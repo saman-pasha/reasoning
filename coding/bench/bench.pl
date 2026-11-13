@@ -5,7 +5,7 @@
 %%     COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
 %%         ../cocolog/cocolog -s coding/bench/bench.pl [-- task ...]
 %%
-%% Four modes per task:
+%% Five modes per task:
 %%
 %%     high      one call with reasoning_effort(high)
 %%     loop      up to three calls with reasoning_effort(none); after each
@@ -17,6 +17,8 @@
 %%     extract   one extra reasoning_effort(none) call rewrites the plain
 %%               requirement into controlled English; the lines the reader
 %%               accepts give the obligations, then the loop runs
+%%     derive    the loop, with obligations derived deterministically from
+%%               the plain requirement's keywords and the task's noun list
 %%
 %% The measurement is the provider's own usage: prompt, completion (which
 %% includes reasoning), reasoning, total, and prompt-cache hits. The code
@@ -104,13 +106,14 @@ bench_task_modes(Task, Dir) :-
 bench_mode_order(Task, Modes) :-
     findall(T, bench_task(T, _, _), Tasks),
     bench_index(Tasks, Task, 1, Index),
-    Cycle is Index mod 4,
+    Cycle is Index mod 5,
     bench_mode_cycle(Cycle, Modes).
 
-bench_mode_cycle(1, [high, loop, contract, extract]).
-bench_mode_cycle(2, [loop, contract, extract, high]).
-bench_mode_cycle(3, [contract, extract, high, loop]).
-bench_mode_cycle(0, [extract, high, loop, contract]).
+bench_mode_cycle(1, [high, loop, contract, extract, derive]).
+bench_mode_cycle(2, [loop, contract, extract, derive, high]).
+bench_mode_cycle(3, [contract, extract, derive, high, loop]).
+bench_mode_cycle(4, [extract, derive, high, loop, contract]).
+bench_mode_cycle(0, [derive, high, loop, contract, extract]).
 
 bench_index([Task|_], Task, I, I) :- !.
 bench_index([_|Tasks], Task, I0, I) :-
@@ -135,6 +138,9 @@ bench_max_attempts(contract, N) :-
     !,
     bench_config(loop_attempts, N).
 bench_max_attempts(extract, N) :-
+    !,
+    bench_config(loop_attempts, N).
+bench_max_attempts(derive, N) :-
     !,
     bench_config(loop_attempts, N).
 bench_max_attempts(loop, N) :-
@@ -171,6 +177,14 @@ bench_mode_spec(extract, Task, Full, Usage, 1) :-
                '~s~n~nObligations extracted from the requirement:~n~s',
                [Spec, ObligationsText])
     ).
+bench_mode_spec(derive, Task, Full, usage(0, 0, 0, 0, 0), 0) :-
+    bench_task(Task, Spec, _),
+    bench_derive_obligations(Task, Spec, Obligations),
+    bench_obligation_lines(Obligations, Lines),
+    atomic_list_concat(Lines, '\n', ObligationsText),
+    format(atom(Full),
+           '~s~n~nObligations derived from the requirement keywords:~n~s',
+           [Spec, ObligationsText]).
 
 %% One extraction call. The reply is parsed by contract.pl; a line the
 %% controlled-English reader refuses is dropped. A failed call leaves the
@@ -300,6 +314,7 @@ bench_prev_files(prev(CodeFile, DiagFile), CodeFile, DiagFile).
 bench_effort_atom(high, high) :- !.
 bench_effort_atom(contract, none) :- !.
 bench_effort_atom(extract, none) :- !.
+bench_effort_atom(derive, none) :- !.
 bench_effort_atom(loop, none).
 
 cocolog(Cocolog) :-
@@ -470,15 +485,17 @@ bench_report(Results, Tasks, Dir) :-
     bench_print_mode_totals(loop, Results),
     bench_print_mode_totals(contract, Results),
     bench_print_mode_totals(extract, Results),
+    bench_print_mode_totals(derive, Results),
     format("~n===== all modes solved =====~n", []),
-    format("task high_total loop_total contract_total extract_total high_reasoning~n", []),
-    forall(member(Task, Tasks), bench_print_four(Task, Results)),
+    format("task high_total loop_total contract_total extract_total derive_total high_reasoning~n", []),
+    forall(member(Task, Tasks), bench_print_five(Task, Results)),
     format("~n===== per solved task =====~n", []),
     format("mode solved total tokens_per_solved~n", []),
     bench_print_per_solved(high, Results),
     bench_print_per_solved(loop, Results),
     bench_print_per_solved(contract, Results),
     bench_print_per_solved(extract, Results),
+    bench_print_per_solved(derive, Results),
     format("~nbenchmark files: ~s~n", [Dir]).
 
 bench_print_mode_totals(Mode, Results) :-
@@ -515,7 +532,7 @@ bench_sum_rows([row(P, C, T, R, H, Secs, Attempts, Succ)|Rest],
     H1 is H0 + H,
     Sec1 is Sec0 + Secs.
 
-bench_print_four(Task, Results) :-
+bench_print_five(Task, Results) :-
     bench_find_result(Task, high, Results,
                       result(_, _, yes, _, usage(_, _, HT, _, _), _, _)),
     bench_find_result(Task, loop, Results,
@@ -524,9 +541,12 @@ bench_print_four(Task, Results) :-
                       result(_, _, yes, _, usage(_, _, CT, _, _), _, _)),
     bench_find_result(Task, extract, Results,
                       result(_, _, yes, _, usage(_, _, ET, _, _), _, _)),
+    bench_find_result(Task, derive, Results,
+                      result(_, _, yes, _, usage(_, _, DT, _, _), _, _)),
     bench_find_result(Task, high, Results,
                       result(_, _, yes, _, usage(_, _, _, HR, _), _, _)),
-    format("~w ~w ~w ~w ~w ~w~n", [Task, HT, LT, CT, ET, HR]).
+    format("~w ~w ~w ~w ~w ~w ~w~n",
+           [Task, HT, LT, CT, ET, DT, HR]).
 
 bench_find_result(Task, Mode, Results, Result) :-
     member(Result0, Results),

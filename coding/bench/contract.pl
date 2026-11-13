@@ -92,6 +92,87 @@ bench_extract_shape_lines(Task, Lines) :-
     ;   Lines = Lines1
     ).
 
+%% bench_derive_sentences(+Task, +Spec, -Sentences)
+%%
+%% The deterministic alternative to the extractor: the task's known read
+%% and print nouns make the required lines, and a keyword in the plain
+%% requirement adds the optional line it implies. No model call.
+bench_derive_sentences(Task, Spec, Sentences) :-
+    bench_program_name(Task, Name),
+    bench_extract_nouns(Task, ReadNoun, PrintNoun, _),
+    format(atom(ReadLine), '~w reads the ~w.', [Name, ReadNoun]),
+    format(atom(PrintLine), '~w prints the ~w.', [Name, PrintNoun]),
+    findall(Optional, bench_derive_optional(Task, Spec, Name, Optional), Optionals0),
+    sort(Optionals0, Optionals),
+    Sentences = ['Every program has an input.',
+                 'Every program has an output.',
+                 ReadLine,
+                 PrintLine|Optionals].
+
+%% A keyword the task's own noun list does not allow is not a keyword for
+%% this task: phonebook's `one word of letters' must not add a word-count
+%% obligation.
+bench_task_has_noun(Task, Noun) :-
+    bench_extract_nouns(Task, _, _, Nouns),
+    member(Noun, Nouns).
+
+bench_derive_optional(Task, Spec, _, 'Every sum is even.') :-
+    bench_task_has_noun(Task, sum),
+    sub_atom(Spec, _, _, _, 'even'),
+    sub_atom(Spec, _, _, _, 'sum').
+bench_derive_optional(Task, Spec, _, 'Every subarray has a sum.') :-
+    bench_task_has_noun(Task, subarray),
+    sub_atom(Spec, _, _, _, 'subarray').
+bench_derive_optional(Task, Spec, _, 'Every subsequence has a length.') :-
+    bench_task_has_noun(Task, subsequence),
+    sub_atom(Spec, _, _, _, 'subsequence').
+bench_derive_optional(Task, Spec, _, 'Every line has a bracket.') :-
+    bench_task_has_noun(Task, bracket),
+    sub_atom(Spec, _, _, _, 'bracket').
+bench_derive_optional(Task, Spec, _, 'Every line has a length.') :-
+    bench_task_has_noun(Task, line),
+    sub_atom(Spec, _, _, _, 'line').
+bench_derive_optional(Task, Spec, _, 'Every word has a letter.') :-
+    bench_task_has_noun(Task, word),
+    sub_atom(Spec, _, _, _, 'word').
+bench_derive_optional(Task, Spec, _, 'Every word has a count.') :-
+    bench_task_has_noun(Task, word),
+    sub_atom(Spec, _, _, _, 'word').
+bench_derive_optional(Task, Spec, Name, Sentence) :-
+    bench_task_has_noun(Task, words),
+    sub_atom(Spec, _, _, _, 'word'),
+    (   sub_atom(Spec, _, _, _, 'sort')
+    ;   sub_atom(Spec, _, _, _, 'lexicographic')
+    ),
+    format(atom(Sentence), '~w sorts the words.', [Name]).
+bench_derive_optional(Task, Spec, _, 'Every command has a verb.') :-
+    bench_task_has_noun(Task, command),
+    sub_atom(Spec, _, _, _, 'command').
+bench_derive_optional(Task, Spec, _, 'Every command has a name.') :-
+    bench_task_has_noun(Task, command),
+    sub_atom(Spec, _, _, _, 'command').
+bench_derive_optional(Task, Spec, _, 'Every name has a number.') :-
+    bench_task_has_noun(Task, name),
+    sub_atom(Spec, _, _, _, 'command').
+bench_derive_optional(Task, Spec, _, 'Every expression has a number.') :-
+    bench_task_has_noun(Task, expression),
+    sub_atom(Spec, _, _, _, 'expression').
+bench_derive_optional(Task, Spec, _, 'Every expression has an operator.') :-
+    bench_task_has_noun(Task, expression),
+    sub_atom(Spec, _, _, _, 'expression').
+bench_derive_optional(Task, Spec, _, 'Every expression has a parenthesis.') :-
+    bench_task_has_noun(Task, expression),
+    sub_atom(Spec, _, _, _, 'expression').
+
+%% bench_derive_obligations(+Task, +Spec, -Obligations)
+%%
+%% The sentences go through the same controlled-English reader and
+%% obligation rules as the extractor's reply.
+bench_derive_obligations(Task, Spec, Obligations) :-
+    bench_derive_sentences(Task, Spec, Sentences),
+    atomic_list_concat(Sentences, '\n', Text),
+    bench_reply_obligations(Text, _Parsed, Obligations).
+
 %% bench_reply_obligations(+Reply, -Parsed, -Obligations)
 %%
 %% Parse each line the extractor wrote. A line the controlled-English
