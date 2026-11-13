@@ -4,7 +4,7 @@
 # rules over the classes. library(reasoning/normalise) generates its lesson shapes from
 # the words in here, and library(reasoning/tagger) measures the shipped tagger on these
 # lines with their quotation marks taken off. It is the lesson test/translate.pl and
-# tutorials/library/46-translate.pl learn, kept here as DATA: nothing trains on a word
+# tutorials/46-translate.pl learn, kept here as DATA: nothing trains on a word
 # the tree does not hold. A line beginning # is a comment.
 Spanish is a language.
 The noun "casa" means "house".

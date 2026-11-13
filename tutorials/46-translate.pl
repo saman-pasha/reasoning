@@ -4,7 +4,7 @@
 %% Clauses only, over library(reasoning/reason): nothing to build, no model,
 %% no lexicon, no store.
 %%
-%%     cocolog -s tutorials/library/46-translate.pl
+%%     cocolog -s tutorials/46-translate.pl
 %%
 %% THE PROBLEM THIS SOLVES. Tutorial 43 reads a paragraph into facts and
 %% rules and proves things over them. This lesson reads a paragraph that

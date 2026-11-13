@@ -2,7 +2,7 @@
 %%
 %% TIER 2: `use_module(library(reasoning/reason))', from reason.pl. Clauses only.
 %%
-%%     cocolog -s tutorials/library/43-reason.pl
+%%     cocolog -s tutorials/43-reason.pl
 %%
 %% A KNOWLEDGE BASE IS ROWS, AND THIS IS HOW A PARAGRAPH BECOMES SOME. The
 %% library reads a controlled English -- a proper noun or `every NOUN' as

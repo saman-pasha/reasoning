@@ -1,11 +1,12 @@
 # Lessons
 
-The four reasoning lessons, moved from cocolog's `tutorials/library/` with the
-library. Run one from this repository's root, with the repository's PARENT
-directory on the library path (the module names are `library(reasoning/...)`):
+The four reasoning lessons, moved here from cocolog's library tutorial
+track with the library. Run one from this repository's root, with the
+repository's PARENT directory on the library path (the module names are
+`library(reasoning/...)`):
 
     COCOLOG_LIBRARY="$(dirname "$PWD")${COCOLOG_LIBRARY:+:$COCOLOG_LIBRARY}" \
-        ../cocolog/cocolog -s tutorials/library/43-reason.pl
+        ../cocolog/cocolog -s tutorials/43-reason.pl
 
 (`sh run-tests.sh` does the same for the test cases.)
 
