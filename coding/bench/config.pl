@@ -8,6 +8,7 @@
 bench_config(provider, openai).
 bench_config(model, 'deepseek-flash').
 bench_config(base_url, 'https://api.deepseek.com/v1/chat/completions').
+bench_config(temperature, 0).
 bench_config(high_effort, high).
 bench_config(loop_effort, none).
 bench_config(loop_attempts, 3).

@@ -3,10 +3,11 @@
 A DeepSeek code-generation benchmark: paying for the model's reasoning up
 front, a deterministic verification loop, a loop whose prompt carries
 obligations from a hand-written controlled-English contract, a loop whose
-obligations are extracted from the plain requirement by the model, and a
-loop whose obligations are derived from its keywords without a model.
+obligations are extracted from the plain requirement by the model, a loop
+whose obligations are derived from its keywords without a model, and a
+loop that adds those obligations only after a failed first attempt.
 
-## The five modes
+## The six modes
 
 | mode | calls | effort | what happens |
 |---|---|---|---|
@@ -15,6 +16,7 @@ loop whose obligations are derived from its keywords without a model.
 | `contract` | up to three | `reasoning_effort(none)` | the loop, with an obligation checklist added to the prompt. The checklist is derived by `contract.pl` from the task's hand-written sentences in the controlled English `library(reasoning/reason)` reads |
 | `extract` | one + up to three | `reasoning_effort(none)` | one call rewrites the plain requirement into allowed controlled-English sentences; `reason.pl` accepts the lines it can read, and the obligations derived from them go into the loop's prompt. The prompt names the task's read and print nouns and only the shapes that task can use |
 | `derive` | up to three | `reasoning_effort(none)` | the loop, with obligations derived deterministically from the plain requirement's keywords and the task's noun list. No model call |
+| `escalate` | up to three | `reasoning_effort(none)` | the first attempt is the plain loop; only a repair attempt adds the keyword-derived obligations |
 
 The loop is the reasoning this repository already trusts -- a compiler and
 tests -- not a second model. The contract mode adds the other half: rules
@@ -25,11 +27,12 @@ contract; its prompt names the task's read and print nouns, closes the noun
 list, and offers only the shapes the task can use. The derive mode writes
 the same kind of contract from keywords the plain requirement already has
 (`subsequence`, `command`, `expression`, `lexicographic`) and the task's
-noun list, so it pays no model call at all. A line the controlled-English
-reader refuses is dropped, and a failed extraction leaves the plain
-requirement. A failed codegen attempt costs another prompt with the
-previous code and diagnostics, so any loop can lose to `high` when the
-first attempt fails.
+noun list, so it pays no model call at all. The escalate mode withholds
+those obligations until a first attempt fails, so a task that passes pays
+only the plain loop's prompt. A line the controlled-English reader refuses
+is dropped, and a failed extraction leaves the plain requirement. A failed
+codegen attempt costs another prompt with the previous code and
+diagnostics, so any loop can lose to `high` when the first attempt fails.
 
 ## Files
 
@@ -37,7 +40,7 @@ first attempt fails.
 |---|---|
 | `bench.pl` | the runner, the task modes and the report |
 | `gen.pl` | one generator call, run as a child `cocolog` so codegen's `main/0` is never called here |
-| `config.pl` | the provider, model, endpoint, efforts and loop cap both scripts use |
+| `config.pl` | the provider, model, endpoint, temperature, efforts and loop cap both scripts use |
 | `contract.pl` | parses the controlled-English contracts, derives the obligations, writes the extractor's prompt and line parser, and holds the keyword-to-contract rules |
 | `tasks.pl` | seven requirements, their hand-written contracts, extractor noun lists and stdin/stdout cases |
 | `run.sh` | sets `COCOLOG_LIBRARY` and runs `bench.pl` |
@@ -55,10 +58,11 @@ no other provider variable is needed. `run.sh` builds `COCOLOG_LIBRARY` as a
 colon-separated list, like `PATH`: the repository's parent, the cocolog
 checkout's `library/`, and any value the variable already had.
 
-The provider, model and endpoint are `coding/bench/config.pl`'s facts:
-DeepSeek's OpenAI-compatible endpoint, `deepseek-flash`, `high` for the
-`high` mode and `none` for `loop`, `contract` and `extract`.
-`loop_attempts` is the cap (three).
+The provider, model, endpoint and efforts are `coding/bench/config.pl`'s
+facts: DeepSeek's OpenAI-compatible endpoint, `deepseek-flash`, `high` for
+the `high` mode and `none` for the others. `temperature` is 0, to make
+runs as repeatable as the provider allows; `loop_attempts` is the cap
+(three).
 
 Each run prints the temporary directory holding every attempt's `.spec.txt`,
 `.c`, `.out` and `.diag.txt`, then a line per task/mode and the totals.
@@ -85,37 +89,33 @@ after trimming trailing whitespace and final newlines.
 
 ```
 mode     tasks passed attempts prompt completion reasoning total cache_hit seconds
-high     7     7      7        943    8385       5532      9328  0         59.90
-loop     7     7      7        768    2613       0         3381  0         34.25
-contract 7     7      7        1398   3251       0         4649  0         36.46
-extract  7     7      14       3266   3542       0         6808  512       36.17
-derive   7     7      7        1423   3321       0         4744  0         36.07
+high     7     7      7        943    11344      7985      12287 0         69.08
+loop     7     7      8        1145   3167       0         4312  128       38.42
+contract 7     7      7        1398   3317       0         4715  0         36.07
+extract  7     7      14       3280   3471       0         6751  512       35.25
+derive   7     7      7        1423   3401       0         4824  0         32.74
+escalate 7     7      7        768    3002       0         3770  0         33.56
 ```
 
-All five modes solved every task, and every codegen call passed on its
-first attempt. `loop` won because the obligations bought nothing when no
-repair was needed: `contract` is 4 649 against `loop`'s 3 381, and `derive`
-is 4 744 -- 40 % more. The deterministic derivation is the useful result:
-it matched the hand-written contract almost exactly (4 744 against 4 649,
-2 % more) with no hand-written requirement and no extraction call. It beat
-`extract` by 30 % (4 744 against 6 808) and `high` by 49 % (9 328).
+All six modes solved every task. `escalate` had the lowest total: it paid
+the plain first-attempt prompt and never needed a repair. `loop` is close
+but its LCS first attempt failed and its repair cost 984; `escalate`'s LCS
+first attempt passed at 364. On the six tasks where both passed first try,
+the two are nearly identical (sum_even 200 against 200, max_subarray 278
+against 278, balanced 418 against 418); the differences are
+completion-token variance, not the mode.
 
-`extract` made seven extraction calls, and its 14 attempts are 7 extraction
-calls plus 7 codegen calls, all first try. Its own rewrite still costs more
-than it saves. Tightening the prompt had helped -- 8 553 to 6 924, 15
-attempts to 14 -- but the deterministic keywords remove the call entirely
-and land at the same price as the hand contract.
+That is also the limitation of this comparison: each mode makes its own
+model calls, so the first-attempt luck differs. The LCS outcome does not
+show that escalation repairs better; it shows that escalation's first
+attempt happened to pass. Temperature 0 is set to reduce this, and the
+provider still varies. A paired run that generates the first attempt once
+and branches into the two repair policies is the next methodological step.
 
-The ranking is not fixed. In an earlier three-mode run the loop needed
-repairs on calculator and LCS -- the LCS attempt used `scanf("%100s")`,
-which cannot read an empty line -- and the hand-written contract won,
-4 595 against 6 235. The benchmark exists to show both sides: obligations
-pay when a repair is likely, the plain loop pays when it is not, and
-`derive` is the version that needs no human contract and no extraction
-call. Choosing when to add obligations, rather than always adding them, is
-the next lever.
-
-`high` burned 5 532 reasoning tokens; every no-reasoning mode burned none.
+The other results hold: `contract` and `derive` solved LCS first try (527
+and 526) but their obligations add prompt tokens on every task, so they
+cost 4 715 and 4 824 against `loop`'s 4 312. `extract` is the costliest
+no-reasoning mode at 6 751. `high` burned 7 985 reasoning tokens.
 
 ## Adding a task
 
@@ -132,5 +132,6 @@ and lets optional lines use `Nouns`; `bench_extract_extra_lines/2` adds a
 line the required set cannot say (`sum_even`'s `Every sum is even.`). The
 derive mode uses the same `ReadNoun`, `PrintNoun` and `Nouns`, plus the
 keyword rules in `contract.pl`; a new concept in `Spec` needs a keyword
-rule there. `high` and `loop` use `Spec` alone; `extract` writes its own
-sentences; `derive` writes them from keywords. No Python is involved.
+rule there. Escalate uses the same rules, but only on a repair attempt.
+`high` and `loop` use `Spec` alone; `extract` writes its own sentences;
+`derive` writes them from keywords. No Python is involved.
