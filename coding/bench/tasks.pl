@@ -200,3 +200,26 @@ bench_program_name(word_count, 'WordCount').
 bench_program_name(phonebook, 'Phonebook').
 bench_program_name(calculator, 'Calculator').
 bench_program_name(lcs, 'Lcs').
+
+%% The extractor's closed vocabulary: the noun it must use for `reads',
+%% the noun it must use for `prints', and every noun an optional line may
+%% use. input and output are added to every list by the prompt.
+bench_extract_nouns(sum_even, integers, sum,
+                    [integers, integer, sum, number, count]).
+bench_extract_nouns(max_subarray, integers, sum,
+                    [integers, integer, subarray, sum, number]).
+bench_extract_nouns(balanced, line, output,
+                    [line, bracket, length, number]).
+bench_extract_nouns(word_count, words, words,
+                    [words, word, letter, count, line]).
+bench_extract_nouns(phonebook, commands, output,
+                    [commands, command, verb, name, number, line]).
+bench_extract_nouns(calculator, expression, output,
+                    [expression, number, operator, parenthesis]).
+bench_extract_nouns(lcs, line, length,
+                    [line, length, subsequence]).
+
+%% A line the required set cannot say and the task needs: sum_even's
+%% property is what makes its sum the sum of the even integers.
+bench_extract_extra_lines(sum_even, ['Every sum is even.']).
+bench_extract_extra_lines(_, []).
