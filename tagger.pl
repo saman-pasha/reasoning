@@ -50,8 +50,8 @@
 %% between quotation marks, so `The noun casa means house' comes back as
 %% the lesson's line. X is never the network's to answer: it is the
 %% lexicon's verdict on a tagging, below. Sequences are padded to the
-%% longest in the batch and batched position-major, as tutorials/tensor/41
-%% batches its sequences; a MASK holds a sequence's state still past its
+%% longest in the batch and batched position-major, as the tensor lessons
+%% batch their sequences; a MASK holds a sequence's state still past its
 %% end, so the backward pass starts at the real last word and not at
 %% padding. The forward is a tensor_expr PROCEDURE, tg_forward//5, and
 %% exec/1 frees every state and gate it made but the logits.
@@ -229,7 +229,7 @@
 %% which is memorising), 16384 read 0.987 and 32768 read 0.993 in 140
 %% seconds. A corpus too large to memorise is what makes a tagger
 %% generalise, and the steps and not the pairs are what a training costs.
-%% The lesson is tutorials/library/45-tagger.pl.
+%% The lesson is tutorials/45-tagger.pl.
 
 :- use_module(library(torch)).
 :- use_module(library(tensor_expr)).

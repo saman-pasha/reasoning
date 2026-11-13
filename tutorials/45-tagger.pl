@@ -5,7 +5,7 @@
 %% lesson TRAINS, so it needs library/torch.so built (sh modules/torch/build.sh),
 %% and about two minutes on four cores.
 %%
-%%     cocolog -s tutorials/library/45-tagger.pl
+%%     cocolog -s tutorials/45-tagger.pl
 %%
 %% THE PROBLEM THIS SOLVES. Tutorial 43 ends on prose that
 %% library(reasoning/reason) refuses, and tutorial 44 makes the data that

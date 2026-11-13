@@ -3,7 +3,7 @@
 %% TIER 2: `use_module(library(reasoning/normalise))', from normalise.pl. Clauses only,
 %% and it needs nothing but library(reasoning/reason).
 %%
-%%     cocolog -s tutorials/library/44-normalise.pl
+%%     cocolog -s tutorials/44-normalise.pl
 %%
 %% THE PROBLEM THIS SOLVES. library(reasoning/reason) reads a controlled English and
 %% refuses everything else -- tutorial 43 ends on a list of ordinary

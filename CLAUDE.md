@@ -2,9 +2,9 @@
 
 <!-- Moved verbatim from cocolog's CLAUDE.md, section "The reasoning library and the translator"
      (lines 4459-11710 at cocolog commit b9c48e8), on 2026-11-13, when the library
-     became this repository. Paths in the text are as they stood in cocolog's
-     checkout: `library/reasoning/X` is `X` at this repository's root; `test/X`,
-     `tutorials/library/X` and `tools/X` keep their paths here. -->
+     became this repository. Paths in the text were rewritten for it:
+     `library/reasoning/X` is `X` at this repository's root; `test/X`,
+     `tutorials/X` and `tools/X` keep their paths here. -->
 
 ## The version
 
@@ -27,7 +27,7 @@ pairs), `tagger.pl` (a GRU tagger over `tensor_expr`, plus the deterministic
 judge `tagger_sane/2` and repair `tg_repair/3`), `translate.pl` (sentences
 read into an English-worded IR and written into any lesson's language),
 `teach.pl` and `page.pl`. Cases: `test/reason.pl`, `normalise.pl`,
-`tagger.pl`, `translate.pl`; lessons 43-46 in `tutorials/library/`.
+`tagger.pl`, `translate.pl`; lessons 43-46 in `tutorials/`.
 
 **Where the data is, and who reads it:**
 

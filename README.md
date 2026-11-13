@@ -11,7 +11,7 @@ This repository is that directory. Put its PARENT on the library path, so
 that `library(reasoning/reason)` finds `reason.pl` here:
 
     COCOLOG_LIBRARY="$(dirname "$PWD")${COCOLOG_LIBRARY:+:$COCOLOG_LIBRARY}" \
-        ../cocolog/cocolog -s tutorials/library/43-reason.pl
+        ../cocolog/cocolog -s tutorials/43-reason.pl
 
 `sh run-tests.sh` sets the same path and runs the four cases below.
 
@@ -33,7 +33,7 @@ that `library(reasoning/reason)` finds `reason.pl` here:
 
 The suite case for each is `test/reason.pl`, `test/normalise.pl`,
 `test/tagger.pl` and `test/translate.pl`, and the lessons are
-`tutorials/library/43-reason.pl`, `44-normalise.pl`, `45-tagger.pl` and
+`tutorials/43-reason.pl`, `44-normalise.pl`, `45-tagger.pl` and
 `46-translate.pl`. `test/prelude.pl` is cocolog's case harness, copied here
 so the four cases run without a cocolog checkout's `test/` beside them; run
 them with `sh run-tests.sh` (or `cocolog -s test/<case>.pl` from this
