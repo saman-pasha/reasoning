@@ -1,0 +1,743 @@
+# library/reasoning/corpus/extra/eng-spa.dix -- entries Apertium's eng-spa
+# bilingual dictionary lacks, in its own shape, one a line. build.pl reads
+# them BEFORE the raw dictionary; an entry both ways is then the first
+# meaning of its word in its class, and the first word for its English
+# meaning, and an entry marked r="RL" comes after every entry both ways and
+# is kept only when the dictionary gave the Spanish word no meaning in that
+# class. Every word here has its paradigm in apertium-spa.spa.dix, so the
+# builder writes all its forms. A line that is not an entry is a comment.
+#
+# the Monte Livata article (Italian UD, ISDT test-232..260), into Spanish.
+# `niño' and `niña' are what a Spanish article calls a child of four; the
+# dictionary's first words for `child', `boy' and `girl' are `infante',
+# `chico' and `chica', and `compañero' is what `il compagno della donna' is
+# where the dictionary's first word for `partner' is the business `socio'.
+<e><p><l>child<s n="n"/></l><r>niño<s n="n"/><s n="GD"/></r></p></e>
+<e><p><l>girl<s n="n"/></l><r>niño<s n="n"/><s n="f"/></r></p></e>
+<e><p><l>boy<s n="n"/></l><r>niño<s n="n"/><s n="m"/></r></p></e>
+<e><p><l>partner<s n="n"/></l><r>compañero<s n="n"/><s n="GD"/></r></p></e>
+<e><p><l>rescuer<s n="n"/></l><r>socorrista<s n="n"/><s n="mf"/></r></p></e>
+<e><p><l>speleological<s n="adj"/></l><r>espeleológico<s n="adj"/></r></p></e>
+<e><p><l>ski<s n="vblex"/></l><r>esquiar<s n="vblex"/></r></p></e>
+<e><p><l>joke<s n="vblex"/></l><r>bromear<s n="vblex"/></r></p></e>
+<e><p><l>patrol<s n="vblex"/></l><r>patrullar<s n="vblex"/></r></p></e>
+<e><p><l>exhausted<s n="adj"/></l><r>agotado<s n="adj"/></r></p></e>
+<e><p><l>confused<s n="adj"/></l><r>confuso<s n="adj"/></r></p></e>
+<e><p><l>trapped<s n="adj"/></l><r>atrapado<s n="adj"/></r></p></e>
+<e><p><l>extinguish<s n="vblex"/></l><r>apagar<s n="vblex"/></r></p></e>
+<e><p><l>cleft<s n="n"/></l><r>hendidura<s n="n"/><s n="f"/></r></p></e>
+# the dictionary's first Spanish for `search' is `busca', for `report'
+# `denuncia' (to denounce), and it has no `shattered'
+<e><p><l>search<s n="n"/></l><r>búsqueda<s n="n"/><s n="f"/></r></p></e>
+<e><p><l>report<s n="vblex"/></l><r>informar<s n="vblex"/></r></p></e>
+<e><p><l>shattered<s n="adj"/></l><r>destrozado<s n="adj"/></r></p></e>
+<e><p><l>carabineer<s n="n"/></l><r>carabinero<s n="n"/><s n="m"/></r></p></e>
+# `make' is `realizar' first in the dictionary, and `si sono fatti forza',
+# `si è fatta male' are made: `hacer'
+<e><p><l>make<s n="vblex"/></l><r>hacer<s n="vblex"/></r></p></e>
+# `mount' is `montura' (a saddle) first: `Monte Livata' is a mountain
+<e><p><l>mount<s n="n"/></l><r>monte<s n="n"/><s n="m"/></r></p></e>
+# `know' is `conocer' (to be acquainted with) first; `non si sa come' is
+# `no se sabe cómo'
+<e><p><l>know<s n="vblex"/></l><r>saber<s n="vblex"/></r></p></e>
+# `doctor' is the Spanish `doctor' first; a hospital's doctors are `médicos'
+<e><p><l>doctor<s n="n"/></l><r>médico<s n="n"/><s n="GD"/></r></p></e>
+# `enter' is `introducir' (to put in) and `entrar' has no entry at all:
+# `è entrata nel panico' is `ha entrado en pánico'
+<e><p><l>enter<s n="vblex"/></l><r>entrar<s n="vblex"/></r></p></e>
+# `arouse' is `excitar' first, which is the wrong sense for a worry:
+# `condizioni che non destano preoccupazione'
+<e><p><l>arouse<s n="vblex"/></l><r>suscitar<s n="vblex"/></r></p></e>
+# `alejar' has only `move away', more than a word
+<e><p><l>distance<s n="vblex"/></l><r>alejar<s n="vblex"/></r></p></e>
+# `operation' is `funcionamiento' first, how a machine runs: `alle
+# operazioni di ritrovamento' are the rescue's `operaciones'
+<e><p><l>operation<s n="n"/></l><r>operación<s n="n"/><s n="f"/></r></p></e>
+# `hall' is `vestíbulo' first, an entrance: `la sala operativa' is a room
+<e><p><l>hall<s n="n"/></l><r>sala<s n="n"/><s n="f"/></r></p></e>
+# `note' is `billete' first, a banknote: `fa sapere, in una nota' is a
+# statement the region issued, `una nota'
+<e><p><l>note<s n="n"/></l><r>nota<s n="n"/><s n="f"/></r></p></e>
+#
+# the Fiat-Chrysler article, into Spanish. `billion' is `billón' in the
+# dictionary, which in Spanish is a million millions -- a thousand times what
+# `3,6 miliardi di dollari' says; `millardo' is a thousand millions
+<e><p><l>billion<s n="n"/></l><r>millardo<s n="n"/><s n="m"/></r></p></e>
+# `cash' has no Spanish noun: `1,75 miliardi in contanti' is `en efectivo'
+<e><p><l>cash<s n="n"/></l><r>efectivo<s n="n"/><s n="m"/></r></p></e>
+# `closing' is `cerramiento' first, an enclosure: a deal's closing is its
+# `cierre'; `understanding' is `comprensión' first, and a memorandum of
+# understanding is `de entendimiento'; `payable' is `pagable', and a sum
+# falling due is `pagadero'
+<e><p><l>closing<s n="n"/></l><r>cierre<s n="n"/><s n="m"/></r></p></e>
+<e><p><l>understanding<s n="n"/></l><r>entendimiento<s n="n"/><s n="m"/></r></p></e>
+<e><p><l>payable<s n="adj"/></l><r>pagadero<s n="adj"/></r></p></e>
+#
+# the violin exhibition in Valencia (AnCora CESS-CAST-P-20010202-169), into
+# Italian. `rendir', `elogiar', `rasgar' and `instintivo' have their
+# paradigms in apertium-spa and no English here: `rendir tributo' renders
+# tribute, `elogió su sonoridad' praised it, and a bow scrapes the strings
+# (`rasgar' is to tear first, so the entry is read only from Spanish)
+<e><p><l>render<s n="vblex"/></l><r>rendir<s n="vblex"/></r></p></e>
+<e r="RL"><p><l>praise<s n="vblex"/></l><r>elogiar<s n="vblex"/></r></p></e>
+<e r="RL"><p><l>scrape<s n="vblex"/></l><r>rasgar<s n="vblex"/></r></p></e>
+<e><p><l>instinctive<s n="adj"/></l><r>instintivo<s n="adj"/></r></p></e>
+# `medidas coercitivas', where the dictionary puts `coactivo' first
+<e><p><l>coercive<s n="adj"/></l><r>coercitivo<s n="adj"/></r></p></e>
+# `Un capitolo riassume la sperimentazione': the dictionary has no English
+# for `resumir', and `summarise' had no Spanish at all
+<e><p><l>summarise<s n="vblex"/></l><r>resumir<s n="vblex"/></r></p></e>
+# `accostarsi con serenità': the dictionary gives `approach' as the
+# pronominal `acercarse' only, which the builder does not write
+<e><p><l>approach<s n="vblex"/></l><r>acercar<s n="vblex"/></r></p></e>
+# the Monreale article (Italian UD, VIT-9465..9470), into Spanish: English
+# words the Italian side now gives and the Spanish side had no word for,
+# and `fiscalía' first for the prosecution where the dictionary's first
+# word is the trial's `procesamiento'
+<e><p><l>bribe<s n="n"/></l><r>soborno<s n="n"/><s n="m"/></r></p></e>
+<e><p><l>accusation<s n="n"/></l><r>acusación<s n="n"/><s n="f"/></r></p></e>
+<e><p><l>Norman<s n="adj"/></l><r>normando<s n="adj"/></r></p></e>
+<e><p><l>monsignor<s n="n"/></l><r>monseñor<s n="n"/><s n="m"/></r></p></e>
+<e><p><l>prosecutor<s n="n"/></l><r>fiscal<s n="n"/><s n="mf"/></r></p></e>
+<e><p><l>prosecution<s n="n"/></l><r>fiscalía<s n="n"/><s n="f"/></r></p></e>
+<e><p><l>pocket<s n="vblex"/></l><r>embolsar<s n="vblex"/></r></p></e>
+<e><p><l>swindle<s n="vblex"/></l><r>estafar<s n="vblex"/></r></p></e>
+<e><p><l>tribunal<s n="n"/></l><r>tribunal<s n="n"/><s n="m"/></r></p></e>
+# the record-market report (AnCora CESS-CAST-P-20010103-139), into Italian:
+# `discográfico' and `ralentización' have paradigms in apertium-spa and no
+# English here
+<e><p><l>discographic<s n="adj"/></l><r>discográfico<s n="adj"/></r></p></e>
+<e><p><l>slowdown<s n="n"/></l><r>ralentización<s n="n"/><s n="f"/></r></p></e>
+# the island-traffic article (Italian UD, VIT-9472..9484), into Spanish:
+# `canicular' and `excursionista' have paradigms in apertium-spa and no
+# English here
+<e><p><l>canicular<s n="adj"/></l><r>canicular<s n="adj"/></r></p></e>
+<e><p><l>excursionist<s n="n"/></l><r>excursionista<s n="n"/><s n="mf"/></r></p></e>
+# the opera review (AnCora CESS-CAST-P-20000102-120), into Italian: words
+# apertium-spa has a paradigm for and no English here. `convencimiento' is
+# a belief, and the English `conviction' is the verdict first in both
+# dictionaries, so the IR carries `convincement'; `estreno', `lord' and
+# `jalón' are read only into English, so `debut', `lord' and `milestone'
+# keep the words they had
+<e r="RL"><p><l>debut<s n="n"/></l><r>estreno<s n="n"/><s n="m"/></r></p></e>
+<e r="RL"><p><l>lord<s n="n"/></l><r>lord<s n="n"/><s n="m"/></r></p></e>
+<e r="RL"><p><l>convincement<s n="n"/></l><r>convencimiento<s n="n"/><s n="m"/></r></p></e>
+<e r="RL"><p><l>milestone<s n="n"/></l><r>jalón<s n="n"/><s n="m"/></r></p></e>
+<e><p><l>fatuous<s n="adj"/></l><r>fatuo<s n="adj"/></r></p></e>
+<e><p><l>liceistic<s n="adj"/></l><r>liceístico<s n="adj"/></r></p></e>
+<e><p><l>intone<s n="vblex"/></l><r>entonar<s n="vblex"/></r></p></e>
+<e><p><l>aria<s n="n"/></l><r>aria<s n="n"/><s n="f"/></r></p></e>
+# the Clinton inquiry (AnCora CESS-CAST-P-19981202-34), all read only into
+# English: `la segunda audiencia' -- the dictionary tags the ordinals det ord,
+# which the builder does not read, and has `first' and `third' as adjectives
+# and `second' not; `está siendo presionado' and `recopilar las últimas
+# pruebas' -- the monolingual has both verbs and the bilingual pairs neither
+# with an English word
+<e r="RL"><p><l>second<s n="adj"/></l><r>segundo<s n="adj"/></r></p></e>
+<e r="RL"><p><l>pressure<s n="vblex"/></l><r>presionar<s n="vblex"/></r></p></e>
+<e r="RL"><p><l>collect<s n="vblex"/></l><r>recopilar<s n="vblex"/></r></p></e>
+# `dicho comité': the committee just named -- apertium-spa has `dicho' as an
+# adjective and the bilingual pairs it with nothing, so it read only as the
+# participle of `dice' and the phrase had no word before its noun; `la ex
+# becaria de la Casa Blanca' is an intern, and the dictionary's `becario'
+# is a scholar only
+<e><p><l>aforementioned<s n="adj"/></l><r>dicho<s n="adj"/></r></p></e>
+<e><p><l>intern<s n="n"/></l><r>becario<s n="n"/><s n="GD"/></r></p></e>
+# the letter on the Bosnian holocaust (Italian UD, VIT-9763..9774): words
+# apertium-spa has and the bilingual pairs with nothing -- `bosnio', `víspera'
+# -- and two senses first: a petty man is `mezquino', which the bilingual
+# did not pair, and to mediate is `mediar', where `intermediar' came first
+<e><p><l>bosnian<s n="adj"/></l><r>bosnio<s n="adj"/></r></p></e>
+<e><p><l>eve<s n="n"/></l><r>víspera<s n="n"/><s n="f"/></r></p></e>
+<e><p><l>petty<s n="adj"/></l><r>mezquino<s n="adj"/></r></p></e>
+<e><p><l>mediate<s n="vblex"/></l><r>mediar<s n="vblex"/></r></p></e>
+# the pacifist letter, into Spanish
+# `dell'"Assalto a Palazzo Farnese"': the assault -- the dictionary's only
+# `asalto' is a boxing round
+<e><p><l>assault<s n="n"/></l><r>asalto<s n="n"/><s n="m"/></r></p></e>
+# the column on the mobile telephone (AnCora CESS-CAST-P-19990802-48): words
+# apertium-spa carries and the bilingual pairs with nothing. `cayó a un
+# socavón': a hole in the ground, read only into English so that `hole' is
+# still written `hoyo'
+<e r="RL"><p><l>hole<s n="n"/></l><r>socavón<s n="n"/><s n="m"/></r></p></e>
+# `el telefonino destripado': gutted
+<e><p><l>gut<s n="vblex"/></l><r>destripar<s n="vblex"/></r></p></e>
+# `que yacía junto a él': lay beside him -- English's `lie' is also to tell
+# a lie, which Italian writes `mentire', so the pivot is `rest', and read
+# only into English so that `rests' is still written `descansa'
+<e r="RL"><p><l>rest<s n="vblex"/></l><r>yacer<s n="vblex"/></r></p></e>
+# `los precios ... se han abaratado': have come down -- read only into
+# English, so that `reduces' is still written `reduce'
+<e r="RL"><p><l>reduce<s n="vblex"/></l><r>abaratar<s n="vblex"/></r></p></e>
+# `más modernizados': modernised
+<e><p><l>modernise<s n="vblex"/></l><r>modernizar<s n="vblex"/></r></p></e>
+# `los publicistas de las marcas': the people who write their advertising
+<e><p><l>publicist<s n="n"/></l><r>publicista<s n="n"/><s n="GD"/></r></p></e>
+# the letter on the Bastille and Thermidor, into Spanish: words apertium-spa
+# carries and the bilingual pairs with nothing. `i presìdi': garrisons
+<e><p><l>garrison<s n="n"/></l><r>guarnición<s n="n"/><s n="f"/></r></p></e>
+# `si permette di chiamare fuorilegge': outlaws
+<e><p><l>outlaw<s n="n"/></l><r>forajido<s n="n"/><s n="GD"/></r></p></e>
+# `la stampa piuttosto tiepida': lukewarm
+<e><p><l>lukewarm<s n="adj"/></l><r>tibio<s n="adj"/></r></p></e>
+# `topi di fogna': sewer rats
+<e><p><l>sewer<s n="n"/></l><r>alcantarilla<s n="n"/><s n="f"/></r></p></e>
+# `i lacci e lacciuoli': snares -- written only (r="LR"), so `trampa' is
+# still read as a trap
+<e r="LR"><p><l>snare<s n="n"/></l><r>trampa<s n="n"/><s n="f"/></r></p></e>
+# `non senza redarguire chi ...': rebuke
+<e><p><l>rebuke<s n="vblex"/></l><r>reprender<s n="vblex"/></r></p></e>
+# `il temerario ringhiare di Craxi': the growling -- Spanish says it with the
+# noun, `el gruñido'
+<e><p><l>growling<s n="n"/></l><r>gruñido<s n="n"/><s n="m"/></r></p></e>
+# `perché codesti presìdi non debordino dalle loro funzioni': overstep --
+# written only, so `sobrepasa' is still read as `exceeds'
+<e r="LR"><p><l>overstep<s n="vblex"/></l><r>sobrepasar<s n="vblex"/></r></p></e>
+# `si permette di chiamare fuorilegge': outlaws -- apertium-spa has
+# `forajido' as an adjective only, so the noun above has no forms of its own
+<e><p><l>outlaw<s n="adj"/></l><r>forajido<s n="adj"/></r></p></e>
+# the Giglio park letter (Italian UD VIT-9792..9799), into Spanish.
+# `l'arcipelago toscano': Tuscan -- apertium-spa carries `toscano' and the
+# bilingual pairs nothing with it
+<e><p><l>Tuscan<s n="adj"/></l><r>toscano<s n="adj"/></r></p></e>
+# `un parco "mummificato"': mummified -- apertium-spa carries `momificar'
+# and the bilingual pairs nothing with it
+<e><p><l>mummify<s n="vblex"/></l><r>momificar<s n="vblex"/></r></p></e>
+# the England supporters column (AnCora CESS-CAST-P-19990601-13), into
+# Italian.
+# `estas hordas más vikingas que británicas': Viking -- apertium-spa carries
+# `vikingo' and the bilingual pairs nothing with it
+<e><p><l>Viking<s n="adj"/></l><r>vikingo<s n="adj"/></r></p></e>
+# `el imperturbable gentleman': imperturbable -- the same
+<e><p><l>imperturbable<s n="adj"/></l><r>imperturbable<s n="adj"/></r></p></e>
+# `el imperturbable gentleman del bombín': a bowler hat -- the same
+<e><p><l>bowler<s n="n"/></l><r>bombín<s n="n"/><s n="m"/></r></p></e>
+# `el irónico humor del gélido habitante': icy -- the same
+<e><p><l>icy<s n="adj"/></l><r>gélido<s n="adj"/></r></p></e>
+# `los bobalicones comentarios': silly -- read only (r="RL"), so `silly' is
+# still written `tonto'
+<e r="RL"><p><l>silly<s n="adj"/></l><r>bobalicón<s n="adj"/></r></p></e>
+# `los hooligans': hooligan -- apertium-spa carries it, a noun of both
+# genders
+<e><p><l>hooligan<s n="n"/></l><r>hooligan<s n="n"/><s n="mf"/></r></p></e>
+# `su avinagrado carácter': sour -- read only, so `sour' is still `ácido'
+<e r="RL"><p><l>sour<s n="adj"/></l><r>avinagrado<s n="adj"/></r></p></e>
+# `su avinagrado carácter flemático': phlegmatic -- apertium-spa carries it
+<e><p><l>phlegmatic<s n="adj"/></l><r>flemático<s n="adj"/></r></p></e>
+# `como facilonga explicación': easy -- read only, so `easy' is still `fácil'
+<e r="RL"><p><l>easy<s n="adj"/></l><r>facilongo<s n="adj"/></r></p></e>
+# `Los muchachotes hinchas del equipo inglés': fans -- apertium-spa carries
+# `hincha' as a noun of both genders and the bilingual pairs nothing with it,
+# so the vocabulary knew only the verb `inflates'; read only, so `fan' is
+# still written `seguidor'
+<e r="RL"><p><l>fan<s n="n"/></l><r>hincha<s n="n"/><s n="mf"/></r></p></e>
+# the Puigbó article (AnCora CESS-CAST-P-19990701-130), into Italian.
+# `la tele pública catalana': the telly -- apertium-spa carries `tele' and
+# the bilingual gives it only to `TV', which no lesson word can be; read
+# only, so `television' is still written `televisión'
+<e r="RL"><p><l>television<s n="n"/></l><r>tele<s n="n"/><s n="f"/></r></p></e>
+# `Jaume Barberà, recientemente fichado por TVE': signed up -- apertium-spa
+# carries `fichar' and the bilingual pairs nothing with it; read as
+# `engages', which is Italian's `ingaggiare', and read only, so `engages' is
+# still written `compromete'
+<e r="RL"><p><l>engage<s n="vblex"/></l><r>fichar<s n="vblex"/></r></p></e>
+# `La cadena catalana, capitaneada por el empresario ...': captained -- the
+# same, and no other word of either language means it
+<e><p><l>captain<s n="vblex"/></l><r>capitanear<s n="vblex"/></r></p></e>
+# `el empresario gerundense': of Girona -- the same, and English has no
+# word for it; the IR's is `gironese', as Italian's is
+<e><p><l>gironese<s n="adj"/></l><r>gerundense<s n="adj"/></r></p></e>
+# the Salvini interview (Italian UD VIT-9816..9850), into Spanish.
+# `per la centesima volta': hundredth -- the bilingual pairs `centésimo' as
+# an ordinal determiner, a class the builder does not write; apertium-spa
+# carries the adjective
+<e><p><l>hundredth<s n="adj"/></l><r>centésimo<s n="adj"/></r></p></e>
+# `E la pantera torna ad affilare gli artigli': sharpens, claws --
+# apertium-spa carries `afilar' and `garra', and the bilingual pairs
+# `afilar' with nothing and `garra' only with a harp
+<e><p><l>sharpen<s n="vblex"/></l><r>afilar<s n="vblex"/></r></p></e>
+<e><p><l>claw<s n="n"/></l><r>garra<s n="n"/><s n="f"/></r></p></e>
+# `un problema grave e che mi tormenta': torments -- the bilingual pairs
+# `atormentar' with `rack' only
+<e><p><l>torment<s n="vblex"/></l><r>atormentar<s n="vblex"/></r></p></e>
+# the Radio Nacional anniversary (AnCora CESS-CAST-P-19990701-83), into
+# Italian.
+# `el conseller de Presidència de la Generalitat': a minister of the Catalan
+# government -- apertium-spa carries `conseller' and the bilingual pairs
+# nothing with it; read as `adviser', which is Italian's `consigliere', and
+# read only, so `adviser' is still written `asesor'
+<e r="RL"><p><l>adviser<s n="n"/></l><r>conseller<s n="n"/><s n="m"/></r></p></e>
+# `el campeón motociclista Sito Pons': motorcyclist, the noun and the
+# adjective -- apertium-spa carries both and the bilingual pairs neither
+<e><p><l>motorcyclist<s n="n"/></l><r>motociclista<s n="n"/><s n="mf"/></r></p></e>
+<e><p><l>motorcycling<s n="adj"/></l><r>motociclista<s n="adj"/></r></p></e>
+# `Fue entonces el momento de homenajear a dos "personajes singulares"':
+# to pay homage -- the same; read as `honours' and read only, so `honours'
+# is still written `honrar'
+<e r="RL"><p><l>honour<s n="vblex"/></l><r>homenajear<s n="vblex"/></r></p></e>
+# `Hubo, sin embargo, un desliz protocolario': a slip -- the same; read
+# only, `resbalón' stays the word written
+<e r="RL"><p><l>slip<s n="n"/></l><r>desliz<s n="n"/><s n="m"/></r></p></e>
+<e><p><l>protocolary<s n="adj"/></l><r>protocolario<s n="adj"/></r></p></e>
+# `como señal de aperturismo': the political opening of 1974 -- the same;
+# read as `opening' and read only, so `opening' is still written `apertura'
+<e r="RL"><p><l>opening<s n="n"/></l><r>aperturismo<s n="n"/><s n="m"/></r></p></e>
+# `pasaron la velada en una mesa': the evening -- apertium-spa carries the
+# noun `velada' and the bilingual pairs nothing with it; read as the
+# participle of `velar' it was `watched'; read only, `evening' is still
+# written `anochecer'
+<e r="RL"><p><l>evening<s n="n"/></l><r>velada<s n="n"/><s n="f"/></r></p></e>
+# `el aplauso de estrellas actuales de las ondas tan dispares como Josep
+# Cuní y Nieves Herrero': as disparate -- apertium-spa carries the adjective
+# `dispar' and the bilingual pairs nothing with it; read as `disparar',
+# `dispares' was what you shoot, and the sentence was refused
+<e><p><l>disparate<s n="adj"/></l><r>dispar<s n="adj"/><s n="mf"/></r></p></e>
+# the Fregene report (Italian UD VIT-9851..9925), into Spanish: the Spanish
+# word for a meaning its Italian word has and Spanish had none for.
+# apertium-spa carries each and the bilingual pairs it with nothing;
+# written only, so no Spanish text reads any word otherwise.
+<e r="LR"><p><l>culpable<s n="adj"/></l><r>culposo<s n="adj"/></r></p></e>
+<e r="LR"><p><l>unshakeable<s n="adj"/></l><r>inquebrantable<s n="adj"/><s n="mf"/></r></p></e>
+<e r="LR"><p><l>glimmer<s n="n"/></l><r>atisbo<s n="n"/><s n="m"/></r></p></e>
+<e r="LR"><p><l>lineament<s n="n"/></l><r>rasgo<s n="n"/><s n="m"/></r></p></e>
+<e r="LR"><p><l>furrow<s n="vblex"/></l><r>surcar<s n="vblex"/></r></p></e>
+<e r="LR"><p><l>eventful<s n="adj"/></l><r>movido<s n="adj"/></r></p></e>
+<e r="LR"><p><l>piedmontese<s n="adj"/></l><r>piamontés<s n="adj"/></r></p></e>
+<e r="LR"><p><l>piedmontese<s n="n"/></l><r>piamontés<s n="n"/><s n="GD"/></r></p></e>
+<e r="LR"><p><l>enamour<s n="vblex"/></l><r>enamorar<s n="vblex"/></r></p></e>
+<e r="LR"><p><l>hard<s n="adv"/></l><r>duro<s n="adv"/></r></p></e>
+<e r="LR"><p><l>paediatric<s n="adj"/></l><r>pediátrico<s n="adj"/></r></p></e>
+<e r="LR"><p><l>browse<s n="vblex"/></l><r>hojear<s n="vblex"/></r></p></e>
+<e r="LR"><p><l>balneal<s n="adj"/></l><r>balneario<s n="adj"/></r></p></e>
+<e r="LR"><p><l>rummage<s n="vblex"/></l><r>hurgar<s n="vblex"/></r></p></e>
+# the errors of The Lord of the Rings (AnCora CESS-CAST-P-20020102-112), into
+# Italian: `personajes o elementos contemporáneos que se cuelan en el plano',
+# which sneak into the shot, and `unas grandes piedras, que se tambalean',
+# which wobble -- apertium-spa carries `colar' and `tambalear', and the
+# bilingual pairs nothing with the first and only `tambalearse' with the
+# second, which is no lemma the monolingual has; read only
+<e r="RL"><p><l>sneak<s n="vblex"/></l><r>colar<s n="vblex"/></r></p></e>
+<e r="RL"><p><l>wobble<s n="vblex"/></l><r>tambalear<s n="vblex"/></r></p></e>
+# the report on Ciampi sending back the law on unappealability (UD VIT
+# VIT-9926..9946), from Italian: the Spanish word for a meaning the Italian
+# one has and Spanish had none for. apertium-spa carries each and the
+# bilingual pairs it with nothing; written only, so no Spanish text reads
+# any word otherwise
+<e r="LR"><p><l>inexplicable<s n="adj"/></l><r>inexplicable<s n="adj"/></r></p></e>
+<e r="LR"><p><l>acquittal<s n="n"/></l><r>absolución<s n="n"/><s n="f"/></r></p></e>
+# the report on Ciampi, continued: `se fosse stata promulgata' and `avrebbe
+# dissestato', into Spanish. apertium-spa carries both verbs and the
+# bilingual pairs them with nothing; the second is written only
+<e><p><l>promulgate<s n="vblex"/></l><r>promulgar<s n="vblex"/></r></p></e>
+<e r="LR"><p><l>disorganize<s n="vblex"/></l><r>desorganizar<s n="vblex"/></r></p></e>
+# the report on the election at Òmnium Cultural (AnCora
+# CESS-CAST-P-20020301-125), into Italian: words apertium-spa carries and the
+# bilingual pairs with nothing
+<e><p><l>counterattack<s n="vblex"/></l><r>contraatacar<s n="vblex"/></r></p></e>
+<e><p><l>decapitate<s n="vblex"/></l><r>decapitar<s n="vblex"/></r></p></e>
+<e><p><l>unleash<s n="vblex"/></l><r>desatar<s n="vblex"/></r></p></e>
+<e><p><l>catalanist<s n="adj"/></l><r>catalanista<s n="adj"/></r></p></e>
+# ... and read only, each with a meaning the dictionary gives another word
+# first: `esgrimió una papeleta' brandished it, `desconocen qué
+# consecuencias' do not know, `el sector renovador' the reformist one,
+# `un comportamiento "caciquil"' a local boss's, authoritarian
+<e r="RL"><p><l>brandish<s n="vblex"/></l><r>esgrimir<s n="vblex"/></r></p></e>
+<e r="RL"><p><l>ignore<s n="vblex"/></l><r>desconocer<s n="vblex"/></r></p></e>
+<e r="RL"><p><l>reformist<s n="adj"/></l><r>renovador<s n="adj"/></r></p></e>
+<e r="RL"><p><l>authoritarian<s n="adj"/></l><r>caciquil<s n="adj"/></r></p></e>
+# the report on the course in astronautics at La Sapienza (the Italian UD
+# VIT document VIT-9947..9966), from Italian: words apertium-spa carries and
+# the bilingual pairs with nothing. `ready', `hopes' and a `suit' need no
+# line -- the vocabulary writes them `listo', `espera' and `traje' already
+# -- and a line for them here would put that meaning FIRST for reading
+# too: `espera' would read as hopes before it expects, and `listo' as
+# ready before it is smart
+<e><p><l>astronautics<s n="n"/></l><r>astronáutica<s n="n"/><s n="f"/></r></p></e>
+<e><p><l>institute<s n="vblex"/></l><r>instituir<s n="vblex"/></r></p></e>
+<e><p><l>internship<s n="n"/></l><r>pasantía<s n="n"/><s n="f"/></r></p></e>
+<e><p><l>aeronautics<s n="n"/></l><r>aeronáutica<s n="n"/><s n="f"/></r></p></e>
+# ... and `uno de los docentes', a lecturer: apertium-spa carries the noun and
+# the bilingual pairs it with nothing, where `conferenciante' is a speaker
+<e><p><l>lecturer<s n="n"/></l><r>docente<s n="n"/><s n="mf"/></r></p></e>
+# ... and written only: `transbordador' is a ferry first, and read as the
+# shuttle it would be the shuttle everywhere
+<e r="LR"><p><l>shuttle<s n="n"/></l><r>transbordador<s n="n"/><s n="m"/></r></p></e>
+# the report on Senegal's win over France at the 2002 World Cup (AnCora
+# CESS-CAST-P-20020601-51), into Italian: words apertium-spa carries and the
+# bilingual pairs with nothing
+<e><p><l>captivating<s n="adj"/></l><r>cautivador<s n="adj"/></r></p></e>
+<e><p><l>convalescent<s n="adj"/></l><r>convaleciente<s n="adj"/></r></p></e>
+<e><p><l>unexplored<s n="adj"/></l><r>inexplorado<s n="adj"/></r></p></e>
+<e><p><l>unstoppable<s n="adj"/></l><r>imparable<s n="adj"/></r></p></e>
+<e><p><l>sensational<s n="adj"/></l><r>sensacional<s n="adj"/></r></p></e>
+<e><p><l>desolate<s n="adj"/></l><r>desolado<s n="adj"/></r></p></e>
+<e><p><l>inexhaustible<s n="adj"/></l><r>inagotable<s n="adj"/></r></p></e>
+<e><p><l>lack<s n="vblex"/></l><r>carecer<s n="vblex"/></r></p></e>
+<e><p><l>taint<s n="vblex"/></l><r>salpicar<s n="vblex"/></r></p></e>
+# ... and read only, each with a meaning the dictionary gives another word
+# first: `la gesta conseguida' the feat, which `hazaña' is written for, and
+# `una cruenta batalla' a bloody one, which `sangriento' is written for
+<e r="RL"><p><l>feat<s n="n"/></l><r>gesta<s n="n"/><s n="f"/></r></p></e>
+<e r="RL"><p><l>bloody<s n="adj"/></l><r>cruento<s n="adj"/></r></p></e>
+# Umberto Eco on the flat earth (the Italian UD VIT document VIT-9967..9998),
+# from Italian: words apertium-spa carries and the bilingual pairs with nothing
+<e><p><l>dialoguing<s n="adj"/></l><r>dialogante<s n="adj"/></r></p></e>
+<e><p><l>roundness<s n="n"/></l><r>redondez<s n="n"/><s n="f"/></r></p></e>
+<e><p><l>sphericity<s n="n"/></l><r>esfericidad<s n="n"/><s n="f"/></r></p></e>
+<e><p><l>geocentrism<s n="n"/></l><r>geocentrismo<s n="n"/><s n="m"/></r></p></e>
+<e><p><l>tabernacle<s n="n"/></l><r>tabernáculo<s n="n"/><s n="m"/></r></p></e>
+<e><p><l>polemicize<s n="vblex"/></l><r>polemizar<s n="vblex"/></r></p></e>
+<e><p><l>genoese<s n="adj"/></l><r>genovés<s n="adj"/></r></p></e>
+<e><p><l>infernal<s n="adj"/></l><r>infernal<s n="adj"/></r></p></e>
+<e><p><l>distance<s n="vblex"/></l><r>distar<s n="vblex"/></r></p></e>
+# `err' is the hand lines' `equivoca', which state four of its forms, and
+# `si stava sbagliando' wants the gerund
+<e><p><l>err<s n="vblex"/></l><r>equivocar<s n="vblex"/></r></p></e>
+# ... and written only: `avvincente' is gripping, and `apasionante', which
+# Spanish says for it, reads as another word's meaning first
+<e r="LR"><p><l>gripping<s n="adj"/></l><r>apasionante<s n="adj"/></r></p></e>
+# `raggiungere il levante per la via del ponente': apertium-spa carries
+# `levante', and the bilingual pairs it with nothing
+<e><p><l>levant<s n="n"/></l><r>levante<s n="n"/><s n="m"/></r></p></e>
+# the Arzalluz report (AnCora CESS-CAST-P-20020801-17), into Italian.
+# apertium-spa carries each with its paradigm and the bilingual pairs it
+# with nothing: `mentir' is the verb `mienten' is, where the only verb spelt
+# so was `mentar' in the subjunctive (they mention); `quejar' is `se
+# quejó'; Spanish had no word for self-determination, nostalgic or
+# Francoism. An English word is lower-case letters, so `self-determination'
+# is never admitted and the word for it is `autodetermination'
+<e><p><l>lie<s n="vblex"/></l><r>mentir<s n="vblex"/></r></p></e>
+<e><p><l>complain<s n="vblex"/></l><r>quejar<s n="vblex"/></r></p></e>
+<e><p><l>autodetermination<s n="n"/></l><r>autodeterminación<s n="n"/><s n="f"/></r></p></e>
+<e><p><l>nostalgic<s n="adj"/></l><r>nostálgico<s n="adj"/></r></p></e>
+<e><p><l>francoism<s n="n"/></l><r>franquismo<s n="n"/><s n="m"/></r></p></e>
+# ... and read only, each with a meaning the dictionary gives another word
+# first: `beneplácito' approval, `traspasar' to transfer, `lelo' silly,
+# `dictamen' a report, `revancha' revenge, and `autogobierno' autonomy,
+# which is self-government, a word with a hyphen
+<e r="RL"><p><l>autonomy<s n="n"/></l><r>autogobierno<s n="n"/><s n="m"/></r></p></e>
+<e r="RL"><p><l>approval<s n="n"/></l><r>beneplácito<s n="n"/><s n="m"/></r></p></e>
+<e r="RL"><p><l>transfer<s n="vblex"/></l><r>traspasar<s n="vblex"/></r></p></e>
+<e r="RL"><p><l>silly<s n="adj"/></l><r>lelo<s n="adj"/></r></p></e>
+<e r="RL"><p><l>report<s n="n"/></l><r>dictamen<s n="n"/><s n="m"/></r></p></e>
+<e r="RL"><p><l>revenge<s n="n"/></l><r>revancha<s n="n"/><s n="f"/></r></p></e>
+# the Cecchi Paone report (VIT-9270..9295), into Spanish: `pisar' (to trample)
+# and `callar' for the Italian `pestare' and `tacere', `emitir' for a
+# broadcast before the dictionary's `retransmitir', `vicedirector', and
+# `vespertino' for `preserale'
+<e><p><l>trample<s n="vblex"/></l><r>pisar<s n="vblex"/></r></p></e>
+<e><p><l>hush<s n="vblex"/></l><r>callar<s n="vblex"/></r></p></e>
+<e><p><l>broadcast<s n="vblex"/></l><r>emitir<s n="vblex"/></r></p></e>
+<e><p><l>vicedirector<s n="n"/></l><r>vicedirector<s n="n"/><s n="m"/></r></p></e>
+<e><p><l>preevening<s n="adj"/></l><r>vespertino<s n="adj"/></r></p></e>
+<e><p><l>aloofness<s n="n"/></l><r>distanciamiento<s n="n"/><s n="m"/></r></p></e>
+<e><p><l>subtract<s n="vblex"/></l><r>sustraer<s n="vblex"/></r></p></e>
+# the Carrefour and Promodès report (AnCora CESS-CAST-P-19990901-75), into Italian:
+# apertium-spa carries each with its paradigm and the bilingual dictionary pairs
+# it with nothing. `central' as a noun is `las centrales de compra': the lesson
+# knew only the adjective, and a bare adjective before `y' heads no phrase
+<e><p><l>employers<s n="n"/></l><r>patronal<s n="n"/><s n="f"/></r></p></e>
+<e><p><l>antimonopoly<s n="adj"/></l><r>antimonopolio<s n="adj"/></r></p></e>
+<e><p><l>selfservice<s n="n"/></l><r>autoservicio<s n="n"/><s n="m"/></r></p></e>
+<e><p><l>offload<s n="vblex"/></l><r>repercutir<s n="vblex"/></r></p></e>
+<e><p><l>central<s n="n"/></l><r>central<s n="n"/><s n="f"/></r></p></e>
+# the poverty report of the Carniti commission (VIT-9637..9672): `presidir' and
+# `reconfortante' for the English words of the Italian entries; apertium-spa
+# carries both with their paradigms and the bilingual dictionary pairs neither
+<e><p><l>preside<s n="vblex"/></l><r>presidir<s n="vblex"/></r></p></e>
+<e><p><l>comforting<s n="adj"/></l><r>reconfortante<s n="adj"/><s n="mf"/></r></p></e>
+# `Segnano la differenza' -- mark: the dictionary's first Spanish word for the verb
+# is `manchar', to stain, and `marcar' comes second
+<e><p><l>mark<s n="vblex"/></l><r>marcar<s n="vblex"/></r></p></e>
+# `la mesta classifica' -- a ranking, Spanish's `clasificación'
+<e><p><l>ranking<s n="n"/></l><r>clasificación<s n="n"/><s n="f"/></r></p></e>
+# `un consuntivo inquietante' -- disturbing: apertium-spa carries `inquietante'
+# and the bilingual dictionary pairs it with nothing
+<e><p><l>disturbing<s n="adj"/></l><r>inquietante<s n="adj"/><s n="mf"/></r></p></e>
+# `addirittura raddoppierebbe' -- double: the dictionary's only Spanish verb for it
+# is `plegar', to fold, and `duplicar' comes with nothing
+<e><p><l>double<s n="vblex"/></l><r>duplicar<s n="vblex"/></r></p></e>
+# `el italiano medio' -- the average Italian, `medio' where the dictionary gives `mediano'
+<e><p><l>average<s n="adj"/></l><r>medio<s n="adj"/></r></p></e>
+# the Israeli report (AnCora CESS-CAST-P-20010102-25), into Italian: each of
+# these has its paradigm in apertium-spa.spa.dix and no English word.
+# `el sepelio' is the funeral and `los colonos' the settlers -- both read
+# into English only, `funeral' and `colonizador' stay the words written; `se
+# clamó a la venganza' is cried out for revenge; `abatido a tiros' is felled
+# by shots (the dictionary has `abatir' only as `knock down', two words); and
+# `la cisjordana localidad' is the West Bank town
+<e r="RL"><p><l>funeral<s n="n"/></l><r>sepelio<s n="n"/><s n="m"/></r></p></e>
+<e r="RL"><p><l>colonist<s n="n"/></l><r>colono<s n="n"/><s n="m"/></r></p></e>
+<e r="RL"><p><l>cry<s n="vblex"/></l><r>clamar<s n="vblex"/></r></p></e>
+<e><p><l>fell<s n="vblex"/></l><r>abatir<s n="vblex"/></r></p></e>
+<e><p><l>Cisjordanian<s n="adj"/></l><r>cisjordano<s n="adj"/></r></p></e>
+# `un sepelio multitudinario' is a crowded funeral (the monolingual dictionary
+# has the adjective and no English), and `una escalada de violencia' is an
+# escalation, where `climbing' was the dictionary's word for `escalada'
+<e><p><l>crowded<s n="adj"/></l><r>multitudinario<s n="adj"/></r></p></e>
+<e><p><l>escalation<s n="n"/></l><r>escalada<s n="n"/><s n="f"/></r></p></e>
+# the Montanelli tribute, into Spanish: the Spanish words for the English ones
+# the Italian entries above read -- `estoico', `lombardo', `preocupado' and
+# `ineficiente' are in apertium-spa.spa.dix and in no bilingual entry. Written
+# only (LR): the Spanish words need no meaning of their own to be read
+<e r="LR"><p><l>stoic<s n="adj"/></l><r>estoico<s n="adj"/></r></p></e>
+<e r="LR"><p><l>Lombard<s n="adj"/></l><r>lombardo<s n="adj"/></r></p></e>
+<e r="LR"><p><l>worried<s n="adj"/></l><r>preocupado<s n="adj"/></r></p></e>
+<e r="LR"><p><l>inefficient<s n="adj"/></l><r>ineficiente<s n="adj"/></r></p></e>
+# `appassionarsi' into Spanish: `apasionar' is in apertium-spa.spa.dix and in
+# no bilingual entry of one English word
+<e><p><l>impassion<s n="vblex"/></l><r>apasionar<s n="vblex"/></r></p></e>
+# the Clot street report (AnCora CESS-CAST-P-20000701-80), into Italian: each of
+# these has its paradigm in apertium-spa.spa.dix and no English word.
+# `peatonal', `revitalizar', `humanizar', `presupuestar' and `pilón' (a bollard)
+# are read and written; `lúdico' and `abonado' only read -- `recreativo' and
+# `suscriptor' stay the Spanish words for recreational and subscriber
+<e><p><l>pedestrian<s n="adj"/></l><r>peatonal<s n="adj"/><s n="mf"/></r></p></e>
+<e><p><l>revitalise<s n="vblex"/></l><r>revitalizar<s n="vblex"/></r></p></e>
+<e><p><l>humanise<s n="vblex"/></l><r>humanizar<s n="vblex"/></r></p></e>
+<e><p><l>budget<s n="vblex"/></l><r>presupuestar<s n="vblex"/></r></p></e>
+<e><p><l>bollard<s n="n"/></l><r>pilón<s n="n"/><s n="m"/></r></p></e>
+<e r="RL"><p><l>recreational<s n="adj"/></l><r>lúdico<s n="adj"/></r></p></e>
+<e r="RL"><p><l>subscriber<s n="n"/></l><r>abonado<s n="n"/><s n="GD"/></r></p></e>
+# `los comerciantes afectados' -- the traders affected: `afectado' is an
+# adjective to apertium-spa.spa.dix and the bilingual dictionary has no entry
+# for it, so `afectados' was only the participle of `afectar' and Italian wrote
+# the verb's first word, `influiti'
+<e><p><l>affected<s n="adj"/></l><r>afectado<s n="adj"/></r></p></e>
+# the Quartieri article (Venice treebank VIT), from Italian: the Spanish words
+# for the English ones the Italian entries read. Each has its paradigm in
+# apertium-spa.spa.dix and no English word; written only (LR), as the Spanish
+# words need no meaning of their own to be read. `involve' is the exception:
+# the dictionary's first Spanish word for it is `acarrear', to cart, and
+# `coinvolge ragazzi' needs `involucra', so the entry is both ways and comes first
+<e r="LR"><p><l>graffito<s n="n"/></l><r>grafiti<s n="n"/><s n="m"/></r></p></e>
+<e><p><l>involve<s n="vblex"/></l><r>involucrar<s n="vblex"/></r></p></e>
+<e r="LR"><p><l>marginalise<s n="vblex"/></l><r>marginar<s n="vblex"/></r></p></e>
+<e r="LR"><p><l>paw<s n="n"/></l><r>pata<s n="n"/><s n="f"/></r></p></e>
+<e r="LR"><p><l>fitter<s n="n"/></l><r>montador<s n="n"/><s n="GD"/></r></p></e>
+# `la lingua del ghetto': the Italian dictionary has `ghetto' and the Spanish
+# `gueto' only inside its own entry, with no bilingual one to carry it
+<e r="LR"><p><l>ghetto<s n="n"/></l><r>gueto<s n="n"/><s n="m"/></r></p></e>
+# `ragazzi emarginati e a rischio', into Spanish: the adjective `marginado'
+<e r="LR"><p><l>marginalised<s n="adj"/></l><r>marginado<s n="adj"/></r></p></e>
+# `ragazzi provenienti dai ghetti', into Spanish: `proveniente' has its paradigm
+# in apertium-spa.spa.dix and the dictionary's only entry for it is `from'
+<e r="LR"><p><l>originating<s n="adj"/></l><r>proveniente<s n="adj"/><s n="mf"/></r></p></e>
+# the Abogacía report (AnCora CESS-CAST-P-19991001-61), into Italian: each of
+# these has its paradigm in apertium-spa.spa.dix and no English word, or one of
+# several (`aprovechar' is `take advantage of'), and is only read (RL). An RL
+# noun still comes before the dictionary's own further down the nouns, so the
+# dictionary's `abogado' is said first, both ways, or `letrado' would be the
+# first Spanish word for a lawyer; the Spanish words for procedure, stress and
+# exploit stay the dictionary's as they come first (the verbs' RL entries come
+# last). `honorario' is an honorarium, which is no `fee' (the dictionary's `fee'
+# is a cost); `enjuiciamiento', as in `ley de enjuiciamiento civil', is the
+# procedure
+<e><p><l>lawyer<s n="n"/></l><r>abogado<s n="n"/><s n="GD"/></r></p></e>
+<e r="RL"><p><l>lawyer<s n="n"/></l><r>letrado<s n="n"/><s n="GD"/></r></p></e>
+<e r="RL"><p><l>honorarium<s n="n"/></l><r>honorario<s n="n"/><s n="m"/></r></p></e>
+<e r="RL"><p><l>confiscatory<s n="adj"/></l><r>confiscatorio<s n="adj"/></r></p></e>
+<e r="RL"><p><l>procedure<s n="n"/></l><r>enjuiciamiento<s n="n"/><s n="m"/></r></p></e>
+<e r="RL"><p><l>stress<s n="vblex"/></l><r>recalcar<s n="vblex"/></r></p></e>
+<e r="RL"><p><l>exploit<s n="vblex"/></l><r>aprovechar<s n="vblex"/></r></p></e>
+# the Makula interview (VIT-9381..9414), into Spanish: `colta da sincope' -- the syncope of
+# fainting has `síncope' in apertium-spa.spa.dix and no English word; and `overtake', which
+# the Italian `cogliere' is read as, is written `sorprender' (left to right only)
+<e><p><l>syncope<s n="n"/></l><r>síncope<s n="n"/><s n="f"/></r></p></e>
+<e r="LR"><p><l>overtake<s n="vblex"/></l><r>sorprender<s n="vblex"/></r></p></e>
+# `nei casi di annegamento': drowning, which Spanish says `ahogamiento'; `i bagnanti',
+# the bathers, `bañistas'. Both ways
+<e><p><l>drowning<s n="n"/></l><r>ahogamiento<s n="n"/><s n="m"/></r></p></e>
+<e><p><l>bather<s n="n"/></l><r>bañista<s n="n"/><s n="mf"/></r></p></e>
+# the Tempi del governo article (VIT-9673..9712), into Spanish: the Spanish half of its words, which
+# apertium-spa.spa.dix has with a paradigm and the bilingual dictionary lacks or ranks below another word
+# `la cerilla': a matchstick, where the dictionary's first Spanish word for a match is the sports match.
+# Left to right only: `cerilla' is read as it was
+<e r="LR"><p><l>matchstick<s n="n"/></l><r>cerilla<s n="n"/><s n="f"/></r></p></e>
+# `più corto': short in length; the dictionary's first Spanish word for short is `bajo'
+<e><p><l>short<s n="adj"/></l><r>corto<s n="adj"/></r></p></e>
+<e><p><l>presidentialism<s n="n"/></l><r>presidencialismo<s n="n"/><s n="m"/></r></p></e>
+<e><p><l>presidentialist<s n="adj"/></l><r>presidencialista<s n="adj"/><s n="mf"/></r></p></e>
+<e><p><l>presidentialist<s n="n"/></l><r>presidencialista<s n="n"/><s n="mf"/></r></p></e>
+<e><p><l>forcing<s n="n"/></l><r>forzamiento<s n="n"/><s n="m"/></r></p></e>
+<e><p><l>punitive<s n="adj"/></l><r>punitivo<s n="adj"/></r></p></e>
+<e><p><l>distrustful<s n="adj"/></l><r>desconfiado<s n="adj"/></r></p></e>
+# `una fase costituente': constituent, the adjective; the dictionary has the noun alone (the voter)
+<e><p><l>constituent<s n="adj"/></l><r>constituyente<s n="adj"/><s n="mf"/></r></p></e>
+# `Melina tra Polo e Olivo': stalling, in the footballers' word
+<e r="LR"><p><l>stalling<s n="n"/></l><r>dilación<s n="n"/><s n="f"/></r></p></e>
+# `la sensazione che ...': the Spanish word for a sensation (the dictionary has it as a feeling only)
+<e><p><l>sensation<s n="n"/></l><r>sensación<s n="n"/><s n="f"/></r></p></e>
+# the PSOE and PNV article (AnCora CESS-CAST-P-20000903-30), Spanish into Italian and English: words with a
+# paradigm in apertium-spa.spa.dix and no English word, or with one the vocabulary cannot use
+# `se distancia del duro discurso': distances himself
+<e><p><l>distance<s n="vblex"/></l><r>distanciar<s n="vblex"/></r></p></e>
+# `no arremeter contra el PP': to attack (the dictionary has `arremeter a' as two English words)
+<e r="RL"><p><l>attack<s n="vblex"/></l><r>arremeter<s n="vblex"/></r></p></e>
+# `en materia antiterrorista' (the dictionary's anti-terrorist has a hyphen)
+<e><p><l>antiterrorist<s n="adj"/></l><r>antiterrorista<s n="adj"/><s n="mf"/></r></p></e>
+# `el tremendismo del presidente': alarmism (the dictionary's `alarmismo' is the one written)
+<e r="RL"><p><l>alarmism<s n="n"/></l><r>tremendismo<s n="n"/><s n="m"/></r></p></e>
+# `recomponer la unidad democrática': to rebuild it
+<e r="RL"><p><l>rebuild<s n="vblex"/></l><r>recomponer<s n="vblex"/></r></p></e>
+# `espetó al presidente que ...': retorted
+<e r="RL"><p><l>retort<s n="vblex"/></l><r>espetar<s n="vblex"/></r></p></e>
+# `fue mucho menos remilgado': squeamish
+<e><p><l>squeamish<s n="adj"/></l><r>remilgado<s n="adj"/></r></p></e>
+# `que han estado torpedeando': torpedoing
+<e><p><l>torpedo<s n="vblex"/></l><r>torpedear<s n="vblex"/></r></p></e>
+# `la senda de los últimos meses': a path (the dictionary's `camino' is the one written)
+<e r="RL"><p><l>path<s n="n"/></l><r>senda<s n="n"/><s n="f"/></r></p></e>
+# `mensajes de crispación': tension (the dictionary's `tensión' is the one written)
+<e r="RL"><p><l>tension<s n="n"/></l><r>crispación<s n="n"/><s n="f"/></r></p></e>
+# the PSOE and PNV article, second batch (into Italian and English)
+# `aboga por tejer una unidad': weave (the dictionary has `tejer' as knit alone)
+<e><p><l>weave<s n="vblex"/></l><r>tejer<s n="vblex"/></r></p></e>
+# `fiel a su consigna de no arremeter': a directive
+<e r="RL"><p><l>directive<s n="n"/></l><r>consigna<s n="n"/><s n="f"/></r></p></e>
+# `al precisar que esa actitud ...': specifying (the dictionary's `precisar' is to require)
+<e r="RL"><p><l>specify<s n="vblex"/></l><r>precisar<s n="vblex"/></r></p></e>
+# `trasladará al lehendakari la posición del PSOE': convey (the dictionary's `trasladar' is to move)
+<e r="RL"><p><l>convey<s n="vblex"/></l><r>trasladar<s n="vblex"/></r></p></e>
+# the PSOE and PNV article, third batch (into Italian and English)
+# `no desean potenciar': boost (the dictionary's `improves' came first)
+<e r="RL"><p><l>boost<s n="vblex"/></l><r>potenciar<s n="vblex"/></r></p></e>
+# the Tatarella interview (VIT-9714..9749), Italian into Spanish and English: the Spanish for what the Italian lines say
+# `carte truccate': rigged (the dictionary's `aparejar' is a ship's)
+<e><p><l>rig<s n="vblex"/></l><r>amañar<s n="vblex"/></r></p></e>
+# `D'Alema è doppiogiochista?': a hypocrite
+<e><p><l>hypocrite<s n="n"/></l><r>hipócrita<s n="n"/><s n="mf"/></r></p></e>
+# the Barcelona and Unicaja basketball report (AnCora CESS-CAST-P-20001201-176), Spanish into Italian and English: the English for what the Spanish dictionary has and the bilingual one lacks
+# `Barcelona y Unicaja engrandecieron ayer la Liga': dignified
+<e r="RL"><p><l>dignify<s n="vblex"/></l><r>engrandecer<s n="vblex"/></r></p></e>
+# `una tremenda consistencia', `un tremendo derroche físico': tremendous (the dictionary's `enorme' is the one written)
+<e r="RL"><p><l>tremendous<s n="adj"/></l><r>tremendo<s n="adj"/></r></p></e>
+# `para descabalgar a los malagueños del liderato': oust (the dictionary's `desbancar' is the one written)
+<e r="RL"><p><l>oust<s n="vblex"/></l><r>descabalgar<s n="vblex"/></r></p></e>
+# `dos personajes antagónicos'
+<e r="RL"><p><l>antagonistic<s n="adj"/></l><r>antagónico<s n="adj"/></r></p></e>
+# `después de que el partido acabara empatado a 72'
+<e><p><l>tie<s n="vblex"/></l><r>empatar<s n="vblex"/></r></p></e>
+# `El pívot estadounidense del Barcelona': a basketball pivot (the dictionary's `pivote' is the one written)
+<e r="RL"><p><l>pivot<s n="n"/></l><r>pívot<s n="n"/><s n="mf"/></r></p></e>
+# the Barcelona and Unicaja basketball report, second batch (into Italian and English)
+# `cinco triples seguidos': consecutive (the dictionary has `seguido' as followed only)
+<e r="RL"><p><l>consecutive<s n="adj"/></l><r>seguido<s n="adj"/></r></p></e>
+# `por seis supuestas faltas graves': alleged -- `presunto' is what Spanish writes for it, `supuesto' is the second word for it
+<e><p><l>alleged<s n="adj"/></l><r>presunto<s n="adj"/></r></p></e>
+<e><p><l>alleged<s n="adj"/></l><r>supuesto<s n="adj"/></r></p></e>
+# `un marcado tono ofensivo': tone, where the dictionary's `tono' is a key first
+<e><p><l>tone<s n="n"/></l><r>tono<s n="n"/><s n="m"/></r></p></e>
+# `un tremendo derroche físico': the effort spent (the dictionary has `derroche' as a splurge only)
+<e><p><l>expenditure<s n="n"/></l><r>derroche<s n="n"/><s n="m"/></r></p></e>
+# `sólo cedió el triunfo en la prórroga': overtime
+<e><p><l>overtime<s n="n"/></l><r>prórroga<s n="n"/><s n="f"/></r></p></e>
+# `rescindir su contrato': a contract, where the dictionary's `contrato' is an agreement first
+<e><p><l>contract<s n="n"/></l><r>contrato<s n="n"/><s n="m"/></r></p></e>
+# the Rosi report (VIT-9567..9604), Italian into Spanish and English: the Spanish for the English words the Italian entries brought in
+# `al controllo antidoping'
+<e><p><l>antidoping<s n="adj"/></l><r>antidopaje<s n="adj"/><s n="mf"/></r></p></e>
+# `annunciato la positività del pugile'
+<e><p><l>positivity<s n="n"/></l><r>positividad<s n="n"/><s n="f"/></r></p></e>
+# `dai microtraumi encefalici'
+<e><p><l>microtrauma<s n="n"/></l><r>microtraumatismo<s n="n"/><s n="m"/></r></p></e>
+<e><p><l>encephalic<s n="adj"/></l><r>encefálico<s n="adj"/></r></p></e>
+# `verdetto casareccio'
+<e><p><l>homespun<s n="adj"/></l><r>casero<s n="adj"/></r></p></e>
+# the Rosi report, second batch: `farmaci ... salvaguardano ... i pugili'
+<e><p><l>safeguard<s n="vblex"/></l><r>salvaguardar<s n="vblex"/></r></p></e>
+# the Miss World article (AnCora CESS-CAST-P-20001201-199, 16 sentences), Spanish into Italian and English: the Spanish for the English words the Italian entries bring in
+# `esa reina destronada y saliente', `un tanto añeja'
+<e><p><l>dethrone<s n="vblex"/></l><r>destronar<s n="vblex"/></r></p></e>
+<e><p><l>outgoing<s n="adj"/></l><r>saliente<s n="adj"/><s n="mf"/></r></p></e>
+<e><p><l>dated<s n="adj"/></l><r>añejo<s n="adj"/></r></p></e>
+# `no se ha escatimado en gastos', `rivalizando hasta el último minuto'
+<e><p><l>skimp<s n="vblex"/></l><r>escatimar<s n="vblex"/></r></p></e>
+<e><p><l>vie<s n="vblex"/></l><r>rivalizar<s n="vblex"/></r></p></e>
+# `encontró un filón'
+<e><p><l>goldmine<s n="n"/></l><r>filón<s n="n"/><s n="m"/></r></p></e>
+# `obras de beneficencia': the dictionary's `caridad' first, so that it stays the one written for `charity'
+<e><p><l>charity<s n="n"/></l><r>caridad<s n="n"/><s n="f"/></r></p></e>
+<e><p><l>charity<s n="n"/></l><r>beneficencia<s n="n"/><s n="f"/></r></p></e>
+# the Miss World article, second batch: `coronando la nueva promesa', `una mirada seductora'
+<e><p><l>crown<s n="vblex"/></l><r>coronar<s n="vblex"/></r></p></e>
+<e><p><l>gaze<s n="n"/></l><r>mirada<s n="n"/><s n="f"/></r></p></e>
+# the Lazio article (VIT-9511..9539), Italian into Spanish and English: the Spanish for the English words the Italian entries bring in
+# `non ci siamo smembrati', `ricominciamo a lavorare', `è stato offuscato dalla buriana'
+<e><p><l>dismember<s n="vblex"/></l><r>desmembrar<s n="vblex"/></r></p></e>
+<e><p><l>recommence<s n="vblex"/></l><r>recomenzar<s n="vblex"/></r></p></e>
+<e><p><l>overshadow<s n="vblex"/></l><r>eclipsar<s n="vblex"/></r></p></e>
+# `i ragazzi della primavera', `In primavera fa caldo': the dictionary's first Spanish noun for `spring' is a coil
+<e><p><l>spring<s n="n"/></l><r>primavera<s n="n"/><s n="f"/></r></p></e>
+# `un vestuario convulsionado por los constantes cambios', `un jugador díscolo como pocos', `Solitario y taciturno', `organizado tácticamente':
+# each word has its forms in apertium-spa.spa.dix and no English
+<e><p><l>convulse<s n="vblex"/></l><r>convulsionar<s n="vblex"/></r></p></e>
+<e><p><l>unruly<s n="adj"/></l><r>díscolo<s n="adj"/></r></p></e>
+<e><p><l>taciturn<s n="adj"/></l><r>taciturno<s n="adj"/></r></p></e>
+<e><p><l>tactically<s n="adv"/></l><r>tácticamente<s n="adv"/></r></p></e>
+# `que ha recobrado su mejor nivel': regained; read only, `recuperar' stays the word written for `regain'
+<e r="RL"><p><l>regain<s n="vblex"/></l><r>recobrar<s n="vblex"/></r></p></e>
+# the Venice canals report (VIT-9999..10010), Italian into Spanish: the Spanish words its English needs, each with its paradigm in the dictionary
+# `di arsenico e di pesticidi'
+<e><p><l>pesticide<s n="n"/></l><r>pesticida<s n="n"/><s n="m"/></r></p></e>
+# `impavidi nuotatori': fearless is `impávido' (the dictionary's first Spanish for it is `osado', daring)
+<e><p><l>fearless<s n="adj"/></l><r>impávido<s n="adj"/></r></p></e>
+# `con bracciate possenti': a swimmer's stroke is a `brazada', both ways (the dictionary has it read only, after `trazo')
+<e><p><l>stroke<s n="n"/></l><r>brazada<s n="n"/><s n="f"/></r></p></e>
+# `dagli scarichi delle industrie': industrial discharges are `vertidos' (the dictionary's first Spanish for a discharge is
+# `caudal', a flow)
+<e><p><l>discharge<s n="n"/></l><r>vertido<s n="n"/><s n="m"/></r></p></e>
+# `i curatori dell'indagine': the curators
+<e><p><l>curator<s n="n"/></l><r>curador<s n="n"/><s n="m"/></r></p></e>
+# The islands report (VIT-9485..9510): `si sono rassegnati' is `se han resignado' -- the verb's forms (its
+# reflexive sense is a line of spanish.txt), read only: `dimitir' stays the Spanish for resign
+<e r="RL"><p><l>resign<s n="vblex"/></l><r>resignar<s n="vblex"/></r></p></e>
+# `Dovrebbero transitare ... 290 mila vetture': transit, where the Italian dictionary's `passes' is
+# `transcurre', time passing
+<e><p><l>transit<s n="vblex"/></l><r>transitar<s n="vblex"/></r></p></e>
+# `le idee di ferree ordinanze come quella dell'estate scorsa': an ordinance, which the bilingual
+# dictionary lacks (the Spanish one has `ordenanza')
+<e><p><l>ordinance<s n="n"/></l><r>ordenanza<s n="n"/><s n="f"/></r></p></e>
+# The New Year's Eve report (AnCora CESS-CAST-P-20010103-85): verbs, adjectives and adverbs the bilingual dictionary
+# lacks, whose forms the Spanish one has. `la Guardia Urbana - - desbordada - -': overwhelmed
+<e><p><l>overwhelm<s n="vblex"/></l><r>desbordar<s n="vblex"/></r></p></e>
+# `La falta de agentes hasta última hora propició disputas': favoured, read only (`favorecer' stays the one written)
+<e r="RL"><p><l>favour<s n="vblex"/></l><r>propiciar<s n="vblex"/></r></p></e>
+# `el operativo de limpieza se reveló descompensado': unbalanced, the participle of `descompensar'
+<e r="RL"><p><l>unbalance<s n="vblex"/></l><r>descompensar<s n="vblex"/></r></p></e>
+# `sólo seis operarios llegaron': workers, read only (`trabajador' stays the one written)
+<e r="RL"><p><l>worker<s n="n"/></l><r>operario<s n="n"/><s n="GD"/></r></p></e>
+# `con dos máquinas barredoras': sweeping
+<e><p><l>sweeping<s n="adj"/></l><r>barredor<s n="adj"/></r></p></e>
+# `cuando ésta se desalojase': evacuated, read only (`evacuar' stays the one written)
+<e r="RL"><p><l>evacuate<s n="vblex"/></l><r>desalojar<s n="vblex"/></r></p></e>
+# `provistos de dos camiones de recogida': equipped
+<e><p><l>equipped<s n="adj"/></l><r>provisto<s n="adj"/></r></p></e>
+# `dos cisternas de limpieza': cisterns
+<e><p><l>cistern<s n="n"/></l><r>cisterna<s n="n"/><s n="f"/></r></p></e>
+# `los trabajadores llegaron escalonadamente': gradually, read only (`gradualmente' stays the one written)
+<e r="RL"><p><l>gradually<s n="adv"/></l><r>escalonadamente<s n="adv"/></r></p></e>
+# `la operación se ralentizó': slowed, read only
+<e r="RL"><p><l>slow<s n="vblex"/></l><r>ralentizar<s n="vblex"/></r></p></e>
+# `criticó ayer duramente la organización': harshly
+<e><p><l>harshly<s n="adv"/></l><r>duramente<s n="adv"/></r></p></e>
+# The Salou report (AnCora CESS-CAST-P-19990301-37): verbs and a noun the bilingual dictionary lacks, whose forms the
+# Spanish one has. `No he vuelto a la playa': returns, read only (`regresar' stays the one written; the dictionary
+# gives `volver' only two-word English verbs, which the builder takes none of)
+<e r="RL"><p><l>return<s n="vblex"/></l><r>volver<s n="vblex"/></r></p></e>
+# `han recriminado a las autoridades': reproached, read only
+<e r="RL"><p><l>reproach<s n="vblex"/></l><r>recriminar<s n="vblex"/></r></p></e>
+# `regentan un bar': manage, read only
+<e r="RL"><p><l>manage<s n="vblex"/></l><r>regentar<s n="vblex"/></r></p></e>
+# `Rebeca, que augura': predicts, read only
+<e r="RL"><p><l>predict<s n="vblex"/></l><r>augurar<s n="vblex"/></r></p></e>
+# `el jubilado fallecido el día 13': the pensioner, read only (`pensionista' stays the one written)
+<e r="RL"><p><l>pensioner<s n="n"/></l><r>jubilado<s n="n"/><s n="GD"/></r></p></e>
+# the Air Europa report: `lincharla verbalmente', `se amotinó', `reclamaciones cursadas por el pasaje', `vociferó Joaquín Camp'
+<e><p><l>lynch<s n="vblex"/></l><r>linchar<s n="vblex"/></r></p></e>
+<e><p><l>mutiny<s n="vblex"/></l><r>amotinar<s n="vblex"/></r></p></e>
+<e r="RL"><p><l>submit<s n="vblex"/></l><r>cursar<s n="vblex"/></r></p></e>
+<e r="RL"><p><l>shout<s n="vblex"/></l><r>vociferar<s n="vblex"/></r></p></e>
+# the physics report, Italian into Spanish: `le forze primordiali' are primordial, which the Spanish `primordial' is
+# written for only (r="LR"), so that a Spanish `papel primordial' is still read as paramount
+<e r="LR"><p><l>primordial<s n="adj"/></l><r>primordial<s n="adj"/></r></p></e>

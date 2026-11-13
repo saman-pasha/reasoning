@@ -1,0 +1,148 @@
+# library/reasoning/corpus/italian.txt -- the Italian lesson of test/translate.pl, in
+# the same controlled English as spanish.txt beside it: a second language, learned
+# under its own name there, and a second source of mentioned words here.
+Italian is a language.
+The noun "casa" means "house".
+The noun "cane" means "dog".
+The noun "pane" means "bread".
+The adjective "grande" means "big".
+The verb "è" means "is".
+The verb "mangia" means "eats".
+The feminine article "la" means "the".
+The masculine article "il" means "the".
+Every noun that ends in "a" is feminine.
+Every noun that does not end in "a" is masculine.
+Every adjective follows the noun.
+"case" is the plural of "casa".
+"grandi" is the plural of "grande".
+"sono" is the plural of "è".
+"le" is the plural of "la".
+The word "non" means "not".
+The word "cosa" means "what".
+"cani" is the plural of "cane".
+"pani" is the plural of "pane".
+The masculine article "lo" means "the".
+"i" is the plural of "il".
+"gli" is the plural of "lo".
+The masculine article "un" means "a".
+The masculine article "uno" means "a".
+The feminine article "una" means "a".
+"era" is the past of "è".
+"erano" is the past of "sono".
+"sarà" is the future of "è".
+"saranno" is the plural of "sarà".
+"sei" is the second person of "è".
+"siamo" is the first person of "sono".
+"stato" is the participle of "è".
+The auxiliary "ha" means "has".
+"hanno" is the plural of "ha".
+"ho" is the first person of "ha".
+"hai" is the second person of "ha".
+"abbiamo" is the first person of "hanno".
+"aveva" is the past of "ha".
+"avevano" is the past of "hanno".
+The auxiliary "sta" means "is".
+"stanno" is the plural of "sta".
+"sto" is the first person of "sta".
+"stai" is the second person of "sta".
+"stiamo" is the first person of "stanno".
+"stava" is the past of "sta".
+"stavano" is the past of "stanno".
+The word "non" precedes the verb.
+The word "che" means "what".
+The word "chi" means "who".
+The word "dove" means "where".
+The word "quando" means "when".
+The word "quale" means "which".
+The pronoun "io" means "I".
+The pronoun "tu" means "you".
+The pronoun "lui" means "he".
+The pronoun "lei" means "she".
+The pronoun "noi" means "we".
+The pronoun "loro" means "they".
+The pronoun "mi" means "me".
+The pronoun "ti" means "you".
+The pronoun "lo" means "him".
+The pronoun "la" means "her".
+The pronoun "lo" means "it".
+The pronoun "ci" means "us".
+The pronoun "li" means "them".
+The pronoun "lui" means "him".
+The pronoun "lei" means "her".
+The pronoun "noi" means "us".
+The pronoun "loro" means "them".
+Every pronoun precedes the verb.
+The pronoun "lui" does not precede the verb.
+The pronoun "lei" does not precede the verb.
+The pronoun "noi" does not precede the verb.
+The pronoun "loro" does not precede the verb.
+The preposition "in" means "in".
+The preposition "con" means "with".
+The preposition "a" means "to".
+The preposition "di" means "of".
+The preposition "da" means "from".
+The preposition "per" means "for".
+The preposition "su" means "on".
+"del" is the contraction of "di il".
+"dello" is the contraction of "di lo".
+"della" is the contraction of "di la".
+"dei" is the contraction of "di i".
+"degli" is the contraction of "di gli".
+"delle" is the contraction of "di le".
+"al" is the contraction of "a il".
+"allo" is the contraction of "a lo".
+"alla" is the contraction of "a la".
+"ai" is the contraction of "a i".
+"agli" is the contraction of "a gli".
+"alle" is the contraction of "a le".
+"nel" is the contraction of "in il".
+"nello" is the contraction of "in lo".
+"nella" is the contraction of "in la".
+"nei" is the contraction of "in i".
+"negli" is the contraction of "in gli".
+"nelle" is the contraction of "in le".
+"dal" is the contraction of "da il".
+"dalla" is the contraction of "da la".
+"dai" is the contraction of "da i".
+"dalle" is the contraction of "da le".
+"sul" is the contraction of "su il".
+"sulla" is the contraction of "su la".
+"sui" is the contraction of "su i".
+"sulle" is the contraction of "su le".
+The conjunction "e" means "and".
+The adverb "bene" means "well".
+The adverb "oggi" means "today".
+The masculine possessive "mio" means "my".
+The feminine possessive "mia" means "my".
+"miei" is the plural of "mio".
+"mie" is the plural of "mia".
+The masculine possessive "tuo" means "your".
+The feminine possessive "tua" means "your".
+"tuoi" is the plural of "tuo".
+"tue" is the plural of "tua".
+The masculine possessive "suo" means "his".
+The feminine possessive "sua" means "his".
+The masculine possessive "suo" means "her".
+The feminine possessive "sua" means "her".
+"suoi" is the plural of "suo".
+"sue" is the plural of "sua".
+The masculine possessive "nostro" means "our".
+The feminine possessive "nostra" means "our".
+"nostri" is the plural of "nostro".
+"nostre" is the plural of "nostra".
+The possessive "loro" means "their".
+The impersonal pronoun "si" means "one".
+"l'" is the elision of "lo".
+"l'" is the elision of "il".
+"l'" is the elision of "la".
+"un'" is the elision of "una".
+"dell'" is the elision of "dello".
+"dell'" is the elision of "della".
+"nell'" is the elision of "nello".
+"nell'" is the elision of "nella".
+"all'" is the elision of "allo".
+"all'" is the elision of "alla".
+"dall'" is the elision of "dallo".
+"dall'" is the elision of "dalla".
+"sull'" is the elision of "sullo".
+"sull'" is the elision of "sulla".
