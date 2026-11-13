@@ -40,28 +40,57 @@ bench_obligation_lines(Obligations, Lines) :-
 %% bench_extract_prompt(+Task, +Spec, -Prompt)
 %%
 %% The prompt that asks a model for the controlled-English sentences.
-%% The noun list and the shapes are closed on purpose: a sentence outside
-%% them is dropped by bench_reply_obligations/3, and a loose prompt gives
-%% the reader more prose than contract.
+%% Both the nouns and the shapes are closed on purpose: a sentence outside
+%% them is dropped by bench_reply_obligations/3. The read and print lines
+%% are required and named, so the extractor cannot spend its lines on
+%% noise and leave out what the program reads or prints.
 bench_extract_prompt(Task, Spec, Prompt) :-
     bench_program_name(Task, Name),
+    bench_extract_nouns(Task, ReadNoun, PrintNoun, Nouns0),
+    atomic_list_concat(['input', output|Nouns0], ', ', Nouns),
+    bench_extract_shape_lines(Task, ShapeLines),
+    atomic_list_concat(ShapeLines, '\n', Shapes),
+    bench_extract_extra_lines(Task, ExtraLines),
+    atomic_list_concat(ExtraLines, '\n', Extras),
     format(atom(Prompt),
 'Rewrite this programming requirement as controlled-English sentences.
-Use ONLY these nouns: input, output, integers, line, words, commands, expression, sum, length, bracket, number, operator, parenthesis, verb, name, count, letter, subarray, subsequence.
-Use ONLY these sentence shapes, one per line:
+Use ONLY these nouns: ~s.
+Use ONLY these sentence shapes:
+~s
+Required lines, exactly as written:
 Every program has an input.
 Every program has an output.
-NAME reads the NOUN.
-NAME prints the NOUN.
-NAME sorts the NOUN.
-Every NOUN has a NOUN.
-NAME has a NOUN.
-Output only the sentences, no explanation.
+~w reads the ~w.
+~w prints the ~w.
+~s
+Add optional lines only from the remaining shapes and the allowed nouns.
+Use lowercase nouns exactly as listed. Do not use any other noun. Do not
+output bullets, numbering, explanations, or any other line. Do not copy a
+line containing <NAME> or <noun>.
 The program name is ~w.
 
 Requirement:
 ~s',
-           [Name, Spec]).
+           [Nouns, Shapes, Name, ReadNoun, Name, PrintNoun, Extras, Name, Spec]).
+
+%% The shape list is task-specific: only word_count gets `sorts', only
+%% sum_even gets a property line. A shape a task cannot use is a line the
+%% model will invent a use for.
+bench_extract_shape_lines(Task, Lines) :-
+    Lines0 = ['Every program has an input.',
+              'Every program has an output.',
+              '<NAME> reads the <noun>.',
+              '<NAME> prints the <noun>.',
+              'Every <noun> has a <noun>.',
+              '<NAME> has a <noun>.'],
+    (   Task == word_count
+    ->  append(Lines0, ['<NAME> sorts the <noun>.'], Lines1)
+    ;   Lines1 = Lines0
+    ),
+    (   Task == sum_even
+    ->  append(Lines1, ['Every <noun> is even.'], Lines)
+    ;   Lines = Lines1
+    ).
 
 %% bench_reply_obligations(+Reply, -Parsed, -Obligations)
 %%
@@ -107,6 +136,18 @@ bench_obligation(Term, Priority, Text) :-
     bench_term_head(Term, Head),
     bench_obligation_head(Head, Priority, Text).
 
+%% A class in the body of a universal sentence names the thing the
+%% obligation is about, even when the head only says `has': `Every
+%% subarray has a sum' is still about the subarray.
+bench_obligation(Term, Priority, Text) :-
+    Term = (_Head :- Body),
+    bench_obligation_body(Body, Priority, Text).
+
+bench_obligation_body(subarray(_), 50,
+    'The subarray is contiguous and non-empty; with all-negative values choose one element.').
+bench_obligation_body(subsequence(_), 51,
+    'A subsequence keeps character order but not adjacency; it is not a substring.').
+
 bench_term_head(Term, Head) :-
     (   Term = (H :- _)
     ->  Head = H
@@ -117,7 +158,11 @@ bench_term_head(Term, Head) :-
 
 bench_obligation_head(have(_, input), 10,
     'Read from standard input to end of file; an empty input is valid.').
+bench_obligation_head(read(_, input), 10,
+    'Read from standard input to end of file; an empty input is valid.').
 bench_obligation_head(have(_, output), 11,
+    'Write exactly the required result, with no prompt or extra text.').
+bench_obligation_head(print(_, output), 11,
     'Write exactly the required result, with no prompt or extra text.').
 
 bench_obligation_head(read(_, integers), 20,
@@ -162,7 +207,11 @@ bench_obligation_head(have(_, letter), 49,
     'A word contains only ASCII letters; no digits or punctuation.').
 bench_obligation_head(subarray(_), 50,
     'The subarray is contiguous and non-empty; with all-negative values choose one element.').
+bench_obligation_head(have(_, subarray), 50,
+    'The subarray is contiguous and non-empty; with all-negative values choose one element.').
 bench_obligation_head(subsequence(_), 51,
+    'A subsequence keeps character order but not adjacency; it is not a substring.').
+bench_obligation_head(have(_, subsequence), 51,
     'A subsequence keeps character order but not adjacency; it is not a substring.').
 
 %% ---- one line per obligation, its first mention first ------------------

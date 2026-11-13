@@ -12,17 +12,19 @@ whose obligations are extracted from the plain requirement by the model.
 | `high` | one | `reasoning_effort(high)` | the model gets the requirement and must return working C |
 | `loop` | up to three | `reasoning_effort(none)` | after each call the code is compiled with `clang -std=c17 -Wall -Wextra -O0` and run on the task's cases; the compiler/test report and the previous program go back with the next call |
 | `contract` | up to three | `reasoning_effort(none)` | the loop, with an obligation checklist added to the prompt. The checklist is derived by `contract.pl` from the task's hand-written sentences in the controlled English `library(reasoning/reason)` reads |
-| `extract` | one + up to three | `reasoning_effort(none)` | one call rewrites the plain requirement into allowed controlled-English sentences; `reason.pl` accepts the lines it can read, and the obligations derived from them go into the loop's prompt |
+| `extract` | one + up to three | `reasoning_effort(none)` | one call rewrites the plain requirement into allowed controlled-English sentences; `reason.pl` accepts the lines it can read, and the obligations derived from them go into the loop's prompt. The prompt names the task's read and print nouns and only the shapes that task can use |
 
 The loop is the reasoning this repository already trusts -- a compiler and
 tests -- not a second model. The contract mode adds the other half: rules
 over the parsed requirement produce obligations such as "read whole lines,
 not whitespace-separated words; a line may be empty" without spending a
 model reasoning token. The extract mode asks a model to write that
-contract; a line the controlled-English reader refuses is dropped, and a
-failed extraction leaves the plain requirement. A failed codegen attempt
-costs another prompt with the previous code and diagnostics, so either
-loop can lose to `high` when the first attempt fails.
+contract; its prompt names the task's read and print nouns, closes the noun
+list, and offers only the shapes the task can use. A line the
+controlled-English reader refuses is dropped, and a failed extraction
+leaves the plain requirement. A failed codegen attempt costs another prompt
+with the previous code and diagnostics, so either loop can lose to `high`
+when the first attempt fails.
 
 ## Files
 
@@ -78,38 +80,50 @@ after trimming trailing whitespace and final newlines.
 
 ```
 mode     tasks passed attempts prompt completion reasoning total cache_hit seconds
-high     7     7      7        943    9672       6636      10615 0         62.51
-loop     7     7      7        768    2773       0         3541  0         32.92
-contract 7     7      7        1398   3344       0         4742  0         35.78
-extract  7     7      15       4040   4513       0         8553  128       39.27
+high     7     7      7        943    11119      7740      12062 0         70.59
+loop     7     7      7        768    2984       0         3752  0         33.84
+contract 7     7      7        1398   3324       0         4722  0         34.35
+extract  7     7      14       3260   3664       0         6924  512       34.62
 ```
 
 All four modes solved every task. `loop` won this run because every
 codegen first attempt passed: the contract obligations added prompt tokens
-and bought nothing (4 742 against 3 541), and extraction added more still.
-`extract` made seven extraction calls and needed one `word_count` repair;
-its 15 attempts are 7 extraction calls and 8 codegen calls. It still beat
-`high` (8 553 against 10 615) but not `loop` or `contract`.
+and bought nothing (4 722 against 3 752), and extraction added more.
+`extract` made seven extraction calls and every codegen call passed on its
+first attempt; its 14 attempts are 7 extraction calls and 7 codegen calls.
+Its own rewrite still costs more than it saves: 6 924 against `loop`'s
+3 752 (84 % more) and `contract`'s 4 722 (47 % more), though it beats `high`
+(12 062).
+
+Tightening the prompt helped: the previous extraction run, with one
+all-purpose noun list and no required read/print lines, cost 8 553 tokens
+and 15 attempts, with one `word_count` repair. Naming the task's read and
+print nouns, closing the noun list, and offering only the shapes that task
+can use brought it to 6 924 and 14 attempts -- a 19 % cut, but not enough
+to beat a plain loop that passed first time.
 
 That ranking is not fixed. In an earlier three-mode run the loop needed
 repairs on calculator and LCS -- the LCS attempt used `scanf("%100s")`,
 which cannot read an empty line -- and the hand-written contract won,
 4 595 against 6 235. The benchmark exists to show both sides: the hand
 contract pays when a repair is likely, the plain loop pays when it is not,
-and the extractor currently pays for its own rewrite without making the
-first attempt reliable enough to earn it back. Tightening the extraction
-prompt, or validating and retrying its lines, is the next lever.
+and the extractor currently pays for its own rewrite. Its remaining cost is
+the seven extraction calls; a deterministic keyword-to-contract mapping, or
+extraction only when the plain requirement is ambiguous, is the next lever.
 
-`high` burned 6 636 reasoning tokens; every no-reasoning mode burned none.
+`high` burned 7 740 reasoning tokens; every no-reasoning mode burned none.
 
 ## Adding a task
 
-Add a `bench_task(Name, Spec, Cases)` clause and a
-`bench_requirement(Name, Sentences)` clause to `tasks.pl`. `Cases` is a
-list of `case(Input, Expected)`, both atoms; `Input` keeps its newlines,
-and `Expected` is compared after trailing whitespace and final newlines
-are trimmed. `Sentences` is the same requirement in the controlled English
-`library(reasoning/reason)` reads; `contract.pl` derives the contract
-mode's checklist from it, so a sentence the reader refuses breaks the
-`contract` mode. `high`, `loop` and `extract` use `Spec` alone; `extract`
-writes its own sentences from it. No Python is involved.
+Add a `bench_task(Name, Spec, Cases)` clause, a
+`bench_requirement(Name, Sentences)` clause, and a
+`bench_extract_nouns(Name, ReadNoun, PrintNoun, Nouns)` clause to
+`tasks.pl`. `Cases` is a list of `case(Input, Expected)`, both atoms;
+`Input` keeps its newlines, and `Expected` is compared after trailing
+whitespace and final newlines are trimmed. `Sentences` is the same
+requirement in the controlled English `library(reasoning/reason)` reads;
+`contract.pl` derives the contract mode's checklist from it. The extract
+mode reads `Spec`, names `ReadNoun` and `PrintNoun` in the required lines,
+and lets optional lines use `Nouns`; `bench_extract_extra_lines/2` adds a
+line the required set cannot say (`sum_even`'s `Every sum is even.`).
+`high`, `loop` and `extract` use `Spec` alone. No Python is involved.
