@@ -30,6 +30,7 @@ bench_gen_spec(EffortAtom, Spec0, PrevFile, DiagFile, Spec, Options) :-
     bench_config(provider, Provider),
     bench_config(model, Model),
     bench_config(base_url, BaseUrl),
+    bench_config(temperature, Temperature),
     (   EffortAtom == high
     ->  bench_config(high_effort, Effort)
     ;   bench_config(loop_effort, Effort)
@@ -37,6 +38,7 @@ bench_gen_spec(EffortAtom, Spec0, PrevFile, DiagFile, Spec, Options) :-
     Options = [provider(Provider),
                model(Model),
                base_url(BaseUrl),
+               temperature(Temperature),
                reasoning_effort(Effort)],
     (   PrevFile == '-'
     ->  Spec = Spec0

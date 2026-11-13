@@ -75,13 +75,14 @@ codegen_c(Spec,
 
 ## Benchmark
 
-`coding/bench/` measures DeepSeek's high reasoning against four
+`coding/bench/` measures DeepSeek's high reasoning against five
 no-reasoning verification loops on seven small C tasks: the requirement
 alone, the requirement with obligations derived from a hand-written
-controlled-English contract, obligations extracted from it by a model, and
-obligations derived from its keywords without a model. `coding/bench/run.sh`
-sets the colon-separated `COCOLOG_LIBRARY` and runs it; see its README for
-the modes, the token columns and a sample run.
+controlled-English contract, obligations extracted from it by a model,
+obligations derived from its keywords without a model, and obligations
+added only after a failed first attempt. `coding/bench/run.sh` sets the
+colon-separated `COCOLOG_LIBRARY` and runs it; see its README for the
+modes, the token columns and a sample run.
 
 ## Shape of a generator
 
