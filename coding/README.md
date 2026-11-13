@@ -21,7 +21,7 @@ loads `coding/options.pl` and hands its options to `llm_chat/3`.
 | `provider` | `anthropic` |
 | `model` | `claude-sonnet-4-5` |
 | `base_url` | `https://api.anthropic.com/v1/messages` |
-| `effort` (Anthropic) | `low` |
+| `effort` (Anthropic) | `none` |
 | `reasoning_effort` (OpenAI) | `none` |
 | `key_env` | `REASONING_API_KEY` |
 
@@ -43,7 +43,8 @@ A provider chosen only in the call keeps `library(llm)`'s endpoint and
 default model unless `model(M)` or `base_url(U)` is given too. The two
 effort names are per provider, because `library(llm)` treats `effort(L)`
 and `reasoning_effort(L)` as the same level and refuses two different
-ones. The key variable is `REASONING_API_KEY` unless `key_env(NAME)` names
+ones; both default to `none`, so a caller asks for reasoning explicitly.
+The key variable is `REASONING_API_KEY` unless `key_env(NAME)` names
 another. Further defaults are one more `codegen_default/2` fact; the
 generator fills them in unless the caller names the same key.
 
@@ -71,6 +72,13 @@ codegen_c(Spec,
            base_url('https://api.deepseek.com/v1/chat/completions')],
           Code).
 ```
+
+## Benchmark
+
+`coding/bench/` measures DeepSeek's high reasoning against the no-reasoning
+verify/repair loop on seven small C tasks. `coding/bench/run.sh` sets the
+colon-separated `COCOLOG_LIBRARY` and runs it; see its README for the modes,
+the token columns and a sample run.
 
 ## Shape of a generator
 

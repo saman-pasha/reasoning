@@ -4,9 +4,8 @@
 %%
 %% A requirement goes to a language model as a CONTRACT: C17, one complete
 %% program, no Markdown fences, no prose. The model is used with the
-%% effort defaults in `coding/options.pl' -- OpenAI's reasoning_effort is
-%% `none', Anthropic's effort is `low' -- so the thinking this repository
-%% does is not paid for twice.
+%% effort defaults in `coding/options.pl' -- both `none' -- so the
+%% thinking this repository does is not paid for twice.
 %%
 %% The library is tier 2 and lives in the cocolog checkout beside this
 %% repository, so run from the repository root with its PARENT on the
