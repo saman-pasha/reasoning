@@ -14,18 +14,38 @@ loads `coding/options.pl` and hands its options to `llm_chat/3`.
 
 ## Defaults
 
-`coding/options.pl` holds the defaults. The two effort names are per
-provider, because `library(llm)` treats `effort(L)` and
-`reasoning_effort(L)` as the same level and refuses two different ones:
+`coding/options.pl` holds the defaults:
 
-| provider | default | field sent |
-|---|---|---|
-| Anthropic | `low` | `output_config: {effort: "low"}` |
-| OpenAI | `none` | `reasoning_effort: "none"` |
+| key | default |
+|---|---|
+| `provider` | `anthropic` |
+| `model` | `claude-sonnet-4-5` |
+| `base_url` | `https://api.anthropic.com/v1/messages` |
+| `effort` (Anthropic) | `low` |
+| `reasoning_effort` (OpenAI) | `none` |
+| `key_env` | `REASONING_API_KEY` |
 
-A caller may override either name. Further defaults are one more
-`codegen_default/2` fact; the generator fills them in unless the caller
-names the same key.
+The provider, model and base URL are one setting; change the three facts
+together. For DeepSeek over its OpenAI-compatible endpoint:
+
+```prolog
+codegen_default(provider, openai).
+codegen_default(model, 'deepseek-flash').
+codegen_default(base_url, 'https://api.deepseek.com/v1/chat/completions').
+```
+
+A local OpenAI-compatible server uses the same shape with
+`http://127.0.0.1:8000/v1/chat/completions`. The URL is the full request
+endpoint, not only the host or the `/v1` root.
+
+`provider(P)`, `model(M)` and `base_url(U)` in a call override the facts.
+A provider chosen only in the call keeps `library(llm)`'s endpoint and
+default model unless `model(M)` or `base_url(U)` is given too. The two
+effort names are per provider, because `library(llm)` treats `effort(L)`
+and `reasoning_effort(L)` as the same level and refuses two different
+ones. The key variable is `REASONING_API_KEY` unless `key_env(NAME)` names
+another. Further defaults are one more `codegen_default/2` fact; the
+generator fills them in unless the caller names the same key.
 
 ## Run
 
@@ -33,14 +53,24 @@ From this repository's root, with its parent and the cocolog library on
 the path:
 
 ```sh
+export REASONING_API_KEY=...
 COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
     ../cocolog/cocolog -s coding/c/codegen.pl -- spec.txt out.c
 ```
 
-The key comes from the environment (`OPENAI_API_KEY`, `ANTHROPIC_API_KEY`,
-or whatever `llm_provider/3` names), never from this repository. A
-provider pointed at another endpoint -- DeepSeek, for example -- is
-registered with the same dynamic facts `library(llm)` documents.
+The key comes from the environment -- `REASONING_API_KEY` by default, or
+the variable named by `key_env(NAME)` -- never from this repository. The
+endpoint and model come from `coding/options.pl`; edit its three facts,
+or call `codegen_c/3` from a wrapper with `provider`, `model` and
+`base_url` overrides:
+
+```prolog
+codegen_c(Spec,
+          [provider(openai),
+           model('deepseek-flash'),
+           base_url('https://api.deepseek.com/v1/chat/completions')],
+          Code).
+```
 
 ## Shape of a generator
 
