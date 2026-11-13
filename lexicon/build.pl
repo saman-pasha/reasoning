@@ -1,7 +1,7 @@
-%% library/reasoning/lexicon/build.pl -- WordNet 3.0 to library/reasoning/lexicon/*.txt.
+%% lexicon/build.pl -- WordNet 3.0 to lexicon/*.txt.
 %%
-%%     ./cocolog -s library/reasoning/lexicon/build.pl -- --wordnet DIR [--out DIR] [--cap CLASS=N]...
-%%     sh tools/lexicon/build.sh                         the same, from the checkout root
+%%     ./cocolog -s lexicon/build.pl -- --wordnet DIR [--out DIR] [--cap CLASS=N]...
+%%     sh tools/lexicon/build.sh                         the same, from this repository's root
 %%
 %% THE LEXICON IS DATA, NOT SOURCE. library(reasoning/normalise) generates
 %% its sentences from files beside it, one class a file, and this writes
@@ -62,7 +62,7 @@
 
 main :-
     current_prolog_flag(argv, [_|Args]),
-    lx_options(Args, '/usr/share/wordnet', WN, 'library/reasoning/lexicon', Out, [], Caps),
+    lx_options(Args, '/usr/share/wordnet', WN, 'lexicon', Out, [], Caps),
     atom_concat(WN, '/cntlist.rev', Cnt),
     (   exists_file(Cnt)
     ->  true
