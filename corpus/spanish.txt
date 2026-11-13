@@ -1,0 +1,192 @@
+# library/reasoning/corpus/spanish.txt -- a Spanish lesson in the controlled English
+# library(reasoning/reason) reads, one sentence a line: the vocabulary as facts about
+# MENTIONED words (a word between quotation marks stands for itself), the grammar as
+# rules over the classes. library(reasoning/normalise) generates its lesson shapes from
+# the words in here, and library(reasoning/tagger) measures the shipped tagger on these
+# lines with their quotation marks taken off. It is the lesson test/translate.pl and
+# tutorials/library/46-translate.pl learn, kept here as DATA: nothing trains on a word
+# the tree does not hold. A line beginning # is a comment.
+Spanish is a language.
+The noun "casa" means "house".
+The noun "perro" means "dog".
+The noun "gato" means "cat".
+The noun "mesa" means "table".
+The noun "libro" means "book".
+The noun "pan" means "bread".
+The noun "huevo" means "egg".
+The noun "leche" means "milk".
+"leche" is feminine.
+The noun "ciudad" means "city".
+"ciudad" is feminine.
+The noun "amigo" means "friend".
+The noun "amiga" means "friend".
+The adjective "grande" means "big".
+The masculine adjective "rojo" means "red".
+The feminine adjective "roja" means "red".
+The masculine adjective "pequeño" means "small".
+The feminine adjective "pequeña" means "small".
+The verb "es" means "is".
+The verb "come" means "eats".
+The verb "lee" means "reads".
+The verb "tiene" means "has".
+The verb "vive" means "lives".
+The verb "ve" means "sees".
+The verb "da" means "gives".
+The verb "canta" means "sings".
+The masculine article "el" means "the".
+The feminine article "la" means "the".
+The masculine article "un" means "a".
+The feminine article "una" means "a".
+Every noun that ends in "a" is feminine.
+Every noun that does not end in "a" is masculine.
+Every adjective follows the noun.
+Every noun that ends in a vowel takes "s" in the plural.
+Every noun that ends in a consonant takes "es" in the plural.
+Every adjective that ends in a vowel takes "s" in the plural.
+Every article that ends in a vowel takes "s" in the plural.
+Every possessive that ends in a vowel takes "s" in the plural.
+"los" is the plural of "el".
+"unos" is the plural of "un".
+Every verb that ends in "e" takes "n" in the plural.
+"son" is the plural of "es".
+"viven" is the plural of "vive".
+"ven" is the plural of "ve".
+"dan" is the plural of "da".
+"cantan" is the plural of "canta".
+The word "no" means "not".
+The word "no" precedes the verb.
+The word "qué" means "what".
+The word "qué" means "which".
+The word "quién" means "who".
+The word "dónde" means "where".
+The word "cuándo" means "when".
+The mark "¿" begins the question.
+"comió" is the past of "come".
+"comieron" is the past of "comen".
+"leyó" is the past of "lee".
+"leyeron" is the past of "leen".
+"tenía" is the past of "tiene".
+"tenían" is the past of "tienen".
+"era" is the past of "es".
+"eran" is the past of "son".
+"vivió" is the past of "vive".
+"vivieron" is the past of "viven".
+"vio" is the past of "ve".
+"vieron" is the past of "ven".
+"dio" is the past of "da".
+"dieron" is the past of "dan".
+"cantó" is the past of "canta".
+"cantaron" is the past of "cantan".
+"ate" is the past of "eats".
+"read" is the past of "reads".
+"saw" is the past of "sees".
+"gave" is the past of "gives".
+"sang" is the past of "sings".
+Every verb that ends in "e" takes "rá" in the future.
+Every verb that ends in "a" takes "rá" in the future.
+"será" is the future of "es".
+"tendrá" is the future of "tiene".
+"vivirá" is the future of "vive".
+"comerán" is the plural of "comerá".
+"leerán" is the plural of "leerá".
+"serán" is the plural of "será".
+"tendrán" is the plural of "tendrá".
+"vivirán" is the plural of "vivirá".
+"verán" is the plural of "verá".
+"darán" is the plural of "dará".
+"cantarán" is the plural of "cantará".
+The auxiliary "ha" means "has".
+"han" is the plural of "ha".
+"he" is the first person of "ha".
+"has" is the second person of "ha".
+"hemos" is the first person of "han".
+"había" is the past of "ha".
+"habían" is the past of "han".
+The auxiliary "está" means "is".
+"están" is the plural of "está".
+"estoy" is the first person of "está".
+"estás" is the second person of "está".
+"estamos" is the first person of "están".
+"estaba" is the past of "está".
+"estaban" is the past of "están".
+"comido" is the participle of "come".
+"leído" is the participle of "lee".
+"tenido" is the participle of "tiene".
+"sido" is the participle of "es".
+"vivido" is the participle of "vive".
+"visto" is the participle of "ve".
+"dado" is the participle of "da".
+"cantado" is the participle of "canta".
+"eaten" is the participle of "eats".
+"seen" is the participle of "sees".
+"given" is the participle of "gives".
+"sung" is the participle of "sings".
+"como" is the first person of "come".
+"comes" is the second person of "come".
+"comemos" is the first person of "comen".
+"soy" is the first person of "es".
+"eres" is the second person of "es".
+"somos" is the first person of "son".
+"tengo" is the first person of "tiene".
+"tienes" is the second person of "tiene".
+"tenemos" is the first person of "tienen".
+"vivo" is the first person of "vive".
+"vives" is the second person of "vive".
+"vivimos" is the first person of "viven".
+"veo" is the first person of "ve".
+"ves" is the second person of "ve".
+"vemos" is the first person of "ven".
+"leo" is the first person of "lee".
+"canto" is the first person of "canta".
+"doy" is the first person of "da".
+"comí" is the first person of "comió".
+"comiste" is the second person of "comió".
+"comimos" is the first person of "comieron".
+"comeré" is the first person of "comerá".
+"comerás" is the second person of "comerá".
+"comeremos" is the first person of "comerán".
+"fui" is the first person of "era".
+"fuimos" is the first person of "eran".
+"seré" is the first person of "será".
+The pronoun "yo" means "I".
+The pronoun "tú" means "you".
+The pronoun "él" means "he".
+The pronoun "ella" means "she".
+The pronoun "nosotros" means "we".
+The pronoun "ellos" means "they".
+The pronoun "me" means "me".
+The pronoun "te" means "you".
+The pronoun "lo" means "him".
+The pronoun "la" means "her".
+The pronoun "lo" means "it".
+The pronoun "nos" means "us".
+The pronoun "los" means "them".
+The pronoun "le" means "him".
+The pronoun "él" means "him".
+The pronoun "ella" means "her".
+The pronoun "nosotros" means "us".
+The pronoun "ellos" means "them".
+Every pronoun precedes the verb.
+The pronoun "él" does not precede the verb.
+The possessive "mi" means "my".
+The possessive "tu" means "your".
+The possessive "su" means "his".
+The possessive "su" means "her".
+The masculine possessive "nuestro" means "our".
+The feminine possessive "nuestra" means "our".
+The preposition "en" means "in".
+The preposition "con" means "with".
+The preposition "a" means "to".
+The preposition "de" means "of".
+The word "a" precedes the person.
+"amigo" is a person.
+"amiga" is a person.
+"al" is the contraction of "a el".
+"del" is the contraction of "de el".
+The adverb "rápidamente" means "quickly".
+The adverb "bien" means "well".
+The adverb "hoy" means "today".
+The number "dos" means "two".
+The number "tres" means "three".
+The conjunction "y" means "and".
+The impersonal pronoun "se" means "one".

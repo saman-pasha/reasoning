@@ -1,0 +1,37 @@
+Lesson lines for words Apertium's bilingual dictionary does not carry, or
+carries with a meaning the translator cannot use.
+
+WHY THEY ARE NOT IN ../italian.txt AND ../spanish.txt, which is the whole
+point of this directory: those two files are the TAGGER's corpus. The
+generator draws its lesson shapes from them, so a line added there changes
+the training pairs, and `generated/' and `model.rows' must be regenerated
+with it -- which re-rolls every minority shape the network learned by luck.
+Four lines cost the adjective grid 0.60 -> 0.25 and a red test/tagger.pl.
+
+The vocabulary directory is NOT read by the generator. These lines are
+written at the HEAD of `../vocabulary/<language>.txt' by `../build.pl',
+before every dictionary line, so the translator gets the words, the first
+meaning of a word is the one written here, and the tagger sees nothing at
+all.
+
+One sentence a line, the same controlled English the reader already reads.
+
+eng-ita.dix and eng-spa.dix are the other half: ENTRIES in the bilingual
+dictionary's own shape, one a line, for a word the monolingual dictionary
+has with its paradigm and the bilingual one lacks -- `muovere', `sparire',
+`soccorritore' have every form in apertium-ita.ita.dix and no English. The
+builder reads them before the raw bilingual file, so every form comes out
+of the paradigm exactly as a dictionary word's does, where a line in
+italian.txt would have to state each form by hand. An entry marked r="RL"
+is read into English only and comes after every entry both ways; an entry
+both ways is the first meaning of its word and the first word for its
+meaning. Each file says which of its entries is which, and why.
+
+A line may state a CLASS as well as a word: `"gato" is animate.' is no word
+Apertium lacks but a fact it does not carry. WordNet's noun.person says which
+nouns are persons (`lexicon/class.txt', for `build.pl'); the animals, a
+hundred a language at the end of italian.txt and spanish.txt, are stated here,
+the nouns whose meaning in the vocabulary is `cat', `dog', `horse' and so on.
+A question phrase with a noun asks for the object when a doer stands after the
+verb and it is none (`¿Qué libro lee el gato?', fo_which_object/3 in
+translate.pl); an institution (`gobierno') is not stated, and is no doer.
