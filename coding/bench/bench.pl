@@ -5,7 +5,7 @@
 %%     COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
 %%         ../cocolog/cocolog -s coding/bench/bench.pl [-- task ...]
 %%
-%% Three modes per task:
+%% Four modes per task:
 %%
 %%     high      one call with reasoning_effort(high)
 %%     loop      up to three calls with reasoning_effort(none); after each
@@ -14,6 +14,9 @@
 %%     contract  the loop, with the obligation checklist contract.pl derives
 %%               from the task's controlled-English requirement added to
 %%               the prompt
+%%     extract   one extra reasoning_effort(none) call rewrites the plain
+%%               requirement into controlled English; the lines the reader
+%%               accepts give the obligations, then the loop runs
 %%
 %% The measurement is the provider's own usage: prompt, completion (which
 %% includes reasoning), reasoning, total, and prompt-cache hits. The code
@@ -25,6 +28,7 @@
 %% Anthropic default, so the modes differ in reasoning effort and prompt
 %% only.
 
+:- use_module(library(llm)).
 :- use_module(library(process)).
 :- use_module('coding/bench/config.pl').
 :- use_module('coding/bench/tasks.pl').
@@ -35,7 +39,9 @@
 %% ---- the provider under test -------------------------------------------
 %%
 %% bench_config/2 is coding/bench/config.pl's: DeepSeek's OpenAI-compatible
-%% endpoint, one model, high effort for one mode and none for the loop.
+%% endpoint, one model, high effort for the high mode and none for the
+%% others. The extract mode also calls it directly, so the parent points
+%% library(llm) at the same endpoint the children use.
 
 %% ---- the run -----------------------------------------------------------
 
@@ -46,6 +52,7 @@ main :-
     ;   format("REASONING_API_KEY is not set.~n", []),
         halt(1)
     ),
+    bench_llm_setup,
     bench_selected_tasks(Tasks),
     (   Tasks == []
     ->  format("no benchmark task named.~n", []),
@@ -78,6 +85,14 @@ bench_scratch(Dir) :-
     tmp_file(codegen_bench, Dir),
     make_directory(Dir).
 
+%% The parent's own model call is the extractor; it uses the same endpoint
+%% and key the child generators use.
+bench_llm_setup :-
+    bench_config(provider, Provider),
+    bench_config(base_url, BaseUrl),
+    retractall(llm_provider(Provider, _, _)),
+    assertz(llm_provider(Provider, BaseUrl, 'REASONING_API_KEY')).
+
 %% ---- one task, its modes -----------------------------------------------
 
 bench_task_modes(Task, Dir) :-
@@ -89,12 +104,13 @@ bench_task_modes(Task, Dir) :-
 bench_mode_order(Task, Modes) :-
     findall(T, bench_task(T, _, _), Tasks),
     bench_index(Tasks, Task, 1, Index),
-    Cycle is Index mod 3,
+    Cycle is Index mod 4,
     bench_mode_cycle(Cycle, Modes).
 
-bench_mode_cycle(1, [high, loop, contract]).
-bench_mode_cycle(2, [loop, contract, high]).
-bench_mode_cycle(0, [contract, high, loop]).
+bench_mode_cycle(1, [high, loop, contract, extract]).
+bench_mode_cycle(2, [loop, contract, extract, high]).
+bench_mode_cycle(3, [contract, extract, high, loop]).
+bench_mode_cycle(0, [extract, high, loop, contract]).
 
 bench_index([Task|_], Task, I, I) :- !.
 bench_index([_|Tasks], Task, I0, I) :-
@@ -104,12 +120,13 @@ bench_index([_|Tasks], Task, I0, I) :-
 bench_run_mode(Task, Mode, Dir) :-
     format("--- ~w / ~w ---~n", [Task, Mode]),
     bench_max_attempts(Mode, Max),
-    bench_mode_spec(Mode, Task, Spec),
+    bench_mode_spec(Mode, Task, Spec, Usage0, ExtraAttempts),
     get_time(T0),
-    bench_attempts(1, Max, Task, Mode, Spec, Dir, usage(0, 0, 0, 0, 0), none,
-                   Success, Attempts, Usage, LastDiag),
+    bench_attempts(1, Max, Task, Mode, Spec, Dir, Usage0, none,
+                   Success, Attempts0, Usage, LastDiag),
     get_time(T1),
     Seconds is T1 - T0,
+    Attempts is Attempts0 + ExtraAttempts,
     assertz(bench_result(Task, Mode, Success, Attempts, Usage, Seconds, LastDiag)),
     bench_print_result(Task, Mode, Success, Attempts, Usage, Seconds).
 
@@ -117,16 +134,21 @@ bench_max_attempts(high, 1) :- !.
 bench_max_attempts(contract, N) :-
     !,
     bench_config(loop_attempts, N).
+bench_max_attempts(extract, N) :-
+    !,
+    bench_config(loop_attempts, N).
 bench_max_attempts(loop, N) :-
     bench_config(loop_attempts, N).
 
 %% The contract mode adds the checklist derived by contract.pl to the
-%% plain requirement. high and loop get the requirement alone.
-bench_mode_spec(high, Task, Spec) :-
+%% plain requirement. high and loop get the requirement alone. extract
+%% spends one no-reasoning call rewriting the requirement into controlled
+%% English; its usage is returned so the loop's total carries it.
+bench_mode_spec(high, Task, Spec, usage(0, 0, 0, 0, 0), 0) :-
     bench_task(Task, Spec, _).
-bench_mode_spec(loop, Task, Spec) :-
+bench_mode_spec(loop, Task, Spec, usage(0, 0, 0, 0, 0), 0) :-
     bench_task(Task, Spec, _).
-bench_mode_spec(contract, Task, Full) :-
+bench_mode_spec(contract, Task, Full, usage(0, 0, 0, 0, 0), 0) :-
     bench_task(Task, Spec, _),
     bench_obligations(Task, Obligations),
     bench_obligation_lines(Obligations, Lines),
@@ -134,6 +156,65 @@ bench_mode_spec(contract, Task, Full) :-
     format(atom(Full),
            '~s~n~nObligations derived from a controlled-English contract:~n~s',
            [Spec, ObligationsText]).
+bench_mode_spec(extract, Task, Full, Usage, 1) :-
+    bench_task(Task, Spec, _),
+    bench_extract_contract(Task, Spec, Obligations, Usage, Error),
+    (   Error == none
+    ->  true
+    ;   format("extract warning: ~w~n", [Error])
+    ),
+    (   Obligations == []
+    ->  Full = Spec
+    ;   bench_obligation_lines(Obligations, Lines),
+        atomic_list_concat(Lines, '\n', ObligationsText),
+        format(atom(Full),
+               '~s~n~nObligations extracted from the requirement:~n~s',
+               [Spec, ObligationsText])
+    ).
+
+%% One extraction call. The reply is parsed by contract.pl; a line the
+%% controlled-English reader refuses is dropped. A failed call leaves the
+%% mode with the plain requirement and its usage at zero.
+bench_extract_contract(Task, Spec, Obligations, Usage, Error) :-
+    bench_extract_prompt(Task, Spec, Prompt),
+    bench_config(provider, Provider),
+    bench_config(model, Model),
+    catch(( llm_chat([msg(system,
+                          'You rewrite programming requirements into controlled English sentences. Output only sentences of the allowed shapes.'),
+                     msg(user, Prompt)],
+                    [provider(Provider), model(Model), reasoning_effort(none)],
+                    Reply),
+            bench_usage_now(Usage0),
+            bench_reply_obligations(Reply, _Parsed, Obligations0),
+            Usage = Usage0,
+            Obligations = Obligations0,
+            Error = none
+          ),
+          Ball,
+          ( Usage = usage(0, 0, 0, 0, 0),
+            Obligations = [],
+            bench_error_text(Ball, Error)
+          )).
+
+bench_usage_now(Usage) :-
+    (   catch(llm_last_usage(json(Pairs)), _, fail)
+    ->  bench_usage_pairs(Pairs, Usage)
+    ;   Usage = usage(0, 0, 0, 0, 0)
+    ).
+
+bench_usage_pairs(Pairs, usage(P, C, T, R, H)) :-
+    memberchk(prompt_tokens-P, Pairs),
+    memberchk(completion_tokens-C, Pairs),
+    memberchk(total_tokens-T, Pairs),
+    (   memberchk(completion_tokens_details-json(Details), Pairs),
+        memberchk(reasoning_tokens-R, Details)
+    ->  true
+    ;   R = 0
+    ),
+    (   memberchk(prompt_cache_hit_tokens-H, Pairs)
+    ->  true
+    ;   H = 0
+    ).
 
 %% ---- attempts, generation and verification -----------------------------
 
@@ -218,6 +299,7 @@ bench_prev_files(prev(CodeFile, DiagFile), CodeFile, DiagFile).
 
 bench_effort_atom(high, high) :- !.
 bench_effort_atom(contract, none) :- !.
+bench_effort_atom(extract, none) :- !.
 bench_effort_atom(loop, none).
 
 cocolog(Cocolog) :-
@@ -387,14 +469,16 @@ bench_report(Results, Tasks, Dir) :-
     bench_print_mode_totals(high, Results),
     bench_print_mode_totals(loop, Results),
     bench_print_mode_totals(contract, Results),
+    bench_print_mode_totals(extract, Results),
     format("~n===== all modes solved =====~n", []),
-    format("task high_total loop_total contract_total high_reasoning loop_reasoning contract_reasoning~n", []),
-    forall(member(Task, Tasks), bench_print_three(Task, Results)),
+    format("task high_total loop_total contract_total extract_total high_reasoning~n", []),
+    forall(member(Task, Tasks), bench_print_four(Task, Results)),
     format("~n===== per solved task =====~n", []),
     format("mode solved total tokens_per_solved~n", []),
     bench_print_per_solved(high, Results),
     bench_print_per_solved(loop, Results),
     bench_print_per_solved(contract, Results),
+    bench_print_per_solved(extract, Results),
     format("~nbenchmark files: ~s~n", [Dir]).
 
 bench_print_mode_totals(Mode, Results) :-
@@ -431,14 +515,18 @@ bench_sum_rows([row(P, C, T, R, H, Secs, Attempts, Succ)|Rest],
     H1 is H0 + H,
     Sec1 is Sec0 + Secs.
 
-bench_print_three(Task, Results) :-
+bench_print_four(Task, Results) :-
     bench_find_result(Task, high, Results,
-                      result(_, _, yes, _, usage(_, _, HT, HR, _), _, _)),
+                      result(_, _, yes, _, usage(_, _, HT, _, _), _, _)),
     bench_find_result(Task, loop, Results,
-                      result(_, _, yes, _, usage(_, _, LT, LR, _), _, _)),
+                      result(_, _, yes, _, usage(_, _, LT, _, _), _, _)),
     bench_find_result(Task, contract, Results,
-                      result(_, _, yes, _, usage(_, _, CT, CR, _), _, _)),
-    format("~w ~w ~w ~w ~w ~w ~w~n", [Task, HT, LT, CT, HR, LR, CR]).
+                      result(_, _, yes, _, usage(_, _, CT, _, _), _, _)),
+    bench_find_result(Task, extract, Results,
+                      result(_, _, yes, _, usage(_, _, ET, _, _), _, _)),
+    bench_find_result(Task, high, Results,
+                      result(_, _, yes, _, usage(_, _, _, HR, _), _, _)),
+    format("~w ~w ~w ~w ~w ~w~n", [Task, HT, LT, CT, ET, HR]).
 
 bench_find_result(Task, Mode, Results, Result) :-
     member(Result0, Results),

@@ -37,6 +37,71 @@ bench_obligation_lines(Obligations, Lines) :-
             ),
             Lines).
 
+%% bench_extract_prompt(+Task, +Spec, -Prompt)
+%%
+%% The prompt that asks a model for the controlled-English sentences.
+%% The noun list and the shapes are closed on purpose: a sentence outside
+%% them is dropped by bench_reply_obligations/3, and a loose prompt gives
+%% the reader more prose than contract.
+bench_extract_prompt(Task, Spec, Prompt) :-
+    bench_program_name(Task, Name),
+    format(atom(Prompt),
+'Rewrite this programming requirement as controlled-English sentences.
+Use ONLY these nouns: input, output, integers, line, words, commands, expression, sum, length, bracket, number, operator, parenthesis, verb, name, count, letter, subarray, subsequence.
+Use ONLY these sentence shapes, one per line:
+Every program has an input.
+Every program has an output.
+NAME reads the NOUN.
+NAME prints the NOUN.
+NAME sorts the NOUN.
+Every NOUN has a NOUN.
+NAME has a NOUN.
+Output only the sentences, no explanation.
+The program name is ~w.
+
+Requirement:
+~s',
+           [Name, Spec]).
+
+%% bench_reply_obligations(+Reply, -Parsed, -Obligations)
+%%
+%% Parse each line the extractor wrote. A line the controlled-English
+%% reader refuses is dropped, not fatal: the extractor is a model, and the
+%% reader is the judge. Parsed is the accepted Line-Terms pairs, for a
+%% caller that wants to show what survived.
+bench_reply_obligations(Reply, Parsed, Obligations) :-
+    split_string(Reply, "\n", " \t\r", Lines0),
+    exclude(contract_empty_string, Lines0, Lines1),
+    findall(LineAtom-Terms,
+            (   member(Line, Lines1),
+                atom_string(Line0, Line),
+                bench_clean_line(Line0, LineAtom),
+                LineAtom \== '',
+                catch(reason_text(LineAtom, Terms), _, fail)
+            ),
+            Parsed),
+    findall(Priority-Text,
+            (   member(_-Terms, Parsed),
+                member(Term, Terms),
+                bench_obligation(Term, Priority, Text)
+            ),
+            Pairs),
+    keysort(Pairs, Sorted),
+    bench_unique_obligations(Sorted, Obligations).
+
+%% The model sometimes writes a bullet even when asked for sentences.
+bench_clean_line(Line, Clean) :-
+    (   sub_atom(Line, 0, 2, _, '- ')
+    ->  sub_atom(Line, 2, _, 0, Clean)
+    ;   Clean = Line
+    ).
+
+contract_empty_string(S) :-
+    (   string(S)
+    ->  string_length(S, 0)
+    ;   S == ''
+    ).
+
 %% A universal sentence parses to (Head :- Body); a fact is its own head.
 bench_obligation(Term, Priority, Text) :-
     bench_term_head(Term, Head),
