@@ -1,0 +1,10 @@
+# the raw dictionaries tools/corpus/fetch.sh downloads; what corpus/build.pl
+# writes from them is committed
+corpus/raw/
+
+# macOS
+.DS_Store
+
+# python bytecode, from tools/corpus/fetch.sh's converter
+__pycache__/
+*.pyc

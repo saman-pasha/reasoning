@@ -1,4 +1,4 @@
-# library/reasoning
+# reasoning
 
 Everything of the reasoning task lives here, and it is loaded with the
 directory in the name:
@@ -7,6 +7,14 @@ directory in the name:
     :- use_module(library(reasoning/normalise)).
     :- use_module(library(reasoning/tagger)).
 
+This repository is that directory. Put its PARENT on the library path, so
+that `library(reasoning/reason)` finds `reason.pl` here:
+
+    COCOLOG_LIBRARY="$(dirname "$PWD")${COCOLOG_LIBRARY:+:$COCOLOG_LIBRARY}" \
+        ../cocolog/cocolog -s tutorials/library/43-reason.pl
+
+`sh run-tests.sh` sets the same path and runs the four cases below.
+
 | file | what |
 |---|---|
 | `reason.pl` | a paragraph of controlled English in, predicates out -- and, optionally, typed prose in through the shipped tagger (`reason_prose/2`, `reason_ask_prose/2`, loaded on first use): facts, `neg/1` facts, rules, a quantity as a VALUE (`500 euros` is `quantity(500, euros)`, `The rent is 500 euros` an `amount/2`), and a question as a GOAL with a variable where `who`, `what`, `where` or `how much` stood; `truth/2`, four-valued; `reason_ask/2`, a question answered with the fact, the rule or the denial it rests on, and `reason_ask/3` with the EXPLANATION beside it -- `reason_explanation/2`, the whole proof in sentences, every level of it, which a `Why ...?` question answers as `because(Text)`; `reason_concepts/2`, what a text mentions, ranked, and `reason_topics/2` and `reason_outline/2`, what it is ABOUT as an outline by topic with the sub-topics under each -- `Kh8, a king: black; occupies H8; may move to G8, G7 and H7.`; `reason_refused/2`, which sentence would not parse; a word in quotation marks is MENTIONED (`"casa" means "house"` is `mean(casa, house)`, `the noun "casa"` says what it is), a relative clause takes a verb, `is the NOUN of X` is the relation the noun names, `end_in/2` is the library's so that a rule over letters runs (`ends in a vowel` included), and `reason_learn/1` reads and asserts |
@@ -14,26 +22,27 @@ directory in the name:
 | `normalise.pl` | the training data for the network: the grammar's fifty-five shapes as a generator with gold tags, thirteen noise transforms that carry the tags, and the assembler the round trip holds them to -- over the lexicon files in `lexicon/` and the lessons in `corpus/`, read as needed and never written into the code. Ten of the shapes are a LESSON's, about mentioned words (`The noun "casa" means "house"`, `Every noun that ends in "a" is feminine`), and their tag M is the one the assembler writes something for: the quotation marks, so that `The noun casa means house` typed bare comes back as the lesson's own line (`normalise_bare/2` is the typing) |
 | `lexicon/` | the words, one class a file: 2500 census first names and some seventeen thousand WordNet words ranked by use for the generator (`unit.txt` the four hundred a number counts, WordNet's units of measurement and of time; `language.txt` a hundred and fifty languages, for `Spanish is a language` and the `in Spanish` the normaliser drops), and in `known_*.txt` every SemCor-counted noun, verb, adjective and adverb for the tagger's judge; `SOURCES.md` says where each came from, and `lexicon/build.pl` writes every file but the names from a WordNet 3.0 `dict` directory; `prose.txt` is eight thousand of WordNet's own example sentences, which nothing trains on and `tagger_refused/4` measures against |
 | `generated/` | the training data, as DATA: `training.txt`, the 32768 pairs the shipped model was fitted to, and `evaluation.txt`, the 300 it is measured on -- one `pair(...)` term a line, written by `generate.pl` and read back by `normalise_load/2`; committed, because a seed is not data once a shape or a lexicon line moves under it |
-| `generate.pl` | the program that writes `generated/`: `cocolog -s library/reasoning/generate.pl`, which `tools/tagger/train.sh` runs first |
+| `generate.pl` | the program that writes `generated/`: `cocolog -s generate.pl`, which `tools/tagger/train.sh` runs first |
 | `train.pl` | the program that trains the shipped tagger on `generated/training.txt` into the knowledge base and measures it -- unseen pairs, real prose refused, the lessons typed bare -- which `tools/tagger/train.sh` runs over a scratch store and exports from |
 | `corpus/` | the lessons, as DATA: `spanish.txt` and `italian.txt`, the two lessons `test/translate.pl` learns, one sentence a line in the controlled English. The lesson shapes' words -- the mentioned words, the classes said of them, the adjectives, the forms, the relations and the class atoms -- are read out of these lines by pattern, so that no word of a lesson lives in the code, and `tagger_lessons/4` measures the shipped tagger on the lines typed bare. Its README says what to add and where |
 | `corpus/vocabulary/` | the vocabulary of each lesson, WRITTEN by `corpus/build.pl` out of Apertium's dictionaries and committed: `spanish.txt`, some eighty thousand lesson lines, and `italian.txt`, some sixty thousand -- every noun with its gender and plural, every adjective in its forms, every verb in sixteen, the persons, an English past -ed cannot make -- in the shapes the hand-written lessons use, so the same reader and the same translator serve. `tools/corpus/fetch.sh` fetches the raw dictionaries (not committed) and `test/translate.pl` rebuilds the Spanish file from them byte for byte |
-| `teach.pl` | the program that learns a language's lessons -- the grammar, then the vocabulary, in chunks -- into the knowledge base: `cocolog --embed KB -s library/reasoning/teach.pl -- spanish`, four minutes once, and every later process over the store starts taught. A SECOND ARGUMENT NAMES THE LESSON (`-- spanish spanish`), which is how two languages share one store: learned under names they share nothing, and the IR then translates between them |
-| `page.pl` | the program that translates a file sentence by sentence over a taught store, marking what it refuses with the words no lesson knows: `cocolog --embed KB -s library/reasoning/page.pl -- page.txt [INTO [FROM]]`; naming both takes the page from one language to the other through the IR, with no English sentence written |
+| `teach.pl` | the program that learns a language's lessons -- the grammar, then the vocabulary, in chunks -- into the knowledge base: `cocolog --embed KB -s teach.pl -- spanish`, four minutes once, and every later process over the store starts taught. A SECOND ARGUMENT NAMES THE LESSON (`-- spanish spanish`), which is how two languages share one store: learned under names they share nothing, and the IR then translates between them |
+| `page.pl` | the program that translates a file sentence by sentence over a taught store, marking what it refuses with the words no lesson knows: `cocolog --embed KB -s page.pl -- page.txt [INTO [FROM]]`; naming both takes the page from one language to the other through the IR, with no English sentence written |
 | `model.rows` | the SHIPPED tagger: the model's rows as `tagger_export/2` writes them, eight thousand lines, which `tagger_pretrained/1` consults as a module when the knowledge base a program proves against holds no model named `tagger` of its own -- so a `--local` program reads prose with no training and no store; `sh tools/tagger/train.sh` writes it (`generate.pl`, then `train.pl`), three minutes with libtorch |
 | `tagger.pl` | the network: a tagger over library(tensor_expr) -- two embeddings, a GRU each way, a linear head -- trained on `normalise.pl`'s pairs and saved into the knowledge base; `tagger_normalise/4` takes prose to `reason.pl`'s terms, `tagger_ask/3` answers a typed question (`tagger_ask/4` with the explanation beside it), `tagger_pretrained/1` loads the model the knowledge base keeps or the shipped one, `tagger_evaluate/4` measures it on sentences training never saw, `tagger_refused/4` on sentences it must not read and `tagger_lessons/4` on the corpus's lessons typed bare; a tagging the lexicon contradicts (`tagger_sane/2`, eleven rules -- a quoted word is M and nothing else, and a sentence about a word is related only by a verb some lesson uses) comes back X, outside, which the assembler refuses. Needs library(torch) to train or tag; its pure half loads anywhere |
 
 The suite case for each is `test/reason.pl`, `test/normalise.pl`,
-`test/tagger.pl` and `test/translate.pl`, and the lesson `tutorials/library/43-reason.pl`,
-`44-normalise.pl`, `45-tagger.pl` and `46-translate.pl`. They
-stay where the runners look -- `test/run.pl` takes `test/*.pl` and
-`test/tutorials.pl` takes `tutorials/*/*.pl` -- because a case under
-`library/` is a case nobody runs.
+`test/tagger.pl` and `test/translate.pl`, and the lessons are
+`tutorials/library/43-reason.pl`, `44-normalise.pl`, `45-tagger.pl` and
+`46-translate.pl`. `test/prelude.pl` is cocolog's case harness, copied here
+so the four cases run without a cocolog checkout's `test/` beside them; run
+them with `sh run-tests.sh` (or `cocolog -s test/<case>.pl` from this
+repository's root, with its parent on `$COCOLOG_LIBRARY`).
 
 The library has a version of its own, which is not cocolog's:
 `reason_version/1` answers it as an atom (`X.Y.Z`) and `reason_version/3` as
 the three integers a program compares, from one fact at the top of
-`reason.pl`. A change to anything in this directory -- the code, `corpus/`,
+`reason.pl`. A change to anything in this repository -- the code, `corpus/`,
 `lexicon/`, `generated/`, `model.rows` -- moves that number in the same
 commit, and `cocolog --version` stays unless the binary or another library
 changed too. CLAUDE.md, under The version, has the rules.
