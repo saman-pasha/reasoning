@@ -6,10 +6,11 @@
 %%
 %% THE TWO EFFORT NAMES ARE PER PROVIDER. `library(llm)' treats
 %% `effort(L)' and `reasoning_effort(L)' as the same level under two names
-%% and refuses two different levels in one request. So the default here is
-%% the provider's own field:
+%% and refuses two different levels in one request. Both defaults are
+%% `none': the generator spends no reasoning tokens unless a caller asks
+%% for them. The provider's own field is used:
 %%
-%%     Anthropic    effort(low)
+%%     Anthropic    effort(none)
 %%     OpenAI       reasoning_effort(none)
 %%
 %% A caller may override either name; codegen_options/2 rewrites it to the
@@ -38,14 +39,15 @@
 %%                 'http://127.0.0.1:8000/v1/chat/completions'.
 %%
 %% DeepSeek's Anthropic-compatible endpoint is
-%% 'https://api.deepseek.com/anthropic/v1/messages'; its effort default is
-%% `low' there, so pass effort(none) in the call (or set
-%% `codegen_default(effort, none)') to turn its reasoning off.
+%% 'https://api.deepseek.com/anthropic/v1/messages'; the facts below
+%% already send effort(none), so its reasoning is off there too. Raise
+%% `effort' in a call (or in `codegen_default(effort, ...)') to turn it
+%% on.
 
 codegen_default(provider, anthropic).
 codegen_default(model, 'claude-sonnet-4-5').
 codegen_default(base_url, 'https://api.anthropic.com/v1/messages').
-codegen_default(effort, low).
+codegen_default(effort, none).
 codegen_default(reasoning_effort, none).
 codegen_default(key_env, 'REASONING_API_KEY').
 
