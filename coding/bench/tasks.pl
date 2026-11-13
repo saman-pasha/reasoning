@@ -118,3 +118,74 @@ bench_lines([Line], Line) :- !.
 bench_lines([Line|Lines], Text) :-
     bench_lines(Lines, Rest),
     atomic_list_concat([Line, '\n', Rest], Text).
+
+%% ---- the controlled-English contract ----------------------------------
+%%
+%% bench_requirement(+Name, -Sentences) is the same requirement in the
+%% controlled English library(reasoning/reason) reads. coding/bench/
+%% contract.pl parses these sentences and derives the obligations the
+%% `contract' mode adds to the prompt. A sentence this reader refuses is
+%% a broken contract, not a hint: keep each one in the shapes it reads
+%% (`Every X has a Y.', `Name reads the Y.', `Name prints the Y.').
+
+bench_requirement(sum_even, [
+    'Every program has an input.',
+    'Every program has an output.',
+    'SumEven reads the integers.',
+    'SumEven prints the sum.',
+    'Every sum is even.'
+]).
+
+bench_requirement(max_subarray, [
+    'Every program has an input.',
+    'Every program has an output.',
+    'MaxSubarray has a subarray.',
+    'MaxSubarray reads the integers.',
+    'MaxSubarray prints the sum.'
+]).
+
+bench_requirement(balanced, [
+    'Every program has an input.',
+    'Every program has an output.',
+    'Balanced reads the line.',
+    'Every line has a bracket.',
+    'Every line has a length.'
+]).
+
+bench_requirement(word_count, [
+    'Every program has an input.',
+    'Every program has an output.',
+    'WordCount reads the words.',
+    'WordCount prints the words.',
+    'WordCount sorts the words.',
+    'Every word has a letter.',
+    'Every word has a count.'
+]).
+
+bench_requirement(phonebook, [
+    'Every program has an input.',
+    'Every program has an output.',
+    'Phonebook reads the commands.',
+    'Every command has a verb.',
+    'Every command has a name.',
+    'Every name has a number.'
+]).
+
+bench_requirement(calculator, [
+    'Every program has an input.',
+    'Every program has an output.',
+    'Calculator reads the expression.',
+    'Every expression has a number.',
+    'Every expression has an operator.',
+    'Every expression has a parenthesis.'
+]).
+
+bench_requirement(lcs, [
+    'Every program has an input.',
+    'Every program has an output.',
+    'Lcs reads the first line.',
+    'Lcs reads the second line.',
+    'Lcs has a subsequence.',
+    'Lcs prints the length.',
+    'Every line has a length.'
+]).

@@ -5,25 +5,30 @@
 %%     COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
 %%         ../cocolog/cocolog -s coding/bench/bench.pl [-- task ...]
 %%
-%% Two modes per task:
+%% Three modes per task:
 %%
-%%     high   one call with reasoning_effort(high)
-%%     loop   up to three calls with reasoning_effort(none); after each
-%%            the code is compiled with clang and run on the task's cases,
-%%            and the compiler/test report goes back with the next call
+%%     high      one call with reasoning_effort(high)
+%%     loop      up to three calls with reasoning_effort(none); after each
+%%               the code is compiled with clang and run on the task's cases,
+%%               and the compiler/test report goes back with the next call
+%%     contract  the loop, with the obligation checklist contract.pl derives
+%%               from the task's controlled-English requirement added to
+%%               the prompt
 %%
 %% The measurement is the provider's own usage: prompt, completion (which
 %% includes reasoning), reasoning, total, and prompt-cache hits. The code
 %% is generated in a child cocolog (coding/bench/gen.pl) so this file's
 %% main/0 is the only main/0 the benchmark process sees.
 %%
-%% The provider, model and endpoint are the benchmark's own facts below.
+%% The provider, model, endpoint and efforts are coding/bench/config.pl's.
 %% They are DeepSeek's OpenAI-compatible endpoint, not coding/options.pl's
-%% Anthropic default, so the two modes differ in reasoning effort alone.
+%% Anthropic default, so the modes differ in reasoning effort and prompt
+%% only.
 
 :- use_module(library(process)).
 :- use_module('coding/bench/config.pl').
 :- use_module('coding/bench/tasks.pl').
+:- use_module('coding/bench/contract.pl').
 
 :- dynamic bench_result/7.
 
@@ -84,10 +89,12 @@ bench_task_modes(Task, Dir) :-
 bench_mode_order(Task, Modes) :-
     findall(T, bench_task(T, _, _), Tasks),
     bench_index(Tasks, Task, 1, Index),
-    (   Index mod 2 =:= 1
-    ->  Modes = [high, loop]
-    ;   Modes = [loop, high]
-    ).
+    Cycle is Index mod 3,
+    bench_mode_cycle(Cycle, Modes).
+
+bench_mode_cycle(1, [high, loop, contract]).
+bench_mode_cycle(2, [loop, contract, high]).
+bench_mode_cycle(0, [contract, high, loop]).
 
 bench_index([Task|_], Task, I, I) :- !.
 bench_index([_|Tasks], Task, I0, I) :-
@@ -97,7 +104,7 @@ bench_index([_|Tasks], Task, I0, I) :-
 bench_run_mode(Task, Mode, Dir) :-
     format("--- ~w / ~w ---~n", [Task, Mode]),
     bench_max_attempts(Mode, Max),
-    bench_task(Task, Spec, _),
+    bench_mode_spec(Mode, Task, Spec),
     get_time(T0),
     bench_attempts(1, Max, Task, Mode, Spec, Dir, usage(0, 0, 0, 0, 0), none,
                    Success, Attempts, Usage, LastDiag),
@@ -107,8 +114,26 @@ bench_run_mode(Task, Mode, Dir) :-
     bench_print_result(Task, Mode, Success, Attempts, Usage, Seconds).
 
 bench_max_attempts(high, 1) :- !.
+bench_max_attempts(contract, N) :-
+    !,
+    bench_config(loop_attempts, N).
 bench_max_attempts(loop, N) :-
     bench_config(loop_attempts, N).
+
+%% The contract mode adds the checklist derived by contract.pl to the
+%% plain requirement. high and loop get the requirement alone.
+bench_mode_spec(high, Task, Spec) :-
+    bench_task(Task, Spec, _).
+bench_mode_spec(loop, Task, Spec) :-
+    bench_task(Task, Spec, _).
+bench_mode_spec(contract, Task, Full) :-
+    bench_task(Task, Spec, _),
+    bench_obligations(Task, Obligations),
+    bench_obligation_lines(Obligations, Lines),
+    atomic_list_concat(Lines, '\n', ObligationsText),
+    format(atom(Full),
+           '~s~n~nObligations derived from a controlled-English contract:~n~s',
+           [Spec, ObligationsText]).
 
 %% ---- attempts, generation and verification -----------------------------
 
@@ -192,6 +217,7 @@ bench_prev_files(none, '-', '-') :- !.
 bench_prev_files(prev(CodeFile, DiagFile), CodeFile, DiagFile).
 
 bench_effort_atom(high, high) :- !.
+bench_effort_atom(contract, none) :- !.
 bench_effort_atom(loop, none).
 
 cocolog(Cocolog) :-
@@ -360,13 +386,15 @@ bench_report(Results, Tasks, Dir) :-
     format("mode tasks passed attempts prompt completion reasoning total cache_hit seconds~n", []),
     bench_print_mode_totals(high, Results),
     bench_print_mode_totals(loop, Results),
-    format("~n===== both solved =====~n", []),
-    format("task high_total loop_total high_reasoning loop_reasoning~n", []),
-    forall(member(Task, Tasks), bench_print_both(Task, Results)),
+    bench_print_mode_totals(contract, Results),
+    format("~n===== all modes solved =====~n", []),
+    format("task high_total loop_total contract_total high_reasoning loop_reasoning contract_reasoning~n", []),
+    forall(member(Task, Tasks), bench_print_three(Task, Results)),
     format("~n===== per solved task =====~n", []),
     format("mode solved total tokens_per_solved~n", []),
     bench_print_per_solved(high, Results),
     bench_print_per_solved(loop, Results),
+    bench_print_per_solved(contract, Results),
     format("~nbenchmark files: ~s~n", [Dir]).
 
 bench_print_mode_totals(Mode, Results) :-
@@ -403,12 +431,14 @@ bench_sum_rows([row(P, C, T, R, H, Secs, Attempts, Succ)|Rest],
     H1 is H0 + H,
     Sec1 is Sec0 + Secs.
 
-bench_print_both(Task, Results) :-
+bench_print_three(Task, Results) :-
     bench_find_result(Task, high, Results,
                       result(_, _, yes, _, usage(_, _, HT, HR, _), _, _)),
     bench_find_result(Task, loop, Results,
                       result(_, _, yes, _, usage(_, _, LT, LR, _), _, _)),
-    format("~w ~w ~w ~w ~w~n", [Task, HT, LT, HR, LR]).
+    bench_find_result(Task, contract, Results,
+                      result(_, _, yes, _, usage(_, _, CT, CR, _), _, _)),
+    format("~w ~w ~w ~w ~w ~w ~w~n", [Task, HT, LT, CT, HR, LR, CR]).
 
 bench_find_result(Task, Mode, Results, Result) :-
     member(Result0, Results),
