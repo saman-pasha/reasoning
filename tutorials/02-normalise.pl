@@ -1,12 +1,12 @@
-%% cocolog tutorial 44 -- library(reasoning/normalise): the grammar as a data generator, and the tags that undo the noise.
+%% reasoning tutorial 02 -- library(reasoning/normalise): the grammar as a data generator, and the tags that undo the noise.
 %%
 %% TIER 2: `use_module(library(reasoning/normalise))', from normalise.pl. Clauses only,
 %% and it needs nothing but library(reasoning/reason).
 %%
-%%     cocolog -s tutorials/44-normalise.pl
+%%     cocolog -s tutorials/02-normalise.pl
 %%
 %% THE PROBLEM THIS SOLVES. library(reasoning/reason) reads a controlled English and
-%% refuses everything else -- tutorial 43 ends on a list of ordinary
+%% refuses everything else -- tutorial 01 ends on a list of ordinary
 %% sentences it will not read. The road from typed prose to that grammar
 %% is a network that labels every token: subject, relation, object, or
 %% noise. Prolog then rebuilds the sentence in the grammar's shapes and

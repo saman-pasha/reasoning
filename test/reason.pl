@@ -662,7 +662,7 @@ prose :-
     %% existence_error(tagger, pretrained), which the header names and the
     %% branch below catches -- not torch's own existence_error for a tensor
     %% predicate, which it raised through 1.8.55 and which took this case and
-    %% lesson 43 red on every box without torch. Asked of the module itself,
+    %% lesson 01 red on every box without torch. Asked of the module itself,
     %% which may be beside the binary, on the path or compiled in.
     (   catch(use_module(library(torch)), _, fail)
     ->  true

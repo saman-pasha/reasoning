@@ -229,7 +229,7 @@
 %% which is memorising), 16384 read 0.987 and 32768 read 0.993 in 140
 %% seconds. A corpus too large to memorise is what makes a tagger
 %% generalise, and the steps and not the pairs are what a training costs.
-%% The lesson is tutorials/45-tagger.pl.
+%% The lesson is tutorials/03-tagger.pl.
 
 :- use_module(library(torch)).
 :- use_module(library(tensor_expr)).

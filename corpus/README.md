@@ -8,7 +8,7 @@ between quotation marks is MENTIONED and stands for itself, so `The noun
 
 | file | what |
 |---|---|
-| `spanish.txt` | the Spanish lesson of `test/translate.pl` and `tutorials/46-translate.pl`: 183 lines, the vocabulary as facts about words, the grammar as rules over the classes -- the auxiliary of the progressive (`The auxiliary "está" means "is"`) among them, because a vocabulary cannot say which `is` it is |
+| `spanish.txt` | the Spanish lesson of `test/translate.pl` and `tutorials/04-translate.pl`: 183 lines, the vocabulary as facts about words, the grammar as rules over the classes -- the auxiliary of the progressive (`The auxiliary "está" means "is"`) among them, because a vocabulary cannot say which `is` it is |
 | `italian.txt` | the Italian lesson learned beside it under its own name: 130 lines -- the articles, the copula and the two auxiliaries in their forms, the negation, the question words, the pronouns, the possessives, the prepositions and their contractions |
 | `vocabulary/spanish.txt` | the VOCABULARY, written by `build.pl` and never by hand: some 127 000 lesson lines in the same shapes -- 22 000 words with their genders, plurals, persons and every verb's forms (the conditional, the infinitive and the gerund since 1.2.43, the participle in its four forms since 1.6.1, the subjunctive since 1.6.8, the imperative since 1.6.10), the modals, the demonstratives, the determiners and the pronouns that stand alone, the numbers, and `hay` as `there is` -- out of Apertium's dictionaries |
 | `vocabulary/italian.txt` | the same for Italian, some 98 000 lines |
