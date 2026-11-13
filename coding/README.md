@@ -75,10 +75,11 @@ codegen_c(Spec,
 
 ## Benchmark
 
-`coding/bench/` measures DeepSeek's high reasoning against two
-no-reasoning verification loops on seven small C tasks: one with the
-requirement alone, and one with obligations derived from a
-controlled-English contract. `coding/bench/run.sh` sets the
+`coding/bench/` measures DeepSeek's high reasoning against three
+no-reasoning verification loops on seven small C tasks: the requirement
+alone, the requirement with obligations derived from a hand-written
+controlled-English contract, and the requirement with obligations
+extracted from it by a model. `coding/bench/run.sh` sets the
 colon-separated `COCOLOG_LIBRARY` and runs it; see its README for the modes,
 the token columns and a sample run.
 

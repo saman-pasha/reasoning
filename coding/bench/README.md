@@ -1,24 +1,28 @@
 # coding/bench
 
 A DeepSeek code-generation benchmark: paying for the model's reasoning up
-front, a deterministic verification loop, and a loop whose prompt carries
-obligations derived from a controlled-English contract.
+front, a deterministic verification loop, a loop whose prompt carries
+obligations from a hand-written controlled-English contract, and a loop
+whose obligations are extracted from the plain requirement by the model.
 
-## The three modes
+## The four modes
 
 | mode | calls | effort | what happens |
 |---|---|---|---|
 | `high` | one | `reasoning_effort(high)` | the model gets the requirement and must return working C |
 | `loop` | up to three | `reasoning_effort(none)` | after each call the code is compiled with `clang -std=c17 -Wall -Wextra -O0` and run on the task's cases; the compiler/test report and the previous program go back with the next call |
-| `contract` | up to three | `reasoning_effort(none)` | the loop, with an obligation checklist added to the prompt. The checklist is derived by `contract.pl` from the task's sentences in the controlled English `library(reasoning/reason)` reads |
+| `contract` | up to three | `reasoning_effort(none)` | the loop, with an obligation checklist added to the prompt. The checklist is derived by `contract.pl` from the task's hand-written sentences in the controlled English `library(reasoning/reason)` reads |
+| `extract` | one + up to three | `reasoning_effort(none)` | one call rewrites the plain requirement into allowed controlled-English sentences; `reason.pl` accepts the lines it can read, and the obligations derived from them go into the loop's prompt |
 
 The loop is the reasoning this repository already trusts -- a compiler and
 tests -- not a second model. The contract mode adds the other half: rules
 over the parsed requirement produce obligations such as "read whole lines,
 not whitespace-separated words; a line may be empty" without spending a
-model reasoning token. A failed attempt costs another prompt that contains
-the previous code and the diagnostics, so either loop can lose to `high`
-when the first attempt fails.
+model reasoning token. The extract mode asks a model to write that
+contract; a line the controlled-English reader refuses is dropped, and a
+failed extraction leaves the plain requirement. A failed codegen attempt
+costs another prompt with the previous code and diagnostics, so either
+loop can lose to `high` when the first attempt fails.
 
 ## Files
 
@@ -27,8 +31,8 @@ when the first attempt fails.
 | `bench.pl` | the runner, the task modes and the report |
 | `gen.pl` | one generator call, run as a child `cocolog` so codegen's `main/0` is never called here |
 | `config.pl` | the provider, model, endpoint, efforts and loop cap both scripts use |
-| `contract.pl` | parses the controlled-English requirements and derives the obligations |
-| `tasks.pl` | seven requirements, their controlled-English contracts and stdin/stdout cases |
+| `contract.pl` | parses the controlled-English contracts, derives the obligations, and holds the extractor's prompt and line parser |
+| `tasks.pl` | seven requirements, their hand-written contracts and stdin/stdout cases |
 | `run.sh` | sets `COCOLOG_LIBRARY` and runs `bench.pl` |
 
 ## Run
@@ -46,8 +50,8 @@ checkout's `library/`, and any value the variable already had.
 
 The provider, model and endpoint are `coding/bench/config.pl`'s facts:
 DeepSeek's OpenAI-compatible endpoint, `deepseek-flash`, `high` for the
-`high` mode and `none` for `loop` and `contract`. `loop_attempts` is the
-cap (three).
+`high` mode and `none` for `loop`, `contract` and `extract`.
+`loop_attempts` is the cap (three).
 
 Each run prints the temporary directory holding every attempt's `.spec.txt`,
 `.c`, `.out` and `.diag.txt`, then a line per task/mode and the totals.
@@ -74,26 +78,29 @@ after trimming trailing whitespace and final newlines.
 
 ```
 mode     tasks passed attempts prompt completion reasoning total cache_hit seconds
-high     7     7      7        943    10571      7510      11514 0         70.33
-loop     7     7      9        2274   3961       0         6235  128       61.33
-contract 7     7      7        1398   3197       0         4595  0         35.54
+high     7     7      7        943    9672       6636      10615 0         62.51
+loop     7     7      7        768    2773       0         3541  0         32.92
+contract 7     7      7        1398   3344       0         4742  0         35.78
+extract  7     7      15       4040   4513       0         8553  128       39.27
 ```
 
-The contract mode used 60 % fewer tokens than `high` (4 595 against
-11 514) and 26 % fewer than `loop` (4 595 against 6 235), and about half
-`high`'s wall time. All seven contract calls passed on the first attempt.
-The loop did not: its calculator attempt failed once, and its LCS attempt
-used `scanf("%100s")`, which returns no second string on an empty line.
-Those two repairs cost 2 458 and 980 tokens; the contract mode's
-first-attempt totals for the same tasks were 718 and 561. The obligations
-that catch these are the line's length and the empty-line rule.
+All four modes solved every task. `loop` won this run because every
+codegen first attempt passed: the contract obligations added prompt tokens
+and bought nothing (4 742 against 3 541), and extraction added more still.
+`extract` made seven extraction calls and needed one `word_count` repair;
+its 15 attempts are 7 extraction calls and 8 codegen calls. It still beat
+`high` (8 553 against 10 615) but not `loop` or `contract`.
 
-On a task the first attempt passes, `loop` is still cheaper than
-`contract`: the obligations add prompt tokens (sum_even is 173 against
-280) and buy nothing. The contract mode pays when a failure would cost a
-repair prompt -- which is the case the benchmark exists to show.
+That ranking is not fixed. In an earlier three-mode run the loop needed
+repairs on calculator and LCS -- the LCS attempt used `scanf("%100s")`,
+which cannot read an empty line -- and the hand-written contract won,
+4 595 against 6 235. The benchmark exists to show both sides: the hand
+contract pays when a repair is likely, the plain loop pays when it is not,
+and the extractor currently pays for its own rewrite without making the
+first attempt reliable enough to earn it back. Tightening the extraction
+prompt, or validating and retrying its lines, is the next lever.
 
-`high` burned 7 510 reasoning tokens; both loops burned none.
+`high` burned 6 636 reasoning tokens; every no-reasoning mode burned none.
 
 ## Adding a task
 
@@ -104,5 +111,5 @@ and `Expected` is compared after trailing whitespace and final newlines
 are trimmed. `Sentences` is the same requirement in the controlled English
 `library(reasoning/reason)` reads; `contract.pl` derives the contract
 mode's checklist from it, so a sentence the reader refuses breaks the
-`contract` mode. `high` and `loop` use `Spec` alone. No Python is
-involved.
+`contract` mode. `high`, `loop` and `extract` use `Spec` alone; `extract`
+writes its own sentences from it. No Python is involved.

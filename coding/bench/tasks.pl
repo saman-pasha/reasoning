@@ -189,3 +189,14 @@ bench_requirement(lcs, [
     'Lcs prints the length.',
     'Every line has a length.'
 ]).
+
+%% The capitalized name the extractor is told to use. The controlled
+%% English reader capitalizes a proper name; these are the same atoms it
+%% will read back as sumeven, maxsubarray, ...
+bench_program_name(sum_even, 'SumEven').
+bench_program_name(max_subarray, 'MaxSubarray').
+bench_program_name(balanced, 'Balanced').
+bench_program_name(word_count, 'WordCount').
+bench_program_name(phonebook, 'Phonebook').
+bench_program_name(calculator, 'Calculator').
+bench_program_name(lcs, 'Lcs').
