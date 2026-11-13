@@ -468,7 +468,7 @@
 %% made from it, and no code, test or lesson in the tree spells the number.
 %% Bump it in the commit that changes this repository, never afterwards.
 
-reason_version(1, 0, 39).
+reason_version(1, 0, 40).
 
 reason_version(Version) :-
     reason_version(Major, Minor, Patch),
@@ -588,7 +588,7 @@ reason_ask_prose(Text, Answers, Explanations) :- rp_model(M), tagger_ask(M, Text
 %% of it that did not fail never meant torch was there, and the shipped
 %% model then died at its first tensor with torch's own
 %% existence_error(procedure, tensor_from_list/2), which no caller of the
-%% header's promise catches: test/reason.pl and lesson 43 went red on every
+%% header's promise catches: test/reason.pl and lesson 01 went red on every
 %% box without torch where they meant to say "no shipped tagger here".
 rp_model(M) :-
     (   catch(nb_getval('$rp_model', Cached), _, Cached = none), Cached \== none

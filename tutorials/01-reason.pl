@@ -1,8 +1,8 @@
-%% cocolog tutorial 43 -- library(reasoning/reason): a paragraph in, predicates out.
+%% reasoning tutorial 01 -- library(reasoning/reason): a paragraph in, predicates out.
 %%
 %% TIER 2: `use_module(library(reasoning/reason))', from reason.pl. Clauses only.
 %%
-%%     cocolog -s tutorials/43-reason.pl
+%%     cocolog -s tutorials/01-reason.pl
 %%
 %% A KNOWLEDGE BASE IS ROWS, AND THIS IS HOW A PARAGRAPH BECOMES SOME. The
 %% library reads a controlled English -- a proper noun or `every NOUN' as

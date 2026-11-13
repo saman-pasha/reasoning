@@ -17,7 +17,7 @@ default; a minor (something new reachable from a program) or a major (a
 program that worked stopping) is PROPOSED and used by the proposer; a
 documentation-only commit does not bump; a message names the number that
 moved (`reasoning X.Y.Z`). `test/reason.pl` (section `version`, four arms
-red) and lesson 43 pin the shape of the answer, deliberately not the number.
+red) and lesson 01 pin the shape of the answer, deliberately not the number.
 
 ## The reasoning library and the translator
 
@@ -27,7 +27,7 @@ pairs), `tagger.pl` (a GRU tagger over `tensor_expr`, plus the deterministic
 judge `tagger_sane/2` and repair `tg_repair/3`), `translate.pl` (sentences
 read into an English-worded IR and written into any lesson's language),
 `teach.pl` and `page.pl`. Cases: `test/reason.pl`, `normalise.pl`,
-`tagger.pl`, `translate.pl`; lessons 43-46 in `tutorials/`.
+`tagger.pl`, `translate.pl`; lessons 01-04 in `tutorials/`.
 
 **Where the data is, and who reads it:**
 
@@ -223,7 +223,7 @@ read into an English-worded IR and written into any lesson's language),
   every regression, find every cost by hunk bisection (the heaviest sentences
   of a pass, written to a file and counted over a copy of the library per
   rule: two seconds a copy, where a pass of the controls is two and a half
-  minutes), add a section to `test/translate.pl` and to lesson 46, record the
+  minutes), add a section to `test/translate.pl` and to lesson 04, record the
   stated costs. An arm is the same copy run through the section: **one whose
   removal makes the section RAISE has no FAIL line**, so read the last line
   (`GREEN` or `RED`) and count the `ERROR` lines as well. Controls run
@@ -1669,7 +1669,7 @@ read into an English-worded IR and written into any lesson's language),
   THE CODE ALONE (the new translator on the old store) in 131, 7 in the
   report's files and 124 in 43 files elsewhere, +0.115 % outside it (to 4 909
   564 479), where the report reads 7 and 8 as before. Eleven expectations of
-  the older sections of test/translate.pl and six of lesson 46 were written in
+  the older sections of test/translate.pl and six of lesson 04 were written in
   the old English and changed with the capitals, `last` and `what` (`saturday`,
   `sunday morning`, `next february`, `the next year`, `roman`, `the olympic
   Barcelona`, `the catalan board`, `The one that makes them wished`).
@@ -1781,7 +1781,7 @@ read into an English-worded IR and written into any lesson's language),
   chairman sign?`, Italian `Quale libro consiglia il medico?` `Which book does
   the doctor advise?`; `¿Qué presidente firmó la ley?`, `¿Qué jugador marcó el
   gol?` and `¿Qué perro come el pan?` read as they did. `test/translate.pl`'s
-  `question_roles` (17 checks) and lesson 46's section 72 hold it, with an arm
+  `question_roles` (17 checks) and lesson 04's section 72 hold it, with an arm
   for each of the seven rules and five for the guards: a name that goes on is
   not read (`fo_name_goes_on/2`: `¿Qué libro lee Maria Lopez?` is still `Which
   book reads Maria Lopez?`, because `fo_np_words_after/3` ends a bare name at
@@ -2644,7 +2644,7 @@ read into an English-worded IR and written into any lesson's language),
   The Rognoni interview's faults (reasoning 1.0.13; cocolog stays 2.11.0; no new
   article). Four faults the interview left, fixed in code and data, each with
   its arm red (test/translate.pl's `rognoni_faults`: 14 checks, 7 arms that go
-  red and 3 rules that have none, below; lesson 46's section 76): A NOUN THAT
+  red and 3 rules that have none, below; lesson 04's section 76): A NOUN THAT
   CAN SAY A RELATION SAYS ONE BEFORE `between` OR `with` (`Milano - rapporto
   difficile, tra Berlusconi e le regole` was `difficult report`, `informe
   difícil`: a noun whose first meaning is no relation and that has
@@ -2848,7 +2848,7 @@ read into an English-worded IR and written into any lesson's language),
   have their collaboration` and `possono avere` (es_19991001-61 17, a stated
   cost).
   Seven expectations of the older sections of test/translate.pl and two of
-  lesson 46 were written in the old English or the old order and changed with
+  lesson 04 were written in the old English or the old order and changed with
   the rules (`on Saturday` in both files, `bought on Sunday`, `that on Sunday
   eats`, `On Tuesday the summit.` in both files, `put the house in danger`, and
   the round trip's `la casa roja grande`, twice).
@@ -5332,7 +5332,7 @@ read into an English-worded IR and written into any lesson's language),
   and 14 before, and their sentences fall from 10.8 million inferences into Spanish and 10.9 into English to 8.4 and
   8.5. English refuses 10 for the third person nobody names, on purpose, as it refuses 3, 4 and 17. Each rule has its
   arm red (test/translate.pl's `spoleto_faults': 38 checks, 37 arms, 35 red in the section, one red in newspaper_lazio
-  and one guard of cost that stays green, below; lesson 46's section 87; an arm is a library directory of symlinks whose
+  and one guard of cost that stays green, below; lesson 04's section 87; an arm is a library directory of symlinks whose
   reasoning/translate.pl is the edited copy, `COCOLOG_LIBRARY=ARM cocolog query "use_module('test/translate.pl'),
   spoleto_faults, checks_done"', two seconds a run).
   A NUMBER, A NAME AND A NOUN ARE AN EDITION (`38 Spoleto festival.' heads the report on the festival's 38th edition,
@@ -6202,7 +6202,7 @@ read into an English-worded IR and written into any lesson's language),
   showed one more: the lesson's neuter `esto', a demonstrative of no gender, came first for `Questa è la casa', and the
   writer takes the first demonstrative in the noun's gender, never one of no gender. Two older checks changed with the
   rules: the Bovalino section's `The dog sleeps Sunday morning.' is `on Sunday morning', and the bank section's guard
-  that a bare number is no object asks `El perro va al Tg 444.' (in test/translate.pl and in lesson 46's section 77):
+  that a bare number is no object asks `El perro va al Tg 444.' (in test/translate.pl and in lesson 04's section 77):
   `Tg 4' is one name now, and in that section's lesson a name after `al' is the object of `va', `The dog goes the Tg 4.'
   -- the guard's arm is red on `Tg 444'. The section's insertion first dropped `newspaper_grazioli_checks_2' from
   test/translate.pl, which the whole case found (`Unknown procedure'), and it is back.
@@ -6566,7 +6566,7 @@ read into an English-worded IR and written into any lesson's language),
   choose' (it_9605_9636 29), the place `have to' gave `also' and `always' before, which the same fix mends. The whole
   case found two more: the islands section's `Nessuna casa, invece, a Roma dove ...' is `No house, instead, in Rome
   where ...' now, the adverb set off by its commas kept there by this sample's rule (the gap writer's, its arm red in
-  that section too), and the expectation is the new text in test/translate.pl and in lesson 46; and its scan of the
+  that section too), and the expectation is the new text in test/translate.pl and in lesson 04; and its scan of the
   vocabularies found `centro ricerca', a masculine noun in `-a' whose denial was missing, which the writer would have
   written `la centro ricerca': `"centro ricerca" is not feminine.' is in, and KB304 is taught with it (KB303 without it
   read every sentence of the controls alike, with either translator).

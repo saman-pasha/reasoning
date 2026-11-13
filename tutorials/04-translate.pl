@@ -1,12 +1,12 @@
-%% cocolog tutorial 46 -- library(reasoning/translate): a language lesson as a knowledge base.
+%% reasoning tutorial 04 -- library(reasoning/translate): a language lesson as a knowledge base.
 %%
 %% TIER 2: `use_module(library(reasoning/translate))', from translate.pl.
 %% Clauses only, over library(reasoning/reason): nothing to build, no model,
 %% no lexicon, no store.
 %%
-%%     cocolog -s tutorials/46-translate.pl
+%%     cocolog -s tutorials/04-translate.pl
 %%
-%% THE PROBLEM THIS SOLVES. Tutorial 43 reads a paragraph into facts and
+%% THE PROBLEM THIS SOLVES. Tutorial 01 reads a paragraph into facts and
 %% rules and proves things over them. This lesson reads a paragraph that
 %% TEACHES: one hundred and eighty-three lines of Spanish in the same
 %% controlled English, and what comes out is a vocabulary as facts, a

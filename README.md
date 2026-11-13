@@ -11,7 +11,7 @@ This repository is that directory. Put its PARENT on the library path, so
 that `library(reasoning/reason)` finds `reason.pl` here:
 
     COCOLOG_LIBRARY="$(dirname "$PWD")${COCOLOG_LIBRARY:+:$COCOLOG_LIBRARY}" \
-        ../cocolog/cocolog -s tutorials/43-reason.pl
+        ../cocolog/cocolog -s tutorials/01-reason.pl
 
 `sh run-tests.sh` sets the same path and runs the four cases below.
 
@@ -33,8 +33,8 @@ that `library(reasoning/reason)` finds `reason.pl` here:
 
 The suite case for each is `test/reason.pl`, `test/normalise.pl`,
 `test/tagger.pl` and `test/translate.pl`, and the lessons are
-`tutorials/43-reason.pl`, `44-normalise.pl`, `45-tagger.pl` and
-`46-translate.pl`. `test/prelude.pl` is cocolog's case harness, copied here
+`tutorials/01-reason.pl`, `02-normalise.pl`, `03-tagger.pl` and
+`04-translate.pl`. `test/prelude.pl` is cocolog's case harness, copied here
 so the four cases run without a cocolog checkout's `test/` beside them; run
 them with `sh run-tests.sh` (or `cocolog -s test/<case>.pl` from this
 repository's root, with its parent on `$COCOLOG_LIBRARY`).
@@ -175,7 +175,7 @@ said, the rule and the body that proved it, or the denial -- so
 level of it down to what was said, a universal in a body as `whenever Kh8
 may move to X, X is unsafe (X: G8, G7 and H7)` with every instance
 explained -- `reason_explanation/2`, over a back-rank mate written in the
-controlled English, in `test/reason.pl` and lesson 43. Eight
+controlled English, in `test/reason.pl` and lesson 01. Eight
 shapes are QUANTITIES: `Nadia pays 500 euros' is pay(nadia, quantity(500,
 euros)), a value and never an individual, the number a determiner to the
 tagger and copied by the assembler; `The rent is 500 euros' is amount/2,

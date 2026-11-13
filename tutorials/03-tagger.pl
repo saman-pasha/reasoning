@@ -1,14 +1,14 @@
-%% cocolog tutorial 45 -- library(reasoning/tagger): the network that reads typed text for the grammar.
+%% reasoning tutorial 03 -- library(reasoning/tagger): the network that reads typed text for the grammar.
 %%
 %% TIER 2: `use_module(library(reasoning/tagger))', from tagger.pl.
 %% Clauses only, over library(tensor_expr) and library(torch) -- and this
 %% lesson TRAINS, so it needs library/torch.so built (sh modules/torch/build.sh),
 %% and about two minutes on four cores.
 %%
-%%     cocolog -s tutorials/45-tagger.pl
+%%     cocolog -s tutorials/03-tagger.pl
 %%
-%% THE PROBLEM THIS SOLVES. Tutorial 43 ends on prose that
-%% library(reasoning/reason) refuses, and tutorial 44 makes the data that
+%% THE PROBLEM THIS SOLVES. Tutorial 01 ends on prose that
+%% library(reasoning/reason) refuses, and tutorial 02 makes the data that
 %% could teach a network to label every token -- subject, relation, object,
 %% noise -- so that the assembler can rebuild a sentence in the grammar's
 %% shapes. This lesson trains that network, in about eighty seconds on four
