@@ -25,6 +25,8 @@
 %% never written here.
 %%
 %%     --tests FILE     run the cases in FILE after compiling
+%%     --auto-tests     ask the model for test cases, then run them
+%%     --cases-effort L reasoning effort for the auto cases (default high)
 %%     --contract FILE  take the checklist from controlled-English FILE
 %%     --keep DIR       write every attempt's prompt, code and diagnostic
 %%     --attempts N     try at most N times (default 3)
@@ -73,8 +75,20 @@
 %%         UndefinedBehaviorSanitizer. A wrong case, or a sanitizer report,
 %%         goes back like a failed compile; the third failure throws
 %%         error(codegen_error(test_failed, Diagnostic), _). Cases and
-%%         the cases file are described in `coding/compile.pl'. With
-%%         analyze(yes), a static-analyzer finding is analyze_failed.
+%%         the cases file are described in `coding/compile.pl'. Cases may
+%%         be `auto': the model is asked for test cases first, and those
+%%         cases are run. With analyze(yes), a static-analyzer finding is
+%%         analyze_failed.
+%%
+%%     codegen_cases(+Spec, -Cases)
+%%     codegen_cases(+Spec, +Overrides, -Cases)
+%%     codegen_cases(+Spec, +Overrides, +CasesEffort, -Cases)
+%%         one model call that writes test cases for the requirement in
+%%         the text-block format `# input'/`# expected'. CasesEffort
+%%         defaults to `high', because a wrong expected output can mislead
+%%         a repair; it is a library(llm) effort level. The cases are not
+%%         verified against a reference; the requirement and the model are
+%%         the oracle. The call is in codegen_report/1's totals.
 %%
 %%     codegen_c_from(+Spec, +Obligations, +Cases, +Overrides, -Code)
 %%         the loop itself, the checklist already decided: keyword
@@ -118,20 +132,21 @@ codegen_c(Spec, Overrides, Code) :-
     codegen_report_finish(Start).
 
 codegen_call(Prompt, Overrides, Code) :-
+    codegen_llm('You are a C17 programmer. Output only C source code, no Markdown fences, no explanation.',
+                Prompt, Overrides, Reply),
+    codegen_strip_fence(Reply, Code).
+
+codegen_llm(System, Prompt, Overrides, Reply) :-
     codegen_options(Overrides, Options),
     codegen_key_env(Overrides, KeyVar),
     llm_opt(Options, provider, Provider),
     codegen_base_url(Overrides, Provider, BaseUrl),
     codegen_use_endpoint(Provider, BaseUrl, KeyVar),
     get_time(CallStart),
-    llm_chat([msg(system,
-                  'You are a C17 programmer. Output only C source code, no Markdown fences, no explanation.'),
-              msg(user, Prompt)],
-             Options, Reply),
+    llm_chat([msg(system, System), msg(user, Prompt)], Options, Reply),
     get_time(CallEnd),
     CallSeconds is CallEnd - CallStart,
-    codegen_report_add(CallSeconds),
-    codegen_strip_fence(Reply, Code).
+    codegen_report_add(CallSeconds).
 
 %% ---- the run report ----------------------------------------------------
 
@@ -276,18 +291,32 @@ codegen_c_compiled(Spec, Overrides, Code) :-
 codegen_c_from(Spec, Obligations, Cases, Overrides, Code) :-
     codegen_c_from(Spec, Obligations, Cases, Overrides, [], Code).
 
-codegen_c_from(Spec, Obligations, Cases, Overrides, RunOptions, Code) :-
-    codegen_run_prepare(RunOptions, Max, Timeout, CFlags, Budget, Analyze),
+codegen_c_from(Spec, Obligations, Cases0, Overrides, RunOptions, Code) :-
+    codegen_run_prepare(RunOptions, Max, Timeout, CFlags, Budget, Analyze,
+                        CasesEffort),
     codegen_run_option(RunOptions, keep, none, Keep),
     codegen_report_reset,
     get_time(Start),
-    catch(codegen_attempt(1, Max, Spec, Obligations, Cases, Overrides,
-                          Keep, check(Timeout, CFlags), Analyze, Budget,
-                          none, Code), Ball,
+    catch(( codegen_cases_ready(Cases0, Spec, Overrides, Keep, CasesEffort,
+                                Cases),
+            codegen_attempt(1, Max, Spec, Obligations, Cases, Overrides,
+                            Keep, check(Timeout, CFlags), Analyze, Budget,
+                            none, Code)
+          ), Ball,
           ( codegen_report_finish(Start), throw(Ball) )),
     codegen_report_finish(Start).
 
-codegen_run_prepare(RunOptions, Max, Timeout, CFlags, Budget, Analyze) :-
+%% Cases are given, or `auto' asks the model for them before the first
+%% code call. The case call is part of the run's report; `--keep' writes
+%% the generated cases as auto-cases.txt.
+codegen_cases_ready(auto, Spec, Overrides, Keep, CasesEffort, Cases) :-
+    !,
+    codegen_generate_cases(Spec, Overrides, CasesEffort, Cases),
+    codegen_keep_cases(Keep, Cases).
+codegen_cases_ready(Cases, _, _, _, _, Cases).
+
+codegen_run_prepare(RunOptions, Max, Timeout, CFlags, Budget, Analyze,
+                    CasesEffort) :-
     codegen_run_option(RunOptions, attempts, 3, Max0),
     codegen_run_check(attempts, Max0),
     Max = Max0,
@@ -300,8 +329,17 @@ codegen_run_prepare(RunOptions, Max, Timeout, CFlags, Budget, Analyze) :-
     codegen_run_budget(Budget0, Budget),
     codegen_run_option(RunOptions, analyze, no, Analyze0),
     codegen_run_analyze(Analyze0, Analyze),
+    codegen_run_option(RunOptions, cases_effort, high, CasesEffort0),
+    codegen_run_cases_effort(CasesEffort0, CasesEffort),
     codegen_run_option(RunOptions, keep, none, Keep),
     codegen_keep_prepare(Keep).
+
+codegen_run_cases_effort(Level, Level) :-
+    atom(Level),
+    !.
+codegen_run_cases_effort(Value, _) :-
+    format(atom(Msg), 'cases_effort must be an atom, not ~w', [Value]),
+    throw(error(codegen_error(run_option, Msg), codegen_run_prepare/7)).
 
 codegen_run_analyze(yes, yes) :-
     !.
@@ -361,6 +399,38 @@ codegen_keep_attempt(dir(Dir), Attempt, Kind, Text) :-
     format(atom(Name), 'attempt-~w.~w', [Attempt, Kind]),
     codegen_keep_file(Dir, Name, Text).
 
+%% The auto-generated cases, in the format c_parse_text_cases/2 reads, so
+%% a run's oracle can be read after the fact.
+codegen_keep_cases(none, _) :-
+    !.
+codegen_keep_cases(dir(Dir), Cases) :-
+    codegen_cases_text(Cases, Text),
+    codegen_keep_file(Dir, 'auto-cases.txt', Text).
+
+codegen_cases_text([], '').
+codegen_cases_text(Cases, Text) :-
+    Cases \== [],
+    findall(Block,
+            (   member(Case, Cases),
+                codegen_case_block(Case, Block)
+            ),
+            Blocks),
+    atomic_list_concat(Blocks, '', Text).
+
+codegen_case_block(case(Input, Expected), Block) :-
+    codegen_terminated(Expected, Terminated),
+    format(atom(Block), '# input~n~s# expected~n~s', [Input, Terminated]).
+codegen_case_block(case(Input, Expected, Exit), Block) :-
+    codegen_terminated(Expected, Terminated),
+    format(atom(Block), '# input~n~s# expected~n~s# exit ~w~n',
+           [Input, Terminated, Exit]).
+
+codegen_terminated(Atom, Terminated) :-
+    (   sub_atom(Atom, _, 1, 0, '\n')
+    ->  Terminated = Atom
+    ;   atom_concat(Atom, '\n', Terminated)
+    ).
+
 codegen_keep_file(Dir, Name, Text) :-
     atom_concat(Dir, '/', Prefix),
     atom_concat(Prefix, Name, File),
@@ -383,6 +453,62 @@ codegen_c_tested(Spec, Cases, Code) :-
 codegen_c_tested(Spec, Cases, Overrides, Code) :-
     codegen_obligations(Spec, Obligations),
     codegen_c_from(Spec, Obligations, Cases, Overrides, Code).
+
+%% codegen_cases(+Spec, -Cases)
+%% codegen_cases(+Spec, +Overrides, -Cases)
+%% codegen_cases(+Spec, +Overrides, +CasesEffort, -Cases)
+%%
+%% One model call writes test cases in the `# input'/`# expected' format.
+%% The cases are the model's answers, not an independent oracle. The
+%% default effort is `high'; a caller may name another level.
+codegen_cases(Spec, Cases) :-
+    codegen_cases(Spec, [], high, Cases).
+
+codegen_cases(Spec, Overrides, Cases) :-
+    codegen_cases(Spec, Overrides, high, Cases).
+
+codegen_cases(Spec, Overrides, CasesEffort, Cases) :-
+    codegen_report_reset,
+    get_time(Start),
+    catch(codegen_generate_cases(Spec, Overrides, CasesEffort, Cases), Ball,
+          ( codegen_report_finish(Start), throw(Ball) )),
+    codegen_report_finish(Start).
+
+codegen_generate_cases(Spec, Overrides, CasesEffort, Cases) :-
+    codegen_case_overrides(Overrides, CasesEffort, CaseOverrides),
+    codegen_case_prompt(Spec, Prompt),
+    codegen_llm('You write black-box test cases for C17 programs. Output only the requested test-case blocks, with no prose, numbering or Markdown fences.',
+                Prompt, CaseOverrides, Reply),
+    codegen_strip_fence(Reply, Text),
+    codegen_case_reply(Text, Cases).
+
+%% The case call has an effort of its own: the code call's effort is no
+%% measure of how carefully an oracle should be written.
+codegen_case_overrides(Overrides, CasesEffort, CaseOverrides) :-
+    exclude(codegen_case_effort, Overrides, Rest),
+    CaseOverrides = [effort(CasesEffort)|Rest].
+
+codegen_case_effort(effort(_)).
+codegen_case_effort(reasoning_effort(_)).
+
+codegen_case_reply(Text, Cases) :-
+    (   catch(c_parse_text_cases(Text, Cases0), _, fail)
+    ->  true
+    ;   codegen_case_error('the reply is not a sequence of "# input"/"# expected" blocks')
+    ),
+    (   Cases0 == []
+    ->  codegen_case_error('the reply has no test case')
+    ;   length(Cases0, Count),
+        (   Count =< 20
+        ->  Cases = Cases0
+        ;   format(atom(Msg), 'the reply has ~w test cases; at most 20 are used',
+                   [Count]),
+            codegen_case_error(Msg)
+        )
+    ).
+
+codegen_case_error(Msg) :-
+    throw(error(codegen_error(cases_auto, Msg), codegen_generate_cases/4)).
 
 codegen_attempt(Attempt, Max, Spec, Obligations, Cases, Overrides, Keep,
                 check(Timeout, CFlags), Analyze, Budget, Prev, Code) :-
@@ -490,6 +616,31 @@ codegen_prompt(Spec, Prompt) :-
            'Write a complete C17 program for this requirement. Output only the C source, with no Markdown fences and no explanation.~n~n~s',
            [Spec]).
 
+%% The case-generation prompt. The format is the one c_parse_text_cases/2
+%% reads, so a reply with prose before the first block is refused.
+codegen_case_prompt(Spec, Prompt) :-
+    format(atom(Prompt),
+'Write 6 to 10 black-box test cases for a C17 program that must satisfy this requirement:
+
+~s
+
+Output only test cases in exactly this format:
+
+# input
+<the exact input>
+# expected
+<the exact expected output>
+
+Repeat those two blocks for every case. Rules:
+- Use only input the requirement allows.
+- Keep every input small: at most 20 lines and at most 100 numbers.
+- If a line declares how many values follow, make the count match.
+- Include the smallest or empty valid input, a typical input, and edge cases.
+- The expected output must be exact; trailing whitespace is ignored.
+- Do not write a program, an explanation, numbering, or Markdown fences.
+- Do not put commentary between the blocks.',
+           [Spec]).
+
 %% Models still wrap code in ```c ... ``` even when told not to. A reply
 %% with no fence is the code as it stands; one with block fences loses the
 %% fence lines and keeps everything between them.
@@ -516,7 +667,7 @@ main :-
                 format(user_error, 'codegen: ~w~n~s~n', [Kind, Detail]),
                 halt(1)
               ))
-    ;   format("usage: cocolog -s coding/c/codegen.pl -- SPEC.txt [--tests CASES.txt] [--contract CONTRACT.txt] [--keep DIR] [--attempts N] [--timeout MS] [--budget N] [--cflags FLAGS] [--analyze] [--dry-run] [--key-env NAME] [--temperature T] [--max-tokens N] [--provider P] [--model M] [--base-url U] [--effort E] [--report] [OUT.c]~n", []),
+    ;   format("usage: cocolog -s coding/c/codegen.pl -- SPEC.txt [--tests CASES.txt] [--auto-tests] [--cases-effort L] [--contract CONTRACT.txt] [--keep DIR] [--attempts N] [--timeout MS] [--budget N] [--cflags FLAGS] [--analyze] [--dry-run] [--key-env NAME] [--temperature T] [--max-tokens N] [--provider P] [--model M] [--base-url U] [--effort E] [--report] [OUT.c]~n", []),
         halt(1)
     ).
 
@@ -525,13 +676,18 @@ codegen_main(SpecFile, TestsFile, ContractFile, OutFile, Report, DryRun,
     read_file_to_codes(SpecFile, Codes),
     atom_codes(Spec, Codes),
     (   DryRun == yes
-    ->  codegen_prompt_for(Spec, ContractFile, Prompt),
+    ->  (   TestsFile == auto
+        ->  codegen_case_prompt(Spec, Prompt)
+        ;   codegen_prompt_for(Spec, ContractFile, Prompt)
+        ),
         format("~s~n", [Prompt]),
         codegen_report_reset,
         codegen_report_print(Report)
     ;   codegen_obligations_for(Spec, ContractFile, Obligations),
         (   TestsFile == none
         ->  Cases = []
+        ;   TestsFile == auto
+        ->  Cases = auto
         ;   c_read_cases(TestsFile, Cases)
         ),
         codegen_c_from(Spec, Obligations, Cases, Overrides, RunOptions, Code),
@@ -573,8 +729,14 @@ codegen_args(Args, ArgsTerm) :-
 codegen_args([], State, State) :-
     State = args(Spec, _, _, _, _, _, _, _),
     Spec \== none.
-codegen_args(['--tests', File|Rest], args(S, none, C, O, R, D, Run, Os), A) :-
+codegen_args(['--tests', File|Rest], args(S, _, C, O, R, D, Run, Os), A) :-
     codegen_args(Rest, args(S, File, C, O, R, D, Run, Os), A).
+codegen_args(['--auto-tests'|Rest], args(S, _, C, O, R, D, Run, Os), A) :-
+    codegen_args(Rest, args(S, auto, C, O, R, D, Run, Os), A).
+codegen_args(['--cases-effort', E|Rest], args(S, T, C, O, R, D, Run, Os), A) :-
+    atom(E),
+    codegen_run_set(cases_effort(E), Run, Run1),
+    codegen_args(Rest, args(S, T, C, O, R, D, Run1, Os), A).
 codegen_args(['--contract', File|Rest], args(S, T, none, O, R, D, Run, Os), A) :-
     codegen_args(Rest, args(S, T, File, O, R, D, Run, Os), A).
 codegen_args(['--keep', Dir|Rest], args(S, T, C, O, R, D, Run, Os), A) :-

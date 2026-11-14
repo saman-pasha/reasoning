@@ -40,6 +40,10 @@
 %%         output). A bad file throws
 %%         error(codegen_error(cases_file, Message), _). The formats and
 %%         their empty-block rules are described below.
+%%
+%%     c_parse_text_cases(+Text, -Cases)
+%%         the text-block format from an atom, with no file. The same
+%%         errors as c_read_cases/2.
 
 :- use_module(library(process)).
 
@@ -226,6 +230,12 @@ c_read_cases(File, Cases) :-
     ).
 
 c_read_text_cases(Text, Cases) :-
+    c_parse_text_cases(Text, Cases).
+
+%% The same text blocks from an atom, so a caller that already holds the
+%% text (a model's reply) needs no file. Errors are the cases_file errors
+%% c_read_cases/2 raises.
+c_parse_text_cases(Text, Cases) :-
     split_string(Text, "\n", "", Lines0),
     c_drop_final_empty(Lines0, Lines1),
     findall(Line,
