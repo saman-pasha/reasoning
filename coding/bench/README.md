@@ -161,9 +161,22 @@ extract   1     0      4        13934  16187      0         30121 3712      53.6
 derive    1     0      3        13203  14833      0         28036 4224      52.83
 escalate  1     0      3        12533  14972      0         27505 1536      51.60
 escalate2 1     0      3        10779  13317      0         24096 1280      48.34
+opencode-c-r0#high 1     1      25       n/a    n/a        n/a       n/a   n/a       1245.77
+opencode-c-r2#high 1     1      13       n/a    n/a        n/a       n/a   n/a       195.50
+opencode-c-r8#high 1     1      35       n/a    n/a        n/a       n/a   n/a       377.23
 ```
 
-`contract` is the only passing mode, and it needed two attempts: the
+The last three rows are not benchmark modes: they are the same task
+through OpenCode, in a fresh directory holding only `spec.txt` and
+`cases/`, with the model's `#high` variant. `attempts` counts endpoint
+calls and `seconds` is the session's wall time; the token columns are
+`n/a` because the endpoint does not record provider usage. The call times
+were 232.3 s for `c-r0`, 153.9 s for `c-r2` and 266.9 s for `c-r8`. Each
+generated program was independently rebuilt with `clang -std=c17 -Wall
+-Wextra -O0`, passed all ten cases, passed ASan/UBSan, and matched an
+independent specification model on 1,000 random command streams.
+
+`contract` is the only passing benchmark mode, and it needed two attempts: the
 first timed out on cases 2 and 6, the second passed all ten. `high`, one
 call with no repair, failed only case 8, the last-committer-wins delete
 after another transaction inserted the key. `loop`, `derive`, `escalate`,
