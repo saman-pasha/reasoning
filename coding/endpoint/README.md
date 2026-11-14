@@ -30,6 +30,13 @@ export REASONING_API_KEY=...
 coding/endpoint/run.sh
 ```
 
+`run.sh` makes a random `CODING_ENDPOINT_TOKEN` when that variable is unset
+and prints it. Every completion request must then carry
+`Authorization: Bearer TOKEN`, and the `apiKey` in the installed OpenCode
+config must be the same value. To keep a token across restarts, export
+`CODING_ENDPOINT_TOKEN` yourself before `run.sh`. The model list and the
+health page are open.
+
 It listens on `http://127.0.0.1:8787/v1` by default. Check it:
 
 ```sh
@@ -39,9 +46,11 @@ curl -s http://127.0.0.1:8787/health
 
 ## Connect OpenCode
 
-Copy `opencode.json` to `~/.config/opencode/opencode.json` for every
-project, or to a project's `opencode.json` for one project. The installed
-copy is kept at `config/opencode.json`. The file uses OpenCode v2's
+Copy `config/opencode.json` to `~/.config/opencode/opencode.json` for every
+project, or to a project's `opencode.json` for one project. Its provider
+`settings.apiKey` is `{env:CODING_ENDPOINT_TOKEN}` in the repository copy;
+the installed copy carries the actual token, which must match the token
+the running endpoint was given. The file uses OpenCode v2's
 `providers`/`package`/`settings` shape.
 
 Then either choose the model in the TUI, or name it on the command line:
@@ -68,15 +77,19 @@ DeepSeek's OpenAI endpoint with `REASONING_API_KEY`:
 | `CODING_ENDPOINT_C_MODEL` | the backend model |
 | `CODING_ENDPOINT_COCOLOG_MODEL` | the backend model |
 | `CODING_ENDPOINT_KEY_ENV` | `REASONING_API_KEY` |
+| `CODING_ENDPOINT_TOKEN` | a fresh random token when `run.sh` starts |
+| `CODING_ENDPOINT_ALLOW_ORIGIN` | the local OpenCode web origins |
 | `CODING_ENDPOINT_HOST` | `127.0.0.1` |
 | `CODING_ENDPOINT_PORT` | `8787` |
 | `CODING_ENDPOINT_MAX_TOKENS` | `8192` (0 leaves the client's limit) |
 | `CODING_ENDPOINT_TIMEOUT` | `600` seconds |
 | `COCOLOG_SKILL` | `../../cocolog/SKILL.md` beside this repository |
 
-The key is read from the environment at each call and never logged or
-written to disk. The endpoint binds to loopback by default and has no
-authentication of its own: do not expose it on a public interface.
+The backend key is read from the environment at each call and never logged
+or written to disk by the server. The endpoint binds to loopback by
+default, requires the bearer token when `CODING_ENDPOINT_TOKEN` is set, and
+sends CORS headers only to the allowlisted origins. Do not expose it on a
+public interface.
 
 The request's `max_completion_tokens` is sent to the backend as
 `max_tokens` and capped by `CODING_ENDPOINT_MAX_TOKENS`, because OpenCode
@@ -91,16 +104,16 @@ python3 coding/endpoint/test.py -v
 
 The test starts a fake backend and the endpoint, then checks the model
 list, the model mapping and token cap, the injected C guide, the title
-request without a guide, and a streamed cocolog reply. No model is called.
+request without a guide, the bearer-token guard, the forwarded effort,
+and a streamed cocolog reply. No model is called.
 
 ## Files
 
 | path | what |
 |---|---|
 | `server.py` | the endpoint, standard library only |
-| `run.sh` | starts it with `REASONING_API_KEY` checked |
-| `opencode.json` | the provider and the two models |
-| `config/opencode.json` | the copy installed at `~/.config/opencode/` |
+| `run.sh` | starts it and makes or accepts the bearer token |
+| `config/opencode.json` | the provider, the two models and their variants |
 | `prompts/c.md` | the C17 guide |
 | `prompts/cocolog.md` | the cocolog addendum to `SKILL.md` |
 | `test.py` | the local checks, no model |

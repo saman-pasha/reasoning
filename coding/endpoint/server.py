@@ -9,8 +9,18 @@ and forwards the request to an OpenAI-compatible backend.
 The server is deliberately local: it binds 127.0.0.1 by default, keeps no
 state between requests, and reads the backend key from the environment at
 each call.  It is not a second agent loop; OpenCode's tools are the loop.
+
+TWO GUARDS KEEP A LOCALHOST PORT FROM BECOMING A PUBLIC ONE.  A browser on
+this machine may reach 127.0.0.1 from any page, and this server forwards
+the backend key on its own, so no page is given the origin: the CORS
+headers answer only an allowlisted ORIGIN (CODING_ENDPOINT_ALLOW_ORIGIN or
+the opencode.json origins) and a browser preflight from anywhere else gets
+no permission.  And when CODING_ENDPOINT_TOKEN is set, every request must
+carry it as ``Authorization: Bearer TOKEN``; run.sh sets one at random so
+that the loopback port is not driveable by whatever is listening.
 """
 
+import hmac
 import json
 import os
 import sys
@@ -39,6 +49,18 @@ MAX_BODY = int(os.environ.get("CODING_ENDPOINT_MAX_BODY", str(8 * 1024 * 1024)))
 COCOLOG_SKILL = Path(
     os.environ.get("COCOLOG_SKILL", str(ROOT.parent / "cocolog" / "SKILL.md"))
 )
+TOKEN = os.environ.get("CODING_ENDPOINT_TOKEN", "")
+# The origins a page may call from: the opencode web origins, and anything a
+# caller names.  "*" is refused: it would hand the port to every page.
+ALLOW_ORIGINS = {
+    origin.strip()
+    for origin in os.environ.get(
+        "CODING_ENDPOINT_ALLOW_ORIGIN",
+        "http://localhost:3000,http://127.0.0.1:3000,"
+        "http://localhost:4096,http://127.0.0.1:4096",
+    ).split(",")
+    if origin.strip() and origin.strip() != "*"
+}
 
 SERVICE = "reasoning-coding/1.0"
 MODELS = ("c", "cocolog")
@@ -122,22 +144,54 @@ class Handler(BaseHTTPRequestHandler):
     def log_message(self, fmt, *args):
         return
 
+    def call_origin(self):
+        """The request's Origin, when it is one the server allows, else None."""
+        origin = self.headers.get("Origin")
+        if origin and origin in ALLOW_ORIGINS:
+            return origin
+        return None
+
+    def send_cors(self, status=204):
+        """The CORS headers, for an allowed origin and for no other page."""
+        self.send_response(status)
+        origin = self.call_origin()
+        if origin is not None:
+            self.send_header("Access-Control-Allow-Origin", origin)
+            self.send_header("Vary", "Origin")
+            self.send_header("Access-Control-Allow-Headers",
+                             "Authorization, Content-Type")
+            self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Content-Length", "0")
+        self.end_headers()
+
+    def cors_headers(self):
+        origin = self.call_origin()
+        if origin is not None:
+            self.send_header("Access-Control-Allow-Origin", origin)
+            self.send_header("Vary", "Origin")
+
+    def token_ok(self):
+        """True when no token is set, or the request carries the token.
+
+        A browser sends Authorization on a fetch, so a page that has the
+        token (OpenCode does) works, and one that does not is refused.
+        """
+        if not TOKEN:
+            return True
+        header = self.headers.get("Authorization", "")
+        scheme, _, given = header.partition(" ")
+        if scheme.lower() != "bearer":
+            return False
+        return hmac.compare_digest(given.strip().encode(), TOKEN.encode())
+
     def send_json(self, status, payload):
         body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
         self.send_response(status)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(body)))
-        self.send_header("Access-Control-Allow-Origin", "*")
+        self.cors_headers()
         self.end_headers()
         self.wfile.write(body)
-
-    def send_cors(self):
-        self.send_response(204)
-        self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Headers", "Authorization, Content-Type")
-        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-        self.send_header("Content-Length", "0")
-        self.end_headers()
 
     def do_OPTIONS(self):
         self.send_cors()
@@ -179,6 +233,13 @@ class Handler(BaseHTTPRequestHandler):
         path = urlsplit(self.path).path.rstrip("/")
         if path != "/v1/chat/completions":
             self.send_json(404, {"error": {"message": f"no route {path}"}})
+            return
+        if not self.token_ok():
+            self.send_json(
+                401,
+                {"error": {"message": "Authorization: Bearer TOKEN is required "
+                                      "when CODING_ENDPOINT_TOKEN is set"}},
+            )
             return
         length_text = self.headers.get("Content-Length", "0")
         try:
@@ -275,7 +336,7 @@ class Handler(BaseHTTPRequestHandler):
             self.send_response(error.code)
             self.send_header("Content-Type", ctype)
             self.send_header("Content-Length", str(len(data)))
-            self.send_header("Access-Control-Allow-Origin", "*")
+            self.cors_headers()
             self.end_headers()
             self.wfile.write(data)
             return
@@ -306,7 +367,7 @@ class Handler(BaseHTTPRequestHandler):
                     response.headers.get("Content-Type", "application/json"),
                 )
                 self.send_header("Content-Length", str(len(data)))
-                self.send_header("Access-Control-Allow-Origin", "*")
+                self.cors_headers()
                 self.end_headers()
                 self.wfile.write(data)
         except (BrokenPipeError, ConnectionResetError):
@@ -328,6 +389,12 @@ def main():
         file=sys.stderr,
         flush=True,
     )
+    if TOKEN:
+        print("coding endpoint: every request needs Authorization: Bearer TOKEN",
+              file=sys.stderr, flush=True)
+    else:
+        print("coding endpoint: no CODING_ENDPOINT_TOKEN; any loopback client "
+              "may call it", file=sys.stderr, flush=True)
     if "cocolog" not in GUIDES:
         print(f"coding endpoint: cocolog is unavailable until {COCOLOG_SKILL} exists",
               file=sys.stderr, flush=True)

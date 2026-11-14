@@ -14,6 +14,7 @@ import sys
 import threading
 import time
 import unittest
+import urllib.error
 import urllib.request
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -82,12 +83,15 @@ def wait_for(url):
     raise RuntimeError(f"no answer at {url}")
 
 
-def ask(url, payload):
+def ask(url, payload, token="test-token"):
     data = json.dumps(payload).encode()
+    headers = {"Content-Type": "application/json"}
+    if token is not None:
+        headers["Authorization"] = f"Bearer {token}"
     request = urllib.request.Request(
         url,
         data=data,
-        headers={"Content-Type": "application/json"},
+        headers=headers,
         method="POST",
     )
     with urllib.request.urlopen(request, timeout=10) as response:
@@ -110,6 +114,7 @@ class EndpointTest(unittest.TestCase):
         env.update(
             {
                 "REASONING_API_KEY": "test-key",
+                "CODING_ENDPOINT_TOKEN": "test-token",
                 "CODING_ENDPOINT_PORT": str(cls.port),
                 "CODING_ENDPOINT_BACKEND": (
                     f"http://127.0.0.1:{cls.backend_port}/v1/chat/completions"
@@ -163,6 +168,18 @@ class EndpointTest(unittest.TestCase):
         self.assertEqual(sent["max_tokens"], 16)
         self.assertIn("This session: C17", sent["messages"][0]["content"])
         self.assertEqual(len(sent["tools"]), 1)
+
+    def test_token_is_required(self):
+        with self.assertRaises(urllib.error.HTTPError) as caught:
+            ask(
+                self.base + "/v1/chat/completions",
+                {
+                    "model": "c",
+                    "messages": [{"role": "user", "content": "hello"}],
+                },
+                token=None,
+            )
+        self.assertEqual(caught.exception.code, 401)
 
     def test_effort_is_forwarded(self):
         ask(

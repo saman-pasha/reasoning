@@ -5,40 +5,99 @@
       "name": "Reasoning coding (C and cocolog)",
       "package": "@opencode/ai/providers/openai-compatible",
       "settings": {
-        "baseURL": "http://127.0.0.1:8787/v1"
+        "baseURL": "http://127.0.0.1:8787/v1",
+        "apiKey": "{env:CODING_ENDPOINT_TOKEN}"
       },
       "models": {
         "c": {
           "name": "C17",
           "capabilities": {
             "tools": true,
-            "input": ["text"],
-            "output": ["text"]
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
           },
-          "settings": { "reasoningEffort": "high" },
+          "settings": {
+            "reasoningEffort": "high"
+          },
           "variants": [
-            { "id": "none", "settings": { "reasoningEffort": "none" } },
-            { "id": "low", "settings": { "reasoningEffort": "low" } },
-            { "id": "medium", "settings": { "reasoningEffort": "medium" } },
-            { "id": "high", "settings": { "reasoningEffort": "high" } }
+            {
+              "id": "none",
+              "settings": {
+                "reasoningEffort": "none"
+              }
+            },
+            {
+              "id": "low",
+              "settings": {
+                "reasoningEffort": "low"
+              }
+            },
+            {
+              "id": "medium",
+              "settings": {
+                "reasoningEffort": "medium"
+              }
+            },
+            {
+              "id": "high",
+              "settings": {
+                "reasoningEffort": "high"
+              }
+            }
           ],
-          "limit": { "context": 1000000, "output": 8192 }
+          "limit": {
+            "context": 1000000,
+            "output": 8192
+          }
         },
         "cocolog": {
           "name": "cocolog",
           "capabilities": {
             "tools": true,
-            "input": ["text"],
-            "output": ["text"]
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
           },
-          "settings": { "reasoningEffort": "high" },
+          "settings": {
+            "reasoningEffort": "high"
+          },
           "variants": [
-            { "id": "none", "settings": { "reasoningEffort": "none" } },
-            { "id": "low", "settings": { "reasoningEffort": "low" } },
-            { "id": "medium", "settings": { "reasoningEffort": "medium" } },
-            { "id": "high", "settings": { "reasoningEffort": "high" } }
+            {
+              "id": "none",
+              "settings": {
+                "reasoningEffort": "none"
+              }
+            },
+            {
+              "id": "low",
+              "settings": {
+                "reasoningEffort": "low"
+              }
+            },
+            {
+              "id": "medium",
+              "settings": {
+                "reasoningEffort": "medium"
+              }
+            },
+            {
+              "id": "high",
+              "settings": {
+                "reasoningEffort": "high"
+              }
+            }
           ],
-          "limit": { "context": 1000000, "output": 8192 }
+          "limit": {
+            "context": 1000000,
+            "output": 8192
+          }
         }
       }
     }
