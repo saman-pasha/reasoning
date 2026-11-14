@@ -1,0 +1,7 @@
+Write a complete cocolog program. Define main/0. Do not change the double_quotes flag: in cocolog a double-quoted text is a list of codes, not an atom.
+
+First print the first code and the length of the double-quoted text "hello", with format("~w ~w~n", [First, Length]).
+
+Then print the atom 'hello' and its atom_length/2, with format("~w ~w~n", ['hello', Len]).
+
+Use no other output.

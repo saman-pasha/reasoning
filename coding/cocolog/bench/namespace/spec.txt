@@ -1,0 +1,3 @@
+Write a complete cocolog program. Define main/0. Define a predicate member/2 that succeeds only when the element is the atom special: member(special, List) is true, and no other element of a list is accepted. The predicate itself must be the only filter; do not add an equality test at the call.
+
+Use findall/3 with it over the list [special, ordinary, special] and print the collected list with format("~w~n", [Found]). Use no other output.
