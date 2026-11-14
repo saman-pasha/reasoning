@@ -1,0 +1,7 @@
+Write a complete cocolog program. Define main/0. It loads the HTML template at coding/cocolog/examples/html_template/page.html with library(template), renders it in the html format with this context:
+
+  page = [title='My Store']
+  user = [name='Alice & Bob']
+  items = [tea, coffee, cocoa]
+
+The template uses page.title, an if on user, and a for loop over items with loop.index. Use `template_file(File, html, Context, Output)` from library(template); do not invent another template predicate. The output is an atom; print it with write/1, with no extra text and no added newline. If you use double-quoted text, set the double_quotes flag to atom.

@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html>
+<head><title>{{ page.title }}</title></head>
+<body>
+<h1>{{ page.title }}</h1>
+{% if user %}<p>Welcome, {{ user.name }}!</p>{% else %}<p>Please log in.</p>{% endif %}
+<ul>{% for item in items %}<li>{{ loop.index }}: {{ item }}</li>{% endfor %}</ul>
+</body>
+</html>
