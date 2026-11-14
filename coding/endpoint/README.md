@@ -5,37 +5,35 @@ in cocolog with `library(httpd)`. OpenCode sends its normal agent
 conversation, tools and stream; the endpoint appends the language guide and
 forwards the request to an OpenAI-compatible model.
 
-Two model names are exposed:
+Eight model names are exposed:
 
-| model | guide |
+| model | guide and reasoning checks |
 |---|---|
-| `c` | `prompts/c.md`, C with clang and the sanitizers, C99 through C23 (C17 unless the task names another), and the reasoning pre-pass |
-| `cocolog` | cocolog's own `SKILL.md`, `prompts/cocolog.md`, and the reasoning pre-pass |
+| `c` | `prompts/c.md`, C with clang and the sanitizers, C99 through C23; the endpoint's default two checks |
+| `cocolog` | cocolog's own `SKILL.md`, `prompts/cocolog.md`; the default two checks |
+| `c-r0`, `c-r2`, `c-r8` | the same C guide, with no checks, two checks or eight checks |
+| `cocolog-r0`, `cocolog-r2`, `cocolog-r8` | the same cocolog guide, with no checks, two checks or eight checks |
 
 The endpoint is not a second agent loop. OpenCode still owns the read, edit
-and shell tools, the session and the permissions. Both models declare a
-1,000,000-token context and an 8,192-token output limit; `/v1/models` reports
-the same limits.
+and shell tools, the session and the permissions. Every model declares a
+1,000,000-token context and an 8,192-token output limit.
 
-`settings.reasoningEffort` defaults to `none`, and the models define the
-effort variants `none`, `low`, `medium` and `high`. OpenCode sends the chosen
-level as `reasoning_effort`, and the endpoint forwards it unchanged. In the
-TUI, `ctrl+t` cycles the variants; on the command line name one as
-`reasoning/c#high` or `reasoning/cocolog#low`. A request that omits `stream`
+Every model also defines the effort variants `none`, `low`, `medium` and
+`high`, so the reasoning count and the effort are chosen independently:
+
+```sh
+reasoning/cocolog-r8#high     # eight checks and high model effort
+reasoning/c-r0#none           # plain mode, no checks, no model effort
+```
+
+`settings.reasoningEffort` defaults to `none`, and OpenCode sends the chosen
+level as `reasoning_effort`; the endpoint forwards it unchanged. `ctrl+t`
+cycles effort variants on the selected model. A request that omits `stream`
 is treated as `stream: true`.
 
-Three further variants choose the reasoning pre-pass for one request:
-
-| variant | trace | meaning |
-|---|---|---|
-| `#r0` | `mode=plain`, `reasoning=0` | no pre-pass, like `CODING_ENDPOINT_REASONING=off` |
-| `#r2` | `mode=reasoning`, `reasoning=2` | exactly two checks |
-| `#r8` | `mode=reasoning`, `reasoning=8` | exactly eight checks |
-
-They carry the header `x-coding-reasoning: 0`, `2` or `8`; the endpoint reads
-it per request. `#r0` is the mode setting only: the language guide, effort
-and tools are unchanged. `#r2` is the default. On the command line:
-`reasoning/c#r8` or `reasoning/cocolog#r0`.
+The `-rN` suffix is read by the endpoint itself, and the model config also
+carries `x-coding-reasoning: N`. A request header still overrides both for a
+one-off: `0`/`off` is plain mode, and a number keeps that many checks.
 
 ## What it is not
 
@@ -89,9 +87,9 @@ OpenCode asks as usual.
 
 ## The reasoning pre-pass
 
-For both `reasoning/c` and `reasoning/cocolog`, the endpoint reads the
-session's first user turn with `reasoning_core.pl`, which runs locally and
-calls no model:
+For every model, including the `-r0`, `-r2` and `-r8` names, the endpoint
+reads the session's first user turn with `reasoning_core.pl`, which runs
+locally and calls no model:
 
 - `coding/obligations.pl` derives checks from the request's keywords.
 - `coding/contract.pl` reads controlled-English sentences through
@@ -103,13 +101,13 @@ The deduplicated checks are appended to the model's system prompt under a
 "Reasoning pre-pass" heading. By default the pass keeps exactly two: the
 task's first two, general checks when the task's wording gives fewer, and no
 more when it gives more. That is the usual trace's `mode=reasoning` and
-`reasoning=2`. A request's `x-coding-reasoning` header overrides both ends:
-`0` or `off` turns the pass off, and a number keeps that many checks.
-`CODING_ENDPOINT_REASONING_MIN` and `CODING_ENDPOINT_REASONING_MAX` change
-the two ends for requests with no header. The model still writes and runs
-the code with OpenCode's tools, but it is checked against this repository's
-own reading of the request. `CODING_ENDPOINT_REASONING=off` disables the
-pass for either model.
+`reasoning=2`. The `-rN` model suffix and a request's `x-coding-reasoning`
+header override both ends: `0` or `off` turns the pass off, and a number
+keeps that many checks. `CODING_ENDPOINT_REASONING_MIN` and
+`CODING_ENDPOINT_REASONING_MAX` change the two ends for requests with
+neither. The model still writes and runs the code with OpenCode's tools, but
+it is checked against this repository's own reading of the request.
+`CODING_ENDPOINT_REASONING=off` disables the pass for every model.
 
 ## Trace
 

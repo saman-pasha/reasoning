@@ -47,33 +47,6 @@
               "settings": {
                 "reasoningEffort": "high"
               }
-            },
-            {
-              "id": "r0",
-              "settings": {
-                "reasoningEffort": "none"
-              },
-              "headers": {
-                "x-coding-reasoning": "0"
-              }
-            },
-            {
-              "id": "r2",
-              "settings": {
-                "reasoningEffort": "none"
-              },
-              "headers": {
-                "x-coding-reasoning": "2"
-              }
-            },
-            {
-              "id": "r8",
-              "settings": {
-                "reasoningEffort": "none"
-              },
-              "headers": {
-                "x-coding-reasoning": "8"
-              }
             }
           ],
           "limit": {
@@ -119,38 +92,299 @@
               "settings": {
                 "reasoningEffort": "high"
               }
-            },
+            }
+          ],
+          "limit": {
+            "context": 1000000,
+            "output": 8192
+          }
+        },
+        "c-r0": {
+          "name": "C (r0: plain)",
+          "capabilities": {
+            "tools": true,
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "settings": {
+            "reasoningEffort": "none"
+          },
+          "variants": [
             {
-              "id": "r0",
+              "id": "none",
               "settings": {
                 "reasoningEffort": "none"
-              },
-              "headers": {
-                "x-coding-reasoning": "0"
               }
             },
             {
-              "id": "r2",
+              "id": "low",
               "settings": {
-                "reasoningEffort": "none"
-              },
-              "headers": {
-                "x-coding-reasoning": "2"
+                "reasoningEffort": "low"
               }
             },
             {
-              "id": "r8",
+              "id": "medium",
               "settings": {
-                "reasoningEffort": "none"
-              },
-              "headers": {
-                "x-coding-reasoning": "8"
+                "reasoningEffort": "medium"
+              }
+            },
+            {
+              "id": "high",
+              "settings": {
+                "reasoningEffort": "high"
               }
             }
           ],
           "limit": {
             "context": 1000000,
             "output": 8192
+          },
+          "headers": {
+            "x-coding-reasoning": "0"
+          }
+        },
+        "c-r2": {
+          "name": "C (r2: two checks)",
+          "capabilities": {
+            "tools": true,
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "settings": {
+            "reasoningEffort": "none"
+          },
+          "variants": [
+            {
+              "id": "none",
+              "settings": {
+                "reasoningEffort": "none"
+              }
+            },
+            {
+              "id": "low",
+              "settings": {
+                "reasoningEffort": "low"
+              }
+            },
+            {
+              "id": "medium",
+              "settings": {
+                "reasoningEffort": "medium"
+              }
+            },
+            {
+              "id": "high",
+              "settings": {
+                "reasoningEffort": "high"
+              }
+            }
+          ],
+          "limit": {
+            "context": 1000000,
+            "output": 8192
+          },
+          "headers": {
+            "x-coding-reasoning": "2"
+          }
+        },
+        "c-r8": {
+          "name": "C (r8: eight checks)",
+          "capabilities": {
+            "tools": true,
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "settings": {
+            "reasoningEffort": "none"
+          },
+          "variants": [
+            {
+              "id": "none",
+              "settings": {
+                "reasoningEffort": "none"
+              }
+            },
+            {
+              "id": "low",
+              "settings": {
+                "reasoningEffort": "low"
+              }
+            },
+            {
+              "id": "medium",
+              "settings": {
+                "reasoningEffort": "medium"
+              }
+            },
+            {
+              "id": "high",
+              "settings": {
+                "reasoningEffort": "high"
+              }
+            }
+          ],
+          "limit": {
+            "context": 1000000,
+            "output": 8192
+          },
+          "headers": {
+            "x-coding-reasoning": "8"
+          }
+        },
+        "cocolog-r0": {
+          "name": "cocolog (r0: plain)",
+          "capabilities": {
+            "tools": true,
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "settings": {
+            "reasoningEffort": "none"
+          },
+          "variants": [
+            {
+              "id": "none",
+              "settings": {
+                "reasoningEffort": "none"
+              }
+            },
+            {
+              "id": "low",
+              "settings": {
+                "reasoningEffort": "low"
+              }
+            },
+            {
+              "id": "medium",
+              "settings": {
+                "reasoningEffort": "medium"
+              }
+            },
+            {
+              "id": "high",
+              "settings": {
+                "reasoningEffort": "high"
+              }
+            }
+          ],
+          "limit": {
+            "context": 1000000,
+            "output": 8192
+          },
+          "headers": {
+            "x-coding-reasoning": "0"
+          }
+        },
+        "cocolog-r2": {
+          "name": "cocolog (r2: two checks)",
+          "capabilities": {
+            "tools": true,
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "settings": {
+            "reasoningEffort": "none"
+          },
+          "variants": [
+            {
+              "id": "none",
+              "settings": {
+                "reasoningEffort": "none"
+              }
+            },
+            {
+              "id": "low",
+              "settings": {
+                "reasoningEffort": "low"
+              }
+            },
+            {
+              "id": "medium",
+              "settings": {
+                "reasoningEffort": "medium"
+              }
+            },
+            {
+              "id": "high",
+              "settings": {
+                "reasoningEffort": "high"
+              }
+            }
+          ],
+          "limit": {
+            "context": 1000000,
+            "output": 8192
+          },
+          "headers": {
+            "x-coding-reasoning": "2"
+          }
+        },
+        "cocolog-r8": {
+          "name": "cocolog (r8: eight checks)",
+          "capabilities": {
+            "tools": true,
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "settings": {
+            "reasoningEffort": "none"
+          },
+          "variants": [
+            {
+              "id": "none",
+              "settings": {
+                "reasoningEffort": "none"
+              }
+            },
+            {
+              "id": "low",
+              "settings": {
+                "reasoningEffort": "low"
+              }
+            },
+            {
+              "id": "medium",
+              "settings": {
+                "reasoningEffort": "medium"
+              }
+            },
+            {
+              "id": "high",
+              "settings": {
+                "reasoningEffort": "high"
+              }
+            }
+          ],
+          "limit": {
+            "context": 1000000,
+            "output": 8192
+          },
+          "headers": {
+            "x-coding-reasoning": "8"
           }
         }
       }

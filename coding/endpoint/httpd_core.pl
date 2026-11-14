@@ -76,13 +76,57 @@ ep_guide(cocolog, Guide) :-
     ep_read_text('coding/endpoint/prompts/cocolog.md', Add),
     atomic_list_concat([Skill, '\n\n', Add], Guide).
 
+%% A model name may end in -rN: c-r8, cocolog-r2. The suffix chooses the
+%% number of reasoning checks, and the base chooses the language guide.
+ep_model_count(Model, N) :-
+    atom(Model),
+    atom_string(Model, String),
+    split_string(String, "-", "", Parts),
+    reverse(Parts, [LastString|_]),
+    atom_string(Last, LastString),
+    atom_concat('r', Digits, Last),
+    atom_number(Digits, N),
+    integer(N),
+    N >= 0.
+
+ep_model_base(Model, Base) :-
+    (   ep_model_count(Model, _)
+    ->  atom_string(Model, String),
+        split_string(String, "-", "", Parts),
+        append(BaseParts, [_], Parts),
+        atomic_list_concat(BaseParts, '-', Base0),
+        atom_string(Base, Base0)
+    ;   Base = Model
+    ).
+
 ep_alias(Model, Alias) :-
     atom(Model),
     downcase_atom(Model, Low),
-    (   memberchk(Low, [c, c89, c99, c11, c17, c23])
+    ep_model_base(Low, Base),
+    (   memberchk(Base, [c, c89, c99, c11, c17, c23])
     ->  Alias = c
-    ;   memberchk(Low, [cocolog, 'cocolog-card'])
+    ;   memberchk(Base, [cocolog, 'cocolog-card'])
     ->  Alias = cocolog
+    ).
+
+%% x-coding-reasoning wins; then a -rN model suffix; then the endpoint's
+%% environment. The answer is default, off or count(N).
+ep_reasoning_setting(Request, Model, Setting) :-
+    (   http_header(Request, 'x-coding-reasoning', Value)
+    ->  ep_reasoning_value(Value, Setting)
+    ;   ep_model_count(Model, N)
+    ->  Setting = count(N)
+    ;   Setting = default
+    ).
+
+ep_reasoning_value(Value, Setting) :-
+    (   memberchk(Value, [off, none, plain, '0'])
+    ->  Setting = off
+    ;   atom_number(Value, N),
+        integer(N),
+        N >= 0
+    ->  Setting = count(N)
+    ;   Setting = default
     ).
 
 %% ---- JSON pairs --------------------------------------------------------
@@ -209,26 +253,17 @@ ep_reasoning_count_from_env(Min, Max) :-
     ep_int('CODING_ENDPOINT_REASONING_MIN', 2, Min),
     ep_int('CODING_ENDPOINT_REASONING_MAX', 2, Max).
 
-ep_reasoning_count(Request, Min, Max) :-
-    (   http_header(Request, 'x-coding-reasoning', Value)
-    ->  (   memberchk(Value, [off, none, plain, '0'])
-        ->  Min = 0, Max = 0
-        ;   atom_number(Value, N),
-            integer(N),
-            N >= 0
-        ->  Min = N, Max = N
-        ;   ep_reasoning_count_from_env(Min, Max)
-        )
-    ;   ep_reasoning_count_from_env(Min, Max)
-    ).
+ep_reasoning_count(default, Min, Max) :-
+    ep_reasoning_count_from_env(Min, Max).
+ep_reasoning_count(off, 0, 0).
+ep_reasoning_count(count(N), N, N).
 
-ep_mode(Request, Title, Mode) :-
-    (   Title == true
-    ->  Mode = title
-    ;   http_header(Request, 'x-coding-reasoning', Value),
-        memberchk(Value, [off, none, plain, '0'])
-    ->  Mode = plain
-    ;   ep_reasoning_on
+ep_mode(true, _, title) :-
+    !.
+ep_mode(false, off, plain) :-
+    !.
+ep_mode(false, _, Mode) :-
+    (   ep_reasoning_on
     ->  Mode = reasoning
     ;   Mode = plain
     ).
@@ -259,14 +294,14 @@ ep_fill_checks(Min, Max, Checks, Out) :-
     ;   Out = Checks
     ).
 
-ep_reasoning(Request, Mode, Title, Messages, Guide0, Guide, N, Terms) :-
+ep_reasoning(Setting, Mode, Title, Messages, Guide0, Guide, N, Terms) :-
     (   Mode == reasoning,
         \+ Title,
         ep_task_text(Messages, Text)
     ->  endpoint_reason(Text, Obs, CObs, Terms0),
         append(Obs, CObs, All0),
         ep_unique(All0, All1),
-        ep_reasoning_count(Request, Min, Max),
+        ep_reasoning_count(Setting, Min, Max),
         ep_checks(Min, Max, All1, All),
         length(All, N),
         Terms = Terms0,
@@ -451,8 +486,9 @@ ep_chat_body(Request, Body, Start, Reply) :-
             ->  Title = true
             ;   Title = false
             ),
-            ep_mode(Request, Title, Mode),
-            ep_reasoning(Request, Mode, Title, Messages, Guide0, Guide, N, Terms),
+            ep_reasoning_setting(Request, Model0, Setting),
+            ep_mode(Title, Setting, Mode),
+            ep_reasoning(Setting, Mode, Title, Messages, Guide0, Guide, N, Terms),
             ep_backend_model(Alias, BackendModel),
             (   is_list(Terms) -> length(Terms, TermCount) ; TermCount = 0 ),
             (   Title == true
@@ -507,23 +543,32 @@ ep_chat_body(Request, Body, Start, Reply) :-
 
 %% ---- routes ------------------------------------------------------------
 
+ep_models([c, 'c-r0', 'c-r2', 'c-r8',
+           cocolog, 'cocolog-r0', 'cocolog-r2', 'cocolog-r8']).
+
+ep_model_name(c, 'C (C99-C23)').
+ep_model_name('c-r0', 'C (r0: plain)').
+ep_model_name('c-r2', 'C (r2: two checks)').
+ep_model_name('c-r8', 'C (r8: eight checks)').
+ep_model_name(cocolog, cocolog).
+ep_model_name('cocolog-r0', 'cocolog (r0: plain)').
+ep_model_name('cocolog-r2', 'cocolog (r2: two checks)').
+ep_model_name('cocolog-r8', 'cocolog (r8: eight checks)').
+
 ep_models_reply(Request, reply(200, Headers, Codes)) :-
     ep_cors(Request, Cors),
     append(Cors, ['Content-Type'-'application/json'], Headers),
     ep_int('CODING_ENDPOINT_CONTEXT', 1000000, Context),
     ep_int('CODING_ENDPOINT_MAX_TOKENS', 8192, Output),
-    json_codes(json([object-list,
-                     data-[json([id-c, object-model, created-0,
-                                 owned_by-'reasoning-coding',
-                                 name-'C (C99-C23)',
-                                 context_length-Context,
-                                 max_output_tokens-Output]),
-                           json([id-cocolog, object-model, created-0,
-                                 owned_by-'reasoning-coding',
-                                 name-cocolog,
-                                 context_length-Context,
-                                 max_output_tokens-Output])]]),
-               Codes).
+    ep_models(Names),
+    findall(json([id-Name, object-model, created-0,
+                  owned_by-'reasoning-coding',
+                  name-Label,
+                  context_length-Context,
+                  max_output_tokens-Output]),
+            ( member(Name, Names), ep_model_name(Name, Label) ),
+            Data),
+    json_codes(json([object-list, data-Data]), Codes).
 
 ep_health_reply(Request, reply(200, Headers, Codes)) :-
     ep_cors(Request, Cors),
@@ -533,9 +578,10 @@ ep_health_reply(Request, reply(200, Headers, Codes)) :-
     ep_env('CODING_ENDPOINT_TRACE', '', Trace),
     ep_env('CODING_ENDPOINT_REASONING', 'on', Reasoning),
     (   Token == '' -> Auth = none ; Auth = bearer ),
+    ep_models(Names),
     json_codes(json([ok- @(true),
                      service-'reasoning-coding/1.0',
-                     models-[c, cocolog],
+                     models-Names,
                      backend-Backend,
                      reasoning-Reasoning,
                      trace-Trace,

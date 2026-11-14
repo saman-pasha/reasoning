@@ -18,8 +18,10 @@
                 ep_add_guide/3,
                 ep_task_text/2,
                 ep_reasoning/8,
+                ep_reasoning_setting/3,
                 ep_reasoning_count/3,
                 ep_mode/3,
+                ep_alias/2,
                 ep_checks/2,
                 ep_sse/3
               ]).
@@ -38,6 +40,7 @@ main :-
     test_reasoning,
     test_c_reasoning,
     test_reasoning_headers,
+    test_model_suffix,
     test_check_cap,
     unsetenv('CODING_ENDPOINT_TOKEN'),
     checks_done.
@@ -46,8 +49,8 @@ test_models :-
     ep_models_reply(request(get, '/v1/models', [], http(1, 1), [], []),
                     reply(200, _, Codes)),
     atom_codes(Text, Codes),
-    (   sub_atom(Text, _, _, _, '"id":"c"'),
-        sub_atom(Text, _, _, _, '"id":"cocolog"'),
+    (   sub_atom(Text, _, _, _, '"id":"c-r8"'),
+        sub_atom(Text, _, _, _, '"id":"cocolog-r0"'),
         sub_atom(Text, _, _, _, '"context_length":1000000'),
         sub_atom(Text, _, _, _, '"max_output_tokens":8192')
     ->  Got = both
@@ -163,8 +166,9 @@ test_reasoning :-
 test_c_reasoning :-
     Messages = [json([role-user, content-'Write hello.c that prints hello.'])],
     Request = request(post, '/v1/chat/completions', [], http(1, 1), [], []),
-    ep_mode(Request, false, Mode),
-    ep_reasoning(Request, Mode, false, Messages, 'GUIDE', Guide, N, _),
+    ep_reasoning_setting(Request, c, Setting),
+    ep_mode(false, Setting, Mode),
+    ep_reasoning(Setting, Mode, false, Messages, 'GUIDE', Guide, N, _),
     (   Mode == reasoning,
         N =:= 2,
         sub_atom(Guide, _, _, _, 'Reasoning pre-pass'),
@@ -180,13 +184,24 @@ test_reasoning_headers :-
                   ['x-coding-reasoning'-'0'], []),
     Eight = request(post, '/v1/chat/completions', [], http(1, 1),
                     ['x-coding-reasoning'-'8'], []),
-    ep_mode(Off, false, OffMode),
-    ep_reasoning(Off, OffMode, false, Messages, 'GUIDE', _, OffN, _),
-    ep_mode(Eight, false, EightMode),
-    ep_reasoning(Eight, EightMode, false, Messages, 'GUIDE', _, EightN, _),
+    ep_reasoning_setting(Off, cocolog, OffSetting),
+    ep_mode(false, OffSetting, OffMode),
+    ep_reasoning(OffSetting, OffMode, false, Messages, 'GUIDE', _, OffN, _),
+    ep_reasoning_setting(Eight, cocolog, EightSetting),
+    ep_mode(false, EightSetting, EightMode),
+    ep_reasoning(EightSetting, EightMode, false, Messages, 'GUIDE', _, EightN, _),
     check('x-coding-reasoning 0 is plain', OffMode-OffN, plain-0),
     check('x-coding-reasoning 8 is eight checks', EightMode-EightN,
           reasoning-8).
+
+test_model_suffix :-
+    Empty = request(post, '/v1/chat/completions', [], http(1, 1), [], []),
+    ep_alias('cocolog-r8', Alias),
+    ep_reasoning_setting(Empty, 'cocolog-r8', Setting),
+    ep_mode(false, Setting, Mode),
+    check('cocolog-r8 selects cocolog', Alias, cocolog),
+    check('cocolog-r8 asks for eight checks', Mode-Setting,
+          reasoning-count(8)).
 
 test_check_cap :-
     ep_checks([first, second, third], Checks),
