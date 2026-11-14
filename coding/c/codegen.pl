@@ -29,6 +29,7 @@
 %%     --keep DIR       write every attempt's prompt, code and diagnostic
 %%     --attempts N     try at most N times (default 3)
 %%     --timeout MS     let one case run MS milliseconds (default 3000)
+%%     --dry-run        print the first prompt and exit, no model call
 %%     --provider P     provider(P) in the call
 %%     --model M        model(M) in the call
 %%     --base-url U     base_url(U) in the call
@@ -359,6 +360,14 @@ codegen_guided_prompt(Spec, Obligations, Prev, Prompt) :-
                [Base, Diag, Previous])
     ).
 
+%% codegen_prompt_for(+Spec, +Contract, -Prompt)
+%%
+%% The first prompt a run would send. Contract is `none' for the keyword
+%% reading, or a controlled-English file. No model call and no compile.
+codegen_prompt_for(Spec, Contract, Prompt) :-
+    codegen_obligations_for(Spec, Contract, Obligations),
+    codegen_guided_prompt(Spec, Obligations, none, Prompt).
+
 %% Point the selected provider at the endpoint and key variable the
 %% options give. `llm_provider/3' is library(llm)'s dynamic
 %% configuration; this is what makes the default REASONING_API_KEY rather
@@ -394,34 +403,42 @@ codegen_fence_line(Line) :-
 
 main :-
     current_prolog_flag(argv, [_|Args]),
-    (   codegen_args(Args, args(SpecFile, TestsFile, ContractFile, OutFile, Report, RunOptions, Overrides))
+    (   codegen_args(Args, args(SpecFile, TestsFile, ContractFile, OutFile,
+                                Report, DryRun, RunOptions, Overrides))
     ->  catch(codegen_main(SpecFile, TestsFile, ContractFile, OutFile,
-                           Report, RunOptions, Overrides),
+                           Report, DryRun, RunOptions, Overrides),
               error(codegen_error(Kind, Detail), _),
               ( codegen_report_print(Report),
                 format(user_error, 'codegen: ~w~n~s~n', [Kind, Detail]),
                 halt(1)
               ))
-    ;   format("usage: cocolog -s coding/c/codegen.pl -- SPEC.txt [--tests CASES.txt] [--contract CONTRACT.txt] [--keep DIR] [--attempts N] [--timeout MS] [--provider P] [--model M] [--base-url U] [--effort E] [--report] [OUT.c]~n", []),
+    ;   format("usage: cocolog -s coding/c/codegen.pl -- SPEC.txt [--tests CASES.txt] [--contract CONTRACT.txt] [--keep DIR] [--attempts N] [--timeout MS] [--dry-run] [--provider P] [--model M] [--base-url U] [--effort E] [--report] [OUT.c]~n", []),
         halt(1)
     ).
 
-codegen_main(SpecFile, TestsFile, ContractFile, OutFile, Report, RunOptions, Overrides) :-
+codegen_main(SpecFile, TestsFile, ContractFile, OutFile, Report, DryRun,
+             RunOptions, Overrides) :-
     read_file_to_codes(SpecFile, Codes),
     atom_codes(Spec, Codes),
-    codegen_obligations_for(Spec, ContractFile, Obligations),
-    (   TestsFile == none
-    ->  Cases = []
-    ;   c_read_cases(TestsFile, Cases)
-    ),
-    codegen_c_from(Spec, Obligations, Cases, Overrides, RunOptions, Code),
-    (   OutFile == none
-    ->  format("~s~n", [Code])
-    ;   atom_concat(Code, '\n', Text),
-        atom_codes(Text, OutCodes),
-        write_file_from_codes(OutFile, OutCodes)
-    ),
-    codegen_report_print(Report).
+    (   DryRun == yes
+    ->  codegen_prompt_for(Spec, ContractFile, Prompt),
+        format("~s~n", [Prompt]),
+        codegen_report_reset,
+        codegen_report_print(Report)
+    ;   codegen_obligations_for(Spec, ContractFile, Obligations),
+        (   TestsFile == none
+        ->  Cases = []
+        ;   c_read_cases(TestsFile, Cases)
+        ),
+        codegen_c_from(Spec, Obligations, Cases, Overrides, RunOptions, Code),
+        (   OutFile == none
+        ->  format("~s~n", [Code])
+        ;   atom_concat(Code, '\n', Text),
+            atom_codes(Text, OutCodes),
+            write_file_from_codes(OutFile, OutCodes)
+        ),
+        codegen_report_print(Report)
+    ).
 
 %% A contract file replaces the keyword reading; a contract the reasoner
 %% reads as nothing is an error, not a silent fallback.
@@ -445,49 +462,51 @@ codegen_obligations_for(_Spec, File, Obligations) :-
 %% SPEC.txt [flags] [OUT.c], the flags anywhere after the binary. A
 %% second positional is OUT.c; a third is a usage error. One state term
 %% carries the parsed fields: args(Spec, Tests, Contract, Out, Report,
-%% Keep, Overrides).
+%% DryRun, RunOptions, Overrides).
 codegen_args(Args, ArgsTerm) :-
-    codegen_args(Args, args(none, none, none, none, no, [], []), ArgsTerm).
+    codegen_args(Args, args(none, none, none, none, no, no, [], []), ArgsTerm).
 
 codegen_args([], State, State) :-
-    State = args(Spec, _, _, _, _, _, _),
+    State = args(Spec, _, _, _, _, _, _, _),
     Spec \== none.
-codegen_args(['--tests', File|Rest], args(S, none, C, O, R, Run, Os), A) :-
-    codegen_args(Rest, args(S, File, C, O, R, Run, Os), A).
-codegen_args(['--contract', File|Rest], args(S, T, none, O, R, Run, Os), A) :-
-    codegen_args(Rest, args(S, T, File, O, R, Run, Os), A).
-codegen_args(['--keep', Dir|Rest], args(S, T, C, O, R, Run, Os), A) :-
+codegen_args(['--tests', File|Rest], args(S, none, C, O, R, D, Run, Os), A) :-
+    codegen_args(Rest, args(S, File, C, O, R, D, Run, Os), A).
+codegen_args(['--contract', File|Rest], args(S, T, none, O, R, D, Run, Os), A) :-
+    codegen_args(Rest, args(S, T, File, O, R, D, Run, Os), A).
+codegen_args(['--keep', Dir|Rest], args(S, T, C, O, R, D, Run, Os), A) :-
     codegen_run_set(keep(dir(Dir)), Run, Run1),
-    codegen_args(Rest, args(S, T, C, O, R, Run1, Os), A).
-codegen_args(['--attempts', N|Rest], args(S, T, C, O, R, Run, Os), A) :-
+    codegen_args(Rest, args(S, T, C, O, R, D, Run1, Os), A).
+codegen_args(['--attempts', N|Rest], args(S, T, C, O, R, D, Run, Os), A) :-
     atom_number(N, N0),
     integer(N0),
     N0 > 0,
     codegen_run_set(attempts(N0), Run, Run1),
-    codegen_args(Rest, args(S, T, C, O, R, Run1, Os), A).
-codegen_args(['--timeout', Ms|Rest], args(S, T, C, O, R, Run, Os), A) :-
+    codegen_args(Rest, args(S, T, C, O, R, D, Run1, Os), A).
+codegen_args(['--timeout', Ms|Rest], args(S, T, C, O, R, D, Run, Os), A) :-
     atom_number(Ms, Ms0),
     integer(Ms0),
     Ms0 > 0,
     codegen_run_set(case_timeout(Ms0), Run, Run1),
-    codegen_args(Rest, args(S, T, C, O, R, Run1, Os), A).
-codegen_args(['--provider', P|Rest], args(S, T, C, O, R, Run, Os), A) :-
-    codegen_args(Rest, args(S, T, C, O, R, Run, [provider(P)|Os]), A).
-codegen_args(['--model', M|Rest], args(S, T, C, O, R, Run, Os), A) :-
-    codegen_args(Rest, args(S, T, C, O, R, Run, [model(M)|Os]), A).
-codegen_args(['--base-url', U|Rest], args(S, T, C, O, R, Run, Os), A) :-
-    codegen_args(Rest, args(S, T, C, O, R, Run, [base_url(U)|Os]), A).
-codegen_args(['--effort', E|Rest], args(S, T, C, O, R, Run, Os), A) :-
-    codegen_args(Rest, args(S, T, C, O, R, Run, [effort(E)|Os]), A).
-codegen_args(['--report'|Rest], args(S, T, C, O, _, Run, Os), A) :-
-    codegen_args(Rest, args(S, T, C, O, yes, Run, Os), A).
-codegen_args([Arg|Rest], args(none, T, C, O, R, Run, Os), A) :-
+    codegen_args(Rest, args(S, T, C, O, R, D, Run1, Os), A).
+codegen_args(['--provider', P|Rest], args(S, T, C, O, R, D, Run, Os), A) :-
+    codegen_args(Rest, args(S, T, C, O, R, D, Run, [provider(P)|Os]), A).
+codegen_args(['--model', M|Rest], args(S, T, C, O, R, D, Run, Os), A) :-
+    codegen_args(Rest, args(S, T, C, O, R, D, Run, [model(M)|Os]), A).
+codegen_args(['--base-url', U|Rest], args(S, T, C, O, R, D, Run, Os), A) :-
+    codegen_args(Rest, args(S, T, C, O, R, D, Run, [base_url(U)|Os]), A).
+codegen_args(['--effort', E|Rest], args(S, T, C, O, R, D, Run, Os), A) :-
+    codegen_args(Rest, args(S, T, C, O, R, D, Run, [effort(E)|Os]), A).
+codegen_args(['--dry-run'|Rest], args(S, T, C, O, R, _, Run, Os), A) :-
+    codegen_args(Rest, args(S, T, C, O, R, yes, Run, Os), A).
+codegen_args(['--report'|Rest], args(S, T, C, O, _, D, Run, Os), A) :-
+    codegen_args(Rest, args(S, T, C, O, yes, D, Run, Os), A).
+codegen_args([Arg|Rest], args(none, T, C, O, R, D, Run, Os), A) :-
     \+ codegen_flag(Arg),
-    codegen_args(Rest, args(Arg, T, C, O, R, Run, Os), A).
-codegen_args([Arg|Rest], args(S, T, C, none, R, Run, Os), A) :-
+    codegen_args(Rest, args(Arg, T, C, O, R, D, Run, Os), A).
+codegen_args([Arg|Rest], args(S, T, C, none, R, D, Run, Os), A) :-
     S \== none,
     \+ codegen_flag(Arg),
-    codegen_args(Rest, args(S, T, C, Arg, R, Run, Os), A).
+    codegen_args(Rest, args(S, T, C, Arg, R, D, Run, Os), A).
 
 codegen_run_set(Option, Options, [Option|Rest]) :-
     functor(Option, Key, _),

@@ -24,6 +24,7 @@ main :-
     cases_file,
     cli,
     keep,
+    dry_run,
     check_tool,
     checks_done.
 
@@ -335,20 +336,22 @@ cases_file :-
 cli :-
     section('cli'),
     cli_query("codegen_args(['s','o'], A), write(A)",
-              ['args(s,none,none,o,no,[],[]']),
+              ['args(s,none,none,o,no,no,[],[]']),
     cli_query("codegen_args(['s','--tests','c','o'], A), write(A)",
-              ['args(s,c,none,o,no,[],[]']),
+              ['args(s,c,none,o,no,no,[],[]']),
     cli_query("codegen_args(['s','--contract','k.txt','o'], A), write(A)",
-              ['args(s,none,k.txt,o,no,[],[]']),
+              ['args(s,none,k.txt,o,no,no,[],[]']),
     cli_query("codegen_args(['s','--keep','k','o'], A), write(A)",
-              ['args(s,none,none,o,no,[keep(dir(k))],[]']),
+              ['args(s,none,none,o,no,no,[keep(dir(k))],[]']),
     cli_query("codegen_args(['s','--attempts','2','--timeout','500','o'], A), write(A)",
               ['attempts(2)', 'case_timeout(500)']),
     cli_query("codegen_args(['--provider','openai','--model','deepseek-flash','--base-url','https://x','--effort','none','s','o'], A), write(A)",
               ['provider(openai)', 'model(deepseek-flash)',
                'base_url(https://x)', 'effort(none)']),
     cli_query("codegen_args(['s','--report','o'], A), write(A)",
-              [',yes,']),
+              [',yes,no,']),
+    cli_query("codegen_args(['s','--dry-run','o'], A), write(A)",
+              [',no,yes,']),
     cli_query("( codegen_args(['s','--provider'], _) -> write(yes) ; write(no) )",
               ['no']),
     cli_query("( codegen_args(['s','--keep'], _) -> write(yes) ; write(no) )",
@@ -437,6 +440,53 @@ keep_absent(Dir, Name) :-
     ),
     format(atom(Label), '~w is not written', [Name]),
     check(Label, Result, absent).
+
+%% ---- the dry run -------------------------------------------------------
+
+dry_run :-
+    section('dry run'),
+    scratch(Dir),
+    atom_concat(Dir, '/sum.txt', SpecFile),
+    fixture(SpecFile,
+            ['Write a complete C17 program. It reads integers. It prints the sum of all even integers.']),
+    atom_concat(Dir, '/contract.txt', ContractFile),
+    fixture(ContractFile,
+            ['Every program has an input.',
+             'Every program has an output.',
+             'Balanced reads the line.',
+             'Every line has a bracket.']),
+    atom_concat(Dir, '/bad_contract.txt', BadContract),
+    fixture(BadContract,
+            ['The quick brown fox jumps over the lazy dog.']),
+    atom_concat(Dir, '/never.c', OutFile),
+    format(atom(Args1), "-s coding/c/codegen.pl -- ~w --dry-run ~w",
+           [SpecFile, OutFile]),
+    cocolog_run(Args1, Text1, Exit1),
+    check('a dry run exits 0', Exit1, 0),
+    has('the dry run carries the requirement', 'sum of all even integers', Text1),
+    has('the dry run carries the keyword obligation',
+        'Only even integers contribute', Text1),
+    (   catch(read_file_to_codes(OutFile, _), _, fail)
+    ->  Wrote = yes
+    ;   Wrote = no
+    ),
+    check('a dry run writes no program', Wrote, no),
+    format(atom(Args2), "-s coding/c/codegen.pl -- ~w --contract ~w --dry-run",
+           [SpecFile, ContractFile]),
+    cocolog_run(Args2, Text2, Exit2),
+    check('a contract dry run exits 0', Exit2, 0),
+    has('the contract dry run carries its obligation',
+        'Track bracket kind', Text2),
+    format(atom(Args3), "-s coding/c/codegen.pl -- ~w --contract ~w --dry-run",
+           [SpecFile, BadContract]),
+    cocolog_run(Args3, _Text3, Exit3),
+    check('a bad contract fails before a prompt', Exit3, 1),
+    format(atom(Args4), "-s coding/c/codegen.pl -- ~w --tests ~w --dry-run",
+           [SpecFile, '/no/such/cases']),
+    cocolog_run(Args4, Text4, Exit4),
+    check('a dry run ignores the tests file', Exit4, 0),
+    has('the dry run still prints a prompt',
+        'Write a complete C17 program', Text4).
 
 %% ---- the standalone checker -------------------------------------------
 
