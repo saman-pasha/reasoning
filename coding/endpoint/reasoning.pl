@@ -1,4 +1,4 @@
-%% coding/endpoint/reasoning.pl -- the endpoint's local reasoning pre-pass.
+%% coding/endpoint/reasoning.pl -- the endpoint's reasoning helper.
 %%
 %%     cocolog -s coding/endpoint/reasoning.pl -- TEXT.txt
 %%
@@ -10,11 +10,10 @@
 %%
 %% Nothing here calls a model. The endpoint appends the findings to the
 %% language guide, so the cocolog session is checked against this
-%% repository's own reading of the request.
+%% repository's own reading of the request. The reading itself is
+%% reasoning_core.pl's, shared with the httpd endpoint.
 
-:- use_module('coding/obligations.pl').
-:- use_module('coding/contract.pl').
-:- use_module(library(reasoning/reason)).
+:- use_module('coding/endpoint/reasoning_core.pl').
 
 main :-
     current_prolog_flag(argv, [_|Args]),
@@ -25,22 +24,7 @@ main :-
     ),
     read_file_to_codes(File, Codes),
     atom_codes(Text, Codes),
-    (   catch(codegen_obligations(Text, Obs), _, fail)
-    ->  true
-    ;   Obs = []
-    ),
-    (   catch(codegen_contract_obligations(Text, CObs), _, fail)
-    ->  true
-    ;   CObs = []
-    ),
-    (   catch(reason_text(Text, Terms0), _, fail)
-    ->  true
-    ;   Terms0 = []
-    ),
-    (   length(Terms0, N), N > 20
-    ->  length(Terms, 20)
-    ;   Terms = Terms0
-    ),
+    endpoint_reason(Text, Obs, CObs, Terms),
     forall(member(O, Obs), format("obligation\t~s~n", [O])),
     forall(member(O, CObs), format("contract\t~s~n", [O])),
     forall(member(T, Terms), format("term\t~q~n", [T])).

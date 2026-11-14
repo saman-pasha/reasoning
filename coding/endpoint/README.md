@@ -40,6 +40,30 @@ OpenCode's tools, but it is checked against this repository's own reading of
 the request. `CODING_ENDPOINT_REASONING=off` disables the pass. The `c` model
 does not use it.
 
+## The non-streaming cocolog httpd version
+
+`httpd.pl` is the same endpoint written in cocolog, for a box that wants
+the server in this repository's language. It asks the backend for one whole
+reply — `library(curl)` has no streaming — and, when the client asked for
+`stream: true` as OpenCode does, synthesises the reply as SSE: one content
+(or tool-call) chunk, one finish chunk, then `[DONE]`.
+
+```sh
+export REASONING_API_KEY=...
+export CODING_ENDPOINT_TOKEN=...
+CODING_ENDPOINT_PORT=8790 coding/endpoint/run-httpd.sh
+```
+
+It uses the same guides, reasoning pre-pass, environment variables and
+trace format as `server.py`. Its limits are the tradeoff: the whole reply
+arrives before the first byte reaches OpenCode, and `library(tcp)` binds
+every interface rather than loopback, so the bearer token is the guard.
+Run one endpoint or the other on a port, not both.
+
+OpenCode was checked against it with `reasoning/c` writing and compiling a
+C file through `write`/`shell` tool calls, and with
+`reasoning/cocolog#none` answering a cocolog prompt.
+
 ## Trace
 
 Set `CODING_ENDPOINT_TRACE=/path/to/trace.jsonl` to write one JSON line per
@@ -136,21 +160,28 @@ The OpenCode title-generation request is forwarded without a language guide.
 
 ```sh
 python3 coding/endpoint/test.py -v
+python3 coding/endpoint/test_httpd.py -v
 ```
 
-The test starts a fake backend and the endpoint, then checks the model
+The first test starts a fake backend and `server.py`; the second starts
+`httpd.pl` against the same kind of fake backend. They check the model
 list, the model mapping and token cap, the injected C guide, the title
 request without a guide, the bearer-token guard, the forwarded effort,
-and a streamed cocolog reply. No model is called.
+the non-stream JSON, the synthesised SSE and the trace. No model is
+called.
 
 ## Files
 
 | path | what |
 |---|---|
-| `server.py` | the endpoint, standard library only |
-| `run.sh` | starts it and makes or accepts the bearer token |
+| `server.py` | the streaming endpoint, standard library only |
+| `run.sh` | starts `server.py` and makes or accepts the bearer token |
+| `httpd.pl` | the non-streaming endpoint in cocolog |
+| `run-httpd.sh` | starts `httpd.pl` with the repository's library path |
+| `reasoning_core.pl` | the shared obligations, contract and term reader |
 | `config/opencode.json` | the provider, the two models and their variants |
-| `reasoning.pl` | the local pre-pass: obligations, contracts and parsed terms |
+| `reasoning.pl` | the command-line form of the pre-pass |
 | `prompts/c.md` | the C guide, every edition from C99 to C23 |
 | `prompts/cocolog.md` | the cocolog addendum to `SKILL.md` |
-| `test.py` | the local checks, no model |
+| `test.py` | the local checks for `server.py`, no model |
+| `test_httpd.py` | the local checks for `httpd.pl`, no model |

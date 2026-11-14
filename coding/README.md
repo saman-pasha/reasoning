@@ -380,8 +380,11 @@ It is an OpenAI-compatible endpoint: it appends the language's guide to the
 system prompt, keeps OpenCode's conversation, tools and stream, and forwards
 the request to an OpenAI-compatible backend. The C model gets
 `coding/endpoint/prompts/c.md`; the cocolog model gets cocolog's own
-`SKILL.md` plus a short addendum. `coding/endpoint/README.md` has the start
-command, the OpenCode config and the backend variables.
+`SKILL.md` plus a short addendum, and `cocolog` also gets the repository's
+reasoning pre-pass. A non-streaming version written in cocolog
+(`coding/endpoint/httpd.pl`) buffers the backend reply and synthesises SSE
+for OpenCode. `coding/endpoint/README.md` has the start commands, the
+OpenCode config and the backend variables.
 
 ## Benchmark
 
