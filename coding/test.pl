@@ -520,6 +520,8 @@ cli :-
               ['[]']),
     cli_query("asserta((llm_chat(_M,_O,'int main(void) { return 0; }') :- nb_setval(llm_usage, json([prompt_tokens-10, completion_tokens-5, total_tokens-15, prompt_cache_hit_tokens-3, completion_tokens_details-json([reasoning_tokens-2])])), !)), codegen_c_compiled('a spec', _), codegen_report(report(1,10,5,2,3,15,S)), float(S), codegen_report_calls([call(_,10,5,2,3,15)]), write('USAGE-'), write(731)",
               ['USAGE-731']),
+    cli_query("asserta((llm_chat(_M,_O,'int main(void) { return 0; }') :- nb_setval(llm_usage, json([input_tokens-10, output_tokens-5, cache_read_input_tokens-3, reasoning_tokens-2])), !)), codegen_c_compiled('a spec', _), codegen_report(report(1,10,5,2,3,15,S)), float(S), write('ANTHROPIC-USAGE-'), write(731)",
+              ['ANTHROPIC-USAGE-731']),
     cli_query("asserta((llm_chat(_M,_O,'int main(void) { return 0; }') :- nb_setval(llm_usage, json([prompt_tokens-10, completion_tokens-5, total_tokens-15])), !)), codegen_c_compiled('a spec', _), codegen_report_print(yes), write('PRINT-'), write(731)",
               ['codegen call 1:', 'PRINT-731']),
     cli_query("( catch(codegen_obligations_for(s, '/no/such/contract', _), error(codegen_error(contract_file, _), _), true) -> write(yes) ; write(no) )",
@@ -720,6 +722,7 @@ dry_run :-
 auto_cases :-
     section('auto cases'),
     auto_cases_child,
+    auto_cases_provider,
     auto_cases_reject,
     auto_cases_refused,
     cli_query("codegen_args(['s','--auto-tests','--cases-effort','none','o'], A), write(A)",
@@ -728,11 +731,15 @@ auto_cases :-
               ['args(s,auto,none,o,no,no,[verify_model(m)],[])']),
     cli_query("codegen_args(['s','--auto-tests','o'], A), write(A)",
               ['args(s,auto,none,o,no,no,[],[])']),
-    cli_query("codegen_verify_model([], auto, M), write(M)",
-              ['claude-opus-5-5']),
-    cli_query("codegen_verify_model([provider(openai), model('deepseek-flash'), base_url('x')], auto, M), write(M)",
-              ['deepseek-reasoner']),
-    cli_query("codegen_verify_model([], custom, M), write(M)",
+    cli_query("codegen_args(['s','--auto-tests','--verify-provider','anthropic','--verify-base-url','u','--verify-key-env','K','o'], args(_,_,_,_,_,_,Run,_)), memberchk(verify_provider(anthropic), Run), memberchk(verify_base_url(u), Run), memberchk(verify_key_env(K), Run), write('VERIFY-ARGS-'), write(731)",
+              ['VERIFY-ARGS-731']),
+    cli_query("codegen_verify_settings([], high, verify(auto,auto,none,none), Ref, P, M), write('SET-'), write(P), write('-'), write(M), ( memberchk(model('claude-opus-5-5'), Ref) -> write('-ok') ; write('-no') )",
+              ['SET-anthropic-claude-opus-5-5-ok']),
+    cli_query("codegen_verify_settings([provider(openai), model('deepseek-flash'), base_url('x')], high, verify(auto,auto,none,none), Ref, P, M), write('DEEP-'), write(P), write('-'), write(M), ( memberchk(base_url(x), Ref) -> write('-ok') ; write('-no') )",
+              ['DEEP-openai-deepseek-reasoner-ok']),
+    cli_query("codegen_verify_settings([provider(openai), model('deepseek-flash'), base_url('main')], high, verify(anthropic,'deepseek-reasoner','ref','ANTHROPIC_AUTH_TOKEN'), Ref, P, M), write('PROV-'), write(P), write('-'), write(M), memberchk(provider(anthropic), Ref), memberchk(base_url(ref), Ref), memberchk(key_env('ANTHROPIC_AUTH_TOKEN'), Ref), write('-ok')",
+              ['PROV-anthropic-deepseek-reasoner-ok']),
+    cli_query("codegen_verify_settings([], high, verify(auto,custom,none,none), _, _, M), write(M)",
               ['custom']),
     cli_query("asserta((llm_chat(_, Options, '# input\\n1\\n# expected\\n1\\n') :- member(effort(high), Options), !)), codegen_cases('a spec', _), write('CASE-EFFORT-'), write(731)",
               ['CASE-EFFORT-731']),
@@ -742,6 +749,10 @@ auto_cases :-
 auto_cases_child :-
     Goal = "asserta((llm_chat(Messages, Options, '#include <stdio.h>\\nint main(void){int c;while((c=getchar())!=EOF)putchar(c);return 0;}\\n') :- memberchk(model('claude-sonnet-4-5'), Options), member(msg(system, S), Messages), sub_atom(S, _, _, _, 'C17 programmer'), \\+ sub_atom(S, _, _, _, 'reference implementation'), !)), asserta((llm_chat(Messages, Options, '#include <stdio.h>\\nint main(void){int c;while((c=getchar())!=EOF)putchar(c);return 0;}\\n') :- memberchk(model('claude-opus-5-5'), Options), member(msg(system, S), Messages), sub_atom(S, _, _, _, 'reference implementation'), !)), asserta((llm_chat(Messages, _, '# input\\nabc\\n# expected\\nabc\\n# input\\n# expected\\n') :- member(msg(system, S), Messages), sub_atom(S, _, _, _, 'test cases'), !)), codegen_c_tested('Copy standard input to standard output.', auto, _), codegen_report(report(Calls, _, _, _, _, _, _)), write('AUTO-CALLS-'), write(Calls), nl",
     cli_query(Goal, ['AUTO-CALLS-3']).
+
+auto_cases_provider :-
+    Goal = "asserta((llm_chat(Messages, Options, '#include <stdio.h>\\nint main(void){int c;while((c=getchar())!=EOF)putchar(c);return 0;}\\n') :- memberchk(provider(openai), Options), memberchk(model('deepseek-flash'), Options), member(msg(system, S), Messages), sub_atom(S, _, _, _, 'C17 programmer'), \\+ sub_atom(S, _, _, _, 'reference implementation'), !)), asserta((llm_chat(Messages, Options, '#include <stdio.h>\\nint main(void){int c;while((c=getchar())!=EOF)putchar(c);return 0;}\\n') :- memberchk(provider(anthropic), Options), memberchk(model('deepseek-reasoner'), Options), member(msg(system, S), Messages), sub_atom(S, _, _, _, 'reference implementation'), !)), asserta((llm_chat(Messages, _, '# input\\nabc\\n# expected\\nabc\\n# input\\n# expected\\n') :- member(msg(system, S), Messages), sub_atom(S, _, _, _, 'test cases'), !)), codegen_c_from('Copy standard input to standard output.', [], auto, [provider(openai), model('deepseek-flash'), base_url('https://main'), temperature(0)], [verify_provider(anthropic), verify_model('deepseek-reasoner'), verify_base_url('https://ref'), verify_key_env('ANTHROPIC_AUTH_TOKEN')], _), codegen_report(report(Calls, _, _, _, _, _, _)), write('AUTO-PROVIDER-'), write(Calls), nl",
+    cli_query(Goal, ['AUTO-PROVIDER-3']).
 
 auto_cases_reject :-
     Goal = "asserta((llm_chat(_, _, '#include <stdio.h>\\nint main(void){putchar(51);putchar(10);return 0;}\\n') :- !)), asserta((llm_chat(Messages, _, '#include <stdio.h>\\nint main(void){putchar(51);putchar(10);return 0;}\\n') :- member(msg(system, S), Messages), sub_atom(S, _, _, _, 'reference implementation'), !)), asserta((llm_chat(Messages, _, '# input\\n1 2\\n# expected\\n4\\n') :- member(msg(system, S), Messages), sub_atom(S, _, _, _, 'test cases'), !)), ( catch(codegen_c_tested('Read two integers. Print their sum.', auto, _), error(codegen_error(cases_auto, _), _), true) -> write('AUTO-REJECT-'), write(731) ; write('AUTO-OTHER-'), write(731) )",
