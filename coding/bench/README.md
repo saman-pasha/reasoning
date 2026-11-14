@@ -98,73 +98,49 @@ after trimming trailing whitespace and final newlines.
 
 ## A sample run
 
-2026-11-14, `deepseek-flash`, `REASONING_API_KEY`, the nine tasks before
-`mvccs`:
+2026-11-14, `deepseek-flash`, `REASONING_API_KEY`, all ten tasks:
 
 ```
 mode      tasks passed attempts prompt completion reasoning total cache_hit seconds
-high      9     8      9        1211   17663      13134     18874 0         104.85
-loop      9     8      12       2441   5228       0         7669  896       55.01
-contract  9     9      9        1807   5666       0         7473  0         45.53
-extract   9     9      18       4194   5487       0         9681  767       43.56
-derive    9     9      9        1855   5149       0         7004  0         43.91
-escalate  9     9      10       1654   5186       0         6840  256       47.01
-escalate2 9     9      12       2574   5706       0         8280  1024      56.11
+high      10    9      10       1607   36956      29534     38563 256       205.33
+loop      10    8      15       8139   11445      0         19584 2048      92.33
+contract  10    10     10       2382   7888       0         10270 384       62.29
+extract   10    10     20       5370   8582       0         13952 1535      61.35
+derive    10    10     10       2429   7575       0         10004 384       61.34
+escalate  10    9      13       8174   11646      0         19820 1664      84.33
+escalate2 10    9      15       9070   13372      0         22442 2048      95.62
 ```
 
 `stable_sort` is still the hard task: the model must sort by score and
-keep equal scores in input order. `high` failed it (1 328 tokens, 701 of
-them reasoning) and `loop` failed it in three plain attempts (2 210).
-`contract` and `derive` solved it on their first codegen attempt (1 139
-and 1 147); `extract` also passed on its first codegen attempt, 1 332
-including its extraction call; `escalate` passed on its second attempt
-(2 035) and `escalate2` on its third (2 810), which is when its
-third-stage obligations fired. `lcs` also needed one repair in `loop` and
-`escalate2`.
+keep equal scores in input order. `high` failed it (2 899 tokens, 2 072
+of them reasoning) and `loop` failed it in three plain attempts (2 210).
+`contract`, `derive` and `extract` solved it on their first codegen
+attempt (1 126, 1 114 and 1 389, the last including its extraction call);
+`escalate` passed it on its second attempt (1 823) and `escalate2` on its
+third (2 810), which is when its third-stage obligations fired.
 
-That is the expected tradeoff: `escalate2` withholds the obligations until
-a second repair is needed, so it pays two failed attempts before they
-help. `contract`/`derive` pay obligations on every task and solve the hard
-one first time. `extract` is 9/9 but the costliest successful mode at
-9 681 because it spends two calls per task. `high` is 8/9 and burned
-13 134 reasoning tokens. Among the 9/9 modes, `escalate` is cheapest at
-6 840, then `derive` at 7 004 and `contract` at 7 473; per task solved
-that is 760, 778 and 830 tokens, against `high`'s 2 359 (18 874 tokens
-for the 8 tasks it solved).
+`mvccs`, the MVCC B-tree, is the new task: one writer, any number of
+readers, a snapshot per reader, and a 2-3-4 tree at each snapshot. `high`
+passed it first try at 17 197 tokens (14 005 reasoning), and `derive`
+passed it first try at 2 902, the cheapest of the modes. `contract`
+passed at 2 998 and `extract` at 4 037 (including extraction). `loop`,
+`escalate` and `escalate2` failed it after three attempts (11 923, 13 166
+and 14 082). The generated programs define B-tree node structs with a
+version chain or copy-on-write, so the task measures the MVCC B-tree, not
+a flat map. The model is not deterministic: run alone before this suite,
+`mvccs` had `contract` and `escalate2` pass first try (3 061 and 2 615)
+and `derive` fail; here `derive` passes and `escalate2` fails.
 
-`btree` passed on the first attempt in every mode. `high` spent 5 489
-tokens (4 294 reasoning) where `loop` spent 1 145; `derive`, `escalate`
-and `escalate2` were all near 1 130-1 180, and `contract` was 1 347.
+`derive` is the cheapest 10/10 mode at 10 004, then `contract` at 10 270
+and `extract` at 13 952; per task solved that is 1 000, 1 027 and 1 395.
+`high` is 9/10 and burned 29 534 reasoning tokens, 3 963 per task it
+solved (35 664 for the 9). `loop` is 8/10 at 19 584 and `escalate` and
+`escalate2` 9/10 at 19 820 and 22 442; the failed tasks account for much
+of those totals.
 
-### The MVCCS task
-
-`mvccs` is the MVCC B-tree: a 2-3-4 tree of integer keys with one writer,
-any number of readers and a snapshot per reader. The writer stages
-insertions and commits them as one new version; a reader sees the tree as
-of its snapshot. The requirement asks for copy-on-write or versioned
-nodes, recursion and dynamic allocation. Run alone on 2026-11-14:
-
-```
-mode      tasks passed attempts prompt completion reasoning total cache_hit seconds
-high      1     1      1        396    20072      17435     20468 0         102.49
-loop      1     0      3        6945   8016       0         14961 640       34.34
-contract  1     1      1        575    2486       0         3061  0         12.08
-extract   1     1      2        1188   2874       0         4062  128       12.63
-derive    1     0      3        6730   6881       0         13611 1408      32.62
-escalate  1     1      2        3340   4775       0         8115  640       22.45
-escalate2 1     1      1        371    2244       0         2615  128       11.16
-```
-
-`contract` solves it on the first call for 3 061 tokens, and `escalate2`
-does too for 2 615; `extract` passes on its first codegen attempt (4 062
-including the extraction call). `high` passes but spends 20 468 tokens,
-17 435 of them reasoning. `escalate` needs a repair (8 115). `loop` and
-`derive` fail after three attempts: the loop's last program segfaults
-after the B-tree splits, and `derive`'s checklist does not keep the
-per-snapshot roots, so it prints the newest tree for every reader. The
-passing programs all define B-tree nodes with copy-on-write or a version
-chain, so the MVCC requirement is what is being measured, not a flat map.
-The shipped tool passes it on its first call too (3 284 tokens, 13.57 s).
+`btree` passed on the first attempt in every mode: `high` spent 6 249
+tokens (5 090 reasoning) where `loop`, `derive`, `escalate` and
+`escalate2` spent 1 134-1 136, `contract` 1 326 and `extract` 1 647.
 
 ### History: the eight tasks before `btree`
 
@@ -249,23 +225,25 @@ the task's cases under the sanitizers. Its tokens come from
 the `derive` policy plus the tool's own keyword reader and the sanitizers,
 so its token count is the one to compare with the tool's future.
 
-A run on the nine tasks before `mvccs`, on 2026-11-14:
+A run on all ten tasks, on 2026-11-14:
 
 ```
 task        pass calls prompt completion reasoning total cache_hit seconds
-sum_even    pass 1     219    73         0         292   0         4.51
-max_subarray pass 1    228    169        0         397   0         5.44
-balanced    pass 1     211    308        0         519   0         6.08
-word_count  pass 1     237    827        0         1064  0         6.88
-phonebook   pass 1     286    1004       0         1290  128       8.42
-calculator  pass 1     244    488        0         732   0         6.76
-lcs         pass 1     202    247        0         449   0         6.30
-stable_sort pass 1     241    618        0         859   0         7.03
-btree       pass 1     182    902        0         1084  0         8.36
-overall     9 9        9      2050       4636      0     6686  128   59.78
+sum_even    pass 1     219    73         0         292   0         5.47
+max_subarray pass 1    228    169        0         397   0         5.15
+balanced    pass 1     211    320        0         531   0         5.08
+word_count  pass 1     237    835        0         1072  0         5.94
+phonebook   pass 1     286    830        0         1116  128       6.70
+calculator  pass 1     244    488        0         732   0         5.89
+lcs         pass 1     202    249        0         451   0         5.37
+stable_sort pass 1     241    533        0         774   0         6.51
+btree       pass 1     218    940        0         1158  0         7.32
+mvccs       pass 1     666    2457       0         3123  512       13.31
+overall     10 10      10     2752       6894      0     9646  640       66.74
 ```
 
-All nine passed on the first call, including `stable_sort` and `btree`;
+All ten passed on the first call, including `stable_sort`, `btree` and
+`mvccs`;
 the keyword checklist carried the stable-order line without a repair. The
 seconds are longer than the `derive` row's because every case runs under
 the sanitizers.
