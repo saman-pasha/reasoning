@@ -103,7 +103,12 @@ on `PATH`.
 ## Tests
 
 A compiling program can still be wrong, so `--tests CASES.txt` runs it.
-The file is one Prolog term:
+The cases binary is built with AddressSanitizer and
+UndefinedBehaviorSanitizer (`-fsanitize=address,undefined
+-fno-sanitize-recover=all`), so an out-of-bounds read or a signed overflow
+fails a case even when the printed answer happens to match. Leak detection
+is off: a one-shot program's leak is no answer's business. The file is one
+Prolog term:
 
 ```prolog
 cases([case('1 2 3\n', '6'),
@@ -123,11 +128,11 @@ codegen_c_tested(Spec, Cases, Overrides, Code).
 
 `codegen_c_tested/3,4` also carries the obligation checklist. It throws
 `error(codegen_error(test_failed, Diagnostic), _)` when the third reply
-still answers a case wrong (a compile failure keeps `compile_failed`).
-`c_test_check(Code, Cases, Verdict)` is the combined check on its own
-(`ok`, `fail(compile, Diagnostic)` or `fail(test, Diagnostic)`), and
-`c_read_cases(File, Cases)` reads and validates the cases file; both are
-in `coding/compile.pl`.
+still answers a case wrong or reports undefined behaviour (a compile
+failure keeps `compile_failed`). `c_test_check(Code, Cases, Verdict)` is
+the combined check on its own (`ok`, `fail(compile, Diagnostic)` or
+`fail(test, Diagnostic)`), and `c_read_cases(File, Cases)` reads and
+validates the cases file; both are in `coding/compile.pl`.
 
 ## Obligations
 
@@ -172,7 +177,8 @@ See its README for the modes, the token columns and sample runs.
 5. Strip a Markdown fence, if the model added one.
 6. Compile the reply; on failure, return the diagnostic and the previous
    program to the model and try again.
-7. If cases are given, run them and repair a wrong answer the same way.
+7. If cases are given, run them under the sanitizers and repair a wrong
+   answer or a report the same way.
 8. Return or write the code.
 
 The C generator is `coding/c/codegen.pl`; it is deliberately small. The
