@@ -31,6 +31,9 @@
 %%     --timeout MS     let one case run MS milliseconds (default 3000)
 %%     --cflags FLAGS   extra clang arguments (default none)
 %%     --dry-run        print the first prompt and exit, no model call
+%%     --key-env NAME   read the API key from NAME
+%%     --temperature T  temperature(T) in the call
+%%     --max-tokens N   max_tokens(N) in the call
 %%     --provider P     provider(P) in the call
 %%     --model M        model(M) in the call
 %%     --base-url U     base_url(U) in the call
@@ -423,7 +426,7 @@ main :-
                 format(user_error, 'codegen: ~w~n~s~n', [Kind, Detail]),
                 halt(1)
               ))
-    ;   format("usage: cocolog -s coding/c/codegen.pl -- SPEC.txt [--tests CASES.txt] [--contract CONTRACT.txt] [--keep DIR] [--attempts N] [--timeout MS] [--cflags FLAGS] [--dry-run] [--provider P] [--model M] [--base-url U] [--effort E] [--report] [OUT.c]~n", []),
+    ;   format("usage: cocolog -s coding/c/codegen.pl -- SPEC.txt [--tests CASES.txt] [--contract CONTRACT.txt] [--keep DIR] [--attempts N] [--timeout MS] [--cflags FLAGS] [--dry-run] [--key-env NAME] [--temperature T] [--max-tokens N] [--provider P] [--model M] [--base-url U] [--effort E] [--report] [OUT.c]~n", []),
         halt(1)
     ).
 
@@ -510,6 +513,18 @@ codegen_args(['--base-url', U|Rest], args(S, T, C, O, R, D, Run, Os), A) :-
     codegen_args(Rest, args(S, T, C, O, R, D, Run, [base_url(U)|Os]), A).
 codegen_args(['--effort', E|Rest], args(S, T, C, O, R, D, Run, Os), A) :-
     codegen_args(Rest, args(S, T, C, O, R, D, Run, [effort(E)|Os]), A).
+codegen_args(['--key-env', K|Rest], args(S, T, C, O, R, D, Run, Os), A) :-
+    codegen_args(Rest, args(S, T, C, O, R, D, Run, [key_env(K)|Os]), A).
+codegen_args(['--temperature', Temp|Rest], args(S, T, C, O, R, D, Run, Os), A) :-
+    atom_number(Temp, Value),
+    number(Value),
+    Value >= 0,
+    codegen_args(Rest, args(S, T, C, O, R, D, Run, [temperature(Value)|Os]), A).
+codegen_args(['--max-tokens', N|Rest], args(S, T, C, O, R, D, Run, Os), A) :-
+    atom_number(N, Value),
+    integer(Value),
+    Value > 0,
+    codegen_args(Rest, args(S, T, C, O, R, D, Run, [max_tokens(Value)|Os]), A).
 codegen_args(['--dry-run'|Rest], args(S, T, C, O, R, _, Run, Os), A) :-
     codegen_args(Rest, args(S, T, C, O, R, yes, Run, Os), A).
 codegen_args(['--report'|Rest], args(S, T, C, O, _, D, Run, Os), A) :-
