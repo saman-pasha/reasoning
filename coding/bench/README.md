@@ -161,20 +161,23 @@ extract   1     0      4        13934  16187      0         30121 3712      53.6
 derive    1     0      3        13203  14833      0         28036 4224      52.83
 escalate  1     0      3        12533  14972      0         27505 1536      51.60
 escalate2 1     0      3        10779  13317      0         24096 1280      48.34
-opencode-c-r0#high 1     1      25       n/a    n/a        n/a       n/a   n/a       1245.77
-opencode-c-r2#high 1     1      13       n/a    n/a        n/a       n/a   n/a       195.50
-opencode-c-r8#high 1     1      35       n/a    n/a        n/a       n/a   n/a       377.23
+opencode-c-r0#high 1     1      39       1660899 42270      26492     1703169 1638272   557.95
+opencode-c-r2#high 1     1      12       364250  33931      24856     398181  355712    319.88
+opencode-c-r8#high 1     1      10       297881  30504      20579     328385  290432    198.87
 ```
 
 The last three rows are not benchmark modes: they are the same task
 through OpenCode, in a fresh directory holding only `spec.txt` and
 `cases/`, with the model's `#high` variant. `attempts` counts endpoint
-calls and `seconds` is the session's wall time; the token columns are
-`n/a` because the endpoint does not record provider usage. The call times
-were 232.3 s for `c-r0`, 153.9 s for `c-r2` and 266.9 s for `c-r8`. Each
-generated program was independently rebuilt with `clang -std=c17 -Wall
--Wextra -O0`, passed all ten cases, passed ASan/UBSan, and matched an
-independent specification model on 1,000 random command streams.
+calls and `seconds` is the session's wall time; the token columns are the
+sums of the backend's reported usage over those calls. The call times
+were 349.3 s for `c-r0`, 228.9 s for `c-r2` and 169.4 s for `c-r8`.
+`c-r0#high` traces `mode=plain`, `reasoning=0` and `terms=0` on every
+call, so its 26,492 reasoning tokens are DeepSeek's own `#high` effort,
+not endpoint checks. Each generated program was independently rebuilt
+with `clang -std=c17 -Wall -Wextra -O0`, passed all ten cases, passed
+ASan/UBSan, and matched an independent specification model on 1,000
+random command streams.
 
 `contract` is the only passing benchmark mode, and it needed two attempts: the
 first timed out on cases 2 and 6, the second passed all ten. `high`, one
