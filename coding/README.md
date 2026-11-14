@@ -14,6 +14,8 @@ coding/
     check.pl          compile and test an existing C file, no model
   cocolog/
     codegen.pl        cocolog source, taught by cocolog's SKILL.md
+  endpoint/
+    server.py         OpenCode's C and cocolog models, over an OpenAI API
 ```
 
 A new language is a new directory and a `codegen.pl` beside this one; it
@@ -331,6 +333,16 @@ The guide is `$COCOLOG_SKILL`, else `../cocolog/SKILL.md`, or `--skill
 FILE`. See `coding/cocolog/README.md` for the flags, the API and the checks,
 and `coding/cocolog/bench/` for the eight-task benchmark suite and its
 `no_skill` control.
+
+## OpenCode endpoint
+
+`coding/endpoint/` exposes `c` and `cocolog` as models OpenCode can select.
+It is an OpenAI-compatible endpoint: it appends the language's guide to the
+system prompt, keeps OpenCode's conversation, tools and stream, and forwards
+the request to an OpenAI-compatible backend. The C model gets
+`coding/endpoint/prompts/c.md`; the cocolog model gets cocolog's own
+`SKILL.md` plus a short addendum. `coding/endpoint/README.md` has the start
+command, the OpenCode config and the backend variables.
 
 ## Benchmark
 

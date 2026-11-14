@@ -1,0 +1,27 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "providers": {
+    "reasoning": {
+      "name": "Reasoning coding (C and cocolog)",
+      "package": "@opencode/ai/providers/openai-compatible",
+      "settings": {
+        "baseURL": "http://127.0.0.1:8787/v1"
+      },
+      "models": {
+        "c": {
+          "name": "C17",
+          "tool_call": true,
+          "input": ["text"],
+          "output": ["text"]
+        },
+        "cocolog": {
+          "name": "cocolog",
+          "tool_call": true,
+          "input": ["text"],
+          "output": ["text"]
+        }
+      }
+    }
+  },
+  "model": "reasoning/cocolog"
+}
