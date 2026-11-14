@@ -44,7 +44,7 @@ to `high` when the first attempt fails.
 | `bench.pl` | the runner, the task modes and the report |
 | `gen.pl` | one generator call, run as a child `cocolog` so codegen's `main/0` is never called here |
 | `config.pl` | the provider, model, endpoint, temperature, efforts and loop cap both scripts use |
-| `contract.pl` | parses the controlled-English contracts, derives the obligations, writes the extractor's prompt and line parser, and holds the keyword-to-contract rules |
+| `contract.pl` | parses the controlled-English contracts with the shared `coding/contract.pl` reader and vocabulary, writes the extractor's prompt and line parser, and holds the keyword-to-contract rules |
 | `tasks.pl` | eight requirements, their hand-written contracts, extractor noun lists and stdin/stdout cases |
 | `run.sh` | sets `COCOLOG_LIBRARY` and runs `bench.pl` |
 | `paired.pl` | the paired repair comparison: one shared first attempt, then plain and obliged branches |

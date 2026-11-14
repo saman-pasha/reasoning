@@ -4,15 +4,22 @@
 %% library(reasoning/reason) reads. The reader parses them, and the rules
 %% below turn the parsed facts and rule heads into the same kind of
 %% obligation the keyword reader in `coding/obligations.pl' writes. This
-%% is the `contract' half of coding/bench, kept for the generator itself:
-%% a person who writes the contract says what the requirement means, and
-%% the reasoner, not a keyword, decides what it implies.
+%% is the one contract reader and vocabulary: coding/bench/contract.pl
+%% uses it too, so the benchmark's contract mode and the generator cannot
+%% drift. A person who writes the contract says what the requirement
+%% means, and the reasoner, not a keyword, decides what it implies.
 %%
 %%     codegen_contract_obligations(+Text, -Obligations)
 %%         Text is an atom, a list of atoms (one sentence each), or codes.
 %%         Obligations is a list of atoms, most structural first, one of
 %%         each. A sentence the reader refuses is dropped; a contract it
 %%         reads as nothing gives [].
+%%
+%%     codegen_contract_terms_obligations(+Terms, -Obligations)
+%%         the same mapping for terms `reason_text/2' has already
+%%         answered, which is how coding/bench/contract.pl reads the
+%%         extractor's reply. The benchmark and the generator share this
+%%         vocabulary, so they cannot drift.
 %%
 %% The shapes the rules know, one obligation each:
 %%
@@ -37,15 +44,18 @@
 codegen_contract_obligations(Text, Obligations) :-
     codegen_contract_text(Text, Atom),
     (   catch(reason_text(Atom, Terms), _, fail)
-    ->  findall(Priority-Text2,
-                (   member(Term, Terms),
-                    contract_obligation(Term, Priority, Text2)
-                ),
-                Pairs),
-        keysort(Pairs, Sorted),
-        contract_unique(Sorted, Obligations)
+    ->  codegen_contract_terms_obligations(Terms, Obligations)
     ;   Obligations = []
     ).
+
+codegen_contract_terms_obligations(Terms, Obligations) :-
+    findall(Priority-Text,
+            (   member(Term, Terms),
+                contract_obligation(Term, Priority, Text)
+            ),
+            Pairs),
+    keysort(Pairs, Sorted),
+    contract_unique(Sorted, Obligations).
 
 codegen_contract_text(Text, Atom) :-
     (   atom(Text)

@@ -10,11 +10,13 @@
 :- use_module('test/prelude.pl').
 :- use_module('coding/obligations.pl').
 :- use_module('coding/contract.pl').
+:- use_module('coding/bench/contract.pl').
 :- use_module('coding/compile.pl').
 
 main :-
     obligations,
     contract,
+    shared,
     boundaries,
     prompt,
     checker,
@@ -119,6 +121,35 @@ contract_has_line(Text, Fragment) :-
     codegen_contract_obligations(Text, Obligations),
     atomic_list_concat(Obligations, '\n', All),
     sub_atom(All, _, _, _, Fragment).
+
+%% ---- one vocabulary for the tool and the benchmark --------------------
+
+shared :-
+    section('shared contract'),
+    findall(Task, bench_task(Task, _, _), Tasks),
+    forall(member(Task, Tasks), shared_one(Task)),
+    yes_no(( bench_reply_obligations('Every line has a bracket.\n', Parsed, Obs),
+             Parsed \== [],
+             member('Track bracket kind and nesting order, not only counts.', Obs)
+           ), Y),
+    check('the extractor reply uses the shared vocabulary', Y, yes),
+    yes_no(( bench_task(stable_sort, Spec, _),
+             bench_derive_obligations(stable_sort, Spec, Derived),
+             member('Sort the records by score, highest first.', Derived),
+             member('Records with equal scores keep their original input order; the sort is stable.', Derived)
+           ), Y2),
+    check('the derive mode uses the shared vocabulary', Y2, yes).
+
+shared_one(Task) :-
+    bench_requirement(Task, Sentences),
+    codegen_contract_obligations(Sentences, Tool),
+    bench_obligations(Task, Bench),
+    (   Tool == Bench
+    ->  Same = yes
+    ;   Same = no
+    ),
+    format(atom(Label), 'the benchmark and the tool agree on ~w', [Task]),
+    check(Label, Same, yes).
 
 %% ---- whole words, not substrings --------------------------------------
 
