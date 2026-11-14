@@ -45,7 +45,7 @@ to `high` when the first attempt fails.
 | `gen.pl` | one generator call, run as a child `cocolog` so codegen's `main/0` is never called here |
 | `config.pl` | the provider, model, endpoint, temperature, efforts and loop cap both scripts use |
 | `contract.pl` | parses the controlled-English contracts, derives the obligations, writes the extractor's prompt and line parser, and holds the keyword-to-contract rules |
-| `tasks.pl` | seven requirements, their hand-written contracts, extractor noun lists and stdin/stdout cases |
+| `tasks.pl` | eight requirements, their hand-written contracts, extractor noun lists and stdin/stdout cases |
 | `run.sh` | sets `COCOLOG_LIBRARY` and runs `bench.pl` |
 | `paired.pl` | the paired repair comparison: one shared first attempt, then plain and obliged branches |
 | `paired.sh` | sets `COCOLOG_LIBRARY` and runs `paired.pl` |
@@ -54,7 +54,7 @@ to `high` when the first attempt fails.
 
 ```sh
 export REASONING_API_KEY=...
-coding/bench/run.sh              # all tasks, six modes
+coding/bench/run.sh              # all tasks, seven modes
 coding/bench/run.sh -- lcs       # one task
 coding/bench/paired.sh           # paired first attempt and two repair policies
 coding/bench/paired.sh -- lcs
@@ -93,37 +93,35 @@ after trimming trailing whitespace and final newlines.
 
 ## A sample run
 
-2026-11-14, `deepseek-flash`, `REASONING_API_KEY`, all seven tasks:
+2026-11-14, `deepseek-flash`, `REASONING_API_KEY`, all eight tasks:
 
 ```
-mode     tasks passed attempts prompt completion reasoning total cache_hit seconds
-high      7     7      7        943    14713      10731     15656 0         84.91
-loop      7     7      8        1145   3172       0         4317  128       36.46
-contract  7     7      7        1398   3454       0         4852  0         32.16
-extract   7     7      14       3280   3346       0         6626  512       32.21
-derive    7     7      7        1423   3375       0         4798  0         33.00
-escalate  7     7      8        1243   3290       0         4533  256       36.42
-escalate2 7     7      8        1145   3102       0         4247  128       36.05
+mode      tasks passed attempts prompt completion reasoning total cache_hit seconds
+high      8     7      8        1077   16762      12670     17839 0         102.95
+loop      8     7      10       1955   3908       0         5863  768       51.64
+contract  8     8      8        1615   4419       0         6034  0         45.41
+extract   8     8      16       3772   4181       0         7953  640       40.67
+derive    8     8      8        1693   4298       0         5991  0         40.35
+escalate  8     8      10       2024   4439       0         6463  768       50.98
+escalate2 8     8      11       2465   4618       0         7083  1024      55.23
 ```
 
-All seven modes solved every task. `escalate2` had the lowest total, but
-its third stage never fired: LCS failed its first attempt and passed on
-the second, which is the plain repair. Its LCS cost is therefore the same
-as `loop`'s (984 against 988), and the 70-token difference in the totals is
-completion-token variance. `escalate`, which adds the obligations on the
-first repair, paid 1 144 for LCS against the plain repair's 988 -- more for
-the same one-repair success.
+`stable_sort` is the hard task: the model must sort by score and keep
+equal scores in input order. `high` and `loop` both failed it; loop tried
+three plain attempts and spent 2 210 tokens on the task. `contract`,
+`derive` and `extract` solved it on their first codegen attempt (1 118,
+1 130 and 1 321, the last including its extraction call), so they are 8/8
+without a repair. `escalate` passed it on its second attempt (1 930);
+`escalate2` passed it on its third (2 773), which is the first time its
+third-stage obligations fired.
 
-That is the point of the two-stage design: on this task set the obligations
-are dormant, and the mode costs what the plain loop costs. They would be
-used only by a task whose two plain attempts both fail. The earlier
-six-mode run's escalation result had the same first-attempt-luck problem;
-the paired run below isolates the repair policy.
-
-`contract` and `derive` solved LCS first try (527 and 526) but pay
-obligations on every task; they cost 4 852 and 4 798 against `loop`'s
-4 317. `extract` is the costliest no-reasoning mode at 6 626. `high` burned
-10 731 reasoning tokens.
+That is the expected tradeoff: `escalate2` withholds the obligations until
+a second repair is needed, so it pays two failed attempts before they
+help. `contract`/`derive` pay obligations on every task and solve the hard
+one first time; on the earlier easy tasks that cost more than a plain
+loop, but here it also buys the missing task. `extract` is 8/8 but the
+costliest no-reasoning mode at 7 953. `high` failed `stable_sort` and
+burned 12 670 reasoning tokens.
 
 ## Paired run
 
@@ -138,39 +136,47 @@ input to two branches:
 The first attempt's tokens are counted in both totals, so the difference
 is the repair policy alone.
 
-A sample from the same seven tasks:
+A sample from the same eight tasks:
 
 ```
-task first plain_total obliged_total plain_pass obliged_pass
-sum_even   yes  173 173 pass pass
-max_subarray yes 278 278 pass pass
-balanced   yes  418 418 pass pass
-word_count yes 1047 1047 pass pass
-phonebook  yes  898 898 pass pass
-calculator yes  587 587 pass pass
-lcs        no   984 1144 pass pass
+task        first plain_total obliged_total plain_pass obliged_pass
+sum_even    yes   200   200   pass pass
+max_subarray yes  278   278   pass pass
+balanced    yes   419   419   pass pass
+word_count  yes   1047  1047  pass pass
+phonebook   yes   839   839   pass pass
+calculator  yes   546   546   pass pass
+lcs         no    984   1144  pass pass
+stable_sort no    2210  1930  fail pass
 ```
 
-The one first attempt that failed:
+The two first attempts that failed:
 
 ```
-task first_tokens plain_repair obliged_repair plain_attempts obliged_attempts plain_pass obliged_pass
-lcs  328          656          816            2              2                pass       pass
+task        first_tokens plain_repair obliged_repair plain_attempts obliged_attempts plain_pass obliged_pass
+lcs         328          656          816            2              2                pass       pass
+stable_sort 450          1760         1480           3              2                fail       pass
 ```
 
 Totals:
 
 ```
 tasks passed first_tokens plain_repair obliged_repair plain_total obliged_total
-7     7      3729         656          816            4385        4545
+8     7      4107         2416          2296           6523        6403
 ```
 
 Six first attempts passed, so both policies were identical there. LCS
-failed, and both policies fixed it on the first repair; the obligations
-did not save an attempt and cost 160 more tokens (816 against 656). The
-plain repair wins on this failure. Obligations on repair would pay only
-if a plain repair failed and the obliged repair passed, which this task
-set did not show; a harder task or more trials is the next measurement.
+failed and both policies fixed it on the first repair; the obligations cost
+160 more tokens (816 against 656), so the plain repair wins that one.
+`stable_sort` is the other side: the plain branch failed after both repairs
+(1 760 repair tokens), while the obliged branch passed on its second repair
+(1 480), because the third attempt carried the stable-order obligation. The
+obliged policy therefore solved one more task and spent 120 fewer tokens
+overall.
+
+This is the clean comparison the six-mode rows cannot make: on a task whose
+plain repairs fail, obligations on the second repair pay. On a task where a
+plain repair succeeds, they are 160 tokens of overhead.
 
 ## Adding a task
 
