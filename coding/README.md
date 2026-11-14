@@ -86,6 +86,8 @@ COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
 | flag | effect |
 |---|---|
 | `--tests FILE` | run the cases in FILE after compiling |
+| `--auto-tests` | ask the model for test cases, then run them |
+| `--cases-effort L` | reasoning effort for the auto cases (default `high`) |
 | `--contract FILE` | take the checklist from controlled-English FILE |
 | `--keep DIR` | write every attempt's prompt, code and diagnostic |
 | `--attempts N` | try at most N times (default 3) |
@@ -211,6 +213,13 @@ unless `--timeout` says otherwise. A wrong answer goes back to
 the model with the case report and the previous program, just as a failed
 compile does. A bad cases file is refused before any model call.
 
+`--auto-tests` asks the model for 6 to 10 cases in exactly this format
+before the first code call, with `high` reasoning unless
+`--cases-effort` names another level. The cases are the model's answers,
+not an independent oracle: a wrong expected output can send a repair after
+the wrong answer. `--keep DIR` writes the accepted cases to
+`auto-cases.txt`, and `codegen_cases/2,3,4` exposes the call on its own.
+
 ```prolog
 codegen_c_tested(Spec, Cases, Code).
 codegen_c_tested(Spec, Cases, Overrides, Code).
@@ -324,6 +333,7 @@ See its README for the modes, the token columns and sample runs.
 8. Return or write the code.
 
 The C generator is `coding/c/codegen.pl`; it is deliberately small. The
-benchmark in `coding/bench/` is where the prompt policy is measured. The
-next step is deriving cases from the requirement, so the tool can test
-without a hand-written cases file.
+benchmark in `coding/bench/` is where the prompt policy is measured.
+`--auto-tests` removes the hand-written cases file: the model writes the
+cases. The remaining limit is the oracle, since the same model writes the
+expected outputs; an independent check of them is the next step.

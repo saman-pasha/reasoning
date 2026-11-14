@@ -29,6 +29,7 @@ main :-
     budget,
     keep,
     dry_run,
+    auto_cases,
     check_tool,
     checks_done.
 
@@ -707,7 +708,35 @@ dry_run :-
     cocolog_run(Args4, Text4, Exit4),
     check('a dry run ignores the tests file', Exit4, 0),
     has('the dry run still prints a prompt',
-        'Write a complete C17 program', Text4).
+        'Write a complete C17 program', Text4),
+    format(atom(Args5), "-s coding/c/codegen.pl -- ~w --auto-tests --dry-run",
+           [SpecFile]),
+    cocolog_run(Args5, Text5, Exit5),
+    check('an auto-tests dry run exits 0', Exit5, 0),
+    has('the auto-tests dry run asks for cases', 'black-box test cases', Text5).
+
+%% ---- cases from the model ---------------------------------------------
+
+auto_cases :-
+    section('auto cases'),
+    auto_cases_child,
+    auto_cases_refused,
+    cli_query("codegen_args(['s','--auto-tests','--cases-effort','none','o'], A), write(A)",
+              ['args(s,auto,none,o,no,no,[cases_effort(none)],[])']),
+    cli_query("codegen_args(['s','--auto-tests','o'], A), write(A)",
+              ['args(s,auto,none,o,no,no,[],[])']),
+    cli_query("asserta((llm_chat(_, Options, '# input\\n1\\n# expected\\n1\\n') :- member(effort(high), Options), !)), codegen_cases('a spec', _), write('CASE-EFFORT-'), write(731)",
+              ['CASE-EFFORT-731']),
+    cli_query("asserta((llm_chat(_, Options, '# input\\n1\\n# expected\\n1\\n') :- member(effort(none), Options), !)), codegen_cases('a spec', [effort(high)], none, _), write('CASE-EFFORT-NONE-'), write(731)",
+              ['CASE-EFFORT-NONE-731']).
+
+auto_cases_child :-
+    Goal = "asserta((llm_chat(_, _, '#include <stdio.h>\\nint main(void){int c;while((c=getchar())!=EOF)putchar(c);return 0;}\\n') :- !)), asserta((llm_chat(Messages, _, '# input\\nabc\\n# expected\\nabc\\n# input\\n# expected\\n') :- member(msg(system, S), Messages), sub_atom(S, _, _, _, 'test cases'), !)), codegen_c_tested('Copy standard input to standard output.', auto, _), codegen_report(report(Calls, _, _, _, _, _, _)), write('AUTO-CALLS-'), write(Calls), nl",
+    cli_query(Goal, ['AUTO-CALLS-2']).
+
+auto_cases_refused :-
+    cli_query("asserta((llm_chat(_,_, 'no cases here') :- !)), ( catch(codegen_cases('a spec', _), error(codegen_error(Kind, _), _), true) -> write(Kind) ; write(none) )",
+              ['cases_auto']).
 
 %% ---- the standalone checker -------------------------------------------
 
