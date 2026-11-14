@@ -277,10 +277,13 @@ Every line has a length.
 The accepted shapes are listed at the top of `coding/contract.pl`:
 `Every X has a Y.`, `NAME reads the Y.`, `NAME prints the Y.`,
 `NAME sorts the Y.`, `NAME has a Y.`, `Every sum is even.`, and the
-subarray/subsequence bodies. A line the reasoner refuses is dropped; a
-sentence it reads but the rules do not know adds no line. A contract the
-reasoner reads as no obligation at all is an error (`contract_empty`),
-not a silent fallback. The same obligations are available to a caller as
+subarray/subsequence bodies. The vocabulary now also covers the general C
+checks the keyword reader knows: file, string/character, float/decimal,
+precision, matrix, allocation, recursion, separator and uppercase. A line
+the reasoner refuses is dropped; a sentence it reads but the rules do not
+know adds no line. A contract the reasoner reads as no obligation at all
+is an error (`contract_empty`), not a silent fallback. The same
+obligations are available to a caller as
 `codegen_contract_obligations(Text, Obligations)`, and
 `codegen_c_from/5` runs the loop with a checklist the caller supplies.
 The benchmark's contract, extract and derive modes use the same

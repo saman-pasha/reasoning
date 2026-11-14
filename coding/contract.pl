@@ -34,6 +34,11 @@
 %%     Every expression has an operator. (also number, parenthesis)
 %%     Every sum is even.
 %%     NAME has a subarray.        (or a subsequence)
+%%     Every program has a file.   (also string, decimal, matrix, ...)
+%%
+%% The last group is the general C checks coding/obligations.pl also
+%% reads: file, string/character, float/decimal, precision, matrix/grid/
+%% table, allocation/memory, recursion, separator, uppercase.
 %%
 %% A sentence outside these shapes is read by reason_text/2 but adds no
 %% obligation; a sentence reason_text/2 refuses is not part of the
@@ -152,6 +157,40 @@ contract_obligation_head(have(_, score), 59,
     'Sort the records by score, highest first.').
 contract_obligation_head(have(_, order), 60,
     'Records with equal scores keep their original input order; the sort is stable.').
+
+%% The general C checks, the same lines coding/obligations.pl writes.
+contract_obligation_head(have(_, file), 13,
+    'Check every fopen; close every file; do not assume the file exists.').
+contract_obligation_head(read(_, file), 13,
+    'Check every fopen; close every file; do not assume the file exists.').
+contract_obligation_head(have(_, string), 27,
+    'C strings are NUL-terminated; reserve one byte for the terminator and bound every copy.').
+contract_obligation_head(read(_, string), 27,
+    'C strings are NUL-terminated; reserve one byte for the terminator and bound every copy.').
+contract_obligation_head(have(_, character), 27,
+    'C strings are NUL-terminated; reserve one byte for the terminator and bound every copy.').
+contract_obligation_head(have(_, float), 28,
+    'Use double for floating point; do not compare two floating values for equality.').
+contract_obligation_head(have(_, decimal), 28,
+    'Use double for floating point; do not compare two floating values for equality.').
+contract_obligation_head(have(_, precision), 29,
+    'Print exactly the number of decimal places the requirement names.').
+contract_obligation_head(have(_, matrix), 33,
+    'Check every row and column index against its bound.').
+contract_obligation_head(have(_, grid), 33,
+    'Check every row and column index against its bound.').
+contract_obligation_head(have(_, table), 33,
+    'Check every row and column index against its bound.').
+contract_obligation_head(have(_, allocation), 34,
+    'Check every allocation for NULL, and free every allocation.').
+contract_obligation_head(have(_, memory), 34,
+    'Check every allocation for NULL, and free every allocation.').
+contract_obligation_head(have(_, recursion), 35,
+    'Bound the recursion depth, or keep the input small enough that it stays bounded.').
+contract_obligation_head(have(_, separator), 43,
+    'Separate the values exactly as the requirement says; print no trailing separator.').
+contract_obligation_head(have(_, uppercase), 44,
+    'Convert the text to uppercase before comparing or printing it.').
 
 %% ---- one line per obligation, its first mention first ------------------
 
