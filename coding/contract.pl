@@ -157,6 +157,16 @@ contract_obligation_head(have(_, score), 59,
     'Sort the records by score, highest first.').
 contract_obligation_head(have(_, order), 60,
     'Records with equal scores keep their original input order; the sort is stable.').
+contract_obligation_head(have(_, tree), 35,
+    'A B-tree of minimum degree 2 is a 2-3-4 tree; keep the keys in each node sorted and split a full node before descending into it.').
+contract_obligation_head(have(_, version), 36,
+    'A version is the result of one commit; a reader sees the newest version of a key at or before its snapshot.').
+contract_obligation_head(have(_, snapshot), 37,
+    'A snapshot is the current commit id when a reader begins; commits after it are invisible to that reader.').
+contract_obligation_head(have(_, commit), 38,
+    'A commit applies its staged operations atomically as one new version; staged writes are invisible before it.').
+contract_obligation_head(have(_, transaction), 39,
+    'There is one writer; its staged operations are invisible until commit, and readers never block it or each other.').
 
 %% The general C checks, the same lines coding/obligations.pl writes.
 contract_obligation_head(have(_, file), 13,

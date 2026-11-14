@@ -45,7 +45,7 @@ to `high` when the first attempt fails.
 | `gen.pl` | one generator call, run as a child `cocolog` so codegen's `main/0` is never called here |
 | `config.pl` | the provider, model, endpoint, temperature, efforts and loop cap both scripts use |
 | `contract.pl` | parses the controlled-English contracts with the shared `coding/contract.pl` reader and vocabulary, writes the extractor's prompt and line parser, and holds the keyword-to-contract rules |
-| `tasks.pl` | nine requirements, their hand-written contracts, extractor noun lists and stdin/stdout cases |
+| `tasks.pl` | ten requirements, their hand-written contracts, extractor noun lists and stdin/stdout cases |
 | `run.sh` | sets `COCOLOG_LIBRARY` and runs `bench.pl` |
 | `paired.pl` | the paired repair comparison: one shared first attempt, then plain and obliged branches |
 | `paired.sh` | sets `COCOLOG_LIBRARY` and runs `paired.pl` |
@@ -98,7 +98,8 @@ after trimming trailing whitespace and final newlines.
 
 ## A sample run
 
-2026-11-14, `deepseek-flash`, `REASONING_API_KEY`, all nine tasks:
+2026-11-14, `deepseek-flash`, `REASONING_API_KEY`, the nine tasks before
+`mvccs`:
 
 ```
 mode      tasks passed attempts prompt completion reasoning total cache_hit seconds
@@ -134,6 +135,36 @@ for the 8 tasks it solved).
 `btree` passed on the first attempt in every mode. `high` spent 5 489
 tokens (4 294 reasoning) where `loop` spent 1 145; `derive`, `escalate`
 and `escalate2` were all near 1 130-1 180, and `contract` was 1 347.
+
+### The MVCCS task
+
+`mvccs` is the MVCC B-tree: a 2-3-4 tree of integer keys with one writer,
+any number of readers and a snapshot per reader. The writer stages
+insertions and commits them as one new version; a reader sees the tree as
+of its snapshot. The requirement asks for copy-on-write or versioned
+nodes, recursion and dynamic allocation. Run alone on 2026-11-14:
+
+```
+mode      tasks passed attempts prompt completion reasoning total cache_hit seconds
+high      1     1      1        396    20072      17435     20468 0         102.49
+loop      1     0      3        6945   8016       0         14961 640       34.34
+contract  1     1      1        575    2486       0         3061  0         12.08
+extract   1     1      2        1188   2874       0         4062  128       12.63
+derive    1     0      3        6730   6881       0         13611 1408      32.62
+escalate  1     1      2        3340   4775       0         8115  640       22.45
+escalate2 1     1      1        371    2244       0         2615  128       11.16
+```
+
+`contract` solves it on the first call for 3 061 tokens, and `escalate2`
+does too for 2 615; `extract` passes on its first codegen attempt (4 062
+including the extraction call). `high` passes but spends 20 468 tokens,
+17 435 of them reasoning. `escalate` needs a repair (8 115). `loop` and
+`derive` fail after three attempts: the loop's last program segfaults
+after the B-tree splits, and `derive`'s checklist does not keep the
+per-snapshot roots, so it prints the newest tree for every reader. The
+passing programs all define B-tree nodes with copy-on-write or a version
+chain, so the MVCC requirement is what is being measured, not a flat map.
+The shipped tool passes it on its first call too (3 284 tokens, 13.57 s).
 
 ### History: the eight tasks before `btree`
 
@@ -218,7 +249,7 @@ the task's cases under the sanitizers. Its tokens come from
 the `derive` policy plus the tool's own keyword reader and the sanitizers,
 so its token count is the one to compare with the tool's future.
 
-A run on 2026-11-14:
+A run on the nine tasks before `mvccs`, on 2026-11-14:
 
 ```
 task        pass calls prompt completion reasoning total cache_hit seconds
