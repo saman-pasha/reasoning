@@ -135,8 +135,27 @@ The cases binary is built with AddressSanitizer and
 UndefinedBehaviorSanitizer (`-fsanitize=address,undefined
 -fno-sanitize-recover=all`), so an out-of-bounds read or a signed overflow
 fails a case even when the printed answer happens to match. Leak detection
-is off: a one-shot program's leak is no answer's business. The file is one
-Prolog term:
+is off: a one-shot program's leak is no answer's business. The file is
+text blocks:
+
+```text
+# input
+1 2 3
+# expected
+6
+# input
+4 5
+# expected
+9
+```
+
+`# input` starts a case and `# expected` starts its expected output; the
+next `# input` starts the following case. `# input` immediately followed
+by `# expected` is no input at all; a blank line between them is an empty
+line (one newline). An empty expected is `# expected` with nothing before
+the next block. Any other line is content, even one beginning `#`.
+
+The Prolog term form is accepted too:
 
 ```prolog
 cases([case('1 2 3\n', '6'),

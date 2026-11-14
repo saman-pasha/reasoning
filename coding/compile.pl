@@ -21,9 +21,11 @@
 %%         the runner on its own: [] when every case matches.
 %%
 %%     c_read_cases(+File, -Cases)
-%%         read one Prolog term, cases([case(Input, Expected), ...]), and
-%%         check its shape. A bad file throws
-%%         error(codegen_error(cases_file, Message), _).
+%%         read one Prolog term, cases([case(Input, Expected), ...]), or
+%%         text blocks (`# input', the input, `# expected', the expected
+%%         output). A bad file throws
+%%         error(codegen_error(cases_file, Message), _). The formats and
+%%         their empty-block rules are described below.
 
 :- use_module(library(process)).
 
@@ -121,22 +123,129 @@ c_case_failure(Index, Input, Expected, Exit, Actual, Error, Failure) :-
     ).
 
 %% ---- reading a cases file ---------------------------------------------
-
+%%
+%% Two formats: one Prolog term,
+%%
+%%     cases([case('1 2 3\n', '6'), case('4 5\n', '9')]).
+%%
+%% or text blocks, which need no escaping:
+%%
+%%     # input
+%%     1 2 3
+%%     # expected
+%%     6
+%%     # input
+%%     4 5
+%%     # expected
+%%     9
+%%
+%% An empty input is `# input' immediately followed by `# expected'; a
+%% blank line between the two is an empty line (one newline), not no
+%% input. An empty expected is `# expected' followed by the next
+%% `# input' or the end. A line is a marker only when it is exactly one
+%% of the two; any other line is content. An input block ends with a
+%% newline, as a file's line does; expected output is trimmed by the
+%% runner.
 c_read_cases(File, Cases) :-
     (   catch(read_file_to_codes(File, Codes), _, fail)
-    ->  atom_codes(Text, Codes),
-        (   catch(read_term_from_atom(Text, Term, []), _, fail)
-        ->  true
-        ;   c_cases_error('the cases file is not one Prolog term')
-        )
+    ->  true
     ;   format(atom(Msg), 'cannot read ~s', [File]),
         throw(error(codegen_error(cases_file, Msg), c_read_cases/2))
     ),
-    (   Term = cases(Cases0),
+    atom_codes(Text, Codes),
+    (   catch(read_term_from_atom(Text, Term, []), _, fail),
+        Term = cases(Cases0),
         c_valid_cases(Cases0)
     ->  Cases = Cases0
-    ;   c_cases_error('the cases file must be cases([case(Input, Expected), ...])')
+    ;   c_read_text_cases(Text, Cases)
     ).
+
+c_read_text_cases(Text, Cases) :-
+    split_string(Text, "\n", "", Lines0),
+    c_drop_final_empty(Lines0, Lines1),
+    findall(Line,
+            (   member(Raw, Lines1),
+                atom_string(Atom0, Raw),
+                c_strip_cr(Atom0, Line)
+            ),
+            Lines),
+    c_text_cases(Lines, 1, none, [], [], [], CasesRev),
+    reverse(CasesRev, Cases).
+
+%% A file's final newline ends its last line; it is not an empty line of
+%% content. One empty part is dropped, so an input block can still end on
+%% a blank line of its own.
+c_drop_final_empty(Lines, Init) :-
+    (   append(Init0, [Last], Lines),
+        c_empty_string(Last)
+    ->  Init = Init0
+    ;   Init = Lines
+    ).
+
+c_strip_cr(Atom0, Atom) :-
+    (   sub_atom(Atom0, _, 1, 0, '\r')
+    ->  sub_atom(Atom0, 0, _, 1, Atom)
+    ;   Atom = Atom0
+    ).
+
+c_text_cases([], _, none, _, _, [], _) :-
+    c_cases_error('the cases file has no "# input" block').
+c_text_cases([], _, none, _, _, Cases, Cases) :-
+    Cases \== [].
+c_text_cases([], _, input, _, _, _, _) :-
+    c_cases_error('the cases file ends inside an input block').
+c_text_cases([], _, expected, In, Ex, Cases, Closed) :-
+    c_close_case(In, Ex, Cases, Closed).
+
+c_text_cases([Line|Rest], N, none, _, _, Cases, Closed) :-
+    (   Line == '# input'
+    ->  N1 is N + 1,
+        c_text_cases(Rest, N1, input, [], [], Cases, Closed)
+    ;   Line == ''
+    ->  N1 is N + 1,
+        c_text_cases(Rest, N1, none, [], [], Cases, Closed)
+    ;   c_cases_error_at(N, 'text before the first # input')
+    ).
+c_text_cases([Line|Rest], N, input, In, Ex, Cases, Closed) :-
+    (   Line == '# expected'
+    ->  N1 is N + 1,
+        c_text_cases(Rest, N1, expected, In, [], Cases, Closed)
+    ;   Line == '# input'
+    ->  c_cases_error_at(N, 'a new # input before # expected')
+    ;   N1 is N + 1,
+        c_text_cases(Rest, N1, input, [Line|In], Ex, Cases, Closed)
+    ).
+c_text_cases([Line|Rest], N, expected, In, Ex, Cases, Closed) :-
+    (   Line == '# input'
+    ->  c_close_case(In, Ex, Cases, Cases1),
+        N1 is N + 1,
+        c_text_cases(Rest, N1, input, [], [], Cases1, Closed)
+    ;   Line == '# expected'
+    ->  c_cases_error_at(N, 'a second # expected')
+    ;   N1 is N + 1,
+        c_text_cases(Rest, N1, expected, In, [Line|Ex], Cases, Closed)
+    ).
+
+c_close_case(InRev, ExRev, Cases, [case(Input, Expected)|Cases]) :-
+    c_input_atom(InRev, Input),
+    c_expected_atom(ExRev, Expected).
+
+c_input_atom([], '').
+c_input_atom(Rev, Atom) :-
+    Rev \== [],
+    reverse(Rev, Lines),
+    atomic_list_concat(Lines, '\n', Body),
+    atom_concat(Body, '\n', Atom).
+
+c_expected_atom([], '').
+c_expected_atom(Rev, Atom) :-
+    Rev \== [],
+    reverse(Rev, Lines),
+    atomic_list_concat(Lines, '\n', Atom).
+
+c_cases_error_at(N, Msg) :-
+    format(atom(Full), 'line ~w: ~s', [N, Msg]),
+    c_cases_error(Full).
 
 c_cases_error(Msg) :-
     throw(error(codegen_error(cases_file, Msg), c_read_cases/2)).
