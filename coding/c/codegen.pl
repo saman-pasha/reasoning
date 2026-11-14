@@ -27,6 +27,8 @@
 %%     --tests FILE     run the cases in FILE after compiling
 %%     --contract FILE  take the checklist from controlled-English FILE
 %%     --keep DIR       write every attempt's prompt, code and diagnostic
+%%     --attempts N     try at most N times (default 3)
+%%     --timeout MS     let one case run MS milliseconds (default 3000)
 %%     --provider P     provider(P) in the call
 %%     --model M        model(M) in the call
 %%     --base-url U     base_url(U) in the call
@@ -193,21 +195,51 @@ codegen_c_compiled(Spec, Overrides, Code) :-
     codegen_c_from(Spec, Obligations, [], Overrides, Code).
 
 %% codegen_c_from(+Spec, +Obligations, +Cases, +Overrides, -Code)
-%% codegen_c_from(+Spec, +Obligations, +Cases, +Overrides, +Keep, -Code)
+%% codegen_c_from(+Spec, +Obligations, +Cases, +Overrides, +RunOptions, -Code)
 %%
 %% The loop itself, with the checklist already decided: keyword
 %% obligations, `codegen_contract_obligations/2' from
 %% `coding/contract.pl', or a list a caller wrote. Cases is [] for a
-%% compile-only run. Keep is `none' or `dir(Dir)'; with a directory, every
-%% attempt's prompt, code and diagnostic is written there as
-%% attempt-N.prompt.txt, attempt-N.c and attempt-N.diag.txt.
+%% compile-only run. RunOptions is a list of
+%% `attempts(N)' (default 3), `case_timeout(Ms)' (default 3000) and
+%% `keep(Dir)'; with a keep directory, every attempt's prompt, code and
+%% diagnostic is written there as attempt-N.prompt.txt, attempt-N.c and
+%% attempt-N.diag.txt.
 codegen_c_from(Spec, Obligations, Cases, Overrides, Code) :-
-    codegen_c_from(Spec, Obligations, Cases, Overrides, none, Code).
+    codegen_c_from(Spec, Obligations, Cases, Overrides, [], Code).
 
-codegen_c_from(Spec, Obligations, Cases, Overrides, Keep, Code) :-
-    codegen_keep_prepare(Keep),
+codegen_c_from(Spec, Obligations, Cases, Overrides, RunOptions, Code) :-
+    codegen_run_prepare(RunOptions, Max, Timeout),
+    codegen_run_option(RunOptions, keep, none, Keep),
     codegen_report_reset,
-    codegen_attempt(1, 3, Spec, Obligations, Cases, Overrides, Keep, none, Code).
+    codegen_attempt(1, Max, Spec, Obligations, Cases, Overrides,
+                    Keep, Timeout, none, Code).
+
+codegen_run_prepare(RunOptions, Max, Timeout) :-
+    codegen_run_option(RunOptions, attempts, 3, Max0),
+    codegen_run_check(attempts, Max0),
+    Max = Max0,
+    codegen_run_option(RunOptions, case_timeout, 3000, Timeout0),
+    codegen_run_check(case_timeout, Timeout0),
+    Timeout = Timeout0,
+    codegen_run_option(RunOptions, keep, none, Keep),
+    codegen_keep_prepare(Keep).
+
+codegen_run_option(Options, Key, Default, Value) :-
+    (   member(Option, Options),
+        functor(Option, Key, 1),
+        arg(1, Option, Found)
+    ->  Value = Found
+    ;   Value = Default
+    ).
+
+codegen_run_check(Key, Value) :-
+    (   integer(Value),
+        Value > 0
+    ->  true
+    ;   format(atom(Msg), '~w must be a positive integer, not ~w', [Key, Value]),
+        throw(error(codegen_error(run_option, Msg), codegen_run_prepare/3))
+    ).
 
 codegen_keep_prepare(none) :-
     !.
@@ -249,12 +281,12 @@ codegen_c_tested(Spec, Cases, Overrides, Code) :-
     codegen_obligations(Spec, Obligations),
     codegen_c_from(Spec, Obligations, Cases, Overrides, Code).
 
-codegen_attempt(Attempt, Max, Spec, Obligations, Cases, Overrides, Keep, Prev, Code) :-
+codegen_attempt(Attempt, Max, Spec, Obligations, Cases, Overrides, Keep, Timeout, Prev, Code) :-
     codegen_guided_prompt(Spec, Obligations, Prev, Prompt),
     codegen_keep_attempt(Keep, Attempt, 'prompt.txt', Prompt),
     codegen_call(Prompt, Overrides, Code0),
     codegen_keep_attempt(Keep, Attempt, 'c', Code0),
-    codegen_verdict(Code0, Cases, Verdict),
+    codegen_verdict(Code0, Cases, Timeout, Verdict),
     (   Verdict == ok
     ->  Code = Code0
     ;   Verdict = fail(Kind, Diag),
@@ -263,20 +295,20 @@ codegen_attempt(Attempt, Max, Spec, Obligations, Cases, Overrides, Keep, Prev, C
         ->  throw(error(codegen_error(Kind, Diag), codegen_c_compiled/3))
         ;   Next is Attempt + 1,
             codegen_attempt(Next, Max, Spec, Obligations, Cases, Overrides,
-                            Keep, prev(Code0, Diag), Code)
+                            Keep, Timeout, prev(Code0, Diag), Code)
         )
     ).
 
-codegen_verdict(Code, [], Verdict) :-
+codegen_verdict(Code, [], _, Verdict) :-
     c_compile_check(Code, Check),
     (   Check == ok
     ->  Verdict = ok
     ;   Check = fail(Diag),
         Verdict = fail(compile_failed, Diag)
     ).
-codegen_verdict(Code, Cases, Verdict) :-
+codegen_verdict(Code, Cases, Timeout, Verdict) :-
     Cases \== [],
-    c_test_check(Code, Cases, Check),
+    c_test_check(Code, Cases, Timeout, Check),
     (   Check == ok
     ->  Verdict = ok
     ;   Check = fail(compile, Diag)
@@ -337,18 +369,18 @@ codegen_fence_line(Line) :-
 
 main :-
     current_prolog_flag(argv, [_|Args]),
-    (   codegen_args(Args, args(SpecFile, TestsFile, ContractFile, OutFile, Report, Keep, Overrides))
+    (   codegen_args(Args, args(SpecFile, TestsFile, ContractFile, OutFile, Report, RunOptions, Overrides))
     ->  catch(codegen_main(SpecFile, TestsFile, ContractFile, OutFile,
-                           Report, Keep, Overrides),
+                           Report, RunOptions, Overrides),
               error(codegen_error(Kind, Detail), _),
               ( codegen_report_print(Report),
                 format(user_error, 'codegen: ~w~n~s~n', [Kind, Detail]),
                 halt(1)
               ))
-    ;   format("usage: cocolog -s coding/c/codegen.pl -- SPEC.txt [--tests CASES.txt] [--contract CONTRACT.txt] [--keep DIR] [--provider P] [--model M] [--base-url U] [--effort E] [--report] [OUT.c]~n", [])
+    ;   format("usage: cocolog -s coding/c/codegen.pl -- SPEC.txt [--tests CASES.txt] [--contract CONTRACT.txt] [--keep DIR] [--attempts N] [--timeout MS] [--provider P] [--model M] [--base-url U] [--effort E] [--report] [OUT.c]~n", [])
     ).
 
-codegen_main(SpecFile, TestsFile, ContractFile, OutFile, Report, Keep, Overrides) :-
+codegen_main(SpecFile, TestsFile, ContractFile, OutFile, Report, RunOptions, Overrides) :-
     read_file_to_codes(SpecFile, Codes),
     atom_codes(Spec, Codes),
     codegen_obligations_for(Spec, ContractFile, Obligations),
@@ -356,7 +388,7 @@ codegen_main(SpecFile, TestsFile, ContractFile, OutFile, Report, Keep, Overrides
     ->  Cases = []
     ;   c_read_cases(TestsFile, Cases)
     ),
-    codegen_c_from(Spec, Obligations, Cases, Overrides, Keep, Code),
+    codegen_c_from(Spec, Obligations, Cases, Overrides, RunOptions, Code),
     (   OutFile == none
     ->  format("~s~n", [Code])
     ;   atom_concat(Code, '\n', Text),
@@ -389,34 +421,54 @@ codegen_obligations_for(_Spec, File, Obligations) :-
 %% carries the parsed fields: args(Spec, Tests, Contract, Out, Report,
 %% Keep, Overrides).
 codegen_args(Args, ArgsTerm) :-
-    codegen_args(Args, args(none, none, none, none, no, none, []), ArgsTerm).
+    codegen_args(Args, args(none, none, none, none, no, [], []), ArgsTerm).
 
 codegen_args([], State, State) :-
     State = args(Spec, _, _, _, _, _, _),
     Spec \== none.
-codegen_args(['--tests', File|Rest], args(S, none, C, O, R, K, Os), A) :-
-    codegen_args(Rest, args(S, File, C, O, R, K, Os), A).
-codegen_args(['--contract', File|Rest], args(S, T, none, O, R, K, Os), A) :-
-    codegen_args(Rest, args(S, T, File, O, R, K, Os), A).
-codegen_args(['--keep', Dir|Rest], args(S, T, C, O, R, none, Os), A) :-
-    codegen_args(Rest, args(S, T, C, O, R, Dir, Os), A).
-codegen_args(['--provider', P|Rest], args(S, T, C, O, R, K, Os), A) :-
-    codegen_args(Rest, args(S, T, C, O, R, K, [provider(P)|Os]), A).
-codegen_args(['--model', M|Rest], args(S, T, C, O, R, K, Os), A) :-
-    codegen_args(Rest, args(S, T, C, O, R, K, [model(M)|Os]), A).
-codegen_args(['--base-url', U|Rest], args(S, T, C, O, R, K, Os), A) :-
-    codegen_args(Rest, args(S, T, C, O, R, K, [base_url(U)|Os]), A).
-codegen_args(['--effort', E|Rest], args(S, T, C, O, R, K, Os), A) :-
-    codegen_args(Rest, args(S, T, C, O, R, K, [effort(E)|Os]), A).
-codegen_args(['--report'|Rest], args(S, T, C, O, _, K, Os), A) :-
-    codegen_args(Rest, args(S, T, C, O, yes, K, Os), A).
-codegen_args([Arg|Rest], args(none, T, C, O, R, K, Os), A) :-
+codegen_args(['--tests', File|Rest], args(S, none, C, O, R, Run, Os), A) :-
+    codegen_args(Rest, args(S, File, C, O, R, Run, Os), A).
+codegen_args(['--contract', File|Rest], args(S, T, none, O, R, Run, Os), A) :-
+    codegen_args(Rest, args(S, T, File, O, R, Run, Os), A).
+codegen_args(['--keep', Dir|Rest], args(S, T, C, O, R, Run, Os), A) :-
+    codegen_run_set(keep(dir(Dir)), Run, Run1),
+    codegen_args(Rest, args(S, T, C, O, R, Run1, Os), A).
+codegen_args(['--attempts', N|Rest], args(S, T, C, O, R, Run, Os), A) :-
+    atom_number(N, N0),
+    integer(N0),
+    N0 > 0,
+    codegen_run_set(attempts(N0), Run, Run1),
+    codegen_args(Rest, args(S, T, C, O, R, Run1, Os), A).
+codegen_args(['--timeout', Ms|Rest], args(S, T, C, O, R, Run, Os), A) :-
+    atom_number(Ms, Ms0),
+    integer(Ms0),
+    Ms0 > 0,
+    codegen_run_set(case_timeout(Ms0), Run, Run1),
+    codegen_args(Rest, args(S, T, C, O, R, Run1, Os), A).
+codegen_args(['--provider', P|Rest], args(S, T, C, O, R, Run, Os), A) :-
+    codegen_args(Rest, args(S, T, C, O, R, Run, [provider(P)|Os]), A).
+codegen_args(['--model', M|Rest], args(S, T, C, O, R, Run, Os), A) :-
+    codegen_args(Rest, args(S, T, C, O, R, Run, [model(M)|Os]), A).
+codegen_args(['--base-url', U|Rest], args(S, T, C, O, R, Run, Os), A) :-
+    codegen_args(Rest, args(S, T, C, O, R, Run, [base_url(U)|Os]), A).
+codegen_args(['--effort', E|Rest], args(S, T, C, O, R, Run, Os), A) :-
+    codegen_args(Rest, args(S, T, C, O, R, Run, [effort(E)|Os]), A).
+codegen_args(['--report'|Rest], args(S, T, C, O, _, Run, Os), A) :-
+    codegen_args(Rest, args(S, T, C, O, yes, Run, Os), A).
+codegen_args([Arg|Rest], args(none, T, C, O, R, Run, Os), A) :-
     \+ codegen_flag(Arg),
-    codegen_args(Rest, args(Arg, T, C, O, R, K, Os), A).
-codegen_args([Arg|Rest], args(S, T, C, none, R, K, Os), A) :-
+    codegen_args(Rest, args(Arg, T, C, O, R, Run, Os), A).
+codegen_args([Arg|Rest], args(S, T, C, none, R, Run, Os), A) :-
     S \== none,
     \+ codegen_flag(Arg),
-    codegen_args(Rest, args(S, T, C, Arg, R, K, Os), A).
+    codegen_args(Rest, args(S, T, C, Arg, R, Run, Os), A).
+
+codegen_run_set(Option, Options, [Option|Rest]) :-
+    functor(Option, Key, _),
+    exclude(codegen_run_key(Key), Options, Rest).
+
+codegen_run_key(Key, Option) :-
+    functor(Option, Key, _).
 
 codegen_flag(Arg) :-
     atom(Arg),

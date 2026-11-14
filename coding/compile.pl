@@ -8,6 +8,7 @@
 %%         error, not an exception.
 %%
 %%     c_test_check(+Code, +Cases, -Verdict)
+%%     c_test_check(+Code, +Cases, +Timeout, -Verdict)
 %%         compile with AddressSanitizer and UndefinedBehaviorSanitizer,
 %%         then run the binary on each case. ok, or
 %%         fail(compile, Diagnostic) or fail(test, Diagnostic). A case is
@@ -15,9 +16,11 @@
 %%         and both sides are compared after trailing whitespace and final
 %%         newlines are trimmed. A sanitizer report is a failed case, even
 %%         when the printed answer happens to match; leak detection is off
-%%         (a one-shot program's leak is no answer's business).
+%%         (a one-shot program's leak is no answer's business). Timeout is
+%%         the milliseconds one case may run, 3000 unless a caller says.
 %%
 %%     c_run_cases(+Exe, +Cases, -Failures)
+%%     c_run_cases(+Exe, +Cases, +Timeout, -Failures)
 %%         the runner on its own: [] when every case matches.
 %%
 %%     c_read_cases(+File, -Cases)
@@ -67,9 +70,12 @@ c_compile_command(sanitized, Exe, CFile, Cmd) :-
 %% ---- compile and run the cases ----------------------------------------
 
 c_test_check(Code, Cases, Verdict) :-
+    c_test_check(Code, Cases, 3000, Verdict).
+
+c_test_check(Code, Cases, Timeout, Verdict) :-
     c_compile(Code, sanitized, Exe, CompileVerdict),
     (   CompileVerdict == ok
-    ->  c_run_cases(Exe, Cases, Failures),
+    ->  c_run_cases(Exe, Cases, Timeout, Failures),
         (   Failures == []
         ->  Verdict = ok
         ;   atomic_list_concat(Failures, '\n\n', Diag0),
@@ -81,15 +87,18 @@ c_test_check(Code, Cases, Verdict) :-
     ).
 
 c_run_cases(Exe, Cases, Failures) :-
-    c_run_cases(Cases, Exe, 1, Failures).
+    c_run_cases(Exe, Cases, 3000, Failures).
 
-c_run_cases([], _, _, []).
-c_run_cases([case(Input, Expected)|Rest], Exe, Index, Failures) :-
+c_run_cases(Exe, Cases, Timeout, Failures) :-
+    c_run_cases(Cases, Exe, Timeout, 1, Failures).
+
+c_run_cases([], _, _, _, []).
+c_run_cases([case(Input, Expected)|Rest], Exe, Timeout, Index, Failures) :-
     tmp_file(codegen_case, InFile),
     atom_codes(Input, InCodes),
     write_file_from_codes(InFile, InCodes),
     format(atom(Cmd), 'ASAN_OPTIONS=detect_leaks=0 ~s < ~s 2>&1', [Exe, InFile]),
-    c_run_command(Cmd, 3000, OutCodes, Exit, Error),
+    c_run_command(Cmd, Timeout, OutCodes, Exit, Error),
     atom_codes(Actual0, OutCodes),
     c_norm(Actual0, Actual),
     c_norm(Expected, ExpNorm),
@@ -101,7 +110,7 @@ c_run_cases([case(Input, Expected)|Rest], Exe, Index, Failures) :-
         Here = [Failure]
     ),
     Next is Index + 1,
-    c_run_cases(Rest, Exe, Next, Tail),
+    c_run_cases(Rest, Exe, Timeout, Next, Tail),
     append(Here, Tail, Failures).
 
 c_case_failure(Index, Input, Expected, Exit, Actual, Error, Failure) :-

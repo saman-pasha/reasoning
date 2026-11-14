@@ -84,6 +84,8 @@ COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
 | `--tests FILE` | run the cases in FILE after compiling |
 | `--contract FILE` | take the checklist from controlled-English FILE |
 | `--keep DIR` | write every attempt's prompt, code and diagnostic |
+| `--attempts N` | try at most N times (default 3) |
+| `--timeout MS` | let one case run MS milliseconds (default 3000) |
 | `--provider P` | `provider(P)` in the call |
 | `--model M` | `model(M)` in the call |
 | `--base-url U` | `base_url(U)` in the call |
@@ -111,8 +113,10 @@ stdout for the program.
 `--keep DIR` creates the directory if needed and writes each attempt as
 `attempt-N.prompt.txt`, `attempt-N.c` and, when it failed,
 `attempt-N.diag.txt`. The files are written before a failure is thrown, so
-the last candidate survives a refused run. `codegen_c_from/6` takes the
-same directory as `dir(Dir)`; `codegen_c_from/5` keeps nothing.
+the last candidate survives a refused run. `codegen_c_from/6` takes a run
+options list -- `keep(dir(Dir))`, `attempts(N)`, `case_timeout(Ms)` -- and
+`codegen_c_from/5` uses the defaults. `attempts` counts the first call;
+`case_timeout` is one case's run time, after compilation.
 
 ## Compile and repair
 
@@ -171,7 +175,8 @@ cases([case('1 2 3\n', '6'),
 
 Each case is `case(Input, Expected)`, both atoms; `Input` keeps its
 newlines, and both sides are compared after trailing whitespace and final
-newlines are trimmed, as the benchmark does. A wrong answer goes back to
+newlines are trimmed, as the benchmark does. One case may run for 3000 ms
+unless `--timeout` says otherwise. A wrong answer goes back to
 the model with the case report and the previous program, just as a failed
 compile does. A bad cases file is refused before any model call.
 
