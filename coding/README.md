@@ -73,6 +73,25 @@ codegen_c(Spec,
           Code).
 ```
 
+## Compile and repair
+
+`main/0` does not return the first reply. It compiles the reply with
+`clang -std=c17 -Wall -Wextra -O0`, and on a failure sends the compiler's
+diagnostic and the previous program back to the model, up to three
+attempts. If no reply compiles it prints the last diagnostic and exits 1.
+The same policy is available to a Prolog caller:
+
+```prolog
+codegen_c_compiled(Spec, Code).
+codegen_c_compiled(Spec, Overrides, Code).
+```
+
+`codegen_c_compiled/2,3` throws
+`error(codegen_error(compile_failed, Diagnostic), _)` when the third reply
+still fails, and `c_compile_check(Code, Verdict)` is the checker on its
+own (`ok`, or `fail(Diagnostic)`). `codegen_c/2,3` remains the one-shot
+call that returns a reply without compiling it. `clang` must be on `PATH`.
+
 ## Benchmark
 
 `coding/bench/` measures DeepSeek's high reasoning against six
@@ -93,9 +112,12 @@ See its README for the modes, the token columns and sample runs.
 3. Call `llm_chat/3` with `codegen_options/2` and the language's system
    prompt.
 4. Strip a Markdown fence, if the model added one.
-5. Return or write the code.
+5. Compile the reply; on failure, return the diagnostic and the previous
+   program to the model and try again.
+6. Return or write the code.
 
 The C generator is `coding/c/codegen.pl`; it is deliberately small. The
+benchmark in `coding/bench/` is where the prompt policy is measured. The
 next steps are the ones the architecture needs, not more prompt text:
 derive the obligations and tests from the requirement with `reasoning`,
-compile the reply with `cicilang`, and repair on the diagnostic.
+and run the tests as a second check after the compile.
