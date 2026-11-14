@@ -15,6 +15,8 @@ main :-
     boundaries,
     prompt,
     checker,
+    runner,
+    cases_file,
     checks_done.
 
 %% ---- the obligations a requirement implies -----------------------------
@@ -112,6 +114,49 @@ checker :-
     Warn = 'int main(void) { int unused; return 0; }\n',
     yes_no(c_compile_check(Warn, ok), Y3),
     check('a warning is not a failure', Y3, yes).
+
+%% ---- the case runner ---------------------------------------------------
+
+runner :-
+    section('runner'),
+    Sum = '#include <stdio.h>\nint main(void) { long a, s = 0; while (scanf("%ld", &a) == 1) s += a; printf("%ld\\n", s); return 0; }\n',
+    Cases = [case('1 2 3\n', '6'), case('4 5\n', '9')],
+    yes_no(c_test_check(Sum, Cases, ok), Y1),
+    check('a right program passes every case', Y1, yes),
+    Wrong = '#include <stdio.h>\nint main(void) { printf("0\\n"); return 0; }\n',
+    yes_no(( c_test_check(Wrong, Cases, fail(test, Diag)),
+             sub_atom(Diag, _, _, _, 'CASE 1 WRONG')
+           ), Y2),
+    check('a wrong answer is a test failure', Y2, yes),
+    Broken = 'int main(void) { return missing; }\n',
+    yes_no(c_test_check(Broken, Cases, fail(compile, _)), Y3),
+    check('a compile failure is not a test failure', Y3, yes).
+
+%% ---- the cases file ----------------------------------------------------
+
+cases_file :-
+    section('cases file'),
+    scratch(Dir),
+    atom_concat(Dir, '/good.pl', GoodFile),
+    fixture(GoodFile, ['cases([case(''1 2\\n'', ''3''), case('''', ''0'')]).']),
+    yes_no(( c_read_cases(GoodFile, Cases),
+             Cases == [case('1 2\n', '3'), case('', '0')]
+           ), Y1),
+    check('a cases term is read, its escapes kept', Y1, yes),
+    atom_concat(Dir, '/bad.pl', BadFile),
+    fixture(BadFile, ['cases([case(''a''), case(''b'', ''c'')]).']),
+    yes_no(( catch(( c_read_cases(BadFile, _), fail ),
+                   error(codegen_error(cases_file, _), _),
+                   true)
+           ), Y2),
+    check('a malformed case is refused', Y2, yes),
+    atom_concat(Dir, '/notaterm.pl', NoFile),
+    fixture(NoFile, ['this is not a term']),
+    yes_no(( catch(( c_read_cases(NoFile, _), fail ),
+                   error(codegen_error(cases_file, _), _),
+                   true)
+           ), Y3),
+    check('a file that is not a term is refused', Y3, yes).
 
 %% ---- helpers -----------------------------------------------------------
 

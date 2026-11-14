@@ -1,12 +1,14 @@
 %% coding/c/codegen.pl -- C code from a written requirement.
 %%
-%%     cocolog -s coding/c/codegen.pl -- SPEC.txt [OUT.c]
+%%     cocolog -s coding/c/codegen.pl -- SPEC.txt [--tests CASES.txt] [OUT.c]
 %%
 %% A requirement goes to a language model as a CONTRACT: C17, one complete
 %% program, no Markdown fences, no prose. The reply is compiled, and a
-%% failed compile is repaired with the compiler's own diagnostic. The
-%% model is used with the effort defaults in `coding/options.pl' -- both
-%% `none' -- so the thinking this repository does is not paid for twice.
+%% failed compile is repaired with the compiler's own diagnostic. With
+%% `--tests', the program is also run on each case and a wrong answer is
+%% repaired the same way. The model is used with the effort defaults in
+%% `coding/options.pl' -- both `none' -- so the thinking this repository
+%% does is not paid for twice.
 %%
 %% The library is tier 2 and lives in the cocolog checkout beside this
 %% repository, so run from the repository root with its PARENT on the
@@ -39,13 +41,22 @@
 %%         and the previous program, up to three attempts; then
 %%         error(codegen_error(compile_failed, Diagnostic), _) is thrown.
 %%
+%%     codegen_c_tested(+Spec, +Cases, -Code)
+%%     codegen_c_tested(+Spec, +Cases, +Overrides, -Code)
+%%         the compiled path, and then each case(Input, Expected) is run
+%%         against the binary. A wrong case goes back like a failed
+%%         compile; the third failure throws
+%%         error(codegen_error(test_failed, Diagnostic), _). Cases and
+%%         the cases file are described in `coding/compile.pl'.
+%%
 %%     c_compile_check(+Code, -Verdict)
-%%         ok or fail(Diagnostic), from `coding/compile.pl'; the check the
-%%         repair loop uses.
+%%     c_test_check(+Code, +Cases, -Verdict)
+%%         from `coding/compile.pl'; the checks the repair loop uses.
 %%
 %%     main/0
-%%         the program: SPEC.txt, then an optional OUT.c; stdout otherwise.
-%%         It uses codegen_c_compiled/2 and exits 1 if no reply compiles.
+%%         the program: SPEC.txt, an optional `--tests CASES.txt', then an
+%%         optional OUT.c; stdout otherwise. It uses codegen_c_tested/2
+%%         when tests are given and exits 1 if no reply passes.
 
 :- use_module(library(llm)).
 :- use_module('coding/options.pl').
@@ -82,21 +93,51 @@ codegen_c_compiled(Spec, Code) :-
 
 codegen_c_compiled(Spec, Overrides, Code) :-
     codegen_obligations(Spec, Obligations),
-    codegen_compile_attempt(1, 3, Spec, Obligations, Overrides, none, Code).
+    codegen_attempt(1, 3, Spec, Obligations, [], Overrides, none, Code).
 
-codegen_compile_attempt(Attempt, Max, Spec, Obligations, Overrides, Prev, Code) :-
+%% codegen_c_tested(+Spec, +Cases, -Code)
+%% codegen_c_tested(+Spec, +Cases, +Overrides, -Code)
+%%
+%% The same loop, and a compiling reply is run on each case. A case that
+%% answers wrong is repaired like a compile failure.
+codegen_c_tested(Spec, Cases, Code) :-
+    codegen_c_tested(Spec, Cases, [], Code).
+
+codegen_c_tested(Spec, Cases, Overrides, Code) :-
+    codegen_obligations(Spec, Obligations),
+    codegen_attempt(1, 3, Spec, Obligations, Cases, Overrides, none, Code).
+
+codegen_attempt(Attempt, Max, Spec, Obligations, Cases, Overrides, Prev, Code) :-
     codegen_guided_prompt(Spec, Obligations, Prev, Prompt),
     codegen_call(Prompt, Overrides, Code0),
-    c_compile_check(Code0, Verdict),
+    codegen_verdict(Code0, Cases, Verdict),
     (   Verdict == ok
     ->  Code = Code0
-    ;   Verdict = fail(Diag),
+    ;   Verdict = fail(Kind, Diag),
         (   Attempt >= Max
-        ->  throw(error(codegen_error(compile_failed, Diag), codegen_c_compiled/3))
+        ->  throw(error(codegen_error(Kind, Diag), codegen_c_compiled/3))
         ;   Next is Attempt + 1,
-            codegen_compile_attempt(Next, Max, Spec, Obligations, Overrides,
-                                    prev(Code0, Diag), Code)
+            codegen_attempt(Next, Max, Spec, Obligations, Cases, Overrides,
+                            prev(Code0, Diag), Code)
         )
+    ).
+
+codegen_verdict(Code, [], Verdict) :-
+    c_compile_check(Code, Check),
+    (   Check == ok
+    ->  Verdict = ok
+    ;   Check = fail(Diag),
+        Verdict = fail(compile_failed, Diag)
+    ).
+codegen_verdict(Code, Cases, Verdict) :-
+    Cases \== [],
+    c_test_check(Code, Cases, Check),
+    (   Check == ok
+    ->  Verdict = ok
+    ;   Check = fail(compile, Diag)
+    ->  Verdict = fail(compile_failed, Diag)
+    ;   Check = fail(test, Diag),
+        Verdict = fail(test_failed, Diag)
     ).
 
 codegen_guided_prompt(Spec, Obligations, Prev, Prompt) :-
@@ -112,7 +153,7 @@ codegen_guided_prompt(Spec, Obligations, Prev, Prompt) :-
     ->  Prompt = Base
     ;   Prev = prev(Previous, Diag),
         format(atom(Prompt),
-               '~s~n~nYour previous C program did not compile. The compiler said:~n~s~nThe previous program was:~n~s~nWrite a corrected complete C17 program. Output only the C source.',
+               '~s~n~nYour previous C program did not pass verification. The report said:~n~s~nThe previous program was:~n~s~nWrite a corrected complete C17 program. Output only the C source.',
                [Base, Diag, Previous])
     ).
 
@@ -151,19 +192,41 @@ codegen_fence_line(Line) :-
 
 main :-
     current_prolog_flag(argv, [_|Args]),
-    (   Args = [SpecFile|Rest]
-    ->  read_file_to_codes(SpecFile, Codes),
-        atom_codes(Spec, Codes),
-        catch(codegen_c_compiled(Spec, Code),
-              error(codegen_error(compile_failed, Diag), _),
-              ( format("the program did not compile after three attempts~n~s~n", [Diag]),
+    (   codegen_args(Args, SpecFile, TestsFile, OutFile)
+    ->  catch(codegen_main(SpecFile, TestsFile, OutFile),
+              error(codegen_error(Kind, Detail), _),
+              ( format("codegen: ~w~n~s~n", [Kind, Detail]),
                 halt(1)
-              )),
-        (   Rest = [OutFile|_]
-        ->  atom_concat(Code, '\n', Text),
-            atom_codes(Text, OutCodes),
-            write_file_from_codes(OutFile, OutCodes)
-        ;   format("~s~n", [Code])
-        )
-    ;   format("usage: cocolog -s coding/c/codegen.pl -- SPEC.txt [OUT.c]~n", [])
+              ))
+    ;   format("usage: cocolog -s coding/c/codegen.pl -- SPEC.txt [--tests CASES.txt] [OUT.c]~n", [])
     ).
+
+codegen_main(SpecFile, TestsFile, OutFile) :-
+    read_file_to_codes(SpecFile, Codes),
+    atom_codes(Spec, Codes),
+    (   TestsFile == none
+    ->  codegen_c_compiled(Spec, Code)
+    ;   c_read_cases(TestsFile, Cases),
+        codegen_c_tested(Spec, Cases, Code)
+    ),
+    (   OutFile == none
+    ->  format("~s~n", [Code])
+    ;   atom_concat(Code, '\n', Text),
+        atom_codes(Text, OutCodes),
+        write_file_from_codes(OutFile, OutCodes)
+    ).
+
+%% SPEC.txt [--tests CASES.txt] [OUT.c], the flag anywhere after the
+%% binary. A second positional is OUT.c; a third is a usage error.
+codegen_args(Args, SpecFile, TestsFile, OutFile) :-
+    codegen_args(Args, none, none, none, SpecFile, TestsFile, OutFile).
+
+codegen_args([], Spec, Tests, Out, Spec, Tests, Out) :-
+    Spec \== none.
+codegen_args(['--tests', File|Rest], Spec, none, Out, S, T, O) :-
+    codegen_args(Rest, Spec, File, Out, S, T, O).
+codegen_args([Arg|Rest], none, Tests, Out, S, T, O) :-
+    codegen_args(Rest, Arg, Tests, Out, S, T, O).
+codegen_args([Arg|Rest], Spec, Tests, none, S, T, O) :-
+    Spec \== none,
+    codegen_args(Rest, Spec, Tests, Arg, S, T, O).

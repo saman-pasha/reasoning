@@ -6,7 +6,7 @@ Code generation for the reasoning library, one language a directory:
 coding/
   options.pl          defaults shared by every generator
   obligations.pl      the checks a requirement's words imply
-  compile.pl          the C compile checker
+  compile.pl          the compile checker and case runner
   test.pl             the coding helpers' checks
   c/
     codegen.pl        C17 code from a written requirement
@@ -60,6 +60,9 @@ the path:
 export REASONING_API_KEY=...
 COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
     ../cocolog/cocolog -s coding/c/codegen.pl -- spec.txt out.c
+
+COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
+    ../cocolog/cocolog -s coding/c/codegen.pl -- spec.txt --tests cases.pl out.c
 ```
 
 The key comes from the environment -- `REASONING_API_KEY` by default, or
@@ -97,24 +100,53 @@ caller can use it without the generator. `codegen_c/2,3` remains the
 one-shot call that returns a reply without compiling it. `clang` must be
 on `PATH`.
 
+## Tests
+
+A compiling program can still be wrong, so `--tests CASES.txt` runs it.
+The file is one Prolog term:
+
+```prolog
+cases([case('1 2 3\n', '6'),
+       case('4 5\n', '9')]).
+```
+
+Each case is `case(Input, Expected)`, both atoms; `Input` keeps its
+newlines, and both sides are compared after trailing whitespace and final
+newlines are trimmed, as the benchmark does. A wrong answer goes back to
+the model with the case report and the previous program, just as a failed
+compile does. A bad cases file is refused before any model call.
+
+```prolog
+codegen_c_tested(Spec, Cases, Code).
+codegen_c_tested(Spec, Cases, Overrides, Code).
+```
+
+`codegen_c_tested/3,4` also carries the obligation checklist. It throws
+`error(codegen_error(test_failed, Diagnostic), _)` when the third reply
+still answers a case wrong (a compile failure keeps `compile_failed`).
+`c_test_check(Code, Cases, Verdict)` is the combined check on its own
+(`ok`, `fail(compile, Diagnostic)` or `fail(test, Diagnostic)`), and
+`c_read_cases(File, Cases)` reads and validates the cases file; both are
+in `coding/compile.pl`.
+
 ## Obligations
 
-Before the first call, `codegen_c_compiled/2,3` reads the requirement's
-own words with `coding/obligations.pl` and adds a checklist to every
-attempt. The reading is deterministic and costs no model call: a `line`
-the program reads is read whole, a `word` is a run of ASCII letters, a
-`subsequence` is not a substring, a `subarray` is contiguous and
-non-empty, a `sort` with `descending` is descending, and equal keys under
-`stable` keep their input order. A word must match whole, so `assortment`
-is not `sort` and `deadline` is not `line`, and a line the program
-*prints* is told from one it *reads* by where the words stand relative to
-the input and output verbs. `codegen_c/2,3` keeps its plain prompt; the
-checklist belongs to the compiled path.
+Before the first call, `codegen_c_compiled/2,3` and `codegen_c_tested/3,4`
+read the requirement's own words with `coding/obligations.pl` and add a
+checklist to every attempt. The reading is deterministic and costs no
+model call: a `line` the program reads is read whole, a `word` is a run of
+ASCII letters, a `subsequence` is not a substring, a `subarray` is
+contiguous and non-empty, a `sort` with `descending` is descending, and
+equal keys under `stable` keep their input order. A word must match whole,
+so `assortment` is not `sort` and `deadline` is not `line`, and a line the
+program *prints* is told from one it *reads* by where the words stand
+relative to the input and output verbs. `codegen_c/2,3` keeps its plain
+prompt; the checklist belongs to the verified paths.
 
 `coding/test.pl` holds the checks: the word boundaries, the lines each
-benchmark task's requirement implies, the guided prompt, and the compile
-checker. Run it from this repository's root with the cocolog library on
-the path.
+benchmark task's requirement implies, the guided prompt, the compile
+checker, the case runner and the cases file. Run it from this repository's
+root with the cocolog library on the path.
 
 ## Benchmark
 
@@ -140,8 +172,10 @@ See its README for the modes, the token columns and sample runs.
 5. Strip a Markdown fence, if the model added one.
 6. Compile the reply; on failure, return the diagnostic and the previous
    program to the model and try again.
-7. Return or write the code.
+7. If cases are given, run them and repair a wrong answer the same way.
+8. Return or write the code.
 
 The C generator is `coding/c/codegen.pl`; it is deliberately small. The
 benchmark in `coding/bench/` is where the prompt policy is measured. The
-next step is running tests as a second check after the compile.
+next step is deriving cases from the requirement, so the tool can test
+without a hand-written cases file.
