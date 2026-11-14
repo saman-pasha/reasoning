@@ -34,8 +34,9 @@ that `library(reasoning/reason)` finds `reason.pl` here:
 The suite case for each is `test/reason.pl`, `test/normalise.pl`,
 `test/tagger.pl` and `test/translate.pl`, and the lessons are
 `tutorials/01-reason.pl`, `02-normalise.pl`, `03-tagger.pl` and
-`04-translate.pl`. `test/prelude.pl` is cocolog's case harness, copied here
-so the four cases run without a cocolog checkout's `test/` beside them; run
+`04-translate.pl`. `coding/test.pl` is the coding helpers' case.
+`test/prelude.pl` is cocolog's case harness, copied here
+so the cases run without a cocolog checkout's `test/` beside them; run
 them with `sh run-tests.sh` (or `cocolog -s test/<case>.pl` from this
 repository's root, with its parent on `$COCOLOG_LIBRARY`).
 
