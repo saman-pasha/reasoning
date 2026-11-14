@@ -10,6 +10,8 @@
 %% input, an all-negative maximum subarray, mismatched bracket kinds, a
 %% sorted word count, a stateful phonebook, and operator precedence.
 
+:- use_module(library(process)).
+
 bench_task(sum_even, Spec, Cases) :-
     bench_lines([
         'Write a complete C17 program. It reads integers from standard input until EOF.',
@@ -147,6 +149,26 @@ bench_task(btree, Spec, Cases) :-
                   '10\n20\n25\n30\n35\n40\n45\n50\n55\n60\n65\n70\n75\n80\n85')
             ].
 
+bench_task(btree_debug, Spec, Cases) :-
+    bench_debug_source(Source),
+    format(atom(Spec),
+'Debug this C17 program. It reads an integer n from standard input, inserts n keys into a B-tree of minimum degree 6, searches, deletes half the keys, searches again, deletes the rest, and prints three integers: the number found in the first search, the number left after deleting half, and the final root key-plus-child count. A correct tree prints ((n+1)/2) (n/2) 0; with n=30 this program prints 14 13 6, and with n=256 it crashes. It has exactly three defects. Fix them without changing the algorithm, its dynamic allocation or its recursion, or the input/output format. Output the complete corrected C17 program.~n~n~s',
+           [Source]),
+    Cases = [ case('0\n', '0 0 0'),
+              case('1\n', '1 0 0'),
+              case('5\n', '3 2 0'),
+              case('10\n', '5 5 0'),
+              case('11\n', '6 5 0'),
+              case('12\n', '6 6 0'),
+              case('20\n', '10 10 0'),
+              case('30\n', '15 15 0'),
+              case('50\n', '25 25 0'),
+              case('64\n', '32 32 0'),
+              case('128\n', '64 64 0'),
+              case('256\n', '128 128 0'),
+              case('1000\n', '500 500 0')
+            ].
+
 bench_task(mvccs, Spec, Cases) :-
     bench_lines([
         'Write a complete C17 program. It simulates a multi-version B-tree of',
@@ -193,6 +215,10 @@ bench_task(mvccs, Spec, Cases) :-
                   '1\n1\n2'),
               case('', '')
             ].
+
+bench_debug_source(Source) :-
+    read_file_to_codes('coding/bench/debug/btree_c_buggy.c', Codes),
+    atom_codes(Source, Codes).
 
 %% One requirement from lines. The newline between lines is the atom's
 %% own, so the spec reaches the model as written.
@@ -293,6 +319,15 @@ bench_requirement(btree, [
     'Every program has an allocation.'
 ]).
 
+bench_requirement(btree_debug, [
+    'Every program has an input.',
+    'Every program has an output.',
+    'BTreeDebug reads the integer.',
+    'BTreeDebug prints the output.',
+    'Every program has a recursion.',
+    'Every program has an allocation.'
+]).
+
 bench_requirement(mvccs, [
     'Every program has an input.',
     'Every program has an output.',
@@ -319,6 +354,7 @@ bench_program_name(calculator, 'Calculator').
 bench_program_name(lcs, 'Lcs').
 bench_program_name(stable_sort, 'SortStable').
 bench_program_name(btree, 'BTree').
+bench_program_name(btree_debug, 'BTreeDebug').
 bench_program_name(mvccs, 'MvccBTree').
 
 %% The extractor's closed vocabulary: the noun it must use for `reads',
@@ -342,6 +378,8 @@ bench_extract_nouns(stable_sort, line, output,
                     [line, name, number, score, order, word, count]).
 bench_extract_nouns(btree, integers, keys,
                     [integers, integer, node, key, tree]).
+bench_extract_nouns(btree_debug, integer, output,
+                    [integer, tree, node, key, allocation, recursion]).
 bench_extract_nouns(mvccs, commands, output,
                     [commands, command, verb, key, tree, node, integer,
                      version, reader, snapshot, commit, writer,
@@ -353,6 +391,9 @@ bench_extract_extra_lines(sum_even, ['Every sum is even.']).
 bench_extract_extra_lines(stable_sort,
                           ['Every line has a score.',
                            'Every line has an order.']).
+bench_extract_extra_lines(btree_debug,
+                          ['Every program has a recursion.',
+                           'Every program has an allocation.']).
 bench_extract_extra_lines(mvccs,
                           ['Every program has a tree.',
                            'Every command has a verb.',
