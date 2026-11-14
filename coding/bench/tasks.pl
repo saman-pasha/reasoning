@@ -130,6 +130,23 @@ bench_task(stable_sort, Spec, Cases) :-
                   'b 2\nd 2\nf 2\na 1\nc 1\ne 1')
             ].
 
+bench_task(btree, Spec, Cases) :-
+    bench_lines([
+        'Write a complete C17 program. It reads an integer n, then n integers.',
+        'Insert each integer into a B-tree of minimum degree 2 (a 2-3-4 tree),',
+        'ignoring a key already present. Print the keys in ascending order, one',
+        'per line.'
+    ], Spec),
+    Cases = [ case('0\n', ''),
+              case('5\n3 1 4 1 5\n', '1\n3\n4\n5'),
+              case('7\n5 5 5 5 5 5 5\n', '5'),
+              case('5\n-1 -5 0 5 1\n', '-5\n-1\n0\n1\n5'),
+              case('10\n10 20 30 40 50 60 70 80 90 100\n',
+                  '10\n20\n30\n40\n50\n60\n70\n80\n90\n100'),
+              case('15\n50 30 70 20 40 60 80 10 25 35 45 55 65 75 85\n',
+                  '10\n20\n25\n30\n35\n40\n45\n50\n55\n60\n65\n70\n75\n80\n85')
+            ].
+
 %% One requirement from lines. The newline between lines is the atom's
 %% own, so the spec reaches the model as written.
 bench_lines([], '').
@@ -220,6 +237,15 @@ bench_requirement(stable_sort, [
     'Every line has an order.'
 ]).
 
+bench_requirement(btree, [
+    'Every program has an input.',
+    'Every program has an output.',
+    'BTree reads the integers.',
+    'BTree prints the output.',
+    'Every program has a recursion.',
+    'Every program has an allocation.'
+]).
+
 %% The capitalized name the extractor is told to use. The controlled
 %% English reader capitalizes a proper name; these are the same atoms it
 %% will read back as sumeven, maxsubarray, ...
@@ -231,6 +257,7 @@ bench_program_name(phonebook, 'Phonebook').
 bench_program_name(calculator, 'Calculator').
 bench_program_name(lcs, 'Lcs').
 bench_program_name(stable_sort, 'SortStable').
+bench_program_name(btree, 'BTree').
 
 %% The extractor's closed vocabulary: the noun it must use for `reads',
 %% the noun it must use for `prints', and every noun an optional line may
@@ -251,6 +278,8 @@ bench_extract_nouns(lcs, line, length,
                     [line, length, subsequence]).
 bench_extract_nouns(stable_sort, line, output,
                     [line, name, number, score, order, word, count]).
+bench_extract_nouns(btree, integers, keys,
+                    [integers, integer, node, key, tree]).
 
 %% A line the required set cannot say and the task needs: sum_even's
 %% property is what makes its sum the sum of the even integers.

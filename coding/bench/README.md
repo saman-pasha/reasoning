@@ -45,7 +45,7 @@ to `high` when the first attempt fails.
 | `gen.pl` | one generator call, run as a child `cocolog` so codegen's `main/0` is never called here |
 | `config.pl` | the provider, model, endpoint, temperature, efforts and loop cap both scripts use |
 | `contract.pl` | parses the controlled-English contracts with the shared `coding/contract.pl` reader and vocabulary, writes the extractor's prompt and line parser, and holds the keyword-to-contract rules |
-| `tasks.pl` | eight requirements, their hand-written contracts, extractor noun lists and stdin/stdout cases |
+| `tasks.pl` | nine requirements, their hand-written contracts, extractor noun lists and stdin/stdout cases |
 | `run.sh` | sets `COCOLOG_LIBRARY` and runs `bench.pl` |
 | `paired.pl` | the paired repair comparison: one shared first attempt, then plain and obliged branches |
 | `paired.sh` | sets `COCOLOG_LIBRARY` and runs `paired.pl` |
@@ -98,7 +98,8 @@ after trimming trailing whitespace and final newlines.
 
 ## A sample run
 
-2026-11-14, `deepseek-flash`, `REASONING_API_KEY`, all eight tasks:
+2026-11-14, `deepseek-flash`, `REASONING_API_KEY`, the eight tasks that
+predate `btree`:
 
 ```
 mode      tasks passed attempts prompt completion reasoning total cache_hit seconds
@@ -128,6 +129,24 @@ loop, but here it also buys the missing task. `extract` is 8/8 but the
 costliest no-reasoning mode at 7 953. `high` failed `stable_sort` and
 burned 12 670 reasoning tokens.
 
+`btree` was added after that sample. Run alone on the same day, all seven
+modes passed it on the first attempt:
+
+```
+mode      tasks passed attempts prompt completion reasoning total cache_hit seconds
+high      1     1      1        134    4467       3386      4601  0         25.60
+loop      1     1      1        109    960        0         1069  0         7.73
+contract  1     1      1        192    1260       0         1452  0         8.42
+extract   1     1      2        422    999        0         1421  0         7.89
+derive    1     1      1        162    967        0         1129  0         7.66
+escalate  1     1      1        109    963        0         1072  0         7.11
+escalate2 1     1      1        109    1025       0         1134  0         7.48
+```
+
+`high` spent 3 386 reasoning tokens and 4 601 total; the plain loop solved
+it in 1 069. The contract carried the recursion and allocation lines, but
+every mode already found the tree on its first call.
+
 ## Paired run
 
 The seven mode rows above call the model independently, so first-attempt
@@ -141,7 +160,7 @@ input to two branches:
 The first attempt's tokens are counted in both totals, so the difference
 is the repair policy alone.
 
-A sample from the same eight tasks:
+A sample from the same eight tasks, before `btree` was added:
 
 ```
 task        first plain_total obliged_total plain_pass obliged_pass
@@ -196,21 +215,22 @@ A run on 2026-11-14:
 
 ```
 task        pass calls prompt completion reasoning total cache_hit seconds
-sum_even    pass 1     219    73         0         292   0         4.58
-max_subarray pass 1    228    132        0         360   0         5.30
-balanced    pass 1     211    307        0         518   0         6.30
-word_count  pass 1     237    873        0         1110  0         7.28
-phonebook   pass 1     286    992        0         1278  128       8.10
-calculator  pass 1     244    492        0         736   0         6.30
-lcs         pass 1     202    247        0         449   0         5.54
-stable_sort pass 1     241    533        0         774   0         7.16
-overall     8 8        8      1868       3649      0     5517  128   50.56
+sum_even    pass 1     219    73         0         292   0         4.51
+max_subarray pass 1    228    169        0         397   0         5.44
+balanced    pass 1     211    308        0         519   0         6.08
+word_count  pass 1     237    827        0         1064  0         6.88
+phonebook   pass 1     286    1004       0         1290  128       8.42
+calculator  pass 1     244    488        0         732   0         6.76
+lcs         pass 1     202    247        0         449   0         6.30
+stable_sort pass 1     241    618        0         859   0         7.03
+btree       pass 1     182    902        0         1084  0         8.36
+overall     9 9        9      2050       4636      0     6686  128   59.78
 ```
 
-All eight passed on the first call, including `stable_sort`; the keyword
-checklist carried the stable-order line without a repair. The seconds are
-longer than the `derive` row's because every case runs under the
-sanitizers.
+All nine passed on the first call, including `stable_sort` and `btree`;
+the keyword checklist carried the stable-order line without a repair. The
+seconds are longer than the `derive` row's because every case runs under
+the sanitizers.
 
 ## Adding a task
 
