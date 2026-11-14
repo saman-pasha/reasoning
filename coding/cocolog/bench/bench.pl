@@ -4,9 +4,10 @@
 %%
 %% Two modes per task:
 %%
-%%     high      one call at reasoning_effort(high)
+%%     high      one call at reasoning_effort(high), with SKILL.md
 %%     checked   up to three calls at none; each repair carries the output
 %%               mismatch from the expected file
+%%     no_skill  the high control with the guide omitted
 %%
 %% Every task's main/0 prints all its results in one run, and the codegen's
 %% own --expect check compares them with the task's expected file. The
@@ -46,7 +47,7 @@ bench_selected_tasks(Tasks) :-
     ).
 
 bench_task_modes(Task, Dir) :-
-    forall(member(Mode, [high, checked]), bench_run(Task, Mode, Dir)).
+    forall(member(Mode, [high, checked, no_skill]), bench_run(Task, Mode, Dir)).
 
 bench_run(Task, Mode, Dir) :-
     bench_task(Task, Spec, Expected),
@@ -115,6 +116,7 @@ write_text(File, Text) :-
 bench_report(_Tasks) :-
     mode_total(high),
     mode_total(checked),
+    mode_total(no_skill),
     overall.
 
 mode_total(Mode) :-

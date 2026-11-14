@@ -13,6 +13,7 @@
 %%     --goal G        the goal `cocolog run' proves (default main)
 %%     --skill FILE    the language guide (default $COCOLOG_SKILL, else
 %%                     ../cocolog/SKILL.md)
+%%     --no-skill      omit the guide; a short generic cocolog prompt
 %%     --expect FILE   compare the program's standard output with FILE
 %%     --attempts N    try at most N times (default 3)
 %%     --timeout MS    let one run take MS milliseconds (default 3000)
@@ -76,6 +77,11 @@ cocolog_system_prompt(Skill, Prompt) :-
 ~s',
            [Skill]).
 
+cocolog_no_skill_prompt(Prompt) :-
+    format(atom(Prompt),
+'You are a cocolog programmer. Write a complete cocolog program for the requirement. Define main/0 unless the requirement names another goal. Output only the complete source code, with no Markdown fences and no explanation.',
+           []).
+
 cocolog_user_prompt(Spec, Goal, Prompt) :-
     format(atom(Prompt),
 'Write a complete cocolog program for this requirement. The command run will prove ~w.
@@ -115,8 +121,11 @@ codegen_cocolog_checked(Spec, Overrides, Code) :-
 codegen_cocolog_from(Spec, Goal, Overrides, RunOptions, Code) :-
     cocolog_run_prepare(RunOptions, Attempts, Timeout, Budget, Keep, SkillFile,
                         Expect),
-    cocolog_skill_text(SkillFile, Skill),
-    cocolog_system_prompt(Skill, System),
+    (   SkillFile == no
+    ->  cocolog_no_skill_prompt(System)
+    ;   cocolog_skill_text(SkillFile, Skill),
+        cocolog_system_prompt(Skill, System)
+    ),
     codegen_report_reset,
     get_time(Start),
     catch(cocolog_attempt(1, Attempts, Spec, Goal, System, Overrides, Keep,
@@ -422,7 +431,7 @@ main :-
                 format(user_error, 'codegen: ~w~n~s~n', [Kind, Detail]),
                 halt(1)
               ))
-    ;   format("usage: cocolog -s coding/cocolog/codegen.pl -- SPEC.txt [--goal G] [--skill FILE] [--expect FILE] [--attempts N] [--timeout MS] [--budget N] [--keep DIR] [--dry-run] [--key-env NAME] [--temperature T] [--max-tokens N] [--provider P] [--model M] [--base-url U] [--effort E] [--report] [OUT.pl]~n", []),
+    ;   format("usage: cocolog -s coding/cocolog/codegen.pl -- SPEC.txt [--goal G] [--skill FILE] [--no-skill] [--expect FILE] [--attempts N] [--timeout MS] [--budget N] [--keep DIR] [--dry-run] [--key-env NAME] [--temperature T] [--max-tokens N] [--provider P] [--model M] [--base-url U] [--effort E] [--report] [OUT.pl]~n", []),
         halt(1)
     ).
 
@@ -431,8 +440,11 @@ cocolog_main(SpecFile, Goal, OutFile, Report, DryRun, RunOptions, Overrides) :-
     atom_codes(Spec, Codes),
     (   DryRun == yes
     ->  cocolog_run_option(RunOptions, skill, none, SkillFile),
-        cocolog_skill_text(SkillFile, Skill),
-        cocolog_system_prompt(Skill, System),
+        (   SkillFile == no
+        ->  cocolog_no_skill_prompt(System)
+        ;   cocolog_skill_text(SkillFile, Skill),
+            cocolog_system_prompt(Skill, System)
+        ),
         cocolog_user_prompt(Spec, Goal, Prompt),
         format("SYSTEM~n~s~n~nUSER~n~s~n", [System, Prompt]),
         codegen_report_reset,
@@ -459,6 +471,9 @@ cocolog_args(['--goal', Goal|Rest], args(S, _, O, R, D, Run, Os), A) :-
     cocolog_args(Rest, args(S, Goal, O, R, D, Run, Os), A).
 cocolog_args(['--skill', File|Rest], args(S, G, O, R, D, Run, Os), A) :-
     cocolog_run_set(skill(File), Run, Run1),
+    cocolog_args(Rest, args(S, G, O, R, D, Run1, Os), A).
+cocolog_args(['--no-skill'|Rest], args(S, G, O, R, D, Run, Os), A) :-
+    cocolog_run_set(skill(no), Run, Run1),
     cocolog_args(Rest, args(S, G, O, R, D, Run1, Os), A).
 cocolog_args(['--expect', File|Rest], args(S, G, O, R, D, Run, Os), A) :-
     cocolog_run_set(expect(File), Run, Run1),

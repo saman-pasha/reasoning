@@ -30,6 +30,7 @@ COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
 |---|---|
 | `--goal G` | the goal `cocolog run` proves (default `main`) |
 | `--skill FILE` | the language guide |
+| `--no-skill` | omit the guide and use a short generic cocolog prompt |
 | `--expect FILE` | compare the program's standard output with FILE |
 | `--attempts N` | try at most N times (default 3) |
 | `--timeout MS` | one run's timeout (default 3000) |
@@ -77,9 +78,9 @@ library does not have, in all three attempts; naming the API fixed it.
 ## Benchmark suite
 
 `coding/cocolog/bench/` runs four tasks — the template loader, JSON, a DCG
-and the program's database — in `high` and `checked` modes, with an exact
-expected output per task. See its README for the measured table and how to
-run it.
+and the program's database — in `high`, `checked` and `no_skill` modes, with
+an exact expected output per task. `no_skill` is the control with the guide
+omitted. See its README for the measured table and how to run it.
 
 ## API
 
