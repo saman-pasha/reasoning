@@ -90,6 +90,7 @@ COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
 | `--keep DIR` | write every attempt's prompt, code and diagnostic |
 | `--attempts N` | try at most N times (default 3) |
 | `--timeout MS` | let one case run MS milliseconds (default 3000) |
+| `--cflags FLAGS` | extra clang arguments (default none) |
 | `--dry-run` | print the first prompt and exit, no model call |
 | `--provider P` | `provider(P)` in the call |
 | `--model M` | `model(M)` in the call |
@@ -120,9 +121,11 @@ prints the same line to stderr, leaving stdout for the program.
 `attempt-N.prompt.txt`, `attempt-N.c` and, when it failed,
 `attempt-N.diag.txt`. The files are written before a failure is thrown, so
 the last candidate survives a refused run. `codegen_c_from/6` takes a run
-options list -- `keep(dir(Dir))`, `attempts(N)`, `case_timeout(Ms)` -- and
-`codegen_c_from/5` uses the defaults. `attempts` counts the first call;
-`case_timeout` is one case's run time, after compilation.
+options list -- `keep(dir(Dir))`, `attempts(N)`, `case_timeout(Ms)`,
+`cflags(Flags)` -- and `codegen_c_from/5` uses the defaults. `attempts`
+counts the first call; `case_timeout` is one case's run time, after
+compilation; `cflags` are extra clang arguments such as `-lm` or
+`-DNDEBUG`.
 
 `--dry-run` prints the first prompt -- the requirement and its checklist --
 and exits 0 without calling the model or writing OUT.c. `--contract` is
@@ -208,8 +211,9 @@ validates the cases file; both are in `coding/compile.pl`.
 `coding/c/check.pl` is the verifier without the generator. It compiles an
 existing C file, and with `--tests` builds it with the sanitizers and runs
 every case. No model is called. It prints `OK` and exits 0, or the
-compiler/test report and exits 1; `--timeout MS` is one case's run time.
-Without `--tests` it is the plain compile check.
+compiler/test report and exits 1; `--timeout MS` is one case's run time,
+and `--cflags FLAGS` are extra compiler arguments. Without `--tests` it is
+the plain compile check.
 
 ```sh
 cocolog -s coding/c/check.pl -- out.c --tests cases.txt
