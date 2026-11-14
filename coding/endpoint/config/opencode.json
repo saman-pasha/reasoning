@@ -10,15 +10,35 @@
       "models": {
         "c": {
           "name": "C17",
-          "tool_call": true,
-          "input": ["text"],
-          "output": ["text"]
+          "capabilities": {
+            "tools": true,
+            "input": ["text"],
+            "output": ["text"]
+          },
+          "settings": { "reasoningEffort": "high" },
+          "variants": [
+            { "id": "none", "settings": { "reasoningEffort": "none" } },
+            { "id": "low", "settings": { "reasoningEffort": "low" } },
+            { "id": "medium", "settings": { "reasoningEffort": "medium" } },
+            { "id": "high", "settings": { "reasoningEffort": "high" } }
+          ],
+          "limit": { "context": 1000000, "output": 8192 }
         },
         "cocolog": {
           "name": "cocolog",
-          "tool_call": true,
-          "input": ["text"],
-          "output": ["text"]
+          "capabilities": {
+            "tools": true,
+            "input": ["text"],
+            "output": ["text"]
+          },
+          "settings": { "reasoningEffort": "high" },
+          "variants": [
+            { "id": "none", "settings": { "reasoningEffort": "none" } },
+            { "id": "low", "settings": { "reasoningEffort": "low" } },
+            { "id": "medium", "settings": { "reasoningEffort": "medium" } },
+            { "id": "high", "settings": { "reasoningEffort": "high" } }
+          ],
+          "limit": { "context": 1000000, "output": 8192 }
         }
       }
     }

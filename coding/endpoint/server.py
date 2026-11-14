@@ -34,6 +34,7 @@ COCOLOG_MODEL = os.environ.get("CODING_ENDPOINT_COCOLOG_MODEL", BACKEND_MODEL)
 KEY_ENV = os.environ.get("CODING_ENDPOINT_KEY_ENV", "REASONING_API_KEY")
 REQUEST_TIMEOUT = int(os.environ.get("CODING_ENDPOINT_TIMEOUT", "600"))
 MAX_OUTPUT_TOKENS = int(os.environ.get("CODING_ENDPOINT_MAX_TOKENS", "8192"))
+CONTEXT_WINDOW = int(os.environ.get("CODING_ENDPOINT_CONTEXT", "1000000"))
 MAX_BODY = int(os.environ.get("CODING_ENDPOINT_MAX_BODY", str(8 * 1024 * 1024)))
 COCOLOG_SKILL = Path(
     os.environ.get("COCOLOG_SKILL", str(ROOT.parent / "cocolog" / "SKILL.md"))
@@ -152,6 +153,8 @@ class Handler(BaseHTTPRequestHandler):
                     "created": now,
                     "owned_by": "reasoning-coding",
                     "name": "C17" if model == "c" else "cocolog",
+                    "context_length": CONTEXT_WINDOW,
+                    "max_output_tokens": MAX_OUTPUT_TOKENS,
                 }
                 for model in MODELS
             ]
@@ -237,10 +240,11 @@ class Handler(BaseHTTPRequestHandler):
         stream = bool(body.get("stream"))
         tools = body.get("tools")
         tool_count = len(tools) if isinstance(tools, list) else 0
+        effort = body.get("reasoning_effort", "-")
         print(
             f"{alias} -> {body['model']} stream={str(stream).lower()} "
             f"messages={len(messages)} tools={tool_count} "
-            f"guide={'no' if title else 'yes'}",
+            f"effort={effort} guide={'no' if title else 'yes'}",
             file=sys.stderr,
             flush=True,
         )

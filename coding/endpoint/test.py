@@ -143,6 +143,9 @@ class EndpointTest(unittest.TestCase):
         with urllib.request.urlopen(self.base + "/v1/models") as response:
             data = json.loads(response.read())
         self.assertEqual([m["id"] for m in data["data"]], ["c", "cocolog"])
+        self.assertEqual(
+            [m["context_length"] for m in data["data"]], [1000000, 1000000]
+        )
 
     def test_c_request_maps_model_and_guide(self):
         ask(
@@ -160,6 +163,17 @@ class EndpointTest(unittest.TestCase):
         self.assertEqual(sent["max_tokens"], 16)
         self.assertIn("This session: C17", sent["messages"][0]["content"])
         self.assertEqual(len(sent["tools"]), 1)
+
+    def test_effort_is_forwarded(self):
+        ask(
+            self.base + "/v1/chat/completions",
+            {
+                "model": "c",
+                "messages": [{"role": "user", "content": "hello"}],
+                "reasoning_effort": "low",
+            },
+        )
+        self.assertEqual(SEEN[-1]["reasoning_effort"], "low")
 
     def test_title_request_gets_no_guide(self):
         ask(

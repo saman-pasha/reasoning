@@ -13,7 +13,15 @@ Two model names are exposed:
 
 The endpoint is not a second agent loop. OpenCode still owns the read, edit
 and shell tools, the session and the permissions. The guides tell the model
-how to use those tools for C or cocolog.
+how to use those tools for C or cocolog. Both models declare a 1,000,000-token
+context and an 8,192-token output limit; `/v1/models` reports the same limits.
+
+`settings.reasoningEffort` defaults to `high`, and the models define the
+variants `none`, `low`, `medium` and `high`. OpenCode sends the chosen level
+as `reasoning_effort`, and the endpoint forwards it unchanged. `none` turns
+the backend's thinking off; a higher level asks for more thinking, tokens and
+latency. In the TUI, `ctrl+t` cycles the variants; on the command line name
+one as `reasoning/c#none` or `reasoning/cocolog#high`.
 
 ## Start
 
