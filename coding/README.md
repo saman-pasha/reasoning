@@ -92,6 +92,9 @@ COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
 | `--timeout MS` | let one case run MS milliseconds (default 3000) |
 | `--cflags FLAGS` | extra clang arguments (default none) |
 | `--dry-run` | print the first prompt and exit, no model call |
+| `--key-env NAME` | read the API key from NAME |
+| `--temperature T` | `temperature(T)` in the call |
+| `--max-tokens N` | `max_tokens(N)` in the call |
 | `--provider P` | `provider(P)` in the call |
 | `--model M` | `model(M)` in the call |
 | `--base-url U` | `base_url(U)` in the call |
@@ -100,8 +103,10 @@ COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
 
 The provider, model and base URL are one setting: a provider chosen alone
 keeps `library(llm)`'s model and endpoint for that provider, so pass all
-three when changing provider. A flag said again keeps its last value. The
-same overrides are available to a Prolog caller:
+three when changing provider. A flag said again keeps its last value.
+`--key-env NAME` only picks the variable; the key is still read from the
+environment, never from the repository. The same overrides are available
+to a Prolog caller:
 
 ```prolog
 codegen_c(Spec,
