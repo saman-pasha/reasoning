@@ -4,8 +4,8 @@
 %%
 %% The obligations' word boundaries, the lines each benchmark task's
 %% requirement implies, the controlled-English contract, the guided
-%% prompt, the C compile checker and case runner, and the command line.
-%% No model call and no network.
+%% prompt, the C compile checker and case runner, the command line, and
+%% the standalone checker. No model call and no network.
 
 :- use_module('test/prelude.pl').
 :- use_module('coding/obligations.pl').
@@ -24,6 +24,7 @@ main :-
     cases_file,
     cli,
     keep,
+    check_tool,
     checks_done.
 
 %% ---- the obligations a requirement implies -----------------------------
@@ -432,6 +433,52 @@ keep_absent(Dir, Name) :-
     ),
     format(atom(Label), '~w is not written', [Name]),
     check(Label, Result, absent).
+
+%% ---- the standalone checker -------------------------------------------
+
+check_tool :-
+    section('check tool'),
+    scratch(Dir),
+    atom_concat(Dir, '/good.c', Good),
+    fixture(Good, ['#include <stdio.h>',
+                   'int main(void) { printf("ok\\n"); return 0; }']),
+    atom_concat(Dir, '/bad.c', Bad),
+    fixture(Bad, ['int main(void) { return missing; }']),
+    atom_concat(Dir, '/pass.txt', PassFile),
+    fixture(PassFile, ['# input', '# expected', 'ok']),
+    atom_concat(Dir, '/wrong.txt', WrongFile),
+    fixture(WrongFile, ['# input', '# expected', 'no']),
+    check_compiles(Good, Text1, Exit1),
+    check('a good file compiles', Exit1, 0),
+    has('the good file says OK', 'OK:', Text1),
+    check_compiles(Bad, Text2, Exit2),
+    check('a bad file fails', Exit2, 1),
+    has('the bad file names the failure', 'COMPILE FAILED', Text2),
+    check_with_cases(Good, PassFile, Text3, Exit3),
+    check('a good file passes its cases', Exit3, 0),
+    has('the passing cases say OK', 'case(s) pass', Text3),
+    check_with_cases(Good, WrongFile, Text4, Exit4),
+    check('a wrong answer fails the check', Exit4, 1),
+    has('the wrong answer says TESTS FAILED', 'TESTS FAILED', Text4),
+    has('the wrong answer names the case', 'CASE 1 WRONG', Text4),
+    atom_concat(Dir, '/missing.c', Missing),
+    check_compiles(Missing, Text5, Exit5),
+    check('a missing file fails', Exit5, 1),
+    has('the missing file names the path', 'cannot read', Text5),
+    cocolog_run('-s coding/c/check.pl', Text6, Exit6),
+    check('the check usage is an error', Exit6, 1),
+    has('the check usage is printed', 'usage:', Text6),
+    cocolog_run('-s coding/c/codegen.pl', Text7, Exit7),
+    check('the generator usage is an error', Exit7, 1),
+    has('the generator usage is printed', 'usage:', Text7).
+
+check_compiles(File, Text, Exit) :-
+    format(atom(Args), "-s coding/c/check.pl -- ~w", [File]),
+    cocolog_run(Args, Text, Exit).
+
+check_with_cases(File, Cases, Text, Exit) :-
+    format(atom(Args), "-s coding/c/check.pl -- ~w --tests ~w", [File, Cases]),
+    cocolog_run(Args, Text, Exit).
 
 cli_query(Goal, Needles) :-
     format(atom(Args),

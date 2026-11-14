@@ -11,6 +11,7 @@ coding/
   test.pl             the coding helpers' checks
   c/
     codegen.pl        C17 code from a written requirement
+    check.pl          compile and test an existing C file, no model
 ```
 
 A new language is a new directory and a `codegen.pl` beside this one; it
@@ -64,6 +65,9 @@ COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
 
 COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
     ../cocolog/cocolog -s coding/c/codegen.pl -- spec.txt --tests cases.pl out.c
+
+COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
+    ../cocolog/cocolog -s coding/c/check.pl -- out.c --tests cases.txt
 ```
 
 The key comes from the environment -- `REASONING_API_KEY` by default, or
@@ -192,6 +196,18 @@ failure keeps `compile_failed`). `c_test_check(Code, Cases, Verdict)` is
 the combined check on its own (`ok`, `fail(compile, Diagnostic)` or
 `fail(test, Diagnostic)`), and `c_read_cases(File, Cases)` reads and
 validates the cases file; both are in `coding/compile.pl`.
+
+## Check
+
+`coding/c/check.pl` is the verifier without the generator. It compiles an
+existing C file, and with `--tests` builds it with the sanitizers and runs
+every case. No model is called. It prints `OK` and exits 0, or the
+compiler/test report and exits 1; `--timeout MS` is one case's run time.
+Without `--tests` it is the plain compile check.
+
+```sh
+cocolog -s coding/c/check.pl -- out.c --tests cases.txt
+```
 
 ## Obligations
 
