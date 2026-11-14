@@ -148,6 +148,31 @@ of those totals.
 tokens (5 090 reasoning) where `loop`, `derive`, `escalate` and
 `escalate2` spent 1 134-1 136, `contract` 1 326 and `extract` 1 647.
 
+### The mvccs_acid run
+
+2026-11-15, `deepseek-flash`, `REASONING_API_KEY`, `mvccs_acid` alone:
+
+```
+mode      tasks passed attempts prompt completion reasoning total cache_hit seconds
+high      1     0      1        520    36711      31140     37231 0         175.89
+loop      1     0      3        10695  13360      0         24055 1024      50.43
+contract  1     1      2        7245   11378      0         18623 640       44.78
+extract   1     0      4        13934  16187      0         30121 3712      53.64
+derive    1     0      3        13203  14833      0         28036 4224      52.83
+escalate  1     0      3        12533  14972      0         27505 1536      51.60
+escalate2 1     0      3        10779  13317      0         24096 1280      48.34
+```
+
+`contract` is the only passing mode, and it needed two attempts: the
+first timed out on cases 2 and 6, the second passed all ten. `high`, one
+call with no repair, failed only case 8, the last-committer-wins delete
+after another transaction inserted the key. `loop`, `derive`, `escalate`,
+`escalate2` and `extract` all failed case 3, a read that should not see a
+key committed after its snapshot but did. The task is much heavier than
+the `mvccs` result above: `high` spent 31 140 reasoning tokens and still
+missed the edge case, while the passing `contract` run cost 18 623 tokens
+in total.
+
 ### The btree_debug task
 
 `btree_debug` is the cicilang benchmark's `btree_c.c`, adapted to read `n`
