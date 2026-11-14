@@ -4,10 +4,11 @@ A DeepSeek code-generation benchmark: paying for the model's reasoning up
 front, a deterministic verification loop, a loop whose prompt carries
 obligations from a hand-written controlled-English contract, a loop whose
 obligations are extracted from the plain requirement by the model, a loop
-whose obligations are derived from its keywords without a model, and a
-loop that adds those obligations only after a failed first attempt.
+whose obligations are derived from its keywords without a model, a loop
+that adds those obligations after one failed attempt, and one that adds
+them only after two.
 
-## The six modes
+## The seven modes
 
 | mode | calls | effort | what happens |
 |---|---|---|---|
@@ -17,6 +18,7 @@ loop that adds those obligations only after a failed first attempt.
 | `extract` | one + up to three | `reasoning_effort(none)` | one call rewrites the plain requirement into allowed controlled-English sentences; `reason.pl` accepts the lines it can read, and the obligations derived from them go into the loop's prompt. The prompt names the task's read and print nouns and only the shapes that task can use |
 | `derive` | up to three | `reasoning_effort(none)` | the loop, with obligations derived deterministically from the plain requirement's keywords and the task's noun list. No model call |
 | `escalate` | up to three | `reasoning_effort(none)` | the first attempt is the plain loop; only a repair attempt adds the keyword-derived obligations |
+| `escalate2` | up to three | `reasoning_effort(none)` | the first two attempts are the plain loop; only the third adds the keyword-derived obligations |
 
 The loop is the reasoning this repository already trusts -- a compiler and
 tests -- not a second model. The contract mode adds the other half: rules
@@ -28,11 +30,12 @@ list, and offers only the shapes the task can use. The derive mode writes
 the same kind of contract from keywords the plain requirement already has
 (`subsequence`, `command`, `expression`, `lexicographic`) and the task's
 noun list, so it pays no model call at all. The escalate mode withholds
-those obligations until a first attempt fails, so a task that passes pays
-only the plain loop's prompt. A line the controlled-English reader refuses
-is dropped, and a failed extraction leaves the plain requirement. A failed
-codegen attempt costs another prompt with the previous code and
-diagnostics, so any loop can lose to `high` when the first attempt fails.
+those obligations until a first attempt fails; escalate2 withholds them
+until a second attempt fails, so a plain repair gets its chance first. A
+line the controlled-English reader refuses is dropped, and a failed
+extraction leaves the plain requirement. A failed codegen attempt costs
+another prompt with the previous code and diagnostics, so any loop can lose
+to `high` when the first attempt fails.
 
 ## Files
 
@@ -94,37 +97,37 @@ after trimming trailing whitespace and final newlines.
 
 ```
 mode     tasks passed attempts prompt completion reasoning total cache_hit seconds
-high     7     7      7        943    11344      7985      12287 0         69.08
-loop     7     7      8        1145   3167       0         4312  128       38.42
-contract 7     7      7        1398   3317       0         4715  0         36.07
-extract  7     7      14       3280   3471       0         6751  512       35.25
-derive   7     7      7        1423   3401       0         4824  0         32.74
-escalate 7     7      7        768    3002       0         3770  0         33.56
+high      7     7      7        943    14713      10731     15656 0         84.91
+loop      7     7      8        1145   3172       0         4317  128       36.46
+contract  7     7      7        1398   3454       0         4852  0         32.16
+extract   7     7      14       3280   3346       0         6626  512       32.21
+derive    7     7      7        1423   3375       0         4798  0         33.00
+escalate  7     7      8        1243   3290       0         4533  256       36.42
+escalate2 7     7      8        1145   3102       0         4247  128       36.05
 ```
 
-All six modes solved every task. `escalate` had the lowest total: it paid
-the plain first-attempt prompt and never needed a repair. `loop` is close
-but its LCS first attempt failed and its repair cost 984; `escalate`'s LCS
-first attempt passed at 364. On the six tasks where both passed first try,
-the two are nearly identical (sum_even 200 against 200, max_subarray 278
-against 278, balanced 418 against 418); the differences are
-completion-token variance, not the mode.
+All seven modes solved every task. `escalate2` had the lowest total, but
+its third stage never fired: LCS failed its first attempt and passed on
+the second, which is the plain repair. Its LCS cost is therefore the same
+as `loop`'s (984 against 988), and the 70-token difference in the totals is
+completion-token variance. `escalate`, which adds the obligations on the
+first repair, paid 1 144 for LCS against the plain repair's 988 -- more for
+the same one-repair success.
 
-That is also the limitation of this comparison: each mode makes its own
-model calls, so the first-attempt luck differs. The LCS outcome does not
-show that escalation repairs better; it shows that escalation's first
-attempt happened to pass. Temperature 0 is set to reduce this, and the
-provider still varies. A paired run that generates the first attempt once
-and branches into the two repair policies is the next methodological step.
+That is the point of the two-stage design: on this task set the obligations
+are dormant, and the mode costs what the plain loop costs. They would be
+used only by a task whose two plain attempts both fail. The earlier
+six-mode run's escalation result had the same first-attempt-luck problem;
+the paired run below isolates the repair policy.
 
-The other results hold: `contract` and `derive` solved LCS first try (527
-and 526) but their obligations add prompt tokens on every task, so they
-cost 4 715 and 4 824 against `loop`'s 4 312. `extract` is the costliest
-no-reasoning mode at 6 751. `high` burned 7 985 reasoning tokens.
+`contract` and `derive` solved LCS first try (527 and 526) but pay
+obligations on every task; they cost 4 852 and 4 798 against `loop`'s
+4 317. `extract` is the costliest no-reasoning mode at 6 626. `high` burned
+10 731 reasoning tokens.
 
 ## Paired run
 
-The six mode rows above call the model independently, so first-attempt
+The seven mode rows above call the model independently, so first-attempt
 luck can decide the total. `paired.pl` removes that: one plain first
 attempt per task; if it fails, the same program and diagnostic are the
 input to two branches:
@@ -184,6 +187,7 @@ and lets optional lines use `Nouns`; `bench_extract_extra_lines/2` adds a
 line the required set cannot say (`sum_even`'s `Every sum is even.`). The
 derive mode uses the same `ReadNoun`, `PrintNoun` and `Nouns`, plus the
 keyword rules in `contract.pl`; a new concept in `Spec` needs a keyword
-rule there. Escalate uses the same rules, but only on a repair attempt.
-`high` and `loop` use `Spec` alone; `extract` writes its own sentences;
-`derive` writes them from keywords. No Python is involved.
+rule there. Escalate uses the same rules on the first repair; escalate2
+uses them only on the second. `high` and `loop` use `Spec` alone;
+`extract` writes its own sentences; `derive` writes them from keywords.
+No Python is involved.

@@ -5,22 +5,24 @@
 %%     COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
 %%         ../cocolog/cocolog -s coding/bench/bench.pl [-- task ...]
 %%
-%% Six modes per task:
+%% Seven modes per task:
 %%
-%%     high      one call with reasoning_effort(high)
-%%     loop      up to three calls with reasoning_effort(none); after each
-%%               the code is compiled with clang and run on the task's cases,
-%%               and the compiler/test report goes back with the next call
-%%     contract  the loop, with the obligation checklist contract.pl derives
-%%               from the task's controlled-English requirement added to
-%%               the prompt
-%%     extract   one extra reasoning_effort(none) call rewrites the plain
-%%               requirement into controlled English; the lines the reader
-%%               accepts give the obligations, then the loop runs
-%%     derive    the loop, with obligations derived deterministically from
-%%               the plain requirement's keywords and the task's noun list
-%%     escalate  the first attempt is the plain loop; only a repair attempt
-%%               adds the keyword-derived obligations
+%%     high       one call with reasoning_effort(high)
+%%     loop       up to three calls with reasoning_effort(none); after each
+%%                the code is compiled with clang and run on the task's cases,
+%%                and the compiler/test report goes back with the next call
+%%     contract   the loop, with the obligation checklist contract.pl derives
+%%                from the task's controlled-English requirement added to
+%%                the prompt
+%%     extract    one extra reasoning_effort(none) call rewrites the plain
+%%                requirement into controlled English; the lines the reader
+%%                accepts give the obligations, then the loop runs
+%%     derive     the loop, with obligations derived deterministically from
+%%                the plain requirement's keywords and the task's noun list
+%%     escalate   the first attempt is the plain loop; only a repair attempt
+%%                adds the keyword-derived obligations
+%%     escalate2  the first two attempts are the plain loop; only the third
+%%                adds the keyword-derived obligations
 %%
 %% The measurement is the provider's own usage: prompt, completion (which
 %% includes reasoning), reasoning, total, and prompt-cache hits. The code
@@ -108,15 +110,16 @@ bench_task_modes(Task, Dir) :-
 bench_mode_order(Task, Modes) :-
     findall(T, bench_task(T, _, _), Tasks),
     bench_index(Tasks, Task, 1, Index),
-    Cycle is Index mod 6,
+    Cycle is Index mod 7,
     bench_mode_cycle(Cycle, Modes).
 
-bench_mode_cycle(1, [high, loop, contract, extract, derive, escalate]).
-bench_mode_cycle(2, [loop, contract, extract, derive, escalate, high]).
-bench_mode_cycle(3, [contract, extract, derive, escalate, high, loop]).
-bench_mode_cycle(4, [extract, derive, escalate, high, loop, contract]).
-bench_mode_cycle(5, [derive, escalate, high, loop, contract, extract]).
-bench_mode_cycle(0, [escalate, high, loop, contract, extract, derive]).
+bench_mode_cycle(1, [high, loop, contract, extract, derive, escalate, escalate2]).
+bench_mode_cycle(2, [loop, contract, extract, derive, escalate, escalate2, high]).
+bench_mode_cycle(3, [contract, extract, derive, escalate, escalate2, high, loop]).
+bench_mode_cycle(4, [extract, derive, escalate, escalate2, high, loop, contract]).
+bench_mode_cycle(5, [derive, escalate, escalate2, high, loop, contract, extract]).
+bench_mode_cycle(6, [escalate, escalate2, high, loop, contract, extract, derive]).
+bench_mode_cycle(0, [escalate2, high, loop, contract, extract, derive, escalate]).
 
 bench_index([Task|_], Task, I, I) :- !.
 bench_index([_|Tasks], Task, I0, I) :-
@@ -147,6 +150,9 @@ bench_max_attempts(derive, N) :-
     !,
     bench_config(loop_attempts, N).
 bench_max_attempts(escalate, N) :-
+    !,
+    bench_config(loop_attempts, N).
+bench_max_attempts(escalate2, N) :-
     !,
     bench_config(loop_attempts, N).
 bench_max_attempts(loop, N) :-
@@ -186,6 +192,8 @@ bench_mode_spec(extract, Task, Full, Usage, 1) :-
 bench_mode_spec(derive, Task, Full, usage(0, 0, 0, 0, 0), 0) :-
     bench_derive_full(Task, Full).
 bench_mode_spec(escalate, Task, Spec, usage(0, 0, 0, 0, 0), 0) :-
+    bench_task(Task, Spec, _).
+bench_mode_spec(escalate2, Task, Spec, usage(0, 0, 0, 0, 0), 0) :-
     bench_task(Task, Spec, _).
 
 %% The keyword-derived requirement, shared by the derive mode and by the
@@ -288,6 +296,13 @@ bench_attempt_spec(pair_obliged, Task, Attempt, Spec, Full) :-
     ->  true
     ;   Full = Spec
     ).
+bench_attempt_spec(escalate2, Task, Attempt, Spec, Full) :-
+    !,
+    (   Attempt >= 3,
+        bench_derive_full(Task, Full)
+    ->  true
+    ;   Full = Spec
+    ).
 bench_attempt_spec(Mode, _, _, Spec, Spec) :-
     Mode \== escalate,
     !.
@@ -355,6 +370,7 @@ bench_effort_atom(contract, none) :- !.
 bench_effort_atom(extract, none) :- !.
 bench_effort_atom(derive, none) :- !.
 bench_effort_atom(escalate, none) :- !.
+bench_effort_atom(escalate2, none) :- !.
 bench_effort_atom(pair_first, none) :- !.
 bench_effort_atom(pair_plain, none) :- !.
 bench_effort_atom(pair_obliged, none) :- !.
@@ -530,9 +546,10 @@ bench_report(Results, Tasks, Dir) :-
     bench_print_mode_totals(extract, Results),
     bench_print_mode_totals(derive, Results),
     bench_print_mode_totals(escalate, Results),
+    bench_print_mode_totals(escalate2, Results),
     format("~n===== totals by task =====~n", []),
-    format("task high_total loop_total contract_total extract_total derive_total escalate_total high_reasoning~n", []),
-    forall(member(Task, Tasks), bench_print_six(Task, Results)),
+    format("task high_total loop_total contract_total extract_total derive_total escalate_total escalate2_total high_reasoning~n", []),
+    forall(member(Task, Tasks), bench_print_seven(Task, Results)),
     format("~n===== per solved task =====~n", []),
     format("mode solved total tokens_per_solved~n", []),
     bench_print_per_solved(high, Results),
@@ -541,6 +558,7 @@ bench_report(Results, Tasks, Dir) :-
     bench_print_per_solved(extract, Results),
     bench_print_per_solved(derive, Results),
     bench_print_per_solved(escalate, Results),
+    bench_print_per_solved(escalate2, Results),
     format("~nbenchmark files: ~s~n", [Dir]).
 
 bench_print_mode_totals(Mode, Results) :-
@@ -577,15 +595,16 @@ bench_sum_rows([row(P, C, T, R, H, Secs, Attempts, Succ)|Rest],
     H1 is H0 + H,
     Sec1 is Sec0 + Secs.
 
-bench_print_six(Task, Results) :-
+bench_print_seven(Task, Results) :-
     bench_mode_usage(Task, high, Results, usage(_, _, HT, HR, _)),
     bench_mode_usage(Task, loop, Results, usage(_, _, LT, _, _)),
     bench_mode_usage(Task, contract, Results, usage(_, _, CT, _, _)),
     bench_mode_usage(Task, extract, Results, usage(_, _, ET, _, _)),
     bench_mode_usage(Task, derive, Results, usage(_, _, DT, _, _)),
     bench_mode_usage(Task, escalate, Results, usage(_, _, ST, _, _)),
-    format("~w ~w ~w ~w ~w ~w ~w ~w~n",
-           [Task, HT, LT, CT, ET, DT, ST, HR]).
+    bench_mode_usage(Task, escalate2, Results, usage(_, _, S2T, _, _)),
+    format("~w ~w ~w ~w ~w ~w ~w ~w ~w~n",
+           [Task, HT, LT, CT, ET, DT, ST, S2T, HR]).
 
 bench_mode_usage(Task, Mode, Results, Usage) :-
     bench_find_result(Task, Mode, Results,
