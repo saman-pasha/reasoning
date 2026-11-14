@@ -98,8 +98,46 @@ after trimming trailing whitespace and final newlines.
 
 ## A sample run
 
-2026-11-14, `deepseek-flash`, `REASONING_API_KEY`, the eight tasks that
-predate `btree`:
+2026-11-14, `deepseek-flash`, `REASONING_API_KEY`, all nine tasks:
+
+```
+mode      tasks passed attempts prompt completion reasoning total cache_hit seconds
+high      9     8      9        1211   17663      13134     18874 0         104.85
+loop      9     8      12       2441   5228       0         7669  896       55.01
+contract  9     9      9        1807   5666       0         7473  0         45.53
+extract   9     9      18       4194   5487       0         9681  767       43.56
+derive    9     9      9        1855   5149       0         7004  0         43.91
+escalate  9     9      10       1654   5186       0         6840  256       47.01
+escalate2 9     9      12       2574   5706       0         8280  1024      56.11
+```
+
+`stable_sort` is still the hard task: the model must sort by score and
+keep equal scores in input order. `high` failed it (1 328 tokens, 701 of
+them reasoning) and `loop` failed it in three plain attempts (2 210).
+`contract` and `derive` solved it on their first codegen attempt (1 139
+and 1 147); `extract` also passed on its first codegen attempt, 1 332
+including its extraction call; `escalate` passed on its second attempt
+(2 035) and `escalate2` on its third (2 810), which is when its
+third-stage obligations fired. `lcs` also needed one repair in `loop` and
+`escalate2`.
+
+That is the expected tradeoff: `escalate2` withholds the obligations until
+a second repair is needed, so it pays two failed attempts before they
+help. `contract`/`derive` pay obligations on every task and solve the hard
+one first time. `extract` is 9/9 but the costliest successful mode at
+9 681 because it spends two calls per task. `high` is 8/9 and burned
+13 134 reasoning tokens. Among the 9/9 modes, `escalate` is cheapest at
+6 840, then `derive` at 7 004 and `contract` at 7 473; per task solved
+that is 760, 778 and 830 tokens, against `high`'s 2 359 (18 874 tokens
+for the 8 tasks it solved).
+
+`btree` passed on the first attempt in every mode. `high` spent 5 489
+tokens (4 294 reasoning) where `loop` spent 1 145; `derive`, `escalate`
+and `escalate2` were all near 1 130-1 180, and `contract` was 1 347.
+
+### History: the eight tasks before `btree`
+
+The same day, before `btree` was added:
 
 ```
 mode      tasks passed attempts prompt completion reasoning total cache_hit seconds
@@ -112,40 +150,9 @@ escalate  8     8      10       2024   4439       0         6463  768       50.9
 escalate2 8     8      11       2465   4618       0         7083  1024      55.23
 ```
 
-`stable_sort` is the hard task: the model must sort by score and keep
-equal scores in input order. `high` and `loop` both failed it; loop tried
-three plain attempts and spent 2 210 tokens on the task. `contract`,
-`derive` and `extract` solved it on their first codegen attempt (1 118,
-1 130 and 1 321, the last including its extraction call), so they are 8/8
-without a repair. `escalate` passed it on its second attempt (1 930);
-`escalate2` passed it on its third (2 773), which is the first time its
-third-stage obligations fired.
-
-That is the expected tradeoff: `escalate2` withholds the obligations until
-a second repair is needed, so it pays two failed attempts before they
-help. `contract`/`derive` pay obligations on every task and solve the hard
-one first time; on the earlier easy tasks that cost more than a plain
-loop, but here it also buys the missing task. `extract` is 8/8 but the
-costliest no-reasoning mode at 7 953. `high` failed `stable_sort` and
-burned 12 670 reasoning tokens.
-
-`btree` was added after that sample. Run alone on the same day, all seven
-modes passed it on the first attempt:
-
-```
-mode      tasks passed attempts prompt completion reasoning total cache_hit seconds
-high      1     1      1        134    4467       3386      4601  0         25.60
-loop      1     1      1        109    960        0         1069  0         7.73
-contract  1     1      1        192    1260       0         1452  0         8.42
-extract   1     1      2        422    999        0         1421  0         7.89
-derive    1     1      1        162    967        0         1129  0         7.66
-escalate  1     1      1        109    963        0         1072  0         7.11
-escalate2 1     1      1        109    1025       0         1134  0         7.48
-```
-
-`high` spent 3 386 reasoning tokens and 4 601 total; the plain loop solved
-it in 1 069. The contract carried the recursion and allocation lines, but
-every mode already found the tree on its first call.
+Here `high` and `loop` failed `stable_sort` and were 7/8; the other five
+modes were 8/8, `extract` costliest at 7 953, and `derive` cheapest among
+them at 5 991.
 
 ## Paired run
 
