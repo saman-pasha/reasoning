@@ -205,6 +205,9 @@ reasoner reads as no obligation at all is an error (`contract_empty`),
 not a silent fallback. The same obligations are available to a caller as
 `codegen_contract_obligations(Text, Obligations)`, and
 `codegen_c_from/5` runs the loop with a checklist the caller supplies.
+The benchmark's contract, extract and derive modes use the same
+`coding/contract.pl` reader and vocabulary, so the tool and the benchmark
+cannot drift.
 
 ## Benchmark
 
