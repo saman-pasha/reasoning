@@ -77,10 +77,11 @@ library does not have, in all three attempts; naming the API fixed it.
 
 ## Benchmark suite
 
-`coding/cocolog/bench/` runs four tasks — the template loader, JSON, a DCG
-and the program's database — in `high`, `checked` and `no_skill` modes, with
-an exact expected output per task. `no_skill` is the control with the guide
-omitted. See its README for the measured table and how to run it.
+`coding/cocolog/bench/` runs seven tasks — the template loader, JSON, a DCG,
+the program's database, file codes, double-quoted codes and the one-namespace
+trap — in `high`, `checked` and `no_skill` modes, with an exact expected
+output per task. `no_skill` is the control with the guide omitted. See its
+README for the measured table and how to run it.
 
 ## API
 
