@@ -90,6 +90,7 @@ COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
 | `--keep DIR` | write every attempt's prompt, code and diagnostic |
 | `--attempts N` | try at most N times (default 3) |
 | `--timeout MS` | let one case run MS milliseconds (default 3000) |
+| `--budget N` | stop before a repair once N tokens are spent |
 | `--cflags FLAGS` | extra clang arguments (default none) |
 | `--dry-run` | print the first prompt and exit, no model call |
 | `--key-env NAME` | read the API key from NAME |
@@ -127,10 +128,12 @@ prints the same line to stderr, leaving stdout for the program.
 `attempt-N.diag.txt`. The files are written before a failure is thrown, so
 the last candidate survives a refused run. `codegen_c_from/6` takes a run
 options list -- `keep(dir(Dir))`, `attempts(N)`, `case_timeout(Ms)`,
-`cflags(Flags)` -- and `codegen_c_from/5` uses the defaults. `attempts`
-counts the first call; `case_timeout` is one case's run time, after
-compilation; `cflags` are extra clang arguments such as `-lm` or
-`-DNDEBUG`.
+`cflags(Flags)`, `budget(N)` -- and `codegen_c_from/5` uses the defaults.
+`attempts` counts the first call; `case_timeout` is one case's run time,
+after compilation; `cflags` are extra clang arguments such as `-lm` or
+`-DNDEBUG`; `budget` stops before a repair once the provider's total
+tokens reach N. It does not abort a call in flight and does not fail a
+program that already passed.
 
 `--dry-run` prints the first prompt -- the requirement and its checklist --
 and exits 0 without calling the model or writing OUT.c. `--contract` is
