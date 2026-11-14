@@ -246,7 +246,82 @@ cases_file :-
                    error(codegen_error(cases_file, _), _),
                    true)
            ), Y3),
-    check('a file that is not a term is refused', Y3, yes).
+    check('a file that is not a term is refused', Y3, yes),
+    atom_concat(Dir, '/text.pl', TextFile),
+    fixture(TextFile,
+            ['# input', '1 2 3', '# expected', '6',
+             '# input', '4 5', '# expected', '9']),
+    yes_no(( c_read_cases(TextFile, TextCases),
+             TextCases == [case('1 2 3\n', '6'), case('4 5\n', '9')]
+           ), Y4),
+    check('a text file is read block by block', Y4, yes),
+    atom_concat(Dir, '/empty_in.pl', EmptyInFile),
+    fixture(EmptyInFile, ['# input', '# expected', '0']),
+    yes_no(( c_read_cases(EmptyInFile, EmptyInCases),
+             EmptyInCases == [case('', '0')]
+           ), Y5),
+    check('an empty input block is empty input', Y5, yes),
+    atom_concat(Dir, '/empty_out.pl', EmptyOutFile),
+    fixture(EmptyOutFile, ['# input', 'hello', '# expected']),
+    yes_no(( c_read_cases(EmptyOutFile, EmptyOutCases),
+             EmptyOutCases == [case('hello\n', '')]
+           ), Y6),
+    check('an empty expected block is empty output', Y6, yes),
+    atom_concat(Dir, '/emptyline.pl', EmptyLineFile),
+    fixture(EmptyLineFile, ['# input', '', '# expected', 'yes']),
+    yes_no(( c_read_cases(EmptyLineFile, EmptyLineCases),
+             EmptyLineCases == [case('\n', 'yes')]
+           ), Y6b),
+    check('a blank line is an empty line, not no input', Y6b, yes),
+    atom_concat(Dir, '/hash.pl', HashFile),
+    fixture(HashFile, ['# input', '#include <stdio.h>', '# expected', 'ok']),
+    yes_no(( c_read_cases(HashFile, HashCases),
+             HashCases == [case('#include <stdio.h>\n', 'ok')]
+           ), Y7),
+    check('a # that is not a marker is content', Y7, yes),
+    atom_concat(Dir, '/before.pl', BeforeFile),
+    fixture(BeforeFile, ['hello', '# input', 'x', '# expected', 'y']),
+    yes_no(( catch(( c_read_cases(BeforeFile, _), fail ),
+                   error(codegen_error(cases_file, Diag0), _),
+                   sub_atom(Diag0, _, _, _, 'before the first')
+           )), Y8),
+    check('text before the first block names its line', Y8, yes),
+    atom_concat(Dir, '/noclose.pl', NoCloseFile),
+    fixture(NoCloseFile, ['# input', 'x', '# input', 'y', '# expected', 'z']),
+    yes_no(( catch(( c_read_cases(NoCloseFile, _), fail ),
+                   error(codegen_error(cases_file, _), _),
+                   true)
+           ), Y9),
+    check('a second # input before # expected is refused', Y9, yes),
+    atom_concat(Dir, '/eofin.pl', EofInFile),
+    fixture(EofInFile, ['# input', 'x']),
+    yes_no(( catch(( c_read_cases(EofInFile, _), fail ),
+                   error(codegen_error(cases_file, Diag1), _),
+                   sub_atom(Diag1, _, _, _, 'ends inside')
+           )), Y10),
+    check('a file that ends inside an input block is refused', Y10, yes),
+    atom_concat(Dir, '/twice.pl', TwiceFile),
+    fixture(TwiceFile,
+            ['# input', 'x', '# expected', 'y', '# expected', 'z']),
+    yes_no(( catch(( c_read_cases(TwiceFile, _), fail ),
+                   error(codegen_error(cases_file, _), _),
+                   true)
+           ), Y11),
+    check('a second # expected is refused', Y11, yes),
+    atom_concat(Dir, '/multi.pl', MultiFile),
+    fixture(MultiFile,
+            ['# input', 'a', 'b', '# expected', 'out']),
+    yes_no(( c_read_cases(MultiFile, MultiCases),
+             MultiCases == [case('a\nb\n', 'out')]
+           ), Y12),
+    check('a multi-line input keeps its newlines', Y12, yes),
+    atom_concat(Dir, '/crlf.pl', CrlfFile),
+    atom_codes('# input\r\nx\r\n# expected\r\ny\r\n', Crlf),
+    write_file_from_codes(CrlfFile, Crlf),
+    yes_no(( c_read_cases(CrlfFile, CrlfCases),
+             CrlfCases == [case('x\n', 'y')]
+           ), Y13),
+    check('a CRLF file is read line by line', Y13, yes).
 
 %% ---- the command line --------------------------------------------------
 
