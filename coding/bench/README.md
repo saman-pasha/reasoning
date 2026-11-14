@@ -45,7 +45,8 @@ to `high` when the first attempt fails.
 | `gen.pl` | one generator call, run as a child `cocolog` so codegen's `main/0` is never called here |
 | `config.pl` | the provider, model, endpoint, temperature, efforts and loop cap both scripts use |
 | `contract.pl` | parses the controlled-English contracts with the shared `coding/contract.pl` reader and vocabulary, writes the extractor's prompt and line parser, and holds the keyword-to-contract rules |
-| `tasks.pl` | ten requirements, their hand-written contracts, extractor noun lists and stdin/stdout cases |
+| `tasks.pl` | eleven requirements, their hand-written contracts, extractor noun lists and stdin/stdout cases |
+| `debug/btree_c_buggy.c` | the cicilang `btree_c.c` adapted to stdin, with three injected defects |
 | `run.sh` | sets `COCOLOG_LIBRARY` and runs `bench.pl` |
 | `paired.pl` | the paired repair comparison: one shared first attempt, then plain and obliged branches |
 | `paired.sh` | sets `COCOLOG_LIBRARY` and runs `paired.pl` |
@@ -98,7 +99,8 @@ after trimming trailing whitespace and final newlines.
 
 ## A sample run
 
-2026-11-14, `deepseek-flash`, `REASONING_API_KEY`, all ten tasks:
+2026-11-14, `deepseek-flash`, `REASONING_API_KEY`, the ten tasks before
+`btree_debug`:
 
 ```
 mode      tasks passed attempts prompt completion reasoning total cache_hit seconds
@@ -141,6 +143,32 @@ of those totals.
 `btree` passed on the first attempt in every mode: `high` spent 6 249
 tokens (5 090 reasoning) where `loop`, `derive`, `escalate` and
 `escalate2` spent 1 134-1 136, `contract` 1 326 and `extract` 1 647.
+
+### The btree_debug task
+
+`btree_debug` is the cicilang benchmark's `btree_c.c`, adapted to read `n`
+from standard input and print three deterministic counts, with three
+defects injected. The requirement carries the buggy source, the correct
+output `((n+1)/2) (n/2) 0`, and the symptoms at `n=30` and `n=256`. Run
+alone on 2026-11-14:
+
+```
+mode      tasks passed attempts prompt completion reasoning total cache_hit seconds
+high      1     1      1        2758   24055      21749     26813 0         123.11
+loop      1     1      1        2733   1948       0         4681  2560      10.05
+contract  1     1      1        2802   1962       0         4764  0         10.27
+extract   1     0      4        15412  5915       0         21327 8064      30.91
+derive    1     1      1        2801   1949       0         4750  2560      9.97
+escalate  1     1      1        2733   1948       0         4681  2560      9.61
+escalate2 1     1      1        2733   1949       0         4682  2560      10.02
+```
+
+Six modes fixed it on the first call; `extract` failed after four
+attempts. The bug report in the requirement is what made the task
+solvable: in a first run without it, every mode failed and `high` timed
+out after 600 s, and the models repaired the insertion branch but left the
+merge's last child and the right rotation's child index. The shipped tool
+fixes it on the first call too (4 844 tokens, 11.94 s).
 
 ### History: the eight tasks before `btree`
 
@@ -225,7 +253,7 @@ the task's cases under the sanitizers. Its tokens come from
 the `derive` policy plus the tool's own keyword reader and the sanitizers,
 so its token count is the one to compare with the tool's future.
 
-A run on all ten tasks, on 2026-11-14:
+A run on the ten tasks before `btree_debug`, on 2026-11-14:
 
 ```
 task        pass calls prompt completion reasoning total cache_hit seconds
