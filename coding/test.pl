@@ -23,6 +23,7 @@ main :-
     runner,
     cases_file,
     cli,
+    keep,
     checks_done.
 
 %% ---- the obligations a requirement implies -----------------------------
@@ -327,20 +328,24 @@ cases_file :-
 
 cli :-
     section('cli'),
-    cli_query("codegen_args(['s','o'], S,T,C,O,R,Os), write(args(S,T,C,O,R,Os))",
-              ['args(s,none,none,o,no,[]']),
-    cli_query("codegen_args(['s','--tests','c','o'], S,T,C,O,R,Os), write(args(S,T,C,O,R,Os))",
-              ['args(s,c,none,o,no,[]']),
-    cli_query("codegen_args(['s','--contract','k.txt','o'], S,T,C,O,R,Os), write(args(S,T,C,O,R,Os))",
-              ['args(s,none,k.txt,o,no,[]']),
-    cli_query("codegen_args(['--provider','openai','--model','deepseek-flash','--base-url','https://x','--effort','none','s','o'], S,T,C,O,R,Os), write(args(S,T,C,O,R,Os))",
+    cli_query("codegen_args(['s','o'], A), write(A)",
+              ['args(s,none,none,o,no,none,[]']),
+    cli_query("codegen_args(['s','--tests','c','o'], A), write(A)",
+              ['args(s,c,none,o,no,none,[]']),
+    cli_query("codegen_args(['s','--contract','k.txt','o'], A), write(A)",
+              ['args(s,none,k.txt,o,no,none,[]']),
+    cli_query("codegen_args(['s','--keep','k','o'], A), write(A)",
+              ['args(s,none,none,o,no,k,[]']),
+    cli_query("codegen_args(['--provider','openai','--model','deepseek-flash','--base-url','https://x','--effort','none','s','o'], A), write(A)",
               ['provider(openai)', 'model(deepseek-flash)',
                'base_url(https://x)', 'effort(none)']),
-    cli_query("codegen_args(['s','--report','o'], S,T,C,O,R,Os), write(args(S,T,C,O,R,Os))",
+    cli_query("codegen_args(['s','--report','o'], A), write(A)",
               [',yes,']),
-    cli_query("( codegen_args(['s','--provider'],_,_,_,_,_,_) -> write(yes) ; write(no) )",
+    cli_query("( codegen_args(['s','--provider'], _) -> write(yes) ; write(no) )",
               ['no']),
-    cli_query("( codegen_args(['s','o','x'],_,_,_,_,_,_) -> write(yes) ; write(no) )",
+    cli_query("( codegen_args(['s','--keep'], _) -> write(yes) ; write(no) )",
+              ['no']),
+    cli_query("( codegen_args(['s','o','x'], _) -> write(yes) ; write(no) )",
               ['no']),
     cli_query("codegen_report_reset, codegen_report(R), write(R)",
               ['report(0,0,0,0,0)']),
@@ -348,6 +353,64 @@ cli :-
               ['report(0,0,0,0,0)']),
     cli_query("( catch(codegen_obligations_for(s, '/no/such/contract', _), error(codegen_error(contract_file, _), _), true) -> write(yes) ; write(no) )",
               ['yes']).
+
+%% ---- keeping the attempts ---------------------------------------------
+
+keep :-
+    section('keep'),
+    scratch(Dir),
+    atom_concat(Dir, '/logs', KeepDir),
+    keep_child_success(KeepDir),
+    keep_has(KeepDir, 'attempt-1.prompt.txt', 'a spec'),
+    keep_has(KeepDir, 'attempt-1.c', 'missing'),
+    keep_has(KeepDir, 'attempt-1.diag.txt', 'COMPILE FAILED'),
+    keep_has(KeepDir, 'attempt-2.c', 'return 0'),
+    keep_absent(KeepDir, 'attempt-2.diag.txt'),
+    scratch(Dir2),
+    atom_concat(Dir2, '/logs', KeepDir2),
+    keep_child_failure(KeepDir2),
+    keep_has(KeepDir2, 'attempt-3.diag.txt', 'COMPILE FAILED'),
+    keep_absent(KeepDir2, 'attempt-4.prompt.txt').
+
+keep_child_success(Dir) :-
+    format(atom(Args),
+           "query \"use_module('coding/c/codegen.pl'), nb_setval(keep_calls,0), asserta((codegen_call(_P,_O,C) :- nb_getval(keep_calls,N0), N1 is N0+1, nb_setval(keep_calls,N1), (N1 =:= 1 -> C = 'int main(void) { return missing; }' ; C = 'int main(void) { return 0; }'), !)), codegen_c_from('a spec', [], [], [], dir('~w'), _), write('KEEP-SUCCESS-731')\"",
+           [Dir]),
+    cocolog_out(Args, Codes),
+    atom_codes(Text, Codes),
+    has('the keeping run succeeds', 'KEEP-SUCCESS-731', Text).
+
+keep_child_failure(Dir) :-
+    format(atom(Args),
+           "query \"use_module('coding/c/codegen.pl'), asserta((codegen_call(_P,_O,'int main(void) { return missing; }') :- !)), ( catch(codegen_c_from('a spec', [], [], [], dir('~w'), _), error(codegen_error(compile_failed,_),_), true) -> write('KEEP-FAILED-731') ; write('KEEP-OTHER-731') )\"",
+           [Dir]),
+    cocolog_out(Args, Codes),
+    atom_codes(Text, Codes),
+    has('the keeping run refuses', 'KEEP-FAILED-731', Text).
+
+keep_has(Dir, Name, Fragment) :-
+    atom_concat(Dir, '/', Prefix),
+    atom_concat(Prefix, Name, File),
+    (   catch(read_file_to_codes(File, Codes), _, fail)
+    ->  atom_codes(Text, Codes),
+        (   sub_atom(Text, _, _, _, Fragment)
+        ->  Result = yes
+        ;   Result = no
+        )
+    ;   Result = missing
+    ),
+    format(atom(Label), '~w holds ~s', [Name, Fragment]),
+    check(Label, Result, yes).
+
+keep_absent(Dir, Name) :-
+    atom_concat(Dir, '/', Prefix),
+    atom_concat(Prefix, Name, File),
+    (   catch(read_file_to_codes(File, _), _, fail)
+    ->  Result = present
+    ;   Result = absent
+    ),
+    format(atom(Label), '~w is not written', [Name]),
+    check(Label, Result, absent).
 
 cli_query(Goal, Needles) :-
     format(atom(Args),
