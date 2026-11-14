@@ -221,7 +221,12 @@ runner :-
     check('a heap overflow fails a case', Y5, yes),
     Leak = '#include <stdio.h>\n#include <stdlib.h>\nint main(void) { char *p = malloc(10); p[0] = 0; printf("ok\\n"); return 0; }\n',
     yes_no(c_test_check(Leak, [case('', 'ok')], ok), Y6),
-    check('a leak is not a wrong answer', Y6, yes).
+    check('a leak is not a wrong answer', Y6, yes),
+    Loop = 'int main(void) { for (;;) { } }\n',
+    yes_no(( c_test_check(Loop, [case('', '')], 200, fail(test, Diag4)),
+             sub_atom(Diag4, _, _, _, 'TIMEOUT')
+           ), Y7),
+    check('a slow case times out at the caller limit', Y7, yes).
 
 %% ---- the cases file ----------------------------------------------------
 
@@ -329,13 +334,15 @@ cases_file :-
 cli :-
     section('cli'),
     cli_query("codegen_args(['s','o'], A), write(A)",
-              ['args(s,none,none,o,no,none,[]']),
+              ['args(s,none,none,o,no,[],[]']),
     cli_query("codegen_args(['s','--tests','c','o'], A), write(A)",
-              ['args(s,c,none,o,no,none,[]']),
+              ['args(s,c,none,o,no,[],[]']),
     cli_query("codegen_args(['s','--contract','k.txt','o'], A), write(A)",
-              ['args(s,none,k.txt,o,no,none,[]']),
+              ['args(s,none,k.txt,o,no,[],[]']),
     cli_query("codegen_args(['s','--keep','k','o'], A), write(A)",
-              ['args(s,none,none,o,no,k,[]']),
+              ['args(s,none,none,o,no,[keep(dir(k))],[]']),
+    cli_query("codegen_args(['s','--attempts','2','--timeout','500','o'], A), write(A)",
+              ['attempts(2)', 'case_timeout(500)']),
     cli_query("codegen_args(['--provider','openai','--model','deepseek-flash','--base-url','https://x','--effort','none','s','o'], A), write(A)",
               ['provider(openai)', 'model(deepseek-flash)',
                'base_url(https://x)', 'effort(none)']),
@@ -344,6 +351,10 @@ cli :-
     cli_query("( codegen_args(['s','--provider'], _) -> write(yes) ; write(no) )",
               ['no']),
     cli_query("( codegen_args(['s','--keep'], _) -> write(yes) ; write(no) )",
+              ['no']),
+    cli_query("( codegen_args(['s','--attempts','x'], _) -> write(yes) ; write(no) )",
+              ['no']),
+    cli_query("( codegen_args(['s','--timeout','x'], _) -> write(yes) ; write(no) )",
               ['no']),
     cli_query("( codegen_args(['s','o','x'], _) -> write(yes) ; write(no) )",
               ['no']),
@@ -370,11 +381,12 @@ keep :-
     atom_concat(Dir2, '/logs', KeepDir2),
     keep_child_failure(KeepDir2),
     keep_has(KeepDir2, 'attempt-3.diag.txt', 'COMPILE FAILED'),
-    keep_absent(KeepDir2, 'attempt-4.prompt.txt').
+    keep_absent(KeepDir2, 'attempt-4.prompt.txt'),
+    keep_child_attempts(2).
 
 keep_child_success(Dir) :-
     format(atom(Args),
-           "query \"use_module('coding/c/codegen.pl'), nb_setval(keep_calls,0), asserta((codegen_call(_P,_O,C) :- nb_getval(keep_calls,N0), N1 is N0+1, nb_setval(keep_calls,N1), (N1 =:= 1 -> C = 'int main(void) { return missing; }' ; C = 'int main(void) { return 0; }'), !)), codegen_c_from('a spec', [], [], [], dir('~w'), _), write('KEEP-SUCCESS-731')\"",
+           "query \"use_module('coding/c/codegen.pl'), nb_setval(keep_calls,0), asserta((codegen_call(_P,_O,C) :- nb_getval(keep_calls,N0), N1 is N0+1, nb_setval(keep_calls,N1), (N1 =:= 1 -> C = 'int main(void) { return missing; }' ; C = 'int main(void) { return 0; }'), !)), codegen_c_from('a spec', [], [], [], [keep(dir('~w'))], _), write('KEEP-SUCCESS-731')\"",
            [Dir]),
     cocolog_out(Args, Codes),
     atom_codes(Text, Codes),
@@ -382,11 +394,20 @@ keep_child_success(Dir) :-
 
 keep_child_failure(Dir) :-
     format(atom(Args),
-           "query \"use_module('coding/c/codegen.pl'), asserta((codegen_call(_P,_O,'int main(void) { return missing; }') :- !)), ( catch(codegen_c_from('a spec', [], [], [], dir('~w'), _), error(codegen_error(compile_failed,_),_), true) -> write('KEEP-FAILED-731') ; write('KEEP-OTHER-731') )\"",
+           "query \"use_module('coding/c/codegen.pl'), asserta((codegen_call(_P,_O,'int main(void) { return missing; }') :- !)), ( catch(codegen_c_from('a spec', [], [], [], [keep(dir('~w'))], _), error(codegen_error(compile_failed,_),_), true) -> write('KEEP-FAILED-731') ; write('KEEP-OTHER-731') )\"",
            [Dir]),
     cocolog_out(Args, Codes),
     atom_codes(Text, Codes),
     has('the keeping run refuses', 'KEEP-FAILED-731', Text).
+
+keep_child_attempts(Count) :-
+    format(atom(Args),
+           "query \"use_module('coding/c/codegen.pl'), nb_setval(keep_calls,0), asserta((codegen_call(_P,_O,'int main(void) { return missing; }') :- nb_getval(keep_calls,N0), N1 is N0+1, nb_setval(keep_calls,N1), !)), catch(codegen_c_from('a spec', [], [], [], [attempts(2)], _), error(codegen_error(compile_failed,_),_), true), nb_getval(keep_calls,C), write('CALLS-731-'), write(C), nl\"",
+           []),
+    cocolog_out(Args, Codes),
+    atom_codes(Text, Codes),
+    format(atom(Needle), 'CALLS-731-~w', [Count]),
+    has('the attempts option stops at its count', Needle, Text).
 
 keep_has(Dir, Name, Fragment) :-
     atom_concat(Dir, '/', Prefix),
