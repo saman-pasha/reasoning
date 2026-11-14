@@ -23,6 +23,13 @@
 %%         the milliseconds one case may run, 3000 unless a caller says;
 %%         CFlags are extra compiler arguments, '' unless a caller says.
 %%
+%%     c_analyze_check(+Code, -Verdict)
+%%     c_analyze_check(+Code, +CFlags, -Verdict)
+%%         `clang --analyze' over the source. ok when it prints no
+%%         `warning:'; fail(Diagnostic) with its output otherwise. This is
+%%         the deeper check when no cases are given; it is slower than a
+%%         compile and finds paths the compiler itself does not.
+%%
 %%     c_run_cases(+Exe, +Cases, -Failures)
 %%     c_run_cases(+Exe, +Cases, +Timeout, -Failures)
 %%         the runner on its own: [] when every case matches.
@@ -73,6 +80,37 @@ c_compile_command(sanitized, CFlags, Exe, CFile, Cmd) :-
     format(atom(Cmd),
            'clang -std=c17 -Wall -Wextra -O0 -g ~s -fsanitize=address,undefined -fno-sanitize-recover=all -o ~s ~s 2>&1',
            [CFlags, Exe, CFile]).
+
+%% ---- static analysis ---------------------------------------------------
+
+c_analyze_check(Code, Verdict) :-
+    c_analyze_check(Code, '', Verdict).
+
+c_analyze_check(Code, CFlags, Verdict) :-
+    tmp_file(codegen_analyze, Dir),
+    make_directory(Dir),
+    atom_concat(Dir, '/analyze.c', CFile),
+    atom_concat(Code, '\n', Text),
+    atom_codes(Text, Codes),
+    write_file_from_codes(CFile, Codes),
+    format(atom(Cmd),
+           'clang --analyze -Xanalyzer -analyzer-output=text -std=c17 -Wall -Wextra -O0 ~s ~s 2>&1',
+           [CFlags, CFile]),
+    c_run_command(Cmd, 120000, OutCodes, Exit, Error),
+    atom_codes(Output, OutCodes),
+    (   Error == none,
+        Exit == 0,
+        \+ sub_atom(Output, _, _, _, 'warning:')
+    ->  Verdict = ok
+    ;   (   Error \== none
+        ->  format(atom(Diag0), 'analyzer could not run: ~w~n~s', [Error, Output])
+        ;   Exit \== 0
+        ->  format(atom(Diag0), 'ANALYZER FAILED (exit ~w)~n~s', [Exit, Output])
+        ;   format(atom(Diag0), 'ANALYZER FINDINGS~n~s', [Output])
+        ),
+        c_limit(4000, Diag0, Diag),
+        Verdict = fail(Diag)
+    ).
 
 %% ---- compile and run the cases ----------------------------------------
 

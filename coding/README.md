@@ -7,7 +7,7 @@ coding/
   options.pl          defaults shared by every generator
   obligations.pl      the checks a requirement's words imply
   contract.pl         obligations from controlled-English sentences
-  compile.pl          the compile checker and case runner
+  compile.pl          the compile, analyzer and case checks
   test.pl             the coding helpers' checks
   c/
     codegen.pl        C17 code from a written requirement
@@ -224,10 +224,13 @@ existing C file, and with `--tests` builds it with the sanitizers and runs
 every case. No model is called. It prints `OK` and exits 0, or the
 compiler/test report and exits 1; `--timeout MS` is one case's run time,
 and `--cflags FLAGS` are extra compiler arguments. Without `--tests` it is
-the plain compile check.
+the plain compile check. `--analyze` runs `clang --analyze` first; a
+finding is printed and exits 1, and with `--tests` the cases run after a
+clean analysis.
 
 ```sh
 cocolog -s coding/c/check.pl -- out.c --tests cases.txt
+cocolog -s coding/c/check.pl -- out.c --analyze
 ```
 
 ## Obligations

@@ -281,7 +281,15 @@ runner :-
     yes_no(( c_test_check(BadExit, [case('', 'wrong', 2)], fail(test, Diag7)),
              sub_atom(Diag7, _, _, _, 'CASE 1 WRONG')
            ), Y13),
-    check('a matching exit still checks the output', Y13, yes).
+    check('a matching exit still checks the output', Y13, yes),
+    Clean = '#include <stdio.h>\nint main(void) { printf("ok\\n"); return 0; }\n',
+    yes_no(c_analyze_check(Clean, ok), Y14),
+    check('the analyzer passes a clean program', Y14, yes),
+    Null = '#include <stdio.h>\nint main(void) { int *p = 0; printf("%d\\n", *p); return 0; }\n',
+    yes_no(( c_analyze_check(Null, fail(Diag8)),
+             sub_atom(Diag8, _, _, _, 'Dereference of null pointer')
+           ), Y15),
+    check('the analyzer finds a null dereference', Y15, yes).
 
 %% ---- the cases file ----------------------------------------------------
 
@@ -701,6 +709,20 @@ check_tool :-
     check_with_cases(ExitC, ExitMissingFile, Text11, Exit11),
     check('the checker refuses an unexpected exit', Exit11, 1),
     has('the unexpected exit says TESTS FAILED', 'TESTS FAILED', Text11),
+    atom_concat(Dir, '/null.c', NullC),
+    fixture(NullC,
+            ['#include <stdio.h>',
+             'int main(void) { int *p = 0; printf("%d\\n", *p); return 0; }']),
+    check_analyze(NullC, Text12, Exit12),
+    check('the analyzer check fails a null deref', Exit12, 1),
+    has('the analyzer check prints the finding',
+        'Dereference of null pointer', Text12),
+    check_analyze(Good, Text13, Exit13),
+    check('the analyzer check passes a clean file', Exit13, 0),
+    has('the analyzer check says OK', 'passes the analyzer', Text13),
+    check_with_analyze_cases(Good, PassFile, Text14, Exit14),
+    check('analyze and cases can both run', Exit14, 0),
+    has('analyze with cases passes', 'case(s) pass', Text14),
     atom_concat(Dir, '/missing.c', Missing),
     check_compiles(Missing, Text5, Exit5),
     check('a missing file fails', Exit5, 1),
@@ -724,6 +746,16 @@ check_with_cases_flags(File, Cases, Flags, Text, Exit) :-
     format(atom(Args),
            "-s coding/c/check.pl -- ~w --tests ~w --cflags ~w",
            [File, Cases, Flags]),
+    cocolog_run(Args, Text, Exit).
+
+check_analyze(File, Text, Exit) :-
+    format(atom(Args), "-s coding/c/check.pl -- ~w --analyze", [File]),
+    cocolog_run(Args, Text, Exit).
+
+check_with_analyze_cases(File, Cases, Text, Exit) :-
+    format(atom(Args),
+           "-s coding/c/check.pl -- ~w --analyze --tests ~w",
+           [File, Cases]),
     cocolog_run(Args, Text, Exit).
 
 cli_query(Goal, Needles) :-
