@@ -15,6 +15,22 @@ that `library(reasoning/reason)` finds `reason.pl` here:
 
 `sh run-tests.sh` sets the same path and runs the four cases below.
 
+## Achievements
+
+**The coding endpoint passed a 10/10 MVCC B-tree with transactions and ACID
+behaviour on all three tested OpenCode models: `c-r0#high`, `c-r2#high` and
+`c-r8#high`.** `c-r8#high` was fastest at 198.87 s wall (10 calls, 328,385
+tokens); `c-r2#high` used 12 calls and 398,181 tokens in 319.88 s;
+`c-r0#high` ran with the reasoning pre-pass off (`mode=plain`,
+`reasoning=0`, `terms=0`) and passed in 557.95 s with 1,703,169 tokens, its
+26,492 reasoning tokens being DeepSeek's `#high` effort rather than endpoint
+checks. Every generated C program was independently rebuilt with clang,
+passed ASan/UBSan, and matched an independent model of the specification on
+1,000 random command streams. The endpoint records `prompt_tokens`,
+`completion_tokens`, `reasoning_tokens`, `total_tokens` and
+`cache_hit_tokens` in its trace; the full table is in
+`coding/bench/README.md`.
+
 | file | what |
 |---|---|
 | `reason.pl` | a paragraph of controlled English in, predicates out -- and, optionally, typed prose in through the shipped tagger (`reason_prose/2`, `reason_ask_prose/2`, loaded on first use): facts, `neg/1` facts, rules, a quantity as a VALUE (`500 euros` is `quantity(500, euros)`, `The rent is 500 euros` an `amount/2`), and a question as a GOAL with a variable where `who`, `what`, `where` or `how much` stood; `truth/2`, four-valued; `reason_ask/2`, a question answered with the fact, the rule or the denial it rests on, and `reason_ask/3` with the EXPLANATION beside it -- `reason_explanation/2`, the whole proof in sentences, every level of it, which a `Why ...?` question answers as `because(Text)`; `reason_concepts/2`, what a text mentions, ranked, and `reason_topics/2` and `reason_outline/2`, what it is ABOUT as an outline by topic with the sub-topics under each -- `Kh8, a king: black; occupies H8; may move to G8, G7 and H7.`; `reason_refused/2`, which sentence would not parse; a word in quotation marks is MENTIONED (`"casa" means "house"` is `mean(casa, house)`, `the noun "casa"` says what it is), a relative clause takes a verb, `is the NOUN of X` is the relation the noun names, `end_in/2` is the library's so that a rule over letters runs (`ends in a vowel` included), and `reason_learn/1` reads and asserts |
