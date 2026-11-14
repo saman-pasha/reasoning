@@ -9,6 +9,7 @@ coding/
   contract.pl         obligations from controlled-English sentences
   compile.pl          the compile, analyzer and case checks
   test.pl             the coding helpers' checks
+  (the version case is ../test/version.pl, run by ../run-tests.sh)
   c/
     codegen.pl        C17 code from a written requirement
     check.pl          compile and test an existing C file, no model

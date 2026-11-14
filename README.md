@@ -35,10 +35,14 @@ The suite case for each is `test/reason.pl`, `test/normalise.pl`,
 `test/tagger.pl` and `test/translate.pl`, and the lessons are
 `tutorials/01-reason.pl`, `02-normalise.pl`, `03-tagger.pl` and
 `04-translate.pl`. `coding/test.pl` is the coding helpers' case.
-`test/prelude.pl` is cocolog's case harness, copied here
-so the cases run without a cocolog checkout's `test/` beside them; run
-them with `sh run-tests.sh` (or `cocolog -s test/<case>.pl` from this
-repository's root, with its parent on `$COCOLOG_LIBRARY`).
+`test/version.pl` holds the version rule below where a case can: one
+`reason_version/3`, a shape `X.Y.Z`, and, in a git checkout, RED when
+`reason.pl` is changed and the number is still HEAD's. `test/prelude.pl` is
+cocolog's case harness, copied here so the cases run without a cocolog
+checkout's `test/` beside them; run them with `sh run-tests.sh` (or
+`cocolog -s test/<case>.pl` from this repository's root, with its parent on
+`$COCOLOG_LIBRARY`). `run-tests.sh` runs `version` first, so a number left
+behind is heard before the four long cases.
 
 The library has a version of its own, which is not cocolog's:
 `reason_version/1` answers it as an atom (`X.Y.Z`) and `reason_version/3` as

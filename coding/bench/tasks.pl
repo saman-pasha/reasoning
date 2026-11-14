@@ -9,6 +9,23 @@
 %% and hard enough that a no-reasoning model can get one wrong: an empty
 %% input, an all-negative maximum subarray, mismatched bracket kinds, a
 %% sorted word count, a stateful phonebook, and operator precedence.
+%%
+%% HOW A TASK IS WRITTEN. The Spec is what the model sees, and it is plain
+%% C-less prose: what is read, what is printed, in what format. It says
+%% nothing a careful programmer would have to guess and nothing a case
+%% depends on that it does not state -- an undeclared format is a benchmark
+%% defect, and it shows as a repair loop that never closes. Cases come in
+%% pairs: one ordinary input, and at least one that is an EDGE the careless
+%% reading gets wrong (the empty input, all negatives, the mismatched
+%% closer, the tie). A task whose every case is ordinary measures nothing
+%% but the model's arithmetic.
+%%
+%% THE CASES ARE THE SPECIFICATION OF OUTPUT FORMAT. Expected has no final
+%% newline because the runner trims both sides (bench_norm/2 in bench.pl):
+%% write what must be on the screen, not how a terminal happens to pad it.
+%%
+%% Above all a task runs in a SCRATCH directory with no network, so it can
+%% describe only computation: read stdin, compute, write stdout.
 
 :- use_module(library(process)).
 
@@ -83,6 +100,10 @@ bench_task(phonebook, Spec, Cases) :-
               case('add z 9\nadd a 1\nadd m 5\nlist\n', 'a 1\nm 5\nz 9')
             ].
 
+%% calculator: `1+2*3' is 7 only if `*' binds tighter (left to right gives
+%% 9), and `1-2-3' is -4 only if subtraction is left-associative (right to
+%% left gives 2). One case pins precedence, the other association;
+%% `(2+3)*(4-1)' pins that parentheses beat both.
 bench_task(calculator, Spec, Cases) :-
     bench_lines([
         'Write a complete C17 program. It reads one line containing an arithmetic',
@@ -99,6 +120,10 @@ bench_task(calculator, Spec, Cases) :-
               case('(2+3)*(4-1)\n', '15')
             ].
 
+%% lcs: the empty string against a word, and two words with nothing in
+%% common, are the two the recursive reading that forgets its base cases
+%% gets wrong; `aggtab/gxtxayb' is the case a greedy longest-run program
+%% answers 3.
 bench_task(lcs, Spec, Cases) :-
     bench_lines([
         'Write a complete C17 program. It reads two lines, each a string of',
@@ -113,6 +138,11 @@ bench_task(lcs, Spec, Cases) :-
               case('abc\n\n', '0')
             ].
 
+%% stable_sort: every tie case is here on purpose. qsort with only SCORE
+%% compared reorders equal scores; the repeated pairs a b c d e f are the
+%% different orders that comparison may leave, so a case passes only if
+%% the input order survived -- and the all-equal and all-zero cases are
+%% where an unstable sort has the most room to differ.
 bench_task(stable_sort, Spec, Cases) :-
     bench_lines([
         'Write a complete C17 program. It reads an integer n, then n lines',
@@ -132,6 +162,19 @@ bench_task(stable_sort, Spec, Cases) :-
                   'b 2\nd 2\nf 2\na 1\nc 1\ne 1')
             ].
 
+%% ---- the harder ones, and what each is FOR -----------------------------
+%%
+%% These are the tasks whose spec is long enough that the failure modes
+%% are not the arithmetic: a reader that must not see a write it began
+%% before, a sort whose ties the spec decides, a B-tree whose duplicates
+%% are ignored. Each comment here names the one check that catches the
+%% plausible wrong reading, so a case is never removed without knowing
+%% which wrong answer it was holding out.
+
+%% btree: the duplicates case (`5 5 5 5 5 5 5' -> one `5') is the one a
+%% program that forgets "ignoring a key already present" fails; the
+%% empty input and the already-sorted input are the two the split logic
+%% gets wrong first, and neither needs a tree that holds more than one node.
 bench_task(btree, Spec, Cases) :-
     bench_lines([
         'Write a complete C17 program. It reads an integer n, then n integers.',
@@ -149,6 +192,13 @@ bench_task(btree, Spec, Cases) :-
                   '10\n20\n25\n30\n35\n40\n45\n50\n55\n60\n65\n70\n75\n80\n85')
             ].
 
+%% btree_debug: not a writing task. The source is READ from coding/bench/
+%% debug/btree_c_buggy.c at run time, so the file a model must repair is
+%% the file in the repository and not a copy kept beside the spec. The
+%% program's first line in every case -- `((n+1)/2) (n/2) 0' -- is stated
+%% in the spec because a repair must not be allowed to change what a
+%% correct run prints; checking it before the fix is how a model that
+%% rewrote the program instead of repairing it shows.
 bench_task(btree_debug, Spec, Cases) :-
     bench_debug_source(Source),
     format(atom(Spec),
@@ -169,6 +219,13 @@ bench_task(btree_debug, Spec, Cases) :-
               case('1000\n', '500 500 0')
             ].
 
+%% mvccs: the snapshot rule is the task. `b r' after `i 1' but before `c'
+%% must still print nothing and answer no to 2 after that insert commits,
+%% and `b s' taken later must see it -- the case that distinguishes a real
+%% snapshot from a reader that reads the live tree. The writer never blocks
+%% and the reader never blocks are not testable from one process's stdout;
+%% they are stated so that a program which locks is at least visible to the
+%% reader of the code, not claimed by a case.
 bench_task(mvccs, Spec, Cases) :-
     bench_lines([
         'Write a complete C17 program. It simulates a multi-version B-tree of',
@@ -215,6 +272,13 @@ bench_task(mvccs, Spec, Cases) :-
                   '1\n1\n2'),
               case('', '')
             ].
+
+%% ---- the helpers -------------------------------------------------------
+%%
+%% The debug task's source is READ, not copied: coding/bench/debug/
+%% btree_c_buggy.c is the one copy the benchmark repairs, so an edit to it
+%% reaches every run without a second file to keep in step. The read is by
+%% a relative path because the benchmark runs from the repository root.
 
 bench_debug_source(Source) :-
     read_file_to_codes('coding/bench/debug/btree_c_buggy.c', Codes),

@@ -1,8 +1,12 @@
 #!/bin/sh
 # Runs the reasoning test cases from this repository's root.
 #
-#   sh run-tests.sh              all five: reason, normalise, tagger, translate, coding
+#   sh run-tests.sh              all six: version, reason, normalise, tagger, translate, coding
 #   sh run-tests.sh reason       one of them
+#
+# `version` is first on purpose: it fails when reason.pl is changed and
+# reason_version/3 is not moved, which is cheaper to hear before the four
+# long cases than after them.
 #
 # The module names are library(reasoning/...), so the repository's PARENT
 # directory goes on the library path; the cocolog checkout beside it (or a
@@ -23,8 +27,8 @@ export COCOLOG_LIBRARY="$LIBS"
 cd "$ROOT"
 CASE=${1:-all}
 case "$CASE" in
-    all)      CASES="reason normalise tagger translate coding" ;;
-    reason|normalise|tagger|translate|coding) CASES=$CASE ;;
+    all)      CASES="version reason normalise tagger translate coding" ;;
+    version|reason|normalise|tagger|translate|coding) CASES=$CASE ;;
     *) echo "run-tests: no such case: $CASE" >&2; exit 1 ;;
 esac
 RED=0

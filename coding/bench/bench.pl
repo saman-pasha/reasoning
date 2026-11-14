@@ -48,8 +48,24 @@
 %% endpoint, one model, high effort for the high mode and none for the
 %% others. The extract mode also calls it directly, so the parent points
 %% library(llm) at the same endpoint the children use.
+%%
+%% THE BENCHMARK MEASURES THE MODES AGAINST EACH OTHER, not against a
+%% quality bar: what matters is that the effort and prompt differ and the
+%% task, cases and backend do not. A change to one mode that also moved a
+%% default in config.pl would make every number before it incomparable,
+%% which is why config.pl is separate and shared with the child.
 
 %% ---- the run -----------------------------------------------------------
+%%
+%% main/0 does three things and no more: check the key, name the tasks
+%% (all, or those on the command line), and hand each to bench_task_modes.
+%% Results are asserted as they arrive -- a provider outage at task four
+%% must not lose tasks one to three -- and the report is read back from
+%% those facts at the end.
+%%
+%% A CHILD COCOLOG DOES THE GENERATION (gen.pl), so the parent's main/0 is
+%% the only main/0 in the process and a model reply that defines main/0
+%% cannot take the benchmark's own entry point over.
 
 main :-
     (   getenv('REASONING_API_KEY', Key),
@@ -100,6 +116,13 @@ bench_llm_setup :-
     assertz(llm_provider(Provider, BaseUrl, 'REASONING_API_KEY')).
 
 %% ---- one task, its modes -----------------------------------------------
+%%
+%% A task's modes run in a rotated order: task 1 starts with `high', task 2
+%% with `loop', and so on round seven. A provider caches a prompt's prefix
+%% and prices a hit differently, and the modes share the task's requirement
+%% at the head of every prompt; a fixed order would hand whoever ran last
+%% the cached prefix always. Rotating spreads that cost over the modes, so
+%% the difference measured is effort and prompt, not position in the run.
 
 bench_task_modes(Task, Dir) :-
     format("===== ~w =====~n", [Task]),
@@ -138,6 +161,21 @@ bench_run_mode(Task, Mode, Dir) :-
     Attempts is Attempts0 + ExtraAttempts,
     assertz(bench_result(Task, Mode, Success, Attempts, Usage, Seconds, LastDiag)),
     bench_print_result(Task, Mode, Success, Attempts, Usage, Seconds).
+
+%% ---- the modes ---------------------------------------------------------
+%%
+%% ONE ROW PER MODE, AND THE ROW IS THE WHOLE POLICY. max_attempts is how
+%% many calls a mode may spend; effort_atom is the level sent with each;
+%% mode_spec is the requirement that call carries; attempt_spec is what a
+%% REPAIR attempt carries. Splitting them this way is what lets
+%% `escalate' be "plain first, obliged on repair" without a second loop:
+%% only attempt_spec changes between attempts.
+%%
+%% A NEW MODE IS FOUR CLAUSES HERE -- max_attempts, mode_spec, effort_atom,
+%% and a line in bench_mode_cycle/2's lists -- plus bench_attempt_spec/4
+%% where its repairs differ from its first call. bench_mode_cycle/2 is
+%% seven clauses of seven modes each; adding an eighth mode means editing
+%% every one, which is why it is kept together and named as a cycle.
 
 bench_max_attempts(high, 1) :- !.
 bench_max_attempts(contract, N) :-
@@ -254,6 +292,18 @@ bench_usage_pairs(Pairs, usage(P, C, T, R, H)) :-
     ).
 
 %% ---- attempts, generation and verification -----------------------------
+%%
+%% AN ATTEMPT IS A PAIR: one model call, then a verdict. bench_attempts
+%% repeats until a verdict is ok or the mode's ceiling is reached, and a
+%% failed verdict becomes `prev(CodeFile, DiagFile)' -- the program and the
+%% report -- which the next call is given. This is the same repair loop
+%% coding/c/codegen.pl runs in one process; here it is spread over child
+%% cocologs so a reply's assertz or halt cannot reach the runner.
+%%
+%% The mode's usage is the SUM over its attempts, the extract call
+%% included: a mode that spends a call rewriting the requirement pays for
+%% it in its own total, which is what makes `contract' and `extract'
+%% comparable to `loop'.
 
 bench_attempts(Attempt, Max, Task, Mode, Spec0, Dir, Usage0, Prev,
                Success, Attempts, Usage, LastDiag) :-
@@ -380,6 +430,15 @@ cocolog(Cocolog) :-
     current_prolog_flag(executable, Cocolog).
 
 %% ---- the child's usage line --------------------------------------------
+%%
+%% The child prints one line, `USAGE prompt completion total reasoning
+%% cache_hit', from library(llm)'s usage for its single call. A child that
+%% died before printing it -- a timeout, a provider error -- gives zeros
+%% rather than failing the task: the attempt is already a failure for a
+%% better-known reason, and a missing usage must not hide it.
+%%
+%% reasoning and cache_hit are fields the provider may not send, and zero
+%% is what "not reported" means here.
 
 bench_parse_usage(Text, Usage) :-
     (   bench_usage_line(Text, Line)
@@ -408,6 +467,17 @@ bench_number(String, N) :-
     atom_number(A, N).
 
 %% ---- compile and run the cases -----------------------------------------
+%%
+%% The verdict is the SAME one coding/c/check.pl gives: `clang -std=c17
+%% -Wall -Wextra -O0', then each case run with the binary's stdout trimmed
+%% of trailing whitespace and compared to the expected text, also trimmed.
+%% A case that times out (exit 124), exits nonzero or could not run is a
+%% failure with the reason named, so the repair call is told what went
+%% wrong and not only that something did.
+%%
+%% The diagnostic is cut at 4000 characters before it goes back: a runaway
+%% program can print megabytes of output, and the prompt must stay inside
+%% the backend's context.
 
 bench_verify(Task, Mode, Dir, Attempt, Verdict, Diag) :-
     bench_code_file(Task, Mode, Dir, Attempt, CodeFile),
@@ -487,6 +557,16 @@ bench_run_command(Cmd, Timeout, OutCodes, Exit, Error) :-
           )).
 
 %% ---- small helpers -----------------------------------------------------
+%%
+%% bench_norm is the comparison's one rule, and it is NOT `trim': each line
+%% loses its leading and trailing spaces and the empty lines between them,
+%% then the lines are joined -- so `6' and `  6\n\n' and `6\r' are one
+%% answer, while `6\n7' and `6 7' stay two. A program that pads a column or
+%% ends in a newline should not fail a case for the padding.
+%%
+%% bench_run_command catches a process that could not start at all (a
+%% missing clang, a timeout that killed the shell) and answers Exit -1 with
+%% the reason, so the caller has one shape to read.
 
 bench_norm(Text, Norm) :-
     split_string(Text, "\n", " \t\r", Lines0),
@@ -528,6 +608,21 @@ bench_error_text(Ball, Text) :-
     catch(format(atom(Text), 'error: ~w', [Ball]), _, Text = 'error').
 
 %% ---- the report --------------------------------------------------------
+%%
+%% The report answers three questions, and none of them is the printer's
+%% own: whether a mode solves the tasks (passed), what it cost to try
+%% (total, reasoning, attempts), and what it costs to SUCCEED (tokens per
+%% solved task). The third is the one to compare: a mode can win on total
+%% by giving up cheaply, so tokens_per_solved divides the tokens of the
+%% tasks it PASSED by how many it passed, never by every task.
+%%
+%% The per-mode totals are summed by bench_sum_rows/2 over rows built for
+%% the mode, so a mode with no row prints zeros instead of vanishing --
+%% a missing line would read as "not measured" where it means "all failed".
+%%
+%% The `~2f' seconds is wall time for the whole mode over a task, the child
+%% cocologs and their process starts included. It is not the provider's
+%% latency and must not be read as one.
 
 bench_print_result(Task, Mode, Success, Attempts, usage(P, C, T, R, H), Seconds) :-
     (   Success == yes

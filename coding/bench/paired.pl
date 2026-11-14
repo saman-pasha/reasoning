@@ -76,6 +76,15 @@ pair_branch(Task, Mode, Spec, Dir, Prev, Success, Attempts, Usage) :-
     bench_attempts(2, 3, Task, Mode, Spec, Dir, usage(0, 0, 0, 0, 0), Prev,
                    Success, Attempts, Usage, _LastDiag).
 
+%% The totals ADD the shared first attempt back to each repair branch:
+%% pair_total(U1, Repair, Total) is U1 + Repair, so plain_total and
+%% obliged_total are the full cost of running a task to a passing program
+%% under each policy. The first attempt counts in both because both paid
+%% it -- it is the branch that was never taken that is nil. A first attempt
+%% that passed (V1 == ok) is recorded with both branches passed at one
+%% attempt and no repair usage, so `every first attempt passed' is said
+%% once, at the end, instead of the report being empty.
+
 pair_assert(Task, First, U1, PS, PA, PU, OS, OA, OU) :-
     assertz(pair_result(Task, First, U1, PS, PA, PU, OS, OA, OU)),
     pair_total(U1, PU, PlainTotal),

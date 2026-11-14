@@ -49,6 +49,21 @@ tool_selected_tasks(Tasks) :-
     ;   findall(Task, (member(Task, Args), bench_task(Task, _, _)), Tasks)
     ).
 
+%% ---- what the benchmark's own modes cannot see -------------------------
+%%
+%% bench.pl measures PROMPTS; this measures the SHIPPED TOOL -- the same
+%% codegen_c_tested/4 a user calls -- so a task that passes here passes
+%% where the tool would be used, sanitizers and all. A task that passes
+%% only in bench.pl is a prompt that works under the benchmark's own child
+%% generator (gen.pl) and not under the tool's policy, and the difference
+%% is the finding, not the failure.
+%%
+%% The child is a `query' and not `-s', because coding/c/codegen.pl has a
+%% main/0 of its own; tool_gen.pl defines run/0, which the query proves.
+%% A child that could not start at all (Codes empty, Exit -1) is a fail
+%% with no diag rather than an error here: one task's provider outage must
+%% not end the run, and the per-task line already says fail.
+
 tool_task(Task, Dir, Pass, Calls, Usage, Seconds) :-
     bench_task(Task, Spec, Cases),
     format(atom(SpecFile), '~s/~w.spec.txt', [Dir, Task]),

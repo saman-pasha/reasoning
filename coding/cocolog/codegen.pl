@@ -48,6 +48,12 @@
 :- use_module('coding/options.pl').
 
 %% ---- the language guide ------------------------------------------------
+%%
+%% Three ways to find the guide, in order: --skill FILE, $COCOLOG_SKILL,
+%% then ../cocolog/SKILL.md beside this repository. A guide that cannot be
+%% read is an error, never a silent fall-back to the generic prompt: the
+%% generic run is a different experiment (--no-skill says so on purpose),
+%% and a missing file must not be quietly counted with it.
 
 cocolog_skill_text(Text) :-
     cocolog_skill_text(none, Text).
@@ -96,6 +102,10 @@ cocolog_repair_prompt(Base, prev(Previous, Diag), Prompt) :-
            [Base, Diag, Previous]).
 
 %% ---- one call ----------------------------------------------------------
+%%
+%% codegen_cocolog/2,3 is the one-shot: one model call, the reply returned
+%% as written, NOT run and not repaired. It is what a caller uses to see
+%% what the model writes; the tool's main/0 is what uses the checked loop.
 
 codegen_cocolog(Spec, Code) :-
     codegen_cocolog(Spec, [], Code).
@@ -204,6 +214,24 @@ cocolog_attempt(Attempt, Max, Spec, Goal, System, Overrides, Keep, Timeout,
     ).
 
 %% ---- run the reply -----------------------------------------------------
+%%
+%% THE REPLY IS RUN, NOT READ. A program that loads and whose main/0
+%% succeeds is accepted; a program that prints `ERROR:' or `Warning:' on
+%% stderr is not, through the same process, because a load warning names a
+%% clause that did not land -- the program may still run, on less than it
+%% wrote, which is the failure this check exists to catch. cocolog's `run'
+%% sends both streams here (2>&1), so a warning in the output is a warning
+%% in the verdict.
+%%
+%% The verifier reads no store and starts no server: the reply runs under
+%% plain `--local', so a generator that wrote to a knowledge base would
+%% pass here and fail where it was meant to run. A task that needs one is
+%% not this tool's.
+%%
+%% EXPECT is compared byte for byte against the whole output, not trimmed:
+%% unlike the C benchmark's cases (bench_norm/2 there), here the program
+%% writes its report, and a missing newline is a difference the caller
+%% asked to see.
 
 cocolog_check(Code, Goal, Timeout, Expect, Verdict) :-
     (   Code == ''
@@ -265,6 +293,15 @@ cocolog_limit(Max, Text, Limited) :-
     ).
 
 %% ---- the model call ----------------------------------------------------
+%%
+%% The guide is the largest part of the prompt: cocolog's SKILL.md is about
+%% 19 000 tokens, sent with every attempt. It is loaded once, when the tool
+%% starts, and reused -- so an edit to SKILL.md while a `--attempts 3' run
+%% is going does not change the guide between the call and its repair.
+%%
+%% --no-skill swaps it for a short generic prompt, which is the control:
+%% the difference between a run with the guide and one without measures
+%% what the guide is worth, not what the model is.
 
 cocolog_llm(System, Prompt, Overrides, Reply) :-
     codegen_options(Overrides, Options),
@@ -419,6 +456,14 @@ cocolog_report_calls([call(S, P, C, R, H, T)|Rest], N) :-
     cocolog_report_calls(Rest, N1).
 
 %% ---- CLI ---------------------------------------------------------------
+%%
+%% A bad flag list is the usage line and exit 1. A bad RUN -- an unreadable
+%% spec, a guide that is not there, a run that ends refused -- is exit 1
+%% with `codegen: KIND' and the diagnostic on stderr, and the report first
+%% when --report was asked for, so the tokens a refused run spent are
+%% still seen. OUT is written only after a run is accepted: a refused run
+%% leaves no .pl behind to be mistaken for the program, and --keep dir is
+%% how its last candidate is kept for a person to read.
 
 main :-
     current_prolog_flag(argv, [_|Args]),
