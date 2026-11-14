@@ -126,6 +126,17 @@ ep_last_user_text(Messages, Text) :-
     Text \== '',
     !.
 
+%% The task is the FIRST user turn. Later turns in a tool session are
+%% results and follow-ups; the request the reasoning checks belong to is
+%% the one that opened the session.
+ep_task_text(Messages, Text) :-
+    member(json(Pairs), Messages),
+    memberchk(role-user, Pairs),
+    memberchk(content-Text, Pairs),
+    atom(Text),
+    Text \== '',
+    !.
+
 ep_title_request(Messages) :-
     Messages = [json(Pairs)|_],
     memberchk(role-system, Pairs),
@@ -174,7 +185,7 @@ ep_reasoning(Alias, Title, Messages, Guide0, Guide, N, Terms) :-
     (   Alias == cocolog,
         \+ Title,
         ep_reasoning_on,
-        ep_last_user_text(Messages, Text)
+        ep_task_text(Messages, Text)
     ->  endpoint_reason(Text, Obs, CObs, Terms0),
         append(Obs, CObs, All0),
         ep_unique(All0, All),

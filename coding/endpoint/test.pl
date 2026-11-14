@@ -16,6 +16,7 @@
                 ep_health_reply/2,
                 ep_token_ok/1,
                 ep_add_guide/3,
+                ep_task_text/2,
                 ep_sse/3
               ]).
 :- use_module('coding/endpoint/reasoning_core.pl',
@@ -27,6 +28,7 @@ main :-
     test_health,
     test_token,
     test_guard,
+    test_task_text,
     test_sse,
     test_sse_tools,
     test_reasoning,
@@ -85,6 +87,14 @@ test_guard :-
     ;   Got = wrong
     ),
     check('a missing system prompt gets one', Got, prepended).
+
+test_task_text :-
+    Messages = [ json([role-system, content-agent]),
+                 json([role-user, content-task]),
+                 json([role-user, content-tool-result])
+               ],
+    ep_task_text(Messages, Text),
+    check('the first user turn is the task', Text, task).
 
 test_sse :-
     Reply = json([id-test,
