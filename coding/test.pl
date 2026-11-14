@@ -724,15 +724,23 @@ auto_cases :-
     auto_cases_refused,
     cli_query("codegen_args(['s','--auto-tests','--cases-effort','none','o'], A), write(A)",
               ['args(s,auto,none,o,no,no,[cases_effort(none)],[])']),
+    cli_query("codegen_args(['s','--auto-tests','--verify-model','m','o'], A), write(A)",
+              ['args(s,auto,none,o,no,no,[verify_model(m)],[])']),
     cli_query("codegen_args(['s','--auto-tests','o'], A), write(A)",
               ['args(s,auto,none,o,no,no,[],[])']),
+    cli_query("codegen_verify_model([], auto, M), write(M)",
+              ['claude-opus-5-5']),
+    cli_query("codegen_verify_model([provider(openai), model('deepseek-flash'), base_url('x')], auto, M), write(M)",
+              ['deepseek-reasoner']),
+    cli_query("codegen_verify_model([], custom, M), write(M)",
+              ['custom']),
     cli_query("asserta((llm_chat(_, Options, '# input\\n1\\n# expected\\n1\\n') :- member(effort(high), Options), !)), codegen_cases('a spec', _), write('CASE-EFFORT-'), write(731)",
               ['CASE-EFFORT-731']),
     cli_query("asserta((llm_chat(_, Options, '# input\\n1\\n# expected\\n1\\n') :- member(effort(none), Options), !)), codegen_cases('a spec', [effort(high)], none, _), write('CASE-EFFORT-NONE-'), write(731)",
               ['CASE-EFFORT-NONE-731']).
 
 auto_cases_child :-
-    Goal = "asserta((llm_chat(_, _, '#include <stdio.h>\\nint main(void){int c;while((c=getchar())!=EOF)putchar(c);return 0;}\\n') :- !)), asserta((llm_chat(Messages, _, '#include <stdio.h>\\nint main(void){int c;while((c=getchar())!=EOF)putchar(c);return 0;}\\n') :- member(msg(system, S), Messages), sub_atom(S, _, _, _, 'reference implementation'), !)), asserta((llm_chat(Messages, _, '# input\\nabc\\n# expected\\nabc\\n# input\\n# expected\\n') :- member(msg(system, S), Messages), sub_atom(S, _, _, _, 'test cases'), !)), codegen_c_tested('Copy standard input to standard output.', auto, _), codegen_report(report(Calls, _, _, _, _, _, _)), write('AUTO-CALLS-'), write(Calls), nl",
+    Goal = "asserta((llm_chat(Messages, Options, '#include <stdio.h>\\nint main(void){int c;while((c=getchar())!=EOF)putchar(c);return 0;}\\n') :- memberchk(model('claude-sonnet-4-5'), Options), member(msg(system, S), Messages), sub_atom(S, _, _, _, 'C17 programmer'), \\+ sub_atom(S, _, _, _, 'reference implementation'), !)), asserta((llm_chat(Messages, Options, '#include <stdio.h>\\nint main(void){int c;while((c=getchar())!=EOF)putchar(c);return 0;}\\n') :- memberchk(model('claude-opus-5-5'), Options), member(msg(system, S), Messages), sub_atom(S, _, _, _, 'reference implementation'), !)), asserta((llm_chat(Messages, _, '# input\\nabc\\n# expected\\nabc\\n# input\\n# expected\\n') :- member(msg(system, S), Messages), sub_atom(S, _, _, _, 'test cases'), !)), codegen_c_tested('Copy standard input to standard output.', auto, _), codegen_report(report(Calls, _, _, _, _, _, _)), write('AUTO-CALLS-'), write(Calls), nl",
     cli_query(Goal, ['AUTO-CALLS-3']).
 
 auto_cases_reject :-
