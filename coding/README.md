@@ -6,6 +6,7 @@ Code generation for the reasoning library, one language a directory:
 coding/
   options.pl          defaults shared by every generator
   obligations.pl      the checks a requirement's words imply
+  contract.pl         obligations from controlled-English sentences
   compile.pl          the compile checker and case runner
   test.pl             the coding helpers' checks
   c/
@@ -81,6 +82,7 @@ COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
 | flag | effect |
 |---|---|
 | `--tests FILE` | run the cases in FILE after compiling |
+| `--contract FILE` | take the checklist from controlled-English FILE |
 | `--provider P` | `provider(P)` in the call |
 | `--model M` | `model(M)` in the call |
 | `--base-url U` | `base_url(U)` in the call |
@@ -172,12 +174,37 @@ equal keys under `stable` keep their input order. A word must match whole,
 so `assortment` is not `sort` and `deadline` is not `line`, and a line the
 program *prints* is told from one it *reads* by where the words stand
 relative to the input and output verbs. `codegen_c/2,3` keeps its plain
-prompt; the checklist belongs to the verified paths.
+prompt; the checklist belongs to the verified paths. A `--contract` file
+replaces this keyword reading with the reasoner's own, below.
 
 `coding/test.pl` holds the checks: the word boundaries, the lines each
-benchmark task's requirement implies, the guided prompt, the compile
-checker, the case runner and the cases file. Run it from this repository's
-root with the cocolog library on the path.
+benchmark task's requirement implies, the contract reader, the guided
+prompt, the compile checker, the case runner and the cases file. Run it
+from this repository's root with the cocolog library on the path.
+
+## Contracts
+
+`--contract CONTRACT.txt` replaces the keyword reading with sentences in
+the controlled English `library(reasoning/reason)` parses. The rules in
+`coding/contract.pl` turn what the reader parses into obligations:
+
+```text
+Every program has an input.
+Every program has an output.
+Balanced reads the line.
+Every line has a bracket.
+Every line has a length.
+```
+
+The accepted shapes are listed at the top of `coding/contract.pl`:
+`Every X has a Y.`, `NAME reads the Y.`, `NAME prints the Y.`,
+`NAME sorts the Y.`, `NAME has a Y.`, `Every sum is even.`, and the
+subarray/subsequence bodies. A line the reasoner refuses is dropped; a
+sentence it reads but the rules do not know adds no line. A contract the
+reasoner reads as no obligation at all is an error (`contract_empty`),
+not a silent fallback. The same obligations are available to a caller as
+`codegen_contract_obligations(Text, Obligations)`, and
+`codegen_c_from/5` runs the loop with a checklist the caller supplies.
 
 ## Benchmark
 
@@ -195,7 +222,8 @@ See its README for the modes, the token columns and sample runs.
 ## Shape of a generator
 
 1. Read the requirement.
-2. Derive the checks its words imply; no model call.
+2. Derive the checks: its words by keyword, or a controlled-English
+   contract through the reasoner; no model call.
 3. Build a contract prompt: the language, one complete program, code only,
    and the checklist.
 4. Call `llm_chat/3` with `codegen_options/2` and the language's system

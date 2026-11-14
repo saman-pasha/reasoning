@@ -3,15 +3,18 @@
 %%     cocolog -s coding/test.pl        from this repository's root
 %%
 %% The obligations' word boundaries, the lines each benchmark task's
-%% requirement implies, the guided prompt that carries them, and the C
-%% compile checker. No model call and no network.
+%% requirement implies, the controlled-English contract, the guided
+%% prompt, the C compile checker and case runner, and the command line.
+%% No model call and no network.
 
 :- use_module('test/prelude.pl').
 :- use_module('coding/obligations.pl').
+:- use_module('coding/contract.pl').
 :- use_module('coding/compile.pl').
 
 main :-
     obligations,
+    contract,
     boundaries,
     prompt,
     checker,
@@ -74,6 +77,48 @@ strings :-
     Spec = "Read until end-of-file and print the sum of integers.",
     has_line('a string is a requirement too', Spec, 'end of file'),
     has_line('the sum is mentioned', Spec, 'wide enough for the sum').
+
+%% ---- the controlled-English contract ----------------------------------
+
+contract :-
+    section('contract'),
+    Stable = 'Every program has an input. Every program has an output. SortStable reads the line. SortStable prints the output. Every line has a name. Every line has a number. Every line has a score. Every line has an order.',
+    contract_has('a contract reads lines', Stable, 'Read whole lines'),
+    contract_has('the score is ordered highest first', Stable, 'Sort the records by score'),
+    contract_has('equal scores keep their order', Stable, 'the sort is stable'),
+    contract_has('a number is one integer', Stable, 'Parse a number as an integer'),
+    contract_has('a name is one word', Stable, 'A name is one word of letters'),
+    contract_has('the output is exact', Stable, 'Write exactly the required result'),
+    contract_no('no subarray in the stable contract', Stable, 'subarray'),
+    Calculator = 'Every program has an input. Every program has an output. Calculator reads the expression. Every expression has a number. Every expression has an operator. Every expression has a parenthesis.',
+    contract_has('the operators are named', Calculator, 'Handle +, -, *, and /'),
+    contract_has('parentheses group', Calculator, 'Parentheses group subexpressions'),
+    contract_has('the expression is whole', Calculator, 'Parse the whole expression'),
+    yes_no(( codegen_contract_obligations(['Every program has an input.', 'Every program has an output.'], Lines),
+             member('Read from standard input to end of file; an empty input is valid.', Lines)
+           ), Y1),
+    check('a list of sentences is a contract', Y1, yes),
+    yes_no(( codegen_contract_obligations('Every dog has a tail.', Lines2),
+             Lines2 == []
+           ), Y2),
+    check('a shape with no rule adds no line', Y2, yes),
+    yes_no(( codegen_contract_obligations('The quick brown fox jumps over the lazy dog.', Lines3),
+             Lines3 == []
+           ), Y3),
+    check('a contract the reader refuses is empty', Y3, yes).
+
+contract_has(Label, Text, Fragment) :-
+    yes_no(contract_has_line(Text, Fragment), YN),
+    check(Label, YN, yes).
+
+contract_no(Label, Text, Fragment) :-
+    yes_no(contract_has_line(Text, Fragment), YN),
+    check(Label, YN, no).
+
+contract_has_line(Text, Fragment) :-
+    codegen_contract_obligations(Text, Obligations),
+    atomic_list_concat(Obligations, '\n', All),
+    sub_atom(All, _, _, _, Fragment).
 
 %% ---- whole words, not substrings --------------------------------------
 
@@ -176,21 +221,27 @@ cases_file :-
 
 cli :-
     section('cli'),
-    cli_query("codegen_args(['s','o'], S,T,O,R,Os), write(args(S,T,O,R,Os))",
-              ['args(s,none,o,no,[]']),
-    cli_query("codegen_args(['s','--tests','c','o'], S,T,O,R,Os), write(args(S,T,O,R,Os))",
-              ['args(s,c,o,no,[]']),
-    cli_query("codegen_args(['--provider','openai','--model','deepseek-flash','--base-url','https://x','--effort','none','s','o'], S,T,O,R,Os), write(args(S,T,O,R,Os))",
+    cli_query("codegen_args(['s','o'], S,T,C,O,R,Os), write(args(S,T,C,O,R,Os))",
+              ['args(s,none,none,o,no,[]']),
+    cli_query("codegen_args(['s','--tests','c','o'], S,T,C,O,R,Os), write(args(S,T,C,O,R,Os))",
+              ['args(s,c,none,o,no,[]']),
+    cli_query("codegen_args(['s','--contract','k.txt','o'], S,T,C,O,R,Os), write(args(S,T,C,O,R,Os))",
+              ['args(s,none,k.txt,o,no,[]']),
+    cli_query("codegen_args(['--provider','openai','--model','deepseek-flash','--base-url','https://x','--effort','none','s','o'], S,T,C,O,R,Os), write(args(S,T,C,O,R,Os))",
               ['provider(openai)', 'model(deepseek-flash)',
                'base_url(https://x)', 'effort(none)']),
-    cli_query("codegen_args(['s','--report','o'], S,T,O,R,Os), write(args(S,T,O,R,Os))",
+    cli_query("codegen_args(['s','--report','o'], S,T,C,O,R,Os), write(args(S,T,C,O,R,Os))",
               [',yes,']),
-    cli_query("( codegen_args(['s','--provider'],_,_,_,_,_) -> write(yes) ; write(no) )",
+    cli_query("( codegen_args(['s','--provider'],_,_,_,_,_,_) -> write(yes) ; write(no) )",
               ['no']),
-    cli_query("( codegen_args(['s','o','x'],_,_,_,_,_) -> write(yes) ; write(no) )",
+    cli_query("( codegen_args(['s','o','x'],_,_,_,_,_,_) -> write(yes) ; write(no) )",
               ['no']),
     cli_query("codegen_report_reset, codegen_report(R), write(R)",
-              ['report(0,0,0,0,0)']).
+              ['report(0,0,0,0,0)']),
+    cli_query("codegen_report(R), write(R)",
+              ['report(0,0,0,0,0)']),
+    cli_query("( catch(codegen_obligations_for(s, '/no/such/contract', _), error(codegen_error(contract_file, _), _), true) -> write(yes) ; write(no) )",
+              ['yes']).
 
 cli_query(Goal, Needles) :-
     format(atom(Args),
