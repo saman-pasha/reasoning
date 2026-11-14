@@ -115,7 +115,10 @@ ep_reasoning_setting(Request, Model, Setting) :-
     (   http_header(Request, 'x-coding-reasoning', Value)
     ->  ep_reasoning_value(Value, Setting)
     ;   ep_model_count(Model, N)
-    ->  Setting = count(N)
+    ->  (   N =:= 0
+        ->  Setting = off
+        ;   Setting = count(N)
+        )
     ;   Setting = default
     ).
 
@@ -262,13 +265,15 @@ ep_mode(true, _, title) :-
     !.
 ep_mode(false, off, plain) :-
     !.
+ep_mode(false, count(0), plain) :-
+    !.
 ep_mode(false, _, Mode) :-
     (   ep_reasoning_on
     ->  Mode = reasoning
     ;   Mode = plain
     ).
 
-ep_limit_checks(Checks, Max, Checks) :-
+ep_limit_checks(_, Max, []) :-
     Max =< 0,
     !.
 ep_limit_checks(Checks, Max, Checks) :-
@@ -337,6 +342,56 @@ ep_forward(Body0, Alias, Status, Resp) :-
     curl_post(Url, 'application/json', Codes,
               [header(Auth), timeout(600), max_size(16777216)],
               Status, Resp).
+
+%% The backend's usage object, as flat numbers for the trace. A reply
+%% without usage (an error, or a backend that reports none) is all zero.
+ep_usage(Resp, Usage) :-
+    (   catch(json_parse(Resp, json(Pairs)), _, fail),
+        memberchk(usage-json(U), Pairs)
+    ->  ep_usage_count(U, prompt_tokens, P),
+        ep_usage_count(U, completion_tokens, C),
+        ep_usage_reasoning(U, R),
+        ep_usage_total(U, P, C, T),
+        ep_usage_cache(U, H),
+        Usage = usage(P, C, R, T, H)
+    ;   Usage = usage(0, 0, 0, 0, 0)
+    ).
+
+ep_usage_count(Pairs, Key, N) :-
+    (   memberchk(Key-V, Pairs),
+        integer(V),
+        V >= 0
+    ->  N = V
+    ;   N = 0
+    ).
+
+ep_usage_reasoning(Pairs, R) :-
+    (   memberchk(completion_tokens_details-json(Details), Pairs)
+    ->  ep_usage_count(Details, reasoning_tokens, R)
+    ;   R = 0
+    ).
+
+ep_usage_total(Pairs, P, C, T) :-
+    (   memberchk(total_tokens-T0, Pairs),
+        integer(T0),
+        T0 >= 0
+    ->  T = T0
+    ;   T is P + C
+    ).
+
+ep_usage_cache(Pairs, H) :-
+    (   memberchk(prompt_cache_hit_tokens-H0, Pairs),
+        integer(H0),
+        H0 >= 0
+    ->  H = H0
+    ;   memberchk(prompt_tokens_details-json(Details), Pairs)
+    ->  ep_usage_count(Details, cached_tokens, H)
+    ;   H = 0
+    ).
+
+ep_usage_json(usage(P, C, R, T, H),
+              [prompt_tokens-P, completion_tokens-C, reasoning_tokens-R,
+               total_tokens-T, cache_hit_tokens-H]).
 
 %% ---- the reply as JSON or as one SSE body ------------------------------
 
@@ -441,7 +496,7 @@ ep_header(Request, Name, Default, Value) :-
     ).
 
 ep_trace(Request, Start, Alias, Backend, Effort, Mode, N, Terms,
-         Stream, MessageCount, ToolCount, Status) :-
+         Stream, MessageCount, ToolCount, Status, Usage) :-
     ep_env('CODING_ENDPOINT_TRACE', '', File),
     File \== '',
     get_time(Now),
@@ -455,11 +510,13 @@ ep_trace(Request, Start, Alias, Backend, Effort, Mode, N, Terms,
     ),
     ep_header(Request, 'x-opencode-project', '-', Project),
     (   Stream == true -> StreamJson = @(true) ; StreamJson = @(false) ),
+    ep_usage_json(Usage, UsagePairs),
     json_codes(json([ts-Now, session-Session, project-Project,
                      seconds-Seconds, status-Status, model-Alias,
                      backend-Backend, effort-Effort, mode-Mode,
                      reasoning-N, terms-Terms, stream-StreamJson,
-                     messages-MessageCount, tools-ToolCount]), Codes),
+                     messages-MessageCount, tools-ToolCount | UsagePairs]),
+               Codes),
     append(Codes, [10], Line),
     catch(append_file_from_codes(File, Line), _, true).
 
@@ -532,8 +589,10 @@ ep_chat_body(Request, Body, Start, Reply) :-
             ;   append(Cors, ['Content-Type'-'application/json'], Headers),
                 Reply = reply(Status, Headers, Resp)
             ),
+            ep_usage(Resp, Usage),
             ep_trace(Request, Start, Alias, BackendModel, Effort, Mode,
-                     N, TermCount, Stream, MessageCount, ToolCount, Status)
+                     N, TermCount, Stream, MessageCount, ToolCount, Status,
+                     Usage)
         ;   ep_error_reply(Request, 500,
                            'the language guide is missing', Reply)
         )

@@ -23,7 +23,9 @@
                 ep_mode/3,
                 ep_alias/2,
                 ep_checks/2,
-                ep_sse/3
+                ep_sse/3,
+                ep_usage/2,
+                ep_usage_json/2
               ]).
 :- use_module('coding/endpoint/reasoning_core.pl',
               [ endpoint_reason/4 ]).
@@ -35,6 +37,7 @@ main :-
     test_token,
     test_guard,
     test_task_text,
+    test_usage,
     test_sse,
     test_sse_tools,
     test_reasoning,
@@ -42,6 +45,7 @@ main :-
     test_reasoning_headers,
     test_model_suffix,
     test_check_cap,
+    test_zero_checks,
     unsetenv('CODING_ENDPOINT_TOKEN'),
     checks_done.
 
@@ -105,6 +109,37 @@ test_task_text :-
                ],
     ep_task_text(Messages, Text),
     check('the first user turn is the task', Text, task).
+
+test_usage :-
+    Reply = json([id-test,
+                  created-1,
+                  choices-[json([index-0,
+                                 message-json([role-assistant, content-ok]),
+                                 finish_reason-stop])],
+                  usage-json([prompt_tokens-120,
+                              completion_tokens-45,
+                              total_tokens-165,
+                              prompt_cache_hit_tokens-64,
+                              completion_tokens_details-
+                                  json([reasoning_tokens-30])])]),
+    json_codes(Reply, Codes),
+    ep_usage(Codes, Usage),
+    ep_usage_json(Usage, Pairs),
+    check('the trace reads token usage', Usage, usage(120, 45, 30, 165, 64)),
+    check('the trace writes token usage', Pairs,
+          [prompt_tokens-120, completion_tokens-45, reasoning_tokens-30,
+           total_tokens-165, cache_hit_tokens-64]),
+    json_codes(json([usage-json([prompt_tokens-7,
+                                 completion_tokens-3,
+                                 prompt_tokens_details-
+                                     json([cached_tokens-2])])]),
+               Codes2),
+    ep_usage(Codes2, Fallback),
+    check('a provider that names cached tokens another way', Fallback,
+          usage(7, 3, 0, 10, 2)),
+    json_codes(json([id-test]), EmptyCodes),
+    ep_usage(EmptyCodes, None),
+    check('a reply without usage is all zero', None, usage(0, 0, 0, 0, 0)).
 
 test_sse :-
     Reply = json([id-test,
@@ -206,3 +241,11 @@ test_model_suffix :-
 test_check_cap :-
     ep_checks([first, second, third], Checks),
     check('a longer reading is capped at two', Checks, [first, second]).
+
+test_zero_checks :-
+    Empty = request(post, '/v1/chat/completions', [], http(1, 1), [], []),
+    ep_reasoning_setting(Empty, 'c-r0', Setting),
+    ep_mode(false, Setting, Mode),
+    check('c-r0 without a header is plain', Mode-Setting, plain-off),
+    ep_checks(0, 0, [first, second], Checks),
+    check('a zero maximum keeps no checks', Checks, []).

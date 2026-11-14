@@ -116,8 +116,10 @@ completion request. A line carries the time, OpenCode session and project
 ids, model, backend model, effort, `mode` (`reasoning`, `title`, or `plain`
 when the pre-pass is off),
 the number of reasoning checks and parsed terms, message and tool counts,
-the HTTP status and the seconds. The trace never includes prompts, replies
-or the bearer token.
+the HTTP status and the seconds. It also carries the backend's usage as
+`prompt_tokens`, `completion_tokens`, `reasoning_tokens`, `total_tokens`
+and `cache_hit_tokens`, all zero when the backend reports none. The trace
+never includes prompts, replies or the bearer token.
 
 ```sh
 CODING_ENDPOINT_TRACE="$HOME/.local/state/opencode/reasoning-coding.jsonl" \
@@ -170,8 +172,9 @@ COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
 ```
 
 The test checks the model and health replies, the bearer-token guard, the
-guide merge, the SSE synthesis for text and tool calls, and the reasoning
-reader. No model is called and no socket is opened.
+guide merge, the usage reading and trace fields, the SSE synthesis for
+text and tool calls, and the reasoning reader. No model is called and no
+socket is opened.
 
 ## Files
 
