@@ -54,6 +54,7 @@ obligations :-
     balanced,
     calculator,
     mvccs,
+    mvccs_acid,
     strings,
     general.
 
@@ -127,6 +128,18 @@ mvccs :-
     has_line('allocations are checked', Spec, 'Check every allocation'),
     no_line('an invoice is no version',
             'Send the invoice.', 'newest version of a key').
+
+mvccs_acid :-
+    bench_task(mvccs_acid, Spec, Cases),
+    length(Cases, N),
+    check('the ACID task has ten cases', N, 10),
+    has_line('the ACID B-tree is named', Spec, '2-3-4 tree'),
+    has_line('the ACID commit is atomic', Spec, 'staged operations atomically'),
+    has_line('the ACID snapshot is fixed', Spec, 'snapshot is the current commit id'),
+    has_line('the ACID recursion is bounded', Spec, 'Bound the recursion depth'),
+    has_line('the ACID allocations are checked', Spec, 'Check every allocation'),
+    no_line('an invoice is no snapshot',
+            'Send the invoice.', 'snapshot is the current commit id').
 
 strings :-
     Spec = "Read until end-of-file and print the sum of integers.",

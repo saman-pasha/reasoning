@@ -192,6 +192,54 @@ bench_task(btree, Spec, Cases) :-
                   '10\n20\n25\n30\n35\n40\n45\n50\n55\n60\n65\n70\n75\n80\n85')
             ].
 
+%% mvccs_acid: the MVCC B-tree with transactions and ACID behaviour.
+bench_task(mvccs_acid, Spec, Cases) :-
+    bench_lines([
+        'Write a complete C17 program, mvccs.c. It simulates a multi-version B-tree of',
+        'minimum degree 2 (a 2-3-4 tree) holding integer keys, with transactions and',
+        'snapshot isolation. Read commands from standard input until EOF, one command',
+        'per line. Blank lines are ignored.',
+        '',
+        '  b T          begin transaction T at the latest committed version; error if T is active',
+        '  i T KEY      stage an insertion of KEY in T; error if T is not active',
+        '  d T KEY      stage a deletion of KEY in T; error if T is not active',
+        '  c T          commit T atomically: apply all its staged changes as one new',
+        '               committed version, increment the commit id, and end T;',
+        '               error if T is not active. An empty commit still increments.',
+        '  a T          abort T, discard all its staged changes, and end T;',
+        '               error if T is not active',
+        '  r T KEY      print yes if KEY is visible in T''s view, otherwise no;',
+        '               error if T is not active',
+        '  p T          print every key visible in T''s view in ascending order, one per',
+        '               line; print nothing for an empty view; error if T is not active',
+        '  g KEY        print yes if KEY is in the latest committed version, otherwise no',
+        '  v            print the latest commit id',
+        '',
+        'T is a word of ASCII letters or digits. KEY is an integer, possibly negative.',
+        'A transaction''s view is the committed version at its begin snapshot plus its',
+        'own staged insertions and deletions; commits by other transactions after its',
+        'snapshot are invisible to it. A commit applies its net staged changes to the',
+        'latest committed version (last committer wins for keys it changed). An',
+        'insertion of a key already visible is ignored; a deletion of an absent key is',
+        'ignored. At EOF, active transactions are abandoned without committing.',
+        '',
+        'Use a B-tree for the committed versions, recursion for insertion and deletion,',
+        'and dynamic allocation for nodes; the number of keys and transactions is not',
+        'fixed. Print exactly what each command asks for, with no prompts or debug output.'
+    ], Spec),
+    Cases = [
+        case('v\n', '0'),
+        case('b T1\ni T1 5\nr T1 5\ng 5\nc T1\ng 5\nv\nb T2\nr T2 5\np T2\n', 'yes\nno\nyes\n1\nyes\n5'),
+        case('b T1\ni T1 1\nc T1\nb T2\nb T3\ni T3 2\nc T3\nr T2 1\nr T2 2\nc T2\nb T4\nr T4 1\nr T4 2\nv\n', 'yes\nno\nyes\nyes\n3'),
+        case('b T1\ni T1 10\na T1\ng 10\nb T2\nr T2 10\nv\n', 'no\nno\n0'),
+        case('b T1\ni T1 7\nr T1 7\ng 7\nd T1 7\nr T1 7\ni T1 8\np T1\nc T1\ng 8\nv\n', 'yes\nno\nno\n8\nyes\n1'),
+        case('b T1\ni T1 1\ni T1 2\nb T2\nr T2 1\nr T2 2\nc T1\nb T3\np T3\n', 'no\nno\n1\n2'),
+        case('b T1\ni T1 3\nc T1\nb T2\nd T2 3\nc T2\ng 3\nb T3\np T3\nv\n', 'no\n2'),
+        case('b T1\nb T2\ni T1 5\nc T1\nd T2 5\nc T2\ng 5\nv\n', 'no\n2'),
+        case('r T1 1\ni T1 1\nc T1\na T1\nb T1\nb T1\n', 'error\nerror\nerror\nerror\nerror'),
+        case('b T1\ni T1 1\nc T1\nb T2\ni T2 2\nc T2\nb T3\nr T3 1\nr T3 2\nb T4\nr T4 2\na T4\nb T5\nr T5 2\n', 'yes\nyes\nyes\nyes')
+            ].
+
 %% btree_debug: not a writing task. The source is READ from coding/bench/
 %% debug/btree_c_buggy.c at run time, so the file a model must repair is
 %% the file in the repository and not a copy kept beside the spec. The
@@ -406,6 +454,20 @@ bench_requirement(mvccs, [
     'Every program has an allocation.'
 ]).
 
+bench_requirement(mvccs_acid, [
+    'Every program has an input.',
+    'Every program has an output.',
+    'MvccAcid reads the commands.',
+    'MvccAcid prints the output.',
+    'Every command has a verb.',
+    'Every program has a tree.',
+    'Every commit has a version.',
+    'Every reader has a snapshot.',
+    'Every writer has a transaction.',
+    'Every program has a recursion.',
+    'Every program has an allocation.'
+]).
+
 %% The capitalized name the extractor is told to use. The controlled
 %% English reader capitalizes a proper name; these are the same atoms it
 %% will read back as sumeven, maxsubarray, ...
@@ -420,6 +482,7 @@ bench_program_name(stable_sort, 'SortStable').
 bench_program_name(btree, 'BTree').
 bench_program_name(btree_debug, 'BTreeDebug').
 bench_program_name(mvccs, 'MvccBTree').
+bench_program_name(mvccs_acid, 'MvccAcid').
 
 %% The extractor's closed vocabulary: the noun it must use for `reads',
 %% the noun it must use for `prints', and every noun an optional line may
@@ -449,6 +512,11 @@ bench_extract_nouns(mvccs, commands, output,
                      version, reader, snapshot, commit, writer,
                      transaction, recursion, allocation]).
 
+bench_extract_nouns(mvccs_acid, commands, output,
+                    [commands, command, verb, key, tree, node, integer,
+                     version, reader, snapshot, commit, writer,
+                     transaction, recursion, allocation]).
+
 %% A line the required set cannot say and the task needs: sum_even's
 %% property is what makes its sum the sum of the even integers.
 bench_extract_extra_lines(sum_even, ['Every sum is even.']).
@@ -466,4 +534,13 @@ bench_extract_extra_lines(mvccs,
                            'Every writer has a transaction.',
                            'Every program has a recursion.',
                            'Every program has an allocation.']).
+bench_extract_extra_lines(mvccs_acid,
+                          ['Every program has a tree.',
+                           'Every command has a verb.',
+                           'Every commit has a version.',
+                           'Every reader has a snapshot.',
+                           'Every writer has a transaction.',
+                           'Every program has a recursion.',
+                           'Every program has an allocation.']).
+
 bench_extract_extra_lines(_, []).

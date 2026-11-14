@@ -45,7 +45,7 @@ to `high` when the first attempt fails.
 | `gen.pl` | one generator call, run as a child `cocolog` so codegen's `main/0` is never called here |
 | `config.pl` | the provider, model, endpoint, temperature, efforts and loop cap both scripts use |
 | `contract.pl` | parses the controlled-English contracts with the shared `coding/contract.pl` reader and vocabulary, writes the extractor's prompt and line parser, and holds the keyword-to-contract rules |
-| `tasks.pl` | eleven requirements, their hand-written contracts, extractor noun lists and stdin/stdout cases |
+| `tasks.pl` | twelve requirements, their hand-written contracts, extractor noun lists and stdin/stdout cases |
 | `debug/btree_c_buggy.c` | the cicilang `btree_c.c` adapted to stdin, with three injected defects |
 | `run.sh` | sets `COCOLOG_LIBRARY` and runs `bench.pl` |
 | `paired.pl` | the paired repair comparison: one shared first attempt, then plain and obliged branches |
@@ -121,8 +121,12 @@ attempt (1 126, 1 114 and 1 389, the last including its extraction call);
 `escalate` passed it on its second attempt (1 823) and `escalate2` on its
 third (2 810), which is when its third-stage obligations fired.
 
-`mvccs`, the MVCC B-tree, is the new task: one writer, any number of
-readers, a snapshot per reader, and a 2-3-4 tree at each snapshot. `high`
+`mvccs`, the MVCC B-tree, is one task: one writer, any number of
+readers, a snapshot per reader, and a 2-3-4 tree at each snapshot. The
+newer `mvccs_acid` adds named transactions, staged inserts and deletes,
+atomic commit and abort, snapshot isolation, last-committer-wins and error
+handling; its ten cases are in `tasks.pl`. It is not in this older sample.
+`high`
 passed it first try at 17 197 tokens (14 005 reasoning), and `derive`
 passed it first try at 2 902, the cheapest of the modes. `contract`
 passed at 2 998 and `extract` at 4 037 (including extraction). `loop`,
