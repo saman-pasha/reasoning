@@ -32,8 +32,9 @@ curl -s http://127.0.0.1:8787/health
 ## Connect OpenCode
 
 Copy `opencode.json` to `~/.config/opencode/opencode.json` for every
-project, or to a project's `opencode.json` for one project. The file uses
-OpenCode v2's `providers`/`package`/`settings` shape.
+project, or to a project's `opencode.json` for one project. The installed
+copy is kept at `config/opencode.json`. The file uses OpenCode v2's
+`providers`/`package`/`settings` shape.
 
 Then either choose the model in the TUI, or name it on the command line:
 
@@ -91,6 +92,7 @@ request without a guide, and a streamed cocolog reply. No model is called.
 | `server.py` | the endpoint, standard library only |
 | `run.sh` | starts it with `REASONING_API_KEY` checked |
 | `opencode.json` | the provider and the two models |
+| `config/opencode.json` | the copy installed at `~/.config/opencode/` |
 | `prompts/c.md` | the C17 guide |
 | `prompts/cocolog.md` | the cocolog addendum to `SKILL.md` |
 | `test.py` | the local checks, no model |
