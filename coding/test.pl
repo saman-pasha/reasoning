@@ -23,6 +23,7 @@ main :-
     runner,
     cases_file,
     cli,
+    cflags,
     keep,
     dry_run,
     check_tool,
@@ -228,7 +229,16 @@ runner :-
     yes_no(( c_test_check(Loop, [case('', '')], 200, fail(test, Diag4)),
              sub_atom(Diag4, _, _, _, 'TIMEOUT')
            ), Y7),
-    check('a slow case times out at the caller limit', Y7, yes).
+    check('a slow case times out at the caller limit', Y7, yes),
+    Macro = '#include <stdio.h>\nint main(void) {\n#ifdef ANSWER_YES\n    printf("yes\\n");\n#else\n    printf("no\\n");\n#endif\n    return 0;\n}\n',
+    yes_no(c_test_check(Macro, [case('', 'no')], 3000, '', ok), Y8),
+    check('a program without the flag runs its branch', Y8, yes),
+    yes_no(c_test_check(Macro, [case('', 'yes')], 3000, '-DANSWER_YES', ok), Y9),
+    check('cflags reach the compiler', Y9, yes),
+    yes_no(( c_test_check(Macro, [case('', 'yes')], 3000, '', fail(test, Diag5)),
+             sub_atom(Diag5, _, _, _, 'CASE 1 WRONG')
+           ), Y10),
+    check('without the flag the expected branch is wrong', Y10, yes).
 
 %% ---- the cases file ----------------------------------------------------
 
@@ -345,6 +355,8 @@ cli :-
               ['args(s,none,none,o,no,no,[keep(dir(k))],[]']),
     cli_query("codegen_args(['s','--attempts','2','--timeout','500','o'], A), write(A)",
               ['attempts(2)', 'case_timeout(500)']),
+    cli_query("codegen_args(['s','--cflags','-DANSWER_YES','o'], A), write(A)",
+              ['cflags(-DANSWER_YES)']),
     cli_query("codegen_args(['--provider','openai','--model','deepseek-flash','--base-url','https://x','--effort','none','s','o'], A), write(A)",
               ['provider(openai)', 'model(deepseek-flash)',
                'base_url(https://x)', 'effort(none)']),
@@ -360,6 +372,8 @@ cli :-
               ['no']),
     cli_query("( codegen_args(['s','--timeout','x'], _) -> write(yes) ; write(no) )",
               ['no']),
+    cli_query("( codegen_args(['s','--cflags'], _) -> write(yes) ; write(no) )",
+              ['no']),
     cli_query("( codegen_args(['s','o','x'], _) -> write(yes) ; write(no) )",
               ['no']),
     cli_query("codegen_report_reset, codegen_report(R), write(R)",
@@ -372,6 +386,29 @@ cli :-
               ['USAGE-731']),
     cli_query("( catch(codegen_obligations_for(s, '/no/such/contract', _), error(codegen_error(contract_file, _), _), true) -> write(yes) ; write(no) )",
               ['yes']).
+
+%% ---- cflags in the generator ------------------------------------------
+
+cflags :-
+    section('cflags'),
+    cflags_child_success,
+    cflags_child_failure.
+
+cflags_child_success :-
+    format(atom(Args),
+           "query \"use_module('coding/c/codegen.pl'), asserta((codegen_call(_P,_O,'int main(void) { return FOO; }') :- !)), codegen_c_from('a spec', [], [], [], [cflags('-DFOO=0')], _), write('CFLAGS-OK-731')\"",
+           []),
+    cocolog_out(Args, Codes),
+    atom_codes(Text, Codes),
+    has('the generated program builds with its flag', 'CFLAGS-OK-731', Text).
+
+cflags_child_failure :-
+    format(atom(Args),
+           "query \"use_module('coding/c/codegen.pl'), asserta((codegen_call(_P,_O,'int main(void) { return FOO; }') :- !)), ( catch(codegen_c_from('a spec', [], [], [], [], _), error(codegen_error(compile_failed,_),_), true) -> write('CFLAGS-FAIL-731') ; write('CFLAGS-OTHER-731') )\"",
+           []),
+    cocolog_out(Args, Codes),
+    atom_codes(Text, Codes),
+    has('without its flag the generated program fails', 'CFLAGS-FAIL-731', Text).
 
 %% ---- keeping the attempts ---------------------------------------------
 
@@ -515,6 +552,25 @@ check_tool :-
     check('a wrong answer fails the check', Exit4, 1),
     has('the wrong answer says TESTS FAILED', 'TESTS FAILED', Text4),
     has('the wrong answer names the case', 'CASE 1 WRONG', Text4),
+    atom_concat(Dir, '/macro.c', MacroFile),
+    fixture(MacroFile,
+            ['#include <stdio.h>',
+             'int main(void) {',
+             '#ifdef ANSWER_YES',
+             '    printf("yes\\n");',
+             '#else',
+             '    printf("no\\n");',
+             '#endif',
+             '    return 0;',
+             '}']),
+    atom_concat(Dir, '/yes.txt', YesFile),
+    fixture(YesFile, ['# input', '# expected', 'yes']),
+    check_with_cases(MacroFile, YesFile, Text8, Exit8),
+    check('without the flag the branch is wrong', Exit8, 1),
+    has('without the flag the case fails', 'TESTS FAILED', Text8),
+    check_with_cases_flags(MacroFile, YesFile, '-DANSWER_YES', Text9, Exit9),
+    check('with cflags the branch is right', Exit9, 0),
+    has('with cflags the case passes', 'case(s) pass', Text9),
     atom_concat(Dir, '/missing.c', Missing),
     check_compiles(Missing, Text5, Exit5),
     check('a missing file fails', Exit5, 1),
@@ -532,6 +588,12 @@ check_compiles(File, Text, Exit) :-
 
 check_with_cases(File, Cases, Text, Exit) :-
     format(atom(Args), "-s coding/c/check.pl -- ~w --tests ~w", [File, Cases]),
+    cocolog_run(Args, Text, Exit).
+
+check_with_cases_flags(File, Cases, Flags, Text, Exit) :-
+    format(atom(Args),
+           "-s coding/c/check.pl -- ~w --tests ~w --cflags ~w",
+           [File, Cases, Flags]),
     cocolog_run(Args, Text, Exit).
 
 cli_query(Goal, Needles) :-

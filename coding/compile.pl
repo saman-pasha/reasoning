@@ -1,14 +1,16 @@
 %% coding/compile.pl -- compile and run a C source atom.
 %%
 %%     c_compile_check(+Code, -Verdict)
+%%     c_compile_check(+Code, +CFlags, -Verdict)
 %%         ok, or fail(Diagnostic). The source is written to a fresh
 %%         temporary directory and compiled with
-%%         `clang -std=c17 -Wall -Wextra -O0'; stderr is merged into the
-%%         diagnostic. A compiler that cannot be run is a failure with its
-%%         error, not an exception.
+%%         `clang -std=c17 -Wall -Wextra -O0 CFlags'; stderr is merged into
+%%         the diagnostic. A compiler that cannot be run is a failure with
+%%         its error, not an exception.
 %%
 %%     c_test_check(+Code, +Cases, -Verdict)
 %%     c_test_check(+Code, +Cases, +Timeout, -Verdict)
+%%     c_test_check(+Code, +Cases, +Timeout, +CFlags, -Verdict)
 %%         compile with AddressSanitizer and UndefinedBehaviorSanitizer,
 %%         then run the binary on each case. ok, or
 %%         fail(compile, Diagnostic) or fail(test, Diagnostic). A case is
@@ -17,7 +19,8 @@
 %%         newlines are trimmed. A sanitizer report is a failed case, even
 %%         when the printed answer happens to match; leak detection is off
 %%         (a one-shot program's leak is no answer's business). Timeout is
-%%         the milliseconds one case may run, 3000 unless a caller says.
+%%         the milliseconds one case may run, 3000 unless a caller says;
+%%         CFlags are extra compiler arguments, '' unless a caller says.
 %%
 %%     c_run_cases(+Exe, +Cases, -Failures)
 %%     c_run_cases(+Exe, +Cases, +Timeout, -Failures)
@@ -35,9 +38,12 @@
 %% ---- compile -----------------------------------------------------------
 
 c_compile_check(Code, Verdict) :-
-    c_compile(Code, plain, _Exe, Verdict).
+    c_compile_check(Code, '', Verdict).
 
-c_compile(Code, Mode, Exe, Verdict) :-
+c_compile_check(Code, CFlags, Verdict) :-
+    c_compile(Code, plain, CFlags, _Exe, Verdict).
+
+c_compile(Code, Mode, CFlags, Exe, Verdict) :-
     tmp_file(codegen_check, Dir),
     make_directory(Dir),
     atom_concat(Dir, '/check.c', CFile),
@@ -45,7 +51,7 @@ c_compile(Code, Mode, Exe, Verdict) :-
     atom_concat(Code, '\n', Text),
     atom_codes(Text, Codes),
     write_file_from_codes(CFile, Codes),
-    c_compile_command(Mode, Exe, CFile, Cmd),
+    c_compile_command(Mode, CFlags, Exe, CFile, Cmd),
     c_run_command(Cmd, 120000, OutCodes, Exit, Error),
     atom_codes(Output, OutCodes),
     (   Error == none,
@@ -59,13 +65,13 @@ c_compile(Code, Mode, Exe, Verdict) :-
         Verdict = fail(Diag)
     ).
 
-c_compile_command(plain, Exe, CFile, Cmd) :-
-    format(atom(Cmd), 'clang -std=c17 -Wall -Wextra -O0 -o ~s ~s 2>&1',
-           [Exe, CFile]).
-c_compile_command(sanitized, Exe, CFile, Cmd) :-
+c_compile_command(plain, CFlags, Exe, CFile, Cmd) :-
+    format(atom(Cmd), 'clang -std=c17 -Wall -Wextra -O0 ~s -o ~s ~s 2>&1',
+           [CFlags, Exe, CFile]).
+c_compile_command(sanitized, CFlags, Exe, CFile, Cmd) :-
     format(atom(Cmd),
-           'clang -std=c17 -Wall -Wextra -O0 -g -fsanitize=address,undefined -fno-sanitize-recover=all -o ~s ~s 2>&1',
-           [Exe, CFile]).
+           'clang -std=c17 -Wall -Wextra -O0 -g ~s -fsanitize=address,undefined -fno-sanitize-recover=all -o ~s ~s 2>&1',
+           [CFlags, Exe, CFile]).
 
 %% ---- compile and run the cases ----------------------------------------
 
@@ -73,7 +79,10 @@ c_test_check(Code, Cases, Verdict) :-
     c_test_check(Code, Cases, 3000, Verdict).
 
 c_test_check(Code, Cases, Timeout, Verdict) :-
-    c_compile(Code, sanitized, Exe, CompileVerdict),
+    c_test_check(Code, Cases, Timeout, '', Verdict).
+
+c_test_check(Code, Cases, Timeout, CFlags, Verdict) :-
+    c_compile(Code, sanitized, CFlags, Exe, CompileVerdict),
     (   CompileVerdict == ok
     ->  c_run_cases(Exe, Cases, Timeout, Failures),
         (   Failures == []
