@@ -775,6 +775,8 @@ cocolog :-
                       ['COCO-REPAIR-2']),
     cocolog_cli_query("cocolog_args(['s','--goal','main','--attempts','2','--timeout','1000','o'], args(s,main,o,_,_,Run,_)), memberchk(attempts(2), Run), memberchk(timeout(1000), Run), write('COCO-ARGS-'), write(731)",
                       ['COCO-ARGS-731']),
+    cocolog_cli_query("cocolog_args(['s','--no-skill','o'], args(s,_,_,_,_,Run,_)), memberchk(skill(no), Run), cocolog_no_skill_prompt(P), sub_atom(P, _, _, _, 'cocolog programmer'), write('COCO-NOSKILL-'), write(731)",
+                      ['COCO-NOSKILL-731']),
     cocolog_cli_query("tmp_file(coco_expect, F), atom_codes('ok\\n', Cs), write_file_from_codes(F, Cs), asserta((llm_chat(_,_, 'main :- writeln(ok).') :- !)), codegen_cocolog_from('Print ok.', main, [], [expect(F)], _), write('COCO-EXPECT-'), write(731)",
                       ['COCO-EXPECT-731']),
     cocolog_cli_query("( catch(cocolog_skill_text('/no/such/guide', _), error(codegen_error(skill_file,_),_), true) -> write('COCO-NOGUIDE-'), write(731) ; write('COCO-NOGUIDE-NO-'), write(731) )",

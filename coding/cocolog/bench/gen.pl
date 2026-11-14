@@ -10,8 +10,9 @@
 %%     RESULT pass|fail
 %%     ERROR Kind
 %%
-%% `high' is one call at high effort; `checked' is up to three calls at
-%% none, each repair carrying the output mismatch.
+%% `high' is one call at high effort with SKILL.md; `checked' is up to
+%% three calls at none, each repair carrying the output mismatch;
+%% `no_skill' is the high control with the guide omitted.
 
 :- use_module(library(process)).
 :- use_module('coding/cocolog/codegen.pl').
@@ -28,13 +29,14 @@ run_mode(SpecFile, ExpectedFile, OutFile, ModeAtom) :-
     bench_config(base_url, BaseUrl),
     bench_config(temperature, Temperature),
     mode_effort(ModeAtom, Effort, Attempts),
+    mode_skill(ModeAtom, SkillOption),
     Overrides = [provider(Provider),
                  model(Model),
                  base_url(BaseUrl),
                  temperature(Temperature),
                  reasoning_effort(Effort)],
     RunOptions = [attempts(Attempts), timeout(5000),
-                  expect(ExpectedFile)],
+                  expect(ExpectedFile)|SkillOption],
     (   catch(codegen_cocolog_from(Spec, main, Overrides, RunOptions, Code),
               Ball, (gen_fail(Ball), fail))
     ->  write_code(OutFile, Code),
@@ -45,9 +47,16 @@ run_mode(SpecFile, ExpectedFile, OutFile, ModeAtom) :-
 mode_effort(high, Effort, 1) :-
     !,
     bench_config(high_effort, Effort).
+mode_effort(no_skill, Effort, 1) :-
+    !,
+    bench_config(high_effort, Effort).
 mode_effort(_, Effort, Attempts) :-
     bench_config(loop_effort, Effort),
     bench_config(loop_attempts, Attempts).
+
+mode_skill(no_skill, [skill(no)]) :-
+    !.
+mode_skill(_, []).
 
 read_file_codes(File, Atom) :-
     read_file_to_codes(File, Codes),

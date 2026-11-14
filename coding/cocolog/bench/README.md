@@ -18,8 +18,12 @@ failure and its report goes back for repair.
 
 | mode | calls | effort | what happens |
 |---|---|---|---|
-| `high` | one | `high` | one call; no repair |
+| `high` | one | `high` | one call with SKILL.md in the system prompt; no repair |
 | `checked` | up to three | `none` | each failed run sends the output mismatch and the previous program back |
+| `no_skill` | one | `high` | the `high` control with the guide omitted; a short generic cocolog prompt |
+
+The `no_skill` mode is the control for SKILL.md: same task and effort, no
+guide. The system prompt is only a sentence naming cocolog and `main/0`.
 
 The system prompt is cocolog's whole `SKILL.md` (about 19 000 tokens, mostly
 served from cache after the first call).
@@ -38,23 +42,30 @@ coding/cocolog/bench/run.sh -- json      # one task
 
 ```
 task           mode    pass calls prompt completion reasoning total  cache  seconds
-html_template  high    pass 1     19281  2914       2812      22195  19072  16.90
-html_template  checked pass 1     19256  105        0         19361  19072  2.23
-json           high    pass 1     19309  10346      10250     29655  18944  53.33
-json           checked pass 1     19284  89         0         19373  19072  2.97
-dcg            high    pass 1     19262  4209       3983      23471  19072  25.65
-dcg            checked fail 3     58261  576        0         58837  57600  9.96
-store          high    pass 1     19294  455        279       19749  19072  5.34
-store          checked pass 1     19269  175        0         19444  19072  2.62
-high                   4 4   4     77146  17924      17324     95070  76160  101.22
-checked                4 3   6     116070 945        0         117015 114816 17.78
-overall                8 7   10    193216 18869      17324     212085 190976 119.00
+html_template  high    pass 1     19281  1841       1739      21122  19072  11.55
+html_template  checked pass 1     19256  105        0         19361  19072  2.37
+html_template  no_skill pass 1    229    2357       2250      2586   0      13.23
+json           high    pass 1     19309  1826       1728      21135  19072  11.40
+json           checked pass 1     19284  89         0         19373  19072  2.40
+json           no_skill pass 1    257    4187       4091      4444   0      23.38
+dcg            high    fail 1     19262  7668       7534      26930  19072  42.62
+dcg            checked fail 3     58279  605        0         58884  57600  9.29
+dcg            no_skill pass 1    210    2508       2297      2718   0      14.36
+store          high    pass 1     19294  784        602       20078  19072  5.97
+store          checked pass 1     19269  175        0         19444  19072  2.80
+store          no_skill pass 1    242    2288       2108      2530   0      12.54
+high                   4 3   4     77146  12119      11603     89265  76288  71.54
+checked                4 3   6     116088 974        0         117062 114816 16.86
+no_skill               4 4   4     938    11340      10746     12278  0      63.51
+overall                12 10 14    194172 24433      22349     218605 191104 151.91
 ```
 
-`high` passed all four first try. `checked` passed three; `dcg` failed after
-three attempts in this run, though an earlier run of the same task passed it
-on the second. The model is not deterministic; the task and its expected
-output are fixed and were checked against a hand-written reference.
+`high` and `checked` both failed only `dcg` in this run; `no_skill` passed all
+four first try. The model is not deterministic (`dcg` has passed in other
+runs), but the control's cost is unambiguous: about 200 prompt tokens per
+task against 19 000 with SKILL.md, and 12 278 total tokens against 89 265 for
+`high`. For these four tasks the guide was not necessary; the suite is a
+control, not evidence that a guide never helps.
 
 ## Files
 
