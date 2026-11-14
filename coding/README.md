@@ -110,9 +110,10 @@ codegen_c(Spec,
 ```
 
 `codegen_report/1` answers
-`report(Calls, Prompt, Completion, Reasoning, Total)` for the last
-top-level generation; `--report` prints the same line to stderr, leaving
-stdout for the program.
+`report(Calls, Prompt, Completion, Reasoning, CacheHit, Total, Seconds)`
+for the last top-level generation: the tokens the provider reported, the
+prompt tokens it served from cache, and the loop's wall time. `--report`
+prints the same line to stderr, leaving stdout for the program.
 
 `--keep DIR` creates the directory if needed and writes each attempt as
 `attempt-N.prompt.txt`, `attempt-N.c` and, when it failed,
