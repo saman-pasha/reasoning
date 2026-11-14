@@ -25,7 +25,8 @@
 %% never written here.
 %%
 %%     --tests FILE     run the cases in FILE after compiling
-%%     --auto-tests     ask the model for test cases, then run them
+%%     --auto-tests     ask the model for test cases, verify them with an
+%%                      independent reference program, then run them
 %%     --cases-effort L reasoning effort for the auto cases (default high)
 %%     --contract FILE  take the checklist from controlled-English FILE
 %%     --keep DIR       write every attempt's prompt, code and diagnostic
@@ -76,9 +77,11 @@
 %%         goes back like a failed compile; the third failure throws
 %%         error(codegen_error(test_failed, Diagnostic), _). Cases and
 %%         the cases file are described in `coding/compile.pl'. Cases may
-%%         be `auto': the model is asked for test cases first, and those
-%%         cases are run. With analyze(yes), a static-analyzer finding is
-%%         analyze_failed.
+%%         be `auto': the model is asked for test cases first, an
+%%         independent reference program is generated from the same
+%%         requirement, and a case whose expected answer the reference
+%%         does not reproduce is dropped. With analyze(yes), a
+%%         static-analyzer finding is analyze_failed.
 %%
 %%     codegen_cases(+Spec, -Cases)
 %%     codegen_cases(+Spec, +Overrides, -Cases)
@@ -86,9 +89,9 @@
 %%         one model call that writes test cases for the requirement in
 %%         the text-block format `# input'/`# expected'. CasesEffort
 %%         defaults to `high', because a wrong expected output can mislead
-%%         a repair; it is a library(llm) effort level. The cases are not
-%%         verified against a reference; the requirement and the model are
-%%         the oracle. The call is in codegen_report/1's totals.
+%%         a repair; it is a library(llm) effort level. These are the raw
+%%         cases: the `auto' path of codegen_c_from/6 verifies them with a
+%%         reference program. The call is in codegen_report/1's totals.
 %%
 %%     codegen_c_from(+Spec, +Obligations, +Cases, +Overrides, -Code)
 %%         the loop itself, the checklist already decided: keyword
@@ -298,7 +301,7 @@ codegen_c_from(Spec, Obligations, Cases0, Overrides, RunOptions, Code) :-
     codegen_report_reset,
     get_time(Start),
     catch(( codegen_cases_ready(Cases0, Spec, Overrides, Keep, CasesEffort,
-                                Cases),
+                                Timeout, CFlags, Cases),
             codegen_attempt(1, Max, Spec, Obligations, Cases, Overrides,
                             Keep, check(Timeout, CFlags), Analyze, Budget,
                             none, Code)
@@ -307,13 +310,19 @@ codegen_c_from(Spec, Obligations, Cases0, Overrides, RunOptions, Code) :-
     codegen_report_finish(Start).
 
 %% Cases are given, or `auto' asks the model for them before the first
-%% code call. The case call is part of the run's report; `--keep' writes
-%% the generated cases as auto-cases.txt.
-codegen_cases_ready(auto, Spec, Overrides, Keep, CasesEffort, Cases) :-
+%% code call. An independent reference program is generated from the same
+%% requirement and run on every generated input; a case whose expected
+%% answer it does not reproduce is dropped. The calls are part of the
+%% run's report; `--keep' writes the verified cases, the rejected ones and
+%% the reference program.
+codegen_cases_ready(auto, Spec, Overrides, Keep, CasesEffort, Timeout, CFlags,
+                    Cases) :-
     !,
-    codegen_generate_cases(Spec, Overrides, CasesEffort, Cases),
+    codegen_generate_cases(Spec, Overrides, CasesEffort, Raw),
+    codegen_verify_cases(Spec, Overrides, Keep, CasesEffort, Timeout, CFlags,
+                         Raw, Cases),
     codegen_keep_cases(Keep, Cases).
-codegen_cases_ready(Cases, _, _, _, _, Cases).
+codegen_cases_ready(Cases, _, _, _, _, _, _, Cases).
 
 codegen_run_prepare(RunOptions, Max, Timeout, CFlags, Budget, Analyze,
                     CasesEffort) :-
@@ -459,8 +468,9 @@ codegen_c_tested(Spec, Cases, Overrides, Code) :-
 %% codegen_cases(+Spec, +Overrides, +CasesEffort, -Cases)
 %%
 %% One model call writes test cases in the `# input'/`# expected' format.
-%% The cases are the model's answers, not an independent oracle. The
-%% default effort is `high'; a caller may name another level.
+%% These are raw cases; the `auto' path of codegen_c_from/6 runs a
+%% reference program over them and drops disagreements. The default
+%% effort is `high'; a caller may name another level.
 codegen_cases(Spec, Cases) :-
     codegen_cases(Spec, [], high, Cases).
 
@@ -509,6 +519,69 @@ codegen_case_reply(Text, Cases) :-
 
 codegen_case_error(Msg) :-
     throw(error(codegen_error(cases_auto, Msg), codegen_generate_cases/4)).
+
+%% The independent check: a second, high-effort program from the same
+%% requirement, run on each generated input. Only expectations it
+%% reproduces survive. It never sees the generated cases.
+codegen_verify_cases(Spec, Overrides, Keep, CasesEffort, Timeout, CFlags,
+                     Raw, Cases) :-
+    codegen_reference_prompt(Spec, Prompt),
+    codegen_case_overrides(Overrides, CasesEffort, RefOverrides),
+    codegen_llm('You are a C17 programmer writing an independent reference implementation for black-box testing. Output only the complete C source, with no Markdown fences and no explanation.',
+                Prompt, RefOverrides, Reply),
+    codegen_strip_fence(Reply, Reference),
+    codegen_keep_reference(Keep, Reference),
+    codegen_case_inputs(Raw, Inputs),
+    c_run_outputs(Reference, Inputs, Timeout, CFlags, Outputs, Verdict),
+    (   Verdict == ok
+    ->  true
+    ;   Verdict = fail(Diag),
+        format(atom(Msg), 'the reference program did not compile: ~s',
+               [Diag]),
+        codegen_case_error(Msg)
+    ),
+    codegen_verified_cases(Raw, Outputs, Cases, Rejected),
+    codegen_keep_rejected(Keep, Rejected),
+    (   Cases == []
+    ->  codegen_case_error('the reference program disagreed with every generated case')
+    ;   true
+    ).
+
+codegen_case_inputs([], []).
+codegen_case_inputs([case(Input, _)|Cases], [Input|Inputs]) :-
+    codegen_case_inputs(Cases, Inputs).
+codegen_case_inputs([case(Input, _, _)|Cases], [Input|Inputs]) :-
+    codegen_case_inputs(Cases, Inputs).
+
+codegen_verified_cases([], [], [], []).
+codegen_verified_cases([Case|Cases], [output(Actual, Exit, Error)|Outputs],
+                       Kept, Rejected) :-
+    codegen_verified_cases(Cases, Outputs, Kept0, Rejected0),
+    (   codegen_case_holds(Case, Actual, Exit, Error)
+    ->  Kept = [Case|Kept0],
+        Rejected = Rejected0
+    ;   Kept = Kept0,
+        Rejected = [Case|Rejected0]
+    ).
+
+codegen_case_holds(case(_, Expected), Actual, Exit, Error) :-
+    codegen_case_holds(case(_, Expected, 0), Actual, Exit, Error).
+codegen_case_holds(case(_, Expected, ExpectedExit), Actual, Exit, Error) :-
+    Error == none,
+    Exit =:= ExpectedExit,
+    c_norm(Expected, Norm),
+    Actual == Norm.
+
+codegen_keep_reference(none, _) :-
+    !.
+codegen_keep_reference(dir(Dir), Reference) :-
+    codegen_keep_file(Dir, 'reference.c', Reference).
+
+codegen_keep_rejected(none, _) :-
+    !.
+codegen_keep_rejected(dir(Dir), Cases) :-
+    codegen_cases_text(Cases, Text),
+    codegen_keep_file(Dir, 'auto-cases-rejected.txt', Text).
 
 codegen_attempt(Attempt, Max, Spec, Obligations, Cases, Overrides, Keep,
                 check(Timeout, CFlags), Analyze, Budget, Prev, Code) :-
@@ -639,6 +712,15 @@ Repeat those two blocks for every case. Rules:
 - The expected output must be exact; trailing whitespace is ignored.
 - Do not write a program, an explanation, numbering, or Markdown fences.
 - Do not put commentary between the blocks.',
+           [Spec]).
+
+%% The reference program sees the requirement and nothing else. Its sole
+%% purpose is to reproduce or contradict the generated expectations.
+codegen_reference_prompt(Spec, Prompt) :-
+    format(atom(Prompt),
+'Write a complete C17 reference implementation for this requirement. It will be used only to check generated test cases. Output only the C source, with no Markdown fences and no explanation.
+
+~s',
            [Spec]).
 
 %% Models still wrap code in ```c ... ``` even when told not to. A reply

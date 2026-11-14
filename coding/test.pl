@@ -720,6 +720,7 @@ dry_run :-
 auto_cases :-
     section('auto cases'),
     auto_cases_child,
+    auto_cases_reject,
     auto_cases_refused,
     cli_query("codegen_args(['s','--auto-tests','--cases-effort','none','o'], A), write(A)",
               ['args(s,auto,none,o,no,no,[cases_effort(none)],[])']),
@@ -731,8 +732,12 @@ auto_cases :-
               ['CASE-EFFORT-NONE-731']).
 
 auto_cases_child :-
-    Goal = "asserta((llm_chat(_, _, '#include <stdio.h>\\nint main(void){int c;while((c=getchar())!=EOF)putchar(c);return 0;}\\n') :- !)), asserta((llm_chat(Messages, _, '# input\\nabc\\n# expected\\nabc\\n# input\\n# expected\\n') :- member(msg(system, S), Messages), sub_atom(S, _, _, _, 'test cases'), !)), codegen_c_tested('Copy standard input to standard output.', auto, _), codegen_report(report(Calls, _, _, _, _, _, _)), write('AUTO-CALLS-'), write(Calls), nl",
-    cli_query(Goal, ['AUTO-CALLS-2']).
+    Goal = "asserta((llm_chat(_, _, '#include <stdio.h>\\nint main(void){int c;while((c=getchar())!=EOF)putchar(c);return 0;}\\n') :- !)), asserta((llm_chat(Messages, _, '#include <stdio.h>\\nint main(void){int c;while((c=getchar())!=EOF)putchar(c);return 0;}\\n') :- member(msg(system, S), Messages), sub_atom(S, _, _, _, 'reference implementation'), !)), asserta((llm_chat(Messages, _, '# input\\nabc\\n# expected\\nabc\\n# input\\n# expected\\n') :- member(msg(system, S), Messages), sub_atom(S, _, _, _, 'test cases'), !)), codegen_c_tested('Copy standard input to standard output.', auto, _), codegen_report(report(Calls, _, _, _, _, _, _)), write('AUTO-CALLS-'), write(Calls), nl",
+    cli_query(Goal, ['AUTO-CALLS-3']).
+
+auto_cases_reject :-
+    Goal = "asserta((llm_chat(_, _, '#include <stdio.h>\\nint main(void){putchar(51);putchar(10);return 0;}\\n') :- !)), asserta((llm_chat(Messages, _, '#include <stdio.h>\\nint main(void){putchar(51);putchar(10);return 0;}\\n') :- member(msg(system, S), Messages), sub_atom(S, _, _, _, 'reference implementation'), !)), asserta((llm_chat(Messages, _, '# input\\n1 2\\n# expected\\n4\\n') :- member(msg(system, S), Messages), sub_atom(S, _, _, _, 'test cases'), !)), ( catch(codegen_c_tested('Read two integers. Print their sum.', auto, _), error(codegen_error(cases_auto, _), _), true) -> write('AUTO-REJECT-'), write(731) ; write('AUTO-OTHER-'), write(731) )",
+    cli_query(Goal, ['AUTO-REJECT-731']).
 
 auto_cases_refused :-
     cli_query("asserta((llm_chat(_,_, 'no cases here') :- !)), ( catch(codegen_cases('a spec', _), error(codegen_error(Kind, _), _), true) -> write(Kind) ; write(none) )",
