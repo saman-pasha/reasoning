@@ -1,4 +1,4 @@
-%% coding/cocolog/bench/tasks.pl -- the cocolog benchmark's seven tasks.
+%% coding/cocolog/bench/tasks.pl -- the cocolog benchmark's eight tasks.
 %%
 %%     bench_task(+Name, -Spec, -Expected)
 %%
@@ -31,6 +31,10 @@ bench_task(codes, Spec,
 bench_task(file, Spec,
            'coding/cocolog/bench/file/expected.txt') :-
     bench_spec('coding/cocolog/bench/file/spec.txt', Spec).
+
+bench_task(stream, Spec,
+           'coding/cocolog/bench/stream/expected.txt') :-
+    bench_spec('coding/cocolog/bench/stream/spec.txt', Spec).
 
 bench_task(namespace, Spec,
            'coding/cocolog/bench/namespace/expected.txt') :-

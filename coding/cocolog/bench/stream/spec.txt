@@ -1,0 +1,3 @@
+Write a complete cocolog program. Define main/0. Use library(stream) and open the file coding/cocolog/bench/stream/lines.txt for reading with stream_open(File, read, Stream).
+
+Read each line with stream_read_line(Stream, Codes) until end_of_file, convert the codes to an atom with atom_codes/2, and print the line as "N: atom" with format("~w: ~w~n", [N, Atom]), counting from 1. Close the stream. Use no other output.

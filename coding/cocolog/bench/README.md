@@ -1,6 +1,6 @@
 # coding/cocolog/bench
 
-A benchmark for `coding/cocolog/codegen.pl`: seven cocolog tasks, three modes.
+A benchmark for `coding/cocolog/codegen.pl`: eight cocolog tasks, three modes.
 
 | task | what it asks |
 |---|---|
@@ -9,6 +9,7 @@ A benchmark for `coding/cocolog/codegen.pl`: seven cocolog tasks, three modes.
 | `dcg` | parse two comma-separated integer lists with a DCG |
 | `store` | assert, collect and sort city facts; retract one and collect again |
 | `file` | read a file with `read_file_to_codes/2`, split it into lines at code 10 and print them |
+| `stream` | the same lines through `library(stream)`: `stream_open/3`, `stream_read_line/2`, `stream_close/1` |
 | `codes` | treat `"hello"` as codes, not an atom, and compare it with `'hello'` |
 | `namespace` | define a `member/2` that accepts only `special`, against the library's `member/2` |
 
@@ -35,7 +36,7 @@ served from cache after the first call).
 
 ```sh
 export REASONING_API_KEY=...
-coding/cocolog/bench/run.sh              # all seven tasks, three modes
+coding/cocolog/bench/run.sh              # all eight tasks, three modes
 coding/cocolog/bench/run.sh -- json      # one task
 ```
 
@@ -45,48 +46,54 @@ coding/cocolog/bench/run.sh -- json      # one task
 
 ```
 task           mode    pass calls prompt completion reasoning total  cache  seconds
-html_template  high    pass 1     19281  1679       1565      20960  19072  11.05
-html_template  checked pass 1     19256  105        0         19361  19072  2.89
-html_template  no_skill pass 1    229    5460       5342      5689   0      31.45
-json           high    pass 1     19309  1013       910       20322  19072  7.83
-json           checked pass 1     19284  89         0         19373  19072  2.92
-json           no_skill fail 1    257    5323       5208      5580   123    28.62
-dcg            high    pass 1     19262  4795       4561      24057  19072  27.00
-dcg            checked fail 3     58273  596        0         58869  57728  9.24
-dcg            no_skill pass 1    210    4001       3869      4211   0      22.33
-store          high    pass 1     19294  964        785       20258  19072  6.62
-store          checked pass 1     19269  175        0         19444  19072  2.59
-store          no_skill pass 1    242    1472       1289      1714   0      7.70
-codes          high    pass 1     19249  489        430       19738  18944  4.14
-codes          checked pass 1     19224  64         0         19288  19072  2.50
-codes          no_skill pass 1    197    771        712       968    0      5.26
-file           high    pass 1     19251  2215       2035      21466  18944  13.96
-file           checked pass 1     19226  197        0         19423  19072  2.59
-file           no_skill pass 1    199    6021       5745      6220   0      32.53
-namespace      high    pass 1     19248  8112       8040      27360  18944  49.26
-namespace      checked fail 3     57929  179        0         58108  57472  7.10
-namespace      no_skill fail 1    196    1827       1769      2023   0      10.69
-high                   7 7   7     134894 19267      18326     154161 133120 119.86
-checked                7 5   11    212461 1405       0         213866 210560 29.83
-no_skill               7 5   7     1530   24875      23934     26405  123    138.58
-overall                21 17 25    348885 45547      42260     394432 343803 288.27
+html_template  high    pass 1     19281  2452       2342      21733  19072  15.55
+html_template  checked pass 1     19256  105        0         19361  19072  3.20
+html_template  no_skill pass 1    229    1915       1805      2144   0      11.50
+json           high    pass 1     19309  1223       1120      20532  19072  8.11
+json           checked pass 1     19284  102        0         19386  19072  2.59
+json           no_skill pass 1    257    704        614       961    123    5.04
+dcg            high    pass 1     19262  5004       4789      24266  19072  31.03
+dcg            checked pass 3     58273  601        0         58874  57728  8.99
+dcg            no_skill pass 1    210    7518       7272      7728   0      39.70
+store          high    pass 1     19294  1015       832       20309  19072  6.36
+store          checked pass 1     19269  175        0         19444  19072  2.39
+store          no_skill pass 1    242    2638       2451      2880   0      15.51
+codes          high    pass 1     19249  441        378       19690  19072  3.91
+codes          checked pass 1     19224  64         0         19288  19072  3.73
+codes          no_skill pass 1    197    926        867       1123   0      5.94
+file           high    pass 1     19251  2446       2283      21697  19072  15.15
+file           checked pass 1     19226  187        0         19413  19072  2.94
+file           no_skill pass 1    199    4065       3909      4264   0      22.95
+stream         high    pass 1     19257  1270       1134      20527  18944  7.91
+stream         checked pass 1     19232  130        0         19362  18944  2.58
+stream         no_skill pass 1    205    1705       1583      1910   0      10.08
+namespace      high    fail 1     19248  5559       5501      24807  19072  34.72
+  ERROR cocolog_failed
+namespace      checked pass 3     57953  215        0         58168  57472  6.97
+namespace      no_skill fail 1    196    424        366       620    0      3.60
+  ERROR cocolog_failed
+high                   8 7   8     154151 19410      18379     173561 152448 122.74
+checked                8 8   12    231717 1579       0         233296 229504 33.39
+no_skill               8 7   8     1735   19895      18867     21630  123    114.32
+overall                24 22 28    387603 40884      37246     428487 382075 270.45
 ```
 
-`high` passed all seven first try. `no_skill` passed five: it failed `json`
-and `namespace`, the two tasks that name a cocolog trap in the guide — the
-JSON term and the one namespace. `checked` also passed five: it failed
-`namespace` and `dcg` (which `high` and `no_skill` both passed; the model is
-not deterministic). The control used 26 405 tokens against `high`'s 154 161:
-SKILL.md bought two tasks for about six times the tokens in this run. The
-tasks and expected outputs are fixed and were checked against hand-written
-references.
+`checked` passed all eight, repairing `dcg`, `namespace` and `stream` on its
+third call. `high` and `no_skill` each passed seven: both failed `namespace`,
+the one-namespace trap the guide names. `high` used 173 561 tokens against
+the control's 21 630, about eight times as many, and the guide's one-shot
+advantage over the control is not visible in this run; with repairs, the
+guided `checked` mode passed every task in 12 calls and 233 296 tokens.
+`namespace` is still the task a one-shot call gets wrong most often: the
+model defines `member/2` and the library's own still answers. The tasks and
+expected outputs are fixed and were checked against hand-written references.
 
 ## Files
 
 | file | what it is |
 |---|---|
 | `bench.pl` | the runner and the totals |
-| `tasks.pl` | the seven tasks, each spec read from its directory |
+| `tasks.pl` | the eight tasks, each spec read from its directory |
 | `gen.pl` | one codegen run in a child, so `codegen.pl`'s `main/0` is never called here |
 | `run.sh` | sets `COCOLOG_LIBRARY` and runs `bench.pl` |
 | `<task>/spec.txt` | the requirement |
