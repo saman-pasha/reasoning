@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head><title>My Store</title></head>
+<body>
+<h1>My Store</h1>
+<p>Welcome, Alice &amp; Bob!</p>
+<ul><li>1: tea</li><li>2: coffee</li><li>3: cocoa</li></ul>
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head><title>Admin</title></head>
+<body>
+<h1>Admin</h1>
+<p>Please log in.</p>
+<ul><li>1: logs</li></ul>
+</body>
+</html>

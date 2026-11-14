@@ -328,8 +328,8 @@ language the guide describes. A reply must define `main/0` (or the goal
 `cocolog run` before accepting it, repairing a warning, a failed goal or an
 error like the C loop; `--expect FILE` also compares its standard output.
 The guide is `$COCOLOG_SKILL`, else `../cocolog/SKILL.md`, or `--skill
-FILE`. See `coding/cocolog/README.md` for the flags, the API, the checks
-and the HTML template loader in `coding/cocolog/examples/html_template/`.
+FILE`. See `coding/cocolog/README.md` for the flags, the API and the checks,
+and `coding/cocolog/bench/` for the four-task benchmark suite.
 
 ## Benchmark
 

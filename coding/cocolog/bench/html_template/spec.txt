@@ -1,0 +1,7 @@
+Write a complete cocolog program. Define main/0. It loads the HTML template at coding/cocolog/bench/html_template/page.html with library(template), using template_file(File, html, Context, Output), twice, and prints the two rendered atoms with write/1 in that order, with no extra text and no added newline between or after them.
+
+First rendering: page=[title='My Store'], user=[name='Alice & Bob'], items=[tea, coffee, cocoa].
+
+Second rendering: page=[title='Admin'], items=[logs] (there is no user).
+
+Set the double_quotes flag to atom if your code uses double-quoted text.

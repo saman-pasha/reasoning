@@ -1,0 +1,5 @@
+Write a complete cocolog program. Define main/0, using the program's own database: assertz/1, retract/1, retractall/1, findall/3 and sort/2.
+
+First main/0 clears city/2 with retractall/1, asserts city(paris, france), city(tokyo, japan) and city(lima, peru), collects C-N pairs with findall/3, sorts the pairs, and prints the sorted list with format("~w~n", [Pairs]).
+
+Then it clears city/2 again, asserts the same three facts, retracts city(tokyo, japan), collects and sorts the remaining pairs, and prints that list.

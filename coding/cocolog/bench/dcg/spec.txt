@@ -1,0 +1,7 @@
+Write a complete cocolog program. Define main/0. Define a DCG that parses a comma-separated list of integers; library(dcg/basics) gives integer//1, or write the digits grammar yourself.
+
+First main/0 turns the atom '3,1,4' into codes with atom_codes/2, parses it with phrase/2, and prints the resulting list with format("~w~n", [Ns]).
+
+Then it does the same for the atom '2,7'.
+
+Do not leave a choice point that prints a second answer.
