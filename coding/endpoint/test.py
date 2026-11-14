@@ -8,9 +8,11 @@ streamed bytes without asking a provider.
 
 import json
 import os
+import shutil
 import socket
 import subprocess
 import sys
+import tempfile
 import threading
 import time
 import unittest
@@ -83,15 +85,17 @@ def wait_for(url):
     raise RuntimeError(f"no answer at {url}")
 
 
-def ask(url, payload, token="test-token"):
+def ask(url, payload, token="test-token", headers=None):
     data = json.dumps(payload).encode()
-    headers = {"Content-Type": "application/json"}
+    request_headers = {"Content-Type": "application/json"}
     if token is not None:
-        headers["Authorization"] = f"Bearer {token}"
+        request_headers["Authorization"] = f"Bearer {token}"
+    if headers:
+        request_headers.update(headers)
     request = urllib.request.Request(
         url,
         data=data,
-        headers=headers,
+        headers=request_headers,
         method="POST",
     )
     with urllib.request.urlopen(request, timeout=10) as response:
@@ -110,6 +114,8 @@ class EndpointTest(unittest.TestCase):
         )
         cls.backend_thread.start()
         cls.port = free_port()
+        cls.tmp = tempfile.mkdtemp(prefix="coding-endpoint-test-")
+        cls.trace = os.path.join(cls.tmp, "trace.jsonl")
         env = os.environ.copy()
         env.update(
             {
@@ -120,6 +126,14 @@ class EndpointTest(unittest.TestCase):
                     f"http://127.0.0.1:{cls.backend_port}/v1/chat/completions"
                 ),
                 "CODING_ENDPOINT_MAX_TOKENS": "16",
+                "CODING_ENDPOINT_REASONING": "on",
+                "CODING_ENDPOINT_TRACE": cls.trace,
+                "CODING_ENDPOINT_REASONING_BIN": str(
+                    ROOT.parent / "cocolog" / "cocolog"
+                ),
+                "COCOLOG_LIBRARY": (
+                    f"{ROOT.parent}:{ROOT.parent / 'cocolog' / 'library'}"
+                ),
             }
         )
         cls.server = subprocess.Popen(
@@ -140,6 +154,7 @@ class EndpointTest(unittest.TestCase):
             cls.server.kill()
         cls.backend.shutdown()
         cls.backend.server_close()
+        shutil.rmtree(cls.tmp, ignore_errors=True)
 
     def setUp(self):
         SEEN.clear()
@@ -223,6 +238,59 @@ class EndpointTest(unittest.TestCase):
         self.assertIn("cocolog", sent["messages"][0]["content"])
         self.assertIn(b"data: ", data)
         self.assertIn(b"[DONE]", data)
+
+    def test_cocolog_reasoning_checks(self):
+        ask(
+            self.base + "/v1/chat/completions",
+            {
+                "model": "cocolog",
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": (
+                            "Write a cocolog program that reads a line and "
+                            "prints its words sorted."
+                        ),
+                    }
+                ],
+            },
+        )
+        system = SEEN[-1]["messages"][0]["content"]
+        self.assertIn("Reasoning pre-pass", system)
+        self.assertIn("A word is a maximal run", system)
+
+    def trace_records(self):
+        for _ in range(100):
+            if os.path.exists(self.trace):
+                with open(self.trace, encoding="utf-8") as handle:
+                    lines = [json.loads(line) for line in handle if line.strip()]
+                if lines:
+                    return lines
+            time.sleep(0.02)
+        return []
+
+    def test_trace_has_session_and_mode(self):
+        ask(
+            self.base + "/v1/chat/completions",
+            {
+                "model": "cocolog",
+                "messages": [{"role": "user", "content": "hello"}],
+            },
+            headers={
+                "x-opencode-session-id": "ses_test",
+                "x-opencode-project": "proj_test",
+            },
+        )
+        matches = [
+            record for record in self.trace_records()
+            if record.get("session") == "ses_test"
+        ]
+        self.assertTrue(matches)
+        record = matches[-1]
+        self.assertEqual(record["model"], "cocolog")
+        self.assertEqual(record["mode"], "reasoning")
+        self.assertEqual(record["project"], "proj_test")
+        self.assertEqual(record["status"], 200)
 
 
 if __name__ == "__main__":

@@ -20,10 +20,15 @@ carry it as ``Authorization: Bearer TOKEN``; run.sh sets one at random so
 that the loopback port is not driveable by whatever is listening.
 """
 
+import hashlib
 import hmac
 import json
 import os
+import subprocess
 import sys
+import tempfile
+import threading
+import time
 import urllib.error
 import urllib.request
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -50,6 +55,18 @@ COCOLOG_SKILL = Path(
     os.environ.get("COCOLOG_SKILL", str(ROOT.parent / "cocolog" / "SKILL.md"))
 )
 TOKEN = os.environ.get("CODING_ENDPOINT_TOKEN", "")
+REASONING = os.environ.get("CODING_ENDPOINT_REASONING", "on").lower() not in (
+    "off", "0", "no", "false",
+)
+REASONING_BIN = os.environ.get(
+    "CODING_ENDPOINT_REASONING_BIN", str(ROOT.parent / "cocolog" / "cocolog")
+)
+REASONING_HELPER = HERE / "reasoning.pl"
+REASONING_LIBRARY = os.environ.get(
+    "COCOLOG_LIBRARY",
+    f"{ROOT.parent}:{ROOT.parent / 'cocolog' / 'library'}",
+)
+TRACE_PATH = os.environ.get("CODING_ENDPOINT_TRACE", "")
 # The origins a page may call from: the opencode web origins, and anything a
 # caller names.  "*" is refused: it would hand the port to every page.
 ALLOW_ORIGINS = {
@@ -144,6 +161,128 @@ def backend_key():
     return key
 
 
+REASON_CACHE = {}
+REASON_LOCK = threading.Lock()
+REASON_DOWN = False
+TRACE_LOCK = threading.Lock()
+if TRACE_PATH:
+    Path(TRACE_PATH).parent.mkdir(parents=True, exist_ok=True)
+
+
+def last_user_text(messages):
+    """The latest user turn, as text, or an empty string."""
+    for message in reversed(messages):
+        if not isinstance(message, dict) or message.get("role") != "user":
+            continue
+        content = message.get("content")
+        if isinstance(content, str):
+            return content
+        if isinstance(content, list):
+            parts = []
+            for part in content:
+                if isinstance(part, dict) and part.get("type") == "text":
+                    parts.append(part.get("text", ""))
+            return "\n".join(parts)
+    return ""
+
+
+def reasoning_lines(text):
+    """The reasoner's checks for TEXT: (lines, term_count).
+
+    One subprocess per distinct TEXT, cached; the helper is local Prolog,
+    calls no model, and its failure never fails the request.
+    """
+    global REASON_DOWN
+    if not REASONING or not text.strip() or REASON_DOWN:
+        return [], 0
+    key = hashlib.sha256(text.encode("utf-8")).hexdigest()
+    with REASON_LOCK:
+        if key in REASON_CACHE:
+            return REASON_CACHE[key]
+    lines = []
+    terms = 0
+    path = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            "w", suffix=".txt", delete=False, encoding="utf-8"
+        ) as handle:
+            handle.write(text)
+            path = handle.name
+        env = os.environ.copy()
+        env["COCOLOG_LIBRARY"] = REASONING_LIBRARY
+        run = subprocess.run(
+            [REASONING_BIN, "-s", str(REASONING_HELPER), "--", path],
+            env=env,
+            capture_output=True,
+            text=True,
+            timeout=15,
+        )
+        if run.returncode != 0:
+            print(
+                f"coding endpoint: reasoning helper exited {run.returncode}: "
+                f"{run.stderr.strip()[:300]}",
+                file=sys.stderr,
+                flush=True,
+            )
+        else:
+            for line in run.stdout.splitlines():
+                kind, _, value = line.partition("\t")
+                if kind in ("obligation", "contract") and value:
+                    lines.append(value)
+                elif kind == "term":
+                    terms += 1
+    except FileNotFoundError:
+        REASON_DOWN = True
+        print(
+            f"coding endpoint: no reasoner at {REASONING_BIN}; "
+            "the cocolog guide is unaccompanied",
+            file=sys.stderr,
+            flush=True,
+        )
+    except (OSError, subprocess.SubprocessError) as error:
+        print(f"coding endpoint: reasoning helper failed: {error}",
+              file=sys.stderr, flush=True)
+    finally:
+        if path:
+            try:
+                os.unlink(path)
+            except OSError:
+                pass
+    unique = []
+    for line in lines:
+        if line not in unique:
+            unique.append(line)
+    result = (unique, terms)
+    with REASON_LOCK:
+        REASON_CACHE[key] = result
+    return result
+
+
+def reasoning_note(lines):
+    if not lines:
+        return ""
+    body = "\n".join(f"- {line}" for line in lines)
+    return (
+        "\n\n# Reasoning pre-pass\n\n"
+        "A deterministic pass by this repository's reasoner read the request "
+        "and found these checks. Verify each one before you say the task is "
+        "done:\n\n" + body
+    )
+
+
+def trace(record):
+    if not TRACE_PATH:
+        return
+    try:
+        line = json.dumps(record, ensure_ascii=False) + "\n"
+        with TRACE_LOCK:
+            with open(TRACE_PATH, "a", encoding="utf-8") as handle:
+                handle.write(line)
+    except OSError as error:
+        print(f"coding endpoint: cannot write trace {TRACE_PATH}: {error}",
+              file=sys.stderr, flush=True)
+
+
 class Handler(BaseHTTPRequestHandler):
     protocol_version = "HTTP/1.1"
     server_version = SERVICE
@@ -191,6 +330,21 @@ class Handler(BaseHTTPRequestHandler):
             return False
         return hmac.compare_digest(given.strip().encode(), TOKEN.encode())
 
+    def trace_request(self, start, **fields):
+        record = {
+            "ts": round(time.time(), 3),
+            "session": (
+                self.headers.get("x-opencode-session-id")
+                or self.headers.get("x-opencode-session")
+                or self.headers.get("x-session-id")
+                or "-"
+            ),
+            "project": self.headers.get("x-opencode-project", "-"),
+            "seconds": round(time.time() - start, 3),
+        }
+        record.update(fields)
+        trace(record)
+
     def send_json(self, status, payload):
         body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
         self.send_response(status)
@@ -231,12 +385,15 @@ class Handler(BaseHTTPRequestHandler):
                     "backend": BACKEND,
                     "backend_models": {"c": C_MODEL, "cocolog": COCOLOG_MODEL},
                     "guides": sorted(GUIDES),
+                    "reasoning": "on" if REASONING else "off",
+                    "trace": TRACE_PATH or None,
                 },
             )
             return
         self.send_json(404, {"error": {"message": f"no route {path}"}})
 
     def do_POST(self):
+        start = time.time()
         path = urlsplit(self.path).path.rstrip("/")
         if path != "/v1/chat/completions":
             self.send_json(404, {"error": {"message": f"no route {path}"}})
@@ -294,6 +451,13 @@ class Handler(BaseHTTPRequestHandler):
             self.send_json(400, {"error": {"message": "messages must be a non-empty list"}})
             return
         title = is_title_request(messages)
+        reason_lines = []
+        reason_terms = 0
+        mode = "title" if title else "plain"
+        if alias == "cocolog" and REASONING and not title:
+            reason_lines, reason_terms = reasoning_lines(last_user_text(messages))
+            mode = "reasoning"
+            guide = guide + reasoning_note(reason_lines)
         if not title:
             add_guide(messages, guide)
         body["model"] = backend_model(alias)
@@ -309,16 +473,30 @@ class Handler(BaseHTTPRequestHandler):
         tools = body.get("tools")
         tool_count = len(tools) if isinstance(tools, list) else 0
         effort = body.get("reasoning_effort", "-")
+        trace_fields = {
+            "model": alias,
+            "backend": body["model"],
+            "effort": effort,
+            "mode": mode,
+            "reasoning": len(reason_lines),
+            "terms": reason_terms,
+            "stream": stream,
+            "messages": len(messages),
+            "tools": tool_count,
+        }
         print(
             f"{alias} -> {body['model']} stream={str(stream).lower()} "
             f"messages={len(messages)} tools={tool_count} "
-            f"effort={effort} guide={'no' if title else 'yes'}",
+            f"effort={effort} mode={mode} reason={len(reason_lines)} "
+            f"guide={'no' if title else 'yes'}",
             file=sys.stderr,
             flush=True,
         )
         try:
             key = backend_key()
         except RuntimeError as error:
+            self.trace_request(start, status=500, error="backend_key",
+                               **trace_fields)
             self.send_json(500, {"error": {"message": str(error)}})
             return
         request = urllib.request.Request(
@@ -338,6 +516,8 @@ class Handler(BaseHTTPRequestHandler):
         try:
             response = urllib.request.urlopen(request, timeout=REQUEST_TIMEOUT)
         except urllib.error.HTTPError as error:
+            self.trace_request(start, status=error.code, error="backend",
+                               **trace_fields)
             data = error.read()
             ctype = error.headers.get("Content-Type", "application/json")
             self.send_response(error.code)
@@ -348,6 +528,8 @@ class Handler(BaseHTTPRequestHandler):
             self.wfile.write(data)
             return
         except Exception as error:
+            self.trace_request(start, status=502, error="transport",
+                               **trace_fields)
             self.send_json(502, {"error": {"message": f"backend failed: {error}"}})
             return
         try:
@@ -380,7 +562,9 @@ class Handler(BaseHTTPRequestHandler):
         except (BrokenPipeError, ConnectionResetError):
             pass
         finally:
+            status = response.status
             response.close()
+            self.trace_request(start, status=status, **trace_fields)
 
 
 class Server(ThreadingHTTPServer):

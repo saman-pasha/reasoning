@@ -9,7 +9,7 @@ Two model names are exposed:
 | model | guide |
 |---|---|
 | `c` | `prompts/c.md`, C with clang and the sanitizers, C99 through C23 (C17 unless the task names another) |
-| `cocolog` | cocolog's own `SKILL.md` plus `prompts/cocolog.md` |
+| `cocolog` | cocolog's own `SKILL.md`, `prompts/cocolog.md`, and the endpoint's reasoning pre-pass |
 
 The endpoint is not a second agent loop. OpenCode still owns the read, edit
 and shell tools, the session and the permissions. The guides tell the model
@@ -22,6 +22,38 @@ as `reasoning_effort`, and the endpoint forwards it unchanged. `none` turns
 the backend's thinking off; a higher level asks for more thinking, tokens and
 latency. In the TUI, `ctrl+t` cycles the variants; on the command line name
 one as `reasoning/c#none` or `reasoning/cocolog#high`.
+
+## The reasoning pre-pass
+
+For `reasoning/cocolog`, the endpoint reads the latest user turn with
+`reasoning.pl`, which runs locally and calls no model:
+
+- `coding/obligations.pl` derives checks from the request's keywords.
+- `coding/contract.pl` reads controlled-English sentences through
+  `library(reasoning/reason)` and derives the contract's checks.
+- `library(reasoning/reason)` parses the text into terms; their count is
+  recorded in the trace.
+
+The deduplicated checks are appended to the cocolog system prompt under a
+"Reasoning pre-pass" heading. The model still writes and runs the code with
+OpenCode's tools, but it is checked against this repository's own reading of
+the request. `CODING_ENDPOINT_REASONING=off` disables the pass. The `c` model
+does not use it.
+
+## Trace
+
+Set `CODING_ENDPOINT_TRACE=/path/to/trace.jsonl` to write one JSON line per
+completion request. A line carries the time, OpenCode session and project
+ids, model, backend model, effort, `mode` (`reasoning`, `plain` or `title`),
+the number of reasoning checks and parsed terms, message and tool counts,
+the HTTP status and the seconds. The trace never includes prompts, replies
+or the bearer token.
+
+```sh
+CODING_ENDPOINT_TRACE="$HOME/.local/state/opencode/reasoning-coding.jsonl" \
+    coding/endpoint/run.sh
+tail -f "$HOME/.local/state/opencode/reasoning-coding.jsonl"
+```
 
 ## Start
 
@@ -79,10 +111,14 @@ DeepSeek's OpenAI endpoint with `REASONING_API_KEY`:
 | `CODING_ENDPOINT_KEY_ENV` | `REASONING_API_KEY` |
 | `CODING_ENDPOINT_TOKEN` | a fresh random token when `run.sh` starts |
 | `CODING_ENDPOINT_ALLOW_ORIGIN` | the local OpenCode web origins |
+| `CODING_ENDPOINT_REASONING` | `on` for `cocolog`; `off` disables the pre-pass |
+| `CODING_ENDPOINT_TRACE` | unset; a JSONL path turns tracing on |
+| `CODING_ENDPOINT_REASONING_BIN` | `../../cocolog/cocolog` beside this repository |
 | `CODING_ENDPOINT_HOST` | `127.0.0.1` |
 | `CODING_ENDPOINT_PORT` | `8787` |
 | `CODING_ENDPOINT_MAX_TOKENS` | `8192` (0 leaves the client's limit) |
 | `CODING_ENDPOINT_TIMEOUT` | `600` seconds |
+| `COCOLOG_LIBRARY` | the repository's parent and cocolog's library |
 | `COCOLOG_SKILL` | `../../cocolog/SKILL.md` beside this repository |
 
 The backend key is read from the environment at each call and never logged
@@ -114,6 +150,7 @@ and a streamed cocolog reply. No model is called.
 | `server.py` | the endpoint, standard library only |
 | `run.sh` | starts it and makes or accepts the bearer token |
 | `config/opencode.json` | the provider, the two models and their variants |
+| `reasoning.pl` | the local pre-pass: obligations, contracts and parsed terms |
 | `prompts/c.md` | the C guide, every edition from C99 to C23 |
 | `prompts/cocolog.md` | the cocolog addendum to `SKILL.md` |
 | `test.py` | the local checks, no model |
