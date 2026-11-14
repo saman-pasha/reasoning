@@ -44,6 +44,13 @@
 %%     c_parse_text_cases(+Text, -Cases)
 %%         the text-block format from an atom, with no file. The same
 %%         errors as c_read_cases/2.
+%%
+%%     c_run_outputs(+Code, +Inputs, -Outputs, -Verdict)
+%%     c_run_outputs(+Code, +Inputs, +Timeout, +CFlags, -Outputs, -Verdict)
+%%         compile Code with the sanitizers and run it once per input atom.
+%%         Outputs is a list of output(Text, Exit, Error), Text normalized
+%%         as the case runner normalizes an answer. Verdict is ok when the
+%%         program compiled, or fail(Diagnostic) when it did not.
 
 :- use_module(library(process)).
 
@@ -188,6 +195,33 @@ c_case_failure(Index, Input, Expected, ExpectedExit, Exit, Actual, Error, Failur
                'CASE ~w WRONG~ninput: ~w~nexpected: ~w~nactual: ~w',
                [Index, Input, Expected, Actual])
     ).
+
+%% ---- run inputs and answer what the program printed -------------------
+
+c_run_outputs(Code, Inputs, Outputs, Verdict) :-
+    c_run_outputs(Code, Inputs, 3000, '', Outputs, Verdict).
+
+c_run_outputs(Code, Inputs, Timeout, CFlags, Outputs, Verdict) :-
+    c_compile(Code, sanitized, CFlags, Exe, Compile),
+    (   Compile == ok
+    ->  c_run_output_list(Inputs, Exe, Timeout, Outputs),
+        Verdict = ok
+    ;   Compile = fail(Diag),
+        Outputs = [],
+        Verdict = fail(Diag)
+    ).
+
+c_run_output_list([], _, _, []).
+c_run_output_list([Input|Rest], Exe, Timeout,
+                  [output(Output, Exit, Error)|Outputs]) :-
+    tmp_file(codegen_case, InFile),
+    atom_codes(Input, InCodes),
+    write_file_from_codes(InFile, InCodes),
+    format(atom(Cmd), 'ASAN_OPTIONS=detect_leaks=0 ~s < ~s 2>&1', [Exe, InFile]),
+    c_run_command(Cmd, Timeout, OutCodes, Exit, Error),
+    atom_codes(Actual0, OutCodes),
+    c_norm(Actual0, Output),
+    c_run_output_list(Rest, Exe, Timeout, Outputs).
 
 %% ---- reading a cases file ---------------------------------------------
 %%
