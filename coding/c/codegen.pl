@@ -29,6 +29,7 @@
 %%     --keep DIR       write every attempt's prompt, code and diagnostic
 %%     --attempts N     try at most N times (default 3)
 %%     --timeout MS     let one case run MS milliseconds (default 3000)
+%%     --budget N       stop before a repair once N tokens are spent
 %%     --cflags FLAGS   extra clang arguments (default none)
 %%     --dry-run        print the first prompt and exit, no model call
 %%     --key-env NAME   read the API key from NAME
@@ -229,23 +230,24 @@ codegen_c_compiled(Spec, Overrides, Code) :-
 %% `coding/contract.pl', or a list a caller wrote. Cases is [] for a
 %% compile-only run. RunOptions is a list of
 %% `attempts(N)' (default 3), `case_timeout(Ms)' (default 3000),
-%% `cflags(Flags)' (default '') and `keep(Dir)'; with a keep directory,
-%% every attempt's prompt, code and diagnostic is written there as
-%% attempt-N.prompt.txt, attempt-N.c and attempt-N.diag.txt.
+%% `cflags(Flags)' (default ''), `budget(N)' (no budget unless said) and
+%% `keep(Dir)'; with a keep directory, every attempt's prompt, code and
+%% diagnostic is written there as attempt-N.prompt.txt, attempt-N.c and
+%% attempt-N.diag.txt.
 codegen_c_from(Spec, Obligations, Cases, Overrides, Code) :-
     codegen_c_from(Spec, Obligations, Cases, Overrides, [], Code).
 
 codegen_c_from(Spec, Obligations, Cases, Overrides, RunOptions, Code) :-
-    codegen_run_prepare(RunOptions, Max, Timeout, CFlags),
+    codegen_run_prepare(RunOptions, Max, Timeout, CFlags, Budget),
     codegen_run_option(RunOptions, keep, none, Keep),
     codegen_report_reset,
     get_time(Start),
     catch(codegen_attempt(1, Max, Spec, Obligations, Cases, Overrides,
-                          Keep, check(Timeout, CFlags), none, Code), Ball,
+                          Keep, check(Timeout, CFlags), Budget, none, Code), Ball,
           ( codegen_report_finish(Start), throw(Ball) )),
     codegen_report_finish(Start).
 
-codegen_run_prepare(RunOptions, Max, Timeout, CFlags) :-
+codegen_run_prepare(RunOptions, Max, Timeout, CFlags, Budget) :-
     codegen_run_option(RunOptions, attempts, 3, Max0),
     codegen_run_check(attempts, Max0),
     Max = Max0,
@@ -254,14 +256,26 @@ codegen_run_prepare(RunOptions, Max, Timeout, CFlags) :-
     Timeout = Timeout0,
     codegen_run_option(RunOptions, cflags, '', Flags0),
     codegen_run_cflags(Flags0, CFlags),
+    codegen_run_option(RunOptions, budget, none, Budget0),
+    codegen_run_budget(Budget0, Budget),
     codegen_run_option(RunOptions, keep, none, Keep),
     codegen_keep_prepare(Keep).
+
+codegen_run_budget(none, none) :-
+    !.
+codegen_run_budget(N, N) :-
+    integer(N),
+    N > 0,
+    !.
+codegen_run_budget(Value, _) :-
+    format(atom(Msg), 'budget must be a positive integer, not ~w', [Value]),
+    throw(error(codegen_error(run_option, Msg), codegen_run_prepare/5)).
 
 codegen_run_cflags(Flags, Flags) :-
     (   atom(Flags)
     ->  true
     ;   format(atom(Msg), 'cflags must be an atom, not ~w', [Flags]),
-        throw(error(codegen_error(run_option, Msg), codegen_run_prepare/4))
+        throw(error(codegen_error(run_option, Msg), codegen_run_prepare/5))
     ).
 
 codegen_run_option(Options, Key, Default, Value) :-
@@ -277,7 +291,7 @@ codegen_run_check(Key, Value) :-
         Value > 0
     ->  true
     ;   format(atom(Msg), '~w must be a positive integer, not ~w', [Key, Value]),
-        throw(error(codegen_error(run_option, Msg), codegen_run_prepare/4))
+        throw(error(codegen_error(run_option, Msg), codegen_run_prepare/5))
     ).
 
 codegen_keep_prepare(none) :-
@@ -321,7 +335,7 @@ codegen_c_tested(Spec, Cases, Overrides, Code) :-
     codegen_c_from(Spec, Obligations, Cases, Overrides, Code).
 
 codegen_attempt(Attempt, Max, Spec, Obligations, Cases, Overrides, Keep,
-                check(Timeout, CFlags), Prev, Code) :-
+                check(Timeout, CFlags), Budget, Prev, Code) :-
     codegen_guided_prompt(Spec, Obligations, Prev, Prompt),
     codegen_keep_attempt(Keep, Attempt, 'prompt.txt', Prompt),
     codegen_call(Prompt, Overrides, Code0),
@@ -333,11 +347,27 @@ codegen_attempt(Attempt, Max, Spec, Obligations, Cases, Overrides, Keep,
         codegen_keep_attempt(Keep, Attempt, 'diag.txt', Diag),
         (   Attempt >= Max
         ->  throw(error(codegen_error(Kind, Diag), codegen_c_compiled/3))
+        ;   budget_exhausted(Budget)
+        ->  codegen_budget_error(Budget)
         ;   Next is Attempt + 1,
             codegen_attempt(Next, Max, Spec, Obligations, Cases, Overrides,
-                            Keep, check(Timeout, CFlags), prev(Code0, Diag), Code)
+                            Keep, check(Timeout, CFlags), Budget,
+                            prev(Code0, Diag), Code)
         )
     ).
+
+budget_exhausted(none) :-
+    !,
+    fail.
+budget_exhausted(Budget) :-
+    codegen_report(report(_, _, _, _, _, Total, _)),
+    Total >= Budget.
+
+codegen_budget_error(Budget) :-
+    codegen_report(report(_, _, _, _, _, Total, _)),
+    format(atom(Msg), 'the run reached ~w tokens, its budget of ~w',
+           [Total, Budget]),
+    throw(error(codegen_error(budget_exceeded, Msg), codegen_c_compiled/3)).
 
 codegen_verdict(Code, [], check(_, CFlags), Verdict) :-
     c_compile_check(Code, CFlags, Check),
@@ -426,7 +456,7 @@ main :-
                 format(user_error, 'codegen: ~w~n~s~n', [Kind, Detail]),
                 halt(1)
               ))
-    ;   format("usage: cocolog -s coding/c/codegen.pl -- SPEC.txt [--tests CASES.txt] [--contract CONTRACT.txt] [--keep DIR] [--attempts N] [--timeout MS] [--cflags FLAGS] [--dry-run] [--key-env NAME] [--temperature T] [--max-tokens N] [--provider P] [--model M] [--base-url U] [--effort E] [--report] [OUT.c]~n", []),
+    ;   format("usage: cocolog -s coding/c/codegen.pl -- SPEC.txt [--tests CASES.txt] [--contract CONTRACT.txt] [--keep DIR] [--attempts N] [--timeout MS] [--budget N] [--cflags FLAGS] [--dry-run] [--key-env NAME] [--temperature T] [--max-tokens N] [--provider P] [--model M] [--base-url U] [--effort E] [--report] [OUT.c]~n", []),
         halt(1)
     ).
 
@@ -501,6 +531,12 @@ codegen_args(['--timeout', Ms|Rest], args(S, T, C, O, R, D, Run, Os), A) :-
     integer(Ms0),
     Ms0 > 0,
     codegen_run_set(case_timeout(Ms0), Run, Run1),
+    codegen_args(Rest, args(S, T, C, O, R, D, Run1, Os), A).
+codegen_args(['--budget', N|Rest], args(S, T, C, O, R, D, Run, Os), A) :-
+    atom_number(N, Value),
+    integer(Value),
+    Value > 0,
+    codegen_run_set(budget(Value), Run, Run1),
     codegen_args(Rest, args(S, T, C, O, R, D, Run1, Os), A).
 codegen_args(['--cflags', Flags|Rest], args(S, T, C, O, R, D, Run, Os), A) :-
     codegen_run_set(cflags(Flags), Run, Run1),

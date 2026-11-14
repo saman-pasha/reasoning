@@ -25,6 +25,7 @@ main :-
     cases_file,
     cli,
     cflags,
+    budget,
     keep,
     dry_run,
     check_tool,
@@ -429,6 +430,8 @@ cli :-
               ['attempts(2)', 'case_timeout(500)']),
     cli_query("codegen_args(['s','--cflags','-DANSWER_YES','o'], A), write(A)",
               ['cflags(-DANSWER_YES)']),
+    cli_query("codegen_args(['s','--budget','15','o'], A), write(A)",
+              ['budget(15)']),
     cli_query("codegen_args(['s','--key-env','MY_KEY','--temperature','0.2','--max-tokens','100','o'], A), write(A)",
               ['key_env(MY_KEY)', 'temperature(0.2)', 'max_tokens(100)']),
     cli_query("codegen_args(['--provider','openai','--model','deepseek-flash','--base-url','https://x','--effort','none','s','o'], A), write(A)",
@@ -456,6 +459,12 @@ cli :-
               ['no']),
     cli_query("( codegen_args(['s','--max-tokens','0'], _) -> write(yes) ; write(no) )",
               ['no']),
+    cli_query("( codegen_args(['s','--budget','0'], _) -> write(yes) ; write(no) )",
+              ['no']),
+    cli_query("( codegen_args(['s','--budget','x'], _) -> write(yes) ; write(no) )",
+              ['no']),
+    cli_query("( codegen_args(['s','--budget'], _) -> write(yes) ; write(no) )",
+              ['no']),
     cli_query("( codegen_args(['s','o','x'], _) -> write(yes) ; write(no) )",
               ['no']),
     cli_query("codegen_report_reset, codegen_report(R), write(R)",
@@ -478,7 +487,7 @@ cflags :-
 
 cflags_child_success :-
     format(atom(Args),
-           "query \"use_module('coding/c/codegen.pl'), asserta((codegen_call(_P,_O,'int main(void) { return FOO; }') :- !)), codegen_c_from('a spec', [], [], [], [cflags('-DFOO=0')], _), write('CFLAGS-OK-731')\"",
+           "query \"use_module('coding/c/codegen.pl'), asserta((codegen_call(_P,_O,'int main(void) { return FOO; }') :- !)), codegen_c_from('a spec', [], [], [], [cflags('-DFOO=0')], _), write('CFLAGS-OK-'), write(731)\"",
            []),
     cocolog_out(Args, Codes),
     atom_codes(Text, Codes),
@@ -486,11 +495,35 @@ cflags_child_success :-
 
 cflags_child_failure :-
     format(atom(Args),
-           "query \"use_module('coding/c/codegen.pl'), asserta((codegen_call(_P,_O,'int main(void) { return FOO; }') :- !)), ( catch(codegen_c_from('a spec', [], [], [], [], _), error(codegen_error(compile_failed,_),_), true) -> write('CFLAGS-FAIL-731') ; write('CFLAGS-OTHER-731') )\"",
+           "query \"use_module('coding/c/codegen.pl'), asserta((codegen_call(_P,_O,'int main(void) { return FOO; }') :- !)), ( catch(codegen_c_from('a spec', [], [], [], [], _), error(codegen_error(compile_failed,_),_), true) -> write('CFLAGS-FAIL-'), write(731) ; write('CFLAGS-OTHER-'), write(731) )\"",
            []),
     cocolog_out(Args, Codes),
     atom_codes(Text, Codes),
     has('without its flag the generated program fails', 'CFLAGS-FAIL-731', Text).
+
+%% ---- the token budget ------------------------------------------------
+
+budget :-
+    section('budget'),
+    budget_child_stop,
+    budget_child_pass.
+
+budget_child_stop :-
+    format(atom(Args),
+           "query \"use_module('coding/c/codegen.pl'), asserta((llm_chat(_,_,'int main(void) { return missing; }') :- nb_setval(llm_usage, json([prompt_tokens-10, completion_tokens-5, total_tokens-15])), !)), ( catch(codegen_c_from('a spec', [], [], [], [budget(15), attempts(3)], _), error(codegen_error(budget_exceeded,_),_), true) -> write('BUDGET-STOP-'), write(731) ; write('BUDGET-OTHER-'), write(731) ), codegen_report(report(C,_,_,_,_,_,_)), write('BUDGET-CALLS-'), write(C), nl\"",
+           []),
+    cocolog_out(Args, Codes),
+    atom_codes(Text, Codes),
+    has('the budget stops before a repair', 'BUDGET-STOP-731', Text),
+    has('the budget stops after one call', 'BUDGET-CALLS-1', Text).
+
+budget_child_pass :-
+    format(atom(Args),
+           "query \"use_module('coding/c/codegen.pl'), asserta((llm_chat(_,_,'int main(void) { return 0; }') :- nb_setval(llm_usage, json([prompt_tokens-10, completion_tokens-5, total_tokens-15])), !)), codegen_c_from('a spec', [], [], [], [budget(1)], _), write('BUDGET-PASS-'), write(731)\"",
+           []),
+    cocolog_out(Args, Codes),
+    atom_codes(Text, Codes),
+    has('a passing first call ignores the budget', 'BUDGET-PASS-731', Text).
 
 %% ---- keeping the attempts ---------------------------------------------
 
@@ -513,7 +546,7 @@ keep :-
 
 keep_child_success(Dir) :-
     format(atom(Args),
-           "query \"use_module('coding/c/codegen.pl'), nb_setval(keep_calls,0), asserta((codegen_call(_P,_O,C) :- nb_getval(keep_calls,N0), N1 is N0+1, nb_setval(keep_calls,N1), (N1 =:= 1 -> C = 'int main(void) { return missing; }' ; C = 'int main(void) { return 0; }'), !)), codegen_c_from('a spec', [], [], [], [keep(dir('~w'))], _), write('KEEP-SUCCESS-731')\"",
+           "query \"use_module('coding/c/codegen.pl'), nb_setval(keep_calls,0), asserta((codegen_call(_P,_O,C) :- nb_getval(keep_calls,N0), N1 is N0+1, nb_setval(keep_calls,N1), (N1 =:= 1 -> C = 'int main(void) { return missing; }' ; C = 'int main(void) { return 0; }'), !)), codegen_c_from('a spec', [], [], [], [keep(dir('~w'))], _), write('KEEP-SUCCESS-'), write(731)\"",
            [Dir]),
     cocolog_out(Args, Codes),
     atom_codes(Text, Codes),
@@ -521,7 +554,7 @@ keep_child_success(Dir) :-
 
 keep_child_failure(Dir) :-
     format(atom(Args),
-           "query \"use_module('coding/c/codegen.pl'), asserta((codegen_call(_P,_O,'int main(void) { return missing; }') :- !)), ( catch(codegen_c_from('a spec', [], [], [], [keep(dir('~w'))], _), error(codegen_error(compile_failed,_),_), true) -> write('KEEP-FAILED-731') ; write('KEEP-OTHER-731') )\"",
+           "query \"use_module('coding/c/codegen.pl'), asserta((codegen_call(_P,_O,'int main(void) { return missing; }') :- !)), ( catch(codegen_c_from('a spec', [], [], [], [keep(dir('~w'))], _), error(codegen_error(compile_failed,_),_), true) -> write('KEEP-FAILED-'), write(731) ; write('KEEP-OTHER-'), write(731) )\"",
            [Dir]),
     cocolog_out(Args, Codes),
     atom_codes(Text, Codes),
