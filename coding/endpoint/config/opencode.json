@@ -51,7 +51,7 @@
           ],
           "limit": {
             "context": 1000000,
-            "output": 8192
+            "output": 32768
           }
         },
         "cocolog": {
@@ -96,7 +96,7 @@
           ],
           "limit": {
             "context": 1000000,
-            "output": 8192
+            "output": 32768
           }
         },
         "c-r0": {
@@ -141,7 +141,7 @@
           ],
           "limit": {
             "context": 1000000,
-            "output": 8192
+            "output": 32768
           },
           "headers": {
             "x-coding-reasoning": "0"
@@ -189,7 +189,7 @@
           ],
           "limit": {
             "context": 1000000,
-            "output": 8192
+            "output": 32768
           },
           "headers": {
             "x-coding-reasoning": "2"
@@ -237,7 +237,7 @@
           ],
           "limit": {
             "context": 1000000,
-            "output": 8192
+            "output": 32768
           },
           "headers": {
             "x-coding-reasoning": "8"
@@ -285,7 +285,7 @@
           ],
           "limit": {
             "context": 1000000,
-            "output": 8192
+            "output": 32768
           },
           "headers": {
             "x-coding-reasoning": "0"
@@ -333,7 +333,7 @@
           ],
           "limit": {
             "context": 1000000,
-            "output": 8192
+            "output": 32768
           },
           "headers": {
             "x-coding-reasoning": "2"
@@ -381,7 +381,7 @@
           ],
           "limit": {
             "context": 1000000,
-            "output": 8192
+            "output": 32768
           },
           "headers": {
             "x-coding-reasoning": "8"

@@ -313,7 +313,7 @@ ep_reasoning(Setting, Mode, Title, Messages, Guide0, Guide, N, Terms) :-
 %% ---- backend -----------------------------------------------------------
 
 ep_cap_tokens(Body0, Body) :-
-    ep_int('CODING_ENDPOINT_MAX_TOKENS', 8192, Max),
+    ep_int('CODING_ENDPOINT_MAX_TOKENS', 32768, Max),
     (   Max > 0
     ->  (   ep_json_get(Body0, max_tokens, N0),
             integer(N0), N0 > 0, N0 =< Max
@@ -559,7 +559,7 @@ ep_models_reply(Request, reply(200, Headers, Codes)) :-
     ep_cors(Request, Cors),
     append(Cors, ['Content-Type'-'application/json'], Headers),
     ep_int('CODING_ENDPOINT_CONTEXT', 1000000, Context),
-    ep_int('CODING_ENDPOINT_MAX_TOKENS', 8192, Output),
+    ep_int('CODING_ENDPOINT_MAX_TOKENS', 32768, Output),
     ep_models(Names),
     findall(json([id-Name, object-model, created-0,
                   owned_by-'reasoning-coding',

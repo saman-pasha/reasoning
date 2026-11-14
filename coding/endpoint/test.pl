@@ -52,7 +52,7 @@ test_models :-
     (   sub_atom(Text, _, _, _, '"id":"c-r8"'),
         sub_atom(Text, _, _, _, '"id":"cocolog-r0"'),
         sub_atom(Text, _, _, _, '"context_length":1000000'),
-        sub_atom(Text, _, _, _, '"max_output_tokens":8192')
+        sub_atom(Text, _, _, _, '"max_output_tokens":32768')
     ->  Got = both
     ;   Got = missing
     ),

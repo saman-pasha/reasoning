@@ -16,7 +16,7 @@ Eight model names are exposed:
 
 The endpoint is not a second agent loop. OpenCode still owns the read, edit
 and shell tools, the session and the permissions. Every model declares a
-1,000,000-token context and an 8,192-token output limit.
+1,000,000-token context and a 32,768-token output limit.
 
 Every model also defines the effort variants `none`, `low`, `medium` and
 `high`, so the reasoning count and the effort are chosen independently:
@@ -146,7 +146,7 @@ DeepSeek's OpenAI endpoint with `REASONING_API_KEY`:
 | `CODING_ENDPOINT_TRACE` | unset; a JSONL path turns tracing on |
 | `CODING_ENDPOINT_HOST` | unused; `library(tcp)` binds every interface |
 | `CODING_ENDPOINT_PORT` | `8787` |
-| `CODING_ENDPOINT_MAX_TOKENS` | `8192` (0 leaves the client's limit) |
+| `CODING_ENDPOINT_MAX_TOKENS` | `32768` (0 leaves the client's limit) |
 | `CODING_ENDPOINT_CONTEXT` | `1000000` |
 | `CODING_ENDPOINT_TIMEOUT` | `600` seconds |
 | `COCOLOG_LIBRARY` | set by `run-httpd.sh` |
