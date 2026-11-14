@@ -377,7 +377,8 @@ main :-
                 format(user_error, 'codegen: ~w~n~s~n', [Kind, Detail]),
                 halt(1)
               ))
-    ;   format("usage: cocolog -s coding/c/codegen.pl -- SPEC.txt [--tests CASES.txt] [--contract CONTRACT.txt] [--keep DIR] [--attempts N] [--timeout MS] [--provider P] [--model M] [--base-url U] [--effort E] [--report] [OUT.c]~n", [])
+    ;   format("usage: cocolog -s coding/c/codegen.pl -- SPEC.txt [--tests CASES.txt] [--contract CONTRACT.txt] [--keep DIR] [--attempts N] [--timeout MS] [--provider P] [--model M] [--base-url U] [--effort E] [--report] [OUT.c]~n", []),
+        halt(1)
     ).
 
 codegen_main(SpecFile, TestsFile, ContractFile, OutFile, Report, RunOptions, Overrides) :-
