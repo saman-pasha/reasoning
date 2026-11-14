@@ -31,6 +31,7 @@
 %%     --timeout MS     let one case run MS milliseconds (default 3000)
 %%     --budget N       stop before a repair once N tokens are spent
 %%     --cflags FLAGS   extra clang arguments (default none)
+%%     --analyze        run clang --analyze before accepting a reply
 %%     --dry-run        print the first prompt and exit, no model call
 %%     --key-env NAME   read the API key from NAME
 %%     --temperature T  temperature(T) in the call
@@ -63,6 +64,7 @@
 %%         compile goes back to the model with the compiler's diagnostic
 %%         and the previous program, up to three attempts; then
 %%         error(codegen_error(compile_failed, Diagnostic), _) is thrown.
+%%         With analyze(yes), a static-analyzer finding is analyze_failed.
 %%
 %%     codegen_c_tested(+Spec, +Cases, -Code)
 %%     codegen_c_tested(+Spec, +Cases, +Overrides, -Code)
@@ -71,7 +73,8 @@
 %%         UndefinedBehaviorSanitizer. A wrong case, or a sanitizer report,
 %%         goes back like a failed compile; the third failure throws
 %%         error(codegen_error(test_failed, Diagnostic), _). Cases and
-%%         the cases file are described in `coding/compile.pl'.
+%%         the cases file are described in `coding/compile.pl'. With
+%%         analyze(yes), a static-analyzer finding is analyze_failed.
 %%
 %%     codegen_c_from(+Spec, +Obligations, +Cases, +Overrides, -Code)
 %%         the loop itself, the checklist already decided: keyword
@@ -230,24 +233,26 @@ codegen_c_compiled(Spec, Overrides, Code) :-
 %% `coding/contract.pl', or a list a caller wrote. Cases is [] for a
 %% compile-only run. RunOptions is a list of
 %% `attempts(N)' (default 3), `case_timeout(Ms)' (default 3000),
-%% `cflags(Flags)' (default ''), `budget(N)' (no budget unless said) and
-%% `keep(Dir)'; with a keep directory, every attempt's prompt, code and
-%% diagnostic is written there as attempt-N.prompt.txt, attempt-N.c and
-%% attempt-N.diag.txt.
+%% `cflags(Flags)' (default ''), `budget(N)' (no budget unless said),
+%% `analyze(yes)' (off unless said) and `keep(Dir)'; with a keep
+%% directory, every attempt's prompt, code and diagnostic is written there
+%% as attempt-N.prompt.txt, attempt-N.c and attempt-N.diag.txt. A
+%% static-analyzer finding is the failure kind analyze_failed.
 codegen_c_from(Spec, Obligations, Cases, Overrides, Code) :-
     codegen_c_from(Spec, Obligations, Cases, Overrides, [], Code).
 
 codegen_c_from(Spec, Obligations, Cases, Overrides, RunOptions, Code) :-
-    codegen_run_prepare(RunOptions, Max, Timeout, CFlags, Budget),
+    codegen_run_prepare(RunOptions, Max, Timeout, CFlags, Budget, Analyze),
     codegen_run_option(RunOptions, keep, none, Keep),
     codegen_report_reset,
     get_time(Start),
     catch(codegen_attempt(1, Max, Spec, Obligations, Cases, Overrides,
-                          Keep, check(Timeout, CFlags), Budget, none, Code), Ball,
+                          Keep, check(Timeout, CFlags), Analyze, Budget,
+                          none, Code), Ball,
           ( codegen_report_finish(Start), throw(Ball) )),
     codegen_report_finish(Start).
 
-codegen_run_prepare(RunOptions, Max, Timeout, CFlags, Budget) :-
+codegen_run_prepare(RunOptions, Max, Timeout, CFlags, Budget, Analyze) :-
     codegen_run_option(RunOptions, attempts, 3, Max0),
     codegen_run_check(attempts, Max0),
     Max = Max0,
@@ -258,8 +263,18 @@ codegen_run_prepare(RunOptions, Max, Timeout, CFlags, Budget) :-
     codegen_run_cflags(Flags0, CFlags),
     codegen_run_option(RunOptions, budget, none, Budget0),
     codegen_run_budget(Budget0, Budget),
+    codegen_run_option(RunOptions, analyze, no, Analyze0),
+    codegen_run_analyze(Analyze0, Analyze),
     codegen_run_option(RunOptions, keep, none, Keep),
     codegen_keep_prepare(Keep).
+
+codegen_run_analyze(yes, yes) :-
+    !.
+codegen_run_analyze(no, no) :-
+    !.
+codegen_run_analyze(Value, _) :-
+    format(atom(Msg), 'analyze must be yes or no, not ~w', [Value]),
+    throw(error(codegen_error(run_option, Msg), codegen_run_prepare/6)).
 
 codegen_run_budget(none, none) :-
     !.
@@ -269,13 +284,13 @@ codegen_run_budget(N, N) :-
     !.
 codegen_run_budget(Value, _) :-
     format(atom(Msg), 'budget must be a positive integer, not ~w', [Value]),
-    throw(error(codegen_error(run_option, Msg), codegen_run_prepare/5)).
+    throw(error(codegen_error(run_option, Msg), codegen_run_prepare/6)).
 
 codegen_run_cflags(Flags, Flags) :-
     (   atom(Flags)
     ->  true
     ;   format(atom(Msg), 'cflags must be an atom, not ~w', [Flags]),
-        throw(error(codegen_error(run_option, Msg), codegen_run_prepare/5))
+        throw(error(codegen_error(run_option, Msg), codegen_run_prepare/6))
     ).
 
 codegen_run_option(Options, Key, Default, Value) :-
@@ -291,7 +306,7 @@ codegen_run_check(Key, Value) :-
         Value > 0
     ->  true
     ;   format(atom(Msg), '~w must be a positive integer, not ~w', [Key, Value]),
-        throw(error(codegen_error(run_option, Msg), codegen_run_prepare/5))
+        throw(error(codegen_error(run_option, Msg), codegen_run_prepare/6))
     ).
 
 codegen_keep_prepare(none) :-
@@ -335,12 +350,12 @@ codegen_c_tested(Spec, Cases, Overrides, Code) :-
     codegen_c_from(Spec, Obligations, Cases, Overrides, Code).
 
 codegen_attempt(Attempt, Max, Spec, Obligations, Cases, Overrides, Keep,
-                check(Timeout, CFlags), Budget, Prev, Code) :-
+                check(Timeout, CFlags), Analyze, Budget, Prev, Code) :-
     codegen_guided_prompt(Spec, Obligations, Prev, Prompt),
     codegen_keep_attempt(Keep, Attempt, 'prompt.txt', Prompt),
     codegen_call(Prompt, Overrides, Code0),
     codegen_keep_attempt(Keep, Attempt, 'c', Code0),
-    codegen_verdict(Code0, Cases, check(Timeout, CFlags), Verdict),
+    codegen_verdict(Code0, Cases, check(Timeout, CFlags), Analyze, Verdict),
     (   Verdict == ok
     ->  Code = Code0
     ;   Verdict = fail(Kind, Diag),
@@ -351,7 +366,7 @@ codegen_attempt(Attempt, Max, Spec, Obligations, Cases, Overrides, Keep,
         ->  codegen_budget_error(Budget)
         ;   Next is Attempt + 1,
             codegen_attempt(Next, Max, Spec, Obligations, Cases, Overrides,
-                            Keep, check(Timeout, CFlags), Budget,
+                            Keep, check(Timeout, CFlags), Analyze, Budget,
                             prev(Code0, Diag), Code)
         )
     ).
@@ -369,22 +384,32 @@ codegen_budget_error(Budget) :-
            [Total, Budget]),
     throw(error(codegen_error(budget_exceeded, Msg), codegen_c_compiled/3)).
 
-codegen_verdict(Code, [], check(_, CFlags), Verdict) :-
+codegen_verdict(Code, [], check(_, CFlags), Analyze, Verdict) :-
     c_compile_check(Code, CFlags, Check),
     (   Check == ok
-    ->  Verdict = ok
+    ->  codegen_analyze_verdict(Code, CFlags, Analyze, Verdict)
     ;   Check = fail(Diag),
         Verdict = fail(compile_failed, Diag)
     ).
-codegen_verdict(Code, Cases, check(Timeout, CFlags), Verdict) :-
+codegen_verdict(Code, Cases, check(Timeout, CFlags), Analyze, Verdict) :-
     Cases \== [],
     c_test_check(Code, Cases, Timeout, CFlags, Check),
     (   Check == ok
-    ->  Verdict = ok
+    ->  codegen_analyze_verdict(Code, CFlags, Analyze, Verdict)
     ;   Check = fail(compile, Diag)
     ->  Verdict = fail(compile_failed, Diag)
     ;   Check = fail(test, Diag),
         Verdict = fail(test_failed, Diag)
+    ).
+
+codegen_analyze_verdict(_Code, _CFlags, no, ok) :-
+    !.
+codegen_analyze_verdict(Code, CFlags, yes, Verdict) :-
+    c_analyze_check(Code, CFlags, Check),
+    (   Check == ok
+    ->  Verdict = ok
+    ;   Check = fail(Diag),
+        Verdict = fail(analyze_failed, Diag)
     ).
 
 codegen_guided_prompt(Spec, Obligations, Prev, Prompt) :-
@@ -456,7 +481,7 @@ main :-
                 format(user_error, 'codegen: ~w~n~s~n', [Kind, Detail]),
                 halt(1)
               ))
-    ;   format("usage: cocolog -s coding/c/codegen.pl -- SPEC.txt [--tests CASES.txt] [--contract CONTRACT.txt] [--keep DIR] [--attempts N] [--timeout MS] [--budget N] [--cflags FLAGS] [--dry-run] [--key-env NAME] [--temperature T] [--max-tokens N] [--provider P] [--model M] [--base-url U] [--effort E] [--report] [OUT.c]~n", []),
+    ;   format("usage: cocolog -s coding/c/codegen.pl -- SPEC.txt [--tests CASES.txt] [--contract CONTRACT.txt] [--keep DIR] [--attempts N] [--timeout MS] [--budget N] [--cflags FLAGS] [--analyze] [--dry-run] [--key-env NAME] [--temperature T] [--max-tokens N] [--provider P] [--model M] [--base-url U] [--effort E] [--report] [OUT.c]~n", []),
         halt(1)
     ).
 
@@ -540,6 +565,9 @@ codegen_args(['--budget', N|Rest], args(S, T, C, O, R, D, Run, Os), A) :-
     codegen_args(Rest, args(S, T, C, O, R, D, Run1, Os), A).
 codegen_args(['--cflags', Flags|Rest], args(S, T, C, O, R, D, Run, Os), A) :-
     codegen_run_set(cflags(Flags), Run, Run1),
+    codegen_args(Rest, args(S, T, C, O, R, D, Run1, Os), A).
+codegen_args(['--analyze'|Rest], args(S, T, C, O, R, D, Run, Os), A) :-
+    codegen_run_set(analyze(yes), Run, Run1),
     codegen_args(Rest, args(S, T, C, O, R, D, Run1, Os), A).
 codegen_args(['--provider', P|Rest], args(S, T, C, O, R, D, Run, Os), A) :-
     codegen_args(Rest, args(S, T, C, O, R, D, Run, [provider(P)|Os]), A).

@@ -25,6 +25,7 @@ main :-
     cases_file,
     cli,
     cflags,
+    analyze_gen,
     budget,
     keep,
     dry_run,
@@ -440,6 +441,8 @@ cli :-
               ['cflags(-DANSWER_YES)']),
     cli_query("codegen_args(['s','--budget','15','o'], A), write(A)",
               ['budget(15)']),
+    cli_query("codegen_args(['s','--analyze','o'], A), write(A)",
+              ['analyze(yes)']),
     cli_query("codegen_args(['s','--key-env','MY_KEY','--temperature','0.2','--max-tokens','100','o'], A), write(A)",
               ['key_env(MY_KEY)', 'temperature(0.2)', 'max_tokens(100)']),
     cli_query("codegen_args(['--provider','openai','--model','deepseek-flash','--base-url','https://x','--effort','none','s','o'], A), write(A)",
@@ -508,6 +511,29 @@ cflags_child_failure :-
     cocolog_out(Args, Codes),
     atom_codes(Text, Codes),
     has('without its flag the generated program fails', 'CFLAGS-FAIL-731', Text).
+
+%% ---- analysis in the generator ----------------------------------------
+
+analyze_gen :-
+    section('analyze'),
+    analyze_child_stop,
+    analyze_child_pass.
+
+analyze_child_stop :-
+    format(atom(Args),
+           "query \"use_module('coding/c/codegen.pl'), asserta((codegen_call(_,_,'int main(void) { int *p = 0; return *p; }') :- !)), ( catch(codegen_c_from('a spec', [], [], [], [analyze(yes), attempts(1)], _), error(codegen_error(analyze_failed,_),_), true) -> write('ANALYZE-STOP-'), write(731) ; write('ANALYZE-OTHER-'), write(731) )\"",
+           []),
+    cocolog_out(Args, Codes),
+    atom_codes(Text, Codes),
+    has('the analyzer stops a generated program', 'ANALYZE-STOP-731', Text).
+
+analyze_child_pass :-
+    format(atom(Args),
+           "query \"use_module('coding/c/codegen.pl'), asserta((codegen_call(_,_,'int main(void) { int *p = 0; return *p; }') :- !)), codegen_c_from('a spec', [], [], [], [attempts(1)], _), write('ANALYZE-PASS-'), write(731)\"",
+           []),
+    cocolog_out(Args, Codes),
+    atom_codes(Text, Codes),
+    has('without the flag the program is accepted', 'ANALYZE-PASS-731', Text).
 
 %% ---- the token budget ------------------------------------------------
 
