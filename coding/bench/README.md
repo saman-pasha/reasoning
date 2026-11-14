@@ -161,14 +161,7 @@ extract   1     0      4        13934  16187      0         30121 3712      53.6
 derive    1     0      3        13203  14833      0         28036 4224      52.83
 escalate  1     0      3        12533  14972      0         27505 1536      51.60
 escalate2 1     0      3        10779  13317      0         24096 1280      48.34
-opencode-r8#high 1     1      57       n/a    n/a        n/a       n/a   n/a       732.38
 ```
-
-The last row is not a benchmark mode: it is the same task through OpenCode
-with `reasoning/c-r8#high` (eight reasoning checks, high model effort and
-the agent's tools). It passed all ten cases after 57 working calls. The
-endpoint trace does not record token counts, so those columns are `n/a`;
-the wall time is from the session's first to last call.
 
 `contract` is the only passing mode, and it needed two attempts: the
 first timed out on cases 2 and 6, the second passed all ten. `high`, one
