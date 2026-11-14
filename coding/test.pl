@@ -38,7 +38,28 @@ obligations :-
     max_subarray,
     balanced,
     calculator,
-    strings.
+    strings,
+    general.
+
+general :-
+    Spec = 'Read a text file of comma-separated values. Each line is a matrix row of floating point numbers with two decimal places and one string. Allocate a buffer with malloc, recursively parse it, and convert the result to uppercase.',
+    has_line('a file is checked', Spec, 'Check every fopen'),
+    has_line('a string is NUL-terminated', Spec, 'NUL-terminated'),
+    has_line('floating point is double', Spec, 'Use double for floating point'),
+    has_line('decimal places are exact', Spec, 'decimal places'),
+    has_line('matrix bounds are checked', Spec, 'row and column index'),
+    has_line('allocations are checked', Spec, 'Check every allocation'),
+    has_line('recursion is bounded', Spec, 'Bound the recursion depth'),
+    has_line('separators are exact', Spec, 'Separate the values'),
+    has_line('uppercase is applied', Spec, 'Convert the text to uppercase'),
+    no_line('dynamic programming is not memory',
+            'Use dynamic programming.', 'Check every allocation'),
+    no_line('a tablet is not a table',
+            'Buy a tablet.', 'row and column index'),
+    no_line('format is not float',
+            'Format the output.', 'floating point'),
+    no_line('uppercase without convert is no rule',
+            'Print the uppercase word.', 'Convert the text to uppercase').
 
 stable_sort :-
     Spec = 'Write a complete C17 program. It reads an integer n, then n lines "NAME SCORE", where NAME is one word of letters and SCORE is an integer. Print the records sorted by SCORE descending. Records with the same score must keep their original input order.',
