@@ -1,0 +1,7 @@
+Write a complete cocolog program. Define main/0, using library(json). It does two things in order.
+
+First it parses the atom '{"name":"Ada","n":42,"ok":true}' with json_parse/2. The parsed term is json(Pairs); take the name with memberchk(name-Name, Pairs) and print Name with format("~w~n", [Name]).
+
+Then it builds the term json([lang-json([name-'Ada']), ok- @(true)]) and writes it with json_atom/2, and prints the atom with format("~w~n", [Json]). The space between the minus and @(true) is required.
+
+Use json_parse/2 and json_atom/2; do not invent other predicates.

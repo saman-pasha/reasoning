@@ -74,6 +74,13 @@ cached), 76 completion, and the output matched. A first spec without the
 explicit `template_file/4` hint produced `template_text/4`, which the
 library does not have, in all three attempts; naming the API fixed it.
 
+## Benchmark suite
+
+`coding/cocolog/bench/` runs four tasks — the template loader, JSON, a DCG
+and the program's database — in `high` and `checked` modes, with an exact
+expected output per task. See its README for the measured table and how to
+run it.
+
 ## API
 
 ```prolog
