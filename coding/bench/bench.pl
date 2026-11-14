@@ -279,6 +279,15 @@ bench_attempts(Attempt, Max, Task, Mode, Spec0, Dir, Usage0, Prev,
 %% The first escalate attempt is the plain requirement; a repair attempt
 %% adds the keyword-derived obligations. Every other mode keeps one spec
 %% for every attempt.
+%% The paired run's obligation branch uses the keyword-derived requirement
+%% on its repair attempts; the plain branch keeps the plain one.
+bench_attempt_spec(pair_obliged, Task, Attempt, Spec, Full) :-
+    !,
+    (   Attempt >= 2,
+        bench_derive_full(Task, Full)
+    ->  true
+    ;   Full = Spec
+    ).
 bench_attempt_spec(Mode, _, _, Spec, Spec) :-
     Mode \== escalate,
     !.
@@ -346,6 +355,9 @@ bench_effort_atom(contract, none) :- !.
 bench_effort_atom(extract, none) :- !.
 bench_effort_atom(derive, none) :- !.
 bench_effort_atom(escalate, none) :- !.
+bench_effort_atom(pair_first, none) :- !.
+bench_effort_atom(pair_plain, none) :- !.
+bench_effort_atom(pair_obliged, none) :- !.
 bench_effort_atom(loop, none).
 
 cocolog(Cocolog) :-

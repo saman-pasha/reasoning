@@ -80,9 +80,10 @@ no-reasoning verification loops on seven small C tasks: the requirement
 alone, the requirement with obligations derived from a hand-written
 controlled-English contract, obligations extracted from it by a model,
 obligations derived from its keywords without a model, and obligations
-added only after a failed first attempt. `coding/bench/run.sh` sets the
-colon-separated `COCOLOG_LIBRARY` and runs it; see its README for the
-modes, the token columns and a sample run.
+added only after a failed first attempt. `coding/bench/run.sh` sets the colon-separated `COCOLOG_LIBRARY` and runs
+the six modes; `coding/bench/paired.sh` runs the paired comparison, where
+one first attempt branches into a plain repair and an obligation repair.
+See its README for the modes, the token columns and sample runs.
 
 ## Shape of a generator
 
