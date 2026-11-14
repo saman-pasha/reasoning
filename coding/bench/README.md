@@ -49,6 +49,9 @@ to `high` when the first attempt fails.
 | `run.sh` | sets `COCOLOG_LIBRARY` and runs `bench.pl` |
 | `paired.pl` | the paired repair comparison: one shared first attempt, then plain and obliged branches |
 | `paired.sh` | sets `COCOLOG_LIBRARY` and runs `paired.pl` |
+| `tool.pl` | the shipped C tool over the same tasks, with its own report |
+| `tool_gen.pl` | one real-tool run in a child process, printing usage and result |
+| `tool.sh` | sets `COCOLOG_LIBRARY` and runs `tool.pl` |
 
 ## Run
 
@@ -58,6 +61,8 @@ coding/bench/run.sh              # all tasks, seven modes
 coding/bench/run.sh -- lcs       # one task
 coding/bench/paired.sh           # paired first attempt and two repair policies
 coding/bench/paired.sh -- lcs
+coding/bench/tool.sh             # the shipped tool, all tasks
+coding/bench/tool.sh -- lcs
 ```
 
 `REASONING_API_KEY` is read by the child `gen.pl` through `coding/options.pl`;
@@ -177,6 +182,35 @@ overall.
 This is the clean comparison the six-mode rows cannot make: on a task whose
 plain repairs fail, obligations on the second repair pay. On a task where a
 plain repair succeeds, they are 160 tokens of overhead.
+
+## The shipped tool
+
+`coding/bench/tool.sh` runs the real `coding/c/codegen.pl` policy over the
+same tasks: the keyword obligations on every attempt, compile repair, and
+the task's cases under the sanitizers. Its tokens come from
+`codegen_report/1`, and a task passes only when the tool accepts it. It is
+the `derive` policy plus the tool's own keyword reader and the sanitizers,
+so its token count is the one to compare with the tool's future.
+
+A run on 2026-11-14:
+
+```
+task        pass calls prompt completion reasoning total cache_hit seconds
+sum_even    pass 1     219    73         0         292   0         4.58
+max_subarray pass 1    228    132        0         360   0         5.30
+balanced    pass 1     211    307        0         518   0         6.30
+word_count  pass 1     237    873        0         1110  0         7.28
+phonebook   pass 1     286    992        0         1278  128       8.10
+calculator  pass 1     244    492        0         736   0         6.30
+lcs         pass 1     202    247        0         449   0         5.54
+stable_sort pass 1     241    533        0         774   0         7.16
+overall     8 8        8      1868       3649      0     5517  128   50.56
+```
+
+All eight passed on the first call, including `stable_sort`; the keyword
+checklist carried the stable-order line without a repair. The seconds are
+longer than the `derive` row's because every case runs under the
+sanitizers.
 
 ## Adding a task
 
