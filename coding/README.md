@@ -90,6 +90,7 @@ COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
 | `--keep DIR` | write every attempt's prompt, code and diagnostic |
 | `--attempts N` | try at most N times (default 3) |
 | `--timeout MS` | let one case run MS milliseconds (default 3000) |
+| `--dry-run` | print the first prompt and exit, no model call |
 | `--provider P` | `provider(P)` in the call |
 | `--model M` | `model(M)` in the call |
 | `--base-url U` | `base_url(U)` in the call |
@@ -122,6 +123,10 @@ the last candidate survives a refused run. `codegen_c_from/6` takes a run
 options list -- `keep(dir(Dir))`, `attempts(N)`, `case_timeout(Ms)` -- and
 `codegen_c_from/5` uses the defaults. `attempts` counts the first call;
 `case_timeout` is one case's run time, after compilation.
+
+`--dry-run` prints the first prompt -- the requirement and its checklist --
+and exits 0 without calling the model or writing OUT.c. `--contract` is
+honored, so a bad contract still fails; `--tests` is not read.
 
 ## Compile and repair
 
