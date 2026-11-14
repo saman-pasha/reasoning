@@ -1,7 +1,7 @@
 #!/bin/sh
 # Runs the reasoning test cases from this repository's root.
 #
-#   sh run-tests.sh              all four: reason, normalise, tagger, translate
+#   sh run-tests.sh              all five: reason, normalise, tagger, translate, coding
 #   sh run-tests.sh reason       one of them
 #
 # The module names are library(reasoning/...), so the repository's PARENT
@@ -23,13 +23,17 @@ export COCOLOG_LIBRARY="$LIBS"
 cd "$ROOT"
 CASE=${1:-all}
 case "$CASE" in
-    all)      CASES="reason normalise tagger translate" ;;
-    reason|normalise|tagger|translate) CASES=$CASE ;;
+    all)      CASES="reason normalise tagger translate coding" ;;
+    reason|normalise|tagger|translate|coding) CASES=$CASE ;;
     *) echo "run-tests: no such case: $CASE" >&2; exit 1 ;;
 esac
 RED=0
 for C in $CASES; do
+    case "$C" in
+        coding) FILE=coding/test.pl ;;
+        *)      FILE=test/$C.pl ;;
+    esac
     printf '%s\n' "===== $C ====="
-    if "$COCOLOG" -s "test/$C.pl"; then :; else RED=$((RED + 1)); fi
+    if "$COCOLOG" -s "$FILE"; then :; else RED=$((RED + 1)); fi
 done
 exit "$RED"

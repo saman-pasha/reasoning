@@ -14,6 +14,7 @@
 :- use_module('coding/compile.pl').
 
 main :-
+    clang_required,
     obligations,
     contract,
     shared,
@@ -28,6 +29,15 @@ main :-
     dry_run,
     check_tool,
     checks_done.
+
+clang_required :-
+    (   catch(proc_run('command -v clang >/dev/null 2>&1', 10000, _, Exit), _, fail)
+    ->  (   Exit == 0
+        ->  true
+        ;   skip('no clang on the path')
+        )
+    ;   skip('no clang on the path')
+    ).
 
 %% ---- the obligations a requirement implies -----------------------------
 

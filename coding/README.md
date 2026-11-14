@@ -242,7 +242,8 @@ replaces this keyword reading with the reasoner's own, below.
 `coding/test.pl` holds the checks: the word boundaries, the lines each
 benchmark task's requirement implies, the contract reader, the guided
 prompt, the compile checker, the case runner and the cases file. Run it
-from this repository's root with the cocolog library on the path.
+with `sh run-tests.sh coding` from this repository's root; the case skips
+itself when `clang` is not on the path.
 
 ## Contracts
 
