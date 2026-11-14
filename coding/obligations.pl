@@ -119,6 +119,16 @@ codegen_obligation(Tokens, 12,
     ;   codegen_token(Tokens, 'end-of-file')
     ).
 
+codegen_obligation(Tokens, 13,
+    'Check every fopen; close every file; do not assume the file exists.') :-
+    (   codegen_token(Tokens, file)
+    ;   codegen_token(Tokens, files)
+    ;   codegen_token(Tokens, fopen)
+    ;   codegen_token(Tokens, fread)
+    ;   codegen_token(Tokens, fwrite)
+    ;   codegen_token(Tokens, fprintf)
+    ).
+
 codegen_obligation(Tokens, 11,
     'Write exactly the required result; do not print a prompt or extra text.') :-
     codegen_output_cue(Tokens).
@@ -184,6 +194,37 @@ codegen_obligation(Tokens, 26,
     ;   codegen_phrase(Tokens, [truncate, toward, zero])
     ).
 
+codegen_obligation(Tokens, 27,
+    'C strings are NUL-terminated; reserve one byte for the terminator and bound every copy.') :-
+    (   codegen_token(Tokens, string)
+    ;   codegen_token(Tokens, strings)
+    ;   codegen_token(Tokens, character)
+    ;   codegen_token(Tokens, characters)
+    ;   codegen_token(Tokens, char)
+    ;   codegen_token(Tokens, chars)
+    ;   codegen_token(Tokens, text)
+    ).
+
+codegen_obligation(Tokens, 28,
+    'Use double for floating point; do not compare two floating values for equality.') :-
+    (   codegen_token(Tokens, float)
+    ;   codegen_token(Tokens, floats)
+    ;   codegen_token(Tokens, floating)
+    ;   codegen_token(Tokens, double)
+    ;   codegen_token(Tokens, doubles)
+    ;   codegen_token(Tokens, decimal)
+    ;   codegen_token(Tokens, decimals)
+    ).
+
+codegen_obligation(Tokens, 29,
+    'Print exactly the number of decimal places the requirement names.') :-
+    (   codegen_token(Tokens, precision)
+    ;   codegen_token(Tokens, decimal),
+        (   codegen_token(Tokens, places)
+        ;   codegen_token(Tokens, digits)
+        )
+    ).
+
 codegen_obligation(Tokens, 30,
     'Use a type wide enough for the sum; print exactly one integer sum.') :-
     codegen_token(Tokens, sum),
@@ -204,6 +245,34 @@ codegen_obligation(Tokens, 32,
     ;   codegen_token(Tokens, sums)
     ).
 
+codegen_obligation(Tokens, 33,
+    'Check every row and column index against its bound.') :-
+    (   codegen_token(Tokens, matrix)
+    ;   codegen_token(Tokens, matrices)
+    ;   codegen_token(Tokens, grid)
+    ;   codegen_token(Tokens, grids)
+    ;   codegen_token(Tokens, table)
+    ;   codegen_token(Tokens, tables)
+    ).
+
+codegen_obligation(Tokens, 34,
+    'Check every allocation for NULL, and free every allocation.') :-
+    (   codegen_token(Tokens, malloc)
+    ;   codegen_token(Tokens, calloc)
+    ;   codegen_token(Tokens, realloc)
+    ;   codegen_token(Tokens, allocate)
+    ;   codegen_token(Tokens, allocates)
+    ;   codegen_token(Tokens, allocation)
+    ;   codegen_token(Tokens, allocations)
+    ).
+
+codegen_obligation(Tokens, 35,
+    'Bound the recursion depth, or keep the input small enough that it stays bounded.') :-
+    (   codegen_token(Tokens, recursive)
+    ;   codegen_token(Tokens, recursively)
+    ;   codegen_token(Tokens, recursion)
+    ).
+
 codegen_obligation(Tokens, 40,
     'The subarray is contiguous and non-empty; with all-negative values choose one element.') :-
     (   codegen_token(Tokens, subarray)
@@ -221,6 +290,24 @@ codegen_obligation(Tokens, 42,
     'Track bracket kind and nesting order, not only counts.') :-
     (   codegen_token(Tokens, bracket)
     ;   codegen_token(Tokens, brackets)
+    ).
+
+codegen_obligation(Tokens, 43,
+    'Separate the values exactly as the requirement says; print no trailing separator.') :-
+    (   codegen_token(Tokens, comma)
+    ;   codegen_token(Tokens, commas)
+    ;   codegen_token(Tokens, tab)
+    ;   codegen_token(Tokens, tabs)
+    ;   codegen_token(Tokens, 'comma-separated')
+    ;   codegen_phrase(Tokens, [comma, separated])
+    ;   codegen_phrase(Tokens, [space, separated])
+    ).
+
+codegen_obligation(Tokens, 44,
+    'Convert the text to uppercase before comparing or printing it.') :-
+    codegen_token(Tokens, uppercase),
+    (   codegen_token(Tokens, convert)
+    ;   codegen_token(Tokens, converts)
     ).
 
 codegen_obligation(Tokens, 50,

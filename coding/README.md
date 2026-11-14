@@ -227,10 +227,12 @@ checklist to every attempt. The reading is deterministic and costs no
 model call: a `line` the program reads is read whole, a `word` is a run of
 ASCII letters, a `subsequence` is not a substring, a `subarray` is
 contiguous and non-empty, a `sort` with `descending` is descending, and
-equal keys under `stable` keep their input order. A word must match whole,
-so `assortment` is not `sort` and `deadline` is not `line`, and a line the
-program *prints* is told from one it *reads* by where the words stand
-relative to the input and output verbs. `codegen_c/2,3` keeps its plain
+equal keys under `stable` keep their input order. Beyond those it also
+reads a file, a string, floating point and decimal places, a matrix, an
+allocation, recursion, a separator and an uppercase conversion. A word
+must match whole, so `assortment` is not `sort` and `deadline` is not
+`line`, and a line the program *prints* is told from one it *reads* by
+where the words stand relative to the input and output verbs. `codegen_c/2,3` keeps its plain
 prompt; the checklist belongs to the verified paths. A `--contract` file
 replaces this keyword reading with the reasoner's own, below.
 
