@@ -47,6 +47,33 @@
               "settings": {
                 "reasoningEffort": "high"
               }
+            },
+            {
+              "id": "r0",
+              "settings": {
+                "reasoningEffort": "none"
+              },
+              "headers": {
+                "x-coding-reasoning": "0"
+              }
+            },
+            {
+              "id": "r2",
+              "settings": {
+                "reasoningEffort": "none"
+              },
+              "headers": {
+                "x-coding-reasoning": "2"
+              }
+            },
+            {
+              "id": "r8",
+              "settings": {
+                "reasoningEffort": "none"
+              },
+              "headers": {
+                "x-coding-reasoning": "8"
+              }
             }
           ],
           "limit": {
@@ -91,6 +118,33 @@
               "id": "high",
               "settings": {
                 "reasoningEffort": "high"
+              }
+            },
+            {
+              "id": "r0",
+              "settings": {
+                "reasoningEffort": "none"
+              },
+              "headers": {
+                "x-coding-reasoning": "0"
+              }
+            },
+            {
+              "id": "r2",
+              "settings": {
+                "reasoningEffort": "none"
+              },
+              "headers": {
+                "x-coding-reasoning": "2"
+              }
+            },
+            {
+              "id": "r8",
+              "settings": {
+                "reasoningEffort": "none"
+              },
+              "headers": {
+                "x-coding-reasoning": "8"
               }
             }
           ],

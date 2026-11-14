@@ -17,7 +17,9 @@
                 ep_token_ok/1,
                 ep_add_guide/3,
                 ep_task_text/2,
-                ep_reasoning/7,
+                ep_reasoning/8,
+                ep_reasoning_count/3,
+                ep_mode/3,
                 ep_checks/2,
                 ep_sse/3
               ]).
@@ -35,6 +37,7 @@ main :-
     test_sse_tools,
     test_reasoning,
     test_c_reasoning,
+    test_reasoning_headers,
     test_check_cap,
     unsetenv('CODING_ENDPOINT_TOKEN'),
     checks_done.
@@ -159,14 +162,31 @@ test_reasoning :-
 
 test_c_reasoning :-
     Messages = [json([role-user, content-'Write hello.c that prints hello.'])],
-    ep_reasoning(c, false, Messages, 'GUIDE', Guide, N, _),
-    (   N =:= 2,
+    Request = request(post, '/v1/chat/completions', [], http(1, 1), [], []),
+    ep_mode(Request, false, Mode),
+    ep_reasoning(Request, Mode, false, Messages, 'GUIDE', Guide, N, _),
+    (   Mode == reasoning,
+        N =:= 2,
         sub_atom(Guide, _, _, _, 'Reasoning pre-pass'),
         sub_atom(Guide, _, _, _, 'do not assume more input')
     ->  Got = checks
     ;   Got = wrong
     ),
     check('the C model gets exactly two reasoning checks', Got, checks).
+
+test_reasoning_headers :-
+    Messages = [json([role-user, content-'Write hello.c that prints hello.'])],
+    Off = request(post, '/v1/chat/completions', [], http(1, 1),
+                  ['x-coding-reasoning'-'0'], []),
+    Eight = request(post, '/v1/chat/completions', [], http(1, 1),
+                    ['x-coding-reasoning'-'8'], []),
+    ep_mode(Off, false, OffMode),
+    ep_reasoning(Off, OffMode, false, Messages, 'GUIDE', _, OffN, _),
+    ep_mode(Eight, false, EightMode),
+    ep_reasoning(Eight, EightMode, false, Messages, 'GUIDE', _, EightN, _),
+    check('x-coding-reasoning 0 is plain', OffMode-OffN, plain-0),
+    check('x-coding-reasoning 8 is eight checks', EightMode-EightN,
+          reasoning-8).
 
 test_check_cap :-
     ep_checks([first, second, third], Checks),

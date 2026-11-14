@@ -187,14 +187,51 @@ ep_note(Checks, Note) :-
 ep_general_check('Read the input exactly as the task describes; do not assume more input than it gives.').
 ep_general_check('Write exactly the required result; do not print a prompt, label or debugging text.').
 ep_general_check('Compile and run the program before you say the task is done.').
+ep_general_check('Handle empty input, end of file and malformed input without crashing.').
+ep_general_check('Check every allocation, bound, index and null before it is used.').
+ep_general_check('Keep the result deterministic; no timestamps, random values or environment-dependent output.').
+ep_general_check('Remove debugging output from the final program.').
+ep_general_check('Run the task''s own example and compare its exact output before you say it is done.').
 
 %% By default exactly two checks: the task's first two when it has that
 %% many, general ones when it has fewer, and no more when it has more.
+%% A request's x-coding-reasoning header overrides both ends: 0 or off
+%% turns the pass off, N keeps N checks.
 ep_checks(Checks0, Checks) :-
-    ep_int('CODING_ENDPOINT_REASONING_MIN', 2, Min),
-    ep_int('CODING_ENDPOINT_REASONING_MAX', 2, Max),
+    ep_reasoning_count_from_env(Min, Max),
+    ep_checks(Min, Max, Checks0, Checks).
+
+ep_checks(Min, Max, Checks0, Checks) :-
     ep_limit_checks(Checks0, Max, Limited),
     ep_fill_checks(Min, Max, Limited, Checks).
+
+ep_reasoning_count_from_env(Min, Max) :-
+    ep_int('CODING_ENDPOINT_REASONING_MIN', 2, Min),
+    ep_int('CODING_ENDPOINT_REASONING_MAX', 2, Max).
+
+ep_reasoning_count(Request, Min, Max) :-
+    (   http_header(Request, 'x-coding-reasoning', Value)
+    ->  (   memberchk(Value, [off, none, plain, '0'])
+        ->  Min = 0, Max = 0
+        ;   atom_number(Value, N),
+            integer(N),
+            N >= 0
+        ->  Min = N, Max = N
+        ;   ep_reasoning_count_from_env(Min, Max)
+        )
+    ;   ep_reasoning_count_from_env(Min, Max)
+    ).
+
+ep_mode(Request, Title, Mode) :-
+    (   Title == true
+    ->  Mode = title
+    ;   http_header(Request, 'x-coding-reasoning', Value),
+        memberchk(Value, [off, none, plain, '0'])
+    ->  Mode = plain
+    ;   ep_reasoning_on
+    ->  Mode = reasoning
+    ;   Mode = plain
+    ).
 
 ep_limit_checks(Checks, Max, Checks) :-
     Max =< 0,
@@ -222,14 +259,15 @@ ep_fill_checks(Min, Max, Checks, Out) :-
     ;   Out = Checks
     ).
 
-ep_reasoning(_Alias, Title, Messages, Guide0, Guide, N, Terms) :-
-    (   \+ Title,
-        ep_reasoning_on,
+ep_reasoning(Request, Mode, Title, Messages, Guide0, Guide, N, Terms) :-
+    (   Mode == reasoning,
+        \+ Title,
         ep_task_text(Messages, Text)
     ->  endpoint_reason(Text, Obs, CObs, Terms0),
         append(Obs, CObs, All0),
         ep_unique(All0, All1),
-        ep_checks(All1, All),
+        ep_reasoning_count(Request, Min, Max),
+        ep_checks(Min, Max, All1, All),
         length(All, N),
         Terms = Terms0,
         ep_note(All, Note),
@@ -413,7 +451,8 @@ ep_chat_body(Request, Body, Start, Reply) :-
             ->  Title = true
             ;   Title = false
             ),
-            ep_reasoning(Alias, Title, Messages, Guide0, Guide, N, Terms),
+            ep_mode(Request, Title, Mode),
+            ep_reasoning(Request, Mode, Title, Messages, Guide0, Guide, N, Terms),
             ep_backend_model(Alias, BackendModel),
             (   is_list(Terms) -> length(Terms, TermCount) ; TermCount = 0 ),
             (   Title == true
@@ -456,12 +495,6 @@ ep_chat_body(Request, Body, Start, Reply) :-
                 )
             ;   append(Cors, ['Content-Type'-'application/json'], Headers),
                 Reply = reply(Status, Headers, Resp)
-            ),
-            (   Title == true
-            ->  Mode = title
-            ;   ep_reasoning_on
-            ->  Mode = reasoning
-            ;   Mode = plain
             ),
             ep_trace(Request, Start, Alias, BackendModel, Effort, Mode,
                      N, TermCount, Stream, MessageCount, ToolCount, Status)
