@@ -78,10 +78,10 @@ no_skill               8 7   8     1735   19895      18867     21630  123    114
 overall                24 22 28    387603 40884      37246     428487 382075 270.45
 ```
 
-`checked` passed all eight, repairing `dcg`, `namespace` and `stream` on its
-third call. `high` and `no_skill` each passed seven: both failed `namespace`,
-the one-namespace trap the guide names. `high` used 173 561 tokens against
-the control's 21 630, about eight times as many, and the guide's one-shot
+`checked` passed all eight, repairing `dcg` and `namespace` on its third
+call. `high` and `no_skill` each passed seven: both failed `namespace`, the
+one-namespace trap the guide names. `high` used 173 561 tokens against the
+control's 21 630, about eight times as many, and the guide's one-shot
 advantage over the control is not visible in this run; with repairs, the
 guided `checked` mode passed every task in 12 calls and 233 296 tokens.
 `namespace` is still the task a one-shot call gets wrong most often: the
