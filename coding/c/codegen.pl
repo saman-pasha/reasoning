@@ -25,6 +25,7 @@
 %% never written here.
 %%
 %%     --tests FILE     run the cases in FILE after compiling
+%%     --contract FILE  take the checklist from controlled-English FILE
 %%     --provider P     provider(P) in the call
 %%     --model M        model(M) in the call
 %%     --base-url U     base_url(U) in the call
@@ -33,6 +34,9 @@
 %%
 %% The three of provider, model and base URL are one setting: a provider
 %% chosen alone keeps library(llm)'s model and endpoint for that provider.
+%% A contract file replaces the keyword reading of the requirement; its
+%% sentences are the shapes `coding/contract.pl' lists, and one the
+%% reasoner reads as no obligation is an error, not a silent fallback.
 %%
 %%     codegen_c(+Spec, -Code)
 %%     codegen_c(+Spec, +Overrides, -Code)
@@ -60,6 +64,12 @@
 %%         error(codegen_error(test_failed, Diagnostic), _). Cases and
 %%         the cases file are described in `coding/compile.pl'.
 %%
+%%     codegen_c_from(+Spec, +Obligations, +Cases, +Overrides, -Code)
+%%         the loop itself, the checklist already decided: keyword
+%%         obligations, `codegen_contract_obligations/2' from
+%%         `coding/contract.pl', or a list a caller wrote. Cases is [] for
+%%         a compile-only run.
+%%
 %%     c_compile_check(+Code, -Verdict)
 %%     c_test_check(+Code, +Cases, -Verdict)
 %%         from `coding/compile.pl'; the checks the repair loop uses.
@@ -76,6 +86,7 @@
 :- use_module(library(llm)).
 :- use_module('coding/options.pl').
 :- use_module('coding/obligations.pl').
+:- use_module('coding/contract.pl').
 :- use_module('coding/compile.pl').
 
 codegen_c(Spec, Code) :-
@@ -146,11 +157,18 @@ codegen_bump(Global, Number) :-
     nb_setval(Global, New).
 
 codegen_report(report(Calls, Prompt, Completion, Reasoning, Total)) :-
-    nb_getval('$codegen_calls', Calls),
-    nb_getval('$codegen_prompt', Prompt),
-    nb_getval('$codegen_completion', Completion),
-    nb_getval('$codegen_reasoning', Reasoning),
-    nb_getval('$codegen_total', Total).
+    codegen_global('$codegen_calls', Calls),
+    codegen_global('$codegen_prompt', Prompt),
+    codegen_global('$codegen_completion', Completion),
+    codegen_global('$codegen_reasoning', Reasoning),
+    codegen_global('$codegen_total', Total).
+
+%% A report asked before any generation (an early error, say) is zeros.
+codegen_global(Global, Value) :-
+    (   catch(nb_getval(Global, Current), _, fail)
+    ->  Value = Current
+    ;   Value = 0
+    ).
 
 codegen_report_print(no) :-
     !.
@@ -170,9 +188,17 @@ codegen_c_compiled(Spec, Code) :-
     codegen_c_compiled(Spec, [], Code).
 
 codegen_c_compiled(Spec, Overrides, Code) :-
-    codegen_report_reset,
     codegen_obligations(Spec, Obligations),
-    codegen_attempt(1, 3, Spec, Obligations, [], Overrides, none, Code).
+    codegen_c_from(Spec, Obligations, [], Overrides, Code).
+
+%% codegen_c_from(+Spec, +Obligations, +Cases, +Overrides, -Code)
+%%
+%% The loop itself, with the checklist already decided: keyword
+%% obligations, contract obligations, or a list a caller wrote. Cases is
+%% [] for a compile-only run.
+codegen_c_from(Spec, Obligations, Cases, Overrides, Code) :-
+    codegen_report_reset,
+    codegen_attempt(1, 3, Spec, Obligations, Cases, Overrides, none, Code).
 
 %% codegen_c_tested(+Spec, +Cases, -Code)
 %% codegen_c_tested(+Spec, +Cases, +Overrides, -Code)
@@ -183,9 +209,8 @@ codegen_c_tested(Spec, Cases, Code) :-
     codegen_c_tested(Spec, Cases, [], Code).
 
 codegen_c_tested(Spec, Cases, Overrides, Code) :-
-    codegen_report_reset,
     codegen_obligations(Spec, Obligations),
-    codegen_attempt(1, 3, Spec, Obligations, Cases, Overrides, none, Code).
+    codegen_c_from(Spec, Obligations, Cases, Overrides, Code).
 
 codegen_attempt(Attempt, Max, Spec, Obligations, Cases, Overrides, Prev, Code) :-
     codegen_guided_prompt(Spec, Obligations, Prev, Prompt),
@@ -272,24 +297,25 @@ codegen_fence_line(Line) :-
 
 main :-
     current_prolog_flag(argv, [_|Args]),
-    (   codegen_args(Args, SpecFile, TestsFile, OutFile, Report, Overrides)
-    ->  catch(codegen_main(SpecFile, TestsFile, OutFile, Report, Overrides),
+    (   codegen_args(Args, SpecFile, TestsFile, ContractFile, OutFile, Report, Overrides)
+    ->  catch(codegen_main(SpecFile, TestsFile, ContractFile, OutFile, Report, Overrides),
               error(codegen_error(Kind, Detail), _),
               ( codegen_report_print(Report),
                 format(user_error, 'codegen: ~w~n~s~n', [Kind, Detail]),
                 halt(1)
               ))
-    ;   format("usage: cocolog -s coding/c/codegen.pl -- SPEC.txt [--tests CASES.txt] [--provider P] [--model M] [--base-url U] [--effort E] [--report] [OUT.c]~n", [])
+    ;   format("usage: cocolog -s coding/c/codegen.pl -- SPEC.txt [--tests CASES.txt] [--contract CONTRACT.txt] [--provider P] [--model M] [--base-url U] [--effort E] [--report] [OUT.c]~n", [])
     ).
 
-codegen_main(SpecFile, TestsFile, OutFile, Report, Overrides) :-
+codegen_main(SpecFile, TestsFile, ContractFile, OutFile, Report, Overrides) :-
     read_file_to_codes(SpecFile, Codes),
     atom_codes(Spec, Codes),
+    codegen_obligations_for(Spec, ContractFile, Obligations),
     (   TestsFile == none
-    ->  codegen_c_compiled(Spec, Overrides, Code)
-    ;   c_read_cases(TestsFile, Cases),
-        codegen_c_tested(Spec, Cases, Overrides, Code)
+    ->  Cases = []
+    ;   c_read_cases(TestsFile, Cases)
     ),
+    codegen_c_from(Spec, Obligations, Cases, Overrides, Code),
     (   OutFile == none
     ->  format("~s~n", [Code])
     ;   atom_concat(Code, '\n', Text),
@@ -298,34 +324,65 @@ codegen_main(SpecFile, TestsFile, OutFile, Report, Overrides) :-
     ),
     codegen_report_print(Report).
 
+%% A contract file replaces the keyword reading; a contract the reasoner
+%% reads as nothing is an error, not a silent fallback.
+codegen_obligations_for(Spec, none, Obligations) :-
+    !,
+    codegen_obligations(Spec, Obligations).
+codegen_obligations_for(_Spec, File, Obligations) :-
+    (   catch(read_file_to_codes(File, Codes), _, fail)
+    ->  true
+    ;   format(atom(Msg), 'cannot read ~s', [File]),
+        throw(error(codegen_error(contract_file, Msg), codegen_obligations_for/3))
+    ),
+    atom_codes(Contract, Codes),
+    codegen_contract_obligations(Contract, Obligations),
+    (   Obligations == []
+    ->  format(atom(Msg2), 'the contract ~s read as no obligation', [File]),
+        throw(error(codegen_error(contract_empty, Msg2), codegen_obligations_for/3))
+    ;   true
+    ).
+
 %% SPEC.txt [flags] [OUT.c], the flags anywhere after the binary. A
 %% second positional is OUT.c; a third is a usage error. Overrides are
 %% prepended, so a flag said again keeps its last value.
-codegen_args(Args, SpecFile, TestsFile, OutFile, Report, Overrides) :-
-    codegen_args(Args, none, none, none, no, [],
-                 SpecFile, TestsFile, OutFile, Report, Overrides).
+codegen_args(Args, SpecFile, TestsFile, ContractFile, OutFile, Report, Overrides) :-
+    codegen_args(Args, none, none, none, none, no, [],
+                 SpecFile, TestsFile, ContractFile, OutFile, Report, Overrides).
 
-codegen_args([], Spec, Tests, Out, Report, Os, Spec, Tests, Out, Report, Os) :-
+codegen_args([], Spec, Tests, Contract, Out, Report, Os,
+             Spec, Tests, Contract, Out, Report, Os) :-
     Spec \== none.
-codegen_args(['--tests', File|Rest], Spec, none, Out, Report, Os, S, T, O, R, Os2) :-
-    codegen_args(Rest, Spec, File, Out, Report, Os, S, T, O, R, Os2).
-codegen_args(['--provider', P|Rest], Spec, Tests, Out, Report, Os, S, T, O, R, Os2) :-
-    codegen_args(Rest, Spec, Tests, Out, Report, [provider(P)|Os], S, T, O, R, Os2).
-codegen_args(['--model', M|Rest], Spec, Tests, Out, Report, Os, S, T, O, R, Os2) :-
-    codegen_args(Rest, Spec, Tests, Out, Report, [model(M)|Os], S, T, O, R, Os2).
-codegen_args(['--base-url', U|Rest], Spec, Tests, Out, Report, Os, S, T, O, R, Os2) :-
-    codegen_args(Rest, Spec, Tests, Out, Report, [base_url(U)|Os], S, T, O, R, Os2).
-codegen_args(['--effort', E|Rest], Spec, Tests, Out, Report, Os, S, T, O, R, Os2) :-
-    codegen_args(Rest, Spec, Tests, Out, Report, [effort(E)|Os], S, T, O, R, Os2).
-codegen_args(['--report'|Rest], Spec, Tests, Out, _, Os, S, T, O, R, Os2) :-
-    codegen_args(Rest, Spec, Tests, Out, yes, Os, S, T, O, R, Os2).
-codegen_args([Arg|Rest], none, Tests, Out, Report, Os, S, T, O, R, Os2) :-
+codegen_args(['--tests', File|Rest], Spec, none, Contract, Out, Report, Os,
+             S, T, C, O, R, Os2) :-
+    codegen_args(Rest, Spec, File, Contract, Out, Report, Os, S, T, C, O, R, Os2).
+codegen_args(['--contract', File|Rest], Spec, Tests, none, Out, Report, Os,
+             S, T, C, O, R, Os2) :-
+    codegen_args(Rest, Spec, Tests, File, Out, Report, Os, S, T, C, O, R, Os2).
+codegen_args(['--provider', P|Rest], Spec, Tests, Contract, Out, Report, Os,
+             S, T, C, O, R, Os2) :-
+    codegen_args(Rest, Spec, Tests, Contract, Out, Report, [provider(P)|Os], S, T, C, O, R, Os2).
+codegen_args(['--model', M|Rest], Spec, Tests, Contract, Out, Report, Os,
+             S, T, C, O, R, Os2) :-
+    codegen_args(Rest, Spec, Tests, Contract, Out, Report, [model(M)|Os], S, T, C, O, R, Os2).
+codegen_args(['--base-url', U|Rest], Spec, Tests, Contract, Out, Report, Os,
+             S, T, C, O, R, Os2) :-
+    codegen_args(Rest, Spec, Tests, Contract, Out, Report, [base_url(U)|Os], S, T, C, O, R, Os2).
+codegen_args(['--effort', E|Rest], Spec, Tests, Contract, Out, Report, Os,
+             S, T, C, O, R, Os2) :-
+    codegen_args(Rest, Spec, Tests, Contract, Out, Report, [effort(E)|Os], S, T, C, O, R, Os2).
+codegen_args(['--report'|Rest], Spec, Tests, Contract, Out, _, Os,
+             S, T, C, O, R, Os2) :-
+    codegen_args(Rest, Spec, Tests, Contract, Out, yes, Os, S, T, C, O, R, Os2).
+codegen_args([Arg|Rest], none, Tests, Contract, Out, Report, Os,
+             S, T, C, O, R, Os2) :-
     \+ codegen_flag(Arg),
-    codegen_args(Rest, Arg, Tests, Out, Report, Os, S, T, O, R, Os2).
-codegen_args([Arg|Rest], Spec, Tests, none, Report, Os, S, T, O, R, Os2) :-
+    codegen_args(Rest, Arg, Tests, Contract, Out, Report, Os, S, T, C, O, R, Os2).
+codegen_args([Arg|Rest], Spec, Tests, Contract, none, Report, Os,
+             S, T, C, O, R, Os2) :-
     Spec \== none,
     \+ codegen_flag(Arg),
-    codegen_args(Rest, Spec, Tests, Arg, Report, Os, S, T, O, R, Os2).
+    codegen_args(Rest, Spec, Tests, Contract, Arg, Report, Os, S, T, C, O, R, Os2).
 
 codegen_flag(Arg) :-
     atom(Arg),
