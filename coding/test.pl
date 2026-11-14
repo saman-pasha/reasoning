@@ -494,8 +494,12 @@ cli :-
               ['report(0,0,0,0,0,0,0.0)']),
     cli_query("codegen_report_reset, codegen_report_print(yes)",
               ['0 call(s)', '0 cached']),
-    cli_query("asserta((llm_chat(_M,_O,'int main(void) { return 0; }') :- nb_setval(llm_usage, json([prompt_tokens-10, completion_tokens-5, total_tokens-15, prompt_cache_hit_tokens-3, completion_tokens_details-json([reasoning_tokens-2])])), !)), codegen_c_compiled('a spec', _), codegen_report(report(1,10,5,2,3,15,S)), float(S), write('USAGE-731')",
+    cli_query("codegen_report_reset, codegen_report_calls(C), write(C)",
+              ['[]']),
+    cli_query("asserta((llm_chat(_M,_O,'int main(void) { return 0; }') :- nb_setval(llm_usage, json([prompt_tokens-10, completion_tokens-5, total_tokens-15, prompt_cache_hit_tokens-3, completion_tokens_details-json([reasoning_tokens-2])])), !)), codegen_c_compiled('a spec', _), codegen_report(report(1,10,5,2,3,15,S)), float(S), codegen_report_calls([call(_,10,5,2,3,15)]), write('USAGE-'), write(731)",
               ['USAGE-731']),
+    cli_query("asserta((llm_chat(_M,_O,'int main(void) { return 0; }') :- nb_setval(llm_usage, json([prompt_tokens-10, completion_tokens-5, total_tokens-15])), !)), codegen_c_compiled('a spec', _), codegen_report_print(yes), write('PRINT-'), write(731)",
+              ['codegen call 1:', 'PRINT-731']),
     cli_query("( catch(codegen_obligations_for(s, '/no/such/contract', _), error(codegen_error(contract_file, _), _), true) -> write(yes) ; write(no) )",
               ['yes']).
 

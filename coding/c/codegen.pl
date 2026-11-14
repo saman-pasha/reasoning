@@ -91,6 +91,10 @@
 %%         Seconds), the last top-level generation's calls, tokens and
 %%         wall time. `--report' prints it.
 %%
+%%     codegen_report_calls(-Calls)
+%%         call(Seconds, Prompt, Completion, Reasoning, CacheHit, Total),
+%%         one per provider call in order. `--report' prints these too.
+%%
 %%     main/0
 %%         the program: SPEC.txt, the flags, then an optional OUT.c;
 %%         stdout otherwise. It uses codegen_c_tested/4 when tests are
@@ -119,11 +123,14 @@ codegen_call(Prompt, Overrides, Code) :-
     llm_opt(Options, provider, Provider),
     codegen_base_url(Overrides, Provider, BaseUrl),
     codegen_use_endpoint(Provider, BaseUrl, KeyVar),
+    get_time(CallStart),
     llm_chat([msg(system,
                   'You are a C17 programmer. Output only C source code, no Markdown fences, no explanation.'),
               msg(user, Prompt)],
              Options, Reply),
-    codegen_report_add,
+    get_time(CallEnd),
+    CallSeconds is CallEnd - CallStart,
+    codegen_report_add(CallSeconds),
     codegen_strip_fence(Reply, Code).
 
 %% ---- the run report ----------------------------------------------------
@@ -135,14 +142,15 @@ codegen_report_reset :-
     nb_setval('$codegen_reasoning', 0),
     nb_setval('$codegen_cache', 0),
     nb_setval('$codegen_total', 0),
-    nb_setval('$codegen_seconds', 0.0).
+    nb_setval('$codegen_seconds', 0.0),
+    nb_setval('$codegen_call_list', []).
 
 codegen_report_finish(Start) :-
     get_time(End),
     Seconds is End - Start,
     nb_setval('$codegen_seconds', Seconds).
 
-codegen_report_add :-
+codegen_report_add(CallSeconds) :-
     nb_getval('$codegen_calls', Calls0),
     Calls is Calls0 + 1,
     nb_setval('$codegen_calls', Calls),
@@ -165,8 +173,23 @@ codegen_report_add :-
         codegen_bump('$codegen_completion', Completion),
         codegen_bump('$codegen_reasoning', Reasoning),
         codegen_bump('$codegen_cache', CacheHit),
-        codegen_bump('$codegen_total', Total)
-    ;   true
+        codegen_bump('$codegen_total', Total),
+        codegen_call_record(call(CallSeconds, Prompt, Completion, Reasoning,
+                                 CacheHit, Total))
+    ;   codegen_call_record(call(CallSeconds, 0, 0, 0, 0, 0))
+    ).
+
+codegen_call_record(Call) :-
+    (   catch(nb_getval('$codegen_call_list', Calls), _, fail)
+    ->  true
+    ;   Calls = []
+    ),
+    nb_setval('$codegen_call_list', [Call|Calls]).
+
+codegen_report_calls(Calls) :-
+    (   catch(nb_getval('$codegen_call_list', Reversed), _, fail)
+    ->  reverse(Reversed, Calls)
+    ;   Calls = []
     ).
 
 codegen_usage_number(Pairs, Key, Number) :-
@@ -207,10 +230,22 @@ codegen_global(Global, Value) :-
 codegen_report_print(no) :-
     !.
 codegen_report_print(yes) :-
-    codegen_report(report(Calls, Prompt, Completion, Reasoning, CacheHit, Total, Seconds)),
+    codegen_report_calls(Calls),
+    codegen_report_print_calls(Calls, 1),
+    codegen_report(report(Calls0, Prompt, Completion, Reasoning, CacheHit, Total,
+                          Seconds)),
     format(user_error,
            'codegen: ~w call(s), ~w prompt + ~w completion = ~w tokens (~w reasoning, ~w cached) in ~2f s~n',
-           [Calls, Prompt, Completion, Total, Reasoning, CacheHit, Seconds]).
+           [Calls0, Prompt, Completion, Total, Reasoning, CacheHit, Seconds]).
+
+codegen_report_print_calls([], _).
+codegen_report_print_calls([call(CallSeconds, Prompt, Completion, Reasoning,
+                                 CacheHit, Total)|Rest], N) :-
+    format(user_error,
+           'codegen call ~w: ~w prompt + ~w completion = ~w tokens (~w reasoning, ~w cached) in ~2f s~n',
+           [N, Prompt, Completion, Total, Reasoning, CacheHit, CallSeconds]),
+    N1 is N + 1,
+    codegen_report_print_calls(Rest, N1).
 
 %% codegen_c_compiled(+Spec, -Code)
 %% codegen_c_compiled(+Spec, +Overrides, -Code)
