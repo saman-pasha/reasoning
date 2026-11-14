@@ -14,7 +14,8 @@
 %%         compile with AddressSanitizer and UndefinedBehaviorSanitizer,
 %%         then run the binary on each case. ok, or
 %%         fail(compile, Diagnostic) or fail(test, Diagnostic). A case is
-%%         case(Input, Expected), both atoms; Input keeps its newlines,
+%%         case(Input, Expected) or case(Input, Expected, Exit), the atoms
+%%         and an exit status that defaults to 0; Input keeps its newlines,
 %%         and both sides are compared after trailing whitespace and final
 %%         newlines are trimmed. A sanitizer report is a failed case, even
 %%         when the printed answer happens to match; leak detection is off
@@ -102,7 +103,8 @@ c_run_cases(Exe, Cases, Timeout, Failures) :-
     c_run_cases(Cases, Exe, Timeout, 1, Failures).
 
 c_run_cases([], _, _, _, []).
-c_run_cases([case(Input, Expected)|Rest], Exe, Timeout, Index, Failures) :-
+c_run_cases([Case|Rest], Exe, Timeout, Index, Failures) :-
+    c_case_parts(Case, Input, Expected, ExpectedExit),
     tmp_file(codegen_case, InFile),
     atom_codes(Input, InCodes),
     write_file_from_codes(InFile, InCodes),
@@ -112,29 +114,34 @@ c_run_cases([case(Input, Expected)|Rest], Exe, Timeout, Index, Failures) :-
     c_norm(Actual0, Actual),
     c_norm(Expected, ExpNorm),
     (   Error == none,
-        Exit == 0,
+        Exit \== 124,
+        Exit =:= ExpectedExit,
         Actual == ExpNorm
     ->  Here = []
-    ;   c_case_failure(Index, Input, Expected, Exit, Actual, Error, Failure),
+    ;   c_case_failure(Index, Input, Expected, ExpectedExit, Exit, Actual,
+                       Error, Failure),
         Here = [Failure]
     ),
     Next is Index + 1,
     c_run_cases(Rest, Exe, Timeout, Next, Tail),
     append(Here, Tail, Failures).
 
-c_case_failure(Index, Input, Expected, Exit, Actual, Error, Failure) :-
+c_case_parts(case(Input, Expected), Input, Expected, 0).
+c_case_parts(case(Input, Expected, Exit), Input, Expected, Exit).
+
+c_case_failure(Index, Input, Expected, ExpectedExit, Exit, Actual, Error, Failure) :-
     (   Error \== none
     ->  format(atom(Failure),
-               'CASE ~w COULD NOT RUN~ninput: ~w~nexpected: ~w~nerror: ~w',
-               [Index, Input, Expected, Error])
+               'CASE ~w COULD NOT RUN (expected exit ~w)~ninput: ~w~nexpected: ~w~nerror: ~w',
+               [Index, ExpectedExit, Input, Expected, Error])
     ;   Exit == 124
     ->  format(atom(Failure),
                'CASE ~w TIMEOUT~ninput: ~w~nexpected: ~w',
                [Index, Input, Expected])
-    ;   Exit \== 0
+    ;   Exit =\= ExpectedExit
     ->  format(atom(Failure),
-               'CASE ~w EXIT ~w~ninput: ~w~nexpected: ~w~nactual: ~w',
-               [Index, Exit, Input, Expected, Actual])
+               'CASE ~w EXIT ~w (expected ~w)~ninput: ~w~nexpected: ~w~nactual: ~w',
+               [Index, Exit, ExpectedExit, Input, Expected, Actual])
     ;   format(atom(Failure),
                'CASE ~w WRONG~ninput: ~w~nexpected: ~w~nactual: ~w',
                [Index, Input, Expected, Actual])
@@ -144,7 +151,7 @@ c_case_failure(Index, Input, Expected, Exit, Actual, Error, Failure) :-
 %%
 %% Two formats: one Prolog term,
 %%
-%%     cases([case('1 2 3\n', '6'), case('4 5\n', '9')]).
+%%     cases([case('1 2 3\n', '6'), case('4 5\n', '9', 2)]).
 %%
 %% or text blocks, which need no escaping:
 %%
@@ -156,14 +163,16 @@ c_case_failure(Index, Input, Expected, Exit, Actual, Error, Failure) :-
 %%     4 5
 %%     # expected
 %%     9
+%%     # exit 2
 %%
-%% An empty input is `# input' immediately followed by `# expected'; a
-%% blank line between the two is an empty line (one newline), not no
-%% input. An empty expected is `# expected' followed by the next
-%% `# input' or the end. A line is a marker only when it is exactly one
-%% of the two; any other line is content. An input block ends with a
-%% newline, as a file's line does; expected output is trimmed by the
-%% runner.
+%% An exit status is optional and 0 unless said: the third argument in the
+%% term, `# exit N' after the expected block in the text. An empty input
+%% is `# input' immediately followed by `# expected'; a blank line between
+%% the two is an empty line (one newline), not no input. An empty expected
+%% is `# expected' followed by the next `# input' or the end. A line is a
+%% marker only when it is exactly one of the three (or `# exit N'); any
+%% other line is content. An input block ends with a newline, as a file's
+%% line does; expected output is trimmed by the runner.
 c_read_cases(File, Cases) :-
     (   catch(read_file_to_codes(File, Codes), _, fail)
     ->  true
@@ -213,7 +222,9 @@ c_text_cases([], _, none, _, _, Cases, Cases) :-
 c_text_cases([], _, input, _, _, _, _) :-
     c_cases_error('the cases file ends inside an input block').
 c_text_cases([], _, expected, In, Ex, Cases, Closed) :-
-    c_close_case(In, Ex, Cases, Closed).
+    c_close_case(In, Ex, 0, Cases, Closed).
+c_text_cases([], _, after(Exit), In, Ex, Cases, Closed) :-
+    c_close_case(In, Ex, Exit, Cases, Closed).
 
 c_text_cases([Line|Rest], N, none, _, _, Cases, Closed) :-
     (   Line == '# input'
@@ -235,16 +246,47 @@ c_text_cases([Line|Rest], N, input, In, Ex, Cases, Closed) :-
     ).
 c_text_cases([Line|Rest], N, expected, In, Ex, Cases, Closed) :-
     (   Line == '# input'
-    ->  c_close_case(In, Ex, Cases, Cases1),
+    ->  c_close_case(In, Ex, 0, Cases, Cases1),
         N1 is N + 1,
         c_text_cases(Rest, N1, input, [], [], Cases1, Closed)
     ;   Line == '# expected'
     ->  c_cases_error_at(N, 'a second # expected')
+    ;   c_exit_marker(Line, Exit)
+    ->  N1 is N + 1,
+        c_text_cases(Rest, N1, after(Exit), In, Ex, Cases, Closed)
+    ;   c_exit_prefix(Line)
+    ->  c_cases_error_at(N, '# exit needs a non-negative number')
     ;   N1 is N + 1,
         c_text_cases(Rest, N1, expected, In, [Line|Ex], Cases, Closed)
     ).
+c_text_cases([Line|Rest], N, after(Exit), In, Ex, Cases, Closed) :-
+    (   Line == '# input'
+    ->  c_close_case(In, Ex, Exit, Cases, Cases1),
+        N1 is N + 1,
+        c_text_cases(Rest, N1, input, [], [], Cases1, Closed)
+    ;   Line == ''
+    ->  N1 is N + 1,
+        c_text_cases(Rest, N1, after(Exit), In, Ex, Cases, Closed)
+    ;   c_cases_error_at(N, 'content after # exit')
+    ).
 
-c_close_case(InRev, ExRev, Cases, [case(Input, Expected)|Cases]) :-
+c_exit_prefix(Line) :-
+    sub_atom(Line, 0, 6, _, '# exit').
+
+c_exit_marker(Line, Exit) :-
+    sub_atom(Line, 0, 6, _, '# exit'),
+    sub_atom(Line, 7, _, 0, Number),
+    atom_number(Number, Exit0),
+    integer(Exit0),
+    Exit0 >= 0,
+    Exit = Exit0.
+
+c_close_case(InRev, ExRev, 0, Cases, [case(Input, Expected)|Cases]) :-
+    !,
+    c_input_atom(InRev, Input),
+    c_expected_atom(ExRev, Expected).
+c_close_case(InRev, ExRev, Exit, Cases,
+             [case(Input, Expected, Exit)|Cases]) :-
     c_input_atom(InRev, Input),
     c_expected_atom(ExRev, Expected).
 
@@ -272,6 +314,12 @@ c_valid_cases([]).
 c_valid_cases([case(Input, Expected)|Rest]) :-
     atom(Input),
     atom(Expected),
+    c_valid_cases(Rest).
+c_valid_cases([case(Input, Expected, Exit)|Rest]) :-
+    atom(Input),
+    atom(Expected),
+    integer(Exit),
+    Exit >= 0,
     c_valid_cases(Rest).
 
 %% ---- small helpers -----------------------------------------------------
