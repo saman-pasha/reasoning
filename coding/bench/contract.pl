@@ -132,6 +132,18 @@ bench_derive_optional(Task, Spec, _, 'Every line has a bracket.') :-
 bench_derive_optional(Task, Spec, _, 'Every line has a length.') :-
     bench_task_has_noun(Task, line),
     sub_atom(Spec, _, _, _, 'line').
+bench_derive_optional(Task, Spec, _, 'Every line has a score.') :-
+    bench_task_has_noun(Task, score),
+    sub_atom(Spec, _, _, _, 'score').
+bench_derive_optional(Task, Spec, _, 'Every line has an order.') :-
+    bench_task_has_noun(Task, order),
+    sub_atom(Spec, _, _, _, 'order').
+bench_derive_optional(Task, Spec, _, 'Every line has a name.') :-
+    bench_task_has_noun(Task, name),
+    sub_atom(Spec, _, _, _, 'name').
+bench_derive_optional(Task, Spec, _, 'Every line has a number.') :-
+    bench_task_has_noun(Task, number),
+    sub_atom(Spec, _, _, _, 'integer').
 bench_derive_optional(Task, Spec, _, 'Every word has a letter.') :-
     bench_task_has_noun(Task, word),
     sub_atom(Spec, _, _, _, 'word').
@@ -294,6 +306,10 @@ bench_obligation_head(subsequence(_), 51,
     'A subsequence keeps character order but not adjacency; it is not a substring.').
 bench_obligation_head(have(_, subsequence), 51,
     'A subsequence keeps character order but not adjacency; it is not a substring.').
+bench_obligation_head(have(_, score), 59,
+    'Sort the records by score, highest first.').
+bench_obligation_head(have(_, order), 60,
+    'Records with equal scores keep their original input order; the sort is stable.').
 
 %% ---- one line per obligation, its first mention first ------------------
 

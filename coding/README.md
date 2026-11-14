@@ -76,7 +76,7 @@ codegen_c(Spec,
 ## Benchmark
 
 `coding/bench/` measures DeepSeek's high reasoning against six
-no-reasoning verification loops on seven small C tasks: the requirement
+no-reasoning verification loops on eight small C tasks: the requirement
 alone, the requirement with obligations derived from a hand-written
 controlled-English contract, obligations extracted from it by a model,
 obligations derived from its keywords without a model, obligations added

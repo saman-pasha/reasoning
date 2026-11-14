@@ -111,6 +111,25 @@ bench_task(lcs, Spec, Cases) :-
               case('abc\n\n', '0')
             ].
 
+bench_task(stable_sort, Spec, Cases) :-
+    bench_lines([
+        'Write a complete C17 program. It reads an integer n, then n lines',
+        '"NAME SCORE", where NAME is one word of letters and SCORE is an integer.',
+        'Print the records sorted by SCORE descending. Records with the same',
+        'score must keep their original input order.'
+    ], Spec),
+    Cases = [ case('5\nbob 10\nalice 10\ncarol 5\ndave 20\n',
+                  'dave 20\nbob 10\nalice 10\ncarol 5'),
+              case('4\na 1\nb 1\nc 1\nd 1\n', 'a 1\nb 1\nc 1\nd 1'),
+              case('3\nz 0\na 0\nm 0\n', 'z 0\na 0\nm 0'),
+              case('2\nx -5\ny -10\n', 'x -5\ny -10'),
+              case('5\na 2\nb 3\nc 2\nd 3\ne 2\n',
+                  'b 3\nd 3\na 2\nc 2\ne 2'),
+              case('1\nonly 0\n', 'only 0'),
+              case('6\na 1\nb 2\nc 1\nd 2\ne 1\nf 2\n',
+                  'b 2\nd 2\nf 2\na 1\nc 1\ne 1')
+            ].
+
 %% One requirement from lines. The newline between lines is the atom's
 %% own, so the spec reaches the model as written.
 bench_lines([], '').
@@ -190,6 +209,17 @@ bench_requirement(lcs, [
     'Every line has a length.'
 ]).
 
+bench_requirement(stable_sort, [
+    'Every program has an input.',
+    'Every program has an output.',
+    'SortStable reads the line.',
+    'SortStable prints the output.',
+    'Every line has a name.',
+    'Every line has a number.',
+    'Every line has a score.',
+    'Every line has an order.'
+]).
+
 %% The capitalized name the extractor is told to use. The controlled
 %% English reader capitalizes a proper name; these are the same atoms it
 %% will read back as sumeven, maxsubarray, ...
@@ -200,6 +230,7 @@ bench_program_name(word_count, 'WordCount').
 bench_program_name(phonebook, 'Phonebook').
 bench_program_name(calculator, 'Calculator').
 bench_program_name(lcs, 'Lcs').
+bench_program_name(stable_sort, 'SortStable').
 
 %% The extractor's closed vocabulary: the noun it must use for `reads',
 %% the noun it must use for `prints', and every noun an optional line may
@@ -218,8 +249,13 @@ bench_extract_nouns(calculator, expression, output,
                     [expression, number, operator, parenthesis]).
 bench_extract_nouns(lcs, line, length,
                     [line, length, subsequence]).
+bench_extract_nouns(stable_sort, line, output,
+                    [line, name, number, score, order, word, count]).
 
 %% A line the required set cannot say and the task needs: sum_even's
 %% property is what makes its sum the sum of the even integers.
 bench_extract_extra_lines(sum_even, ['Every sum is even.']).
+bench_extract_extra_lines(stable_sort,
+                          ['Every line has a score.',
+                           'Every line has an order.']).
 bench_extract_extra_lines(_, []).
