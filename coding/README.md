@@ -88,7 +88,10 @@ COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
 | `--tests FILE` | run the cases in FILE after compiling |
 | `--auto-tests` | ask the model for test cases, then run them |
 | `--cases-effort L` | reasoning effort for the auto case and reference calls (default `high`) |
+| `--verify-provider P` | provider for the reference check (default: the code call's) |
 | `--verify-model M` | model for the reference check (default: a second model of the same provider where the pair is known) |
+| `--verify-base-url U` | endpoint for the verification provider |
+| `--verify-key-env NAME` | key variable for the verification provider |
 | `--contract FILE` | take the checklist from controlled-English FILE |
 | `--keep DIR` | write every attempt's prompt, code and diagnostic |
 | `--attempts N` | try at most N times (default 3) |
@@ -221,10 +224,15 @@ independent reference program from the same requirement, compiles it with
 the sanitizers, and drops every case whose expected output the reference
 does not reproduce. The second model defaults to `deepseek-reasoner` for
 `deepseek-flash` and `claude-opus-5-5` for `claude-sonnet-4-5`;
-`--verify-model` names another model of the same provider. `--keep DIR`
-writes the verified cases to `auto-cases.txt`, the dropped ones to
-`auto-cases-rejected.txt`, and the reference program to `reference.c`.
-`codegen_cases/2,3,4` exposes the raw case call on its own.
+`--verify-model` names another model. The provider, endpoint and key are
+the code call's unless `--verify-provider`, `--verify-base-url` and
+`--verify-key-env` name others; with a provider named, `--verify-model`
+defaults to that provider's model (`claude-opus-5-5` or
+`deepseek-reasoner`). `--keep DIR` writes the verified cases to
+`auto-cases.txt`, the dropped ones to `auto-cases-rejected.txt`, and the
+reference program to `reference.c`. The report prints
+`reference model M via P`. `codegen_cases/2,3,4` exposes the raw case
+call on its own.
 
 ```prolog
 codegen_c_tested(Spec, Cases, Code).
@@ -341,6 +349,6 @@ See its README for the modes, the token columns and sample runs.
 The C generator is `coding/c/codegen.pl`; it is deliberately small. The
 benchmark in `coding/bench/` is where the prompt policy is measured.
 `--auto-tests` removes the hand-written cases file: the model writes the
-cases, and a second model writes a reference program that drops the cases
-it contradicts. The remaining limit is an error both models share; a
-second provider or model family would close it.
+cases, and a second model—optionally through a second provider—writes a
+reference program that drops the cases it contradicts. The remaining
+limit is an error both models share; a second model family would close it.
