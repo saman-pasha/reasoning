@@ -147,6 +147,53 @@ bench_task(btree, Spec, Cases) :-
                   '10\n20\n25\n30\n35\n40\n45\n50\n55\n60\n65\n70\n75\n80\n85')
             ].
 
+bench_task(mvccs, Spec, Cases) :-
+    bench_lines([
+        'Write a complete C17 program. It simulates a multi-version B-tree of',
+        'minimum degree 2 (a 2-3-4 tree) that holds integer keys, with one writer',
+        'and any number of readers. It reads commands from standard input until EOF,',
+        'one command per line:',
+        '  i KEY        -- stage an insertion of KEY in the writer transaction',
+        '  c            -- commit the staged insertions atomically as one version;',
+        '                  commit ids start at 1',
+        '  b READER     -- begin READER with a snapshot of the current commit id',
+        '  r READER KEY -- print yes if KEY is in the tree at the snapshot of READER, otherwise no',
+        '  p READER     -- print every key in the snapshot of READER in ascending order, one per line',
+        '  e READER     -- end READER',
+        'KEY is an integer, possibly negative. READER is one word of ASCII letters',
+        'or digits. An insertion of a key already in the tree is ignored. A reader',
+        'sees the newest committed version of the tree at or before its snapshot;',
+        'staged insertions are invisible until their commit. A reader begun before',
+        'the first commit sees an empty tree. Readers never block the writer and',
+        'the writer never blocks readers; use copy-on-write or versioned nodes so',
+        'every reader keeps a consistent snapshot. Print exactly one line for each',
+        'r command and no line for a p command with no keys. Use dynamic allocation',
+        'for nodes and recursion for insertion; the number of keys and readers is',
+        'not fixed.'
+    ], Spec),
+    Cases = [ case('i 3\ni 1\ni 2\nc\nb r\np r\nr r 2\nr r 4\n',
+                  '1\n2\n3\nyes\nno'),
+              case('i 1\nc\nb r\ni 2\nc\np r\nr r 2\nb s\np s\n',
+                  '1\nno\n1\n2'),
+              case('b r\np r\nr r 1\ni 5\nc\np r\nb s\np s\n',
+                  'no\n5'),
+              case('i 2\ni 2\nc\nb r\np r\nr r 2\n',
+                  '2\nyes'),
+              case('i 5\nc\nb a\ni 3\nc\nb b\ni 8\nc\nb c\np a\np b\np c\n',
+                  '5\n3\n5\n3\n5\n8'),
+              case('i -1\ni 10\ni 0\ni -5\nc\nb r\np r\nr r -5\nr r 4\n',
+                  '-5\n-1\n0\n10\nyes\nno'),
+              case('i 10\ni 20\ni 30\ni 40\ni 50\ni 60\ni 70\ni 80\ni 90\ni 100\nc\nb r\np r\n',
+                  '10\n20\n30\n40\n50\n60\n70\n80\n90\n100'),
+              case('b r\ni 1\nc\ni 2\nc\np r\nb s\np s\n',
+                  '1\n2'),
+              case('i 1\nc\nb r1\ni 2\nc\nb r2\ni 3\nc\nb r3\nr r1 1\nr r1 2\nr r2 2\nr r2 3\nr r3 3\n',
+                  'yes\nno\nyes\nno\nyes'),
+              case('i 1\nc\nb r\ni 1\ni 2\nc\np r\nb s\np s\n',
+                  '1\n1\n2'),
+              case('', '')
+            ].
+
 %% One requirement from lines. The newline between lines is the atom's
 %% own, so the spec reaches the model as written.
 bench_lines([], '').
@@ -246,6 +293,20 @@ bench_requirement(btree, [
     'Every program has an allocation.'
 ]).
 
+bench_requirement(mvccs, [
+    'Every program has an input.',
+    'Every program has an output.',
+    'MvccBTree reads the commands.',
+    'MvccBTree prints the output.',
+    'Every command has a verb.',
+    'Every program has a tree.',
+    'Every commit has a version.',
+    'Every reader has a snapshot.',
+    'Every writer has a transaction.',
+    'Every program has a recursion.',
+    'Every program has an allocation.'
+]).
+
 %% The capitalized name the extractor is told to use. The controlled
 %% English reader capitalizes a proper name; these are the same atoms it
 %% will read back as sumeven, maxsubarray, ...
@@ -258,6 +319,7 @@ bench_program_name(calculator, 'Calculator').
 bench_program_name(lcs, 'Lcs').
 bench_program_name(stable_sort, 'SortStable').
 bench_program_name(btree, 'BTree').
+bench_program_name(mvccs, 'MvccBTree').
 
 %% The extractor's closed vocabulary: the noun it must use for `reads',
 %% the noun it must use for `prints', and every noun an optional line may
@@ -280,6 +342,10 @@ bench_extract_nouns(stable_sort, line, output,
                     [line, name, number, score, order, word, count]).
 bench_extract_nouns(btree, integers, keys,
                     [integers, integer, node, key, tree]).
+bench_extract_nouns(mvccs, commands, output,
+                    [commands, command, verb, key, tree, node, integer,
+                     version, reader, snapshot, commit, writer,
+                     transaction, recursion, allocation]).
 
 %% A line the required set cannot say and the task needs: sum_even's
 %% property is what makes its sum the sum of the even integers.
@@ -287,4 +353,12 @@ bench_extract_extra_lines(sum_even, ['Every sum is even.']).
 bench_extract_extra_lines(stable_sort,
                           ['Every line has a score.',
                            'Every line has an order.']).
+bench_extract_extra_lines(mvccs,
+                          ['Every program has a tree.',
+                           'Every command has a verb.',
+                           'Every commit has a version.',
+                           'Every reader has a snapshot.',
+                           'Every writer has a transaction.',
+                           'Every program has a recursion.',
+                           'Every program has an allocation.']).
 bench_extract_extra_lines(_, []).

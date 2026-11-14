@@ -174,6 +174,41 @@ codegen_obligation(Tokens, 24,
     ;   codegen_token(Tokens, commands)
     ).
 
+codegen_obligation(Tokens, 35,
+    'A B-tree of minimum degree 2 is a 2-3-4 tree; keep the keys in each node sorted and split a full node before descending into it.') :-
+    (   codegen_token(Tokens, 'b-tree')
+    ;   codegen_token(Tokens, btree)
+    ;   codegen_token(Tokens, tree)
+    ).
+
+codegen_obligation(Tokens, 36,
+    'A version is the result of one commit; a reader sees the newest version of a key at or before its snapshot.') :-
+    (   codegen_token(Tokens, version)
+    ;   codegen_token(Tokens, versions)
+    ;   codegen_token(Tokens, 'multi-version')
+    ).
+
+codegen_obligation(Tokens, 37,
+    'A snapshot is the current commit id when a reader begins; commits after it are invisible to that reader.') :-
+    (   codegen_token(Tokens, snapshot)
+    ;   codegen_token(Tokens, snapshots)
+    ).
+
+codegen_obligation(Tokens, 38,
+    'A commit applies its staged operations atomically as one new version; staged writes are invisible before it.') :-
+    (   codegen_token(Tokens, commit)
+    ;   codegen_token(Tokens, commits)
+    ;   codegen_token(Tokens, committed)
+    ).
+
+codegen_obligation(Tokens, 39,
+    'There is one writer; its staged operations are invisible until commit, and readers never block it or each other.') :-
+    (   codegen_token(Tokens, writer)
+    ;   codegen_token(Tokens, writers)
+    ;   codegen_token(Tokens, reader)
+    ;   codegen_token(Tokens, readers)
+    ).
+
 codegen_obligation(Tokens, 25,
     'Parse the whole expression with operator precedence and parentheses; do not evaluate left to right.') :-
     (   codegen_token(Tokens, expression)

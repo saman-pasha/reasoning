@@ -50,6 +50,7 @@ obligations :-
     max_subarray,
     balanced,
     calculator,
+    mvccs,
     strings,
     general.
 
@@ -112,6 +113,18 @@ calculator :-
     has_line('precedence is respected', Spec, 'operator precedence'),
     has_line('division is integer', Spec, 'integer division').
 
+mvccs :-
+    bench_task(mvccs, Spec, _),
+    has_line('the B-tree is named', Spec, '2-3-4 tree'),
+    has_line('the versions are kept', Spec, 'newest version of a key'),
+    has_line('a snapshot is fixed', Spec, 'snapshot is the current commit'),
+    has_line('a commit is atomic', Spec, 'commit applies its staged operations'),
+    has_line('one writer', Spec, 'There is one writer'),
+    has_line('the recursion is bounded', Spec, 'Bound the recursion depth'),
+    has_line('allocations are checked', Spec, 'Check every allocation'),
+    no_line('an invoice is no version',
+            'Send the invoice.', 'newest version of a key').
+
 strings :-
     Spec = "Read until end-of-file and print the sum of integers.",
     has_line('a string is a requirement too', Spec, 'end of file'),
@@ -133,6 +146,14 @@ contract :-
     contract_has('the operators are named', Calculator, 'Handle +, -, *, and /'),
     contract_has('parentheses group', Calculator, 'Parentheses group subexpressions'),
     contract_has('the expression is whole', Calculator, 'Parse the whole expression'),
+    MvccBTree = 'Every program has an input. Every program has an output. MvccBTree reads the commands. MvccBTree prints the output. Every command has a verb. Every program has a tree. Every commit has a version. Every reader has a snapshot. Every writer has a transaction. Every program has a recursion. Every program has an allocation.',
+    contract_has('a B-tree is a 2-3-4 tree', MvccBTree, '2-3-4 tree'),
+    contract_has('a version is seen at its snapshot', MvccBTree, 'newest version of a key'),
+    contract_has('a snapshot is fixed', MvccBTree, 'snapshot is the current commit'),
+    contract_has('one writer', MvccBTree, 'There is one writer'),
+    contract_has('the transaction is invisible', MvccBTree, 'staged operations are invisible'),
+    contract_has('the recursion is bounded', MvccBTree, 'Bound the recursion depth'),
+    contract_has('the MVCC allocation is checked', MvccBTree, 'Check every allocation'),
     General = 'Every program has a file. Every line has a character. Every number has a decimal. Every number has a precision. Every program has a matrix. Every program has an allocation. Every program has a recursion. Every line has a separator. Every word has an uppercase.',
     contract_has('a contract names a file', General, 'Check every fopen'),
     contract_has('a contract names a string', General, 'NUL-terminated'),

@@ -156,6 +156,7 @@ bench_derive_optional(Task, Spec, _, 'Every command has a verb.') :-
     sub_atom(Spec, _, _, _, 'command').
 bench_derive_optional(Task, Spec, _, 'Every command has a name.') :-
     bench_task_has_noun(Task, command),
+    bench_task_has_noun(Task, name),
     sub_atom(Spec, _, _, _, 'command').
 bench_derive_optional(Task, Spec, _, 'Every name has a number.') :-
     bench_task_has_noun(Task, name),
@@ -169,6 +170,25 @@ bench_derive_optional(Task, Spec, _, 'Every expression has an operator.') :-
 bench_derive_optional(Task, Spec, _, 'Every expression has a parenthesis.') :-
     bench_task_has_noun(Task, expression),
     sub_atom(Spec, _, _, _, 'expression').
+bench_derive_optional(Task, Spec, _, 'Every commit has a version.') :-
+    bench_task_has_noun(Task, commit),
+    sub_atom(Spec, _, _, _, 'commit').
+bench_derive_optional(Task, Spec, _, 'Every reader has a snapshot.') :-
+    bench_task_has_noun(Task, reader),
+    sub_atom(Spec, _, _, _, 'reader').
+bench_derive_optional(Task, Spec, _, 'Every writer has a transaction.') :-
+    bench_task_has_noun(Task, writer),
+    sub_atom(Spec, _, _, _, 'writer').
+bench_derive_optional(Task, Spec, _, 'Every program has an allocation.') :-
+    bench_task_has_noun(Task, allocation),
+    sub_atom(Spec, _, _, _, 'allocation').
+bench_derive_optional(Task, Spec, _, 'Every program has a recursion.') :-
+    bench_task_has_noun(Task, recursion),
+    sub_atom(Spec, _, _, _, 'recursion').
+bench_derive_optional(Task, Spec, _, 'Every program has a tree.') :-
+    bench_task_has_noun(Task, tree),
+    bench_task_has_noun(Task, version),
+    sub_atom(Spec, _, _, _, 'B-tree').
 
 %% bench_derive_obligations(+Task, +Spec, -Obligations)
 %%
