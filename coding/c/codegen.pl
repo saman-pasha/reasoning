@@ -28,6 +28,8 @@
 %%     --auto-tests     ask the model for test cases, verify them with an
 %%                      independent reference program, then run them
 %%     --cases-effort L reasoning effort for the auto cases (default high)
+%%     --verify-model M model for the reference check (default: the second
+%%                      model of a known pair, otherwise the code model)
 %%     --contract FILE  take the checklist from controlled-English FILE
 %%     --keep DIR       write every attempt's prompt, code and diagnostic
 %%     --attempts N     try at most N times (default 3)
@@ -77,10 +79,10 @@
 %%         goes back like a failed compile; the third failure throws
 %%         error(codegen_error(test_failed, Diagnostic), _). Cases and
 %%         the cases file are described in `coding/compile.pl'. Cases may
-%%         be `auto': the model is asked for test cases first, an
-%%         independent reference program is generated from the same
-%%         requirement, and a case whose expected answer the reference
-%%         does not reproduce is dropped. With analyze(yes), a
+%%         be `auto': the model is asked for test cases first, a second
+%%         model (where the pair is known) writes an independent reference
+%%         program from the same requirement, and a case whose expected
+%%         answer the reference does not reproduce is dropped. With analyze(yes), a
 %%         static-analyzer finding is analyze_failed.
 %%
 %%     codegen_cases(+Spec, -Cases)
@@ -161,6 +163,7 @@ codegen_report_reset :-
     nb_setval('$codegen_cache', 0),
     nb_setval('$codegen_total', 0),
     nb_setval('$codegen_seconds', 0.0),
+    nb_setval('$codegen_verify_model', none),
     nb_setval('$codegen_call_list', []).
 
 codegen_report_finish(Start) :-
@@ -250,11 +253,19 @@ codegen_report_print(no) :-
 codegen_report_print(yes) :-
     codegen_report_calls(Calls),
     codegen_report_print_calls(Calls, 1),
+    codegen_report_verify_model,
     codegen_report(report(Calls0, Prompt, Completion, Reasoning, CacheHit, Total,
                           Seconds)),
     format(user_error,
            'codegen: ~w call(s), ~w prompt + ~w completion = ~w tokens (~w reasoning, ~w cached) in ~2f s~n',
            [Calls0, Prompt, Completion, Total, Reasoning, CacheHit, Seconds]).
+
+codegen_report_verify_model :-
+    (   catch(nb_getval('$codegen_verify_model', Model), _, fail),
+        Model \== none
+    ->  format(user_error, 'codegen: reference model ~w~n', [Model])
+    ;   true
+    ).
 
 codegen_report_print_calls([], _).
 codegen_report_print_calls([call(CallSeconds, Prompt, Completion, Reasoning,
@@ -287,7 +298,9 @@ codegen_c_compiled(Spec, Overrides, Code) :-
 %% compile-only run. RunOptions is a list of
 %% `attempts(N)' (default 3), `case_timeout(Ms)' (default 3000),
 %% `cflags(Flags)' (default ''), `budget(N)' (no budget unless said),
-%% `analyze(yes)' (off unless said) and `keep(Dir)'; with a keep
+%% `analyze(yes)' (off unless said), `cases_effort(Level)' (default
+%% `high'), `verify_model(M)' (default `auto': the second model of a known
+%% pair, otherwise the code model) and `keep(Dir)'; with a keep
 %% directory, every attempt's prompt, code and diagnostic is written there
 %% as attempt-N.prompt.txt, attempt-N.c and attempt-N.diag.txt. A
 %% static-analyzer finding is the failure kind analyze_failed.
@@ -296,12 +309,13 @@ codegen_c_from(Spec, Obligations, Cases, Overrides, Code) :-
 
 codegen_c_from(Spec, Obligations, Cases0, Overrides, RunOptions, Code) :-
     codegen_run_prepare(RunOptions, Max, Timeout, CFlags, Budget, Analyze,
-                        CasesEffort),
+                        CasesEffort, VerifyModel0),
     codegen_run_option(RunOptions, keep, none, Keep),
     codegen_report_reset,
     get_time(Start),
-    catch(( codegen_cases_ready(Cases0, Spec, Overrides, Keep, CasesEffort,
-                                Timeout, CFlags, Cases),
+    catch(( codegen_cases_ready(Cases0, Spec, Overrides, Keep,
+                                case_settings(CasesEffort, VerifyModel0,
+                                              Timeout, CFlags), Cases),
             codegen_attempt(1, Max, Spec, Obligations, Cases, Overrides,
                             Keep, check(Timeout, CFlags), Analyze, Budget,
                             none, Code)
@@ -315,17 +329,18 @@ codegen_c_from(Spec, Obligations, Cases0, Overrides, RunOptions, Code) :-
 %% answer it does not reproduce is dropped. The calls are part of the
 %% run's report; `--keep' writes the verified cases, the rejected ones and
 %% the reference program.
-codegen_cases_ready(auto, Spec, Overrides, Keep, CasesEffort, Timeout, CFlags,
+codegen_cases_ready(auto, Spec, Overrides, Keep,
+                    case_settings(CasesEffort, VerifyModel, Timeout, CFlags),
                     Cases) :-
     !,
     codegen_generate_cases(Spec, Overrides, CasesEffort, Raw),
-    codegen_verify_cases(Spec, Overrides, Keep, CasesEffort, Timeout, CFlags,
-                         Raw, Cases),
+    codegen_verify_cases(Spec, Overrides, Keep, CasesEffort, VerifyModel,
+                         Timeout, CFlags, Raw, Cases),
     codegen_keep_cases(Keep, Cases).
-codegen_cases_ready(Cases, _, _, _, _, _, _, Cases).
+codegen_cases_ready(Cases, _, _, _, _, Cases).
 
 codegen_run_prepare(RunOptions, Max, Timeout, CFlags, Budget, Analyze,
-                    CasesEffort) :-
+                    CasesEffort, VerifyModel) :-
     codegen_run_option(RunOptions, attempts, 3, Max0),
     codegen_run_check(attempts, Max0),
     Max = Max0,
@@ -340,6 +355,8 @@ codegen_run_prepare(RunOptions, Max, Timeout, CFlags, Budget, Analyze,
     codegen_run_analyze(Analyze0, Analyze),
     codegen_run_option(RunOptions, cases_effort, high, CasesEffort0),
     codegen_run_cases_effort(CasesEffort0, CasesEffort),
+    codegen_run_option(RunOptions, verify_model, auto, VerifyModel0),
+    codegen_run_verify_model(VerifyModel0, VerifyModel),
     codegen_run_option(RunOptions, keep, none, Keep),
     codegen_keep_prepare(Keep).
 
@@ -348,7 +365,16 @@ codegen_run_cases_effort(Level, Level) :-
     !.
 codegen_run_cases_effort(Value, _) :-
     format(atom(Msg), 'cases_effort must be an atom, not ~w', [Value]),
-    throw(error(codegen_error(run_option, Msg), codegen_run_prepare/7)).
+    throw(error(codegen_error(run_option, Msg), codegen_run_prepare/8)).
+
+codegen_run_verify_model(auto, auto) :-
+    !.
+codegen_run_verify_model(Model, Model) :-
+    atom(Model),
+    !.
+codegen_run_verify_model(Value, _) :-
+    format(atom(Msg), 'verify_model must be an atom or auto, not ~w', [Value]),
+    throw(error(codegen_error(run_option, Msg), codegen_run_prepare/8)).
 
 codegen_run_analyze(yes, yes) :-
     !.
@@ -356,7 +382,7 @@ codegen_run_analyze(no, no) :-
     !.
 codegen_run_analyze(Value, _) :-
     format(atom(Msg), 'analyze must be yes or no, not ~w', [Value]),
-    throw(error(codegen_error(run_option, Msg), codegen_run_prepare/6)).
+    throw(error(codegen_error(run_option, Msg), codegen_run_prepare/8)).
 
 codegen_run_budget(none, none) :-
     !.
@@ -366,13 +392,13 @@ codegen_run_budget(N, N) :-
     !.
 codegen_run_budget(Value, _) :-
     format(atom(Msg), 'budget must be a positive integer, not ~w', [Value]),
-    throw(error(codegen_error(run_option, Msg), codegen_run_prepare/6)).
+    throw(error(codegen_error(run_option, Msg), codegen_run_prepare/8)).
 
 codegen_run_cflags(Flags, Flags) :-
     (   atom(Flags)
     ->  true
     ;   format(atom(Msg), 'cflags must be an atom, not ~w', [Flags]),
-        throw(error(codegen_error(run_option, Msg), codegen_run_prepare/6))
+        throw(error(codegen_error(run_option, Msg), codegen_run_prepare/8))
     ).
 
 codegen_run_option(Options, Key, Default, Value) :-
@@ -388,7 +414,7 @@ codegen_run_check(Key, Value) :-
         Value > 0
     ->  true
     ;   format(atom(Msg), '~w must be a positive integer, not ~w', [Key, Value]),
-        throw(error(codegen_error(run_option, Msg), codegen_run_prepare/6))
+        throw(error(codegen_error(run_option, Msg), codegen_run_prepare/8))
     ).
 
 codegen_keep_prepare(none) :-
@@ -520,13 +546,17 @@ codegen_case_reply(Text, Cases) :-
 codegen_case_error(Msg) :-
     throw(error(codegen_error(cases_auto, Msg), codegen_generate_cases/4)).
 
-%% The independent check: a second, high-effort program from the same
-%% requirement, run on each generated input. Only expectations it
-%% reproduces survive. It never sees the generated cases.
-codegen_verify_cases(Spec, Overrides, Keep, CasesEffort, Timeout, CFlags,
-                     Raw, Cases) :-
+%% The independent check: a second model (where the pair is known) writes
+%% a high-effort program from the same requirement, run on each generated
+%% input. Only expectations it reproduces survive. It never sees the
+%% generated cases.
+codegen_verify_cases(Spec, Overrides, Keep, CasesEffort, VerifyModel0, Timeout,
+                     CFlags, Raw, Cases) :-
+    codegen_verify_model(Overrides, VerifyModel0, VerifyModel),
+    nb_setval('$codegen_verify_model', VerifyModel),
+    codegen_reference_overrides(Overrides, CasesEffort, VerifyModel,
+                                RefOverrides),
     codegen_reference_prompt(Spec, Prompt),
-    codegen_case_overrides(Overrides, CasesEffort, RefOverrides),
     codegen_llm('You are a C17 programmer writing an independent reference implementation for black-box testing. Output only the complete C source, with no Markdown fences and no explanation.',
                 Prompt, RefOverrides, Reply),
     codegen_strip_fence(Reply, Reference),
@@ -546,6 +576,30 @@ codegen_verify_cases(Spec, Overrides, Keep, CasesEffort, Timeout, CFlags,
     ->  codegen_case_error('the reference program disagreed with every generated case')
     ;   true
     ).
+
+%% A second model where the pair is known, the code model otherwise. The
+%% provider, endpoint and key stay the code call's; `--verify-model' names
+%% another model of the same provider.
+codegen_verify_model(Overrides, auto, Model) :-
+    !,
+    codegen_provider(Overrides, Provider),
+    codegen_model(Overrides, Provider, Main),
+    (   codegen_second_model(Provider, Main, Second)
+    ->  Model = Second
+    ;   Model = Main
+    ).
+codegen_verify_model(_, Model, Model).
+
+codegen_second_model(openai, 'deepseek-flash', 'deepseek-reasoner').
+codegen_second_model(openai, 'deepseek-reasoner', 'deepseek-chat').
+codegen_second_model(anthropic, 'claude-sonnet-4-5', 'claude-opus-5-5').
+
+codegen_reference_overrides(Overrides, CasesEffort, VerifyModel, RefOverrides) :-
+    codegen_case_overrides(Overrides, CasesEffort, Base),
+    exclude(codegen_model_option, Base, Rest),
+    RefOverrides = [model(VerifyModel)|Rest].
+
+codegen_model_option(model(_)).
 
 codegen_case_inputs([], []).
 codegen_case_inputs([case(Input, _)|Cases], [Input|Inputs]) :-
@@ -749,7 +803,7 @@ main :-
                 format(user_error, 'codegen: ~w~n~s~n', [Kind, Detail]),
                 halt(1)
               ))
-    ;   format("usage: cocolog -s coding/c/codegen.pl -- SPEC.txt [--tests CASES.txt] [--auto-tests] [--cases-effort L] [--contract CONTRACT.txt] [--keep DIR] [--attempts N] [--timeout MS] [--budget N] [--cflags FLAGS] [--analyze] [--dry-run] [--key-env NAME] [--temperature T] [--max-tokens N] [--provider P] [--model M] [--base-url U] [--effort E] [--report] [OUT.c]~n", []),
+    ;   format("usage: cocolog -s coding/c/codegen.pl -- SPEC.txt [--tests CASES.txt] [--auto-tests] [--cases-effort L] [--verify-model M] [--contract CONTRACT.txt] [--keep DIR] [--attempts N] [--timeout MS] [--budget N] [--cflags FLAGS] [--analyze] [--dry-run] [--key-env NAME] [--temperature T] [--max-tokens N] [--provider P] [--model M] [--base-url U] [--effort E] [--report] [OUT.c]~n", []),
         halt(1)
     ).
 
@@ -818,6 +872,10 @@ codegen_args(['--auto-tests'|Rest], args(S, _, C, O, R, D, Run, Os), A) :-
 codegen_args(['--cases-effort', E|Rest], args(S, T, C, O, R, D, Run, Os), A) :-
     atom(E),
     codegen_run_set(cases_effort(E), Run, Run1),
+    codegen_args(Rest, args(S, T, C, O, R, D, Run1, Os), A).
+codegen_args(['--verify-model', M|Rest], args(S, T, C, O, R, D, Run, Os), A) :-
+    atom(M),
+    codegen_run_set(verify_model(M), Run, Run1),
     codegen_args(Rest, args(S, T, C, O, R, D, Run1, Os), A).
 codegen_args(['--contract', File|Rest], args(S, T, none, O, R, D, Run, Os), A) :-
     codegen_args(Rest, args(S, T, File, O, R, D, Run, Os), A).
