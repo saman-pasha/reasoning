@@ -287,7 +287,8 @@ obligations derived from its keywords without a model, obligations added
 after one failed attempt, and obligations added only after two.
 `coding/bench/run.sh` sets the colon-separated `COCOLOG_LIBRARY` and runs
 the seven modes; `coding/bench/paired.sh` runs the paired comparison, where
-one first attempt branches into a plain repair and an obligation repair.
+one first attempt branches into a plain repair and an obligation repair;
+`coding/bench/tool.sh` runs the shipped tool itself over the same tasks.
 See its README for the modes, the token columns and sample runs.
 
 ## Shape of a generator
