@@ -31,6 +31,7 @@ main :-
     dry_run,
     auto_cases,
     check_tool,
+    cocolog,
     checks_done.
 
 clang_required :-
@@ -761,6 +762,32 @@ auto_cases_reject :-
 auto_cases_refused :-
     cli_query("asserta((llm_chat(_,_, 'no cases here') :- !)), ( catch(codegen_cases('a spec', _), error(codegen_error(Kind, _), _), true) -> write(Kind) ; write(none) )",
               ['cases_auto']).
+
+%% ---- the cocolog generator --------------------------------------------
+
+cocolog :-
+    section('cocolog'),
+    cocolog_cli_query("cocolog_skill_text(T), ( sub_atom(T, _, _, _, 'one namespace') -> write('COCO-SKILL-'), write(731) ; write('COCO-SKILL-NO-'), write(731) )",
+                      ['COCO-SKILL-731']),
+    cocolog_cli_query("asserta((llm_chat(_,_, 'main :- writeln(55).') :- !)), codegen_cocolog_checked('Print 55.', _), write('COCO-CHECK-'), write(731)",
+                      ['COCO-CHECK-731']),
+    cocolog_cli_query("nb_setval(coco_calls,0), asserta((llm_chat(_,_,C) :- nb_getval(coco_calls,N), ( N =:= 0 -> C = 'main :- missing.' ; C = 'main :- writeln(ok).' ), N1 is N+1, nb_setval(coco_calls,N1), !)), codegen_cocolog_checked('Print ok.', _), codegen_report(report(C,_,_,_,_,_,_)), write('COCO-REPAIR-'), write(C), write(731)",
+                      ['COCO-REPAIR-2']),
+    cocolog_cli_query("cocolog_args(['s','--goal','main','--attempts','2','--timeout','1000','o'], args(s,main,o,_,_,Run,_)), memberchk(attempts(2), Run), memberchk(timeout(1000), Run), write('COCO-ARGS-'), write(731)",
+                      ['COCO-ARGS-731']),
+    cocolog_cli_query("tmp_file(coco_expect, F), atom_codes('ok\\n', Cs), write_file_from_codes(F, Cs), asserta((llm_chat(_,_, 'main :- writeln(ok).') :- !)), codegen_cocolog_from('Print ok.', main, [], [expect(F)], _), write('COCO-EXPECT-'), write(731)",
+                      ['COCO-EXPECT-731']),
+    cocolog_cli_query("( catch(cocolog_skill_text('/no/such/guide', _), error(codegen_error(skill_file,_),_), true) -> write('COCO-NOGUIDE-'), write(731) ; write('COCO-NOGUIDE-NO-'), write(731) )",
+                      ['COCO-NOGUIDE-731']).
+
+cocolog_cli_query(Goal, Needles) :-
+    format(atom(Args),
+           "query \"use_module('coding/cocolog/codegen.pl'), ~s\"",
+           [Goal]),
+    cocolog_out(Args, Codes),
+    atom_codes(Text, Codes),
+    forall(member(Needle, Needles),
+           has('the command line says the expected term', Needle, Text)).
 
 %% ---- the standalone checker -------------------------------------------
 

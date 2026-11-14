@@ -12,6 +12,8 @@ coding/
   c/
     codegen.pl        C17 code from a written requirement
     check.pl          compile and test an existing C file, no model
+  cocolog/
+    codegen.pl        cocolog source, taught by cocolog's SKILL.md
 ```
 
 A new language is a new directory and a `codegen.pl` beside this one; it
@@ -315,6 +317,19 @@ obligations are available to a caller as
 The benchmark's contract, extract and derive modes use the same
 `coding/contract.pl` reader and vocabulary, so the tool and the benchmark
 cannot drift.
+
+## cocolog
+
+`coding/cocolog/codegen.pl` writes cocolog source instead of C. Its system
+prompt carries the cocolog checkout's `SKILL.md` whole—the dialect, the
+libraries and the differences from SWI-Prolog—so the model writes the
+language the guide describes. A reply must define `main/0` (or the goal
+`--goal` names); the tool writes it to a temporary file and runs
+`cocolog run` before accepting it, repairing a warning, a failed goal or an
+error like the C loop; `--expect FILE` also compares its standard output.
+The guide is `$COCOLOG_SKILL`, else `../cocolog/SKILL.md`, or `--skill
+FILE`. See `coding/cocolog/README.md` for the flags, the API, the checks
+and the HTML template loader in `coding/cocolog/examples/html_template/`.
 
 ## Benchmark
 
