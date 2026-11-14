@@ -83,6 +83,7 @@ COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
 |---|---|
 | `--tests FILE` | run the cases in FILE after compiling |
 | `--contract FILE` | take the checklist from controlled-English FILE |
+| `--keep DIR` | write every attempt's prompt, code and diagnostic |
 | `--provider P` | `provider(P)` in the call |
 | `--model M` | `model(M)` in the call |
 | `--base-url U` | `base_url(U)` in the call |
@@ -106,6 +107,12 @@ codegen_c(Spec,
 `report(Calls, Prompt, Completion, Reasoning, Total)` for the last
 top-level generation; `--report` prints the same line to stderr, leaving
 stdout for the program.
+
+`--keep DIR` creates the directory if needed and writes each attempt as
+`attempt-N.prompt.txt`, `attempt-N.c` and, when it failed,
+`attempt-N.diag.txt`. The files are written before a failure is thrown, so
+the last candidate survives a refused run. `codegen_c_from/6` takes the
+same directory as `dir(Dir)`; `codegen_c_from/5` keeps nothing.
 
 ## Compile and repair
 
