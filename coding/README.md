@@ -5,6 +5,9 @@ Code generation for the reasoning library, one language a directory:
 ```
 coding/
   options.pl          defaults shared by every generator
+  obligations.pl      the checks a requirement's words imply
+  compile.pl          the C compile checker
+  test.pl             the coding helpers' checks
   c/
     codegen.pl        C17 code from a written requirement
 ```
@@ -89,8 +92,29 @@ codegen_c_compiled(Spec, Overrides, Code).
 `codegen_c_compiled/2,3` throws
 `error(codegen_error(compile_failed, Diagnostic), _)` when the third reply
 still fails, and `c_compile_check(Code, Verdict)` is the checker on its
-own (`ok`, or `fail(Diagnostic)`). `codegen_c/2,3` remains the one-shot
-call that returns a reply without compiling it. `clang` must be on `PATH`.
+own (`ok`, or `fail(Diagnostic)`); it lives in `coding/compile.pl` so a
+caller can use it without the generator. `codegen_c/2,3` remains the
+one-shot call that returns a reply without compiling it. `clang` must be
+on `PATH`.
+
+## Obligations
+
+Before the first call, `codegen_c_compiled/2,3` reads the requirement's
+own words with `coding/obligations.pl` and adds a checklist to every
+attempt. The reading is deterministic and costs no model call: a `line`
+the program reads is read whole, a `word` is a run of ASCII letters, a
+`subsequence` is not a substring, a `subarray` is contiguous and
+non-empty, a `sort` with `descending` is descending, and equal keys under
+`stable` keep their input order. A word must match whole, so `assortment`
+is not `sort` and `deadline` is not `line`, and a line the program
+*prints* is told from one it *reads* by where the words stand relative to
+the input and output verbs. `codegen_c/2,3` keeps its plain prompt; the
+checklist belongs to the compiled path.
+
+`coding/test.pl` holds the checks: the word boundaries, the lines each
+benchmark task's requirement implies, the guided prompt, and the compile
+checker. Run it from this repository's root with the cocolog library on
+the path.
 
 ## Benchmark
 
@@ -108,16 +132,16 @@ See its README for the modes, the token columns and sample runs.
 ## Shape of a generator
 
 1. Read the requirement.
-2. Build a contract prompt: the language, one complete program, code only.
-3. Call `llm_chat/3` with `codegen_options/2` and the language's system
+2. Derive the checks its words imply; no model call.
+3. Build a contract prompt: the language, one complete program, code only,
+   and the checklist.
+4. Call `llm_chat/3` with `codegen_options/2` and the language's system
    prompt.
-4. Strip a Markdown fence, if the model added one.
-5. Compile the reply; on failure, return the diagnostic and the previous
+5. Strip a Markdown fence, if the model added one.
+6. Compile the reply; on failure, return the diagnostic and the previous
    program to the model and try again.
-6. Return or write the code.
+7. Return or write the code.
 
 The C generator is `coding/c/codegen.pl`; it is deliberately small. The
 benchmark in `coding/bench/` is where the prompt policy is measured. The
-next steps are the ones the architecture needs, not more prompt text:
-derive the obligations and tests from the requirement with `reasoning`,
-and run the tests as a second check after the compile.
+next step is running tests as a second check after the compile.

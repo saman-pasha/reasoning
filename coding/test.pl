@@ -1,0 +1,137 @@
+%% coding/test.pl -- the coding helpers' own checks.
+%%
+%%     cocolog -s coding/test.pl        from this repository's root
+%%
+%% The obligations' word boundaries, the lines each benchmark task's
+%% requirement implies, the guided prompt that carries them, and the C
+%% compile checker. No model call and no network.
+
+:- use_module('test/prelude.pl').
+:- use_module('coding/obligations.pl').
+:- use_module('coding/compile.pl').
+
+main :-
+    obligations,
+    boundaries,
+    prompt,
+    checker,
+    checks_done.
+
+%% ---- the obligations a requirement implies -----------------------------
+
+obligations :-
+    section('obligations'),
+    stable_sort,
+    word_count,
+    max_subarray,
+    balanced,
+    calculator,
+    strings.
+
+stable_sort :-
+    Spec = 'Write a complete C17 program. It reads an integer n, then n lines "NAME SCORE", where NAME is one word of letters and SCORE is an integer. Print the records sorted by SCORE descending. Records with the same score must keep their original input order.',
+    has_line('the stable sort reads lines', Spec, 'Read whole lines'),
+    has_line('the stable sort reads a whole integer', Spec, 'whole integer'),
+    has_line('the stable sort has words of letters', Spec, 'maximal run of ASCII letters'),
+    has_line('the sort is descending', Spec, 'Sort in descending order.'),
+    has_line('equal scores keep their order', Spec, 'the sort must be stable'),
+    no_line('no subarray in a stable sort', Spec, 'subarray'),
+    no_line('no expression in a stable sort', Spec, 'operator precedence'),
+    one_of_each('the stable obligations are distinct', Spec).
+
+word_count :-
+    Spec = 'Write a complete C17 program. It reads words from standard input until EOF. A word is a maximal sequence of ASCII letters. Convert every word to lowercase. Print each distinct word and its count, one per line, in lexicographic order, separated by one space.',
+    has_line('a word is ASCII letters', Spec, 'maximal run of ASCII letters'),
+    has_line('every word is lowered', Spec, 'lowercase'),
+    has_line('the words are sorted by bytes', Spec, 'lexicographic order'),
+    has_line('each distinct word once', Spec, 'each distinct value once'),
+    has_line('every occurrence is counted', Spec, 'Count every occurrence'),
+    has_line('the input ends at EOF', Spec, 'end of file'),
+    no_line('a printed line is no input line', Spec, 'Read whole lines').
+
+max_subarray :-
+    Spec = 'Write a complete C17 program. It reads an integer n (1 <= n <= 100000), then n integers. It prints the maximum sum of a non-empty contiguous subarray, on one line.',
+    has_line('the subarray is contiguous', Spec, 'subarray is contiguous'),
+    has_line('a maximum starts at the first value', Spec, 'maximum or minimum'),
+    has_line('the sum has room', Spec, 'type wide enough for the sum'),
+    no_line('a printed line is no input line', Spec, 'Read whole lines').
+
+balanced :-
+    Spec = 'Write a complete C17 program. It reads one line of up to 1000 characters containing only the characters ()[]{}. It prints yes if the brackets are correctly balanced and properly nested, otherwise no.',
+    has_line('the input line is read whole', Spec, 'Read whole lines'),
+    has_line('the bracket kind is tracked', Spec, 'bracket kind').
+
+calculator :-
+    Spec = 'Write a complete C17 program. It reads one line containing an arithmetic expression with non-negative integers, +, -, *, /, parentheses, and spaces. Evaluate it with integer arithmetic; division truncates toward zero. Print the result on one line.',
+    has_line('the input line is read whole', Spec, 'Read whole lines'),
+    has_line('precedence is respected', Spec, 'operator precedence'),
+    has_line('division is integer', Spec, 'integer division').
+
+strings :-
+    Spec = "Read until end-of-file and print the sum of integers.",
+    has_line('a string is a requirement too', Spec, 'end of file'),
+    has_line('the sum is mentioned', Spec, 'wide enough for the sum').
+
+%% ---- whole words, not substrings --------------------------------------
+
+boundaries :-
+    section('boundaries'),
+    Spec = 'Write an assortment for the deadline; a password is not a sort.',
+    no_line('assortment is not a sort', Spec, 'Sort in'),
+    no_line('deadline is not a line', Spec, 'Read whole lines'),
+    no_line('password is not a word', Spec, 'maximal run of ASCII letters'),
+    has_line('Write is still an output verb', Spec, 'do not print a prompt').
+
+%% ---- the guided prompt -------------------------------------------------
+
+prompt :-
+    section('prompt'),
+    Spec = 'Read lines. Print them sorted in descending order.',
+    format(atom(Args),
+           "query \"use_module('coding/c/codegen.pl'), codegen_obligations('~w', Os), codegen_guided_prompt('~w', Os, none, P), write(P)\"",
+           [Spec, Spec]),
+    cocolog_out(Args, Codes),
+    atom_codes(Text, Codes),
+    has('the prompt says the checks are mandatory', 'must satisfy every one', Text),
+    has('the prompt carries the sort line', 'Sort in descending order.', Text),
+    has('the prompt carries the requirement', 'Read lines.', Text).
+
+%% ---- the compile checker ----------------------------------------------
+
+checker :-
+    section('compile'),
+    Good = '#include <stdio.h>\nint main(void) { return 0; }\n',
+    yes_no(c_compile_check(Good, ok), Y1),
+    check('a valid program compiles', Y1, yes),
+    Bad = 'int main(void) { return missing; }\n',
+    yes_no(( c_compile_check(Bad, Verdict),
+             Verdict = fail(Diag),
+             sub_atom(Diag, _, _, _, 'missing')
+           ), Y2),
+    check('an invalid program fails and names the identifier', Y2, yes),
+    Warn = 'int main(void) { int unused; return 0; }\n',
+    yes_no(c_compile_check(Warn, ok), Y3),
+    check('a warning is not a failure', Y3, yes).
+
+%% ---- helpers -----------------------------------------------------------
+
+has_line(Label, Spec, Fragment) :-
+    yes_no(codegen_has_line(Spec, Fragment), YN),
+    check(Label, YN, yes).
+
+no_line(Label, Spec, Fragment) :-
+    yes_no(codegen_has_line(Spec, Fragment), YN),
+    check(Label, YN, no).
+
+codegen_has_line(Spec, Fragment) :-
+    codegen_obligations(Spec, Obligations),
+    atomic_list_concat(Obligations, '\n', All),
+    sub_atom(All, _, _, _, Fragment).
+
+one_of_each(Label, Spec) :-
+    codegen_obligations(Spec, Obligations),
+    sort(Obligations, Sorted),
+    length(Obligations, N),
+    length(Sorted, M),
+    Diff is N - M,
+    check(Label, Diff, 0).

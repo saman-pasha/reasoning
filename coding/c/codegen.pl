@@ -32,32 +32,39 @@
 %%     codegen_c_compiled(+Spec, -Code)
 %%     codegen_c_compiled(+Spec, +Overrides, -Code)
 %%         Code is a reply that compiles with
-%%         `clang -std=c17 -Wall -Wextra -O0'. A failed compile goes back
-%%         to the model with the compiler's diagnostic and the previous
-%%         program, up to three attempts; then
+%%         `clang -std=c17 -Wall -Wextra -O0'. The requirement's words are
+%%         read by `coding/obligations.pl' for the checks they imply, and
+%%         the prompt carries that checklist on every attempt. A failed
+%%         compile goes back to the model with the compiler's diagnostic
+%%         and the previous program, up to three attempts; then
 %%         error(codegen_error(compile_failed, Diagnostic), _) is thrown.
 %%
 %%     c_compile_check(+Code, -Verdict)
-%%         ok or fail(Diagnostic), the check the repair loop uses.
+%%         ok or fail(Diagnostic), from `coding/compile.pl'; the check the
+%%         repair loop uses.
 %%
 %%     main/0
 %%         the program: SPEC.txt, then an optional OUT.c; stdout otherwise.
 %%         It uses codegen_c_compiled/2 and exits 1 if no reply compiles.
 
 :- use_module(library(llm)).
-:- use_module(library(process)).
 :- use_module('coding/options.pl').
+:- use_module('coding/obligations.pl').
+:- use_module('coding/compile.pl').
 
 codegen_c(Spec, Code) :-
     codegen_c(Spec, [], Code).
 
 codegen_c(Spec, Overrides, Code) :-
+    codegen_prompt(Spec, Prompt),
+    codegen_call(Prompt, Overrides, Code).
+
+codegen_call(Prompt, Overrides, Code) :-
     codegen_options(Overrides, Options),
     codegen_key_env(Overrides, KeyVar),
     llm_opt(Options, provider, Provider),
     codegen_base_url(Overrides, Provider, BaseUrl),
     codegen_use_endpoint(Provider, BaseUrl, KeyVar),
-    codegen_prompt(Spec, Prompt),
     llm_chat([msg(system,
                   'You are a C17 programmer. Output only C source code, no Markdown fences, no explanation.'),
               msg(user, Prompt)],
@@ -67,16 +74,19 @@ codegen_c(Spec, Overrides, Code) :-
 %% codegen_c_compiled(+Spec, -Code)
 %% codegen_c_compiled(+Spec, +Overrides, -Code)
 %%
-%% The reply is compiled with clang. A compile failure goes back with the
-%% compiler's diagnostic and the previous program, up to three attempts.
+%% The reply is compiled with clang after every call. A compile failure
+%% goes back with the compiler's diagnostic and the previous program, up
+%% to three attempts. The obligation checklist is in every attempt.
 codegen_c_compiled(Spec, Code) :-
     codegen_c_compiled(Spec, [], Code).
 
 codegen_c_compiled(Spec, Overrides, Code) :-
-    codegen_compile_attempt(1, 3, Spec, Overrides, none, Code).
+    codegen_obligations(Spec, Obligations),
+    codegen_compile_attempt(1, 3, Spec, Obligations, Overrides, none, Code).
 
-codegen_compile_attempt(Attempt, Max, Spec, Overrides, Prev, Code) :-
-    codegen_c_with_feedback(Spec, Prev, Overrides, Code0),
+codegen_compile_attempt(Attempt, Max, Spec, Obligations, Overrides, Prev, Code) :-
+    codegen_guided_prompt(Spec, Obligations, Prev, Prompt),
+    codegen_call(Prompt, Overrides, Code0),
     c_compile_check(Code0, Verdict),
     (   Verdict == ok
     ->  Code = Code0
@@ -84,52 +94,26 @@ codegen_compile_attempt(Attempt, Max, Spec, Overrides, Prev, Code) :-
         (   Attempt >= Max
         ->  throw(error(codegen_error(compile_failed, Diag), codegen_c_compiled/3))
         ;   Next is Attempt + 1,
-            codegen_compile_attempt(Next, Max, Spec, Overrides,
+            codegen_compile_attempt(Next, Max, Spec, Obligations, Overrides,
                                     prev(Code0, Diag), Code)
         )
     ).
 
-codegen_c_with_feedback(Spec, none, Overrides, Code) :-
-    !,
-    codegen_c(Spec, Overrides, Code).
-codegen_c_with_feedback(Spec, prev(Previous, Diag), Overrides, Code) :-
-    format(atom(Full),
-           '~s~n~nYour previous C program did not compile. The compiler said:~n~s~nThe previous program was:~n~s~nWrite a corrected complete C17 program. Output only the C source.',
-           [Spec, Diag, Previous]),
-    codegen_c(Full, Overrides, Code).
-
-%% c_compile_check(+Code, -Verdict)
-%%
-%% ok, or fail(Diagnostic). The source and binary live in a fresh
-%% temporary directory; clang's stderr is merged into its stdout.
-c_compile_check(Code, Verdict) :-
-    tmp_file(codegen_check, Dir),
-    make_directory(Dir),
-    atom_concat(Dir, '/check.c', CFile),
-    atom_concat(Dir, '/check.out', Exe),
-    atom_concat(Code, '\n', Text),
-    atom_codes(Text, Codes),
-    write_file_from_codes(CFile, Codes),
-    format(atom(Cmd), 'clang -std=c17 -Wall -Wextra -O0 -o ~s ~s 2>&1',
-           [Exe, CFile]),
-    catch(( proc_run(Cmd, 120000, OutCodes, Exit),
-            Error = none
-          ),
-          Ball,
-          ( OutCodes = [],
-            Exit = -1,
-            Error = Ball
-          )),
-    atom_codes(Output, OutCodes),
-    (   Error == none,
-        Exit == 0
-    ->  Verdict = ok
-    ;   (   Error == none
-        ->  format(atom(Diag0), 'COMPILE FAILED (exit ~w)~n~s', [Exit, Output])
-        ;   format(atom(Diag0), 'compiler could not run: ~w~n~s', [Error, Output])
-        ),
-        codegen_limit(4000, Diag0, Diag),
-        Verdict = fail(Diag)
+codegen_guided_prompt(Spec, Obligations, Prev, Prompt) :-
+    codegen_obligation_lines(Obligations, Lines),
+    (   Lines == []
+    ->  codegen_prompt(Spec, Base)
+    ;   atomic_list_concat(Lines, '\n', Checklist),
+        format(atom(Base),
+               'Write a complete C17 program for this requirement. Output only the C source, with no Markdown fences and no explanation.~n~nThe requirement implies these checks. The program must satisfy every one:~n~s~n~nRequirement:~n~s',
+               [Checklist, Spec])
+    ),
+    (   Prev == none
+    ->  Prompt = Base
+    ;   Prev = prev(Previous, Diag),
+        format(atom(Prompt),
+               '~s~n~nYour previous C program did not compile. The compiler said:~n~s~nThe previous program was:~n~s~nWrite a corrected complete C17 program. Output only the C source.',
+               [Base, Diag, Previous])
     ).
 
 %% Point the selected provider at the endpoint and key variable the
@@ -164,13 +148,6 @@ codegen_strip_fence(Text, Code) :-
 
 codegen_fence_line(Line) :-
     sub_string(Line, 0, 3, _, '```').
-
-codegen_limit(Max, Atom, Limited) :-
-    atom_length(Atom, Len),
-    (   Len =< Max
-    ->  Limited = Atom
-    ;   sub_atom(Atom, 0, Max, _, Limited)
-    ).
 
 main :-
     current_prolog_flag(argv, [_|Args]),
