@@ -130,7 +130,20 @@ runner :-
     check('a wrong answer is a test failure', Y2, yes),
     Broken = 'int main(void) { return missing; }\n',
     yes_no(c_test_check(Broken, Cases, fail(compile, _)), Y3),
-    check('a compile failure is not a test failure', Y3, yes).
+    check('a compile failure is not a test failure', Y3, yes),
+    Overflow = '#include <stdio.h>\nint main(void) { volatile int x = 2147483647; x = x + 1; printf("%d\\n", x); return 0; }\n',
+    yes_no(( c_test_check(Overflow, [case('', '')], fail(test, Diag1)),
+             sub_atom(Diag1, _, _, _, 'runtime error')
+           ), Y4),
+    check('undefined behaviour fails a case', Y4, yes),
+    Heap = '#include <stdio.h>\n#include <stdlib.h>\nint main(void) { int *a = malloc(sizeof(int)); a[0] = 7; volatile int i = 1; printf("%d\\n", a[i]); return 0; }\n',
+    yes_no(( c_test_check(Heap, [case('', '')], fail(test, Diag2)),
+             sub_atom(Diag2, _, _, _, 'AddressSanitizer')
+           ), Y5),
+    check('a heap overflow fails a case', Y5, yes),
+    Leak = '#include <stdio.h>\n#include <stdlib.h>\nint main(void) { char *p = malloc(10); p[0] = 0; printf("ok\\n"); return 0; }\n',
+    yes_no(c_test_check(Leak, [case('', 'ok')], ok), Y6),
+    check('a leak is not a wrong answer', Y6, yes).
 
 %% ---- the cases file ----------------------------------------------------
 

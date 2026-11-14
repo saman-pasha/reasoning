@@ -44,8 +44,9 @@
 %%     codegen_c_tested(+Spec, +Cases, -Code)
 %%     codegen_c_tested(+Spec, +Cases, +Overrides, -Code)
 %%         the compiled path, and then each case(Input, Expected) is run
-%%         against the binary. A wrong case goes back like a failed
-%%         compile; the third failure throws
+%%         against a binary built with AddressSanitizer and
+%%         UndefinedBehaviorSanitizer. A wrong case, or a sanitizer report,
+%%         goes back like a failed compile; the third failure throws
 %%         error(codegen_error(test_failed, Diagnostic), _). Cases and
 %%         the cases file are described in `coding/compile.pl'.
 %%

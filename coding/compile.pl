@@ -8,11 +8,14 @@
 %%         error, not an exception.
 %%
 %%     c_test_check(+Code, +Cases, -Verdict)
-%%         compile, then run the binary on each case. ok, or
+%%         compile with AddressSanitizer and UndefinedBehaviorSanitizer,
+%%         then run the binary on each case. ok, or
 %%         fail(compile, Diagnostic) or fail(test, Diagnostic). A case is
 %%         case(Input, Expected), both atoms; Input keeps its newlines,
 %%         and both sides are compared after trailing whitespace and final
-%%         newlines are trimmed.
+%%         newlines are trimmed. A sanitizer report is a failed case, even
+%%         when the printed answer happens to match; leak detection is off
+%%         (a one-shot program's leak is no answer's business).
 %%
 %%     c_run_cases(+Exe, +Cases, -Failures)
 %%         the runner on its own: [] when every case matches.
@@ -27,9 +30,9 @@
 %% ---- compile -----------------------------------------------------------
 
 c_compile_check(Code, Verdict) :-
-    c_compile(Code, _Exe, Verdict).
+    c_compile(Code, plain, _Exe, Verdict).
 
-c_compile(Code, Exe, Verdict) :-
+c_compile(Code, Mode, Exe, Verdict) :-
     tmp_file(codegen_check, Dir),
     make_directory(Dir),
     atom_concat(Dir, '/check.c', CFile),
@@ -37,8 +40,7 @@ c_compile(Code, Exe, Verdict) :-
     atom_concat(Code, '\n', Text),
     atom_codes(Text, Codes),
     write_file_from_codes(CFile, Codes),
-    format(atom(Cmd), 'clang -std=c17 -Wall -Wextra -O0 -o ~s ~s 2>&1',
-           [Exe, CFile]),
+    c_compile_command(Mode, Exe, CFile, Cmd),
     c_run_command(Cmd, 120000, OutCodes, Exit, Error),
     atom_codes(Output, OutCodes),
     (   Error == none,
@@ -52,10 +54,18 @@ c_compile(Code, Exe, Verdict) :-
         Verdict = fail(Diag)
     ).
 
+c_compile_command(plain, Exe, CFile, Cmd) :-
+    format(atom(Cmd), 'clang -std=c17 -Wall -Wextra -O0 -o ~s ~s 2>&1',
+           [Exe, CFile]).
+c_compile_command(sanitized, Exe, CFile, Cmd) :-
+    format(atom(Cmd),
+           'clang -std=c17 -Wall -Wextra -O0 -g -fsanitize=address,undefined -fno-sanitize-recover=all -o ~s ~s 2>&1',
+           [Exe, CFile]).
+
 %% ---- compile and run the cases ----------------------------------------
 
 c_test_check(Code, Cases, Verdict) :-
-    c_compile(Code, Exe, CompileVerdict),
+    c_compile(Code, sanitized, Exe, CompileVerdict),
     (   CompileVerdict == ok
     ->  c_run_cases(Exe, Cases, Failures),
         (   Failures == []
@@ -76,7 +86,7 @@ c_run_cases([case(Input, Expected)|Rest], Exe, Index, Failures) :-
     tmp_file(codegen_case, InFile),
     atom_codes(Input, InCodes),
     write_file_from_codes(InFile, InCodes),
-    format(atom(Cmd), '~s < ~s 2>&1', [Exe, InFile]),
+    format(atom(Cmd), 'ASAN_OPTIONS=detect_leaks=0 ~s < ~s 2>&1', [Exe, InFile]),
     c_run_command(Cmd, 3000, OutCodes, Exit, Error),
     atom_codes(Actual0, OutCodes),
     c_norm(Actual0, Actual),
