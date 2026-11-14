@@ -67,9 +67,30 @@ COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
 
 The key comes from the environment -- `REASONING_API_KEY` by default, or
 the variable named by `key_env(NAME)` -- never from this repository. The
-endpoint and model come from `coding/options.pl`; edit its three facts,
-or call `codegen_c/3` from a wrapper with `provider`, `model` and
-`base_url` overrides:
+endpoint and model come from `coding/options.pl`, or from the command
+line, so a one-off DeepSeek run needs no edit:
+
+```sh
+COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
+    ../cocolog/cocolog -s coding/c/codegen.pl -- spec.txt \
+    --provider openai --model deepseek-flash \
+    --base-url https://api.deepseek.com/v1/chat/completions \
+    --effort none --report out.c
+```
+
+| flag | effect |
+|---|---|
+| `--tests FILE` | run the cases in FILE after compiling |
+| `--provider P` | `provider(P)` in the call |
+| `--model M` | `model(M)` in the call |
+| `--base-url U` | `base_url(U)` in the call |
+| `--effort E` | `effort(E)` in the call |
+| `--report` | print calls and token usage to stderr |
+
+The provider, model and base URL are one setting: a provider chosen alone
+keeps `library(llm)`'s model and endpoint for that provider, so pass all
+three when changing provider. A flag said again keeps its last value. The
+same overrides are available to a Prolog caller:
 
 ```prolog
 codegen_c(Spec,
@@ -78,6 +99,11 @@ codegen_c(Spec,
            base_url('https://api.deepseek.com/v1/chat/completions')],
           Code).
 ```
+
+`codegen_report/1` answers
+`report(Calls, Prompt, Completion, Reasoning, Total)` for the last
+top-level generation; `--report` prints the same line to stderr, leaving
+stdout for the program.
 
 ## Compile and repair
 

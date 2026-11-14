@@ -1,14 +1,14 @@
 %% coding/c/codegen.pl -- C code from a written requirement.
 %%
-%%     cocolog -s coding/c/codegen.pl -- SPEC.txt [--tests CASES.txt] [OUT.c]
+%%     cocolog -s coding/c/codegen.pl -- SPEC.txt [flags] [OUT.c]
 %%
 %% A requirement goes to a language model as a CONTRACT: C17, one complete
 %% program, no Markdown fences, no prose. The reply is compiled, and a
 %% failed compile is repaired with the compiler's own diagnostic. With
-%% `--tests', the program is also run on each case and a wrong answer is
-%% repaired the same way. The model is used with the effort defaults in
-%% `coding/options.pl' -- both `none' -- so the thinking this repository
-%% does is not paid for twice.
+%% `--tests', the program is also run on each case under the sanitizers
+%% and a wrong answer is repaired the same way. The model is used with the
+%% effort defaults in `coding/options.pl' -- both `none' -- so the
+%% thinking this repository does is not paid for twice.
 %%
 %% The library is tier 2 and lives in the cocolog checkout beside this
 %% repository, so run from the repository root with its PARENT on the
@@ -23,6 +23,16 @@
 %% key is read from the environment variable the options name --
 %% `REASONING_API_KEY' by default, or `key_env(NAME)' in Overrides. It is
 %% never written here.
+%%
+%%     --tests FILE     run the cases in FILE after compiling
+%%     --provider P     provider(P) in the call
+%%     --model M        model(M) in the call
+%%     --base-url U     base_url(U) in the call
+%%     --effort E       effort(E) in the call
+%%     --report         print calls and token usage to stderr
+%%
+%% The three of provider, model and base URL are one setting: a provider
+%% chosen alone keeps library(llm)'s model and endpoint for that provider.
 %%
 %%     codegen_c(+Spec, -Code)
 %%     codegen_c(+Spec, +Overrides, -Code)
@@ -54,10 +64,14 @@
 %%     c_test_check(+Code, +Cases, -Verdict)
 %%         from `coding/compile.pl'; the checks the repair loop uses.
 %%
+%%     codegen_report(-Report)
+%%         report(Calls, Prompt, Completion, Reasoning, Total), the last
+%%         top-level generation's calls and tokens. `--report' prints it.
+%%
 %%     main/0
-%%         the program: SPEC.txt, an optional `--tests CASES.txt', then an
-%%         optional OUT.c; stdout otherwise. It uses codegen_c_tested/2
-%%         when tests are given and exits 1 if no reply passes.
+%%         the program: SPEC.txt, the flags, then an optional OUT.c;
+%%         stdout otherwise. It uses codegen_c_tested/4 when tests are
+%%         given and exits 1 if no reply passes.
 
 :- use_module(library(llm)).
 :- use_module('coding/options.pl').
@@ -68,6 +82,7 @@ codegen_c(Spec, Code) :-
     codegen_c(Spec, [], Code).
 
 codegen_c(Spec, Overrides, Code) :-
+    codegen_report_reset,
     codegen_prompt(Spec, Prompt),
     codegen_call(Prompt, Overrides, Code).
 
@@ -81,7 +96,69 @@ codegen_call(Prompt, Overrides, Code) :-
                   'You are a C17 programmer. Output only C source code, no Markdown fences, no explanation.'),
               msg(user, Prompt)],
              Options, Reply),
+    codegen_report_add,
     codegen_strip_fence(Reply, Code).
+
+%% ---- the run report ----------------------------------------------------
+
+codegen_report_reset :-
+    nb_setval('$codegen_calls', 0),
+    nb_setval('$codegen_prompt', 0),
+    nb_setval('$codegen_completion', 0),
+    nb_setval('$codegen_reasoning', 0),
+    nb_setval('$codegen_total', 0).
+
+codegen_report_add :-
+    nb_getval('$codegen_calls', Calls0),
+    Calls is Calls0 + 1,
+    nb_setval('$codegen_calls', Calls),
+    (   catch(llm_last_usage(json(Pairs)), _, fail)
+    ->  codegen_usage_number(Pairs, prompt_tokens, Prompt),
+        codegen_usage_number(Pairs, completion_tokens, Completion),
+        (   memberchk(completion_tokens_details-json(Details), Pairs),
+            memberchk(reasoning_tokens-R0, Details),
+            integer(R0)
+        ->  Reasoning = R0
+        ;   Reasoning = 0
+        ),
+        (   codegen_usage_number(Pairs, total_tokens, Total0),
+            Total0 > 0
+        ->  Total = Total0
+        ;   Total is Prompt + Completion
+        ),
+        codegen_bump('$codegen_prompt', Prompt),
+        codegen_bump('$codegen_completion', Completion),
+        codegen_bump('$codegen_reasoning', Reasoning),
+        codegen_bump('$codegen_total', Total)
+    ;   true
+    ).
+
+codegen_usage_number(Pairs, Key, Number) :-
+    (   memberchk(Key-Value, Pairs),
+        integer(Value)
+    ->  Number = Value
+    ;   Number = 0
+    ).
+
+codegen_bump(Global, Number) :-
+    nb_getval(Global, Old),
+    New is Old + Number,
+    nb_setval(Global, New).
+
+codegen_report(report(Calls, Prompt, Completion, Reasoning, Total)) :-
+    nb_getval('$codegen_calls', Calls),
+    nb_getval('$codegen_prompt', Prompt),
+    nb_getval('$codegen_completion', Completion),
+    nb_getval('$codegen_reasoning', Reasoning),
+    nb_getval('$codegen_total', Total).
+
+codegen_report_print(no) :-
+    !.
+codegen_report_print(yes) :-
+    codegen_report(report(Calls, Prompt, Completion, Reasoning, Total)),
+    format(user_error,
+           'codegen: ~w call(s), ~w prompt + ~w completion = ~w tokens (~w reasoning)~n',
+           [Calls, Prompt, Completion, Total, Reasoning]).
 
 %% codegen_c_compiled(+Spec, -Code)
 %% codegen_c_compiled(+Spec, +Overrides, -Code)
@@ -93,6 +170,7 @@ codegen_c_compiled(Spec, Code) :-
     codegen_c_compiled(Spec, [], Code).
 
 codegen_c_compiled(Spec, Overrides, Code) :-
+    codegen_report_reset,
     codegen_obligations(Spec, Obligations),
     codegen_attempt(1, 3, Spec, Obligations, [], Overrides, none, Code).
 
@@ -105,6 +183,7 @@ codegen_c_tested(Spec, Cases, Code) :-
     codegen_c_tested(Spec, Cases, [], Code).
 
 codegen_c_tested(Spec, Cases, Overrides, Code) :-
+    codegen_report_reset,
     codegen_obligations(Spec, Obligations),
     codegen_attempt(1, 3, Spec, Obligations, Cases, Overrides, none, Code).
 
@@ -193,41 +272,61 @@ codegen_fence_line(Line) :-
 
 main :-
     current_prolog_flag(argv, [_|Args]),
-    (   codegen_args(Args, SpecFile, TestsFile, OutFile)
-    ->  catch(codegen_main(SpecFile, TestsFile, OutFile),
+    (   codegen_args(Args, SpecFile, TestsFile, OutFile, Report, Overrides)
+    ->  catch(codegen_main(SpecFile, TestsFile, OutFile, Report, Overrides),
               error(codegen_error(Kind, Detail), _),
-              ( format("codegen: ~w~n~s~n", [Kind, Detail]),
+              ( codegen_report_print(Report),
+                format(user_error, 'codegen: ~w~n~s~n', [Kind, Detail]),
                 halt(1)
               ))
-    ;   format("usage: cocolog -s coding/c/codegen.pl -- SPEC.txt [--tests CASES.txt] [OUT.c]~n", [])
+    ;   format("usage: cocolog -s coding/c/codegen.pl -- SPEC.txt [--tests CASES.txt] [--provider P] [--model M] [--base-url U] [--effort E] [--report] [OUT.c]~n", [])
     ).
 
-codegen_main(SpecFile, TestsFile, OutFile) :-
+codegen_main(SpecFile, TestsFile, OutFile, Report, Overrides) :-
     read_file_to_codes(SpecFile, Codes),
     atom_codes(Spec, Codes),
     (   TestsFile == none
-    ->  codegen_c_compiled(Spec, Code)
+    ->  codegen_c_compiled(Spec, Overrides, Code)
     ;   c_read_cases(TestsFile, Cases),
-        codegen_c_tested(Spec, Cases, Code)
+        codegen_c_tested(Spec, Cases, Overrides, Code)
     ),
     (   OutFile == none
     ->  format("~s~n", [Code])
     ;   atom_concat(Code, '\n', Text),
         atom_codes(Text, OutCodes),
         write_file_from_codes(OutFile, OutCodes)
-    ).
+    ),
+    codegen_report_print(Report).
 
-%% SPEC.txt [--tests CASES.txt] [OUT.c], the flag anywhere after the
-%% binary. A second positional is OUT.c; a third is a usage error.
-codegen_args(Args, SpecFile, TestsFile, OutFile) :-
-    codegen_args(Args, none, none, none, SpecFile, TestsFile, OutFile).
+%% SPEC.txt [flags] [OUT.c], the flags anywhere after the binary. A
+%% second positional is OUT.c; a third is a usage error. Overrides are
+%% prepended, so a flag said again keeps its last value.
+codegen_args(Args, SpecFile, TestsFile, OutFile, Report, Overrides) :-
+    codegen_args(Args, none, none, none, no, [],
+                 SpecFile, TestsFile, OutFile, Report, Overrides).
 
-codegen_args([], Spec, Tests, Out, Spec, Tests, Out) :-
+codegen_args([], Spec, Tests, Out, Report, Os, Spec, Tests, Out, Report, Os) :-
     Spec \== none.
-codegen_args(['--tests', File|Rest], Spec, none, Out, S, T, O) :-
-    codegen_args(Rest, Spec, File, Out, S, T, O).
-codegen_args([Arg|Rest], none, Tests, Out, S, T, O) :-
-    codegen_args(Rest, Arg, Tests, Out, S, T, O).
-codegen_args([Arg|Rest], Spec, Tests, none, S, T, O) :-
+codegen_args(['--tests', File|Rest], Spec, none, Out, Report, Os, S, T, O, R, Os2) :-
+    codegen_args(Rest, Spec, File, Out, Report, Os, S, T, O, R, Os2).
+codegen_args(['--provider', P|Rest], Spec, Tests, Out, Report, Os, S, T, O, R, Os2) :-
+    codegen_args(Rest, Spec, Tests, Out, Report, [provider(P)|Os], S, T, O, R, Os2).
+codegen_args(['--model', M|Rest], Spec, Tests, Out, Report, Os, S, T, O, R, Os2) :-
+    codegen_args(Rest, Spec, Tests, Out, Report, [model(M)|Os], S, T, O, R, Os2).
+codegen_args(['--base-url', U|Rest], Spec, Tests, Out, Report, Os, S, T, O, R, Os2) :-
+    codegen_args(Rest, Spec, Tests, Out, Report, [base_url(U)|Os], S, T, O, R, Os2).
+codegen_args(['--effort', E|Rest], Spec, Tests, Out, Report, Os, S, T, O, R, Os2) :-
+    codegen_args(Rest, Spec, Tests, Out, Report, [effort(E)|Os], S, T, O, R, Os2).
+codegen_args(['--report'|Rest], Spec, Tests, Out, _, Os, S, T, O, R, Os2) :-
+    codegen_args(Rest, Spec, Tests, Out, yes, Os, S, T, O, R, Os2).
+codegen_args([Arg|Rest], none, Tests, Out, Report, Os, S, T, O, R, Os2) :-
+    \+ codegen_flag(Arg),
+    codegen_args(Rest, Arg, Tests, Out, Report, Os, S, T, O, R, Os2).
+codegen_args([Arg|Rest], Spec, Tests, none, Report, Os, S, T, O, R, Os2) :-
     Spec \== none,
-    codegen_args(Rest, Spec, Tests, Arg, S, T, O).
+    \+ codegen_flag(Arg),
+    codegen_args(Rest, Spec, Tests, Arg, Report, Os, S, T, O, R, Os2).
+
+codegen_flag(Arg) :-
+    atom(Arg),
+    sub_atom(Arg, 0, 2, _, '--').

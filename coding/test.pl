@@ -17,6 +17,7 @@ main :-
     checker,
     runner,
     cases_file,
+    cli,
     checks_done.
 
 %% ---- the obligations a requirement implies -----------------------------
@@ -170,6 +171,35 @@ cases_file :-
                    true)
            ), Y3),
     check('a file that is not a term is refused', Y3, yes).
+
+%% ---- the command line --------------------------------------------------
+
+cli :-
+    section('cli'),
+    cli_query("codegen_args(['s','o'], S,T,O,R,Os), write(args(S,T,O,R,Os))",
+              ['args(s,none,o,no,[]']),
+    cli_query("codegen_args(['s','--tests','c','o'], S,T,O,R,Os), write(args(S,T,O,R,Os))",
+              ['args(s,c,o,no,[]']),
+    cli_query("codegen_args(['--provider','openai','--model','deepseek-flash','--base-url','https://x','--effort','none','s','o'], S,T,O,R,Os), write(args(S,T,O,R,Os))",
+              ['provider(openai)', 'model(deepseek-flash)',
+               'base_url(https://x)', 'effort(none)']),
+    cli_query("codegen_args(['s','--report','o'], S,T,O,R,Os), write(args(S,T,O,R,Os))",
+              [',yes,']),
+    cli_query("( codegen_args(['s','--provider'],_,_,_,_,_) -> write(yes) ; write(no) )",
+              ['no']),
+    cli_query("( codegen_args(['s','o','x'],_,_,_,_,_) -> write(yes) ; write(no) )",
+              ['no']),
+    cli_query("codegen_report_reset, codegen_report(R), write(R)",
+              ['report(0,0,0,0,0)']).
+
+cli_query(Goal, Needles) :-
+    format(atom(Args),
+           "query \"use_module('coding/c/codegen.pl'), ~s\"",
+           [Goal]),
+    cocolog_out(Args, Codes),
+    atom_codes(Text, Codes),
+    forall(member(Needle, Needles),
+           has('the command line says the expected term', Needle, Text)).
 
 %% ---- helpers -----------------------------------------------------------
 
