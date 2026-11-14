@@ -11,7 +11,7 @@ coding/
   test.pl             the coding helpers' checks
   (the version case is ../test/version.pl, run by ../run-tests.sh)
   c/
-    codegen.pl        C17 code from a written requirement
+    codegen.pl        C code from a written requirement, C99 to C23 (--std)
     check.pl          compile and test an existing C file, no model
   cocolog/
     codegen.pl        cocolog source, taught by cocolog's SKILL.md
@@ -103,6 +103,7 @@ COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
 | `--timeout MS` | let one case run MS milliseconds (default 3000) |
 | `--budget N` | stop before a repair once N tokens are spent |
 | `--cflags FLAGS` | extra clang arguments (default none) |
+| `--std EDITION` | the C edition compiled and tested as: `c89`, `c99`, `c11`, `c17` (default) or `c23`; `c90`, `c18` and `c2x` alias them |
 | `--analyze` | run `clang --analyze` before accepting a reply |
 | `--dry-run` | print the first prompt and exit, no model call |
 | `--key-env NAME` | read the API key from NAME |
@@ -158,7 +159,9 @@ honored, so a bad contract still fails; `--tests` is not read.
 ## Compile and repair
 
 `main/0` does not return the first reply. It compiles the reply with
-`clang -std=c17 -Wall -Wextra -O0`, and on a failure sends the compiler's
+`clang -std=<EDITION> -Wall -Wextra -O0` (`c17` unless `--std` or
+`codegen_default(std, Edition)` names another; see "The C standard" below),
+and on a failure sends the compiler's
 diagnostic and the previous program back to the model, up to three
 attempts. If no reply compiles it prints the last diagnostic and exits 1.
 `--analyze` also puts every reply through `clang --analyze`; a finding is
@@ -258,8 +261,8 @@ validates the cases file; both are in `coding/compile.pl`.
 existing C file, and with `--tests` builds it with the sanitizers and runs
 every case. No model is called. It prints `OK` and exits 0, or the
 compiler/test report and exits 1; `--timeout MS` is one case's run time,
-and `--cflags FLAGS` are extra compiler arguments. Without `--tests` it is
-the plain compile check. `--analyze` runs `clang --analyze` first; a
+`--cflags FLAGS` are extra compiler arguments, and `--std EDITION` is the
+C edition (default `c17`). Without `--tests` it is the plain compile check. `--analyze` runs `clang --analyze` first; a
 finding is printed and exits 1, and with `--tests` the cases run after a
 clean analysis.
 
@@ -267,6 +270,41 @@ clean analysis.
 cocolog -s coding/c/check.pl -- out.c --tests cases.txt
 cocolog -s coding/c/check.pl -- out.c --analyze
 ```
+
+## The C standard
+
+The generators write C, not one edition of it. `codegen_default(std, c17)`
+in `coding/options.pl` is the one place the edition is decided; C17 is the
+default because every table recorded before the fact was recorded under it,
+and raising it would make the comparison unable to be re-run. A run names
+another edition two ways:
+
+```sh
+cocolog -s coding/c/codegen.pl -- spec.txt --std c99 out.c
+cocolog -s coding/c/check.pl -- out.c --std c23 --tests cases.txt
+```
+
+```prolog
+codegen_c_from(Spec, Obligations, Cases, Overrides, [std(c99)], Code).
+```
+
+or asserts `codegen_default(std, c23)` in its own file for every run of
+that process -- which is also how the benchmark names it, through
+`bench_config(std, c23)` in `coding/bench/config.pl`.
+
+The names are `c89`, `c99`, `c11`, `c17` and `c23`; `c90`, `c18` and `c2x`
+alias them. One name reaches everything the run does: the prompt says
+`Write a complete C99 program`, the compile, the sanitizer build, the
+static analysis and the benchmark's verify all carry the one `-std=`, so a
+program cannot be written as C23 and analysed as C17. A name clang does not
+know is refused before a model call, naming what is allowed.
+
+What each edition changes in practice: C89 has no `//` comment, no
+declarations after statements, no `restrict`; C99 adds all three and
+`<stdint.h>`, `<stdbool.h>` and VLAs; C11 adds `_Generic`, `_Static_assert`
+and `<threads.h>`; C17 is C11 with corrections; C23 adds `nullptr`,
+`constexpr`, `typeof`, `enum : int`, `[[attributes]]` and makes `bool` a
+keyword. It is the edition the task names, never a guess.
 
 ## Obligations
 

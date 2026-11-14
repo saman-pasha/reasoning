@@ -94,8 +94,8 @@ codegen_first_pos([Token|Tokens], Words, N, Pos) :-
         codegen_first_pos(Tokens, Words, N1, Pos)
     ).
 
-%% The first position at or after From. The leading `Write a complete C17
-%% program' is an instruction, not an output: an output verb before the
+%% The first position at or after From. The leading `Write a complete C
+%% program' (or any `Write a complete CN program') is an instruction, not an output: an output verb before the
 %% input cue does not make a later `line' an output line.
 codegen_after([Token|Tokens], Words, N, From, Pos) :-
     (   N >= From,

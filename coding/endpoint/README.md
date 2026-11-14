@@ -8,7 +8,7 @@ Two model names are exposed:
 
 | model | guide |
 |---|---|
-| `c` | `prompts/c.md`, C17 with clang and the sanitizers |
+| `c` | `prompts/c.md`, C with clang and the sanitizers, C99 through C23 (C17 unless the task names another) |
 | `cocolog` | cocolog's own `SKILL.md` plus `prompts/cocolog.md` |
 
 The endpoint is not a second agent loop. OpenCode still owns the read, edit
@@ -114,6 +114,6 @@ and a streamed cocolog reply. No model is called.
 | `server.py` | the endpoint, standard library only |
 | `run.sh` | starts it and makes or accepts the bearer token |
 | `config/opencode.json` | the provider, the two models and their variants |
-| `prompts/c.md` | the C17 guide |
+| `prompts/c.md` | the C guide, every edition from C99 to C23 |
 | `prompts/cocolog.md` | the cocolog addendum to `SKILL.md` |
 | `test.py` | the local checks, no model |

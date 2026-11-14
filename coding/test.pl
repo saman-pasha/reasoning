@@ -25,6 +25,7 @@ main :-
     cases_file,
     cli,
     cflags,
+    standard,
     analyze_gen,
     budget,
     keep,
@@ -551,6 +552,127 @@ cflags_child_failure :-
     atom_codes(Text, Codes),
     has('without its flag the generated program fails', 'CFLAGS-FAIL-731', Text).
 
+%% ---- the C standard ---------------------------------------------------
+%%
+%% Each check compiles a program whose ANSWER is __STDC_VERSION__, and asks
+%% for the number the edition must print: 199901 for c99, 202311 for c23,
+%% 201710 for the default and for c18's alias. The number is not a pin on
+%% clang's version -- it is what the STANDARD says the macro is -- so the
+%% check moves only when cocolog's plumbing or the standard moves, never
+%% when clang is upgraded. restrict is a hard error in C89 and valid in
+%% C99, which is the one place the two editions cannot be confused.
+%%
+%% The generator's own path is checked through a child, as cflags is: a
+%% child asserts its code reply, runs codegen_c_from with std(Edition), and
+%% writes a word naming the verdict -- so what is proved is that std(_)
+%% reaches c_compile_check, not only that the library can take an edition.
+
+standard :-
+    section('standard'),
+    scratch(Dir),
+    atom_concat(Dir, '/version.c', Version),
+    fixture(Version, ['#include <stdio.h>',
+                      'int main(void) {',
+                      '#ifdef __STDC_VERSION__',
+                      '    printf("%ld\\n", (long)__STDC_VERSION__);',
+                      '#else',
+                      '    puts("none");',
+                      '#endif',
+                      '    return 0;',
+                      '}']),
+    standard_case(Dir, Version, c99, '199901'),
+    standard_case(Dir, Version, c11, '201112'),
+    standard_case(Dir, Version, c17, '201710'),
+    standard_case(Dir, Version, c23, '202311'),
+    %% an alias compiles as the edition it names, and SAYS that edition:
+    %% c18 is c17 and c2x is c23, so the report and the prompt agree.
+    standard_case(Dir, Version, c18, '201710', c17),
+    standard_case(Dir, Version, c2x, '202311', c23),
+    standard_case(Dir, Version, c89, 'none'),
+    standard_default(Dir, Version),
+    standard_restrict(Dir),
+    standard_refused(Dir, Version),
+    standard_generator(Dir, c99, 'STD-OK-c99'),
+    standard_generator(Dir, c23, 'STD-OK-c23'),
+    standard_generator_default(Dir),
+    standard_generator_refused(Dir).
+
+standard_case(Dir, Version, Std, Want) :-
+    standard_case(Dir, Version, Std, Want, Std).
+
+standard_case(Dir, Version, Std, Want, Says) :-
+    format(atom(Cases), '~w/~w.cases.txt', [Dir, Std]),
+    fixture(Cases, ['# input', '# expected', Want]),
+    standard_check(Version, Cases, Std, Text, Exit),
+    format(atom(Label), '~w prints ~w', [Std, Want]),
+    check(Label, Exit, 0),
+    format(atom(SaysAtom), 'compiles as ~w', [Says]),
+    has(SaysAtom, SaysAtom, Text).
+
+standard_default(Dir, Version) :-
+    atom_concat(Dir, '/default.cases.txt', Cases),
+    fixture(Cases, ['# input', '# expected', '201710']),
+    check_with_cases(Version, Cases, Text, Exit),
+    check('with no --std the default is C17', Exit, 0),
+    has('and the default says so', 'compiles as c17', Text).
+
+standard_restrict(Dir) :-
+    atom_concat(Dir, '/restrict.c', Restrict),
+    fixture(Restrict, ['int main(void) {',
+                       '    const char *restrict p = "x";',
+                       '    return p[0] == 120 ? 0 : 1;',
+                       '}']),
+    standard_check(Restrict, none, c89, Text89, Exit89),
+    check('restrict is a compile failure in C89', Exit89, 1),
+    has('and the failure is named', 'COMPILE FAILED', Text89),
+    standard_check(Restrict, none, c99, Text99, Exit99),
+    check('and compiles in C99', Exit99, 0).
+
+standard_refused(Dir, Version) :-
+    standard_check(Version, none, c19, Text, Exit),
+    check('an edition clang does not know exits 1', Exit, 1),
+    has('and names the editions it takes',
+        'c89, c99, c11, c17 or c23', Text).
+
+standard_generator(Dir, Std, Want) :-
+    format(atom(Args),
+           "query \"use_module('coding/c/codegen.pl'), asserta((codegen_call(_,_,'#include <stdio.h>\\nint main(void) {\\n#ifdef __STDC_VERSION__\\n  printf(\\\"%ld\\\\n\\\", (long)__STDC_VERSION__);\\n#else\\n  puts(\\\"none\\\");\\n#endif\\n  return 0;\\n}\\n') :- !)), codegen_c_from('a spec', [], [case('', '~w')], [], [std(~w)], _), write('~w')\"",
+           [standard_value(Std), Std, Want]),
+    cocolog_out(Args, Codes),
+    atom_codes(Text, Codes),
+    format(atom(Label), 'the generator compiles its reply as ~w, and it runs', [Std]),
+    has(Label, Want, Text).
+
+standard_value(c99, '199901').
+standard_value(c23, '202311').
+
+standard_generator_default(Dir) :-
+    _ = Dir,
+    format(atom(Args),
+           "query \"use_module('coding/c/codegen.pl'), asserta((codegen_call(_,_,'#include <stdio.h>\\nint main(void) {\\n#ifdef __STDC_VERSION__\\n  printf(\\\"%ld\\\\n\\\", (long)__STDC_VERSION__);\\n#else\\n  puts(\\\"none\\\");\\n#endif\\n  return 0;\\n}\\n') :- !)), codegen_c_from('a spec', [], [case('', '201710')], [], [], _), write('STD-DEFAULT-OK')\"",
+           []),
+    cocolog_out(Args, Codes),
+    atom_codes(Text, Codes),
+    has('with no std(_) the generator compiles as C17', 'STD-DEFAULT-OK', Text).
+
+standard_generator_refused(Dir) :-
+    _ = Dir,
+    format(atom(Args),
+           "query \"use_module('coding/c/codegen.pl'), ( catch(codegen_c_from('a spec', [], [], [], [std(c19)], _), error(codegen_error(std,_),_), true) -> write('STD-REFUSED-OK') ; write('STD-REFUSED-NO') )\"",
+           []),
+    cocolog_out(Args, Codes),
+    atom_codes(Text, Codes),
+    has('the generator refuses an unknown edition before any call', 'STD-REFUSED-OK', Text).
+
+standard_check(File, Cases, Std, Text, Exit) :-
+    (   Cases == none
+    ->  format(atom(Args), "-s coding/c/check.pl -- ~w --std ~w", [File, Std])
+    ;   format(atom(Args),
+               "-s coding/c/check.pl -- ~w --tests ~w --std ~w",
+               [File, Cases, Std])
+    ),
+    cocolog_run(Args, Text, Exit).
+
 %% ---- analysis in the generator ----------------------------------------
 
 analyze_gen :-
@@ -748,15 +870,15 @@ auto_cases :-
               ['CASE-EFFORT-NONE-731']).
 
 auto_cases_child :-
-    Goal = "asserta((llm_chat(Messages, Options, '#include <stdio.h>\\nint main(void){int c;while((c=getchar())!=EOF)putchar(c);return 0;}\\n') :- memberchk(model('claude-sonnet-4-5'), Options), member(msg(system, S), Messages), sub_atom(S, _, _, _, 'C17 programmer'), \\+ sub_atom(S, _, _, _, 'reference implementation'), !)), asserta((llm_chat(Messages, Options, '#include <stdio.h>\\nint main(void){int c;while((c=getchar())!=EOF)putchar(c);return 0;}\\n') :- memberchk(model('claude-opus-5-5'), Options), member(msg(system, S), Messages), sub_atom(S, _, _, _, 'reference implementation'), !)), asserta((llm_chat(Messages, _, '# input\\nabc\\n# expected\\nabc\\n# input\\n# expected\\n') :- member(msg(system, S), Messages), sub_atom(S, _, _, _, 'test cases'), !)), codegen_c_tested('Copy standard input to standard output.', auto, _), codegen_report(report(Calls, _, _, _, _, _, _)), write('AUTO-CALLS-'), write(Calls), nl",
+    Goal = "asserta((llm_chat(Messages, Options, '#include <stdio.h>\\nint main(void){int c;while((c=getchar())!=EOF)putchar(c);return 0;}\\n') :- memberchk(model('claude-sonnet-4-5'), Options), member(msg(system, S), Messages), sub_atom(S, _, _, _, 'C17 programmer'), \\+ sub_atom(S, _, _, _, 'reference implementation'), !)), asserta((llm_chat(Messages, Options, '#include <stdio.h>\\nint main(void){int c;while((c=getchar())!=EOF)putchar(c);return 0;}\\n') :- memberchk(model('claude-opus-5-5'), Options), member(msg(system, S), Messages), sub_atom(S, _, _, _, 'reference implementation'), !)), asserta((llm_chat(Messages, _, '# input\\nabc\\n# expected\\nabc\\n# input\\n# expected\\n') :- member(msg(system, S), Messages), sub_atom(S, _, _, _, 'black-box test cases'), !)), codegen_c_tested('Copy standard input to standard output.', auto, _), codegen_report(report(Calls, _, _, _, _, _, _)), write('AUTO-CALLS-'), write(Calls), nl",
     cli_query(Goal, ['AUTO-CALLS-3']).
 
 auto_cases_provider :-
-    Goal = "asserta((llm_chat(Messages, Options, '#include <stdio.h>\\nint main(void){int c;while((c=getchar())!=EOF)putchar(c);return 0;}\\n') :- memberchk(provider(openai), Options), memberchk(model('deepseek-flash'), Options), member(msg(system, S), Messages), sub_atom(S, _, _, _, 'C17 programmer'), \\+ sub_atom(S, _, _, _, 'reference implementation'), !)), asserta((llm_chat(Messages, Options, '#include <stdio.h>\\nint main(void){int c;while((c=getchar())!=EOF)putchar(c);return 0;}\\n') :- memberchk(provider(anthropic), Options), memberchk(model('deepseek-reasoner'), Options), member(msg(system, S), Messages), sub_atom(S, _, _, _, 'reference implementation'), !)), asserta((llm_chat(Messages, _, '# input\\nabc\\n# expected\\nabc\\n# input\\n# expected\\n') :- member(msg(system, S), Messages), sub_atom(S, _, _, _, 'test cases'), !)), codegen_c_from('Copy standard input to standard output.', [], auto, [provider(openai), model('deepseek-flash'), base_url('https://main'), temperature(0)], [verify_provider(anthropic), verify_model('deepseek-reasoner'), verify_base_url('https://ref'), verify_key_env('ANTHROPIC_AUTH_TOKEN')], _), codegen_report(report(Calls, _, _, _, _, _, _)), write('AUTO-PROVIDER-'), write(Calls), nl",
+    Goal = "asserta((llm_chat(Messages, Options, '#include <stdio.h>\\nint main(void){int c;while((c=getchar())!=EOF)putchar(c);return 0;}\\n') :- memberchk(provider(openai), Options), memberchk(model('deepseek-flash'), Options), member(msg(system, S), Messages), sub_atom(S, _, _, _, 'C17 programmer'), \\+ sub_atom(S, _, _, _, 'reference implementation'), !)), asserta((llm_chat(Messages, Options, '#include <stdio.h>\\nint main(void){int c;while((c=getchar())!=EOF)putchar(c);return 0;}\\n') :- memberchk(provider(anthropic), Options), memberchk(model('deepseek-reasoner'), Options), member(msg(system, S), Messages), sub_atom(S, _, _, _, 'reference implementation'), !)), asserta((llm_chat(Messages, _, '# input\\nabc\\n# expected\\nabc\\n# input\\n# expected\\n') :- member(msg(system, S), Messages), sub_atom(S, _, _, _, 'black-box test cases'), !)), codegen_c_from('Copy standard input to standard output.', [], auto, [provider(openai), model('deepseek-flash'), base_url('https://main'), temperature(0)], [verify_provider(anthropic), verify_model('deepseek-reasoner'), verify_base_url('https://ref'), verify_key_env('ANTHROPIC_AUTH_TOKEN')], _), codegen_report(report(Calls, _, _, _, _, _, _)), write('AUTO-PROVIDER-'), write(Calls), nl",
     cli_query(Goal, ['AUTO-PROVIDER-3']).
 
 auto_cases_reject :-
-    Goal = "asserta((llm_chat(_, _, '#include <stdio.h>\\nint main(void){putchar(51);putchar(10);return 0;}\\n') :- !)), asserta((llm_chat(Messages, _, '#include <stdio.h>\\nint main(void){putchar(51);putchar(10);return 0;}\\n') :- member(msg(system, S), Messages), sub_atom(S, _, _, _, 'reference implementation'), !)), asserta((llm_chat(Messages, _, '# input\\n1 2\\n# expected\\n4\\n') :- member(msg(system, S), Messages), sub_atom(S, _, _, _, 'test cases'), !)), ( catch(codegen_c_tested('Read two integers. Print their sum.', auto, _), error(codegen_error(cases_auto, _), _), true) -> write('AUTO-REJECT-'), write(731) ; write('AUTO-OTHER-'), write(731) )",
+    Goal = "asserta((llm_chat(_, _, '#include <stdio.h>\\nint main(void){putchar(51);putchar(10);return 0;}\\n') :- !)), asserta((llm_chat(Messages, _, '#include <stdio.h>\\nint main(void){putchar(51);putchar(10);return 0;}\\n') :- member(msg(system, S), Messages), sub_atom(S, _, _, _, 'reference implementation'), !)), asserta((llm_chat(Messages, _, '# input\\n1 2\\n# expected\\n4\\n') :- member(msg(system, S), Messages), sub_atom(S, _, _, _, 'black-box test cases'), !)), ( catch(codegen_c_tested('Read two integers. Print their sum.', auto, _), error(codegen_error(cases_auto, _), _), true) -> write('AUTO-REJECT-'), write(731) ; write('AUTO-OTHER-'), write(731) )",
     cli_query(Goal, ['AUTO-REJECT-731']).
 
 auto_cases_refused :-

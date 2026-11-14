@@ -51,7 +51,17 @@
 %%         Outputs is a list of output(Text, Exit, Error), Text normalized
 %%         as the case runner normalizes an answer. Verdict is ok when the
 %%         program compiled, or fail(Diagnostic) when it did not.
+%%
+%% THE C EDITION IS AN ARGUMENT, and every check above has a +Std form that
+%% names it: c_compile_check/4, c_test_check/6, c_analyze_check/4,
+%% c_run_outputs/7. Std is a name `coding/options.pl''s codegen_std_value/2
+%% knows -- c89, c99, c11, c17, c23, or an alias -- and becomes the one
+%% `-std=' the compile, the sanitizer build and the analyzer each carry,
+%% so a program cannot be compiled as C23 and analysed as C17. The shorter
+%% forms with no Std use `codegen_std/1''s default, c17 unless a caller
+%% asserted another: an existing caller keeps compiling what it compiled.
 
+:- use_module('coding/options.pl').
 :- use_module(library(process)).
 
 %% ---- compile -----------------------------------------------------------
@@ -60,9 +70,13 @@ c_compile_check(Code, Verdict) :-
     c_compile_check(Code, '', Verdict).
 
 c_compile_check(Code, CFlags, Verdict) :-
-    c_compile(Code, plain, CFlags, _Exe, Verdict).
+    codegen_std(Std),
+    c_compile_check(Code, CFlags, Std, Verdict).
 
-c_compile(Code, Mode, CFlags, Exe, Verdict) :-
+c_compile_check(Code, CFlags, Std, Verdict) :-
+    c_compile(Code, plain, CFlags, Std, _Exe, Verdict).
+
+c_compile(Code, Mode, CFlags, Std, Exe, Verdict) :-
     tmp_file(codegen_check, Dir),
     make_directory(Dir),
     atom_concat(Dir, '/check.c', CFile),
@@ -70,7 +84,7 @@ c_compile(Code, Mode, CFlags, Exe, Verdict) :-
     atom_concat(Code, '\n', Text),
     atom_codes(Text, Codes),
     write_file_from_codes(CFile, Codes),
-    c_compile_command(Mode, CFlags, Exe, CFile, Cmd),
+    c_compile_command(Mode, CFlags, Std, Exe, CFile, Cmd),
     c_run_command(Cmd, 120000, OutCodes, Exit, Error),
     atom_codes(Output, OutCodes),
     (   Error == none,
@@ -84,13 +98,20 @@ c_compile(Code, Mode, CFlags, Exe, Verdict) :-
         Verdict = fail(Diag)
     ).
 
-c_compile_command(plain, CFlags, Exe, CFile, Cmd) :-
-    format(atom(Cmd), 'clang -std=c17 -Wall -Wextra -O0 ~s -o ~s ~s 2>&1',
-           [CFlags, Exe, CFile]).
-c_compile_command(sanitized, CFlags, Exe, CFile, Cmd) :-
+%% The edition is resolved ONCE, here, so a name that is not one clang
+%% knows fails before a temporary directory is made and names what is
+%% allowed, rather than reaching clang as `-std=c19'.
+c_compile_command(Mode, CFlags, Std, Exe, CFile, Cmd) :-
+    codegen_std_value(Std, Spelling),
+    c_compile_std_command(Mode, CFlags, Spelling, Exe, CFile, Cmd).
+
+c_compile_std_command(plain, CFlags, Spelling, Exe, CFile, Cmd) :-
+    format(atom(Cmd), 'clang -std=~w -Wall -Wextra -O0 ~s -o ~s ~s 2>&1',
+           [Spelling, CFlags, Exe, CFile]).
+c_compile_std_command(sanitized, CFlags, Spelling, Exe, CFile, Cmd) :-
     format(atom(Cmd),
-           'clang -std=c17 -Wall -Wextra -O0 -g ~s -fsanitize=address,undefined -fno-sanitize-recover=all -o ~s ~s 2>&1',
-           [CFlags, Exe, CFile]).
+           'clang -std=~w -Wall -Wextra -O0 -g ~s -fsanitize=address,undefined -fno-sanitize-recover=all -o ~s ~s 2>&1',
+           [Spelling, CFlags, Exe, CFile]).
 
 %% ---- static analysis ---------------------------------------------------
 
@@ -98,6 +119,11 @@ c_analyze_check(Code, Verdict) :-
     c_analyze_check(Code, '', Verdict).
 
 c_analyze_check(Code, CFlags, Verdict) :-
+    codegen_std(Std),
+    c_analyze_check(Code, CFlags, Std, Verdict).
+
+c_analyze_check(Code, CFlags, Std, Verdict) :-
+    codegen_std_value(Std, Spelling),
     tmp_file(codegen_analyze, Dir),
     make_directory(Dir),
     atom_concat(Dir, '/analyze.c', CFile),
@@ -105,8 +131,8 @@ c_analyze_check(Code, CFlags, Verdict) :-
     atom_codes(Text, Codes),
     write_file_from_codes(CFile, Codes),
     format(atom(Cmd),
-           'clang --analyze -Xanalyzer -analyzer-output=text -std=c17 -Wall -Wextra -O0 ~s ~s 2>&1',
-           [CFlags, CFile]),
+           'clang --analyze -Xanalyzer -analyzer-output=text -std=~w -Wall -Wextra -O0 ~s ~s 2>&1',
+           [Spelling, CFlags, CFile]),
     c_run_command(Cmd, 120000, OutCodes, Exit, Error),
     atom_codes(Output, OutCodes),
     (   Error == none,
@@ -132,7 +158,11 @@ c_test_check(Code, Cases, Timeout, Verdict) :-
     c_test_check(Code, Cases, Timeout, '', Verdict).
 
 c_test_check(Code, Cases, Timeout, CFlags, Verdict) :-
-    c_compile(Code, sanitized, CFlags, Exe, CompileVerdict),
+    codegen_std(Std),
+    c_test_check(Code, Cases, Timeout, CFlags, Std, Verdict).
+
+c_test_check(Code, Cases, Timeout, CFlags, Std, Verdict) :-
+    c_compile(Code, sanitized, CFlags, Std, Exe, CompileVerdict),
     (   CompileVerdict == ok
     ->  c_run_cases(Exe, Cases, Timeout, Failures),
         (   Failures == []
@@ -202,7 +232,11 @@ c_run_outputs(Code, Inputs, Outputs, Verdict) :-
     c_run_outputs(Code, Inputs, 3000, '', Outputs, Verdict).
 
 c_run_outputs(Code, Inputs, Timeout, CFlags, Outputs, Verdict) :-
-    c_compile(Code, sanitized, CFlags, Exe, Compile),
+    codegen_std(Std),
+    c_run_outputs(Code, Inputs, Timeout, CFlags, Std, Outputs, Verdict).
+
+c_run_outputs(Code, Inputs, Timeout, CFlags, Std, Outputs, Verdict) :-
+    c_compile(Code, sanitized, CFlags, Std, Exe, Compile),
     (   Compile == ok
     ->  c_run_output_list(Inputs, Exe, Timeout, Outputs),
         Verdict = ok

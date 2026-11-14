@@ -166,7 +166,7 @@ class EndpointTest(unittest.TestCase):
         sent = SEEN[-1]
         self.assertEqual(sent["model"], "deepseek-chat")
         self.assertEqual(sent["max_tokens"], 16)
-        self.assertIn("This session: C17", sent["messages"][0]["content"])
+        self.assertIn("This session: C", sent["messages"][0]["content"])
         self.assertEqual(len(sent["tools"]), 1)
 
     def test_token_is_required(self):
@@ -205,7 +205,7 @@ class EndpointTest(unittest.TestCase):
         )
         sent = SEEN[-1]
         self.assertEqual(sent["model"], "deepseek-chat")
-        self.assertNotIn("This session: C17", sent["messages"][0]["content"])
+        self.assertNotIn("This session: C", sent["messages"][0]["content"])
         self.assertNotIn("SKILL", sent["messages"][0]["content"])
 
     def test_cocolog_stream_passes_through(self):

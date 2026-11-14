@@ -13,7 +13,7 @@ them only after two.
 | mode | calls | effort | what happens |
 |---|---|---|---|
 | `high` | one | `reasoning_effort(high)` | the model gets the requirement and must return working C |
-| `loop` | up to three | `reasoning_effort(none)` | after each call the code is compiled with `clang -std=c17 -Wall -Wextra -O0` and run on the task's cases; the compiler/test report and the previous program go back with the next call |
+| `loop` | up to three | `reasoning_effort(none)` | after each call the code is compiled with `clang -std=<EDITION> -Wall -Wextra -O0` (`c17` unless `bench_config(std, ...)` names another) and run on the task's cases; the compiler/test report and the previous program go back with the next call |
 | `contract` | up to three | `reasoning_effort(none)` | the loop, with an obligation checklist added to the prompt. The checklist is derived by `contract.pl` from the task's hand-written sentences in the controlled English `library(reasoning/reason)` reads |
 | `extract` | one + up to three | `reasoning_effort(none)` | one call rewrites the plain requirement into allowed controlled-English sentences; `reason.pl` accepts the lines it can read, and the obligations derived from them go into the loop's prompt. The prompt names the task's read and print nouns and only the shapes that task can use |
 | `derive` | up to three | `reasoning_effort(none)` | the loop, with obligations derived deterministically from the plain requirement's keywords and the task's noun list. No model call |

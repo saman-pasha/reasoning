@@ -2,7 +2,7 @@
 %%
 %%     cocolog -s coding/c/codegen.pl -- SPEC.txt [flags] [OUT.c]
 %%
-%% A requirement goes to a language model as a CONTRACT: C17, one complete
+%% A requirement goes to a language model as a CONTRACT: one complete
 %% program, no Markdown fences, no prose. The reply is compiled, and a
 %% failed compile is repaired with the compiler's own diagnostic. With
 %% `--tests', the program is also run on each case under the sanitizers
@@ -40,6 +40,9 @@
 %%     --timeout MS     let one case run MS milliseconds (default 3000)
 %%     --budget N       stop before a repair once N tokens are spent
 %%     --cflags FLAGS   extra clang arguments (default none)
+%%     --std EDITION    compile and test as this C: c89, c99, c11, c17
+%%                      (default) or c23; c90, c18 and c2x alias c89, c17
+%%                      and c23
 %%     --analyze        run clang --analyze before accepting a reply
 %%     --dry-run        print the first prompt and exit, no model call
 %%     --key-env NAME   read the API key from NAME
@@ -133,7 +136,13 @@
 codegen_c(Spec, Code) :-
     codegen_c(Spec, [], Code).
 
+%% The one-shot has no run options, so it reads codegen_std/1's default and
+%% records its name for the prompt: a run that asserted another default in
+%% its own file gets that edition named in the prompt and nothing else.
 codegen_c(Spec, Overrides, Code) :-
+    codegen_std(Std),
+    codegen_std_name(Std, StdName),
+    nb_setval('$codegen_std_name', StdName),
     codegen_report_reset,
     get_time(Start),
     codegen_prompt(Spec, Prompt),
@@ -142,8 +151,11 @@ codegen_c(Spec, Overrides, Code) :-
     codegen_report_finish(Start).
 
 codegen_call(Prompt, Overrides, Code) :-
-    codegen_llm('You are a C17 programmer. Output only C source code, no Markdown fences, no explanation.',
-                Prompt, Overrides, Reply),
+    codegen_std_name_global(Std),
+    format(atom(System),
+           'You are a ~w programmer. Output only C source code, no Markdown fences, no explanation.',
+           [Std]),
+    codegen_llm(System, Prompt, Overrides, Reply),
     codegen_strip_fence(Reply, Code).
 
 codegen_llm(System, Prompt, Overrides, Reply) :-
@@ -337,16 +349,16 @@ codegen_c_from(Spec, Obligations, Cases, Overrides, Code) :-
     codegen_c_from(Spec, Obligations, Cases, Overrides, [], Code).
 
 codegen_c_from(Spec, Obligations, Cases0, Overrides, RunOptions, Code) :-
-    codegen_run_prepare(RunOptions, Max, Timeout, CFlags, Budget, Analyze,
-                        CasesEffort, VerifySettings0),
+    codegen_run_prepare(RunOptions, Max, Timeout, CFlags, Std, Budget,
+                        Analyze, CasesEffort, VerifySettings0),
     codegen_run_option(RunOptions, keep, none, Keep),
     codegen_report_reset,
     get_time(Start),
     catch(( codegen_cases_ready(Cases0, Spec, Overrides, Keep,
                                 case_settings(CasesEffort, VerifySettings0,
-                                              Timeout, CFlags), Cases),
+                                              Timeout, CFlags, Std), Cases),
             codegen_attempt(1, Max, Spec, Obligations, Cases, Overrides,
-                            Keep, check(Timeout, CFlags), Analyze, Budget,
+                            Keep, check(Timeout, CFlags, Std), Analyze, Budget,
                             none, Code)
           ), Ball,
           ( codegen_report_finish(Start), throw(Ball) )),
@@ -359,16 +371,25 @@ codegen_c_from(Spec, Obligations, Cases0, Overrides, RunOptions, Code) :-
 %% run's report; `--keep' writes the verified cases, the rejected ones and
 %% the reference program.
 codegen_cases_ready(auto, Spec, Overrides, Keep,
-                    case_settings(CasesEffort, VerifySettings, Timeout, CFlags),
+                    case_settings(CasesEffort, VerifySettings, Timeout, CFlags,
+                                  Std),
                     Cases) :-
     !,
     codegen_generate_cases(Spec, Overrides, CasesEffort, Raw),
     codegen_verify_cases(Spec, Overrides, Keep, CasesEffort, VerifySettings,
-                         Timeout, CFlags, Raw, Cases),
+                         Timeout, CFlags, Std, Raw, Cases),
     codegen_keep_cases(Keep, Cases).
 codegen_cases_ready(Cases, _, _, _, _, Cases).
 
-codegen_run_prepare(RunOptions, Max, Timeout, CFlags, Budget, Analyze,
+%% codegen_run_prepare(+RunOptions, -Max, -Timeout, -CFlags, -Std, -Budget,
+%%                     -Analyze, -CasesEffort, -VerifySettings)
+%%
+%% `std(Edition)' is read first and validated here: a name that is not a C
+%% edition stops the run before a model call or a temporary directory, and
+%% the edition it settles on is what every prompt and every compiler
+%% command of the run uses. Without std(_) the default is
+%% codegen_std/1's, which is c17 unless a caller asserted another.
+codegen_run_prepare(RunOptions, Max, Timeout, CFlags, Std, Budget, Analyze,
                     CasesEffort, VerifySettings) :-
     codegen_run_option(RunOptions, attempts, 3, Max0),
     codegen_run_check(attempts, Max0),
@@ -378,6 +399,15 @@ codegen_run_prepare(RunOptions, Max, Timeout, CFlags, Budget, Analyze,
     Timeout = Timeout0,
     codegen_run_option(RunOptions, cflags, '', Flags0),
     codegen_run_cflags(Flags0, CFlags),
+    codegen_run_option(RunOptions, std, std, Std0),
+    (   Std0 == std
+    ->  codegen_std(Std1)
+    ;   Std1 = Std0
+    ),
+    codegen_std_value(Std1, _),
+    codegen_std_name(Std1, StdName),
+    nb_setval('$codegen_std_name', StdName),
+    Std = Std1,
     codegen_run_option(RunOptions, budget, none, Budget0),
     codegen_run_budget(Budget0, Budget),
     codegen_run_option(RunOptions, analyze, no, Analyze0),
@@ -402,7 +432,7 @@ codegen_run_cases_effort(Level, Level) :-
     !.
 codegen_run_cases_effort(Value, _) :-
     format(atom(Msg), 'cases_effort must be an atom, not ~w', [Value]),
-    throw(error(codegen_error(run_option, Msg), codegen_run_prepare/8)).
+    throw(error(codegen_error(run_option, Msg), codegen_run_prepare/9)).
 
 codegen_run_auto_atom(auto, auto) :-
     !.
@@ -411,7 +441,7 @@ codegen_run_auto_atom(_Key, Value, Value) :-
     !.
 codegen_run_auto_atom(Key, Value, _) :-
     format(atom(Msg), '~w must be an atom or auto, not ~w', [Key, Value]),
-    throw(error(codegen_error(run_option, Msg), codegen_run_prepare/8)).
+    throw(error(codegen_error(run_option, Msg), codegen_run_prepare/9)).
 
 codegen_run_optional_atom(none, none) :-
     !.
@@ -420,7 +450,7 @@ codegen_run_optional_atom(_Key, Value, Value) :-
     !.
 codegen_run_optional_atom(Key, Value, _) :-
     format(atom(Msg), '~w must be an atom or none, not ~w', [Key, Value]),
-    throw(error(codegen_error(run_option, Msg), codegen_run_prepare/8)).
+    throw(error(codegen_error(run_option, Msg), codegen_run_prepare/9)).
 
 codegen_run_analyze(yes, yes) :-
     !.
@@ -428,7 +458,7 @@ codegen_run_analyze(no, no) :-
     !.
 codegen_run_analyze(Value, _) :-
     format(atom(Msg), 'analyze must be yes or no, not ~w', [Value]),
-    throw(error(codegen_error(run_option, Msg), codegen_run_prepare/8)).
+    throw(error(codegen_error(run_option, Msg), codegen_run_prepare/9)).
 
 codegen_run_budget(none, none) :-
     !.
@@ -438,13 +468,13 @@ codegen_run_budget(N, N) :-
     !.
 codegen_run_budget(Value, _) :-
     format(atom(Msg), 'budget must be a positive integer, not ~w', [Value]),
-    throw(error(codegen_error(run_option, Msg), codegen_run_prepare/8)).
+    throw(error(codegen_error(run_option, Msg), codegen_run_prepare/9)).
 
 codegen_run_cflags(Flags, Flags) :-
     (   atom(Flags)
     ->  true
     ;   format(atom(Msg), 'cflags must be an atom, not ~w', [Flags]),
-        throw(error(codegen_error(run_option, Msg), codegen_run_prepare/8))
+        throw(error(codegen_error(run_option, Msg), codegen_run_prepare/9))
     ).
 
 codegen_run_option(Options, Key, Default, Value) :-
@@ -460,7 +490,7 @@ codegen_run_check(Key, Value) :-
         Value > 0
     ->  true
     ;   format(atom(Msg), '~w must be a positive integer, not ~w', [Key, Value]),
-        throw(error(codegen_error(run_option, Msg), codegen_run_prepare/8))
+        throw(error(codegen_error(run_option, Msg), codegen_run_prepare/9))
     ).
 
 codegen_keep_prepare(none) :-
@@ -559,8 +589,11 @@ codegen_cases(Spec, Overrides, CasesEffort, Cases) :-
 codegen_generate_cases(Spec, Overrides, CasesEffort, Cases) :-
     codegen_case_overrides(Overrides, CasesEffort, CaseOverrides),
     codegen_case_prompt(Spec, Prompt),
-    codegen_llm('You write black-box test cases for C17 programs. Output only the requested test-case blocks, with no prose, numbering or Markdown fences.',
-                Prompt, CaseOverrides, Reply),
+    codegen_std_name_global(Std),
+    format(atom(CaseSystem),
+           'You write black-box test cases for ~w programs. Output only the requested test-case blocks, with no prose, numbering or Markdown fences.',
+           [Std]),
+    codegen_llm(CaseSystem, Prompt, CaseOverrides, Reply),
     codegen_strip_fence(Reply, Text),
     codegen_case_reply(Text, Cases).
 
@@ -597,18 +630,21 @@ codegen_case_error(Msg) :-
 %% is run on each generated input. Only expectations it reproduces
 %% survive. It never sees the generated cases.
 codegen_verify_cases(Spec, Overrides, Keep, CasesEffort, VerifySettings0,
-                     Timeout, CFlags, Raw, Cases) :-
+                     Timeout, CFlags, Std, Raw, Cases) :-
     codegen_verify_settings(Overrides, CasesEffort, VerifySettings0,
                             RefOverrides, VerifyProvider, VerifyModel),
     nb_setval('$codegen_verify_model', VerifyModel),
     nb_setval('$codegen_verify_provider', VerifyProvider),
     codegen_reference_prompt(Spec, Prompt),
-    codegen_llm('You are a C17 programmer writing an independent reference implementation for black-box testing. Output only the complete C source, with no Markdown fences and no explanation.',
-                Prompt, RefOverrides, Reply),
+    codegen_std_name(Std, StdProse),
+    format(atom(RefSystem),
+           'You are a ~w programmer writing an independent reference implementation for black-box testing. Output only the complete C source, with no Markdown fences and no explanation.',
+           [StdProse]),
+    codegen_llm(RefSystem, Prompt, RefOverrides, Reply),
     codegen_strip_fence(Reply, Reference),
     codegen_keep_reference(Keep, Reference),
     codegen_case_inputs(Raw, Inputs),
-    c_run_outputs(Reference, Inputs, Timeout, CFlags, Outputs, Verdict),
+    c_run_outputs(Reference, Inputs, Timeout, CFlags, Std, Outputs, Verdict),
     (   Verdict == ok
     ->  true
     ;   Verdict = fail(Diag),
@@ -741,12 +777,12 @@ codegen_keep_rejected(dir(Dir), Cases) :-
     codegen_keep_file(Dir, 'auto-cases-rejected.txt', Text).
 
 codegen_attempt(Attempt, Max, Spec, Obligations, Cases, Overrides, Keep,
-                check(Timeout, CFlags), Analyze, Budget, Prev, Code) :-
+                check(Timeout, CFlags, Std), Analyze, Budget, Prev, Code) :-
     codegen_guided_prompt(Spec, Obligations, Prev, Prompt),
     codegen_keep_attempt(Keep, Attempt, 'prompt.txt', Prompt),
     codegen_call(Prompt, Overrides, Code0),
     codegen_keep_attempt(Keep, Attempt, 'c', Code0),
-    codegen_verdict(Code0, Cases, check(Timeout, CFlags), Analyze, Verdict),
+    codegen_verdict(Code0, Cases, check(Timeout, CFlags, Std), Analyze, Verdict),
     (   Verdict == ok
     ->  Code = Code0
     ;   Verdict = fail(Kind, Diag),
@@ -757,7 +793,7 @@ codegen_attempt(Attempt, Max, Spec, Obligations, Cases, Overrides, Keep,
         ->  codegen_budget_error(Budget)
         ;   Next is Attempt + 1,
             codegen_attempt(Next, Max, Spec, Obligations, Cases, Overrides,
-                            Keep, check(Timeout, CFlags), Analyze, Budget,
+                            Keep, check(Timeout, CFlags, Std), Analyze, Budget,
                             prev(Code0, Diag), Code)
         )
     ).
@@ -775,28 +811,28 @@ codegen_budget_error(Budget) :-
            [Total, Budget]),
     throw(error(codegen_error(budget_exceeded, Msg), codegen_c_compiled/3)).
 
-codegen_verdict(Code, [], check(_, CFlags), Analyze, Verdict) :-
-    c_compile_check(Code, CFlags, Check),
+codegen_verdict(Code, [], check(_, CFlags, Std), Analyze, Verdict) :-
+    c_compile_check(Code, CFlags, Std, Check),
     (   Check == ok
-    ->  codegen_analyze_verdict(Code, CFlags, Analyze, Verdict)
+    ->  codegen_analyze_verdict(Code, CFlags, Std, Analyze, Verdict)
     ;   Check = fail(Diag),
         Verdict = fail(compile_failed, Diag)
     ).
-codegen_verdict(Code, Cases, check(Timeout, CFlags), Analyze, Verdict) :-
+codegen_verdict(Code, Cases, check(Timeout, CFlags, Std), Analyze, Verdict) :-
     Cases \== [],
-    c_test_check(Code, Cases, Timeout, CFlags, Check),
+    c_test_check(Code, Cases, Timeout, CFlags, Std, Check),
     (   Check == ok
-    ->  codegen_analyze_verdict(Code, CFlags, Analyze, Verdict)
+    ->  codegen_analyze_verdict(Code, CFlags, Std, Analyze, Verdict)
     ;   Check = fail(compile, Diag)
     ->  Verdict = fail(compile_failed, Diag)
     ;   Check = fail(test, Diag),
         Verdict = fail(test_failed, Diag)
     ).
 
-codegen_analyze_verdict(_Code, _CFlags, no, ok) :-
+codegen_analyze_verdict(_Code, _CFlags, _Std, no, ok) :-
     !.
-codegen_analyze_verdict(Code, CFlags, yes, Verdict) :-
-    c_analyze_check(Code, CFlags, Check),
+codegen_analyze_verdict(Code, CFlags, Std, yes, Verdict) :-
+    c_analyze_check(Code, CFlags, Std, Check),
     (   Check == ok
     ->  Verdict = ok
     ;   Check = fail(Diag),
@@ -808,16 +844,18 @@ codegen_guided_prompt(Spec, Obligations, Prev, Prompt) :-
     (   Lines == []
     ->  codegen_prompt(Spec, Base)
     ;   atomic_list_concat(Lines, '\n', Checklist),
+        codegen_std_name_global(Std),
         format(atom(Base),
-               'Write a complete C17 program for this requirement. Output only the C source, with no Markdown fences and no explanation.~n~nThe requirement implies these checks. The program must satisfy every one:~n~s~n~nRequirement:~n~s',
-               [Checklist, Spec])
+               'Write a complete ~w program for this requirement. Output only the C source, with no Markdown fences and no explanation.~n~nThe requirement implies these checks. The program must satisfy every one:~n~s~n~nRequirement:~n~s',
+               [Std, Checklist, Spec])
     ),
     (   Prev == none
     ->  Prompt = Base
     ;   Prev = prev(Previous, Diag),
+        codegen_std_name_global(Std),
         format(atom(Prompt),
-               '~s~n~nYour previous C program did not pass verification. The report said:~n~s~nThe previous program was:~n~s~nWrite a corrected complete C17 program. Output only the C source.',
-               [Base, Diag, Previous])
+               '~s~n~nYour previous C program did not pass verification. The report said:~n~s~nThe previous program was:~n~s~nWrite a corrected complete ~w program. Output only the C source.',
+               [Base, Diag, Previous, Std])
     ).
 
 %% codegen_prompt_for(+Spec, +Contract, -Prompt)
@@ -841,16 +879,31 @@ codegen_use_endpoint(Provider, BaseUrl, KeyVar) :-
     ;   throw(error(llm_error(unknown_provider, Provider), codegen_c/3))
     ).
 
+%% The run's edition, as a prompt names it, set once by codegen_run_prepare/9
+%% at the start of a run and read by every prompt that run builds -- so the
+%% first prompt, its repairs, the case call and the reference call all say
+%% the edition the compiler was given. A call that reaches a prompt with no
+%% run prepared (codegen_c/3's one-shot) reads codegen_std/1's default.
+codegen_std_name_global(Std) :-
+    (   catch(nb_getval('$codegen_std_name', Found), _, fail),
+        atom(Found)
+    ->  Std = Found
+    ;   codegen_std(Default),
+        codegen_std_name(Default, Std)
+    ).
+
 codegen_prompt(Spec, Prompt) :-
+    codegen_std_name_global(Std),
     format(atom(Prompt),
-           'Write a complete C17 program for this requirement. Output only the C source, with no Markdown fences and no explanation.~n~n~s',
-           [Spec]).
+           'Write a complete ~s program for this requirement. Output only the C source, with no Markdown fences and no explanation.~n~n~s',
+           [Std, Spec]).
 
 %% The case-generation prompt. The format is the one c_parse_text_cases/2
 %% reads, so a reply with prose before the first block is refused.
 codegen_case_prompt(Spec, Prompt) :-
+    codegen_std_name_global(Std),
     format(atom(Prompt),
-'Write 6 to 10 black-box test cases for a C17 program that must satisfy this requirement:
+'Write 6 to 10 black-box test cases for a ~w program that must satisfy this requirement:
 
 ~s
 
@@ -869,16 +922,17 @@ Repeat those two blocks for every case. Rules:
 - The expected output must be exact; trailing whitespace is ignored.
 - Do not write a program, an explanation, numbering, or Markdown fences.
 - Do not put commentary between the blocks.',
-           [Spec]).
+           [Std, Spec]).
 
 %% The reference program sees the requirement and nothing else. Its sole
 %% purpose is to reproduce or contradict the generated expectations.
 codegen_reference_prompt(Spec, Prompt) :-
+    codegen_std_name_global(Std),
     format(atom(Prompt),
-'Write a complete C17 reference implementation for this requirement. It will be used only to check generated test cases. Output only the C source, with no Markdown fences and no explanation.
+'Write a complete ~w reference implementation for this requirement. It will be used only to check generated test cases. Output only the C source, with no Markdown fences and no explanation.
 
 ~s',
-           [Spec]).
+           [Std, Spec]).
 
 %% Models still wrap code in ```c ... ``` even when told not to. A reply
 %% with no fence is the code as it stands; one with block fences loses the
@@ -906,7 +960,7 @@ main :-
                 format(user_error, 'codegen: ~w~n~s~n', [Kind, Detail]),
                 halt(1)
               ))
-    ;   format("usage: cocolog -s coding/c/codegen.pl -- SPEC.txt [--tests CASES.txt] [--auto-tests] [--cases-effort L] [--verify-provider P] [--verify-model M] [--verify-base-url U] [--verify-key-env NAME] [--contract CONTRACT.txt] [--keep DIR] [--attempts N] [--timeout MS] [--budget N] [--cflags FLAGS] [--analyze] [--dry-run] [--key-env NAME] [--temperature T] [--max-tokens N] [--provider P] [--model M] [--base-url U] [--effort E] [--report] [OUT.c]~n", []),
+    ;   format("usage: cocolog -s coding/c/codegen.pl -- SPEC.txt [--tests CASES.txt] [--auto-tests] [--cases-effort L] [--verify-provider P] [--verify-model M] [--verify-base-url U] [--verify-key-env NAME] [--contract CONTRACT.txt] [--keep DIR] [--attempts N] [--timeout MS] [--budget N] [--cflags FLAGS] [--std EDITION] [--analyze] [--dry-run] [--key-env NAME] [--temperature T] [--max-tokens N] [--provider P] [--model M] [--base-url U] [--effort E] [--report] [OUT.c]~n", []),
         halt(1)
     ).
 
@@ -915,7 +969,14 @@ codegen_main(SpecFile, TestsFile, ContractFile, OutFile, Report, DryRun,
     read_file_to_codes(SpecFile, Codes),
     atom_codes(Spec, Codes),
     (   DryRun == yes
-    ->  (   TestsFile == auto
+    ->  %% A dry run prints prompts, and a prompt names the edition: the
+        %% run options are prepared for their std(_) alone, so --dry-run
+        %% --std c23 shows the C23 prompt rather than the default's.
+        (   memberchk(std(_), RunOptions)
+        ->  codegen_run_prepare(RunOptions, _, _, _, _, _, _, _, _)
+        ;   true
+        ),
+        (   TestsFile == auto
         ->  codegen_case_prompt(Spec, Prompt)
         ;   codegen_prompt_for(Spec, ContractFile, Prompt)
         ),
@@ -1017,6 +1078,13 @@ codegen_args(['--budget', N|Rest], args(S, T, C, O, R, D, Run, Os), A) :-
     codegen_args(Rest, args(S, T, C, O, R, D, Run1, Os), A).
 codegen_args(['--cflags', Flags|Rest], args(S, T, C, O, R, D, Run, Os), A) :-
     codegen_run_set(cflags(Flags), Run, Run1),
+    codegen_args(Rest, args(S, T, C, O, R, D, Run1, Os), A).
+%% The edition is parsed here and checked again by codegen_run_prepare/9,
+%% which names it back to the run; a misspelt one is the run-option error
+%% and not an unknown flag, so the message says what is allowed.
+codegen_args(['--std', Std|Rest], args(S, T, C, O, R, D, Run, Os), A) :-
+    atom(Std),
+    codegen_run_set(std(Std), Run, Run1),
     codegen_args(Rest, args(S, T, C, O, R, D, Run1, Os), A).
 codegen_args(['--analyze'|Rest], args(S, T, C, O, R, D, Run, Os), A) :-
     codegen_run_set(analyze(yes), Run, Run1),

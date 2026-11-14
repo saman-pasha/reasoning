@@ -22,11 +22,17 @@
 %%     codegen_default(max_tokens, 16000).
 %%     codegen_default(temperature, 0).
 %%
+%% `std/1' is such a fact, and the one a C run reads for the edition to
+%% compile against: see "the C standard" at the foot of this file.
+%%
 %% The two effort keys are special-cased below, because which one is used
 %% depends on the provider. `key_env/1' is not an option of `library(llm)':
 %% codegen.pl reads it and points the selected provider at that variable.
 %% The provider, model and base_url are special-cased too: codegen.pl
-%% points library(llm) at the endpoint before the call.
+%% points library(llm) at the endpoint before the call. `std/1' is a
+%% special case for the other reason: it is not an option of the model
+%% call at all, and would reach the provider as an unknown field if it
+%% were left to the generic rule.
 %%
 %% THE PROVIDER, ITS MODEL AND ITS ENDPOINT ARE ONE SETTING. Change the
 %% three facts together when you change the provider. A call's
@@ -50,6 +56,9 @@ codegen_default(base_url, 'https://api.anthropic.com/v1/messages').
 codegen_default(effort, none).
 codegen_default(reasoning_effort, none).
 codegen_default(key_env, 'REASONING_API_KEY').
+%% the C edition every generator compiles against; see the section at the
+%% foot of this file for the names, the aliases and why c17 is the default
+codegen_default(std, c17).
 
 %% codegen_options(+Overrides, -Options)
 %%
@@ -163,7 +172,8 @@ codegen_other_options(Overrides, Options) :-
                 O \= effort(_),
                 O \= reasoning_effort(_),
                 O \= key_env(_),
-                O \= base_url(_)
+                O \= base_url(_),
+                O \= std(_)
             ),
             Rest),
     findall(Option,
@@ -174,6 +184,7 @@ codegen_other_options(Overrides, Options) :-
                 Key \== reasoning_effort,
                 Key \== key_env,
                 Key \== base_url,
+                Key \== std,
                 Option =.. [Key, Value],
                 \+ codegen_key(Key, Rest)
             ),
@@ -183,3 +194,75 @@ codegen_other_options(Overrides, Options) :-
 codegen_key(Key, Options) :-
     member(O, Options),
     functor(O, Key, _).
+
+%% ---- the C standard ----------------------------------------------------
+%%
+%% THE GENERATORS WRITE C, NOT ONE EDITION OF IT. The pipeline pinned
+%% `clang -std=c17' in four places (compile, the sanitizer build, the
+%% analyzer and the benchmark's verify), so a requirement that needed
+%% `_Generic' or `threads.h' and a requirement that had to stay in C99
+%% were both measured against the same edition by accident. `codegen_std/1'
+%% is the one place the edition is decided, and `codegen_std_value/2'
+%% resolves it to the spelling clang takes.
+%%
+%%     codegen_default(std, c17).     % this file: change it to change every run
+%%
+%% A caller names another WITHOUT editing the fact, two ways, and they
+%% mean different things:
+%%
+%%     std(c99) in a run option   THIS RUN compiles as C99; the prompt still
+%%                                says C99, and nothing else moves
+%%     assertz(codegen_default(std, c23)) in a caller's own file   the
+%%                                DEFAULT for that process, which is how a
+%%                                benchmark run names its edition for
+%%                                every task at once
+%%
+%% Each edition is a fact of its own rather than a list, so a misspelt one
+%% is a refusal that names what is allowed, not a quiet fallback:
+%%
+%%     c89 -> c89   c90 -> c89   c99 -> c99   c11 -> c11
+%%     c17 -> c17   c18 -> c17   c2x -> c23   c23 -> c23
+%%
+%% c17 is the default because every benchmark table recorded before this
+%% fact was recorded under it: raising the default would move every number
+%% in a comparison that cannot be re-run. A run that means another edition
+%% says so, and the report says which one it used.
+
+codegen_std(Std) :-
+    codegen_default(std, Std).
+
+%% codegen_std_value(+Name, -Spelling)
+%%
+%% The `-std=' spelling clang takes for Name, or Name itself when it is one
+%% of the spellings already; anything else raises, with the allowed names
+%% in the message. An unbound Name is an instantiation error, not a guess.
+codegen_std_value(Name, Spelling) :-
+    (   var(Name)
+    ->  throw(error(instantiation_error, codegen_std_value/2))
+    ;   atom(Name),
+        codegen_std_spelling(Name, Spelling)
+    ->  true
+    ;   format(atom(Msg), 'the C standard is one of c89, c99, c11, c17 or c23, not ~w',
+               [Name]),
+        throw(error(codegen_error(std, Msg), codegen_std_value/2))
+    ).
+
+codegen_std_spelling(c89, c89).
+codegen_std_spelling(c90, c89).
+codegen_std_spelling(c99, c99).
+codegen_std_spelling(c11, c11).
+codegen_std_spelling(c17, c17).
+codegen_std_spelling(c18, c17).
+codegen_std_spelling(c2x, c23).
+codegen_std_spelling(c23, c23).
+
+%% codegen_std_name(+Name, -Prose)
+%%
+%% The name a prompt uses: `C99', `C17', `C23'. An alias gets the canonical
+%% edition's name (`c18' is `C17'), so the prompt and the compiler flag
+%% always agree. A name clang does not know raises, as codegen_std_value/2
+%% does: a prompt must not say C99 where the compiler was told C17.
+codegen_std_name(Name, Prose) :-
+    codegen_std_value(Name, Spelling),
+    atom_concat(c, Digits, Spelling),
+    atom_concat('C', Digits, Prose).

@@ -64,9 +64,16 @@ ALLOW_ORIGINS = {
 
 SERVICE = "reasoning-coding/1.0"
 MODELS = ("c", "cocolog")
+# `c' is C, whatever edition is asked of it: c89 through c23 all reach the
+# same guide, which now names every edition C99 to C23 rather than C17
+# alone. c17 stays an alias because it was the one name a client had.
 ALIASES = {
     "c": "c",
+    "c89": "c",
+    "c99": "c",
+    "c11": "c",
     "c17": "c",
+    "c23": "c",
     "cocolog": "cocolog",
     "cocolog-card": "cocolog",
 }
@@ -206,7 +213,7 @@ class Handler(BaseHTTPRequestHandler):
                     "object": "model",
                     "created": now,
                     "owned_by": "reasoning-coding",
-                    "name": "C17" if model == "c" else "cocolog",
+                    "name": "C (C99-C23)" if model == "c" else "cocolog",
                     "context_length": CONTEXT_WINDOW,
                     "max_output_tokens": MAX_OUTPUT_TOKENS,
                 }

@@ -31,7 +31,7 @@
 
 bench_task(sum_even, Spec, Cases) :-
     bench_lines([
-        'Write a complete C17 program. It reads integers from standard input until EOF.',
+        'Write a complete C program. It reads integers from standard input until EOF.',
         'It prints, on one line, the sum of all even integers (negative even integers',
         'included). If there are no even integers, it prints 0.'
     ], Spec),
@@ -43,7 +43,7 @@ bench_task(sum_even, Spec, Cases) :-
 
 bench_task(max_subarray, Spec, Cases) :-
     bench_lines([
-        'Write a complete C17 program. It reads an integer n (1 <= n <= 100000),',
+        'Write a complete C program. It reads an integer n (1 <= n <= 100000),',
         'then n integers. It prints the maximum sum of a non-empty contiguous',
         'subarray, on one line.'
     ], Spec),
@@ -56,7 +56,7 @@ bench_task(max_subarray, Spec, Cases) :-
 
 bench_task(balanced, Spec, Cases) :-
     bench_lines([
-        'Write a complete C17 program. It reads one line of up to 1000 characters',
+        'Write a complete C program. It reads one line of up to 1000 characters',
         'containing only the characters ()[]{}. It prints yes if the brackets are',
         'correctly balanced and properly nested, otherwise no. The newline is not',
         'part of the line.'
@@ -70,7 +70,7 @@ bench_task(balanced, Spec, Cases) :-
 
 bench_task(word_count, Spec, Cases) :-
     bench_lines([
-        'Write a complete C17 program. It reads words from standard input until EOF.',
+        'Write a complete C program. It reads words from standard input until EOF.',
         'A word is a maximal sequence of ASCII letters. Convert every word to',
         'lowercase. Print each distinct word and its count, one per line, in',
         'lexicographic order, separated by one space.'
@@ -83,7 +83,7 @@ bench_task(word_count, Spec, Cases) :-
 
 bench_task(phonebook, Spec, Cases) :-
     bench_lines([
-        'Write a complete C17 program. It reads commands from standard input until EOF,',
+        'Write a complete C program. It reads commands from standard input until EOF,',
         'one command per line:',
         '  add NAME NUMBER  -- NAME is one word of letters, NUMBER is an integer; add or replace',
         '  find NAME        -- print NUMBER or not found',
@@ -106,7 +106,7 @@ bench_task(phonebook, Spec, Cases) :-
 %% `(2+3)*(4-1)' pins that parentheses beat both.
 bench_task(calculator, Spec, Cases) :-
     bench_lines([
-        'Write a complete C17 program. It reads one line containing an arithmetic',
+        'Write a complete C program. It reads one line containing an arithmetic',
         'expression with non-negative integers, +, -, *, /, parentheses, and spaces.',
         'Evaluate it with integer arithmetic; division truncates toward zero. The',
         'expression is valid and fits in a signed 32-bit int. Print the result on one',
@@ -126,7 +126,7 @@ bench_task(calculator, Spec, Cases) :-
 %% answers 3.
 bench_task(lcs, Spec, Cases) :-
     bench_lines([
-        'Write a complete C17 program. It reads two lines, each a string of',
+        'Write a complete C program. It reads two lines, each a string of',
         'lowercase ASCII letters with length at most 100. Print the length of',
         'their longest common subsequence on one line.'
     ], Spec),
@@ -145,7 +145,7 @@ bench_task(lcs, Spec, Cases) :-
 %% where an unstable sort has the most room to differ.
 bench_task(stable_sort, Spec, Cases) :-
     bench_lines([
-        'Write a complete C17 program. It reads an integer n, then n lines',
+        'Write a complete C program. It reads an integer n, then n lines',
         '"NAME SCORE", where NAME is one word of letters and SCORE is an integer.',
         'Print the records sorted by SCORE descending. Records with the same',
         'score must keep their original input order.'
@@ -177,7 +177,7 @@ bench_task(stable_sort, Spec, Cases) :-
 %% gets wrong first, and neither needs a tree that holds more than one node.
 bench_task(btree, Spec, Cases) :-
     bench_lines([
-        'Write a complete C17 program. It reads an integer n, then n integers.',
+        'Write a complete C program. It reads an integer n, then n integers.',
         'Insert each integer into a B-tree of minimum degree 2 (a 2-3-4 tree),',
         'ignoring a key already present. Print the keys in ascending order, one',
         'per line.'
@@ -202,7 +202,7 @@ bench_task(btree, Spec, Cases) :-
 bench_task(btree_debug, Spec, Cases) :-
     bench_debug_source(Source),
     format(atom(Spec),
-'Debug this C17 program. It reads an integer n from standard input, inserts n keys into a B-tree of minimum degree 6, searches, deletes half the keys, searches again, deletes the rest, and prints three integers: the number found in the first search, the number left after deleting half, and the final root key-plus-child count. A correct tree prints ((n+1)/2) (n/2) 0; with n=30 this program prints 14 13 6, and with n=256 it crashes. It has exactly three defects. Fix them without changing the algorithm, its dynamic allocation or its recursion, or the input/output format. Output the complete corrected C17 program.~n~n~s',
+'Debug this C program. It reads an integer n from standard input, inserts n keys into a B-tree of minimum degree 6, searches, deletes half the keys, searches again, deletes the rest, and prints three integers: the number found in the first search, the number left after deleting half, and the final root key-plus-child count. A correct tree prints ((n+1)/2) (n/2) 0; with n=30 this program prints 14 13 6, and with n=256 it crashes. It has exactly three defects. Fix them without changing the algorithm, its dynamic allocation or its recursion, or the input/output format. Output the complete corrected C program.~n~n~s',
            [Source]),
     Cases = [ case('0\n', '0 0 0'),
               case('1\n', '1 0 0'),
@@ -228,7 +228,7 @@ bench_task(btree_debug, Spec, Cases) :-
 %% reader of the code, not claimed by a case.
 bench_task(mvccs, Spec, Cases) :-
     bench_lines([
-        'Write a complete C17 program. It simulates a multi-version B-tree of',
+        'Write a complete C program. It simulates a multi-version B-tree of',
         'minimum degree 2 (a 2-3-4 tree) that holds integer keys, with one writer',
         'and any number of readers. It reads commands from standard input until EOF,',
         'one command per line:',

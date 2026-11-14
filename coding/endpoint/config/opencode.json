@@ -10,7 +10,7 @@
       },
       "models": {
         "c": {
-          "name": "C17",
+          "name": "C (C99-C23)",
           "capabilities": {
             "tools": true,
             "input": [

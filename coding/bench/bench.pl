@@ -39,6 +39,7 @@
 :- use_module('coding/bench/config.pl').
 :- use_module('coding/bench/tasks.pl').
 :- use_module('coding/bench/contract.pl').
+:- use_module('coding/options.pl').
 
 :- dynamic bench_result/7.
 
@@ -375,6 +376,14 @@ bench_code_file(Task, Mode, Dir, Attempt, File) :-
 bench_exe_file(Task, Mode, Dir, Attempt, File) :-
     format(atom(File), '~s/~w_~w_~w.out', [Dir, Task, Mode, Attempt]).
 
+%% The benchmark's edition, from coding/bench/config.pl, and validated here
+%% so a misspelt one stops the run at the first task rather than compiling
+%% with clang's guess. It is NOT codegen_std/1: the benchmark's numbers are
+%% a record of the generator under one edition, and an options default
+%% changed for some other program must not move them.
+bench_std(Std) :-
+    bench_config(std, Std).
+
 bench_input_file(Task, Mode, Dir, Attempt, Index, File) :-
     format(atom(File), '~s/~w_~w_~w_~w.in', [Dir, Task, Mode, Attempt, Index]).
 
@@ -468,7 +477,7 @@ bench_number(String, N) :-
 
 %% ---- compile and run the cases -----------------------------------------
 %%
-%% The verdict is the SAME one coding/c/check.pl gives: `clang -std=c17
+%% The verdict is the SAME one coding/c/check.pl gives: `clang -std=<edition>
 %% -Wall -Wextra -O0', then each case run with the binary's stdout trimmed
 %% of trailing whitespace and compared to the expected text, also trimmed.
 %% A case that times out (exit 124), exits nonzero or could not run is a
@@ -482,8 +491,10 @@ bench_number(String, N) :-
 bench_verify(Task, Mode, Dir, Attempt, Verdict, Diag) :-
     bench_code_file(Task, Mode, Dir, Attempt, CodeFile),
     bench_exe_file(Task, Mode, Dir, Attempt, Exe),
-    format(atom(Cmd), 'clang -std=c17 -Wall -Wextra -O0 -o ~s ~s 2>&1',
-           [Exe, CodeFile]),
+    bench_std(Std),
+    codegen_std_value(Std, Spelling),
+    format(atom(Cmd), 'clang -std=~w -Wall -Wextra -O0 -o ~s ~s 2>&1',
+           [Spelling, Exe, CodeFile]),
     bench_run_command(Cmd, 120000, CompCodes, CompExit, CompError),
     atom_codes(CompText, CompCodes),
     (   CompError \== none
