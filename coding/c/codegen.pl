@@ -78,8 +78,9 @@
 %%         from `coding/compile.pl'; the checks the repair loop uses.
 %%
 %%     codegen_report(-Report)
-%%         report(Calls, Prompt, Completion, Reasoning, Total), the last
-%%         top-level generation's calls and tokens. `--report' prints it.
+%%         report(Calls, Prompt, Completion, Reasoning, CacheHit, Total,
+%%         Seconds), the last top-level generation's calls, tokens and
+%%         wall time. `--report' prints it.
 %%
 %%     main/0
 %%         the program: SPEC.txt, the flags, then an optional OUT.c;
@@ -97,8 +98,11 @@ codegen_c(Spec, Code) :-
 
 codegen_c(Spec, Overrides, Code) :-
     codegen_report_reset,
+    get_time(Start),
     codegen_prompt(Spec, Prompt),
-    codegen_call(Prompt, Overrides, Code).
+    catch(codegen_call(Prompt, Overrides, Code), Ball,
+          ( codegen_report_finish(Start), throw(Ball) )),
+    codegen_report_finish(Start).
 
 codegen_call(Prompt, Overrides, Code) :-
     codegen_options(Overrides, Options),
@@ -120,7 +124,14 @@ codegen_report_reset :-
     nb_setval('$codegen_prompt', 0),
     nb_setval('$codegen_completion', 0),
     nb_setval('$codegen_reasoning', 0),
-    nb_setval('$codegen_total', 0).
+    nb_setval('$codegen_cache', 0),
+    nb_setval('$codegen_total', 0),
+    nb_setval('$codegen_seconds', 0.0).
+
+codegen_report_finish(Start) :-
+    get_time(End),
+    Seconds is End - Start,
+    nb_setval('$codegen_seconds', Seconds).
 
 codegen_report_add :-
     nb_getval('$codegen_calls', Calls0),
@@ -135,6 +146,7 @@ codegen_report_add :-
         ->  Reasoning = R0
         ;   Reasoning = 0
         ),
+        codegen_usage_number(Pairs, prompt_cache_hit_tokens, CacheHit),
         (   codegen_usage_number(Pairs, total_tokens, Total0),
             Total0 > 0
         ->  Total = Total0
@@ -143,6 +155,7 @@ codegen_report_add :-
         codegen_bump('$codegen_prompt', Prompt),
         codegen_bump('$codegen_completion', Completion),
         codegen_bump('$codegen_reasoning', Reasoning),
+        codegen_bump('$codegen_cache', CacheHit),
         codegen_bump('$codegen_total', Total)
     ;   true
     ).
@@ -159,12 +172,21 @@ codegen_bump(Global, Number) :-
     New is Old + Number,
     nb_setval(Global, New).
 
-codegen_report(report(Calls, Prompt, Completion, Reasoning, Total)) :-
+codegen_report(report(Calls, Prompt, Completion, Reasoning, CacheHit, Total, Seconds)) :-
     codegen_global('$codegen_calls', Calls),
     codegen_global('$codegen_prompt', Prompt),
     codegen_global('$codegen_completion', Completion),
     codegen_global('$codegen_reasoning', Reasoning),
-    codegen_global('$codegen_total', Total).
+    codegen_global('$codegen_cache', CacheHit),
+    codegen_global('$codegen_total', Total),
+    codegen_report_seconds(Seconds).
+
+codegen_report_seconds(Seconds) :-
+    (   catch(nb_getval('$codegen_seconds', Found), _, fail),
+        float(Found)
+    ->  Seconds = Found
+    ;   Seconds = 0.0
+    ).
 
 %% A report asked before any generation (an early error, say) is zeros.
 codegen_global(Global, Value) :-
@@ -176,10 +198,10 @@ codegen_global(Global, Value) :-
 codegen_report_print(no) :-
     !.
 codegen_report_print(yes) :-
-    codegen_report(report(Calls, Prompt, Completion, Reasoning, Total)),
+    codegen_report(report(Calls, Prompt, Completion, Reasoning, CacheHit, Total, Seconds)),
     format(user_error,
-           'codegen: ~w call(s), ~w prompt + ~w completion = ~w tokens (~w reasoning)~n',
-           [Calls, Prompt, Completion, Total, Reasoning]).
+           'codegen: ~w call(s), ~w prompt + ~w completion = ~w tokens (~w reasoning, ~w cached) in ~2f s~n',
+           [Calls, Prompt, Completion, Total, Reasoning, CacheHit, Seconds]).
 
 %% codegen_c_compiled(+Spec, -Code)
 %% codegen_c_compiled(+Spec, +Overrides, -Code)
@@ -212,8 +234,11 @@ codegen_c_from(Spec, Obligations, Cases, Overrides, RunOptions, Code) :-
     codegen_run_prepare(RunOptions, Max, Timeout),
     codegen_run_option(RunOptions, keep, none, Keep),
     codegen_report_reset,
-    codegen_attempt(1, Max, Spec, Obligations, Cases, Overrides,
-                    Keep, Timeout, none, Code).
+    get_time(Start),
+    catch(codegen_attempt(1, Max, Spec, Obligations, Cases, Overrides,
+                          Keep, Timeout, none, Code), Ball,
+          ( codegen_report_finish(Start), throw(Ball) )),
+    codegen_report_finish(Start).
 
 codegen_run_prepare(RunOptions, Max, Timeout) :-
     codegen_run_option(RunOptions, attempts, 3, Max0),
