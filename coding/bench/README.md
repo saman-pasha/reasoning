@@ -44,19 +44,24 @@ diagnostics, so any loop can lose to `high` when the first attempt fails.
 | `contract.pl` | parses the controlled-English contracts, derives the obligations, writes the extractor's prompt and line parser, and holds the keyword-to-contract rules |
 | `tasks.pl` | seven requirements, their hand-written contracts, extractor noun lists and stdin/stdout cases |
 | `run.sh` | sets `COCOLOG_LIBRARY` and runs `bench.pl` |
+| `paired.pl` | the paired repair comparison: one shared first attempt, then plain and obliged branches |
+| `paired.sh` | sets `COCOLOG_LIBRARY` and runs `paired.pl` |
 
 ## Run
 
 ```sh
 export REASONING_API_KEY=...
-coding/bench/run.sh              # all tasks
+coding/bench/run.sh              # all tasks, six modes
 coding/bench/run.sh -- lcs       # one task
+coding/bench/paired.sh           # paired first attempt and two repair policies
+coding/bench/paired.sh -- lcs
 ```
 
 `REASONING_API_KEY` is read by the child `gen.pl` through `coding/options.pl`;
-no other provider variable is needed. `run.sh` builds `COCOLOG_LIBRARY` as a
-colon-separated list, like `PATH`: the repository's parent, the cocolog
-checkout's `library/`, and any value the variable already had.
+no other provider variable is needed. `run.sh` and `paired.sh` build
+`COCOLOG_LIBRARY` as a colon-separated list, like `PATH`: the repository's
+parent, the cocolog checkout's `library/`, and any value the variable
+already had.
 
 The provider, model, endpoint and efforts are `coding/bench/config.pl`'s
 facts: DeepSeek's OpenAI-compatible endpoint, `deepseek-flash`, `high` for
@@ -116,6 +121,53 @@ The other results hold: `contract` and `derive` solved LCS first try (527
 and 526) but their obligations add prompt tokens on every task, so they
 cost 4 715 and 4 824 against `loop`'s 4 312. `extract` is the costliest
 no-reasoning mode at 6 751. `high` burned 7 985 reasoning tokens.
+
+## Paired run
+
+The six mode rows above call the model independently, so first-attempt
+luck can decide the total. `paired.pl` removes that: one plain first
+attempt per task; if it fails, the same program and diagnostic are the
+input to two branches:
+
+- `pair_plain`: up to two repairs with the plain requirement;
+- `pair_obliged`: up to two repairs with the keyword-derived obligations.
+
+The first attempt's tokens are counted in both totals, so the difference
+is the repair policy alone.
+
+A sample from the same seven tasks:
+
+```
+task first plain_total obliged_total plain_pass obliged_pass
+sum_even   yes  173 173 pass pass
+max_subarray yes 278 278 pass pass
+balanced   yes  418 418 pass pass
+word_count yes 1047 1047 pass pass
+phonebook  yes  898 898 pass pass
+calculator yes  587 587 pass pass
+lcs        no   984 1144 pass pass
+```
+
+The one first attempt that failed:
+
+```
+task first_tokens plain_repair obliged_repair plain_attempts obliged_attempts plain_pass obliged_pass
+lcs  328          656          816            2              2                pass       pass
+```
+
+Totals:
+
+```
+tasks passed first_tokens plain_repair obliged_repair plain_total obliged_total
+7     7      3729         656          816            4385        4545
+```
+
+Six first attempts passed, so both policies were identical there. LCS
+failed, and both policies fixed it on the first repair; the obligations
+did not save an attempt and cost 160 more tokens (816 against 656). The
+plain repair wins on this failure. Obligations on repair would pay only
+if a plain repair failed and the obliged repair passed, which this task
+set did not show; a harder task or more trials is the next measurement.
 
 ## Adding a task
 
