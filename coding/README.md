@@ -178,15 +178,18 @@ next `# input` starts the following case. `# input` immediately followed
 by `# expected` is no input at all; a blank line between them is an empty
 line (one newline). An empty expected is `# expected` with nothing before
 the next block. Any other line is content, even one beginning `#`.
+An expected exit status is optional: `# exit N` after the expected block,
+before the next `# input`. A timeout never passes, even when `N` is 124.
 
 The Prolog term form is accepted too:
 
 ```prolog
 cases([case('1 2 3\n', '6'),
-       case('4 5\n', '9')]).
+       case('4 5\n', '9', 2)]).
 ```
 
-Each case is `case(Input, Expected)`, both atoms; `Input` keeps its
+Each case is `case(Input, Expected)` or `case(Input, Expected, Exit)`,
+the atoms and an exit status that defaults to 0; `Input` keeps its
 newlines, and both sides are compared after trailing whitespace and final
 newlines are trimmed, as the benchmark does. One case may run for 3000 ms
 unless `--timeout` says otherwise. A wrong answer goes back to

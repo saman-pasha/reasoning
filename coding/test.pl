@@ -247,10 +247,10 @@ runner :-
     yes_no(c_test_check(Leak, [case('', 'ok')], ok), Y6),
     check('a leak is not a wrong answer', Y6, yes),
     Loop = 'int main(void) { for (;;) { } }\n',
-    yes_no(( c_test_check(Loop, [case('', '')], 200, fail(test, Diag4)),
+    yes_no(( c_test_check(Loop, [case('', '', 124)], 200, fail(test, Diag4)),
              sub_atom(Diag4, _, _, _, 'TIMEOUT')
            ), Y7),
-    check('a slow case times out at the caller limit', Y7, yes),
+    check('a timeout is a failure even if expected', Y7, yes),
     Macro = '#include <stdio.h>\nint main(void) {\n#ifdef ANSWER_YES\n    printf("yes\\n");\n#else\n    printf("no\\n");\n#endif\n    return 0;\n}\n',
     yes_no(c_test_check(Macro, [case('', 'no')], 3000, '', ok), Y8),
     check('a program without the flag runs its branch', Y8, yes),
@@ -259,7 +259,18 @@ runner :-
     yes_no(( c_test_check(Macro, [case('', 'yes')], 3000, '', fail(test, Diag5)),
              sub_atom(Diag5, _, _, _, 'CASE 1 WRONG')
            ), Y10),
-    check('without the flag the expected branch is wrong', Y10, yes).
+    check('without the flag the expected branch is wrong', Y10, yes),
+    BadExit = '#include <stdio.h>\nint main(void) { printf("bad\\n"); return 2; }\n',
+    yes_no(c_test_check(BadExit, [case('', 'bad', 2)], ok), Y11),
+    check('an expected exit status passes', Y11, yes),
+    yes_no(( c_test_check(BadExit, [case('', 'bad')], fail(test, Diag6)),
+             sub_atom(Diag6, _, _, _, 'EXIT 2 (expected 0)')
+           ), Y12),
+    check('an unexpected exit status fails', Y12, yes),
+    yes_no(( c_test_check(BadExit, [case('', 'wrong', 2)], fail(test, Diag7)),
+             sub_atom(Diag7, _, _, _, 'CASE 1 WRONG')
+           ), Y13),
+    check('a matching exit still checks the output', Y13, yes).
 
 %% ---- the cases file ----------------------------------------------------
 
@@ -360,7 +371,37 @@ cases_file :-
     yes_no(( c_read_cases(CrlfFile, CrlfCases),
              CrlfCases == [case('x\n', 'y')]
            ), Y13),
-    check('a CRLF file is read line by line', Y13, yes).
+    check('a CRLF file is read line by line', Y13, yes),
+    atom_concat(Dir, '/exitterm.pl', ExitTermFile),
+    fixture(ExitTermFile, ['cases([case(''a\\n'', ''b'', 3)]).']),
+    yes_no(( c_read_cases(ExitTermFile, ExitTermCases),
+             ExitTermCases == [case('a\n', 'b', 3)]
+           ), Y14),
+    check('a term carries an exit status', Y14, yes),
+    atom_concat(Dir, '/exittext.pl', ExitTextFile),
+    fixture(ExitTextFile,
+            ['# input', 'bad', '# expected', 'error', '# exit 2',
+             '# input', 'good', '# expected', 'ok']),
+    yes_no(( c_read_cases(ExitTextFile, ExitTextCases),
+             ExitTextCases == [case('bad\n', 'error', 2), case('good\n', 'ok')]
+           ), Y15),
+    check('a text block carries an exit status', Y15, yes),
+    atom_concat(Dir, '/afterexit.pl', AfterExitFile),
+    fixture(AfterExitFile,
+            ['# input', 'x', '# expected', 'y', '# exit 2', 'stray']),
+    yes_no(( catch(( c_read_cases(AfterExitFile, _), fail ),
+                   error(codegen_error(cases_file, Diag2), _),
+                   sub_atom(Diag2, _, _, _, 'after # exit'))
+           ), Y16),
+    check('content after # exit is refused', Y16, yes),
+    atom_concat(Dir, '/badexit.pl', BadExitFile),
+    fixture(BadExitFile,
+            ['# input', 'x', '# expected', 'y', '# exit -1']),
+    yes_no(( catch(( c_read_cases(BadExitFile, _), fail ),
+                   error(codegen_error(cases_file, Diag3), _),
+                   sub_atom(Diag3, _, _, _, 'non-negative'))
+           ), Y17),
+    check('a bad exit number is refused', Y17, yes).
 
 %% ---- the command line --------------------------------------------------
 
@@ -592,6 +633,21 @@ check_tool :-
     check_with_cases_flags(MacroFile, YesFile, '-DANSWER_YES', Text9, Exit9),
     check('with cflags the branch is right', Exit9, 0),
     has('with cflags the case passes', 'case(s) pass', Text9),
+    atom_concat(Dir, '/exit.c', ExitC),
+    fixture(ExitC,
+            ['#include <stdio.h>',
+             'int main(void) { printf("bad\\n"); return 2; }']),
+    atom_concat(Dir, '/exit_expected.txt', ExitExpectedFile),
+    fixture(ExitExpectedFile,
+            ['# input', '# expected', 'bad', '# exit 2']),
+    atom_concat(Dir, '/exit_missing.txt', ExitMissingFile),
+    fixture(ExitMissingFile, ['# input', '# expected', 'bad']),
+    check_with_cases(ExitC, ExitExpectedFile, Text10, Exit10),
+    check('the checker honors an expected exit', Exit10, 0),
+    has('the expected exit passes', 'case(s) pass', Text10),
+    check_with_cases(ExitC, ExitMissingFile, Text11, Exit11),
+    check('the checker refuses an unexpected exit', Exit11, 1),
+    has('the unexpected exit says TESTS FAILED', 'TESTS FAILED', Text11),
     atom_concat(Dir, '/missing.c', Missing),
     check_compiles(Missing, Text5, Exit5),
     check('a missing file fails', Exit5, 1),
