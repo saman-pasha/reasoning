@@ -17,6 +17,8 @@
                 ep_token_ok/1,
                 ep_add_guide/3,
                 ep_task_text/2,
+                ep_reasoning/7,
+                ep_checks/2,
                 ep_sse/3
               ]).
 :- use_module('coding/endpoint/reasoning_core.pl',
@@ -32,6 +34,8 @@ main :-
     test_sse,
     test_sse_tools,
     test_reasoning,
+    test_c_reasoning,
+    test_check_cap,
     unsetenv('CODING_ENDPOINT_TOKEN'),
     checks_done.
 
@@ -152,3 +156,18 @@ test_reasoning :-
     ;   Got = nothing
     ),
     check('the reasoner reads the request', Got, read).
+
+test_c_reasoning :-
+    Messages = [json([role-user, content-'Write hello.c that prints hello.'])],
+    ep_reasoning(c, false, Messages, 'GUIDE', Guide, N, _),
+    (   N =:= 2,
+        sub_atom(Guide, _, _, _, 'Reasoning pre-pass'),
+        sub_atom(Guide, _, _, _, 'do not assume more input')
+    ->  Got = checks
+    ;   Got = wrong
+    ),
+    check('the C model gets exactly two reasoning checks', Got, checks).
+
+test_check_cap :-
+    ep_checks([first, second, third], Checks),
+    check('a longer reading is capped at two', Checks, [first, second]).

@@ -181,14 +181,55 @@ ep_note(Checks, Note) :-
            '~n~n# Reasoning pre-pass~n~nA deterministic pass by the repository reasoner read the request and found these checks. Verify each one before you say the task is done:~n~n~w',
            [Body]).
 
-ep_reasoning(Alias, Title, Messages, Guide0, Guide, N, Terms) :-
-    (   Alias == cocolog,
-        \+ Title,
+%% The checks every code task gets when its wording gives fewer than the
+%% minimum. They are deliberately generic: the task's own obligations, when
+%% it has any, stay first.
+ep_general_check('Read the input exactly as the task describes; do not assume more input than it gives.').
+ep_general_check('Write exactly the required result; do not print a prompt, label or debugging text.').
+ep_general_check('Compile and run the program before you say the task is done.').
+
+%% By default exactly two checks: the task's first two when it has that
+%% many, general ones when it has fewer, and no more when it has more.
+ep_checks(Checks0, Checks) :-
+    ep_int('CODING_ENDPOINT_REASONING_MIN', 2, Min),
+    ep_int('CODING_ENDPOINT_REASONING_MAX', 2, Max),
+    ep_limit_checks(Checks0, Max, Limited),
+    ep_fill_checks(Min, Max, Limited, Checks).
+
+ep_limit_checks(Checks, Max, Checks) :-
+    Max =< 0,
+    !.
+ep_limit_checks(Checks, Max, Checks) :-
+    length(Checks, N),
+    N =< Max,
+    !.
+ep_limit_checks(Checks, Max, Limited) :-
+    length(Limited, Max),
+    append(Limited, _, Checks).
+
+ep_fill_checks(Min, _, Checks, Checks) :-
+    length(Checks, N),
+    N >= Min,
+    !.
+ep_fill_checks(Min, Max, Checks, Out) :-
+    (   Max > 0, length(Checks, N), N >= Max
+    ->  Out = Checks
+    ;   ep_general_check(Check),
+        \+ memberchk(Check, Checks),
+        !,
+        append(Checks, [Check], Checks1),
+        ep_fill_checks(Min, Max, Checks1, Out)
+    ;   Out = Checks
+    ).
+
+ep_reasoning(_Alias, Title, Messages, Guide0, Guide, N, Terms) :-
+    (   \+ Title,
         ep_reasoning_on,
         ep_task_text(Messages, Text)
     ->  endpoint_reason(Text, Obs, CObs, Terms0),
         append(Obs, CObs, All0),
-        ep_unique(All0, All),
+        ep_unique(All0, All1),
+        ep_checks(All1, All),
         length(All, N),
         Terms = Terms0,
         ep_note(All, Note),
@@ -382,7 +423,7 @@ ep_chat_body(Request, Body, Start, Reply) :-
             ),
             (   ep_json_get(Body1, stream, Stream0)
             ->  true
-            ;   Stream0 = @(false)
+            ;   Stream0 = @(true)
             ),
             (   Stream0 == @(true) -> Stream = true ; Stream = false ),
             (   ep_json_get(Body1, reasoning_effort, Effort)
@@ -418,7 +459,7 @@ ep_chat_body(Request, Body, Start, Reply) :-
             ),
             (   Title == true
             ->  Mode = title
-            ;   Alias == cocolog, ep_reasoning_on
+            ;   ep_reasoning_on
             ->  Mode = reasoning
             ;   Mode = plain
             ),

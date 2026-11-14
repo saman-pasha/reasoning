@@ -9,7 +9,7 @@ Two model names are exposed:
 
 | model | guide |
 |---|---|
-| `c` | `prompts/c.md`, C with clang and the sanitizers, C99 through C23 (C17 unless the task names another) |
+| `c` | `prompts/c.md`, C with clang and the sanitizers, C99 through C23 (C17 unless the task names another), and the reasoning pre-pass |
 | `cocolog` | cocolog's own `SKILL.md`, `prompts/cocolog.md`, and the reasoning pre-pass |
 
 The endpoint is not a second agent loop. OpenCode still owns the read, edit
@@ -17,11 +17,12 @@ and shell tools, the session and the permissions. Both models declare a
 1,000,000-token context and an 8,192-token output limit; `/v1/models` reports
 the same limits.
 
-`settings.reasoningEffort` defaults to `high`, and the models define the
+`settings.reasoningEffort` defaults to `none`, and the models define the
 variants `none`, `low`, `medium` and `high`. OpenCode sends the chosen level
 as `reasoning_effort`, and the endpoint forwards it unchanged. In the TUI,
 `ctrl+t` cycles the variants; on the command line name one as
-`reasoning/c#none` or `reasoning/cocolog#high`.
+`reasoning/c#high` or `reasoning/cocolog#low`. A request that omits `stream`
+is treated as `stream: true`.
 
 ## What it is not
 
@@ -75,8 +76,9 @@ OpenCode asks as usual.
 
 ## The reasoning pre-pass
 
-For `reasoning/cocolog`, the endpoint reads the latest user turn with
-`reasoning_core.pl`, which runs locally and calls no model:
+For both `reasoning/c` and `reasoning/cocolog`, the endpoint reads the
+session's first user turn with `reasoning_core.pl`, which runs locally and
+calls no model:
 
 - `coding/obligations.pl` derives checks from the request's keywords.
 - `coding/contract.pl` reads controlled-English sentences through
@@ -84,17 +86,22 @@ For `reasoning/cocolog`, the endpoint reads the latest user turn with
 - `library(reasoning/reason)` parses the text into terms; their count is
   recorded in the trace.
 
-The deduplicated checks are appended to the cocolog system prompt under a
-"Reasoning pre-pass" heading. The model still writes and runs the code with
-OpenCode's tools, but it is checked against this repository's own reading of
-the request. `CODING_ENDPOINT_REASONING=off` disables the pass. The `c` model
-does not use it.
+The deduplicated checks are appended to the model's system prompt under a
+"Reasoning pre-pass" heading. By default the pass keeps exactly two: the
+task's first two, general checks when the task's wording gives fewer, and no
+more when it gives more. That is the usual trace's `mode=reasoning` and
+`reasoning=2`. `CODING_ENDPOINT_REASONING_MIN` and
+`CODING_ENDPOINT_REASONING_MAX` change the two ends. The model still writes
+and runs the code with OpenCode's tools, but it is checked against this
+repository's own reading of the request.
+`CODING_ENDPOINT_REASONING=off` disables the pass for either model.
 
 ## Trace
 
 Set `CODING_ENDPOINT_TRACE=/path/to/trace.jsonl` to write one JSON line per
 completion request. A line carries the time, OpenCode session and project
-ids, model, backend model, effort, `mode` (`reasoning`, `plain` or `title`),
+ids, model, backend model, effort, `mode` (`reasoning`, `title`, or `plain`
+when the pre-pass is off),
 the number of reasoning checks and parsed terms, message and tool counts,
 the HTTP status and the seconds. The trace never includes prompts, replies
 or the bearer token.
@@ -119,7 +126,9 @@ DeepSeek's OpenAI endpoint with `REASONING_API_KEY`:
 | `CODING_ENDPOINT_KEY_ENV` | `REASONING_API_KEY` |
 | `CODING_ENDPOINT_TOKEN` | unset; a bearer token when set |
 | `CODING_ENDPOINT_ALLOW_ORIGIN` | the local OpenCode web origins |
-| `CODING_ENDPOINT_REASONING` | `on` for `cocolog`; `off` disables the pre-pass |
+| `CODING_ENDPOINT_REASONING` | `on` for both models; `off` disables the pre-pass |
+| `CODING_ENDPOINT_REASONING_MIN` | `2`, filled with general checks if needed |
+| `CODING_ENDPOINT_REASONING_MAX` | `2`, the checks kept from a longer reading |
 | `CODING_ENDPOINT_TRACE` | unset; a JSONL path turns tracing on |
 | `CODING_ENDPOINT_HOST` | unused; `library(tcp)` binds every interface |
 | `CODING_ENDPOINT_PORT` | `8787` |
