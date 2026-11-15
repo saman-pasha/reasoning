@@ -1,7 +1,21 @@
-# Reasoning Coding Art for Codex: the provider block appended to
-# ~/.codex/config.toml. Replace TOKEN with the endpoint's bearer token
-# (CODING_ENDPOINT_TOKEN); Codex reads the token from this file, not from
-# the environment. The matching profile is codex-reasoning.config.toml.
+# Reasoning Coding Art for Codex.
+#
+# These go at the TOP of ~/.codex/config.toml, before any [table], and
+# replace the model and provider a previous block set:
+#
+#   model = "cocolog"
+#   model_provider = "reasoning"
+#   model_context_window = 1000000
+#   model_auto_compact_token_limit = 900000
+#   model_catalog_json = "~/.codex/model-catalog.json"
+#
+# Copy codex-model-catalog.json to ~/.codex/model-catalog.json first. The
+# catalog is what makes the twelve cocolog/C/Python names appear in
+# /model; without it Codex lists only the models it ships.
+#
+# The provider table follows. Replace TOKEN with the endpoint's bearer
+# token (CODING_ENDPOINT_TOKEN); Codex reads the token from this file, not
+# from the environment. The matching profile is codex-reasoning.config.toml.
 
 [model_providers.reasoning]
 name = "Reasoning Coding Art"

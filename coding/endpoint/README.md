@@ -59,9 +59,18 @@ and puts it on the rebuilt assistant messages; an assistant message always
 carries the field, empty when there was no reasoning, because the backend
 refuses one that omits it while thinking.
 
-`~/.codex/config.toml`:
+Copy `config/codex-model-catalog.json` to `~/.codex/model-catalog.json`.
+The catalog is what puts the twelve names in Codex's `/model` picker;
+without it Codex lists only the models it ships. Then add to the top of
+`~/.codex/config.toml`, before any table:
 
 ```toml
+model = "cocolog"
+model_provider = "reasoning"
+model_context_window = 1000000
+model_auto_compact_token_limit = 900000
+model_catalog_json = "~/.codex/model-catalog.json"
+
 [model_providers.reasoning]
 name = "Reasoning Coding Art"
 base_url = "http://127.0.0.1:8787/v1"
@@ -79,11 +88,10 @@ model_auto_compact_token_limit = 900000
 ```
 
 `-m python-r8` picks another model, and `-c model_reasoning_effort=high`
-picks the backend's effort. The base config can also name `cocolog` and
-`reasoning` at the top level, with the context keys, so plain `codex`
-uses the same default without `-p`. Codex warns that a custom slug has no
-model metadata; the context overrides supply the 1M window and a 900k
-auto-compaction limit.
+picks the backend's effort. The base config names `cocolog` and
+`reasoning` at the top level, so plain `codex` uses the same default
+without `-p`; the catalog supplies the model metadata (1M context, 900k
+auto-compaction) and the picker entries.
 
 ## What it is not
 
@@ -270,8 +278,9 @@ socket is opened.
 | `reasoning_core.pl` | obligations, contract and reasoner reading |
 | `reasoning.pl` | the command-line form of the pre-pass |
 | `config/opencode.json` | the provider, the two models and their variants |
-| `config/codex.toml` | Codex's provider block, with a placeholder token |
+| `config/codex.toml` | Codex's top-level defaults and provider block, with a placeholder token |
 | `config/codex-reasoning.config.toml` | Codex's `-p reasoning` profile |
+| `config/codex-model-catalog.json` | the twelve models for Codex's `/model` picker |
 | `prompts/c.md` | the C guide, every edition from C99 to C23 |
 | `prompts/cocolog.md` | the cocolog addendum to `SKILL.md` |
 | `test.pl` | the local checks, no model and no socket |
