@@ -411,6 +411,10 @@ section_18 :-
     must('and back, which is the same two halves the other way', S18b, 'Cosa mangia il cane?'),
     reason_translate('Le case non sono grandi.', italian, spanish, S18c),
     must('a stated plural one side and a ruled one the other', S18c, 'Las casas no son grandes.'),
+    reason_translate('Il cane non mangia la casa.', italian, spanish, S18d),
+    must('a negative statement, Italian into Spanish', S18d, 'El perro no come la casa.'),
+    reason_translate('La casa no es grande.', spanish, italian, S18e),
+    must('a negative copula back', S18e, 'La casa non è grande.'),
     show('so a language is added by adding its lesson', 'reason_learn(Text, Language, Terms)').
 
 section_19 :-

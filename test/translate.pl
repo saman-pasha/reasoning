@@ -950,6 +950,9 @@ ir :-
     check('the copula, and the gender rule of the other lesson', S5, 'La casa es grande.'),
     reason_translate('Le case non sono grandi.', italian, spanish, S6),
     check('a stated plural one side, a ruled one the other', S6, 'Las casas no son grandes.'),
+    reason_translate('Il cane non mangia la casa.', italian, spanish, S6b),
+    check('a negative statement, Italian into Spanish', S6b,
+          'El perro no come la casa.'),
     reason_translate('Cosa mangia il cane?', italian, spanish, S7),
     check('a question, with the mark the other lesson begins one with', S7, '¿Qué come el perro?'),
 
@@ -957,6 +960,8 @@ ir :-
     check('and the other way, which is the same two halves', I8, 'Il cane mangia il pane.'),
     reason_translate('Las casas no son grandes.', spanish, italian, I9),
     check('the plurals back', I9, 'Le case non sono grandi.'),
+    reason_translate('La casa no es grande.', spanish, italian, I9b),
+    check('a negative copula back', I9b, 'La casa non è grande.'),
     reason_translate('¿Qué come el perro?', spanish, italian, I10),
     check('the question back, and Italian begins one with nothing', I10, 'Cosa mangia il cane?'),
 
