@@ -71,7 +71,7 @@ experimental_bearer_token = "TOKEN"
 `~/.codex/reasoning.config.toml`, selected with `codex -p reasoning`:
 
 ```toml
-model = "c"
+model = "cocolog"
 model_provider = "reasoning"
 model_reasoning_effort = "none"
 model_context_window = 1000000
@@ -79,9 +79,11 @@ model_auto_compact_token_limit = 900000
 ```
 
 `-m python-r8` picks another model, and `-c model_reasoning_effort=high`
-picks the backend's effort. Codex warns that a custom slug has no model
-metadata; the context overrides in the profile supply the 1M window and a
-900k auto-compaction limit.
+picks the backend's effort. The base config can also name `cocolog` and
+`reasoning` at the top level, with the context keys, so plain `codex`
+uses the same default without `-p`. Codex warns that a custom slug has no
+model metadata; the context overrides supply the 1M window and a 900k
+auto-compaction limit.
 
 ## What it is not
 
