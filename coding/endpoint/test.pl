@@ -202,7 +202,45 @@ test_loop_guard :-
     ep_test_calls(15, 848, Fifteen),
     ep_loop_verdict([json([role-assistant, tool_calls-Fifteen])],
                     Verdict15),
-    check('fifteen repeated commands are allowed', Verdict15, ok).
+    check('fifteen repeated commands are allowed', Verdict15, ok),
+    ep_test_edits(18, 1, Edits),
+    ep_loop_verdict([json([role-assistant, tool_calls-Edits])], EditVerdict),
+    check('eighteen different edits of one file are allowed',
+          EditVerdict, ok),
+    ep_test_same_edits(16, SameEdits),
+    ep_loop_verdict([json([role-assistant, tool_calls-SameEdits])],
+                    SameVerdict),
+    (   SameVerdict = repeat(_, 16, 16)
+    ->  Repeated = yes
+    ;   Repeated = no
+    ),
+    check('sixteen identical edits are a loop', Repeated, yes),
+    ep_tool_signature(read, '{"path":"/tmp/x.pl"}', ReadSignature),
+    check('a path-only tool is keyed by its path', ReadSignature,
+          'read:/tmp/x.pl').
+
+ep_test_edits(0, _, []).
+ep_test_edits(N, Start,
+              [json([id-Id, type-function,
+                     function-json([name-edit, arguments-Arguments])])|Rest]) :-
+    N > 0,
+    format(atom(Id), 'edit~w', [N]),
+    format(atom(Arguments),
+           '{"path":"/tmp/strategy.pl","oldString":"old ~w","newString":"new ~w"}',
+           [Start, Start]),
+    N1 is N - 1,
+    Start1 is Start + 1,
+    ep_test_edits(N1, Start1, Rest).
+
+ep_test_same_edits(0, []).
+ep_test_same_edits(N,
+                   [json([id-Id, type-function,
+                          function-json([name-edit,
+                                         arguments-'{"path":"/tmp/strategy.pl","oldString":"same","newString":"same too"}'])])|Rest]) :-
+    N > 0,
+    format(atom(Id), 'same~w', [N]),
+    N1 is N - 1,
+    ep_test_same_edits(N1, Rest).
 
 ep_test_calls(0, _, []).
 ep_test_calls(N, Start, [json([id-Id, type-function,

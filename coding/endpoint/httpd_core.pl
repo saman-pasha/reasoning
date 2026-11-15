@@ -644,13 +644,58 @@ ep_tool_signature(Name, Arguments, Signature) :-
     ->  Key0 = Command
     ;   Value = json(ArgumentPairs),
         memberchk(path-Path, ArgumentPairs)
-    ->  Key0 = Path
+    ->  ep_path_key(ArgumentPairs, Path, Key0)
     ;   atom(Arguments)
     ->  Key0 = Arguments
     ;   Key0 = none
     ),
     ep_signature_atom(Key0, Key),
     atomic_list_concat([Name, ':', Key], Signature).
+
+%% A tool whose only argument is the path is keyed by that path. A tool
+%% that writes, edits or reads a named part of a file carries its other
+%% arguments in the key too: eighteen edits of one file, each a different
+%% hunk, are eighteen signatures, and the same edit twice is one. Without
+%% this, a session that legitimately edits one file many times is stopped.
+ep_path_key([path-_], Path, Path) :-
+    !.
+ep_path_key(ArgumentPairs, Path, Key) :-
+    ep_value_digest(json(ArgumentPairs), Digest),
+    format(atom(Key), '~w#~w', [Path, Digest]).
+
+%% A 32-bit FNV-1a digest of a value's text, as seven letters. Letters,
+%% not digits: the signature's digit normalisation would fold two decimal
+%% digests to one '#'. It keeps the signature short; two values that meet
+%% here are the same edit, which is what the guard is counting.
+ep_value_digest(Value, Digest) :-
+    (   atom(Value)
+    ->  atom_codes(Value, Codes)
+    ;   string(Value)
+    ->  string_codes(Value, Codes)
+    ;   number(Value)
+    ->  format(atom(Text), '~w', [Value]),
+        atom_codes(Text, Codes)
+    ;   format(atom(Text), '~q', [Value]),
+        atom_codes(Text, Codes)
+    ),
+    ep_codes_digest(Codes, 2166136261, Hash),
+    ep_digest_letters(7, Hash, Letters),
+    atom_codes(Digest, Letters).
+
+ep_codes_digest([], Hash, Hash).
+ep_codes_digest([Code|Codes], Hash0, Hash) :-
+    Mixed is Hash0 xor Code,
+    Hash1 is (Mixed * 16777619) mod 4294967296,
+    ep_codes_digest(Codes, Hash1, Hash).
+
+ep_digest_letters(0, _, []).
+ep_digest_letters(N, Hash, [Letter|Letters]) :-
+    N > 0,
+    Digit is Hash mod 26,
+    Letter is 97 + Digit,
+    Next is Hash div 26,
+    N1 is N - 1,
+    ep_digest_letters(N1, Next, Letters).
 
 ep_tool_arguments(Value, Value) :-
     Value = json(_),

@@ -142,7 +142,11 @@ tail -f "$HOME/.local/state/opencode/reasoning-coding.jsonl"
 
 Every request carries the session's tool history. The endpoint normalises a
 shell command's digits (`names848.pl` and `names855.pl` are one signature)
-and counts identical tool calls. At 16 the request is refused with HTTP 409
+and counts identical tool calls. A shell call is keyed by its command. A
+tool whose arguments are a path alone is keyed by that path; an `edit` or a
+`write` is keyed by its path and a digest of its other arguments, so
+eighteen edits of one file with different hunks are eighteen signatures,
+while the same edit twice is one. At 16 the request is refused with HTTP 409
 and a message naming the repeated signature, before the backend is called.
 `CODING_ENDPOINT_REPEAT_LIMIT` changes the limit; `0` disables the guard.
 
