@@ -52,6 +52,13 @@ message that answers it -- passed through the same guide, reasoning checks
 and loop guard, and the chat reply is written back as Responses SSE events
 (or one Responses object). Codex's text and tool calls both round-trip.
 
+Codex drops a reasoning item from its next input, but DeepSeek's thinking
+mode wants the last reasoning back. The endpoint remembers the reasoning
+per session (`session-id`) under the tool calls or the text it belonged to
+and puts it on the rebuilt assistant messages; an assistant message always
+carries the field, empty when there was no reasoning, because the backend
+refuses one that omits it while thinking.
+
 `~/.codex/config.toml`:
 
 ```toml
@@ -155,7 +162,8 @@ it is checked against this repository's own reading of the request.
 ## Trace
 
 Set `CODING_ENDPOINT_TRACE=/path/to/trace.jsonl` to write one JSON line per
-completion request. A line carries the time, OpenCode session and project
+completion request. A line carries the time, the session (`x-opencode-session`
+or Codex's `session-id`) and project
 ids, model, backend model, effort, `mode` (`reasoning`, `title`, or `plain`
 when the pre-pass is off),
 the number of reasoning checks and parsed terms, message and tool counts,
@@ -260,6 +268,8 @@ socket is opened.
 | `reasoning_core.pl` | obligations, contract and reasoner reading |
 | `reasoning.pl` | the command-line form of the pre-pass |
 | `config/opencode.json` | the provider, the two models and their variants |
+| `config/codex.toml` | Codex's provider block, with a placeholder token |
+| `config/codex-reasoning.config.toml` | Codex's `-p reasoning` profile |
 | `prompts/c.md` | the C guide, every edition from C99 to C23 |
 | `prompts/cocolog.md` | the cocolog addendum to `SKILL.md` |
 | `test.pl` | the local checks, no model and no socket |

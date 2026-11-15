@@ -1,0 +1,10 @@
+# Reasoning Coding Art profile for Codex: copy this file to
+# ~/.codex/reasoning.config.toml and run `codex -p reasoning`. `-m c-r2`,
+# `-m cocolog` or `-m python-r8` picks another model, and
+# `-c model_reasoning_effort=high` picks the backend's effort.
+
+model = "c"
+model_provider = "reasoning"
+model_reasoning_effort = "none"
+model_context_window = 1000000
+model_auto_compact_token_limit = 900000

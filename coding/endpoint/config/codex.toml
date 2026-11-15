@@ -1,0 +1,9 @@
+# Reasoning Coding Art for Codex: the provider block appended to
+# ~/.codex/config.toml. Replace TOKEN with the endpoint's bearer token
+# (CODING_ENDPOINT_TOKEN); Codex reads the token from this file, not from
+# the environment. The matching profile is codex-reasoning.config.toml.
+
+[model_providers.reasoning]
+name = "Reasoning Coding Art"
+base_url = "http://127.0.0.1:8787/v1"
+experimental_bearer_token = "TOKEN"

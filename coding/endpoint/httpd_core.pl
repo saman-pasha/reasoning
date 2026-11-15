@@ -578,13 +578,7 @@ ep_trace(Request, Start, Alias, Backend, Effort, Mode, N, Terms,
     File \== '',
     get_time(Now),
     Seconds is Now - Start,
-    ep_header(Request, 'x-opencode-session-id', '-', Session0),
-    ep_header(Request, 'x-opencode-session', '-', Session1),
-    ep_header(Request, 'x-session-id', '-', Session2),
-    (   Session0 \== '-' -> Session = Session0
-    ;   Session1 \== '-' -> Session = Session1
-    ;   Session = Session2
-    ),
+    ep_session_id(Request, Session),
     ep_header(Request, 'x-opencode-project', '-', Project),
     (   Stream == true -> StreamJson = @(true) ; StreamJson = @(false) ),
     ep_usage_json(Usage, UsagePairs),
@@ -596,6 +590,19 @@ ep_trace(Request, Start, Alias, Backend, Effort, Mode, N, Terms,
                Codes),
     append(Codes, [10], Line),
     catch(append_file_from_codes(File, Line), _, true).
+
+%% OpenCode names the session in its headers; Codex names it in
+%% `session-id'. Both are what the thinking-mode memo is keyed by.
+ep_session_id(Request, Session) :-
+    ep_header(Request, 'x-opencode-session-id', '-', Session0),
+    ep_header(Request, 'x-opencode-session', '-', Session1),
+    ep_header(Request, 'x-session-id', '-', Session2),
+    ep_header(Request, 'session-id', '-', Session3),
+    (   Session0 \== '-' -> Session = Session0
+    ;   Session1 \== '-' -> Session = Session1
+    ;   Session2 \== '-' -> Session = Session2
+    ;   Session = Session3
+    ).
 
 %% ---- the loop guard ----------------------------------------------------
 
@@ -882,7 +889,8 @@ ep_responses(Request, Reply) :-
     ).
 
 ep_responses_body(Request, Body, Reply) :-
-    (   ep_responses_chat_body(Body, ChatBody)
+    ep_session_id(Request, Session),
+    (   ep_responses_chat_body(Session, Body, ChatBody)
     ->  ep_json_get(Body, model, Model),
         (   ep_json_get(Body, stream, Stream0),
             Stream0 == @(true)
@@ -900,16 +908,20 @@ ep_responses_body(Request, Body, Reply) :-
         ),
         ChatReply = reply(Status, ChatHeaders, ChatReplyCodes),
         (   Status =:= 200
-        ->  ep_responses_reply(Request, Model, Stream, ChatReplyCodes, Reply)
+        ->  ep_responses_reply(Session, Request, Model, Stream,
+                               ChatReplyCodes, Reply)
         ;   Reply = reply(Status, ChatHeaders, ChatReplyCodes)
         )
     ;   ep_error_reply(Request, 400, 'model and input are required', Reply)
     ).
 
 ep_responses_chat_body(Body, ChatBody) :-
+    ep_responses_chat_body('-', Body, ChatBody).
+
+ep_responses_chat_body(Session, Body, ChatBody) :-
     ep_json_get(Body, model, Model),
     ep_json_get(Body, input, Input),
-    ep_responses_messages(Input, Messages0),
+    ep_responses_messages(Session, Input, Messages0),
     Messages0 \== [],
     ep_responses_instructions(Body, Messages0, Messages),
     ep_responses_tools(Body, Tools),
@@ -935,37 +947,49 @@ ep_responses_instructions(Body, Messages0, Messages) :-
 %% is one assistant message with several tool calls; the outputs that
 %% follow are the tool messages that answer them.
 ep_responses_messages(Input, Messages) :-
+    ep_responses_messages('-', Input, Messages).
+
+ep_responses_messages(_Session, Input, Messages) :-
     atom(Input),
     Input \== '',
     !,
     Messages = [json([role-user, content-Input])].
-ep_responses_messages(Input, Messages) :-
+ep_responses_messages(Session, Input, Messages) :-
     is_list(Input),
     !,
-    ep_r_items(Input, [], Messages).
+    ep_r_items(Session, Input, [], Messages).
 
-ep_r_items([], Pending, Messages) :-
-    ep_r_flush(Pending, Messages).
-ep_r_items([json(Pairs)|Items], Pending, Messages) :-
+ep_r_items(Session, [], Pending, Messages) :-
+    ep_r_flush(Session, Pending, Messages).
+ep_r_items(Session, [json(Pairs)|Items], Pending, Messages) :-
     memberchk(type-function_call, Pairs),
     !,
     ep_r_function_call(json(Pairs), Call),
-    ep_r_items(Items, [Call|Pending], Messages).
-ep_r_items([Item|Items], Pending, Messages) :-
-    ep_r_flush(Pending, Here),
-    ep_r_item_message(Item, Message),
+    ep_r_items(Session, Items, [Call|Pending], Messages).
+ep_r_items(Session, [Item|Items], Pending, Messages) :-
+    ep_r_flush(Session, Pending, Here),
+    ep_r_item_message(Session, Item, Message),
     !,
-    ep_r_items(Items, [], Rest),
+    ep_r_items(Session, Items, [], Rest),
     ep_r_cons(Here, Message, Rest, Messages).
-ep_r_items([_|Items], Pending, Messages) :-
-    ep_r_flush(Pending, Here),
-    ep_r_items(Items, [], Rest),
+ep_r_items(Session, [_|Items], Pending, Messages) :-
+    ep_r_flush(Session, Pending, Here),
+    ep_r_items(Session, Items, [], Rest),
     append(Here, Rest, Messages).
 
-ep_r_flush([], []).
-ep_r_flush(Pending, [json([role-assistant, tool_calls-Calls])]) :-
+ep_r_flush(_, [], []).
+ep_r_flush(Session, Pending, [Message]) :-
     Pending = [_|_],
-    reverse(Pending, Calls).
+    reverse(Pending, Calls),
+    ep_reasoning_memo_calls(Session, Calls, Reasoning),
+    ep_r_assistant_calls(Calls, Reasoning, Message).
+
+%% The field is always present, empty when the reply has no reasoning:
+%% DeepSeek's thinking mode refuses an assistant turn that omits it, and
+%% accepts an empty one when thinking is off.
+ep_r_assistant_calls(Calls, Reasoning,
+                     json([role-assistant, tool_calls-Calls,
+                           reasoning_content-Reasoning])).
 
 ep_r_cons(Here, none, Rest, Messages) :-
     append(Here, Rest, Messages).
@@ -987,7 +1011,7 @@ ep_r_arguments(Pairs, Arguments) :-
     ;   Arguments = '{}'
     ).
 
-ep_r_item_message(json(Pairs), Message) :-
+ep_r_item_message(Session, json(Pairs), Message) :-
     memberchk(type-message, Pairs),
     memberchk(role-Role0, Pairs),
     ep_r_role(Role0, Role),
@@ -995,8 +1019,12 @@ ep_r_item_message(json(Pairs), Message) :-
     ->  ep_r_text(Content0, Text)
     ;   Text = ''
     ),
-    Message = json([role-Role, content-Text]).
-ep_r_item_message(json(Pairs), Message) :-
+    (   Role == assistant
+    ->  ep_reasoning_memo_text(Session, Text, Reasoning)
+    ;   Reasoning = ''
+    ),
+    ep_r_assistant_text(Role, Text, Reasoning, Message).
+ep_r_item_message(_, json(Pairs), Message) :-
     memberchk(type-function_call_output, Pairs),
     memberchk(call_id-Id, Pairs),
     (   memberchk(output-Output, Pairs)
@@ -1005,9 +1033,99 @@ ep_r_item_message(json(Pairs), Message) :-
     ),
     Message = json([role-tool, tool_call_id-Id, content-Text]).
 
+ep_r_assistant_text(Role, Text, Reasoning,
+                    json([role-Role, content-Text,
+                          reasoning_content-Reasoning])).
+
 ep_r_role(developer, system) :-
     !.
 ep_r_role(Role, Role).
+
+%% DeepSeek's thinking mode requires an assistant turn's reasoning_content
+%% back on the next request, and Codex does not carry a reasoning item
+%% through (it drops one from its input). The endpoint remembers the last
+%% reasoning per session, under the tool calls or the text it belonged to,
+%% and puts it on the assistant messages the next request rebuilds.
+ep_reasoning_memo_calls(Session, Calls, Reasoning) :-
+    ep_memo_calls_key(Calls, Key),
+    ep_reasoning_memo_get(Session, Key, Reasoning).
+
+ep_reasoning_memo_text(_, '', '') :-
+    !.
+ep_reasoning_memo_text(Session, Text, Reasoning) :-
+    ep_memo_text_key(Text, Key),
+    ep_reasoning_memo_get(Session, Key, Reasoning).
+
+ep_memo_calls_key(Calls, Key) :-
+    findall(Id, ep_memo_call_id(Calls, Id), Ids),
+    atomic_list_concat(Ids, ',', Joined),
+    atomic_list_concat(['calls:', Joined], Key).
+
+ep_memo_call_id(Calls, Id) :-
+    member(Call, Calls),
+    Call = json(Pairs),
+    memberchk(id-Id, Pairs).
+
+ep_memo_text_key(Text, Key) :-
+    ep_value_digest(Text, Digest),
+    atomic_list_concat(['text:', Digest], Key).
+
+ep_reasoning_memo_get('-', _, '') :-
+    !.
+ep_reasoning_memo_get(Session, Key, Text) :-
+    (   catch(nb_getval('$ep_reasoning_memo', Memo), _, fail)
+    ->  true
+    ;   Memo = []
+    ),
+    (   memberchk(memo(Session, Key)-Found, Memo)
+    ->  Text = Found
+    ;   Text = ''
+    ).
+
+ep_reasoning_memo_store('-', _, _) :-
+    !.
+ep_reasoning_memo_store(_, _, '') :-
+    !.
+ep_reasoning_memo_store(Session, Key, Text) :-
+    (   catch(nb_getval('$ep_reasoning_memo', Memo0), _, fail)
+    ->  true
+    ;   Memo0 = []
+    ),
+    exclude(ep_memo_same(Session, Key), Memo0, Memo1),
+    Memo2 = [memo(Session, Key)-Text|Memo1],
+    ep_memo_trim(Memo2, 200, Memo),
+    nb_setval('$ep_reasoning_memo', Memo).
+
+ep_memo_same(Session, Key, memo(Session0, Key0)-_) :-
+    Session0 == Session,
+    Key0 == Key.
+
+ep_memo_trim(List, N, List) :-
+    length(List, Length),
+    Length =< N,
+    !.
+ep_memo_trim([_|Rest], N, Trimmed) :-
+    ep_memo_trim(Rest, N, Trimmed).
+
+ep_reasoning_memo_reply('-', _, _, _) :-
+    !.
+ep_reasoning_memo_reply(_, _, _, '') :-
+    !.
+ep_reasoning_memo_reply(Session, Content, Calls, Reasoning) :-
+    ep_reasoning_memo_reply_text(Session, Content, Reasoning),
+    ep_reasoning_memo_reply_calls(Session, Calls, Reasoning).
+
+ep_reasoning_memo_reply_text(_, '', _) :-
+    !.
+ep_reasoning_memo_reply_text(Session, Content, Reasoning) :-
+    ep_memo_text_key(Content, Key),
+    ep_reasoning_memo_store(Session, Key, Reasoning).
+
+ep_reasoning_memo_reply_calls(_, [], _) :-
+    !.
+ep_reasoning_memo_reply_calls(Session, Calls, Reasoning) :-
+    ep_memo_calls_key(Calls, Key),
+    ep_reasoning_memo_store(Session, Key, Reasoning).
 
 ep_r_text(Value, Text) :-
     atom(Value),
@@ -1099,21 +1217,25 @@ ep_responses_extra(Body, reasoning_effort, Value) :-
 
 %% ---- the chat reply as Responses --------------------------------------
 
-ep_responses_reply(Request, Model, Stream, ChatCodes, Reply) :-
+ep_responses_reply(Session, Request, Model, Stream, ChatCodes, Reply) :-
     ep_cors(Request, Cors),
     (   Stream == true
-    ->  ep_responses_events(ChatCodes, Model, Events, _Response),
+    ->  ep_responses_events(Session, ChatCodes, Model, Events, _Response),
         ep_responses_sse(Events, Sse),
         append(Cors, ['Content-Type'-'text/event-stream',
                       'Cache-Control'-'no-cache'], Headers),
         Reply = reply(200, Headers, Sse)
-    ;   ep_responses_events(ChatCodes, Model, _Events, Response),
+    ;   ep_responses_events(Session, ChatCodes, Model, _Events, Response),
         json_codes(Response, Codes),
         Reply = reply(200, ['Content-Type'-'application/json'|Cors], Codes)
     ).
 
 ep_responses_events(ChatCodes, Model, Events, Response) :-
-    ep_responses_chat(ChatCodes, Content, Calls),
+    ep_responses_events('-', ChatCodes, Model, Events, Response).
+
+ep_responses_events(Session, ChatCodes, Model, Events, Response) :-
+    ep_responses_chat(ChatCodes, Content, Calls, Reasoning),
+    ep_reasoning_memo_reply(Session, Content, Calls, Reasoning),
     ep_responses_outputs(Content, Calls, Items, ItemEvents),
     ep_usage(ChatCodes, Usage),
     ep_responses_usage_json(Usage, UsageJson),
@@ -1132,12 +1254,20 @@ ep_responses_events(ChatCodes, Model, Events, Response) :-
                                            response-Response]),
     append([CreatedEvent|ItemEvents], [DoneEvent], Events).
 
-ep_responses_chat(ChatCodes, Content, Calls) :-
+ep_responses_chat(ChatCodes, Content, Calls, Reasoning) :-
     json_parse(ChatCodes, json(Pairs)),
     memberchk(choices-[json(Choice)|_], Pairs),
     memberchk(message-json(Message), Choice),
     ep_responses_content(Message, Content),
-    ep_responses_calls(Message, Calls).
+    ep_responses_calls(Message, Calls),
+    ep_responses_reasoning(Message, Reasoning).
+
+ep_responses_reasoning(Message, Reasoning) :-
+    (   memberchk(reasoning_content-Value, Message),
+        atom(Value)
+    ->  Reasoning = Value
+    ;   Reasoning = ''
+    ).
 
 ep_responses_content(Message, Content) :-
     (   memberchk(content-Value, Message),

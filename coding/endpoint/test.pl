@@ -33,7 +33,9 @@
                 ep_loop_verdict/2,
                 ep_tool_signature/3,
                 ep_responses_chat_body/2,
+                ep_responses_chat_body/3,
                 ep_responses_events/4,
+                ep_responses_events/5,
                 ep_responses_sse/2,
                 ep_key/1
               ]).
@@ -52,6 +54,7 @@ main :-
     test_effort_default,
     test_loop_guard,
     test_responses,
+    test_responses_memo,
     test_sse,
     test_sse_usage,
     test_sse_tools,
@@ -277,6 +280,18 @@ test_responses :-
     check('responses tools are functions alone', ToolCount, 1),
     ep_json_get(Chat, reasoning_effort, Effort),
     check('a responses effort reaches the chat body', Effort, high),
+    ep_responses_chat_body('session-with-no-memo', Input, NoMemoChat),
+    ep_json_get(NoMemoChat, messages, NoMemoMessages),
+    length(NoMemoMessages, NoMemoCount),
+    check('a session with no memo still translates', NoMemoCount, 4),
+    (   member(NoMemoMessage, NoMemoMessages),
+        ep_json_get(NoMemoMessage, role, assistant),
+        ep_json_get(NoMemoMessage, reasoning_content, '')
+    ->  EmptyField = yes
+    ;   EmptyField = no
+    ),
+    check('a thinking-mode assistant keeps an empty reasoning field',
+          EmptyField, yes),
     Reply = json([choices-[json([message-json([role-assistant,
                                                content-'OK'])])],
                   usage-json([prompt_tokens-3, completion_tokens-1,
@@ -324,6 +339,50 @@ test_responses :-
     ;   Call = no
     ),
     check('a chat tool call becomes a function_call item', Call, yes).
+
+%% DeepSeek's thinking mode wants the last reasoning back; Codex drops a
+%% reasoning item, so the endpoint remembers it and rebuilds it.
+test_responses_memo :-
+    MemoMessage = json([role-assistant,
+                        content-thinking,
+                        reasoning_content-because,
+                        tool_calls-[json([id-'call_7',
+                                          type-function,
+                                          function-json([name-shell,
+                                                         arguments-'{}'])])]]),
+    Reply = json([choices-[json([message-MemoMessage])],
+                  usage-json([prompt_tokens-3, completion_tokens-1,
+                              total_tokens-4])]),
+    json_codes(Reply, Codes),
+    ep_responses_events('memo-session', Codes, 'c-r0', _Events, _),
+    Input = json([model-'c-r0',
+                  input-[json([type-message, role-user,
+                               content-[json([type-input_text, text-go])]]),
+                         json([type-function_call, call_id-'call_7',
+                               name-shell, arguments-'{}']),
+                         json([type-function_call_output, call_id-'call_7',
+                               output-ok]),
+                         json([type-message, role-assistant,
+                               content-[json([type-output_text,
+                                              text-thinking])]])]]),
+    ep_responses_chat_body('memo-session', Input, Chat),
+    ep_json_get(Chat, messages, Messages),
+    (   member(Message, Messages),
+        ep_json_get(Message, role, assistant),
+        ep_json_get(Message, tool_calls, _),
+        ep_json_get(Message, reasoning_content, because)
+    ->  CallsMemo = yes
+    ;   CallsMemo = no
+    ),
+    check('the reasoning of tool calls is put back', CallsMemo, yes),
+    (   member(TextMessage, Messages),
+        ep_json_get(TextMessage, role, assistant),
+        ep_json_get(TextMessage, content, thinking),
+        ep_json_get(TextMessage, reasoning_content, because)
+    ->  TextMemo = yes
+    ;   TextMemo = no
+    ),
+    check('the reasoning of an assistant text is put back', TextMemo, yes).
 
 ep_test_calls(0, _, []).
 ep_test_calls(N, Start, [json([id-Id, type-function,

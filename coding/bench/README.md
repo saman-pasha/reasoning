@@ -164,9 +164,12 @@ escalate2 1     0      3        10779  13317      0         24096 1280      48.3
 opencode-c-r0#high 1     1      39       1660899 42270      26492     1703169 1638272   557.95
 opencode-c-r2#high 1     1      12       364250  33931      24856     398181  355712    319.88
 opencode-c-r8#high 1     1      10       297881  30504      20579     328385  290432    198.87
+codex-c-r0#high    1     1      15       873893  39422      27428     913315  830592    315.55
+codex-c-r2#high    1     1      13       421904  19987      12762     441891  399103    223.53
+codex-c-r8#high    1     1      33       2378233 49075      31407     2427308 2324992   580.39
 ```
 
-The last three rows are not benchmark modes: they are the same task
+The OpenCode rows are not benchmark modes: they are the same task
 through OpenCode, in a fresh directory holding only `spec.txt` and
 `cases/`, with the model's `#high` variant. `attempts` counts endpoint
 calls and `seconds` is the session's wall time; the token columns are the
@@ -178,6 +181,19 @@ not endpoint checks. Each generated program was independently rebuilt
 with `clang -std=c17 -Wall -Wextra -O0`, passed all ten cases, passed
 ASan/UBSan, and matched an independent specification model on 1,000
 random command streams.
+
+The three `codex-...#high` rows are the same task through Codex 0.169,
+with the same prompt and the same two files, under
+`codex -p reasoning -m c-rN -c model_reasoning_effort=high exec -s
+workspace-write --skip-git-repo-check`. `attempts` is again the endpoint
+calls and `seconds` the session's wall time; the endpoint's call time was
+230.9 s for `c-r0`, 118.4 s for `c-r2` and 384.4 s for `c-r8`, the rest
+being the agent's own builds, case runs and fuzzing. Each program was
+rebuilt independently, passed the ten cases and ASan/UBSan, and matched
+the independent model on 500 random streams (200 more under the
+sanitizers). Codex's `c-r8` session spent most of its wall time on its
+own stress tests: 33 calls and 2.43 million prompt tokens against
+OpenCode's 10 calls and 328 thousand.
 
 `contract` is the only passing benchmark mode, and it needed two attempts: the
 first timed out on cases 2 and 6, the second passed all ten. `high`, one
