@@ -8,6 +8,7 @@ coding/
   obligations.pl      the checks a requirement's words imply
   contract.pl         obligations from controlled-English sentences
   compile.pl          the compile, analyzer and case checks
+  languages.pl        the language table: C, cocolog and Python
   test.pl             the coding helpers' checks
   (the version case is ../test/version.pl, run by ../run-tests.sh)
   c/
@@ -15,9 +16,15 @@ coding/
     check.pl          compile and test an existing C file, no model
   cocolog/
     codegen.pl        cocolog source, taught by cocolog's SKILL.md
+  python/
+    codegen.pl        Python 3 source from a written requirement
+    check.pl          parse and test an existing Python file, no model
+    names.pl          the names a Python source defines and reads
+    obligations.pl    the checks a Python requirement's words imply
   endpoint/
     httpd.pl          OpenCode's C and cocolog models, in cocolog httpd
     httpd_core.pl     its pages, JSON, backend call and SSE synthesis
+    prompts/python.md Python's guide when the endpoint serves it
 ```
 
 A new language is a new directory and a `codegen.pl` beside this one; it
