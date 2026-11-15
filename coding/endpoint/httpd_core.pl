@@ -595,6 +595,110 @@ ep_trace(Request, Start, Alias, Backend, Effort, Mode, N, Terms,
     append(Codes, [10], Line),
     catch(append_file_from_codes(File, Line), _, true).
 
+%% ---- the loop guard ----------------------------------------------------
+
+ep_repeat_limit(Limit) :-
+    ep_int('CODING_ENDPOINT_REPEAT_LIMIT', 16, Limit).
+
+ep_loop_verdict(Messages, Verdict) :-
+    ep_repeat_limit(Limit),
+    (   Limit > 0,
+        ep_tool_signatures(Messages, Signatures),
+        ep_signature_counts(Signatures, Counts),
+        member(Signature-Count, Counts),
+        Count >= Limit
+    ->  Verdict = repeat(Signature, Count, Limit)
+    ;   Verdict = ok
+    ).
+
+ep_tool_signatures([], []).
+ep_tool_signatures([json(Pairs)|Messages], Signatures) :-
+    (   memberchk(tool_calls-Calls, Pairs),
+        is_list(Calls)
+    ->  ep_call_signatures(Calls, Here),
+        ep_tool_signatures(Messages, Rest),
+        append(Here, Rest, Signatures)
+    ;   ep_tool_signatures(Messages, Signatures)
+    ).
+
+ep_call_signatures([], []).
+ep_call_signatures([json(Pairs)|Calls], [Signature|Signatures]) :-
+    (   memberchk(function-json(Function), Pairs),
+        memberchk(name-Name, Function),
+        memberchk(arguments-Arguments, Function)
+    ->  ep_tool_signature(Name, Arguments, Signature)
+    ;   Signature = unknown
+    ),
+    ep_call_signatures(Calls, Signatures).
+
+ep_tool_signature(Name, Arguments, Signature) :-
+    (   catch(ep_tool_arguments(Arguments, Value), _, fail)
+    ->  true
+    ;   Value = none
+    ),
+    (   Name == shell,
+        Value = json(ArgumentPairs),
+        memberchk(command-Command, ArgumentPairs)
+    ->  Key0 = Command
+    ;   Value = json(ArgumentPairs),
+        memberchk(path-Path, ArgumentPairs)
+    ->  Key0 = Path
+    ;   atom(Arguments)
+    ->  Key0 = Arguments
+    ;   Key0 = none
+    ),
+    ep_signature_atom(Key0, Key),
+    atomic_list_concat([Name, ':', Key], Signature).
+
+ep_tool_arguments(Value, Value) :-
+    Value = json(_),
+    !.
+ep_tool_arguments(Arguments, Value) :-
+    catch(json_parse(Arguments, Value), _, fail).
+
+ep_signature_atom(Value, Atom) :-
+    (   atom(Value)
+    ->  Text = Value
+    ;   string(Value)
+    ->  atom_string(Text, Value)
+    ;   number(Value)
+    ->  format(atom(Text), '~w', [Value])
+    ;   format(atom(Text), '~q', [Value])
+    ),
+    downcase_atom(Text, Lower),
+    atom_codes(Lower, Codes),
+    ep_digits_normal(Codes, Normal),
+    atom_codes(Atom, Normal).
+
+ep_digits_normal([], []).
+ep_digits_normal([C|Codes], Out) :-
+    (   C >= 0'0,
+        C =< 0'9
+    ->  Out = [0'#|Rest],
+        ep_digits_skip(Codes, Rest)
+    ;   Out = [C|Rest],
+        ep_digits_normal(Codes, Rest)
+    ).
+
+ep_digits_skip([C|Codes], Out) :-
+    C >= 0'0,
+    C =< 0'9,
+    !,
+    ep_digits_skip(Codes, Out).
+ep_digits_skip(Codes, Codes).
+
+ep_signature_counts([], []).
+ep_signature_counts([Signature|Signatures], Counts) :-
+    ep_signature_counts(Signatures, Rest),
+    ep_signature_bump(Signature, Rest, Counts).
+
+ep_signature_bump(Signature, [], [Signature-1]).
+ep_signature_bump(Signature, [Signature-N|Rest], [Signature-N1|Rest]) :-
+    !,
+    N1 is N + 1.
+ep_signature_bump(Signature, [Other|Rest], [Other|Out]) :-
+    ep_signature_bump(Signature, Rest, Out).
+
 %% ---- the chat route ----------------------------------------------------
 
 ep_chat(Request, Reply) :-
@@ -609,7 +713,22 @@ ep_chat(Request, Reply) :-
         )
     ).
 
+%% A loop guard. OpenCode sends the session's whole tool history, so the
+%% endpoint can see the same shell command (or file access) requested again
+%% and again. Digits are normalised, so names848.pl and names855.pl are one
+%% signature. At the limit the request is refused before the model is paid
+%% for another turn.
 ep_chat_body(Request, Body, Start, Reply) :-
+    (   ep_messages(Body, Messages),
+        ep_loop_verdict(Messages, repeat(Signature, Count, Limit))
+    ->  format(atom(Message),
+               'loop guard: the same tool call was repeated ~w times (limit ~w): ~s. Stop repeating it and summarize what you found.',
+               [Count, Limit, Signature]),
+        ep_error_reply(Request, 409, Message, Reply)
+    ;   ep_chat_body_1(Request, Body, Start, Reply)
+    ).
+
+ep_chat_body_1(Request, Body, Start, Reply) :-
     (   ep_json_get(Body, model, Model0),
         ep_alias(Model0, Alias),
         ep_messages(Body, Messages)

@@ -29,7 +29,8 @@
                 ep_usage/2,
                 ep_usage_json/2,
                 ep_default_effort/2,
-                ep_json_get/3
+                ep_json_get/3,
+                ep_loop_verdict/2
               ]).
 :- use_module('coding/endpoint/reasoning_core.pl',
               [ endpoint_reason/4 ]).
@@ -43,6 +44,7 @@ main :-
     test_task_text,
     test_usage,
     test_effort_default,
+    test_loop_guard,
     test_sse,
     test_sse_usage,
     test_sse_tools,
@@ -160,6 +162,27 @@ test_effort_default :-
     ep_default_effort(json([reasoning_effort-'']), Blank),
     ep_json_get(Blank, reasoning_effort, E3),
     check('a blank effort becomes none', E3, none).
+
+test_loop_guard :-
+    ep_test_calls(16, 848, Sixteen),
+    ep_loop_verdict([json([role-assistant, tool_calls-Sixteen])],
+                    Verdict16),
+    check('sixteen repeated commands are a loop', Verdict16,
+          repeat('shell:cat /tmp/names#.pl', 16, 16)),
+    ep_test_calls(15, 848, Fifteen),
+    ep_loop_verdict([json([role-assistant, tool_calls-Fifteen])],
+                    Verdict15),
+    check('fifteen repeated commands are allowed', Verdict15, ok).
+
+ep_test_calls(0, _, []).
+ep_test_calls(N, Start, [json([id-Id, type-function,
+                              function-json([name-shell, arguments-Arguments])])|Rest]) :-
+    N > 0,
+    format(atom(Id), 'call~w', [N]),
+    format(atom(Arguments), '{"command":"cat /tmp/names~w.pl"}', [Start]),
+    N1 is N - 1,
+    Start1 is Start + 1,
+    ep_test_calls(N1, Start1, Rest).
 
 test_sse :-
     Reply = json([id-test,

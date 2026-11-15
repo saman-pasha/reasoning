@@ -138,6 +138,14 @@ CODING_ENDPOINT_TRACE="$HOME/.local/state/opencode/reasoning-coding.jsonl" \
 tail -f "$HOME/.local/state/opencode/reasoning-coding.jsonl"
 ```
 
+## Loop guard
+
+Every request carries the session's tool history. The endpoint normalises a
+shell command's digits (`names848.pl` and `names855.pl` are one signature)
+and counts identical tool calls. At 16 the request is refused with HTTP 409
+and a message naming the repeated signature, before the backend is called.
+`CODING_ENDPOINT_REPEAT_LIMIT` changes the limit; `0` disables the guard.
+
 ## Backend
 
 The endpoint forwards to an OpenAI-compatible chat endpoint. The default is
@@ -158,6 +166,7 @@ DeepSeek's OpenAI endpoint with `REASONING_API_KEY`:
 | `CODING_ENDPOINT_REASONING_MAX` | `2`, the checks kept from a longer reading |
 | `x-coding-reasoning` header | per request: `0`/`off`, `2`, `8`, … |
 | `CODING_ENDPOINT_TRACE` | unset; a JSONL path turns tracing on |
+| `CODING_ENDPOINT_REPEAT_LIMIT` | `16`; `0` disables the repeated-tool-call guard |
 | `CODING_ENDPOINT_HOST` | unused; `library(tcp)` binds every interface |
 | `CODING_ENDPOINT_PORT` | `8787` |
 | `CODING_ENDPOINT_MAX_TOKENS` | `32768` (0 leaves the client's limit) |
