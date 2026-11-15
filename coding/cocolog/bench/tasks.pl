@@ -6,8 +6,6 @@
 %% file its program's standard output must match. Every task's main/0
 %% prints several results in one run, so one expected file holds them all.
 
-:- use_module(library(process)).
-
 bench_task(html_template, Spec,
            'coding/cocolog/bench/html_template/expected.txt') :-
     bench_spec('coding/cocolog/bench/html_template/spec.txt', Spec).

@@ -1,6 +1,6 @@
 %% coding/cocolog/codegen.pl -- cocolog source from a written requirement.
 %%
-%%     cocolog -s coding/cocolog/codegen.pl -- SPEC.txt [flags] [OUT.pl]
+%%     cocolog -s coding/cocolog/run.pl -- SPEC.txt [flags] [OUT.pl]
 %%
 %% The requirement goes to a language model together with cocolog's own
 %% SKILL.md, the guide the repository writes for a programmer new to the
@@ -26,7 +26,8 @@
 %%
 %%     codegen_cocolog(+Spec, -Code)
 %%     codegen_cocolog(+Spec, +Overrides, -Code)
-%%         one model call, not run.
+%%     codegen_cocolog(+Spec, +Goal, +Overrides, -Code)
+%%         one model call, not run; the goal defaults to main.
 %%
 %%     codegen_cocolog_checked(+Spec, -Code)
 %%     codegen_cocolog_checked(+Spec, +Overrides, -Code)
@@ -46,6 +47,7 @@
 :- use_module(library(llm)).
 :- use_module(library(process)).
 :- use_module('coding/options.pl').
+:- use_module('coding/report.pl').
 
 %% ---- the language guide ------------------------------------------------
 %%
@@ -98,7 +100,7 @@ cocolog_repair_prompt(Base, none, Base) :-
     !.
 cocolog_repair_prompt(Base, prev(Previous, Diag), Prompt) :-
     format(atom(Prompt),
-           '~s~n~nYour previous program did not load or run. The report said:~n~s~nThe previous program was:~n~s~nWrite a corrected complete cocolog program. Output only the source.',
+           '~s~n~nYour previous program did not pass verification. It may not have loaded, run, timed out, or printed the expected output. The report said:~n~s~nThe previous program was:~n~s~nWrite a corrected complete cocolog program. Output only the source.',
            [Base, Diag, Previous]).
 
 %% ---- one call ----------------------------------------------------------
@@ -108,12 +110,15 @@ cocolog_repair_prompt(Base, prev(Previous, Diag), Prompt) :-
 %% what the model writes; the tool's main/0 is what uses the checked loop.
 
 codegen_cocolog(Spec, Code) :-
-    codegen_cocolog(Spec, [], Code).
+    codegen_cocolog(Spec, main, [], Code).
 
 codegen_cocolog(Spec, Overrides, Code) :-
+    codegen_cocolog(Spec, main, Overrides, Code).
+
+codegen_cocolog(Spec, Goal, Overrides, Code) :-
     cocolog_skill_text(Skill),
     cocolog_system_prompt(Skill, System),
-    cocolog_user_prompt(Spec, main, Prompt),
+    cocolog_user_prompt(Spec, Goal, Prompt),
     codegen_report_reset,
     get_time(Start),
     catch(( cocolog_llm(System, Prompt, Overrides, Reply),
@@ -131,6 +136,7 @@ codegen_cocolog_checked(Spec, Overrides, Code) :-
 codegen_cocolog_from(Spec, Goal, Overrides, RunOptions, Code) :-
     cocolog_run_prepare(RunOptions, Attempts, Timeout, Budget, Keep, SkillFile,
                         Expect),
+    codegen_key_env(Overrides, KeyVar),
     (   SkillFile == no
     ->  cocolog_no_skill_prompt(System)
     ;   cocolog_skill_text(SkillFile, Skill),
@@ -138,8 +144,8 @@ codegen_cocolog_from(Spec, Goal, Overrides, RunOptions, Code) :-
     ),
     codegen_report_reset,
     get_time(Start),
-    catch(cocolog_attempt(1, Attempts, Spec, Goal, System, Overrides, Keep,
-                          Timeout, Expect, Budget, none, Code), Ball,
+    catch(cocolog_attempt(1, Attempts, Spec, Goal, System, Overrides, KeyVar,
+                          Keep, Timeout, Expect, Budget, none, Code), Ball,
           ( codegen_report_finish(Start), throw(Ball) )),
     codegen_report_finish(Start).
 
@@ -203,15 +209,15 @@ cocolog_keep_prepare(dir(Dir)) :-
         throw(error(codegen_error(keep_dir, Msg), cocolog_keep_prepare/1))
     ).
 
-cocolog_attempt(Attempt, Max, Spec, Goal, System, Overrides, Keep, Timeout,
-                Expect, Budget, Prev, Code) :-
+cocolog_attempt(Attempt, Max, Spec, Goal, System, Overrides, KeyVar, Keep,
+                Timeout, Expect, Budget, Prev, Code) :-
     cocolog_user_prompt(Spec, Goal, Base),
     cocolog_repair_prompt(Base, Prev, Prompt),
     cocolog_keep_attempt(Keep, Attempt, 'prompt.txt', Prompt),
     cocolog_llm(System, Prompt, Overrides, Reply),
     cocolog_strip_fence(Reply, Code0),
     cocolog_keep_attempt(Keep, Attempt, 'pl', Code0),
-    cocolog_check(Code0, Goal, Timeout, Expect, Verdict),
+    cocolog_check(Code0, Goal, Timeout, Expect, KeyVar, Verdict),
     (   Verdict == ok
     ->  Code = Code0
     ;   Verdict = fail(Diag),
@@ -222,8 +228,9 @@ cocolog_attempt(Attempt, Max, Spec, Goal, System, Overrides, Keep, Timeout,
         ;   cocolog_budget_exhausted(Budget)
         ->  cocolog_budget_error(Budget)
         ;   Next is Attempt + 1,
-            cocolog_attempt(Next, Max, Spec, Goal, System, Overrides, Keep,
-                            Timeout, Expect, Budget, prev(Code0, Diag), Code)
+            cocolog_attempt(Next, Max, Spec, Goal, System, Overrides, KeyVar,
+                            Keep, Timeout, Expect, Budget, prev(Code0, Diag),
+                            Code)
         )
     ).
 
@@ -247,33 +254,65 @@ cocolog_attempt(Attempt, Max, Spec, Goal, System, Overrides, Keep, Timeout,
 %% writes its report, and a missing newline is a difference the caller
 %% asked to see.
 
-cocolog_check(Code, Goal, Timeout, Expect, Verdict) :-
+cocolog_check(Code, Goal, Timeout, Expect, KeyVar, Verdict) :-
     (   Code == ''
     ->  Verdict = fail('the reply is empty')
-    ;   tmp_file(cocolog_program, Dir),
-        (   catch(make_directory(Dir), _, fail)
-        ->  true
-        ;   format(atom(DirMsg), 'cannot make the check directory ~s', [Dir]),
-            throw(error(codegen_error(check_dir, DirMsg), cocolog_check/5))
-        ),
+    ;   cocolog_temp_dir(Dir),
         atom_concat(Dir, '/program.pl', File),
-        atom_codes(Code, Codes),
-        (   catch(write_file_from_codes(File, Codes), _, fail)
-        ->  true
-        ;   format(atom(FileMsg), 'cannot write the check file ~s', [File]),
-            throw(error(codegen_error(check_file, FileMsg), cocolog_check/5))
-        ),
-        current_prolog_flag(executable, Exe),
-        cocolog_run_command(Exe, File, Goal, Command),
-        cocolog_proc_run(Command, Timeout, OutCodes, Exit),
-        atom_codes(Output, OutCodes),
-        (   Exit == 0,
-            \+ cocolog_bad_output(Output)
-        ->  cocolog_expect(Expect, Output, Verdict)
-        ;   format(atom(Diag0), 'cocolog run exit ~w~n~s', [Exit, Output]),
-            cocolog_limit(4000, Diag0, Diag),
-            Verdict = fail(Diag)
+        atom_concat(Dir, '/stderr.txt', ErrFile),
+        call_cleanup(
+            cocolog_check_file(Code, Goal, Timeout, Expect, KeyVar, File,
+                               ErrFile, Verdict),
+            cocolog_cleanup(Dir, File, ErrFile))
+    ).
+
+cocolog_check_file(Code, Goal, Timeout, Expect, KeyVar, File, ErrFile,
+                   Verdict) :-
+    atom_codes(Code, Codes),
+    (   catch(write_file_from_codes(File, Codes), _, fail)
+    ->  true
+    ;   format(atom(FileMsg), 'cannot write the check file ~s', [File]),
+        throw(error(codegen_error(check_file, FileMsg), cocolog_check/5))
+    ),
+    current_prolog_flag(executable, Exe),
+    cocolog_run_command(Exe, File, Goal, ErrFile, KeyVar, Command),
+    cocolog_proc_run(Command, Timeout, OutCodes, Exit),
+    (   catch(read_file_to_codes(ErrFile, ErrCodes), _, fail)
+    ->  true
+    ;   ErrCodes = []
+    ),
+    atom_codes(Output, OutCodes),
+    atom_codes(Errors, ErrCodes),
+    (   Exit == 0,
+        \+ cocolog_bad_output(Errors)
+    ->  cocolog_expect(Expect, Output, Verdict)
+    ;   Exit == 124
+    ->  format(atom(Diag0), 'cocolog run timed out after ~w ms~n~s',
+               [Timeout, Errors]),
+        cocolog_limit(4000, Diag0, Diag),
+        Verdict = fail(Diag)
+    ;   format(atom(Diag0), 'cocolog run exit ~w~n~s', [Exit, Errors]),
+        cocolog_limit(4000, Diag0, Diag),
+        Verdict = fail(Diag)
+    ).
+
+%% tmp_file/2 only names a path. A killed run can leave a directory under a
+%% name this process would be given again, so an existing name is skipped.
+cocolog_temp_dir(Dir) :-
+    tmp_file(cocolog_program, Try),
+    (   cocolog_path_exists(Try)
+    ->  cocolog_temp_dir(Dir)
+    ;   (   catch(make_directory(Try), _, fail)
+        ->  Dir = Try
+        ;   format(atom(DirMsg), 'cannot make the check directory ~s', [Try]),
+            throw(error(codegen_error(check_dir, DirMsg), cocolog_check/5))
         )
+    ).
+
+cocolog_path_exists(Path) :-
+    (   exists_file(Path)
+    ->  true
+    ;   exists_directory(Path)
     ).
 
 cocolog_expect(none, _, ok) :-
@@ -288,19 +327,67 @@ cocolog_expect(expect(File, Expected), Output, Verdict) :-
         Verdict = fail(Diag)
     ).
 
-cocolog_run_command(Exe, File, main, Command) :-
-    !,
-    format(atom(Command), '"~s" run "~s" 2>&1', [Exe, File]).
-cocolog_run_command(Exe, File, Goal, Command) :-
-    format(atom(Command), '"~s" run "~s" "~w" 2>&1', [Exe, File, Goal]).
+cocolog_run_command(Exe, File, Goal, ErrFile, KeyVar, Command) :-
+    cocolog_shell_quote(Exe, QExe),
+    cocolog_shell_quote(File, QFile),
+    cocolog_shell_quote(ErrFile, QErr),
+    (   atom(KeyVar), KeyVar \== ''
+    ->  cocolog_shell_quote(KeyVar, QKey),
+        format(atom(Prefix), 'env -u ~w ', [QKey])
+    ;   Prefix = ''
+    ),
+    (   Goal == main
+    ->  format(atom(Command), '~w~w run ~w 2>~w',
+               [Prefix, QExe, QFile, QErr])
+    ;   cocolog_shell_quote(Goal, QGoal),
+        format(atom(Command), '~w~w run ~w ~w 2>~w',
+               [Prefix, QExe, QFile, QGoal, QErr])
+    ).
+
+%% POSIX single-quote quoting: a quote inside becomes '\''.
+cocolog_shell_quote(Value, Quoted) :-
+    (   atom(Value)
+    ->  atom_codes(Value, Codes)
+    ;   string(Value)
+    ->  string_codes(Value, Codes)
+    ;   format(atom(Text), '~w', [Value]),
+        atom_codes(Text, Codes)
+    ),
+    cocolog_shell_escape(Codes, Escaped),
+    Q = 39,
+    append([Q|Escaped], [Q], All),
+    atom_codes(Quoted, All).
+
+cocolog_shell_escape([], []).
+cocolog_shell_escape([C|Codes], Out) :-
+    (   C =:= 39
+    ->  Out = [39, 92, 39, 39|Rest]
+    ;   Out = [C|Rest]
+    ),
+    cocolog_shell_escape(Codes, Rest).
 
 cocolog_proc_run(Command, Timeout, Codes, Exit) :-
-    catch(proc_run(Command, Timeout, Codes, Exit), _, ( Codes = [], Exit = 124 )).
+    catch(proc_run(Command, Timeout, Codes, Exit), Ball,
+          throw(error(codegen_error(process, Ball), cocolog_proc_run/4))).
 
+%% Errors and warnings are line-leading in cocolog's own diagnostics, so
+%% the program's own output may contain the words without being refused.
 cocolog_bad_output(Output) :-
-    (   sub_atom(Output, _, _, _, 'ERROR:')
-    ;   sub_atom(Output, _, _, _, 'Warning:')
+    atom_string(Output, String),
+    split_string(String, "\n", "", Lines),
+    member(Line, Lines),
+    (   cocolog_line_begins(Line, 'ERROR:')
+    ;   cocolog_line_begins(Line, 'Warning:')
     ).
+
+cocolog_line_begins(Line, Word) :-
+    atom_string(Word, Prefix),
+    sub_string(Line, 0, _, _, Prefix).
+
+cocolog_cleanup(Dir, File, ErrFile) :-
+    catch(delete_file(File), _, true),
+    catch(delete_file(ErrFile), _, true),
+    catch(delete_directory(Dir), _, true).
 
 cocolog_limit(Max, Text, Limited) :-
     (   atom_length(Text, Length),
@@ -312,9 +399,10 @@ cocolog_limit(Max, Text, Limited) :-
 %% ---- the model call ----------------------------------------------------
 %%
 %% The guide is the largest part of the prompt: cocolog's SKILL.md is about
-%% 19 000 tokens, sent with every attempt. It is loaded once, when the tool
-%% starts, and reused -- so an edit to SKILL.md while a `--attempts 3' run
-%% is going does not change the guide between the call and its repair.
+%% 19 000 tokens, sent with every attempt. It is loaded once per
+%% `codegen_cocolog_from/5' call, before the first attempt, and reused --
+%% so an edit to SKILL.md while a `--attempts 3' run is going does not
+%% change the guide between the call and its repair.
 %%
 %% --no-skill swaps it for a short generic prompt, which is the control:
 %% the difference between a run with the guide and one without measures
@@ -351,127 +439,6 @@ cocolog_strip_fence(Text, Code) :-
 cocolog_fence_line(Line) :-
     sub_string(Line, 0, 3, _, '```').
 
-%% ---- the run report ----------------------------------------------------
-
-codegen_report_reset :-
-    nb_setval('$cocolog_calls', 0),
-    nb_setval('$cocolog_prompt', 0),
-    nb_setval('$cocolog_completion', 0),
-    nb_setval('$cocolog_reasoning', 0),
-    nb_setval('$cocolog_cache', 0),
-    nb_setval('$cocolog_total', 0),
-    nb_setval('$cocolog_seconds', 0.0),
-    nb_setval('$cocolog_call_list', []).
-
-codegen_report_finish(Start) :-
-    get_time(End),
-    Seconds is End - Start,
-    nb_setval('$cocolog_seconds', Seconds).
-
-codegen_report_add(CallSeconds) :-
-    (   catch(nb_getval('$cocolog_calls', Calls0), _, fail)
-    ->  Calls is Calls0 + 1
-    ;   Calls = 1
-    ),
-    nb_setval('$cocolog_calls', Calls),
-    (   catch(llm_last_usage(json(Pairs)), _, fail)
-    ->  cocolog_usage_first(Pairs, prompt_tokens, input_tokens, Prompt),
-        cocolog_usage_first(Pairs, completion_tokens, output_tokens,
-                            Completion),
-        (   memberchk(completion_tokens_details-json(Details), Pairs),
-            memberchk(reasoning_tokens-R0, Details),
-            integer(R0)
-        ->  Reasoning = R0
-        ;   cocolog_usage_found(Pairs, reasoning_tokens, R1)
-        ->  Reasoning = R1
-        ;   Reasoning = 0
-        ),
-        cocolog_usage_first(Pairs, prompt_cache_hit_tokens,
-                            cache_read_input_tokens, CacheHit),
-        (   cocolog_usage_found(Pairs, total_tokens, Total0),
-            Total0 > 0
-        ->  Total = Total0
-        ;   Total is Prompt + Completion
-        ),
-        cocolog_bump('$cocolog_prompt', Prompt),
-        cocolog_bump('$cocolog_completion', Completion),
-        cocolog_bump('$cocolog_reasoning', Reasoning),
-        cocolog_bump('$cocolog_cache', CacheHit),
-        cocolog_bump('$cocolog_total', Total),
-        cocolog_call_record(call(CallSeconds, Prompt, Completion, Reasoning,
-                                 CacheHit, Total))
-    ;   cocolog_call_record(call(CallSeconds, 0, 0, 0, 0, 0))
-    ).
-
-cocolog_usage_first(Pairs, Key, Alternate, Number) :-
-    (   cocolog_usage_found(Pairs, Key, Found)
-    ->  Number = Found
-    ;   cocolog_usage_found(Pairs, Alternate, Found)
-    ->  Number = Found
-    ;   Number = 0
-    ).
-
-cocolog_usage_found(Pairs, Key, Number) :-
-    memberchk(Key-Value, Pairs),
-    integer(Value),
-    Number = Value.
-
-cocolog_bump(Global, Number) :-
-    (   catch(nb_getval(Global, Old), _, fail)
-    ->  true
-    ;   Old = 0
-    ),
-    New is Old + Number,
-    nb_setval(Global, New).
-
-cocolog_call_record(Call) :-
-    (   catch(nb_getval('$cocolog_call_list', Calls), _, fail)
-    ->  true
-    ;   Calls = []
-    ),
-    nb_setval('$cocolog_call_list', [Call|Calls]).
-
-codegen_report(report(Calls, Prompt, Completion, Reasoning, CacheHit, Total,
-                      Seconds)) :-
-    cocolog_global('$cocolog_calls', Calls),
-    cocolog_global('$cocolog_prompt', Prompt),
-    cocolog_global('$cocolog_completion', Completion),
-    cocolog_global('$cocolog_reasoning', Reasoning),
-    cocolog_global('$cocolog_cache', CacheHit),
-    cocolog_global('$cocolog_total', Total),
-    (   catch(nb_getval('$cocolog_seconds', S), _, fail), float(S)
-    ->  Seconds = S
-    ;   Seconds = 0.0
-    ).
-
-cocolog_global(Global, Value) :-
-    (   catch(nb_getval(Global, Current), _, fail)
-    ->  Value = Current
-    ;   Value = 0
-    ).
-
-codegen_report_print(no) :-
-    !.
-codegen_report_print(yes) :-
-    (   catch(nb_getval('$cocolog_call_list', Reversed), _, fail)
-    ->  reverse(Reversed, Calls)
-    ;   Calls = []
-    ),
-    cocolog_report_calls(Calls, 1),
-    codegen_report(report(Calls0, Prompt, Completion, Reasoning, CacheHit,
-                          Total, Seconds)),
-    format(user_error,
-           'codegen: ~w call(s), ~w prompt + ~w completion = ~w tokens (~w reasoning, ~w cached) in ~2f s~n',
-           [Calls0, Prompt, Completion, Total, Reasoning, CacheHit, Seconds]).
-
-cocolog_report_calls([], _).
-cocolog_report_calls([call(S, P, C, R, H, T)|Rest], N) :-
-    format(user_error,
-           'codegen call ~w: ~w prompt + ~w completion = ~w tokens (~w reasoning, ~w cached) in ~2f s~n',
-           [N, P, C, T, R, H, S]),
-    N1 is N + 1,
-    cocolog_report_calls(Rest, N1).
-
 %% ---- CLI ---------------------------------------------------------------
 %%
 %% A bad flag list is the usage line and exit 1. A bad RUN -- an unreadable
@@ -482,7 +449,7 @@ cocolog_report_calls([call(S, P, C, R, H, T)|Rest], N) :-
 %% leaves no .pl behind to be mistaken for the program, and --keep dir is
 %% how its last candidate is kept for a person to read.
 
-main :-
+cocolog_cli :-
     current_prolog_flag(argv, [_|Args]),
     (   cocolog_args(Args, args(SpecFile, Goal, OutFile, Report, DryRun,
                                 RunOptions, Overrides))
@@ -498,7 +465,7 @@ main :-
                 ),
                 halt(1)
               ))
-    ;   format("usage: cocolog -s coding/cocolog/codegen.pl -- SPEC.txt [--goal G] [--skill FILE] [--no-skill] [--expect FILE] [--attempts N] [--timeout MS] [--budget N] [--keep DIR] [--dry-run] [--key-env NAME] [--temperature T] [--max-tokens N] [--provider P] [--model M] [--base-url U] [--effort E] [--report] [OUT.pl]~n", []),
+    ;   format("usage: cocolog -s coding/cocolog/run.pl -- SPEC.txt [--goal G] [--skill FILE] [--no-skill] [--expect FILE] [--attempts N] [--timeout MS] [--budget N] [--keep DIR] [--dry-run] [--key-env NAME] [--temperature T] [--max-tokens N] [--provider P] [--model M] [--base-url U] [--effort E] [--report] [OUT.pl]~n", []),
         halt(1)
     ).
 
@@ -509,7 +476,9 @@ cocolog_main(SpecFile, Goal, OutFile, Report, DryRun, RunOptions, Overrides) :-
         throw(error(codegen_error(spec_file, Msg), cocolog_main/7))
     ),
     (   DryRun == yes
-    ->  cocolog_run_option(RunOptions, skill, none, SkillFile),
+    ->  cocolog_run_option(RunOptions, keep, none, Keep),
+        cocolog_keep_prepare(Keep),
+        cocolog_run_option(RunOptions, skill, none, SkillFile),
         (   SkillFile == no
         ->  cocolog_no_skill_prompt(System)
         ;   cocolog_skill_text(SkillFile, Skill),

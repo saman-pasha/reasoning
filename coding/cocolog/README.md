@@ -11,7 +11,7 @@ about 19 000 prompt tokens.
 ```sh
 export REASONING_API_KEY=...
 COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
-    ../cocolog/cocolog -s coding/cocolog/codegen.pl -- spec.txt out.pl
+    ../cocolog/cocolog -s coding/cocolog/run.pl -- spec.txt out.pl
 ```
 
 The default guide is `$COCOLOG_SKILL`, else `../cocolog/SKILL.md`; `--skill
@@ -20,7 +20,7 @@ DeepSeek:
 
 ```sh
 COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
-    ../cocolog/cocolog -s coding/cocolog/codegen.pl -- spec.txt \
+    ../cocolog/cocolog -s coding/cocolog/run.pl -- spec.txt \
     --provider openai --model deepseek-flash \
     --base-url https://api.deepseek.com/v1/chat/completions \
     --effort none --report out.pl
@@ -31,7 +31,7 @@ COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
 | `--goal G` | the goal `cocolog run` proves (default `main`) |
 | `--skill FILE` | the language guide |
 | `--no-skill` | omit the guide and use a short generic cocolog prompt |
-| `--expect FILE` | compare the program's standard output with FILE |
+| `--expect FILE` | compare the program's standard output with FILE; the program runs under plain `--local`, with no `argv` |
 | `--attempts N` | try at most N times (default 3) |
 | `--timeout MS` | one run's timeout (default 3000) |
 | `--budget N` | stop before a repair once N tokens are spent |
@@ -43,7 +43,9 @@ COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
 ## What is checked
 
 A reply is a complete cocolog program. It must define `main/0` unless
-`--goal` names another goal. The tool writes it to a temporary file and runs
+`--goal` names another goal. The child that checks a reply runs with the
+provider key variable removed from its environment, so model-written code
+cannot read `REASONING_API_KEY`. The tool writes it to a temporary file and runs
 
 ```sh
 cocolog run FILE.pl [Goal]
@@ -62,7 +64,7 @@ a condition and a loop, and the expected HTML. Run from this repository's
 root with
 
 ```sh
-../cocolog/cocolog -s coding/cocolog/codegen.pl -- \
+../cocolog/cocolog -s coding/cocolog/run.pl -- \
     coding/cocolog/examples/html_template/spec.txt \
     --expect coding/cocolog/examples/html_template/expected.html \
     --provider openai --model deepseek-flash \
@@ -88,11 +90,16 @@ See its README for the measured table and how to run it.
 ```prolog
 codegen_cocolog(Spec, Code).
 codegen_cocolog(Spec, Overrides, Code).          % one call, not run
+codegen_cocolog(Spec, Goal, Overrides, Code).    % one call, named goal
 codegen_cocolog_checked(Spec, Code).
 codegen_cocolog_checked(Spec, Overrides, Code).  % run main, repair
 codegen_cocolog_from(Spec, Goal, Overrides, RunOptions, Code).
 cocolog_skill_text(Text).
 cocolog_skill_text(File, Text).
+codegen_report(report(Calls, Prompt, Completion, Reasoning, Cache, Total,
+                      Seconds)).
+codegen_report_calls(Calls).
+codegen_report_print(no|yes).
 ```
 
 `RunOptions` are `attempts(N)`, `timeout(Ms)`, `budget(N)`, `keep(dir(Dir))`,

@@ -1,6 +1,6 @@
 # HTML template loader
 
-A benchmark for `coding/cocolog/codegen.pl`: load `page.html` with
+A benchmark for `coding/cocolog/run.pl`: load `page.html` with
 `library(template)`, render it in HTML format with the context in `spec.txt`,
 and print the result exactly. `expected.html` is the oracle.
 
@@ -8,7 +8,7 @@ Run from this repository's root:
 
 ```sh
 COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
-    ../cocolog/cocolog -s coding/cocolog/codegen.pl -- \
+    ../cocolog/cocolog -s coding/cocolog/run.pl -- \
     coding/cocolog/examples/html_template/spec.txt \
     --expect coding/cocolog/examples/html_template/expected.html \
     --provider openai --model deepseek-flash \

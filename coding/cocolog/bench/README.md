@@ -18,6 +18,11 @@ per task holds the exact output. The codegen's `--expect` check compares the
 run with that file, so a program that loads but prints the wrong text is a
 failure and its report goes back for repair.
 
+Each task now carries a `reference.pl`, run by `coding/test.pl` against the
+same expected file. The `namespace` reference deliberately defines
+`ns_member/2`: the task's literal `member/2` is the one-namespace trap, and
+the expected output is the one the namespaced version produces.
+
 ## Modes
 
 | mode | calls | effort | what happens |
@@ -98,4 +103,6 @@ expected outputs are fixed and were checked against hand-written references.
 | `run.sh` | sets `COCOLOG_LIBRARY` and runs `bench.pl` |
 | `<task>/spec.txt` | the requirement |
 | `<task>/expected.txt` | the exact standard output |
+| `<task>/reference.pl` | a hand-written reference program for the task |
 | `html_template/page.html` | the template the first task loads |
+| `file/lines.txt`, `stream/lines.txt` | the two tasks' line files |

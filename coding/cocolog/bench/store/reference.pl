@@ -1,0 +1,16 @@
+main :-
+    retractall(city(_, _)),
+    assertz(city(paris, france)),
+    assertz(city(tokyo, japan)),
+    assertz(city(lima, peru)),
+    findall(City-Country, city(City, Country), Pairs0),
+    sort(Pairs0, Pairs),
+    format("~w~n", [Pairs]),
+    retractall(city(_, _)),
+    assertz(city(paris, france)),
+    assertz(city(tokyo, japan)),
+    assertz(city(lima, peru)),
+    retract(city(tokyo, japan)),
+    findall(City-Country, city(City, Country), Remaining0),
+    sort(Remaining0, Remaining),
+    format("~w~n", [Remaining]).

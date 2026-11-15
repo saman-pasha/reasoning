@@ -74,11 +74,11 @@ c_compile_check(Code, CFlags, Verdict) :-
     c_compile_check(Code, CFlags, Std, Verdict).
 
 c_compile_check(Code, CFlags, Std, Verdict) :-
-    c_compile(Code, plain, CFlags, Std, _Exe, Verdict).
+    c_compile(Code, plain, CFlags, Std, Exe, Verdict0),
+    call_cleanup(Verdict = Verdict0, c_clean_exe(Exe)).
 
 c_compile(Code, Mode, CFlags, Std, Exe, Verdict) :-
-    tmp_file(codegen_check, Dir),
-    make_directory(Dir),
+    c_temp_dir(codegen_check, Dir),
     atom_concat(Dir, '/check.c', CFile),
     atom_concat(Dir, '/check.out', Exe),
     atom_concat(Code, '\n', Text),
@@ -97,6 +97,51 @@ c_compile(Code, Mode, CFlags, Std, Exe, Verdict) :-
         c_limit(4000, Diag0, Diag),
         Verdict = fail(Diag)
     ).
+
+%% tmp_file/2 only names a path; it makes nothing. A killed run can leave a
+%% directory under a name this process would be given again (the names carry
+%% the process id and a counter), so an existing name is skipped.
+c_temp_dir(Tag, Dir) :-
+    tmp_file(Tag, Try),
+    (   c_path_exists(Try)
+    ->  c_temp_dir(Tag, Dir)
+    ;   make_directory(Try),
+        Dir = Try
+    ).
+
+c_path_exists(Path) :-
+    (   exists_file(Path)
+    ->  true
+    ;   exists_directory(Path)
+    ).
+
+%% The directory a compiled check lives in, with everything the check wrote.
+c_clean_exe(Exe) :-
+    file_directory_name(Exe, Dir),
+    c_clean_dir(Dir).
+
+c_clean_dir(Dir) :-
+    (   catch(directory_files(Dir, Entries), _, fail)
+    ->  c_clean_entries(Entries, Dir),
+        catch(delete_directory(Dir), _, true)
+    ;   true
+    ).
+
+c_clean_entries([], _).
+c_clean_entries(['.'|Rest], Dir) :-
+    !,
+    c_clean_entries(Rest, Dir).
+c_clean_entries(['..'|Rest], Dir) :-
+    !,
+    c_clean_entries(Rest, Dir).
+c_clean_entries([Entry|Rest], Dir) :-
+    atom_concat(Dir, '/', Base),
+    atom_concat(Base, Entry, Path),
+    (   exists_directory(Path)
+    ->  c_clean_dir(Path)
+    ;   catch(delete_file(Path), _, true)
+    ),
+    c_clean_entries(Rest, Dir).
 
 %% The edition is resolved ONCE, here, so a name that is not one clang
 %% knows fails before a temporary directory is made and names what is
@@ -124,9 +169,12 @@ c_analyze_check(Code, CFlags, Verdict) :-
 
 c_analyze_check(Code, CFlags, Std, Verdict) :-
     codegen_std_value(Std, Spelling),
-    tmp_file(codegen_analyze, Dir),
-    make_directory(Dir),
+    c_temp_dir(codegen_analyze, Dir),
     atom_concat(Dir, '/analyze.c', CFile),
+    call_cleanup(c_analyze_file(Code, CFlags, Spelling, CFile, Verdict),
+                 c_clean_dir(Dir)).
+
+c_analyze_file(Code, CFlags, Spelling, CFile, Verdict) :-
     atom_concat(Code, '\n', Text),
     atom_codes(Text, Codes),
     write_file_from_codes(CFile, Codes),
@@ -163,6 +211,10 @@ c_test_check(Code, Cases, Timeout, CFlags, Verdict) :-
 
 c_test_check(Code, Cases, Timeout, CFlags, Std, Verdict) :-
     c_compile(Code, sanitized, CFlags, Std, Exe, CompileVerdict),
+    call_cleanup(c_test_judge(Exe, CompileVerdict, Cases, Timeout, Verdict),
+                 c_clean_exe(Exe)).
+
+c_test_judge(Exe, CompileVerdict, Cases, Timeout, Verdict) :-
     (   CompileVerdict == ok
     ->  c_run_cases(Exe, Cases, Timeout, Failures),
         (   Failures == []
@@ -189,6 +241,7 @@ c_run_cases([Case|Rest], Exe, Timeout, Index, Failures) :-
     write_file_from_codes(InFile, InCodes),
     format(atom(Cmd), 'ASAN_OPTIONS=detect_leaks=0 ~s < ~s 2>&1', [Exe, InFile]),
     c_run_command(Cmd, Timeout, OutCodes, Exit, Error),
+    catch(delete_file(InFile), _, true),
     atom_codes(Actual0, OutCodes),
     c_norm(Actual0, Actual),
     c_norm(Expected, ExpNorm),
@@ -237,6 +290,11 @@ c_run_outputs(Code, Inputs, Timeout, CFlags, Outputs, Verdict) :-
 
 c_run_outputs(Code, Inputs, Timeout, CFlags, Std, Outputs, Verdict) :-
     c_compile(Code, sanitized, CFlags, Std, Exe, Compile),
+    call_cleanup(c_run_output_judge(Exe, Compile, Inputs, Timeout, Outputs,
+                                    Verdict),
+                 c_clean_exe(Exe)).
+
+c_run_output_judge(Exe, Compile, Inputs, Timeout, Outputs, Verdict) :-
     (   Compile == ok
     ->  c_run_output_list(Inputs, Exe, Timeout, Outputs),
         Verdict = ok
@@ -253,6 +311,7 @@ c_run_output_list([Input|Rest], Exe, Timeout,
     write_file_from_codes(InFile, InCodes),
     format(atom(Cmd), 'ASAN_OPTIONS=detect_leaks=0 ~s < ~s 2>&1', [Exe, InFile]),
     c_run_command(Cmd, Timeout, OutCodes, Exit, Error),
+    catch(delete_file(InFile), _, true),
     atom_codes(Actual0, OutCodes),
     c_norm(Actual0, Output),
     c_run_output_list(Rest, Exe, Timeout, Outputs).

@@ -33,6 +33,7 @@ main :-
     auto_cases,
     check_tool,
     cocolog,
+    bench_references,
     checks_done.
 
 clang_required :-
@@ -938,11 +939,35 @@ cocolog_check_query(Label, Goal, Needle) :-
 cocolog_missing_key :-
     cocolog(C),
     format(atom(Cmd),
-           'env -u REASONING_API_KEY "~s" -s coding/cocolog/codegen.pl -- coding/cocolog/examples/html_template/spec.txt --no-skill /tmp/coco_key.pl 2>&1',
+           'env -u REASONING_API_KEY "~s" -s coding/cocolog/run.pl -- coding/cocolog/examples/html_template/spec.txt --no-skill /tmp/coco_key.pl 2>&1',
            [C]),
     shell(Cmd, Text, Exit),
     check('a missing key exits one', Exit, 1),
     has('a missing key is a codegen error', 'codegen: llm_error(no_key', Text).
+
+bench_references :-
+    section('cocolog bench references'),
+    forall(member(Task, [html_template, json, dcg, store, codes, file,
+                         stream, namespace]),
+           bench_reference(Task)).
+
+bench_reference(Task) :-
+    format(atom(Args), '-s coding/cocolog/bench/~w/reference.pl', [Task]),
+    cocolog_run(Args, Text, Exit),
+    format(atom(ExpectedFile), 'coding/cocolog/bench/~w/expected.txt',
+           [Task]),
+    read_file_to_codes(ExpectedFile, Codes),
+    atom_codes(Expected0, Codes),
+    bench_without_final_newline(Expected0, Expected),
+    format(atom(Label), 'the ~w reference matches its expected output',
+           [Task]),
+    check(Label, Exit-Text, 0-Expected).
+
+bench_without_final_newline(Atom, Trimmed) :-
+    (   atom_concat(Trimmed, '\n', Atom)
+    ->  true
+    ;   Trimmed = Atom
+    ).
 
 cocolog_cli_query(Goal, Needles) :-
     format(atom(Args),

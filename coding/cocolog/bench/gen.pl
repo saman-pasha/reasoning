@@ -14,7 +14,6 @@
 %% three calls at none, each repair carrying the output mismatch;
 %% `no_skill' is the high control with the guide omitted.
 
-:- use_module(library(process)).
 :- use_module('coding/cocolog/codegen.pl').
 :- use_module('coding/bench/config.pl').
 
