@@ -146,6 +146,16 @@ and counts identical tool calls. At 16 the request is refused with HTTP 409
 and a message naming the repeated signature, before the backend is called.
 `CODING_ENDPOINT_REPEAT_LIMIT` changes the limit; `0` disables the guard.
 
+## Request bodies
+
+The endpoint parses the whole request with cocolog's `json_parse/2`. That
+parser refused a string holding `\u0000` -- "any character but a NUL" -- so
+one tool that printed binary (`head -2 $(which timeout)`, say) put thousands
+of NUL escapes into the next request and the endpoint answered HTTP 400
+"the body is not JSON". The escape is now replaced with `�` before the
+parse: the document stays valid and the tool's text keeps its place. A raw
+NUL byte is still not JSON and is still refused.
+
 ## Backend
 
 The endpoint forwards to an OpenAI-compatible chat endpoint. The default is

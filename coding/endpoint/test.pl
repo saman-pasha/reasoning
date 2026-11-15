@@ -41,6 +41,7 @@ main :-
     test_models,
     test_health,
     test_token,
+    test_body_json,
     test_guard,
     test_task_text,
     test_usage,
@@ -99,6 +100,33 @@ test_token :-
     ( ep_token_ok(Bad) -> Open = open ; Open = closed ),
     check('no token means no guard', Open, open),
     setenv('CODING_ENDPOINT_TOKEN', 'test-token').
+
+test_body_json :-
+    Nul = "{\"model\":\"cocolog\",\"messages\":[{\"role\":\"user\",\"content\":\"x\\u0000y\"}]}",
+    ep_body_json_codes(Nul, Safe),
+    (   codes_contains(Safe, [92, 117, 70, 70, 70, 68])
+    ->  Fixed = yes
+    ;   Fixed = no
+    ),
+    check('a NUL escape becomes the replacement character', Fixed, yes),
+    (   catch(json_parse(Safe, json(Pairs)), _, fail),
+        memberchk(messages-Messages, Pairs),
+        Messages = [json(Message)],
+        memberchk(content-Content, Message),
+        atom_codes(Content, ContentCodes),
+        codes_contains(ContentCodes, [65533])
+    ->  Parsed = yes
+    ;   Parsed = no
+    ),
+    check('the sanitized body parses', Parsed, yes),
+    Plain = "{\"model\":\"x\"}",
+    ep_body_json_codes(Plain, Same),
+    check('a body with no NUL is unchanged', Same, Plain).
+
+codes_contains(Codes, Seq) :-
+    append(_, Rest, Codes),
+    append(Seq, _, Rest),
+    !.
 
 test_guard :-
     ep_add_guide([json([role-system, content-agent])], 'GUIDE',

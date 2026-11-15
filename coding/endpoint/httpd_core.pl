@@ -709,11 +709,26 @@ ep_chat(Request, Reply) :-
     ->  ep_error_reply(Request, 401,
                        'Authorization: Bearer TOKEN is required', Reply)
     ;   Request = request(_, _, _, _, _, BodyCodes),
-        (   catch(json_parse(BodyCodes, Body), _, fail)
+        (   catch(( ep_body_json_codes(BodyCodes, SafeCodes),
+                    json_parse(SafeCodes, Body) ), _, fail)
         ->  ep_chat_body(Request, Body, Start, Reply)
         ;   ep_error_reply(Request, 400, 'the body is not JSON', Reply)
         )
     ).
+
+%% JSON lets a string hold \u0000, and cocolog's json_parse stops at it:
+%% a tool that prints binary puts thousands of them into the next request,
+%% and the whole body used to be refused. The escape becomes �, the
+%% replacement character, so the document still parses and the tool's
+%% text stays where it was. Only the escape is touched; a raw NUL byte is
+%% not JSON and is still refused.
+ep_body_json_codes([], []).
+ep_body_json_codes([92, 117, 48, 48, 48, 48 | Codes],
+                   [92, 117, 70, 70, 70, 68 | Out]) :-
+    !,
+    ep_body_json_codes(Codes, Out).
+ep_body_json_codes([C|Codes], [C|Out]) :-
+    ep_body_json_codes(Codes, Out).
 
 %% A loop guard. OpenCode sends the session's whole tool history, so the
 %% endpoint can see the same shell command (or file access) requested again
