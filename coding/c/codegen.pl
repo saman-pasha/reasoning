@@ -955,9 +955,14 @@ main :-
                                 Report, DryRun, RunOptions, Overrides))
     ->  catch(codegen_main(SpecFile, TestsFile, ContractFile, OutFile,
                            Report, DryRun, RunOptions, Overrides),
-              error(codegen_error(Kind, Detail), _),
+              Ball,
               ( codegen_report_print(Report),
-                format(user_error, 'codegen: ~w~n~s~n', [Kind, Detail]),
+                (   Ball = error(codegen_error(Kind, Detail), _)
+                ->  format(user_error, 'codegen: ~w~n~s~n', [Kind, Detail])
+                ;   Ball = error(Term, _)
+                ->  format(user_error, 'codegen: ~w~n', [Term])
+                ;   format(user_error, 'codegen: ~w~n', [Ball])
+                ),
                 halt(1)
               ))
     ;   format("usage: cocolog -s coding/c/codegen.pl -- SPEC.txt [--tests CASES.txt] [--auto-tests] [--cases-effort L] [--verify-provider P] [--verify-model M] [--verify-base-url U] [--verify-key-env NAME] [--contract CONTRACT.txt] [--keep DIR] [--attempts N] [--timeout MS] [--budget N] [--cflags FLAGS] [--std EDITION] [--analyze] [--dry-run] [--key-env NAME] [--temperature T] [--max-tokens N] [--provider P] [--model M] [--base-url U] [--effort E] [--report] [OUT.c]~n", []),
@@ -966,8 +971,11 @@ main :-
 
 codegen_main(SpecFile, TestsFile, ContractFile, OutFile, Report, DryRun,
              RunOptions, Overrides) :-
-    read_file_to_codes(SpecFile, Codes),
-    atom_codes(Spec, Codes),
+    (   catch(read_file_to_codes(SpecFile, Codes), _, fail)
+    ->  atom_codes(Spec, Codes)
+    ;   format(atom(Msg), 'cannot read the requirement ~s', [SpecFile]),
+        throw(error(codegen_error(spec_file, Msg), codegen_main/8))
+    ),
     (   DryRun == yes
     ->  %% A dry run prints prompts, and a prompt names the edition: the
         %% run options are prepared for their std(_) alone, so --dry-run
@@ -995,7 +1003,12 @@ codegen_main(SpecFile, TestsFile, ContractFile, OutFile, Report, DryRun,
         ->  format("~s~n", [Code])
         ;   atom_concat(Code, '\n', Text),
             atom_codes(Text, OutCodes),
-            write_file_from_codes(OutFile, OutCodes)
+            (   catch(write_file_from_codes(OutFile, OutCodes), _, fail)
+            ->  true
+            ;   format(atom(Msg), 'cannot write ~s', [OutFile]),
+                throw(error(codegen_error(output_file, Msg),
+                            codegen_main/8))
+            )
         ),
         codegen_report_print(Report)
     ).

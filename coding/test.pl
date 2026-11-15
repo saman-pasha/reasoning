@@ -915,7 +915,34 @@ cocolog :-
     cocolog_cli_query("tmp_file(coco_expect, F), atom_codes('ok\\n', Cs), write_file_from_codes(F, Cs), asserta((llm_chat(_,_, 'main :- writeln(ok).') :- !)), codegen_cocolog_from('Print ok.', main, [], [expect(F)], _), write('COCO-EXPECT-'), write(731)",
                       ['COCO-EXPECT-731']),
     cocolog_cli_query("( catch(cocolog_skill_text('/no/such/guide', _), error(codegen_error(skill_file,_),_), true) -> write('COCO-NOGUIDE-'), write(731) ; write('COCO-NOGUIDE-NO-'), write(731) )",
-                      ['COCO-NOGUIDE-731']).
+                      ['COCO-NOGUIDE-731']),
+    cocolog_check_query('a missing spec is diagnosed',
+                        "( catch(cocolog_main('/no/such/spec.txt', main, none, no, no, [], []), error(codegen_error(spec_file,_),_), true) -> write('COCO-SPEC-'), write(731) ; write('COCO-SPEC-NO-'), write(731) )",
+                        'COCO-SPEC-731'),
+    cocolog_check_query('an unreadable expect is refused before a call',
+                        "nb_setval(coco_calls,0), asserta((llm_chat(_,_,_) :- nb_getval(coco_calls,N), N1 is N+1, nb_setval(coco_calls,N1), fail)), ( catch(codegen_cocolog_from('Print ok.', main, [], [expect('/no/such/expected.txt')], _), error(codegen_error(expect_file,_),_), true) -> nb_getval(coco_calls,C), write('COCO-EXPECT-PRE-'), write(C), write(731) ; write('COCO-EXPECT-PRE-NO-'), write(731) )",
+                        'COCO-EXPECT-PRE-0'),
+    cocolog_check_query('an unwritable output is diagnosed',
+                        "( catch(cocolog_write_output('/no/such/dir/out.pl', 'main :- true.'), error(codegen_error(output_file,_),_), true) -> write('COCO-OUT-'), write(731) ; write('COCO-OUT-NO-'), write(731) )",
+                        'COCO-OUT-731'),
+    cocolog_missing_key.
+
+cocolog_check_query(Label, Goal, Needle) :-
+    format(atom(Args),
+           "query \"use_module('coding/cocolog/codegen.pl'), ~s\"",
+           [Goal]),
+    cocolog_out(Args, Codes),
+    atom_codes(Text, Codes),
+    has(Label, Needle, Text).
+
+cocolog_missing_key :-
+    cocolog(C),
+    format(atom(Cmd),
+           'env -u REASONING_API_KEY "~s" -s coding/cocolog/codegen.pl -- coding/cocolog/examples/html_template/spec.txt --no-skill /tmp/coco_key.pl 2>&1',
+           [C]),
+    shell(Cmd, Text, Exit),
+    check('a missing key exits one', Exit, 1),
+    has('a missing key is a codegen error', 'codegen: llm_error(no_key', Text).
 
 cocolog_cli_query(Goal, Needles) :-
     format(atom(Args),
@@ -1010,7 +1037,18 @@ check_tool :-
     has('the check usage is printed', 'usage:', Text6),
     cocolog_run('-s coding/c/codegen.pl', Text7, Exit7),
     check('the generator usage is an error', Exit7, 1),
-    has('the generator usage is printed', 'usage:', Text7).
+    has('the generator usage is printed', 'usage:', Text7),
+    c_generator_missing_spec.
+
+c_generator_missing_spec :-
+    cocolog(C),
+    format(atom(Cmd),
+           '"~s" -s coding/c/codegen.pl -- /no/such/spec.txt /tmp/x.c 2>&1',
+           [C]),
+    shell(Cmd, Text, Exit),
+    check('the C generator missing spec exits one', Exit, 1),
+    has('the C generator diagnoses a missing spec', 'codegen: spec_file',
+        Text).
 
 check_compiles(File, Text, Exit) :-
     format(atom(Args), "-s coding/c/check.pl -- ~w", [File]),

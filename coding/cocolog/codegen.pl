@@ -160,7 +160,21 @@ cocolog_run_prepare(RunOptions, Attempts, Timeout, Budget, Keep, SkillFile,
     cocolog_run_option(RunOptions, keep, none, Keep),
     cocolog_keep_prepare(Keep),
     cocolog_run_option(RunOptions, skill, none, SkillFile),
-    cocolog_run_option(RunOptions, expect, none, Expect).
+    cocolog_run_option(RunOptions, expect, none, Expect0),
+    cocolog_expect_prepare(Expect0, Expect).
+
+%% The oracle is a configuration error, not a repair: read it before the
+%% first call, so a typo costs no model tokens and cannot change between
+%% attempts.
+cocolog_expect_prepare(none, none) :-
+    !.
+cocolog_expect_prepare(File, expect(File, Expected)) :-
+    (   catch(read_file_to_codes(File, Codes), _, fail)
+    ->  atom_codes(Expected, Codes)
+    ;   format(atom(Msg), 'cannot read the expected output ~s', [File]),
+        throw(error(codegen_error(expect_file, Msg),
+                    cocolog_expect_prepare/2))
+    ).
 
 cocolog_run_option(Options, Key, Default, Value) :-
     (   member(Option, Options),
@@ -237,10 +251,18 @@ cocolog_check(Code, Goal, Timeout, Expect, Verdict) :-
     (   Code == ''
     ->  Verdict = fail('the reply is empty')
     ;   tmp_file(cocolog_program, Dir),
-        make_directory(Dir),
+        (   catch(make_directory(Dir), _, fail)
+        ->  true
+        ;   format(atom(DirMsg), 'cannot make the check directory ~s', [Dir]),
+            throw(error(codegen_error(check_dir, DirMsg), cocolog_check/5))
+        ),
         atom_concat(Dir, '/program.pl', File),
         atom_codes(Code, Codes),
-        write_file_from_codes(File, Codes),
+        (   catch(write_file_from_codes(File, Codes), _, fail)
+        ->  true
+        ;   format(atom(FileMsg), 'cannot write the check file ~s', [File]),
+            throw(error(codegen_error(check_file, FileMsg), cocolog_check/5))
+        ),
         current_prolog_flag(executable, Exe),
         cocolog_run_command(Exe, File, Goal, Command),
         cocolog_proc_run(Command, Timeout, OutCodes, Exit),
@@ -256,19 +278,14 @@ cocolog_check(Code, Goal, Timeout, Expect, Verdict) :-
 
 cocolog_expect(none, _, ok) :-
     !.
-cocolog_expect(File, Output, Verdict) :-
-    (   catch(read_file_to_codes(File, Codes), _, fail)
-    ->  atom_codes(Expected, Codes),
-        (   Output == Expected
-        ->  Verdict = ok
-        ;   format(atom(Diag0),
-                   'the output does not match ~s~nexpected:~n~s~nactual:~n~s',
-                   [File, Expected, Output]),
-            cocolog_limit(4000, Diag0, Diag),
-            Verdict = fail(Diag)
-        )
-    ;   format(atom(Msg), 'cannot read the expected output ~s', [File]),
-        Verdict = fail(Msg)
+cocolog_expect(expect(File, Expected), Output, Verdict) :-
+    (   Output == Expected
+    ->  Verdict = ok
+    ;   format(atom(Diag0),
+               'the output does not match ~s~nexpected:~n~s~nactual:~n~s',
+               [File, Expected, Output]),
+        cocolog_limit(4000, Diag0, Diag),
+        Verdict = fail(Diag)
     ).
 
 cocolog_run_command(Exe, File, main, Command) :-
@@ -471,9 +488,14 @@ main :-
                                 RunOptions, Overrides))
     ->  catch(cocolog_main(SpecFile, Goal, OutFile, Report, DryRun,
                            RunOptions, Overrides),
-              error(codegen_error(Kind, Detail), _),
+              Ball,
               ( codegen_report_print(Report),
-                format(user_error, 'codegen: ~w~n~s~n', [Kind, Detail]),
+                (   Ball = error(codegen_error(Kind, Detail), _)
+                ->  format(user_error, 'codegen: ~w~n~s~n', [Kind, Detail])
+                ;   Ball = error(Term, _)
+                ->  format(user_error, 'codegen: ~w~n', [Term])
+                ;   format(user_error, 'codegen: ~w~n', [Ball])
+                ),
                 halt(1)
               ))
     ;   format("usage: cocolog -s coding/cocolog/codegen.pl -- SPEC.txt [--goal G] [--skill FILE] [--no-skill] [--expect FILE] [--attempts N] [--timeout MS] [--budget N] [--keep DIR] [--dry-run] [--key-env NAME] [--temperature T] [--max-tokens N] [--provider P] [--model M] [--base-url U] [--effort E] [--report] [OUT.pl]~n", []),
@@ -481,8 +503,11 @@ main :-
     ).
 
 cocolog_main(SpecFile, Goal, OutFile, Report, DryRun, RunOptions, Overrides) :-
-    read_file_to_codes(SpecFile, Codes),
-    atom_codes(Spec, Codes),
+    (   catch(read_file_to_codes(SpecFile, Codes), _, fail)
+    ->  atom_codes(Spec, Codes)
+    ;   format(atom(Msg), 'cannot read the requirement ~s', [SpecFile]),
+        throw(error(codegen_error(spec_file, Msg), cocolog_main/7))
+    ),
     (   DryRun == yes
     ->  cocolog_run_option(RunOptions, skill, none, SkillFile),
         (   SkillFile == no
@@ -495,13 +520,20 @@ cocolog_main(SpecFile, Goal, OutFile, Report, DryRun, RunOptions, Overrides) :-
         codegen_report_reset,
         codegen_report_print(Report)
     ;   codegen_cocolog_from(Spec, Goal, Overrides, RunOptions, Code),
-        (   OutFile == none
-        ->  format("~s~n", [Code])
-        ;   atom_concat(Code, '\n', Text),
-            atom_codes(Text, TextCodes),
-            write_file_from_codes(OutFile, TextCodes)
-        ),
+        cocolog_write_output(OutFile, Code),
         codegen_report_print(Report)
+    ).
+
+cocolog_write_output(none, Code) :-
+    !,
+    format("~s~n", [Code]).
+cocolog_write_output(OutFile, Code) :-
+    atom_concat(Code, '\n', Text),
+    atom_codes(Text, TextCodes),
+    (   catch(write_file_from_codes(OutFile, TextCodes), _, fail)
+    ->  true
+    ;   format(atom(Msg), 'cannot write ~s', [OutFile]),
+        throw(error(codegen_error(output_file, Msg), cocolog_write_output/2))
     ).
 
 %% args(Spec, Goal, Out, Report, DryRun, RunOptions, Overrides)
