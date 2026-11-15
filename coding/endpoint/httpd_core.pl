@@ -354,9 +354,21 @@ ep_cap_tokens(Body0, Body) :-
     ;   Body = Body0
     ).
 
+%% An omitted, blank or null effort is the endpoint's default: none. The
+%% backend distinguishes an absent effort from an explicit one, so the
+%% endpoint writes it rather than leave the provider's default in place.
+ep_default_effort(Body0, Body) :-
+    (   ep_json_get(Body0, reasoning_effort, Value),
+        Value \== '',
+        Value \== @(null)
+    ->  Body = Body0
+    ;   ep_json_set_field(Body0, reasoning_effort, none, Body)
+    ).
+
 ep_forward(Body0, Alias, Status, Resp) :-
+    ep_default_effort(Body0, BodyE),
     ep_backend_model(Alias, Model),
-    ep_json_set_field(Body0, model, Model, Body1),
+    ep_json_set_field(BodyE, model, Model, Body1),
     ep_json_set_field(Body1, stream, @(false), Body2),
     ep_json_del(Body2, stream_options, Body2a),
     ep_json_del(Body2a, max_completion_tokens, Body3),
@@ -622,9 +634,11 @@ ep_chat_body(Request, Body, Start, Reply) :-
             ;   Stream0 = @(true)
             ),
             (   Stream0 == @(true) -> Stream = true ; Stream = false ),
-            (   ep_json_get(Body1, reasoning_effort, Effort)
-            ->  true
-            ;   Effort = '-'
+            (   ep_json_get(Body1, reasoning_effort, Effort0),
+                Effort0 \== '',
+                Effort0 \== @(null)
+            ->  Effort = Effort0
+            ;   Effort = none
             ),
             (   ep_json_get(Body1, tools, Tools), is_list(Tools)
             ->  length(Tools, ToolCount)

@@ -20,9 +20,9 @@ The endpoint is not a second agent loop. OpenCode still owns the read, edit
 and shell tools, the session and the permissions. Every model declares a
 1,000,000-token context and a 32,768-token output limit.
 
-Every model also defines the effort variants `none`, `low`, `medium`,
-`high` and `max`, so the reasoning count and the effort are chosen
-independently:
+Every model also defines the effort variants `none`, `minimal`, `low`,
+`medium`, `high`, `xhigh`, `ultra` and `max`, so the reasoning count and
+the effort are chosen independently:
 
 ```sh
 reasoning/cocolog-r8#high     # eight checks and high model effort
@@ -31,9 +31,11 @@ reasoning/c-r0#none           # plain mode, no checks, no model effort
 ```
 
 `settings.reasoningEffort` defaults to `none`, and OpenCode sends the chosen
-level as `reasoning_effort`; the endpoint forwards it unchanged. `ctrl+t`
-cycles effort variants on the selected model. A request that omits `stream`
-is treated as `stream: true`.
+level as `reasoning_effort`; the endpoint forwards an explicit level
+unchanged. A request that omits the field, or sends it blank, is forwarded
+as `none`; the provider default is never used by accident. `ctrl+t` cycles
+effort variants on the selected model. A request that omits `stream` is
+treated as `stream: true`.
 
 The `-rN` suffix is read by the endpoint itself, and the model config also
 carries `x-coding-reasoning: N`. A request header still overrides both for a

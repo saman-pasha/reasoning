@@ -27,7 +27,9 @@
                 ep_checks/2,
                 ep_sse/3,
                 ep_usage/2,
-                ep_usage_json/2
+                ep_usage_json/2,
+                ep_default_effort/2,
+                ep_json_get/3
               ]).
 :- use_module('coding/endpoint/reasoning_core.pl',
               [ endpoint_reason/4 ]).
@@ -40,6 +42,7 @@ main :-
     test_guard,
     test_task_text,
     test_usage,
+    test_effort_default,
     test_sse,
     test_sse_usage,
     test_sse_tools,
@@ -146,6 +149,17 @@ test_usage :-
     json_codes(json([id-test]), EmptyCodes),
     ep_usage(EmptyCodes, None),
     check('a reply without usage is all zero', None, usage(0, 0, 0, 0, 0)).
+
+test_effort_default :-
+    ep_default_effort(json([model-c]), Omitted),
+    ep_json_get(Omitted, reasoning_effort, E1),
+    check('an omitted effort becomes none', E1, none),
+    ep_default_effort(json([reasoning_effort-high]), Chosen),
+    ep_json_get(Chosen, reasoning_effort, E2),
+    check('a chosen effort is kept', E2, high),
+    ep_default_effort(json([reasoning_effort-'']), Blank),
+    ep_json_get(Blank, reasoning_effort, E3),
+    check('a blank effort becomes none', E3, none).
 
 test_sse :-
     Reply = json([id-test,

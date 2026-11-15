@@ -31,6 +31,12 @@
               }
             },
             {
+              "id": "minimal",
+              "settings": {
+                "reasoningEffort": "minimal"
+              }
+            },
+            {
               "id": "low",
               "settings": {
                 "reasoningEffort": "low"
@@ -46,6 +52,18 @@
               "id": "high",
               "settings": {
                 "reasoningEffort": "high"
+              }
+            },
+            {
+              "id": "xhigh",
+              "settings": {
+                "reasoningEffort": "xhigh"
+              }
+            },
+            {
+              "id": "ultra",
+              "settings": {
+                "reasoningEffort": "ultra"
               }
             },
             {
@@ -82,6 +100,12 @@
               }
             },
             {
+              "id": "minimal",
+              "settings": {
+                "reasoningEffort": "minimal"
+              }
+            },
+            {
               "id": "low",
               "settings": {
                 "reasoningEffort": "low"
@@ -97,6 +121,18 @@
               "id": "high",
               "settings": {
                 "reasoningEffort": "high"
+              }
+            },
+            {
+              "id": "xhigh",
+              "settings": {
+                "reasoningEffort": "xhigh"
+              }
+            },
+            {
+              "id": "ultra",
+              "settings": {
+                "reasoningEffort": "ultra"
               }
             },
             {
@@ -136,6 +172,12 @@
               }
             },
             {
+              "id": "minimal",
+              "settings": {
+                "reasoningEffort": "minimal"
+              }
+            },
+            {
               "id": "low",
               "settings": {
                 "reasoningEffort": "low"
@@ -151,6 +193,18 @@
               "id": "high",
               "settings": {
                 "reasoningEffort": "high"
+              }
+            },
+            {
+              "id": "xhigh",
+              "settings": {
+                "reasoningEffort": "xhigh"
+              }
+            },
+            {
+              "id": "ultra",
+              "settings": {
+                "reasoningEffort": "ultra"
               }
             },
             {
@@ -190,6 +244,12 @@
               }
             },
             {
+              "id": "minimal",
+              "settings": {
+                "reasoningEffort": "minimal"
+              }
+            },
+            {
               "id": "low",
               "settings": {
                 "reasoningEffort": "low"
@@ -205,6 +265,18 @@
               "id": "high",
               "settings": {
                 "reasoningEffort": "high"
+              }
+            },
+            {
+              "id": "xhigh",
+              "settings": {
+                "reasoningEffort": "xhigh"
+              }
+            },
+            {
+              "id": "ultra",
+              "settings": {
+                "reasoningEffort": "ultra"
               }
             },
             {
@@ -244,6 +316,12 @@
               }
             },
             {
+              "id": "minimal",
+              "settings": {
+                "reasoningEffort": "minimal"
+              }
+            },
+            {
               "id": "low",
               "settings": {
                 "reasoningEffort": "low"
@@ -259,6 +337,18 @@
               "id": "high",
               "settings": {
                 "reasoningEffort": "high"
+              }
+            },
+            {
+              "id": "xhigh",
+              "settings": {
+                "reasoningEffort": "xhigh"
+              }
+            },
+            {
+              "id": "ultra",
+              "settings": {
+                "reasoningEffort": "ultra"
               }
             },
             {
@@ -295,6 +385,12 @@
               }
             },
             {
+              "id": "minimal",
+              "settings": {
+                "reasoningEffort": "minimal"
+              }
+            },
+            {
               "id": "low",
               "settings": {
                 "reasoningEffort": "low"
@@ -310,6 +406,18 @@
               "id": "high",
               "settings": {
                 "reasoningEffort": "high"
+              }
+            },
+            {
+              "id": "xhigh",
+              "settings": {
+                "reasoningEffort": "xhigh"
+              }
+            },
+            {
+              "id": "ultra",
+              "settings": {
+                "reasoningEffort": "ultra"
               }
             },
             {
@@ -349,6 +457,12 @@
               }
             },
             {
+              "id": "minimal",
+              "settings": {
+                "reasoningEffort": "minimal"
+              }
+            },
+            {
               "id": "low",
               "settings": {
                 "reasoningEffort": "low"
@@ -364,6 +478,18 @@
               "id": "high",
               "settings": {
                 "reasoningEffort": "high"
+              }
+            },
+            {
+              "id": "xhigh",
+              "settings": {
+                "reasoningEffort": "xhigh"
+              }
+            },
+            {
+              "id": "ultra",
+              "settings": {
+                "reasoningEffort": "ultra"
               }
             },
             {
@@ -403,6 +529,12 @@
               }
             },
             {
+              "id": "minimal",
+              "settings": {
+                "reasoningEffort": "minimal"
+              }
+            },
+            {
               "id": "low",
               "settings": {
                 "reasoningEffort": "low"
@@ -418,6 +550,18 @@
               "id": "high",
               "settings": {
                 "reasoningEffort": "high"
+              }
+            },
+            {
+              "id": "xhigh",
+              "settings": {
+                "reasoningEffort": "xhigh"
+              }
+            },
+            {
+              "id": "ultra",
+              "settings": {
+                "reasoningEffort": "ultra"
               }
             },
             {
@@ -457,6 +601,12 @@
               }
             },
             {
+              "id": "minimal",
+              "settings": {
+                "reasoningEffort": "minimal"
+              }
+            },
+            {
               "id": "low",
               "settings": {
                 "reasoningEffort": "low"
@@ -472,6 +622,18 @@
               "id": "high",
               "settings": {
                 "reasoningEffort": "high"
+              }
+            },
+            {
+              "id": "xhigh",
+              "settings": {
+                "reasoningEffort": "xhigh"
+              }
+            },
+            {
+              "id": "ultra",
+              "settings": {
+                "reasoningEffort": "ultra"
               }
             },
             {
@@ -508,6 +670,12 @@
               }
             },
             {
+              "id": "minimal",
+              "settings": {
+                "reasoningEffort": "minimal"
+              }
+            },
+            {
               "id": "low",
               "settings": {
                 "reasoningEffort": "low"
@@ -523,6 +691,18 @@
               "id": "high",
               "settings": {
                 "reasoningEffort": "high"
+              }
+            },
+            {
+              "id": "xhigh",
+              "settings": {
+                "reasoningEffort": "xhigh"
+              }
+            },
+            {
+              "id": "ultra",
+              "settings": {
+                "reasoningEffort": "ultra"
               }
             },
             {
@@ -562,6 +742,12 @@
               }
             },
             {
+              "id": "minimal",
+              "settings": {
+                "reasoningEffort": "minimal"
+              }
+            },
+            {
               "id": "low",
               "settings": {
                 "reasoningEffort": "low"
@@ -577,6 +763,18 @@
               "id": "high",
               "settings": {
                 "reasoningEffort": "high"
+              }
+            },
+            {
+              "id": "xhigh",
+              "settings": {
+                "reasoningEffort": "xhigh"
+              }
+            },
+            {
+              "id": "ultra",
+              "settings": {
+                "reasoningEffort": "ultra"
               }
             },
             {
@@ -616,6 +814,12 @@
               }
             },
             {
+              "id": "minimal",
+              "settings": {
+                "reasoningEffort": "minimal"
+              }
+            },
+            {
               "id": "low",
               "settings": {
                 "reasoningEffort": "low"
@@ -631,6 +835,18 @@
               "id": "high",
               "settings": {
                 "reasoningEffort": "high"
+              }
+            },
+            {
+              "id": "xhigh",
+              "settings": {
+                "reasoningEffort": "xhigh"
+              }
+            },
+            {
+              "id": "ultra",
+              "settings": {
+                "reasoningEffort": "ultra"
               }
             },
             {
