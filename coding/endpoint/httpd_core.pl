@@ -859,6 +859,392 @@ ep_chat_body_1(Request, Body, Start, Reply) :-
                        'model and messages are required', Reply)
     ).
 
+%% ---- the Responses route (Codex) --------------------------------------
+%%
+%% Codex speaks only the Responses API. A Responses request is translated
+%% to the chat request the rest of the endpoint already knows -- same
+%% messages, guide, reasoning checks, loop guard and backend -- and the
+%% chat reply is written back as Responses events (when Codex asked for a
+%% stream) or as one Responses object. Codex's developer messages become
+%% system messages, so ep_add_guide appends the language guide to the
+%% first of them.
+
+ep_responses(Request, Reply) :-
+    (   \+ ep_token_ok(Request)
+    ->  ep_error_reply(Request, 401,
+                       'Authorization: Bearer TOKEN is required', Reply)
+    ;   Request = request(_, _, _, _, _, BodyCodes),
+        (   catch(( ep_body_json_codes(BodyCodes, SafeCodes),
+                    json_parse(SafeCodes, Body) ), _, fail)
+        ->  ep_responses_body(Request, Body, Reply)
+        ;   ep_error_reply(Request, 400, 'the body is not JSON', Reply)
+        )
+    ).
+
+ep_responses_body(Request, Body, Reply) :-
+    (   ep_responses_chat_body(Body, ChatBody)
+    ->  ep_json_get(Body, model, Model),
+        (   ep_json_get(Body, stream, Stream0),
+            Stream0 == @(true)
+        ->  Stream = true
+        ;   Stream = false
+        ),
+        json_codes(ChatBody, ChatCodes),
+        Request = request(Method, Path, Headers, Version, Host, _),
+        ChatRequest = request(Method, Path, Headers, Version, Host, ChatCodes),
+        (   catch(ep_chat(ChatRequest, ChatReply), Error,
+                  ( format(user_error, "endpoint: ~q~n", [Error]),
+                    ep_error_reply(Request, 500, 'internal error', ChatReply) ))
+        ->  true
+        ;   ep_error_reply(Request, 500, 'internal error', ChatReply)
+        ),
+        ChatReply = reply(Status, ChatHeaders, ChatReplyCodes),
+        (   Status =:= 200
+        ->  ep_responses_reply(Request, Model, Stream, ChatReplyCodes, Reply)
+        ;   Reply = reply(Status, ChatHeaders, ChatReplyCodes)
+        )
+    ;   ep_error_reply(Request, 400, 'model and input are required', Reply)
+    ).
+
+ep_responses_chat_body(Body, ChatBody) :-
+    ep_json_get(Body, model, Model),
+    ep_json_get(Body, input, Input),
+    ep_responses_messages(Input, Messages0),
+    Messages0 \== [],
+    ep_responses_instructions(Body, Messages0, Messages),
+    ep_responses_tools(Body, Tools),
+    ep_responses_extras(Body, Extras),
+    Base = [model-Model, messages-Messages, stream- @(false)],
+    ep_responses_tools_pair(Tools, Base, Base1),
+    append(Extras, Base1, Pairs),
+    ChatBody = json(Pairs).
+
+ep_responses_tools_pair([], Pairs, Pairs).
+ep_responses_tools_pair(Tools, Pairs, [tools-Tools|Pairs]) :-
+    Tools = [_|_].
+
+ep_responses_instructions(Body, Messages0, Messages) :-
+    (   ep_json_get(Body, instructions, Text),
+        atom(Text),
+        Text \== ''
+    ->  Messages = [json([role-system, content-Text])|Messages0]
+    ;   Messages = Messages0
+    ).
+
+%% The input is a string or a list of items. A run of function_call items
+%% is one assistant message with several tool calls; the outputs that
+%% follow are the tool messages that answer them.
+ep_responses_messages(Input, Messages) :-
+    atom(Input),
+    Input \== '',
+    !,
+    Messages = [json([role-user, content-Input])].
+ep_responses_messages(Input, Messages) :-
+    is_list(Input),
+    !,
+    ep_r_items(Input, [], Messages).
+
+ep_r_items([], Pending, Messages) :-
+    ep_r_flush(Pending, Messages).
+ep_r_items([json(Pairs)|Items], Pending, Messages) :-
+    memberchk(type-function_call, Pairs),
+    !,
+    ep_r_function_call(json(Pairs), Call),
+    ep_r_items(Items, [Call|Pending], Messages).
+ep_r_items([Item|Items], Pending, Messages) :-
+    ep_r_flush(Pending, Here),
+    ep_r_item_message(Item, Message),
+    !,
+    ep_r_items(Items, [], Rest),
+    ep_r_cons(Here, Message, Rest, Messages).
+ep_r_items([_|Items], Pending, Messages) :-
+    ep_r_flush(Pending, Here),
+    ep_r_items(Items, [], Rest),
+    append(Here, Rest, Messages).
+
+ep_r_flush([], []).
+ep_r_flush(Pending, [json([role-assistant, tool_calls-Calls])]) :-
+    Pending = [_|_],
+    reverse(Pending, Calls).
+
+ep_r_cons(Here, none, Rest, Messages) :-
+    append(Here, Rest, Messages).
+ep_r_cons(Here, Message, Rest, Messages) :-
+    Message \== none,
+    append(Here, [Message|Rest], Messages).
+
+ep_r_function_call(json(Pairs),
+                   json([id-Id, type-function,
+                         function-json([name-Name, arguments-Arguments])])) :-
+    memberchk(call_id-Id, Pairs),
+    memberchk(name-Name, Pairs),
+    ep_r_arguments(Pairs, Arguments).
+
+ep_r_arguments(Pairs, Arguments) :-
+    (   memberchk(arguments-Value, Pairs),
+        atom(Value)
+    ->  Arguments = Value
+    ;   Arguments = '{}'
+    ).
+
+ep_r_item_message(json(Pairs), Message) :-
+    memberchk(type-message, Pairs),
+    memberchk(role-Role0, Pairs),
+    ep_r_role(Role0, Role),
+    (   memberchk(content-Content0, Pairs)
+    ->  ep_r_text(Content0, Text)
+    ;   Text = ''
+    ),
+    Message = json([role-Role, content-Text]).
+ep_r_item_message(json(Pairs), Message) :-
+    memberchk(type-function_call_output, Pairs),
+    memberchk(call_id-Id, Pairs),
+    (   memberchk(output-Output, Pairs)
+    ->  ep_r_text(Output, Text)
+    ;   Text = ''
+    ),
+    Message = json([role-tool, tool_call_id-Id, content-Text]).
+
+ep_r_role(developer, system) :-
+    !.
+ep_r_role(Role, Role).
+
+ep_r_text(Value, Text) :-
+    atom(Value),
+    !,
+    Text = Value.
+ep_r_text(Value, Text) :-
+    string(Value),
+    !,
+    atom_string(Text, Value).
+ep_r_text(Value, Text) :-
+    is_list(Value),
+    !,
+    ep_r_parts(Value, Parts),
+    atomic_list_concat(Parts, '\n', Text).
+ep_r_text(_, '').
+
+ep_r_parts([], []).
+ep_r_parts([json(Pairs)|Rest], [Text|Texts]) :-
+    !,
+    (   memberchk(text-Value, Pairs)
+    ->  ep_r_text(Value, Text)
+    ;   Text = ''
+    ),
+    ep_r_parts(Rest, Texts).
+ep_r_parts([Other|Rest], [Text|Texts]) :-
+    ep_r_text(Other, Text),
+    ep_r_parts(Rest, Texts).
+
+ep_responses_tools(Body, Tools) :-
+    (   ep_json_get(Body, tools, Raw),
+        is_list(Raw)
+    ->  ep_r_tools(Raw, Tools)
+    ;   Tools = []
+    ).
+
+ep_r_tools([], []).
+ep_r_tools([Item|Items], Tools) :-
+    ep_r_tool(Item, Tool),
+    !,
+    ep_r_tools(Items, Rest),
+    ep_r_tools_add(Tool, Rest, Tools).
+ep_r_tools([_|Items], Tools) :-
+    ep_r_tools(Items, Tools).
+
+ep_r_tools_add(none, Rest, Rest) :-
+    !.
+ep_r_tools_add(Tool, Rest, [Tool|Rest]).
+
+ep_r_tool(json(Pairs), Tool) :-
+    memberchk(type-function, Pairs),
+    memberchk(name-Name, Pairs),
+    !,
+    (   memberchk(description-Description, Pairs)
+    ->  true
+    ;   Description = ''
+    ),
+    (   memberchk(parameters-Parameters, Pairs)
+    ->  true
+    ;   Parameters = json([])
+    ),
+    Tool = json([type-function,
+                 function-json([name-Name, description-Description,
+                                parameters-Parameters])]).
+ep_r_tool(_, none).
+
+ep_responses_extras(Body, Extras) :-
+    findall(Key-Value, ep_responses_extra(Body, Key, Value), Extras).
+
+ep_responses_extra(Body, tool_choice, Value) :-
+    ep_json_get(Body, tool_choice, Value),
+    Value \== @(null).
+ep_responses_extra(Body, parallel_tool_calls, Value) :-
+    ep_json_get(Body, parallel_tool_calls, Value),
+    (   Value == @(true)
+    ;   Value == @(false)
+    ).
+ep_responses_extra(Body, max_tokens, Value) :-
+    ep_json_get(Body, max_output_tokens, Value),
+    integer(Value),
+    Value > 0.
+ep_responses_extra(Body, temperature, Value) :-
+    ep_json_get(Body, temperature, Value),
+    number(Value).
+ep_responses_extra(Body, reasoning_effort, Value) :-
+    ep_json_get(Body, reasoning, json(Pairs)),
+    memberchk(effort-Value, Pairs),
+    atom(Value),
+    Value \== ''.
+
+%% ---- the chat reply as Responses --------------------------------------
+
+ep_responses_reply(Request, Model, Stream, ChatCodes, Reply) :-
+    ep_cors(Request, Cors),
+    (   Stream == true
+    ->  ep_responses_events(ChatCodes, Model, Events, _Response),
+        ep_responses_sse(Events, Sse),
+        append(Cors, ['Content-Type'-'text/event-stream',
+                      'Cache-Control'-'no-cache'], Headers),
+        Reply = reply(200, Headers, Sse)
+    ;   ep_responses_events(ChatCodes, Model, _Events, Response),
+        json_codes(Response, Codes),
+        Reply = reply(200, ['Content-Type'-'application/json'|Cors], Codes)
+    ).
+
+ep_responses_events(ChatCodes, Model, Events, Response) :-
+    ep_responses_chat(ChatCodes, Content, Calls),
+    ep_responses_outputs(Content, Calls, Items, ItemEvents),
+    ep_usage(ChatCodes, Usage),
+    ep_responses_usage_json(Usage, UsageJson),
+    get_time(Now),
+    Created is round(Now),
+    IdBase is round(Now * 1000),
+    format(atom(RespId), 'resp_~w', [IdBase]),
+    Resp0 = json([id-RespId, object-response, created_at-Created,
+                  status-in_progress, model-Model, output-[]]),
+    Response = json([id-RespId, object-response, created_at-Created,
+                     status-completed, model-Model, output-Items,
+                     usage-UsageJson]),
+    CreatedEvent = 'response.created'-json([type-'response.created',
+                                            response-Resp0]),
+    DoneEvent = 'response.completed'-json([type-'response.completed',
+                                           response-Response]),
+    append([CreatedEvent|ItemEvents], [DoneEvent], Events).
+
+ep_responses_chat(ChatCodes, Content, Calls) :-
+    json_parse(ChatCodes, json(Pairs)),
+    memberchk(choices-[json(Choice)|_], Pairs),
+    memberchk(message-json(Message), Choice),
+    ep_responses_content(Message, Content),
+    ep_responses_calls(Message, Calls).
+
+ep_responses_content(Message, Content) :-
+    (   memberchk(content-Value, Message),
+        Value \== @(null)
+    ->  ep_r_text(Value, Content)
+    ;   Content = ''
+    ).
+
+ep_responses_calls(Message, Calls) :-
+    (   memberchk(tool_calls-Value, Message),
+        is_list(Value)
+    ->  Calls = Value
+    ;   Calls = []
+    ).
+
+ep_responses_outputs(Content, Calls, Items, Events) :-
+    ep_responses_message_part(Content, Calls, 0, MsgItems, MsgEvents),
+    length(MsgItems, MsgCount),
+    Next is MsgCount,
+    ep_responses_call_parts(Calls, Next, CallItems, CallEvents),
+    append(MsgItems, CallItems, Items),
+    append(MsgEvents, CallEvents, Events).
+
+%% A reply that has only tool calls carries no message item.
+ep_responses_message_part('', [_|_], _, [], []) :-
+    !.
+ep_responses_message_part(Content, _, Index, [Item1], Events) :-
+    get_time(Now),
+    IdBase is round(Now * 1000),
+    format(atom(MsgId), 'msg_~w', [IdBase]),
+    Part = json([type-output_text, text-Content, annotations-[]]),
+    EmptyPart = json([type-output_text, text-'', annotations-[]]),
+    Item0 = json([type-message, id-MsgId, status-in_progress,
+                  role-assistant, content-[]]),
+    Item1 = json([type-message, id-MsgId, status-completed,
+                  role-assistant, content-[Part]]),
+    Events = [
+        'response.output_item.added'-json([type-'response.output_item.added',
+                                           output_index-Index, item-Item0]),
+        'response.content_part.added'-json([type-'response.content_part.added',
+                                            item_id-MsgId,
+                                            output_index-Index,
+                                            content_index-0,
+                                            part-EmptyPart]),
+        'response.output_text.delta'-json([type-'response.output_text.delta',
+                                           item_id-MsgId,
+                                           output_index-Index,
+                                           content_index-0,
+                                           delta-Content]),
+        'response.output_text.done'-json([type-'response.output_text.done',
+                                          item_id-MsgId,
+                                          output_index-Index,
+                                          content_index-0,
+                                          text-Content]),
+        'response.content_part.done'-json([type-'response.content_part.done',
+                                           item_id-MsgId,
+                                           output_index-Index,
+                                           content_index-0,
+                                           part-Part]),
+        'response.output_item.done'-json([type-'response.output_item.done',
+                                          output_index-Index, item-Item1])
+    ].
+
+ep_responses_call_parts([], _, [], []).
+ep_responses_call_parts([json(Pairs)|Calls], Index, [Item1|Items], Events) :-
+    memberchk(id-CallId, Pairs),
+    memberchk(function-json(Function), Pairs),
+    memberchk(name-Name, Function),
+    (   memberchk(arguments-Arguments, Function)
+    ->  true
+    ;   Arguments = '{}'
+    ),
+    format(atom(FcId), 'fc_~w', [CallId]),
+    Item0 = json([type-function_call, id-FcId, call_id-CallId,
+                  name-Name, arguments-Arguments, status-in_progress]),
+    Item1 = json([type-function_call, id-FcId, call_id-CallId,
+                  name-Name, arguments-Arguments, status-completed]),
+    Added = 'response.output_item.added'-json([type-'response.output_item.added',
+                                               output_index-Index,
+                                               item-Item0]),
+    Done = 'response.output_item.done'-json([type-'response.output_item.done',
+                                             output_index-Index,
+                                             item-Item1]),
+    Next is Index + 1,
+    ep_responses_call_parts(Calls, Next, Items, Rest),
+    Events = [Added, Done|Rest].
+
+ep_responses_usage_json(usage(Prompt, Completion, Reasoning, Total, Cache),
+                        json([input_tokens-Prompt,
+                              output_tokens-Completion,
+                              total_tokens-Total,
+                              input_tokens_details-
+                                  json([cached_tokens-Cache]),
+                              output_tokens_details-
+                                  json([reasoning_tokens-Reasoning])])).
+
+ep_responses_sse([], []).
+ep_responses_sse([Type-Event|Events], Codes) :-
+    atom_codes(Type, TypeCodes),
+    json_codes(Event, EventCodes),
+    append("event: ", TypeCodes, A),
+    append(A, "\ndata: ", B),
+    append(B, EventCodes, C),
+    append(C, "\n\n", D),
+    ep_responses_sse(Events, Rest),
+    append(D, Rest, Codes).
+
 %% ---- routes ------------------------------------------------------------
 
 ep_models([c, 'c-r0', 'c-r2', 'c-r8',
@@ -935,4 +1321,14 @@ httpd_page('/v1/chat/completions', Request, Reply) :-
     Request = request(options, _, _, _, _, _),
     ep_preflight(Request, Reply).
 httpd_page('/v1/chat/completions', _, reply(405, ['Allow'-'POST, OPTIONS'], 'method not allowed')).
+
+httpd_page('/v1/responses', Request, Reply) :-
+    Request = request(post, _, _, _, _, _),
+    catch(ep_responses(Request, Reply), Error,
+          ( format(user_error, "endpoint: ~q~n", [Error]),
+            ep_error_reply(Request, 500, 'internal error', Reply) )).
+httpd_page('/v1/responses', Request, Reply) :-
+    Request = request(options, _, _, _, _, _),
+    ep_preflight(Request, Reply).
+httpd_page('/v1/responses', _, reply(405, ['Allow'-'POST, OPTIONS'], 'method not allowed')).
 

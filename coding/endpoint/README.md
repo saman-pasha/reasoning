@@ -41,6 +41,41 @@ The `-rN` suffix is read by the endpoint itself, and the model config also
 carries `x-coding-reasoning: N`. A request header still overrides both for a
 one-off: `0`/`off` is plain mode, and a number keeps that many checks.
 
+## Codex
+
+Codex speaks only the Responses API, and since 0.163 it refuses
+`wire_api = "chat"`. The endpoint serves `/v1/responses` too: a Responses
+request is translated to the same chat request -- developer messages become
+system messages, a run of `function_call` items becomes one assistant
+message with several tool calls, and `function_call_output` becomes the tool
+message that answers it -- passed through the same guide, reasoning checks
+and loop guard, and the chat reply is written back as Responses SSE events
+(or one Responses object). Codex's text and tool calls both round-trip.
+
+`~/.codex/config.toml`:
+
+```toml
+[model_providers.reasoning]
+name = "Reasoning Coding Art"
+base_url = "http://127.0.0.1:8787/v1"
+experimental_bearer_token = "TOKEN"
+```
+
+`~/.codex/reasoning.config.toml`, selected with `codex -p reasoning`:
+
+```toml
+model = "c"
+model_provider = "reasoning"
+model_reasoning_effort = "none"
+model_context_window = 1000000
+model_auto_compact_token_limit = 900000
+```
+
+`-m python-r8` picks another model, and `-c model_reasoning_effort=high`
+picks the backend's effort. Codex warns that a custom slug has no model
+metadata; the context overrides in the profile supply the 1M window and a
+900k auto-compaction limit.
+
 ## What it is not
 
 The backend call is **non-streaming**: `library(curl)` returns one whole

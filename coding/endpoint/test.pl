@@ -31,6 +31,10 @@
                 ep_default_effort/2,
                 ep_json_get/3,
                 ep_loop_verdict/2,
+                ep_tool_signature/3,
+                ep_responses_chat_body/2,
+                ep_responses_events/4,
+                ep_responses_sse/2,
                 ep_key/1
               ]).
 :- use_module('coding/endpoint/reasoning_core.pl',
@@ -47,6 +51,7 @@ main :-
     test_usage,
     test_effort_default,
     test_loop_guard,
+    test_responses,
     test_sse,
     test_sse_usage,
     test_sse_tools,
@@ -241,6 +246,84 @@ ep_test_same_edits(N,
     format(atom(Id), 'same~w', [N]),
     N1 is N - 1,
     ep_test_same_edits(N1, Rest).
+
+%% ---- the Responses route ----------------------------------------------
+
+test_responses :-
+    Input = json([model-'cocolog-r0',
+                  input-[json([type-message, role-developer,
+                               content-[json([type-input_text,
+                                              text-developer])]]),
+                         json([type-message, role-user,
+                               content-[json([type-input_text,
+                                              text-hi])]]),
+                         json([type-function_call, call_id-'call_1',
+                               name-shell, arguments-'{"cmd":"echo hi"}']),
+                         json([type-function_call_output,
+                               call_id-'call_1', output-hi])],
+                  tools-[json([type-function, name-shell,
+                               description-run,
+                               parameters-json([type-object])]),
+                         json([type-web_search])],
+                  reasoning-json([effort-high])]),
+    ep_responses_chat_body(Input, Chat),
+    ep_json_get(Chat, messages, Messages),
+    findall(Role, ( member(Message, Messages),
+                    ep_json_get(Message, role, Role) ), Roles),
+    check('responses messages keep their order', Roles,
+          [system, user, assistant, tool]),
+    ep_json_get(Chat, tools, Tools),
+    length(Tools, ToolCount),
+    check('responses tools are functions alone', ToolCount, 1),
+    ep_json_get(Chat, reasoning_effort, Effort),
+    check('a responses effort reaches the chat body', Effort, high),
+    Reply = json([choices-[json([message-json([role-assistant,
+                                               content-'OK'])])],
+                  usage-json([prompt_tokens-3, completion_tokens-1,
+                              total_tokens-4])]),
+    json_codes(Reply, Codes),
+    ep_responses_events(Codes, 'cocolog-r0', Events, Response),
+    (   member('response.output_text.delta'-Event, Events),
+        ep_json_get(Event, delta, 'OK')
+    ->  Delta = yes
+    ;   Delta = no
+    ),
+    check('a responses stream carries the text delta', Delta, yes),
+    (   member('response.completed'-Done, Events),
+        ep_json_get(Done, response, DoneResponse),
+        ep_json_get(DoneResponse, status, completed)
+    ->  Completed = yes
+    ;   Completed = no
+    ),
+    check('a responses stream completes', Completed, yes),
+    ep_json_get(Response, object, Object),
+    check('the final reply is a response object', Object, response),
+    ep_responses_sse(Events, SseCodes),
+    atom_codes(Sse, SseCodes),
+    (   sub_atom(Sse, _, _, _, 'event: response.created'),
+        sub_atom(Sse, _, _, _, 'event: response.completed')
+    ->  Framed = yes
+    ;   Framed = no
+    ),
+    check('responses events are framed as SSE', Framed, yes),
+    CallReply = json([choices-[json([message-json([role-assistant,
+                                                   content- @(null),
+                                                   tool_calls-[json([id-'call_9',
+                                                                     type-function,
+                                                                     function-json([name-shell,
+                                                                                    arguments-'{}'])])]])])],
+                      usage-json([prompt_tokens-3, completion_tokens-1,
+                                  total_tokens-4])]),
+    json_codes(CallReply, CallCodes),
+    ep_responses_events(CallCodes, 'cocolog-r0', CallEvents, _),
+    (   member('response.output_item.done'-CallEvent, CallEvents),
+        ep_json_get(CallEvent, item, CallItem),
+        ep_json_get(CallItem, type, function_call),
+        ep_json_get(CallItem, call_id, 'call_9')
+    ->  Call = yes
+    ;   Call = no
+    ),
+    check('a chat tool call becomes a function_call item', Call, yes).
 
 ep_test_calls(0, _, []).
 ep_test_calls(N, Start, [json([id-Id, type-function,
