@@ -9,6 +9,7 @@
 :- use_module(library(json)).
 :- use_module(library(curl)).
 :- use_module('coding/endpoint/reasoning_core.pl').
+:- use_module('coding/languages.pl').
 
 %% ---- configuration -----------------------------------------------------
 
@@ -36,6 +37,11 @@ ep_backend_model(c, Model) :-
     ).
 ep_backend_model(cocolog, Model) :-
     ep_env('CODING_ENDPOINT_COCOLOG_MODEL', '', M0),
+    (   M0 \== '' -> Model = M0
+    ;   ep_env('CODING_ENDPOINT_MODEL', 'deepseek-chat', Model)
+    ).
+ep_backend_model(python, Model) :-
+    ep_env('CODING_ENDPOINT_PYTHON_MODEL', '', M0),
     (   M0 \== '' -> Model = M0
     ;   ep_env('CODING_ENDPOINT_MODEL', 'deepseek-chat', Model)
     ).
@@ -76,6 +82,9 @@ ep_guide(cocolog, Guide) :-
     ep_read_text('coding/endpoint/prompts/cocolog.md', Add),
     atomic_list_concat([Skill, '\n\n', Add], Guide).
 
+ep_guide(python, Guide) :-
+    ep_read_text('coding/endpoint/prompts/python.md', Guide).
+
 %% A model name may end in -rN: c-r8, cocolog-r2. The suffix chooses the
 %% number of reasoning checks, and the base chooses the language guide.
 ep_model_count(Model, N) :-
@@ -107,6 +116,8 @@ ep_alias(Model, Alias) :-
     ->  Alias = c
     ;   memberchk(Base, [cocolog, 'cocolog-card'])
     ->  Alias = cocolog
+    ;   Base == python
+    ->  Alias = python
     ).
 
 %% x-coding-reasoning wins; then a -rN model suffix; then the endpoint's
@@ -249,8 +260,20 @@ ep_checks(Checks0, Checks) :-
     ep_checks(Min, Max, Checks0, Checks).
 
 ep_checks(Min, Max, Checks0, Checks) :-
+    ep_checks(c, Min, Max, Checks0, Checks).
+
+ep_checks(Language, Min, Max, Checks0, Checks) :-
+    ep_general_checks(Language, General),
     ep_limit_checks(Checks0, Max, Limited),
-    ep_fill_checks(Min, Max, Limited, Checks).
+    ep_fill_checks(General, Min, Max, Limited, Checks).
+
+ep_general_checks(c, Checks) :-
+    findall(Check, ep_general_check(Check), Checks).
+ep_general_checks(cocolog, Checks) :-
+    ep_general_checks(c, Checks).
+ep_general_checks(python, Checks) :-
+    codegen_language(python, Language),
+    codegen_language_checks(Language, Checks).
 
 ep_reasoning_count_from_env(Min, Max) :-
     ep_int('CODING_ENDPOINT_REASONING_MIN', 2, Min),
@@ -284,30 +307,33 @@ ep_limit_checks(Checks, Max, Limited) :-
     length(Limited, Max),
     append(Limited, _, Checks).
 
-ep_fill_checks(Min, _, Checks, Checks) :-
+ep_fill_checks(_, Min, _, Checks, Checks) :-
     length(Checks, N),
     N >= Min,
     !.
-ep_fill_checks(Min, Max, Checks, Out) :-
+ep_fill_checks(General, Min, Max, Checks, Out) :-
     (   Max > 0, length(Checks, N), N >= Max
     ->  Out = Checks
-    ;   ep_general_check(Check),
+    ;   member(Check, General),
         \+ memberchk(Check, Checks),
         !,
         append(Checks, [Check], Checks1),
-        ep_fill_checks(Min, Max, Checks1, Out)
+        ep_fill_checks(General, Min, Max, Checks1, Out)
     ;   Out = Checks
     ).
 
 ep_reasoning(Setting, Mode, Title, Messages, Guide0, Guide, N, Terms) :-
+    ep_reasoning(c, Setting, Mode, Title, Messages, Guide0, Guide, N, Terms).
+
+ep_reasoning(Language, Setting, Mode, Title, Messages, Guide0, Guide, N, Terms) :-
     (   Mode == reasoning,
         \+ Title,
         ep_task_text(Messages, Text)
-    ->  endpoint_reason(Text, Obs, CObs, Terms0),
+    ->  endpoint_reason(Language, Text, Obs, CObs, Terms0),
         append(Obs, CObs, All0),
         ep_unique(All0, All1),
         ep_reasoning_count(Setting, Min, Max),
-        ep_checks(Min, Max, All1, All),
+        ep_checks(Language, Min, Max, All1, All),
         length(All, N),
         Terms = Terms0,
         ep_note(All, Note),
@@ -393,6 +419,30 @@ ep_usage_json(usage(P, C, R, T, H),
               [prompt_tokens-P, completion_tokens-C, reasoning_tokens-R,
                total_tokens-T, cache_hit_tokens-H]).
 
+%% The usage chunk OpenCode reads for the session's token counts. It is
+%% the OpenAI streaming shape: an empty choices list and one usage object,
+%% sent before [DONE]. DeepSeek's cache fields and OpenAI's details are
+%% both written, so a client may read either.
+ep_usage_stream_json(usage(P, C, R, T, H),
+                     json([prompt_tokens-P,
+                           completion_tokens-C,
+                           total_tokens-T,
+                           prompt_tokens_details-json([cached_tokens-H]),
+                           completion_tokens_details-
+                               json([reasoning_tokens-R]),
+                           prompt_cache_hit_tokens-H,
+                           prompt_cache_miss_tokens-M])) :-
+    M is max(0, P - H).
+
+ep_usage_chunk(Id, Created, Model, Usage, Chunk) :-
+    ep_usage_stream_json(Usage, UsageJson),
+    Chunk = json([id-Id,
+                  object-'chat.completion.chunk',
+                  created-Created,
+                  model-Model,
+                  choices-[],
+                  usage-UsageJson]).
+
 %% ---- the reply as JSON or as one SSE body ------------------------------
 
 ep_chunk(Id, Created, Model, Delta, Finish, Chunk) :-
@@ -409,15 +459,19 @@ ep_indexed([json(Pairs)|Rest], I, [json([index-I|Pairs])|Out]) :-
     I1 is I + 1,
     ep_indexed(Rest, I1, Out).
 
-ep_delta(Content, ToolCalls, Delta) :-
+ep_delta(Content, ToolCalls, Reasoning, Delta) :-
     (   atom(Content), Content \== ''
     ->  D0 = [role-assistant, content-Content]
     ;   D0 = [role-assistant]
     ),
+    (   atom(Reasoning), Reasoning \== ''
+    ->  D1 = [reasoning_content-Reasoning|D0]
+    ;   D1 = D0
+    ),
     (   is_list(ToolCalls), ToolCalls \== []
     ->  ep_indexed(ToolCalls, 0, Indexed),
-        append(D0, [tool_calls-Indexed], Delta)
-    ;   Delta = D0
+        append(D1, [tool_calls-Indexed], Delta)
+    ;   Delta = D1
     ).
 
 ep_sse(Resp, Alias, Sse) :-
@@ -438,18 +492,27 @@ ep_sse(Resp, Alias, Sse) :-
     ->  true
     ;   ToolCalls = []
     ),
+    (   memberchk(reasoning_content-Reasoning, Message)
+    ->  true
+    ;   Reasoning = ''
+    ),
     ep_backend_model(Alias, Model),
-    ep_delta(Content, ToolCalls, Delta),
+    ep_delta(Content, ToolCalls, Reasoning, Delta),
     ep_chunk(Id, Created, Model, Delta, @(null), Chunk1),
     ep_chunk(Id, Created, Model, [], Finish, Chunk2),
+    ep_usage(Resp, Usage),
+    ep_usage_chunk(Id, Created, Model, Usage, Chunk3),
     json_codes(Chunk1, C1),
     json_codes(Chunk2, C2),
+    json_codes(Chunk3, C3),
     atom_codes('data: ', Prefix),
     atom_codes('data: [DONE]\n\n', Done),
     append(Prefix, C1, L1), append(L1, [10, 10], S1),
     append(Prefix, C2, L2), append(L2, [10, 10], S2),
-    append(S1, S2, S3),
-    append(S3, Done, Sse).
+    append(Prefix, C3, L3), append(L3, [10, 10], S3),
+    append(S1, S2, S12),
+    append(S12, S3, S123),
+    append(S123, Done, Sse).
 
 %% ---- CORS and token ----------------------------------------------------
 
@@ -545,7 +608,8 @@ ep_chat_body(Request, Body, Start, Reply) :-
             ),
             ep_reasoning_setting(Request, Model0, Setting),
             ep_mode(Title, Setting, Mode),
-            ep_reasoning(Setting, Mode, Title, Messages, Guide0, Guide, N, Terms),
+            ep_reasoning(Alias, Setting, Mode, Title, Messages, Guide0, Guide,
+                         N, Terms),
             ep_backend_model(Alias, BackendModel),
             (   is_list(Terms) -> length(Terms, TermCount) ; TermCount = 0 ),
             (   Title == true
@@ -603,7 +667,8 @@ ep_chat_body(Request, Body, Start, Reply) :-
 %% ---- routes ------------------------------------------------------------
 
 ep_models([c, 'c-r0', 'c-r2', 'c-r8',
-           cocolog, 'cocolog-r0', 'cocolog-r2', 'cocolog-r8']).
+           cocolog, 'cocolog-r0', 'cocolog-r2', 'cocolog-r8',
+           python, 'python-r0', 'python-r2', 'python-r8']).
 
 ep_model_name(c, 'C (C99-C23)').
 ep_model_name('c-r0', 'C (r0: plain)').
@@ -613,6 +678,10 @@ ep_model_name(cocolog, cocolog).
 ep_model_name('cocolog-r0', 'cocolog (r0: plain)').
 ep_model_name('cocolog-r2', 'cocolog (r2: two checks)').
 ep_model_name('cocolog-r8', 'cocolog (r8: eight checks)').
+ep_model_name(python, 'Python 3').
+ep_model_name('python-r0', 'Python (r0: plain)').
+ep_model_name('python-r2', 'Python (r2: two checks)').
+ep_model_name('python-r8', 'Python (r8: eight checks)').
 
 ep_models_reply(Request, reply(200, Headers, Codes)) :-
     ep_cors(Request, Cors),

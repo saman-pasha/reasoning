@@ -22,7 +22,7 @@ coding/
     names.pl          the names a Python source defines and reads
     obligations.pl    the checks a Python requirement's words imply
   endpoint/
-    httpd.pl          OpenCode's C and cocolog models, in cocolog httpd
+    httpd.pl          OpenCode's C, cocolog and Python models, in cocolog httpd
     httpd_core.pl     its pages, JSON, backend call and SSE synthesis
     prompts/python.md Python's guide when the endpoint serves it
 ```

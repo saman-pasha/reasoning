@@ -5,24 +5,28 @@ in cocolog with `library(httpd)`. OpenCode sends its normal agent
 conversation, tools and stream; the endpoint appends the language guide and
 forwards the request to an OpenAI-compatible model.
 
-Eight model names are exposed:
+Twelve model names are exposed:
 
 | model | guide and reasoning checks |
 |---|---|
 | `c` | `prompts/c.md`, C with clang and the sanitizers, C99 through C23; the endpoint's default two checks |
 | `cocolog` | cocolog's own `SKILL.md`, `prompts/cocolog.md`; the default two checks |
+| `python` | `prompts/python.md`, Python 3 with `py_compile`, pytest or unittest; the default two checks |
 | `c-r0`, `c-r2`, `c-r8` | the same C guide, with no checks, two checks or eight checks |
 | `cocolog-r0`, `cocolog-r2`, `cocolog-r8` | the same cocolog guide, with no checks, two checks or eight checks |
+| `python-r0`, `python-r2`, `python-r8` | the same Python guide, with no checks, two checks or eight checks |
 
 The endpoint is not a second agent loop. OpenCode still owns the read, edit
 and shell tools, the session and the permissions. Every model declares a
 1,000,000-token context and a 32,768-token output limit.
 
-Every model also defines the effort variants `none`, `low`, `medium` and
-`high`, so the reasoning count and the effort are chosen independently:
+Every model also defines the effort variants `none`, `low`, `medium`,
+`high` and `max`, so the reasoning count and the effort are chosen
+independently:
 
 ```sh
 reasoning/cocolog-r8#high     # eight checks and high model effort
+reasoning/python#max          # two checks and max model effort
 reasoning/c-r0#none           # plain mode, no checks, no model effort
 ```
 
@@ -39,10 +43,12 @@ one-off: `0`/`off` is plain mode, and a number keeps that many checks.
 
 The backend call is **non-streaming**: `library(curl)` returns one whole
 reply, and the endpoint then synthesises the SSE stream OpenCode asked for
-(one content or tool-call chunk, one finish chunk, `[DONE]`). The whole reply
-arrives before OpenCode sees the first byte. The server also serves one
-connection at a time, and `library(tcp)` binds every interface rather than
-loopback.
+(one content or tool-call chunk, one finish chunk, one usage chunk,
+`[DONE]`). The whole reply arrives before OpenCode sees the first byte, so
+the sidebar's token counts update once per model call rather than during
+it; `library(httpd)` has no chunked encoding to carry a progress event.
+The server also serves one connection at a time, and `library(tcp)` binds
+every interface rather than loopback.
 
 ## Start
 
@@ -118,8 +124,11 @@ when the pre-pass is off),
 the number of reasoning checks and parsed terms, message and tool counts,
 the HTTP status and the seconds. It also carries the backend's usage as
 `prompt_tokens`, `completion_tokens`, `reasoning_tokens`, `total_tokens`
-and `cache_hit_tokens`, all zero when the backend reports none. The trace
-never includes prompts, replies or the bearer token.
+and `cache_hit_tokens`, all zero when the backend reports none. The
+synthesized SSE stream ends with an OpenAI-shaped usage chunk carrying the
+same counts, so OpenCode's sidebar shows the prompt, completion and
+reasoning tokens after every model call. The trace never includes prompts,
+replies or the bearer token.
 
 ```sh
 CODING_ENDPOINT_TRACE="$HOME/.local/state/opencode/reasoning-coding.jsonl" \
@@ -138,10 +147,11 @@ DeepSeek's OpenAI endpoint with `REASONING_API_KEY`:
 | `CODING_ENDPOINT_MODEL` | `deepseek-chat` |
 | `CODING_ENDPOINT_C_MODEL` | the backend model |
 | `CODING_ENDPOINT_COCOLOG_MODEL` | the backend model |
+| `CODING_ENDPOINT_PYTHON_MODEL` | the backend model |
 | `CODING_ENDPOINT_KEY_ENV` | `REASONING_API_KEY` |
 | `CODING_ENDPOINT_TOKEN` | unset; a bearer token when set |
 | `CODING_ENDPOINT_ALLOW_ORIGIN` | the local OpenCode web origins |
-| `CODING_ENDPOINT_REASONING` | `on` for both models; `off` disables the pre-pass |
+| `CODING_ENDPOINT_REASONING` | `on` for every model; `off` disables the pre-pass |
 | `CODING_ENDPOINT_REASONING_MIN` | `2`, filled with general checks if needed |
 | `CODING_ENDPOINT_REASONING_MAX` | `2`, the checks kept from a longer reading |
 | `x-coding-reasoning` header | per request: `0`/`off`, `2`, `8`, … |

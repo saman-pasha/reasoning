@@ -18,10 +18,12 @@
                 ep_add_guide/3,
                 ep_task_text/2,
                 ep_reasoning/8,
+                ep_reasoning/9,
                 ep_reasoning_setting/3,
                 ep_reasoning_count/3,
                 ep_mode/3,
                 ep_alias/2,
+                ep_guide/2,
                 ep_checks/2,
                 ep_sse/3,
                 ep_usage/2,
@@ -39,11 +41,13 @@ main :-
     test_task_text,
     test_usage,
     test_sse,
+    test_sse_usage,
     test_sse_tools,
     test_reasoning,
     test_c_reasoning,
     test_reasoning_headers,
     test_model_suffix,
+    test_python,
     test_check_cap,
     test_zero_checks,
     unsetenv('CODING_ENDPOINT_TOKEN'),
@@ -55,12 +59,14 @@ test_models :-
     atom_codes(Text, Codes),
     (   sub_atom(Text, _, _, _, '"id":"c-r8"'),
         sub_atom(Text, _, _, _, '"id":"cocolog-r0"'),
+        sub_atom(Text, _, _, _, '"id":"python-r8"'),
+        sub_atom(Text, _, _, _, '"name":"Python (r8: eight checks)"'),
         sub_atom(Text, _, _, _, '"context_length":1000000'),
         sub_atom(Text, _, _, _, '"max_output_tokens":32768')
-    ->  Got = both
+    ->  Got = all
     ;   Got = missing
     ),
-    check('models and limits', Got, both).
+    check('models and limits', Got, all).
 
 test_health :-
     ep_health_reply(request(get, '/health', [], http(1, 1), [], []),
@@ -159,6 +165,35 @@ test_sse :-
     ),
     check('a non-stream reply becomes SSE', Got, sse).
 
+test_sse_usage :-
+    Reply = json([id-test,
+                  created-1,
+                  choices-[json([index-0,
+                                 message-json([role-assistant, content-ok,
+                                               reasoning_content-think]),
+                                 finish_reason-stop])],
+                  usage-json([prompt_tokens-120,
+                              completion_tokens-45,
+                              total_tokens-165,
+                              prompt_cache_hit_tokens-64,
+                              completion_tokens_details-
+                                  json([reasoning_tokens-30])])]),
+    json_codes(Reply, Codes),
+    ep_sse(Codes, c, Sse),
+    atom_codes(Text, Sse),
+    (   sub_atom(Text, _, _, _, '"choices":[]'),
+        sub_atom(Text, _, _, _, '"usage":{'),
+        sub_atom(Text, _, _, _, '"prompt_tokens":120'),
+        sub_atom(Text, _, _, _, '"completion_tokens":45'),
+        sub_atom(Text, _, _, _, '"total_tokens":165'),
+        sub_atom(Text, _, _, _, '"cached_tokens":64'),
+        sub_atom(Text, _, _, _, '"reasoning_content":"think"'),
+        sub_atom(Text, _, _, _, '"reasoning_tokens":30')
+    ->  Got = usage
+    ;   Got = wrong
+    ),
+    check('the SSE bridge sends usage before DONE', Got, usage).
+
 test_sse_tools :-
     Reply = json([id-test,
                   created-1,
@@ -237,6 +272,31 @@ test_model_suffix :-
     check('cocolog-r8 selects cocolog', Alias, cocolog),
     check('cocolog-r8 asks for eight checks', Mode-Setting,
           reasoning-count(8)).
+
+test_python :-
+    Empty = request(post, '/v1/chat/completions', [], http(1, 1), [], []),
+    ep_alias('python-r8', Alias),
+    ep_reasoning_setting(Empty, 'python-r8', Setting),
+    ep_mode(false, Setting, Mode),
+    check('python-r8 selects python', Alias, python),
+    check('python-r8 asks for eight checks', Mode-Setting,
+          reasoning-count(8)),
+    ep_guide(python, Guide),
+    (   sub_atom(Guide, _, _, _, 'Python 3')
+    ->  GuideRead = python
+    ;   GuideRead = wrong
+    ),
+    check('python has its own guide', GuideRead, python),
+    Messages = [json([role-user,
+                      content-'Write a Python program that reads lines and sorts them.'])],
+    ep_reasoning(python, count(2), reasoning, false, Messages, 'GUIDE',
+                 Reasoned, N, _),
+    (   N =:= 2,
+        sub_atom(Reasoned, _, _, _, 'sys.stdin')
+    ->  ReasonRead = python
+    ;   ReasonRead = wrong
+    ),
+    check('python reasoning uses python checks', ReasonRead, python).
 
 test_check_cap :-
     ep_checks([first, second, third], Checks),
