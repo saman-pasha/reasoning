@@ -225,7 +225,17 @@ test_loop_guard :-
     check('sixteen identical edits are a loop', Repeated, yes),
     ep_tool_signature(read, '{"path":"/tmp/x.pl"}', ReadSignature),
     check('a path-only tool is keyed by its path', ReadSignature,
-          'read:/tmp/x.pl').
+          'read:/tmp/x.pl'),
+    ep_test_stdin(16, '', Waits),
+    ep_loop_verdict([json([role-assistant, tool_calls-Waits])], WaitVerdict),
+    check('PTY polls with no input are not a loop', WaitVerdict, ok),
+    ep_test_stdin(16, 'y', Sends),
+    ep_loop_verdict([json([role-assistant, tool_calls-Sends])], SendVerdict),
+    (   SendVerdict = repeat(_, 16, 16)
+    ->  Sent = yes
+    ;   Sent = no
+    ),
+    check('sixteen identical PTY writes are a loop', Sent, yes).
 
 ep_test_edits(0, _, []).
 ep_test_edits(N, Start,
@@ -249,6 +259,19 @@ ep_test_same_edits(N,
     format(atom(Id), 'same~w', [N]),
     N1 is N - 1,
     ep_test_same_edits(N1, Rest).
+
+ep_test_stdin(0, _, []).
+ep_test_stdin(N, Chars,
+              [json([id-Id, type-function,
+                     function-json([name-'write_stdin',
+                                    arguments-Arguments])])|Rest]) :-
+    N > 0,
+    format(atom(Id), 'stdin~w', [N]),
+    format(atom(Arguments),
+           '{"session_id": ~w, "chars": "~w", "yield_time_ms": 30000, "max_output_tokens": 20000}',
+           [N, Chars]),
+    N1 is N - 1,
+    ep_test_stdin(N1, Chars, Rest).
 
 %% ---- the Responses route ----------------------------------------------
 

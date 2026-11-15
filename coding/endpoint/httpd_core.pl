@@ -631,14 +631,29 @@ ep_tool_signatures([json(Pairs)|Messages], Signatures) :-
     ).
 
 ep_call_signatures([], []).
-ep_call_signatures([json(Pairs)|Calls], [Signature|Signatures]) :-
-    (   memberchk(function-json(Function), Pairs),
-        memberchk(name-Name, Function),
-        memberchk(arguments-Arguments, Function)
-    ->  ep_tool_signature(Name, Arguments, Signature)
-    ;   Signature = unknown
-    ),
-    ep_call_signatures(Calls, Signatures).
+ep_call_signatures([json(Pairs)|Calls], Signatures) :-
+    (   ep_wait_call(Pairs)
+    ->  ep_call_signatures(Calls, Signatures)
+    ;   (   memberchk(function-json(Function), Pairs),
+            memberchk(name-Name, Function),
+            memberchk(arguments-Arguments, Function)
+        ->  ep_tool_signature(Name, Arguments, Signature)
+        ;   Signature = unknown
+        ),
+        ep_call_signatures(Calls, Rest),
+        Signatures = [Signature|Rest]
+    ).
+
+%% Codex polls a running PTY with write_stdin and empty chars; a long
+%% build or test run legitimately makes many such calls, and the session
+%% id and timeouts normalise to one signature. Waiting is not a loop.
+ep_wait_call(Pairs) :-
+    memberchk(function-json(Function), Pairs),
+    memberchk(name-write_stdin, Function),
+    memberchk(arguments-Arguments, Function),
+    catch(ep_tool_arguments(Arguments, json(ArgumentPairs)), _, fail),
+    memberchk(chars-Chars, ArgumentPairs),
+    Chars == ''.
 
 ep_tool_signature(Name, Arguments, Signature) :-
     (   catch(ep_tool_arguments(Arguments, Value), _, fail)
