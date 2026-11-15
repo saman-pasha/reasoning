@@ -17,10 +17,10 @@
 :- use_module('coding/bench/config.pl').
 
 main :-
-    (   getenv('REASONING_API_KEY', Key),
+    (   getenv('CODING_ENDPOINT_KEY_ENV', Key),
         Key \== ''
     ->  true
-    ;   format("REASONING_API_KEY is not set.~n", []),
+    ;   format("CODING_ENDPOINT_KEY_ENV is not set.~n", []),
         halt(1)
     ),
     tool_selected_tasks(Tasks),
@@ -58,8 +58,9 @@ tool_selected_tasks(Tasks) :-
 %% generator (gen.pl) and not under the tool's policy, and the difference
 %% is the finding, not the failure.
 %%
-%% The child is a `query' and not `-s', because coding/c/codegen.pl has a
-%% main/0 of its own; tool_gen.pl defines run/0, which the query proves.
+%% The child is a `query' that loads the generator module and proves
+%% run/0 (tool_gen.pl); the tool's command line is coding/c/run.pl, a
+%% separate entry.
 %% A child that could not start at all (Codes empty, Exit -1) is a fail
 %% with no diag rather than an error here: one task's provider outage must
 %% not end the run, and the per-task line already says fail.

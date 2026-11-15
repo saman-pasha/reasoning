@@ -55,7 +55,7 @@ codegen_default(model, 'claude-sonnet-4-5').
 codegen_default(base_url, 'https://api.anthropic.com/v1/messages').
 codegen_default(effort, none).
 codegen_default(reasoning_effort, none).
-codegen_default(key_env, 'REASONING_API_KEY').
+codegen_default(key_env, 'CODING_ENDPOINT_KEY_ENV').
 %% the C edition every generator compiles against; see the section at the
 %% foot of this file for the names, the aliases and why c17 is the default
 codegen_default(std, c17).
@@ -136,7 +136,9 @@ codegen_effort_default(_, Option) :-
 %% codegen_key_env(+Overrides, -KeyVar)
 %%
 %% The environment variable the provider's key is read from. The default
-%% is REASONING_API_KEY; `key_env(NAME)' in Overrides replaces it.
+%% is CODING_ENDPOINT_KEY_ENV, whose value is the key itself; the endpoint
+%% and every generator read the same variable. `key_env(NAME)' in
+%% Overrides replaces it.
 codegen_key_env(Overrides, KeyVar) :-
     (   memberchk(key_env(K), Overrides)
     ->  KeyVar = K

@@ -21,6 +21,7 @@ main :-
     boundaries,
     prompt,
     checker,
+    cleanup,
     runner,
     cases_file,
     cli,
@@ -33,6 +34,8 @@ main :-
     auto_cases,
     check_tool,
     cocolog,
+    entries,
+    python_tool,
     bench_references,
     checks_done.
 
@@ -639,16 +642,16 @@ standard_restrict(Dir) :-
     standard_check(Restrict, none, c89, Text89, Exit89),
     check('restrict is a compile failure in C89', Exit89, 1),
     has('and the failure is named', 'COMPILE FAILED', Text89),
-    standard_check(Restrict, none, c99, Text99, Exit99),
+    standard_check(Restrict, none, c99, _Text99, Exit99),
     check('and compiles in C99', Exit99, 0).
 
-standard_refused(Dir, Version) :-
+standard_refused(_Dir, Version) :-
     standard_check(Version, none, c19, Text, Exit),
     check('an edition clang does not know exits 1', Exit, 1),
     has('and names the editions it takes',
         'c89, c99, c11, c17 or c23', Text).
 
-standard_generator(Dir, Std, Want) :-
+standard_generator(_Dir, Std, Want) :-
     format(atom(Args),
            "query \"use_module('coding/c/codegen.pl'), asserta((codegen_call(_,_,'#include <stdio.h>\\nint main(void) {\\n#ifdef __STDC_VERSION__\\n  printf(\\\"%ld\\\\n\\\", (long)__STDC_VERSION__);\\n#else\\n  puts(\\\"none\\\");\\n#endif\\n  return 0;\\n}\\n') :- !)), codegen_c_from('a spec', [], [case('', '~w')], [], [std(~w)], _), write('~w')\"",
            [standard_value(Std), Std, Want]),
@@ -820,7 +823,7 @@ dry_run :-
     fixture(BadContract,
             ['The quick brown fox jumps over the lazy dog.']),
     atom_concat(Dir, '/never.c', OutFile),
-    format(atom(Args1), "-s coding/c/codegen.pl -- ~w --dry-run ~w",
+    format(atom(Args1), "-s coding/c/run.pl -- ~w --dry-run ~w",
            [SpecFile, OutFile]),
     cocolog_run(Args1, Text1, Exit1),
     check('a dry run exits 0', Exit1, 0),
@@ -832,23 +835,23 @@ dry_run :-
     ;   Wrote = no
     ),
     check('a dry run writes no program', Wrote, no),
-    format(atom(Args2), "-s coding/c/codegen.pl -- ~w --contract ~w --dry-run",
+    format(atom(Args2), "-s coding/c/run.pl -- ~w --contract ~w --dry-run",
            [SpecFile, ContractFile]),
     cocolog_run(Args2, Text2, Exit2),
     check('a contract dry run exits 0', Exit2, 0),
     has('the contract dry run carries its obligation',
         'Track bracket kind', Text2),
-    format(atom(Args3), "-s coding/c/codegen.pl -- ~w --contract ~w --dry-run",
+    format(atom(Args3), "-s coding/c/run.pl -- ~w --contract ~w --dry-run",
            [SpecFile, BadContract]),
     cocolog_run(Args3, _Text3, Exit3),
     check('a bad contract fails before a prompt', Exit3, 1),
-    format(atom(Args4), "-s coding/c/codegen.pl -- ~w --tests ~w --dry-run",
+    format(atom(Args4), "-s coding/c/run.pl -- ~w --tests ~w --dry-run",
            [SpecFile, '/no/such/cases']),
     cocolog_run(Args4, Text4, Exit4),
     check('a dry run ignores the tests file', Exit4, 0),
     has('the dry run still prints a prompt',
         'Write a complete C17 program', Text4),
-    format(atom(Args5), "-s coding/c/codegen.pl -- ~w --auto-tests --dry-run",
+    format(atom(Args5), "-s coding/c/run.pl -- ~w --auto-tests --dry-run",
            [SpecFile]),
     cocolog_run(Args5, Text5, Exit5),
     check('an auto-tests dry run exits 0', Exit5, 0),
@@ -903,19 +906,26 @@ auto_cases_refused :-
 
 cocolog :-
     section('cocolog'),
-    cocolog_cli_query("cocolog_skill_text(T), ( sub_atom(T, _, _, _, 'one namespace') -> write('COCO-SKILL-'), write(731) ; write('COCO-SKILL-NO-'), write(731) )",
+    cocolog_cli_query('the guide names the one namespace',
+                      "cocolog_skill_text(T), ( sub_atom(T, _, _, _, 'one namespace') -> write('COCO-SKILL-'), write(731) ; write('COCO-SKILL-NO-'), write(731) )",
                       ['COCO-SKILL-731']),
-    cocolog_cli_query("asserta((llm_chat(_,_, 'main :- writeln(55).') :- !)), codegen_cocolog_checked('Print 55.', _), write('COCO-CHECK-'), write(731)",
+    cocolog_cli_query('a program that prints 55 is accepted',
+                      "asserta((llm_chat(_,_, 'main :- writeln(55).') :- !)), codegen_cocolog_checked('Print 55.', _), write('COCO-CHECK-'), write(731)",
                       ['COCO-CHECK-731']),
-    cocolog_cli_query("nb_setval(coco_calls,0), asserta((llm_chat(_,_,C) :- nb_getval(coco_calls,N), ( N =:= 0 -> C = 'main :- missing.' ; C = 'main :- writeln(ok).' ), N1 is N+1, nb_setval(coco_calls,N1), !)), codegen_cocolog_checked('Print ok.', _), codegen_report(report(C,_,_,_,_,_,_)), write('COCO-REPAIR-'), write(C), write(731)",
+    cocolog_cli_query('a failed run is repaired',
+                      "nb_setval(coco_calls,0), asserta((llm_chat(_,_,C) :- nb_getval(coco_calls,N), ( N =:= 0 -> C = 'main :- missing.' ; C = 'main :- writeln(ok).' ), N1 is N+1, nb_setval(coco_calls,N1), !)), codegen_cocolog_checked('Print ok.', _), codegen_report(report(C,_,_,_,_,_,_)), write('COCO-REPAIR-'), write(C), write(731)",
                       ['COCO-REPAIR-2']),
-    cocolog_cli_query("cocolog_args(['s','--goal','main','--attempts','2','--timeout','1000','o'], args(s,main,o,_,_,Run,_)), memberchk(attempts(2), Run), memberchk(timeout(1000), Run), write('COCO-ARGS-'), write(731)",
+    cocolog_cli_query('the argument parser reads the flags',
+                      "cocolog_args(['s','--goal','main','--attempts','2','--timeout','1000','o'], args(s,main,o,_,_,Run,_)), memberchk(attempts(2), Run), memberchk(timeout(1000), Run), write('COCO-ARGS-'), write(731)",
                       ['COCO-ARGS-731']),
-    cocolog_cli_query("cocolog_args(['s','--no-skill','o'], args(s,_,_,_,_,Run,_)), memberchk(skill(no), Run), cocolog_no_skill_prompt(P), sub_atom(P, _, _, _, 'cocolog programmer'), write('COCO-NOSKILL-'), write(731)",
+    cocolog_cli_query('no-skill uses the generic prompt',
+                      "cocolog_args(['s','--no-skill','o'], args(s,_,_,_,_,Run,_)), memberchk(skill(no), Run), cocolog_no_skill_prompt(P), sub_atom(P, _, _, _, 'cocolog programmer'), write('COCO-NOSKILL-'), write(731)",
                       ['COCO-NOSKILL-731']),
-    cocolog_cli_query("tmp_file(coco_expect, F), atom_codes('ok\\n', Cs), write_file_from_codes(F, Cs), asserta((llm_chat(_,_, 'main :- writeln(ok).') :- !)), codegen_cocolog_from('Print ok.', main, [], [expect(F)], _), write('COCO-EXPECT-'), write(731)",
+    cocolog_cli_query('a matching expect is accepted',
+                      "tmp_file(coco_expect, F), atom_codes('ok\\n', Cs), write_file_from_codes(F, Cs), asserta((llm_chat(_,_, 'main :- writeln(ok).') :- !)), codegen_cocolog_from('Print ok.', main, [], [expect(F)], _), write('COCO-EXPECT-'), write(731)",
                       ['COCO-EXPECT-731']),
-    cocolog_cli_query("( catch(cocolog_skill_text('/no/such/guide', _), error(codegen_error(skill_file,_),_), true) -> write('COCO-NOGUIDE-'), write(731) ; write('COCO-NOGUIDE-NO-'), write(731) )",
+    cocolog_cli_query('a missing guide is refused',
+                      "( catch(cocolog_skill_text('/no/such/guide', _), error(codegen_error(skill_file,_),_), true) -> write('COCO-NOGUIDE-'), write(731) ; write('COCO-NOGUIDE-NO-'), write(731) )",
                       ['COCO-NOGUIDE-731']),
     cocolog_check_query('a missing spec is diagnosed',
                         "( catch(cocolog_main('/no/such/spec.txt', main, none, no, no, [], []), error(codegen_error(spec_file,_),_), true) -> write('COCO-SPEC-'), write(731) ; write('COCO-SPEC-NO-'), write(731) )",
@@ -926,6 +936,13 @@ cocolog :-
     cocolog_check_query('an unwritable output is diagnosed',
                         "( catch(cocolog_write_output('/no/such/dir/out.pl', 'main :- true.'), error(codegen_error(output_file,_),_), true) -> write('COCO-OUT-'), write(731) ; write('COCO-OUT-NO-'), write(731) )",
                         'COCO-OUT-731'),
+    cocolog_goal,
+    cocolog_keep,
+    cocolog_budget,
+    cocolog_mismatch,
+    cocolog_warning,
+    cocolog_stdout_warning,
+    cocolog_usage,
     cocolog_missing_key.
 
 cocolog_check_query(Label, Goal, Needle) :-
@@ -939,11 +956,124 @@ cocolog_check_query(Label, Goal, Needle) :-
 cocolog_missing_key :-
     cocolog(C),
     format(atom(Cmd),
-           'env -u REASONING_API_KEY "~s" -s coding/cocolog/run.pl -- coding/cocolog/examples/html_template/spec.txt --no-skill /tmp/coco_key.pl 2>&1',
+           'env -u CODING_ENDPOINT_KEY_ENV "~s" -s coding/cocolog/run.pl -- coding/cocolog/examples/html_template/spec.txt --no-skill /tmp/coco_key.pl 2>&1',
            [C]),
     shell(Cmd, Text, Exit),
     check('a missing key exits one', Exit, 1),
     has('a missing key is a codegen error', 'codegen: llm_error(no_key', Text).
+
+cocolog_goal :-
+    cocolog_check_query('a named goal reaches the prompt and the run',
+        "asserta((llm_chat(Messages, _, 'go :- writeln(go).') :- member(msg(user, P), Messages), sub_atom(P, _, _, _, 'prove go'), !)), codegen_cocolog_from('Print go.', go, [], [attempts(1)], _), write('COCO-GOAL-'), write(731)",
+        'COCO-GOAL-731').
+
+cocolog_keep :-
+    cocolog_check_query('--keep writes the attempt it kept',
+        "tmp_file(coco_keep, Dir), make_directory(Dir), asserta((llm_chat(_,_, 'main :- writeln(kept).') :- !)), codegen_cocolog_from('Print kept.', main, [], [keep(dir(Dir)), attempts(1)], _), atom_concat(Dir, '/attempt-1.pl', F), ( exists_file(F) -> read_file_to_codes(F, Cs), atom_codes(T, Cs), sub_atom(T, _, _, _, 'writeln(kept)'), write('COCO-KEEP-'), write(731) ; write('COCO-KEEP-NO') )",
+        'COCO-KEEP-731').
+
+cocolog_budget :-
+    cocolog_check_query('the budget stops before a repair',
+        "nb_setval(coco_calls,0), asserta((llm_chat(_,_, 'main :- missing.') :- nb_getval(coco_calls,N), N1 is N+1, nb_setval(coco_calls,N1), nb_setval(llm_usage, json([prompt_tokens-10, completion_tokens-5, total_tokens-15])), !)), ( catch(codegen_cocolog_from('Fail.', main, [], [budget(1), attempts(3)], _), error(codegen_error(budget_exceeded,_),_), true) -> nb_getval(coco_calls,C), write('COCO-BUDGET-'), write(C), write(731) ; write('COCO-BUDGET-NO') )",
+        'COCO-BUDGET-1').
+
+cocolog_mismatch :-
+    cocolog_check_query('an output mismatch is repaired',
+        "tmp_file(coco_expect, F), atom_codes('ok\\n', Cs), write_file_from_codes(F, Cs), nb_setval(coco_calls,0), asserta((llm_chat(_,_,C) :- nb_getval(coco_calls,N), ( N =:= 0 -> C = 'main :- writeln(no).' ; C = 'main :- writeln(ok).' ), N1 is N+1, nb_setval(coco_calls,N1), !)), codegen_cocolog_from('Print ok.', main, [], [expect(F)], _), nb_getval(coco_calls,C), write('COCO-MISMATCH-'), write(C), write(731)",
+        'COCO-MISMATCH-2').
+
+cocolog_warning :-
+    cocolog_check_query('a load warning is refused',
+        "tmp_file(coco_warn, F), atom_codes('main :- writeln(ok).\\np(X) :- true.\\n', Cs), write_file_from_codes(F, Cs), read_file_to_codes(F, Cs2), atom_codes(Code, Cs2), cocolog_check(Code, main, 3000, none, 'CODING_ENDPOINT_KEY_ENV', V), ( V = fail(D), sub_atom(D, _, _, _, 'printed a load diagnostic') -> write('COCO-WARN-'), write(731) ; write('COCO-WARN-NO') )",
+        'COCO-WARN-731').
+
+cocolog_stdout_warning :-
+    cocolog_check_query('a Warning: line on standard output is accepted',
+        "tmp_file(coco_warn, F), atom_codes('main :- atom_codes(A, [87,97,114,110,105,110,103,58,32,100,97,116,97]), write(A), nl.\\n', Cs), write_file_from_codes(F, Cs), read_file_to_codes(F, Cs2), atom_codes(Code, Cs2), cocolog_check(Code, main, 3000, none, 'CODING_ENDPOINT_KEY_ENV', ok), write('COCO-STDOUT-WARN-'), write(731)",
+        'COCO-STDOUT-WARN-731').
+
+cocolog_usage :-
+    cocolog_run('-s coding/cocolog/run.pl', Text, Exit),
+    check('the cocolog generator usage is an error', Exit, 1),
+    has('the cocolog generator usage is printed', 'usage:', Text).
+
+%% ---- the temporary directory ------------------------------------------
+
+cleanup :-
+    section('cleanup'),
+    scratch(Dir),
+    atom_concat(Dir, '/target', Target),
+    make_directory(Target),
+    atom_concat(Target, '/keep.txt', Keep),
+    fixture(Keep, ['keep']),
+    atom_concat(Dir, '/work', Work),
+    make_directory(Work),
+    atom_concat(Work, '/link', Link),
+    atom_concat('ln -s ', Target, Ln0),
+    atom_concat(Ln0, ' ', Ln1),
+    atom_concat(Ln1, Link, Ln),
+    shell(Ln, _, 0),
+    c_clean_dir(Work),
+    (   exists_file(Keep)
+    ->  Kept = true
+    ;   Kept = false
+    ),
+    check('a symlink in a temporary directory does not delete its target',
+          Kept, true),
+    catch(delete_file(Keep), _, true),
+    catch(delete_directory(Target), _, true).
+
+%% ---- the generator entries -------------------------------------------
+
+entries :-
+    section('generator entries'),
+    entry_module(c, 'coding/c/codegen.pl'),
+    entry_module(cocolog, 'coding/cocolog/codegen.pl'),
+    entry_module(python, 'coding/python/codegen.pl'),
+    entry_program(c, 'coding/c/run.pl'),
+    entry_program(cocolog, 'coding/cocolog/run.pl'),
+    entry_program(python, 'coding/python/run.pl').
+
+entry_module(Name, File) :-
+    format(atom(Args),
+           "query \"use_module('~w'), ( current_predicate(main/0) -> write('MAIN-YES') ; write('MAIN-NO') )\"",
+           [File]),
+    cocolog_out(Args, Codes),
+    atom_codes(Text, Codes),
+    format(atom(Label), 'the ~w generator module keeps no main/0', [Name]),
+    has(Label, 'MAIN-NO', Text).
+
+entry_program(Name, File) :-
+    format(atom(Args),
+           "query \"use_module('~w'), findall(B, clause(main, B), Bs), length(Bs, N), write('MAIN-'), write(N)\"",
+           [File]),
+    cocolog_out(Args, Codes),
+    atom_codes(Text, Codes),
+    format(atom(Label), 'the ~w entry owns exactly one main/0', [Name]),
+    has(Label, 'MAIN-1', Text).
+
+%% ---- the Python tool --------------------------------------------------
+
+python_tool :-
+    section('python tool'),
+    scratch(Dir),
+    atom_concat(Dir, '/spec.txt', Spec),
+    fixture(Spec, ['print(1)']),
+    cocolog(C),
+    format(atom(Cmd1),
+           'env -u CODING_ENDPOINT_KEY_ENV "~s" -s coding/python/run.pl -- ~w /tmp/coco_py.py 2>&1',
+           [C, Spec]),
+    shell(Cmd1, Text1, Exit1),
+    check('a missing Python key exits one', Exit1, 1),
+    has('a missing Python key is a codegen error',
+        'codegen: llm_error(no_key', Text1),
+    format(atom(Cmd2),
+           'env -u CODING_ENDPOINT_KEY_ENV "~s" -s coding/python/run.pl -- ~w --expect /no/such/expected /tmp/coco_py.py 2>&1',
+           [C, Spec]),
+    shell(Cmd2, Text2, Exit2),
+    check('an unreadable Python expect exits one', Exit2, 1),
+    has('an unreadable Python expect is refused before a call',
+        'codegen: expect_file', Text2).
 
 bench_references :-
     section('cocolog bench references'),
@@ -969,14 +1099,14 @@ bench_without_final_newline(Atom, Trimmed) :-
     ;   Trimmed = Atom
     ).
 
-cocolog_cli_query(Goal, Needles) :-
+cocolog_cli_query(Label, Goal, Needles) :-
     format(atom(Args),
            "query \"use_module('coding/cocolog/codegen.pl'), ~s\"",
            [Goal]),
     cocolog_out(Args, Codes),
     atom_codes(Text, Codes),
     forall(member(Needle, Needles),
-           has('the command line says the expected term', Needle, Text)).
+           has(Label, Needle, Text)).
 
 %% ---- the standalone checker -------------------------------------------
 
@@ -1060,7 +1190,7 @@ check_tool :-
     cocolog_run('-s coding/c/check.pl', Text6, Exit6),
     check('the check usage is an error', Exit6, 1),
     has('the check usage is printed', 'usage:', Text6),
-    cocolog_run('-s coding/c/codegen.pl', Text7, Exit7),
+    cocolog_run('-s coding/c/run.pl', Text7, Exit7),
     check('the generator usage is an error', Exit7, 1),
     has('the generator usage is printed', 'usage:', Text7),
     c_generator_missing_spec.
@@ -1068,7 +1198,7 @@ check_tool :-
 c_generator_missing_spec :-
     cocolog(C),
     format(atom(Cmd),
-           '"~s" -s coding/c/codegen.pl -- /no/such/spec.txt /tmp/x.c 2>&1',
+           '"~s" -s coding/c/run.pl -- /no/such/spec.txt /tmp/x.c 2>&1',
            [C]),
     shell(Cmd, Text, Exit),
     check('the C generator missing spec exits one', Exit, 1),

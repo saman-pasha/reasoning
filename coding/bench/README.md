@@ -42,7 +42,7 @@ to `high` when the first attempt fails.
 | file | what it is |
 |---|---|
 | `bench.pl` | the runner, the task modes and the report |
-| `gen.pl` | one generator call, run as a child `cocolog` so codegen's `main/0` is never called here |
+| `gen.pl` | one generator call, run as a child `cocolog` so the tool's CLI is never called here |
 | `config.pl` | the provider, model, endpoint, temperature, efforts and loop cap both scripts use |
 | `contract.pl` | parses the controlled-English contracts with the shared `coding/contract.pl` reader and vocabulary, writes the extractor's prompt and line parser, and holds the keyword-to-contract rules |
 | `tasks.pl` | twelve requirements, their hand-written contracts, extractor noun lists and stdin/stdout cases |
@@ -57,7 +57,7 @@ to `high` when the first attempt fails.
 ## Run
 
 ```sh
-export REASONING_API_KEY=...
+export CODING_ENDPOINT_KEY_ENV=...
 coding/bench/run.sh              # all tasks, seven modes
 coding/bench/run.sh -- lcs       # one task
 coding/bench/paired.sh           # paired first attempt and two repair policies
@@ -66,7 +66,7 @@ coding/bench/tool.sh             # the shipped tool, all tasks
 coding/bench/tool.sh -- lcs
 ```
 
-`REASONING_API_KEY` is read by the child `gen.pl` through `coding/options.pl`;
+`CODING_ENDPOINT_KEY_ENV` is read by the child `gen.pl` through `coding/options.pl`;
 no other provider variable is needed. `run.sh` and `paired.sh` build
 `COCOLOG_LIBRARY` as a colon-separated list, like `PATH`: the repository's
 parent, the cocolog checkout's `library/`, and any value the variable
@@ -99,7 +99,7 @@ after trimming trailing whitespace and final newlines.
 
 ## A sample run
 
-2026-11-14, `deepseek-flash`, `REASONING_API_KEY`, the ten tasks before
+2026-11-14, `deepseek-flash`, `CODING_ENDPOINT_KEY_ENV`, the ten tasks before
 `btree_debug`:
 
 ```
@@ -150,7 +150,7 @@ tokens (5 090 reasoning) where `loop`, `derive`, `escalate` and
 
 ### The mvccs_acid run
 
-2026-11-15, `deepseek-flash`, `REASONING_API_KEY`, `mvccs_acid` alone:
+2026-11-15, `deepseek-flash`, `CODING_ENDPOINT_KEY_ENV`, `mvccs_acid` alone:
 
 ```
 mode      tasks passed attempts prompt completion reasoning total cache_hit seconds

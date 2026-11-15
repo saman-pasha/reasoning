@@ -69,6 +69,7 @@
 :- use_module('coding/languages.pl').
 :- use_module('coding/python/obligations.pl').
 :- use_module('coding/report.pl').
+:- use_module('coding/shell.pl').
 
 %% ---- the reading -------------------------------------------------------
 
@@ -295,7 +296,10 @@ python_guard_verdict(guard(Tests, Sanity, Command), Goal, Code,
     ).
 
 python_command_check(CommandText, Dir, check(_Python, Timeout), Verdict) :-
-    format(atom(Command), 'cd "~s" && ~s 2>&1', [Dir, CommandText]),
+    codegen_shell_quote(Dir, QDir),
+    codegen_env_prefix('CODING_ENDPOINT_KEY_ENV', EnvPrefix),
+    format(atom(Command), 'cd ~w && ~s~s 2>&1',
+           [QDir, EnvPrefix, CommandText]),
     python_proc_run(Command, Timeout, OutCodes, Exit),
     (   Exit == 0
     ->  Verdict = ok
@@ -361,10 +365,15 @@ python_write(Code, Dir, File) :-
     ),
     atom_concat(Dir, '/program.py', File),
     atom_codes(Code, Codes),
-    write_file_from_codes(File, Codes).
+    (   catch(write_file_from_codes(File, Codes), _, fail)
+    ->  true
+    ;   format(atom(Msg2), 'cannot write ~s', [File]),
+        throw(error(codegen_error(write, Msg2), python_write/3))
+    ).
 
 python_proc_run(Command, Timeout, Codes, Exit) :-
-    catch(proc_run(Command, Timeout, Codes, Exit), _, ( Codes = [], Exit = 124 )).
+    catch(proc_run(Command, Timeout, Codes, Exit), Ball,
+          throw(error(codegen_error(process, Ball), python_proc_run/4))).
 
 python_limit(Max, Text, Limited) :-
     (   atom_length(Text, Length),
@@ -462,11 +471,8 @@ python_cli :-
                                RunOptions, Overrides))
     ->  catch(python_main(SpecFile, OutFile, Report, DryRun, RunOptions,
                          Overrides),
-              error(codegen_error(Kind, Detail), _),
-              ( codegen_report_print(Report),
-                format(user_error, 'codegen: ~w~n~s~n', [Kind, Detail]),
-                halt(1)
-              ))
+              Ball,
+              codegen_cli_failure(Report, Ball))
     ;   format("usage: cocolog -s coding/python/run.pl -- SPEC.txt [--goal G] [--python PATH] [--verified plain|guarded|tested] [--tests CMD] [--keep DIR] [--attempts N] [--timeout MS] [--budget N] [--expect FILE] [--dry-run] [--modes] [--provider P] [--model M] [--base-url U] [--effort E] [--report] [OUT.py]~n", []),
         halt(1)
     ).
@@ -474,8 +480,10 @@ python_cli :-
 %% --expect belongs to a program run: a reply the loop above accepted is
 %% written alone in a directory of its own and run as `python3
 %% program.py', and its standard output must match the file byte for
-%% byte. The comparison is after acceptance, so a mismatch refuses the
-%% run with no repair: what was run is what the output came from.
+%% byte. The expected file is read before the first model call, so a typo
+%% costs no generation; the comparison is after acceptance, so a mismatch
+%% refuses the run with no repair: what was run is what the output came
+%% from.
 python_main(SpecFile, OutFile, Report, DryRun, RunOptions, Overrides) :-
     (   catch(read_file_to_codes(SpecFile, Codes), _, fail)
     ->  atom_codes(Spec, Codes)
@@ -488,8 +496,9 @@ python_main(SpecFile, OutFile, Report, DryRun, RunOptions, Overrides) :-
         format("~s~n", [Prompt]),
         codegen_report_reset,
         codegen_report_print(Report)
-    ;   codegen_python_from(Spec, Overrides, RunOptions, Code),
-        python_run_option(RunOptions, expect, none, Expect),
+    ;   python_run_option(RunOptions, expect, none, Expect0),
+        python_expect_prepare(Expect0, Expect),
+        codegen_python_from(Spec, Overrides, RunOptions, Code),
         (   Expect == none
         ->  true
         ;   python_expect(Expect, Code, RunOptions)
@@ -498,24 +507,32 @@ python_main(SpecFile, OutFile, Report, DryRun, RunOptions, Overrides) :-
         codegen_report_print(Report)
     ).
 
-python_expect(Expect, Code, RunOptions) :-
-    (   catch(read_file_to_codes(Expect, WantCodes), _, fail)
-    ->  true
-    ;   format(atom(Msg), 'cannot read the expected output ~s', [Expect]),
-        throw(error(codegen_error(expect_file, Msg), python_expect/3))
-    ),
+python_expect_prepare(none, none) :-
+    !.
+python_expect_prepare(File, expect(File, Expected)) :-
+    (   catch(read_file_to_codes(File, Codes), _, fail)
+    ->  atom_codes(Expected, Codes)
+    ;   format(atom(Msg), 'cannot read the expected output ~s', [File]),
+        throw(error(codegen_error(expect_file, Msg),
+                    python_expect_prepare/2))
+    ).
+
+python_expect(expect(File, Expected), Code, RunOptions) :-
     python_run_option(RunOptions, python, none, Python),
     python_write(Code, Dir, _File),
     python_interpreter(Python, Exe),
-    format(atom(Command), 'cd "~s" && "~s" program.py 2>&1', [Dir, Exe]),
+    codegen_shell_quote(Dir, QDir),
+    codegen_shell_quote(Exe, QExe),
+    codegen_env_prefix('CODING_ENDPOINT_KEY_ENV', EnvPrefix),
+    format(atom(Command), 'cd ~w && ~s~w program.py 2>&1',
+           [QDir, EnvPrefix, QExe]),
     python_proc_run(Command, 10000, GotCodes, _Exit),
-    atom_codes(Want, WantCodes),
     atom_codes(Got, GotCodes),
-    (   Got == Want
+    (   Got == Expected
     ->  true
     ;   format(atom(Diag),
                'the output does not match ~s~nexpected:~n~s~nactual:~n~s',
-               [Expect, Want, Got]),
+               [File, Expected, Got]),
         throw(error(codegen_error(expect_failed, Diag), python_expect/3))
     ).
 
@@ -525,7 +542,12 @@ python_write_output(none, Code) :-
 python_write_output(OutFile, Code) :-
     atom_concat(Code, '\n', Text),
     atom_codes(Text, TextCodes),
-    write_file_from_codes(OutFile, TextCodes).
+    (   catch(write_file_from_codes(OutFile, TextCodes), _, fail)
+    ->  true
+    ;   format(atom(Msg), 'cannot write ~s', [OutFile]),
+        throw(error(codegen_error(output_file, Msg),
+                    python_write_output/2))
+    ).
 
 python_modes_printed :-
     forall(member(Mode, [plain, guarded, tested]),

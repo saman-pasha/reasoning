@@ -13,8 +13,8 @@
 %%     RESULT pass|fail
 %%     ERROR kind
 %%
-%% The child is a query rather than `-s', because coding/c/codegen.pl has a
-%% main/0 of its own; this file defines run/0 only.
+%% The child is a query that loads the generator module and proves run/0;
+%% the tool's command line is coding/c/run.pl, a separate entry.
 
 :- use_module('coding/c/codegen.pl').
 :- use_module('coding/compile.pl').

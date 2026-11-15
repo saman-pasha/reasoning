@@ -5,6 +5,8 @@ Code generation for the reasoning library, one language a directory:
 ```
 coding/
   options.pl          defaults shared by every generator
+  report.pl           the run report and the command lines' error ending
+  shell.pl            POSIX single-quote quoting for a command
   obligations.pl      the checks a requirement's words imply
   contract.pl         obligations from controlled-English sentences
   compile.pl          the compile, analyzer and case checks
@@ -13,11 +15,14 @@ coding/
   (the version case is ../test/version.pl, run by ../run-tests.sh)
   c/
     codegen.pl        C code from a written requirement, C99 to C23 (--std)
+    run.pl            its command line
     check.pl          compile and test an existing C file, no model
   cocolog/
     codegen.pl        cocolog source, taught by cocolog's SKILL.md
+    run.pl            its command line
   python/
     codegen.pl        Python 3 source from a written requirement
+    run.pl            its command line
     check.pl          parse and test an existing Python file, no model
     names.pl          the names a Python source defines and reads
     obligations.pl    the checks a Python requirement's words imply
@@ -27,8 +32,9 @@ coding/
     prompts/python.md Python's guide when the endpoint serves it
 ```
 
-A new language is a new directory and a `codegen.pl` beside this one; it
-loads `coding/options.pl` and hands its options to `llm_chat/3`.
+A new language is a new directory with a `codegen.pl` module beside this
+one and a thin `run.pl` entry that owns `main/0`; the module loads
+`coding/options.pl` and hands its options to `llm_chat/3`.
 
 ## Defaults
 
@@ -41,7 +47,7 @@ loads `coding/options.pl` and hands its options to `llm_chat/3`.
 | `base_url` | `https://api.anthropic.com/v1/messages` |
 | `effort` (Anthropic) | `none` |
 | `reasoning_effort` (OpenAI) | `none` |
-| `key_env` | `REASONING_API_KEY` |
+| `key_env` | `CODING_ENDPOINT_KEY_ENV` |
 
 The provider, model and base URL are one setting; change the three facts
 together. For DeepSeek over its OpenAI-compatible endpoint:
@@ -62,7 +68,7 @@ default model unless `model(M)` or `base_url(U)` is given too. The two
 effort names are per provider, because `library(llm)` treats `effort(L)`
 and `reasoning_effort(L)` as the same level and refuses two different
 ones; both default to `none`, so a caller asks for reasoning explicitly.
-The key variable is `REASONING_API_KEY` unless `key_env(NAME)` names
+The key variable is `CODING_ENDPOINT_KEY_ENV` unless `key_env(NAME)` names
 another. Further defaults are one more `codegen_default/2` fact; the
 generator fills them in unless the caller names the same key.
 
@@ -72,25 +78,25 @@ From this repository's root, with its parent and the cocolog library on
 the path:
 
 ```sh
-export REASONING_API_KEY=...
+export CODING_ENDPOINT_KEY_ENV=...
 COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
-    ../cocolog/cocolog -s coding/c/codegen.pl -- spec.txt out.c
+    ../cocolog/cocolog -s coding/c/run.pl -- spec.txt out.c
 
 COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
-    ../cocolog/cocolog -s coding/c/codegen.pl -- spec.txt --tests cases.pl out.c
+    ../cocolog/cocolog -s coding/c/run.pl -- spec.txt --tests cases.pl out.c
 
 COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
     ../cocolog/cocolog -s coding/c/check.pl -- out.c --tests cases.txt
 ```
 
-The key comes from the environment -- `REASONING_API_KEY` by default, or
+The key comes from the environment -- `CODING_ENDPOINT_KEY_ENV` by default, or
 the variable named by `key_env(NAME)` -- never from this repository. The
 endpoint and model come from `coding/options.pl`, or from the command
 line, so a one-off DeepSeek run needs no edit:
 
 ```sh
 COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
-    ../cocolog/cocolog -s coding/c/codegen.pl -- spec.txt \
+    ../cocolog/cocolog -s coding/c/run.pl -- spec.txt \
     --provider openai --model deepseek-flash \
     --base-url https://api.deepseek.com/v1/chat/completions \
     --effort none --report out.c
@@ -166,8 +172,9 @@ honored, so a bad contract still fails; `--tests` is not read.
 
 ## Compile and repair
 
-`main/0` does not return the first reply. It compiles the reply with
-`clang -std=<EDITION> -Wall -Wextra -O0` (`c17` unless `--std` or
+`coding/c/run.pl`'s `main/0` does not return the first reply. It
+compiles the reply with `clang -std=<EDITION> -Wall -Wextra -O0` (`c17`
+unless `--std` or
 `codegen_default(std, Edition)` names another; see "The C standard" below),
 and on a failure sends the compiler's
 diagnostic and the previous program back to the model, up to three
@@ -288,7 +295,7 @@ and raising it would make the comparison unable to be re-run. A run names
 another edition two ways:
 
 ```sh
-cocolog -s coding/c/codegen.pl -- spec.txt --std c99 out.c
+cocolog -s coding/c/run.pl -- spec.txt --std c99 out.c
 cocolog -s coding/c/check.pl -- out.c --std c23 --tests cases.txt
 ```
 
@@ -369,13 +376,14 @@ cannot drift.
 
 ## cocolog
 
-`coding/cocolog/codegen.pl` writes cocolog source instead of C. Its system
-prompt carries the cocolog checkout's `SKILL.md` whole—the dialect, the
-libraries and the differences from SWI-Prolog—so the model writes the
-language the guide describes. A reply must define `main/0` (or the goal
-`--goal` names); the tool writes it to a temporary file and runs
-`cocolog run` before accepting it, repairing a warning, a failed goal or an
-error like the C loop; `--expect FILE` also compares its standard output.
+`coding/cocolog/codegen.pl` writes cocolog source instead of C; its
+command line is `coding/cocolog/run.pl`. Its system prompt carries the
+cocolog checkout's `SKILL.md` whole—the dialect, the libraries and the
+differences from SWI-Prolog—so the model writes the language the guide
+describes. A reply must define `main/0` (or the goal `--goal` names); the
+tool writes it to a temporary file and runs `cocolog run` before accepting
+it, repairing a warning, a failed goal or an error like the C loop;
+`--expect FILE` also compares its standard output.
 The guide is `$COCOLOG_SKILL`, else `../cocolog/SKILL.md`, or `--skill
 FILE`. See `coding/cocolog/README.md` for the flags, the API and the checks,
 and `coding/cocolog/bench/` for the eight-task benchmark suite and its
@@ -423,8 +431,9 @@ See its README for the modes, the token columns and sample runs.
    answer or a report the same way.
 8. Return or write the code.
 
-The C generator is `coding/c/codegen.pl`; it is deliberately small. The
-benchmark in `coding/bench/` is where the prompt policy is measured.
+The C generator module is `coding/c/codegen.pl`, its command line
+`coding/c/run.pl`; it is deliberately small. The benchmark in
+`coding/bench/` is where the prompt policy is measured.
 `--auto-tests` removes the hand-written cases file: the model writes the
 cases, and a second model—optionally through a second provider—writes a
 reference program that drops the cases it contradicts. The remaining

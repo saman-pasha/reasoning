@@ -1,6 +1,6 @@
 %% coding/c/codegen.pl -- C code from a written requirement.
 %%
-%%     cocolog -s coding/c/codegen.pl -- SPEC.txt [flags] [OUT.c]
+%%     cocolog -s coding/c/run.pl -- SPEC.txt [flags] [OUT.c]
 %%
 %% A requirement goes to a language model as a CONTRACT: one complete
 %% program, no Markdown fences, no prose. The reply is compiled, and a
@@ -15,13 +15,13 @@
 %% library path:
 %%
 %%     COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
-%%         ../cocolog/cocolog -s coding/c/codegen.pl -- SPEC.txt out.c
+%%         ../cocolog/cocolog -s coding/c/run.pl -- SPEC.txt out.c
 %%
 %% The provider, model and endpoint are `coding/options.pl''s
 %% `codegen_default(provider, ...)', `model' and `base_url' facts; a
 %% call's provider(P), model(M) or base_url(U) overrides any of them. The
 %% key is read from the environment variable the options name --
-%% `REASONING_API_KEY' by default, or `key_env(NAME)' in Overrides. It is
+%% `CODING_ENDPOINT_KEY_ENV' by default, or `key_env(NAME)' in Overrides. It is
 %% never written here.
 %%
 %%     --tests FILE     run the cases in FILE after compiling
@@ -122,10 +122,12 @@
 %%         call(Seconds, Prompt, Completion, Reasoning, CacheHit, Total),
 %%         one per provider call in order. `--report' prints these too.
 %%
-%%     main/0
+%%     c_cli/0
 %%         the program: SPEC.txt, the flags, then an optional OUT.c;
 %%         stdout otherwise. It uses codegen_c_tested/4 when tests are
-%%         given and exits 1 if no reply passes.
+%%         given and exits 1 if no reply passes. `coding/c/run.pl' owns
+%%         main/0 and calls this, so the generator module can be loaded
+%%         beside the cocolog and Python ones without an entry collision.
 
 :- use_module(library(llm)).
 :- use_module('coding/options.pl').
@@ -724,7 +726,7 @@ codegen_prompt_for(Spec, Contract, Prompt) :-
 
 %% Point the selected provider at the endpoint and key variable the
 %% options give. `llm_provider/3' is library(llm)'s dynamic
-%% configuration; this is what makes the default REASONING_API_KEY rather
+%% configuration; this is what makes the default CODING_ENDPOINT_KEY_ENV rather
 %% than OPENAI_API_KEY or ANTHROPIC_API_KEY, and what lets options.pl's
 %% base_url reach the request. library(llm) knows two request bodies, so
 %% a provider it does not know is refused here.
@@ -805,23 +807,15 @@ codegen_strip_fence(Text, Code) :-
 codegen_fence_line(Line) :-
     sub_string(Line, 0, 3, _, '```').
 
-main :-
+c_cli :-
     current_prolog_flag(argv, [_|Args]),
     (   codegen_args(Args, args(SpecFile, TestsFile, ContractFile, OutFile,
                                 Report, DryRun, RunOptions, Overrides))
     ->  catch(codegen_main(SpecFile, TestsFile, ContractFile, OutFile,
                            Report, DryRun, RunOptions, Overrides),
               Ball,
-              ( codegen_report_print(Report),
-                (   Ball = error(codegen_error(Kind, Detail), _)
-                ->  format(user_error, 'codegen: ~w~n~s~n', [Kind, Detail])
-                ;   Ball = error(Term, _)
-                ->  format(user_error, 'codegen: ~w~n', [Term])
-                ;   format(user_error, 'codegen: ~w~n', [Ball])
-                ),
-                halt(1)
-              ))
-    ;   format("usage: cocolog -s coding/c/codegen.pl -- SPEC.txt [--tests CASES.txt] [--auto-tests] [--cases-effort L] [--verify-provider P] [--verify-model M] [--verify-base-url U] [--verify-key-env NAME] [--contract CONTRACT.txt] [--keep DIR] [--attempts N] [--timeout MS] [--budget N] [--cflags FLAGS] [--std EDITION] [--analyze] [--dry-run] [--key-env NAME] [--temperature T] [--max-tokens N] [--provider P] [--model M] [--base-url U] [--effort E] [--report] [OUT.c]~n", []),
+              codegen_cli_failure(Report, Ball))
+    ;   format("usage: cocolog -s coding/c/run.pl -- SPEC.txt [--tests CASES.txt] [--auto-tests] [--cases-effort L] [--verify-provider P] [--verify-model M] [--verify-base-url U] [--verify-key-env NAME] [--contract CONTRACT.txt] [--keep DIR] [--attempts N] [--timeout MS] [--budget N] [--cflags FLAGS] [--std EDITION] [--analyze] [--dry-run] [--key-env NAME] [--temperature T] [--max-tokens N] [--provider P] [--model M] [--base-url U] [--effort E] [--report] [OUT.c]~n", []),
         halt(1)
     ).
 

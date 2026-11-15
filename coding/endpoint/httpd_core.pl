@@ -46,11 +46,13 @@ ep_backend_model(python, Model) :-
     ;   ep_env('CODING_ENDPOINT_MODEL', 'deepseek-chat', Model)
     ).
 
+%% Despite its name, CODING_ENDPOINT_KEY_ENV holds the backend key itself;
+%% it is not the name of another variable. The generators read the same one.
 ep_key(Key) :-
-    ep_env('CODING_ENDPOINT_KEY_ENV', 'REASONING_API_KEY', Var),
-    (   getenv(Var, Key), Key \== ''
+    ep_env('CODING_ENDPOINT_KEY_ENV', '', Key),
+    (   Key \== ''
     ->  true
-    ;   throw(error(ep_no_key(Var), ep_key/1))
+    ;   throw(error(ep_no_key('CODING_ENDPOINT_KEY_ENV'), ep_key/1))
     ).
 
 ep_token(Token) :-

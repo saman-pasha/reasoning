@@ -1,6 +1,6 @@
 %% coding/cocolog/bench/bench.pl -- the cocolog codegen benchmark.
 %%
-%%     REASONING_API_KEY=... coding/cocolog/bench/run.sh [-- task ...]
+%%     CODING_ENDPOINT_KEY_ENV=... coding/cocolog/bench/run.sh [-- task ...]
 %%
 %% Two modes per task:
 %%
@@ -19,10 +19,10 @@
 :- dynamic bench_result/10.
 
 main :-
-    (   getenv('REASONING_API_KEY', Key),
+    (   getenv('CODING_ENDPOINT_KEY_ENV', Key),
         Key \== ''
     ->  true
-    ;   format("REASONING_API_KEY is not set.~n", []),
+    ;   format("CODING_ENDPOINT_KEY_ENV is not set.~n", []),
         halt(1)
     ),
     bench_selected_tasks(Tasks),

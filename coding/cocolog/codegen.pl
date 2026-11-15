@@ -48,6 +48,7 @@
 :- use_module(library(process)).
 :- use_module('coding/options.pl').
 :- use_module('coding/report.pl').
+:- use_module('coding/shell.pl').
 
 %% ---- the language guide ------------------------------------------------
 %%
@@ -107,7 +108,8 @@ cocolog_repair_prompt(Base, prev(Previous, Diag), Prompt) :-
 %%
 %% codegen_cocolog/2,3 is the one-shot: one model call, the reply returned
 %% as written, NOT run and not repaired. It is what a caller uses to see
-%% what the model writes; the tool's main/0 is what uses the checked loop.
+%% what the model writes; the entry's main/0 (run.pl) is what uses the
+%% checked loop.
 
 codegen_cocolog(Spec, Code) :-
     codegen_cocolog(Spec, main, [], Code).
@@ -237,55 +239,68 @@ cocolog_attempt(Attempt, Max, Spec, Goal, System, Overrides, KeyVar, Keep,
 %% ---- run the reply -----------------------------------------------------
 %%
 %% THE REPLY IS RUN, NOT READ. A program that loads and whose main/0
-%% succeeds is accepted; a program that prints `ERROR:' or `Warning:' on
-%% stderr is not, through the same process, because a load warning names a
-%% clause that did not land -- the program may still run, on less than it
-%% wrote, which is the failure this check exists to catch. cocolog's `run'
-%% sends both streams here (2>&1), so a warning in the output is a warning
-%% in the verdict.
+%% succeeds is accepted; a program whose standard error carries a
+%% line-leading `ERROR:' or `Warning:' is not, because a load warning
+%% names a clause that did not land -- the program may still run, on less
+%% than it wrote, which is the failure this check exists to catch. The
+%% child's standard error is the stream proc_run/4 reads; its standard
+%% output goes to a file of its own. A warning can therefore not be
+%% mistaken for the program's own text, and the program cannot truncate
+%% the stream the check reads.
 %%
 %% The verifier reads no store and starts no server: the reply runs under
 %% plain `--local', so a generator that wrote to a knowledge base would
 %% pass here and fail where it was meant to run. A task that needs one is
 %% not this tool's.
 %%
-%% EXPECT is compared byte for byte against the whole output, not trimmed:
-%% unlike the C benchmark's cases (bench_norm/2 there), here the program
-%% writes its report, and a missing newline is a difference the caller
-%% asked to see.
+%% EXPECT is compared byte for byte against the standard output, not
+%% trimmed: unlike the C benchmark's cases (bench_norm/2 there), here the
+%% program writes its report, and a missing newline is a difference the
+%% caller asked to see.
 
 cocolog_check(Code, Goal, Timeout, Expect, KeyVar, Verdict) :-
     (   Code == ''
     ->  Verdict = fail('the reply is empty')
     ;   cocolog_temp_dir(Dir),
         atom_concat(Dir, '/program.pl', File),
-        atom_concat(Dir, '/stderr.txt', ErrFile),
+        atom_concat(Dir, '/stdout.txt', OutFile),
         call_cleanup(
             cocolog_check_file(Code, Goal, Timeout, Expect, KeyVar, File,
-                               ErrFile, Verdict),
-            cocolog_cleanup(Dir, File, ErrFile))
+                               OutFile, Verdict),
+            cocolog_cleanup(Dir, File, OutFile))
     ).
 
-cocolog_check_file(Code, Goal, Timeout, Expect, KeyVar, File, ErrFile,
+%% proc_run/4 reads the pipe it gives the child. The command puts the
+%% child's standard ERROR on that pipe and its standard OUTPUT in OutFile
+%% (`2>&1 >OUT'), so a load diagnostic is on a stream the program cannot
+%% truncate, and --expect compares what the program printed and nothing
+%% else.
+cocolog_check_file(Code, Goal, Timeout, Expect, KeyVar, File, OutFile,
                    Verdict) :-
     atom_codes(Code, Codes),
     (   catch(write_file_from_codes(File, Codes), _, fail)
     ->  true
     ;   format(atom(FileMsg), 'cannot write the check file ~s', [File]),
-        throw(error(codegen_error(check_file, FileMsg), cocolog_check/5))
+        throw(error(codegen_error(check_file, FileMsg),
+                    cocolog_check_file/8))
     ),
     current_prolog_flag(executable, Exe),
-    cocolog_run_command(Exe, File, Goal, ErrFile, KeyVar, Command),
-    cocolog_proc_run(Command, Timeout, OutCodes, Exit),
-    (   catch(read_file_to_codes(ErrFile, ErrCodes), _, fail)
+    cocolog_run_command(Exe, File, Goal, OutFile, KeyVar, Command),
+    cocolog_proc_run(Command, Timeout, ErrCodes, Exit),
+    (   catch(read_file_to_codes(OutFile, OutCodes), _, fail)
     ->  true
-    ;   ErrCodes = []
+    ;   OutCodes = []
     ),
     atom_codes(Output, OutCodes),
     atom_codes(Errors, ErrCodes),
     (   Exit == 0,
-        \+ cocolog_bad_output(Errors)
+        \+ cocolog_bad_stderr(Errors)
     ->  cocolog_expect(Expect, Output, Verdict)
+    ;   Exit == 0
+    ->  format(atom(Diag0), 'cocolog run printed a load diagnostic~n~s',
+               [Errors]),
+        cocolog_limit(4000, Diag0, Diag),
+        Verdict = fail(Diag)
     ;   Exit == 124
     ->  format(atom(Diag0), 'cocolog run timed out after ~w ms~n~s',
                [Timeout, Errors]),
@@ -305,7 +320,7 @@ cocolog_temp_dir(Dir) :-
     ;   (   catch(make_directory(Try), _, fail)
         ->  Dir = Try
         ;   format(atom(DirMsg), 'cannot make the check directory ~s', [Try]),
-            throw(error(codegen_error(check_dir, DirMsg), cocolog_check/5))
+            throw(error(codegen_error(check_dir, DirMsg), cocolog_temp_dir/1))
         )
     ).
 
@@ -327,52 +342,36 @@ cocolog_expect(expect(File, Expected), Output, Verdict) :-
         Verdict = fail(Diag)
     ).
 
-cocolog_run_command(Exe, File, Goal, ErrFile, KeyVar, Command) :-
-    cocolog_shell_quote(Exe, QExe),
-    cocolog_shell_quote(File, QFile),
-    cocolog_shell_quote(ErrFile, QErr),
-    (   atom(KeyVar), KeyVar \== ''
-    ->  cocolog_shell_quote(KeyVar, QKey),
-        format(atom(Prefix), 'env -u ~w ', [QKey])
-    ;   Prefix = ''
-    ),
+cocolog_run_command(Exe, File, Goal, OutFile, KeyVar, Command) :-
+    codegen_shell_quote(Exe, QExe),
+    codegen_shell_quote(File, QFile),
+    codegen_shell_quote(OutFile, QOut),
+    codegen_env_prefix(KeyVar, Prefix),
     (   Goal == main
-    ->  format(atom(Command), '~w~w run ~w 2>~w',
-               [Prefix, QExe, QFile, QErr])
-    ;   cocolog_shell_quote(Goal, QGoal),
-        format(atom(Command), '~w~w run ~w ~w 2>~w',
-               [Prefix, QExe, QFile, QGoal, QErr])
+    ->  format(atom(Command), 'ulimit -f 8192; ~w~w run ~w 2>&1 >~w',
+               [Prefix, QExe, QFile, QOut])
+    ;   codegen_shell_quote(Goal, QGoal),
+        format(atom(Command), 'ulimit -f 8192; ~w~w run ~w ~w 2>&1 >~w',
+               [Prefix, QExe, QFile, QGoal, QOut])
     ).
 
-%% POSIX single-quote quoting: a quote inside becomes '\''.
-cocolog_shell_quote(Value, Quoted) :-
-    (   atom(Value)
-    ->  atom_codes(Value, Codes)
-    ;   string(Value)
-    ->  string_codes(Value, Codes)
-    ;   format(atom(Text), '~w', [Value]),
-        atom_codes(Text, Codes)
-    ),
-    cocolog_shell_escape(Codes, Escaped),
-    Q = 39,
-    append([Q|Escaped], [Q], All),
-    atom_codes(Quoted, All).
-
-cocolog_shell_escape([], []).
-cocolog_shell_escape([C|Codes], Out) :-
-    (   C =:= 39
-    ->  Out = [39, 92, 39, 39|Rest]
-    ;   Out = [C|Rest]
-    ),
-    cocolog_shell_escape(Codes, Rest).
-
+%% The selected key and the known provider keys are removed from the
+%% child's environment by codegen_env_prefix/2: a generated program has no
+%% business asking a provider anything, and the key is the one secret this
+%% process holds.
+%%
+%% `ulimit -f 8192' (4 MB in 512-byte blocks) caps the file standard output
+%% goes to; a program that floods it dies on the write and fails the check
+%% instead of filling the disk. The deadline bounds standard error, which
+%% proc_run/4 reads through a pipe.
 cocolog_proc_run(Command, Timeout, Codes, Exit) :-
     catch(proc_run(Command, Timeout, Codes, Exit), Ball,
           throw(error(codegen_error(process, Ball), cocolog_proc_run/4))).
 
 %% Errors and warnings are line-leading in cocolog's own diagnostics, so
-%% the program's own output may contain the words without being refused.
-cocolog_bad_output(Output) :-
+%% the program's standard output may contain the words without being
+%% refused.
+cocolog_bad_stderr(Output) :-
     atom_string(Output, String),
     split_string(String, "\n", "", Lines),
     member(Line, Lines),
@@ -384,9 +383,9 @@ cocolog_line_begins(Line, Word) :-
     atom_string(Word, Prefix),
     sub_string(Line, 0, _, _, Prefix).
 
-cocolog_cleanup(Dir, File, ErrFile) :-
+cocolog_cleanup(Dir, File, OutFile) :-
     catch(delete_file(File), _, true),
-    catch(delete_file(ErrFile), _, true),
+    catch(delete_file(OutFile), _, true),
     catch(delete_directory(Dir), _, true).
 
 cocolog_limit(Max, Text, Limited) :-
@@ -456,15 +455,7 @@ cocolog_cli :-
     ->  catch(cocolog_main(SpecFile, Goal, OutFile, Report, DryRun,
                            RunOptions, Overrides),
               Ball,
-              ( codegen_report_print(Report),
-                (   Ball = error(codegen_error(Kind, Detail), _)
-                ->  format(user_error, 'codegen: ~w~n~s~n', [Kind, Detail])
-                ;   Ball = error(Term, _)
-                ->  format(user_error, 'codegen: ~w~n', [Term])
-                ;   format(user_error, 'codegen: ~w~n', [Ball])
-                ),
-                halt(1)
-              ))
+              codegen_cli_failure(Report, Ball))
     ;   format("usage: cocolog -s coding/cocolog/run.pl -- SPEC.txt [--goal G] [--skill FILE] [--no-skill] [--expect FILE] [--attempts N] [--timeout MS] [--budget N] [--keep DIR] [--dry-run] [--key-env NAME] [--temperature T] [--max-tokens N] [--provider P] [--model M] [--base-url U] [--effort E] [--report] [OUT.pl]~n", []),
         halt(1)
     ).

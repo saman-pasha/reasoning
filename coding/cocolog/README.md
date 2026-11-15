@@ -9,7 +9,7 @@ about 19 000 prompt tokens.
 ## Run
 
 ```sh
-export REASONING_API_KEY=...
+export CODING_ENDPOINT_KEY_ENV=...
 COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
     ../cocolog/cocolog -s coding/cocolog/run.pl -- spec.txt out.pl
 ```
@@ -44,8 +44,10 @@ COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
 
 A reply is a complete cocolog program. It must define `main/0` unless
 `--goal` names another goal. The child that checks a reply runs with the
-provider key variable removed from its environment, so model-written code
-cannot read `REASONING_API_KEY`. The tool writes it to a temporary file and runs
+selected key variable (`--key-env`, `CODING_ENDPOINT_KEY_ENV` by default) and
+`library(llm)`'s `ANTHROPIC_API_KEY` and `OPENAI_API_KEY` removed from its
+environment, so model-written code cannot read them. The tool writes it to
+a temporary file and runs
 
 ```sh
 cocolog run FILE.pl [Goal]

@@ -62,6 +62,7 @@
 %% asserted another: an existing caller keeps compiling what it compiled.
 
 :- use_module('coding/options.pl').
+:- use_module('coding/shell.pl').
 :- use_module(library(process)).
 
 %% ---- compile -----------------------------------------------------------
@@ -83,7 +84,7 @@ c_compile(Code, Mode, CFlags, Std, Exe, Verdict) :-
     atom_concat(Dir, '/check.out', Exe),
     atom_concat(Code, '\n', Text),
     atom_codes(Text, Codes),
-    write_file_from_codes(CFile, Codes),
+    c_write_file(CFile, Codes, c_compile/6),
     c_compile_command(Mode, CFlags, Std, Exe, CFile, Cmd),
     c_run_command(Cmd, 120000, OutCodes, Exit, Error),
     atom_codes(Output, OutCodes),
@@ -105,14 +106,26 @@ c_temp_dir(Tag, Dir) :-
     tmp_file(Tag, Try),
     (   c_path_exists(Try)
     ->  c_temp_dir(Tag, Dir)
-    ;   make_directory(Try),
-        Dir = Try
+    ;   catch(make_directory(Try), _, fail)
+    ->  Dir = Try
+    ;   format(atom(Msg), 'cannot make the temporary directory ~s', [Try]),
+        throw(error(codegen_error(temp_dir, Msg), c_temp_dir/2))
     ).
 
 c_path_exists(Path) :-
     (   exists_file(Path)
     ->  true
     ;   exists_directory(Path)
+    ).
+
+%% A failed write is a diagnosed error, never a silent failure of the
+%% check: to the compiler a missing file looks like a compile failure, so
+%% the model would be asked to repair the wrong thing.
+c_write_file(File, Codes, Context) :-
+    (   catch(write_file_from_codes(File, Codes), _, fail)
+    ->  true
+    ;   format(atom(Msg), 'cannot write ~s', [File]),
+        throw(error(codegen_error(write, Msg), Context))
     ).
 
 %% The directory a compiled check lives in, with everything the check wrote.
@@ -134,10 +147,16 @@ c_clean_entries(['.'|Rest], Dir) :-
 c_clean_entries(['..'|Rest], Dir) :-
     !,
     c_clean_entries(Rest, Dir).
+%% A symlink is UNLINKED, never followed: a generated program knows its
+%% executable's directory from argv[0], so a link it plants there must not
+%% reach the file or directory it names. exists_directory/1 follows links;
+%% read_link/3 is what tells them apart.
 c_clean_entries([Entry|Rest], Dir) :-
     atom_concat(Dir, '/', Base),
     atom_concat(Base, Entry, Path),
-    (   exists_directory(Path)
+    (   catch(read_link(Path, _, _), _, fail)
+    ->  catch(delete_file(Path), _, true)
+    ;   exists_directory(Path)
     ->  c_clean_dir(Path)
     ;   catch(delete_file(Path), _, true)
     ),
@@ -151,12 +170,16 @@ c_compile_command(Mode, CFlags, Std, Exe, CFile, Cmd) :-
     c_compile_std_command(Mode, CFlags, Spelling, Exe, CFile, Cmd).
 
 c_compile_std_command(plain, CFlags, Spelling, Exe, CFile, Cmd) :-
-    format(atom(Cmd), 'clang -std=~w -Wall -Wextra -O0 ~s -o ~s ~s 2>&1',
-           [Spelling, CFlags, Exe, CFile]).
+    codegen_shell_quote(Exe, QExe),
+    codegen_shell_quote(CFile, QFile),
+    format(atom(Cmd), 'clang -std=~w -Wall -Wextra -O0 ~s -o ~w ~w 2>&1',
+           [Spelling, CFlags, QExe, QFile]).
 c_compile_std_command(sanitized, CFlags, Spelling, Exe, CFile, Cmd) :-
+    codegen_shell_quote(Exe, QExe),
+    codegen_shell_quote(CFile, QFile),
     format(atom(Cmd),
-           'clang -std=~w -Wall -Wextra -O0 -g ~s -fsanitize=address,undefined -fno-sanitize-recover=all -o ~s ~s 2>&1',
-           [Spelling, CFlags, Exe, CFile]).
+           'clang -std=~w -Wall -Wextra -O0 -g ~s -fsanitize=address,undefined -fno-sanitize-recover=all -o ~w ~w 2>&1',
+           [Spelling, CFlags, QExe, QFile]).
 
 %% ---- static analysis ---------------------------------------------------
 
@@ -177,10 +200,11 @@ c_analyze_check(Code, CFlags, Std, Verdict) :-
 c_analyze_file(Code, CFlags, Spelling, CFile, Verdict) :-
     atom_concat(Code, '\n', Text),
     atom_codes(Text, Codes),
-    write_file_from_codes(CFile, Codes),
+    c_write_file(CFile, Codes, c_analyze_file/5),
+    codegen_shell_quote(CFile, QFile),
     format(atom(Cmd),
-           'clang --analyze -Xanalyzer -analyzer-output=text -std=~w -Wall -Wextra -O0 ~s ~s 2>&1',
-           [Spelling, CFlags, CFile]),
+           'clang --analyze -Xanalyzer -analyzer-output=text -std=~w -Wall -Wextra -O0 ~s ~w 2>&1',
+           [Spelling, CFlags, QFile]),
     c_run_command(Cmd, 120000, OutCodes, Exit, Error),
     atom_codes(Output, OutCodes),
     (   Error == none,
@@ -238,8 +262,12 @@ c_run_cases([Case|Rest], Exe, Timeout, Index, Failures) :-
     c_case_parts(Case, Input, Expected, ExpectedExit),
     tmp_file(codegen_case, InFile),
     atom_codes(Input, InCodes),
-    write_file_from_codes(InFile, InCodes),
-    format(atom(Cmd), 'ASAN_OPTIONS=detect_leaks=0 ~s < ~s 2>&1', [Exe, InFile]),
+    c_write_file(InFile, InCodes, c_run_cases/5),
+    codegen_shell_quote(Exe, QExe),
+    codegen_shell_quote(InFile, QIn),
+    codegen_env_prefix('CODING_ENDPOINT_KEY_ENV', EnvPrefix),
+    format(atom(Cmd), '~sASAN_OPTIONS=detect_leaks=0 ~w < ~w 2>&1',
+           [EnvPrefix, QExe, QIn]),
     c_run_command(Cmd, Timeout, OutCodes, Exit, Error),
     catch(delete_file(InFile), _, true),
     atom_codes(Actual0, OutCodes),
@@ -308,8 +336,12 @@ c_run_output_list([Input|Rest], Exe, Timeout,
                   [output(Output, Exit, Error)|Outputs]) :-
     tmp_file(codegen_case, InFile),
     atom_codes(Input, InCodes),
-    write_file_from_codes(InFile, InCodes),
-    format(atom(Cmd), 'ASAN_OPTIONS=detect_leaks=0 ~s < ~s 2>&1', [Exe, InFile]),
+    c_write_file(InFile, InCodes, c_run_output_list/4),
+    codegen_shell_quote(Exe, QExe),
+    codegen_shell_quote(InFile, QIn),
+    codegen_env_prefix('CODING_ENDPOINT_KEY_ENV', EnvPrefix),
+    format(atom(Cmd), '~sASAN_OPTIONS=detect_leaks=0 ~w < ~w 2>&1',
+           [EnvPrefix, QExe, QIn]),
     c_run_command(Cmd, Timeout, OutCodes, Exit, Error),
     catch(delete_file(InFile), _, true),
     atom_codes(Actual0, OutCodes),

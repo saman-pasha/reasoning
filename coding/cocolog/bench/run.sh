@@ -1,7 +1,7 @@
 #!/bin/sh
 # coding/cocolog/bench/run.sh -- run the cocolog codegen benchmark.
 #
-#   export REASONING_API_KEY=...
+#   export CODING_ENDPOINT_KEY_ENV=...
 #   coding/cocolog/bench/run.sh              all tasks
 #   coding/cocolog/bench/run.sh -- json      one task
 #

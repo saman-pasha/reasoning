@@ -1,7 +1,7 @@
 %% coding/bench/bench.pl -- DeepSeek codegen, high reasoning against a
 %% no-reasoning verification loop.
 %%
-%%     REASONING_API_KEY=... \
+%%     CODING_ENDPOINT_KEY_ENV=... \
 %%     COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
 %%         ../cocolog/cocolog -s coding/bench/bench.pl [-- task ...]
 %%
@@ -69,10 +69,10 @@
 %% cannot take the benchmark's own entry point over.
 
 main :-
-    (   getenv('REASONING_API_KEY', Key),
+    (   getenv('CODING_ENDPOINT_KEY_ENV', Key),
         Key \== ''
     ->  true
-    ;   format("REASONING_API_KEY is not set.~n", []),
+    ;   format("CODING_ENDPOINT_KEY_ENV is not set.~n", []),
         halt(1)
     ),
     bench_llm_setup,
@@ -114,7 +114,7 @@ bench_llm_setup :-
     bench_config(provider, Provider),
     bench_config(base_url, BaseUrl),
     retractall(llm_provider(Provider, _, _)),
-    assertz(llm_provider(Provider, BaseUrl, 'REASONING_API_KEY')).
+    assertz(llm_provider(Provider, BaseUrl, 'CODING_ENDPOINT_KEY_ENV')).
 
 %% ---- one task, its modes -----------------------------------------------
 %%

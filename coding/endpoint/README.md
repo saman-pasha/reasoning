@@ -55,7 +55,7 @@ every interface rather than loopback.
 ## Start
 
 ```sh
-export REASONING_API_KEY=...
+export CODING_ENDPOINT_KEY_ENV=...
 export CODING_ENDPOINT_TOKEN=...
 coding/endpoint/run-httpd.sh
 ```
@@ -149,7 +149,8 @@ and a message naming the repeated signature, before the backend is called.
 ## Backend
 
 The endpoint forwards to an OpenAI-compatible chat endpoint. The default is
-DeepSeek's OpenAI endpoint with `REASONING_API_KEY`:
+DeepSeek's OpenAI endpoint with the backend key in
+`CODING_ENDPOINT_KEY_ENV`:
 
 | variable | default |
 |---|---|
@@ -158,7 +159,7 @@ DeepSeek's OpenAI endpoint with `REASONING_API_KEY`:
 | `CODING_ENDPOINT_C_MODEL` | the backend model |
 | `CODING_ENDPOINT_COCOLOG_MODEL` | the backend model |
 | `CODING_ENDPOINT_PYTHON_MODEL` | the backend model |
-| `CODING_ENDPOINT_KEY_ENV` | `REASONING_API_KEY` |
+| `CODING_ENDPOINT_KEY_ENV` | the backend key itself; required |
 | `CODING_ENDPOINT_TOKEN` | unset; a bearer token when set |
 | `CODING_ENDPOINT_ALLOW_ORIGIN` | the local OpenCode web origins |
 | `CODING_ENDPOINT_REASONING` | `on` for every model; `off` disables the pre-pass |
@@ -175,8 +176,11 @@ DeepSeek's OpenAI endpoint with `REASONING_API_KEY`:
 | `COCOLOG_LIBRARY` | set by `run-httpd.sh` |
 | `COCOLOG_SKILL` | `../cocolog/SKILL.md` beside this repository |
 
-The backend key is read from the environment at each call and never logged
-or written to disk by the server. CORS headers go only to the allowlisted
+Despite its name, `CODING_ENDPOINT_KEY_ENV` holds the key itself; it is
+not the name of another variable. The generators, the benchmarks and the
+endpoint all read that one variable. The backend key is read from the
+environment at each call and never logged or written to disk by the
+server. CORS headers go only to the allowlisted
 origins, and a completion request needs `Authorization: Bearer TOKEN` when
 `CODING_ENDPOINT_TOKEN` is set.
 

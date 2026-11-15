@@ -1,7 +1,7 @@
 #!/bin/sh
 # coding/bench/run.sh -- run the DeepSeek codegen benchmark.
 #
-#   export REASONING_API_KEY=...
+#   export CODING_ENDPOINT_KEY_ENV=...
 #   coding/bench/run.sh              all tasks
 #   coding/bench/run.sh -- lcs       one task
 #

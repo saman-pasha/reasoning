@@ -1,7 +1,7 @@
 #!/bin/sh
 # coding/bench/tool.sh -- the shipped C tool over the benchmark tasks.
 #
-#   export REASONING_API_KEY=...
+#   export CODING_ENDPOINT_KEY_ENV=...
 #   coding/bench/tool.sh              all tasks
 #   coding/bench/tool.sh -- lcs       one task
 #

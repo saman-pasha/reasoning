@@ -1,4 +1,4 @@
-%% coding/report.pl -- the run report both code generators share.
+%% coding/report.pl -- the run report every code generator shares.
 %%
 %%     codegen_report_reset/0
 %%     codegen_report_finish(+Start)
@@ -6,9 +6,16 @@
 %%     codegen_report_calls(-Calls)
 %%     codegen_report(-Report)
 %%     codegen_report_print(no|yes)
+%%     codegen_cli_failure(+Report, +Ball)
 %%
-%% One set of predicates and one global prefix, so loading the C and
-%% cocolog generators in one process does not merge two reports.
+%% One set of predicates and one global prefix, so loading the C, cocolog
+%% and Python generators in one process does not merge two reports.
+%%
+%% codegen_cli_failure/2 is what each command line's catch/3 answers: the
+%% report first (the tokens a refused run spent are still seen), then the
+%% error. A codegen_error names its kind; any other ball -- a missing key,
+%% an HTTP failure, a bad provider -- is printed as the term it is. It
+%% never returns: the process ends with exit 1.
 
 :- use_module(library(llm)).
 
@@ -30,8 +37,10 @@ codegen_report_finish(Start) :-
     nb_setval('$codegen_seconds', Seconds).
 
 codegen_report_add(CallSeconds) :-
-    nb_getval('$codegen_calls', Calls0),
-    Calls is Calls0 + 1,
+    (   catch(nb_getval('$codegen_calls', Calls0), _, fail)
+    ->  Calls is Calls0 + 1
+    ;   Calls = 1
+    ),
     nb_setval('$codegen_calls', Calls),
     (   catch(llm_last_usage(json(Pairs)), _, fail)
     ->  codegen_usage_first(Pairs, prompt_tokens, input_tokens, Prompt),
@@ -95,7 +104,10 @@ codegen_usage_number(Pairs, Key, Number) :-
     ).
 
 codegen_bump(Global, Number) :-
-    nb_getval(Global, Old),
+    (   catch(nb_getval(Global, Old), _, fail)
+    ->  true
+    ;   Old = 0
+    ),
     New is Old + Number,
     nb_setval(Global, New).
 
@@ -133,6 +145,17 @@ codegen_report_print(yes) :-
     format(user_error,
            'codegen: ~w call(s), ~w prompt + ~w completion = ~w tokens (~w reasoning, ~w cached) in ~2f s~n',
            [Calls0, Prompt, Completion, Total, Reasoning, CacheHit, Seconds]).
+
+%% The command lines' common ending: the report, the error, exit 1.
+codegen_cli_failure(Report, Ball) :-
+    codegen_report_print(Report),
+    (   Ball = error(codegen_error(Kind, Detail), _)
+    ->  format(user_error, 'codegen: ~w~n~s~n', [Kind, Detail])
+    ;   Ball = error(Term, _)
+    ->  format(user_error, 'codegen: ~w~n', [Term])
+    ;   format(user_error, 'codegen: ~w~n', [Ball])
+    ),
+    halt(1).
 
 codegen_report_verify_model :-
     (   catch(nb_getval('$codegen_verify_model', Model), _, fail),

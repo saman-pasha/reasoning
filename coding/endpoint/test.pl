@@ -30,7 +30,8 @@
                 ep_usage_json/2,
                 ep_default_effort/2,
                 ep_json_get/3,
-                ep_loop_verdict/2
+                ep_loop_verdict/2,
+                ep_key/1
               ]).
 :- use_module('coding/endpoint/reasoning_core.pl',
               [ endpoint_reason/4 ]).
@@ -55,6 +56,7 @@ main :-
     test_python,
     test_check_cap,
     test_zero_checks,
+    test_backend_key,
     unsetenv('CODING_ENDPOINT_TOKEN'),
     checks_done.
 
@@ -346,3 +348,14 @@ test_zero_checks :-
     check('c-r0 without a header is plain', Mode-Setting, plain-off),
     ep_checks(0, 0, [first, second], Checks),
     check('a zero maximum keeps no checks', Checks, []).
+
+test_backend_key :-
+    setenv('CODING_ENDPOINT_KEY_ENV', 'test-backend-key'),
+    ep_key(Key),
+    check('the backend key is read from CODING_ENDPOINT_KEY_ENV',
+          Key, 'test-backend-key'),
+    unsetenv('CODING_ENDPOINT_KEY_ENV'),
+    (   catch(ep_key(_), error(ep_no_key(_), _), true)
+    ->  check('an absent backend key is refused', yes, yes)
+    ;   check('an absent backend key is refused', no, yes)
+    ).

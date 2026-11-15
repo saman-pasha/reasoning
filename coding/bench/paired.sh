@@ -1,7 +1,7 @@
 #!/bin/sh
 # coding/bench/paired.sh -- the paired repair comparison.
 #
-#   export REASONING_API_KEY=...
+#   export CODING_ENDPOINT_KEY_ENV=...
 #   coding/bench/paired.sh              all tasks
 #   coding/bench/paired.sh -- lcs       one task
 #

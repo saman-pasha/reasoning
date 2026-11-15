@@ -1,6 +1,6 @@
 %% coding/bench/paired.pl -- the paired repair comparison.
 %%
-%%     REASONING_API_KEY=... \
+%%     CODING_ENDPOINT_KEY_ENV=... \
 %%     COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
 %%         cocolog query "use_module('coding/bench/paired.pl'), run"
 %%
@@ -19,10 +19,10 @@
 :- dynamic pair_result/9.
 
 run :-
-    (   getenv('REASONING_API_KEY', Key),
+    (   getenv('CODING_ENDPOINT_KEY_ENV', Key),
         Key \== ''
     ->  true
-    ;   format("REASONING_API_KEY is not set.~n", []),
+    ;   format("CODING_ENDPOINT_KEY_ENV is not set.~n", []),
         halt(1)
     ),
     bench_llm_setup,
