@@ -1484,7 +1484,7 @@ ep_bare_action(Rest) :-
     ep_first_word(Rest, Word, Rest1),
     (   ep_bare_leading_adverb(Word)
     ->  ep_bare_action(Rest1)
-    ;   ep_action_word(Word)
+    ;   ep_action_word(Word, Rest1)
     ).
 
 ep_bare_leading_adverb(just).
@@ -1500,8 +1500,57 @@ ep_bare_leading_adverb(briefly).
 ep_bare_leading_adverb(immediately).
 ep_bare_leading_adverb(still).
 
-ep_action_word(Word) :-
-    \+ ep_nonaction_word(Word).
+ep_action_word(Word, Rest) :-
+    (   ep_closing_word(Word)
+    ->  \+ ep_closing_rest(Word, Rest)
+    ;   \+ ep_nonaction_word(Word)
+    ).
+
+%% A closing word closes only with a closing rest: "finish" and "stop
+%% here" end the turn, "finish the code" and "stop the server" are work.
+ep_closing_word(wait).
+ep_closing_word(finish).
+ep_closing_word(stop).
+ep_closing_word(close).
+ep_closing_word(end).
+ep_closing_word(leave).
+ep_closing_word(wrap).
+
+ep_closing_rest(wait, Rest) :-
+    (   ep_rest_empty(Rest)
+    ;   ep_rest_begins(Rest, here)
+    ;   ep_rest_begins(Rest, 'for your')
+    ;   ep_rest_begins(Rest, 'for input')
+    ;   ep_rest_begins(Rest, 'for instructions')
+    ;   ep_rest_begins(Rest, 'for a response')
+    ).
+ep_closing_rest(Word, Rest) :-
+    memberchk(Word, [finish, stop, close, end, wrap]),
+    (   ep_rest_empty(Rest)
+    ;   ep_rest_begins(Rest, here)
+    ;   ep_rest_begins(Rest, 'for now')
+    ;   ep_rest_begins(Rest, up)
+    ).
+ep_closing_rest(leave, Rest) :-
+    (   ep_rest_empty(Rest)
+    ;   ep_rest_begins(Rest, 'the rest')
+    ;   ep_rest_begins(Rest, 'the remaining')
+    ;   ep_rest_begins(Rest, 'the decision')
+    ;   ep_rest_begins(Rest, it)
+    ;   ep_rest_begins(Rest, that)
+    ;   ep_rest_begins(Rest, you)
+    ;   ep_rest_begins(Rest, here)
+    ).
+
+ep_rest_empty(Rest) :-
+    atom_codes(Rest, Codes),
+    ep_skip_nonletter(Codes, []).
+
+ep_rest_begins(Rest, Phrase) :-
+    atom_codes(Rest, Codes),
+    ep_skip_nonletter(Codes, Codes1),
+    atom_codes(Flat, Codes1),
+    sub_atom(Flat, 0, _, _, Phrase).
 
 ep_sentence_gerund(Text, After) :-
     ep_first_word(Text, Word, Rest),
@@ -1741,13 +1790,7 @@ ep_nonaction_word(say).
 ep_nonaction_word(tell).
 ep_nonaction_word(answer).
 ep_nonaction_word(describe).
-ep_nonaction_word(leave).
-ep_nonaction_word(finish).
-ep_nonaction_word(stop).
-ep_nonaction_word(wait).
 ep_nonaction_word(conclude).
-ep_nonaction_word(close).
-ep_nonaction_word(wrap).
 ep_nonaction_word(restate).
 ep_nonaction_word(recap).
 ep_nonaction_word(highlight).
@@ -1759,7 +1802,6 @@ ep_nonaction_word(suggest).
 ep_nonaction_word(recommend).
 ep_nonaction_word(assure).
 ep_nonaction_word(confirm).
-ep_nonaction_word(end).
 ep_nonaction_word(be).
 
 ep_usage_add(usage(P1, C1, R1, T1, H1), usage(P2, C2, R2, T2, H2),
