@@ -440,6 +440,33 @@ curl -s -H "Authorization: Bearer $CODING_ENDPOINT_TOKEN" \
 `/health` names the backend and the twelve models; `/v1/models` is the
 OpenAI-shaped list OpenCode and Codex read.
 
+### Install scripts
+
+`coding/install/` has one script per client and platform, each with its
+own README. They merge the provider into the client's config, copy the
+Codex catalog and profile, back up what they replace, and check the
+backend's `/health`:
+
+```text
+opencode-ubuntu.sh   opencode-macos.sh   opencode-windows.ps1
+codex-ubuntu.sh      codex-macos.sh      codex-windows.ps1
+```
+
+The default backend is `http://127.0.0.1:8787/v1`. Set
+`REASONING_BASE_URL` for another endpoint and `CODING_ENDPOINT_TOKEN` for
+its bearer token:
+
+```sh
+REASONING_BASE_URL=http://127.0.0.1:8787/v1 \
+CODING_ENDPOINT_TOKEN=... coding/install/opencode-macos.sh
+```
+
+The Windows files are PowerShell scripts; run them with
+`powershell -ExecutionPolicy Bypass -File ...`. The Codex installer adds
+the provider and catalog but does not change your default model or
+provider; select it with `codex -p reasoning`. See
+`coding/install/README.md` for the paths, backups and post-install edits.
+
 ### OpenAI or Anthropic backend
 
 The endpoint talks to one backend at a time. Set `CODING_ENDPOINT_API`,
