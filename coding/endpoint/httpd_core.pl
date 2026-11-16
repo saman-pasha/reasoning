@@ -27,8 +27,13 @@ ep_int(Name, Default, N) :-
     ).
 
 ep_backend_url(Url) :-
-    ep_env('CODING_ENDPOINT_BACKEND',
-           'https://api.deepseek.com/v1/chat/completions', Url).
+    ep_backend_mode(Mode),
+    (   Mode == anthropic
+    ->  ep_env('CODING_ENDPOINT_BACKEND',
+               'https://api.anthropic.com/v1/messages', Url)
+    ;   ep_env('CODING_ENDPOINT_BACKEND',
+               'https://api.deepseek.com/v1/chat/completions', Url)
+    ).
 
 ep_backend_model(c, Model) :-
     ep_env('CODING_ENDPOINT_C_MODEL', '', M0),
@@ -375,13 +380,357 @@ ep_forward(Body0, Alias, Status, Resp) :-
     ep_json_del(Body2, stream_options, Body2a),
     ep_json_del(Body2a, max_completion_tokens, Body3),
     ep_cap_tokens(Body3, Body4),
-    json_codes(Body4, Codes),
+    ep_backend_mode(Mode),
     ep_backend_url(Url),
     ep_key(Key),
-    format(atom(Auth), 'Authorization: Bearer ~w', [Key]),
-    curl_post(Url, 'application/json', Codes,
-              [header(Auth), timeout(600), max_size(16777216)],
-              Status, Resp).
+    (   Mode == anthropic
+    ->  ep_anthropic_body(Body4, AnthropicBody),
+        json_codes(AnthropicBody, AnthropicCodes),
+        format(atom(KeyHeader), 'x-api-key: ~w', [Key]),
+        curl_post(Url, 'application/json', AnthropicCodes,
+                  [ header(KeyHeader),
+                    header('anthropic-version: 2023-06-01'),
+                    timeout(600), max_size(16777216) ],
+                  Status0, AnthropicResp),
+        ep_anthropic_reply(Status0, AnthropicResp, Status, Resp)
+    ;   json_codes(Body4, Codes),
+        format(atom(Auth), 'Authorization: Bearer ~w', [Key]),
+        curl_post(Url, 'application/json', Codes,
+                  [header(Auth), timeout(600), max_size(16777216)],
+                  Status, Resp)
+    ).
+
+%% ---- the Anthropic backend --------------------------------------------
+%%
+%% CODING_ENDPOINT_API=anthropic speaks the Messages wire: the system
+%% prompt goes beside the messages, an assistant's tool calls are tool_use
+%% blocks and the tool results are tool_result blocks in a user message.
+
+ep_backend_mode(Mode) :-
+    ep_env('CODING_ENDPOINT_API', 'openai', Api0),
+    downcase_atom(Api0, Api),
+    (   Api == anthropic
+    ->  Mode = anthropic
+    ;   Mode = openai
+    ).
+
+ep_anthropic_body(json(Pairs), json(Out)) :-
+    memberchk(model-Model, Pairs),
+    memberchk(messages-Messages, Pairs),
+    ep_anthropic_system(Messages, System, Rest),
+    ep_anthropic_messages(Rest, Wire),
+    ep_anthropic_max_tokens(Pairs, MaxTokens),
+    Base = [model-Model, max_tokens-MaxTokens, messages-Wire],
+    ep_anthropic_system_field(System, Base, Base1),
+    ep_anthropic_tools_field(Pairs, Base1, Base2),
+    ep_anthropic_choice_field(Pairs, Base2, Base3),
+    ep_anthropic_sampling_fields(Pairs, Base3, Out).
+
+ep_anthropic_system([], '', []).
+ep_anthropic_system([json(Pairs)|Rest], System, Messages) :-
+    memberchk(role-system, Pairs),
+    !,
+    ep_anthropic_field(content, Pairs, Text),
+    ep_anthropic_system(Rest, More, Messages),
+    ep_anthropic_join_system(Text, More, System).
+ep_anthropic_system([Message|Rest], System, [Message|Messages]) :-
+    ep_anthropic_system(Rest, System, Messages).
+
+ep_anthropic_join_system('', More, More) :-
+    !.
+ep_anthropic_join_system(Text, '', Text) :-
+    !.
+ep_anthropic_join_system(Text, More, System) :-
+    atomic_list_concat([Text, '\n\n', More], System).
+
+ep_anthropic_field(Key, Pairs, Text) :-
+    (   memberchk(Key-Value, Pairs)
+    ->  ep_anthropic_text(Value, Text)
+    ;   Text = ''
+    ).
+
+ep_anthropic_text(Value, Text) :-
+    atom(Value),
+    !,
+    Text = Value.
+ep_anthropic_text(Value, Text) :-
+    string(Value),
+    !,
+    atom_string(Text, Value).
+ep_anthropic_text(Value, Text) :-
+    is_list(Value),
+    !,
+    ep_anthropic_parts(Value, Parts),
+    atomic_list_concat(Parts, '\n', Text).
+ep_anthropic_text(Value, Text) :-
+    number(Value),
+    !,
+    format(atom(Text), '~w', [Value]).
+ep_anthropic_text(_, '').
+
+ep_anthropic_parts([], []).
+ep_anthropic_parts([json(Pairs)|Rest], [Text|Texts]) :-
+    !,
+    ep_anthropic_field(text, Pairs, Text),
+    ep_anthropic_parts(Rest, Texts).
+ep_anthropic_parts([Other|Rest], [Text|Texts]) :-
+    ep_anthropic_text(Other, Text),
+    ep_anthropic_parts(Rest, Texts).
+
+ep_anthropic_messages([], []).
+ep_anthropic_messages([json(Pairs)|Rest], Out) :-
+    memberchk(role-tool, Pairs),
+    !,
+    ep_anthropic_tool_results([json(Pairs)|Rest], Blocks, Rest1),
+    ep_anthropic_messages(Rest1, More),
+    Out = [json([role-user, content-Blocks])|More].
+ep_anthropic_messages([json(Pairs)|Rest], [Wire|More]) :-
+    memberchk(role-Role0, Pairs),
+    (   Role0 == assistant
+    ->  Role = assistant
+    ;   Role = user
+    ),
+    ep_anthropic_message_content(Role, Pairs, Content),
+    Wire = json([role-Role, content-Content]),
+    ep_anthropic_messages(Rest, More).
+
+ep_anthropic_message_content(assistant, Pairs, Blocks) :-
+    memberchk(tool_calls-Calls, Pairs),
+    is_list(Calls),
+    Calls \== [],
+    !,
+    ep_anthropic_field(content, Pairs, Text),
+    ep_anthropic_text_blocks(Text, TextBlocks),
+    ep_anthropic_tool_blocks(Calls, ToolBlocks),
+    append(TextBlocks, ToolBlocks, Blocks).
+ep_anthropic_message_content(_, Pairs, Text) :-
+    ep_anthropic_field(content, Pairs, Text).
+
+ep_anthropic_text_blocks('', []) :-
+    !.
+ep_anthropic_text_blocks(Text, [json([type-text, text-Text])]).
+
+ep_anthropic_tool_blocks([], []).
+ep_anthropic_tool_blocks([json(Pairs)|Calls], [Block|Blocks]) :-
+    memberchk(id-Id, Pairs),
+    memberchk(function-json(Function), Pairs),
+    memberchk(name-Name, Function),
+    (   memberchk(arguments-Arguments, Function)
+    ->  ep_anthropic_input(Arguments, Input)
+    ;   Input = json([])
+    ),
+    Block = json([type-tool_use, id-Id, name-Name, input-Input]),
+    ep_anthropic_tool_blocks(Calls, Blocks).
+
+ep_anthropic_input(Arguments, Input) :-
+    (   atom(Arguments),
+        catch(json_parse(Arguments, Parsed), _, fail)
+    ->  Input = Parsed
+    ;   Arguments = json(_)
+    ->  Input = Arguments
+    ;   Input = json([])
+    ).
+
+ep_anthropic_tool_results([json(Pairs)|Rest], [Block|Blocks], Rest1) :-
+    memberchk(role-tool, Pairs),
+    !,
+    memberchk(tool_call_id-Id, Pairs),
+    ep_anthropic_field(content, Pairs, Text),
+    Block = json([type-tool_result, tool_use_id-Id, content-Text]),
+    ep_anthropic_tool_results(Rest, Blocks, Rest1).
+ep_anthropic_tool_results(Rest, [], Rest).
+
+ep_anthropic_max_tokens(Pairs, Max) :-
+    (   memberchk(max_tokens-Value, Pairs),
+        integer(Value),
+        Value > 0
+    ->  Max = Value
+    ;   Max = 32768
+    ).
+
+ep_anthropic_system_field('', Pairs, Pairs).
+ep_anthropic_system_field(System, Pairs, [system-System|Pairs]).
+
+ep_anthropic_tools_field(Pairs, Base, [tools-Tools|Base]) :-
+    memberchk(tools-ChatTools, Pairs),
+    is_list(ChatTools),
+    ep_anthropic_tools(ChatTools, Tools),
+    Tools \== [].
+ep_anthropic_tools_field(_, Base, Base).
+
+ep_anthropic_tools([], []).
+ep_anthropic_tools([json(Pairs)|Rest], [Tool|Tools]) :-
+    memberchk(type-function, Pairs),
+    memberchk(function-json(Function), Pairs),
+    memberchk(name-Name, Function),
+    !,
+    (   memberchk(description-Description, Function)
+    ->  true
+    ;   Description = ''
+    ),
+    (   memberchk(parameters-Parameters, Function)
+    ->  true
+    ;   Parameters = json([type-object])
+    ),
+    Tool = json([name-Name, description-Description,
+                 input_schema-Parameters]),
+    ep_anthropic_tools(Rest, Tools).
+ep_anthropic_tools([_|Rest], Tools) :-
+    ep_anthropic_tools(Rest, Tools).
+
+ep_anthropic_choice_field(Pairs, Base, [tool_choice-Choice|Base]) :-
+    memberchk(tool_choice-Value, Pairs),
+    ep_anthropic_choice(Value, Choice),
+    Choice \== none.
+ep_anthropic_choice_field(_, Base, Base).
+
+ep_anthropic_choice(auto, json([type-auto])).
+ep_anthropic_choice(none, json([type-none])).
+ep_anthropic_choice(required, json([type-any])).
+ep_anthropic_choice(Value, json([type-tool, name-Name])) :-
+    Value = json(Pairs),
+    memberchk(type-function, Pairs),
+    memberchk(function-json(Function), Pairs),
+    memberchk(name-Name, Function).
+ep_anthropic_choice(_, none).
+
+ep_anthropic_sampling_fields(Pairs, Base, Out) :-
+    findall(Key-Value, ep_anthropic_sampling(Pairs, Key, Value), Extra),
+    append(Extra, Base, Out).
+
+ep_anthropic_sampling(Pairs, temperature, Value) :-
+    memberchk(temperature-Value, Pairs),
+    number(Value).
+ep_anthropic_sampling(Pairs, top_p, Value) :-
+    memberchk(top_p-Value, Pairs),
+    number(Value).
+
+%% The reply becomes the chat reply the rest of the endpoint reads.
+ep_anthropic_reply(Status, Codes, Status, Out) :-
+    Status >= 200,
+    Status < 300,
+    catch(json_parse(Codes, json(Pairs)), _, fail),
+    !,
+    ep_anthropic_chat_reply(Pairs, Reply),
+    json_codes(Reply, Out).
+ep_anthropic_reply(Status, Codes, Status, Out) :-
+    Status >= 400,
+    catch(json_parse(Codes, json(Pairs)), _, fail),
+    !,
+    ep_anthropic_error_reply(Pairs, Reply),
+    json_codes(Reply, Out).
+ep_anthropic_reply(Status, Codes, Status, Codes).
+
+ep_anthropic_chat_reply(Pairs, json(Out)) :-
+    (   memberchk(id-Id, Pairs)
+    ->  true
+    ;   Id = 'chatcmpl-anthropic'
+    ),
+    (   memberchk(model-Model, Pairs)
+    ->  true
+    ;   Model = anthropic
+    ),
+    (   memberchk(content-Content, Pairs),
+        is_list(Content)
+    ->  true
+    ;   Content = []
+    ),
+    ep_anthropic_blocks(Content, Text, Calls),
+    (   memberchk(stop_reason-Stop, Pairs)
+    ->  true
+    ;   Stop = end_turn
+    ),
+    ep_anthropic_finish(Stop, Finish),
+    ep_anthropic_usage(Pairs, Usage),
+    ep_anthropic_message(Text, Calls, Message),
+    get_time(Now),
+    Created is round(Now),
+    Out = [id-Id, object-'chat.completion', created-Created, model-Model,
+           choices-[json([index-0, message-Message, finish_reason-Finish])],
+           usage-Usage].
+
+ep_anthropic_usage(Pairs, json([prompt_tokens-Prompt,
+                                completion_tokens-Completion,
+                                total_tokens-Total,
+                                prompt_cache_hit_tokens-Cache,
+                                completion_tokens_details-
+                                    json([reasoning_tokens-Reasoning])])) :-
+    (   memberchk(usage-json(U), Pairs)
+    ->  true
+    ;   U = []
+    ),
+    ep_anthropic_count(U, input_tokens, Input),
+    ep_anthropic_count(U, output_tokens, Completion),
+    ep_anthropic_count(U, cache_read_input_tokens, Cache),
+    ep_anthropic_count(U, cache_creation_input_tokens, CacheNew),
+    Prompt is Input + Cache + CacheNew,
+    (   memberchk(output_tokens_details-json(Details), U),
+        memberchk(thinking_tokens-Reasoning, Details)
+    ->  true
+    ;   Reasoning = 0
+    ),
+    Total is Prompt + Completion.
+
+ep_anthropic_count(Pairs, Key, Number) :-
+    (   memberchk(Key-Value, Pairs),
+        integer(Value)
+    ->  Number = Value
+    ;   Number = 0
+    ).
+
+ep_anthropic_blocks([], '', []).
+ep_anthropic_blocks([json(Pairs)|Rest], Text, Calls) :-
+    memberchk(type-text, Pairs),
+    memberchk(text-Here, Pairs),
+    !,
+    ep_anthropic_blocks(Rest, More, Calls),
+    ep_anthropic_join_text(Here, More, Text).
+ep_anthropic_blocks([json(Pairs)|Rest], Text, [Call|Calls]) :-
+    memberchk(type-tool_use, Pairs),
+    !,
+    ep_anthropic_call(Pairs, Call),
+    ep_anthropic_blocks(Rest, Text, Calls).
+ep_anthropic_blocks([_|Rest], Text, Calls) :-
+    ep_anthropic_blocks(Rest, Text, Calls).
+
+ep_anthropic_join_text('', More, More) :-
+    !.
+ep_anthropic_join_text(Text, '', Text) :-
+    !.
+ep_anthropic_join_text(Text, More, Both) :-
+    atom_concat(Text, More, Both).
+
+ep_anthropic_call(Pairs, json([id-Id, type-function,
+                              function-json([name-Name,
+                                             arguments-Arguments])])) :-
+    memberchk(id-Id, Pairs),
+    memberchk(name-Name, Pairs),
+    (   memberchk(input-Input, Pairs)
+    ->  true
+    ;   Input = json([])
+    ),
+    json_codes(Input, Codes),
+    atom_codes(Arguments, Codes).
+
+ep_anthropic_finish(tool_use, tool_calls) :-
+    !.
+ep_anthropic_finish(max_tokens, length) :-
+    !.
+ep_anthropic_finish(_, stop).
+
+ep_anthropic_message('', [], json([role-assistant, content-''])).
+ep_anthropic_message(Text, [], json([role-assistant, content-Text])).
+ep_anthropic_message('', Calls, json([role-assistant, content- @(null),
+                                     tool_calls-Calls])).
+ep_anthropic_message(Text, Calls, json([role-assistant, content-Text,
+                                       tool_calls-Calls])).
+
+ep_anthropic_error_reply(Pairs, json([error-json([message-Message])])) :-
+    (   memberchk(error-json(Error), Pairs),
+        memberchk(message-Message, Error)
+    ->  true
+    ;   Message = 'backend error'
+    ).
 
 %% The backend's usage object, as flat numbers for the trace. A reply
 %% without usage (an error, or a backend that reports none) is all zero.

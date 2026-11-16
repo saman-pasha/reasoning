@@ -37,6 +37,8 @@
                 ep_responses_events/4,
                 ep_responses_events/5,
                 ep_responses_sse/2,
+                ep_anthropic_body/2,
+                ep_anthropic_reply/4,
                 ep_key/1
               ]).
 :- use_module('coding/endpoint/reasoning_core.pl',
@@ -55,6 +57,7 @@ main :-
     test_loop_guard,
     test_responses,
     test_responses_memo,
+    test_anthropic,
     test_sse,
     test_sse_usage,
     test_sse_tools,
@@ -406,6 +409,84 @@ test_responses_memo :-
     ;   TextMemo = no
     ),
     check('the reasoning of an assistant text is put back', TextMemo, yes).
+
+%% ---- the Anthropic backend -------------------------------------------
+
+test_anthropic :-
+    Chat = json([model-x, max_tokens-100,
+                 messages-[json([role-system, content-sys]),
+                           json([role-user, content-go]),
+                           json([role-assistant, content-'',
+                                 tool_calls-[json([id-'call_1',
+                                                   type-function,
+                                                   function-json([name-shell,
+                                                                  arguments-'{"cmd":"echo hi"}'])])]]),
+                           json([role-tool, tool_call_id-'call_1',
+                                 content-hi])],
+                 tools-[json([type-function,
+                              function-json([name-shell, description-run,
+                                             parameters-json([type-object])])])],
+                 tool_choice-auto]),
+    ep_anthropic_body(Chat, Anthropic),
+    ep_json_get(Anthropic, system, System),    check('an Anthropic request lifts the system prompt', System, sys),
+    ep_json_get(Anthropic, messages, Messages),
+    findall(Role, (member(Message, Messages),
+                    ep_json_get(Message, role, Role)), Roles),
+    check('an Anthropic request keeps user, assistant and tool result',
+          Roles, [user, assistant, user]),
+    (   member(Assistant, Messages),
+        ep_json_get(Assistant, role, assistant),
+        ep_json_get(Assistant, content, [json(BlockPairs)|_]),
+        memberchk(type-tool_use, BlockPairs),
+        memberchk(input-json(InputPairs), BlockPairs),
+        memberchk(cmd-'echo hi', InputPairs)
+    ->  InputOk = yes
+    ;   InputOk = no
+    ),
+    check('an Anthropic tool call carries an input object', InputOk, yes),
+    (   member(ToolResult, Messages),
+        ep_json_get(ToolResult, role, user),
+        ep_json_get(ToolResult, content, [json(ResultPairs)]),
+        memberchk(type-tool_result, ResultPairs),
+        memberchk(tool_use_id-'call_1', ResultPairs)
+    ->  ResultOk = yes
+    ;   ResultOk = no
+    ),
+    check('an Anthropic tool result answers its call', ResultOk, yes),
+    Reply = json([id-'msg_1', model-x,
+                  content-[json([type-text, text-ok]),
+                           json([type-tool_use, id-'call_2',
+                                 name-shell,
+                                 input-json([cmd-'echo hi'])])],
+                  stop_reason-tool_use,
+                  usage-json([input_tokens-10, output_tokens-5,
+                              cache_read_input_tokens-2,
+                              output_tokens_details-
+                                  json([thinking_tokens-1])])]),
+    json_codes(Reply, Codes),
+    ep_anthropic_reply(200, Codes, Status, ChatCodes),
+    check('an Anthropic reply has status 200', Status, 200),
+    json_parse(ChatCodes, json(OutPairs)),
+    memberchk(choices-[json(Choice)|_], OutPairs),
+    memberchk(message-json(Message), Choice),
+    ep_json_get(json(Message), content, ok),
+    ep_json_get(json(Message), tool_calls, [json(Call)|_]),
+    memberchk(function-json(Function), Call),
+    memberchk(name-shell, Function),
+    memberchk(arguments-Arguments, Function),
+    atom(Arguments),
+    check('an Anthropic reply becomes a chat reply', ok, ok),
+    memberchk(finish_reason-tool_calls, Choice),
+    memberchk(usage-json(Usage), OutPairs),
+    memberchk(prompt_tokens-12, Usage),
+    memberchk(completion_tokens-5, Usage),
+    memberchk(total_tokens-17, Usage),
+    memberchk(prompt_cache_hit_tokens-2, Usage),
+    check('an Anthropic reply carries its usage', Usage,
+          [prompt_tokens-12, completion_tokens-5, total_tokens-17,
+           prompt_cache_hit_tokens-2,
+           completion_tokens_details-json([reasoning_tokens-1])]),
+    !.
 
 ep_test_calls(0, _, []).
 ep_test_calls(N, Start, [json([id-Id, type-function,

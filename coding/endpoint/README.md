@@ -215,13 +215,14 @@ NUL byte is still not JSON and is still refused.
 
 ## Backend
 
-The endpoint forwards to an OpenAI-compatible chat endpoint. The default is
-DeepSeek's OpenAI endpoint with the backend key in
-`CODING_ENDPOINT_KEY_ENV`:
+The endpoint forwards to an OpenAI-compatible chat endpoint or an
+Anthropic-compatible Messages endpoint. The default is DeepSeek's OpenAI
+endpoint with the backend key in `CODING_ENDPOINT_KEY_ENV`:
 
 | variable | default |
 |---|---|
-| `CODING_ENDPOINT_BACKEND` | `https://api.deepseek.com/v1/chat/completions` |
+| `CODING_ENDPOINT_API` | `openai`; `anthropic` speaks the Messages wire |
+| `CODING_ENDPOINT_BACKEND` | `https://api.deepseek.com/v1/chat/completions`; the Anthropic default is `https://api.anthropic.com/v1/messages` |
 | `CODING_ENDPOINT_MODEL` | `deepseek-chat` |
 | `CODING_ENDPOINT_C_MODEL` | the backend model |
 | `CODING_ENDPOINT_COCOLOG_MODEL` | the backend model |
@@ -250,6 +251,36 @@ environment at each call and never logged or written to disk by the
 server. CORS headers go only to the allowlisted
 origins, and a completion request needs `Authorization: Bearer TOKEN` when
 `CODING_ENDPOINT_TOKEN` is set.
+
+```sh
+# OpenAI-compatible
+export CODING_ENDPOINT_API=openai
+export CODING_ENDPOINT_BACKEND=https://api.openai.com/v1/chat/completions
+export CODING_ENDPOINT_KEY_ENV="$OPENAI_API_KEY"
+export CODING_ENDPOINT_MODEL=gpt-5.1-codex
+
+# Anthropic-compatible (api.anthropic.com or a gateway such as
+# https://api.deepseek.com/anthropic/v1/messages)
+export CODING_ENDPOINT_API=anthropic
+export CODING_ENDPOINT_BACKEND=https://api.anthropic.com/v1/messages
+export CODING_ENDPOINT_KEY_ENV="$ANTHROPIC_API_KEY"
+export CODING_ENDPOINT_MODEL=claude-sonnet-4-5
+
+coding/endpoint/run-httpd.sh
+```
+
+`CODING_ENDPOINT_C_MODEL`, `CODING_ENDPOINT_COCOLOG_MODEL` and
+`CODING_ENDPOINT_PYTHON_MODEL` override the model per language; otherwise
+all three use `CODING_ENDPOINT_MODEL`. The URL is the complete endpoint
+(`/chat/completions` or `/messages`), not a base URL.
+
+In `anthropic` mode the endpoint translates both ways: system messages
+become the top-level `system` string, assistant tool calls become
+`tool_use` blocks, tool results become `tool_result` blocks, and the reply's
+text, tool calls, stop reason and usage (including cached input) become the
+chat reply OpenCode and Codex read. `reasoning_effort` is not sent, because
+the Messages API has no such field; the deterministic checks still follow
+the model suffix (`-r0`, `-r2`, `-r8`).
 
 The request's `max_completion_tokens` is sent to the backend as
 `max_tokens` and capped by `CODING_ENDPOINT_MAX_TOKENS`. `stream_options` is
