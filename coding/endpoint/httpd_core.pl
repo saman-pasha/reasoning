@@ -1469,9 +1469,9 @@ ep_dangle_subject_phrase(Text, Before) :-
 ep_dangle_action(gerund, Rest) :-
     ep_first_word(Rest, Word, Rest1),
     (   ep_bare_leading_adverb(Word)
-    ->  ep_first_word(Rest1, Word1, _),
-        ep_ing_word(Word1)
-    ;   ep_ing_word(Word)
+    ->  ep_first_word(Rest1, Word1, Rest2),
+        ep_gerund_action(Word1, Rest2)
+    ;   ep_gerund_action(Word, Rest1)
     ).
 ep_dangle_action(bare, Rest) :-
     ep_bare_action(Rest).
@@ -1556,8 +1556,8 @@ ep_sentence_gerund(Text, After) :-
     ep_first_word(Text, Word, Rest),
     (   ep_leading_adverb(Word)
     ->  ep_first_word(Rest, Word1, After),
-        ep_ing_word(Word1)
-    ;   ep_ing_word(Word),
+        ep_gerund_action(Word1, After)
+    ;   ep_gerund_action(Word, Rest),
         After = Rest
     ).
 
@@ -1595,56 +1595,93 @@ ep_letter(C) :-
 %% A word in -ing heads a sentence: comparing, checking, desugaring,
 %% investigating. A few nouns and prepositions that happen to end in
 %% -ing are not actions.
-ep_ing_word(Word) :-
+ep_gerund_action(Word, Rest) :-
+    ep_ing_base_word(Word),
+    (   ep_ing_closing(Word)
+    ->  \+ ep_ing_closing_rest(Word, Rest)
+    ;   \+ ep_ing_nonaction(Word)
+    ).
+
+ep_ing_base_word(Word) :-
     atom_codes(Word, Codes),
     length(Codes, Length),
     Length >= 5,
     append(_, [105, 110, 103], Codes),
-    \+ ep_ing_stop(Word).
+    \+ ep_ing_noun_stop(Word).
 
-ep_ing_stop(during).
-ep_ing_stop(something).
-ep_ing_stop(nothing).
-ep_ing_stop(anything).
-ep_ing_stop(everything).
-ep_ing_stop(thing).
-ep_ing_stop(things).
-ep_ing_stop(string).
-ep_ing_stop(strings).
-ep_ing_stop(spring).
-ep_ing_stop(king).
-ep_ing_stop(ring).
-ep_ing_stop(wing).
-ep_ing_stop(morning).
-ep_ing_stop(evening).
-ep_ing_stop(explaining).
-ep_ing_stop(summarizing).
-ep_ing_stop(summarising).
-ep_ing_stop(noting).
-ep_ing_stop(mentioning).
-ep_ing_stop(clarifying).
-ep_ing_stop(leaving).
-ep_ing_stop(finishing).
-ep_ing_stop(stopping).
-ep_ing_stop(waiting).
-ep_ing_stop(concluding).
-ep_ing_stop(closing).
-ep_ing_stop(wrapping).
-ep_ing_stop(saying).
-ep_ing_stop(telling).
-ep_ing_stop(answering).
-ep_ing_stop(describing).
-ep_ing_stop(offering).
-ep_ing_stop(suggesting).
-ep_ing_stop(recommending).
-ep_ing_stop(confirming).
-ep_ing_stop(highlighting).
-ep_ing_stop(emphasizing).
-ep_ing_stop(emphasising).
-ep_ing_stop(outlining).
-ep_ing_stop(recapping).
-ep_ing_stop(restating).
-ep_ing_stop(being).
+ep_ing_noun_stop(during).
+ep_ing_noun_stop(something).
+ep_ing_noun_stop(nothing).
+ep_ing_noun_stop(anything).
+ep_ing_noun_stop(everything).
+ep_ing_noun_stop(thing).
+ep_ing_noun_stop(things).
+ep_ing_noun_stop(string).
+ep_ing_noun_stop(strings).
+ep_ing_noun_stop(spring).
+ep_ing_noun_stop(king).
+ep_ing_noun_stop(ring).
+ep_ing_noun_stop(wing).
+ep_ing_noun_stop(morning).
+ep_ing_noun_stop(evening).
+
+%% A gerund closing word closes with a closing rest, as its bare form
+%% does: "Waiting for your input" ends, "Waiting for the rest" is work.
+ep_ing_closing(waiting).
+ep_ing_closing(finishing).
+ep_ing_closing(stopping).
+ep_ing_closing(closing).
+ep_ing_closing(ending).
+ep_ing_closing(leaving).
+ep_ing_closing(wrapping).
+
+ep_ing_closing_rest(waiting, Rest) :-
+    (   ep_rest_begins(Rest, here)
+    ;   ep_rest_begins(Rest, 'for your')
+    ;   ep_rest_begins(Rest, 'for input')
+    ;   ep_rest_begins(Rest, 'for instructions')
+    ;   ep_rest_begins(Rest, 'for a response')
+    ).
+ep_ing_closing_rest(Word, Rest) :-
+    memberchk(Word, [finishing, stopping, closing, ending, wrapping]),
+    (   ep_rest_empty(Rest)
+    ;   ep_rest_begins(Rest, here)
+    ;   ep_rest_begins(Rest, 'for now')
+    ;   ep_rest_begins(Rest, up)
+    ).
+ep_ing_closing_rest(leaving, Rest) :-
+    (   ep_rest_empty(Rest)
+    ;   ep_rest_begins(Rest, 'the rest')
+    ;   ep_rest_begins(Rest, 'the remaining')
+    ;   ep_rest_begins(Rest, 'the decision')
+    ;   ep_rest_begins(Rest, it)
+    ;   ep_rest_begins(Rest, that)
+    ;   ep_rest_begins(Rest, you)
+    ;   ep_rest_begins(Rest, here)
+    ).
+
+ep_ing_nonaction(explaining).
+ep_ing_nonaction(summarizing).
+ep_ing_nonaction(summarising).
+ep_ing_nonaction(noting).
+ep_ing_nonaction(mentioning).
+ep_ing_nonaction(clarifying).
+ep_ing_nonaction(concluding).
+ep_ing_nonaction(saying).
+ep_ing_nonaction(telling).
+ep_ing_nonaction(answering).
+ep_ing_nonaction(describing).
+ep_ing_nonaction(offering).
+ep_ing_nonaction(suggesting).
+ep_ing_nonaction(recommending).
+ep_ing_nonaction(confirming).
+ep_ing_nonaction(highlighting).
+ep_ing_nonaction(emphasizing).
+ep_ing_nonaction(emphasising).
+ep_ing_nonaction(outlining).
+ep_ing_nonaction(recapping).
+ep_ing_nonaction(restating).
+ep_ing_nonaction(being).
 
 ep_no_finite_verb(After) :-
     ep_flat_punct(After, Flat),
