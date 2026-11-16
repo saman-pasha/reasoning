@@ -433,13 +433,31 @@ system prompt, `tool_use`/`tool_result` blocks and usage both ways;
 `reasoning_effort` is not sent because the Messages API has no such field,
 and the suite still follows the model suffix (`-r0`, `-r2`, `-r8`).
 
-`CODING_ENDPOINT_TOKEN` is optional: unset or empty, the port has no bearer
-guard. Set it to one token, or to a comma-separated list so several clients
-can hold different tokens:
+### Bearer tokens
+
+`CODING_ENDPOINT_TOKEN` is optional. Unset or empty, the port has no bearer
+guard and the server warns at startup. Set, every request needs
+`Authorization: Bearer TOKEN`, and `/health` answers `"auth":"bearer"`.
+
+It may hold one token or a comma-separated list, so several clients can
+each hold a different one; spaces after commas are ignored:
 
 ```sh
 export CODING_ENDPOINT_TOKEN="client-a-token, client-b-token"
+coding/endpoint/run-httpd.sh
 ```
+
+A request is accepted if its token matches any entry. Generate one with
+`openssl rand -hex 32`, then give each client its own:
+
+- OpenCode: the provider's `settings.apiKey`.
+- Codex: the provider's `experimental_bearer_token`.
+- curl: `-H "Authorization: Bearer client-b-token"`.
+
+The list is read from the server process's environment, so restart the
+endpoint after changing it. Unset `CODING_ENDPOINT_TOKEN` only on a port
+that is already behind another guard: without it the port is open to every
+client.
 
 ## Benchmark
 
