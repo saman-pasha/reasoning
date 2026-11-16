@@ -70,7 +70,7 @@ Copy-Item -LiteralPath $ProfileSource -Destination $ProfilePath
 
 $lines = @()
 if (Test-Path -LiteralPath $ConfigPath) {
-    $lines = Get-Content -Encoding UTF8 -LiteralPath $ConfigPath
+    $lines = @(Get-Content -Encoding UTF8 -LiteralPath $ConfigPath)
 }
 $out = New-Object System.Collections.Generic.List[string]
 $skip = $false

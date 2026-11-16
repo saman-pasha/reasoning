@@ -1,106 +1,108 @@
-# Install the reasoning backend in a client
+# Configure a reasoning client
 
-These scripts configure **OpenCode** or **Codex** to use a running
-reasoning endpoint. They merge the provider into the client's config,
-copy Codex's model catalog and profile, back up what they replace, and
-check the backend's `/health`.
+These six scripts change **only the backend URL and token** of an
+existing reasoning provider in OpenCode or Codex. They start no backend,
+copy no model catalog or profile, and do not change the default model or
+provider.
 
 | client | Ubuntu | macOS | Windows |
 |---|---|---|---|
-| OpenCode | `opencode-ubuntu.sh` | `opencode-macos.sh` | `opencode-windows.ps1` |
-| Codex | `codex-ubuntu.sh` | `codex-macos.sh` | `codex-windows.ps1` |
+| OpenCode | `opencode-config-ubuntu.sh` | `opencode-config-macos.sh` | `opencode-config-windows.ps1` |
+| Codex | `codex-config-ubuntu.sh` | `codex-config-macos.sh` | `codex-config-windows.ps1` |
 
-The backend itself is not started by these scripts. Run it first:
+## Before running
 
-```sh
-coding/endpoint/run-httpd.sh
-```
+The full installer must already have added the provider entry:
 
-or use an already deployed endpoint.
+- OpenCode: `providers.reasoning` in
+  `~/.config/opencode/opencode.json` (or `OPENCODE_CONFIG`).
+- Codex: `[model_providers.reasoning]` in
+  `~/.codex/config.toml` (or `CODEX_HOME`).
 
-## Before installing
+If it is missing, run the full installer first; the full install section
+is in `coding/README.md`. The config scripts exit with a message rather
+than writing a half provider.
 
-- The client must be installed:
-  - OpenCode: an `opencode` command on `PATH`.
-  - Codex: Codex 0.163 or later; `codex` on `PATH`. Codex uses the
-    Responses API, which the endpoint serves at `/v1/responses`.
-- Ubuntu and macOS need `python3`; the scripts use it to merge JSON and
-  TOML safely.
-- The scripts expect the repository layout: `coding/install/` beside
-  `coding/endpoint/config/`.
+Ubuntu and macOS need `python3`. The scripts use it to update JSON and
+TOML without disturbing the rest of the file.
 
-## Run the installer
+## Run
 
-### Ubuntu or macOS
-
-OpenCode:
+Interactively, the script asks for the URL and then the token. The URL
+prompt shows the current URL as its default; pressing Enter keeps it. The
+token prompt is hidden; pressing Enter keeps the existing token.
 
 ```sh
-REASONING_BASE_URL=http://127.0.0.1:8787/v1 \
-CODING_ENDPOINT_TOKEN='your-token' \
-    coding/install/opencode-ubuntu.sh      # or opencode-macos.sh
+coding/install/opencode-config-macos.sh
+coding/install/codex-config-macos.sh
 ```
 
-Codex:
+Set the values to skip the prompts:
 
 ```sh
 REASONING_BASE_URL=http://127.0.0.1:8787/v1 \
 CODING_ENDPOINT_TOKEN='your-token' \
-    coding/install/codex-ubuntu.sh         # or codex-macos.sh
+    coding/install/opencode-config-ubuntu.sh
 ```
 
-### Windows
+`CODING_ENDPOINT_BASE_URL` is accepted as a fallback for the URL.
 
-Run PowerShell, set the same two variables, and run the script:
+Windows (PowerShell):
+
+```powershell
+powershell -ExecutionPolicy Bypass -File coding\install\opencode-config-windows.ps1
+powershell -ExecutionPolicy Bypass -File coding\install\codex-config-windows.ps1
+```
+
+or set the variables first to skip the prompts:
 
 ```powershell
 $env:REASONING_BASE_URL = "http://127.0.0.1:8787/v1"
 $env:CODING_ENDPOINT_TOKEN = "your-token"
-
-powershell -ExecutionPolicy Bypass -File coding\install\opencode-windows.ps1
-powershell -ExecutionPolicy Bypass -File coding\install\codex-windows.ps1
+powershell -ExecutionPolicy Bypass -File coding\install\codex-config-windows.ps1
 ```
 
-`-ExecutionPolicy Bypass` is needed on a default Windows installation
-that blocks local `.ps1` files.
+## What is changed
 
-## Set the backend URL
+OpenCode:
 
-The default is:
+- `providers.reasoning.settings.baseURL`
+- `providers.reasoning.settings.apiKey` when a token is entered
+
+Codex:
+
+- `[model_providers.reasoning]`'s `base_url`
+- `experimental_bearer_token` when a token is entered
+
+Everything else stays as it was: other providers, models, variants,
+top-level defaults, profiles and comments. The old file is backed up
+beside itself:
+
+```text
+config.toml.bak.20261116120000
+```
+
+The scripts do not set reasoning as the default. OpenCode still uses its
+chosen default model; Codex still uses its existing `model` and
+`model_provider`. Select reasoning explicitly with:
+
+```sh
+opencode -m reasoning/c-r0
+codex -p reasoning
+```
+
+## URL
+
+The default prompt value is the URL already in the config, or
+`http://127.0.0.1:8787/v1` when there is none. Include the `/v1` part:
 
 ```text
 http://127.0.0.1:8787/v1
 ```
 
-Set `REASONING_BASE_URL` before the install (or `CODING_ENDPOINT_BASE_URL`
-as a fallback) to use another endpoint. Include the `/v1` part:
+## Token
 
-```sh
-REASONING_BASE_URL=https://example.test/reasoning/v1 \
-    coding/install/codex-macos.sh
-```
-
-The health check removes the trailing `/v1` and asks for
-`.../health`; the model list is `.../v1/models`.
-
-## Set the bearer token
-
-Set `CODING_ENDPOINT_TOKEN` during installation. If it is unset and the
-installer is interactive, it asks for the token; the input is hidden.
-
-If no token is entered:
-
-- **OpenCode** keeps an existing `settings.apiKey`, or writes
-  `{env:CODING_ENDPOINT_TOKEN}`. Export the variable before running
-  OpenCode:
-  ```sh
-  export CODING_ENDPOINT_TOKEN='your-token'
-  ```
-- **Codex** keeps an existing `experimental_bearer_token`; if there is
-  none, the line is omitted. Rerun the installer with the token if the
-  endpoint requires one.
-
-Generate a token with either form:
+Generate one with either form:
 
 ```sh
 openssl rand -hex 32
@@ -108,106 +110,34 @@ openssl rand -base64 24 | tr '+/' '-_' | tr -d '=\n'
 ```
 
 No further encoding is needed. A token must contain no whitespace and no
-comma; commas separate several tokens in the endpoint's
+comma; commas separate multiple tokens in the endpoint's
 `CODING_ENDPOINT_TOKEN`.
 
-## Where the settings go
+A blank token prompt keeps the token already in the client config. If
+there is no existing token and none is entered, the token field is left
+unchanged (OpenCode may still hold `{env:CODING_ENDPOINT_TOKEN}`; export
+that variable before starting the client).
 
-OpenCode (the first existing path is used, unless `OPENCODE_CONFIG`
-names another file):
+## After changing
 
-- `~/.config/opencode/opencode.json` (Ubuntu/macOS)
-- `%USERPROFILE%\.config\opencode\opencode.json` (Windows)
-- `%APPDATA%\opencode\opencode.json` (Windows, when that file exists)
-
-The script replaces only `providers.reasoning`; other providers stay.
-The provider is written at `settings.baseURL` and `settings.apiKey`.
-It does not change OpenCode's default model; choose
-`reasoning/c-r0` (or another name) when you want it.
-
-Codex (or `CODEX_HOME` when set):
-
-- `~/.codex/config.toml`
-- `~/.codex/model-catalog.json`
-- `~/.codex/reasoning.config.toml`
-
-The script sets only `model_catalog_json` in `config.toml`:
-
-```toml
-model_catalog_json = "/home/you/.codex/model-catalog.json"
-```
-
-and replaces the `[model_providers.reasoning]` table:
-
-```toml
-[model_providers.reasoning]
-name = "Reasoning Coding Art"
-base_url = "http://127.0.0.1:8787/v1"
-experimental_bearer_token = "your-token"
-```
-
-Other tables, providers and top-level defaults are kept. **The installer
-does not make reasoning the default.** Plain `codex` keeps its existing
-`model` and `model_provider`. To use the reasoning provider, select the
-profile:
-
-```sh
-codex -p reasoning
-```
-
-That profile, copied to `reasoning.config.toml`, carries the model and
-context settings:
-
-```toml
-model = "cocolog"
-model_provider = "reasoning"
-model_reasoning_effort = "none"
-model_context_window = 1000000
-model_auto_compact_token_limit = 900000
-```
-
-The model catalog is what makes the twelve names (`c`, `c-r0`,
-`cocolog-r2`, `python-r8`, …) appear in Codex's `/model` picker. Selecting
-one without the profile still uses your default provider, so use
-`codex -p reasoning` (or set `model_provider = "reasoning"` yourself if
-you want it as the default).
-
-Every replaced file is backed up beside itself with a timestamp:
-
-```text
-config.toml.bak.20261116120000
-```
-
-## After installation
-
-To change the URL or token later, either rerun the installer with new
-environment values, or edit the client config:
-
-- OpenCode: `providers.reasoning.settings.baseURL` and
-  `providers.reasoning.settings.apiKey`.
-- Codex: `[model_providers.reasoning]`'s `base_url` and
-  `experimental_bearer_token`. The installer never changes your default
-  model or provider; to make reasoning the default, add `model` and
-  `model_provider` to the top level of `config.toml` yourself.
-
-After editing Codex, restart its daemon so the new provider is used:
+Restart an open OpenCode or Codex TUI. After changing Codex, also restart
+its daemon:
 
 ```sh
 codex app-server daemon restart
 ```
 
-Restart an open OpenCode or Codex TUI as well.
-
-## Check
+Check the endpoint directly:
 
 ```sh
 curl -s http://127.0.0.1:8787/health
 curl -s -H "Authorization: Bearer $CODING_ENDPOINT_TOKEN" \
      http://127.0.0.1:8787/v1/models
+```
 
+and the client:
+
+```sh
 opencode -m reasoning/c-r0 "Reply with OK."
 codex -p reasoning -m c-r0 "Reply with OK."
 ```
-
-If `/model` shows only the built-in models, the catalog path is wrong,
-the catalog JSON is invalid, or Codex's daemon was not restarted.

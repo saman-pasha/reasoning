@@ -442,10 +442,10 @@ OpenAI-shaped list OpenCode and Codex read.
 
 ### Install scripts
 
-`coding/install/` has one script per client and platform, each with its
-own README. They merge the provider into the client's config, copy the
-Codex catalog and profile, back up what they replace, and check the
-backend's `/health`:
+`coding/install/` has one script per client and platform. The full
+installers merge the provider into the client's config, copy the Codex
+catalog and profile, back up what they replace, and check the backend's
+`/health`:
 
 ```text
 opencode-ubuntu.sh   opencode-macos.sh   opencode-windows.ps1
@@ -464,8 +464,10 @@ CODING_ENDPOINT_TOKEN=... coding/install/opencode-macos.sh
 The Windows files are PowerShell scripts; run them with
 `powershell -ExecutionPolicy Bypass -File ...`. The Codex installer adds
 the provider and catalog but does not change your default model or
-provider; select it with `codex -p reasoning`. See
-`coding/install/README.md` for the paths, backups and post-install edits.
+provider; select it with `codex -p reasoning`. The `*-config-*` scripts
+only ask for the URL and token and update an existing provider; they copy
+no catalog or profile and start no backend. Those config-only scripts are
+described in `coding/install/README.md`.
 
 ### OpenAI or Anthropic backend
 

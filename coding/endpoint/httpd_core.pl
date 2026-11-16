@@ -1347,8 +1347,8 @@ ep_text_dangles(Text) :-
     atom_codes(Lower, Codes),
     ep_last_sentence_codes(Codes, LastCodes),
     atom_codes(Last, LastCodes),
-    (   ep_dangle_subject_phrase(Last, Before)
-    ->  ep_sentence_start(Last, Before)
+    (   ep_dangle_subject_phrase(Last, _Before)
+    ->  true
     ;   ep_sentence_gerund(Last, After),
         ep_no_finite_verb(After)
     ).
@@ -1461,20 +1461,62 @@ ep_dangle_subject_phrase(Text, Before) :-
     ep_dangle_subject(Subject, Kind),
     atomic_list_concat([Subject, ' '], Prefix),
     sub_atom(Text, Before, Length, _, Prefix),
+    ep_sentence_start(Text, Before),
     End is Before + Length,
     sub_atom(Text, End, _, 0, Rest),
     ep_dangle_action(Kind, Rest).
 
 ep_dangle_action(gerund, Rest) :-
-    ep_first_word(Rest, Word, _),
-    ep_ing_word(Word).
+    ep_first_word(Rest, Word, Rest1),
+    (   ep_bare_leading_adverb(Word)
+    ->  ep_first_word(Rest1, Word1, _),
+        ep_ing_word(Word1)
+    ;   ep_ing_word(Word)
+    ).
 ep_dangle_action(bare, Rest) :-
-    ep_first_word(Rest, Word, _),
-    ep_dangle_bare(Word).
+    ep_bare_action(Rest).
+
+%% After "I'll", "Let me", "I need to", any word but a closing one is an
+%% action: revert, rewrite, tweak, sanity-check, ... The stop list keeps
+%% offers and explanations from being read as work. An adverb before the
+%% verb is stepped over: "I'll just explain" is still an explanation.
+ep_bare_action(Rest) :-
+    ep_first_word(Rest, Word, Rest1),
+    (   ep_bare_leading_adverb(Word)
+    ->  ep_bare_action(Rest1)
+    ;   ep_action_word(Word)
+    ).
+
+ep_bare_leading_adverb(just).
+ep_bare_leading_adverb(now).
+ep_bare_leading_adverb(next).
+ep_bare_leading_adverb(then).
+ep_bare_leading_adverb(first).
+ep_bare_leading_adverb(also).
+ep_bare_leading_adverb(simply).
+ep_bare_leading_adverb(only).
+ep_bare_leading_adverb(quickly).
+ep_bare_leading_adverb(briefly).
+ep_bare_leading_adverb(immediately).
+ep_bare_leading_adverb(still).
+
+ep_action_word(Word) :-
+    \+ ep_nonaction_word(Word).
 
 ep_sentence_gerund(Text, After) :-
-    ep_first_word(Text, Word, After),
-    ep_ing_word(Word).
+    ep_first_word(Text, Word, Rest),
+    (   ep_leading_adverb(Word)
+    ->  ep_first_word(Rest, Word1, After),
+        ep_ing_word(Word1)
+    ;   ep_ing_word(Word),
+        After = Rest
+    ).
+
+ep_leading_adverb(now).
+ep_leading_adverb(next).
+ep_leading_adverb(then).
+ep_leading_adverb(currently).
+ep_leading_adverb(still).
 
 %% The first word, skipping leading spaces and marks (**Comparing**).
 ep_first_word(Text, Word, After) :-
@@ -1526,6 +1568,34 @@ ep_ing_stop(ring).
 ep_ing_stop(wing).
 ep_ing_stop(morning).
 ep_ing_stop(evening).
+ep_ing_stop(explaining).
+ep_ing_stop(summarizing).
+ep_ing_stop(summarising).
+ep_ing_stop(noting).
+ep_ing_stop(mentioning).
+ep_ing_stop(clarifying).
+ep_ing_stop(leaving).
+ep_ing_stop(finishing).
+ep_ing_stop(stopping).
+ep_ing_stop(waiting).
+ep_ing_stop(concluding).
+ep_ing_stop(closing).
+ep_ing_stop(wrapping).
+ep_ing_stop(saying).
+ep_ing_stop(telling).
+ep_ing_stop(answering).
+ep_ing_stop(describing).
+ep_ing_stop(offering).
+ep_ing_stop(suggesting).
+ep_ing_stop(recommending).
+ep_ing_stop(confirming).
+ep_ing_stop(highlighting).
+ep_ing_stop(emphasizing).
+ep_ing_stop(emphasising).
+ep_ing_stop(outlining).
+ep_ing_stop(recapping).
+ep_ing_stop(restating).
+ep_ing_stop(being).
 
 ep_no_finite_verb(After) :-
     ep_flat_punct(After, Flat),
@@ -1613,6 +1683,9 @@ ep_dangle_subject('i am now', gerund).
 ep_dangle_subject('i\'m going to', bare).
 ep_dangle_subject('i’m going to', bare).
 ep_dangle_subject('i am going to', bare).
+ep_dangle_subject('i\'m about to', bare).
+ep_dangle_subject('i’m about to', bare).
+ep_dangle_subject('i am about to', bare).
 ep_dangle_subject('i need to', bare).
 ep_dangle_subject('now i need to', bare).
 ep_dangle_subject('next i need to', bare).
@@ -1631,6 +1704,10 @@ ep_dangle_subject('now i\'ll', bare).
 ep_dangle_subject('now i’ll', bare).
 ep_dangle_subject('now i will', bare).
 ep_dangle_subject('now let me', bare).
+ep_dangle_subject('now, i\'ll', bare).
+ep_dangle_subject('now, i’ll', bare).
+ep_dangle_subject('now, i will', bare).
+ep_dangle_subject('now, let me', bare).
 ep_dangle_subject('next i\'ll', bare).
 ep_dangle_subject('next i’ll', bare).
 ep_dangle_subject('next i will', bare).
@@ -1643,52 +1720,47 @@ ep_dangle_subject('then i\'ll', bare).
 ep_dangle_subject('then i’ll', bare).
 ep_dangle_subject('then i will', bare).
 ep_dangle_subject('then let me', bare).
+ep_dangle_subject('then, i\'ll', bare).
+ep_dangle_subject('then, i’ll', bare).
+ep_dangle_subject('then, i will', bare).
+ep_dangle_subject('then, let me', bare).
+ep_dangle_subject('after that, i\'ll', bare).
+ep_dangle_subject('after that, i’ll', bare).
+ep_dangle_subject('after that, i will', bare).
+ep_dangle_subject('after that, let me', bare).
 ep_dangle_subject('let me', bare).
 
-ep_dangle_bare(run).
-ep_dangle_bare(check).
-ep_dangle_bare(commit).
-ep_dangle_bare(push).
-ep_dangle_bare(test).
-ep_dangle_bare(build).
-ep_dangle_bare(compile).
-ep_dangle_bare(apply).
-ep_dangle_bare(update).
-ep_dangle_bare(fix).
-ep_dangle_bare(investigate).
-ep_dangle_bare(trace).
-ep_dangle_bare(narrow).
-ep_dangle_bare(verify).
-ep_dangle_bare(validate).
-ep_dangle_bare(rerun).
-ep_dangle_bare('re-run').
-ep_dangle_bare(continue).
-ep_dangle_bare(proceed).
-ep_dangle_bare(try).
-ep_dangle_bare(read).
-ep_dangle_bare(write).
-ep_dangle_bare(search).
-ep_dangle_bare(create).
-ep_dangle_bare(add).
-ep_dangle_bare(remove).
-ep_dangle_bare(execute).
-ep_dangle_bare(start).
-ep_dangle_bare(compare).
-ep_dangle_bare(analyze).
-ep_dangle_bare(examine).
-ep_dangle_bare(inspect).
-ep_dangle_bare(debug).
-ep_dangle_bare(patch).
-ep_dangle_bare(merge).
-ep_dangle_bare(recompile).
-ep_dangle_bare(retest).
-ep_dangle_bare(recheck).
-ep_dangle_bare(rebuild).
-ep_dangle_bare(diff).
-ep_dangle_bare(grep).
-ep_dangle_bare(look).
-ep_dangle_bare(study).
-ep_dangle_bare(work).
+ep_nonaction_word(know).
+ep_nonaction_word(explain).
+ep_nonaction_word(summarize).
+ep_nonaction_word(summarise).
+ep_nonaction_word(note).
+ep_nonaction_word(mention).
+ep_nonaction_word(clarify).
+ep_nonaction_word(say).
+ep_nonaction_word(tell).
+ep_nonaction_word(answer).
+ep_nonaction_word(describe).
+ep_nonaction_word(leave).
+ep_nonaction_word(finish).
+ep_nonaction_word(stop).
+ep_nonaction_word(wait).
+ep_nonaction_word(conclude).
+ep_nonaction_word(close).
+ep_nonaction_word(wrap).
+ep_nonaction_word(restate).
+ep_nonaction_word(recap).
+ep_nonaction_word(highlight).
+ep_nonaction_word(emphasize).
+ep_nonaction_word(emphasise).
+ep_nonaction_word(outline).
+ep_nonaction_word(offer).
+ep_nonaction_word(suggest).
+ep_nonaction_word(recommend).
+ep_nonaction_word(assure).
+ep_nonaction_word(confirm).
+ep_nonaction_word(end).
+ep_nonaction_word(be).
 
 ep_usage_add(usage(P1, C1, R1, T1, H1), usage(P2, C2, R2, T2, H2),
              usage(P, C, R, T, H)) :-
