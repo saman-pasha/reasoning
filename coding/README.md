@@ -389,17 +389,56 @@ FILE`. See `coding/cocolog/README.md` for the flags, the API and the checks,
 and `coding/cocolog/bench/` for the eight-task benchmark suite and its
 `no_skill` control.
 
-## OpenCode endpoint
+## Reasoning backend (OpenCode and Codex)
 
-`coding/endpoint/` exposes `c` and `cocolog` as models OpenCode can select.
-It is an OpenAI-compatible endpoint written in cocolog with
-`library(httpd)`: it appends the language's guide to the system prompt,
-keeps OpenCode's conversation and tools, asks the backend for one whole
-reply, and synthesises the SSE response OpenCode expects. The C model gets
-`coding/endpoint/prompts/c.md`; the cocolog model gets cocolog's own
-`SKILL.md` plus a short addendum, and `cocolog` also gets the repository's
-reasoning pre-pass. `coding/endpoint/README.md` has the start command, the
-OpenCode config and the backend variables.
+`coding/endpoint/` is the reasoning backend both OpenCode and Codex talk
+to. It is written in cocolog with `library(httpd)`: it appends the
+language's guide to the system prompt, keeps the client's conversation and
+tools, asks the backend for one whole reply, and synthesises the SSE
+response the client expects. It serves `/v1/chat/completions` and
+`/v1/models` (OpenCode) and `/v1/responses` (Codex), plus `/health`.
+
+Twelve model names are exposed, three languages with four suite sizes:
+
+| model | guide | checks |
+|---|---|---|
+| `c`, `c-r0`, `c-r2`, `c-r8` | `coding/endpoint/prompts/c.md`, C with clang, C99–C23 | default two, none, two, eight |
+| `cocolog`, `cocolog-r0`, `cocolog-r2`, `cocolog-r8` | cocolog's `SKILL.md` plus the cocolog addendum | default two, none, two, eight |
+| `python`, `python-r0`, `python-r2`, `python-r8` | `coding/endpoint/prompts/python.md`, Python 3 | default two, none, two, eight |
+
+The `-rN` suffix selects the deterministic reasoning pre-pass; the client's
+effort setting selects the backend's own effort. A request header
+`x-coding-reasoning` overrides the suffix for one call. Every model
+advertises a 1,000,000-token context and a 32,768-token output limit.
+`coding/endpoint/README.md` is the full reference for the routes, the
+pre-pass and the configuration files.
+
+### Run it
+
+From this repository's root:
+
+```sh
+export CODING_ENDPOINT_KEY_ENV=...          # the backend key itself
+export CODING_ENDPOINT_TOKEN=...            # optional bearer guard
+coding/endpoint/run-httpd.sh
+```
+
+`run-httpd.sh` sets `COCOLOG_LIBRARY` and starts `httpd.pl`; it listens on
+`8787` unless `CODING_ENDPOINT_PORT` says otherwise. With no
+`CODING_ENDPOINT_API` the backend is DeepSeek's OpenAI-compatible
+chat-completions endpoint with `deepseek-chat`; the Anthropic Messages
+wire and both URLs are set below. Restart after changing any environment
+variable. A startup line names the port and the backend; with no token the
+server warns that the port is open.
+
+```sh
+curl -s http://127.0.0.1:8787/health
+curl -s -H "Authorization: Bearer $CODING_ENDPOINT_TOKEN" \
+     http://127.0.0.1:8787/v1/models
+```
+
+`/health` names the backend and the twelve models; `/v1/models` is the
+OpenAI-shaped list OpenCode and Codex read.
 
 ### OpenAI or Anthropic backend
 
@@ -485,6 +524,100 @@ unset by the endpoint's readers.
 | `CODING_ENDPOINT_CONTEXT` | `1000000` | advertised context |
 | `CODING_ENDPOINT_TIMEOUT` | `600` seconds | the backend call's timeout |
 | `CODING_ENDPOINT_HOST` | — | unused; `library(tcp)` binds every interface |
+
+### Connect OpenCode
+
+```sh
+mkdir -p ~/.config/opencode
+cp coding/endpoint/config/opencode.json ~/.config/opencode/opencode.json
+```
+
+That file declares the provider **Reasoning Coding Art** with all twelve
+models and their eight effort variants. Its `settings.apiKey` is
+`{env:CODING_ENDPOINT_TOKEN}` in the repository copy; an installed copy
+may carry the token literally, and it must match the running endpoint's
+token (or be one entry of its list). Merge the provider into an existing
+config rather than replacing it.
+
+```sh
+opencode -m reasoning/c
+opencode -m reasoning/cocolog-r8
+opencode run --standalone --auto -m reasoning/c \
+    "Write hello.c, compile it with clang, and run it."
+```
+
+`--auto` auto-approves OpenCode's shell and edit permissions. In the TUI,
+`/model` (or the model picker) selects the model and `ctrl+t` cycles its
+effort variants.
+
+### Connect Codex
+
+```sh
+cp coding/endpoint/config/codex-model-catalog.json \
+   ~/.codex/model-catalog.json
+cp coding/endpoint/config/codex-reasoning.config.toml \
+   ~/.codex/reasoning.config.toml
+```
+
+The catalog is what lists the twelve models in Codex's `/model` picker.
+In `~/.codex/config.toml`, before any table, set the top-level defaults
+and add the provider (the file `config/codex.toml` has the same text):
+
+```toml
+model = "cocolog"
+model_provider = "reasoning"
+model_context_window = 1000000
+model_auto_compact_token_limit = 900000
+model_catalog_json = "~/.codex/model-catalog.json"
+
+[model_providers.reasoning]
+name = "Reasoning Coding Art"
+base_url = "http://127.0.0.1:8787/v1"
+experimental_bearer_token = "TOKEN"
+```
+
+`TOKEN` must match the endpoint's bearer token. With the top-level keys
+plain `codex` uses the reasoning provider; `codex -p reasoning` layers the
+profile as well, and either accepts another model:
+
+```sh
+codex -p reasoning
+codex -p reasoning -m c-r8
+codex -p reasoning -c model_reasoning_effort=high
+```
+
+Codex speaks the Responses API, which the endpoint serves; there is no
+`wire_api` setting and no chat-completions mode. After changing the
+config or the catalog, restart Codex's daemon so `/model` reloads it:
+
+```sh
+codex app-server daemon restart
+```
+
+### Check it
+
+`coding/endpoint/test.pl` runs the local checks with no model and no
+socket:
+
+```sh
+COCOLOG_LIBRARY="$PWD/..:$PWD/../cocolog/library" \
+    ../cocolog/cocolog -s coding/endpoint/test.pl
+```
+
+A live completion, and a Codex turn through the same endpoint:
+
+```sh
+curl -s http://127.0.0.1:8787/v1/chat/completions \
+    -H "Authorization: Bearer $CODING_ENDPOINT_TOKEN" \
+    -H 'Content-Type: application/json' \
+    -d '{"model":"c-r0","messages":[{"role":"user","content":"Reply with OK."}],"stream":false}'
+
+codex exec --skip-git-repo-check -m c-r0 "Reply with OK."
+```
+
+Set `CODING_ENDPOINT_TRACE=/path/to/trace.jsonl` to record one JSON line
+per model call (session, model, effort, messages, tools, usage and
+seconds); `tail -f` it while a client runs.
 
 ## Benchmark
 
