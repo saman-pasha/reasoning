@@ -401,6 +401,38 @@ reply, and synthesises the SSE response OpenCode expects. The C model gets
 reasoning pre-pass. `coding/endpoint/README.md` has the start command, the
 OpenCode config and the backend variables.
 
+### OpenAI or Anthropic backend
+
+The endpoint talks to one backend at a time. Set `CODING_ENDPOINT_API`,
+the endpoint URL, the key and the model, then restart it:
+
+```sh
+# OpenAI-compatible
+export CODING_ENDPOINT_API=openai
+export CODING_ENDPOINT_BACKEND=https://api.openai.com/v1/chat/completions
+export CODING_ENDPOINT_KEY_ENV="$OPENAI_API_KEY"
+export CODING_ENDPOINT_MODEL=gpt-5.1-codex
+
+# Anthropic-compatible (api.anthropic.com or a gateway such as
+# https://api.deepseek.com/anthropic/v1/messages)
+export CODING_ENDPOINT_API=anthropic
+export CODING_ENDPOINT_BACKEND=https://api.anthropic.com/v1/messages
+export CODING_ENDPOINT_KEY_ENV="$ANTHROPIC_API_KEY"
+export CODING_ENDPOINT_MODEL=claude-sonnet-4-5
+
+coding/endpoint/run-httpd.sh
+```
+
+`CODING_ENDPOINT_KEY_ENV` holds the key itself, not the name of another
+variable. `CODING_ENDPOINT_BACKEND` is the complete endpoint
+(`/chat/completions` or `/messages`), not a base URL.
+`CODING_ENDPOINT_C_MODEL`, `CODING_ENDPOINT_COCOLOG_MODEL` and
+`CODING_ENDPOINT_PYTHON_MODEL` override the model per language; otherwise
+all three use `CODING_ENDPOINT_MODEL`. Anthropic mode translates the
+system prompt, `tool_use`/`tool_result` blocks and usage both ways;
+`reasoning_effort` is not sent because the Messages API has no such field,
+and the suite still follows the model suffix (`-r0`, `-r2`, `-r8`).
+
 ## Benchmark
 
 `coding/bench/` measures DeepSeek's high reasoning against six
