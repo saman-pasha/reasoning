@@ -1,0 +1,148 @@
+# coding/bench/v2
+
+The second coding benchmark. It is separate from the legacy
+`coding/bench/bench.pl`, `paired.pl` and `tool.pl`; those keep their
+behaviour. v2 answers a narrower set of questions with one verifier,
+repeated trials and held-out cases.
+
+Phase 1 is implemented here, and no paid v2 run has been made yet:
+
+- C only, three legacy tasks: `lcs`, `stable_sort`, `mvccs_acid`.
+- Two modes: `plain` and `derive`.
+- Exact output policy for every task.
+- Repair cases a failing attempt may be told about, and held-out cases
+  that are never put in a prompt or a diagnostic.
+- A JSONL row for every task, mode and trial, and a per-task summary.
+
+`extract`, `contract`, `full`, the other languages, the declarative
+experiment and the bootstrap statistics are not implemented yet.
+
+## The cases
+
+`schema.pl` takes each task's legacy cases and splits them. The split is
+declared by one-based indices:
+
+| task | repair / held-out | why these |
+|---|---|---|
+| `lcs` | 4 / 2 | the greedy killer (`aggtab/gxtxayb`) and the empty second line |
+| `stable_sort` | 5 / 2 | the two tie-heavy orders |
+| `mvccs_acid` | 8 / 2 | last committer wins, and the error commands |
+
+The prompt contains no case. When an attempt fails a repair case, the
+repair prompt gets the verifier's diagnostic for that case. The held-out
+cases are run once, after every repair case passes; a held-out failure is
+a final failure and its case is never named to the model.
+
+The legacy `stable_sort` case 1 says `5` and gives four records. A program
+that follows the requirement and reads five lines reads a line that is not
+there. v2 corrects the count to `4` in its own copy and leaves
+`coding/bench/tasks.pl` untouched, so the legacy run stays reproducible.
+The test pins both texts.
+
+## Output policies
+
+- `exact` -- byte for byte, except that one final newline is optional.
+- `edge_trim` -- the legacy per-line trim and dropped empty lines.
+- `token_normalized` -- runs of whitespace are one space.
+
+Every current task uses `exact`, so a leading space is a failure. The
+legacy `bench_norm/2` is not used. `stdout` and `stderr` are captured
+separately: a nonempty `stderr` is a failure even when `stdout` is right,
+so a sanitizer report cannot pass as an answer.
+
+## Commands
+
+Run from the repository root, with the cocolog checkout beside it:
+
+```sh
+COCOLOG_LIBRARY="$PWD/..:$PWD/../cocolog/library" \
+    ../cocolog/cocolog -s coding/bench/v2/run.pl -- --plan
+```
+
+`--plan` prints the selected tasks, repair/held-out counts, policy and
+budget, and makes no model call. It is the default.
+
+A paid run needs the provider key and `--run`:
+
+```sh
+export CODING_ENDPOINT_KEY_ENV=...       # never a file in this repository
+COCOLOG_LIBRARY="$PWD/..:$PWD/../cocolog/library" \
+    ../cocolog/cocolog -s coding/bench/v2/run.pl -- \
+    --run --tasks lcs --modes plain --trials 1 --out /tmp/v2-pilot.jsonl
+```
+
+Options:
+
+```text
+--tasks A,B     tasks (default: every v2 task)
+--modes A,B     plain, derive (default: config.pl's list)
+--trials N      trials per task and mode (default: 3)
+--seed N        order seed (default: config.pl's)
+--out FILE      JSONL output (default: results/<run id>.jsonl)
+```
+
+`./run.sh` is the same command with `COCOLOG_LIBRARY` set from the
+repository's parent.
+
+## What a row records
+
+The first line is a header with the run id, git commit, model, provider,
+tasks, modes, trials and seed. Each later line is one cell:
+
+```text
+task, language, mode, trial, order_position, seed
+pass_at_1, final_pass, outcome, attempts
+repair, heldout, max_calls
+usage {prompt, completion, total, reasoning, cache_hit}
+seconds
+```
+
+`outcome` is one of `pass`, `fail_compile`, `fail_repair`,
+`fail_heldout`, `fail_generator`, `fail_verifier`.
+
+`pass@1` means the first attempt passed both case sets. `final_pass`
+means any allowed attempt did. The summary prints per task and mode:
+trials, pass@1, final pass, mean attempts, tokens and seconds.
+
+Rows are appended as cells finish, so an interrupted run keeps every
+completed cell.
+
+## Tests
+
+No model and no network:
+
+```sh
+COCOLOG_LIBRARY="$PWD/..:$PWD/../cocolog/library" \
+    ../cocolog/cocolog -s coding/bench/v2/test.pl
+```
+
+The test checks the schema and split, the three output policies, the
+verifier on a correct LCS, a repair-case failure, a held-out-only failure
+and a compile failure, the attempt loop through a fixture seam, and one
+complete JSONL run with no provider.
+
+## Budget
+
+`config.pl` holds the provider, model, temperature, three-trial pilot and
+the seed. Per task, `schema.pl` allows three child calls and a case
+timeout. The default pilot is 3 tasks x 2 modes x 3 trials = 18 cells, at
+most 54 child calls. The pilot is the budget gate: do not start a larger
+run until its per-task variance and token cost are known and the spend is
+approved.
+
+The legacy benchmark is not edited to make v2 pass. A disagreement
+between v2 and a legacy result is recorded before changing either.
+
+## Files
+
+```text
+config.pl    provider, model, temperature, trials, seed, results dir
+schema.pl    task declaration, case split, output policy, budget
+verify.pl    sanitized compile, repair and held-out runs, output policy
+runner.pl    attempts, repair diagnostics, seeded order, JSONL, summary
+gen.pl       one child generator call
+run.pl       the runner's main/0
+test.pl      no-model checks
+run.sh       the shell entry point
+results/     run output; the directory is kept, its files are not
+```

@@ -1,5 +1,9 @@
 # coding/bench
 
+This file describes the legacy suite. The repeated-trial suite with one
+verifier, exact output policies and held-out cases is in `v2/` (see
+`v2/README.md`); the legacy files stay runnable and unchanged.
+
 A DeepSeek code-generation benchmark: paying for the model's reasoning up
 front, a deterministic verification loop, a loop whose prompt carries
 obligations from a hand-written controlled-English contract, a loop whose

@@ -682,7 +682,14 @@ after one failed attempt, and obligations added only after two.
 the seven modes; `coding/bench/paired.sh` runs the paired comparison, where
 one first attempt branches into a plain repair and an obligation repair;
 `coding/bench/tool.sh` runs the shipped tool itself over the same tasks.
-See its README for the modes, the token columns and sample runs.
+The legacy README describes the modes, the token columns and sample runs.
+
+`coding/bench/v2/` is the repeated-trial suite: one verifier, exact output
+policies, repair cases a failing attempt may see and held-out cases it may
+not, seeded trial order and JSONL results. Its Phase 1 covers `lcs`,
+`stable_sort` and `mvccs_acid` with `plain` and `derive`; see
+`coding/bench/v2/README.md`. It makes no model call in `--plan` mode, and
+the pilot is not run without its spend approved.
 
 ## Shape of a generator
 
