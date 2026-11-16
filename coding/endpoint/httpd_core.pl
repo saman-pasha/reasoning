@@ -1345,39 +1345,49 @@ ep_text_dangles(Text) :-
     ep_straight_apostrophes(Text, Flat),
     downcase_atom(Flat, Lower),
     atom_codes(Lower, Codes),
-    ep_last_sentence_codes(Codes, LastCodes),
-    atom_codes(Last, LastCodes),
-    (   ep_dangle_subject_phrase(Last, _Before)
+    ep_last_sentence_codes(Codes, SentenceCodes),
+    ep_last_clause_codes(Codes, ClauseCodes),
+    atom_codes(LastSentence, SentenceCodes),
+    atom_codes(LastClause, ClauseCodes),
+    (   ep_dangle_subject_phrase(LastSentence, _Before)
     ->  true
-    ;   ep_sentence_gerund(Last, After),
+    ;   ep_sentence_gerund(LastClause, After),
         ep_no_finite_verb(After)
     ).
 
-%% The last sentence is the text after the last period, exclamation,
-%% question mark or newline that is followed by a space or the end.
-%% Trailing punctuation belongs to it. The reversed walk keeps the
-%% prefix before the first boundary it meets, which is already in the
-%% original order.
+%% A subject announcement is looked for in the last sentence, so "Let me
+%% simplify: drop ..." keeps its head across the colon. A gerund is looked
+%% for at the head of the last clause, so "The AST is right; comparing
+%% ..." is read from after the semicolon. Both stop at periods,
+%% exclamation marks, question marks and newlines; only a clause also
+%% stops at a semicolon or colon.
 ep_last_sentence_codes(Codes, Last) :-
     reverse(Codes, Back),
-    ep_after_last_break(Back, [], Last).
+    ep_after_last_break(Back, sentence, [], Last).
 
-ep_after_last_break([P|_], Acc, Acc) :-
+ep_last_clause_codes(Codes, Last) :-
+    reverse(Codes, Back),
+    ep_after_last_break(Back, clause, [], Last).
+
+ep_after_last_break([P|_], _, Acc, Acc) :-
     P =:= 10,
     !.
-ep_after_last_break([Space, P|_], Acc, Acc) :-
+ep_after_last_break([Space, P|_], Kind, Acc, Acc) :-
     ep_space(Space),
-    ep_sentence_term(P),
+    ep_break_term(Kind, P),
     !.
-ep_after_last_break([C|Rest], Acc, Out) :-
-    ep_after_last_break(Rest, [C|Acc], Out).
-ep_after_last_break([], Acc, Acc).
+ep_after_last_break([C|Rest], Kind, Acc, Out) :-
+    ep_after_last_break(Rest, Kind, [C|Acc], Out).
+ep_after_last_break([], _, Acc, Acc).
 
-ep_sentence_term(46).
-ep_sentence_term(33).
-ep_sentence_term(63).
-ep_sentence_term(59).
-ep_sentence_term(58).
+ep_break_term(sentence, 46).
+ep_break_term(sentence, 33).
+ep_break_term(sentence, 63).
+ep_break_term(clause, 46).
+ep_break_term(clause, 33).
+ep_break_term(clause, 63).
+ep_break_term(clause, 59).
+ep_break_term(clause, 58).
 
 ep_straight_apostrophes(Text, Flat) :-
     atom_codes('’', [Curly]),
