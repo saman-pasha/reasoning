@@ -69,7 +69,7 @@ ep_allowed_origins(Origins) :-
            Text),
     atom_string(Text, String),
     split_string(String, ",", " \t", Parts),
-    exclude(ep_nonempty_string, Parts, Kept),
+    include(ep_nonempty_string, Parts, Kept),
     maplist(atom_string, Origins, Kept).
 
 ep_nonempty_string(S) :- S \== ''.
@@ -895,18 +895,28 @@ ep_preflight(Request, reply(204, Headers, '')) :-
                   'Access-Control-Allow-Methods'-'GET, POST, OPTIONS'],
            Headers).
 
+%% A token list is comma-separated, so two clients can hold different
+%% tokens without either one learning the other's.
 ep_token_ok(Request) :-
     ep_token(Token),
     (   Token == ''
     ->  true
-    ;   http_header(Request, authorization, Header),
+    ;   ep_tokens(Token, Tokens),
+        Tokens \== [],
+        http_header(Request, authorization, Header),
         atom_string(Header, String),
         split_string(String, " ", "", [SchemeS, GivenS]),
         atom_string(Scheme, SchemeS),
         atom_string(Given, GivenS),
         downcase_atom(Scheme, bearer),
-        Given == Token
+        memberchk(Given, Tokens)
     ).
+
+ep_tokens(Text, Tokens) :-
+    atom_string(Text, String),
+    split_string(String, ",", " \t", Parts),
+    include(ep_nonempty_string, Parts, Kept),
+    maplist(atom_string, Tokens, Kept).
 
 ep_error_reply(Request, Status, Message, reply(Status, Headers, Codes)) :-
     ep_cors(Request, Cors),

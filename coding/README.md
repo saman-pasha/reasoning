@@ -433,6 +433,14 @@ system prompt, `tool_use`/`tool_result` blocks and usage both ways;
 `reasoning_effort` is not sent because the Messages API has no such field,
 and the suite still follows the model suffix (`-r0`, `-r2`, `-r8`).
 
+`CODING_ENDPOINT_TOKEN` is optional: unset or empty, the port has no bearer
+guard. Set it to one token, or to a comma-separated list so several clients
+can hold different tokens:
+
+```sh
+export CODING_ENDPOINT_TOKEN="client-a-token, client-b-token"
+```
+
 ## Benchmark
 
 `coding/bench/` measures DeepSeek's high reasoning against six

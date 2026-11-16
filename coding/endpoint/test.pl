@@ -15,6 +15,7 @@
               [ ep_models_reply/2,
                 ep_health_reply/2,
                 ep_token_ok/1,
+                ep_cors/2,
                 ep_add_guide/3,
                 ep_task_text/2,
                 ep_reasoning/8,
@@ -49,6 +50,7 @@ main :-
     test_models,
     test_health,
     test_token,
+    test_cors,
     test_body_json,
     test_guard,
     test_task_text,
@@ -107,10 +109,37 @@ test_token :-
     ( ep_token_ok(Bad) -> B = yes ; B = no ),
     check('the bearer token is accepted', G, yes),
     check('another token is refused', B, no),
+    setenv('CODING_ENDPOINT_TOKEN', 'test-token, second-token'),
+    Second = request(post, '/v1/chat/completions', [], http(1, 1),
+                     [authorization-'Bearer second-token'], []),
+    ( ep_token_ok(Second) -> S = yes ; S = no ),
+    ( ep_token_ok(Bad) -> B2 = yes ; B2 = no ),
+    check('a second listed token is accepted', S, yes),
+    check('a token not listed is still refused', B2, no),
+    setenv('CODING_ENDPOINT_TOKEN', 'test-token'),
     unsetenv('CODING_ENDPOINT_TOKEN'),
     ( ep_token_ok(Bad) -> Open = open ; Open = closed ),
     check('no token means no guard', Open, open),
     setenv('CODING_ENDPOINT_TOKEN', 'test-token').
+
+test_cors :-
+    Allowed = request(post, '/v1/chat/completions', [], http(1, 1),
+                      [origin-'http://localhost:3000'], []),
+    Other = request(post, '/v1/chat/completions', [], http(1, 1),
+                    [origin-'http://example.com'], []),
+    ep_cors(Allowed, AllowedHeaders),
+    ep_cors(Other, OtherHeaders),
+    (   memberchk('Access-Control-Allow-Origin'-'http://localhost:3000',
+                  AllowedHeaders)
+    ->  Yes = yes
+    ;   Yes = no
+    ),
+    (   memberchk('Access-Control-Allow-Origin'-_, OtherHeaders)
+    ->  No = present
+    ;   No = absent
+    ),
+    check('an allowlisted origin is allowed', Yes, yes),
+    check('another origin is not', No, absent).
 
 test_body_json :-
     Nul = "{\"model\":\"cocolog\",\"messages\":[{\"role\":\"user\",\"content\":\"x\\u0000y\"}]}",

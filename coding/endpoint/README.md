@@ -228,7 +228,7 @@ endpoint with the backend key in `CODING_ENDPOINT_KEY_ENV`:
 | `CODING_ENDPOINT_COCOLOG_MODEL` | the backend model |
 | `CODING_ENDPOINT_PYTHON_MODEL` | the backend model |
 | `CODING_ENDPOINT_KEY_ENV` | the backend key itself; required |
-| `CODING_ENDPOINT_TOKEN` | unset; a bearer token when set |
+| `CODING_ENDPOINT_TOKEN` | unset; one or more bearer tokens, comma-separated |
 | `CODING_ENDPOINT_ALLOW_ORIGIN` | the local OpenCode web origins |
 | `CODING_ENDPOINT_REASONING` | `on` for every model; `off` disables the pre-pass |
 | `CODING_ENDPOINT_REASONING_MIN` | `2`, filled with general checks if needed |
@@ -250,7 +250,10 @@ endpoint all read that one variable. The backend key is read from the
 environment at each call and never logged or written to disk by the
 server. CORS headers go only to the allowlisted
 origins, and a completion request needs `Authorization: Bearer TOKEN` when
-`CODING_ENDPOINT_TOKEN` is set.
+`CODING_ENDPOINT_TOKEN` is set. The variable is optional: unset or empty,
+the port has no guard. When set, it may hold several comma-separated
+tokens, and a request needs one of them; this is how a second client gets
+its own token without sharing the first one.
 
 ```sh
 # OpenAI-compatible
