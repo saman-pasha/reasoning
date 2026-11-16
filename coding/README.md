@@ -472,6 +472,13 @@ system prompt, `tool_use`/`tool_result` blocks and usage both ways;
 `reasoning_effort` is not sent because the Messages API has no such field,
 and the suite still follows the model suffix (`-r0`, `-r2`, `-r8`).
 
+Codex ends a turn when a reply has no function call. If the reply ends on
+an announcement of the next action ("I’m running the gate now"), the
+endpoint puts it in the history, adds a nudge and asks the backend again,
+returning the reply that actually calls the tool.
+`CODING_ENDPOINT_CONTINUE=off` disables the guard, and
+`CODING_ENDPOINT_CONTINUE_LIMIT` caps the extra calls (default `2`).
+
 ### Bearer tokens
 
 `CODING_ENDPOINT_TOKEN` is optional. Unset or empty, the port has no bearer
@@ -518,6 +525,8 @@ unset by the endpoint's readers.
 | `CODING_ENDPOINT_REASONING_MIN` | `2` | minimum checks |
 | `CODING_ENDPOINT_REASONING_MAX` | `2` | maximum checks |
 | `CODING_ENDPOINT_TRACE` | empty | no trace file |
+| `CODING_ENDPOINT_CONTINUE` | `on` | `off` disables the preamble continuation |
+| `CODING_ENDPOINT_CONTINUE_LIMIT` | `2` | extra backend calls after a preamble |
 | `CODING_ENDPOINT_REPEAT_LIMIT` | `16` | `0` disables the loop guard |
 | `CODING_ENDPOINT_PORT` | `8787` | |
 | `CODING_ENDPOINT_MAX_TOKENS` | `32768` | `0` leaves the client's limit |

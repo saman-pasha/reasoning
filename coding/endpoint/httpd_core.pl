@@ -936,7 +936,7 @@ ep_header(Request, Name, Default, Value) :-
     ).
 
 ep_trace(Request, Start, Alias, Backend, Effort, Mode, N, Terms,
-         Stream, MessageCount, ToolCount, Status, Usage) :-
+         Stream, MessageCount, ToolCount, Status, Usage, Continued) :-
     ep_env('CODING_ENDPOINT_TRACE', '', File),
     File \== '',
     get_time(Now),
@@ -949,7 +949,8 @@ ep_trace(Request, Start, Alias, Backend, Effort, Mode, N, Terms,
                      seconds-Seconds, status-Status, model-Alias,
                      backend-Backend, effort-Effort, mode-Mode,
                      reasoning-N, terms-Terms, stream-StreamJson,
-                     messages-MessageCount, tools-ToolCount | UsagePairs]),
+                     messages-MessageCount, tools-ToolCount,
+                     continued-Continued | UsagePairs]),
                Codes),
     append(Codes, [10], Line),
     catch(append_file_from_codes(File, Line), _, true).
@@ -1134,6 +1135,7 @@ ep_signature_bump(Signature, [Other|Rest], [Other|Out]) :-
 %% ---- the chat route ----------------------------------------------------
 
 ep_chat(Request, Reply) :-
+    nb_setval('$ep_continued', 0),
     get_time(Start),
     (   \+ ep_token_ok(Request)
     ->  ep_error_reply(Request, 401,
@@ -1212,14 +1214,17 @@ ep_chat_body_1(Request, Body, Start, Reply) :-
             ),
             length(Messages, MessageCount),
             ep_cors(Request, Cors),
-            (   catch(ep_forward(Body1, Alias, Status, Resp), Error,
-                      ( Status = 502,
+            (   catch(ep_forward(Body1, Alias, Status0, Resp0), Error,
+                      ( Status0 = 502,
                         format(atom(Message), 'backend failed: ~q', [Error]),
-                        json_codes(json([error-json([message-Message])]), Resp) ))
+                        json_codes(json([error-json([message-Message])]), Resp0) ))
             ->  true
-            ;   Status = 502,
-                json_codes(json([error-json([message-'backend failed'])]), Resp)
+            ;   Status0 = 502,
+                json_codes(json([error-json([message-'backend failed'])]), Resp0)
             ),
+            Status = Status0,
+            ep_continue_reply(Body1, Alias, Title, ToolCount, Status0, Resp0,
+                              Resp),
             (   Status =:= 200, Stream == true
             ->  (   catch(ep_sse(Resp, Alias, Sse), _, fail)
                 ->  append(Cors, ['Content-Type'-'text/event-stream',
@@ -1234,14 +1239,534 @@ ep_chat_body_1(Request, Body, Start, Reply) :-
                 Reply = reply(Status, Headers, Resp)
             ),
             ep_usage(Resp, Usage),
+            ep_continued(Continued),
             ep_trace(Request, Start, Alias, BackendModel, Effort, Mode,
                      N, TermCount, Stream, MessageCount, ToolCount, Status,
-                     Usage)
+                     Usage, Continued)
         ;   ep_error_reply(Request, 500,
                            'the language guide is missing', Reply)
         )
     ;   ep_error_reply(Request, 400,
                        'model and messages are required', Reply)
+    ).
+
+%% ---- a reply that stops at a preamble --------------------------------
+%%
+%% Codex ends its turn when a reply carries no function call. A model
+%% that writes "I'm running the gate now" and stops therefore leaves the
+%% work undone, and the user has to prompt it again. When a reply with no
+%% tool call ends on an announcement of the next action, the endpoint
+%% puts that reply in the history, adds a nudge and asks the backend
+%% once more; the reply with the tool call is the one returned. The
+%% extra calls are capped, and the guard can be switched off.
+
+ep_continue_reply(Body, Alias, Title, ToolCount, Status0, Resp0, Resp) :-
+    (   Status0 =:= 200,
+        Title == false,
+        ToolCount > 0,
+        ep_continue_on,
+        ep_continue_limit(Limit),
+        Limit > 0,
+        catch(ep_continue_loop(Body, Alias, Limit, Resp0, Resp, Count), _, fail)
+    ->  ep_continued_add(Count)
+    ;   Resp = Resp0
+    ).
+
+ep_continue_on :-
+    ep_env('CODING_ENDPOINT_CONTINUE', on, Value),
+    downcase_atom(Value, Lower),
+    Lower \== off,
+    Lower \== '0',
+    Lower \== false.
+
+ep_continue_limit(Limit) :-
+    ep_int('CODING_ENDPOINT_CONTINUE_LIMIT', 2, Limit).
+
+ep_continue_loop(Body, Alias, Limit, Resp0, Resp, Count) :-
+    (   Limit > 0,
+        ep_reply_dangles(Resp0)
+    ->  ep_continue_messages(Body, Resp0, Body1),
+        ep_forward(Body1, Alias, Status1, Resp1),
+        (   Status1 =:= 200
+        ->  ep_usage(Resp0, Usage0),
+            ep_usage(Resp1, Usage1),
+            ep_usage_add(Usage0, Usage1, Usage),
+            ep_reply_usage(Resp1, Usage, Resp1a),
+            ep_merge_continuation(Resp0, Resp1a, Resp1b),
+            Limit1 is Limit - 1,
+            ep_continue_loop(Body1, Alias, Limit1, Resp1b, Resp, Count1),
+            Count is Count1 + 1
+        ;   Resp = Resp0,
+            Count = 1
+        )
+    ;   Resp = Resp0,
+        Count = 0
+    ).
+
+%% The assistant's own message and the nudge: the backend sees what it
+%% said and is told that the action it announced has not happened.
+ep_continue_messages(Body, Resp, Body1) :-
+    catch(json_parse(Resp, json(Pairs)), _, fail),
+    memberchk(choices-[json(Choice)|_], Pairs),
+    memberchk(message-Message, Choice),
+    ep_json_get(Body, messages, Messages),
+    ep_continue_nudge(Nudge),
+    append(Messages, [Message, json([role-user, content-Nudge])], Messages1),
+    ep_json_set(Body, messages, Messages1, Body1).
+
+ep_continue_nudge('Your last message announced the next action but made no tool call, so the turn ended before the work. Continue the task now: make the tool call that performs the next step. Do not end your turn with a plan, a preamble or a progress note. If the task is actually complete, give the final answer.').
+
+ep_reply_dangles(Resp) :-
+    catch(json_parse(Resp, json(Pairs)), _, fail),
+    memberchk(choices-[json(Choice)|_], Pairs),
+    memberchk(message-json(Message), Choice),
+    (   memberchk(tool_calls-Calls, Message),
+        is_list(Calls),
+        Calls \== []
+    ->  fail
+    ;   true
+    ),
+    (   memberchk(finish_reason-Finish, Choice)
+    ->  Finish == stop
+    ;   true
+    ),
+    (   memberchk(content-Content, Message)
+    ->  true
+    ;   Content = ''
+    ),
+    ep_text_dangles(Content).
+
+%% Only the LAST sentence is inspected, with curly apostrophes folded to
+%% straight ones. A phrase that announces an action in an earlier
+%% sentence and a final answer after it are not a dangling preamble.
+ep_text_dangles(Text) :-
+    atom(Text),
+    Text \== '',
+    ep_straight_apostrophes(Text, Flat),
+    downcase_atom(Flat, Lower),
+    atom_codes(Lower, Codes),
+    ep_last_sentence_codes(Codes, LastCodes),
+    atom_codes(Last, LastCodes),
+    (   ep_dangle_subject_phrase(Last, Before)
+    ->  ep_sentence_start(Last, Before)
+    ;   ep_sentence_gerund(Last, After),
+        ep_no_finite_verb(After)
+    ).
+
+%% The last sentence is the text after the last period, exclamation,
+%% question mark or newline that is followed by a space or the end.
+%% Trailing punctuation belongs to it. The reversed walk keeps the
+%% prefix before the first boundary it meets, which is already in the
+%% original order.
+ep_last_sentence_codes(Codes, Last) :-
+    reverse(Codes, Back),
+    ep_after_last_break(Back, [], Last).
+
+ep_after_last_break([P|_], Acc, Acc) :-
+    P =:= 10,
+    !.
+ep_after_last_break([Space, P|_], Acc, Acc) :-
+    ep_space(Space),
+    ep_sentence_term(P),
+    !.
+ep_after_last_break([C|Rest], Acc, Out) :-
+    ep_after_last_break(Rest, [C|Acc], Out).
+ep_after_last_break([], Acc, Acc).
+
+ep_sentence_term(46).
+ep_sentence_term(33).
+ep_sentence_term(63).
+ep_sentence_term(59).
+ep_sentence_term(58).
+
+ep_straight_apostrophes(Text, Flat) :-
+    atom_codes('’', [Curly]),
+    atom_codes(Text, Codes),
+    ep_straight_codes(Codes, Curly, FlatCodes),
+    atom_codes(Flat, FlatCodes).
+
+ep_straight_codes([], _, []).
+ep_straight_codes([Curly|Codes], Curly, [39|Out]) :-
+    !,
+    ep_straight_codes(Codes, Curly, Out).
+ep_straight_codes([C|Codes], Curly, [C|Out]) :-
+    ep_straight_codes(Codes, Curly, Out).
+
+ep_sentence_start(_, 0) :- !.
+ep_sentence_start(Text, Before) :-
+    Before > 0,
+    sub_atom(Text, 0, Before, _, Prefix),
+    atom_codes(Prefix, Codes),
+    reverse(Codes, Back),
+    (   ep_first_nonspace(Back, [C|_])
+    ->  ( ep_sentence_mark(C)
+        ; ep_last_word(Prefix, Word),
+          ep_clause_word(Word)
+        )
+    ;   true
+    ).
+
+%% "..., so I'm narrowing" is a clause after a conjunction, not a new
+%% sentence, and the conjunction carries the announcement.
+ep_last_word(Text, Word) :-
+    atom_codes(Text, Codes),
+    reverse(Codes, Back),
+    (   ep_first_nonspace(Back, NonSpace)
+    ->  ep_take_word(NonSpace, WordCodes),
+        reverse(WordCodes, Forward),
+        atom_codes(Word, Forward)
+    ;   Word = ''
+    ).
+
+ep_take_word([C|Codes], [C|Out]) :-
+    \+ ep_space(C),
+    !,
+    ep_take_word(Codes, Out).
+ep_take_word(_, []).
+
+ep_space(32).
+ep_space(9).
+ep_space(10).
+ep_space(13).
+
+ep_clause_word(so).
+ep_clause_word(and).
+ep_clause_word(but).
+ep_clause_word(then).
+ep_clause_word(thus).
+ep_clause_word(therefore).
+ep_clause_word(because).
+ep_clause_word(which).
+ep_clause_word(while).
+ep_clause_word(yet).
+
+ep_first_nonspace([C|Codes], Out) :-
+    (   C =:= 32
+    ;   C =:= 9
+    ;   C =:= 10
+    ;   C =:= 13
+    ),
+    !,
+    ep_first_nonspace(Codes, Out).
+ep_first_nonspace(Codes, Codes).
+
+ep_sentence_mark(C) :-
+    memberchk(C, [46, 33, 63, 58, 59, 34, 39, 45, 42, 35, 40, 91, 10]).
+
+%% The announcements seen in Codex turns: a subject and the action it is
+%% about to take, and a bare gerund at the head of a sentence. A gerund
+%% sentence with a finite verb is a statement ("Testing shows ..."), not
+%% an announcement.
+ep_dangle_subject_phrase(Text, Before) :-
+    ep_dangle_subject(Subject, Kind),
+    atomic_list_concat([Subject, ' '], Prefix),
+    sub_atom(Text, Before, Length, _, Prefix),
+    End is Before + Length,
+    sub_atom(Text, End, _, 0, Rest),
+    ep_dangle_action(Kind, Rest).
+
+ep_dangle_action(gerund, Rest) :-
+    ep_first_word(Rest, Word, _),
+    ep_ing_word(Word).
+ep_dangle_action(bare, Rest) :-
+    ep_first_word(Rest, Word, _),
+    ep_dangle_bare(Word).
+
+ep_sentence_gerund(Text, After) :-
+    ep_first_word(Text, Word, After),
+    ep_ing_word(Word).
+
+%% The first word, skipping leading spaces and marks (**Comparing**).
+ep_first_word(Text, Word, After) :-
+    atom_codes(Text, Codes),
+    ep_skip_nonletter(Codes, Codes1),
+    ep_take_letters(Codes1, WordCodes, Rest),
+    WordCodes \== [],
+    atom_codes(Word, WordCodes),
+    atom_codes(After, Rest).
+
+ep_skip_nonletter([C|Codes], Rest) :-
+    \+ ep_letter(C),
+    !,
+    ep_skip_nonletter(Codes, Rest).
+ep_skip_nonletter(Codes, Codes).
+
+ep_take_letters([C|Codes], [C|Word], Rest) :-
+    ep_letter(C),
+    !,
+    ep_take_letters(Codes, Word, Rest).
+ep_take_letters(Codes, [], Codes).
+
+ep_letter(C) :-
+    C >= 97,
+    C =< 122.
+
+%% A word in -ing heads a sentence: comparing, checking, desugaring,
+%% investigating. A few nouns and prepositions that happen to end in
+%% -ing are not actions.
+ep_ing_word(Word) :-
+    atom_codes(Word, Codes),
+    length(Codes, Length),
+    Length >= 5,
+    append(_, [105, 110, 103], Codes),
+    \+ ep_ing_stop(Word).
+
+ep_ing_stop(during).
+ep_ing_stop(something).
+ep_ing_stop(nothing).
+ep_ing_stop(anything).
+ep_ing_stop(everything).
+ep_ing_stop(thing).
+ep_ing_stop(things).
+ep_ing_stop(string).
+ep_ing_stop(strings).
+ep_ing_stop(spring).
+ep_ing_stop(king).
+ep_ing_stop(ring).
+ep_ing_stop(wing).
+ep_ing_stop(morning).
+ep_ing_stop(evening).
+
+ep_no_finite_verb(After) :-
+    ep_flat_punct(After, Flat),
+    atomic_list_concat([' ', Flat, ' '], '', Padded),
+    \+ (   ep_finite_verb(Verb),
+           atomic_list_concat([' ', Verb, ' '], '', Mark),
+           sub_atom(Padded, _, _, _, Mark)
+       ).
+
+ep_flat_punct(Text, Flat) :-
+    atom_codes(Text, Codes),
+    ep_flat_codes(Codes, FlatCodes),
+    atom_codes(Flat, FlatCodes).
+
+ep_flat_codes([], []).
+ep_flat_codes([C|Codes], [32|Out]) :-
+    memberchk(C, [46, 44, 59, 58, 33, 63, 40, 41, 34, 96]),
+    !,
+    ep_flat_codes(Codes, Out).
+ep_flat_codes([C|Codes], [C|Out]) :-
+    ep_flat_codes(Codes, Out).
+
+ep_finite_verb(is).
+ep_finite_verb(are).
+ep_finite_verb(was).
+ep_finite_verb(were).
+ep_finite_verb(has).
+ep_finite_verb(have).
+ep_finite_verb(had).
+ep_finite_verb(shows).
+ep_finite_verb(show).
+ep_finite_verb(takes).
+ep_finite_verb(take).
+ep_finite_verb(makes).
+ep_finite_verb(make).
+ep_finite_verb(gives).
+ep_finite_verb(give).
+ep_finite_verb(means).
+ep_finite_verb(mean).
+ep_finite_verb(proves).
+ep_finite_verb(prove).
+ep_finite_verb(produces).
+ep_finite_verb(produce).
+ep_finite_verb(works).
+ep_finite_verb(work).
+ep_finite_verb(seems).
+ep_finite_verb(seem).
+ep_finite_verb(appears).
+ep_finite_verb(appear).
+ep_finite_verb(noticed).
+ep_finite_verb(found).
+ep_finite_verb(saw).
+ep_finite_verb(realized).
+ep_finite_verb(observed).
+ep_finite_verb(will).
+ep_finite_verb(can).
+ep_finite_verb(could).
+ep_finite_verb(should).
+ep_finite_verb(would).
+ep_finite_verb(must).
+ep_finite_verb(may).
+ep_finite_verb(might).
+ep_finite_verb(does).
+ep_finite_verb(do).
+ep_finite_verb(did).
+ep_finite_verb(needs).
+ep_finite_verb(need).
+ep_finite_verb(requires).
+ep_finite_verb(require).
+ep_finite_verb(enables).
+ep_finite_verb(enable).
+ep_finite_verb(allows).
+ep_finite_verb(allow).
+ep_finite_verb(lets).
+ep_finite_verb(let).
+ep_finite_verb(causes).
+ep_finite_verb(cause).
+
+ep_dangle_subject('i\'m', gerund).
+ep_dangle_subject('i’m', gerund).
+ep_dangle_subject('i am', gerund).
+ep_dangle_subject('i\'m now', gerund).
+ep_dangle_subject('i’m now', gerund).
+ep_dangle_subject('i am now', gerund).
+ep_dangle_subject('i\'m going to', bare).
+ep_dangle_subject('i’m going to', bare).
+ep_dangle_subject('i am going to', bare).
+ep_dangle_subject('i need to', bare).
+ep_dangle_subject('now i need to', bare).
+ep_dangle_subject('next i need to', bare).
+ep_dangle_subject('i have to', bare).
+ep_dangle_subject('now i have to', bare).
+ep_dangle_subject('i should', bare).
+ep_dangle_subject('now i should', bare).
+ep_dangle_subject('let\'s', bare).
+ep_dangle_subject('i\'ll', bare).
+ep_dangle_subject('i’ll', bare).
+ep_dangle_subject('i will', bare).
+ep_dangle_subject('i\'ll now', bare).
+ep_dangle_subject('i’ll now', bare).
+ep_dangle_subject('i will now', bare).
+ep_dangle_subject('now i\'ll', bare).
+ep_dangle_subject('now i’ll', bare).
+ep_dangle_subject('now i will', bare).
+ep_dangle_subject('now let me', bare).
+ep_dangle_subject('next i\'ll', bare).
+ep_dangle_subject('next i’ll', bare).
+ep_dangle_subject('next i will', bare).
+ep_dangle_subject('next, i\'ll', bare).
+ep_dangle_subject('next, i’ll', bare).
+ep_dangle_subject('next, i will', bare).
+ep_dangle_subject('next let me', bare).
+ep_dangle_subject('next, let me', bare).
+ep_dangle_subject('then i\'ll', bare).
+ep_dangle_subject('then i’ll', bare).
+ep_dangle_subject('then i will', bare).
+ep_dangle_subject('then let me', bare).
+ep_dangle_subject('let me', bare).
+
+ep_dangle_bare(run).
+ep_dangle_bare(check).
+ep_dangle_bare(commit).
+ep_dangle_bare(push).
+ep_dangle_bare(test).
+ep_dangle_bare(build).
+ep_dangle_bare(compile).
+ep_dangle_bare(apply).
+ep_dangle_bare(update).
+ep_dangle_bare(fix).
+ep_dangle_bare(investigate).
+ep_dangle_bare(trace).
+ep_dangle_bare(narrow).
+ep_dangle_bare(verify).
+ep_dangle_bare(validate).
+ep_dangle_bare(rerun).
+ep_dangle_bare('re-run').
+ep_dangle_bare(continue).
+ep_dangle_bare(proceed).
+ep_dangle_bare(try).
+ep_dangle_bare(read).
+ep_dangle_bare(write).
+ep_dangle_bare(search).
+ep_dangle_bare(create).
+ep_dangle_bare(add).
+ep_dangle_bare(remove).
+ep_dangle_bare(execute).
+ep_dangle_bare(start).
+ep_dangle_bare(compare).
+ep_dangle_bare(analyze).
+ep_dangle_bare(examine).
+ep_dangle_bare(inspect).
+ep_dangle_bare(debug).
+ep_dangle_bare(patch).
+ep_dangle_bare(merge).
+ep_dangle_bare(recompile).
+ep_dangle_bare(retest).
+ep_dangle_bare(recheck).
+ep_dangle_bare(rebuild).
+ep_dangle_bare(diff).
+ep_dangle_bare(grep).
+ep_dangle_bare(look).
+ep_dangle_bare(study).
+ep_dangle_bare(work).
+
+ep_usage_add(usage(P1, C1, R1, T1, H1), usage(P2, C2, R2, T2, H2),
+             usage(P, C, R, T, H)) :-
+    P is P1 + P2,
+    C is C1 + C2,
+    R is R1 + R2,
+    T is T1 + T2,
+    H is H1 + H2.
+
+ep_usage_object(usage(P, C, R, T, H),
+                json([prompt_tokens-P,
+                      completion_tokens-C,
+                      total_tokens-T,
+                      prompt_tokens_details-json([cached_tokens-H]),
+                      completion_tokens_details-json([reasoning_tokens-R])])).
+
+ep_reply_usage(Resp0, Usage, Resp) :-
+    (   catch(json_parse(Resp0, Body0), _, fail),
+        ep_usage_object(Usage, Object),
+        ep_json_set(Body0, usage, Object, Body)
+    ->  json_codes(Body, Resp)
+    ;   Resp = Resp0
+    ).
+
+%% The preamble said before the action and the continuation's text are
+%% one assistant message, as they would have been had the tool call come
+%% with the preamble. A continuation with a tool call and no text keeps
+%% the preamble.
+ep_merge_continuation(Resp0, Resp1, Resp) :-
+    ep_reply_text(Resp0, Text0),
+    ep_reply_text(Resp1, Text1),
+    (   Text0 == ''
+    ->  Text = Text1
+    ;   Text1 == ''
+    ->  Text = Text0
+    ;   Text1 == Text0
+    ->  Text = Text0
+    ;   atomic_list_concat([Text0, '\n\n', Text1], Text)
+    ),
+    (   Text == ''
+    ->  Resp = Resp1
+    ;   ep_reply_with_text(Resp1, Text, Resp)
+    ).
+
+ep_reply_text(Resp, Text) :-
+    (   catch(json_parse(Resp, json(Pairs)), _, fail),
+        memberchk(choices-[json(Choice)|_], Pairs),
+        memberchk(message-json(Message), Choice),
+        memberchk(content-Text0, Message),
+        atom(Text0),
+        Text0 \== ''
+    ->  Text = Text0
+    ;   Text = ''
+    ).
+
+ep_reply_with_text(Resp0, Text, Resp) :-
+    (   catch(json_parse(Resp0, json(Pairs)), _, fail),
+        memberchk(choices-[json(Choice0)|Rest], Pairs),
+        memberchk(message-json(Message0), Choice0),
+        ep_json_set(json(Message0), content, Text, Message),
+        ep_json_set(json(Choice0), message, Message, Choice),
+        ep_json_set(json(Pairs), choices, [Choice|Rest], Body)
+    ->  json_codes(Body, Resp)
+    ;   Resp = Resp0
+    ).
+
+ep_continued_add(Count) :-
+    (   catch(nb_getval('$ep_continued', Was), _, fail)
+    ->  true
+    ;   Was = 0
+    ),
+    Now is Was + Count,
+    nb_setval('$ep_continued', Now).
+
+ep_continued(Continued) :-
+    (   catch(nb_getval('$ep_continued', Value), _, fail)
+    ->  Continued = Value
+    ;   Continued = 0
     ).
 
 %% ---- the Responses route (Codex) --------------------------------------

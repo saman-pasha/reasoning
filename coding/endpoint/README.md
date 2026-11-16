@@ -59,6 +59,17 @@ and puts it on the rebuilt assistant messages; an assistant message always
 carries the field, empty when there was no reasoning, because the backend
 refuses one that omits it while thinking.
 
+Codex ends its turn when a reply carries no function call, so a model that
+writes "I’m running the gate now" and stops leaves the work undone. When a
+reply with no tool call ends on an announcement of the next action, the
+endpoint puts that reply in the history, adds a nudge and asks the backend
+once more; the reply that carries the tool call is the one Codex sees. A
+reply with a tool call, a truncated reply and a final answer are returned
+unchanged. The extra calls are capped by
+`CODING_ENDPOINT_CONTINUE_LIMIT` (default `2`), and
+`CODING_ENDPOINT_CONTINUE=off` turns the guard off. The same guard applies
+to OpenCode's chat route.
+
 Copy `config/codex-model-catalog.json` to `~/.codex/model-catalog.json`.
 The catalog is what puts the twelve names in Codex's `/model` picker;
 without it Codex lists only the models it ships. Then add to the top of
@@ -98,7 +109,9 @@ auto-compaction) and the picker entries.
 The backend call is **non-streaming**: `library(curl)` returns one whole
 reply, and the endpoint then synthesises the SSE stream OpenCode asked for
 (one content or tool-call chunk, one finish chunk, one usage chunk,
-`[DONE]`). The whole reply arrives before OpenCode sees the first byte, so
+`[DONE]`). A preamble continuation is another whole backend call before
+the stream is written. The whole reply arrives before OpenCode sees the
+first byte, so
 the sidebar's token counts update once per model call rather than during
 it; `library(httpd)` has no chunked encoding to carry a progress event.
 The server also serves one connection at a time, and `library(tcp)` binds
@@ -177,7 +190,9 @@ or Codex's `session-id`) and project
 ids, model, backend model, effort, `mode` (`reasoning`, `title`, or `plain`
 when the pre-pass is off),
 the number of reasoning checks and parsed terms, message and tool counts,
-the HTTP status and the seconds. It also carries the backend's usage as
+`continued` (the extra backend calls made after a preamble), the HTTP
+status and the seconds. It also carries the backend's usage, the
+continuation's calls included, as
 `prompt_tokens`, `completion_tokens`, `reasoning_tokens`, `total_tokens`
 and `cache_hit_tokens`, all zero when the backend reports none. The
 synthesized SSE stream ends with an OpenAI-shaped usage chunk carrying the
@@ -235,6 +250,8 @@ endpoint with the backend key in `CODING_ENDPOINT_KEY_ENV`:
 | `CODING_ENDPOINT_REASONING_MAX` | `2`, the checks kept from a longer reading |
 | `x-coding-reasoning` header | per request: `0`/`off`, `2`, `8`, … |
 | `CODING_ENDPOINT_TRACE` | unset; a JSONL path turns tracing on |
+| `CODING_ENDPOINT_CONTINUE` | `on`; `off` disables the preamble continuation |
+| `CODING_ENDPOINT_CONTINUE_LIMIT` | `2`; extra backend calls after a preamble |
 | `CODING_ENDPOINT_REPEAT_LIMIT` | `16`; `0` disables the repeated-tool-call guard |
 | `CODING_ENDPOINT_HOST` | unused; `library(tcp)` binds every interface |
 | `CODING_ENDPOINT_PORT` | `8787` |
@@ -322,6 +339,8 @@ socket is opened.
 ## Limits
 
 - No incremental streaming: the backend reply is buffered.
+- A preamble continuation costs one more whole backend call; two at most,
+  unless `CODING_ENDPOINT_CONTINUE_LIMIT` says otherwise.
 - One request at a time (`concurrency(none)`).
 - Every interface is bound; the bearer token is the guard.
 - A client that requests `stream: true` gets synthesized SSE, not live
