@@ -459,6 +459,33 @@ endpoint after changing it. Unset `CODING_ENDPOINT_TOKEN` only on a port
 that is already behind another guard: without it the port is open to every
 client.
 
+### Environment variables
+
+The defaults are the DeepSeek-compatible ones. An empty value is read as
+unset by the endpoint's readers.
+
+| variable | default when unset | notes |
+|---|---|---|
+| `CODING_ENDPOINT_API` | `openai` | `anthropic` selects the Messages wire |
+| `CODING_ENDPOINT_BACKEND` | `https://api.deepseek.com/v1/chat/completions` (`openai`); `https://api.deepseek.com/anthropic/v1/messages` (`anthropic`) | the complete endpoint URL |
+| `CODING_ENDPOINT_KEY_ENV` | empty | no usable default; a completion fails until it is set. Holds the key itself |
+| `CODING_ENDPOINT_MODEL` | `deepseek-chat` | used by all three languages |
+| `CODING_ENDPOINT_C_MODEL` | empty → `CODING_ENDPOINT_MODEL` | per-language override |
+| `CODING_ENDPOINT_COCOLOG_MODEL` | empty → `CODING_ENDPOINT_MODEL` | per-language override |
+| `CODING_ENDPOINT_PYTHON_MODEL` | empty → `CODING_ENDPOINT_MODEL` | per-language override |
+| `CODING_ENDPOINT_TOKEN` | empty | no bearer guard; a comma-separated list is allowed |
+| `CODING_ENDPOINT_ALLOW_ORIGIN` | `http://localhost:3000,http://127.0.0.1:3000,http://localhost:4096,http://127.0.0.1:4096` | CORS allowlist |
+| `CODING_ENDPOINT_REASONING` | `on` | `off`/`0`/`no`/`false` disables the pre-pass |
+| `CODING_ENDPOINT_REASONING_MIN` | `2` | minimum checks |
+| `CODING_ENDPOINT_REASONING_MAX` | `2` | maximum checks |
+| `CODING_ENDPOINT_TRACE` | empty | no trace file |
+| `CODING_ENDPOINT_REPEAT_LIMIT` | `16` | `0` disables the loop guard |
+| `CODING_ENDPOINT_PORT` | `8787` | |
+| `CODING_ENDPOINT_MAX_TOKENS` | `32768` | `0` leaves the client's limit |
+| `CODING_ENDPOINT_CONTEXT` | `1000000` | advertised context |
+| `CODING_ENDPOINT_TIMEOUT` | `600` seconds | the backend call's timeout |
+| `CODING_ENDPOINT_HOST` | — | unused; `library(tcp)` binds every interface |
+
 ## Benchmark
 
 `coding/bench/` measures DeepSeek's high reasoning against six

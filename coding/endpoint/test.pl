@@ -40,6 +40,9 @@
                 ep_responses_sse/2,
                 ep_anthropic_body/2,
                 ep_anthropic_reply/4,
+                ep_backend_url/1,
+                ep_backend_timeout/1,
+                ep_backend_model/2,
                 ep_key/1
               ]).
 :- use_module('coding/endpoint/reasoning_core.pl',
@@ -71,6 +74,7 @@ main :-
     test_check_cap,
     test_zero_checks,
     test_backend_key,
+    test_defaults,
     unsetenv('CODING_ENDPOINT_TOKEN'),
     checks_done.
 
@@ -700,3 +704,32 @@ test_backend_key :-
     ->  check('an absent backend key is refused', yes, yes)
     ;   check('an absent backend key is refused', no, yes)
     ).
+
+test_defaults :-
+    unsetenv('CODING_ENDPOINT_API'),
+    unsetenv('CODING_ENDPOINT_BACKEND'),
+    unsetenv('CODING_ENDPOINT_MODEL'),
+    unsetenv('CODING_ENDPOINT_C_MODEL'),
+    unsetenv('CODING_ENDPOINT_TIMEOUT'),
+    ep_backend_url(OpenUrl),
+    check('the default backend is DeepSeek chat completions', OpenUrl,
+          'https://api.deepseek.com/v1/chat/completions'),
+    setenv('CODING_ENDPOINT_API', 'anthropic'),
+    ep_backend_url(AnthropicUrl),
+    check('the default Anthropic backend is DeepSeek messages', AnthropicUrl,
+          'https://api.deepseek.com/anthropic/v1/messages'),
+    unsetenv('CODING_ENDPOINT_API'),
+    ep_backend_model(c, Model),
+    check('the default model is deepseek-chat', Model, 'deepseek-chat'),
+    ep_backend_timeout(Timeout),
+    check('the default backend timeout is 600 seconds', Timeout, 600),
+    setenv('CODING_ENDPOINT_TIMEOUT', '42'),
+    ep_backend_timeout(SetTimeout),
+    check('CODING_ENDPOINT_TIMEOUT is read', SetTimeout, 42),
+    setenv('CODING_ENDPOINT_C_MODEL', 'deepseek-reasoner'),
+    ep_backend_model(c, SetModel),
+    check('a language model overrides the default', SetModel,
+          'deepseek-reasoner'),
+    unsetenv('CODING_ENDPOINT_TIMEOUT'),
+    unsetenv('CODING_ENDPOINT_C_MODEL'),
+    !.

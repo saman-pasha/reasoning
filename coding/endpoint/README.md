@@ -222,7 +222,7 @@ endpoint with the backend key in `CODING_ENDPOINT_KEY_ENV`:
 | variable | default |
 |---|---|
 | `CODING_ENDPOINT_API` | `openai`; `anthropic` speaks the Messages wire |
-| `CODING_ENDPOINT_BACKEND` | `https://api.deepseek.com/v1/chat/completions`; the Anthropic default is `https://api.anthropic.com/v1/messages` |
+| `CODING_ENDPOINT_BACKEND` | `https://api.deepseek.com/v1/chat/completions` (`openai`); `https://api.deepseek.com/anthropic/v1/messages` (`anthropic`) |
 | `CODING_ENDPOINT_MODEL` | `deepseek-chat` |
 | `CODING_ENDPOINT_C_MODEL` | the backend model |
 | `CODING_ENDPOINT_COCOLOG_MODEL` | the backend model |
@@ -240,7 +240,7 @@ endpoint with the backend key in `CODING_ENDPOINT_KEY_ENV`:
 | `CODING_ENDPOINT_PORT` | `8787` |
 | `CODING_ENDPOINT_MAX_TOKENS` | `32768` (0 leaves the client's limit) |
 | `CODING_ENDPOINT_CONTEXT` | `1000000` |
-| `CODING_ENDPOINT_TIMEOUT` | `600` seconds |
+| `CODING_ENDPOINT_TIMEOUT` | `600` seconds; the backend call's timeout |
 | `COCOLOG_LIBRARY` | set by `run-httpd.sh` |
 | `COCOLOG_SKILL` | `../cocolog/SKILL.md` beside this repository |
 

@@ -30,10 +30,13 @@ ep_backend_url(Url) :-
     ep_backend_mode(Mode),
     (   Mode == anthropic
     ->  ep_env('CODING_ENDPOINT_BACKEND',
-               'https://api.anthropic.com/v1/messages', Url)
+               'https://api.deepseek.com/anthropic/v1/messages', Url)
     ;   ep_env('CODING_ENDPOINT_BACKEND',
                'https://api.deepseek.com/v1/chat/completions', Url)
     ).
+
+ep_backend_timeout(Timeout) :-
+    ep_int('CODING_ENDPOINT_TIMEOUT', 600, Timeout).
 
 ep_backend_model(c, Model) :-
     ep_env('CODING_ENDPOINT_C_MODEL', '', M0),
@@ -382,6 +385,7 @@ ep_forward(Body0, Alias, Status, Resp) :-
     ep_cap_tokens(Body3, Body4),
     ep_backend_mode(Mode),
     ep_backend_url(Url),
+    ep_backend_timeout(Timeout),
     ep_key(Key),
     (   Mode == anthropic
     ->  ep_anthropic_body(Body4, AnthropicBody),
@@ -390,13 +394,13 @@ ep_forward(Body0, Alias, Status, Resp) :-
         curl_post(Url, 'application/json', AnthropicCodes,
                   [ header(KeyHeader),
                     header('anthropic-version: 2023-06-01'),
-                    timeout(600), max_size(16777216) ],
+                    timeout(Timeout), max_size(16777216) ],
                   Status0, AnthropicResp),
         ep_anthropic_reply(Status0, AnthropicResp, Status, Resp)
     ;   json_codes(Body4, Codes),
         format(atom(Auth), 'Authorization: Bearer ~w', [Key]),
         curl_post(Url, 'application/json', Codes,
-                  [header(Auth), timeout(600), max_size(16777216)],
+                  [header(Auth), timeout(Timeout), max_size(16777216)],
                   Status, Resp)
     ).
 
