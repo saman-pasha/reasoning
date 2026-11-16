@@ -493,8 +493,21 @@ export CODING_ENDPOINT_TOKEN="client-a-token, client-b-token"
 coding/endpoint/run-httpd.sh
 ```
 
-A request is accepted if its token matches any entry. Generate one with
-`openssl rand -hex 32`, then give each client its own:
+A request is accepted if its token matches any entry. Generate one with:
+
+```sh
+openssl rand -hex 32
+```
+
+or a 32-character base64url token like the installed one:
+
+```sh
+openssl rand -base64 24 | tr '+/' '-_' | tr -d '=\n'
+```
+
+No further encoding is needed: the endpoint compares the token verbatim.
+A token must hold no whitespace and no comma; commas separate entries in
+`CODING_ENDPOINT_TOKEN`. Then give each client its own:
 
 - OpenCode: the provider's `settings.apiKey`.
 - Codex: the provider's `experimental_bearer_token`.

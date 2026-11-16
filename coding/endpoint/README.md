@@ -270,7 +270,11 @@ origins, and a completion request needs `Authorization: Bearer TOKEN` when
 `CODING_ENDPOINT_TOKEN` is set. The variable is optional: unset or empty,
 the port has no guard. When set, it may hold several comma-separated
 tokens, and a request needs one of them; this is how a second client gets
-its own token without sharing the first one.
+its own token without sharing the first one. Generate one with
+`openssl rand -hex 32`, or a 32-character base64url token with
+`openssl rand -base64 24 | tr '+/' '-_' | tr -d '=\n'`; no further
+encoding is needed. A token holds no whitespace and no comma, which
+separates the list.
 
 ```sh
 # OpenAI-compatible
