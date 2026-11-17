@@ -1024,6 +1024,120 @@ For a change to cocolog:
 - [ ] No build output in `git status`; nothing run that the owner must be
       asked for.
 
+## Transpiling Python to cocolog
+
+Most models know Python best. Translate the **shape** of the Python
+program into relations: a function with a return value becomes a
+predicate with an extra output argument, a loop becomes a recursive
+predicate with an accumulator, and a mutable variable becomes an
+argument passed to the next call. Do not transliterate `print`, `return`
+or assignment.
+
+| Python | cocolog |
+|---|---|
+| `def f(a, b): ... return r` | `f(A, B, R) :- ...` |
+| `x = 1` | `X = 1` (bind once) |
+| `x += 1` | `X1 is X + 1` |
+| `if c: a else: b` | `( C -> A ; B )` or clause guards |
+| `for x in xs:` | a recursive predicate over `[X|Xs]` |
+| `while stack:` | `loop(Stack, ...)` with `[X|Rest]` |
+| `return` early | cut or if-then-else |
+| `a == b` (numbers) | `A =:= B` |
+| `a == b` (atoms) | `A == B` or `A = B` |
+| `lst.append(x)` | `append(Lst, [X], New)` or an accumulator |
+| `len(lst)` | `length(Lst, N)` |
+| `set()` | a sorted list and `memberchk/2` |
+| `dict` | an association list or `library(assoc)` |
+| `print(x)` | `format("~w~n", [X])` |
+| `input()` / `sys.stdin` | `read_line_to_codes(user_input, Codes)` |
+| `s.split()` | `split_string(S, " ", " \t\r", Parts)` |
+| `int(s)` | `number_codes(N, S)` |
+| `range(n)` | `between(0, N1, I)` |
+| `[f(x) for x in xs]` | `findall(Y, (member(X, Xs), f(X, Y)), Ys)` |
+| `sorted(xs)` | `sort(Xs, Sorted)` or `msort` |
+| `try/except` | `catch(Goal, Ball, Handler)` |
+
+Use `_` for a value you do not use. A **singleton variable** (a named
+variable used once) is a warning, and a warning on stderr fails the
+benchmark's exact policy even when the output is right: name it `_` or
+use it. A predicate name a loaded library already defines is silently
+ignored (`digits/3` in `library(stream)`); prefix your own helpers.
+
+### Worked example: BFS from Python
+
+Python:
+
+```python
+import sys
+data = sys.stdin.read().split()
+it = iter(data)
+n = int(next(it)); m = int(next(it))
+adj = [[] for _ in range(n + 1)]
+for _ in range(m):
+    u = int(next(it)); v = int(next(it))
+    adj[u].append(v)
+s = int(next(it))
+seen = {s}
+stack = [s]
+while stack:
+    u = stack.pop()
+    for v in adj[u]:
+        if v not in seen:
+            seen.add(v)
+            stack.append(v)
+print(" ".join(str(i) for i in range(1, n + 1) if i in seen))
+```
+
+cocolog, with the same shape: the stack is a list, the seen set is a
+list with `memberchk/2`, the loop is `closure/4`, and every named
+variable is used (the header's n is `_` because the edges carry the
+nodes).
+
+```prolog
+:- use_module(library(stream)).
+
+main :-
+    read_line_to_codes(user_input, L0),
+    ( L0 == end_of_file -> L = [] ; L = L0 ),
+    split_string(L, " ", " \t\r", [_, MS]),
+    number_codes(M, MS),
+    read_edges(M, Edges),
+    read_line_to_codes(user_input, S0),
+    ( S0 == end_of_file -> S = [] ; S = S0 ),
+    split_string(S, " ", " \t\r", [SS]),
+    number_codes(Start, SS),
+    reach(Start, Edges, Seen),
+    sort(Seen, Sorted),
+    write_nodes(Sorted).
+
+read_edges(0, []) :- !.
+read_edges(K, [U-V|Rest]) :-
+    read_line_to_codes(user_input, L0),
+    ( L0 == end_of_file -> L = [] ; L = L0 ),
+    split_string(L, " ", " \t\r", [US, VS]),
+    number_codes(U, US),
+    number_codes(V, VS),
+    K1 is K - 1,
+    read_edges(K1, Rest).
+
+reach(Start, Edges, Seen) :-
+    closure([Start], Edges, [Start], Seen).
+
+closure([], _, Seen, Seen).
+closure([X|Xs], Edges, Seen, Reach) :-
+    findall(V, (member(U-V, Edges), U =:= X, \+ memberchk(V, Seen)), New0),
+    sort(New0, New),
+    append(Xs, New, Queue),
+    append(Seen, New, Seen1),
+    closure(Queue, Edges, Seen1, Reach).
+
+write_nodes([X]) :- !,
+    format("~w~n", [X]).
+write_nodes([X|Xs]) :-
+    format("~w ", [X]),
+    write_nodes(Xs).
+```
+
 ## Codes, parsers and tables
 
 This file is the reasoning repository's copy of the cocolog skill; the

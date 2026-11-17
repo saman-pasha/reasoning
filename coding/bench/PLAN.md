@@ -291,7 +291,9 @@ tracer's failing chain (`reasoning 1.8.21`). The cocolog generator reads
 this repository's `coding/cocolog/SKILL.md`, a copy of the language
 guide with an added "Codes, parsers and tables" section: `char_code/2`
 and the `0'` token, the safe code-parser shape, the `digits/3` collision
-with `library(stream)`, and a row-table rule with a worked LCS program.
+with `library(stream)`, and a row-table rule with a worked LCS program,
+plus a Python-to-cocolog transpiling section (a construct map and a
+worked BFS).
 The cocolog lane rerun with it is 4/9 pass@1 and 8/9 final, 362 886
 tokens, against 2/9 and 5/9 in the 36-cell run
 (`v2/results/lang-cocolog-skill-20261117.md`, `reasoning 1.8.23`); it is
@@ -312,8 +314,13 @@ The default grid is 18 cells. The first run is in
 `results/form-20261117.md`: the hypothesis was not supported --
 imperative Python passed 9/9 at attempt 1; declarative cocolog passed
 1/9 at attempt 1 and 5/9 final, at about 116 times the tokens. A
-malformed `reach` case was corrected and that lane rerun. The result is
-reported separately from the Phase 4 language comparison.
+malformed `reach` case was corrected and that lane rerun. A
+Python-to-cocolog transpiling section was then added and measured
+(`results/form-20261117-transpile.md`): it improves `reach` (0/3 to 2/3
+at attempt 1, 1/3 to 3/3 final, 54 % fewer tokens) but regresses `topo`
+(3/3 to 0/3 final) and `parses` (1/3 to 0/3); the net over the three
+tasks is negative. The result is reported separately from the Phase 4
+language comparison.
 
 ## Cost
 
@@ -389,7 +396,9 @@ The implemented v2:
   and a form run. The first run did not support the hypothesis: Python
   9/9 at attempt 1, cocolog 1/9 at attempt 1 and 5/9 final, at about 116
   times the tokens. A malformed `reach` case was corrected and that lane
-  rerun.
+  rerun. A Python-to-cocolog transpiling section improves `reach` but
+  regresses `topo` and `parses`; the net is negative
+  (`results/form-20261117-transpile.md`).
 
 Not yet implemented: per-attempt rows in the JSONL. A diagnostic run can
 keep each attempt's spec, code, usage and verdict with `--keep DIR`, but

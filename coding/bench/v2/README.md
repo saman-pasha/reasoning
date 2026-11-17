@@ -146,8 +146,9 @@ generator reads this repository's `coding/cocolog/SKILL.md`, a copy of
 the language guide with an added "Codes, parsers and tables" section:
 `char_code/2` and the `0'` token, the safe code-parser shape, the
 `digits/3` collision with `library(stream)`, and a row-table rule with a
-worked LCS program. `COCOLOG_SKILL` still overrides the path. This is a
-stated, cocolog-only scaffold; the lane rerun with it is
+worked LCS program, plus a "Transpiling Python to cocolog" section (a
+construct map and a worked BFS). `COCOLOG_SKILL` still overrides the
+path. This is a stated, cocolog-only scaffold; the lane rerun with it is
 `results/lang-cocolog-skill-20261117.md` (4/9 pass@1, 8/9 final,
 362 886 tokens, against 2/9 and 5/9 in the 36-cell run). There is **no
 combined score**: the JSONL rows and the per-task/language summary are
@@ -194,6 +195,14 @@ supported**. Imperative Python passed 9/9 at attempt 1; declarative
 cocolog passed 1/9 at attempt 1 and 5/9 final, at about 116 times the
 tokens and 2.4 times the lines. One `reach` case was malformed in that
 run; it was corrected and the `reach` lane rerun, both recorded there.
+
+A Python-to-cocolog **transpiling section** was then added to the
+cocolog skill and measured (`results/form-20261117-transpile.md`). It
+improves `reach` (declarative 0/3 to 2/3 at attempt 1, 1/3 to 3/3 final,
+54 % fewer tokens) but regresses `topo` (3/3 to 0/3 final) and `parses`
+(1/3 to 0/3); the net over the three tasks is negative. The section
+stays as a general guide for the endpoint, not as a proven improvement
+for this lane.
 
 ## Commands
 
