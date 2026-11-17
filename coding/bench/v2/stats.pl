@@ -348,40 +348,49 @@ v2_stats_task_mode_cells_any(Cells, Mode, ModeCells) :-
     ModeCells \== [].
 
 v2_stats_pair_block(Cells, Modes, Samples, Seed) :-
-    (   v2_stats_choose_pair(Modes, ModeA, ModeB)
-    ->  v2_stats_paired_diffs(Cells, ModeA, ModeB, Diffs),
-        Diffs \== [],
-        length(Diffs, NTasks),
-        v2_stats_bootstrap_diff(Diffs, pass1, Samples, Seed,
-                                point(P1), ci(P1Lo, P1Hi)),
-        v2_stats_bootstrap_diff(Diffs, final, Samples, Seed,
-                                point(P2), ci(P2Lo, P2Hi)),
-        S1 is 100 * P1,
-        S1Lo is 100 * P1Lo,
-        S1Hi is 100 * P1Hi,
-        S2 is 100 * P2,
-        S2Lo is 100 * P2Lo,
-        S2Hi is 100 * P2Hi,
-        v2_stats_signed(S1, T1),
-        v2_stats_signed(S1Lo, T1Lo),
-        v2_stats_signed(S1Hi, T1Hi),
-        v2_stats_signed(S2, T2),
-        v2_stats_signed(S2Lo, T2Lo),
-        v2_stats_signed(S2Hi, T2Hi),
-        format("~npaired ~w minus ~w (~w task(s))~n",
-               [ModeB, ModeA, NTasks]),
-        format("pass@1 ~w pp [~w, ~w]~n", [T1, T1Lo, T1Hi]),
-        format("final  ~w pp [~w, ~w]~n", [T2, T2Lo, T2Hi])
-    ;   format("~nno pair of modes to compare~n", [])
+    v2_stats_pairs(Modes, Pairs),
+    (   Pairs == []
+    ->  format("~nno pair of modes to compare~n", [])
+    ;   forall(member(ModeA-ModeB, Pairs),
+               v2_stats_one_pair(Cells, ModeA, ModeB, Samples, Seed))
     ).
 
-v2_stats_choose_pair(Modes, ModeA, ModeB) :-
-    (   memberchk(plain, Modes),
-        memberchk(derive, Modes)
-    ->  ModeA = plain,
-        ModeB = derive
-    ;   Modes = [ModeA, ModeB|_]
-    ).
+v2_stats_pairs(Modes, Pairs) :-
+    findall(ModeA-ModeB,
+            (   member(ModeA-ModeB,
+                       [plain-derive,
+                        derive-extract,
+                        extract-contract,
+                        contract-full]),
+                memberchk(ModeA, Modes),
+                memberchk(ModeB, Modes)
+            ),
+            Pairs).
+
+v2_stats_one_pair(Cells, ModeA, ModeB, Samples, Seed) :-
+    v2_stats_paired_diffs(Cells, ModeA, ModeB, Diffs),
+    Diffs \== [],
+    length(Diffs, NTasks),
+    v2_stats_bootstrap_diff(Diffs, pass1, Samples, Seed,
+                            point(P1), ci(P1Lo, P1Hi)),
+    v2_stats_bootstrap_diff(Diffs, final, Samples, Seed,
+                            point(P2), ci(P2Lo, P2Hi)),
+    S1 is 100 * P1,
+    S1Lo is 100 * P1Lo,
+    S1Hi is 100 * P1Hi,
+    S2 is 100 * P2,
+    S2Lo is 100 * P2Lo,
+    S2Hi is 100 * P2Hi,
+    v2_stats_signed(S1, T1),
+    v2_stats_signed(S1Lo, T1Lo),
+    v2_stats_signed(S1Hi, T1Hi),
+    v2_stats_signed(S2, T2),
+    v2_stats_signed(S2Lo, T2Lo),
+    v2_stats_signed(S2Hi, T2Hi),
+    format("~npaired ~w minus ~w (~w task(s))~n",
+           [ModeB, ModeA, NTasks]),
+    format("pass@1 ~w pp [~w, ~w]~n", [T1, T1Lo, T1Hi]),
+    format("final  ~w pp [~w, ~w]~n", [T2, T2Lo, T2Hi]).
 
 v2_stats_signed(Value, Text) :-
     (   Value >= 0

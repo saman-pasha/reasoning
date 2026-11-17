@@ -18,7 +18,8 @@
                 v2_stats_rate/3,
                 v2_stats_bootstrap_rate/6,
                 v2_stats_paired_diffs/4,
-                v2_stats_bootstrap_diff/6
+                v2_stats_bootstrap_diff/6,
+                v2_stats_pairs/2
               ]).
 :- use_module('coding/bench/v2/runner.pl',
               [ v2_parse_args/2,
@@ -502,6 +503,9 @@ test_stats :-
     ;   DiffOk = point(DiffPoint, DiffLo, DiffHi)
     ),
     check('a paired difference is the derive gain', DiffOk, yes),
+    v2_stats_pairs([plain, derive, contract, extract, full], Pairs),
+    check('the report pairs the ablation steps', Pairs,
+          [plain-derive, derive-extract, extract-contract, contract-full]),
     test_stats_json.
 
 test_stats_json :-

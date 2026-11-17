@@ -344,12 +344,12 @@ byte-identical and attempt 3 changed only formatting. A larger call
 budget is not supported, so `calculator` replaced `mvccs_acid` and the
 latter is kept for a later hard-task or reasoning-effort suite.
 
-The new trio's three-trial pilot (2026-11-17, commit `5076d6a`, saved in
-`v2/results/pilot-20261117-new-trio.md`) reads 15/18 at pass@1 and final
-pass for 10 974 tokens. Every cell finished on its first attempt, so the
-repair loop was not exercised: `lcs/plain` failed all three held-out
-checks, `lcs/derive` passed all three, and `stable_sort` and `calculator`
-passed in both modes. The full mode matrix (`plain`, `derive`, `contract`,
-`extract`, `full`) is implemented; its three-trial pilot is the next paid
-run and is not started. Whether a harder task is needed to exercise
-repair remains a separate decision.
+The five-mode matrix pilot (2026-11-17, commit `75fdc8c`, saved in
+`v2/results/matrix-20261117.md`) reads 42/45 for 35 147 tokens. Only
+`lcs/plain` failed, on all three held-out runs; every obligation mode
+passed it. `contract`, `extract` and `full` had exactly zero paired
+difference against each other and against `derive`, and no cell needed a
+repair. The trio is too easy to separate the upper modes: the next
+decision is task selection (a requirement whose hand contract adds a
+check the keyword derivation misses) or a no-feedback arm, not a larger
+N.

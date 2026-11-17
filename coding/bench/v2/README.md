@@ -129,7 +129,8 @@ bootstrap over tasks**, not over cells: trials of one task are not
 independent samples of the task population. With three tasks the interval
 is necessarily wide, so the table is the evidence and the interval is a
 warning against reading the aggregate as an estimate. It also prints the
-paired difference between `derive` and `plain` over tasks, for pass@1 and
+ablation pairs present: `derive` minus `plain`, `extract` minus `derive`,
+`contract` minus `extract` and `full` minus `contract`, for pass@1 and
 final pass, with the same bootstrap.
 
 `--seed` defaults to the run's own seed, so a report is reproducible.
