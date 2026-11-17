@@ -19,6 +19,19 @@ Cicili 3.3.0. `./cocolog --version` answers it.
 changing cocolog itself. Each section stands alone: go to the one the task
 names.
 
+**A debug situation — a program that fails, raises, hangs, or is slow — is
+answered with the flow tools, and they must be used first.** **Before the
+first run**, `tools/flow/chart.pl` reads the program WITHOUT running it and
+names the unknown call (and the predicate it probably meant), the argument
+free where the engine refuses one, the left recursion, the clause never
+tried, and the clauses not together (§8). **When a query fails, raises or is
+slow**, `tools/flow/debug.pl` runs the goal in a child and writes
+`BASE.txt`, one line a call, down to the call that failed, with the clauses
+tried and where each stood (§9). **Do not guess, do not scatter `write/1`
+through the program, and do not bisect the file by hand before the two
+tools have run**: in a debug situation they are the first step, not the
+last.
+
 | the task | read |
 |---|---|
 | run a file, a goal, a script with arguments | §1 |
@@ -983,6 +996,25 @@ function**: each bullet is there because its fact has already cost a day.
   owner's go-ahead.
 
 ## 20. When something fails
+
+**In a debug situation the flow tools MUST be used, and in this order:**
+
+```sh
+./cocolog -s tools/flow/chart.pl -- 'entry_predicate(+, -)' prog.pl out/name
+./cocolog -s tools/flow/debug.pl -- 'entry_goal(...)' prog.pl out/name txt=true
+```
+
+- **The chart first, before the first run.** It names the misspelt call (and
+  the predicate it probably meant), the argument free where the engine
+  refuses one, the left recursion, the clause never tried and the clauses not
+  together — with no input, no store and no run (§8).
+- **The debug run before any edit made on a guess.** It says where the goal
+  failed, clause by clause, down to the call that failed; read `BASE.txt`,
+  not only the picture (§9). A first run that says `false at step N` is run
+  again with `from=1 to=N`, so the whole run is recorded.
+- **Do not debug by scattering `write/1` through the program, and do not
+  bisect the clauses by hand before the flow tools have run.** They answer
+  both cheaper and exactly.
 
 | symptom | start here |
 |---|---|
