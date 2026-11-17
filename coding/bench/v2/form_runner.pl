@@ -520,9 +520,9 @@ v2_form_summary_row(Task, Form) :-
     ).
 
 v2_form_paired_row(Task) :-
-    findall(pair(Trial, CellI, CellD),
-            (   v2_form_pair(Task, Trial, _, CellI, CellD),
-                CellI = cell(_, imperative, _, _, _, _, _, _, _, _, _, _)
+    findall(pair(Trial, Imperative, Declarative),
+            (   v2_form_pair(Task, Trial, _, Cell1, Cell2),
+                v2_form_pair_cells(Cell1, Cell2, Imperative, Declarative)
             ),
             Pairs),
     (   Pairs == []
@@ -542,6 +542,19 @@ v2_form_signed(N, S) :-
     (   N >= 0
     ->  format(atom(S), '+~w', [N])
     ;   S = N
+    ).
+
+v2_form_pair_cells(Cell1, Cell2, Imperative, Declarative) :-
+    Cell1 = cell(_, Form1, _, _, _, _, _, _, _, _, _, _),
+    Cell2 = cell(_, Form2, _, _, _, _, _, _, _, _, _, _),
+    (   Form1 == imperative,
+        Form2 == declarative
+    ->  Imperative = Cell1,
+        Declarative = Cell2
+    ;   Form1 == declarative,
+        Form2 == imperative,
+        Imperative = Cell2,
+        Declarative = Cell1
     ).
 
 v2_form_pair_counts([], 0, 0, 0, 0, 0, 0, 0, 0).

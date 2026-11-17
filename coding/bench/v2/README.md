@@ -189,6 +189,12 @@ Python is the model's strongest language, cocolog has the repository
 guide, and the two forms use different generators. The default grid is
 3 tasks x 2 forms x 3 trials = 18 cells.
 
+The first run is `results/form-20261117.md`: the hypothesis was **not
+supported**. Imperative Python passed 9/9 at attempt 1; declarative
+cocolog passed 1/9 at attempt 1 and 5/9 final, at about 116 times the
+tokens and 2.4 times the lines. One `reach` case was malformed in that
+run; it was corrected and the `reach` lane rerun, both recorded there.
+
 ## Commands
 
 Run from the repository root, with the cocolog checkout beside it:

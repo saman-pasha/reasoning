@@ -43,10 +43,14 @@
                 v2_reasoning_spec/3,
                 v2_reasoning_head/2,
                 v2_reasoning_check/0,
+                v2_reasoning_case/2,
+                v2_reasoning_case_ok/2,
                 v2_topo_check/3
               ]).
 :- use_module('coding/bench/v2/form_runner.pl',
-              [ v2_form_run/4 ]).
+              [ v2_form_run/4,
+                v2_form_pair_cells/4
+              ]).
 :- use_module('coding/bench/v2/runner.pl',
               [ v2_parse_args/2,
                 v2_selection/6,
@@ -1011,6 +1015,11 @@ test_reasoning :-
     check('the reasoning tasks', Tasks, [reach, topo, parses]),
     yes_no(v2_reasoning_check, All),
     check('every reasoning task has repair and held-out cases', All, yes),
+    yes_no((forall(member(Task, [reach, topo]),
+                   forall(v2_reasoning_case(Task, Case),
+                          v2_reasoning_case_ok(Task, Case)))),
+           CasesOk),
+    check('every graph case header matches its edges', CasesOk, yes),
     once(v2_reasoning_spec(imperative, reach, SI)),
     once(v2_reasoning_spec(declarative, reach, SD)),
     once(v2_reasoning_head(imperative, HI)),
@@ -1069,6 +1078,12 @@ test_reasoning :-
 
 test_form_run :-
     section('form run'),
+    CellI = cell(reach, imperative, python, 1, yes, yes, 1,
+                 usage(1, 1, 2, 0, 0), 1.0, 1, 1, pass),
+    CellD = cell(reach, declarative, cocolog, 1, no, no, 1,
+                 usage(1, 1, 2, 0, 0), 1.0, 1, 1, fail_repair),
+    once(v2_form_pair_cells(CellD, CellI, I2, D2)),
+    check('the pair summary finds both orders', [I2, D2], [CellI, CellD]),
     retractall(v2_language_generate_hook(_, _, _, _, _, _)),
     assertz((v2_language_generate_hook(python, _, _, '',
                                        usage(1, 1, 2, 0, 0), none))),
@@ -1093,16 +1108,16 @@ test_form_run :-
         ;   H = no
         ),
         check('the form header names the suite', H, yes),
-        (   member(CellI, Lines),
-            sub_atom(CellI, _, _, _, '"form":"imperative"'),
-            sub_atom(CellI, _, _, _, '"outcome":"fail_compile"')
+        (   member(LineI, Lines),
+            sub_atom(LineI, _, _, _, '"form":"imperative"'),
+            sub_atom(LineI, _, _, _, '"outcome":"fail_compile"')
         ->  C1 = yes
         ;   C1 = no
         ),
         check('the imperative cell is recorded', C1, yes),
-        (   member(CellD, Lines),
-            sub_atom(CellD, _, _, _, '"form":"declarative"'),
-            sub_atom(CellD, _, _, _, '"outcome":"fail_compile"')
+        (   member(LineD, Lines),
+            sub_atom(LineD, _, _, _, '"form":"declarative"'),
+            sub_atom(LineD, _, _, _, '"outcome":"fail_compile"')
         ->  C2 = yes
         ;   C2 = no
         ),

@@ -38,7 +38,10 @@ v2_reasoning_task(reach, Repair, Heldout, exact, budget(3, 10000, 0)) :-
     Repair =
         [ case('3 2\n1 2\n2 3\n1\n', '1 2 3\n'),
           case('4 2\n1 2\n3 4\n2\n', '2\n'),
-          case('3 3\n1 2\n2 1\n3\n', '3\n'),
+          %% The pre-registered run gave this case the header "3 3" with
+          %% two edges; the header must match the edge count. Corrected
+          %% to "3 2" before the rerun. The other cases are unchanged.
+          case('3 2\n1 2\n2 1\n3\n', '3\n'),
           case('5 4\n1 2\n2 3\n3 4\n4 5\n1\n', '1 2 3 4 5\n')
         ],
     Heldout =
@@ -75,6 +78,48 @@ v2_reasoning_check :-
                Repair \== [],
                Heldout \== []
            )).
+
+v2_reasoning_case(Task, Case) :-
+    v2_reasoning_task(Task, Repair, Heldout, _, _),
+    (   member(Case, Repair)
+    ;   member(Case, Heldout)
+    ).
+
+%% The graph cases must say how many edges they give: a header "n m"
+%% with m edge lines (and, for reach, the start node after them). The
+%% first pre-registered reach run had "3 3" with two edges, which made
+%% both forms fail; this check is why it cannot recur.
+v2_reasoning_case_ok(Task, case(Input, _)) :-
+    memberchk(Task, [reach, topo]),
+    !,
+    split_string(Input, "\n", " \t\r", Lines0),
+    exclude(v2_reasoning_blank, Lines0, Lines),
+    Lines = [First|Rest],
+    split_string(First, " ", " \t\r", [NS, MS]),
+    v2_reasoning_number(NS, N),
+    v2_reasoning_number(MS, M),
+    (   Task == reach
+    ->  length(Rest, M1),
+        M1 =:= M + 1,
+        append(EdgeLines, [StartLine], Rest),
+        split_string(StartLine, " ", " \t\r", [SS]),
+        v2_reasoning_number(SS, S),
+        S >= 1,
+        S =< N
+    ;   EdgeLines = Rest,
+        length(EdgeLines, M)
+    ),
+    forall(member(Line, EdgeLines), v2_reasoning_edge_ok(Line, N)).
+v2_reasoning_case_ok(_, _).
+
+v2_reasoning_edge_ok(Line, N) :-
+    split_string(Line, " ", " \t\r", [US, VS]),
+    v2_reasoning_number(US, U),
+    v2_reasoning_number(VS, V),
+    U >= 1,
+    U =< N,
+    V >= 1,
+    V =< N.
 
 %% ---- the topological order's property ---------------------------------
 

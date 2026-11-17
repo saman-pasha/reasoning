@@ -308,8 +308,12 @@ Implemented in `reasoning_schema.pl`, `form_runner.pl`, `form_run.pl` and
 tasks (`reach`, `topo`, `parses`), imperative Python 3 against
 declarative cocolog, four repair and two held-out cases each, and a
 topological-order property checked by the same predicate for both forms.
-The default grid is 18 cells. The first paid run has not started; its
-result is reported separately from the Phase 4 language comparison.
+The default grid is 18 cells. The first run is in
+`results/form-20261117.md`: the hypothesis was not supported --
+imperative Python passed 9/9 at attempt 1; declarative cocolog passed
+1/9 at attempt 1 and 5/9 final, at about 116 times the tokens. A
+malformed `reach` case was corrected and that lane rerun. The result is
+reported separately from the Phase 4 language comparison.
 
 ## Cost
 
@@ -376,13 +380,16 @@ The implemented v2:
   JSONL run through a fixture seam, the statistic reader, correct LCS
   programs in Python, cocolog and SWI, and fence stripping.
 
-- Phase 5 is implemented and pre-registered (`prereg-phase5.md`):
-  `reasoning_schema.pl` declares `reach`, `topo` and `parses`, the
-  imperative Python and declarative cocolog specs, the repair/held-out
-  cases and the property policy for `topo`; `form_runner.pl` / `form_run.pl`
-  / `form.sh` run the paired grid and write `v2-form` JSONL; the test
-  covers the tasks, the property checker and a form run. The paid run has
-  not started.
+- Phase 5 is implemented, pre-registered (`prereg-phase5.md`) and run
+  (`results/form-20261117.md`): `reasoning_schema.pl` declares `reach`,
+  `topo` and `parses`, the imperative Python and declarative cocolog
+  specs, the repair/held-out cases and the property policy for `topo`;
+  `form_runner.pl` / `form_run.pl` / `form.sh` run the paired grid and
+  write `v2-form` JSONL; the test covers the tasks, the property checker
+  and a form run. The first run did not support the hypothesis: Python
+  9/9 at attempt 1, cocolog 1/9 at attempt 1 and 5/9 final, at about 116
+  times the tokens. A malformed `reach` case was corrected and that lane
+  rerun.
 
 Not yet implemented: per-attempt rows in the JSONL. A diagnostic run can
 keep each attempt's spec, code, usage and verdict with `--keep DIR`, but

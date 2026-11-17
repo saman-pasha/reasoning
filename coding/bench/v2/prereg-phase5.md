@@ -48,3 +48,12 @@ or a repair diagnostic. The topological property checker is
 This registration is committed before the first paid run. The default
 grid is 3 tasks x 2 forms x 3 trials = 18 cells. The run starts only
 after the code and this file are green and committed.
+
+## Post-run record
+
+The first run is in `results/form-20261117.md`. One `reach` case was
+malformed (header `3 3` with two edge lines); it was corrected to `3 2`
+and the `reach` lane was rerun. The hypothesis was not supported on the
+corrected data: imperative Python passed 9/9 at attempt 1, declarative
+cocolog 1/9 at attempt 1 and 5/9 final, at about 116 times the tokens.
+The hypothesis and analysis above are unchanged.
