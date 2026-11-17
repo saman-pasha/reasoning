@@ -563,17 +563,41 @@ ep_anthropic_messages([json(Pairs)|Rest], [Wire|More]) :-
     Wire = json([role-Role, content-Content]),
     ep_anthropic_messages(Rest, More).
 
+%% DeepSeek's thinking mode refuses a replayed assistant turn with tool
+%% calls that does not carry the thinking of that round, and its blocks
+%% are unsigned: the reasoning_content a reply gave is one thinking block.
+%% A round whose thinking the endpoint no longer holds (a restart cleared
+%% the memo, or the client kept none) gets the proxy's placeholder rather
+%% than a refused request.
 ep_anthropic_message_content(assistant, Pairs, Blocks) :-
     memberchk(tool_calls-Calls, Pairs),
     is_list(Calls),
     Calls \== [],
     !,
     ep_anthropic_field(content, Pairs, Text),
+    ep_anthropic_thinking_block(Pairs, Thinking),
     ep_anthropic_text_blocks(Text, TextBlocks),
     ep_anthropic_tool_blocks(Calls, ToolBlocks),
-    append(TextBlocks, ToolBlocks, Blocks).
+    append([Thinking|TextBlocks], ToolBlocks, Blocks).
+ep_anthropic_message_content(assistant, Pairs, Blocks) :-
+    ep_anthropic_field(content, Pairs, Text),
+    ep_anthropic_field(reasoning_content, Pairs, Reasoning),
+    (   Reasoning == ''
+    ->  Blocks = Text
+    ;   ep_anthropic_thinking_block(Pairs, Thinking),
+        ep_anthropic_text_blocks(Text, TextBlocks),
+        append([Thinking|TextBlocks], [], Blocks)
+    ).
 ep_anthropic_message_content(_, Pairs, Text) :-
     ep_anthropic_field(content, Pairs, Text).
+
+ep_anthropic_thinking_block(Pairs, Block) :-
+    ep_anthropic_field(reasoning_content, Pairs, Reasoning),
+    (   Reasoning == ''
+    ->  Thinking = '(thinking omitted)'
+    ;   Thinking = Reasoning
+    ),
+    Block = json([type-thinking, thinking-Thinking]).
 
 ep_anthropic_text_blocks('', []) :-
     !.
@@ -704,14 +728,14 @@ ep_anthropic_chat_reply(Pairs, json(Out)) :-
     ->  true
     ;   Content = []
     ),
-    ep_anthropic_blocks(Content, Text, Calls),
+    ep_anthropic_blocks(Content, Text, Calls, Reasoning),
     (   memberchk(stop_reason-Stop, Pairs)
     ->  true
     ;   Stop = end_turn
     ),
     ep_anthropic_finish(Stop, Finish),
     ep_anthropic_usage(Pairs, Usage),
-    ep_anthropic_message(Text, Calls, Message),
+    ep_anthropic_message(Text, Calls, Reasoning, Message),
     get_time(Now),
     Created is round(Now),
     Out = [id-Id, object-'chat.completion', created-Created, model-Model,
@@ -747,20 +771,34 @@ ep_anthropic_count(Pairs, Key, Number) :-
     ;   Number = 0
     ).
 
-ep_anthropic_blocks([], '', []).
-ep_anthropic_blocks([json(Pairs)|Rest], Text, Calls) :-
+%% DeepSeek's /anthropic endpoint, whose thinking is always on, returns
+%% its reasoning as `thinking` blocks beside the text. They are carried as
+%% reasoning_content, the OpenAI wire's field, so the client and the
+%% session memo can give them back on the next request.
+ep_anthropic_blocks([], '', [], '').
+ep_anthropic_blocks([json(Pairs)|Rest], Text, Calls, Reasoning) :-
+    memberchk(type-thinking, Pairs),
+    !,
+    (   memberchk(thinking-Here, Pairs),
+        atom(Here)
+    ->  true
+    ;   Here = ''
+    ),
+    ep_anthropic_blocks(Rest, Text, Calls, Reasoning0),
+    ep_anthropic_join_text(Here, Reasoning0, Reasoning).
+ep_anthropic_blocks([json(Pairs)|Rest], Text, Calls, Reasoning) :-
     memberchk(type-text, Pairs),
     memberchk(text-Here, Pairs),
     !,
-    ep_anthropic_blocks(Rest, More, Calls),
+    ep_anthropic_blocks(Rest, More, Calls, Reasoning),
     ep_anthropic_join_text(Here, More, Text).
-ep_anthropic_blocks([json(Pairs)|Rest], Text, [Call|Calls]) :-
+ep_anthropic_blocks([json(Pairs)|Rest], Text, [Call|Calls], Reasoning) :-
     memberchk(type-tool_use, Pairs),
     !,
     ep_anthropic_call(Pairs, Call),
-    ep_anthropic_blocks(Rest, Text, Calls).
-ep_anthropic_blocks([_|Rest], Text, Calls) :-
-    ep_anthropic_blocks(Rest, Text, Calls).
+    ep_anthropic_blocks(Rest, Text, Calls, Reasoning).
+ep_anthropic_blocks([_|Rest], Text, Calls, Reasoning) :-
+    ep_anthropic_blocks(Rest, Text, Calls, Reasoning).
 
 ep_anthropic_join_text('', More, More) :-
     !.
@@ -787,12 +825,18 @@ ep_anthropic_finish(max_tokens, length) :-
     !.
 ep_anthropic_finish(_, stop).
 
-ep_anthropic_message('', [], json([role-assistant, content-''])).
-ep_anthropic_message(Text, [], json([role-assistant, content-Text])).
-ep_anthropic_message('', Calls, json([role-assistant, content- @(null),
-                                     tool_calls-Calls])).
-ep_anthropic_message(Text, Calls, json([role-assistant, content-Text,
-                                       tool_calls-Calls])).
+ep_anthropic_message('', [], Reasoning,
+                     json([role-assistant, content-'',
+                           reasoning_content-Reasoning])).
+ep_anthropic_message(Text, [], Reasoning,
+                     json([role-assistant, content-Text,
+                           reasoning_content-Reasoning])).
+ep_anthropic_message('', Calls, Reasoning,
+                     json([role-assistant, content- @(null),
+                           tool_calls-Calls, reasoning_content-Reasoning])).
+ep_anthropic_message(Text, Calls, Reasoning,
+                     json([role-assistant, content-Text,
+                           tool_calls-Calls, reasoning_content-Reasoning])).
 
 ep_anthropic_error_reply(Pairs, json([error-json([message-Message])])) :-
     (   memberchk(error-json(Error), Pairs),
@@ -1271,7 +1315,8 @@ ep_chat_body_1(Request, Body, Start, Reply) :-
             (   Title == true
             ->  Body1 = Body
             ;   ep_add_guide(Messages, Guide, Messages1),
-                ep_json_set(Body, messages, Messages1, Body1)
+                ep_chat_restore(Request, Messages1, Messages2),
+                ep_json_set(Body, messages, Messages2, Body1)
             ),
             (   ep_json_get(Body1, stream, Stream0)
             ->  true
@@ -1316,6 +1361,7 @@ ep_chat_body_1(Request, Body, Start, Reply) :-
             ),
             ep_usage(Resp, Usage),
             ep_reply_finish(Resp, Finish),
+            ep_chat_memo(Request, Resp),
             ep_continued(Continued),
             ep_trace(Request, Start, Alias, BackendModel, Effort, Mode,
                      N, TermCount, Stream, MessageCount, ToolCount, Status,
@@ -2510,6 +2556,72 @@ ep_reasoning_memo_reply_calls(_, [], _) :-
 ep_reasoning_memo_reply_calls(Session, Calls, Reasoning) :-
     ep_memo_calls_key(Calls, Key),
     ep_reasoning_memo_store(Session, Key, Reasoning).
+
+%% ---- the chat route's thinking -----------------------------------------
+%%
+%% Codex is not the only client: OpenCode sends its history back as chat
+%% messages and may keep no reasoning. The reply's reasoning_content is
+%% remembered under the session and put back on an assistant turn by its
+%% tool calls or its text, as the Responses route does. A turn the memo
+%% does not know is left as it came.
+
+ep_chat_memo(Request, Resp) :-
+    ep_session_id(Request, Session),
+    catch(json_parse(Resp, json(Pairs)), _, fail),
+    memberchk(choices-[json(Choice)|_], Pairs),
+    memberchk(message-json(Message), Choice),
+    ep_json_get(json(Message), content, Content0),
+    (   atom(Content0)
+    ->  Content = Content0
+    ;   Content = ''
+    ),
+    (   memberchk(tool_calls-Calls, Message),
+        is_list(Calls)
+    ->  true
+    ;   Calls = []
+    ),
+    (   memberchk(reasoning_content-Reasoning, Message),
+        atom(Reasoning)
+    ->  true
+    ;   Reasoning = ''
+    ),
+    ep_reasoning_memo_reply(Session, Content, Calls, Reasoning).
+
+ep_chat_restore(Request, Messages, Out) :-
+    ep_session_id(Request, Session),
+    (   Session == '-'
+    ->  Out = Messages
+    ;   ep_chat_restore_each(Session, Messages, Out)
+    ).
+
+ep_chat_restore_each(_, [], []).
+ep_chat_restore_each(Session, [json(Pairs)|Rest], [json(Pairs1)|Out]) :-
+    (   memberchk(role-assistant, Pairs),
+        \+ ep_chat_has_reasoning(Pairs)
+    ->  ep_chat_reasoning(Pairs, Session, Reasoning),
+        (   Reasoning == ''
+        ->  Pairs1 = Pairs
+        ;   ep_json_set(json(Pairs), reasoning_content, Reasoning, json(Pairs1))
+        )
+    ;   Pairs1 = Pairs
+    ),
+    ep_chat_restore_each(Session, Rest, Out).
+
+ep_chat_has_reasoning(Pairs) :-
+    memberchk(reasoning_content-Reasoning, Pairs),
+    atom(Reasoning),
+    Reasoning \== ''.
+
+ep_chat_reasoning(Pairs, Session, Reasoning) :-
+    (   memberchk(tool_calls-Calls, Pairs),
+        is_list(Calls),
+        Calls \== []
+    ->  ep_reasoning_memo_calls(Session, Calls, Reasoning)
+    ;   memberchk(content-Text, Pairs),
+        atom(Text)
+    ->  ep_reasoning_memo_text(Session, Text, Reasoning)
+    ;   Reasoning = ''
+    ).
 
 ep_r_text(Value, Text) :-
     atom(Value),
