@@ -333,12 +333,19 @@ the declarative experiment, and per-attempt rows in the JSONL. A
 diagnostic run can keep each attempt's spec, code, usage and verdict with
 `--keep DIR`, but the JSONL still aggregates them per cell.
 
-The pilot found one blocker before the next run: `mvccs_acid` solved 0/6
-and consumed 140 704 of 152 497 tokens. The diagnostic of 2026-11-17
+The old trio's pilot (`mvccs_acid` in place) spent 140 704 of 152 497
+tokens on `mvccs_acid` for zero passes. The diagnostic of 2026-11-17
 (commit `15a13e7`, one `plain` cell, 23 517 tokens) failed only the
 snapshot-visibility case in all three attempts; attempts 1 and 2 were
 byte-identical and attempt 3 changed only formatting. A larger call
-budget is not supported by that evidence, so `calculator` replaces
-`mvccs_acid` in the Phase 1 trio and `mvccs_acid` is kept for a later
-hard-task or reasoning-effort suite. The next paid run is a fresh
-three-trial pilot of the new trio and needs its spend approved.
+budget is not supported, so `calculator` replaced `mvccs_acid` and the
+latter is kept for a later hard-task or reasoning-effort suite.
+
+The new trio's three-trial pilot (2026-11-17, commit `5076d6a`, saved in
+`v2/results/pilot-20261117-new-trio.md`) reads 15/18 at pass@1 and final
+pass for 10 974 tokens. Every cell finished on its first attempt, so the
+repair loop was not exercised: `lcs/plain` failed all three held-out
+checks, `lcs/derive` passed all three, and `stable_sort` and `calculator`
+passed in both modes. The next matrix keeps this trio and adds the
+`extract`, `contract` and `full` modes; whether a harder task is needed
+to exercise repair is a separate decision.

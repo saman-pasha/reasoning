@@ -1,3 +1,4 @@
 *.jsonl
 !pilot-20261117.jsonl
 !mvccs-diag-20261117.jsonl
+!pilot-20261117-new-trio.jsonl
