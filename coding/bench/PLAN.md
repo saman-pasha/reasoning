@@ -358,8 +358,11 @@ The no-feedback arm (`once`) is now implemented, and its pilot against
 cell finished on its first attempt, so `plain` and `once` were the same
 policy; the paired `plain - once` difference is one `lcs` trial,
 `+11.1 pp [0.0, +33.3]`. The trio still cannot measure feedback because
-no first attempt fails a repair case. `btree` is now the fourth task for
-that role: its repair cases include a duplicate key and a root split, and
-its held-out cases are all-equal keys and a deeper split. The next paid
-run is `once` vs `plain` on `btree` alone; the full six-mode matrix follows
-only if the first attempt fails a repair case.
+no first attempt fails a repair case. `btree` is now the fourth task for that role, but its pilot
+(2026-11-17, commit `16a4e1d`, saved in
+`v2/results/btree-once-plain-20261117.md`) passed 6/6 on the first
+attempt: it does not exercise repair either. The next candidate is
+`btree_debug`, a repair task by design: its repair cases include `n=256`
+where the buggy source crashes, and its held-out cases are `n=50` and
+`n=1000`. A `once` vs `plain` pilot on it is the next paid run and has
+not been started.
