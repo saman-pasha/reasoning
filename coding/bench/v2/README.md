@@ -9,7 +9,7 @@ Phase 1 is implemented here; the first pilot has run, and the statistics
 are implemented:
 
 - C only, three legacy tasks: `lcs`, `stable_sort`, `calculator`.
-- Five modes: `plain`, `derive`, `contract`, `extract`, `full`.
+- Six modes: `once`, `plain`, `derive`, `contract`, `extract`, `full`.
 - Exact output policy for every task.
 - Repair cases a failing attempt may be told about, and held-out cases
   that are never put in a prompt or a diagnostic.
@@ -17,9 +17,10 @@ are implemented:
   separate report with task-cluster bootstrap intervals.
 - `--keep DIR` for a diagnostic run's per-attempt code and verdict.
 
-`extract` spends one extra model call; `full` is the hand contract plus
-the keyword derivation and spends none. The other languages, the
-declarative experiment and per-attempt JSONL rows are not implemented yet.
+`once` is the no-feedback arm: one call, no repair. `extract` spends one
+extra model call; `full` is the hand contract plus the keyword derivation
+and spends none. The other languages, the declarative experiment and
+per-attempt JSONL rows are not implemented yet.
 
 `mvccs_acid` was the third task in the first pilot. The diagnostic run of
 2026-11-17 failed only its snapshot-visibility case in all three attempts;
@@ -31,16 +32,19 @@ record for the old trio.
 
 ## Modes
 
-| mode | extra calls | prompt |
+| mode | calls | prompt |
 |---|---|---|
-| `plain` | 0 | the requirement alone |
-| `derive` | 0 | plus obligations derived from its keywords |
-| `contract` | 0 | plus the task's hand controlled-English contract |
-| `extract` | 1 | one call writes the controlled-English contract, then its obligations |
-| `full` | 0 | the hand contract and the keyword derivation together |
+| `once` | 1 | the requirement alone, no repair |
+| `plain` | up to 3 | the repair loop with the requirement alone |
+| `derive` | up to 3 | plus obligations derived from its keywords |
+| `contract` | up to 3 | plus the task's hand controlled-English contract |
+| `extract` | up to 3 + 1 | one call writes the controlled-English contract, then its obligations |
+| `full` | up to 3 | the hand contract and the keyword derivation together |
 
-`full` does not call the extractor: the plan's third factor is the guide,
-and the C codegen's system prompt is the guide in every mode.
+`once` measures the value of feedback itself; `plain` is the feedback arm
+with no obligations. `full` does not call the extractor: the plan's third
+factor is the guide, and the C codegen's system prompt is the guide in
+every mode.
 
 ## The cases
 
@@ -106,8 +110,8 @@ Options:
 
 ```text
 --tasks A,B     tasks (default: every v2 task)
---modes A,B     plain, derive, contract, extract, full
-                (default: config.pl's list, all five)
+--modes A,B     once, plain, derive, contract, extract, full
+                (default: config.pl's list, all six)
 --trials N      trials per task and mode (default: 3)
 --seed N        order seed (default: config.pl's)
 --out FILE      JSONL output (default: results/<run id>.jsonl)
@@ -129,9 +133,9 @@ bootstrap over tasks**, not over cells: trials of one task are not
 independent samples of the task population. With three tasks the interval
 is necessarily wide, so the table is the evidence and the interval is a
 warning against reading the aggregate as an estimate. It also prints the
-ablation pairs present: `derive` minus `plain`, `extract` minus `derive`,
-`contract` minus `extract` and `full` minus `contract`, for pass@1 and
-final pass, with the same bootstrap.
+ablation pairs present: `plain` minus `once`, `derive` minus `plain`,
+`extract` minus `derive`, `contract` minus `extract` and `full` minus
+`contract`, for pass@1 and final pass, with the same bootstrap.
 
 `--seed` defaults to the run's own seed, so a report is reproducible.
 
@@ -182,10 +186,11 @@ JSONL run with no provider.
 
 `config.pl` holds the provider, model, temperature, three-trial pilot and
 the seed. Per task, `schema.pl` allows three child calls and a case
-timeout. The default pilot is 3 tasks x 5 modes x 3 trials = 45 cells: at
-most 135 generator calls plus 15 extraction calls. The pilot is the
-budget gate: do not start a larger run until its per-task variance and
-token cost are known and the spend is approved.
+timeout; `once` reduces that to one. The default pilot is 3 tasks x 6
+modes x 3 trials = 54 cells: at most 153 generator calls plus 18
+extraction calls. The pilot is the budget gate: do not start a larger run
+until its per-task variance and token cost are known and the spend is
+approved.
 
 The legacy benchmark is not edited to make v2 pass. A disagreement
 between v2 and a legacy result is recorded before changing either.

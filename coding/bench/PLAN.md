@@ -317,11 +317,12 @@ The first sprint's skeleton is implemented in `coding/bench/v2/`:
   stderr. A nonempty stderr is a failure.
 - `config.pl` holds the provider, model, temperature, three-trial pilot,
   seed and child timeout.
-- `runner.pl` implements `plain`, `derive`, `contract`, `extract` and
-  `full`, the repair loop, seeded trial order, append-as-you-go JSONL and
-  a per-task summary. `extract` makes one parent call; `full` combines
-  the hand contract and the keyword derivation without one. `run.pl` is
-  its entry point; `gen.pl` is the child generator.
+- `runner.pl` implements `once`, `plain`, `derive`, `contract`, `extract`
+  and `full`, the repair loop, seeded trial order, append-as-you-go JSONL
+  and a per-task summary. `once` is the no-feedback arm (one call);
+  `extract` makes one parent call; `full` combines the hand contract and
+  the keyword derivation without one. `run.pl` is its entry point;
+  `gen.pl` is the child generator.
 - `stats.pl` reads a saved JSONL run and reports per-task rows, a cluster
   bootstrap over tasks for pass@1 and final pass, and the paired mode
   difference over tasks. `report.pl` is its entry point. The pilot's
@@ -349,7 +350,8 @@ The five-mode matrix pilot (2026-11-17, commit `75fdc8c`, saved in
 `lcs/plain` failed, on all three held-out runs; every obligation mode
 passed it. `contract`, `extract` and `full` had exactly zero paired
 difference against each other and against `derive`, and no cell needed a
-repair. The trio is too easy to separate the upper modes: the next
-decision is task selection (a requirement whose hand contract adds a
-check the keyword derivation misses) or a no-feedback arm, not a larger
-N.
+repair. The trio is too easy to separate the upper modes. The
+no-feedback arm `once` is now implemented; its pilot against `plain` is
+the next paid run and has not been started. The task-selection decision
+(a requirement whose hand contract adds a check the keyword derivation
+misses) remains open.

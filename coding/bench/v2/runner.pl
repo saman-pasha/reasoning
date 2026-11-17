@@ -127,6 +127,7 @@ v2_selection(Opts, Tasks, Modes, Trials, Seed, OutSpec) :-
     ;   OutSpec = default
     ).
 
+v2_mode_supported(once).
 v2_mode_supported(plain).
 v2_mode_supported(derive).
 v2_mode_supported(contract).
@@ -246,7 +247,8 @@ v2_run_jobs([Task-Mode|Jobs], Pos, Trial, TrialSeed, RunId, Commit, Stream) :-
     v2_run_jobs(Jobs, Next, Trial, TrialSeed, RunId, Commit, Stream).
 
 v2_run_cell(Task, Mode, Trial, Pos, Seed, RunId, Commit, Row, Cell) :-
-    v2_task(Task, _, _, _, _, _, budget(MaxCalls, _, _)),
+    v2_task(Task, _, _, _, _, _, budget(TaskCalls, _, _)),
+    v2_mode_calls(Mode, TaskCalls, MaxCalls),
     v2_mode_result(Mode, Task, spec(Spec, ModeUsage, ExtraCalls, ModeError)),
     v2_mode_effort(Mode, Effort),
     Usage0 = ModeUsage,
@@ -401,6 +403,10 @@ v2_next_prev(_, Code, Diag, prev(Code, Diag)).
 v2_mode_spec(Mode, Task, Spec) :-
     v2_mode_result(Mode, Task, spec(Spec, _, _, _)).
 
+v2_mode_result(once, Task,
+               spec(Spec, usage(0, 0, 0, 0, 0), 0, none)) :-
+    bench_task(Task, Spec, _).
+
 v2_mode_result(plain, Task,
                spec(Spec, usage(0, 0, 0, 0, 0), 0, none)) :-
     bench_task(Task, Spec, _).
@@ -529,6 +535,11 @@ v2_llm_usage(usage(P, C, T, R, H)) :-
 
 v2_mode_effort(high, high) :- !.
 v2_mode_effort(_, none).
+
+%% once is the no-feedback arm: one generator call and no repair. Every
+%% other mode keeps the task's repair budget.
+v2_mode_calls(once, _, 1) :- !.
+v2_mode_calls(_, Max, Max).
 
 %% ---- one child call ----------------------------------------------------
 

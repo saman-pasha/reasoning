@@ -27,6 +27,7 @@
                 v2_permute/4,
                 v2_mode_spec/3,
                 v2_mode_result/3,
+                v2_mode_calls/3,
                 v2_mode_effort/2,
                 v2_bool/2,
                 v2_add_usage/3,
@@ -286,10 +287,10 @@ test_runner :-
     check('selected trials', Trials, 2),
     check('selected seed', Seed, 5),
     check('selected output', OutSpec, file('/tmp/v2.jsonl')),
-    yes_no((forall(member(M, [plain, derive, contract, extract, full]),
+    yes_no((forall(member(M, [once, plain, derive, contract, extract, full]),
                    v2_mode_supported(M))),
            ModesOk),
-    check('all five modes are supported', ModesOk, yes),
+    check('all six modes are supported', ModesOk, yes),
     yes_no(v2_selection([modes([high])], [], _, _, _, _), BadMode),
     check('an unsupported mode is refused', BadMode, no),
     yes_no(v2_selection([tasks([nope])], _, _, _, _, _), BadTask),
@@ -297,6 +298,12 @@ test_runner :-
     bench_task(lcs, Plain0, _),
     once(v2_mode_spec(plain, lcs, Plain)),
     check('plain is the requirement', Plain, Plain0),
+    once(v2_mode_spec(once, lcs, Once)),
+    check('once is the same requirement', Once, Plain0),
+    v2_mode_calls(once, 3, OnceCalls),
+    check('once makes one call', OnceCalls, 1),
+    v2_mode_calls(plain, 3, PlainCalls),
+    check('plain keeps the repair budget', PlainCalls, 3),
     once(v2_mode_spec(derive, lcs, Derived)),
     (   sub_atom(Derived, _, _, _, 'Obligations derived from the requirement keywords:'),
         sub_atom(Derived, _, _, _, '- Read from standard input')
@@ -503,9 +510,10 @@ test_stats :-
     ;   DiffOk = point(DiffPoint, DiffLo, DiffHi)
     ),
     check('a paired difference is the derive gain', DiffOk, yes),
-    v2_stats_pairs([plain, derive, contract, extract, full], Pairs),
+    v2_stats_pairs([once, plain, derive, contract, extract, full], Pairs),
     check('the report pairs the ablation steps', Pairs,
-          [plain-derive, derive-extract, extract-contract, contract-full]),
+          [once-plain, plain-derive, derive-extract, extract-contract,
+           contract-full]),
     test_stats_json.
 
 test_stats_json :-

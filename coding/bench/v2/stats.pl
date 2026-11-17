@@ -147,13 +147,13 @@ v2_stats_unique([X|Xs], Ys) :-
 
 v2_stats_preferred_modes(Modes, Ordered) :-
     findall(M,
-            (   member(M, [plain, derive, contract, extract, full]),
+            (   member(M, [once, plain, derive, contract, extract, full]),
                 memberchk(M, Modes)
             ),
             First),
     findall(M,
             (   member(M, Modes),
-                \+ memberchk(M, [plain, derive, contract, extract, full])
+                \+ memberchk(M, [once, plain, derive, contract, extract, full])
             ),
             Rest),
     append(First, Rest, Ordered).
@@ -358,7 +358,8 @@ v2_stats_pair_block(Cells, Modes, Samples, Seed) :-
 v2_stats_pairs(Modes, Pairs) :-
     findall(ModeA-ModeB,
             (   member(ModeA-ModeB,
-                       [plain-derive,
+                       [once-plain,
+                        plain-derive,
                         derive-extract,
                         extract-contract,
                         contract-full]),
