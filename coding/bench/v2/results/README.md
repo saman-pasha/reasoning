@@ -1,2 +1,2 @@
-Run output lives here. The directory is kept in git; its JSONL files are
-not. Name a run with `--out` to put its JSONL elsewhere.
+Run output lives here. A generic run's `*.jsonl` is ignored; a frozen
+run keeps a descriptive JSONL beside its report and both are committed.

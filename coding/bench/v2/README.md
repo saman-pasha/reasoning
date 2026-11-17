@@ -144,5 +144,5 @@ gen.pl       one child generator call
 run.pl       the runner's main/0
 test.pl      no-model checks
 run.sh       the shell entry point
-results/     run output; the directory is kept, its files are not
+results/     run output; a frozen pilot keeps its JSONL and report
 ```
