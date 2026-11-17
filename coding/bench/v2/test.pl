@@ -12,6 +12,17 @@
 :- use_module(library(json)).
 :- use_module('coding/bench/v2/schema.pl').
 :- use_module('coding/bench/v2/verify.pl').
+:- use_module('coding/bench/v2/langs.pl',
+              [ v2_language_supported/1,
+                v2_language_task/1,
+                v2_language_spec/3,
+                v2_language_verify/4
+              ]).
+:- use_module('coding/bench/v2/lang_runner.pl',
+              [ v2_lang_run/5 ]).
+:- use_module('coding/bench/v2/lang_gen.pl',
+              [ v2_lang_strip_fence/2,
+                v2_lang_gen_args/7 ]).
 :- use_module('coding/bench/v2/stats.pl',
               [ v2_stats_read_run/3,
                 v2_stats_summary/2,
@@ -50,6 +61,10 @@ main :-
     test_pair_run,
     test_pair_summary,
     test_stats,
+    test_langs,
+    test_lang_fences,
+    test_lang_gen_args,
+    test_lang_run,
     test_keep,
     test_extract_cell,
     test_run_integration,
@@ -690,6 +705,209 @@ test_pair_summary :-
           usage(7, 0, 7, 0, 0)),
     check('a pair summary sums plain totals', PlainTotal,
           usage(16, 0, 16, 0, 0)).
+
+%% ---- the language layer ------------------------------------------------
+
+test_langs :-
+    section('languages'),
+    yes_no((forall(member(L, [c, python, cocolog, swipl]),
+                   v2_language_supported(L))),
+           Supported),
+    check('the four languages are supported', Supported, yes),
+    yes_no((forall(member(T, [lcs, stable_sort, calculator]),
+                   v2_language_task(T))),
+           TasksOk),
+    check('the language tasks are declared', TasksOk, yes),
+    once(v2_language_spec(python, lcs, PySpec)),
+    (   sub_atom(PySpec, _, _, _, 'Write a complete Python 3 program.'),
+        sub_atom(PySpec, _, _, _, 'longest common subsequence')
+    ->  PySpecOk = yes
+    ;   PySpecOk = no
+    ),
+    check('a Python spec keeps the requirement', PySpecOk, yes),
+    once(v2_language_spec(cocolog, lcs, CoSpec)),
+    (   sub_atom(CoSpec, _, _, _, 'main/0 reads standard input'),
+        sub_atom(CoSpec, _, _, _, 'longest common subsequence')
+    ->  CoSpecOk = yes
+    ;   CoSpecOk = no
+    ),
+    check('a cocolog spec names main/0', CoSpecOk, yes),
+    once(v2_language_spec(swipl, lcs, SwSpec)),
+    (   sub_atom(SwSpec, _, _, _, 'SWI-Prolog'),
+        sub_atom(SwSpec, _, _, _, 'longest common subsequence')
+    ->  SwSpecOk = yes
+    ;   SwSpecOk = no
+    ),
+    check('a SWI spec names SWI-Prolog', SwSpecOk, yes),
+    language_lcs_programs(PyCode, CoCode, SwCode),
+    (   v2_test_tool(python3)
+    ->  catch(once(v2_language_verify(python, lcs, PyCode, PyV)),
+              BallP,
+              ( format("python verify error: ~w~n", [BallP]), PyV = error )),
+        check('a correct Python LCS passes', PyV, verdict(ok, ok))
+    ;   true
+    ),
+    catch(once(v2_language_verify(cocolog, lcs, CoCode, CoV)),
+          BallC,
+          ( format("cocolog verify error: ~w~n", [BallC]), CoV = error )),
+    check('a correct cocolog LCS passes', CoV, verdict(ok, ok)),
+    (   v2_test_tool(swipl)
+    ->  catch(once(v2_language_verify(swipl, lcs, SwCode, SwV)),
+              BallS,
+              ( format("swipl verify error: ~w~n", [BallS]), SwV = error )),
+        check('a correct SWI LCS passes', SwV, verdict(ok, ok))
+    ;   true
+    ).
+
+v2_test_tool(Name) :-
+    format(atom(Cmd), 'command -v ~w >/dev/null 2>&1', [Name]),
+    catch(proc_run(Cmd, 10000, _, Exit), _, fail),
+    Exit == 0.
+
+test_lang_fences :-
+    section('language fences'),
+    atomic_list_concat(['```prolog', 'main :- writeln(hello).', '```'],
+                       '\n', FencedProlog),
+    atomic_list_concat(['```', 'main :- writeln(hello).', '```'],
+                       '\n', FencedBare),
+    atomic_list_concat(['', '```prolog', 'main :- writeln(hello).', '```'],
+                       '\n', FencedLeading),
+    QuotedFence = 'main :- writeln("```").',
+    atomic_list_concat(['main :- writeln(hello).', '', ''], '\n',
+                       TrailingLines),
+    fence('main :- writeln(hello).', 'main :- writeln(hello).'),
+    fence(FencedProlog, 'main :- writeln(hello).'),
+    fence(FencedBare, 'main :- writeln(hello).'),
+    fence(FencedLeading, 'main :- writeln(hello).'),
+    fence(QuotedFence, 'main :- writeln("```").'),
+    fence(TrailingLines, 'main :- writeln(hello).'),
+    fence('', '').
+
+fence(Reply, Expected) :-
+    once(v2_lang_strip_fence(Reply, Code)),
+    (   Code == Expected
+    ->  format("ok   fence ~q~n", [Reply])
+    ;   format("FAIL fence ~q: ~q (expected ~q)~n", [Reply, Code, Expected]),
+        fail
+    ).
+
+test_lang_gen_args :-
+    section('language child args'),
+    once(v2_lang_gen_args(
+             ['--out', 'c.py', '--lang', 'python', '--prev', '-',
+              '--spec', 's.txt', '--effort', 'none', '--diag', '-'],
+             Lang, Spec, Out, Effort, Prev, Diag)),
+    check('the child flags are read in any order',
+          [Lang, Spec, Out, Effort, Prev, Diag],
+          [python, 's.txt', 'c.py', none, '-', '-']),
+    (   v2_lang_gen_args(['--lang', 'python'], _, _, _, _, _, _)
+    ->  Missing = no
+    ;   Missing = yes
+    ),
+    check('a child with missing flags is refused', Missing, yes).
+
+test_lang_run :-
+    section('language jsonl'),
+    retractall(v2_language_generate_hook(_, _, _, _, _, _)),
+    language_lcs_programs(PyCode, _, _),
+    assertz((v2_language_generate_hook(python, _, _, Code,
+                                       usage(10, 20, 30, 0, 0), none) :-
+                Code = PyCode)),
+    setenv('CODING_ENDPOINT_KEY_ENV', 'test-key'),
+    tmp_file(v2_lang_keep, KeepRoot),
+    make_directory(KeepRoot),
+    v2_keep_set(KeepRoot),
+    tmp_file(v2_lang_jsonl, OutFile),
+    catch(once(v2_lang_run([lcs], [python], 1, 123, file(OutFile))), Ball,
+          ( format("language run error: ~w~n", [Ball]) )),
+    unsetenv('CODING_ENDPOINT_KEY_ENV'),
+    v2_keep_set(none),
+    retractall(v2_language_generate_hook(_, _, _, _, _, _)),
+    (   exists_file(OutFile)
+    ->  read_file_to_codes(OutFile, Codes),
+        atom_codes(Text, Codes),
+        split_string(Text, "\n", " \t\r", Lines),
+        exclude(v2_empty_string, Lines, Kept),
+        length(Kept, Count),
+        check('a language run writes two JSON lines', Count, 2),
+        (   Kept = [Header, Row]
+        ->  true
+        ;   Header = '', Row = ''
+        ),
+        (   sub_atom(Header, _, _, _, '"suite":"v2-lang"')
+        ->  H = yes
+        ;   H = no
+        ),
+        check('the language header names the suite', H, yes),
+        (   sub_atom(Row, _, _, _, '"language":"python"'),
+            sub_atom(Row, _, _, _, '"outcome":"pass"')
+        ->  R = yes
+        ;   R = no
+        ),
+        check('the language row records a Python pass', R, yes),
+        catch(delete_file(OutFile), _, true)
+    ;   check('the language run writes a JSONL file', missing, present)
+    ),
+    format(atom(KeptCode), '~s/lcs/python/trial-1/attempt-1-code.py',
+           [KeepRoot]),
+    (   exists_file(KeptCode),
+        v2test_read_atom(KeptCode, KeptText),
+        sub_atom(KeptText, _, _, _, 'import sys')
+    ->  K = yes
+    ;   K = no
+    ),
+    check('a language attempt keeps the code with its extension', K, yes),
+    catch(c_clean_dir(KeepRoot), _, true).
+
+language_lcs_programs(Python, Cocolog, Swipl) :-
+    atomic_list_concat([
+        'import sys',
+        'a = sys.stdin.readline().rstrip("\\n")',
+        'b = sys.stdin.readline().rstrip("\\n")',
+        'n, m = len(a), len(b)',
+        'dp = [[0] * (m + 1) for _ in range(n + 1)]',
+        'for i in range(1, n + 1):',
+        '    for j in range(1, m + 1):',
+        '        if a[i - 1] == b[j - 1]:',
+        '            dp[i][j] = dp[i - 1][j - 1] + 1',
+        '        else:',
+        '            dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])',
+        'print(dp[n][m])'
+    ], '\n', Python),
+    atomic_list_concat([
+        ':- use_module(library(stream)).',
+        'main :-',
+        '    current_input(S),',
+        '    stream_read_line(S, L1),',
+        '    stream_read_line(S, L2),',
+        '    ( L1 == end_of_file -> A = [] ; A = L1 ),',
+        '    ( L2 == end_of_file -> B = [] ; B = L2 ),',
+        '    lcs(A, B, N),',
+        '    format("~w~n", [N]).',
+        'lcs([], _, 0) :- !.',
+        'lcs(_, [], 0) :- !.',
+        'lcs([X|Xs], [Y|Ys], N) :-',
+        '    ( X == Y -> lcs(Xs, Ys, N0), N is N0 + 1',
+        '    ; lcs([X|Xs], Ys, N1), lcs(Xs, [Y|Ys], N2), N is max(N1, N2)',
+        '    ).'
+    ], '\n', Cocolog),
+    atomic_list_concat([
+        ':- use_module(library(readutil)).',
+        'line_codes(end_of_file, []) :- !.',
+        'line_codes(S, Cs) :- string_codes(S, Cs).',
+        'lcs([], _, 0) :- !.',
+        'lcs(_, [], 0) :- !.',
+        'lcs([X|Xs], [Y|Ys], N) :-',
+        '    ( X =:= Y -> lcs(Xs, Ys, N0), N is N0 + 1',
+        '    ; lcs([X|Xs], Ys, N1), lcs(Xs, [Y|Ys], N2), N is max(N1, N2)',
+        '    ).',
+        'main :-',
+        '    read_line_to_string(user_input, A0),',
+        '    read_line_to_string(user_input, B0),',
+        '    line_codes(A0, A), line_codes(B0, B),',
+        '    lcs(A, B, N),',
+        '    format("~w~n", [N]).'
+    ], '\n', Swipl).
 
 %% ---- statistics --------------------------------------------------------
 

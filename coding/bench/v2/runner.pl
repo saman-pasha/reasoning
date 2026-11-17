@@ -1016,9 +1016,13 @@ v2_keep_cell_dir(Task, Mode, Trial, Dir) :-
     Root \== none,
     format(atom(Dir), '~s/~w/~w/trial-~w', [Root, Task, Mode, Trial]).
 
-v2_keep_attempt(Attempt, Code, usage(P, C, T, R, H), GenError, Verdict) :-
+v2_keep_attempt(Attempt, Code, Usage, GenError, Verdict) :-
+    v2_keep_attempt_ext(Attempt, c, Code, Usage, GenError, Verdict).
+
+v2_keep_attempt_ext(Attempt, Ext, Code, usage(P, C, T, R, H), GenError,
+                    Verdict) :-
     (   v2_keep_cell_root(Dir)
-    ->  format(atom(CodeName), 'attempt-~w-code.c', [Attempt]),
+    ->  format(atom(CodeName), 'attempt-~w-code.~w', [Attempt, Ext]),
         (   Code == ''
         ->  true
         ;   catch(v2_keep_atom_file(Dir, CodeName, Code), _, true)

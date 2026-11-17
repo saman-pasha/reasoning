@@ -5,8 +5,9 @@ The second coding benchmark. It is separate from the legacy
 behaviour. v2 answers a narrower set of questions with one verifier,
 repeated trials and held-out cases.
 
-Phase 1 is implemented here; the first pilot has run, and the statistics
-are implemented:
+Phase 1 and the Phase 4 language layer are implemented here; the first
+pilot, the paired feedback runs and the first language comparison have
+run, and the statistics are implemented.
 
 - C only, five legacy tasks: `lcs`, `stable_sort`, `calculator`,
   `btree`, `btree_debug`.
@@ -17,11 +18,13 @@ are implemented:
 - A JSONL row for every task, mode and trial, a sorted summary, and a
   separate report with task-cluster bootstrap intervals.
 - `--keep DIR` for a diagnostic run's per-attempt code and verdict.
+- Four languages (C, Python, cocolog and SWI-Prolog) on three
+  language-neutral tasks, with one runner and one verifier policy.
 
 `once` is the no-feedback arm: one call, no repair. `extract` spends one
 extra model call; `full` is the hand contract plus the keyword derivation
-and spends none. The other languages, the declarative experiment and
-per-attempt JSONL rows are not implemented yet.
+and spends none. The declarative experiment and per-attempt JSONL rows
+are not implemented yet.
 
 `mvccs_acid` was the third task in the first pilot. The diagnostic run of
 2026-11-17 failed only its snapshot-visibility case in all three attempts;
@@ -85,6 +88,61 @@ Every current task uses `exact`, so a leading space is a failure. The
 legacy `bench_norm/2` is not used. `stdout` and `stderr` are captured
 separately: a nonempty `stderr` is a failure even when `stdout` is right,
 so a sanitizer report cannot pass as an answer.
+
+## Languages (Phase 4)
+
+`lang.sh` runs the language comparison on the three language-neutral
+tasks (`lcs`, `stable_sort`, `calculator`) in C, Python, cocolog and
+SWI-Prolog. It is a separate runner: no C result or mode matrix changes.
+
+```sh
+./coding/bench/v2/lang.sh --plan
+./coding/bench/v2/lang.sh --doctor
+./coding/bench/v2/lang.sh --run --tasks lcs --langs python,c --trials 1
+```
+
+`--plan` prints the grid and no model call; `--doctor` prints each
+language's toolchain and no model call. A run needs
+`CODING_ENDPOINT_KEY_ENV` and spends tokens. The default grid is
+3 tasks x 4 languages x 3 trials = 36 cells, all in `plain` mode.
+
+What is held identical:
+
+- the task's requirement after its first sentence (which names the
+  language and entry point);
+- the repair and held-out cases, their order, and the exact output
+  policy;
+- the task's call budget and the parent repair loop.
+
+What differs, and is a stated confound:
+
+- **The generator is each language's normal one.** C uses
+  `codegen_c`, Python `codegen_python`, and cocolog
+  `codegen_cocolog`, each with its own guide and obligations. SWI has no
+  generator in this tree: its child makes one direct `llm_chat` call
+  with a short SWI-Prolog system prompt. The comparison therefore
+  measures language *plus its normal guide*, not language alone.
+- **The case timeout.** C keeps its 3 s; every other language gets at
+  least 10 s, because the pyenv `python3` shim alone takes about 3 s to
+  start. This is a timing allowance, not a policy change for C.
+
+Each cell runs one complete program through the same exact matcher and
+the same stdout/stderr separation as `verify.pl`. A nonempty stderr is
+a failure. The source is written to a temporary directory and run as:
+
+```sh
+python3 -I program.py          < in > out 2> err
+cocolog run program.pl         < in > out 2> err
+swipl -q -f program.pl -g main -t halt < in > out 2> err
+```
+
+C compiles with the sanitizer build as before. `PYTHON3` and `SWIPL`
+override the two interpreted runtimes. There is **no combined score**:
+the JSONL rows and the per-task/language summary are the result, and
+languages are not ranked by one number. The first comparison ran on
+2026-11-17: 36 cells, 22/36 pass@1, 26/36 final, 403 944 tokens;
+`results/lang-20261117.md` is the record. Treat it as a pilot: one
+model, one generator per language and three tasks.
 
 ## Commands
 
@@ -231,6 +289,10 @@ and a compile failure, the attempt loop through a fixture seam, the
 paired arms and their shared usage, the statistics and JSONL reader, the
 kept attempt files, and one complete JSONL run with no provider. It also
 pins the five task splits, including the corrected `stable_sort` case.
+For Phase 4 it checks the language table and spec transformation, runs a
+correct LCS through the Python, cocolog and SWI verifiers when the
+toolchain is present, strips Markdown fences from model replies, and
+writes one Python language-run JSONL through a fixture seam.
 
 ## Budget
 
@@ -259,6 +321,11 @@ run.sh       the shell entry point
 stats.pl     JSONL reader, cluster bootstrap, paired differences
 report.pl    the report's main/0
 report.sh    the report's shell entry point
+langs.pl     Phase 4 language table, spec transformation, verifiers
+lang_runner.pl  language cells, attempts and summary
+lang_gen.pl  one language generator call (child)
+lang_run.pl  the language runner's main/0
+lang.sh      the language runner's shell entry point
 test.pl      no-model checks
 legacy.sh    Phase 0 selector for the unchanged legacy benchmark
 results/     baseline.md and frozen runs, each with its JSONL and report

@@ -280,6 +280,12 @@ not a new run. No legacy file was edited.
 - Acceptance: identical specs/cases/budgets; per-language toolchain
   diagnostics; confounds stated; no combined score.
 
+Implemented in `coding/bench/v2/langs.pl`, `lang_runner.pl`,
+`lang_gen.pl`, `lang_run.pl` and `lang.sh`. The first comparison ran on
+2026-11-17: 36 cells, 22/36 pass@1, 26/36 final, 403 944 tokens
+(`v2/results/lang-20261117.md`). It is a pilot: one model, one generator
+per language and three tasks, with the guide confound stated.
+
 ### Phase 5 — declarative vs imperative
 
 - Add the paired two-form experiment and the reasoning-specific task set.
@@ -336,15 +342,31 @@ The implemented v2:
   difference over tasks. `report.pl` is its entry point. The pilot's
   interval is necessarily wide with three tasks; the per-task table is
   the evidence.
+- Phase 4's language layer is implemented and tested, but no language
+  comparison has run. `langs.pl` declares C, Python, cocolog and
+  SWI-Prolog and rewrites only the task requirement's first sentence;
+  cases, held-out split, exact policy and call budget are the C task's.
+  `lang_runner.pl` / `lang_run.pl` / `lang.sh` run the language grid
+  (`--plan`, `--doctor`, `--run`) and write `suite: v2-lang` JSONL rows;
+  `lang_gen.pl` is the child generator. `--doctor` prints each
+  toolchain. The stated confound is that each language uses its normal
+  generator (C's, Python's, cocolog's; SWI a short direct prompt), so the
+  comparison is language plus guide, and non-C languages get a 10 s case
+  timeout where C keeps 3 s. There is no combined score.
 - `test.pl` checks all of the above with no model call, including a full
-  JSONL run through a fixture seam and the statistic reader.
+  JSONL run through a fixture seam, the statistic reader, correct LCS
+  programs in Python, cocolog and SWI, and fence stripping.
 
-Not yet implemented: the other languages, the declarative experiment,
-and per-attempt rows in the JSONL. A diagnostic run can keep each
-attempt's spec, code, usage and verdict with `--keep DIR`, but the JSONL
-still aggregates them per cell. The six-mode matrix has been run on the
+Not yet implemented: the declarative experiment (Phase 5) and
+per-attempt rows in the JSONL. A diagnostic run can keep each attempt's
+spec, code, usage and verdict with `--keep DIR`, but the JSONL still
+aggregates them per cell. The six-mode matrix has been run on the
 three-task set and `btree_debug` has paired feedback runs; the full
-six-mode matrix on all five tasks has not been run.
+six-mode matrix on all five tasks has not been run. The Phase 4 language
+comparison ran on 2026-11-17 (`v2/results/lang-20261117.md`): Python
+9/9 pass@1, C 6/9, SWI 5/9, cocolog 2/9; cocolog's guide is 95.5 % of
+the run's tokens. The next gate is whether to widen the language run or
+turn to Phase 5.
 
 The old trio's pilot (`mvccs_acid` in place) spent 140 704 of 152 497
 tokens on `mvccs_acid` for zero passes. The diagnostic of 2026-11-17
