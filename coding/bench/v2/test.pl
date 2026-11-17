@@ -34,6 +34,7 @@
                 v2_attempts/12,
                 v2_pair_attempts/5,
                 v2_pair_run/4,
+                v2_pair_summary_values/9,
                 v2_run_cell/9,
                 v2_keep_set/1,
                 v2_run/5
@@ -47,6 +48,7 @@ main :-
     test_attempts,
     test_pair,
     test_pair_run,
+    test_pair_summary,
     test_stats,
     test_keep,
     test_extract_cell,
@@ -660,6 +662,34 @@ test_pair_run :-
         catch(delete_file(OutFile), _, true)
     ;   check('the paired run writes a JSONL file', missing, present)
     ).
+
+test_pair_summary :-
+    section('paired summary'),
+    Pairs = [
+        pair(t, 1, ok, yes, yes, 1, 1,
+             usage(1, 0, 1, 0, 0), usage(0, 0, 0, 0, 0),
+             usage(1, 0, 1, 0, 0), usage(1, 0, 1, 0, 0)),
+        pair(t, 2, fail, no, yes, 1, 2,
+             usage(2, 0, 2, 0, 0), usage(3, 0, 3, 0, 0),
+             usage(2, 0, 2, 0, 0), usage(5, 0, 5, 0, 0)),
+        pair(t, 3, fail, no, no, 1, 3,
+             usage(4, 0, 4, 0, 0), usage(6, 0, 6, 0, 0),
+             usage(4, 0, 4, 0, 0), usage(10, 0, 10, 0, 0))
+    ],
+    v2_pair_summary_values(Pairs, N, OncePass, PlainPass, PlainOnly,
+                           Shared, Repair, OnceTotal, PlainTotal),
+    check('a pair summary counts pairs', N, 3),
+    check('a pair summary counts once passes', OncePass, 1),
+    check('a pair summary counts plain passes', PlainPass, 2),
+    check('a pair summary counts plain-only wins', PlainOnly, 1),
+    check('a pair summary sums shared usage', Shared,
+          usage(7, 0, 7, 0, 0)),
+    check('a pair summary sums repair usage', Repair,
+          usage(9, 0, 9, 0, 0)),
+    check('a pair summary sums once totals', OnceTotal,
+          usage(7, 0, 7, 0, 0)),
+    check('a pair summary sums plain totals', PlainTotal,
+          usage(16, 0, 16, 0, 0)).
 
 %% ---- statistics --------------------------------------------------------
 

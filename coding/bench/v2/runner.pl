@@ -952,7 +952,7 @@ v2_pair_summary_row(Task) :-
 v2_pair_summary_values(Pairs, N, OncePass, PlainPass, PlainOnly,
                        Shared, Repair, OnceTotal, PlainTotal) :-
     length(Pairs, N),
-    findall(F, member(pair(_,_,_,_,F,_,_,_,_,_,_), Pairs), OnceFinals),
+    findall(F, member(pair(_,_,_,F,_,_,_,_,_,_,_), Pairs), OnceFinals),
     v2_count_yes(OnceFinals, OncePass),
     findall(F, member(pair(_,_,_,_,F,_,_,_,_,_,_), Pairs), PlainFinals),
     v2_count_yes(PlainFinals, PlainPass),

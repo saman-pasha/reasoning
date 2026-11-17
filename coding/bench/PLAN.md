@@ -378,6 +378,12 @@ saved in `v2/results/btree-debug-paired-20261117.md`) has three pairs:
 the shared first attempt passed in two, and the one failing attempt was
 repaired twice and stayed failing. `once` and `plain` both passed 2/3;
 `plain` cost 29 976 tokens against `once`'s 14 036 with no gain. The
-design is sound but N=3 gives one repair branch. Next is a larger paired
-N or a task/setting that fails first more often; no further paid run has
-been made.
+design is sound but N=3 gives one repair branch.
+
+The 10-pair run (2026-11-17, commit `08198c6`, saved in
+`v2/results/btree-debug-paired-10-20261117.md`) gives a first positive
+signal: `once` 7/10, `plain` 8/10, one paired win (trial 9), two failed
+repairs. Paired difference `+10.0 pp [0.0, +30.0]`; `plain` costs 86 867
+tokens against `once`'s 46 791. One win in three failing branches is not
+an estimate. The next paid run is 30 pairs if the rate holds, about 9
+failing branches; no further paid run has been made.
