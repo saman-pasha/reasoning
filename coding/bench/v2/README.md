@@ -142,20 +142,19 @@ includes the offending source line and a caret under the column when the
 compiler did not quote the line itself; a cocolog entry goal that exits
 nonzero with empty stderr is rerun once under `--trace` and the first
 case's report gets the tracer's last failing chain. For cocolog the
-child appends one benchmark paragraph to the language's normal guide: a
-one-character atom is not a number (`char_code/2`, or keep the codes), a
-character code is `0'` followed by the character, and a code parser uses
-the safe list shape (`skip_spaces([], [])`, a digit base with no
-empty-rest guard, the parenthesis's tail, `number_codes/2`, and no
-`digits/3` — `library(stream)` already defines it). This is a stated,
-cocolog-only deviation from the normal-guide confound, added after the
-2026-11-17 run; with it `calculator/cocolog` is 2/3 pass@1 and 3/3 final
-over three trials, against 0/3 in that run. There is **no combined
-score**: the JSONL rows and the per-task/language summary are the
-result, and languages are not ranked by one number. The first comparison
-ran on 2026-11-17: 36 cells, 22/36 pass@1, 26/36 final, 403 944 tokens;
-`results/lang-20261117.md` is the record. Treat it as a pilot: one
-model, one generator per language and three tasks.
+generator reads this repository's `coding/cocolog/SKILL.md`, a copy of
+the language guide with an added "Codes, parsers and tables" section:
+`char_code/2` and the `0'` token, the safe code-parser shape, the
+`digits/3` collision with `library(stream)`, and a row-table rule with a
+worked LCS program. `COCOLOG_SKILL` still overrides the path. This is a
+stated, cocolog-only scaffold; the lane rerun with it is
+`results/lang-cocolog-skill-20261117.md` (4/9 pass@1, 8/9 final,
+362 886 tokens, against 2/9 and 5/9 in the 36-cell run). There is **no
+combined score**: the JSONL rows and the per-task/language summary are
+the result, and languages are not ranked by one number. The first
+comparison ran on 2026-11-17: 36 cells, 22/36 pass@1, 26/36 final,
+403 944 tokens; `results/lang-20261117.md` is the record. Treat it as a
+pilot: one model, one generator per language and three tasks.
 
 ## Commands
 

@@ -80,51 +80,9 @@ v2_lang_code(python, Spec, Options, Code) :-
     codegen_python(Spec, Options, Code).
 v2_lang_code(cocolog, Spec, Options, Code) :-
     use_module('coding/cocolog/codegen.pl'),
-    v2_lang_cocolog_guide(GuideFile),
-    call_cleanup(
-        v2_lang_with_env('COCOLOG_SKILL', GuideFile,
-                         codegen_cocolog(Spec, main, Options, Code)),
-        catch(delete_file(GuideFile), _, true)).
+    codegen_cocolog(Spec, main, Options, Code).
 v2_lang_code(swipl, Spec, Options, Code) :-
     v2_lang_swipl_code(Spec, Options, Code).
-
-%% The cocolog guide is the language's own, with one benchmark line: the
-%% published language run showed the model treating one-character atoms
-%% as numbers and repeating the error through every repair. The line is
-%% appended to the guide the generator reads, and the environment is put
-%% back whatever the call does.
-v2_lang_cocolog_guide(File) :-
-    use_module('coding/cocolog/codegen.pl'),
-    cocolog_skill_text(Base),
-    v2_lang_cocolog_hint(Hint),
-    format(atom(Text), '~s~n~n~s', [Base, Hint]),
-    tmp_file(v2_lang_cocolog_guide, File),
-    atom_codes(Text, Codes0),
-    append(Codes0, [10], Codes),
-    write_file_from_codes(File, Codes).
-
-v2_lang_cocolog_hint(Hint) :-
-    atomic_list_concat(
-        [ 'A character is not a number. atom_chars/2 gives one-character atoms; to compare or subtract one, take its code with char_code/2, or keep the character codes that read_line_to_codes/2 returns. Write a character code as 0'' and the character itself: 0''( is the code of (, 0'') of ), 0''0 of 0. The token ends at the character; never add a quote after it. 0''0 is the number 48; ''0'' is an atom and not a number.',
-          'A parser over codes works on non-empty list patterns: [C|Cs] binds C, and only then compare it (C =:= 0''+). A spaces predicate has three clauses: skip the whitespace with a cut; skip_spaces([], []). for the end; and skip_spaces(List, List) :- List = [_|_]. for a non-space code, so a non-space is returned unchanged (never skip_spaces(Rest, Rest)., which also matches an unbound list). A parenthesized atom binds C and its tail Cs, compares the open with C =:= 0''(, recurses on the tail Cs (not on the list that still begins with the open paren, or the parser loops), and after the inner expression and the spaces compares the close with C2 =:= 0''), as two separate comparisons. The digit collector ends with parse_digits(Rest, [], Rest). and no Rest = [] guard: the remaining codes may be a non-empty suffix. number_codes/2 takes the list of digit codes and gives the number; it has no third argument, so collect the digit codes and the remaining codes yourself. library(stream) already defines digits/3, and a digits/3 of your own is ignored: name the collector parse_digits/3.'
-        ],
-        '\n\n', Hint).
-
-v2_lang_with_env(Name, Value, Goal) :-
-    (   getenv(Name, Old),
-        Old \== ''
-    ->  Had = yes(Old)
-    ;   Had = none
-    ),
-    setenv(Name, Value),
-    call_cleanup(Goal, v2_lang_restore_env(Name, Had)).
-
-v2_lang_restore_env(Name, yes(Old)) :-
-    !,
-    atom_string(Value, Old),
-    setenv(Name, Value).
-v2_lang_restore_env(Name, none) :-
-    unsetenv(Name).
 
 v2_lang_swipl_code(Spec, Options, Code) :-
     memberchk(provider(Provider), Options),

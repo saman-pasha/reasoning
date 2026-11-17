@@ -22,10 +22,10 @@
               [ v2_lang_run/5 ]).
 :- use_module('coding/bench/v2/lang_gen.pl',
               [ v2_lang_strip_fence/2,
-                v2_lang_gen_args/7,
-                v2_lang_cocolog_guide/1,
-                v2_lang_with_env/3
+                v2_lang_gen_args/7
               ]).
+:- use_module('coding/cocolog/codegen.pl',
+              [ cocolog_skill_text/1 ]).
 :- use_module('coding/bench/v2/stats.pl',
               [ v2_stats_read_run/3,
                 v2_stats_summary/2,
@@ -68,7 +68,7 @@ main :-
     test_lang_fences,
     test_lang_gen_args,
     test_lang_context,
-    test_lang_cocolog_guide,
+    test_cocolog_skill,
     test_lang_run,
     test_keep,
     test_extract_cell,
@@ -844,23 +844,30 @@ test_lang_context :-
     ),
     check('a silent goal failure shows the tracer failures', Traced, yes).
 
-test_lang_cocolog_guide :-
-    section('cocolog guide'),
-    once(v2_lang_cocolog_guide(File)),
-    read_file_to_codes(File, Codes),
-    atom_codes(Text, Codes),
+test_cocolog_skill :-
+    section('cocolog skill'),
+    (   exists_file('coding/cocolog/SKILL.md')
+    ->  Exists = yes
+    ;   Exists = no
+    ),
+    check('the cocolog guide is in this repository', Exists, yes),
+    unsetenv('COCOLOG_SKILL'),
+    catch(once(cocolog_skill_text(Text)),
+          Ball,
+          ( format("cocolog skill error: ~w~n", [Ball]),
+            Text = ''
+          )),
     atom_length(Text, Length),
-    catch(delete_file(File), _, true),
     (   Length > 60000
     ->  Long = yes
     ;   Long = no
     ),
-    check('the cocolog guide is the full language guide', Long, yes),
+    check('the generator reads the full guide', Long, yes),
     (   sub_atom(Text, _, _, _, 'SKILL — working in cocolog')
     ->  Guide = yes
     ;   Guide = no
     ),
-    check('the cocolog guide keeps the language guide', Guide, yes),
+    check('the copied guide keeps the language guide', Guide, yes),
     (   sub_atom(Text, _, _, _, 'char_code/2'),
         sub_atom(Text, _, _, _, 'one-character atoms'),
         sub_atom(Text, _, _, _, 'never add a quote after it'),
@@ -868,30 +875,16 @@ test_lang_cocolog_guide :-
         sub_atom(Text, _, _, _, 'skip_spaces([], [])'),
         sub_atom(Text, _, _, _, 'skip_spaces(List, List)'),
         sub_atom(Text, _, _, _, 'recurses on the tail'),
-        sub_atom(Text, _, _, _, 'no Rest = [] guard'),
-        sub_atom(Text, _, _, _, 'library(stream) already defines digits/3')
-    ->  Hint = yes
-    ;   Hint = no
+        sub_atom(Text, _, _, _, 'The digit collector ends'),
+        sub_atom(Text, _, _, _, 'already defines'),
+        sub_atom(Text, _, _, _, 'A table built one row at a time'),
+        sub_atom(Text, _, _, _, 'lcs_cells'),
+        sub_atom(Text, _, _, _,
+                 'A worked row table for the longest common subsequence')
+    ->  Added = yes
+    ;   Added = no
     ),
-    check('the cocolog guide adds the character-code line', Hint, yes),
-    unsetenv('V2_TEST_GUIDE_ENV'),
-    once(v2_lang_with_env('V2_TEST_GUIDE_ENV', 'v', true)),
-    (   getenv('V2_TEST_GUIDE_ENV', After),
-        After \== ''
-    ->  Restored = no
-    ;   Restored = yes
-    ),
-    check('the guide environment is put back', Restored, yes),
-    setenv('V2_TEST_GUIDE_ENV', 'old'),
-    once(v2_lang_with_env('V2_TEST_GUIDE_ENV', 'new', true)),
-    (   getenv('V2_TEST_GUIDE_ENV', Back),
-        atom_string(BackAtom, Back),
-        BackAtom == old
-    ->  Restored2 = yes
-    ;   Restored2 = no
-    ),
-    check('an existing guide environment is put back', Restored2, yes),
-    unsetenv('V2_TEST_GUIDE_ENV').
+    check('the copied guide has the benchmark section', Added, yes).
 
 test_lang_run :-
     section('language jsonl'),

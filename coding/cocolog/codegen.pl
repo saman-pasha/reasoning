@@ -12,7 +12,7 @@
 %%
 %%     --goal G        the goal `cocolog run' proves (default main)
 %%     --skill FILE    the language guide (default $COCOLOG_SKILL, else
-%%                     ../cocolog/SKILL.md)
+%%                     coding/cocolog/SKILL.md)
 %%     --no-skill      omit the guide; a short generic cocolog prompt
 %%     --expect FILE   compare the program's standard output with FILE
 %%     --attempts N    try at most N times (default 3)
@@ -53,7 +53,7 @@
 %% ---- the language guide ------------------------------------------------
 %%
 %% Three ways to find the guide, in order: --skill FILE, $COCOLOG_SKILL,
-%% then ../cocolog/SKILL.md beside this repository. A guide that cannot be
+%% then this repository's coding/cocolog/SKILL.md. A guide that cannot be
 %% read is an error, never a silent fall-back to the generic prompt: the
 %% generic run is a different experiment (--no-skill says so on purpose),
 %% and a missing file must not be quietly counted with it.
@@ -66,7 +66,7 @@ cocolog_skill_text(none, Text) :-
     (   getenv('COCOLOG_SKILL', File),
         File \== ''
     ->  true
-    ;   File = '../cocolog/SKILL.md'
+    ;   File = 'coding/cocolog/SKILL.md'
     ),
     cocolog_read_skill(File, Text).
 cocolog_skill_text(File, Text) :-

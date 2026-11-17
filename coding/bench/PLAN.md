@@ -287,12 +287,15 @@ Implemented in `coding/bench/v2/langs.pl`, `lang_runner.pl`,
 per language and three tasks, with the guide confound stated. The repair
 diagnostic now shows the offending source line and a caret when the
 compiler did not quote it, and a silent cocolog goal failure adds the
-tracer's failing chain (`reasoning 1.8.21`). The cocolog child appends a
-benchmark paragraph to the normal guide: `char_code/2` and the `0'`
-token, the safe code-parser shape, and the `digits/3` collision with
-`library(stream)`. With it `calculator/cocolog` is 2/3 pass@1 and 3/3
-final over three trials, against 0/3 in the recorded run
-(`reasoning 1.8.22`); it is a stated, cocolog-only deviation.
+tracer's failing chain (`reasoning 1.8.21`). The cocolog generator reads
+this repository's `coding/cocolog/SKILL.md`, a copy of the language
+guide with an added "Codes, parsers and tables" section: `char_code/2`
+and the `0'` token, the safe code-parser shape, the `digits/3` collision
+with `library(stream)`, and a row-table rule with a worked LCS program.
+The cocolog lane rerun with it is 4/9 pass@1 and 8/9 final, 362 886
+tokens, against 2/9 and 5/9 in the 36-cell run
+(`v2/results/lang-cocolog-skill-20261117.md`, `reasoning 1.8.23`); it is
+a stated, cocolog-only scaffold.
 
 ### Phase 5 — declarative vs imperative
 
@@ -373,8 +376,9 @@ three-task set and `btree_debug` has paired feedback runs; the full
 six-mode matrix on all five tasks has not been run. The Phase 4 language
 comparison ran on 2026-11-17 (`v2/results/lang-20261117.md`): Python
 9/9 pass@1, C 6/9, SWI 5/9, cocolog 2/9; cocolog's guide is 95.5 % of
-the run's tokens. The next gate is whether to widen the language run or
-turn to Phase 5.
+the run's tokens. With the repository skill the cocolog lane is 4/9
+pass@1 and 8/9 final (`v2/results/lang-cocolog-skill-20261117.md`). The
+next gate is whether to widen the language run or turn to Phase 5.
 
 The old trio's pilot (`mvccs_acid` in place) spent 140 704 of 152 497
 tokens on `mvccs_acid` for zero passes. The diagnostic of 2026-11-17
