@@ -17,7 +17,7 @@ v2_config(loop_effort, none).
 v2_config(trials, 3).
 v2_config(seed, 20261117).
 
-v2_config(modes, [plain, derive]).
+v2_config(modes, [plain, derive, contract, extract, full]).
 
 v2_config(max_diagnostic, 4000).
 v2_config(child_timeout_ms, 600000).

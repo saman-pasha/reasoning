@@ -317,8 +317,10 @@ The first sprint's skeleton is implemented in `coding/bench/v2/`:
   stderr. A nonempty stderr is a failure.
 - `config.pl` holds the provider, model, temperature, three-trial pilot,
   seed and child timeout.
-- `runner.pl` implements `plain` and `derive`, the repair loop, seeded
-  trial order, append-as-you-go JSONL and a per-task summary. `run.pl` is
+- `runner.pl` implements `plain`, `derive`, `contract`, `extract` and
+  `full`, the repair loop, seeded trial order, append-as-you-go JSONL and
+  a per-task summary. `extract` makes one parent call; `full` combines
+  the hand contract and the keyword derivation without one. `run.pl` is
   its entry point; `gen.pl` is the child generator.
 - `stats.pl` reads a saved JSONL run and reports per-task rows, a cluster
   bootstrap over tasks for pass@1 and final pass, and the paired mode
@@ -328,10 +330,11 @@ The first sprint's skeleton is implemented in `coding/bench/v2/`:
 - `test.pl` checks all of the above with no model call, including a full
   JSONL run through a fixture seam and the statistic reader.
 
-Not yet implemented: `extract`, `contract`, `full`, the other languages,
-the declarative experiment, and per-attempt rows in the JSONL. A
-diagnostic run can keep each attempt's spec, code, usage and verdict with
-`--keep DIR`, but the JSONL still aggregates them per cell.
+Not yet implemented: the other languages, the declarative experiment,
+and per-attempt rows in the JSONL. A diagnostic run can keep each
+attempt's spec, code, usage and verdict with `--keep DIR`, but the JSONL
+still aggregates them per cell. The mode matrix exists; its full pilot
+has not been run.
 
 The old trio's pilot (`mvccs_acid` in place) spent 140 704 of 152 497
 tokens on `mvccs_acid` for zero passes. The diagnostic of 2026-11-17
@@ -346,6 +349,7 @@ The new trio's three-trial pilot (2026-11-17, commit `5076d6a`, saved in
 pass for 10 974 tokens. Every cell finished on its first attempt, so the
 repair loop was not exercised: `lcs/plain` failed all three held-out
 checks, `lcs/derive` passed all three, and `stable_sort` and `calculator`
-passed in both modes. The next matrix keeps this trio and adds the
-`extract`, `contract` and `full` modes; whether a harder task is needed
-to exercise repair is a separate decision.
+passed in both modes. The full mode matrix (`plain`, `derive`, `contract`,
+`extract`, `full`) is implemented; its three-trial pilot is the next paid
+run and is not started. Whether a harder task is needed to exercise
+repair remains a separate decision.

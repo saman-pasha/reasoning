@@ -5,7 +5,8 @@
 %%     --plan           print the selected tasks and budgets, no model call
 %%     --run            run the trials (the default is --plan)
 %%     --tasks A,B      tasks to run (default: every v2 task)
-%%     --modes A,B      plain, derive (default: config.pl's modes)
+%%     --modes A,B      plain, derive, contract, extract, full
+%%                      (default: config.pl's modes)
 %%     --trials N       trials per task and mode (default: config.pl's 3)
 %%     --seed N         order seed (default: config.pl's seed)
 %%     --out FILE       JSONL file (default: results/<run id>.jsonl)
@@ -23,6 +24,7 @@
 :- use_module(library(os)).
 :- use_module(library(stream)).
 :- use_module(library(json)).
+:- use_module(library(llm)).
 :- use_module('coding/shell.pl').
 :- use_module('coding/bench/tasks.pl').
 :- use_module('coding/bench/contract.pl').
@@ -32,6 +34,7 @@
 
 :- dynamic v2_cell/8.
 :- dynamic v2_generate_hook/6.
+:- dynamic v2_extract_hook/5.
 
 v2_cli_main :-
     current_prolog_flag(argv, [_|Args]),
@@ -126,6 +129,9 @@ v2_selection(Opts, Tasks, Modes, Trials, Seed, OutSpec) :-
 
 v2_mode_supported(plain).
 v2_mode_supported(derive).
+v2_mode_supported(contract).
+v2_mode_supported(extract).
+v2_mode_supported(full).
 
 v2_max_calls(Tasks, MaxCalls) :-
     findall(Max,
@@ -143,7 +149,7 @@ v2_usage :-
     format("  --plan          print tasks and budgets; no model call~n", []),
     format("  --run           run the trials~n", []),
     format("  --tasks A,B     tasks (default: every v2 task)~n", []),
-    format("  --modes A,B     plain, derive (default: config.pl's)~n", []),
+    format("  --modes A,B     plain, derive, contract, extract, full~n", []),
     format("  --trials N      trials per task and mode (default: 3)~n", []),
     format("  --seed N        order seed~n", []),
     format("  --out FILE      JSONL output~n", []),
@@ -209,7 +215,7 @@ v2_run(Tasks, Modes, Trials, Seed, OutSpec) :-
     format("v2 run ~w~n", [RunId]),
     format("commit ~w, model ~w, ~w trial(s), seed ~w~n",
            [Commit, Model, Trials, Seed]),
-    format("~w task(s) x ~w mode(s) x ~w trial(s) = ~w cell(s), at most ~w child call(s) per cell~n",
+    format("~w task(s) x ~w mode(s) x ~w trial(s) = ~w cell(s), at most ~w generator call(s) per cell; extract adds one~n",
            [NTask, NMode, Trials, Cells, MaxCalls]),
     format("jsonl: ~w~n~n", [OutFile]),
     forall(between(1, Trials, Trial),
@@ -241,9 +247,9 @@ v2_run_jobs([Task-Mode|Jobs], Pos, Trial, TrialSeed, RunId, Commit, Stream) :-
 
 v2_run_cell(Task, Mode, Trial, Pos, Seed, RunId, Commit, Row, Cell) :-
     v2_task(Task, _, _, _, _, _, budget(MaxCalls, _, _)),
-    v2_mode_spec(Mode, Task, Spec),
+    v2_mode_result(Mode, Task, spec(Spec, ModeUsage, ExtraCalls, ModeError)),
     v2_mode_effort(Mode, Effort),
-    Usage0 = usage(0, 0, 0, 0, 0),
+    Usage0 = ModeUsage,
     get_time(T0),
     v2_keep_begin(Task, Mode, Trial, Spec),
     call_cleanup(
@@ -252,6 +258,7 @@ v2_run_cell(Task, Mode, Trial, Pos, Seed, RunId, Commit, Row, Cell) :-
         v2_keep_cell_set(none)),
     get_time(T1),
     Seconds is T1 - T0,
+    Calls is Attempts + ExtraCalls,
     (   Attempts =:= 1,
         Outcome == pass
     ->  Pass1 = yes
@@ -286,6 +293,9 @@ v2_run_cell(Task, Mode, Trial, Pos, Seed, RunId, Commit, Row, Cell) :-
                 final_pass-FinalJson,
                 outcome-Outcome,
                 attempts-Attempts,
+                extra_calls-ExtraCalls,
+                calls-Calls,
+                mode_error-ModeError,
                 repair-Repair,
                 heldout-Heldout,
                 max_calls-MaxCalls,
@@ -372,17 +382,150 @@ v2_next_prev(verifier(_), _, _, none) :- !.
 v2_next_prev(_, Code, Diag, prev(Code, Diag)).
 
 %% ---- the mode's prompt -------------------------------------------------
+%%
+%% v2_mode_spec/6 answers spec(Spec, Usage, ExtraCalls, Error). The usage
+%% is the extraction call's, spent before any repair attempt; it is the
+%% only extra call any mode makes. Modes:
+%%
+%%     plain     the requirement alone
+%%     derive    plus keyword-derived obligations (no model call)
+%%     contract  plus the hand controlled-English contract (no model call)
+%%     extract   one call writes a controlled-English contract, then its
+%%               obligations (ExtraCalls = 1)
+%%     full      the hand contract and the keyword derivation together
+%%
+%% `full' does not call the extractor: the plan's third factor is the
+%% guide, and the C codegen's system prompt is the guide in every mode.
+%% Its two obligation sources are the ones that cost no extra call.
 
-v2_mode_spec(plain, Task, Spec) :-
+v2_mode_spec(Mode, Task, Spec) :-
+    v2_mode_result(Mode, Task, spec(Spec, _, _, _)).
+
+v2_mode_result(plain, Task,
+               spec(Spec, usage(0, 0, 0, 0, 0), 0, none)) :-
     bench_task(Task, Spec, _).
-v2_mode_spec(derive, Task, Full) :-
+
+v2_mode_result(derive, Task,
+               spec(Full, usage(0, 0, 0, 0, 0), 0, none)) :-
     bench_task(Task, Spec, _),
     bench_derive_obligations(Task, Spec, Obligations),
+    v2_obligations_prompt(
+        Spec,
+        'Obligations derived from the requirement keywords:',
+        Obligations, Full).
+
+v2_mode_result(contract, Task,
+               spec(Full, usage(0, 0, 0, 0, 0), 0, none)) :-
+    bench_task(Task, Spec, _),
+    bench_obligations(Task, Obligations),
+    v2_obligations_prompt(
+        Spec,
+        'Obligations derived from a controlled-English contract:',
+        Obligations, Full).
+
+v2_mode_result(extract, Task,
+               spec(Full, Usage, 1, Error)) :-
+    bench_task(Task, Spec, _),
+    v2_extract_contract(Task, Spec, Obligations, Usage, Error),
+    (   Obligations == []
+    ->  Full = Spec
+    ;   v2_obligations_prompt(
+            Spec,
+            'Obligations extracted from the requirement:',
+            Obligations, Full)
+    ).
+
+v2_mode_result(full, Task,
+               spec(Full, usage(0, 0, 0, 0, 0), 0, none)) :-
+    bench_task(Task, Spec, _),
+    bench_obligations(Task, Contract),
+    bench_derive_obligations(Task, Spec, Derived),
+    v2_union(Contract, Derived, Obligations),
+    v2_obligations_prompt(
+        Spec,
+        'Obligations derived from a controlled-English contract and the requirement keywords:',
+        Obligations, Full).
+
+v2_obligations_prompt(Spec, Label, Obligations, Full) :-
     bench_obligation_lines(Obligations, Lines),
     atomic_list_concat(Lines, '\n', ObligationsText),
-    format(atom(Full),
-           '~s~n~nObligations derived from the requirement keywords:~n~s',
-           [Spec, ObligationsText]).
+    format(atom(Full), '~s~n~n~w~n~s', [Spec, Label, ObligationsText]).
+
+v2_union([], Second, Second).
+v2_union([X|Xs], Second, Union) :-
+    (   memberchk(X, Second)
+    ->  v2_union(Xs, Second, Union)
+    ;   Union = [X|Rest],
+        v2_union(Xs, Second, Rest)
+    ).
+
+%% One extraction call. The reply is parsed by the same controlled-English
+%% reader and vocabulary the contract mode uses; a refused line is dropped.
+%% A failed call leaves the plain requirement, charges its usage if the
+%% provider reported one, and names the error in the JSONL row.
+v2_extract_contract(Task, Spec, Obligations, Usage, Error) :-
+    (   v2_extract_hook(Task, Spec, Obligations, Usage, Error)
+    ->  !
+    ;   v2_extract_contract_call(Task, Spec, Obligations, Usage, Error)
+    ).
+
+%% The real extraction is a parent call. v2_extract_hook/5 is a test
+%% seam: the runner asserts none, and test.pl proves the extract mode
+%% without a provider.
+v2_extract_contract_call(Task, Spec, Obligations, Usage, Error) :-
+    bench_extract_prompt(Task, Spec, Prompt),
+    v2_config(provider, Provider),
+    v2_config(model, Model),
+    v2_config(base_url, BaseUrl),
+    v2_config(temperature, Temperature),
+    v2_llm_setup(Provider, BaseUrl),
+    catch(
+        (   llm_chat(
+                [ msg(system,
+                      'You rewrite programming requirements into controlled English sentences. Output only sentences of the allowed shapes.'),
+                  msg(user, Prompt)
+                ],
+                [ provider(Provider),
+                  model(Model),
+                  temperature(Temperature),
+                  reasoning_effort(none)
+                ],
+                Reply),
+            v2_llm_usage(Usage0),
+            bench_reply_obligations(Reply, _Parsed, Obligations0),
+            Usage = Usage0,
+            (   Obligations0 == []
+            ->  Error = no_obligations
+            ;   Error = none
+            ),
+            Obligations = Obligations0
+        ),
+        Ball,
+        (   Usage = usage(0, 0, 0, 0, 0),
+            Obligations = [],
+            v2_error_text(Ball, Error)
+        )).
+
+v2_llm_setup(Provider, BaseUrl) :-
+    retractall(llm_provider(Provider, _, _)),
+    assertz(llm_provider(Provider, BaseUrl, 'CODING_ENDPOINT_KEY_ENV')).
+
+v2_llm_usage(usage(P, C, T, R, H)) :-
+    (   llm_last_usage(json(Pairs))
+    ->  memberchk(prompt_tokens-P, Pairs),
+        memberchk(completion_tokens-C, Pairs),
+        memberchk(total_tokens-T, Pairs),
+        (   memberchk(completion_tokens_details-json(Details), Pairs),
+            memberchk(reasoning_tokens-R, Details)
+        ->  true
+        ;   R = 0
+        ),
+        (   memberchk(prompt_cache_hit_tokens-H, Pairs)
+        ->  true
+        ;   H = 0
+        )
+    ;   usage(0, 0, 0, 0, 0) = usage(P, C, T, R, H)
+    ).
 
 v2_mode_effort(high, high) :- !.
 v2_mode_effort(_, none).

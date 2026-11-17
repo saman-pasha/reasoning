@@ -25,6 +25,7 @@
                 v2_selection/6,
                 v2_permute/4,
                 v2_mode_spec/3,
+                v2_mode_result/3,
                 v2_mode_effort/2,
                 v2_bool/2,
                 v2_add_usage/3,
@@ -42,6 +43,7 @@ main :-
     test_attempts,
     test_stats,
     test_keep,
+    test_extract_cell,
     test_run_integration,
     checks_done.
 
@@ -283,20 +285,40 @@ test_runner :-
     check('selected trials', Trials, 2),
     check('selected seed', Seed, 5),
     check('selected output', OutSpec, file('/tmp/v2.jsonl')),
-    yes_no(v2_selection([modes([extract])], [], _, _, _, _), BadMode),
+    yes_no((forall(member(M, [plain, derive, contract, extract, full]),
+                   v2_mode_supported(M))),
+           ModesOk),
+    check('all five modes are supported', ModesOk, yes),
+    yes_no(v2_selection([modes([high])], [], _, _, _, _), BadMode),
     check('an unsupported mode is refused', BadMode, no),
     yes_no(v2_selection([tasks([nope])], _, _, _, _, _), BadTask),
     check('an unknown task is refused', BadTask, no),
     bench_task(lcs, Plain0, _),
-    v2_mode_spec(plain, lcs, Plain),
+    once(v2_mode_spec(plain, lcs, Plain)),
     check('plain is the requirement', Plain, Plain0),
-    v2_mode_spec(derive, lcs, Derived),
+    once(v2_mode_spec(derive, lcs, Derived)),
     (   sub_atom(Derived, _, _, _, 'Obligations derived from the requirement keywords:'),
         sub_atom(Derived, _, _, _, '- Read from standard input')
     ->  DerivedOk = yes
     ;   DerivedOk = no
     ),
     check('derive adds the keyword obligations', DerivedOk, yes),
+    once(v2_mode_spec(contract, lcs, Contracted)),
+    (   sub_atom(Contracted, _, _, _, 'Obligations derived from a controlled-English contract:'),
+        sub_atom(Contracted, _, _, _, '- Read from standard input')
+    ->  ContractOk = yes
+    ;   ContractOk = no
+    ),
+    check('contract adds the hand contract', ContractOk, yes),
+    once(v2_mode_spec(full, stable_sort, Full)),
+    (   sub_atom(Full, _, _, _, 'controlled-English contract and the requirement keywords:'),
+        sub_atom(Full, _, _, _, '- A name is one word of letters.'),
+        sub_atom(Full, _, _, _, '- A length may be zero')
+    ->  FullOk = yes
+    ;   FullOk = no
+    ),
+    check('full adds both obligation sources', FullOk, yes),
+    test_extract_mode,
     v2_mode_effort(plain, PlainEffort),
     check('plain has no reasoning effort', PlainEffort, none),
     v2_mode_effort(derive, DeriveEffort),
@@ -330,6 +352,23 @@ test_runner :-
     ;   JsonOk = no
     ),
     check('a row is valid JSON', JsonOk, yes).
+
+test_extract_mode :-
+    retractall(v2_extract_hook(_, _, _, _, _)),
+    assertz(v2_extract_hook(lcs, _,
+                            ['Read the first line.', 'Print the length.'],
+                            usage(1, 2, 3, 0, 0), none)),
+    once(v2_mode_result(extract, lcs, spec(Full, Usage, Extra, Error))),
+    retractall(v2_extract_hook(_, _, _, _, _)),
+    check('extract spends one extra call', Extra, 1),
+    check('extract carries its usage', Usage, usage(1, 2, 3, 0, 0)),
+    check('extract has no error', Error, none),
+    (   sub_atom(Full, _, _, _, 'Obligations extracted from the requirement:'),
+        sub_atom(Full, _, _, _, '- Read the first line.')
+    ->  FullOk = yes
+    ;   FullOk = no
+    ),
+    check('extract adds the extracted obligations', FullOk, yes).
 
 %% ---- the attempt loop --------------------------------------------------
 
@@ -559,6 +598,43 @@ test_keep :-
 v2test_read_atom(File, Atom) :-
     read_file_to_codes(File, Codes),
     atom_codes(Atom, Codes).
+
+%% ---- an extract cell's row ---------------------------------------------
+
+test_extract_cell :-
+    section('extract cell'),
+    v2_retract_hook,
+    retractall(v2_extract_hook(_, _, _, _, _)),
+    assertz((v2_generate_hook(_, _, _, Code, usage(10, 20, 30, 0, 0), none) :-
+                lcs_correct(Code))),
+    assertz(v2_extract_hook(lcs, _, ['Read the first line.'],
+                            usage(1, 2, 3, 0, 0), none)),
+    catch(once(v2_run_cell(lcs, extract, 1, 1, 123, 'run-x', 'commit-x',
+                           Row, _Cell)),
+          Ball,
+          ( format("extract run error: ~w~n", [Ball]) )),
+    v2_retract_hook,
+    retractall(v2_extract_hook(_, _, _, _, _)),
+    (   Row = json(Pairs)
+    ->  true
+    ;   Pairs = []
+    ),
+    v2test_get(extra_calls, Pairs, Extra),
+    check('extract records its extra call', Extra, 1),
+    v2test_get(calls, Pairs, Calls),
+    check('extract counts the extraction call', Calls, 2),
+    v2test_get(mode_error, Pairs, ModeError),
+    check('extract records no mode error', ModeError, none),
+    (   v2test_get(usage, Pairs, json(UsagePairs)),
+        v2test_get(total, UsagePairs, Total)
+    ->  true
+    ;   Total = missing
+    ),
+    check('extract sums both calls', Total, 33).
+
+v2test_get(Key, Pairs, Value) :-
+    memberchk(Key-Value, Pairs),
+    !.
 
 %% ---- one whole cell and its JSONL row ---------------------------------
 

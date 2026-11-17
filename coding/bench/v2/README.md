@@ -9,7 +9,7 @@ Phase 1 is implemented here; the first pilot has run, and the statistics
 are implemented:
 
 - C only, three legacy tasks: `lcs`, `stable_sort`, `calculator`.
-- Two modes: `plain` and `derive`.
+- Five modes: `plain`, `derive`, `contract`, `extract`, `full`.
 - Exact output policy for every task.
 - Repair cases a failing attempt may be told about, and held-out cases
   that are never put in a prompt or a diagnostic.
@@ -17,8 +17,9 @@ are implemented:
   separate report with task-cluster bootstrap intervals.
 - `--keep DIR` for a diagnostic run's per-attempt code and verdict.
 
-`extract`, `contract`, `full`, the other languages, the declarative
-experiment and per-attempt JSONL rows are not implemented yet.
+`extract` spends one extra model call; `full` is the hand contract plus
+the keyword derivation and spends none. The other languages, the
+declarative experiment and per-attempt JSONL rows are not implemented yet.
 
 `mvccs_acid` was the third task in the first pilot. The diagnostic run of
 2026-11-17 failed only its snapshot-visibility case in all three attempts;
@@ -27,6 +28,19 @@ formatting. A larger budget is not supported by that evidence, so
 `calculator` is the Phase 1 third task and `mvccs_acid` is left for a
 later hard-task or reasoning-effort suite. The pilot's numbers remain the
 record for the old trio.
+
+## Modes
+
+| mode | extra calls | prompt |
+|---|---|---|
+| `plain` | 0 | the requirement alone |
+| `derive` | 0 | plus obligations derived from its keywords |
+| `contract` | 0 | plus the task's hand controlled-English contract |
+| `extract` | 1 | one call writes the controlled-English contract, then its obligations |
+| `full` | 0 | the hand contract and the keyword derivation together |
+
+`full` does not call the extractor: the plan's third factor is the guide,
+and the C codegen's system prompt is the guide in every mode.
 
 ## The cases
 
@@ -92,7 +106,8 @@ Options:
 
 ```text
 --tasks A,B     tasks (default: every v2 task)
---modes A,B     plain, derive (default: config.pl's list)
+--modes A,B     plain, derive, contract, extract, full
+                (default: config.pl's list, all five)
 --trials N      trials per task and mode (default: 3)
 --seed N        order seed (default: config.pl's)
 --out FILE      JSONL output (default: results/<run id>.jsonl)
@@ -127,10 +142,15 @@ tasks, modes, trials and seed. Each later line is one cell:
 ```text
 task, language, mode, trial, order_position, seed
 pass_at_1, final_pass, outcome, attempts
+extra_calls, calls, mode_error
 repair, heldout, max_calls
 usage {prompt, completion, total, reasoning, cache_hit}
 seconds
 ```
+
+`attempts` counts the repair loop's generator calls; `extra_calls` is the
+extraction call (`0` or `1`) and `calls` is their sum. `mode_error` is
+`none` unless the extraction failed or returned no obligations.
 
 `outcome` is one of `pass`, `fail_compile`, `fail_repair`,
 `fail_heldout`, `fail_generator`, `fail_verifier`.
@@ -161,10 +181,10 @@ JSONL run with no provider.
 
 `config.pl` holds the provider, model, temperature, three-trial pilot and
 the seed. Per task, `schema.pl` allows three child calls and a case
-timeout. The default pilot is 3 tasks x 2 modes x 3 trials = 18 cells, at
-most 54 child calls. The pilot is the budget gate: do not start a larger
-run until its per-task variance and token cost are known and the spend is
-approved.
+timeout. The default pilot is 3 tasks x 5 modes x 3 trials = 45 cells: at
+most 135 generator calls plus 15 extraction calls. The pilot is the
+budget gate: do not start a larger run until its per-task variance and
+token cost are known and the spend is approved.
 
 The legacy benchmark is not edited to make v2 pass. A disagreement
 between v2 and a legacy result is recorded before changing either.
