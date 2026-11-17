@@ -350,8 +350,15 @@ The five-mode matrix pilot (2026-11-17, commit `75fdc8c`, saved in
 `lcs/plain` failed, on all three held-out runs; every obligation mode
 passed it. `contract`, `extract` and `full` had exactly zero paired
 difference against each other and against `derive`, and no cell needed a
-repair. The trio is too easy to separate the upper modes. The
-no-feedback arm `once` is now implemented; its pilot against `plain` is
-the next paid run and has not been started. The task-selection decision
-(a requirement whose hand contract adds a check the keyword derivation
-misses) remains open.
+repair. The trio is too easy to separate the upper modes.
+
+The no-feedback arm (`once`) is now implemented, and its pilot against
+`plain` (2026-11-17, commit `8a64959`, saved in
+`v2/results/once-plain-20261117.md`) reads 13/18 for 7 945 tokens. Every
+cell finished on its first attempt, so `plain` and `once` were the same
+policy; the paired `plain - once` difference is one `lcs` trial,
+`+11.1 pp [0.0, +33.3]`. The trio still cannot measure feedback because
+no first attempt fails a repair case. The task-selection decision
+remains: add a task whose first attempt is likely to fail an actionable
+repair case (`phonebook`, `btree`, or a small parser with a stated edge),
+then repeat `once` vs `plain`.
