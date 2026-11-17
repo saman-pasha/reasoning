@@ -229,7 +229,10 @@ v2_lang_run_cases(Lang, Source, [Case|Cases], Policy, Timeout, Index,
         Stderr == ''
     ->  Here = []
     ;   v2_lang_case_failure(Index, Input, Expected, ExpectedExit, Exit0,
-                             Actual, Stderr, RunError, Failure),
+                             Actual, Stderr, RunError, Failure0),
+        v2_lang_source_context(Source, Stderr, Failure0, Failure1),
+        v2_lang_trace_context(Lang, Index, Source, InFile, Stderr, Exit0,
+                              ExpectedExit, Timeout, Failure1, Failure),
         Here = [Failure]
     ),
     v2_lang_remove_files([InFile, OutFile, ErrFile]),
@@ -306,6 +309,165 @@ v2_lang_case_failure0(Index, Input, Expected, ExpectedExit, Exit, Actual,
                'CASE ~w WRONG~ninput: ~w~nexpected: ~w~nactual: ~w',
                [Index, Input, Expected, Actual])
     ).
+
+%% ---- the failing source line -------------------------------------------
+%%
+%% A diagnostic that gives only file:line:column leaves a repair call
+%% guessing which token the parser refused. GCC and Python already quote
+%% the source line; cocolog does not. When the line is absent, append it
+%% and a caret under the column, at most once per case.
+
+v2_lang_source_context(Source, Stderr, Failure, WithContext) :-
+    (   Stderr \== '',
+        v2_lang_error_position(Stderr, Line, Col),
+        v2_lang_source_line(Source, Line, Text),
+        Text \== '',
+        \+ sub_atom(Stderr, _, _, _, Text)
+    ->  v2_lang_caret(Col, Caret),
+        format(atom(WithContext),
+               '~w~nThe source line ~w, column ~w:~n~w~n~w',
+               [Failure, Line, Col, Text, Caret])
+    ;   WithContext = Failure
+    ).
+
+v2_lang_error_position(Stderr, Line, Col) :-
+    split_string(Stderr, "\n", " \t\r", Lines),
+    member(Text, Lines),
+    split_string(Text, ":", " \t\r", Parts),
+    v2_lang_position_parts(Parts, Line, Col),
+    !.
+
+v2_lang_position_parts([File, LineText, ColText, Message|_], Line, Col) :-
+    sub_atom(File, _, _, _, '.'),
+    v2_lang_position_number(LineText, Line),
+    v2_lang_position_number(ColText, Col),
+    \+ v2_lang_text_empty(Message).
+v2_lang_position_parts([_|Parts], Line, Col) :-
+    v2_lang_position_parts(Parts, Line, Col).
+
+v2_lang_text_empty(Text) :-
+    (   string(Text)
+    ->  string_length(Text, 0)
+    ;   Text == ''
+    ).
+
+v2_lang_position_number(Text, N) :-
+    atom_string(A, Text),
+    atom_number(A, N),
+    integer(N),
+    N > 0.
+
+v2_lang_source_line(Source, N, Text) :-
+    catch(read_file_to_codes(Source, Codes), _, fail),
+    atom_codes(SourceText, Codes),
+    v2_lang_line_at(SourceText, N, Text).
+
+v2_lang_line_at(Text, N, Line) :-
+    N > 0,
+    (   sub_atom(Text, P, 1, _, '\n')
+    ->  sub_atom(Text, 0, P, _, First),
+        (   N =:= 1
+        ->  Line = First
+        ;   Start is P + 1,
+            sub_atom(Text, Start, _, 0, Rest),
+            Next is N - 1,
+            v2_lang_line_at(Rest, Next, Line)
+        )
+    ;   N =:= 1,
+        Line = Text
+    ).
+
+v2_lang_caret(Col, Caret) :-
+    N is Col - 1,
+    length(Spaces, N),
+    maplist(=( ' ' ), Spaces),
+    append(Spaces, ['^'], Parts),
+    atomic_list_concat(Parts, Caret).
+
+%% A cocolog run exits 1 with empty stderr when its entry goal simply
+%% failed. The four-port tracer names the goals that failed, which is the
+%% only clue a repair call gets; run it once, for the first case, and keep
+%% the last failures only.
+v2_lang_trace_context(cocolog, 1, Source, In, Stderr, Exit, ExpectedExit,
+                      Timeout, Failure, WithTrace) :-
+    !,
+    (   Stderr == '',
+        Exit =\= ExpectedExit,
+        Exit =\= 124,
+        v2_lang_trace_lines(Source, In, Timeout, Lines)
+    ->  atomic_list_concat(Lines, '\n', Trace),
+        format(atom(WithTrace),
+               '~w~nThe entry goal failed with no stderr; the trace of its last failures:~n~w',
+               [Failure, Trace])
+    ;   WithTrace = Failure
+    ).
+v2_lang_trace_context(_, _, _, _, _, _, _, _, Failure, Failure).
+
+v2_lang_trace_lines(Source, In, Timeout, Lines) :-
+    tmp_file(v2_lang_trace, TraceFile),
+    v2_lang_trace_command(Source, In, TraceFile, Cmd),
+    catch(proc_run(Cmd, Timeout, _, _), _, true),
+    v2_lang_read_codes(TraceFile, Codes),
+    v2_lang_remove_files([TraceFile]),
+    atom_codes(Text, Codes),
+    split_string(Text, "\n", " \t\r", Parts),
+    v2_lang_fail_lines(Parts, Fails),
+    reverse(Fails, Rev),
+    v2_lang_depth_first(Rev, [], ChainRev),
+    reverse(ChainRev, Chain),
+    v2_lang_take_last(20, Chain, Lines),
+    Lines \== [].
+
+v2_lang_take_last(N, List, Last) :-
+    length(List, L),
+    (   L > N
+    ->  Skip is L - N,
+        length(Prefix, Skip),
+        append(Prefix, Last, List)
+    ;   Last = List
+    ).
+
+%% One line per depth, taken from the end, is the final failing chain:
+%% the deepest repeated goal (a loop of digit/1 tests) no longer crowds
+%% the caller's goal out of the report.
+v2_lang_depth_first([], _, []).
+v2_lang_depth_first([Line|Lines], Seen, Kept) :-
+    (   v2_lang_fail_depth(Line, Depth),
+        \+ memberchk(Depth, Seen)
+    ->  Kept = [Line|Rest],
+        Seen1 = [Depth|Seen]
+    ;   Kept = Rest,
+        Seen1 = Seen
+    ),
+    v2_lang_depth_first(Lines, Seen1, Rest).
+
+v2_lang_fail_depth(Line, Depth) :-
+    sub_atom(Line, B, 7, _, 'Fail: ('),
+    Start is B + 7,
+    sub_atom(Line, Start, _, 0, Rest),
+    sub_atom(Rest, End, 1, _, ')'),
+    sub_atom(Rest, 0, End, _, Digits),
+    atom_string(Text, Digits),
+    atom_number(Text, Depth),
+    integer(Depth).
+
+v2_lang_trace_command(Source, In, TraceFile, Cmd) :-
+    current_prolog_flag(executable, Exe),
+    codegen_shell_quote(Exe, QExe),
+    codegen_shell_quote(Source, QSource),
+    codegen_shell_quote(In, QIn),
+    codegen_shell_quote(TraceFile, QTrace),
+    format(atom(Cmd), '~w --trace run ~w < ~w > /dev/null 2> ~w',
+           [QExe, QSource, QIn, QTrace]).
+
+v2_lang_fail_lines([], []).
+v2_lang_fail_lines([Text|Texts], Kept) :-
+    atom_string(Line, Text),
+    (   sub_atom(Line, _, _, _, 'Fail:')
+    ->  Kept = [Line|Rest]
+    ;   Kept = Rest
+    ),
+    v2_lang_fail_lines(Texts, Rest).
 
 %% ---- small helpers -----------------------------------------------------
 

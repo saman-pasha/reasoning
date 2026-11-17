@@ -284,7 +284,10 @@ Implemented in `coding/bench/v2/langs.pl`, `lang_runner.pl`,
 `lang_gen.pl`, `lang_run.pl` and `lang.sh`. The first comparison ran on
 2026-11-17: 36 cells, 22/36 pass@1, 26/36 final, 403 944 tokens
 (`v2/results/lang-20261117.md`). It is a pilot: one model, one generator
-per language and three tasks, with the guide confound stated.
+per language and three tasks, with the guide confound stated. The repair
+diagnostic now shows the offending source line and a caret when the
+compiler did not quote it, and a silent cocolog goal failure adds the
+tracer's failing chain (`reasoning 1.8.21`).
 
 ### Phase 5 — declarative vs imperative
 

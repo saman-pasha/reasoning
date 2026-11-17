@@ -137,12 +137,16 @@ swipl -q -f program.pl -g main -t halt < in > out 2> err
 ```
 
 C compiles with the sanitizer build as before. `PYTHON3` and `SWIPL`
-override the two interpreted runtimes. There is **no combined score**:
-the JSONL rows and the per-task/language summary are the result, and
-languages are not ranked by one number. The first comparison ran on
-2026-11-17: 36 cells, 22/36 pass@1, 26/36 final, 403 944 tokens;
-`results/lang-20261117.md` is the record. Treat it as a pilot: one
-model, one generator per language and three tasks.
+override the two interpreted runtimes. A failed case's diagnostic
+includes the offending source line and a caret under the column when the
+compiler did not quote the line itself; a cocolog entry goal that exits
+nonzero with empty stderr is rerun once under `--trace` and the first
+case's report gets the tracer's last failing chain. There is **no
+combined score**: the JSONL rows and the per-task/language summary are
+the result, and languages are not ranked by one number. The first
+comparison ran on 2026-11-17: 36 cells, 22/36 pass@1, 26/36 final,
+403 944 tokens; `results/lang-20261117.md` is the record. Treat it as a
+pilot: one model, one generator per language and three tasks.
 
 ## Commands
 

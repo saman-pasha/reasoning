@@ -64,6 +64,7 @@ main :-
     test_langs,
     test_lang_fences,
     test_lang_gen_args,
+    test_lang_context,
     test_lang_run,
     test_keep,
     test_extract_cell,
@@ -805,6 +806,39 @@ test_lang_gen_args :-
     ;   Missing = yes
     ),
     check('a child with missing flags is refused', Missing, yes).
+
+test_lang_context :-
+    section('language diagnostics'),
+    atomic_list_concat(['main :- writeln(hello).', 'broken :- 1 +.'], '\n',
+                       Bad),
+    catch(once(v2_language_verify(cocolog, lcs, Bad, Verdict)),
+          Ball,
+          ( format("context verify error: ~w~n", [Ball]),
+            Verdict = error
+          )),
+    (   Verdict = verdict(fail(cases([Failure|_])), _),
+        sub_atom(Failure, _, _, _, 'The source line 2'),
+        sub_atom(Failure, _, _, _, 'broken :- 1 +.'),
+        sub_atom(Failure, _, _, _, '^')
+    ->  Shown = yes
+    ;   format("verdict: ~w~n", [Verdict]),
+        Shown = no
+    ),
+    check('a load failure shows the offending source line', Shown, yes),
+    catch(once(v2_language_verify(cocolog, lcs, 'main :- fail.',
+                                  SilentVerdict)),
+          SilentBall,
+          ( format("silent verify error: ~w~n", [SilentBall]),
+            SilentVerdict = error
+          )),
+    (   SilentVerdict = verdict(fail(cases([SilentFailure|_])), _),
+        sub_atom(SilentFailure, _, _, _, 'entry goal failed with no stderr'),
+        sub_atom(SilentFailure, _, _, _, 'Fail:')
+    ->  Traced = yes
+    ;   format("silent verdict: ~w~n", [SilentVerdict]),
+        Traced = no
+    ),
+    check('a silent goal failure shows the tracer failures', Traced, yes).
 
 test_lang_run :-
     section('language jsonl'),
