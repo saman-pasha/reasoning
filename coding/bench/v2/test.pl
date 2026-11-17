@@ -22,7 +22,10 @@
               [ v2_lang_run/5 ]).
 :- use_module('coding/bench/v2/lang_gen.pl',
               [ v2_lang_strip_fence/2,
-                v2_lang_gen_args/7 ]).
+                v2_lang_gen_args/7,
+                v2_lang_cocolog_guide/1,
+                v2_lang_with_env/3
+              ]).
 :- use_module('coding/bench/v2/stats.pl',
               [ v2_stats_read_run/3,
                 v2_stats_summary/2,
@@ -65,6 +68,7 @@ main :-
     test_lang_fences,
     test_lang_gen_args,
     test_lang_context,
+    test_lang_cocolog_guide,
     test_lang_run,
     test_keep,
     test_extract_cell,
@@ -839,6 +843,55 @@ test_lang_context :-
         Traced = no
     ),
     check('a silent goal failure shows the tracer failures', Traced, yes).
+
+test_lang_cocolog_guide :-
+    section('cocolog guide'),
+    once(v2_lang_cocolog_guide(File)),
+    read_file_to_codes(File, Codes),
+    atom_codes(Text, Codes),
+    atom_length(Text, Length),
+    catch(delete_file(File), _, true),
+    (   Length > 60000
+    ->  Long = yes
+    ;   Long = no
+    ),
+    check('the cocolog guide is the full language guide', Long, yes),
+    (   sub_atom(Text, _, _, _, 'SKILL — working in cocolog')
+    ->  Guide = yes
+    ;   Guide = no
+    ),
+    check('the cocolog guide keeps the language guide', Guide, yes),
+    (   sub_atom(Text, _, _, _, 'char_code/2'),
+        sub_atom(Text, _, _, _, 'one-character atoms'),
+        sub_atom(Text, _, _, _, 'never add a quote after it'),
+        sub_atom(Text, _, _, _, 'number_codes/2'),
+        sub_atom(Text, _, _, _, 'skip_spaces([], [])'),
+        sub_atom(Text, _, _, _, 'skip_spaces(List, List)'),
+        sub_atom(Text, _, _, _, 'recurses on the tail'),
+        sub_atom(Text, _, _, _, 'no Rest = [] guard'),
+        sub_atom(Text, _, _, _, 'library(stream) already defines digits/3')
+    ->  Hint = yes
+    ;   Hint = no
+    ),
+    check('the cocolog guide adds the character-code line', Hint, yes),
+    unsetenv('V2_TEST_GUIDE_ENV'),
+    once(v2_lang_with_env('V2_TEST_GUIDE_ENV', 'v', true)),
+    (   getenv('V2_TEST_GUIDE_ENV', After),
+        After \== ''
+    ->  Restored = no
+    ;   Restored = yes
+    ),
+    check('the guide environment is put back', Restored, yes),
+    setenv('V2_TEST_GUIDE_ENV', 'old'),
+    once(v2_lang_with_env('V2_TEST_GUIDE_ENV', 'new', true)),
+    (   getenv('V2_TEST_GUIDE_ENV', Back),
+        atom_string(BackAtom, Back),
+        BackAtom == old
+    ->  Restored2 = yes
+    ;   Restored2 = no
+    ),
+    check('an existing guide environment is put back', Restored2, yes),
+    unsetenv('V2_TEST_GUIDE_ENV').
 
 test_lang_run :-
     section('language jsonl'),

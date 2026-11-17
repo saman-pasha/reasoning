@@ -287,7 +287,12 @@ Implemented in `coding/bench/v2/langs.pl`, `lang_runner.pl`,
 per language and three tasks, with the guide confound stated. The repair
 diagnostic now shows the offending source line and a caret when the
 compiler did not quote it, and a silent cocolog goal failure adds the
-tracer's failing chain (`reasoning 1.8.21`).
+tracer's failing chain (`reasoning 1.8.21`). The cocolog child appends a
+benchmark paragraph to the normal guide: `char_code/2` and the `0'`
+token, the safe code-parser shape, and the `digits/3` collision with
+`library(stream)`. With it `calculator/cocolog` is 2/3 pass@1 and 3/3
+final over three trials, against 0/3 in the recorded run
+(`reasoning 1.8.22`); it is a stated, cocolog-only deviation.
 
 ### Phase 5 — declarative vs imperative
 

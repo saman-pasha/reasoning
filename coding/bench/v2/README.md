@@ -141,12 +141,21 @@ override the two interpreted runtimes. A failed case's diagnostic
 includes the offending source line and a caret under the column when the
 compiler did not quote the line itself; a cocolog entry goal that exits
 nonzero with empty stderr is rerun once under `--trace` and the first
-case's report gets the tracer's last failing chain. There is **no
-combined score**: the JSONL rows and the per-task/language summary are
-the result, and languages are not ranked by one number. The first
-comparison ran on 2026-11-17: 36 cells, 22/36 pass@1, 26/36 final,
-403 944 tokens; `results/lang-20261117.md` is the record. Treat it as a
-pilot: one model, one generator per language and three tasks.
+case's report gets the tracer's last failing chain. For cocolog the
+child appends one benchmark paragraph to the language's normal guide: a
+one-character atom is not a number (`char_code/2`, or keep the codes), a
+character code is `0'` followed by the character, and a code parser uses
+the safe list shape (`skip_spaces([], [])`, a digit base with no
+empty-rest guard, the parenthesis's tail, `number_codes/2`, and no
+`digits/3` — `library(stream)` already defines it). This is a stated,
+cocolog-only deviation from the normal-guide confound, added after the
+2026-11-17 run; with it `calculator/cocolog` is 2/3 pass@1 and 3/3 final
+over three trials, against 0/3 in that run. There is **no combined
+score**: the JSONL rows and the per-task/language summary are the
+result, and languages are not ranked by one number. The first comparison
+ran on 2026-11-17: 36 cells, 22/36 pass@1, 26/36 final, 403 944 tokens;
+`results/lang-20261117.md` is the record. Treat it as a pilot: one
+model, one generator per language and three tasks.
 
 ## Commands
 
