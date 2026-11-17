@@ -249,6 +249,70 @@ ep_note(Checks, Note) :-
            '~n~n# Reasoning pre-pass~n~nA deterministic pass by the repository reasoner read the request and found these checks. Verify each one before you say the task is done:~n~n~w',
            [Body]).
 
+%% ---- what the request is about -----------------------------------------
+%%
+%% The reasoner's concepts and topics, and the question they raise. The
+%% note is appended after the checks so the model names what the request
+%% is about and says why it matters before it writes code.
+
+ep_about_note(Terms, Note) :-
+    (   Terms == []
+    ->  Note = ''
+    ;   (   catch(endpoint_about(Terms, Concepts, Topics), _, fail)
+        ->  true
+        ;   Concepts = [], Topics = []
+        ),
+        (   Concepts == [],
+            Topics == []
+        ->  Note = ''
+        ;   ep_about_lines(Concepts, Topics, Lines),
+            atomic_list_concat(Lines, '\n', Body),
+            format(atom(Note), '~n~n# What the request is about~n~n~w', [Body])
+        )
+    ).
+
+ep_about_lines(Concepts, Topics, Lines) :-
+    ep_concept_section(Concepts, A),
+    ep_topic_section(Topics, B),
+    ep_about_questions(Concepts, Topics, Questions),
+    append(A, B, AB),
+    append(AB,
+           ['', 'Answer these for yourself before you begin, and let the answers shape the code:'|Questions],
+           Lines).
+
+ep_concept_section([], []).
+ep_concept_section(Concepts, Lines) :-
+    findall(Line,
+            ( member(concept(Name, Kind, Mentions), Concepts),
+              format(atom(Line), '- `~w` (~w, ~w mention(s))',
+                     [Name, Kind, Mentions]) ),
+            Bullets),
+    Lines = ['The reasoner read the request as these concepts, the most mentioned first:'|Bullets].
+
+ep_topic_section([], []).
+ep_topic_section(Topics, Lines) :-
+    findall(Line,
+            ( member(topic(Subject, Kind, _), Topics),
+              format(atom(Line), '- `~w` (~w)', [Subject, Kind]) ),
+            Bullets),
+    Lines = ['', 'The subjects it says something about:'|Bullets].
+
+ep_about_questions(Concepts, Topics, Questions) :-
+    findall(Name, member(concept(Name, _, _), Concepts), ConceptNames),
+    findall(Subject, member(topic(Subject, _, _), Topics), TopicNames),
+    append(ConceptNames, TopicNames, Names0),
+    ep_unique(Names0, Names),
+    (   length(Names, N),
+        N > 5
+    ->  length(Top, 5),
+        append(Top, _, Names)
+    ;   Top = Names
+    ),
+    findall(Line,
+            ( member(Name, Top),
+              format(atom(Line), '- Why is `~w` important to this task?', [Name]) ),
+            Questions).
+
 %% The checks every code task gets when its wording gives fewer than the
 %% minimum. They are deliberately generic: the task's own obligations, when
 %% it has any, stay first.
@@ -347,7 +411,8 @@ ep_reasoning(Language, Setting, Mode, Title, Messages, Guide0, Guide, N, Terms) 
         length(All, N),
         Terms = Terms0,
         ep_note(All, Note),
-        atomic_list_concat([Guide0, Note], Guide)
+        ep_about_note(Terms0, About),
+        atomic_list_concat([Guide0, Note, About], Guide)
     ;   Guide = Guide0, N = 0, Terms = 0
     ).
 

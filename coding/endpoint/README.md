@@ -168,7 +168,8 @@ locally and calls no model:
 - `coding/contract.pl` reads controlled-English sentences through
   `library(reasoning/reason)` and derives the contract's checks.
 - `library(reasoning/reason)` parses the text into terms; their count is
-  recorded in the trace.
+  recorded in the trace, and `reason_concepts/2` and `reason_topics/2` give
+  what the request is about.
 
 The deduplicated checks are appended to the model's system prompt under a
 "Reasoning pre-pass" heading. By default the pass keeps exactly two: the
@@ -181,6 +182,12 @@ keeps that many checks. `CODING_ENDPOINT_REASONING_MIN` and
 neither. The model still writes and runs the code with OpenCode's tools, but
 it is checked against this repository's own reading of the request.
 `CODING_ENDPOINT_REASONING=off` disables the pass for every model.
+
+When the request parses into terms, a second note follows the checks under
+"What the request is about": the six most mentioned concepts with their
+kinds and counts, the six subjects with what is said of them, and up to five
+questions, "Why is X important to this task?", one for the leading concepts
+and subjects. A request the reasoner cannot parse adds no second note.
 
 ## Trace
 

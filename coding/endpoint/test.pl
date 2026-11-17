@@ -35,6 +35,7 @@
                 ep_merge_continuation/3,
                 ep_text_dangles/1,
                 ep_reply_dangles/1,
+                ep_about_note/2,
                 ep_continue_messages/3,
                 ep_continue_nudge/3,
                 ep_continue_on/0,
@@ -77,6 +78,7 @@ main :-
     test_sse_usage,
     test_sse_tools,
     test_reasoning,
+    test_about,
     test_c_reasoning,
     test_reasoning_headers,
     test_model_suffix,
@@ -627,6 +629,28 @@ test_reasoning :-
     ;   Got = nothing
     ),
     check('the reasoner reads the request', Got, read).
+
+test_about :-
+    endpoint_reason(
+        'Alice owns a red car. Every employee that is authorized may access the server.',
+        _, _, Terms),
+    (   Terms \== []
+    ->  TermsRead = parsed
+    ;   TermsRead = unparsed
+    ),
+    check('the reasoner parses a controlled-English request', TermsRead, parsed),
+    ep_about_note(Terms, About),
+    (   sub_atom(About, _, _, _, 'What the request is about'),
+        sub_atom(About, _, _, _, 'concepts'),
+        sub_atom(About, _, _, _, 'Why is '),
+        sub_atom(About, _, _, _, 'important to this task')
+    ->  AboutRead = about
+    ;   AboutRead = missing
+    ),
+    check('the reasoning note names the concepts and asks why they matter',
+          AboutRead, about),
+    ep_about_note([], NoTerms),
+    check('a request with no terms adds no concept note', NoTerms, '').
 
 test_c_reasoning :-
     Messages = [json([role-user, content-'Write hello.c that prints hello.'])],

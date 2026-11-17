@@ -2,12 +2,18 @@
 %%
 %%     endpoint_reason(+Text, -Obligations, -Contract, -Terms)
 %%     endpoint_reason(+Language, +Text, -Obligations, -Contract, -Terms)
+%%     endpoint_about(+Terms, -Concepts, -Topics)
 %%
 %% Text is an atom or codes. Obligations come from the language's keyword
 %% reader, Contract from coding/contract.pl's controlled English for C and
 %% cocolog, and Terms from library(reasoning/reason)'s parser. A reader
 %% that fails contributes an empty list; a request never fails because one
 %% did.
+%%
+%% endpoint_about/3 is the reasoner's own answer to what the text is
+%% ABOUT: reason_concepts/2 ranks what it mentions and reason_topics/2
+%% groups what is said about each subject. At most six of each, the most
+%% mentioned first; both empty when the text did not parse.
 
 :- use_module('coding/obligations.pl').
 :- use_module('coding/contract.pl').
@@ -55,3 +61,23 @@ endpoint_contract(c, Text, CObs) :-
 endpoint_contract(cocolog, Text, CObs) :-
     endpoint_contract(c, Text, CObs).
 endpoint_contract(python, _, []).
+
+%% The reasoner's concepts and topics, six at most of each: what the
+%% request is about, for the note the endpoint adds to the guide.
+endpoint_about(Terms, Concepts, Topics) :-
+    (   catch(reason_concepts(Terms, Concepts0), _, fail)
+    ->  ep_cap_six(Concepts0, Concepts)
+    ;   Concepts = []
+    ),
+    (   catch(reason_topics(Terms, Topics0), _, fail)
+    ->  ep_cap_six(Topics0, Topics)
+    ;   Topics = []
+    ).
+
+ep_cap_six(List, Capped) :-
+    (   length(List, N),
+        N > 6
+    ->  length(Capped, 6),
+        append(Capped, _, List)
+    ;   Capped = List
+    ).
