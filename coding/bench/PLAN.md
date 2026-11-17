@@ -370,6 +370,8 @@ Its first pilot (2026-11-17, commit `8951c5e`, saved in
 exercised the repair loop: `once` passed 2/3, `plain` passed 0/3 with
 three calls per cell, 76 034 tokens in all against `once`'s 14 037. The
 direction is negative but not a conclusion: N=3, the modes are separate
-samples, and one task makes the bootstrap degenerate. The next experiment
-is a paired first attempt (one first call, then `once` and `plain` arms
-over the same code), as the legacy `paired.pl` does.
+samples, and one task makes the bootstrap degenerate. A paired first
+attempt is now implemented (`--paired`): one first call, then `once` and
+`plain` arms over the same code, with the shared usage counted in both
+arm totals. Its pilot on `btree_debug` is the next paid run and has not
+been started.

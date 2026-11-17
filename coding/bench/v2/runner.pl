@@ -35,6 +35,7 @@
 :- dynamic v2_cell/8.
 :- dynamic v2_generate_hook/6.
 :- dynamic v2_extract_hook/5.
+:- dynamic v2_pair/11.
 
 v2_cli_main :-
     current_prolog_flag(argv, [_|Args]),
@@ -57,13 +58,29 @@ v2_cli_main :-
     ;   v2_usage,
         halt(2)
     ),
+    (   memberchk(paired, Opts)
+    ->  v2_cli_paired(Opts, Tasks, Trials, Seed, OutSpec)
+    ;   v2_cli_modes(Opts, Tasks, Modes, Trials, Seed, OutSpec)
+    ).
+
+v2_cli_paired(Opts, Tasks, Trials, Seed, OutSpec) :-
     (   memberchk(run, Opts)
-    ->  (   memberchk(keep(KeepDir), Opts)
-        ->  v2_keep_set(KeepDir)
-        ;   v2_keep_set(none)
-        ),
+    ->  v2_keep_option(Opts),
+        v2_pair_run(Tasks, Trials, Seed, OutSpec)
+    ;   v2_pair_plan(Tasks, Trials, Seed)
+    ).
+
+v2_cli_modes(Opts, Tasks, Modes, Trials, Seed, OutSpec) :-
+    (   memberchk(run, Opts)
+    ->  v2_keep_option(Opts),
         v2_run(Tasks, Modes, Trials, Seed, OutSpec)
     ;   v2_plan(Tasks, Modes, Trials, Seed)
+    ).
+
+v2_keep_option(Opts) :-
+    (   memberchk(keep(KeepDir), Opts)
+    ->  v2_keep_set(KeepDir)
+    ;   v2_keep_set(none)
     ).
 
 %% ---- arguments ---------------------------------------------------------
@@ -93,6 +110,8 @@ v2_parse_args(['--seed', Value|Rest], [seed(N)|Opts]) :-
 v2_parse_args(['--out', Value|Rest], [out(Value)|Opts]) :-
     v2_parse_args(Rest, Opts).
 v2_parse_args(['--keep', Value|Rest], [keep(Value)|Opts]) :-
+    v2_parse_args(Rest, Opts).
+v2_parse_args(['--paired'|Rest], [paired|Opts]) :-
     v2_parse_args(Rest, Opts).
 
 v2_csv_atoms(Value, Atoms) :-
@@ -154,7 +173,8 @@ v2_usage :-
     format("  --trials N      trials per task and mode (default: 3)~n", []),
     format("  --seed N        order seed~n", []),
     format("  --out FILE      JSONL output~n", []),
-    format("  --keep DIR      write each attempt's spec, code and verdict~n", []).
+    format("  --keep DIR      write each attempt's spec, code and verdict~n", []),
+    format("  --paired        pair once and plain over one shared first attempt~n", []).
 
 %% ---- plan --------------------------------------------------------------
 
@@ -666,6 +686,296 @@ v2_remove_files([File|Files]) :-
     ;   catch(delete_file(File), _, true)
     ),
     v2_remove_files(Files).
+
+%% ---- paired once and plain ---------------------------------------------
+%%
+%% One first attempt per task and trial, then two arms over the same code:
+%% once (stop) and plain (repair with the requirement alone). If the first
+%% attempt passes its repair cases, both arms are that result. The shared
+%% first attempt's usage is counted in both arms' totals, as the legacy
+%% paired.pl does, so the comparison isolates the repair policy instead of
+%% first-attempt luck. A pair row nests the two arms and records the
+%% shared usage once.
+
+v2_pair_plan(Tasks, Trials, Seed) :-
+    length(Tasks, N),
+    Pairs is N * Trials,
+    format("v2 paired plan (no model calls)~n", []),
+    format("task language budget timeout_ms~n", []),
+    forall(member(Task, Tasks),
+           (   v2_task(Task, Lang, _, _, _, _, budget(MaxCalls, TimeoutMs, _)),
+               format("~w ~w ~w ~w~n", [Task, Lang, MaxCalls, TimeoutMs])
+           )),
+    format("pairs: ~w task(s) x ~w trial(s) = ~w~n", [N, Trials, Pairs]),
+    format("arms: once vs plain over one shared first attempt~n", []),
+    format("seed: ~w~n", [Seed]).
+
+v2_pair_run(Tasks, Trials, Seed, OutSpec) :-
+    (   getenv('CODING_ENDPOINT_KEY_ENV', Key),
+        Key \== ''
+    ->  true
+    ;   format("CODING_ENDPOINT_KEY_ENV is not set.~n", []),
+        halt(1)
+    ),
+    get_time(Now),
+    Stamp is round(Now * 1000),
+    format(atom(RunId), 'v2-paired-~w', [Stamp]),
+    v2_commit(Commit),
+    v2_resolve_out(OutSpec, RunId, OutFile),
+    (   v2_open_results(OutFile, Stream)
+    ->  true
+    ;   format("cannot write ~w~n", [OutFile]),
+        halt(1)
+    ),
+    v2_config(model, Model),
+    v2_config(provider, Provider),
+    v2_config(temperature, Temperature),
+    Header = json([type-header,
+                   suite-'v2-paired',
+                   run_id-RunId,
+                   commit-Commit,
+                   started-Stamp,
+                   seed-Seed,
+                   trials-Trials,
+                   model-Model,
+                   provider-Provider,
+                   temperature-Temperature,
+                   tasks-Tasks,
+                   pair_modes-[once, plain]]),
+    v2_write_row(Stream, Header),
+    retractall(v2_pair(_, _, _, _, _, _, _, _, _, _, _)),
+    length(Tasks, NTask),
+    Pairs is NTask * Trials,
+    format("v2 paired run ~w~n", [RunId]),
+    format("commit ~w, model ~w, ~w pair(s), seed ~w~n",
+           [Commit, Model, Pairs, Seed]),
+    format("jsonl: ~w~n~n", [OutFile]),
+    forall(between(1, Trials, Trial),
+           v2_pair_trial(Trial, Tasks, Trials, Seed, RunId, Commit, Stream)),
+    close(Stream),
+    v2_pair_print_summary(Tasks).
+
+v2_pair_trial(Trial, Tasks, Trials, Seed, RunId, Commit, Stream) :-
+    TrialSeed is Seed + Trial * 7919,
+    v2_permute(Tasks, TrialSeed, Ordered, _),
+    length(Ordered, Count),
+    format("===== pair trial ~w/~w (~w tasks) =====~n",
+           [Trial, Trials, Count]),
+    v2_pair_jobs(Ordered, 1, Trial, TrialSeed, RunId, Commit, Stream).
+
+v2_pair_jobs([], _, _, _, _, _, _).
+v2_pair_jobs([Task|Tasks], Pos, Trial, TrialSeed, RunId, Commit, Stream) :-
+    v2_pair_cell(Task, Trial, Pos, TrialSeed, RunId, Commit, Stream),
+    Next is Pos + 1,
+    v2_pair_jobs(Tasks, Next, Trial, TrialSeed, RunId, Commit, Stream).
+
+v2_pair_cell(Task, Trial, Pos, Seed, RunId, Commit, Stream) :-
+    v2_task(Task, _, _, _, _, _, budget(MaxCalls, _, _)),
+    v2_mode_result(plain, Task, spec(Spec, _, _, _)),
+    get_time(T0),
+    v2_keep_begin(Task, paired, Trial, Spec),
+    call_cleanup(
+        v2_pair_attempts(Task, Trial, Spec, MaxCalls, Pair),
+        v2_keep_cell_set(none)),
+    get_time(T1),
+    Seconds is T1 - T0,
+    Pair = pair(First, Once, Plain, PairVerdict, SharedUsage, PlainRepair),
+    Once = arm(OnceOutcome, OnceFinal, OncePass1, OnceAttempts,
+               OnceRepair, OnceTotal),
+    Plain = arm(PlainOutcome, PlainFinal, PlainPass1, PlainAttempts,
+                PlainRepair, PlainTotal),
+    assertz(v2_pair(Task, Trial, First, OnceFinal, PlainFinal,
+                    OnceAttempts, PlainAttempts, SharedUsage, PlainRepair,
+                    OnceTotal, PlainTotal)),
+    v2_pair_bool(OncePass1, OnceP1Json),
+    v2_pair_bool(OnceFinal, OnceFJson),
+    v2_pair_bool(PlainPass1, PlainP1Json),
+    v2_pair_bool(PlainFinal, PlainFJson),
+    v2_usage_json(OnceRepair, OnceRepairJson),
+    v2_usage_json(OnceTotal, OnceTotalJson),
+    v2_usage_json(PlainRepair, PlainRepairJson),
+    v2_usage_json(PlainTotal, PlainTotalJson),
+    v2_usage_json(SharedUsage, SharedJson),
+    OnceJson = json([outcome-OnceOutcome,
+                     pass_at_1-OnceP1Json,
+                     final_pass-OnceFJson,
+                     attempts-OnceAttempts,
+                     repair_usage-OnceRepairJson,
+                     total_usage-OnceTotalJson]),
+    PlainJson = json([outcome-PlainOutcome,
+                      pass_at_1-PlainP1Json,
+                      final_pass-PlainFJson,
+                      attempts-PlainAttempts,
+                      repair_usage-PlainRepairJson,
+                      total_usage-PlainTotalJson]),
+    v2_config(model, Model),
+    v2_config(temperature, Temperature),
+    Row = json([type-pair,
+                suite-'v2-paired',
+                run_id-RunId,
+                commit-Commit,
+                task-Task,
+                trial-Trial,
+                order_position-Pos,
+                seed-Seed,
+                model-Model,
+                temperature-Temperature,
+                first-First,
+                pair_verdict-PairVerdict,
+                shared_usage-SharedJson,
+                once-OnceJson,
+                plain-PlainJson,
+                seconds-Seconds]),
+    v2_write_row(Stream, Row),
+    v2_pair_report_cell(Task, Trial, First, PairVerdict, Once, Plain,
+                        SharedUsage, Seconds).
+
+v2_pair_attempts(Task, _Trial, Spec, MaxCalls,
+                 pair(First, Once, Plain, PairVerdict, U1, PlainRepair)) :-
+    catch(v2_generate(Spec, none, none, Code1, U1, E1),
+          Ball,
+          ( Code1 = '',
+            U1 = usage(0, 0, 0, 0, 0),
+            E1 = Ball
+          )),
+    (   E1 == none
+    ->  catch(v2_verify(Task, Code1, V1), Ball1,
+              ( v2_error_atom(Ball1, Text1),
+                V1 = verdict(fail(verifier(Text1)), not_run)
+              ))
+    ;   v2_error_atom(E1, Text1),
+        V1 = verdict(fail(generator(Text1)), not_run)
+    ),
+    catch(v2_keep_attempt(1, Code1, U1, E1, V1), _, true),
+    (   V1 = verdict(ok, Heldout1)
+    ->  First = ok,
+        (   Heldout1 == ok
+        ->  OnceOutcome = pass,
+            OnceFinal = yes
+        ;   OnceOutcome = fail_heldout,
+            OnceFinal = no
+        ),
+        OncePass1 = OnceFinal,
+        Once = arm(OnceOutcome, OnceFinal, OncePass1, 1,
+                   usage(0, 0, 0, 0, 0), U1),
+        Plain = Once,
+        PlainRepair = usage(0, 0, 0, 0, 0),
+        (   OnceFinal == yes
+        ->  PairVerdict = both_pass
+        ;   PairVerdict = both_fail
+        )
+    ;   V1 = verdict(fail(Why), not_run)
+    ->  First = fail,
+        v2_why_diag(Why, Diag0),
+        v2_limit(Diag0, Diag),
+        v2_next_prev(Why, Code1, Diag, Prev),
+        v2_attempts(Task, Spec, none, MaxCalls, 2, Prev,
+                    usage(0, 0, 0, 0, 0),
+                    PlainAttempts, PlainRepair, PlainOutcome, _PlainRepair,
+                    _PlainHeldout),
+        v2_fail_outcome(Why, OnceOutcome),
+        Once = arm(OnceOutcome, no, no, 1, usage(0, 0, 0, 0, 0), U1),
+        v2_add_usage(U1, PlainRepair, PlainTotal),
+        (   PlainOutcome == pass
+        ->  PlainFinal = yes,
+            PairVerdict = plain_pass
+        ;   PlainFinal = no,
+            PairVerdict = both_fail
+        ),
+        Plain = arm(PlainOutcome, PlainFinal, no, PlainAttempts,
+                    PlainRepair, PlainTotal)
+    ).
+
+v2_pair_bool(yes, '@'(true)) :- !.
+v2_pair_bool(no, '@'(false)) :- !.
+v2_pair_bool(V, V).
+
+v2_usage_json(usage(P, C, T, R, H),
+              json([prompt-P,
+                    completion-C,
+                    total-T,
+                    reasoning-R,
+                    cache_hit-H])).
+
+v2_pair_report_cell(Task, Trial, First, Verdict, Once, Plain, Shared,
+                    Seconds) :-
+    Once = arm(OnceOutcome, _, _, OnceAttempts, _, OnceTotal),
+    Plain = arm(PlainOutcome, _, _, PlainAttempts, _, PlainTotal),
+    v2_usage_json(Shared, json(SharedPairs)),
+    memberchk(total-SharedTotal, SharedPairs),
+    v2_usage_json(OnceTotal, json(OncePairs)),
+    memberchk(total-OnceTotalN, OncePairs),
+    v2_usage_json(PlainTotal, json(PlainPairs)),
+    memberchk(total-PlainTotalN, PlainPairs),
+    format("~w pair ~w: first ~w, ~w; once ~w (~w attempts, ~w tokens); plain ~w (~w attempts, ~w tokens), shared ~w, ~2f s~n",
+           [Task, Trial, First, Verdict, OnceOutcome, OnceAttempts,
+            OnceTotalN, PlainOutcome, PlainAttempts, PlainTotalN,
+            SharedTotal, Seconds]).
+
+v2_pair_print_summary(Tasks) :-
+    format("~ntask pairs once_pass plain_pass plain_only shared plain_repair once_total plain_total~n",
+           []),
+    forall(member(Task, Tasks), v2_pair_summary_row(Task)),
+    findall(pair(Task, Trial, First, OnceFinal, PlainFinal, OnceAttempts,
+                 PlainAttempts, U1, PlainRepair, OnceTotal, PlainTotal),
+            (   member(Task, Tasks),
+                v2_pair(Task, Trial, First, OnceFinal, PlainFinal,
+                        OnceAttempts, PlainAttempts, U1, PlainRepair,
+                        OnceTotal, PlainTotal)
+            ),
+            Pairs),
+    (   Pairs == []
+    ->  true
+    ;   v2_pair_summary_values(Pairs, N, OncePass, PlainPass, PlainOnly,
+                              Shared, Repair, OnceTotal, PlainTotal2),
+        format("~nall ~w ~w ~w ~w ~w ~w ~w ~w~n",
+               [N, OncePass, PlainPass, PlainOnly, Shared, Repair,
+                OnceTotal, PlainTotal2])
+    ).
+
+v2_pair_summary_row(Task) :-
+    findall(pair(Task, Trial, First, OnceFinal, PlainFinal, OnceAttempts,
+                 PlainAttempts, U1, PlainRepair, OnceTotal, PlainTotal),
+            v2_pair(Task, Trial, First, OnceFinal, PlainFinal,
+                    OnceAttempts, PlainAttempts, U1, PlainRepair,
+                    OnceTotal, PlainTotal),
+            Pairs),
+    (   Pairs == []
+    ->  true
+    ;   v2_pair_summary_values(Pairs, N, OncePass, PlainPass, PlainOnly,
+                              Shared, Repair, OnceTotal, PlainTotal2),
+        format("~w ~w ~w ~w ~w ~w ~w ~w ~w~n",
+               [Task, N, OncePass, PlainPass, PlainOnly, Shared, Repair,
+                OnceTotal, PlainTotal2])
+    ).
+
+v2_pair_summary_values(Pairs, N, OncePass, PlainPass, PlainOnly,
+                       Shared, Repair, OnceTotal, PlainTotal) :-
+    length(Pairs, N),
+    findall(F, member(pair(_,_,_,_,F,_,_,_,_,_,_), Pairs), OnceFinals),
+    v2_count_yes(OnceFinals, OncePass),
+    findall(F, member(pair(_,_,_,_,F,_,_,_,_,_,_), Pairs), PlainFinals),
+    v2_count_yes(PlainFinals, PlainPass),
+    findall(x,
+            ( member(pair(_,_,_,OF,PF,_,_,_,_,_,_), Pairs),
+              PF == yes,
+              OF == no
+            ),
+            Wins),
+    length(Wins, PlainOnly),
+    findall(U, member(pair(_,_,_,_,_,_,_,U,_,_,_), Pairs), Shareds),
+    findall(U, member(pair(_,_,_,_,_,_,_,_,U,_,_), Pairs), Repairs),
+    findall(U, member(pair(_,_,_,_,_,_,_,_,_,U,_), Pairs), OnceTotals),
+    findall(U, member(pair(_,_,_,_,_,_,_,_,_,_,U), Pairs), PlainTotals),
+    v2_usage_sum(Shareds, Shared),
+    v2_usage_sum(Repairs, Repair),
+    v2_usage_sum(OnceTotals, OnceTotal),
+    v2_usage_sum(PlainTotals, PlainTotal).
+
+v2_usage_sum([], usage(0, 0, 0, 0, 0)).
+v2_usage_sum([U|Us], Total) :-
+    v2_usage_sum(Us, Rest),
+    v2_add_usage(U, Rest, Total).
 
 %% ---- kept attempts -----------------------------------------------------
 %%

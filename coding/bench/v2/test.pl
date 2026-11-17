@@ -32,6 +32,8 @@
                 v2_bool/2,
                 v2_add_usage/3,
                 v2_attempts/12,
+                v2_pair_attempts/5,
+                v2_pair_run/4,
                 v2_run_cell/9,
                 v2_keep_set/1,
                 v2_run/5
@@ -43,6 +45,8 @@ main :-
     test_verifier,
     test_runner,
     test_attempts,
+    test_pair,
+    test_pair_run,
     test_stats,
     test_keep,
     test_extract_cell,
@@ -388,6 +392,13 @@ test_runner :-
     ;   KeepOk = KeepOpts
     ),
     check('--keep carries the directory', KeepOk, yes),
+    yes_no(v2_parse_args(['--paired', '--run'], PairedOpts), PairedParsed),
+    check('--paired parses', PairedParsed, yes),
+    (   memberchk(paired, PairedOpts), memberchk(run, PairedOpts)
+    ->  PairedOk = yes
+    ;   PairedOk = PairedOpts
+    ),
+    check('--paired selects a paired run', PairedOk, yes),
     v2_bool(yes, True),
     check('yes is JSON true', True, '@'(true)),
     v2_add_usage(usage(1, 2, 3, 4, 5), usage(10, 20, 30, 40, 50), Sum),
@@ -490,6 +501,165 @@ test_attempt_generator_error :-
 
 v2_retract_hook :-
     retractall(v2_generate_hook(_, _, _, _, _, _)).
+
+%% ---- the paired once/plain experiment ----------------------------------
+
+test_pair :-
+    section('paired experiment'),
+    once(v2_mode_spec(plain, lcs, Spec)),
+    test_pair_first_pass(Spec),
+    test_pair_repair_pass(Spec),
+    test_pair_repair_fail(Spec),
+    test_pair_heldout_fail(Spec).
+
+test_pair_first_pass(Spec) :-
+    v2_retract_hook,
+    assertz((v2_generate_hook(_, _, _, Code, usage(10, 20, 30, 0, 0), none) :-
+                lcs_correct(Code))),
+    v2_pair_attempts(lcs, 1, Spec, 3, Pair),
+    v2_retract_hook,
+    Pair = pair(First,
+                arm(OnceOutcome, OnceFinal, OncePass1, OnceAttempts,
+                    OnceRepair, OnceTotal),
+                arm(PlainOutcome, PlainFinal, PlainPass1, PlainAttempts,
+                    PlainRepair, PlainTotal),
+                Verdict, Shared, PlainRepair),
+    check('a first pass is shared', First, ok),
+    check('a first pass passes once', OnceOutcome, pass),
+    check('a first pass passes plain', PlainOutcome, pass),
+    check('a first pass is pass@1', OncePass1, yes),
+    check('a first pass is one attempt', OnceAttempts, 1),
+    check('a first pass has one attempt in plain', PlainAttempts, 1),
+    check('a first pass pays no repair', OnceRepair, usage(0, 0, 0, 0, 0)),
+    check('a first pass pays no plain repair', PlainRepair,
+          usage(0, 0, 0, 0, 0)),
+    check('a first pass counts shared once in each arm', OnceTotal,
+          usage(10, 20, 30, 0, 0)),
+    check('a first pass has the same plain total', PlainTotal,
+          usage(10, 20, 30, 0, 0)),
+    check('a first pass is a pair pass', Verdict, both_pass),
+    check('a first pass records shared usage', Shared,
+          usage(10, 20, 30, 0, 0)),
+    check('a first pass has both finals', OnceFinal, yes),
+    check('a first pass has both plain finals', PlainFinal, yes),
+    check('a first pass is pass@1 in plain', PlainPass1, yes).
+
+test_pair_repair_pass(Spec) :-
+    v2_retract_hook,
+    assertz((v2_generate_hook(_, Prev, _, Code, U, none) :-
+                (   Prev == none
+                ->  lcs_wrong(Code), U = usage(1, 1, 1, 0, 0)
+                ;   lcs_correct(Code), U = usage(2, 2, 2, 0, 0)
+                ))),
+    v2_pair_attempts(lcs, 1, Spec, 3, Pair),
+    v2_retract_hook,
+    Pair = pair(First,
+                arm(OnceOutcome, OnceFinal, OncePass1, OnceAttempts,
+                    OnceRepair, OnceTotal),
+                arm(PlainOutcome, PlainFinal, PlainPass1, PlainAttempts,
+                    PlainRepair, PlainTotal),
+                Verdict, Shared, PlainRepair),
+    check('a failed first attempt is recorded', First, fail),
+    check('the once arm fails', OnceOutcome, fail_repair),
+    check('the once arm is not pass@1', OncePass1, no),
+    check('the once arm stops at one attempt', OnceAttempts, 1),
+    check('the once arm pays no repair', OnceRepair, usage(0, 0, 0, 0, 0)),
+    check('the once arm pays only the shared call', OnceTotal,
+          usage(1, 1, 1, 0, 0)),
+    check('the plain arm repairs and passes', PlainOutcome, pass),
+    check('the plain arm is not pass@1', PlainPass1, no),
+    check('the plain arm takes two attempts', PlainAttempts, 2),
+    check('the plain arm pays one repair', PlainRepair,
+          usage(2, 2, 2, 0, 0)),
+    check('the plain arm total adds the shared call', PlainTotal,
+          usage(3, 3, 3, 0, 0)),
+    check('the pair is a plain pass', Verdict, plain_pass),
+    check('the pair records shared usage', Shared, usage(1, 1, 1, 0, 0)),
+    check('the once arm fails final', OnceFinal, no),
+    check('the plain arm passes final', PlainFinal, yes).
+
+test_pair_repair_fail(Spec) :-
+    v2_retract_hook,
+    assertz((v2_generate_hook(_, _, _, Code, usage(1, 1, 1, 0, 0), none) :-
+                lcs_wrong(Code))),
+    v2_pair_attempts(lcs, 1, Spec, 3, Pair),
+    v2_retract_hook,
+    Pair = pair(_First, _Once,
+                arm(PlainOutcome, PlainFinal, PlainPass1, PlainAttempts,
+                    PlainRepair, _PlainTotal),
+                Verdict, _Shared, PlainRepair),
+    check('both arms fail when repair fails', PlainOutcome, fail_repair),
+    check('a failed repair is not pass@1', PlainPass1, no),
+    check('a failed repair uses every attempt', PlainAttempts, 3),
+    check('a failed repair pays two repairs', PlainRepair,
+          usage(2, 2, 2, 0, 0)),
+    check('a failed repair has no final pass', PlainFinal, no),
+    check('a failed repair is a pair failure', Verdict, both_fail).
+
+test_pair_heldout_fail(Spec) :-
+    v2_retract_hook,
+    assertz((v2_generate_hook(_, _, _, Code, usage(1, 1, 1, 0, 0), none) :-
+                lcs_heldout_wrong(Code))),
+    v2_pair_attempts(lcs, 1, Spec, 3, Pair),
+    v2_retract_hook,
+    Pair = pair(First,
+                arm(OnceOutcome, OnceFinal, _OncePass1, OnceAttempts,
+                    _OnceRepair, _OnceTotal),
+                arm(PlainOutcome, PlainFinal, _PlainPass1, PlainAttempts,
+                    _PlainRepair, _PlainTotal),
+                Verdict, _Shared, _PR),
+    check('a held-out failure follows a repair pass', First, ok),
+    check('a held-out failure is fail_heldout in once', OnceOutcome,
+          fail_heldout),
+    check('a held-out failure is fail_heldout in plain', PlainOutcome,
+          fail_heldout),
+    check('a held-out failure is final in both', OnceFinal, no),
+    check('a held-out failure is final in plain', PlainFinal, no),
+    check('a held-out failure is one shared attempt', OnceAttempts, 1),
+    check('a held-out failure has no plain attempt', PlainAttempts, 1),
+    check('a held-out failure is a pair failure', Verdict, both_fail).
+
+test_pair_run :-
+    section('paired jsonl'),
+    v2_retract_hook,
+    assertz((v2_generate_hook(_, Prev, _, Code, U, none) :-
+                (   Prev == none
+                ->  lcs_wrong(Code), U = usage(1, 1, 1, 0, 0)
+                ;   lcs_correct(Code), U = usage(2, 2, 2, 0, 0)
+                ))),
+    setenv('CODING_ENDPOINT_KEY_ENV', 'test-key'),
+    tmp_file(v2_pair_jsonl, OutFile),
+    catch(once(v2_pair_run([lcs], 1, 123, file(OutFile))), Ball,
+          ( format("paired run error: ~w~n", [Ball]) )),
+    unsetenv('CODING_ENDPOINT_KEY_ENV'),
+    v2_retract_hook,
+    (   exists_file(OutFile)
+    ->  read_file_to_codes(OutFile, Codes),
+        atom_codes(Text, Codes),
+        split_string(Text, "\n", " \t\r", Lines),
+        exclude(v2_empty_string, Lines, Kept),
+        length(Kept, Count),
+        check('a paired run writes two JSON lines', Count, 2),
+        (   Kept = [Header, Row]
+        ->  true
+        ;   Header = '', Row = ''
+        ),
+        (   sub_atom(Header, _, _, _, '"suite":"v2-paired"')
+        ->  H = yes
+        ;   H = no
+        ),
+        check('the paired header names the suite', H, yes),
+        (   sub_atom(Row, _, _, _, '"type":"pair"'),
+            sub_atom(Row, _, _, _, '"first":"fail"'),
+            sub_atom(Row, _, _, _, '"pair_verdict":"plain_pass"'),
+            sub_atom(Row, _, _, _, '"plain":{"outcome":"pass"')
+        ->  R = yes
+        ;   R = no
+        ),
+        check('the pair row records the plain repair', R, yes),
+        catch(delete_file(OutFile), _, true)
+    ;   check('the paired run writes a JSONL file', missing, present)
+    ).
 
 %% ---- statistics --------------------------------------------------------
 

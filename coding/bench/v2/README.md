@@ -124,10 +124,40 @@ Options:
 --out FILE      JSONL output (default: results/<run id>.jsonl)
 --keep DIR      write each cell's spec and each attempt's code, usage and
                 verdict under DIR/task/mode/trial-N
+--paired        pair once and plain over one shared first attempt
 ```
+
+`--paired` ignores `--modes`: its arms are fixed as `once` and `plain`.
+It writes one `pair` row per task and trial instead of two independent
+cells.
 
 `./run.sh` is the same command with `COCOLOG_LIBRARY` set from the
 repository's parent.
+
+## Pair once and plain
+
+The separate mode cells are independent samples. For a feedback
+comparison, `--paired` makes ONE first call per task and trial, then
+branches the same code and diagnostic into:
+
+- `once` -- stop after the first attempt;
+- `plain` -- repair with the requirement alone, up to the task's budget.
+
+If the first attempt passes its repair cases, both arms are that result.
+The shared first attempt's usage is counted in both arms' totals, as the
+legacy `paired.pl` does; the pair row also records it once under
+`shared_usage`. A pair row is:
+
+```text
+type-pair, task, trial, order_position, seed
+first, pair_verdict
+shared_usage {prompt, completion, total, reasoning, cache_hit}
+once  {outcome, pass_at_1, final_pass, attempts, repair_usage, total_usage}
+plain {outcome, pass_at_1, final_pass, attempts, repair_usage, total_usage}
+seconds
+```
+
+`pair_verdict` is `both_pass`, `plain_pass` or `both_fail`.
 
 ## Report a saved run
 
@@ -186,9 +216,9 @@ COCOLOG_LIBRARY="$PWD/..:$PWD/../cocolog/library" \
 The test checks the schema and split, the three output policies, the
 verifier on a correct LCS, a repair-case failure, a held-out-only failure
 and a compile failure, the attempt loop through a fixture seam, the
-statistics and JSONL reader, the kept attempt files, and one complete
-JSONL run with no provider. It also pins the five task splits, including
-the corrected `stable_sort` case.
+paired arms and their shared usage, the statistics and JSONL reader, the
+kept attempt files, and one complete JSONL run with no provider. It also
+pins the five task splits, including the corrected `stable_sort` case.
 
 ## Budget
 
@@ -209,7 +239,8 @@ between v2 and a legacy result is recorded before changing either.
 config.pl    provider, model, temperature, trials, seed, results dir
 schema.pl    task declaration, case split, output policy, budget
 verify.pl    sanitized compile, repair and held-out runs, output policy
-runner.pl    attempts, repair diagnostics, seeded order, JSONL, summary
+runner.pl    attempts, paired arms, repair diagnostics, seeded order,
+             JSONL, summary
 gen.pl       one child generator call
 run.pl       the runner's main/0
 run.sh       the shell entry point
