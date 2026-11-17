@@ -365,5 +365,11 @@ attempt: it does not exercise repair either. `btree_debug` is now the
 fifth task and the repair-loop candidate: its repair cases include
 `n=256` where the buggy source crashes, its held-out cases are `n=50`
 and `n=1000`, and the model must return the corrected complete program.
-A `once` vs `plain` pilot on it is the next paid run and has not been
-started.
+Its first pilot (2026-11-17, commit `8951c5e`, saved in
+`v2/results/btree-debug-once-plain-20261117.md`) is the first task that
+exercised the repair loop: `once` passed 2/3, `plain` passed 0/3 with
+three calls per cell, 76 034 tokens in all against `once`'s 14 037. The
+direction is negative but not a conclusion: N=3, the modes are separate
+samples, and one task makes the bootstrap degenerate. The next experiment
+is a paired first attempt (one first call, then `once` and `plain` arms
+over the same code), as the legacy `paired.pl` does.
