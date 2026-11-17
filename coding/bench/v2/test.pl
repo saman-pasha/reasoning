@@ -54,13 +54,15 @@ main :-
 test_schema :-
     section('schema'),
     findall(Task, v2_task_name(Task), Tasks),
-    check('the v2 tasks', Tasks, [lcs, stable_sort, calculator, btree]),
+    check('the v2 tasks', Tasks,
+          [lcs, stable_sort, calculator, btree, btree_debug]),
     yes_no(v2_task_check, All),
     check('every task has repair and held-out cases', All, yes),
     forall(member(Task, Tasks), test_task_split(Task)),
     test_lcs_split,
     test_calculator_split,
     test_btree_split,
+    test_btree_debug_split,
     test_stable_sort_fix.
 
 test_task_split(Task) :-
@@ -140,6 +142,24 @@ test_btree_split :-
     ),
     check('btree held-out cases are all-equal and the deeper split', Got,
           [AllEqual, DeeperSplit]).
+
+test_btree_debug_split :-
+    bench_task(btree_debug, _, Cases),
+    v2_task(btree_debug, c, _, Repair, Heldout, _, _),
+    length(Cases, N),
+    length(Repair, NR),
+    length(Heldout, NH),
+    check('btree_debug case count', N, 13),
+    check('btree_debug repair count', NR, 11),
+    check('btree_debug held-out count', NH, 2),
+    nth1(9, Cases, Fifty),
+    nth1(13, Cases, Thousand),
+    (   Heldout == [Fifty, Thousand]
+    ->  Got = [Fifty, Thousand]
+    ;   Got = Heldout
+    ),
+    check('btree_debug held-out cases are n=50 and n=1000', Got,
+          [Fifty, Thousand]).
 
 %% The legacy case says five records and gives four. v2 keeps the legacy
 %% text for the old run and corrects its own copy.

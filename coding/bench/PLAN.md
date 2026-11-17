@@ -361,8 +361,9 @@ policy; the paired `plain - once` difference is one `lcs` trial,
 no first attempt fails a repair case. `btree` is now the fourth task for that role, but its pilot
 (2026-11-17, commit `16a4e1d`, saved in
 `v2/results/btree-once-plain-20261117.md`) passed 6/6 on the first
-attempt: it does not exercise repair either. The next candidate is
-`btree_debug`, a repair task by design: its repair cases include `n=256`
-where the buggy source crashes, and its held-out cases are `n=50` and
-`n=1000`. A `once` vs `plain` pilot on it is the next paid run and has
-not been started.
+attempt: it does not exercise repair either. `btree_debug` is now the
+fifth task and the repair-loop candidate: its repair cases include
+`n=256` where the buggy source crashes, its held-out cases are `n=50`
+and `n=1000`, and the model must return the corrected complete program.
+A `once` vs `plain` pilot on it is the next paid run and has not been
+started.
