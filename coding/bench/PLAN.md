@@ -389,11 +389,12 @@ repaired twice and stayed failing. `once` and `plain` both passed 2/3;
 `plain` cost 29 976 tokens against `once`'s 14 036 with no gain. The
 design is sound but N=3 gives one repair branch.
 
-The 30-pair run (2026-11-17, commit `a53dce8`, saved in
-`v2/results/btree-debug-paired-30-20261117.md`) has 20 first-attempt
-passes and 10 failures. `once` passes 20/30 and `plain` 22/30, two
-paired wins; the paired difference is `+6.7 pp [0.0, +16.7]`. Repair
-success is 2/10, and `plain` costs 284 220 tokens against `once`'s
-140 369 (2.02 times) for the two extra passes. The signal is positive
-but small; a larger N is needed if the effect is to be stated as a rate.
-No further paid run has been made.
+The 100-pair run (2026-11-17, commit `19b6937`, saved in
+`v2/results/btree-debug-paired-100-20261117.md`) is the final feedback
+pilot. The shared first attempt passed 57 times and failed 43. `once`
+passes 57/100 and `plain` 65/100: eight paired wins, no losses, a paired
+difference of `+8.0 pp [+3.0, +14.0]`. Repair success is 8/43 (18.6%);
+`plain` costs 1 091 270 tokens against `once`'s 467 869 (2.33 times),
+and 89.7% of the repair tokens are spent on failures. The direction and
+cost structure are now measured for this task and model; Phase 2's
+paired comparison is complete. No further paid run has been made.
