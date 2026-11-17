@@ -1336,9 +1336,11 @@ ep_reply_dangles(Resp) :-
     ),
     ep_text_dangles(Content).
 
-%% Only the LAST sentence is inspected, with curly apostrophes folded to
-%% straight ones. A phrase that announces an action in an earlier
-%% sentence and a final answer after it are not a dangling preamble.
+%% The LAST sentence is inspected, with curly apostrophes folded to
+%% straight ones, and the two last sentences for a reply that announces
+%% an action and then explains it ("... let me look at X. That affects
+%% ..."). A phrase that announces an action in an earlier sentence and a
+%% final answer after it are not a dangling preamble.
 ep_text_dangles(Text) :-
     atom(Text),
     Text \== '',
@@ -1354,6 +1356,10 @@ ep_text_dangles(Text) :-
     ;   ep_heading_gerund(LastSentence)
     ->  true
     ;   ep_wh_fragment(LastSentence)
+    ->  true
+    ;   ep_sequence_fragment(LastSentence)
+    ->  true
+    ;   ep_pending_announcement(Flat)
     ->  true
     ;   ep_sentence_gerund(LastClause, After),
         ep_no_finite_verb(After)
@@ -1529,6 +1535,76 @@ ep_sequence_word(then).
 ep_sequence_word(now).
 ep_sequence_word(finally).
 ep_sequence_word(also).
+
+%% "First, the tool's options." is a bare noun phrase after a sequence
+%% word, the heading of the next look. A sentence with a finite verb
+%% ("First, the results are good") is a statement.
+ep_sequence_fragment(Text) :-
+    ep_first_word(Text, Word, Rest),
+    ep_sequence_word(Word),
+    ep_no_finite_verb(Rest).
+
+%% A reply that announces an action and then explains why it matters
+%% stops mid-work as surely as one that ends on the announcement itself:
+%% "While that runs, let me look at GitHub Actions ... . That affects any
+%% fix I deploy." The last two sentences are asked: an announcement in
+%% the one before, and neither an announcement nor a question in the
+%% last (a question waits for the user, which is a legitimate stop).
+ep_pending_announcement(Text) :-
+    atom_codes(Text, Codes),
+    ep_last_two_sentences_codes(Codes, PenultCodes, LastCodes),
+    PenultCodes \== [],
+    atom_codes(Penult, PenultCodes),
+    atom_codes(Last, LastCodes),
+    ep_announcement_in(Penult),
+    \+ ep_announcement_in(Last),
+    \+ ep_question_last(Last).
+
+%% The last sentence and the one before it: ep_last_sentence_codes stops
+%% at the last break, this walks on to the break before it.
+ep_last_two_sentences_codes(Codes, Penult, Last) :-
+    reverse(Codes, Back),
+    ep_sentence_back(Back, [], Last, Rest),
+    Rest \== [],
+    ep_sentence_back(Rest, [], Penult, _).
+
+ep_sentence_back([P|Rest], Acc, Acc, Rest) :-
+    P =:= 10,
+    !.
+ep_sentence_back([Space, P|Rest], Acc, Acc, Rest) :-
+    ep_space(Space),
+    ep_break_term(sentence, P),
+    !.
+ep_sentence_back([C|Rest], Acc, Out, Tail) :-
+    ep_sentence_back(Rest, [C|Acc], Out, Tail).
+ep_sentence_back([], Acc, Acc, []).
+
+%% "Let me look at", "I'll check", "I need to run": the announcement can
+%% stand anywhere in the sentence ("While that runs, let me look at ...").
+ep_announcement_in(Text) :-
+    downcase_atom(Text, Lower),
+    ep_announcement_phrase(Phrase),
+    sub_atom(Lower, Before, Length, After, Phrase),
+    Pos is Before + Length,
+    sub_atom(Lower, Pos, After, 0, Rest),
+    ep_bare_action(Rest),
+    !.
+
+ep_announcement_phrase('let me ').
+ep_announcement_phrase('let\'s ').
+ep_announcement_phrase('i\'ll ').
+ep_announcement_phrase('i will ').
+ep_announcement_phrase('i need to ').
+ep_announcement_phrase('i have to ').
+ep_announcement_phrase('i should ').
+ep_announcement_phrase('i\'m going to ').
+ep_announcement_phrase('i\'m about to ').
+
+ep_question_last(Text) :-
+    atom_codes(Text, Codes),
+    reverse(Codes, Back),
+    ep_first_nonspace(Back, [63|_]).
+
 
 ep_dangle_action(gerund, Rest) :-
     ep_first_word(Rest, Word, Rest1),
