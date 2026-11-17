@@ -36,6 +36,7 @@
                 ep_text_dangles/1,
                 ep_reply_dangles/1,
                 ep_continue_messages/3,
+                ep_continue_nudge/3,
                 ep_continue_on/0,
                 ep_continue_limit/1,
                 ep_default_effort/2,
@@ -925,7 +926,30 @@ test_continue :-
     check('a reply with a tool call does not dangle', R2, no),
     continue_reply('I’m checking the parser now.', [], length, ReplyLong),
     ( ep_reply_dangles(ReplyLong) -> R3 = yes ; R3 = no ),
-    check('a truncated reply does not dangle', R3, no),
+    check('a truncated reply dangles', R3, yes),
+    continue_reply('The exact line is not y', [], stop, ReplyMid),
+    ( ep_reply_dangles(ReplyMid) -> R4 = yes ; R4 = no ),
+    check('a reply cut in the middle of a word dangles', R4, yes),
+    continue_reply('The exact line is not yet found.', [], stop, ReplyCut),
+    ( ep_reply_dangles(ReplyCut) -> R5 = yes ; R5 = no ),
+    check('a reply that ends on a word does not dangle', R5, no),
+    continue_reply('The value is a', [], stop, ReplyA),
+    ( ep_reply_dangles(ReplyA) -> R6 = yes ; R6 = no ),
+    check('a final article does not dangle', R6, no),
+    (   ep_continue_nudge([finish_reason-length],
+                          json([content-'The exact line is not y']), NudgeLong),
+        sub_atom(NudgeLong, _, _, _, 'cut off')
+    ->  N1 = yes
+    ;   N1 = no
+    ),
+    check('a cut reply is told it was cut off', N1, yes),
+    (   ep_continue_nudge([finish_reason-stop],
+                          json([content-'I’m checking the parser now.']), NudgeStop),
+        sub_atom(NudgeStop, _, _, _, 'announced the next action')
+    ->  N2 = yes
+    ;   N2 = no
+    ),
+    check('an announced action keeps its own nudge', N2, yes),
     Body = json([model-c, messages-[json([role-user, content-'Fix it.'])]]),
     (   ep_continue_messages(Body, Reply, Body1),
         ep_json_get(Body1, messages, Messages1),

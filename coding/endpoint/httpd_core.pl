@@ -936,7 +936,8 @@ ep_header(Request, Name, Default, Value) :-
     ).
 
 ep_trace(Request, Start, Alias, Backend, Effort, Mode, N, Terms,
-         Stream, MessageCount, ToolCount, Status, Usage, Continued) :-
+         Stream, MessageCount, ToolCount, Status, Finish, Usage,
+         Continued) :-
     ep_env('CODING_ENDPOINT_TRACE', '', File),
     File \== '',
     get_time(Now),
@@ -950,10 +951,20 @@ ep_trace(Request, Start, Alias, Backend, Effort, Mode, N, Terms,
                      backend-Backend, effort-Effort, mode-Mode,
                      reasoning-N, terms-Terms, stream-StreamJson,
                      messages-MessageCount, tools-ToolCount,
-                     continued-Continued | UsagePairs]),
+                     finish-Finish, continued-Continued | UsagePairs]),
                Codes),
     append(Codes, [10], Line),
     catch(append_file_from_codes(File, Line), _, true).
+
+%% The backend's finish reason, for the trace: "stop", "length", "tool_calls".
+ep_reply_finish(Resp, Finish) :-
+    (   catch(json_parse(Resp, json(Pairs)), _, fail),
+        memberchk(choices-[json(Choice)|_], Pairs),
+        memberchk(finish_reason-Value, Choice),
+        atom(Value)
+    ->  Finish = Value
+    ;   Finish = none
+    ).
 
 %% OpenCode names the session in its headers; Codex names it in
 %% `session-id'. Both are what the thinking-mode memo is keyed by.
@@ -1239,10 +1250,11 @@ ep_chat_body_1(Request, Body, Start, Reply) :-
                 Reply = reply(Status, Headers, Resp)
             ),
             ep_usage(Resp, Usage),
+            ep_reply_finish(Resp, Finish),
             ep_continued(Continued),
             ep_trace(Request, Start, Alias, BackendModel, Effort, Mode,
                      N, TermCount, Stream, MessageCount, ToolCount, Status,
-                     Usage, Continued)
+                     Finish, Usage, Continued)
         ;   ep_error_reply(Request, 500,
                            'the language guide is missing', Reply)
         )
@@ -1304,18 +1316,31 @@ ep_continue_loop(Body, Alias, Limit, Resp0, Resp, Count) :-
     ).
 
 %% The assistant's own message and the nudge: the backend sees what it
-%% said and is told that the action it announced has not happened.
+%% said and is told either that the message was cut off or that the
+%% action it announced has not happened.
 ep_continue_messages(Body, Resp, Body1) :-
     catch(json_parse(Resp, json(Pairs)), _, fail),
     memberchk(choices-[json(Choice)|_], Pairs),
     memberchk(message-Message, Choice),
     ep_json_get(Body, messages, Messages),
-    ep_continue_nudge(Nudge),
+    ep_continue_nudge(Choice, Message, Nudge),
     append(Messages, [Message, json([role-user, content-Nudge])], Messages1),
     ep_json_set(Body, messages, Messages1, Body1).
 
-ep_continue_nudge('Your last message announced the next action but made no tool call, so the turn ended before the work. Continue the task now: make the tool call that performs the next step. Do not end your turn with a plan, a preamble or a progress note. If the task is actually complete, give the final answer.').
+ep_continue_nudge(Choice, Message, Nudge) :-
+    (   Message = json(Pairs),
+        memberchk(content-Content, Pairs)
+    ->  true
+    ;   Content = ''
+    ),
+    (   ep_reply_truncated(Choice, Content)
+    ->  Nudge = 'Your last message was cut off before it finished. Continue it from the exact point where it stopped, without repeating what is already written; when the analysis allows, make the next tool call. If the task is actually complete, give the final answer.'
+    ;   Nudge = 'Your last message announced the next action but made no tool call, so the turn ended before the work. Continue the task now: make the tool call that performs the next step. Do not end your turn with a plan, a preamble or a progress note. If the task is actually complete, give the final answer.'
+    ).
 
+%% A reply is continued when it was cut before it finished — the token
+%% limit, or a last word that stops in the middle ("... is not y") — or
+%% when its last sentence announces the next action.
 ep_reply_dangles(Resp) :-
     catch(json_parse(Resp, json(Pairs)), _, fail),
     memberchk(choices-[json(Choice)|_], Pairs),
@@ -1326,15 +1351,57 @@ ep_reply_dangles(Resp) :-
     ->  fail
     ;   true
     ),
-    (   memberchk(finish_reason-Finish, Choice)
-    ->  Finish == stop
-    ;   true
-    ),
     (   memberchk(content-Content, Message)
     ->  true
     ;   Content = ''
     ),
-    ep_text_dangles(Content).
+    (   ep_reply_truncated(Choice, Content)
+    ->  true
+    ;   (   memberchk(finish_reason-Finish, Choice)
+        ->  Finish == stop
+        ;   true
+        ),
+        ep_text_dangles(Content)
+    ).
+
+%% "length" is the backend saying the token limit cut the reply. A reply
+%% that ends on a single letter other than "a" or "i" stopped in the
+%% middle of a word: "The exact line is not y" was "not yet".
+ep_reply_truncated(Choice, Content) :-
+    (   memberchk(finish_reason-Finish, Choice),
+        Finish == length
+    ->  true
+    ;   ep_mid_word(Content)
+    ).
+
+ep_mid_word(Text) :-
+    atom(Text),
+    atom_length(Text, Length),
+    Length > 1,
+    atom_codes(Text, Codes),
+    reverse(Codes, Back),
+    ep_first_nonspace(Back, Start),
+    ep_letters_prefix(Start, [L], _),
+    \+ ep_single_word_end(L).
+
+ep_letters_prefix([C|Codes], [C|Out], Rest) :-
+    ep_ascii_letter(C),
+    !,
+    ep_letters_prefix(Codes, Out, Rest).
+ep_letters_prefix(Codes, [], Codes).
+
+ep_ascii_letter(C) :-
+    C >= 65,
+    C =< 90,
+    !.
+ep_ascii_letter(C) :-
+    C >= 97,
+    C =< 122.
+
+ep_single_word_end(97).
+ep_single_word_end(65).
+ep_single_word_end(105).
+ep_single_word_end(73).
 
 %% The LAST sentence is inspected, with curly apostrophes folded to
 %% straight ones, and the two last sentences for a reply that announces
@@ -2064,6 +2131,8 @@ ep_merge_continuation(Resp0, Resp1, Resp) :-
     ->  Text = Text0
     ;   Text1 == Text0
     ->  Text = Text0
+    ;   ep_mid_word(Text0)
+    ->  atomic_list_concat([Text0, Text1], Text)
     ;   atomic_list_concat([Text0, '\n\n', Text1], Text)
     ),
     (   Text == ''
