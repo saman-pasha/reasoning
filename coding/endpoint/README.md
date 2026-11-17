@@ -10,7 +10,7 @@ Twelve model names are exposed:
 | model | guide and reasoning checks |
 |---|---|
 | `c` | `prompts/c.md`, C with clang and the sanitizers, C99 through C23; the endpoint's default two checks |
-| `cocolog` | cocolog's own `SKILL.md`, `prompts/cocolog.md`; the default two checks |
+| `cocolog` | this repository's `coding/cocolog/SKILL.md`, `prompts/cocolog.md`; the default two checks |
 | `python` | `prompts/python.md`, Python 3 with `py_compile`, pytest or unittest; the default two checks |
 | `c-r0`, `c-r2`, `c-r8` | the same C guide, with no checks, two checks or eight checks |
 | `cocolog-r0`, `cocolog-r2`, `cocolog-r8` | the same cocolog guide, with no checks, two checks or eight checks |
@@ -259,7 +259,7 @@ endpoint with the backend key in `CODING_ENDPOINT_KEY_ENV`:
 | `CODING_ENDPOINT_CONTEXT` | `1000000` |
 | `CODING_ENDPOINT_TIMEOUT` | `600` seconds; the backend call's timeout |
 | `COCOLOG_LIBRARY` | set by `run-httpd.sh` |
-| `COCOLOG_SKILL` | `../cocolog/SKILL.md` beside this repository |
+| `COCOLOG_SKILL` | `coding/cocolog/SKILL.md`, this repository's copy of the guide |
 
 Despite its name, `CODING_ENDPOINT_KEY_ENV` holds the key itself; it is
 not the name of another variable. The generators, the benchmarks and the

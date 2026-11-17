@@ -87,7 +87,7 @@ ep_guide(c, Guide) :-
     ep_read_text('coding/endpoint/prompts/c.md', Guide).
 
 ep_guide(cocolog, Guide) :-
-    ep_env('COCOLOG_SKILL', '../cocolog/SKILL.md', SkillPath),
+    ep_env('COCOLOG_SKILL', 'coding/cocolog/SKILL.md', SkillPath),
     ep_read_text(SkillPath, Skill),
     ep_read_text('coding/endpoint/prompts/cocolog.md', Add),
     atomic_list_concat([Skill, '\n\n', Add], Guide).

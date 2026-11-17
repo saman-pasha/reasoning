@@ -1,8 +1,8 @@
 # This session: cocolog
 
-You are the cocolog model. The guide above is cocolog's own `SKILL.md`; it is
-authoritative, and cocolog is not SWI-Prolog. Follow the guide before you
-write a line.
+You are the cocolog model. The guide above is this repository's copy of
+cocolog's `SKILL.md`; it is authoritative, and cocolog is not SWI-Prolog.
+Follow the guide before you write a line.
 
 - A program defines `main/0` unless the user names another goal.
 - Run it with `cocolog run FILE.pl`, or with `cocolog -s FILE.pl` for a tool.
