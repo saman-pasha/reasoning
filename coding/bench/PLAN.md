@@ -320,13 +320,20 @@ The first sprint's skeleton is implemented in `coding/bench/v2/`:
 - `runner.pl` implements `plain` and `derive`, the repair loop, seeded
   trial order, append-as-you-go JSONL and a per-task summary. `run.pl` is
   its entry point; `gen.pl` is the child generator.
+- `stats.pl` reads a saved JSONL run and reports per-task rows, a cluster
+  bootstrap over tasks for pass@1 and final pass, and the paired mode
+  difference over tasks. `report.pl` is its entry point. The pilot's
+  interval is necessarily wide with three tasks; the per-task table is
+  the evidence.
 - `test.pl` checks all of the above with no model call, including a full
-  JSONL run through a fixture seam.
+  JSONL run through a fixture seam and the statistic reader.
 
 Not yet implemented: `extract`, `contract`, `full`, the other languages,
-the declarative experiment, and bootstrap confidence intervals. The
-summary counts pass@1, final pass and mean attempts, but confidence
-intervals wait for the repeated-trial phase.
+the declarative experiment, and per-attempt rows in the JSONL. A
+diagnostic run can keep each attempt's spec, code, usage and verdict with
+`--keep DIR`, but the JSONL still aggregates them per cell.
 
-No paid v2 run has been made. The three-trial pilot is the next gate and
-needs the spend approved; it is not part of this commit.
+The pilot found one blocker before the next run: `mvccs_acid` solved 0/6
+and consumed 140 704 of 152 497 tokens, so its three-call budget or the
+task itself needs review before the full matrix. No further paid run has
+been made.

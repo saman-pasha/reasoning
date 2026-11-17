@@ -9,6 +9,8 @@
 %%     --trials N       trials per task and mode (default: config.pl's 3)
 %%     --seed N         order seed (default: config.pl's seed)
 %%     --out FILE       JSONL file (default: results/<run id>.jsonl)
+%%     --keep DIR       write each cell's spec and each attempt's code,
+%%                      usage and verdict under DIR/task/mode/trial-N
 %%
 %% A cell is one task, mode and trial. Its attempts are the repair loop:
 %% the verifier judges the repair cases first and the held-out cases only
@@ -53,7 +55,11 @@ v2_cli_main :-
         halt(2)
     ),
     (   memberchk(run, Opts)
-    ->  v2_run(Tasks, Modes, Trials, Seed, OutSpec)
+    ->  (   memberchk(keep(KeepDir), Opts)
+        ->  v2_keep_set(KeepDir)
+        ;   v2_keep_set(none)
+        ),
+        v2_run(Tasks, Modes, Trials, Seed, OutSpec)
     ;   v2_plan(Tasks, Modes, Trials, Seed)
     ).
 
@@ -82,6 +88,8 @@ v2_parse_args(['--seed', Value|Rest], [seed(N)|Opts]) :-
     integer(N),
     v2_parse_args(Rest, Opts).
 v2_parse_args(['--out', Value|Rest], [out(Value)|Opts]) :-
+    v2_parse_args(Rest, Opts).
+v2_parse_args(['--keep', Value|Rest], [keep(Value)|Opts]) :-
     v2_parse_args(Rest, Opts).
 
 v2_csv_atoms(Value, Atoms) :-
@@ -138,7 +146,8 @@ v2_usage :-
     format("  --modes A,B     plain, derive (default: config.pl's)~n", []),
     format("  --trials N      trials per task and mode (default: 3)~n", []),
     format("  --seed N        order seed~n", []),
-    format("  --out FILE      JSONL output~n", []).
+    format("  --out FILE      JSONL output~n", []),
+    format("  --keep DIR      write each attempt's spec, code and verdict~n", []).
 
 %% ---- plan --------------------------------------------------------------
 
@@ -236,8 +245,11 @@ v2_run_cell(Task, Mode, Trial, Pos, Seed, RunId, Commit, Row, Cell) :-
     v2_mode_effort(Mode, Effort),
     Usage0 = usage(0, 0, 0, 0, 0),
     get_time(T0),
-    v2_attempts(Task, Spec, Effort, MaxCalls, 1, none, Usage0,
-                Attempts, Usage, Outcome, Repair, Heldout),
+    v2_keep_begin(Task, Mode, Trial, Spec),
+    call_cleanup(
+        v2_attempts(Task, Spec, Effort, MaxCalls, 1, none, Usage0,
+                    Attempts, Usage, Outcome, Repair, Heldout),
+        v2_keep_cell_set(none)),
     get_time(T1),
     Seconds is T1 - T0,
     (   Attempts =:= 1,
@@ -316,6 +328,7 @@ v2_attempts(Task, Spec, Effort, Max, Attempt, Prev, Usage0,
     ;   v2_error_atom(GenError, Text),
         Verdict = verdict(fail(generator(Text)), not_run)
     ),
+    catch(v2_keep_attempt(Attempt, Code, U, GenError, Verdict), _, true),
     (   Verdict = verdict(ok, HeldoutVerdict)
     ->  Attempts = Attempt,
         Usage = Usage1,
@@ -499,6 +512,78 @@ v2_remove_files([File|Files]) :-
     ;   catch(delete_file(File), _, true)
     ),
     v2_remove_files(Files).
+
+%% ---- kept attempts -----------------------------------------------------
+%%
+%% --keep DIR writes the cell's spec once and every attempt's raw code and
+%% a verdict/usage text. It is for a diagnostic run, not for the normal
+%% matrix: the files are large and the JSONL already carries the counts.
+%% A write failure never fails the cell.
+
+v2_keep_set(Dir) :-
+    nb_setval('$v2_keep', Dir).
+
+v2_keep_root(Dir) :-
+    (   catch(nb_getval('$v2_keep', D), _, fail)
+    ->  Dir = D
+    ;   Dir = none
+    ).
+
+v2_keep_cell_set(Dir) :-
+    nb_setval('$v2_keep_cell', Dir).
+
+v2_keep_cell_root(Dir) :-
+    (   catch(nb_getval('$v2_keep_cell', D), _, fail),
+        D \== none
+    ->  Dir = D
+    ;   fail
+    ).
+
+v2_keep_begin(Task, Mode, Trial, Spec) :-
+    (   v2_keep_cell_dir(Task, Mode, Trial, Dir)
+    ->  catch(v2_make_dirs(Dir), _, true),
+        v2_keep_cell_set(Dir),
+        catch(v2_keep_atom_file(Dir, 'spec.txt', Spec), _, true)
+    ;   v2_keep_cell_set(none)
+    ).
+
+v2_keep_cell_dir(Task, Mode, Trial, Dir) :-
+    v2_keep_root(Root),
+    Root \== none,
+    format(atom(Dir), '~s/~w/~w/trial-~w', [Root, Task, Mode, Trial]).
+
+v2_keep_attempt(Attempt, Code, usage(P, C, T, R, H), GenError, Verdict) :-
+    (   v2_keep_cell_root(Dir)
+    ->  format(atom(CodeName), 'attempt-~w-code.c', [Attempt]),
+        (   Code == ''
+        ->  true
+        ;   catch(v2_keep_atom_file(Dir, CodeName, Code), _, true)
+        ),
+        format(atom(VerdictName), 'attempt-~w-verdict.txt', [Attempt]),
+        format(atom(Text),
+               'usage: ~w ~w ~w ~w ~w~ngenerator: ~w~nverdict: ~w~n',
+               [P, C, T, R, H, GenError, Verdict]),
+        catch(v2_keep_atom_file(Dir, VerdictName, Text), _, true)
+    ;   true
+    ).
+
+v2_keep_atom_file(Dir, Name, Atom) :-
+    format(atom(File), '~s/~w', [Dir, Name]),
+    atom_codes(Atom, Codes0),
+    append(Codes0, [10], Codes),
+    write_file_from_codes(File, Codes).
+
+v2_make_dirs(Dir) :-
+    exists_directory(Dir),
+    !.
+v2_make_dirs(Dir) :-
+    file_directory_name(Dir, Parent),
+    Parent \== Dir,
+    v2_make_dirs(Parent),
+    (   exists_directory(Dir)
+    ->  true
+    ;   catch(make_directory(Dir), _, fail)
+    ).
 
 v2_empty_string(S) :-
     (   string(S)

@@ -62,6 +62,12 @@ COCOLOG_LIBRARY="$PWD/..:$PWD/../cocolog/library" \
 `--plan` prints the selected tasks, repair/held-out counts, policy and
 budget, and makes no model call. It is the default.
 
+For a diagnostic run, `--keep DIR` writes `spec.txt` once per cell and,
+for every attempt, `attempt-N-code.c` and `attempt-N-verdict.txt` with
+the usage, generator error and verifier verdict. A held-out failure's
+file names that failure and no held-out case. The files are for
+diagnosis; the normal matrix leaves them out.
+
 A paid run needs the provider key and `--run`:
 
 ```sh
@@ -79,10 +85,28 @@ Options:
 --trials N      trials per task and mode (default: 3)
 --seed N        order seed (default: config.pl's)
 --out FILE      JSONL output (default: results/<run id>.jsonl)
+--keep DIR      write each cell's spec and each attempt's code, usage and
+                verdict under DIR/task/mode/trial-N
 ```
 
 `./run.sh` is the same command with `COCOLOG_LIBRARY` set from the
 repository's parent.
+
+## Report a saved run
+
+```sh
+./report.sh coding/bench/v2/results/pilot-20261117.jsonl --samples 5000
+```
+
+The report always prints the per-task table. Its aggregate is a **cluster
+bootstrap over tasks**, not over cells: trials of one task are not
+independent samples of the task population. With three tasks the interval
+is necessarily wide, so the table is the evidence and the interval is a
+warning against reading the aggregate as an estimate. It also prints the
+paired difference between `derive` and `plain` over tasks, for pass@1 and
+final pass, with the same bootstrap.
+
+`--seed` defaults to the run's own seed, so a report is reproducible.
 
 ## What a row records
 
@@ -118,8 +142,8 @@ COCOLOG_LIBRARY="$PWD/..:$PWD/../cocolog/library" \
 
 The test checks the schema and split, the three output policies, the
 verifier on a correct LCS, a repair-case failure, a held-out-only failure
-and a compile failure, the attempt loop through a fixture seam, and one
-complete JSONL run with no provider.
+and a compile failure, the attempt loop through a fixture seam, the
+statistics and JSONL reader, and one complete JSONL run with no provider.
 
 ## Budget
 
@@ -142,7 +166,10 @@ verify.pl    sanitized compile, repair and held-out runs, output policy
 runner.pl    attempts, repair diagnostics, seeded order, JSONL, summary
 gen.pl       one child generator call
 run.pl       the runner's main/0
-test.pl      no-model checks
 run.sh       the shell entry point
+stats.pl     JSONL reader, cluster bootstrap, paired differences
+report.pl    the report's main/0
+report.sh    the report's shell entry point
+test.pl      no-model checks
 results/     run output; a frozen pilot keeps its JSONL and report
 ```

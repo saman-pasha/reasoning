@@ -12,6 +12,14 @@
 :- use_module(library(json)).
 :- use_module('coding/bench/v2/schema.pl').
 :- use_module('coding/bench/v2/verify.pl').
+:- use_module('coding/bench/v2/stats.pl',
+              [ v2_stats_read_run/3,
+                v2_stats_summary/2,
+                v2_stats_rate/3,
+                v2_stats_bootstrap_rate/6,
+                v2_stats_paired_diffs/4,
+                v2_stats_bootstrap_diff/6
+              ]).
 :- use_module('coding/bench/v2/runner.pl',
               [ v2_parse_args/2,
                 v2_selection/6,
@@ -21,6 +29,8 @@
                 v2_bool/2,
                 v2_add_usage/3,
                 v2_attempts/12,
+                v2_run_cell/9,
+                v2_keep_set/1,
                 v2_run/5
               ]).
 
@@ -30,6 +40,8 @@ main :-
     test_verifier,
     test_runner,
     test_attempts,
+    test_stats,
+    test_keep,
     test_run_integration,
     checks_done.
 
@@ -281,6 +293,13 @@ test_runner :-
     check('the trial order is seeded', Same, yes),
     msort(Order1, Sorted),
     check('the trial order keeps every cell', Sorted, [1, 2, 3, 4, 5]),
+    yes_no(v2_parse_args(['--keep', '/tmp/keep'], KeepOpts), KeepParsed),
+    check('--keep parses', KeepParsed, yes),
+    (   memberchk(keep('/tmp/keep'), KeepOpts)
+    ->  KeepOk = yes
+    ;   KeepOk = KeepOpts
+    ),
+    check('--keep carries the directory', KeepOk, yes),
     v2_bool(yes, True),
     check('yes is JSON true', True, '@'(true)),
     v2_add_usage(usage(1, 2, 3, 4, 5), usage(10, 20, 30, 40, 50), Sum),
@@ -366,6 +385,161 @@ test_attempt_generator_error :-
 
 v2_retract_hook :-
     retractall(v2_generate_hook(_, _, _, _, _, _)).
+
+%% ---- statistics --------------------------------------------------------
+
+test_stats :-
+    section('statistics'),
+    stats_cells(Cells),
+    v2_stats_summary(Cells, stats(N, Pass1, Final, MeanAttempts, Tokens,
+                                  MeanSeconds)),
+    check('a summary counts the cells', N, 6),
+    check('a summary counts pass@1', Pass1, 5),
+    check('a summary counts final passes', Final, 4),
+    check('a summary sums tokens', Tokens, 330),
+    (   abs(MeanAttempts - 7/6) < 0.0001
+    ->  AttemptsOk = yes
+    ;   AttemptsOk = MeanAttempts
+    ),
+    check('a summary means attempts', AttemptsOk, yes),
+    (   abs(MeanSeconds - 19/6) < 0.0001
+    ->  SecondsOk = yes
+    ;   SecondsOk = MeanSeconds
+    ),
+    check('a summary means seconds', SecondsOk, yes),
+    v2_stats_rate(pass1, Cells, Rate1),
+    (   abs(Rate1 - 5/6) < 0.0001
+    ->  RateOk = yes
+    ;   RateOk = Rate1
+    ),
+    check('a rate is the share of yes', RateOk, yes),
+    v2_stats_bootstrap_rate(Cells, pass1, 200, 7, point(Point),
+                            ci(Lo, Hi)),
+    (   abs(Point - 5/6) < 0.0001,
+        Lo >= 0.0,
+        Hi =< 1.0,
+        Lo =< Hi
+    ->  BootOk = yes
+    ;   BootOk = point(Point, Lo, Hi)
+    ),
+    check('a cluster bootstrap is bounded and points at the rate', BootOk,
+          yes),
+    v2_stats_bootstrap_rate(Cells, pass1, 200, 7, point(Point2),
+                            ci(Lo2, Hi2)),
+    (   Point2 == Point, Lo2 == Lo, Hi2 == Hi
+    ->  Repeat = yes
+    ;   Repeat = no
+    ),
+    check('the bootstrap is seeded', Repeat, yes),
+    v2_stats_paired_diffs(Cells, plain, derive, Diffs),
+    length(Diffs, NDiffs),
+    check('paired differences are one per task', NDiffs, 2),
+    v2_stats_bootstrap_diff(Diffs, final, 200, 9, point(DiffPoint),
+                            ci(DiffLo, DiffHi)),
+    (   abs(DiffPoint - 0.5) < 0.0001,
+        DiffLo >= 0.0,
+        DiffHi =< 1.0,
+        DiffLo =< DiffHi
+    ->  DiffOk = yes
+    ;   DiffOk = point(DiffPoint, DiffLo, DiffHi)
+    ),
+    check('a paired difference is the derive gain', DiffOk, yes),
+    test_stats_json.
+
+test_stats_json :-
+    Header = json([type-header, run_id-r1, commit-c1, model-m1,
+                   trials-1, seed-7, modes-[plain], tasks-[lcs]]),
+    Cell = json([type-cell, task-lcs, mode-plain, trial-1,
+                 pass_at_1-'@'(true), final_pass-'@'(true), attempts-1,
+                 usage-json([prompt-10, completion-20, total-30,
+                             reasoning-0, cache_hit-0]),
+                 seconds-1.5, outcome-pass, repair-ok, heldout-ok]),
+    json_atom(Header, HeaderAtom),
+    json_atom(Cell, CellAtom),
+    atomic_list_concat([HeaderAtom, '\n', CellAtom, '\n'], Text),
+    atom_codes(Text, Codes),
+    tmp_file(v2_stats_jsonl, File),
+    write_file_from_codes(File, Codes),
+    catch(( v2_stats_read_run(File, ReadHeader, Cells) -> Read = ok
+          ; Read = failed
+          ),
+          Ball,
+          ( format(atom(Read), 'error(~w)', [Ball])
+          )),
+    catch(delete_file(File), _, true),
+    check('a JSONL run is read', Read, ok),
+    (   ReadHeader == Header
+    ->  HeaderOk = yes
+    ;   HeaderOk = no
+    ),
+    check('the JSONL header is kept', HeaderOk, yes),
+    (   Cells == [cell(lcs, plain, 1, yes, yes, 1,
+                       usage(10, 20, 30, 0, 0), 1.5, pass, ok, ok)]
+    ->  CellsOk = yes
+    ;   CellsOk = Cells
+    ),
+    check('a JSONL cell is read', CellsOk, yes).
+
+stats_cells([
+    cell(lcs, plain, 1, yes, yes, 1, usage(10, 20, 30, 0, 0), 1.0,
+         pass, ok, ok),
+    cell(lcs, plain, 2, no, no, 2, usage(10, 20, 40, 0, 0), 3.0,
+         fail_repair, fail, not_run),
+    cell(stable_sort, plain, 1, yes, yes, 1, usage(10, 20, 50, 0, 0), 5.0,
+         pass, ok, ok),
+    cell(stable_sort, plain, 2, yes, no, 1, usage(10, 20, 60, 0, 0), 7.0,
+         fail_heldout, ok, fail),
+    cell(lcs, derive, 1, yes, yes, 1, usage(10, 20, 70, 0, 0), 1.0,
+         pass, ok, ok),
+    cell(stable_sort, derive, 1, yes, yes, 1, usage(10, 20, 80, 0, 0), 2.0,
+         pass, ok, ok)
+]).
+
+%% ---- kept attempts -----------------------------------------------------
+
+test_keep :-
+    section('kept attempts'),
+    v2_retract_hook,
+    assertz((v2_generate_hook(_, _, _, Code, usage(10, 20, 30, 0, 0), none) :-
+                lcs_correct(Code))),
+    tmp_file(v2_keep_test, Root),
+    make_directory(Root),
+    v2_keep_set(Root),
+    catch(once(v2_run_cell(lcs, plain, 1, 1, 123, 'run-keep', 'commit-keep',
+                           _Row, _Cell)),
+          Ball,
+          ( format("keep run error: ~w~n", [Ball]) )),
+    v2_keep_set(none),
+    v2_retract_hook,
+    format(atom(SpecFile), '~s/lcs/plain/trial-1/spec.txt', [Root]),
+    format(atom(CodeFile), '~s/lcs/plain/trial-1/attempt-1-code.c', [Root]),
+    format(atom(VerdictFile), '~s/lcs/plain/trial-1/attempt-1-verdict.txt',
+           [Root]),
+    (   exists_file(SpecFile)
+    ->  SpecKept = yes
+    ;   SpecKept = no
+    ),
+    check('the spec is kept', SpecKept, yes),
+    (   exists_file(CodeFile),
+        v2test_read_atom(CodeFile, CodeText),
+        sub_atom(CodeText, _, _, _, 'int main')
+    ->  CodeKept = yes
+    ;   CodeKept = no
+    ),
+    check('the attempt code is kept', CodeKept, yes),
+    (   exists_file(VerdictFile),
+        v2test_read_atom(VerdictFile, VerdictText),
+        sub_atom(VerdictText, _, _, _, 'usage: 10 20 30 0 0'),
+        sub_atom(VerdictText, _, _, _, 'verdict: verdict(ok,ok)')
+    ->  VerdictKept = yes
+    ;   VerdictKept = no
+    ),
+    check('the attempt verdict is kept', VerdictKept, yes),
+    catch(c_clean_dir(Root), _, true).
+
+v2test_read_atom(File, Atom) :-
+    read_file_to_codes(File, Codes),
+    atom_codes(Atom, Codes).
 
 %% ---- one whole cell and its JSONL row ---------------------------------
 
