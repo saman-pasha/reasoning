@@ -373,5 +373,11 @@ direction is negative but not a conclusion: N=3, the modes are separate
 samples, and one task makes the bootstrap degenerate. A paired first
 attempt is now implemented (`--paired`): one first call, then `once` and
 `plain` arms over the same code, with the shared usage counted in both
-arm totals. Its pilot on `btree_debug` is the next paid run and has not
-been started.
+arm totals. Its pilot on `btree_debug` (2026-11-17, commit `2546c0d`,
+saved in `v2/results/btree-debug-paired-20261117.md`) has three pairs:
+the shared first attempt passed in two, and the one failing attempt was
+repaired twice and stayed failing. `once` and `plain` both passed 2/3;
+`plain` cost 29 976 tokens against `once`'s 14 036 with no gain. The
+design is sound but N=3 gives one repair branch. Next is a larger paired
+N or a task/setting that fails first more often; no further paid run has
+been made.
