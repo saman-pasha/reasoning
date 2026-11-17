@@ -1353,6 +1353,8 @@ ep_text_dangles(Text) :-
     ->  true
     ;   ep_heading_gerund(LastSentence)
     ->  true
+    ;   ep_wh_fragment(LastSentence)
+    ->  true
     ;   ep_sentence_gerund(LastClause, After),
         ep_no_finite_verb(After)
     ).
@@ -1491,6 +1493,42 @@ ep_heading_gerund(Text) :-
         ep_gerund_action(Word, '')
     ;   fail
     ).
+
+%% "First, what a systemd unit sees of PATH." is a wh-clause with no
+%% main verb: a heading for the next look, not a final answer. A sentence
+%% whose wh-clause is the subject of a finite verb ("What matters is the
+%% result") is a statement.
+ep_wh_fragment(Text) :-
+    ep_first_word(Text, Word, Rest),
+    (   ep_wh_word(Word)
+    ->  After = Rest
+    ;   ep_sequence_word(Word)
+    ->  ep_first_word(Rest, Word1, Rest1),
+        ep_wh_word(Word1),
+        After = Rest1
+    ;   fail
+    ),
+    ep_no_finite_verb(After).
+
+ep_wh_word(what).
+ep_wh_word(which).
+ep_wh_word(how).
+ep_wh_word(why).
+ep_wh_word(where).
+ep_wh_word(when).
+ep_wh_word(who).
+ep_wh_word(whom).
+ep_wh_word(whose).
+ep_wh_word(whether).
+
+ep_sequence_word(first).
+ep_sequence_word(second).
+ep_sequence_word(third).
+ep_sequence_word(next).
+ep_sequence_word(then).
+ep_sequence_word(now).
+ep_sequence_word(finally).
+ep_sequence_word(also).
 
 ep_dangle_action(gerund, Rest) :-
     ep_first_word(Rest, Word, Rest1),
