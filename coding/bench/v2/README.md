@@ -23,8 +23,8 @@ run, and the statistics are implemented.
 
 `once` is the no-feedback arm: one call, no repair. `extract` spends one
 extra model call; `full` is the hand contract plus the keyword derivation
-and spends none. The declarative experiment and per-attempt JSONL rows
-are not implemented yet.
+and spends none. The declarative experiment is implemented (Phase 5);
+per-attempt JSONL rows are not implemented yet.
 
 `mvccs_acid` was the third task in the first pilot. The diagnostic run of
 2026-11-17 failed only its snapshot-visibility case in all three attempts;
@@ -155,6 +155,39 @@ the result, and languages are not ranked by one number. The first
 comparison ran on 2026-11-17: 36 cells, 22/36 pass@1, 26/36 final,
 403 944 tokens; `results/lang-20261117.md` is the record. Treat it as a
 pilot: one model, one generator per language and three tasks.
+
+## Declarative vs imperative (Phase 5)
+
+`form.sh` runs the paired experiment: for each reasoning task, an
+imperative Python 3 program and a cocolog program of facts, relations
+and rules. Both forms get the same requirement after its first sentence,
+the same repair and held-out cases, the same output policy and the same
+budget. The result is a separate question from the language comparison;
+there is no combined score.
+
+```sh
+./coding/bench/v2/form.sh --plan
+./coding/bench/v2/form.sh --doctor
+./coding/bench/v2/form.sh --run --trials 3
+```
+
+Tasks (`reasoning_schema.pl`):
+
+| task | what | policy |
+|---|---|---|
+| `reach` | transitive closure over a directed graph | exact |
+| `topo` | a topological order of a DAG; any valid order | property |
+| `parses` | number of parse trees of `S -> S S \| a \| b` | exact |
+
+`topo` uses a property checker (`v2_topo_check/3`): the output must be a
+permutation of the nodes with every edge in order. The same checker is
+used by both forms, and its reason reaches the repair diagnostic.
+
+The hypothesis, tasks, cases, budget and analysis are pre-registered in
+`prereg-phase5.md` before the first paid run. The stated confounds:
+Python is the model's strongest language, cocolog has the repository
+guide, and the two forms use different generators. The default grid is
+3 tasks x 2 forms x 3 trials = 18 cells.
 
 ## Commands
 
@@ -304,7 +337,10 @@ pins the five task splits, including the corrected `stable_sort` case.
 For Phase 4 it checks the language table and spec transformation, runs a
 correct LCS through the Python, cocolog and SWI verifiers when the
 toolchain is present, strips Markdown fences from model replies, and
-writes one Python language-run JSONL through a fixture seam.
+writes one Python language-run JSONL through a fixture seam. For Phase 5
+it checks the reasoning task declarations and shared form requirements,
+the topological property checker and its verifier path, and one paired
+form-run JSONL.
 
 ## Budget
 
@@ -338,6 +374,11 @@ lang_runner.pl  language cells, attempts and summary
 lang_gen.pl  one language generator call (child)
 lang_run.pl  the language runner's main/0
 lang.sh      the language runner's shell entry point
+reasoning_schema.pl  Phase 5 tasks, cases and property checker
+form_runner.pl  Phase 5 paired forms, cells, pairs and summary
+form_run.pl  the form runner's main/0
+form.sh      the form runner's shell entry point
+prereg-phase5.md  the pre-registered hypothesis and tasks
 test.pl      no-model checks
 legacy.sh    Phase 0 selector for the unchanged legacy benchmark
 results/     baseline.md and frozen runs, each with its JSONL and report

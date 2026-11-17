@@ -20,7 +20,7 @@
 :- use_module('coding/bench/v2/verify.pl',
               [ v2_verify/3,
                 v2_case_parts/4,
-                v2_match/4
+                v2_match_case/6
               ]).
 
 :- dynamic v2_language_generate_hook/6.
@@ -222,14 +222,14 @@ v2_lang_run_cases(Lang, Source, [Case|Cases], Policy, Timeout, Index,
     v2_lang_read_codes(ErrFile, ErrCodes),
     atom_codes(Actual, OutCodes),
     atom_codes(Stderr, ErrCodes),
-    v2_match(Policy, Actual, Expected, Match),
+    v2_match_case(Policy, Input, Actual, Expected, Match, Reason),
     (   RunError == none,
         Exit0 =:= ExpectedExit,
         Match == yes,
         Stderr == ''
     ->  Here = []
     ;   v2_lang_case_failure(Index, Input, Expected, ExpectedExit, Exit0,
-                             Actual, Stderr, RunError, Failure0),
+                             Actual, Reason, Stderr, RunError, Failure0),
         v2_lang_source_context(Source, Stderr, Failure0, Failure1),
         v2_lang_trace_context(Lang, Index, Source, InFile, Stderr, Exit0,
                               ExpectedExit, Timeout, Failure1, Failure),
@@ -283,9 +283,13 @@ v2_lang_swipl(Swipl) :-
     ).
 
 v2_lang_case_failure(Index, Input, Expected, ExpectedExit, Exit, Actual,
-                     Stderr, RunError, Failure) :-
+                     Reason, Stderr, RunError, Failure) :-
     v2_lang_case_failure0(Index, Input, Expected, ExpectedExit, Exit, Actual,
-                          RunError, Base),
+                          RunError, Base0),
+    (   Reason == none
+    ->  Base = Base0
+    ;   format(atom(Base), '~w~nreason: ~w', [Base0, Reason])
+    ),
     (   Stderr == ''
     ->  Failure = Base
     ;   format(atom(Failure), '~w~nstderr: ~w', [Base, Stderr])

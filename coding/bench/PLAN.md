@@ -303,6 +303,14 @@ a stated, cocolog-only scaffold.
 - Acceptance: pre-registered tasks; held-out cases; both forms verified by
   the same pipeline; the result is reported as a separate question.
 
+Implemented in `reasoning_schema.pl`, `form_runner.pl`, `form_run.pl` and
+`form.sh`, and pre-registered in `prereg-phase5.md`: three reasoning
+tasks (`reach`, `topo`, `parses`), imperative Python 3 against
+declarative cocolog, four repair and two held-out cases each, and a
+topological-order property checked by the same predicate for both forms.
+The default grid is 18 cells. The first paid run has not started; its
+result is reported separately from the Phase 4 language comparison.
+
 ## Cost
 
 The current sample is roughly 134 thousand tokens for 10 tasks x 7 modes.
@@ -368,17 +376,25 @@ The implemented v2:
   JSONL run through a fixture seam, the statistic reader, correct LCS
   programs in Python, cocolog and SWI, and fence stripping.
 
-Not yet implemented: the declarative experiment (Phase 5) and
-per-attempt rows in the JSONL. A diagnostic run can keep each attempt's
-spec, code, usage and verdict with `--keep DIR`, but the JSONL still
-aggregates them per cell. The six-mode matrix has been run on the
-three-task set and `btree_debug` has paired feedback runs; the full
+- Phase 5 is implemented and pre-registered (`prereg-phase5.md`):
+  `reasoning_schema.pl` declares `reach`, `topo` and `parses`, the
+  imperative Python and declarative cocolog specs, the repair/held-out
+  cases and the property policy for `topo`; `form_runner.pl` / `form_run.pl`
+  / `form.sh` run the paired grid and write `v2-form` JSONL; the test
+  covers the tasks, the property checker and a form run. The paid run has
+  not started.
+
+Not yet implemented: per-attempt rows in the JSONL. A diagnostic run can
+keep each attempt's spec, code, usage and verdict with `--keep DIR`, but
+the JSONL still aggregates them per cell. The six-mode matrix has been run
+on the three-task set and `btree_debug` has paired feedback runs; the full
 six-mode matrix on all five tasks has not been run. The Phase 4 language
 comparison ran on 2026-11-17 (`v2/results/lang-20261117.md`): Python
 9/9 pass@1, C 6/9, SWI 5/9, cocolog 2/9; cocolog's guide is 95.5 % of
 the run's tokens. With the repository skill the cocolog lane is 4/9
 pass@1 and 8/9 final (`v2/results/lang-cocolog-skill-20261117.md`). The
-next gate is whether to widen the language run or turn to Phase 5.
+next gate is whether to widen the language run, run the Phase 5 pair, or
+turn to the next suite.
 
 The old trio's pilot (`mvccs_acid` in place) spent 140 704 of 152 497
 tokens on `mvccs_acid` for zero passes. The diagnostic of 2026-11-17

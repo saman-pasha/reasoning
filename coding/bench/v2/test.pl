@@ -16,7 +16,8 @@
               [ v2_language_supported/1,
                 v2_language_task/1,
                 v2_language_spec/3,
-                v2_language_verify/4
+                v2_language_verify/4,
+                v2_lang_verify/7
               ]).
 :- use_module('coding/bench/v2/lang_runner.pl',
               [ v2_lang_run/5 ]).
@@ -35,6 +36,17 @@
                 v2_stats_bootstrap_diff/6,
                 v2_stats_pairs/2
               ]).
+:- use_module('coding/bench/v2/reasoning_schema.pl',
+              [ v2_reasoning_task/1,
+                v2_reasoning_task/5,
+                v2_reasoning_form/2,
+                v2_reasoning_spec/3,
+                v2_reasoning_head/2,
+                v2_reasoning_check/0,
+                v2_topo_check/3
+              ]).
+:- use_module('coding/bench/v2/form_runner.pl',
+              [ v2_form_run/4 ]).
 :- use_module('coding/bench/v2/runner.pl',
               [ v2_parse_args/2,
                 v2_selection/6,
@@ -70,6 +82,8 @@ main :-
     test_lang_context,
     test_cocolog_skill,
     test_lang_run,
+    test_reasoning,
+    test_form_run,
     test_keep,
     test_extract_cell,
     test_run_integration,
@@ -988,6 +1002,120 @@ language_lcs_programs(Python, Cocolog, Swipl) :-
         '    lcs(A, B, N),',
         '    format("~w~n", [N]).'
     ], '\n', Swipl).
+
+%% ---- Phase 5 -----------------------------------------------------------
+
+test_reasoning :-
+    section('reasoning tasks'),
+    findall(T, v2_reasoning_task(T), Tasks),
+    check('the reasoning tasks', Tasks, [reach, topo, parses]),
+    yes_no(v2_reasoning_check, All),
+    check('every reasoning task has repair and held-out cases', All, yes),
+    once(v2_reasoning_spec(imperative, reach, SI)),
+    once(v2_reasoning_spec(declarative, reach, SD)),
+    once(v2_reasoning_head(imperative, HI)),
+    once(v2_reasoning_head(declarative, HD)),
+    (   atom_concat(HI, RestI, SI),
+        atom_concat(HD, RestD, SD),
+        RestI == RestD
+    ->  Same = yes
+    ;   Same = no
+    ),
+    check('the two forms share the requirement', Same, yes),
+    (   sub_atom(SI, _, _, _, 'Python 3'),
+        sub_atom(SD, _, _, _, 'facts, relations and rules')
+    ->  Heads = yes
+    ;   Heads = no
+    ),
+    check('the forms name their languages', Heads, yes),
+    once(v2_topo_check('3 2\n1 2\n1 3\n', '1 2 3\n', R1)),
+    check('a topological order passes', R1, ok),
+    once(v2_topo_check('3 2\n1 2\n1 3\n', '2 1 3\n', R2)),
+    (   R2 = fail(W2),
+        sub_atom(W2, _, _, _, 'not in order')
+    ->  Edge = yes
+    ;   Edge = no
+    ),
+    check('a reversed edge fails with its reason', Edge, yes),
+    once(v2_topo_check('3 2\n1 2\n1 3\n', '1 2\n', R3)),
+    (   R3 = fail(_)
+    ->  Perm = yes
+    ;   Perm = no
+    ),
+    check('an incomplete order fails', Perm, yes),
+    once(v2_match_case(property(v2_topo_check), '3 2\n1 2\n1 3\n',
+                       '1 2 3\n', any, M1, Why1)),
+    check('the verifier handles a property match', [M1, Why1], [yes, none]),
+    once(v2_match_case(property(v2_topo_check), '3 2\n1 2\n1 3\n',
+                       '2 1 3\n', any, M2, Why2)),
+    (   M2 == no,
+        Why2 \== none
+    ->  PropFail = yes
+    ;   PropFail = no
+    ),
+    check('the verifier reports a property failure', PropFail, yes),
+    (   v2_test_tool(python3)
+    ->  catch(once(v2_lang_verify(python, 'print("1 2 3")',
+                                  [case('3 2\n1 2\n1 3\n', any)], [],
+                                  property(v2_topo_check), 10000, PV)),
+              BallP,
+              ( format("python topo verify error: ~w~n", [BallP]),
+                PV = error
+              )),
+        check('the Python verifier accepts a valid topological order', PV,
+              verdict(ok, ok))
+    ;   true
+    ).
+
+test_form_run :-
+    section('form run'),
+    retractall(v2_language_generate_hook(_, _, _, _, _, _)),
+    assertz((v2_language_generate_hook(python, _, _, '',
+                                       usage(1, 1, 2, 0, 0), none))),
+    assertz((v2_language_generate_hook(cocolog, _, _, '',
+                                       usage(1, 1, 2, 0, 0), none))),
+    setenv('CODING_ENDPOINT_KEY_ENV', 'test-key'),
+    tmp_file(v2_form_jsonl, OutFile),
+    catch(once(v2_form_run([reach], 1, 123, file(OutFile))), Ball,
+          ( format("form run error: ~w~n", [Ball]) )),
+    unsetenv('CODING_ENDPOINT_KEY_ENV'),
+    retractall(v2_language_generate_hook(_, _, _, _, _, _)),
+    (   exists_file(OutFile)
+    ->  read_file_to_codes(OutFile, Codes),
+        atom_codes(Text, Codes),
+        split_string(Text, "\n", " \t\r", Lines0),
+        exclude(v2_empty_string, Lines0, Lines),
+        length(Lines, Count),
+        check('a form run writes four JSON lines', Count, 4),
+        (   member(Header, Lines),
+            sub_atom(Header, _, _, _, '"suite":"v2-form"')
+        ->  H = yes
+        ;   H = no
+        ),
+        check('the form header names the suite', H, yes),
+        (   member(CellI, Lines),
+            sub_atom(CellI, _, _, _, '"form":"imperative"'),
+            sub_atom(CellI, _, _, _, '"outcome":"fail_compile"')
+        ->  C1 = yes
+        ;   C1 = no
+        ),
+        check('the imperative cell is recorded', C1, yes),
+        (   member(CellD, Lines),
+            sub_atom(CellD, _, _, _, '"form":"declarative"'),
+            sub_atom(CellD, _, _, _, '"outcome":"fail_compile"')
+        ->  C2 = yes
+        ;   C2 = no
+        ),
+        check('the declarative cell is recorded', C2, yes),
+        (   member(Pair, Lines),
+            sub_atom(Pair, _, _, _, '"pair":"both_fail"')
+        ->  P = yes
+        ;   P = no
+        ),
+        check('the pair records both forms failing', P, yes),
+        catch(delete_file(OutFile), _, true)
+    ;   check('the form run writes a JSONL file', missing, present)
+    ).
 
 %% ---- statistics --------------------------------------------------------
 

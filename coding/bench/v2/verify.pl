@@ -71,14 +71,14 @@ v2_case_failures([Case|Cases], Exe, Policy, TimeoutMs, Index, Failures) :-
     v2_read_codes(ErrFile, ErrCodes0),
     atom_codes(Actual0, OutCodes0),
     atom_codes(Stderr0, ErrCodes0),
-    v2_match(Policy, Actual0, Expected, Match),
+    v2_match_case(Policy, Input, Actual0, Expected, Match, Reason),
     (   RunError == none,
         Exit0 =:= ExpectedExit,
         Match == yes,
         Stderr0 == ''
     ->  Here = []
     ;   v2_case_failure(Index, Input, Expected, ExpectedExit, Exit0,
-                        Actual0, Match, Stderr0, RunError, Failure),
+                        Actual0, Match, Reason, Stderr0, RunError, Failure),
         Here = [Failure]
     ),
     v2_remove_files([InFile, OutFile, ErrFile]),
@@ -101,7 +101,7 @@ v2_remove_files([File|Files]) :-
     v2_remove_files(Files).
 
 v2_case_failure(Index, Input, Expected, ExpectedExit, Exit, Actual, Match,
-                Stderr, RunError, Failure) :-
+                Reason, Stderr, RunError, Failure) :-
     (   RunError == none,
         Exit =:= ExpectedExit,
         Match == yes
@@ -109,7 +109,11 @@ v2_case_failure(Index, Input, Expected, ExpectedExit, Exit, Actual, Match,
                'CASE ~w WROTE TO STDERR~ninput: ~w~nexpected: ~w~nstderr: ~w',
                [Index, Input, Expected, Stderr])
     ;   v2_case_failure0(Index, Input, Expected, ExpectedExit, Exit, Actual,
-                         RunError, Base),
+                         RunError, Base0),
+        (   Reason == none
+        ->  Base = Base0
+        ;   format(atom(Base), '~w~nreason: ~w', [Base0, Reason])
+        ),
         (   Stderr == ''
         ->  Failure = Base
         ;   format(atom(Failure), '~w~nstderr: ~w', [Base, Stderr])
@@ -133,6 +137,30 @@ v2_case_failure0(Index, Input, Expected, ExpectedExit, Exit, Actual, RunError,
     ;   format(atom(Failure),
                'CASE ~w WRONG~ninput: ~w~nexpected: ~w~nactual: ~w',
                [Index, Input, Expected, Actual])
+    ).
+
+%% A property policy hands the case's input and the program's whole output
+%% to a checker: ok, or fail(Reason). The same checker is used by every
+%% form and language, and its reason reaches the repair diagnostic.
+v2_match_case(Policy, Input, Actual, Expected, Match, Reason) :-
+    (   Policy = property(Checker)
+    ->  (   catch(call(Checker, Input, Actual, Result),
+                  Ball,
+                  ( v2_error_text(Ball, Text),
+                    Result = fail(Text)
+                  ))
+        ->  (   Result == ok
+            ->  Match = yes,
+                Reason = none
+            ;   Result = fail(Why),
+                Match = no,
+                v2_error_text(Why, Reason)
+            )
+        ;   Match = no,
+            Reason = 'the property check failed'
+        )
+    ;   v2_match(Policy, Actual, Expected, Match),
+        Reason = none
     ).
 
 v2_match(Policy, Actual, Expected, Match) :-
