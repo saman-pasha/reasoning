@@ -1362,7 +1362,8 @@ ep_text_dangles(Text) :-
     ;   ep_pending_announcement(Flat)
     ->  true
     ;   ep_sentence_gerund(LastClause, After),
-        ep_no_finite_verb(After)
+        ep_without_relative(After, Main),
+        ep_no_finite_verb(Main)
     ).
 
 %% A subject announcement is looked for in the last sentence, so "Let me
@@ -1707,6 +1708,28 @@ ep_sentence_gerund(Text, After) :-
     ;   ep_gerund_action(Word, Rest),
         After = Rest
     ).
+
+%% A finite verb inside a relative clause ("..., which would confirm it")
+%% makes a gerund sentence no statement, so the clause from a comma and
+%% a relative pronoun on is left out of the finite-verb test. "Comparing
+%% the paths shows the difference, which would confirm it" keeps its
+%% finite verb before the relative clause.
+ep_without_relative(Text, Main) :-
+    atom_codes(Text, Codes),
+    (   ep_relative_at(Codes, Before)
+    ->  atom_codes(Main, Before)
+    ;   Main = Text
+    ).
+
+ep_relative_at(Codes, Before) :-
+    append(Before, [44, 32|Rest], Codes),
+    (   append("which", _, Rest)
+    ;   append("whom", _, Rest)
+    ;   append("whose", _, Rest)
+    ;   append("who", _, Rest)
+    ;   append("where", _, Rest)
+    ),
+    !.
 
 ep_leading_adverb(now).
 ep_leading_adverb(next).
