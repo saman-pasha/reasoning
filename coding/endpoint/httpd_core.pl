@@ -1898,6 +1898,12 @@ ep_skip_nonletter([C|Codes], Rest) :-
     ep_skip_nonletter(Codes, Rest).
 ep_skip_nonletter(Codes, Codes).
 
+%% A hyphen between two letters is part of the word: "re-reading" is one
+%% gerund, not "re" and the rest.
+ep_take_letters([45, C|Codes], [45|Word], Rest) :-
+    ep_letter(C),
+    !,
+    ep_take_letters([C|Codes], Word, Rest).
 ep_take_letters([C|Codes], [C|Word], Rest) :-
     ep_letter(C),
     !,
