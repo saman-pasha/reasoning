@@ -1351,6 +1351,8 @@ ep_text_dangles(Text) :-
     atom_codes(LastClause, ClauseCodes),
     (   ep_dangle_subject_phrase(LastSentence, _Before)
     ->  true
+    ;   ep_heading_gerund(LastSentence)
+    ->  true
     ;   ep_sentence_gerund(LastClause, After),
         ep_no_finite_verb(After)
     ).
@@ -1476,6 +1478,20 @@ ep_dangle_subject_phrase(Text, Before) :-
     sub_atom(Text, End, _, 0, Rest),
     ep_dangle_action(Kind, Rest).
 
+%% "Now the report page drawing: ..." announces the next piece of work
+%% as a heading, with no subject pronoun. The last word before the colon
+%% is a gerund.
+ep_heading_gerund(Text) :-
+    ep_first_word(Text, now, Rest),
+    ep_first_word(Rest, the, _),
+    atom_codes(Text, Codes),
+    (   append(BeforeColon, [58|_], Codes)
+    ->  atom_codes(BeforeAtom, BeforeColon),
+        ep_last_word(BeforeAtom, Word),
+        ep_gerund_action(Word, '')
+    ;   fail
+    ).
+
 ep_dangle_action(gerund, Rest) :-
     ep_first_word(Rest, Word, Rest1),
     (   ep_bare_leading_adverb(Word)
@@ -1510,6 +1526,13 @@ ep_bare_leading_adverb(briefly).
 ep_bare_leading_adverb(immediately).
 ep_bare_leading_adverb(still).
 
+%% "Let me confirm the rendering failure" is work; "Let me confirm that
+%% ..." explains what was already found.
+ep_action_word(confirm, Rest) :-
+    !,
+    \+ ep_rest_empty(Rest),
+    \+ ep_rest_begins(Rest, that),
+    \+ ep_rest_begins(Rest, this).
 ep_action_word(Word, Rest) :-
     (   ep_closing_word(Word)
     ->  \+ ep_closing_rest(Word, Rest)
