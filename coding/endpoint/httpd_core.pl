@@ -1490,6 +1490,7 @@ ep_sentence_start(Text, Before) :-
     reverse(Codes, Back),
     (   ep_first_nonspace(Back, [C|_])
     ->  ( ep_sentence_mark(C)
+        ; C =:= 44                 % a comma: the main clause after a front
         ; ep_last_word(Prefix, Word),
           ep_clause_word(Word)
         )
@@ -1497,7 +1498,9 @@ ep_sentence_start(Text, Before) :-
     ).
 
 %% "..., so I'm narrowing" is a clause after a conjunction, not a new
-%% sentence, and the conjunction carries the announcement.
+%% sentence, and the conjunction carries the announcement. A comma opens
+%% a main clause too: "Since make modules is a tracked build target,
+%% I'll use it."
 ep_last_word(Text, Word) :-
     atom_codes(Text, Codes),
     reverse(Codes, Back),
