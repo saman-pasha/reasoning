@@ -10,6 +10,7 @@
 v2_task_name(lcs).
 v2_task_name(stable_sort).
 v2_task_name(calculator).
+v2_task_name(btree).
 
 %% mvccs_acid is deliberately not in the Phase 1 trio. The diagnostic run
 %% of 2026-11-17 (commit 15a13e7) failed only its snapshot-visibility case
@@ -46,18 +47,22 @@ v2_fix_stable_sort_case(Cases, Cases).
 v2_output_policy(lcs, exact).
 v2_output_policy(stable_sort, exact).
 v2_output_policy(calculator, exact).
+v2_output_policy(btree, exact).
 
 v2_budget(lcs, budget(3, 3000, 0)).
 v2_budget(stable_sort, budget(3, 3000, 0)).
 v2_budget(calculator, budget(3, 3000, 0)).
+v2_budget(btree, budget(3, 3000, 0)).
 
 %% One-based indices into the legacy case list. The held-out cases are
 %% chosen for the narrow reading each task exists to catch, not as a tail:
-%% the greedy-killer and empty LCS, the tie-heavy stable sorts, and the
-%% precedence and left-association calculator cases.
+%% the greedy-killer and empty LCS, the tie-heavy stable sorts, the
+%% precedence and left-association calculator cases, and btree's all-equal
+%% keys and deeper split.
 v2_heldout_indices(lcs, [4, 6]).
 v2_heldout_indices(stable_sort, [5, 7]).
 v2_heldout_indices(calculator, [1, 5]).
+v2_heldout_indices(btree, [3, 6]).
 
 v2_split_cases(Task, Cases, Repair, Heldout) :-
     v2_heldout_indices(Task, Indices),

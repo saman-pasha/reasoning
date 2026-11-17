@@ -54,12 +54,13 @@ main :-
 test_schema :-
     section('schema'),
     findall(Task, v2_task_name(Task), Tasks),
-    check('the v2 tasks', Tasks, [lcs, stable_sort, calculator]),
+    check('the v2 tasks', Tasks, [lcs, stable_sort, calculator, btree]),
     yes_no(v2_task_check, All),
     check('every task has repair and held-out cases', All, yes),
     forall(member(Task, Tasks), test_task_split(Task)),
     test_lcs_split,
     test_calculator_split,
+    test_btree_split,
     test_stable_sort_fix.
 
 test_task_split(Task) :-
@@ -121,6 +122,24 @@ test_calculator_split :-
     ),
     check('calculator held-out cases are precedence and association', Got,
           [Precedence, Association]).
+
+test_btree_split :-
+    bench_task(btree, _, Cases),
+    v2_task(btree, c, _, Repair, Heldout, _, _),
+    length(Cases, N),
+    length(Repair, NR),
+    length(Heldout, NH),
+    check('btree case count', N, 6),
+    check('btree repair count', NR, 4),
+    check('btree held-out count', NH, 2),
+    nth1(3, Cases, AllEqual),
+    nth1(6, Cases, DeeperSplit),
+    (   Heldout == [AllEqual, DeeperSplit]
+    ->  Got = [AllEqual, DeeperSplit]
+    ;   Got = Heldout
+    ),
+    check('btree held-out cases are all-equal and the deeper split', Got,
+          [AllEqual, DeeperSplit]).
 
 %% The legacy case says five records and gives four. v2 keeps the legacy
 %% text for the old run and corrects its own copy.

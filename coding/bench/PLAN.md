@@ -358,7 +358,8 @@ The no-feedback arm (`once`) is now implemented, and its pilot against
 cell finished on its first attempt, so `plain` and `once` were the same
 policy; the paired `plain - once` difference is one `lcs` trial,
 `+11.1 pp [0.0, +33.3]`. The trio still cannot measure feedback because
-no first attempt fails a repair case. The task-selection decision
-remains: add a task whose first attempt is likely to fail an actionable
-repair case (`phonebook`, `btree`, or a small parser with a stated edge),
-then repeat `once` vs `plain`.
+no first attempt fails a repair case. `btree` is now the fourth task for
+that role: its repair cases include a duplicate key and a root split, and
+its held-out cases are all-equal keys and a deeper split. The next paid
+run is `once` vs `plain` on `btree` alone; the full six-mode matrix follows
+only if the first attempt fails a repair case.

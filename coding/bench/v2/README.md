@@ -8,7 +8,7 @@ repeated trials and held-out cases.
 Phase 1 is implemented here; the first pilot has run, and the statistics
 are implemented:
 
-- C only, three legacy tasks: `lcs`, `stable_sort`, `calculator`.
+- C only, four legacy tasks: `lcs`, `stable_sort`, `calculator`, `btree`.
 - Six modes: `once`, `plain`, `derive`, `contract`, `extract`, `full`.
 - Exact output policy for every task.
 - Repair cases a failing attempt may be told about, and held-out cases
@@ -56,6 +56,11 @@ declared by one-based indices:
 | `lcs` | 4 / 2 | the greedy killer (`aggtab/gxtxayb`) and the empty second line |
 | `stable_sort` | 5 / 2 | the two tie-heavy orders |
 | `calculator` | 4 / 2 | operator precedence and left-associative subtraction |
+| `btree` | 4 / 2 | all-equal keys and a deeper 2-3-4 split |
+
+`btree` was added after the first matrix: it is the candidate task for
+the repair loop, because a first attempt can fail an actionable repair
+case (a duplicate key or a split) rather than only a held-out one.
 
 The prompt contains no case. When an attempt fails a repair case, the
 repair prompt gets the verifier's diagnostic for that case. The held-out
@@ -180,14 +185,15 @@ The test checks the schema and split, the three output policies, the
 verifier on a correct LCS, a repair-case failure, a held-out-only failure
 and a compile failure, the attempt loop through a fixture seam, the
 statistics and JSONL reader, the kept attempt files, and one complete
-JSONL run with no provider.
+JSONL run with no provider. It also pins the four task splits, including
+the corrected `stable_sort` case.
 
 ## Budget
 
 `config.pl` holds the provider, model, temperature, three-trial pilot and
 the seed. Per task, `schema.pl` allows three child calls and a case
-timeout; `once` reduces that to one. The default pilot is 3 tasks x 6
-modes x 3 trials = 54 cells: at most 153 generator calls plus 18
+timeout; `once` reduces that to one. The default pilot is 4 tasks x 6
+modes x 3 trials = 72 cells: at most 192 generator calls plus 12
 extraction calls. The pilot is the budget gate: do not start a larger run
 until its per-task variance and token cost are known and the spend is
 approved.
