@@ -9,7 +9,14 @@
 
 v2_task_name(lcs).
 v2_task_name(stable_sort).
-v2_task_name(mvccs_acid).
+v2_task_name(calculator).
+
+%% mvccs_acid is deliberately not in the Phase 1 trio. The diagnostic run
+%% of 2026-11-17 (commit 15a13e7) failed only its snapshot-visibility case
+%% in all three attempts; attempts 1 and 2 were byte-identical and attempt
+%% 3 changed only formatting. A larger call budget is not supported by
+%% that evidence. The legacy declaration stays in tasks.pl for a later
+%% hard-task or reasoning-effort suite.
 
 v2_task(Task, c, Spec, Repair, Heldout, Policy,
         budget(MaxCalls, TimeoutMs, MaxTokens)) :-
@@ -38,19 +45,19 @@ v2_fix_stable_sort_case(Cases, Cases).
 
 v2_output_policy(lcs, exact).
 v2_output_policy(stable_sort, exact).
-v2_output_policy(mvccs_acid, exact).
+v2_output_policy(calculator, exact).
 
 v2_budget(lcs, budget(3, 3000, 0)).
 v2_budget(stable_sort, budget(3, 3000, 0)).
-v2_budget(mvccs_acid, budget(3, 5000, 0)).
+v2_budget(calculator, budget(3, 3000, 0)).
 
 %% One-based indices into the legacy case list. The held-out cases are
 %% chosen for the narrow reading each task exists to catch, not as a tail:
 %% the greedy-killer and empty LCS, the tie-heavy stable sorts, and the
-%% error and last-committer-wins MVCC cases.
+%% precedence and left-association calculator cases.
 v2_heldout_indices(lcs, [4, 6]).
 v2_heldout_indices(stable_sort, [5, 7]).
-v2_heldout_indices(mvccs_acid, [8, 9]).
+v2_heldout_indices(calculator, [1, 5]).
 
 v2_split_cases(Task, Cases, Repair, Heldout) :-
     v2_heldout_indices(Task, Indices),

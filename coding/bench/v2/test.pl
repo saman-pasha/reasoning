@@ -50,11 +50,12 @@ main :-
 test_schema :-
     section('schema'),
     findall(Task, v2_task_name(Task), Tasks),
-    check('the v2 tasks', Tasks, [lcs, stable_sort, mvccs_acid]),
+    check('the v2 tasks', Tasks, [lcs, stable_sort, calculator]),
     yes_no(v2_task_check, All),
     check('every task has repair and held-out cases', All, yes),
     forall(member(Task, Tasks), test_task_split(Task)),
     test_lcs_split,
+    test_calculator_split,
     test_stable_sort_fix.
 
 test_task_split(Task) :-
@@ -98,6 +99,24 @@ test_lcs_split :-
     ;   Deterministic = no
     ),
     check('the lcs split is deterministic', Deterministic, yes).
+
+test_calculator_split :-
+    bench_task(calculator, _, Cases),
+    v2_task(calculator, c, _, Repair, Heldout, _, _),
+    length(Cases, N),
+    length(Repair, NR),
+    length(Heldout, NH),
+    check('calculator case count', N, 6),
+    check('calculator repair count', NR, 4),
+    check('calculator held-out count', NH, 2),
+    nth1(1, Cases, Precedence),
+    nth1(5, Cases, Association),
+    (   Heldout == [Precedence, Association]
+    ->  Got = [Precedence, Association]
+    ;   Got = Heldout
+    ),
+    check('calculator held-out cases are precedence and association', Got,
+          [Precedence, Association]).
 
 %% The legacy case says five records and gives four. v2 keeps the legacy
 %% text for the old run and corrects its own copy.

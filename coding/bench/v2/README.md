@@ -5,17 +5,28 @@ The second coding benchmark. It is separate from the legacy
 behaviour. v2 answers a narrower set of questions with one verifier,
 repeated trials and held-out cases.
 
-Phase 1 is implemented here, and no paid v2 run has been made yet:
+Phase 1 is implemented here; the first pilot has run, and the statistics
+are implemented:
 
-- C only, three legacy tasks: `lcs`, `stable_sort`, `mvccs_acid`.
+- C only, three legacy tasks: `lcs`, `stable_sort`, `calculator`.
 - Two modes: `plain` and `derive`.
 - Exact output policy for every task.
 - Repair cases a failing attempt may be told about, and held-out cases
   that are never put in a prompt or a diagnostic.
-- A JSONL row for every task, mode and trial, and a per-task summary.
+- A JSONL row for every task, mode and trial, a sorted summary, and a
+  separate report with task-cluster bootstrap intervals.
+- `--keep DIR` for a diagnostic run's per-attempt code and verdict.
 
 `extract`, `contract`, `full`, the other languages, the declarative
-experiment and the bootstrap statistics are not implemented yet.
+experiment and per-attempt JSONL rows are not implemented yet.
+
+`mvccs_acid` was the third task in the first pilot. The diagnostic run of
+2026-11-17 failed only its snapshot-visibility case in all three attempts;
+two attempts produced byte-identical code and the third changed only
+formatting. A larger budget is not supported by that evidence, so
+`calculator` is the Phase 1 third task and `mvccs_acid` is left for a
+later hard-task or reasoning-effort suite. The pilot's numbers remain the
+record for the old trio.
 
 ## The cases
 
@@ -26,7 +37,7 @@ declared by one-based indices:
 |---|---|---|
 | `lcs` | 4 / 2 | the greedy killer (`aggtab/gxtxayb`) and the empty second line |
 | `stable_sort` | 5 / 2 | the two tie-heavy orders |
-| `mvccs_acid` | 8 / 2 | last committer wins, and the error commands |
+| `calculator` | 4 / 2 | operator precedence and left-associative subtraction |
 
 The prompt contains no case. When an attempt fails a repair case, the
 repair prompt gets the verifier's diagnostic for that case. The held-out
@@ -143,7 +154,8 @@ COCOLOG_LIBRARY="$PWD/..:$PWD/../cocolog/library" \
 The test checks the schema and split, the three output policies, the
 verifier on a correct LCS, a repair-case failure, a held-out-only failure
 and a compile failure, the attempt loop through a fixture seam, the
-statistics and JSONL reader, and one complete JSONL run with no provider.
+statistics and JSONL reader, the kept attempt files, and one complete
+JSONL run with no provider.
 
 ## Budget
 

@@ -334,6 +334,11 @@ diagnostic run can keep each attempt's spec, code, usage and verdict with
 `--keep DIR`, but the JSONL still aggregates them per cell.
 
 The pilot found one blocker before the next run: `mvccs_acid` solved 0/6
-and consumed 140 704 of 152 497 tokens, so its three-call budget or the
-task itself needs review before the full matrix. No further paid run has
-been made.
+and consumed 140 704 of 152 497 tokens. The diagnostic of 2026-11-17
+(commit `15a13e7`, one `plain` cell, 23 517 tokens) failed only the
+snapshot-visibility case in all three attempts; attempts 1 and 2 were
+byte-identical and attempt 3 changed only formatting. A larger call
+budget is not supported by that evidence, so `calculator` replaces
+`mvccs_acid` in the Phase 1 trio and `mvccs_acid` is kept for a later
+hard-task or reasoning-effort suite. The next paid run is a fresh
+three-trial pilot of the new trio and needs its spend approved.
