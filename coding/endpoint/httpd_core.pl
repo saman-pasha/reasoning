@@ -1741,7 +1741,14 @@ ep_letter(C) :-
 
 %% A word in -ing heads a sentence: comparing, checking, desugaring,
 %% investigating. A few nouns and prepositions that happen to end in
-%% -ing are not actions.
+%% -ing are not actions. "Confirming on the published binary" announces
+%% the check; "Confirming that ..." explains what is already known, as
+%% "Let me confirm that" does.
+ep_gerund_action(confirming, Rest) :-
+    !,
+    \+ ep_rest_begins(Rest, that),
+    \+ ep_rest_begins(Rest, this),
+    \+ ep_rest_begins(Rest, 'the fact').
 ep_gerund_action(Word, Rest) :-
     ep_ing_base_word(Word),
     (   ep_ing_closing(Word)
@@ -1821,7 +1828,6 @@ ep_ing_nonaction(describing).
 ep_ing_nonaction(offering).
 ep_ing_nonaction(suggesting).
 ep_ing_nonaction(recommending).
-ep_ing_nonaction(confirming).
 ep_ing_nonaction(highlighting).
 ep_ing_nonaction(emphasizing).
 ep_ing_nonaction(emphasising).
