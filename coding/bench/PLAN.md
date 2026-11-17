@@ -48,25 +48,22 @@ No table adds a row from one suite to a row from another.
 coding/bench/v2/
   README.md
   config.pl          model, temperature, trials, budgets, seeds
-  schema.pl          task and result terms; validation
-  tasks.pl           task descriptions, repair cases, output policy
-  heldout.pl         deterministic held-out cases, never in a diagnostic
-  verify.pl          one verification pipeline for every language
-  langs/c.pl
-  langs/python.pl
-  langs/cocolog.pl
-  langs/swipl.pl
-  modes.pl           plain, feedback, derive, extract, contract, full
-  runner.pl          trials, ordering, child calls, JSONL
+  schema.pl          task declarations, repair/held-out split, output policy
+  verify.pl          one verification pipeline for C
+  gen.pl             one child generator call
+  runner.pl          modes, trials, ordering, child calls, paired arms, JSONL
+  run.pl, run.sh     runner entry points
   stats.pl           pass@1, final pass, paired deltas, bootstrap CIs
-  report.pl          tables from JSONL
-  run.sh
-  results/           frozen runs: config, commit, JSONL, report
+  report.pl, report.sh  report entry points
+  test.pl            no-model checks
+  legacy.sh          Phase 0 selector for the unchanged legacy benchmark
+  results/           baseline.md and frozen runs
 ```
 
-Reuse `coding/compile.pl` for C (sanitized build), `coding/options.pl`
-for provider settings, and `coding/bench/gen.pl`'s child-process pattern.
-Legacy files are not edited to make v2 pass.
+The planned separate `tasks.pl`, `heldout.pl` and `modes.pl` were folded
+into `schema.pl` and `runner.pl`; `langs/` is not built yet. Reuse
+`coding/compile.pl` for C (sanitized build) and `coding/bench/gen.pl`'s
+child-process pattern. Legacy files are not edited to make v2 pass.
 
 ## Task schema
 
@@ -160,17 +157,20 @@ Keep the prompt, verification, cases and budget fixed; vary one thing:
 
 | mode | feedback | obligations | source |
 |---|---|---|---|
-| `plain` | no | none | requirement |
-| `feedback` | compiler/tests | none | requirement |
+| `once` | no | none | requirement |
+| `plain` | compiler/tests | none | requirement |
 | `derive` | compiler/tests | keyword-derived | requirement |
 | `extract` | compiler/tests | model-extracted | extra call |
 | `contract` | compiler/tests | hand contract | task's controlled English |
 | `full` | compiler/tests | contract + derivation + guide | both |
 
+The implementation names the no-feedback arm `once`; `plain` is the
+feedback loop with no obligations.
+
 Comparisons:
 
-- `feedback` vs `plain`: value of the loop alone.
-- `derive` vs `feedback`: value of deterministic obligations.
+- `plain` vs `once`: value of the loop alone.
+- `derive` vs `plain`: value of deterministic obligations.
 - `extract` vs `derive`: value and cost of model interpretation.
 - `contract` vs `extract`: hand contract vs extraction.
 - `full` vs `contract`: the guide and the extra reasoning.
@@ -233,6 +233,12 @@ claim about reasoning, rather than about prompt checklists.
 ## Phases and acceptance
 
 ### Phase 0 — freeze the legacy evidence
+
+**Done 2026-11-17.** `v2/results/baseline.md` records the frozen commit,
+config and the existing sample table; `v2/legacy.sh` runs the unchanged
+`coding/bench/bench.pl`. The selector was checked with a no-task
+invocation (no model call); the sample table is from the legacy README,
+not a new run. No legacy file was edited.
 
 - Keep `bench.pl`, `paired.pl` and `tool.pl` behavior unchanged.
 - Add `v2/results/baseline.md` recording the current commit, model,
@@ -304,14 +310,16 @@ result, that is a finding to record before changing anything else.
 
 ## Status (2026-11-17)
 
-The first sprint's skeleton is implemented in `coding/bench/v2/`:
+The implemented v2:
 
-- `schema.pl` declares the three Phase 1 tasks, their exact output policy,
-  budgets and the repair/held-out split. The split is by explicit indices
-  into the legacy case list, not by a held-out generator yet. It also
-  corrects one defective legacy `stable_sort` case (it said five records
-  and gave four) in v2's own copy; the legacy file is untouched and the
-  test pins both.
+- Phase 0 is done: `results/baseline.md` freezes the legacy evidence and
+  `legacy.sh` runs the unchanged legacy runner.
+- `schema.pl` declares the five tasks, their exact output policy, budgets
+  and the repair/held-out split. The split is by explicit indices into
+  the legacy case list, not by a held-out generator yet. It also corrects
+  one defective legacy `stable_sort` case (it said five records and gave
+  four) in v2's own copy; the legacy file is untouched and the test pins
+  both.
 - `verify.pl` compiles with the sanitizers, runs repair cases first and
   held-out cases only for the final verdict, and separates stdout from
   stderr. A nonempty stderr is a failure.
@@ -334,8 +342,9 @@ The first sprint's skeleton is implemented in `coding/bench/v2/`:
 Not yet implemented: the other languages, the declarative experiment,
 and per-attempt rows in the JSONL. A diagnostic run can keep each
 attempt's spec, code, usage and verdict with `--keep DIR`, but the JSONL
-still aggregates them per cell. The mode matrix exists; its full pilot
-has not been run.
+still aggregates them per cell. The six-mode matrix has been run on the
+three-task set and `btree_debug` has paired feedback runs; the full
+six-mode matrix on all five tasks has not been run.
 
 The old trio's pilot (`mvccs_acid` in place) spent 140 704 of 152 497
 tokens on `mvccs_acid` for zero passes. The diagnostic of 2026-11-17

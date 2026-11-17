@@ -176,6 +176,18 @@ ablation pairs present: `plain` minus `once`, `derive` minus `plain`,
 
 `--seed` defaults to the run's own seed, so a report is reproducible.
 
+## Legacy baseline
+
+The legacy benchmark is frozen and run unchanged by Phase 0's selector:
+
+```sh
+./legacy.sh -- [task ...]
+```
+
+It sets `COCOLOG_LIBRARY`, runs `coding/bench/bench.pl` and spends model
+tokens. `results/baseline.md` records the legacy commit, config and the
+existing sample table; no legacy file is edited to make v2 pass.
+
 ## What a row records
 
 The first line is a header with the run id, git commit, model, provider,
@@ -248,5 +260,6 @@ stats.pl     JSONL reader, cluster bootstrap, paired differences
 report.pl    the report's main/0
 report.sh    the report's shell entry point
 test.pl      no-model checks
-results/     run output; a frozen pilot keeps its JSONL and report
+legacy.sh    Phase 0 selector for the unchanged legacy benchmark
+results/     baseline.md and frozen runs, each with its JSONL and report
 ```
