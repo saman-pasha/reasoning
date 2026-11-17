@@ -1359,6 +1359,8 @@ ep_text_dangles(Text) :-
     ->  true
     ;   ep_sequence_fragment(LastSentence)
     ->  true
+    ;   ep_colon_fragment(LastSentence)
+    ->  true
     ;   ep_pending_announcement(Flat)
     ->  true
     ;   ep_sentence_gerund(LastClause, After),
@@ -1544,6 +1546,15 @@ ep_sequence_fragment(Text) :-
     ep_first_word(Text, Word, Rest),
     ep_sequence_word(Word),
     ep_no_finite_verb(Rest).
+
+%% A sentence that ends on a colon, with no finite verb, is a heading
+%% whose body never came: "One more probe to confirm the message text:".
+%% "The answer is:" keeps its finite verb and stays a statement.
+ep_colon_fragment(Text) :-
+    atom_codes(Text, Codes),
+    reverse(Codes, Back),
+    ep_first_nonspace(Back, [58|_]),
+    ep_no_finite_verb(Text).
 
 %% A reply that announces an action and then explains why it matters
 %% stops mid-work as surely as one that ends on the announcement itself:
