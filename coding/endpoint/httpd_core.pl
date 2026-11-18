@@ -1901,11 +1901,12 @@ ep_sentence_gerund(Text, After) :-
         After = Rest
     ).
 
-%% A finite verb inside a relative clause ("..., which would confirm it")
-%% makes a gerund sentence no statement, so the clause from a comma and
-%% a relative pronoun on is left out of the finite-verb test. "Comparing
-%% the paths shows the difference, which would confirm it" keeps its
-%% finite verb before the relative clause.
+%% A finite verb inside a subordinate clause ("..., which would confirm
+%% it", "..., since the job must inherit the token") makes a gerund
+%% sentence no statement, so the clause from a comma and its opener on is
+%% left out of the finite-verb test. "Comparing the paths shows the
+%% difference, which would confirm it" keeps its finite verb before the
+%% relative clause.
 ep_without_relative(Text, Main) :-
     atom_codes(Text, Codes),
     (   ep_relative_at(Codes, Before)
@@ -1920,8 +1921,20 @@ ep_relative_at(Codes, Before) :-
     ;   append("whose", _, Rest)
     ;   append("who", _, Rest)
     ;   append("where", _, Rest)
+    ;   ep_reason_rest(Rest)
     ),
     !.
+
+%% "..., since ..." and "..., because ..." open a reason clause after
+%% the gerund's object: the sentence's main clause never came.
+ep_reason_rest(Rest) :-
+    (   append("since", Tail, Rest)
+    ;   append("because", Tail, Rest)
+    ),
+    (   Tail = []
+    ;   Tail = [C|_],
+        \+ ep_letter(C)
+    ).
 
 ep_leading_adverb(now).
 ep_leading_adverb(next).
