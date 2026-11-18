@@ -1175,6 +1175,32 @@ write_nodes([X|Xs]) :-
 This file is the reasoning repository's copy of the cocolog skill; the
 benchmark's cocolog lane reads it. The notes below are its additions.
 
+### Warnings, before a parser is written
+
+- **`0'` takes exactly ONE character, and no other.** `0'(`, `0')`,
+  `0'+`, `0'-` and `0'0` are the codes 40, 41, 43, 45 and 48. **For the
+  parentheses write exactly `0'(` and `0')`**: not `0'('`, not `0'-(`,
+  not `0')'`. `0')'` reads as `0')` (41) followed by a stray quote, and
+  the reader stops with `Syntax error: Operator expected` at the token;
+  any extra character between the quote and the one wanted fails the
+  same way. The character wanted is the one right after the quote.
+- **An if-then-else is `( Cond -> Then ; Else )`.** The arrow follows
+  the condition; an opening parenthesis between them starts a new goal
+  and is a syntax error. A comparison whose character is `(` ends
+  `C =:= 0'( ->`: the `(` belongs to the token and the `->` follows it.
+- **A one-character atom is an atom, not its code.** `'0'` is not 48.
+  Never compare or subtract it as a number: `C >= '0'`, `C =:= '0'` and
+  `D is C - '0'` raise a type error, because those operators evaluate
+  their arguments. Write `C >= 0'0` and `D is C - 0'0`, or take an
+  atom's code with `char_code/2`.
+- **`skip_spaces(Rest, Rest).` matches an unbound list**, and a parser
+  built on it loops or succeeds wrongly. The non-space clause is
+  `skip_spaces(List, List) :- List = [_|_].` (the section below).
+- **`digits/3` is `library(stream)`'s**; a collector of that name is
+  ignored. Name it `parse_digits/3`.
+- **A digit collector ends with `parse_digits(Rest, [], Rest).`** — no
+  `Rest = []` guard: the remaining codes may be a non-empty suffix.
+
 ### A character is not a number
 
 `atom_chars/2` gives one-character atoms; to compare or subtract one,
