@@ -62,6 +62,7 @@
 :- use_module('coding/endpoint/reasoning_core.pl',
               [ endpoint_reason/4, endpoint_ir/2 ]).
 :- use_module(library(reasoning/reason), [ reason_learn/1 ]).
+:- use_module('coding/endpoint/english_lesson.pl', [ ep_english_lesson/0 ]).
 
 main :-
     setenv('CODING_ENDPOINT_TOKEN', 'test-token'),
@@ -1125,8 +1126,32 @@ test_ir :-
     ),
     check('the translator''s IR is sent with the note', NoteOk, yes),
     ep_ir_note('Write a complete C program that prints hello.', Plain),
-    check('a request the translator cannot read adds no IR note',
+    check('a sentence the translator cannot read adds no IR note',
           Plain, ''),
+    ep_english_lesson,
+    endpoint_ir('The dog eats the bread.', EnglishIRs),
+    (   EnglishIRs = [ir(_, _)|_]
+    ->  EnglishRead = read
+    ;   EnglishRead = refused
+    ),
+    check('the English lesson reads a plain sentence into the IR',
+          EnglishRead, read),
+    ep_ir_note('The houses were not big.', EnglishNote),
+    (   sub_atom(EnglishNote, _, _, _, houses)
+    ->  EnglishNoteOk = yes
+    ;   EnglishNoteOk = no
+    ),
+    check('the English lesson''s IR reaches the note', EnglishNoteOk, yes),
+    ep_ir_note('The xyzzy eats the bread.', UnknownNote),
+    check('a sentence with an unknown word adds no IR note',
+          UnknownNote, ''),
+    Msgs = [json([role-user, content-'The dog eats the bread.'])],
+    ep_reasoning(count(2), reasoning, false, Msgs, 'GUIDE', Reasoned, _, _),
+    (   sub_atom(Reasoned, _, _, _, 'translator''s IR')
+    ->  ReasonedIR = yes
+    ;   ReasonedIR = no
+    ),
+    check('the reasoning guide carries the IR note', ReasonedIR, yes),
     !.
 
 continue_reply(Text, Calls, Finish, Codes) :-

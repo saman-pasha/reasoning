@@ -10,12 +10,14 @@
 
 :- use_module(library(httpd)).
 :- use_module('coding/endpoint/httpd_core.pl').
+:- use_module('coding/endpoint/english_lesson.pl').
 
 main :-
     ep_int('CODING_ENDPOINT_PORT', 8787, Port),
     ep_backend_url(Backend),
     format("cocolog coding endpoint on port ~w (non-streaming backend: ~w)~n",
            [Port, Backend]),
+    ep_english_lesson,
     ep_token(Token),
     (   Token == ''
     ->  format(user_error,
