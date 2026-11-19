@@ -36,6 +36,7 @@
                 ep_text_dangles/1,
                 ep_reply_dangles/1,
                 ep_about_note/2,
+                ep_ir_note/2,
                 ep_continue_messages/3,
                 ep_continue_nudge/3,
                 ep_continue_on/0,
@@ -59,7 +60,8 @@
                 ep_key/1
               ]).
 :- use_module('coding/endpoint/reasoning_core.pl',
-              [ endpoint_reason/4 ]).
+              [ endpoint_reason/4, endpoint_ir/2 ]).
+:- use_module(library(reasoning/reason), [ reason_learn/1 ]).
 
 main :-
     setenv('CODING_ENDPOINT_TOKEN', 'test-token'),
@@ -91,6 +93,7 @@ main :-
     test_backend_key,
     test_defaults,
     test_continue,
+    test_ir,
     unsetenv('CODING_ENDPOINT_TOKEN'),
     checks_done.
 
@@ -1104,6 +1107,27 @@ test_continue :-
     ep_continue_limit(Set),
     check('CODING_ENDPOINT_CONTINUE_LIMIT is read', Set, 5),
     unsetenv('CODING_ENDPOINT_CONTINUE_LIMIT').
+
+test_ir :-
+    reason_learn('Spanish is a language. The noun "casa" means "house". The adjective "grande" means "big". The verb "es" means "is". The feminine article "la" means "the". Every noun that ends in "a" is feminine. Every adjective follows the noun. Every noun that ends in a vowel takes "s" in the plural. Every article that ends in a vowel takes "s" in the plural. Every adjective that ends in a vowel takes "s" in the plural. "son" is the plural of "es". "era" is the past of "es". The word "no" means "not".'),
+    endpoint_ir('The houses were not big.', IRs),
+    (   IRs = [ir(_, _)|_]
+    ->  Read = read
+    ;   Read = refused
+    ),
+    check('the translator reads a controlled-English request into its IR',
+          Read, read),
+    ep_ir_note('The houses were not big.', Note),
+    (   sub_atom(Note, _, _, _, 'translator''s IR'),
+        sub_atom(Note, _, _, _, houses)
+    ->  NoteOk = yes
+    ;   NoteOk = no
+    ),
+    check('the translator''s IR is sent with the note', NoteOk, yes),
+    ep_ir_note('Write a complete C program that prints hello.', Plain),
+    check('a request the translator cannot read adds no IR note',
+          Plain, ''),
+    !.
 
 continue_reply(Text, Calls, Finish, Codes) :-
     (   Calls == []

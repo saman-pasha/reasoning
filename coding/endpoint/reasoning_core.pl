@@ -3,6 +3,7 @@
 %%     endpoint_reason(+Text, -Obligations, -Contract, -Terms)
 %%     endpoint_reason(+Language, +Text, -Obligations, -Contract, -Terms)
 %%     endpoint_about(+Terms, -Concepts, -Topics)
+%%     endpoint_ir(+Text, -IRs)
 %%
 %% Text is an atom or codes. Obligations come from the language's keyword
 %% reader, Contract from coding/contract.pl's controlled English for C and
@@ -14,11 +15,18 @@
 %% ABOUT: reason_concepts/2 ranks what it mentions and reason_topics/2
 %% groups what is said about each subject. At most six of each, the most
 %% mentioned first; both empty when the text did not parse.
+%%
+%% endpoint_ir/2 is the TRANSLATOR's reading: reason_ir/2's
+%% ir(Sentence, Stop) terms, the English-worded intermediate representation
+%% every target language is written from. The translator reads the words a
+%% lesson teaches, so a text no lesson covers is refused and the list is
+%% empty.
 
 :- use_module('coding/obligations.pl').
 :- use_module('coding/contract.pl').
 :- use_module('coding/python/obligations.pl').
 :- use_module(library(reasoning/reason)).
+:- use_module(library(reasoning/translate)).
 
 endpoint_reason(Text, Obs, CObs, Terms) :-
     endpoint_reason(c, Text, Obs, CObs, Terms).
@@ -80,4 +88,19 @@ ep_cap_six(List, Capped) :-
     ->  length(Capped, 6),
         append(Capped, _, List)
     ;   Capped = List
+    ).
+
+%% The translator's IR of the text, at most three sentences. reason_ir/2
+%% fails on a sentence it cannot read -- a text whose words no lesson
+%% teaches, or a shape it does not translate -- and the caller then adds
+%% no IR note.
+endpoint_ir(Text, IRs) :-
+    (   catch(reason_ir(Text, IRs0), _, fail),
+        IRs0 \== []
+    ->  (   length(IRs0, N),
+            N > 3
+        ->  length(IRs, 3)
+        ;   IRs = IRs0
+        )
+    ;   IRs = []
     ).

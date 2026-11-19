@@ -313,6 +313,27 @@ ep_about_questions(Concepts, Topics, Questions) :-
               format(atom(Line), '- Why is `~w` important to this task?', [Name]) ),
             Questions).
 
+%% ---- the request in the translator's IR ---------------------------------
+%%
+%% When a lesson covers the request's words, the translator reads it into
+%% the intermediate representation every target language is written from.
+%% The note goes after the concepts, so the model is sent the reading as
+%% well as the checks. A request no lesson covers adds nothing.
+
+ep_ir_note(Text, Note) :-
+    (   catch(endpoint_ir(Text, IRs), _, fail),
+        IRs = [_|_]
+    ->  maplist(ep_ir_line, IRs, Lines),
+        atomic_list_concat(Lines, '\n', Body),
+        format(atom(Note),
+               '~n~n# The request in the translator''s IR~n~nThe translator read the request as:~n~n~w',
+               [Body])
+    ;   Note = ''
+    ).
+
+ep_ir_line(ir(Sentence, _Stop), Line) :-
+    format(atom(Line), '- `~w`', [Sentence]).
+
 %% The checks every code task gets when its wording gives fewer than the
 %% minimum. They are deliberately generic: the task's own obligations, when
 %% it has any, stay first.
@@ -412,7 +433,8 @@ ep_reasoning(Language, Setting, Mode, Title, Messages, Guide0, Guide, N, Terms) 
         Terms = Terms0,
         ep_note(All, Note),
         ep_about_note(Terms0, About),
-        atomic_list_concat([Guide0, Note, About], Guide)
+        ep_ir_note(Text, IRNote),
+        atomic_list_concat([Guide0, Note, About, IRNote], Guide)
     ;   Guide = Guide0, N = 0, Terms = 0
     ).
 
