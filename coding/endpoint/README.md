@@ -256,9 +256,13 @@ backend that is down does not cost every request a timeout.
 
 `coding/endpoint/store` is committed (its `lock` is not), so what one machine
 learned is the next machine's start, and every commit of it moves the
-translator on. It was committed empty (reasoning 1.13.0); `live_ir.pl` fills
-it from the benchmark requirements, whose sentences are in the tree
-already. What a session needs to know before committing it:
+translator on. It was committed empty in reasoning 1.13.0. Since 1.13.1 it
+holds what `live_ir.pl` learned from the three benchmark requirements,
+whose sentences are in the tree already: 5 lessons (`until`, `subarray`,
+`toward`, `multiplication`, `subtraction`), 9 rewrites and 17 verdicts, 7 of
+them wrong readings. The second run made 2 calls, for 2 readings the first
+run's rounds had left unchecked, and the third made none. What a session
+needs to know before committing it:
 
 - **It holds the first sentences of every request the endpoint read**, word
   for word, in its rewrites, verdicts and unread sentences, and the

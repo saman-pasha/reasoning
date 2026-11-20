@@ -57,17 +57,18 @@ live_task(Name, t(C0, P0, K0), t(C, P, K)) :-
         C = C0, P = P0, K = K0
     ).
 
-live_reading(reading(S, How, IRs)) :-
+live_reading(reading(S0, How, IRs)) :-
+    ep_ir_display(S0, S),
     (   How == unread
     ->  Verdict = '-'
-    ;   ep_ir_judged(S, IRs, right)
+    ;   ep_ir_judged(S0, IRs, right)
     ->  Verdict = right
     ;   Verdict = unchecked
     ),
     (   How = rewrite(Rs)
     ->  atomic_list_concat(Rs, ' ', R),
         format("   rewrite  ~w~n            -> ~w~n", [S, R])
-    ;   format("   ~w~t~9|~w~n", [How, S])
+    ;   format("   ~w~t~12|~w~n", [How, S])
     ),
     (   How == unread
     ->  true

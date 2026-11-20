@@ -349,8 +349,9 @@ ep_ir_note(Text, Note) :-
 ep_ir_was_read(reading(_, How, _)) :- How \== unread.
 
 ep_ir_lines(reading(S, rewrite(Rs), IRs), [Head|Lines]) :- !,
+    ep_ir_display(S, D),
     atomic_list_concat(Rs, ' ', Rewrite),
-    format(atom(Head), '- "~w", rewritten for the translator as "~w":', [S, Rewrite]),
+    format(atom(Head), '- "~w", rewritten for the translator as "~w":', [D, Rewrite]),
     findall(L, ( member(ir(T, _), IRs), format(atom(L), '  - `~w`', [T]) ), Lines).
 ep_ir_lines(reading(_, _, IRs), Lines) :-
     findall(L, ( member(ir(T, _), IRs), format(atom(L), '- `~w`', [T]) ), Lines).

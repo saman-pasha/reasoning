@@ -196,6 +196,22 @@ ep_ir_unknown(S, Words) :-
     ;   Words = []
     ).
 
+%% A sentence as the model and the coding model are shown it. The
+%% translator's splitter writes a dash before a blank as code 3 and the
+%% brackets as codes 5 and 6 (tr_mid_marks/2); they go back to `-', `('
+%% and `)', and a line break is a blank. The sentence itself, as the store
+%% keys it, is unchanged.
+ep_ir_display(S, Text) :-
+    atom_codes(S, Cs0),
+    maplist(ep_ir_display_code, Cs0, Cs),
+    atom_codes(Text, Cs).
+
+ep_ir_display_code(3, 0'-) :- !.
+ep_ir_display_code(5, 0'() :- !.
+ep_ir_display_code(6, 0')) :- !.
+ep_ir_display_code(10, 32) :- !.
+ep_ir_display_code(C, C).
+
 %% ---- the verdicts -------------------------------------------------------
 
 %% A reading's text: the IRs written with their variables numbered, so one
@@ -412,19 +428,21 @@ ep_ir_prompt(K, Open, System, User) :-
            [K, Body]).
 
 ep_ir_block(N, check(S, How, IRs), Block) :-
+    ep_ir_display(S, D),
     ep_ir_english(IRs, English),
     (   How = rewrite(Rs)
     ->  atomic_list_concat(Rs, ' ', R),
-        format(atom(Block), '~w. "~w"~n   Rewritten as: "~w"~n   Read as: "~w"', [N, S, R, English])
-    ;   format(atom(Block), '~w. "~w"~n   Read as: "~w"', [N, S, English])
+        format(atom(Block), '~w. "~w"~n   Rewritten as: "~w"~n   Read as: "~w"', [N, D, R, English])
+    ;   format(atom(Block), '~w. "~w"~n   Read as: "~w"', [N, D, English])
     ).
 ep_ir_block(N, pending(S, F), Block) :-
+    ep_ir_display(S, D),
     (   ep_ir_try(S, IRs)
     ->  ep_ir_english(IRs, English),
-        format(atom(Head), '~w. "~w"~n   Read wrongly as: "~w"', [N, S, English])
+        format(atom(Head), '~w. "~w"~n   Read wrongly as: "~w"', [N, D, English])
     ;   ep_ir_unknown(S, Ws),
         ep_ir_words_text(Ws, WsText),
-        format(atom(Head), '~w. "~w"~n   Not read. Unknown words: ~w.', [N, S, WsText])
+        format(atom(Head), '~w. "~w"~n   Not read. Unknown words: ~w.', [N, D, WsText])
     ),
     findall(T, ( member(tried(Rs, Failed), F), ep_ir_tried_text(Rs, Failed, T) ), Ts),
     atomic_list_concat([Head|Ts], '\n', Block).
@@ -547,20 +565,46 @@ ep_ir_backend(System, User, Reply) :-
     ep_ir_model(Model),
     ep_ir_int('CODING_ENDPOINT_IR_MAX_TOKENS', 2000, MaxTokens),
     ep_backend_timeout(Timeout),
-    Body = json([model-Model, max_tokens-MaxTokens, temperature-0,
-                 stream- @(false),
+    Body = json([model-Model, max_tokens-MaxTokens, stream- @(false),
                  messages-[json([role-system, content-System]),
                            json([role-user, content-User])]]),
-    (   catch(ep_ir_post(Mode, Url, Key, Timeout, Body, Status, Resp), _, fail),
-        Status >= 200, Status < 300,
+    (   catch(ep_ir_post(Mode, Url, Key, Timeout, Body, Status, Resp), E, true)
+    ->  true
+    ;   E = post_failed
+    ),
+    (   var(E),
+        integer(Status), Status >= 200, Status < 300,
         ep_reply_text(Resp, Reply),
         Reply \== ''
     ->  ep_usage(Resp, usage(P, C, _, _, _)),
         ep_ir_count(prompt_tokens, P),
         ep_ir_count(completion_tokens, C)
-    ;   get_time(Now),
+    ;   ep_ir_say_failed(E, Status, Resp),
+        get_time(Now),
         nb_setval('$ep_ir_rest_until', Now),
         fail
+    ).
+
+%% A failed call says why on stderr, once: the status and the start of the
+%% reply, which names the refusal (`temperature` is deprecated for this
+%% model.). The key is never in it.
+ep_ir_say_failed(E, Status, Resp) :-
+    (   nonvar(E)
+    ->  format(atom(Why), '~q', [E])
+    ;   is_list(Resp)
+    ->  atom_codes(Why0, Resp), ep_ir_first_chars(Why0, 300, Why)
+    ;   atom(Resp)
+    ->  ep_ir_first_chars(Resp, 300, Why)
+    ;   Why = 'no reply'
+    ),
+    (   var(Status) -> S = none ; S = Status ),
+    catch(format(user_error, "ir_repair: the model call failed (status ~w): ~w~n", [S, Why]), _, true).
+
+ep_ir_first_chars(Text, Max, First) :-
+    atom_length(Text, L),
+    (   L > Max
+    ->  sub_atom(Text, 0, Max, _, First)
+    ;   First = Text
     ).
 
 ep_ir_post(anthropic, Url, Key, Timeout, Body, Status, Resp) :- !,
@@ -573,8 +617,10 @@ ep_ir_post(anthropic, Url, Key, Timeout, Body, Status, Resp) :- !,
                 timeout(Timeout), max_size(16777216) ],
               Status0, AnthropicResp),
     ep_anthropic_reply(Status0, AnthropicResp, Status, Resp).
+%% The OpenAI wire takes temperature 0 for one answer a prompt; Anthropic's
+%% newer models refuse the field, so its body has none.
 ep_ir_post(_, Url, Key, Timeout, json(Pairs), Status, Resp) :-
-    json_codes(json([reasoning_effort-none|Pairs]), Codes),
+    json_codes(json([reasoning_effort-none, temperature-0|Pairs]), Codes),
     format(atom(Auth), 'Authorization: Bearer ~w', [Key]),
     curl_post(Url, 'application/json', Codes,
               [header(Auth), timeout(Timeout), max_size(16777216)],

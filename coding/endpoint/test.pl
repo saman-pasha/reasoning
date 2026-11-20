@@ -67,7 +67,7 @@
               [ ep_ir_readings/2, ep_ir_stats/1, ep_ir_stats_reset/0,
                 ep_ir_model_stub/3, ep_ir_lesson/1, ep_ir_rewrite/2,
                 ep_ir_unread/2, ep_ir_verdict/3, ep_ir_repair_ready/0,
-                ep_ir_reply/4 ]).
+                ep_ir_reply/4, ep_ir_display/2 ]).
 
 main :-
     setenv('CODING_ENDPOINT_TOKEN', 'test-token'),
@@ -1244,6 +1244,9 @@ test_ir_repair :-
     check('a reply that is not JSON leaves the sentence unread', R6, [reading('Quux the blarf.', unread, [])]),
     ep_ir_reply('Here: {"ok": [1, "x"], "words": [], "rewrites": [{"id": 2, "sentences": ["A b."]}]} done', [], OK, RW),
     check('the JSON object is found inside the reply text', OK-RW, [1]-[2-['A b.']]),
+    ep_ir_display('n \x5\1 <= n\x6\, \x3\ 2\nlines', Shown),
+    check('the model is shown the brackets, the dash and a blank for a line break',
+          Shown, 'n (1 <= n), - 2 lines'),
     %% the note: what was read, and the rewrite beside its reading
     ep_ir_note('Write a complete C program. It prints the maximum sum of a contiguous subarray.', Note),
     (   sub_atom(Note, _, _, _, 'rewritten for the translator as "Write a complete program in C."'),
