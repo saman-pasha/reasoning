@@ -200,8 +200,11 @@ the shapes it knows, and a sentence it reads can be read wrongly:
 `Convert every word to lowercase.` reads as `Every convert words to
 lowercase.`. So the model checks every sentence (`ir_repair.pl`), in one call
 for the whole request. A sentence the translator read is sent with its
-reading said back in English (`reason_ir_text/3`), and the model says whether
-the reading keeps the sentence's meaning. For a sentence read wrongly, or not
+reading said back in English (`reason_ir_text/3`) and its logical form, and the
+model says whether the reading keeps the sentence's meaning. The logical form,
+because a wrong parse that keeps the word order says itself back as the very
+sentence: `Blank lines are ignored.` read with `lines` for its verb came back
+`Blank lines are ignored.`, and the English alone was judged right. For a sentence read wrongly, or not
 read:
 
 - for each unknown English word, the model gives its class and base form.

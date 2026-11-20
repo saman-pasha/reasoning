@@ -48,19 +48,27 @@ v2_lang_gen_flags([Flag, Value|Rest], [Name-Value|Pairs]) :-
     v2_lang_gen_flags(Rest, Pairs).
 
 v2_lang_gen_spec(EffortAtom, Spec0, PrevFile, DiagFile, Spec, Options) :-
-    v2_config(provider, Provider),
-    v2_config(model, Model),
-    v2_config(base_url, BaseUrl),
-    v2_config(temperature, Temperature),
+    v2_setting(provider, Provider),
+    v2_setting(model, Model),
+    v2_setting(base_url, BaseUrl),
+    v2_setting(temperature, Temperature),
+    v2_setting(max_tokens, MaxTokens),
     (   EffortAtom == high
     ->  v2_config(high_effort, Effort)
-    ;   v2_config(loop_effort, Effort)
+    ;   v2_setting(effort, Effort)
     ),
-    Options = [provider(Provider),
-               model(Model),
-               base_url(BaseUrl),
-               temperature(Temperature),
-               reasoning_effort(Effort)],
+    Options0 = [provider(Provider),
+                model(Model),
+                base_url(BaseUrl),
+                reasoning_effort(Effort)],
+    (   Temperature == none
+    ->  Options1 = Options0
+    ;   Options1 = [temperature(Temperature)|Options0]
+    ),
+    (   MaxTokens == none
+    ->  Options = Options1
+    ;   Options = [max_tokens(MaxTokens)|Options1]
+    ),
     (   PrevFile == '-'
     ->  Spec = Spec0
     ;   read_file_to_codes(PrevFile, PrevCodes),
@@ -136,8 +144,22 @@ v2_lang_trim_atom(Text, Code) :-
     split_string(String, "", " \t\r\n", [Core|_]),
     atom_string(Code, Core).
 
+%% The usage of the one call: OpenAI's fields, or Anthropic's --
+%% input_tokens and output_tokens, the thinking within the output and
+%% reported nowhere apart. input_tokens is only what was read past the
+%% cache, so the prompt is it with cache_read_input_tokens (the hit) and
+%% cache_creation_input_tokens. Read only the OpenAI way, an Anthropic
+%% reply failed the child after its program was written.
 v2_lang_gen_usage :-
-    (   llm_last_usage(json(Pairs))
+    (   llm_last_usage(json(Pairs)),
+        memberchk(input_tokens-In, Pairs)
+    ->  (   memberchk(output_tokens-C, Pairs) -> true ; C = 0 ),
+        v2_lang_usage_int(cache_read_input_tokens, Pairs, H),
+        v2_lang_usage_int(cache_creation_input_tokens, Pairs, W),
+        P is In + H + W,
+        T is P + C,
+        format("USAGE ~w ~w ~w ~w ~w~n", [P, C, T, 0, H])
+    ;   llm_last_usage(json(Pairs))
     ->  memberchk(prompt_tokens-P, Pairs),
         memberchk(completion_tokens-C, Pairs),
         memberchk(total_tokens-T, Pairs),
@@ -152,4 +174,10 @@ v2_lang_gen_usage :-
         ),
         format("USAGE ~w ~w ~w ~w ~w~n", [P, C, T, R, H])
     ;   format("USAGE 0 0 0 0 0~n", [])
+    ).
+
+v2_lang_usage_int(Key, Pairs, N) :-
+    (   memberchk(Key-N0, Pairs), integer(N0)
+    ->  N = N0
+    ;   N = 0
     ).

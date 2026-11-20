@@ -20,7 +20,10 @@
                 v2_lang_verify/7
               ]).
 :- use_module('coding/bench/v2/lang_runner.pl',
-              [ v2_lang_run/5 ]).
+              [ v2_lang_run/7,
+                v2_lang_selection/8 ]).
+
+:- dynamic v2test_seen_spec/1.
 :- use_module('coding/bench/v2/lang_gen.pl',
               [ v2_lang_strip_fence/2,
                 v2_lang_gen_args/7
@@ -86,6 +89,7 @@ main :-
     test_lang_context,
     test_cocolog_skill,
     test_lang_run,
+    test_lang_ir,
     test_reasoning,
     test_form_run,
     test_keep,
@@ -919,7 +923,8 @@ test_lang_run :-
     make_directory(KeepRoot),
     v2_keep_set(KeepRoot),
     tmp_file(v2_lang_jsonl, OutFile),
-    catch(once(v2_lang_run([lcs], [python], 1, 123, file(OutFile))), Ball,
+    catch(once(v2_lang_run([lcs], [python], [plain], none, 1, 123,
+                           file(OutFile))), Ball,
           ( format("language run error: ~w~n", [Ball]) )),
     unsetenv('CODING_ENDPOINT_KEY_ENV'),
     v2_keep_set(none),
@@ -959,6 +964,74 @@ test_lang_run :-
     ),
     check('a language attempt keeps the code with its extension', K, yes),
     catch(c_clean_dir(KeepRoot), _, true).
+
+%% The ir arm: the note the translation phase wrote goes after the
+%% requirement, the plain arm's requirement is the language's as it was,
+%% each row names its arm, and an arm with no note is refused before any
+%% call. The generator is the test seam, so no model is called.
+test_lang_ir :-
+    section('language ir arm'),
+    yes_no(v2_language_task(mvccs_acid), Hard),
+    check('mvccs_acid is a language task', Hard, yes),
+    (   v2_lang_selection([], DefTasks, _, DefArms, _, _, _, _)
+    ->  true
+    ;   DefTasks = none, DefArms = none
+    ),
+    check('the default language tasks are still the three, in the plain arm',
+          DefTasks-DefArms, [lcs, stable_sort, calculator]-[plain]),
+    tmp_file(v2_lang_notes, NotesDir),
+    make_directory(NotesDir),
+    (   catch(v2_lang_selection([tasks([lcs]), langs([python]), arms([plain, ir]),
+                                 ir_notes(NotesDir)], _, _, _, _, _, _, _),
+              error(v2_lang_error(no_ir_note, _), _), fail)
+    ->  Refused = no
+    ;   Refused = yes
+    ),
+    check('an ir arm with no note is refused before any call', Refused, yes),
+    format(atom(NoteFile), '~w/lcs-python.ir', [NotesDir]),
+    atom_codes('\n\n# The request in the translator\'s IR\n\n- `s(test)`', NoteCodes),
+    write_file_from_codes(NoteFile, NoteCodes),
+    retractall(v2test_seen_spec(_)),
+    retractall(v2_language_generate_hook(_, _, _, _, _, _)),
+    language_lcs_programs(PyCode, _, _),
+    assertz((v2_language_generate_hook(python, Spec, _, Code,
+                                       usage(10, 20, 30, 0, 0), none) :-
+                assertz(v2test_seen_spec(Spec)),
+                Code = PyCode)),
+    setenv('CODING_ENDPOINT_KEY_ENV', 'test-key'),
+    v2_keep_set(none),
+    tmp_file(v2_lang_ir_jsonl, OutFile),
+    catch(once(v2_lang_run([lcs], [python], [plain, ir], NotesDir, 1, 123,
+                           file(OutFile))), Ball,
+          ( format("language ir run error: ~w~n", [Ball]) )),
+    unsetenv('CODING_ENDPOINT_KEY_ENV'),
+    retractall(v2_language_generate_hook(_, _, _, _, _, _)),
+    once(v2_language_spec(python, lcs, Base)),
+    findall(S, v2test_seen_spec(S), Seen),
+    (   msort(Seen, [S1, S2]),
+        (   S1 == Base, sub_atom(S2, _, _, _, '`s(test)`')
+        ;   S2 == Base, sub_atom(S1, _, _, _, '`s(test)`')
+        )
+    ->  Specs = yes
+    ;   Specs = no
+    ),
+    check('the ir cell gets the note after the requirement, the plain cell none',
+          Specs, yes),
+    (   exists_file(OutFile)
+    ->  read_file_to_codes(OutFile, Codes),
+        atom_codes(Text, Codes),
+        (   sub_atom(Text, _, _, _, '"arm":"plain","ir_note_chars":0'),
+            sub_atom(Text, _, _, _, '"arm":"ir","ir_note_chars":'),
+            sub_atom(Text, _, _, _, '"arms":["plain","ir"]')
+        ->  Rows = yes
+        ;   Rows = no
+        ),
+        catch(delete_file(OutFile), _, true)
+    ;   Rows = no
+    ),
+    check('each row names its arm and the note''s length', Rows, yes),
+    retractall(v2test_seen_spec(_)),
+    catch(c_clean_dir(NotesDir), _, true).
 
 language_lcs_programs(Python, Cocolog, Swipl) :-
     atomic_list_concat([

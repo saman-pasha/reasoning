@@ -16,8 +16,10 @@
 %% the model about EVERY sentence, not only those the translator could not
 %% read (CODING_ENDPOINT_IR_CHECK, below). One call covers the request. For
 %% a sentence the translator read, the prompt gives its reading said back
-%% in English (reason_ir_text/3), and the model says whether that reading
-%% keeps the sentence's meaning. For a sentence it read wrongly, or did not
+%% in English (reason_ir_text/3) and its logical form, and the model says
+%% whether that reading keeps the sentence's meaning: the logical form,
+%% because a wrong parse that keeps the word order says itself back as the
+%% very sentence. For a sentence it read wrongly, or did not
 %% read, the model gives:
 %%
 %%   - for each unknown English word, its class and its base form. Each
@@ -549,13 +551,20 @@ ep_ir_prompt(K, Open, System, User) :-
     format(atom(User), 'Round ~w. The sentences of the task, and what the parser made of each:~n~n~w',
            [K, Body]).
 
+%% A READING IS SHOWN AS ITS LOGICAL FORM AS WELL AS IN ENGLISH. The
+%% English is the reading said back, and a wrong parse that keeps the word
+%% order says itself back as the sentence: `Blank lines are ignored.' read
+%% with `lines' for its verb said back `Blank lines are ignored.', and the
+%% model judged it right (the mvccs_acid benchmark's translation, reasoning
+%% 1.14.0). The logical form shows each word's role.
 ep_ir_block(N, check(S, How, IRs), Block) :-
     ep_ir_display(S, D),
     ep_ir_english(IRs, English),
+    ep_ir_logical_form(IRs, Form),
     (   How = rewrite(Rs)
     ->  atomic_list_concat(Rs, ' ', R),
-        format(atom(Block), '~w. "~w"~n   Rewritten as: "~w"~n   Read as: "~w"', [N, D, R, English])
-    ;   format(atom(Block), '~w. "~w"~n   Read as: "~w"', [N, D, English])
+        format(atom(Block), '~w. "~w"~n   Rewritten as: "~w"~n   Read as: "~w"~n   Logical form: ~w', [N, D, R, English, Form])
+    ;   format(atom(Block), '~w. "~w"~n   Read as: "~w"~n   Logical form: ~w', [N, D, English, Form])
     ).
 ep_ir_block(N, pending(S, F), Block) :-
     ep_ir_display(S, D),
@@ -568,6 +577,10 @@ ep_ir_block(N, pending(S, F), Block) :-
     ),
     findall(T, ( member(tried(Rs, Failed), F), ep_ir_tried_text(Rs, Failed, T) ), Ts),
     atomic_list_concat([Head|Ts], '\n', Block).
+
+ep_ir_logical_form(IRs, Form) :-
+    findall(T, ( member(ir(T0, _), IRs), format(atom(T), '~q', [T0]) ), Ts),
+    atomic_list_concat(Ts, ' ; ', Form).
 
 ep_ir_tried_text(Rs, [], T) :- !,
     atomic_list_concat(Rs, ' ', Tried),
@@ -593,6 +606,11 @@ ep_ir_system(System) :-
 '{"ok": [1], "words": [{"word": "subarray", "class": "noun", "base": "subarray"}], ',
 '"rewrites": [{"id": 2, "sentences": ["...", "..."]}]}\n\n',
 'OK. List the id of each sentence whose reading has the meaning of the sentence. ',
+'Judge the logical form, not only the English said back: s(Front, Subject, g(Verb, Tense, Aspect, Negated), ',
+'Complements) is a clause, np(Determiner, Number, Modifiers, w(Noun, Case), Count) a noun phrase, obj(...) an ',
+'object, pp(w(Preposition, _), ...) a phrase with a preposition, join(Conjunction, Clause, Clause) two clauses. ',
+'A reading is wrong when a word has the wrong role, even if the English said back is the same sentence: ',
+'a noun read as the verb, a verb read as a noun, an adjective read as a noun. ',
 'A different word order, article or plural is not an error when the meaning stays. ',
 'A reading is wrong when it changes who does what, an action, a number, a limit, a condition, ',
 'a negation, a quantity or a format, or leaves out a requirement.\n\n',

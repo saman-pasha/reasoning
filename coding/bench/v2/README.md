@@ -31,7 +31,9 @@ per-attempt JSONL rows are not implemented yet.
 two attempts produced byte-identical code and the third changed only
 formatting. A larger budget is not supported by that evidence, so
 `calculator` is the Phase 1 third task and `mvccs_acid` is left for a
-later hard-task or reasoning-effort suite. The pilot's numbers remain the
+later hard-task or reasoning-effort suite. Since reasoning 1.14.0 it is a
+hard task of the language runner, with the translator's IR as an arm
+("The translator's IR", below). The pilot's numbers remain the
 record for the old trio.
 
 ## Modes
@@ -156,6 +158,61 @@ the result, and languages are not ranked by one number. The first
 comparison ran on 2026-11-17: 36 cells, 22/36 pass@1, 26/36 final,
 403 944 tokens; `results/lang-20261117.md` is the record. Treat it as a
 pilot: one model, one generator per language and three tasks.
+
+## The translator's IR (an arm of the language runner)
+
+The coding endpoint sends the coding model the translator's reading of the
+request, "The request in the translator's IR" (`coding/endpoint/ir_repair.pl`).
+The `ir` arm measures what that note does: it is `plain` with the note
+after the requirement, and nothing else differs.
+
+```sh
+# 1. the translation phase, counted apart: run it until a run makes no call
+CODING_ENDPOINT_IR_API=anthropic CODING_ENDPOINT_IR_KEY=... CODING_ENDPOINT_IR_MODEL=... \
+    ../cocolog/cocolog --embed coding/endpoint/store -s coding/bench/v2/ir_prep.pl -- \
+    --tasks mvccs_acid --langs c,python,cocolog,swipl --out DIR
+# 2. the benchmark, which reads the notes and calls no translator
+CODING_ENDPOINT_KEY_ENV=... CODING_BENCH_PROVIDER=anthropic CODING_BENCH_MODEL=... \
+CODING_BENCH_BASE_URL=https://api.anthropic.com/v1/messages \
+    ./coding/bench/v2/lang.sh --run --tasks mvccs_acid --arms plain,ir --ir-notes DIR
+```
+
+- **The translation is done first, and none of it is in the benchmark's
+  figures.** `ir_prep.pl` reads each language's requirement as the endpoint
+  reads a request -- every sentence, where the endpoint reads six -- with
+  the model's check and repair, keeps what it learned in the endpoint's
+  store, and writes the note to `DIR/TASK-LANG.ir` and its own calls,
+  tokens and seconds to `DIR/ir-prep.jsonl`. Run it until a run makes no
+  call: the four requirements share every sentence after the first, so a
+  later language's request can judge a shared reading an earlier one used
+  (the first run's C note changed at the second). The benchmark reads the
+  notes from their files; an arm whose note is missing is refused before
+  the first call.
+- **What the `ir` arm costs is in it**: the note is prompt tokens of every
+  call it is in, and the summary gives prompt and completion tokens apart.
+- **Within a trial the cells of both arms are shuffled together**, so
+  neither arm runs at another hour of the provider's day.
+- The note goes after the requirement in the user prompt, where every
+  language's generator puts the requirement; the endpoint puts it in the
+  system prompt, after the guide. A stated difference.
+- `mvccs_acid` is a hard task (`v2_hard_task/1`): the language runner runs
+  it when named, its default tasks stay the three, and the C matrix's grid
+  does not change. Its budget is the pilot's, three calls and 5000 ms a
+  case; cases 6 and 8 are held out, and case 3, the snapshot visibility
+  every pilot attempt failed, stays a repair case.
+- **A run's provider** is `v2_setting/2`: `CODING_BENCH_PROVIDER`,
+  `_MODEL`, `_BASE_URL`, `_EFFORT` and `_MAX_TOKENS` override the facts of
+  `config.pl`, which stay the pilots' record. An `anthropic` run sends no
+  temperature (`claude-sonnet-5-5` refuses one), effort `low` unless set,
+  and 16000 tokens a reply: the model thinks by default, and the thinking
+  counts against the limit. Its usage is Anthropic's `input_tokens`,
+  `output_tokens` and cache fields.
+- **The first run** is `results/ir-mvccs-20261120.md`: 24 cells on
+  `claude-sonnet-5-5`, the translation phase's 9 calls apart. Every
+  held-out failure there is case 8, whose expected output reads "a
+  deletion of an absent key is ignored" against the latest committed
+  version and not against the transaction's view: a stated ambiguity of
+  the task, left as it is so that the run's figures stay comparable.
 
 ## Declarative vs imperative (Phase 5)
 
@@ -373,7 +430,8 @@ between v2 and a legacy result is recorded before changing either.
 ## Files
 
 ```text
-config.pl    provider, model, temperature, trials, seed, results dir
+config.pl    provider, model, temperature, trials, seed, results dir;
+             v2_setting/2, a run's own provider from CODING_BENCH_*
 schema.pl    task declaration, case split, output policy, budget
 verify.pl    sanitized compile, repair and held-out runs, output policy
 runner.pl    attempts, paired arms, repair diagnostics, seeded order,
@@ -389,6 +447,7 @@ lang_runner.pl  language cells, attempts and summary
 lang_gen.pl  one language generator call (child)
 lang_run.pl  the language runner's main/0
 lang.sh      the language runner's shell entry point
+ir_prep.pl   the translation phase of an IR run: each language's note
 reasoning_schema.pl  Phase 5 tasks, cases and property checker
 form_runner.pl  Phase 5 paired forms, cells, pairs and summary
 form_run.pl  the form runner's main/0

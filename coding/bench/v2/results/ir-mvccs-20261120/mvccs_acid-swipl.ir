@@ -1,0 +1,25 @@
+
+
+# The request in the translator's IR
+
+The translator read the request as:
+
+- "Write a complete SWI-Prolog program whose main/0 reads standard input and writes standard output.", rewritten for the translator as "The program is a complete program in SWI-Prolog. The program has a main predicate with no arguments. The main predicate reads the standard input. The main predicate writes the standard output.":
+  - `s(none,np(det(article,the,w(the,lower)),none,[],w(program,lower),singular),g(is,present,simple,no),[obj(np(det(article,a,w(a,lower)),none,[w(complete,lower)],w(program,lower),singular)),pp(w(in,lower),name(SWI-Prolog))])`
+  - `s(none,np(det(article,the,w(the,lower)),none,[],w(program,lower),singular),g(has,present,simple,no),[obj(np(det(article,a,w(a,lower)),none,[w(main,lower)],w(predicate,lower),singular)),pp(w(with,lower),np(none,none,[w(no,lower)],w(arguments,lower),plural))])`
+  - `s(none,np(det(article,the,w(the,lower)),none,[w(main,lower)],w(predicate,lower),singular),g(reads,present,simple,no),[obj(np(det(article,the,w(the,lower)),none,[w(standard,lower)],w(input,lower),singular))])`
+  - `s(none,np(det(article,the,w(the,lower)),none,[w(main,lower)],w(predicate,lower),singular),g(writes,present,simple,no),[obj(np(det(article,the,w(the,lower)),none,[w(standard,lower)],w(output,lower),singular))])`
+- "Read commands from standard input until EOF, one command per line.", rewritten for the translator as "The program reads commands from standard input. Each command is on one line. The program stops at the end of the input.":
+  - `s(none,np(det(article,the,w(the,lower)),none,[],w(program,lower),singular),g(reads,present,simple,no),[obj(np(none,none,[],w(commands,lower),plural)),pp(w(from,lower),np(none,none,[w(standard,lower)],w(input,lower),singular))])`
+  - `s(none,np(det(determiner,each,w(each,lower)),none,[],w(command,lower),singular),g(is,present,simple,no),[pp(w(on,lower),np(none,w(one,lower),[],w(line,lower),singular))])`
+  - `s(none,np(det(article,the,w(the,lower)),none,[],w(program,lower),singular),g(stops,present,simple,no),[pp(w(at,lower),np(det(article,the,w(the,lower)),none,[],w(end,lower),singular)),pp(w(of,lower),np(det(article,the,w(the,lower)),none,[],w(input,lower),singular))])`
+- "Blank lines are ignored.", rewritten for the translator as "The program ignores blank lines.":
+  - `s(none,np(det(article,the,w(the,lower)),none,[],w(program,lower),singular),g(ignores,present,simple,no),[obj(np(none,none,[w(blank,lower)],w(lines,lower),plural))])`
+- "An insertion of a key already visible is ignored; a deletion of an absent key is ignored.", rewritten for the translator as "If a key is already visible, the program ignores an insertion of the key. If a key is absent, the program ignores a deletion of the key.":
+  - `join(comma,join(w(if,upper),none,s(none,np(det(article,a,w(a,lower)),none,[],w(key,lower),singular),g(is,present,simple,no),[adj([int(w(already,lower),w(visible,lower))])])),s(none,np(det(article,the,w(the,lower)),none,[],w(program,lower),singular),g(ignores,present,simple,no),[obj(np(det(article,a,w(an,lower)),none,[],w(insertion,lower),singular)),pp(w(of,lower),np(det(article,the,w(the,lower)),none,[],w(key,lower),singular))]))`
+  - `join(comma,join(w(if,upper),none,s(none,np(det(article,a,w(a,lower)),none,[],w(key,lower),singular),g(is,present,simple,no),[adj([w(absent,lower)])])),s(none,np(det(article,the,w(the,lower)),none,[],w(program,lower),singular),g(ignores,present,simple,no),[obj(np(det(article,a,w(a,lower)),none,[],w(deletion,lower),singular)),pp(w(of,lower),np(det(article,the,w(the,lower)),none,[],w(key,lower),singular))]))`
+- "At EOF, active transactions are abandoned without committing.", rewritten for the translator as "At the end of the input, the program abandons active transactions. It does not commit active transactions.":
+  - `s(none,np(det(article,the,w(the,lower)),none,[],w(program,lower),singular),g(abandons,present,simple,no),[fr(pp(w(at,lower),np(det(article,the,w(the,lower)),none,[],w(end,lower),singular))),fr(pp(w(of,lower),np(det(article,the,w(the,lower)),none,[],w(input,lower),singular))),obj(np(none,none,[w(active,lower)],w(transactions,lower),plural))])`
+  - `s(none,pronoun(third,singular,w(it,lower)),g(commits,present,simple,yes),[obj(np(none,none,[w(active,lower)],w(transactions,lower),plural))])`
+
+The translator did not read 9 of the 14 sentences it was given.

@@ -33,6 +33,7 @@ v2_language_supported(swipl).
 v2_language_task(lcs).
 v2_language_task(stable_sort).
 v2_language_task(calculator).
+v2_language_task(mvccs_acid).
 
 v2_language_extension(c, c).
 v2_language_extension(python, py).
@@ -45,9 +46,17 @@ v2_language_spec(Lang, Task, Spec) :-
     v2_language_supported(Lang),
     Lang \== c,
     v2_task(Task, c, SpecC, _, _, _, _),
-    atom_concat('Write a complete C program.', Rest, SpecC),
+    v2_language_c_head(Task, CHead),
+    atom_concat(CHead, Rest, SpecC),
     v2_language_head(Lang, Head),
     atom_concat(Head, Rest, Spec).
+
+%% The C requirement's first sentence, which names the language and is the
+%% one sentence another language replaces. mvccs_acid names its edition
+%% and its file; everything after the sentence is held identical, its
+%% `dynamic allocation for nodes' too.
+v2_language_c_head(mvccs_acid, 'Write a complete C17 program, mvccs.c.') :- !.
+v2_language_c_head(_, 'Write a complete C program.').
 
 v2_language_head(python,
                  'Write a complete Python 3 program.').

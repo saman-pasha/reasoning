@@ -17,12 +17,18 @@ v2_task_name(btree_debug).
 %% of 2026-11-17 (commit 15a13e7) failed only its snapshot-visibility case
 %% in all three attempts; attempts 1 and 2 were byte-identical and attempt
 %% 3 changed only formatting. A larger call budget is not supported by
-%% that evidence. The legacy declaration stays in tasks.pl for a later
-%% hard-task or reasoning-effort suite.
+%% that evidence. It is a HARD task: not a v2_task_name/1, so the C mode
+%% matrix's default grid does not change, but a v2_task/7 the language
+%% layer runs (langs.pl), with the pilot's budget -- three calls and
+%% 5000 ms a case.
+v2_hard_task(mvccs_acid).
+
+v2_task_known(Task) :- v2_task_name(Task).
+v2_task_known(Task) :- v2_hard_task(Task).
 
 v2_task(Task, c, Spec, Repair, Heldout, Policy,
         budget(MaxCalls, TimeoutMs, MaxTokens)) :-
-    v2_task_name(Task),
+    v2_task_known(Task),
     bench_task(Task, Spec, Cases0),
     v2_cases(Task, Cases0, Cases),
     v2_split_cases(Task, Cases, Repair, Heldout),
@@ -50,12 +56,14 @@ v2_output_policy(stable_sort, exact).
 v2_output_policy(calculator, exact).
 v2_output_policy(btree, exact).
 v2_output_policy(btree_debug, exact).
+v2_output_policy(mvccs_acid, exact).
 
 v2_budget(lcs, budget(3, 3000, 0)).
 v2_budget(stable_sort, budget(3, 3000, 0)).
 v2_budget(calculator, budget(3, 3000, 0)).
 v2_budget(btree, budget(3, 3000, 0)).
 v2_budget(btree_debug, budget(3, 5000, 0)).
+v2_budget(mvccs_acid, budget(3, 5000, 0)).
 
 %% One-based indices into the legacy case list. The held-out cases are
 %% chosen for the narrow reading each task exists to catch, not as a tail:
@@ -68,6 +76,11 @@ v2_heldout_indices(stable_sort, [5, 7]).
 v2_heldout_indices(calculator, [1, 5]).
 v2_heldout_indices(btree, [3, 6]).
 v2_heldout_indices(btree_debug, [9, 13]).
+%% mvccs_acid: another transaction's staged insertions are invisible before
+%% its commit (case 6), and the last committer's stale deletion wins (case
+%% 8). Case 3, the snapshot visibility every pilot attempt failed, stays a
+%% repair case, as it was in the pilot, so a failing attempt is told of it.
+v2_heldout_indices(mvccs_acid, [6, 8]).
 
 v2_split_cases(Task, Cases, Repair, Heldout) :-
     v2_heldout_indices(Task, Indices),
@@ -86,7 +99,7 @@ v2_split_cases([Case|Cases], Index, Indices, Repair, Heldout) :-
 
 %% Validation used by the test and the runner.
 v2_task_check :-
-    forall(v2_task_name(Task),
+    forall(v2_task_known(Task),
            (   v2_task(Task, c, _, Repair, Heldout, _, _),
                Repair \== [],
                Heldout \== []
