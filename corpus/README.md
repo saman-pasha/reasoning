@@ -14,7 +14,7 @@ between quotation marks is MENTIONED and stands for itself, so `The noun
 | `vocabulary/italian.txt` | the same for Italian, some 98 000 lines |
 | `extra/` | what Apertium lacks or gets wrong, which `build.pl` writes at the HEAD of the vocabulary so it comes first: `<language>.txt` in the lessons' own sentences, `eng-<xx>.dix` as entries in the bilingual dictionary's shape, each with a comment saying why. Its README says why they are not in the two lessons above: those are the tagger's corpus |
 | `build.pl` | the program that writes `vocabulary/`: `cocolog -s library/reasoning/corpus/build.pl -- spanish` |
-| `raw/` | Apertium's dictionaries and pattern's English verb table, which `tools/corpus/fetch.sh` downloads (pinned to their commits) and which are NOT committed: 30 MB, and what `build.pl` writes from them is |
+| `raw/` | Apertium's dictionaries and pattern's English verb table, committed since reasoning 1.12.1 with their licences (GPL-2 and pattern's BSD-3: `raw/README.md` names each file's source and licence); `tools/corpus/fetch.sh` downloads them again from the same pinned commits. 30 MB |
 
 **THE HAND-WRITTEN FILE IS THE GRAMMAR AND THE WRITTEN ONE IS THE WORDS.**
 `spanish.txt` says what the rules are -- gender by ending, the plural's

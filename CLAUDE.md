@@ -35,7 +35,7 @@ read into an English-worded IR and written into any lesson's language),
 |---|---|---|
 | `corpus/*.txt` | hand lessons, one sentence a line -- **the TAGGER's corpus** | hand |
 | `corpus/extra/<lang>.txt`, `extra/eng-*.dix` | lines and dictionary entries Apertium lacks or gets wrong -- vocabulary only, never read by the tagger, written FIRST | hand |
-| `corpus/vocabulary/*.txt` | ~110k Italian and ~139k Spanish lesson lines, committed | `corpus/build.pl` from `corpus/raw/` (`tools/corpus/fetch.sh`, not committed) |
+| `corpus/vocabulary/*.txt` | ~110k Italian and ~139k Spanish lesson lines, committed | `corpus/build.pl` from `corpus/raw/` (committed since 1.12.1 with their licences, `corpus/raw/README.md`; `tools/corpus/fetch.sh` downloads them again) |
 | `generated/`, `model.rows` | the training pairs and the shipped model, committed | `tools/tagger/train.sh` |
 | `lexicon/*.txt` | WordNet and census words, committed | `tools/lexicon/build.sh` |
 

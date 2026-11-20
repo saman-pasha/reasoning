@@ -1,8 +1,8 @@
 #!/bin/sh
 # Fetches the raw dictionaries corpus/build.pl reads into
-# corpus/raw/ -- they are not committed; what build.pl
-# writes from them is. Every source is pinned to a commit, so a rebuild
-# gives the same lines.
+# corpus/raw/ again. They are committed since reasoning 1.12.1, with their
+# licences (corpus/raw/README.md); every source is pinned to a commit, so a
+# file this script downloads is byte for byte the committed one.
 #
 #   apertium/apertium-eng-spa, apertium-spa, apertium-eng-ita, apertium-ita   GPL-2
 #   clips/pattern (en-verbs.txt, the English verb table)                     BSD-3

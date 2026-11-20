@@ -1,7 +1,3 @@
-# the raw dictionaries tools/corpus/fetch.sh downloads; what corpus/build.pl
-# writes from them is committed
-corpus/raw/
-
 # macOS
 .DS_Store
 

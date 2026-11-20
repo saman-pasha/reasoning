@@ -19245,11 +19245,11 @@ shapes :-
 
 %% ---- the build, when the raw dictionaries are here --------------------------------
 %%
-%% tools/corpus/fetch.sh puts Apertium's dictionaries under corpus/raw/, which
-%% is not committed; where they are, the Spanish vocabulary is built again
-%% into a scratch directory and must come out byte for byte the committed
-%% file -- the build is a function of its inputs, and a rebuild that
-%% differed would be a change nobody made.
+%% Apertium's dictionaries are under corpus/raw/, committed since reasoning
+%% 1.12.1 (tools/corpus/fetch.sh downloads them again); where they are, the
+%% Spanish vocabulary is built again into a scratch directory and must come
+%% out byte for byte the committed file -- the build is a function of its
+%% inputs, and a rebuild that differed would be a change nobody made.
 
 build :-
     section('the build: build.pl over corpus/raw reproduces the committed file'),
