@@ -11,6 +11,13 @@
 %% language plus normal guide, a confound the report must state. SWI has
 %% no generator in this tree: its path is a direct call with a short
 %% SWI-Prolog system prompt.
+%%
+%% `cocolog_noguide' is cocolog without its guide (since reasoning 1.15.0):
+%% the cocolog generator's short --no-skill system prompt in place of the
+%% guide, and everything else the `cocolog' lane's -- the requirement, the
+%% user prompt, the verifier, the runtime. The difference between the two
+%% lanes is what the guide is worth; the difference between it and `swipl'
+%% is what the runtime and the language's name are.
 
 :- use_module(library(process)).
 :- use_module(library(os)).
@@ -29,6 +36,12 @@ v2_language_supported(c).
 v2_language_supported(python).
 v2_language_supported(cocolog).
 v2_language_supported(swipl).
+v2_language_supported(cocolog_noguide).
+
+%% The runtime a lane's program runs on, which is the lane itself but for
+%% `cocolog_noguide', whose program is a cocolog program.
+v2_language_runtime(cocolog_noguide, cocolog) :- !.
+v2_language_runtime(Lang, Lang).
 
 v2_language_task(lcs).
 v2_language_task(stable_sort).
@@ -39,6 +52,7 @@ v2_language_extension(c, c).
 v2_language_extension(python, py).
 v2_language_extension(cocolog, pl).
 v2_language_extension(swipl, pl).
+v2_language_extension(cocolog_noguide, pl).
 
 v2_language_spec(c, Task, Spec) :-
     v2_task(Task, c, Spec, _, _, _, _).
@@ -64,6 +78,8 @@ v2_language_head(cocolog,
                  'Write a complete cocolog program whose main/0 reads standard input and writes standard output.').
 v2_language_head(swipl,
                  'Write a complete SWI-Prolog program whose main/0 reads standard input and writes standard output.').
+v2_language_head(cocolog_noguide, Head) :-
+    v2_language_head(cocolog, Head).
 
 %% ---- generation --------------------------------------------------------
 
@@ -165,9 +181,10 @@ v2_language_verify(c, Task, Code, Verdict) :-
     v2_verify(Task, Code, Verdict).
 v2_language_verify(Lang, Task, Code, Verdict) :-
     v2_language_supported(Lang),
+    v2_language_runtime(Lang, Runtime),
     v2_task(Task, c, _, Repair, Heldout, Policy, budget(_, TaskTimeout, _)),
-    v2_lang_case_timeout(Lang, TaskTimeout, Timeout),
-    v2_lang_verify(Lang, Code, Repair, Heldout, Policy, Timeout, Verdict).
+    v2_lang_case_timeout(Runtime, TaskTimeout, Timeout),
+    v2_lang_verify(Runtime, Code, Repair, Heldout, Policy, Timeout, Verdict).
 
 %% Interpreted runtimes need their startup time; the model-call budget is
 %% still the task's. C keeps the task's 3 s case timeout so no C result

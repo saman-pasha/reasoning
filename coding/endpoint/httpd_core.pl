@@ -446,19 +446,27 @@ ep_reasoning(Language, Setting, Mode, Title, Messages, Guide0, Guide, N, Terms) 
     (   Mode == reasoning,
         \+ Title,
         ep_task_text(Messages, Text)
-    ->  endpoint_reason(Language, Text, Obs, CObs, Terms0),
-        append(Obs, CObs, All0),
-        ep_unique(All0, All1),
-        ep_reasoning_count(Setting, Min, Max),
-        ep_checks(Language, Min, Max, All1, All),
-        length(All, N),
-        Terms = Terms0,
-        ep_note(All, Note),
-        ep_about_note(Terms0, About),
+    ->  ep_reasoning_notes(Language, Setting, Text, Note, About, N, Terms),
         ep_ir_note(Text, IRNote),
         atomic_list_concat([Guide0, Note, About, IRNote], Guide)
     ;   Guide = Guide0, N = 0, Terms = 0
     ).
+
+%% ep_reasoning_notes(+Language, +Setting, +Text, -Note, -About, -N, -Terms)
+%%
+%% The pre-pass's first two notes, which call no model: the N checks under
+%% "Reasoning pre-pass" and "What the request is about". The IR note is the
+%% third (ep_ir_note/2), and coding/bench/v2/ir_prep.pl writes these two
+%% for a benchmark requirement as the endpoint would send them.
+ep_reasoning_notes(Language, Setting, Text, Note, About, N, Terms) :-
+    endpoint_reason(Language, Text, Obs, CObs, Terms),
+    append(Obs, CObs, All0),
+    ep_unique(All0, All1),
+    ep_reasoning_count(Setting, Min, Max),
+    ep_checks(Language, Min, Max, All1, All),
+    length(All, N),
+    ep_note(All, Note),
+    ep_about_note(Terms, About).
 
 %% ---- backend -----------------------------------------------------------
 

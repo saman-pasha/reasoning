@@ -29,6 +29,10 @@
 %%     codegen_cocolog(+Spec, +Goal, +Overrides, -Code)
 %%         one model call, not run; the goal defaults to main.
 %%
+%%     codegen_cocolog_bare(+Spec, +Goal, +Overrides, -Code)
+%%         the one-shot with --no-skill's short system prompt in place of
+%%         the guide; the user prompt is codegen_cocolog/4's.
+%%
 %%     codegen_cocolog_checked(+Spec, -Code)
 %%     codegen_cocolog_checked(+Spec, +Overrides, -Code)
 %%         the call, then `cocolog run' on the reply, with repair.
@@ -120,6 +124,15 @@ codegen_cocolog(Spec, Overrides, Code) :-
 codegen_cocolog(Spec, Goal, Overrides, Code) :-
     cocolog_skill_text(Skill),
     cocolog_system_prompt(Skill, System),
+    cocolog_one_call(System, Spec, Goal, Overrides, Code).
+
+%% The control: the same call with no guide, which is what the guide is
+%% measured against.
+codegen_cocolog_bare(Spec, Goal, Overrides, Code) :-
+    cocolog_no_skill_prompt(System),
+    cocolog_one_call(System, Spec, Goal, Overrides, Code).
+
+cocolog_one_call(System, Spec, Goal, Overrides, Code) :-
     cocolog_user_prompt(Spec, Goal, Prompt),
     codegen_report_reset,
     get_time(Start),

@@ -1,0 +1,8 @@
+
+
+# Reasoning pre-pass
+
+A deterministic pass by the repository reasoner read the request and found these checks. Verify each one before you say the task is done:
+
+- Read from standard input, `sys.stdin` or the `input()` builtin, exactly as the task describes; do not assume more input than it gives.
+- Write exactly the required result with `print`, one line per answer; no prompt, label or debug output.

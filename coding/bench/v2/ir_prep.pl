@@ -19,6 +19,15 @@
 %% from those files and calls no translator, so no translation token and
 %% no translation second is in its figures.
 %%
+%% THE REASONING NOTE TOO (since reasoning 1.15.0): the pre-pass's checks
+%% and its "What the request is about" note, the endpoint's own
+%% (ep_reasoning_notes/7, the default two checks), written to
+%% DIR/TASK-LANG.reasoning for the runner's `reasoning' and `reasoning_ir'
+%% arms. They call no model. The endpoint reads a C, cocolog or Python
+%% request; `cocolog_noguide' is read as cocolog, and `swipl', which has no
+%% endpoint model, as cocolog too (whose checks are C's: the same keyword
+%% reader and contract).
+%%
 %% Every sentence of the requirement is read (CODING_ENDPOINT_IR_SENTENCES
 %% is 100 unless set), where the endpoint reads a request's first six.
 %% What is learned is kept in the store, as the endpoint keeps it: run the
@@ -81,21 +90,37 @@ ir_prep_one(Dir, Log, Stamp, Model, Task, Lang,
     atom_codes(Note, NoteCodes),
     write_file_from_codes(File, NoteCodes),
     atom_length(Note, NoteChars),
+    ir_prep_endpoint_language(Lang, EpLang),
+    ep_reasoning_notes(EpLang, default, Spec, Checks, About, NChecks, _),
+    atom_concat(Checks, About, Reasoning),
+    format(atom(RFile), '~w/~w-~w.reasoning', [Dir, Task, Lang]),
+    atom_codes(Reasoning, RCodes),
+    write_file_from_codes(RFile, RCodes),
+    atom_length(Reasoning, ReasoningChars),
     Row = json([run-Stamp, task-Task, language-Lang, model-Model,
                 sentences-Sentences, read-Read, lesson-Lesson,
                 rewrite-Rewrite, unread-Unread, lessons-Lessons,
                 calls-Calls, prompt-Prompt, completion-Completion,
                 judged_right-Right, judged_wrong-Wrong,
-                seconds-Seconds, note_chars-NoteChars]),
+                seconds-Seconds, note_chars-NoteChars,
+                reasoning_checks-NChecks,
+                reasoning_note_chars-ReasoningChars]),
     json_codes(Row, RowCodes),
     append(RowCodes, [0'\n], Line),
     append_file_from_codes(Log, Line),
     Readable is Read + Lesson + Rewrite,
-    format("~w/~w: ~w of ~w sentences read (~w unread), ~w calls, ~w + ~w tokens, ~2f s, note ~w chars~n",
+    format("~w/~w: ~w of ~w sentences read (~w unread), ~w calls, ~w + ~w tokens, ~2f s, note ~w chars; reasoning note ~w chars, ~w checks~n",
            [Task, Lang, Readable, Sentences, Unread, Calls, Prompt,
-            Completion, Seconds, NoteChars]),
+            Completion, Seconds, NoteChars, ReasoningChars, NChecks]),
     C is C0 + Calls, P is P0 + Prompt, K is K0 + Completion,
     S is S0 + Seconds.
+
+%% The endpoint's language a lane's requirement is read as.
+ir_prep_endpoint_language(c, c).
+ir_prep_endpoint_language(python, python).
+ir_prep_endpoint_language(cocolog, cocolog).
+ir_prep_endpoint_language(cocolog_noguide, cocolog).
+ir_prep_endpoint_language(swipl, cocolog).
 
 ir_prep_args(Args, Tasks, Langs, Dir) :-
     ir_prep_flags(Args, Pairs),

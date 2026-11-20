@@ -4,9 +4,10 @@
 %%
 %%     --tasks A,B     lcs, stable_sort, calculator, mvccs_acid (default
 %%                     the first three)
-%%     --langs A,B     c, python, cocolog, swipl (default all)
-%%     --arms A,B      plain, ir (default plain)
-%%     --ir-notes DIR  the translation phase's notes, for the ir arm
+%%     --langs A,B     c, python, cocolog, swipl, cocolog_noguide
+%%                     (default the first four)
+%%     --arms A,B      plain, reasoning, reasoning_ir, ir (default plain)
+%%     --ir-notes DIR  the prep phase's notes, for every arm but plain
 %%     --trials N      trials per task and language (default 3)
 %%     --seed N        order seed
 %%     --out FILE      JSONL output
@@ -30,6 +31,17 @@
 %% requirement in the user prompt, where every language's generator puts
 %% the requirement; the endpoint puts it in the system prompt, after the
 %% guide.
+%%
+%% THE REASONING ARMS (since reasoning 1.15.0) measure what the coding
+%% endpoint's reasoning pre-pass adds to a prompt. `plain' is the prompt
+%% forwarded as it is (the endpoint's `-r0'); `reasoning' is the prompt with
+%% the pre-pass's checks and its "What the request is about" note, and
+%% `reasoning_ir' those and then the IR note -- the three notes in the
+%% endpoint's order (httpd_core.pl's ep_reasoning/9). The checks and the
+%% about note are the endpoint's own (`ep_reasoning_notes/7', two checks,
+%% the endpoint's default), which ir_prep.pl wrote to DIR/TASK-LANG.reasoning
+%% before the run; they call no model. `ir' is the IR note alone, as in
+%% reasoning 1.14. The model's effort is the run's in every arm.
 
 :- use_module(library(process)).
 :- use_module(library(os)).
@@ -152,16 +164,18 @@ v2_lang_selection(Opts, Tasks, Langs, Arms, Notes, Trials, Seed, OutSpec) :-
     ;   Arms = [plain]
     ),
     Arms \== [],
-    forall(member(Arm, Arms), memberchk(Arm, [plain, ir])),
-    (   memberchk(ir, Arms)
+    forall(member(Arm, Arms), v2_lang_arm_notes(Arm, _)),
+    (   member(Arm1, Arms),
+        v2_lang_arm_notes(Arm1, [_|_])
     ->  (   memberchk(ir_notes(Notes), Opts)
         ->  true
         ;   throw(error(v2_lang_error(ir_arm_without_notes,
-                                      'the ir arm needs --ir-notes DIR: run coding/bench/v2/ir_prep.pl first'),
+                                      'an arm with notes needs --ir-notes DIR: run coding/bench/v2/ir_prep.pl first'),
                         v2_lang_selection/8))
         ),
-        forall(( member(Task, Tasks), member(Lang, Langs) ),
-               v2_lang_note_file(Notes, Task, Lang, _))
+        forall(( member(Arm2, Arms), v2_lang_arm_notes(Arm2, Kinds),
+                 member(Kind, Kinds), member(Task, Tasks), member(Lang, Langs) ),
+               v2_lang_note_file(Notes, Task, Lang, Kind, _))
     ;   Notes = none
     ),
     (   memberchk(trials(Trials), Opts)
@@ -177,26 +191,51 @@ v2_lang_selection(Opts, Tasks, Langs, Arms, Notes, Trials, Seed, OutSpec) :-
     ;   OutSpec = default
     ).
 
-%% The note file the translation phase wrote for a task and a language,
-%% which must be there: a missing one is refused before the first call.
+%% The note file the prep phase wrote for a task and a language, which
+%% must be there: a missing one is refused before the first call. Kind is
+%% `ir' (the translator's IR) or `reasoning' (the pre-pass's checks and its
+%% about note).
 v2_lang_note_file(Dir, Task, Lang, File) :-
-    format(atom(File), '~w/~w-~w.ir', [Dir, Task, Lang]),
+    v2_lang_note_file(Dir, Task, Lang, ir, File).
+
+v2_lang_note_file(Dir, Task, Lang, Kind, File) :-
+    format(atom(File), '~w/~w-~w.~w', [Dir, Task, Lang, Kind]),
     (   exists_file(File)
     ->  true
-    ;   format(atom(Msg), 'no IR note ~w: run coding/bench/v2/ir_prep.pl for ~w in ~w first',
-               [File, Task, Lang]),
-        throw(error(v2_lang_error(no_ir_note, Msg), v2_lang_note_file/4))
+    ;   v2_lang_note_error(Kind, Error, Name),
+        format(atom(Msg), 'no ~w note ~w: run coding/bench/v2/ir_prep.pl for ~w in ~w first',
+               [Name, File, Task, Lang]),
+        throw(error(v2_lang_error(Error, Msg), v2_lang_note_file/5))
     ).
 
-%% The requirement a cell is given: the language's, and in the ir arm the
-%% note after it.
-v2_lang_arm_spec(plain, _, _, _, Spec, Spec, 0).
-v2_lang_arm_spec(ir, Notes, Task, Lang, Spec0, Spec, NoteChars) :-
-    v2_lang_note_file(Notes, Task, Lang, File),
+v2_lang_note_error(ir, no_ir_note, 'IR').
+v2_lang_note_error(reasoning, no_reasoning_note, reasoning).
+
+%% The arms, and the notes each puts after the requirement, in the
+%% endpoint's order: the prompt alone, the prompt with the reasoning
+%% pre-pass, the prompt with the pre-pass and the IR, and the IR alone.
+v2_lang_arm_notes(plain, []).
+v2_lang_arm_notes(reasoning, [reasoning]).
+v2_lang_arm_notes(reasoning_ir, [reasoning, ir]).
+v2_lang_arm_notes(ir, [ir]).
+
+%% The requirement a cell is given: the language's, and after it the
+%% arm's notes. Chars is chars(IR, Reasoning), each note's length.
+v2_lang_arm_spec(Arm, Notes, Task, Lang, Spec0, Spec, Chars) :-
+    v2_lang_arm_notes(Arm, Kinds),
+    foldl(v2_lang_arm_note(Notes, Task, Lang), Kinds,
+          Spec0-chars(0, 0), Spec-Chars).
+
+v2_lang_arm_note(Notes, Task, Lang, Kind, Spec0-Chars0, Spec-Chars) :-
+    v2_lang_note_file(Notes, Task, Lang, Kind, File),
     read_file_to_codes(File, Codes),
     atom_codes(Note, Codes),
-    atom_length(Note, NoteChars),
-    atom_concat(Spec0, Note, Spec).
+    atom_length(Note, N),
+    atom_concat(Spec0, Note, Spec),
+    v2_lang_add_chars(Kind, N, Chars0, Chars).
+
+v2_lang_add_chars(ir, N, chars(I0, R), chars(I, R)) :- I is I0 + N.
+v2_lang_add_chars(reasoning, N, chars(I, R0), chars(I, R)) :- R is R0 + N.
 
 v2_lang_keep_option(Opts) :-
     (   memberchk(keep(KeepDir), Opts)
@@ -210,8 +249,8 @@ v2_lang_usage :-
     format("  --doctor        print each language's toolchain; no model call~n", []),
     format("  --run           run the comparison~n", []),
     format("  --tasks A,B     lcs, stable_sort, calculator, mvccs_acid~n", []),
-    format("  --langs A,B     c, python, cocolog, swipl~n", []),
-    format("  --arms A,B      plain, ir~n", []),
+    format("  --langs A,B     c, python, cocolog, swipl, cocolog_noguide~n", []),
+    format("  --arms A,B      plain, reasoning, reasoning_ir, ir~n", []),
     format("  --ir-notes DIR  the notes coding/bench/v2/ir_prep.pl wrote~n", []),
     format("  --trials N      trials per task and language~n", []),
     format("  --seed N        order seed~n", []),
@@ -273,6 +312,8 @@ v2_lang_tool_command(swipl, Cmd) :-
     v2_lang_swipl(Swipl),
     codegen_shell_quote(Swipl, QSwipl),
     format(atom(Cmd), '~w --version', [QSwipl]).
+v2_lang_tool_command(cocolog_noguide, Cmd) :-
+    v2_lang_tool_command(cocolog, Cmd).
 
 v2_lang_first_line(Text, Line) :-
     split_string(Text, "\n", " \t\r", Lines),
@@ -363,7 +404,8 @@ v2_lang_cell_run(Task, Lang, Arm, Notes, Trial, Pos, Seed, RunId, Commit,
                  Row, Cell) :-
     v2_task(Task, _, _, _, _, _, budget(MaxCalls, _, _)),
     v2_language_spec(Lang, Task, Spec0),
-    v2_lang_arm_spec(Arm, Notes, Task, Lang, Spec0, Spec, NoteChars),
+    v2_lang_arm_spec(Arm, Notes, Task, Lang, Spec0, Spec,
+                     chars(NoteChars, ReasoningChars)),
     usage(0, 0, 0, 0, 0) = Usage0,
     get_time(T0),
     v2_lang_keep_name(Lang, Arm, KeepLang),
@@ -394,6 +436,7 @@ v2_lang_cell_run(Task, Lang, Arm, Notes, Trial, Pos, Seed, RunId, Commit,
                 mode-plain,
                 arm-Arm,
                 ir_note_chars-NoteChars,
+                reasoning_note_chars-ReasoningChars,
                 trial-Trial,
                 order_position-Pos,
                 seed-Seed,

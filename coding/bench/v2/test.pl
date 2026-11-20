@@ -17,11 +17,13 @@
                 v2_language_task/1,
                 v2_language_spec/3,
                 v2_language_verify/4,
+                v2_language_runtime/2,
                 v2_lang_verify/7
               ]).
 :- use_module('coding/bench/v2/lang_runner.pl',
               [ v2_lang_run/7,
-                v2_lang_selection/8 ]).
+                v2_lang_selection/8,
+                v2_lang_arm_notes/2 ]).
 
 :- dynamic v2test_seen_spec/1.
 :- use_module('coding/bench/v2/lang_gen.pl',
@@ -90,6 +92,7 @@ main :-
     test_cocolog_skill,
     test_lang_run,
     test_lang_ir,
+    test_lang_reasoning,
     test_reasoning,
     test_form_run,
     test_keep,
@@ -1030,6 +1033,96 @@ test_lang_ir :-
     ;   Rows = no
     ),
     check('each row names its arm and the note''s length', Rows, yes),
+    retractall(v2test_seen_spec(_)),
+    catch(c_clean_dir(NotesDir), _, true).
+
+%% The reasoning arms: `reasoning' puts the pre-pass's note after the
+%% requirement, `reasoning_ir' the pre-pass's note and then the IR note, in
+%% the endpoint's order, and an arm whose note is missing is refused before
+%% any call. cocolog_noguide is the cocolog lane's requirement, runtime and
+%% verifier with another generator. The generator is the test seam, so no
+%% model is called.
+test_lang_reasoning :-
+    section('language reasoning arms and cocolog_noguide lane'),
+    findall(A-K, v2_lang_arm_notes(A, K), Arms),
+    check('the four arms and the notes each adds', Arms,
+          [plain-[], reasoning-[reasoning], reasoning_ir-[reasoning, ir],
+           ir-[ir]]),
+    yes_no(v2_language_supported(cocolog_noguide), Lane),
+    check('cocolog_noguide is a language lane', Lane, yes),
+    once(v2_language_runtime(cocolog_noguide, Runtime)),
+    check('cocolog_noguide runs on cocolog', Runtime, cocolog),
+    once(v2_language_spec(cocolog, mvccs_acid, SpecG)),
+    once(v2_language_spec(cocolog_noguide, mvccs_acid, SpecN)),
+    check('cocolog_noguide gets the cocolog requirement', SpecN, SpecG),
+    tmp_file(v2_lang_rnotes, NotesDir),
+    make_directory(NotesDir),
+    format(atom(IrFile), '~w/lcs-python.ir', [NotesDir]),
+    atom_codes('\n\n# The request in the translator\'s IR\n\n- `s(test)`', IrCodes),
+    write_file_from_codes(IrFile, IrCodes),
+    (   catch(v2_lang_selection([tasks([lcs]), langs([python]),
+                                 arms([reasoning]), ir_notes(NotesDir)],
+                                _, _, _, _, _, _, _),
+              error(v2_lang_error(no_reasoning_note, _), _), fail)
+    ->  Refused = no
+    ;   Refused = yes
+    ),
+    check('a reasoning arm with no reasoning note is refused', Refused, yes),
+    forall(member(L, [python, cocolog_noguide]),
+           (   format(atom(RFile), '~w/lcs-~w.reasoning', [NotesDir, L]),
+               atom_codes('\n\n# Reasoning pre-pass\n\n- check one', RCodes),
+               write_file_from_codes(RFile, RCodes)
+           )),
+    format(atom(IrFile2), '~w/lcs-cocolog_noguide.ir', [NotesDir]),
+    write_file_from_codes(IrFile2, IrCodes),
+    retractall(v2test_seen_spec(_)),
+    retractall(v2_language_generate_hook(_, _, _, _, _, _)),
+    language_lcs_programs(PyCode, CoCode, _),
+    assertz((v2_language_generate_hook(Lang, Spec, _, Code,
+                                       usage(10, 20, 30, 0, 0), none) :-
+                assertz(v2test_seen_spec(Lang-Spec)),
+                (   Lang == python
+                ->  Code = PyCode
+                ;   Code = CoCode
+                ))),
+    setenv('CODING_ENDPOINT_KEY_ENV', 'test-key'),
+    v2_keep_set(none),
+    tmp_file(v2_lang_r_jsonl, OutFile),
+    catch(once(v2_lang_run([lcs], [python, cocolog_noguide],
+                           [plain, reasoning, reasoning_ir], NotesDir, 1, 123,
+                           file(OutFile))),
+          Ball,
+          ( format("language reasoning run error: ~w~n", [Ball]) )),
+    unsetenv('CODING_ENDPOINT_KEY_ENV'),
+    retractall(v2_language_generate_hook(_, _, _, _, _, _)),
+    once(v2_language_spec(python, lcs, Base)),
+    findall(S, v2test_seen_spec(python-S), PySpecs0),
+    msort(PySpecs0, PySpecs),
+    atom_concat(Base, '\n\n# Reasoning pre-pass\n\n- check one', WithR),
+    atom_concat(WithR, '\n\n# The request in the translator\'s IR\n\n- `s(test)`', WithRI),
+    msort([Base, WithR, WithRI], Want),
+    check('plain, reasoning and reasoning_ir get the requirement, its pre-pass, and its pre-pass and IR',
+          PySpecs, Want),
+    (   exists_file(OutFile)
+    ->  read_file_to_codes(OutFile, Codes),
+        atom_codes(Text, Codes),
+        (   sub_atom(Text, _, _, _, '"arm":"plain","ir_note_chars":0,"reasoning_note_chars":0'),
+            sub_atom(Text, _, _, _, '"arm":"reasoning","ir_note_chars":0,"reasoning_note_chars":35'),
+            sub_atom(Text, _, _, _, '"arm":"reasoning_ir","ir_note_chars":51,"reasoning_note_chars":35')
+        ->  Rows = yes
+        ;   Rows = no
+        ),
+        split_string(Text, "\n", " \t\r", Lines),
+        include([Line]>>( sub_string(Line, _, _, _, '"language":"cocolog_noguide"'),
+                          sub_string(Line, _, _, _, '"outcome":"pass"') ),
+                Lines, Passes),
+        length(Passes, NPass),
+        catch(delete_file(OutFile), _, true)
+    ;   Rows = no, NPass = 0
+    ),
+    check('each row names the length of each note', Rows, yes),
+    check('a cocolog program passes in the cocolog_noguide lane, in each arm',
+          NPass, 3),
     retractall(v2test_seen_spec(_)),
     catch(c_clean_dir(NotesDir), _, true).
 

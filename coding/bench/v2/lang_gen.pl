@@ -4,15 +4,16 @@
 %%         --lang LANG --spec SPEC_FILE --out OUT_FILE --effort none|high \
 %%         --prev PREV_FILE|- --diag DIAG_FILE|-
 %%
-%% The parent runs this as a child. LANG is c, python, cocolog or swipl.
-%% It writes the source to OUT_FILE and prints:
+%% The parent runs this as a child. LANG is c, python, cocolog, swipl or
+%% cocolog_noguide. It writes the source to OUT_FILE and prints:
 %%
 %%     USAGE Prompt Completion Total Reasoning CacheHit
 %%
 %% The C, Python and cocolog paths use each language's normal generator,
 %% so its normal guide and obligations are part of the experiment. SWI has
 %% no generator in this tree; its path is a direct model call with a short
-%% SWI-Prolog system prompt.
+%% SWI-Prolog system prompt. cocolog_noguide is the cocolog generator with
+%% its short --no-skill system prompt in place of the guide.
 
 :- use_module(library(llm)).
 :- use_module('coding/bench/v2/config.pl').
@@ -91,6 +92,9 @@ v2_lang_code(cocolog, Spec, Options, Code) :-
     codegen_cocolog(Spec, main, Options, Code).
 v2_lang_code(swipl, Spec, Options, Code) :-
     v2_lang_swipl_code(Spec, Options, Code).
+v2_lang_code(cocolog_noguide, Spec, Options, Code) :-
+    use_module('coding/cocolog/codegen.pl'),
+    codegen_cocolog_bare(Spec, main, Options, Code).
 
 v2_lang_swipl_code(Spec, Options, Code) :-
     memberchk(provider(Provider), Options),

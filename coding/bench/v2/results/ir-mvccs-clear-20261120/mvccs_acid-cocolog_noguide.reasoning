@@ -1,0 +1,8 @@
+
+
+# Reasoning pre-pass
+
+A deterministic pass by the repository reasoner read the request and found these checks. Verify each one before you say the task is done:
+
+- Read from standard input exactly as the requirement describes; do not assume more input than it gives.
+- Write exactly the required result; do not print a prompt or extra text.

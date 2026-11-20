@@ -220,6 +220,44 @@ CODING_BENCH_BASE_URL=https://api.anthropic.com/v1/messages \
   text and is not comparable with a run after it. The run on the clear
   text is `results/ir-mvccs-clear-20261120.md`.
 
+### The reasoning arms and the cocolog lane without its guide (1.15.0)
+
+Every reasoning coding benchmark here measures one thing: what this
+repository's reasoning adds to a coding prompt. The language runner's
+three main arms are the endpoint's three settings, at the same model
+effort (`low` for `claude-sonnet-5-5`, whose lowest effort that is):
+
+| arm | what follows the requirement | the endpoint's setting |
+|---|---|---|
+| `plain` | nothing: the prompt forwarded as it is | `-r0`, plain mode |
+| `reasoning` | the pre-pass's checks and its "What the request is about" note | the pre-pass without the IR note |
+| `reasoning_ir` | those, then "The request in the translator's IR" | the full pre-pass, the endpoint's default |
+
+`ir` (the IR note alone, reasoning 1.14) stays an arm.
+
+- **The notes are the endpoint's own text**, made before the run by
+  `ir_prep.pl`: the checks and the about note by `ep_reasoning_notes/7`
+  (httpd_core.pl, the code `ep_reasoning/9` sends; the default two
+  checks) to `DIR/TASK-LANG.reasoning`, with no model call, and the IR
+  note to `DIR/TASK-LANG.ir`. The runner reads them from the files, and an
+  arm whose note is missing is refused before the first call. Each row
+  gives both notes' lengths (`ir_note_chars`, `reasoning_note_chars`).
+- **The endpoint reads a C, cocolog or Python request.** `cocolog_noguide`
+  is read as cocolog, and `swipl`, which has no endpoint model, as cocolog
+  too, whose checks are C's (the same keyword reader and contract).
+- The notes go after the requirement in the user prompt, where the
+  endpoint puts them in the system prompt after the guide: the stated
+  difference of the `ir` arm, now of all three.
+- **`cocolog_noguide` is cocolog without its guide**: the cocolog
+  generator's short `--no-skill` system prompt in place of the guide's
+  19 000 tokens, and the `cocolog` lane's requirement, user prompt,
+  runtime and verifier (`v2_language_runtime/2`). `cocolog` against
+  `cocolog_noguide` is what the guide is worth; `cocolog_noguide` against
+  `swipl`, whose generator is the same shape, is the runtime and the
+  language's name. Its notes are the `cocolog` lane's, as the requirement
+  is (`ir_prep.pl --langs cocolog_noguide` makes no call). The default
+  languages stay the four.
+
 ## Declarative vs imperative (Phase 5)
 
 `form.sh` runs the paired experiment: for each reasoning task, an
