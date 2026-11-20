@@ -1,0 +1,2 @@
+# the endpoint's embedded store: bytes, never text
+coding/endpoint/store/** binary

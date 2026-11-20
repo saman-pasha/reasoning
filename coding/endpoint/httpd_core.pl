@@ -9,6 +9,7 @@
 :- use_module(library(json)).
 :- use_module(library(curl)).
 :- use_module('coding/endpoint/reasoning_core.pl').
+:- use_module('coding/endpoint/ir_repair.pl').
 :- use_module('coding/languages.pl').
 
 %% ---- configuration -----------------------------------------------------
@@ -315,24 +316,44 @@ ep_about_questions(Concepts, Topics, Questions) :-
 
 %% ---- the request in the translator's IR ---------------------------------
 %%
-%% When a lesson covers the request's words, the translator reads it into
-%% the intermediate representation every target language is written from.
-%% The note goes after the concepts, so the model is sent the reading as
-%% well as the checks. A request no lesson covers adds nothing.
+%% The translator reads the request, sentence by sentence, into the
+%% intermediate representation every target language is written from
+%% (ir_repair.pl). The model checks each reading, said back in English; a
+%% sentence read wrongly or not read goes back to it, and it classifies the
+%% unknown words -- taught as lessons -- and rewrites the sentence in a
+%% shape the translator reads. The note goes after the concepts, so the
+%% model is sent the reading as well as the checks: what was read as it
+%% stands, and what was read from a rewrite, with the rewrite. A reading
+%% the model judged wrong is not sent. A request no sentence of which was
+%% read adds nothing.
 
 ep_ir_note(Text, Note) :-
-    (   catch(endpoint_ir(Text, IRs), _, fail),
-        IRs = [_|_]
-    ->  maplist(ep_ir_line, IRs, Lines),
-        atomic_list_concat(Lines, '\n', Body),
+    (   catch(ep_ir_readings(Text, Readings), _, fail),
+        include(ep_ir_was_read, Readings, Read),
+        Read = [_|_]
+    ->  findall(Line, ( member(R, Read), ep_ir_lines(R, Lines), member(Line, Lines) ), All),
+        atomic_list_concat(All, '\n', Body),
+        length(Readings, N),
+        length(Read, NRead),
+        (   NRead < N
+        ->  Missing is N - NRead,
+            format(atom(Tail), '~n~nThe translator did not read ~w of the ~w sentences it was given.', [Missing, N])
+        ;   Tail = ''
+        ),
         format(atom(Note),
-               '~n~n# The request in the translator''s IR~n~nThe translator read the request as:~n~n~w',
-               [Body])
+               '~n~n# The request in the translator''s IR~n~nThe translator read the request as:~n~n~w~w',
+               [Body, Tail])
     ;   Note = ''
     ).
 
-ep_ir_line(ir(Sentence, _Stop), Line) :-
-    format(atom(Line), '- `~w`', [Sentence]).
+ep_ir_was_read(reading(_, How, _)) :- How \== unread.
+
+ep_ir_lines(reading(S, rewrite(Rs), IRs), [Head|Lines]) :- !,
+    atomic_list_concat(Rs, ' ', Rewrite),
+    format(atom(Head), '- "~w", rewritten for the translator as "~w":', [S, Rewrite]),
+    findall(L, ( member(ir(T, _), IRs), format(atom(L), '  - `~w`', [T]) ), Lines).
+ep_ir_lines(reading(_, _, IRs), Lines) :-
+    findall(L, ( member(ir(T, _), IRs), format(atom(L), '- `~w`', [T]) ), Lines).
 
 %% The checks every code task gets when its wording gives fewer than the
 %% minimum. They are deliberately generic: the task's own obligations, when
@@ -1076,7 +1097,14 @@ ep_trace(Request, Start, Alias, Backend, Effort, Mode, N, Terms,
     ep_session_id(Request, Session),
     ep_header(Request, 'x-opencode-project', '-', Project),
     (   Stream == true -> StreamJson = @(true) ; StreamJson = @(false) ),
-    ep_usage_json(Usage, UsagePairs),
+    ep_usage_json(Usage, UsagePairs0),
+    ep_ir_stats(ir(IS, IRd, ILs, IRw, IUn, ILn, ICl, IPt, ICt, ICk, IWr)),
+    append(UsagePairs0,
+           [ir_sentences-IS, ir_read-IRd, ir_lesson-ILs, ir_rewrite-IRw,
+            ir_unread-IUn, ir_lessons-ILn, ir_calls-ICl,
+            ir_prompt_tokens-IPt, ir_completion_tokens-ICt,
+            ir_checked-ICk, ir_wrong-IWr],
+           UsagePairs),
     json_codes(json([ts-Now, session-Session, project-Project,
                      seconds-Seconds, status-Status, model-Alias,
                      backend-Backend, effort-Effort, mode-Mode,
@@ -1310,6 +1338,7 @@ ep_body_json_codes([C|Codes], [C|Out]) :-
 %% signature. At the limit the request is refused before the model is paid
 %% for another turn.
 ep_chat_body(Request, Body, Start, Reply) :-
+    ep_ir_stats_reset,
     (   ep_messages(Body, Messages),
         ep_loop_verdict(Messages, repeat(Signature, Count, Limit))
     ->  format(atom(Message),

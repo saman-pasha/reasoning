@@ -4,3 +4,8 @@
 # python bytecode, from tools/corpus/fetch.sh's converter
 __pycache__/
 *.pyc
+
+# the endpoint's embedded store (coding/endpoint/run-httpd.sh) is
+# committed, so what the model taught the translator is the next
+# machine's start; its lock is the running process's alone
+coding/endpoint/store/lock

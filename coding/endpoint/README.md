@@ -125,7 +125,10 @@ export CODING_ENDPOINT_TOKEN=...
 coding/endpoint/run-httpd.sh
 ```
 
-It listens on port `8787` unless `CODING_ENDPOINT_PORT` names another. The
+It listens on port `8787` unless `CODING_ENDPOINT_PORT` names another, and
+keeps what the model taught the translator in the embedded store
+`CODING_ENDPOINT_STORE` (`coding/endpoint/store`, committed: see "The
+store" below; `CODING_ENDPOINT_STORE=local` keeps it in the process alone). The
 token is required when set; without it the server warns and the port is
 open. Because the socket binds every interface, keep the token and the
 port behind a firewall.
@@ -188,6 +191,86 @@ When the request parses into terms, a second note follows the checks under
 kinds and counts, the six subjects with what is said of them, and up to five
 questions, "Why is X important to this task?", one for the leading concepts
 and subjects. A request the reasoner cannot parse adds no second note.
+
+A third note, "The request in the translator's IR", gives the translator's
+reading of the request's first sentences (`reason_ir/2`, the English-worded
+intermediate representation). The translator reads plain English with the
+English lesson (`english_lesson.pl`), but only the words a lesson teaches and
+the shapes it knows, and a sentence it reads can be read wrongly:
+`Convert every word to lowercase.` reads as `Every convert words to
+lowercase.`. So the model checks every sentence (`ir_repair.pl`), in one call
+for the whole request. A sentence the translator read is sent with its
+reading said back in English (`reason_ir_text/3`), and the model says whether
+the reading keeps the sentence's meaning. For a sentence read wrongly, or not
+read:
+
+- for each unknown English word, the model gives its class and base form.
+  The word is taught as a lesson line in the English lesson's own form,
+  `The noun "x_subarray" means "subarray".`, with `reason_learn/1`;
+- for each sentence, the model gives a rewrite in short plain sentences. The
+  rewrite counts only if the translator reads every sentence of it.
+
+What the reply made read -- a sentence after a lesson, or a rewrite -- is a new
+reading, and the next round sends it to be checked as well: a rewrite can be
+read wrongly too (`Glorp each word.` reads with `Glorp` as a name). A sentence
+that still does not read goes back with the rewrite that was tried and the
+words the translator did not know in it. That is `CODING_ENDPOINT_IR_ROUNDS`
+calls at most (default `3`): a round to check and repair, one to check what
+the repair made, and one for a rewrite read wrongly. A reading the rounds left
+unchecked is used as it stands and sent again with the next request.
+`CODING_ENDPOINT_IR_CHECK` chooses what is sent: `all` (the default), every
+reading the model has not judged; `always`, every reading with every
+request, judged or not; `failed`, only the sentences the translator could not
+read, with no check of a reading.
+
+The note gives each reading, and for a rewritten sentence the rewrite before
+its reading, so the coding model sees what the translator read; a reading the
+model judged wrong is never in it. What a reply may teach is bounded: only a
+word the translator named unknown, only a noun, verb, adjective, adverb,
+preposition or conjunction, and only in letters.
+
+What the model taught is kept. The lesson lines are facts the translator
+reads (`noun/1`, `mean/2`, ...); the rewrite that read is
+`ep_ir_rewrite(Sentence, Rewrites)`; each verdict is
+`ep_ir_verdict(Sentence, Reading, right|wrong)`, the reading's text its key,
+so a reading a new lesson changes is checked again; a sentence that no
+rewrite read is `ep_ir_unread(Sentence, Version)`, not sent again until the
+reasoning version moves. `run-httpd.sh` runs the endpoint on an embedded
+store (`CODING_ENDPOINT_STORE`, `coding/endpoint/store` unless set), and each
+request commits what it taught, so the next request and the next process
+read the sentence with no model call. The English lesson loads while
+`httpd.pl` loads, which writes nothing to the store: the store holds only
+what the model taught. `ep_ir_lesson(Line)` keeps each lesson line:
+
+```sh
+../cocolog/cocolog --embed coding/endpoint/store query \
+    "forall(ep_ir_lesson(L), (write(L), nl))"
+```
+
+With no key, or `CODING_ENDPOINT_IR_REPAIR=off`, no model is asked and the
+note gives what the translator read alone, less the readings a model judged
+wrong before. A call that fails rests the repair for five minutes, so a
+backend that is down does not cost every request a timeout.
+
+### The store
+
+`coding/endpoint/store` is committed (its `lock` is not), so what one machine
+learned is the next machine's start, and every commit of it moves the
+translator on. It was committed empty (reasoning 1.13.0); `live_ir.pl` fills
+it from the benchmark requirements, whose sentences are in the tree
+already. What a session needs to know before committing it:
+
+- **It holds the first sentences of every request the endpoint read**, word
+  for word, in its rewrites, verdicts and unread sentences, and the
+  repository is public. An endpoint whose requests are private names a store
+  of its own (`CODING_ENDPOINT_STORE=/path`), and a store is moved on into
+  the tree only by a run whose sentences may be published (`live_ir.pl`).
+- **It is one process's at a time**: stop the endpoint (`pgrep -x cocolog`
+  prints nothing) before a query reads it and before `git add` takes it, or
+  the commit may hold a store part way through a write.
+- **It is in the writing machine's byte order** (`byteorder.bin`), which an
+  open checks: x86-64 and Apple silicon are both little-endian, so it travels
+  between them.
 
 ## Trace
 
@@ -265,6 +348,16 @@ endpoint with the backend key in `CODING_ENDPOINT_KEY_ENV`:
 | `CODING_ENDPOINT_MAX_TOKENS` | `32768` (0 leaves the client's limit) |
 | `CODING_ENDPOINT_CONTEXT` | `1000000` |
 | `CODING_ENDPOINT_TIMEOUT` | `600` seconds; the backend call's timeout |
+| `CODING_ENDPOINT_STORE` | `coding/endpoint/store`; the embedded store `run-httpd.sh` runs on, `local` for none |
+| `CODING_ENDPOINT_IR_REPAIR` | `on`; `off` asks no model about the translator's reading |
+| `CODING_ENDPOINT_IR_CHECK` | `all`; every reading the model has not judged is checked, `always` every reading with every request, `failed` only what the translator could not read |
+| `CODING_ENDPOINT_IR_API` | `CODING_ENDPOINT_API`; `openai` or `anthropic` for the repair's model |
+| `CODING_ENDPOINT_IR_BACKEND` | the endpoint's backend, or the provider's own URL when `CODING_ENDPOINT_IR_API` is set |
+| `CODING_ENDPOINT_IR_KEY` | `CODING_ENDPOINT_KEY_ENV`; the repair's key itself |
+| `CODING_ENDPOINT_IR_MODEL` | `CODING_ENDPOINT_MODEL`; the repair's model |
+| `CODING_ENDPOINT_IR_ROUNDS` | `3`; calls at most for one request |
+| `CODING_ENDPOINT_IR_SENTENCES` | `6`; the request's first sentences the translator reads |
+| `CODING_ENDPOINT_IR_MAX_TOKENS` | `2000`; the repair reply's limit |
 | `COCOLOG_LIBRARY` | set by `run-httpd.sh` |
 | `COCOLOG_SKILL` | `coding/cocolog/SKILL.md`, this repository's copy of the guide |
 
@@ -328,7 +421,27 @@ COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
 The test checks the model and health replies, the bearer-token guard, the
 guide merge, the usage reading and trace fields, the SSE synthesis for
 text and tool calls, and the reasoning reader. No model is called and no
-socket is opened.
+socket is opened: the IR repair's checks answer with a stub model
+(`ep_ir_model_stub/3`): a reading judged wrong and rewritten, a reading
+confirmed, a rewrite read wrongly and caught, and a child process on an
+embedded store that learns what a second child then reads with no call.
+
+`live_ir.pl` runs the check and the repair against a real model on three
+benchmark requirements, and costs money; it prints each reading in English
+with its verdict. Run it twice on one store, and the second run makes no
+call:
+
+```sh
+CODING_ENDPOINT_IR_API=anthropic CODING_ENDPOINT_IR_KEY="$TEST_API_KEY" \
+CODING_ENDPOINT_IR_MODEL="$TEST_MODEL" \
+COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
+    ../cocolog/cocolog --embed coding/endpoint/store -s coding/endpoint/live_ir.pl
+```
+
+The trace line of a request carries the repair's counts: `ir_sentences`,
+`ir_read`, `ir_lesson`, `ir_rewrite`, `ir_unread`, `ir_lessons`, `ir_calls`,
+`ir_prompt_tokens`, `ir_completion_tokens`, and the verdicts the request
+gave, `ir_checked` (right) and `ir_wrong`.
 
 ## Files
 
@@ -338,6 +451,10 @@ socket is opened.
 | `httpd_core.pl` | pages, JSON, backend call, SSE synthesis, token/CORS, trace |
 | `run-httpd.sh` | starts `httpd.pl` with the repository's library path |
 | `reasoning_core.pl` | obligations, contract and reasoner reading |
+| `english_lesson.pl` | the English lesson the translator reads a request by |
+| `ir_repair.pl` | the model's check of each reading, its help with a sentence read wrongly or not read, and what it taught, kept |
+| `live_ir.pl` | the check and the repair against a real model, on three benchmark requirements |
+| `store/` | the embedded store the endpoint runs on: the lessons, rewrites and verdicts, committed |
 | `reasoning.pl` | the command-line form of the pre-pass |
 | `config/opencode.json` | the provider, the two models and their variants |
 | `config/codex.toml` | Codex's top-level defaults and provider block, with a placeholder token |

@@ -63,9 +63,17 @@
               [ endpoint_reason/4, endpoint_ir/2 ]).
 :- use_module(library(reasoning/reason), [ reason_learn/1 ]).
 :- use_module('coding/endpoint/english_lesson.pl', [ ep_english_lesson/0 ]).
+:- use_module('coding/endpoint/ir_repair.pl',
+              [ ep_ir_readings/2, ep_ir_stats/1, ep_ir_stats_reset/0,
+                ep_ir_model_stub/3, ep_ir_lesson/1, ep_ir_rewrite/2,
+                ep_ir_unread/2, ep_ir_verdict/3, ep_ir_repair_ready/0,
+                ep_ir_reply/4 ]).
 
 main :-
     setenv('CODING_ENDPOINT_TOKEN', 'test-token'),
+    %% no check here asks a real model: the repair's own section answers
+    %% with ep_ir_model_stub/3
+    setenv('CODING_ENDPOINT_IR_REPAIR', 'off'),
     test_models,
     test_health,
     test_token,
@@ -95,6 +103,9 @@ main :-
     test_defaults,
     test_continue,
     test_ir,
+    test_ir_repair,
+    test_ir_check,
+    test_ir_store,
     unsetenv('CODING_ENDPOINT_TOKEN'),
     checks_done.
 
@@ -1152,6 +1163,228 @@ test_ir :-
     ;   ReasonedIR = no
     ),
     check('the reasoning guide carries the IR note', ReasonedIR, yes),
+    !.
+
+%% ---- the model helps the translator read (ir_repair.pl) ----------------
+%%
+%% The model is a stub, ep_ir_model_stub(Key, Round, Reply): a round's prompt
+%% that contains Key is answered Reply, and no backend is called while a stub
+%% exists. Runs after test_ir, so the English lesson is loaded.
+
+test_ir_repair :-
+    unsetenv('CODING_ENDPOINT_KEY_ENV'),
+    unsetenv('CODING_ENDPOINT_IR_KEY'),
+    setenv('CODING_ENDPOINT_IR_REPAIR', 'off'),
+    ( ep_ir_repair_ready -> Off = ready ; Off = not_ready ),
+    check('CODING_ENDPOINT_IR_REPAIR=off asks no model', Off, not_ready),
+    setenv('CODING_ENDPOINT_IR_REPAIR', 'on'),
+    ( ep_ir_repair_ready -> NoKey = ready ; NoKey = not_ready ),
+    check('with no key and no stub the model is not asked', NoKey, not_ready),
+    %% these checks send only what the translator could not read; the
+    %% check of every reading is test_ir_check's
+    setenv('CODING_ENDPOINT_IR_CHECK', failed),
+    %% a word the translator does not know, classified and taught
+    assertz(ep_ir_model_stub('contiguous subarray', 1,
+        '```json\n{"words": [{"word": "subarray", "class": "noun", "base": "subarray"}], "rewrites": []}\n```')),
+    ep_ir_readings('It prints the maximum sum of a contiguous subarray.', R1),
+    ir_shape(R1, S1),
+    check('a word the model classified is taught, and the sentence reads as it stands',
+          S1, ['It prints the maximum sum of a contiguous subarray.'-lesson-1]),
+    ( ep_ir_lesson('The noun "x_subarray" means "subarray".') -> L1 = kept ; L1 = missing ),
+    check('the word is kept as a lesson line in the English lesson''s form', L1, kept),
+    ep_ir_stats(ir(_, _, _, _, _, Lessons1, Calls1, _, _, _, _)),
+    check('one call taught one lesson', Lessons1-Calls1, 1-1),
+    %% a shape the translator does not read, rewritten
+    assertz(ep_ir_model_stub('Write a complete C program.', 1,
+        '{"words": [], "rewrites": [{"id": 1, "sentences": ["Write a complete program in C."]}]}')),
+    ep_ir_readings('Write a complete C program.', R2),
+    ir_shape(R2, S2),
+    check('a rewrite the translator reads is the sentence''s reading',
+          S2, ['Write a complete C program.'-rewrite(['Write a complete program in C.'])-1]),
+    ( ep_ir_rewrite('Write a complete C program.', ['Write a complete program in C.']) -> W2 = kept ; W2 = missing ),
+    check('the rewrite that read is kept', W2, kept),
+    ep_ir_readings('Write a complete C program.', _),
+    ep_ir_stats(ir(_, _, _, Rewrite2, _, _, Calls2, _, _, _, _)),
+    check('a kept rewrite reads again with no call', Rewrite2-Calls2, 1-0),
+    %% a rewrite that does not read goes back with what was tried
+    assertz(ep_ir_model_stub('Division truncates toward zero.', 1,
+        '{"words": [], "rewrites": [{"id": 1, "sentences": ["Division rounds the result toward zero."]}]}')),
+    assertz(ep_ir_model_stub('Tried before: "Division rounds the result toward zero."', 2,
+        '{"words": [], "rewrites": [{"id": 1, "sentences": ["The program divides the numbers.", "It drops the fraction."]}]}')),
+    ep_ir_readings('Division truncates toward zero.', R3),
+    ir_shape(R3, S3),
+    check('a second round sends the rewrite that did not read, and reads the next one',
+          S3, ['Division truncates toward zero.'-rewrite(['The program divides the numbers.', 'It drops the fraction.'])-2]),
+    ep_ir_stats(ir(_, _, _, _, _, _, Calls3, _, _, _, _)),
+    check('two rounds are two calls', Calls3, 2),
+    %% nothing reads: kept as unread, and not sent again
+    forall(between(1, 4, FK),
+           assertz(ep_ir_model_stub('The flux capacitor', FK,
+               '{"words": [], "rewrites": [{"id": 1, "sentences": ["The flux capacitor glorbs the zinth."]}]}'))),
+    ep_ir_readings('The flux capacitor xqzzv the zinth.', R4),
+    check('a sentence no rewrite reads is unread',
+          R4, [reading('The flux capacitor xqzzv the zinth.', unread, [])]),
+    ep_ir_stats(ir(_, _, _, _, _, _, Calls4, _, _, _, _)),
+    check('the model is asked once a round, three rounds at most', Calls4, 3),
+    ep_ir_readings('The flux capacitor xqzzv the zinth.', _),
+    ep_ir_stats(ir(_, _, _, _, Unread5, _, Calls5, _, _, _, _)),
+    check('an unread sentence is not sent again under this version', Unread5-Calls5, 1-0),
+    %% what a reply may teach: unknown words only, a class it knows, letters only
+    assertz(ep_ir_model_stub('The blurgh frobnicates', 1,
+        '{"words": [{"word": "house", "class": "noun"}, {"word": "blurgh2", "class": "noun"}, {"word": "frobnicates", "class": "symbol"}, {"word": "blurgh", "class": "noun", "base": "blurgh"}], "rewrites": []}')),
+    ep_ir_readings('The blurgh frobnicates the house.', _),
+    findall(L, ( ep_ir_lesson(L), once(( sub_atom(L, _, _, _, blurgh) ; sub_atom(L, _, _, _, frobnicat) )) ), GL),
+    check('a reply teaches only an unknown word of a known class, in letters', GL,
+          ['The noun "x_blurgh" means "blurgh".']),
+    ( ep_ir_lesson('The noun "x_house" means "house".') -> HL = taught ; HL = refused ),
+    check('a word the translator knows is not taught again', HL, refused),
+    %% a reply that is no JSON teaches nothing and breaks nothing
+    assertz(ep_ir_model_stub('Quux the blarf', 1, 'I cannot help with that.')),
+    ep_ir_readings('Quux the blarf.', R6),
+    check('a reply that is not JSON leaves the sentence unread', R6, [reading('Quux the blarf.', unread, [])]),
+    ep_ir_reply('Here: {"ok": [1, "x"], "words": [], "rewrites": [{"id": 2, "sentences": ["A b."]}]} done', [], OK, RW),
+    check('the JSON object is found inside the reply text', OK-RW, [1]-[2-['A b.']]),
+    %% the note: what was read, and the rewrite beside its reading
+    ep_ir_note('Write a complete C program. It prints the maximum sum of a contiguous subarray.', Note),
+    (   sub_atom(Note, _, _, _, 'rewritten for the translator as "Write a complete program in C."'),
+        sub_atom(Note, _, _, _, 'w(subarray,lower)')
+    ->  NoteOk = yes
+    ;   NoteOk = no
+    ),
+    check('the note carries the rewrite and both readings', NoteOk, yes),
+    retractall(ep_ir_model_stub(_, _, _)),
+    unsetenv('CODING_ENDPOINT_IR_CHECK'),
+    setenv('CODING_ENDPOINT_IR_REPAIR', 'off'),
+    !.
+
+%% The model checks every reading (CODING_ENDPOINT_IR_CHECK=all, the
+%% default): a sentence the translator read is sent with its reading said
+%% back in English, and a wrong reading is rewritten and never used.
+test_ir_check :-
+    setenv('CODING_ENDPOINT_IR_REPAIR', 'on'),
+    unsetenv('CODING_ENDPOINT_IR_CHECK'),
+    %% a reading the translator gives wrongly, rewritten, the rewrite checked
+    assertz(ep_ir_model_stub('Read as: "Every convert words to lowercase."', 1,
+        '{"ok": [], "rewrites": [{"id": 1, "sentences": ["It converts each word to lowercase."]}]}')),
+    assertz(ep_ir_model_stub('Rewritten as: "It converts each word to lowercase."', 2,
+        '{"ok": [1]}')),
+    ep_ir_readings('Convert every word to lowercase.', C1),
+    ir_shape(C1, CS1),
+    check('a reading the model judged wrong is replaced by the rewrite',
+          CS1, ['Convert every word to lowercase.'-rewrite(['It converts each word to lowercase.'])-1]),
+    ep_ir_stats(ir(_, _, _, _, _, _, CCalls1, _, _, Checked1, Wrong1)),
+    check('the reading and the rewrite''s reading are checked in two calls',
+          CCalls1-Checked1-Wrong1, 2-1-1),
+    findall(V, ep_ir_verdict('Convert every word to lowercase.', _, V), Vs1),
+    check('both verdicts are kept', Vs1, [wrong, right]),
+    ep_ir_readings('Convert every word to lowercase.', C2),
+    ir_shape(C2, CS2),
+    ep_ir_stats(ir(_, _, _, _, _, _, CCalls2, _, _, _, _)),
+    check('a judged reading is read again with no call', CS2-CCalls2, CS1-0),
+    %% a reading the model confirms
+    assertz(ep_ir_model_stub('Read as: "The program reads the input."', 1, '{"ok": [1]}')),
+    ep_ir_readings('The program reads the input.', C3),
+    ir_shape(C3, CS3),
+    ep_ir_stats(ir(_, _, _, _, _, _, CCalls3, _, _, Checked3, _)),
+    check('a right reading is confirmed in one call',
+          CS3-CCalls3-Checked3, ['The program reads the input.'-read-1]-1-1),
+    ep_ir_readings('The program reads the input.', _),
+    ep_ir_stats(ir(_, _, _, _, _, _, CCalls4, _, _, _, _)),
+    check('a confirmed reading is not sent again', CCalls4, 0),
+    setenv('CODING_ENDPOINT_IR_CHECK', always),
+    ep_ir_readings('The program reads the input.', _),
+    ep_ir_stats(ir(_, _, _, _, _, _, CCalls5, _, _, Checked5, _)),
+    check('CODING_ENDPOINT_IR_CHECK=always sends it with every request', CCalls5-Checked5, 1-1),
+    unsetenv('CODING_ENDPOINT_IR_CHECK'),
+    %% a wrong reading no rewrite reads: unread, and never in the note
+    assertz(ep_ir_model_stub('Read as: "Each print words in lowercase."', 1,
+        '{"ok": [], "rewrites": [{"id": 1, "sentences": ["The flarbs zorp the word."]}]}')),
+    assertz(ep_ir_model_stub('Tried before: "The flarbs zorp the word."', 2,
+        '{"rewrites": [{"id": 1, "sentences": ["Glorp each word."]}]}')),
+    %% the translator reads that one as a name: a wrong reading, caught
+    assertz(ep_ir_model_stub('Rewritten as: "Glorp each word."', 3,
+        '{"ok": [], "rewrites": [{"id": 1, "sentences": ["The flarbs zorp each word."]}]}')),
+    ep_ir_readings('Print each word in lowercase.', C6),
+    ep_ir_stats(ir(_, _, _, _, Unread6, _, CCalls6, _, _, _, Wrong6)),
+    check('a wrong reading whose rewrites read wrongly or not at all is unread',
+          C6-Unread6-CCalls6-Wrong6, [reading('Print each word in lowercase.', unread, [])]-1-3-2),
+    ( ep_ir_rewrite('Print each word in lowercase.', _) -> RW6 = kept ; RW6 = dropped ),
+    check('a rewrite whose reading was judged wrong is dropped', RW6, dropped),
+    ep_ir_note('Print each word in lowercase.', CNote6),
+    ep_ir_stats(ir(_, _, _, _, _, _, CCalls7, _, _, _, _)),
+    check('the note never carries a wrong reading, and asks no model again', CNote6-CCalls7, ''-0),
+    %% a reading the model says nothing of is used, and sent again
+    assertz(ep_ir_model_stub('Read as: "It prints each word in lowercase."', 1, '{"ok": []}')),
+    ep_ir_readings('It prints each word in lowercase.', C8),
+    ir_shape(C8, CS8),
+    ep_ir_stats(ir(_, _, _, _, _, _, CCalls8, _, _, Checked8, _)),
+    check('a reading the model said nothing of is used as it stands',
+          CS8-CCalls8-Checked8, ['It prints each word in lowercase.'-read-1]-1-0),
+    ep_ir_readings('It prints each word in lowercase.', _),
+    ep_ir_stats(ir(_, _, _, _, _, _, CCalls9, _, _, _, _)),
+    check('and is sent again with the next request', CCalls9, 1),
+    %% a word taught makes a reading, which the next round checks
+    assertz(ep_ir_model_stub('Unknown words: zibbet', 1,
+        '{"words": [{"word": "zibbet", "class": "noun", "base": "zibbet"}]}')),
+    assertz(ep_ir_model_stub('Read as: "It prints the sum of a contiguous zibbet."', 2, '{"ok": [1]}')),
+    ep_ir_readings('It prints the sum of a contiguous zibbet.', C10),
+    ir_shape(C10, CS10),
+    ep_ir_stats(ir(_, _, _, _, _, Lessons10, CCalls10, _, _, Checked10, _)),
+    check('a reading a lesson made is checked in the next round',
+          CS10-Lessons10-CCalls10-Checked10,
+          ['It prints the sum of a contiguous zibbet.'-lesson-1]-1-2-1),
+    retractall(ep_ir_model_stub(_, _, _)),
+    setenv('CODING_ENDPOINT_IR_REPAIR', 'off'),
+    !.
+
+ir_shape(Readings, Shape) :-
+    findall(S-How-N, ( member(reading(S, How, IRs), Readings), length(IRs, N) ), Shape).
+
+%% Under --embed what one process learned is read by the next: a child
+%% learns with a stub, and a second child, whose stub would answer any
+%% round, reads both sentences with no call: the lesson, the rewrite and
+%% the verdicts came from the store.
+test_ir_store :-
+    current_prolog_flag(executable, Exe),
+    os_pid(Pid),
+    format(atom(Dir), '/tmp/ep_ir_store_~w', [Pid]),
+    format(atom(Learn), '/tmp/ep_ir_learn_~w.pl', [Pid]),
+    format(atom(Read), '/tmp/ep_ir_read_~w.pl', [Pid]),
+    atom_codes(LearnText,
+":- use_module('coding/endpoint/httpd_core.pl').
+    :- use_module('coding/endpoint/english_lesson.pl').
+    :- initialization(ep_english_lesson).
+    main :- setenv('CODING_ENDPOINT_IR_REPAIR', on),
+    assertz(ep_ir_model_stub('Write a complete C program.', 1, '{\"words\": [{\"word\": \"subarray\", \"class\": \"noun\"}], \"rewrites\": [{\"id\": 1, \"sentences\": [\"Write a complete program in C.\"]}]}')),
+    assertz(ep_ir_model_stub('Rewritten as: \"Write a complete program in C.\"', 2, '{\"ok\": [1, 2]}')),
+    ep_ir_readings('Write a complete C program. It prints the maximum sum of a contiguous subarray.', _),
+    retractall(ep_ir_model_stub(_, _, _)),
+    ep_ir_stats(S), write(S), nl.
+"),
+    atom_codes(ReadText,
+":- use_module('coding/endpoint/httpd_core.pl').
+    :- use_module('coding/endpoint/english_lesson.pl').
+    :- initialization(ep_english_lesson).
+    main :- setenv('CODING_ENDPOINT_IR_REPAIR', on),
+    assertz(ep_ir_model_stub('', 1, '{\"ok\": [1, 2]}')),
+    ep_ir_readings('Write a complete C program. It prints the maximum sum of a contiguous subarray.', _),
+    ep_ir_stats(S), write(S), nl.
+"),
+    atom_codes(LearnText, LC), atom_codes(ReadText, RC),
+    write_file_from_codes(Learn, LC), write_file_from_codes(Read, RC),
+    format(atom(C1), '~w --embed ~w -s ~w 2>&1 | tail -1', [Exe, Dir, Learn]),
+    format(atom(C2), '~w --embed ~w -s ~w 2>&1 | tail -1', [Exe, Dir, Read]),
+    format(atom(C3), 'cd /tmp && ~w --embed ~w query "aggregate_all(count, mean(_, _), N), aggregate_all(count, ep_ir_verdict(_, _, right), V), write(N-V), nl" 2>&1 | head -1', [Exe, Dir]),
+    proc_run(C1, 300000, O1, _), proc_run(C2, 300000, O2, _), proc_run(C3, 120000, O3, _),
+    atom_codes(A1, O1), atom_codes(A2, O2), atom_codes(A3, O3),
+    check('under --embed a child learns a lesson and a rewrite, and has both readings checked, in two calls',
+          A1, 'ir(2,0,1,1,0,1,2,0,0,2,0)\n'),
+    check('the next child reads both sentences from the store, checked, with no call',
+          A2, 'ir(2,1,0,1,0,0,0,0,0,0,0)\n'),
+    check('the store holds the lesson taught, not the English lesson, and the two verdicts',
+          A3, '1-2\n'),
+    format(atom(Clean), 'rm -rf ~w ~w ~w', [Dir, Learn, Read]),
+    proc_run(Clean, 60000, _, _),
     !.
 
 continue_reply(Text, Calls, Finish, Codes) :-

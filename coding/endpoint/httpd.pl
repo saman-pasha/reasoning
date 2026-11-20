@@ -12,6 +12,13 @@
 :- use_module('coding/endpoint/httpd_core.pl').
 :- use_module('coding/endpoint/english_lesson.pl').
 
+%% The English lesson loads as the file loads, not in main/0: a goal the
+%% load runs writes nothing through to the store, so under --embed
+%% (run-httpd.sh) the 47 000 words stay in this process and the store holds
+%% only what the requests taught (ir_repair.pl). main/0's call is then a
+%% no-op.
+:- initialization(ep_english_lesson).
+
 main :-
     ep_int('CODING_ENDPOINT_PORT', 8787, Port),
     ep_backend_url(Backend),
