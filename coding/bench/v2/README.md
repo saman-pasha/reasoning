@@ -211,8 +211,14 @@ CODING_BENCH_BASE_URL=https://api.anthropic.com/v1/messages \
   `claude-sonnet-5-5`, the translation phase's 9 calls apart. Every
   held-out failure there is case 8, whose expected output reads "a
   deletion of an absent key is ignored" against the latest committed
-  version and not against the transaction's view: a stated ambiguity of
-  the task, left as it is so that the run's figures stay comparable.
+  version and not against the transaction's view. That was an ambiguity
+  of the task's text, which said neither. **Since reasoning 1.14.1 the
+  text says the rule**: a transaction keeps one staged change per key,
+  even one that does not change its view, and the commit applies each to
+  the latest committed version. No case's expected output changed (each
+  of the ten agrees with the rule), but a run before 1.14.1 read another
+  text and is not comparable with a run after it. The run on the clear
+  text is `results/ir-mvccs-clear-20261120.md`.
 
 ## Declarative vs imperative (Phase 5)
 
