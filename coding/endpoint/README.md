@@ -217,7 +217,12 @@ that still does not read goes back with the rewrite that was tried and the
 words the translator did not know in it. That is `CODING_ENDPOINT_IR_ROUNDS`
 calls at most (default `3`): a round to check and repair, one to check what
 the repair made, and one for a rewrite read wrongly. A reading the rounds left
-unchecked is used as it stands and sent again with the next request.
+unchecked is used as it stands. One the model was shown and passed over is
+kept as `unjudged` and not sent again. One made in the last round, which the
+model never saw, is sent with the next request, at most
+`CODING_ENDPOINT_IR_TRIES` requests (default `2`), and then the sentence is
+unread: the endpoint reads the task at every turn of the coding model, and a
+sentence the model judged wrong in every round cost three calls a turn.
 `CODING_ENDPOINT_IR_CHECK` chooses what is sent: `all` (the default), every
 reading the model has not judged; `always`, every reading with every
 request, judged or not; `failed`, only the sentences the translator could not
@@ -227,15 +232,33 @@ The note gives each reading, and for a rewritten sentence the rewrite before
 its reading, so the coding model sees what the translator read; a reading the
 model judged wrong is never in it. What a reply may teach is bounded: only a
 word the translator named unknown, only a noun, verb, adjective, adverb,
-preposition or conjunction, and only in letters.
+preposition or conjunction, and only in letters. **And a lesson may not change
+a reading the model confirmed**: each lesson is taught alone, every confirmed
+reading is read again, and a lesson that changed one is taken back. `if` is
+unknown in the middle of a sentence and the grammar's own at a sentence's
+head, and `The conjunction "x_if" means "if".` changed every if-sentence's
+reading; in the live run it was taken back five times. `live_ir.pl` prints
+each lesson so taken back.
+
+A reply is the last JSON object in it that has one of its keys: the model
+writes an answer, then `Wait, that violates the rule against "and". Here is
+the corrected answer:` and a second object. For Anthropic's own API the call
+sends `output_config.effort` `low` (`CODING_ENDPOINT_IR_EFFORT`, `none` for no
+field): the model thinks by default, the thinking counts against
+`max_tokens`, and at its default effort one call spent 2000 tokens and
+answered no text. At `low` a call spent about 300 completion tokens where it
+had spent about 1 150. No `temperature` is sent there, which
+`claude-sonnet-5-5` refuses. `CODING_ENDPOINT_IR_LOG=FILE` appends each round's
+prompt and reply to a file.
 
 What the model taught is kept. The lesson lines are facts the translator
 reads (`noun/1`, `mean/2`, ...); the rewrite that read is
 `ep_ir_rewrite(Sentence, Rewrites)`; each verdict is
-`ep_ir_verdict(Sentence, Reading, right|wrong)`, the reading's text its key,
-so a reading a new lesson changes is checked again; a sentence that no
+`ep_ir_verdict(Sentence, Reading, right|wrong|unjudged)`, the reading's text
+its key, so a reading a new lesson changes is checked again; a sentence that no
 rewrite read is `ep_ir_unread(Sentence, Version)`, not sent again until the
-reasoning version moves. `run-httpd.sh` runs the endpoint on an embedded
+reasoning version's minor number moves (`1.13`: this repository moves its
+patch number with every commit). `run-httpd.sh` runs the endpoint on an embedded
 store (`CODING_ENDPOINT_STORE`, `coding/endpoint/store` unless set), and each
 request commits what it taught, so the next request and the next process
 read the sentence with no model call. The English lesson loads while
@@ -256,13 +279,16 @@ backend that is down does not cost every request a timeout.
 
 `coding/endpoint/store` is committed (its `lock` is not), so what one machine
 learned is the next machine's start, and every commit of it moves the
-translator on. It was committed empty in reasoning 1.13.0. Since 1.13.1 it
-holds what `live_ir.pl` learned from the three benchmark requirements,
-whose sentences are in the tree already: 5 lessons (`until`, `subarray`,
-`toward`, `multiplication`, `subtraction`), 9 rewrites and 17 verdicts, 7 of
-them wrong readings. The second run made 2 calls, for 2 readings the first
-run's rounds had left unchecked, and the third made none. What a session
-needs to know before committing it:
+translator on. It was committed empty in reasoning 1.13.0, and 1.13.1 held
+what `live_ir.pl` learned from three benchmark requirements. Since 1.13.2 it
+holds what it learned from all twelve (`coding/bench/tasks.pl`), whose
+sentences are in the tree already: 22 lessons, 20 rewrites, 65 verdicts (35
+of them wrong readings) and 15 sentences unread -- most of them a table of
+commands the splitter takes for one sentence, or a sentence with a list in
+it, which the translator reads wrongly in every rewrite. Eight runs went to
+it, rebuilt from 1.13.1's store; the first three found the faults 1.13.2
+fixes, and the last two made no call. What a session needs to know before
+committing it:
 
 - **It holds the first sentences of every request the endpoint read**, word
   for word, in its rewrites, verdicts and unread sentences, and the
@@ -360,8 +386,11 @@ endpoint with the backend key in `CODING_ENDPOINT_KEY_ENV`:
 | `CODING_ENDPOINT_IR_KEY` | `CODING_ENDPOINT_KEY_ENV`; the repair's key itself |
 | `CODING_ENDPOINT_IR_MODEL` | `CODING_ENDPOINT_MODEL`; the repair's model |
 | `CODING_ENDPOINT_IR_ROUNDS` | `3`; calls at most for one request |
+| `CODING_ENDPOINT_IR_TRIES` | `2`; requests at most whose rounds end on a reading the model never saw |
+| `CODING_ENDPOINT_IR_EFFORT` | `low` for `api.anthropic.com`, `none` elsewhere; `output_config.effort` |
+| `CODING_ENDPOINT_IR_LOG` | none; a file each round's prompt and reply are appended to |
 | `CODING_ENDPOINT_IR_SENTENCES` | `6`; the request's first sentences the translator reads |
-| `CODING_ENDPOINT_IR_MAX_TOKENS` | `2000`; the repair reply's limit |
+| `CODING_ENDPOINT_IR_MAX_TOKENS` | `8000`; the repair reply's limit, thinking included |
 | `COCOLOG_LIBRARY` | set by `run-httpd.sh` |
 | `COCOLOG_SKILL` | `coding/cocolog/SKILL.md`, this repository's copy of the guide |
 

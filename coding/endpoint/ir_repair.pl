@@ -35,22 +35,25 @@
 %% it. CODING_ENDPOINT_IR_ROUNDS (default 3) is the number of calls at most
 %% for one request: a round to check and repair, one to check what the
 %% repair made, and one more for a rewrite the translator read wrongly. A
-%% reading the rounds left unchecked is used as it stands, and is sent
-%% again with the next request.
+%% reading the rounds left unchecked is used as it stands: one the model
+%% saw and passed over is not sent again, and one made in the last round,
+%% which it never saw, is sent with the next request.
 %%
 %% WHAT IS LEARNED IS KEPT. The lesson lines are facts the translator reads
 %% (noun/1, mean/2, verb/1, ...); the rewrite that read is a fact,
 %% ep_ir_rewrite(Sentence, Rewrites); and so is each verdict,
-%% ep_ir_verdict(Sentence, Reading, right|wrong), Reading the reading's
-%% text. Under `--embed' (run-httpd.sh) all of them are written into the
-%% store when the request commits, so the next request and the next
+%% ep_ir_verdict(Sentence, Reading, right|wrong|unjudged), Reading the
+%% reading's text, `unjudged' one the model was shown and passed over.
+%% Under `--embed' (run-httpd.sh) all of them are written into the store
+%% when the request commits, so the next request and the next
 %% process read the sentence with no model call, and a reading judged
 %% wrong is never sent to the coding model again. A verdict is about one
 %% reading: when a lesson changes how the translator reads a sentence, the
 %% new reading is checked again. A sentence that no rewrite read is kept as
 %% ep_ir_unread(Sentence, Version), so the model is not asked about it
-%% again until the reasoning version moves. ep_ir_lesson(Line) keeps each
-%% lesson line as the model's words gave it:
+%% again until the reasoning version's minor number moves (`1.13',
+%% ep_ir_version/1). ep_ir_lesson(Line) keeps each lesson line as the
+%% model's words gave it:
 %%
 %%     cocolog --embed STORE query "forall(ep_ir_lesson(L), (write(L), nl))"
 %%
@@ -76,8 +79,14 @@
 %%     CODING_ENDPOINT_IR_KEY         the key (default CODING_ENDPOINT_KEY_ENV)
 %%     CODING_ENDPOINT_IR_MODEL       the model (default CODING_ENDPOINT_MODEL)
 %%     CODING_ENDPOINT_IR_ROUNDS      calls at most for one request (default 3)
+%%     CODING_ENDPOINT_IR_TRIES       requests at most whose rounds end on a
+%%                                    reading the model never saw (default 2)
 %%     CODING_ENDPOINT_IR_SENTENCES   sentences of the request read (default 6)
-%%     CODING_ENDPOINT_IR_MAX_TOKENS  the reply's limit (default 2000)
+%%     CODING_ENDPOINT_IR_MAX_TOKENS  the reply's limit, thinking included (default 8000)
+%%     CODING_ENDPOINT_IR_EFFORT      output_config.effort (default low for
+%%                                    api.anthropic.com, none elsewhere)
+%%     CODING_ENDPOINT_IR_LOG         a file each round's prompt and reply are
+%%                                    appended to (default none)
 %%
 %% With no key the model is not asked, and the note carries what the
 %% translator read alone, less the readings a model judged wrong before. A
@@ -97,6 +106,7 @@
 :- dynamic ep_ir_rewrite/2.
 :- dynamic ep_ir_unread/2.
 :- dynamic ep_ir_verdict/3.
+:- dynamic ep_ir_tries/3.
 :- dynamic ep_ir_lesson/1.
 :- dynamic ep_ir_model_stub/3.
 
@@ -146,7 +156,7 @@ ep_ir_first(Mode, S, R) :-
     ->  ep_ir_to_check(Mode, S, read, IRs, R)
     ;   ep_ir_rewrite(S, Rs), ep_ir_try_all(Rs, IRs), \+ ep_ir_judged(S, IRs, wrong)
     ->  ep_ir_to_check(Mode, S, rewrite(Rs), IRs, R)
-    ;   reason_version(V), ep_ir_unread(S, V)
+    ;   ep_ir_version(V), ep_ir_unread(S, V)
     ->  R = reading(S, unread, [])
     ;   R = reading(S, pending([]), [])
     ).
@@ -154,17 +164,82 @@ ep_ir_first(Mode, S, R) :-
 %% A reading, settled or sent to be checked as the mode says.
 ep_ir_to_check(failed, S, How, IRs, reading(S, How, IRs)) :- !.
 ep_ir_to_check(all, S, How, IRs, reading(S, How, IRs)) :-
-    ep_ir_judged(S, IRs, right),
+    ep_ir_settled(S, IRs),
     !.
 ep_ir_to_check(_, S, How, IRs, reading(S, check(How), IRs)).
 
+%% A reading the model judged right, or saw and passed over.
+ep_ir_settled(S, IRs) :-
+    (   ep_ir_judged(S, IRs, right)
+    ->  true
+    ;   ep_ir_judged(S, IRs, unjudged)
+    ).
+
 ep_ir_settle(reading(S, pending(_), _), reading(S, unread, [])) :- !,
     (   nb_getval('$ep_ir_answered', yes)
-    ->  reason_version(V), assertz(ep_ir_unread(S, V))
+    ->  ep_ir_version(V), assertz(ep_ir_unread(S, V))
     ;   true
     ).
-ep_ir_settle(reading(S, check(How), IRs), reading(S, How, IRs)) :- !.
+%% A READING THE MODEL SAW AND PASSED OVER IS NOT SENT AGAIN. The endpoint
+%% reads the task at every turn of the coding model, and a reading the
+%% model never answered for was sent again each time, three calls a turn
+%% (two readings of `balanced' in a live run, reasoning 1.13.2). One it
+%% was shown in a round that answered is kept as ep_ir_verdict(S, Reading,
+%% unjudged) and used as it stands; a reading made in the last round, which
+%% the model never saw, is sent with the next request.
+ep_ir_settle(reading(S, check(How), IRs), Out) :- !,
+    ep_ir_reading_text(IRs, Text),
+    (   nb_getval('$ep_ir_answered', yes)
+    ->  nb_getval('$ep_ir_seen', Seen),
+        (   memberchk(S-Text, Seen)
+        ->  retractall(ep_ir_verdict(S, Text, _)),
+            assertz(ep_ir_verdict(S, Text, unjudged)),
+            Out = reading(S, How, IRs)
+        ;   ep_ir_tried(S, How, IRs, Out)
+        )
+    ;   Out = reading(S, How, IRs)
+    ).
 ep_ir_settle(R, R).
+
+%% A SENTENCE WHOSE ROUNDS KEEP ENDING ON A NEW READING IS GIVEN UP. A
+%% reading made in the last round is sent with the next request, and a
+%% sentence the model judges wrong round after round -- `... with one writer
+%% and any number of readers.', whose rewrites the translator read as
+%% `number of readers any', and whose `many readers' the model refused --
+%% ended every request that way, three calls a request (a live run,
+%% reasoning 1.13.2). ep_ir_tries(Sentence, Version, N) counts the requests
+%% that so ended, and at CODING_ENDPOINT_IR_TRIES (default 2) the sentence
+%% is unread under this version: its unchecked rewrite is dropped, and no
+%% reading nobody checked reaches the coding model.
+ep_ir_tried(S, How, IRs, Out) :-
+    ep_ir_version(V),
+    (   retract(ep_ir_tries(S, V, N0))
+    ->  true
+    ;   N0 = 0
+    ),
+    N is N0 + 1,
+    ep_ir_int('CODING_ENDPOINT_IR_TRIES', 2, Max),
+    (   N >= Max
+    ->  retractall(ep_ir_rewrite(S, _)),
+        assertz(ep_ir_unread(S, V)),
+        Out = reading(S, unread, [])
+    ;   assertz(ep_ir_tries(S, V, N)),
+        Out = reading(S, How, IRs)
+    ).
+
+%% THE VERSION A SENTENCE IS GIVEN UP UNDER IS THE MINOR ONE, `1.13'. This
+%% repository moves its patch number with every commit, and a patch is no
+%% reason the translator reads a sentence better: keyed by `1.13.1', the
+%% fifteen sentences the benchmark tasks gave up would all have gone to the
+%% model again at the commit that recorded them.
+ep_ir_version(V) :-
+    reason_version(Major, Minor, _),
+    format(atom(V), '~w.~w', [Major, Minor]).
+
+ep_ir_saw(S, IRs) :-
+    ep_ir_reading_text(IRs, Text),
+    nb_getval('$ep_ir_seen', Seen),
+    nb_setval('$ep_ir_seen', [S-Text|Seen]).
 
 %% One reading of a text, its inferences bounded: a sentence the reader
 %% takes a long way round is no help to a request waiting for a reply.
@@ -255,6 +330,7 @@ ep_ir_repair(K, Max, Mode, Rs0, Rs) :-
     ep_ir_prompt(K, Open, System, User),
     (   ep_ir_ask(K, System, User, Reply)
     ->  nb_setval('$ep_ir_answered', yes),
+        forall(member(_-check(S, _, IRs), Open), ep_ir_saw(S, IRs)),
         (   ep_ir_reply(Reply, Words, Oks, Rewrites)
         ->  true
         ;   Words = [], Oks = [], Rewrites = []
@@ -340,7 +416,7 @@ ep_ir_rewrite_try(Mode, S, Rs, F, R) :-
 %% not seen it.
 ep_ir_next(failed, S, How, IRs, reading(S, How, IRs)) :- !.
 ep_ir_next(_, S, How, IRs, R) :-
-    (   ep_ir_judged(S, IRs, right)
+    (   ep_ir_settled(S, IRs)
     ->  R = reading(S, How, IRs)
     ;   R = reading(S, check(How), IRs)
     ).
@@ -382,13 +458,59 @@ ep_ir_learn(Words, Allowed) :-
     sort(Lines0, Lines),
     (   Lines == []
     ->  true
-    ;   forall(member(Line, Lines),
-               (   catch(reason_learn(Line), _, fail)
-               ->  assertz(ep_ir_lesson(Line)), ep_ir_count(lessons)
-               ;   true
-               )),
-        catch(tr_lessons_moved, _, true)
+    ;   ep_ir_confirmed(Confirmed),
+        forall(member(Line, Lines), ep_ir_learn_line(Line, Confirmed))
     ).
+
+%% A LESSON MAY NOT CHANGE A READING THE MODEL CONFIRMED. A word a reply
+%% classifies is unknown somewhere, but the translator's grammar may read
+%% it elsewhere by a construction of its own: `if' is unknown in the middle
+%% of `It prints yes if the brackets are balanced.', and `If ..., ...' at a
+%% sentence's head is read without any lesson. The lesson `The conjunction
+%% "x_if" means "if".' gave it a second meaning, and the confirmed reading
+%% of `If the input has no even integers, it prints 0.' became another one,
+%% which the model then judged wrong (a live run, reasoning 1.13.2). So each
+%% lesson is taught alone, every confirmed reading is read again, and a
+%% lesson that changed one is taken back: the facts it added are retracted.
+%% A lesson for a word truly unknown changes none, as no confirmed sentence
+%% holds an unknown word.
+ep_ir_learn_line(Line, Confirmed) :-
+    (   catch(reason_text(Line, Terms), _, fail),
+        Terms = [_|_]
+    ->  exclude(ep_ir_holds, Terms, New),
+        forall(member(T, New), assertz(T)),
+        catch(tr_lessons_moved, _, true),
+        (   member(S-Text, Confirmed),
+            \+ ep_ir_current_text(S, Text)
+        ->  forall(member(T, New), ignore(retract(T))),
+            catch(tr_lessons_moved, _, true),
+            ep_ir_refused(Refused0),
+            nb_setval('$ep_ir_refused', [Line|Refused0])
+        ;   assertz(ep_ir_lesson(Line)),
+            ep_ir_count(lessons)
+        )
+    ;   true
+    ).
+
+ep_ir_holds(T) :- catch(clause(T, true), _, fail), !.
+
+%% The readings the model confirmed, as they stand: each sentence with a
+%% verdict `right' whose reading is that one now.
+ep_ir_confirmed(Confirmed) :-
+    findall(S-Text, ep_ir_verdict(S, Text, right), All0),
+    sort(All0, All),
+    include(ep_ir_current, All, Confirmed).
+
+ep_ir_current(S-Text) :- ep_ir_current_text(S, Text).
+
+%% The text of the reading a sentence has now: the sentence's own, or its
+%% kept rewrite's, as ep_ir_first/3 takes them.
+ep_ir_current_text(S, Text) :-
+    (   ep_ir_try(S, IRs), \+ ep_ir_judged(S, IRs, wrong)
+    ->  true
+    ;   ep_ir_rewrite(S, Rs), ep_ir_try_all(Rs, IRs)
+    ),
+    ep_ir_reading_text(IRs, Text).
 
 ep_ir_lesson_line(W0, Class, Base0, Allowed, Line) :-
     downcase_atom(W0, W),
@@ -497,17 +619,14 @@ ep_ir_system(System) :-
 
 %% ---- the reply ----------------------------------------------------------
 
-%% The JSON object in the reply text: the first `{' to the last `}', so a
-%% fence or a sentence around it does no harm.
+%% The JSON object in the reply text, so a fence or a sentence around it
+%% does no harm. A task can hold braces (`only the characters ()[]{}'),
+%% and a sentence before the object may quote them, so the first `{' to
+%% the last `}' is no object there: an object that parses, with one of the
+%% reply's keys, is the reply (ep_ir_json_object/2).
 ep_ir_reply(Text, Words, Oks, Rewrites) :-
     atom_codes(Text, Codes),
-    append(_, [0'{|Rest], Codes),
-    !,
-    append(Inner, [0'}|After], Rest),
-    \+ memberchk(0'}, After),
-    !,
-    append([0'{|Inner], [0'}], Object),
-    catch(json_parse(Object, json(Pairs)), _, fail),
+    ep_ir_json_object(Codes, Pairs),
     (   memberchk(words-WordList, Pairs), is_list(WordList)
     ->  findall(word(W, C, B), ( member(json(WP), WordList),
                                  memberchk(word-W, WP), atom(W),
@@ -528,6 +647,29 @@ ep_ir_reply(Text, Words, Oks, Rewrites) :-
                 Rewrites)
     ;   Rewrites = []
     ).
+
+%% THE LAST OBJECT IS THE ANSWER. The model writes an answer, then `Wait,
+%% that violates the rule against "and". Here is the corrected answer:'
+%% and a second object (a live run, reasoning 1.13.2): the first that
+%% parsed was the answer it took back. So the `{' are tried from the
+%% right, and an inner object without the reply's keys -- a rewrite's own
+%% {"id": 1, ...} -- is passed by.
+ep_ir_json_object(Codes, Pairs) :-
+    findall(Rest, append(_, [0'{|Rest], Codes), Starts0),
+    reverse(Starts0, Starts),
+    member(Rest, Starts),
+    findall(I, nth0(I, Rest, 0'}), Is0),
+    reverse(Is0, Is),
+    member(I, Is),
+    length(Inner, I),
+    append(Inner, _, Rest),
+    append([0'{|Inner], [0'}], Object),
+    catch(json_parse(Object, json(Pairs)), _, fail),
+    (   memberchk(ok-_, Pairs)
+    ;   memberchk(words-_, Pairs)
+    ;   memberchk(rewrites-_, Pairs)
+    ),
+    !.
 
 %% ---- the backend --------------------------------------------------------
 
@@ -556,6 +698,18 @@ ep_ir_ask(Round, System, User, Reply) :-
         ep_ir_count(calls)
     ;   ep_ir_count(calls),
         ep_ir_backend(System, User, Reply)
+    ),
+    ep_ir_log(Round, User, Reply).
+
+%% CODING_ENDPOINT_IR_LOG names a file each round's prompt and reply are
+%% appended to, so a live run can be read afterwards: what the model was
+%% shown and what it said.
+ep_ir_log(Round, User, Reply) :-
+    ep_ir_env('CODING_ENDPOINT_IR_LOG', '', File),
+    (   File == ''
+    ->  true
+    ;   format(codes(Cs), '== round ~w~n-- prompt~n~w~n-- reply~n~w~n~n', [Round, User, Reply]),
+        catch(append_file_from_codes(File, Cs), _, true)
     ).
 
 ep_ir_backend(System, User, Reply) :-
@@ -563,7 +717,7 @@ ep_ir_backend(System, User, Reply) :-
     ep_ir_mode(Mode),
     ep_ir_url(Mode, Url),
     ep_ir_model(Model),
-    ep_ir_int('CODING_ENDPOINT_IR_MAX_TOKENS', 2000, MaxTokens),
+    ep_ir_int('CODING_ENDPOINT_IR_MAX_TOKENS', 8000, MaxTokens),
     ep_backend_timeout(Timeout),
     Body = json([model-Model, max_tokens-MaxTokens, stream- @(false),
                  messages-[json([role-system, content-System]),
@@ -608,8 +762,9 @@ ep_ir_first_chars(Text, Max, First) :-
     ).
 
 ep_ir_post(anthropic, Url, Key, Timeout, Body, Status, Resp) :- !,
-    ep_anthropic_body(Body, AnthropicBody),
-    json_codes(AnthropicBody, Codes),
+    ep_anthropic_body(Body, json(Pairs0)),
+    ep_ir_effort_field(Url, Pairs0, Pairs),
+    json_codes(json(Pairs), Codes),
     format(atom(KeyHeader), 'x-api-key: ~w', [Key]),
     curl_post(Url, 'application/json', Codes,
               [ header(KeyHeader),
@@ -625,6 +780,29 @@ ep_ir_post(_, Url, Key, Timeout, json(Pairs), Status, Resp) :-
     curl_post(Url, 'application/json', Codes,
               [header(Auth), timeout(Timeout), max_size(16777216)],
               Status, Resp).
+
+%% THE MODEL THINKS UNLESS IT IS TOLD HOW MUCH. claude-sonnet-5-5 thinks by
+%% default at effort high, the thinking is billed as output and counts
+%% against max_tokens, and one call spent its 2000 tokens thinking and
+%% answered no text (finish_reason length). A verdict and a rewrite need
+%% little: output_config.effort is `low' for Anthropic's own API, which
+%% every current model takes, and CODING_ENDPOINT_IR_EFFORT names another
+%% level, or `none' for no field -- the default for any other URL, as
+%% another provider's messages endpoint may refuse the field. At `low' the
+%% twelve benchmark tasks' second run spent some 300 completion tokens a
+%% call, where the runs before it spent 1 150.
+ep_ir_effort_field(Url, Pairs0, Pairs) :-
+    ep_ir_env('CODING_ENDPOINT_IR_EFFORT', '', E0),
+    (   E0 \== ''
+    ->  E = E0
+    ;   sub_atom(Url, _, _, _, 'api.anthropic.com')
+    ->  E = low
+    ;   E = none
+    ),
+    (   E == none
+    ->  Pairs = Pairs0
+    ;   append(Pairs0, [output_config-json([effort-E])], Pairs)
+    ).
 
 %% A call that failed rests the backend for five minutes.
 ep_ir_backend_resting :-
@@ -684,12 +862,21 @@ ep_ir_int(Name, Default, N) :-
 
 ep_ir_stats_reset :-
     nb_setval('$ep_ir_answered', no),
+    nb_setval('$ep_ir_refused', []),
+    nb_setval('$ep_ir_seen', []),
     nb_setval('$ep_ir_stats', ir(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)).
 
 ep_ir_stats(Stats) :-
     (   catch(nb_getval('$ep_ir_stats', Stats0), _, fail)
     ->  Stats = Stats0
     ;   Stats = ir(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+    ).
+
+%% The lesson lines this request took back, the last first.
+ep_ir_refused(Lines) :-
+    (   catch(nb_getval('$ep_ir_refused', Lines0), _, fail)
+    ->  Lines = Lines0
+    ;   Lines = []
     ).
 
 %% ir(Sentences, Read, Lesson, Rewrite, Unread, Lessons, Calls,

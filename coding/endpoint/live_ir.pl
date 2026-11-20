@@ -52,6 +52,9 @@ live_task(Name, t(C0, P0, K0), t(C, P, K)) :-
         ep_ir_stats(ir(_, _, _, _, _, Lessons, Calls, Prompt, Completion, Right, Wrong)),
         format("   ~w calls, ~w lessons, ~w judged right, ~w judged wrong, ~w + ~w tokens~n",
                [Calls, Lessons, Right, Wrong, Prompt, Completion]),
+        ep_ir_refused(Refused),
+        forall(member(L, Refused),
+               format("   taken back, as it changed a confirmed reading: ~w~n", [L])),
         C is C0 + Calls, P is P0 + Prompt, K is K0 + Completion
     ;   format("~n== ~w: no such task~n", [Name]),
         C = C0, P = P0, K = K0
@@ -63,6 +66,8 @@ live_reading(reading(S0, How, IRs)) :-
     ->  Verdict = '-'
     ;   ep_ir_judged(S0, IRs, right)
     ->  Verdict = right
+    ;   ep_ir_judged(S0, IRs, unjudged)
+    ->  Verdict = unjudged
     ;   Verdict = unchecked
     ),
     (   How = rewrite(Rs)

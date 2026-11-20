@@ -67,7 +67,8 @@
               [ ep_ir_readings/2, ep_ir_stats/1, ep_ir_stats_reset/0,
                 ep_ir_model_stub/3, ep_ir_lesson/1, ep_ir_rewrite/2,
                 ep_ir_unread/2, ep_ir_verdict/3, ep_ir_repair_ready/0,
-                ep_ir_reply/4, ep_ir_display/2 ]).
+                ep_ir_reply/4, ep_ir_display/2, ep_ir_refused/1,
+                ep_ir_reading_text/2 ]).
 
 main :-
     setenv('CODING_ENDPOINT_TOKEN', 'test-token'),
@@ -1238,12 +1239,33 @@ test_ir_repair :-
           ['The noun "x_blurgh" means "blurgh".']),
     ( ep_ir_lesson('The noun "x_house" means "house".') -> HL = taught ; HL = refused ),
     check('a word the translator knows is not taught again', HL, refused),
+    %% a lesson that would change a confirmed reading is taken back: `if'
+    %% is unknown in the middle of a sentence, and the grammar's own at its head
+    If7 = 'If it reads the input, it prints 0.',
+    ep_ir_try(If7, IfIRs7), ep_ir_reading_text(IfIRs7, IfText7),
+    assertz(ep_ir_verdict(If7, IfText7, right)),
+    assertz(ep_ir_model_stub('prints yes if the zorp', 1,
+        '{"words": [{"word": "if", "class": "conjunction"}, {"word": "zorp", "class": "noun"}], "rewrites": []}')),
+    ep_ir_readings('It prints yes if the zorp is big.', _),
+    findall(L, ( ep_ir_lesson(L), once(( sub_atom(L, _, _, _, '"x_if"') ; sub_atom(L, _, _, _, zorp) )) ), GL7),
+    ep_ir_refused(Refused7),
+    check('a lesson that would change a confirmed reading is taken back, and the other kept',
+          GL7-Refused7, ['The noun "x_zorp" means "zorp".']-['The conjunction "x_if" means "if".']),
+    ( ep_ir_try(If7, IfIRs8), ep_ir_reading_text(IfIRs8, IfText7), \+ catch(conjunction(x_if), _, fail)
+    -> IfKept = yes ; IfKept = no ),
+    check('the confirmed reading stands, and no fact of the lesson taken back is left', IfKept, yes),
+    retract(ep_ir_verdict(If7, IfText7, right)),
     %% a reply that is no JSON teaches nothing and breaks nothing
     assertz(ep_ir_model_stub('Quux the blarf', 1, 'I cannot help with that.')),
     ep_ir_readings('Quux the blarf.', R6),
     check('a reply that is not JSON leaves the sentence unread', R6, [reading('Quux the blarf.', unread, [])]),
     ep_ir_reply('Here: {"ok": [1, "x"], "words": [], "rewrites": [{"id": 2, "sentences": ["A b."]}]} done', [], OK, RW),
     check('the JSON object is found inside the reply text', OK-RW, [1]-[2-['A b.']]),
+    ep_ir_reply('The line holds only the characters ()[]{}. {"ok": [3], "rewrites": []}', _, OK2, _),
+    check('a brace before the JSON object does not hide it', OK2, [3]),
+    ep_ir_reply('{"ok": [1], "rewrites": []}\n\nWait, that is wrong. Here is the corrected answer:\n\n{"ok": [], "rewrites": [{"id": 1, "sentences": ["It reads one line."]}]}', _, OK3, RW3),
+    check('the last object is the answer, the one the model corrected passed by',
+          OK3-RW3, []-[1-['It reads one line.']]),
     ep_ir_display('n \x5\1 <= n\x6\, \x3\ 2\nlines', Shown),
     check('the model is shown the brackets, the dash and a blank for a line break',
           Shown, 'n (1 <= n), - 2 lines'),
@@ -1316,7 +1338,8 @@ test_ir_check :-
     ep_ir_note('Print each word in lowercase.', CNote6),
     ep_ir_stats(ir(_, _, _, _, _, _, CCalls7, _, _, _, _)),
     check('the note never carries a wrong reading, and asks no model again', CNote6-CCalls7, ''-0),
-    %% a reading the model says nothing of is used, and sent again
+    %% a reading the model was shown and said nothing of is used, and kept
+    %% as unjudged, so it is not sent again
     assertz(ep_ir_model_stub('Read as: "It prints each word in lowercase."', 1, '{"ok": []}')),
     ep_ir_readings('It prints each word in lowercase.', C8),
     ir_shape(C8, CS8),
@@ -1325,7 +1348,8 @@ test_ir_check :-
           CS8-CCalls8-Checked8, ['It prints each word in lowercase.'-read-1]-1-0),
     ep_ir_readings('It prints each word in lowercase.', _),
     ep_ir_stats(ir(_, _, _, _, _, _, CCalls9, _, _, _, _)),
-    check('and is sent again with the next request', CCalls9, 1),
+    ( ep_ir_verdict('It prints each word in lowercase.', _, unjudged) -> UJ9 = kept ; UJ9 = missing ),
+    check('and is kept as unjudged, and not sent again', UJ9-CCalls9, kept-0),
     %% a word taught makes a reading, which the next round checks
     assertz(ep_ir_model_stub('Unknown words: zibbet', 1,
         '{"words": [{"word": "zibbet", "class": "noun", "base": "zibbet"}]}')),
@@ -1336,6 +1360,43 @@ test_ir_check :-
     check('a reading a lesson made is checked in the next round',
           CS10-Lessons10-CCalls10-Checked10,
           ['It prints the sum of a contiguous zibbet.'-lesson-1]-1-2-1),
+    %% a sentence whose rounds keep ending on a reading the model never saw
+    %% is given up after CODING_ENDPOINT_IR_TRIES requests
+    setenv('CODING_ENDPOINT_IR_ROUNDS', '1'),
+    assertz(ep_ir_model_stub('Read as: "Each make words lowercase."', 1,
+        '{"ok": [], "rewrites": [{"id": 1, "sentences": ["It makes each word lowercase."]}]}')),
+    assertz(ep_ir_model_stub('Rewritten as: "It makes each word lowercase."', 1,
+        '{"ok": [], "rewrites": [{"id": 1, "sentences": ["The program makes each word lowercase."]}]}')),
+    ep_ir_readings('Make each word lowercase.', T11),
+    ir_shape(T11, TS11),
+    ep_ir_stats(ir(_, _, _, _, _, _, TCalls11, _, _, _, _)),
+    check('a rewrite made in the last round is used, once tried',
+          TS11-TCalls11, ['Make each word lowercase.'-rewrite(['It makes each word lowercase.'])-1]-1),
+    ep_ir_readings('Make each word lowercase.', T12),
+    ep_ir_stats(ir(_, _, _, _, _, _, TCalls12, _, _, _, _)),
+    ( ep_ir_rewrite('Make each word lowercase.', _) -> TRw12 = kept ; TRw12 = dropped ),
+    check('at the second such request the sentence is unread, and its rewrite dropped',
+          T12-TCalls12-TRw12, [reading('Make each word lowercase.', unread, [])]-1-dropped),
+    ep_ir_readings('Make each word lowercase.', _),
+    ep_ir_stats(ir(_, _, _, _, _, _, TCalls13, _, _, _, _)),
+    check('and it is not sent again', TCalls13, 0),
+    unsetenv('CODING_ENDPOINT_IR_ROUNDS'),
+    %% CODING_ENDPOINT_IR_LOG keeps each round's prompt and reply
+    os_pid(LogPid),
+    format(atom(LogFile), '/tmp/ep_ir_log_~w.txt', [LogPid]),
+    setenv('CODING_ENDPOINT_IR_LOG', LogFile),
+    assertz(ep_ir_model_stub('Read as: "The program writes the output."', 1, '{"ok": [1]}')),
+    ep_ir_readings('The program writes the output.', _),
+    unsetenv('CODING_ENDPOINT_IR_LOG'),
+    (   catch(read_file_to_codes(LogFile, LogCodes), _, fail),
+        atom_codes(LogText, LogCodes),
+        sub_atom(LogText, _, _, _, 'Read as: "The program writes the output."'),
+        sub_atom(LogText, _, _, _, '-- reply')
+    ->  Logged = yes
+    ;   Logged = no
+    ),
+    catch(delete_file(LogFile), _, true),
+    check('CODING_ENDPOINT_IR_LOG keeps the round''s prompt and reply', Logged, yes),
     retractall(ep_ir_model_stub(_, _, _)),
     setenv('CODING_ENDPOINT_IR_REPAIR', 'off'),
     !.
