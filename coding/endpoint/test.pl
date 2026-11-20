@@ -815,240 +815,10 @@ test_backend_key :-
     ).
 
 test_continue :-
-    A = 'Direct `p->a_` works. The failure is specific to `&p->a_` passed as a parameter, so I’m narrowing that case.',
-    ( ep_text_dangles(A) -> A1 = yes ; A1 = no ),
-    check('a narrowing preamble dangles', A1, yes),
-    B = 'Docs updated and C/C++ builds verified. Running the full ccllib gate to confirm GREEN with the atomic C++23 skip.',
-    ( ep_text_dangles(B) -> B1 = yes ; B1 = no ),
-    check('a running-gate preamble dangles', B1, yes),
-    C = 'The gate is GREEN: 28 programs in all three runs, 175 refusals, 19 standalone. I’m committing and pushing 1d.',
-    ( ep_text_dangles(C) -> C1 = yes ; C1 = no ),
-    check('a committing preamble dangles', C1, yes),
-    D = 'Done. All tests pass and the fix is committed.',
-    ( ep_text_dangles(D) -> D1 = yes ; D1 = no ),
-    check('a final answer does not dangle', D1, no),
-    E = 'The command I’m running takes ten seconds.',
-    ( ep_text_dangles(E) -> E1 = yes ; E1 = no ),
-    check('a relative clause does not start a sentence', E1, no),
-    F = 'Testing shows the fix works.',
-    ( ep_text_dangles(F) -> F1 = yes ; F1 = no ),
-    check('a gerund with a finite verb is a statement', F1, no),
-    G = 'The flow gate is green. I’ll leave the remaining choice to you.',
-    ( ep_text_dangles(G) -> G1 = yes ; G1 = no ),
-    check('an offer does not dangle', G1, no),
-    H = 'Let me check the compiler source.',
-    ( ep_text_dangles(H) -> H1 = yes ; H1 = no ),
-    check('a let-me preamble dangles', H1, yes),
-    I = 'I need to know whether the test passes.',
-    ( ep_text_dangles(I) -> I1 = yes ; I1 = no ),
-    check('a need to know does not dangle', I1, no),
-    J = 'The C++23 AST itself is right; the failure is in the C++ desugaring of &p->a_. Comparing the two language paths now.',
-    ( ep_text_dangles(J) -> J1 = yes ; J1 = no ),
-    check('a comparing sentence dangles', J1, yes),
-    K = 'I’m checking the parser. The fix is ready.',
-    ( ep_text_dangles(K) -> K1 = yes ; K1 = no ),
-    check('an early preamble before a final answer does not dangle', K1, no),
-    L = 'Checking the AST, I found the bug. The fix is in the desugaring.',
-    ( ep_text_dangles(L) -> L1 = yes ; L1 = no ),
-    check('a gerund in an earlier sentence does not dangle', L1, no),
-    M = 'Comparing the paths shows the difference.',
-    ( ep_text_dangles(M) -> M1 = yes ; M1 = no ),
-    check('a comparing statement does not dangle', M1, no),
-    N = 'Comparing the two paths.',
-    ( ep_text_dangles(N) -> N1 = yes ; N1 = no ),
-    check('a bare comparing phrase dangles', N1, yes),
-    O = 'The AST is right; comparing the paths now.',
-    ( ep_text_dangles(O) -> O1 = yes ; O1 = no ),
-    check('a semicolon starts the last clause', O1, yes),
-    U = 'The harness appends exit N itself. Let me revert that print from the programs.',
-    ( ep_text_dangles(U) -> U1 = yes ; U1 = no ),
-    check('a let-me revert dangles', U1, yes),
-    V = 'I’ll revert the print.',
-    ( ep_text_dangles(V) -> V1 = yes ; V1 = no ),
-    check('an arbitrary action after I will dangles', V1, yes),
-    W = 'Let me know if you need anything else.',
-    ( ep_text_dangles(W) -> W1 = yes ; W1 = no ),
-    check('a let-me know offer does not dangle', W1, no),
-    X = 'I’ll explain the change.',
-    ( ep_text_dangles(X) -> X1 = yes ; X1 = no ),
-    check('an explanation after I will does not dangle', X1, no),
-    Y = 'Let me finish.',
-    ( ep_text_dangles(Y) -> Y1 = yes ; Y1 = no ),
-    check('a closing let-me does not dangle', Y1, no),
-    Z = 'Now reverting the print from the programs.',
-    ( ep_text_dangles(Z) -> Z1 = yes ; Z1 = no ),
-    check('a leading now before a gerund dangles', Z1, yes),
-    AA = 'I’ll just explain the change.',
-    ( ep_text_dangles(AA) -> AA1 = yes ; AA1 = no ),
-    check('an adverb before an explanation does not dangle', AA1, no),
-    AB = 'Let me quickly revert the print.',
-    ( ep_text_dangles(AB) -> AB1 = yes ; AB1 = no ),
-    check('an adverb before an action dangles', AB1, yes),
-    AC = 'I’m just checking the logs.',
-    ( ep_text_dangles(AC) -> AC1 = yes ; AC1 = no ),
-    check('an adverb before a gerund action dangles', AC1, yes),
-    AD = 'I’m just explaining the change.',
-    ( ep_text_dangles(AD) -> AD1 = yes ; AD1 = no ),
-    check('an adverb before an explanation does not dangle', AD1, no),
-    AE = 'I’m about to revert the print.',
-    ( ep_text_dangles(AE) -> AE1 = yes ; AE1 = no ),
-    check('an about-to preamble dangles', AE1, yes),
-    AF = 'After that, I’ll revert the print.',
-    ( ep_text_dangles(AF) -> AF1 = yes ; AF1 = no ),
-    check('an after-that preamble dangles', AF1, yes),
-    AH = 'It\'s running now (the nice message is harmless). Let me wait for it to finish.',
-    ( ep_text_dangles(AH) -> AH1 = yes ; AH1 = no ),
-    check('a wait-for-it-to-finish preamble dangles', AH1, yes),
-    AI = 'I’ll wait for your input.',
-    ( ep_text_dangles(AI) -> AI1 = yes ; AI1 = no ),
-    check('a wait-for-your-input offer does not dangle', AI1, no),
-    AJ = 'Let me finish the code.',
-    ( ep_text_dangles(AJ) -> AJ1 = yes ; AJ1 = no ),
-    check('finishing the code dangles', AJ1, yes),
-    AK = 'I’ll stop the server.',
-    ( ep_text_dangles(AK) -> AK1 = yes ; AK1 = no ),
-    check('stopping the server dangles', AK1, yes),
-    AL = 'I’ll stop here.',
-    ( ep_text_dangles(AL) -> AL1 = yes ; AL1 = no ),
-    check('stopping here does not dangle', AL1, no),
-    AM = 'I’ll leave the file unchanged.',
-    ( ep_text_dangles(AM) -> AM1 = yes ; AM1 = no ),
-    check('leaving the file unchanged dangles', AM1, yes),
-    AN = 'Progressing well (151 lines). Waiting for the rest.',
-    ( ep_text_dangles(AN) -> AN1 = yes ; AN1 = no ),
-    check('waiting for the rest dangles', AN1, yes),
-    AO = 'Waiting for your input.',
-    ( ep_text_dangles(AO) -> AO1 = yes ; AO1 = no ),
-    check('waiting for your input does not dangle', AO1, no),
-    AP = 'Finishing the code.',
-    ( ep_text_dangles(AP) -> AP1 = yes ; AP1 = no ),
-    check('finishing the code dangles', AP1, yes),
-    AQ = 'Finishing.',
-    ( ep_text_dangles(AQ) -> AQ1 = yes ; AQ1 = no ),
-    check('finishing alone does not dangle', AQ1, no),
-    AR = 'Stopping the server.',
-    ( ep_text_dangles(AR) -> AR1 = yes ; AR1 = no ),
-    check('stopping the server dangles', AR1, yes),
-    AS = 'Stopping here.',
-    ( ep_text_dangles(AS) -> AS1 = yes ; AS1 = no ),
-    check('stopping here does not dangle', AS1, no),
-    AT = 'Leaving the file unchanged.',
-    ( ep_text_dangles(AT) -> AT1 = yes ; AT1 = no ),
-    check('leaving the file unchanged as a gerund dangles', AT1, yes),
-    AU = 'Leaving the rest to you.',
-    ( ep_text_dangles(AU) -> AU1 = yes ; AU1 = no ),
-    check('leaving the rest as a gerund does not dangle', AU1, no),
-    AV = 'I’m just waiting for the rest.',
-    ( ep_text_dangles(AV) -> AV1 = yes ; AV1 = no ),
-    check('I am waiting for the rest dangles', AV1, yes),
-    AW = 'Waiting.',
-    ( ep_text_dangles(AW) -> AW1 = yes ; AW1 = no ),
-    check('waiting alone dangles', AW1, yes),
-    AX = 'Let me simplify: drop the unnecessary exit helper and test whether the mutex type macro works without a template argument.',
-    ( ep_text_dangles(AX) -> AX1 = yes ; AX1 = no ),
-    check('a colon keeps the let-me head', AX1, yes),
-    AY = 'The AST is right; I’ll revert the print.',
-    ( ep_text_dangles(AY) -> AY1 = yes ; AY1 = no ),
-    check('a semicolon keeps a later subject announcement', AY1, yes),
-    AZ = 'Now the report page drawing: a page tall enough for every column, so no line is cut off.',
-    ( ep_text_dangles(AZ) -> AZ1 = yes ; AZ1 = no ),
-    check('a now-the heading with a gerund dangles', AZ1, yes),
-    BA = 'I’ve traced the exact failing step. Let me confirm the rendering failure at the end of the chain — whether anything after the drawing can succeed at all.',
-    ( ep_text_dangles(BA) -> BA1 = yes ; BA1 = no ),
-    check('a let-me confirm an object dangles', BA1, yes),
-    BB = 'Let me confirm that the fix is complete.',
-    ( ep_text_dangles(BB) -> BB1 = yes ; BB1 = no ),
-    check('a let-me confirm that does not dangle', BB1, no),
-    BC = 'The only remaining local blocker is that my machine lacks rsvg-convert; the server installs it. I’ll put a small stand-in on the PATH to exercise the full picture path, then look for leftovers. First, what a systemd unit sees of PATH.',
-    ( ep_text_dangles(BC) -> BC1 = yes ; BC1 = no ),
-    check('a wh-clause heading dangles', BC1, yes),
-    BD = 'First, what a systemd unit sees of PATH.',
-    ( ep_text_dangles(BD) -> BD1 = yes ; BD1 = no ),
-    check('a first-what fragment dangles', BD1, yes),
-    BE = 'First, what matters is the result.',
-    ( ep_text_dangles(BE) -> BE1 = yes ; BE1 = no ),
-    check('a wh-clause subject with a finite verb does not dangle', BE1, no),
-    BF = 'While that runs, let me look at GitHub Actions — the server-side commit did (or didn’t) get pushed, and local main may be behind. That affects any fix I deploy.',
-    ( ep_text_dangles(BF) -> BF1 = yes ; BF1 = no ),
-    check('an announcement before its explanation dangles', BF1, yes),
-    BG = 'The flow tools need a file run in a child of their own, so I’ll point flow/debug at the run shape: if its replay loses the getenv output, that confirms the loss is in the path run takes. First, the tool’s options.',
-    ( ep_text_dangles(BG) -> BG1 = yes ; BG1 = no ),
-    check('a sequence noun-phrase heading dangles', BG1, yes),
-    BH = 'First, the tool’s options.',
-    ( ep_text_dangles(BH) -> BH1 = yes ; BH1 = no ),
-    check('a first-the fragment alone dangles', BH1, yes),
-    BI = 'First, the results are good.',
-    ( ep_text_dangles(BI) -> BI1 = yes ; BI1 = no ),
-    check('a sequence clause with a finite verb does not dangle', BI1, no),
-    BJ = 'Let me explain the situation. The server is behind.',
-    ( ep_text_dangles(BJ) -> BJ1 = yes ; BJ1 = no ),
-    check('an explanation before its reason does not dangle', BJ1, no),
-    BK = 'I’ll check the logs. The server may be behind.',
-    ( ep_text_dangles(BK) -> BK1 = yes ; BK1 = no ),
-    check('an action announcement before its reason dangles', BK1, yes),
-    BL = 'I found something worth checking before more engine work: format(atom(A), "~w", [x]) prints nothing in the scratch build, built with these same flags. That is much simpler than getenv/2. Confirming on the published binary.',
-    ( ep_text_dangles(BL) -> BL1 = yes ; BL1 = no ),
-    check('a confirming-against gerund dangles', BL1, yes),
-    BM = 'Confirming on the published binary.',
-    ( ep_text_dangles(BM) -> BM1 = yes ; BM1 = no ),
-    check('a bare confirming-against gerund dangles', BM1, yes),
-    BN = 'Confirming that the tests pass.',
-    ( ep_text_dangles(BN) -> BN1 = yes ; BN1 = no ),
-    check('a confirming-that explanation does not dangle', BN1, no),
-    BO = 'I want to rule out one thing before going deeper: whether this checkout’s engine differs from the one the green review traced. Comparing the published binary with the scratch build is already done; now checking whether ensure_loaded/consult in the same process reproduces it, which would confirm it is not run-specific.',
-    ( ep_text_dangles(BO) -> BO1 = yes ; BO1 = no ),
-    check('a checking sentence before a relative clause dangles', BO1, yes),
-    BP = 'Now checking whether the process reproduces it, which would confirm it is not run-specific.',
-    ( ep_text_dangles(BP) -> BP1 = yes ; BP1 = no ),
-    check('a finite verb in a relative clause does not make a statement', BP1, yes),
-    BQ = 'Comparing the paths, I found the bug.',
-    ( ep_text_dangles(BQ) -> BQ1 = yes ; BQ1 = no ),
-    check('a gerund front before a main clause does not dangle', BQ1, no),
-    BR = 'Comparing the paths shows the difference, which would confirm it.',
-    ( ep_text_dangles(BR) -> BR1 = yes ; BR1 = no ),
-    check('a gerund subject with its own verb does not dangle', BR1, no),
-    BS = 'The catch didn’t fire, which (per the 3.62.5 changelog line "an if-then’s else is reached") suggests old 3.18 swallows it. One more probe to confirm the message text:',
-    ( ep_text_dangles(BS) -> BS1 = yes ; BS1 = no ),
-    check('a colon heading dangles', BS1, yes),
-    BT = 'One more probe to confirm the message text:',
-    ( ep_text_dangles(BT) -> BT1 = yes ; BT1 = no ),
-    check('a bare colon fragment dangles', BT1, yes),
-    BU = 'The answer is:',
-    ( ep_text_dangles(BU) -> BU1 = yes ; BU1 = no ),
-    check('a colon after a finite verb does not dangle', BU1, no),
-    BV = 'Server cocolog is now 3.62.5 (0b55373, the local version). The modules are separate builds and may not exist yet for the new version; let me rebuild them. Since make modules is a tracked build target, I’ll use it.',
-    ( ep_text_dangles(BV) -> BV1 = yes ; BV1 = no ),
-    check('a main clause after a comma announces and dangles', BV1, yes),
-    BW = 'Since the build is a tracked target, I’ll use it.',
-    ( ep_text_dangles(BW) -> BW1 = yes ; BW1 = no ),
-    check('a since-clause and its announcement dangle', BW1, yes),
-    BX = 'The build is green, I’m confident.',
-    ( ep_text_dangles(BX) -> BX1 = yes ; BX1 = no ),
-    check('a comma after a statement and an adjective does not dangle', BX1, no),
-    BY = 'The build is green, I’ll explain the change.',
-    ( ep_text_dangles(BY) -> BY1 = yes ; BY1 = no ),
-    check('a comma before an explanation does not dangle', BY1, no),
-    BZ = 'The trace now shows the first catch/3 never gets an exit marker: the call goes straight from ASK to OPFAIL, with the failing last goal backed into a frame of kind 2 (CATCH). That means the goal is being compiled as if it were the body’s last, and the catch frame is left where $catch_exit should have retired it. I’m re-reading that dispatch path and the code that decides “last goal.”',
-    ( ep_text_dangles(BZ) -> BZ1 = yes ; BZ1 = no ),
-    check('a hyphenated gerund dangles', BZ1, yes),
-    CA = 'I’m re-reading that dispatch path.',
-    ( ep_text_dangles(CA) -> CA1 = yes ; CA1 = no ),
-    check('a bare re-reading phrase dangles', CA1, yes),
-    CB = 'Re-reading the trace, the bug is clear.',
-    ( ep_text_dangles(CB) -> CB1 = yes ; CB1 = no ),
-    check('a hyphenated gerund with its own verb does not dangle', CB1, no),
-    CC = 'Reading the web unit and the /tick route, since a queued strategy job must inherit the Telegram token.',
-    ( ep_text_dangles(CC) -> CC1 = yes ; CC1 = no ),
-    check('a gerund before a reason clause dangles', CC1, yes),
-    CD = 'Reading the trace, because the bug is clear.',
-    ( ep_text_dangles(CD) -> CD1 = yes ; CD1 = no ),
-    check('a gerund before a because clause dangles', CD1, yes),
-    CE = 'Reading the trace, the bug is clear.',
-    ( ep_text_dangles(CE) -> CE1 = yes ; CE1 = no ),
-    check('a gerund front with a main clause does not dangle', CE1, no),
-    CF = 'Reading the trace, we found the bug.',
-    ( ep_text_dangles(CF) -> CF1 = yes ; CF1 = no ),
-    check('a gerund front before a past clause does not dangle', CF1, no),
+    forall(dangle_case(Name, Text, Want),
+           (   ( ep_text_dangles(Text) -> Got = yes ; Got = no ),
+               check(Name, Got, Want)
+           )),
     continue_reply('I’m checking the parser now.', [], stop, Reply),
     ( ep_reply_dangles(Reply) -> R1 = yes ; R1 = no ),
     check('a text-only reply dangles', R1, yes),
@@ -1120,6 +890,87 @@ test_continue :-
     ep_continue_limit(Set),
     check('CODING_ENDPOINT_CONTINUE_LIMIT is read', Set, 5),
     unsetenv('CODING_ENDPOINT_CONTINUE_LIMIT').
+
+%% The texts ep_text_dangles/1 is held to, each with the check's name and
+%% whether it dangles. A table, so test_continue's clause fits a store page.
+dangle_case('a narrowing preamble dangles', 'Direct `p->a_` works. The failure is specific to `&p->a_` passed as a parameter, so I’m narrowing that case.', yes).
+dangle_case('a running-gate preamble dangles', 'Docs updated and C/C++ builds verified. Running the full ccllib gate to confirm GREEN with the atomic C++23 skip.', yes).
+dangle_case('a committing preamble dangles', 'The gate is GREEN: 28 programs in all three runs, 175 refusals, 19 standalone. I’m committing and pushing 1d.', yes).
+dangle_case('a final answer does not dangle', 'Done. All tests pass and the fix is committed.', no).
+dangle_case('a relative clause does not start a sentence', 'The command I’m running takes ten seconds.', no).
+dangle_case('a gerund with a finite verb is a statement', 'Testing shows the fix works.', no).
+dangle_case('an offer does not dangle', 'The flow gate is green. I’ll leave the remaining choice to you.', no).
+dangle_case('a let-me preamble dangles', 'Let me check the compiler source.', yes).
+dangle_case('a need to know does not dangle', 'I need to know whether the test passes.', no).
+dangle_case('a comparing sentence dangles', 'The C++23 AST itself is right; the failure is in the C++ desugaring of &p->a_. Comparing the two language paths now.', yes).
+dangle_case('an early preamble before a final answer does not dangle', 'I’m checking the parser. The fix is ready.', no).
+dangle_case('a gerund in an earlier sentence does not dangle', 'Checking the AST, I found the bug. The fix is in the desugaring.', no).
+dangle_case('a comparing statement does not dangle', 'Comparing the paths shows the difference.', no).
+dangle_case('a bare comparing phrase dangles', 'Comparing the two paths.', yes).
+dangle_case('a semicolon starts the last clause', 'The AST is right; comparing the paths now.', yes).
+dangle_case('a let-me revert dangles', 'The harness appends exit N itself. Let me revert that print from the programs.', yes).
+dangle_case('an arbitrary action after I will dangles', 'I’ll revert the print.', yes).
+dangle_case('a let-me know offer does not dangle', 'Let me know if you need anything else.', no).
+dangle_case('an explanation after I will does not dangle', 'I’ll explain the change.', no).
+dangle_case('a closing let-me does not dangle', 'Let me finish.', no).
+dangle_case('a leading now before a gerund dangles', 'Now reverting the print from the programs.', yes).
+dangle_case('an adverb before an explanation does not dangle', 'I’ll just explain the change.', no).
+dangle_case('an adverb before an action dangles', 'Let me quickly revert the print.', yes).
+dangle_case('an adverb before a gerund action dangles', 'I’m just checking the logs.', yes).
+dangle_case('an adverb before an explanation does not dangle', 'I’m just explaining the change.', no).
+dangle_case('an about-to preamble dangles', 'I’m about to revert the print.', yes).
+dangle_case('an after-that preamble dangles', 'After that, I’ll revert the print.', yes).
+dangle_case('a wait-for-it-to-finish preamble dangles', 'It\'s running now (the nice message is harmless). Let me wait for it to finish.', yes).
+dangle_case('a wait-for-your-input offer does not dangle', 'I’ll wait for your input.', no).
+dangle_case('finishing the code dangles', 'Let me finish the code.', yes).
+dangle_case('stopping the server dangles', 'I’ll stop the server.', yes).
+dangle_case('stopping here does not dangle', 'I’ll stop here.', no).
+dangle_case('leaving the file unchanged dangles', 'I’ll leave the file unchanged.', yes).
+dangle_case('waiting for the rest dangles', 'Progressing well (151 lines). Waiting for the rest.', yes).
+dangle_case('waiting for your input does not dangle', 'Waiting for your input.', no).
+dangle_case('finishing the code dangles', 'Finishing the code.', yes).
+dangle_case('finishing alone does not dangle', 'Finishing.', no).
+dangle_case('stopping the server dangles', 'Stopping the server.', yes).
+dangle_case('stopping here does not dangle', 'Stopping here.', no).
+dangle_case('leaving the file unchanged as a gerund dangles', 'Leaving the file unchanged.', yes).
+dangle_case('leaving the rest as a gerund does not dangle', 'Leaving the rest to you.', no).
+dangle_case('I am waiting for the rest dangles', 'I’m just waiting for the rest.', yes).
+dangle_case('waiting alone dangles', 'Waiting.', yes).
+dangle_case('a colon keeps the let-me head', 'Let me simplify: drop the unnecessary exit helper and test whether the mutex type macro works without a template argument.', yes).
+dangle_case('a semicolon keeps a later subject announcement', 'The AST is right; I’ll revert the print.', yes).
+dangle_case('a now-the heading with a gerund dangles', 'Now the report page drawing: a page tall enough for every column, so no line is cut off.', yes).
+dangle_case('a let-me confirm an object dangles', 'I’ve traced the exact failing step. Let me confirm the rendering failure at the end of the chain — whether anything after the drawing can succeed at all.', yes).
+dangle_case('a let-me confirm that does not dangle', 'Let me confirm that the fix is complete.', no).
+dangle_case('a wh-clause heading dangles', 'The only remaining local blocker is that my machine lacks rsvg-convert; the server installs it. I’ll put a small stand-in on the PATH to exercise the full picture path, then look for leftovers. First, what a systemd unit sees of PATH.', yes).
+dangle_case('a first-what fragment dangles', 'First, what a systemd unit sees of PATH.', yes).
+dangle_case('a wh-clause subject with a finite verb does not dangle', 'First, what matters is the result.', no).
+dangle_case('an announcement before its explanation dangles', 'While that runs, let me look at GitHub Actions — the server-side commit did (or didn’t) get pushed, and local main may be behind. That affects any fix I deploy.', yes).
+dangle_case('a sequence noun-phrase heading dangles', 'The flow tools need a file run in a child of their own, so I’ll point flow/debug at the run shape: if its replay loses the getenv output, that confirms the loss is in the path run takes. First, the tool’s options.', yes).
+dangle_case('a first-the fragment alone dangles', 'First, the tool’s options.', yes).
+dangle_case('a sequence clause with a finite verb does not dangle', 'First, the results are good.', no).
+dangle_case('an explanation before its reason does not dangle', 'Let me explain the situation. The server is behind.', no).
+dangle_case('an action announcement before its reason dangles', 'I’ll check the logs. The server may be behind.', yes).
+dangle_case('a confirming-against gerund dangles', 'I found something worth checking before more engine work: format(atom(A), "~w", [x]) prints nothing in the scratch build, built with these same flags. That is much simpler than getenv/2. Confirming on the published binary.', yes).
+dangle_case('a bare confirming-against gerund dangles', 'Confirming on the published binary.', yes).
+dangle_case('a confirming-that explanation does not dangle', 'Confirming that the tests pass.', no).
+dangle_case('a checking sentence before a relative clause dangles', 'I want to rule out one thing before going deeper: whether this checkout’s engine differs from the one the green review traced. Comparing the published binary with the scratch build is already done; now checking whether ensure_loaded/consult in the same process reproduces it, which would confirm it is not run-specific.', yes).
+dangle_case('a finite verb in a relative clause does not make a statement', 'Now checking whether the process reproduces it, which would confirm it is not run-specific.', yes).
+dangle_case('a gerund front before a main clause does not dangle', 'Comparing the paths, I found the bug.', no).
+dangle_case('a gerund subject with its own verb does not dangle', 'Comparing the paths shows the difference, which would confirm it.', no).
+dangle_case('a colon heading dangles', 'The catch didn’t fire, which (per the 3.62.5 changelog line "an if-then’s else is reached") suggests old 3.18 swallows it. One more probe to confirm the message text:', yes).
+dangle_case('a bare colon fragment dangles', 'One more probe to confirm the message text:', yes).
+dangle_case('a colon after a finite verb does not dangle', 'The answer is:', no).
+dangle_case('a main clause after a comma announces and dangles', 'Server cocolog is now 3.62.5 (0b55373, the local version). The modules are separate builds and may not exist yet for the new version; let me rebuild them. Since make modules is a tracked build target, I’ll use it.', yes).
+dangle_case('a since-clause and its announcement dangle', 'Since the build is a tracked target, I’ll use it.', yes).
+dangle_case('a comma after a statement and an adjective does not dangle', 'The build is green, I’m confident.', no).
+dangle_case('a comma before an explanation does not dangle', 'The build is green, I’ll explain the change.', no).
+dangle_case('a hyphenated gerund dangles', 'The trace now shows the first catch/3 never gets an exit marker: the call goes straight from ASK to OPFAIL, with the failing last goal backed into a frame of kind 2 (CATCH). That means the goal is being compiled as if it were the body’s last, and the catch frame is left where $catch_exit should have retired it. I’m re-reading that dispatch path and the code that decides “last goal.”', yes).
+dangle_case('a bare re-reading phrase dangles', 'I’m re-reading that dispatch path.', yes).
+dangle_case('a hyphenated gerund with its own verb does not dangle', 'Re-reading the trace, the bug is clear.', no).
+dangle_case('a gerund before a reason clause dangles', 'Reading the web unit and the /tick route, since a queued strategy job must inherit the Telegram token.', yes).
+dangle_case('a gerund before a because clause dangles', 'Reading the trace, because the bug is clear.', yes).
+dangle_case('a gerund front with a main clause does not dangle', 'Reading the trace, the bug is clear.', no).
+dangle_case('a gerund front before a past clause does not dangle', 'Reading the trace, we found the bug.', no).
 
 test_ir :-
     reason_learn('Spanish is a language. The noun "casa" means "house". The adjective "grande" means "big". The verb "es" means "is". The feminine article "la" means "the". Every noun that ends in "a" is feminine. Every adjective follows the noun. Every noun that ends in a vowel takes "s" in the plural. Every article that ends in a vowel takes "s" in the plural. Every adjective that ends in a vowel takes "s" in the plural. "son" is the plural of "es". "era" is the past of "es". The word "no" means "not".'),

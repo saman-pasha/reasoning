@@ -388,14 +388,14 @@ v2_lang_caret(Col, Caret) :-
     append(Spaces, ['^'], Parts),
     atomic_list_concat(Parts, Caret).
 
-%% A cocolog run exits 1 with empty stderr when its entry goal simply
+%% A cocolog run exits 1 with no message when its entry goal simply
 %% failed. The four-port tracer names the goals that failed, which is the
 %% only clue a repair call gets; run it once, for the first case, and keep
 %% the last failures only.
 v2_lang_trace_context(cocolog, 1, Source, In, Stderr, Exit, ExpectedExit,
                       Timeout, Failure, WithTrace) :-
     !,
-    (   Stderr == '',
+    (   v2_lang_quiet_stderr(Stderr),
         Exit =\= ExpectedExit,
         Exit =\= 124,
         v2_lang_trace_lines(Source, In, Timeout, Lines)
@@ -406,6 +406,23 @@ v2_lang_trace_context(cocolog, 1, Source, In, Stderr, Exit, ExpectedExit,
     ;   WithTrace = Failure
     ).
 v2_lang_trace_context(_, _, _, _, _, _, _, _, Failure, Failure).
+
+%% Stderr that says nothing of why: empty, or only cocolog's own line for an
+%% entry goal that failed, `ERROR: -g main: false' -- said since cocolog
+%% 3.63.0, where through 3.62.7 a failed goal was silent, and the trace was
+%% then never added (coding/bench/v2/test.pl, `a silent goal failure shows
+%% the tracer failures').
+v2_lang_quiet_stderr('') :- !.
+v2_lang_quiet_stderr(Stderr) :-
+    split_string(Stderr, "\n", " \t\r", Parts0),
+    exclude(v2_lang_empty, Parts0, Parts),
+    Parts \== [],
+    forall(member(P, Parts),
+           (   sub_string(P, 0, _, _, 'ERROR: -'),
+               sub_string(P, _, _, 0, ': false')
+           )).
+
+v2_lang_empty(S) :- string_length(S, 0).
 
 v2_lang_trace_lines(Source, In, Timeout, Lines) :-
     tmp_file(v2_lang_trace, TraceFile),

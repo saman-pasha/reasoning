@@ -17,6 +17,7 @@
 :- use_module(library(process)).
 :- use_module(library(os)).
 :- use_module(library(json)).
+:- use_module(library(stream)).
 :- use_module('coding/shell.pl').
 :- use_module('coding/bench/v2/config.pl').
 :- use_module('coding/bench/v2/langs.pl').
