@@ -1,0 +1,64 @@
+Mvccs is a program.
+Mvccs simulates a tree.
+Each tree is a B-tree.
+The minimum degree is 2.
+Every tree holds the keys.
+Every key is an integer.
+Some keys are negative.
+Every transaction has a snapshot.
+Mvccs reads a line.
+Every line holds a command.
+Every line that is blank is ignored.
+Every transaction begins at the latest version.
+An active transaction that begins again causes an error.
+If an active transaction begins again, it causes an error.
+An active transaction stages an insertion.
+An active transaction stages a deletion.
+An active transaction commits.
+An active transaction aborts.
+An active transaction reads a key.
+An active transaction prints the view.
+If a transaction is not active, it causes an error.
+A transaction commits atomically.
+A transaction that commits applies its changes to the latest version.
+A transaction that commits creates a new version.
+A transaction that commits increments the counter.
+A transaction ends when it commits.
+A transaction that commits no changes increments the counter.
+A transaction that aborts discards its changes.
+A transaction ends when it aborts.
+If a key is visible, it reads as yes.
+If a key is not visible, it reads as no.
+Every key that is visible is printed.
+The printing is in ascending order.
+Every view that is empty does not print a line.
+If a key is committed, it gets yes.
+If a key is not committed, it gets no.
+The program prints the counter for the version command.
+Every transaction name is a word.
+Every view is a snapshot.
+Every view holds the staged changes.
+Changes after the snapshot are invisible.
+Every key has a staged change.
+Every change that is last is kept.
+A blind deletion deletes a key. The key is invisible.
+Every blind deletion is staged.
+The final committer wins.
+Every redundant insertion inserts a key that the tree holds.
+A present key is a key. The key is committed.
+Every redundant insertion is ignored.
+A redundant deletion deletes a key. The key is absent.
+An absent key is not in the latest version.
+Every redundant deletion is ignored.
+Every unfinished transaction is active.
+Every unfinished transaction is abandoned.
+An unfinished transaction is not committed.
+Every committed version is a B-tree.
+Every insertion is recursive.
+Every deletion is recursive.
+Every node is allocated on the heap.
+Every key count is unbounded.
+Every transaction count is unbounded.
+Every command prints an answer.
+The program does not ask for input.
+The program omits debug output. The program writes only the answer.

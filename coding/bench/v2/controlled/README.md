@@ -39,3 +39,37 @@ Where a reading is the grammar's and not the sentence's meaning, it stays:
 `Every transaction that is active may commit.` is `may_commit/1`, and the
 outline then says "is may_commit". The notes are the readers' output as it
 is.
+
+## The complete IR (reasoning 1.17.3)
+
+The coding endpoint's IR note of `mvccs_acid` read 5 of the requirement's
+14 sentences, and the command table was not among them. The restatement
+is read whole by the grammar, so its IR can be whole too, but the
+translator's lexicon is not the grammar's: it reads no compound joined
+by `_`, and `commit` and `abort` only as verbs. With no model it read 29
+of the 64 sentences.
+
+`TASK.translator.txt` is the restatement in a form the translator reads,
+line N for line N, and `ir_complete.pl` reads it with the translator
+alone and writes `TASK.ir`: every sentence of the restatement, its
+translator form where that differs, and the IR of each sentence of that
+form. For `mvccs_acid`: 64 sentences, 68 IR terms, 20 039 characters,
+no model call, the same note at every run.
+
+| the translator form | lines |
+|---|---|
+| the restatement's sentence as it stands, read right | 15 |
+| the model's rewrite from the endpoint's repair (6 calls, $0.11, in a copy of the store), read right | 33 |
+| by hand, after the model's rewrites were not read or were read wrong | 16 |
+
+The hand lines (by the assistant that ran the benchmark) say the same
+rule in words the translator reads right, each checked by its IR:
+`Every commit is atomic.` is `A transaction commits atomically.`, the
+commit id is `the counter` (`the version number` was read as the
+comparative of `numb`), `Mvccs does not print a prompt.` is `The program
+does not ask for input.` (the lexicon knows `prompt` as an adjective
+alone), and a reading of `can`, `causes` or `present` as a noun was
+replaced. Every one of the 68 readings was read back by hand for such a
+misreading; the model's check was not used, because its verdicts moved
+between runs (a second repair run judged 23 readings wrong and read 52
+sentences where the first read 54).

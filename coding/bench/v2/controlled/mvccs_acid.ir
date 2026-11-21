@@ -1,0 +1,138 @@
+
+
+# The request in the translator's IR
+
+The translator read the request, said again in controlled English, sentence by sentence, as:
+
+- "Mvccs is a program.":
+  - `s(none,name(mvccs),g(is,present,simple,no),[obj(np(det(article,a,w(a,lower)),none,[],w(program,lower),singular))])`
+- "Mvccs simulates a tree.":
+  - `s(none,name(mvccs),g(simulates,present,simple,no),[obj(np(det(article,a,w(a,lower)),none,[],w(tree,lower),singular))])`
+- "Every tree is a b_tree.", said for the translator as "Each tree is a B-tree.":
+  - `s(none,np(det(determiner,each,w(each,lower)),none,[],w(tree,lower),singular),g(is,present,simple,no),[obj(np(det(article,a,w(a,lower)),none,[],named(none,[w(B-tree,upper)]),singular))])`
+- "The minimum_degree is 2.", said for the translator as "The minimum degree is 2.":
+  - `s(none,np(det(article,the,w(the,lower)),none,[w(minimum,lower)],w(degree,lower),singular),g(is,present,simple,no),[obj(np(none,none,[],w(2,lower),singular))])`
+- "Every b_tree holds the keys.", said for the translator as "Every tree holds the keys.":
+  - `s(none,np(det(determiner,every,w(every,lower)),none,[],w(tree,lower),singular),g(holds,present,simple,no),[obj(np(det(article,the,w(the,lower)),none,[],w(keys,lower),plural))])`
+- "Every key is an integer.":
+  - `s(none,np(det(determiner,every,w(every,lower)),none,[],w(key,lower),singular),g(is,present,simple,no),[obj(np(det(article,a,w(an,lower)),none,[],w(integer,lower),singular))])`
+- "Every negative_integer may be a key.", said for the translator as "Some keys are negative.":
+  - `s(none,np(det(determiner,some,w(some,lower)),none,[],w(keys,lower),plural),g(is,present,simple,no),[adj([w(negative,lower)])])`
+- "Every transaction has a snapshot.":
+  - `s(none,np(det(determiner,every,w(every,lower)),none,[],w(transaction,lower),singular),g(has,present,simple,no),[obj(np(det(article,a,w(a,lower)),none,[],w(snapshot,lower),singular))])`
+- "Mvccs reads a line.":
+  - `s(none,name(mvccs),g(reads,present,simple,no),[obj(np(det(article,a,w(a,lower)),none,[],w(line,lower),singular))])`
+- "Every line holds a command.":
+  - `s(none,np(det(determiner,every,w(every,lower)),none,[],w(line,lower),singular),g(holds,present,simple,no),[obj(np(det(article,a,w(a,lower)),none,[],w(command,lower),singular))])`
+- "Every line that is blank is ignored.":
+  - `s(none,rc(np(det(determiner,every,w(every,lower)),none,[],w(line,lower),singular),subject,s(none,gap(third,singular),g(is,present,simple,no),[adj([w(blank,lower)])])),g(is,present,simple,no),[adj([w(ignored,lower)])])`
+- "Every transaction begins at the latest_version.", said for the translator as "Every transaction begins at the latest version.":
+  - `s(none,np(det(determiner,every,w(every,lower)),none,[],w(transaction,lower),singular),g(begins,present,simple,no),[pp(w(at,lower),np(det(article,the,w(the,lower)),none,[deg(superlative,w(late,lower))],w(version,lower),singular))])`
+- "Every repeated_begin begins an active_transaction.", said for the translator as "An active transaction that begins again causes an error.":
+  - `s(none,rc(np(det(article,a,w(an,lower)),none,[w(active,lower)],w(transaction,lower),singular),subject,s(none,gap(third,singular),g(begins,present,simple,no),[adv(w(again,lower))])),g(causes,present,simple,no),[obj(np(det(article,a,w(an,lower)),none,[],w(error,lower),singular))])`
+- "Every repeated_begin causes an error.", said for the translator as "If an active transaction begins again, it causes an error.":
+  - `join(comma,join(w(if,upper),none,s(none,np(det(article,a,w(an,lower)),none,[w(active,lower)],w(transaction,lower),singular),g(begins,present,simple,no),[adv(w(again,lower))])),s(none,pronoun(third,singular,w(it,lower)),g(causes,present,simple,no),[obj(np(det(article,a,w(an,lower)),none,[],w(error,lower),singular))]))`
+- "Every transaction that is active may stage an insertion.", said for the translator as "An active transaction stages an insertion.":
+  - `s(none,np(det(article,a,w(an,lower)),none,[w(active,lower)],w(transaction,lower),singular),g(stages,present,simple,no),[obj(np(det(article,a,w(an,lower)),none,[],w(insertion,lower),singular))])`
+- "Every transaction that is active may stage a deletion.", said for the translator as "An active transaction stages a deletion.":
+  - `s(none,np(det(article,a,w(an,lower)),none,[w(active,lower)],w(transaction,lower),singular),g(stages,present,simple,no),[obj(np(det(article,a,w(a,lower)),none,[],w(deletion,lower),singular))])`
+- "Every transaction that is active may commit.", said for the translator as "An active transaction commits.":
+  - `s(none,np(det(article,a,w(an,lower)),none,[w(active,lower)],w(transaction,lower),singular),g(commits,present,simple,no),[])`
+- "Every transaction that is active may abort.", said for the translator as "An active transaction aborts.":
+  - `s(none,np(det(article,a,w(an,lower)),none,[w(active,lower)],w(transaction,lower),singular),g(aborts,present,simple,no),[])`
+- "Every transaction that is active may read a key.", said for the translator as "An active transaction reads a key.":
+  - `s(none,np(det(article,a,w(an,lower)),none,[w(active,lower)],w(transaction,lower),singular),g(reads,present,simple,no),[obj(np(det(article,a,w(a,lower)),none,[],w(key,lower),singular))])`
+- "Every transaction that is active may print the view.", said for the translator as "An active transaction prints the view.":
+  - `s(none,np(det(article,a,w(an,lower)),none,[w(active,lower)],w(transaction,lower),singular),g(prints,present,simple,no),[obj(np(det(article,the,w(the,lower)),none,[],w(view,lower),singular))])`
+- "Every transaction that is not active causes an error.", said for the translator as "If a transaction is not active, it causes an error.":
+  - `join(comma,join(w(if,upper),none,s(none,np(det(article,a,w(a,lower)),none,[],w(transaction,lower),singular),g(is,present,simple,yes),[adj([w(active,lower)])])),s(none,pronoun(third,singular,w(it,lower)),g(causes,present,simple,no),[obj(np(det(article,a,w(an,lower)),none,[],w(error,lower),singular))]))`
+- "Every commit is atomic.", said for the translator as "A transaction commits atomically.":
+  - `s(none,np(det(article,a,w(a,lower)),none,[],w(transaction,lower),singular),g(commits,present,simple,no),[adv(w(atomically,lower))])`
+- "Every commit applies the changes to the latest_version.", said for the translator as "A transaction that commits applies its changes to the latest version.":
+  - `s(none,rc(np(det(article,a,w(a,lower)),none,[],w(transaction,lower),singular),subject,s(none,gap(third,singular),g(commits,present,simple,no),[])),g(applies,present,simple,no),[obj(np(det(possessive,its,w(its,lower)),none,[],w(changes,lower),plural)),pp(w(to,lower),np(det(article,the,w(the,lower)),none,[deg(superlative,w(late,lower))],w(version,lower),singular))])`
+- "Every commit creates a version.", said for the translator as "A transaction that commits creates a new version.":
+  - `s(none,rc(np(det(article,a,w(a,lower)),none,[],w(transaction,lower),singular),subject,s(none,gap(third,singular),g(commits,present,simple,no),[])),g(creates,present,simple,no),[obj(np(det(article,a,w(a,lower)),none,[w(new,lower)],w(version,lower),singular))])`
+- "Every commit increments the commit_id.", said for the translator as "A transaction that commits increments the counter.":
+  - `s(none,rc(np(det(article,a,w(a,lower)),none,[],w(transaction,lower),singular),subject,s(none,gap(third,singular),g(commits,present,simple,no),[])),g(increments,present,simple,no),[obj(np(det(article,the,w(the,lower)),none,[],w(counter,lower),singular))])`
+- "Every commit ends the transaction.", said for the translator as "A transaction ends when it commits.":
+  - `s(none,np(det(article,a,w(a,lower)),none,[],w(transaction,lower),singular),g(ends,present,simple,no),[wh(when,s(none,pronoun(third,singular,w(it,lower)),g(commits,present,simple,no),[]))])`
+- "Every commit that is empty increments the commit_id.", said for the translator as "A transaction that commits no changes increments the counter.":
+  - `s(none,rc(np(det(article,a,w(a,lower)),none,[],w(transaction,lower),singular),subject,s(none,gap(third,singular),g(commits,present,simple,no),[obj(np(none,none,[w(no,lower)],w(changes,lower),plural))])),g(increments,present,simple,no),[obj(np(det(article,the,w(the,lower)),none,[],w(counter,lower),singular))])`
+- "Every abort discards the changes.", said for the translator as "A transaction that aborts discards its changes.":
+  - `s(none,rc(np(det(article,a,w(a,lower)),none,[],w(transaction,lower),singular),subject,s(none,gap(third,singular),g(aborts,present,simple,no),[])),g(discards,present,simple,no),[obj(np(det(possessive,its,w(its,lower)),none,[],w(changes,lower),plural))])`
+- "Every abort ends the transaction.", said for the translator as "A transaction ends when it aborts.":
+  - `s(none,np(det(article,a,w(a,lower)),none,[],w(transaction,lower),singular),g(ends,present,simple,no),[wh(when,s(none,pronoun(third,singular,w(it,lower)),g(aborts,present,simple,no),[]))])`
+- "Every key that is visible reads as "yes".", said for the translator as "If a key is visible, it reads as yes.":
+  - `join(comma,join(w(if,upper),none,s(none,np(det(article,a,w(a,lower)),none,[],w(key,lower),singular),g(is,present,simple,no),[adj([w(visible,lower)])])),s(none,pronoun(third,singular,w(it,lower)),g(reads,present,simple,no),[pp(w(as,lower),np(none,none,[],w(yes,lower),singular))]))`
+- "Every key that is not visible reads as "no".", said for the translator as "If a key is not visible, it reads as no.":
+  - `join(comma,join(w(if,upper),none,s(none,np(det(article,a,w(a,lower)),none,[],w(key,lower),singular),g(is,present,simple,yes),[adj([w(visible,lower)])])),s(none,pronoun(third,singular,w(it,lower)),g(reads,present,simple,no),[pp(w(as,lower),np(none,none,[],w(no,lower),singular))]))`
+- "Every key that is visible is printed.":
+  - `s(none,rc(np(det(determiner,every,w(every,lower)),none,[],w(key,lower),singular),subject,s(none,gap(third,singular),g(is,present,simple,no),[adj([w(visible,lower)])])),g(is,present,simple,no),[adj([w(printed,lower)])])`
+- "Every printing is ascending.", said for the translator as "The printing is in ascending order.":
+  - `s(none,np(det(article,the,w(the,lower)),none,[],w(printing,lower),singular),g(is,present,simple,no),[pp(w(in,lower),np(none,none,[w(ascending,lower)],w(order,lower),singular))])`
+- "Every view that is empty does not print a line.":
+  - `s(none,rc(np(det(determiner,every,w(every,lower)),none,[],w(view,lower),singular),subject,s(none,gap(third,singular),g(is,present,simple,no),[adj([w(empty,lower)])])),g(prints,present,simple,yes),[obj(np(det(article,a,w(a,lower)),none,[],w(line,lower),singular))])`
+- "Every key that is committed gets "yes".", said for the translator as "If a key is committed, it gets yes.":
+  - `join(comma,join(w(if,upper),none,s(none,np(det(article,a,w(a,lower)),none,[],w(key,lower),singular),g(is,present,simple,no),[adj([w(committed,lower)])])),s(none,pronoun(third,singular,w(it,lower)),g(gets,present,simple,no),[obj(np(none,none,[],w(yes,lower),singular))]))`
+- "Every key that is not committed gets "no".", said for the translator as "If a key is not committed, it gets no.":
+  - `join(comma,join(w(if,upper),none,s(none,np(det(article,a,w(a,lower)),none,[],w(key,lower),singular),g(is,present,simple,yes),[adj([w(committed,lower)])])),s(none,pronoun(third,singular,w(it,lower)),g(gets,present,simple,no),[obj(np(none,none,[],w(no,lower),singular))]))`
+- "Every version_command prints the commit_id.", said for the translator as "The program prints the counter for the version command.":
+  - `s(none,np(det(article,the,w(the,lower)),none,[],w(program,lower),singular),g(prints,present,simple,no),[obj(np(det(article,the,w(the,lower)),none,[],w(counter,lower),singular)),pp(w(for,lower),np(det(article,the,w(the,lower)),none,[w(version,lower)],w(command,lower),singular))])`
+- "Every transaction_name is a word.", said for the translator as "Every transaction name is a word.":
+  - `s(none,np(det(determiner,every,w(every,lower)),none,[w(transaction,lower)],w(name,lower),singular),g(is,present,simple,no),[obj(np(det(article,a,w(a,lower)),none,[],w(word,lower),singular))])`
+- "Every view is a snapshot.":
+  - `s(none,np(det(determiner,every,w(every,lower)),none,[],w(view,lower),singular),g(is,present,simple,no),[obj(np(det(article,a,w(a,lower)),none,[],w(snapshot,lower),singular))])`
+- "Every view holds the staged changes.":
+  - `s(none,np(det(determiner,every,w(every,lower)),none,[],w(view,lower),singular),g(holds,present,simple,no),[obj(np(det(article,the,w(the,lower)),none,[w(staged,lower)],w(changes,lower),plural))])`
+- "Every commit that follows the snapshot is invisible.", said for the translator as "Changes after the snapshot are invisible.":
+  - `s(none,with(np(none,none,[],w(changes,lower),plural),[pp(w(after,lower),np(det(article,the,w(the,lower)),none,[],w(snapshot,lower),singular))]),g(is,present,simple,no),[adj([w(invisible,lower)])])`
+- "Every key has a staged_change.", said for the translator as "Every key has a staged change.":
+  - `s(none,np(det(determiner,every,w(every,lower)),none,[],w(key,lower),singular),g(has,present,simple,no),[obj(np(det(article,a,w(a,lower)),none,[w(staged,lower)],w(change,lower),singular))])`
+- "Every change that is last is kept.":
+  - `s(none,rc(np(det(determiner,every,w(every,lower)),none,[],w(change,lower),singular),subject,s(none,gap(third,singular),g(is,present,simple,no),[adv(w(last,lower))])),g(is,present,simple,no),[adj([w(kept,lower)])])`
+- "Every blind_deletion deletes an invisible_key.", said for the translator as "A blind deletion deletes a key. The key is invisible.":
+  - `s(none,np(det(article,a,w(a,lower)),none,[w(blind,lower)],w(deletion,lower),singular),g(deletes,present,simple,no),[obj(np(det(article,a,w(a,lower)),none,[],w(key,lower),singular))])`
+  - `s(none,np(det(article,the,w(the,lower)),none,[],w(key,lower),singular),g(is,present,simple,no),[adj([w(invisible,lower)])])`
+- "Every blind_deletion is staged.", said for the translator as "Every blind deletion is staged.":
+  - `s(none,np(det(determiner,every,w(every,lower)),none,[w(blind,lower)],w(deletion,lower),singular),g(is,present,simple,no),[adj([w(staged,lower)])])`
+- "Every committer that is last wins.", said for the translator as "The final committer wins.":
+  - `s(none,np(det(article,the,w(the,lower)),none,[w(final,lower)],w(committer,lower),singular),g(wins,present,simple,no),[])`
+- "Every redundant_insertion inserts a present_key.", said for the translator as "Every redundant insertion inserts a key that the tree holds.":
+  - `s(none,np(det(determiner,every,w(every,lower)),none,[w(redundant,lower)],w(insertion,lower),singular),g(inserts,present,simple,no),[obj(rc(np(det(article,a,w(a,lower)),none,[],w(key,lower),singular),object,s(none,np(det(article,the,w(the,lower)),none,[],w(tree,lower),singular),g(holds,present,simple,no),[])))])`
+- "Every present_key is a committed_key.", said for the translator as "A present key is a key. The key is committed.":
+  - `s(none,np(det(article,a,w(a,lower)),none,[w(present,lower)],w(key,lower),singular),g(is,present,simple,no),[obj(np(det(article,a,w(a,lower)),none,[],w(key,lower),singular))])`
+  - `s(none,np(det(article,the,w(the,lower)),none,[],w(key,lower),singular),g(is,present,simple,no),[adj([w(committed,lower)])])`
+- "Every redundant_insertion is ignored.", said for the translator as "Every redundant insertion is ignored.":
+  - `s(none,np(det(determiner,every,w(every,lower)),none,[w(redundant,lower)],w(insertion,lower),singular),g(is,present,simple,no),[adj([w(ignored,lower)])])`
+- "Every redundant_deletion deletes an absent_key.", said for the translator as "A redundant deletion deletes a key. The key is absent.":
+  - `s(none,np(det(article,a,w(a,lower)),none,[w(redundant,lower)],w(deletion,lower),singular),g(deletes,present,simple,no),[obj(np(det(article,a,w(a,lower)),none,[],w(key,lower),singular))])`
+  - `s(none,np(det(article,the,w(the,lower)),none,[],w(key,lower),singular),g(is,present,simple,no),[adj([w(absent,lower)])])`
+- "Every absent_key is not a committed_key.", said for the translator as "An absent key is not in the latest version.":
+  - `s(none,np(det(article,a,w(an,lower)),none,[w(absent,lower)],w(key,lower),singular),g(is,present,simple,yes),[pp(w(in,lower),np(det(article,the,w(the,lower)),none,[deg(superlative,w(late,lower))],w(version,lower),singular))])`
+- "Every redundant_deletion is ignored.", said for the translator as "Every redundant deletion is ignored.":
+  - `s(none,np(det(determiner,every,w(every,lower)),none,[w(redundant,lower)],w(deletion,lower),singular),g(is,present,simple,no),[adj([w(ignored,lower)])])`
+- "Every unfinished_transaction is active.", said for the translator as "Every unfinished transaction is active.":
+  - `s(none,np(det(determiner,every,w(every,lower)),none,[w(unfinished,lower)],w(transaction,lower),singular),g(is,present,simple,no),[adj([w(active,lower)])])`
+- "Every unfinished_transaction is abandoned.", said for the translator as "Every unfinished transaction is abandoned.":
+  - `s(none,np(det(determiner,every,w(every,lower)),none,[w(unfinished,lower)],w(transaction,lower),singular),g(is,present,simple,no),[adj([w(abandoned,lower)])])`
+- "Every unfinished_transaction is not committed.", said for the translator as "An unfinished transaction is not committed.":
+  - `s(none,np(det(article,a,w(an,lower)),none,[w(unfinished,lower)],w(transaction,lower),singular),g(is,present,simple,yes),[adj([w(committed,lower)])])`
+- "Every committed_version is a b_tree.", said for the translator as "Every committed version is a B-tree.":
+  - `s(none,np(det(determiner,every,w(every,lower)),none,[w(committed,lower)],w(version,lower),singular),g(is,present,simple,no),[obj(np(det(article,a,w(a,lower)),none,[],named(none,[w(B-tree,upper)]),singular))])`
+- "Every insertion is recursive.":
+  - `s(none,np(det(determiner,every,w(every,lower)),none,[],w(insertion,lower),singular),g(is,present,simple,no),[adj([w(recursive,lower)])])`
+- "Every deletion is recursive.":
+  - `s(none,np(det(determiner,every,w(every,lower)),none,[],w(deletion,lower),singular),g(is,present,simple,no),[adj([w(recursive,lower)])])`
+- "Every node is heap_allocated.", said for the translator as "Every node is allocated on the heap.":
+  - `s(none,np(det(determiner,every,w(every,lower)),none,[],w(node,lower),singular),g(allocates,present,passive,no),[pp(w(on,lower),np(det(article,the,w(the,lower)),none,[],w(heap,lower),singular))])`
+- "Every key_count is unbounded.", said for the translator as "Every key count is unbounded.":
+  - `s(none,np(det(determiner,every,w(every,lower)),none,[w(key,lower)],w(count,lower),singular),g(is,present,simple,no),[adj([w(unbounded,lower)])])`
+- "Every transaction_count is unbounded.", said for the translator as "Every transaction count is unbounded.":
+  - `s(none,np(det(determiner,every,w(every,lower)),none,[w(transaction,lower)],w(count,lower),singular),g(is,present,simple,no),[adj([w(unbounded,lower)])])`
+- "Every command prints an answer.":
+  - `s(none,np(det(determiner,every,w(every,lower)),none,[],w(command,lower),singular),g(prints,present,simple,no),[obj(np(det(article,a,w(an,lower)),none,[],w(answer,lower),singular))])`
+- "Mvccs does not print a prompt.", said for the translator as "The program does not ask for input.":
+  - `s(none,np(det(article,the,w(the,lower)),none,[],w(program,lower),singular),g(asks,present,simple,yes),[pp(w(for,lower),np(none,none,[],w(input,lower),singular))])`
+- "Mvccs does not print a debug_output.", said for the translator as "The program omits debug output. The program writes only the answer.":
+  - `s(none,np(det(article,the,w(the,lower)),none,[],w(program,lower),singular),g(omits,present,simple,no),[obj(np(none,none,[w(debug,lower)],w(output,lower),singular))])`
+  - `s(none,np(det(article,the,w(the,lower)),none,[],w(program,lower),singular),g(writes,present,simple,no),[adv(w(only,lower)),obj(np(det(article,the,w(the,lower)),none,[],w(answer,lower),singular))])`

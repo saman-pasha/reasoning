@@ -249,6 +249,10 @@ CODING_BENCH_BASE_URL=https://api.anthropic.com/v1/messages \
   the run, 60 trials an arm. The restatement makes Python's first program
   right 37/60 against 25/60 (Fisher, one-sided, p = 0.022), with 18 %
   fewer calls and 9 % fewer tokens.
+- **A complete IR** of the restatement (reasoning 1.17.3) is
+  `controlled/mvccs_acid.ir`, written by `ir_complete.pl` with no model
+  from `controlled/mvccs_acid.translator.txt`: all 64 sentences, 68 IR
+  terms, where the endpoint's IR note of the requirement read 5 of 14.
 
 ### The reasoning arms and the cocolog lane without its guide (1.15.0)
 
