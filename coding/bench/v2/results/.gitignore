@@ -32,3 +32,5 @@
 !ir-mvccs-clear-20261120/bench-noguide-1.15.3.jsonl
 !ir-mvccs-checks-20261121/bench.jsonl
 !ir-mvccs-checks-20261121/ir-prep.jsonl
+!reason-python-20261121/bench.jsonl
+!reason-python-20261121/reason-prep.jsonl

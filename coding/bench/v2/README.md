@@ -231,6 +231,12 @@ CODING_BENCH_BASE_URL=https://api.anthropic.com/v1/messages \
   of the ten agrees with the rule), but a run before 1.14.1 read another
   text and is not comparable with a run after it. The run on the clear
   text is `results/ir-mvccs-clear-20261120.md`.
+- **The reader notes in Python** are `results/reason-python-20261121.md`
+  (reasoning 1.17.1): the requirement said again in controlled English
+  (`controlled/`) and what `reason_text/2`, `reason_concepts/2` and
+  `reason_topics/2` make of it, each an arm (`reason_prep.pl` writes
+  them). The restatement itself did best, 12/20 first programs against
+  7/20 with no note (p = 0.21); no reader's note did better than none.
 
 ### The reasoning arms and the cocolog lane without its guide (1.15.0)
 
