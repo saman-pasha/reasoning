@@ -152,4 +152,5 @@ the every-check run, 7/20 now.
 the `.ir` copied from `ir-mvccs-clear-20261120/`) and `reason-prep.jsonl`
 (the notes' sizes and the reasoning version that wrote them). The
 restatement is `coding/bench/v2/controlled/mvccs_acid.txt`; the code is
-1.17.1's (`5da3c6e`).
+1.17.1's (`5da3c6e`). The same report as a page, with its tables drawn:
+`reason-python-20261121.html`.

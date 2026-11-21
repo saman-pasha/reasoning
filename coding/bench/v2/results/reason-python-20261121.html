@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>mvccs_acid Python Notes</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column of 46rem, wide tables in their own scrollers; a lab report, not a dashboard. */
+:root {
+  --bg: #f6f7f6;
+  --surface: #ffffff;
+  --fg: #1b2321;
+  --muted: #5a6763;
+  --rule: #d9dfdc;
+  --accent: #0e6a63;
+  --accent-soft: #dcefec;
+  --good: #1f7a3d;
+  --good-soft: #dff1e4;
+  --bad: #a33a2a;
+  --bad-soft: #f6e1dc;
+  --code-bg: #eef1ef;
+  --font-text: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121716; --surface: #1a201f; --fg: #e3e9e6; --muted: #9aa8a3; --rule: #2e3735;
+    --accent: #5cc4b9; --accent-soft: #173431; --good: #6fcf8e; --good-soft: #17301f;
+    --bad: #ef8b78; --bad-soft: #3a1f1a; --code-bg: #202826; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121716; --surface: #1a201f; --fg: #e3e9e6; --muted: #9aa8a3; --rule: #2e3735;
+  --accent: #5cc4b9; --accent-soft: #173431; --good: #6fcf8e; --good-soft: #17301f;
+  --bad: #ef8b78; --bad-soft: #3a1f1a; --code-bg: #202826; color-scheme: dark;
+}
+body { background: var(--bg); color: var(--fg); font-family: var(--font-text); font-size: 16px; line-height: 1.55; }
+.page { max-width: 46rem; margin: 0 auto; padding-block: 2.5rem 4rem;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 2.25rem; }
+header { display: flex; flex-direction: column; gap: .6rem; }
+.eyebrow { font-family: var(--font-mono); font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+h1 { font-size: 2rem; line-height: 1.15; font-weight: 600; margin: 0; text-wrap: balance; }
+h2 { font-size: 1.3rem; line-height: 1.25; font-weight: 600; margin: 0; text-wrap: balance; }
+h3 { font-size: 1.02rem; font-weight: 600; margin: 0; }
+p { margin: 0; max-width: 65ch; }
+section { display: flex; flex-direction: column; gap: .9rem; min-width: 0; }
+.lede { font-size: 1.08rem; color: var(--fg); }
+.meta { font-size: .86rem; color: var(--muted); font-family: var(--font-mono); }
+ul, ol { margin: 0; padding-left: 1.2rem; display: flex; flex-direction: column; gap: .4rem; max-width: 65ch; }
+code, .mono { font-family: var(--font-mono); font-size: .88em; }
+code { background: var(--code-bg); padding: .05em .3em; border-radius: 3px; }
+.findings { display: grid; gap: .75rem; }
+.finding { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: .9rem 1rem; display: flex; flex-direction: column; gap: .35rem; }
+.finding b { font-weight: 600; }
+.scroll { overflow-x: auto; min-width: 0; border: 1px solid var(--rule); border-radius: 6px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: .88rem; font-variant-numeric: tabular-nums; }
+th, td { padding: .45rem .6rem; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--rule); }
+th { font-weight: 600; color: var(--muted); font-size: .76rem; letter-spacing: .03em; text-transform: uppercase; background: var(--bg); }
+td:first-child, th:first-child, td.l, th.l { text-align: left; }
+tbody tr:last-child td { border-bottom: 0; }
+tr.group td { background: var(--bg); font-weight: 600; text-align: left; color: var(--fg); }
+tr.total td { font-weight: 600; }
+.rate { display: inline-flex; align-items: center; gap: .45rem; justify-content: flex-end; }
+.bar { width: 3.2rem; height: .45rem; background: var(--rule); border-radius: 2px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--accent); }
+.pill { display: inline-block; font-family: var(--font-mono); font-size: .74rem; padding: .05rem .4rem; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
+.pill.bad { background: var(--bad-soft); color: var(--bad); }
+.pill.good { background: var(--good-soft); color: var(--good); }
+tr.best td { background: var(--accent-soft); }
+tr.best td:first-child { box-shadow: inset 3px 0 0 var(--accent); }
+.excerpts { display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: .75rem; }
+.excerpts > div { min-width: 0; display: flex; flex-direction: column; gap: .35rem; }
+.excerpts pre { font-size: .78rem; white-space: pre; }
+pre { margin: 0; background: var(--code-bg); border-radius: 6px; padding: .8rem 1rem; overflow-x: auto; font-family: var(--font-mono); font-size: .85rem; line-height: 1.5; }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: .75rem; }
+.two > div { min-width: 0; display: flex; flex-direction: column; gap: .35rem; }
+.caption { font-size: .84rem; color: var(--muted); max-width: 65ch; }
+.note { font-size: .9rem; color: var(--muted); }
+a { color: var(--accent); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 0; }
+</style>
+</head>
+<body>
+<div class="page">
+<header>
+  <div class="eyebrow">reasoning 1.17.1 · coding bench v2 · 2026-11-21</div>
+  <h1>Which reasoner note helps Python's first program</h1>
+  <p class="lede">One hard task, <code>mvccs_acid</code> (a multi-version B-tree with transactions and snapshot isolation), written in Python by <code>claude-sonnet-5-5</code> at effort <code>low</code>. Each cell got the requirement alone, or the requirement and one note: the requirement said again in controlled English, or what three of the reasoner's readers make of that text, or the translator's IR. Twenty trials an arm, up to three model calls each.</p>
+  <p class="meta">120 cells in one run, 213 generator calls, 1&#8201;159&#8201;412 tokens and 39 min of cell time: $5.75 at list prices.</p>
+</header>
+
+<section>
+  <h2>What the run shows</h2>
+  <div class="findings">
+    <div class="finding"><b>No reader's note made the first program right more often.</b><p><code>reason_text/2</code>'s terms passed 7/20 at the first attempt, as the requirement alone did. The outline of <code>reason_topics/2</code> passed 5/20, <code>reason_concepts/2</code>'s list 3/20 and the translator's IR 3/20. No arm differs from the requirement alone at p&nbsp;&lt;&nbsp;0.05 (Fisher's exact test, two-sided).</p></div>
+    <div class="finding"><b>The readers' input did best: the requirement in controlled English.</b><p>It passed 12/20 at the first attempt against 7/20 (p&nbsp;=&nbsp;0.21). It made the fewest calls, 29 against 34, and spent only 3&#8201;% more tokens, though each call carried 2&#8201;590 characters more. Every other note spent 42&#8201;% to 89&#8201;% more tokens than the requirement alone.</p></div>
+    <div class="finding"><b>One unnamed word decides the first attempt.</b><p>Python's first programs fail almost only at the error case, whose expected output is the word <code>error</code>. The requirement never says what an error prints, and most failing programs print nothing there. 14 of the controlled text's 20 first programs print <code>error</code>, against 8 of 20 with no note.</p></div>
+    <div class="finding"><b>Two cells failed for the safety classifier, not for their programs.</b><p>Both repair calls of two <code>concepts</code> cells were refused, category <code>reasoning_extraction</code>, and each request sent again was refused again. That is why <code>concepts</code> passes 18/20 at the end where every other arm passes 20/20.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>The results, arm by arm</h2>
+  <p class="caption">All six arms ran in one run, shuffled together. First: the first program passed the eight repair cases and the two held-out cases. Final: a program passed within three calls. p compares the first attempts with the requirement alone.</p>
+  <div class="scroll"><table>
+    <thead><tr><th class="l">arm</th><th>first attempt</th><th>final</th><th>calls</th><th>tokens</th><th>tokens a call</th><th>p, first</th></tr></thead>
+    <tbody>
+      <tr><td class="l">requirement alone</td><td><span class="rate">7/20<span class="bar"><i style="width:35%"></i></span></span></td><td><span class="rate">20/20<span class="bar"><i style="width:100%"></i></span></span></td><td>34</td><td>138&#8201;268</td><td>4&#8201;067</td><td></td></tr>
+      <tr class="best"><td class="l"><b>+ controlled English</b></td><td><span class="rate"><b>12/20</b><span class="bar"><i style="width:60%"></i></span></span></td><td><span class="rate">20/20<span class="bar"><i style="width:100%"></i></span></span></td><td><b>29</b></td><td>142&#8201;252</td><td>4&#8201;905</td><td>0.21</td></tr>
+      <tr><td class="l">+ terms</td><td><span class="rate">7/20<span class="bar"><i style="width:35%"></i></span></span></td><td><span class="rate">20/20<span class="bar"><i style="width:100%"></i></span></span></td><td>34</td><td>201&#8201;427</td><td>5&#8201;924</td><td>1.0</td></tr>
+      <tr><td class="l">+ outline</td><td><span class="rate">5/20<span class="bar"><i style="width:25%"></i></span></span></td><td><span class="rate">20/20<span class="bar"><i style="width:100%"></i></span></span></td><td>36</td><td>196&#8201;770</td><td>5&#8201;466</td><td>0.73</td></tr>
+      <tr><td class="l">+ concepts</td><td><span class="rate">3/20<span class="bar"><i style="width:15%"></i></span></span></td><td><span class="rate">18/20<span class="bar"><i style="width:90%"></i></span></span></td><td>42</td><td>261&#8201;988</td><td>6&#8201;238</td><td>0.27</td></tr>
+      <tr><td class="l">+ translator's IR</td><td><span class="rate">3/20<span class="bar"><i style="width:15%"></i></span></span></td><td><span class="rate">20/20<span class="bar"><i style="width:100%"></i></span></span></td><td>38</td><td>218&#8201;707</td><td>5&#8201;755</td><td>0.27</td></tr>
+    </tbody>
+  </table></div>
+  <p>Against the controlled text, <code>concepts</code> and the IR pass 3/20 to its 12/20 (p&nbsp;=&nbsp;0.008 each) and the outline 5/20 (p&nbsp;=&nbsp;0.054). These comparisons were not chosen before the run, and there were fifteen pairs to choose from. With a correction for fifteen comparisons, none passes p&nbsp;&lt;&nbsp;0.05, so read them as a description.</p>
+</section>
+
+<section>
+  <h2>The notes</h2>
+  <p>The readers read controlled English, and the requirement is not controlled English. <code>reason_text/2</code> reads none of its 14 sentences: not with the grammar, not with the tagger, and in live mode only one, wrongly. A note made from the requirement as it is would be empty. So the notes come from a <b>controlled restatement</b>: 64 sentences the grammar reads, written by hand from the requirement's text alone and never from the cases or their expected output.</p>
+  <p>It says what the requirement says and nothing more. The requirement says "error if T is not active" and never what an error prints, so the restatement says <code>Every transaction that is not active causes an error.</code> and not that the program prints <code>error</code>. What the grammar cannot say is left out, for example that each command's output goes on its own line.</p>
+  <p><code>reason_prep.pl</code> reads the restatement with the grammar alone (no tagger, no saved rewrite, no model) and writes the notes. No model was called for them, and no token of theirs is in any figure here. A reading that is the grammar's and not the sentence's meaning stays as it is: <code>Every transaction that is active may commit.</code> becomes <code>may_commit/1</code>.</p>
+  <div class="excerpts">
+    <div><span class="meta">controlled English · 2&#8201;590 characters</span><pre>Mvccs is a program.
+Mvccs simulates a tree.
+Every tree is a b_tree.
+The minimum_degree is 2.
+...
+Every repeated_begin causes an error.</pre></div>
+    <div><span class="meta">terms, reason_text/2 · 66 terms · 2&#8201;387 characters</span><pre>program(mvccs)
+tree(tree_1)
+simulate(mvccs,tree_1)
+b_tree(A):-tree(A)
+...
+cause(A,error):-repeated_begin(A)</pre></div>
+    <div><span class="meta">concepts, reason_concepts/2 · 94 concepts · 3&#8201;823 characters</span><pre>- transaction: class, mentioned 11 times
+- key: class, mentioned 9 times
+- active: property, mentioned 8 times
+- commit: class, mentioned 7 times
+...</pre></div>
+    <div><span class="meta">outline, reason_topics/2 · 53 subjects · 3&#8201;836 characters</span><pre>- Transaction: every transaction has the
+  snapshot; every transaction begins at the
+  latest_version; every transaction that is
+  active may stage the insertion; ...
+- Key: every key is an integer; ...</pre></div>
+  </div>
+  <p class="caption">The IR note (3&#8201;307 characters) is the translator's reading of the requirement as it is, from the earlier clear-text run: 4 to 6 of its 14 sentences, each with its logical form.</p>
+</section>
+
+<section>
+  <h2>Why Python's first programs fail</h2>
+  <p>Almost every failure is at the error case. It sends <code>r</code>, <code>i</code>, <code>c</code> and <code>a</code> for a transaction that has not begun, then <code>b</code> twice, and it expects <code>error</code> five times.</p>
+  <div class="scroll"><table>
+    <thead><tr><th class="l">arm</th><th>first programs that failed</th><th>of them, at the error case</th><th>first programs with the text "error"</th></tr></thead>
+    <tbody>
+      <tr><td class="l">requirement alone</td><td>13</td><td>13</td><td>8/20</td></tr>
+      <tr class="best"><td class="l"><b>+ controlled English</b></td><td>8</td><td>7</td><td><b>14/20</b></td></tr>
+      <tr><td class="l">+ terms</td><td>13</td><td>13</td><td>7/20</td></tr>
+      <tr><td class="l">+ outline</td><td>15</td><td>15</td><td>5/20</td></tr>
+      <tr><td class="l">+ concepts</td><td>17</td><td>17</td><td>3/20</td></tr>
+      <tr><td class="l">+ translator's IR</td><td>17</td><td>16</td><td>4/20</td></tr>
+    </tbody>
+  </table></div>
+  <p>Run on that case's input, 11 of the 13 failing programs with the requirement alone print nothing at all, and 2 stop with a traceback. Of the 7 controlled-text programs that failed the case, 6 print nothing and 1 prints <code>error</code> once.</p>
+  <p>So on this task a note helps the first program when it makes the model print a word the requirement never names. The controlled text says "causes an error" in two sentences of its own. The terms say the same as two rules among 66, and the concepts and the outline put it among 94 and 53 lines. The earlier runs show the same failure: in the clear-text run, 24 of Python's 27 failed first programs failed only the error case.</p>
+</section>
+
+<section>
+  <h2>What it cost</h2>
+  <div class="scroll"><table>
+    <thead><tr><th class="l">run</th><th>cells</th><th>prompt tokens</th><th>completion tokens</th><th>cost</th></tr></thead>
+    <tbody>
+      <tr><td class="l">Python reader notes, 1.17.1</td><td>120</td><td>730&#8201;308</td><td>429&#8201;104</td><td>$5.75</td></tr>
+    </tbody>
+  </table></div>
+  <p class="caption">At $2 and $10 per million input and output tokens, every prompt token at the full price (an upper bound: some were cache reads).</p>
+</section>
+
+<section>
+  <h2>Limits of this run</h2>
+  <ul>
+    <li>One task and one language. Here a note helps or hurts through one word that the cases expect. A task whose failures are not one unnamed output would test the readers in another way.</li>
+    <li>Twenty trials an arm. A difference of five cells in twenty is inside the noise (p&nbsp;=&nbsp;0.21).</li>
+    <li>The restatement was written by hand, by the assistant that ran the benchmark, before the run and from the requirement alone. Its cost is not counted, and another writer would make another text. It tests what a controlled text gives the model, not what a reader gives it.</li>
+    <li>The IR note reads the requirement as it is, not the restatement.</li>
+    <li>The notes sit in the user prompt, not in the system prompt as the coding endpoint puts them.</li>
+    <li>The model takes no temperature. Trials are samples of a generator that is not deterministic.</li>
+  </ul>
+</section>
+
+<hr>
+<section>
+  <h3>Files</h3>
+  <p class="note">In <code>saman-pasha/reasoning</code>, <code>coding/bench/v2/results/reason-python-20261121/</code>: <code>bench.jsonl</code> (the run), the five notes (<code>mvccs_acid-python.controlled</code>, <code>.terms</code>, <code>.concepts</code>, <code>.outline</code> and <code>.ir</code>) and <code>reason-prep.jsonl</code> (the notes' sizes and the reasoning version that wrote them). The restatement is <code>coding/bench/v2/controlled/mvccs_acid.txt</code>, and the same report in Markdown is <code>results/reason-python-20261121.md</code>. Code at <code>5da3c6e</code> (1.17.1); results in <code>7e642d7</code>.</p>
+</section>
+</div>
+</body>
+</html>
