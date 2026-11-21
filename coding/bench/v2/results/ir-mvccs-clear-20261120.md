@@ -23,7 +23,7 @@ no model for them, and no translation token is in its figures.
 
 ## What the runs show
 
-- **The pre-pass's checks change nothing measurable here, two of them or all of them.** For this requirement the pre-pass adds input and output checks and no "What the request is about" note, because the reasoner parsed no terms of the text. The keyword reader found 13 checks in the C requirement and 12 in each other lane's, and the endpoint's default sends only the first two, the generic input and output checks (341 characters; 404 for Python). In C and the three Prolog lanes the checks after them name the task: the 2-3-4 tree's split, versions, snapshots and the atomic commit. Python's do not. Run A, which ran the two reasoning arms together, gives 13/50 first-attempt passes for *+ reasoning* and 14/50 for *+ reasoning + IR* (p = 1.0). In the SWI-Prolog rerun, which ran all four arms together, *prompt forwarded* and *+ reasoning* both pass 0/10 at the first attempt. In cocolog without its guide, also run as one, they pass 7/10 and 5/10. **With every check, in a run of its own with the prompt forwarded, the arm passed 19/50 at the first attempt and the prompt forwarded 20/50 (p = 1.0).**
+- **The pre-pass's checks change nothing measurable here, two of them or all of them.** For this requirement the pre-pass adds input and output checks and no "What the request is about" note, because the reasoner parsed no terms of the text. The keyword reader found 13 checks in the C requirement and 12 in each other lane's, and the endpoint's default sends only the first two, the generic input and output checks (341 characters; 404 for Python). In C and the three Prolog lanes the checks after them name the task: the 2-3-4 tree's split, versions, snapshots and the atomic commit. Python's do not. Run A, which ran the two reasoning arms together, gives 13/50 first-attempt passes for *+ reasoning* and 14/50 for *+ reasoning + IR* (p = 1.0). In the SWI-Prolog rerun, which ran all four arms together, *prompt forwarded* and *+ reasoning* both pass 0/10 at the first attempt. In cocolog without its guide, also run as one, they pass 7/10 and 5/10. **With every check, in a run of its own with the prompt forwarded, the arm passed 19/50 at the first attempt and the prompt forwarded 20/50 (p = 1.0).** In C it made 8 of 10 first programs fail to compile, against 1 of 10 (p = 0.005): they called `strdup`, which C17 does not declare.
 - **The IR note helps the two Prolog lanes at the first attempt, and not C or Python.** In the clear-text run, IR only against the prompt forwarded: cocolog 9/10 against 3/10 (p = 0.020), SWI-Prolog 5/10 against 0/10 (p = 0.033), all four lanes 21/40 against 10/40 (p = 0.021). C and Python do not move. The SWI-Prolog rerun points the same way, 3/10 against 0/10 (p = 0.21). With fewer repair rounds the IR arm also spent fewer tokens and seconds in those lanes. cocolog without its guide, on its two-line prompt, does not show it: 6/10 against 7/10. These tests were not chosen before the run: read them as a description.
 - **Checks in front of the IR do not add to it.** In the SWI-Prolog rerun the IR alone passed 3/10 at the first attempt and *+ reasoning + IR* 1/10, with 75 % more tokens. In cocolog without its guide, whose four arms also ran as one run, both passed 6/10 with about the same tokens. In C, Python and guided cocolog the two IR arms ran an hour apart, so they are not compared here.
 - **The final pass hides the differences.** Almost every cell of C, Python, both cocolog lanes and SWI-Prolog passes within its three calls (final 38/40 to 40/40 a lane). What the arms change is how often the first program is right, and so the calls, tokens and seconds a correct program costs.
@@ -145,20 +145,29 @@ shuffled with these.
   and the atomic commit. C fell from 5/10 to 2/10 at the first attempt
   (p = 0.35) and spent twice the tokens, 169 342 against 85 567. The
   three Prolog lanes moved by one cell or none.
+- **In C, every check made the first program fail to compile.** 8 of its
+  10 first programs did not compile, against 1 of 10 with no note
+  (p = 0.005). Seven of the eight called `strdup` or `strtok_r`, which
+  POSIX declares and the endpoint's `clang -std=c17` does not; the prompt
+  asks for a C17 program. With every check, 7 of 10 first programs called
+  `strdup`; with no note, 1 of 10. The run does not show which check made
+  the model copy its strings that way.
 - **Python got none of them.** Its twelve checks are Python's own
   phrasings of generic checks: integers, `max` and `min`, recursion
   depth, sort order, word splitting, and "An error the task names is
   raised with `raise ValueError("...")`". The cases expect the program
   to print the word `error`; the requirement does not say what an error
   prints. Python rose from 4/10 to 6/10 (p = 0.66), with 4 % fewer
-  tokens.
+  tokens. Its first programs failed the error case 6 times in 10 with no
+  note and 3 times with every check, and another case once.
 - **Checks that do not apply are sent too.** Every lane's note has
   checks for words and recursion, which this task does not have, and the
   Prolog lanes' note tells the program to check every allocation for
   NULL.
 
-This run kept no attempt, so it does not show which case each failing
-first program failed.
+The compile errors, the calls of `strdup` and the failed cases come from
+the first programs the run kept. These comparisons were not chosen before
+the run: read them as a description.
 
 ## Why cocolog with the IR failed every cell in the first run
 
