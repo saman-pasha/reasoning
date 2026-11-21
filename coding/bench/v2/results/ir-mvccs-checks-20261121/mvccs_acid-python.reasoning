@@ -1,0 +1,18 @@
+
+
+# Reasoning pre-pass
+
+A deterministic pass by the repository reasoner read the request and found these checks. Verify each one before you say the task is done:
+
+- Read from standard input, `sys.stdin` or the `input()` builtin, exactly as the task describes; do not assume more input than it gives.
+- Write exactly the required result with `print`, one line per answer; no prompt, label or debug output.
+- Read to end of file: iterate over the remaining lines, and read an empty input as no value, not as a crash.
+- Use `int(token)`, not character arithmetic; a value may be negative, and Python integers do not overflow.
+- Read whole lines with `sys.stdin` or `readline()`, not `input().split()`; a line may be empty, and only its final newline goes.
+- Split words on whitespace with `str.split()`, or find them with `re.finditer(r"[A-Za-z]+", text)`; punctuation and digits separate words.
+- A maximum or minimum is `max(...)` or `min(...)` over the values, not a zero to start from, so an all-negative input works.
+- A recursion that may nest deeper than 1000 needs `sys.setrecursionlimit`, or an iteration with a stack of its own; `fib(30)` by the plain definition is a slow path the task may mean.
+- Sort ascending with `sorted(values, key=KEY)`, which is ascending by default.
+- An error the task names is raised with `raise ValueError("...")`, caught by its class, and never reported by a bare `except:`.
+- Each new name is assigned or bound before it is used, and each new function is defined above its first use.
+- Run the program or the tests you wrote, and read the output of that run.

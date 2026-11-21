@@ -1,0 +1,19 @@
+
+
+# Reasoning pre-pass
+
+A deterministic pass by the repository reasoner read the request and found these checks. Verify each one before you say the task is done:
+
+- Read from standard input exactly as the requirement describes; do not assume more input than it gives.
+- Write exactly the required result; do not print a prompt or extra text.
+- Read to end of file; an empty input is valid.
+- Read a number as a whole integer, not digit by digit; values may be negative or zero.
+- Read whole lines, not whitespace-separated words; a line may be empty.
+- A word is a maximal run of ASCII letters; punctuation and digits separate words.
+- The first word of a command line is its verb; state persists across commands.
+- Check every allocation for NULL, and free every allocation.
+- A B-tree of minimum degree 2 is a 2-3-4 tree; keep the keys in each node sorted and split a full node before descending into it.
+- Bound the recursion depth, or keep the input small enough that it stays bounded.
+- A version is the result of one commit; a reader sees the newest version of a key at or before its snapshot.
+- A snapshot is the current commit id when a reader begins; commits after it are invisible to that reader.
+- A commit applies its staged operations atomically as one new version; staged writes are invisible before it.

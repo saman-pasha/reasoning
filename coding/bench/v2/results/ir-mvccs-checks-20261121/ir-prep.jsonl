@@ -1,0 +1,5 @@
+{"run":1795252840974,"task":"mvccs_acid","language":"c","reasoning_setting":"all","reasoning_checks":13,"reasoning_note_chars":1317}
+{"run":1795252840974,"task":"mvccs_acid","language":"python","reasoning_setting":"all","reasoning_checks":12,"reasoning_note_chars":1597}
+{"run":1795252840974,"task":"mvccs_acid","language":"cocolog","reasoning_setting":"all","reasoning_checks":12,"reasoning_note_chars":1244}
+{"run":1795252840974,"task":"mvccs_acid","language":"cocolog_noguide","reasoning_setting":"all","reasoning_checks":12,"reasoning_note_chars":1244}
+{"run":1795252840974,"task":"mvccs_acid","language":"swipl","reasoning_setting":"all","reasoning_checks":12,"reasoning_note_chars":1244}

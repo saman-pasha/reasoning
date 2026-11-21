@@ -254,6 +254,15 @@ effort (`low` for `claude-sonnet-5-5`, whose lowest effort that is):
   note to `DIR/TASK-LANG.ir`. The runner reads them from the files, and an
   arm whose note is missing is refused before the first call. Each row
   gives both notes' lengths (`ir_note_chars`, `reasoning_note_chars`).
+- **The default sends two checks of those the readers find** (the
+  endpoint's `CODING_ENDPOINT_REASONING_MIN` and `_MAX`, 2 each): 2 of the
+  13 in mvccs_acid's C requirement and of the 12 in each other lane's.
+  Since 1.15.4 `ir_prep.pl --checks all` writes the note with every check
+  the readers find (the endpoint's `count(N)`), `--checks N` with N, and
+  `--only reasoning` writes the `.reasoning` notes alone, with no
+  translation and no model call. `reason_text/2` reads no term of
+  mvccs_acid's requirement, so its "What the request is about" note, which
+  `reason_concepts/2` and `reason_topics/2` write, is empty in every lane.
 - **The endpoint reads a C, cocolog or Python request.** `cocolog_noguide`
   is read as cocolog, and `swipl`, which has no endpoint model, as cocolog
   too, whose checks are C's (the same keyword reader and contract).

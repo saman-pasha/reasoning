@@ -22,7 +22,7 @@ no model for them, and no translation token is in its figures.
 
 ## What the runs show
 
-- **The pre-pass's checks alone change nothing measurable here.** For this requirement the pre-pass adds two input and output checks (341 characters; 404 for Python) and no "What the request is about" note, because the reasoner parsed no terms of the text. Run A, which ran the two reasoning arms together, gives 13/50 first-attempt passes for *+ reasoning* and 14/50 for *+ reasoning + IR* (p = 1.0). In the SWI-Prolog rerun, which ran all four arms together, *prompt forwarded* and *+ reasoning* both pass 0/10 at the first attempt. In cocolog without its guide, also run as one, they pass 7/10 and 5/10.
+- **The pre-pass's checks alone change nothing measurable here.** For this requirement the pre-pass adds two input and output checks (341 characters; 404 for Python) and no "What the request is about" note, because the reasoner parsed no terms of the text. The keyword reader found 13 checks in the C requirement and 12 in each other lane's, and the endpoint's default sends only the first two: the arm never saw the ten that name the task, among them the 2-3-4 tree's split, versions, snapshots and the atomic commit. Run A, which ran the two reasoning arms together, gives 13/50 first-attempt passes for *+ reasoning* and 14/50 for *+ reasoning + IR* (p = 1.0). In the SWI-Prolog rerun, which ran all four arms together, *prompt forwarded* and *+ reasoning* both pass 0/10 at the first attempt. In cocolog without its guide, also run as one, they pass 7/10 and 5/10.
 - **The IR note helps the two Prolog lanes at the first attempt, and not C or Python.** In the clear-text run, IR only against the prompt forwarded: cocolog 9/10 against 3/10 (p = 0.020), SWI-Prolog 5/10 against 0/10 (p = 0.033), all four lanes 21/40 against 10/40 (p = 0.021). C and Python do not move. The SWI-Prolog rerun points the same way, 3/10 against 0/10 (p = 0.21). With fewer repair rounds the IR arm also spent fewer tokens and seconds in those lanes. cocolog without its guide, on its two-line prompt, does not show it: 6/10 against 7/10. These tests were not chosen before the run: read them as a description.
 - **Checks in front of the IR do not add to it.** In the SWI-Prolog rerun the IR alone passed 3/10 at the first attempt and *+ reasoning + IR* 1/10, with 75 % more tokens. In cocolog without its guide, whose four arms also ran as one run, both passed 6/10 with about the same tokens. In C, Python and guided cocolog the two IR arms ran an hour apart, so they are not compared here.
 - **The final pass hides the differences.** Almost every cell of C, Python, both cocolog lanes and SWI-Prolog passes within its three calls (final 38/40 to 40/40 a lane). What the arms change is how often the first program is right, and so the calls, tokens and seconds a correct program costs.
@@ -214,8 +214,9 @@ phase is listed apart and is in no benchmark figure.
   SWI-Prolog and cocolog without its guide ran all four arms in one run
   each.
 - One task. The reasoning pre-pass reads controlled English; this
-  requirement is not, so its checks are generic (two I/O checks, 341
-  characters; 404 for Python) and its about note is empty.
+  requirement is not, so its about note is empty, and the default sent 2
+  of the 12 checks the keyword reader found (13 for C): the two generic
+  I/O checks, 341 characters (404 for Python).
 - The notes sit in the user prompt, not in the system prompt as the
   endpoint puts them.
 - The lanes' prompts differ in more than the language: the SWI-Prolog
