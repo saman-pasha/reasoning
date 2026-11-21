@@ -1,0 +1,245 @@
+== round 1
+-- prompt
+The requirement:
+
+Write a complete Python 3 program. It simulates a multi-version B-tree of
+minimum degree 2 (a 2-3-4 tree) holding integer keys, with transactions and
+snapshot isolation. Read commands from standard input until EOF, one command
+per line. Blank lines are ignored.
+
+  b T          begin transaction T at the latest committed version; error if T is active
+  i T KEY      stage an insertion of KEY in T; error if T is not active
+  d T KEY      stage a deletion of KEY in T; error if T is not active
+  c T          commit T atomically: apply all its staged changes as one new
+               committed version, increment the commit id, and end T;
+               error if T is not active. An empty commit still increments.
+  a T          abort T, discard all its staged changes, and end T;
+               error if T is not active
+  r T KEY      print yes if KEY is visible in T's view, otherwise no;
+               error if T is not active
+  p T          print every key visible in T's view in ascending order, one per
+               line; print nothing for an empty view; error if T is not active
+  g KEY        print yes if KEY is in the latest committed version, otherwise no
+  v            print the latest commit id
+
+T is a word of ASCII letters or digits. KEY is an integer, possibly negative.
+A transaction's view is the committed version at its begin snapshot plus its
+own staged insertions and deletions; commits by other transactions after its
+snapshot are invisible to it. T keeps one staged change per key, the last one
+staged, even when it does not change T's view: a deletion of a key T cannot
+see is still staged. A commit applies each staged change to the latest
+committed version (last committer wins for keys it changed); inserting a key
+that is already there, or deleting a key that is not there, changes nothing.
+At EOF, active transactions are abandoned without committing.
+
+Use a B-tree for the committed versions, recursion for insertion and deletion,
+and dynamic allocation for nodes; the number of keys and transactions is not
+fixed. Print exactly what each command asks for, with no prompts or debug output.
+-- reply
+{"sentences": ["Multiversion_Tree is a program.", "Multiversion_Tree reads the commands from the standard_input.", "Multiversion_Tree reads the commands until the end_of_input.", "Every command is a line.", "Every line that is blank is ignored.", "Every transaction_name is a word.", "Every key is an integer.", "Every key may be negative.", "Every b_command begins a transaction at the latest_committed_version.", "Every b_command that names an active_transaction causes an error.", "Every i_command stages an insertion of a key in the transaction.", "Every i_command that names a transaction that is not active causes an error.", "Every d_command stages a deletion of a key in the transaction.", "Every d_command that names a transaction that is not active causes an error.", "Every c_command commits the transaction atomically.", "Every c_command applies the staged_changes as a new committed_version.", "Every c_command increments the commit_id.", "Every c_command ends the transaction.", "Every c_command that names a transaction with no staged_changes increments the commit_id.", "Every c_command that names a transaction that is not active causes an error.", "Every a_command aborts the transaction.", "Every a_command discards the staged_changes.", "Every a_command ends the transaction.", "Every a_command that names a transaction that is not active causes an error.", "Every r_command that names a key that is visible in the view prints \"yes\".", "Every r_command that names a key that is not visible in the view prints \"no\".", "Every r_command that names a transaction that is not active causes an error.", "Every p_command prints the keys that are visible in the view in the ascending_order.", "Every p_command prints one key a line.", "Every p_command that names an empty_view prints nothing.", "Every p_command that names a transaction that is not active causes an error.", "Every g_command that names a key that is in the latest_committed_version prints \"yes\".", "Every g_command that names a key that is not in the latest_committed_version prints \"no\".", "Every v_command prints the latest_commit_id.", "Every view is the committed_version at the begin_snapshot with the staged_insertions and the staged_deletions.", "Every commit by another transaction after the begin_snapshot is invisible to the transaction.", "Every transaction keeps a staged_change for a key.", "Every transaction keeps the last staged_change for the key.", "Every staged_deletion of a key that is not visible is staged.", "Every commit applies the staged_changes to the latest_committed_version.", "Every last_committer wins for the keys.", "Every insertion of a key that is in the latest_committed_version changes nothing.", "Every deletion of a key that is not in the latest_committed_version changes nothing.", "Every transaction that is active at the end_of_input is abandoned.", "Every transaction that is active at the end_of_input is not committed.", "Multiversion_Tree uses a B_tree for the committed_versions.", "Every B_tree has a minimum_degree.", "The minimum_degree is 2.", "Multiversion_Tree uses a recursion for the insertion.", "Multiversion_Tree uses a recursion for the deletion.", "Multiversion_Tree allocates the nodes dynamically.", "Multiversion_Tree has an unbounded number_of_keys.", "Multiversion_Tree has an unbounded number_of_transactions.", "Multiversion_Tree does not print a prompt.", "Multiversion_Tree does not print a debug_output."]}
+
+== round 2
+-- prompt
+The requirement:
+
+Write a complete Python 3 program. It simulates a multi-version B-tree of
+minimum degree 2 (a 2-3-4 tree) holding integer keys, with transactions and
+snapshot isolation. Read commands from standard input until EOF, one command
+per line. Blank lines are ignored.
+
+  b T          begin transaction T at the latest committed version; error if T is active
+  i T KEY      stage an insertion of KEY in T; error if T is not active
+  d T KEY      stage a deletion of KEY in T; error if T is not active
+  c T          commit T atomically: apply all its staged changes as one new
+               committed version, increment the commit id, and end T;
+               error if T is not active. An empty commit still increments.
+  a T          abort T, discard all its staged changes, and end T;
+               error if T is not active
+  r T KEY      print yes if KEY is visible in T's view, otherwise no;
+               error if T is not active
+  p T          print every key visible in T's view in ascending order, one per
+               line; print nothing for an empty view; error if T is not active
+  g KEY        print yes if KEY is in the latest committed version, otherwise no
+  v            print the latest commit id
+
+T is a word of ASCII letters or digits. KEY is an integer, possibly negative.
+A transaction's view is the committed version at its begin snapshot plus its
+own staged insertions and deletions; commits by other transactions after its
+snapshot are invisible to it. T keeps one staged change per key, the last one
+staged, even when it does not change T's view: a deletion of a key T cannot
+see is still staged. A commit applies each staged change to the latest
+committed version (last committer wins for keys it changed); inserting a key
+that is already there, or deleting a key that is not there, changes nothing.
+At EOF, active transactions are abandoned without committing.
+
+Use a B-tree for the committed versions, recursion for insertion and deletion,
+and dynamic allocation for nodes; the number of keys and transactions is not
+fixed. Print exactly what each command asks for, with no prompts or debug output.
+
+Your sentences, and whether the parser read each:
+
+1. Multiversion_Tree is a program. (read)
+2. Multiversion_Tree reads the commands from the standard_input. (read)
+3. Multiversion_Tree reads the commands until the end_of_input. (read)
+4. Every command is a line. (read)
+5. Every line that is blank is ignored. (read)
+6. Every transaction_name is a word. (read)
+7. Every key is an integer. (read)
+8. Every key may be negative. (NOT READ)
+9. Every b_command begins a transaction at the latest_committed_version. (read)
+10. Every b_command that names an active_transaction causes an error. (read)
+11. Every i_command stages an insertion of a key in the transaction. (NOT READ)
+12. Every i_command that names a transaction that is not active causes an error. (NOT READ)
+13. Every d_command stages a deletion of a key in the transaction. (NOT READ)
+14. Every d_command that names a transaction that is not active causes an error. (NOT READ)
+15. Every c_command commits the transaction atomically. (read)
+16. Every c_command applies the staged_changes as a new committed_version. (NOT READ)
+17. Every c_command increments the commit_id. (read)
+18. Every c_command ends the transaction. (read)
+19. Every c_command that names a transaction with no staged_changes increments the commit_id. (NOT READ)
+20. Every c_command that names a transaction that is not active causes an error. (NOT READ)
+21. Every a_command aborts the transaction. (read)
+22. Every a_command discards the staged_changes. (read)
+23. Every a_command ends the transaction. (read)
+24. Every a_command that names a transaction that is not active causes an error. (NOT READ)
+25. Every r_command that names a key that is visible in the view prints "yes". (NOT READ)
+26. Every r_command that names a key that is not visible in the view prints "no". (NOT READ)
+27. Every r_command that names a transaction that is not active causes an error. (NOT READ)
+28. Every p_command prints the keys that are visible in the view in the ascending_order. (NOT READ)
+29. Every p_command prints one key a line. (NOT READ)
+30. Every p_command that names an empty_view prints nothing. (read)
+31. Every p_command that names a transaction that is not active causes an error. (NOT READ)
+32. Every g_command that names a key that is in the latest_committed_version prints "yes". (NOT READ)
+33. Every g_command that names a key that is not in the latest_committed_version prints "no". (NOT READ)
+34. Every v_command prints the latest_commit_id. (read)
+35. Every view is the committed_version at the begin_snapshot with the staged_insertions and the staged_deletions. (NOT READ)
+36. Every commit by another transaction after the begin_snapshot is invisible to the transaction. (NOT READ)
+37. Every transaction keeps a staged_change for a key. (NOT READ)
+38. Every transaction keeps the last staged_change for the key. (read)
+39. Every staged_deletion of a key that is not visible is staged. (NOT READ)
+40. Every commit applies the staged_changes to the latest_committed_version. (read)
+41. Every last_committer wins for the keys. (read)
+42. Every insertion of a key that is in the latest_committed_version changes nothing. (NOT READ)
+43. Every deletion of a key that is not in the latest_committed_version changes nothing. (NOT READ)
+44. Every transaction that is active at the end_of_input is abandoned. (NOT READ)
+45. Every transaction that is active at the end_of_input is not committed. (NOT READ)
+46. Multiversion_Tree uses a B_tree for the committed_versions. (read)
+47. Every B_tree has a minimum_degree. (read)
+48. The minimum_degree is 2. (read)
+49. Multiversion_Tree uses a recursion for the insertion. (read)
+50. Multiversion_Tree uses a recursion for the deletion. (read)
+51. Multiversion_Tree allocates the nodes dynamically. (read)
+52. Multiversion_Tree has an unbounded number_of_keys. (read)
+53. Multiversion_Tree has an unbounded number_of_transactions. (read)
+54. Multiversion_Tree does not print a prompt. (read)
+55. Multiversion_Tree does not print a debug_output. (read)
+
+Give the whole list again: each read sentence as it is, and each sentence the parser did not read said again in other forms, in two or three sentences where one will not do (the list of what the parser refuses says how). Leave a sentence out only when no form can carry its rule.
+-- reply
+{"sentences": ["Multiversion_Tree is a program.", "Multiversion_Tree reads the commands from the standard_input.", "Multiversion_Tree reads the commands until the end_of_input.", "Every command is a line.", "Every line that is blank is ignored.", "Every transaction_name is a word.", "Every key is an integer.", "Every key that is negative is an integer.", "Every b_command begins a transaction at the latest_committed_version.", "Every b_command that names an active_transaction causes an error.", "Every i_command stages an insertion.", "Every insertion has a key.", "Every i_command that names an inactive_transaction causes an error.", "Every d_command stages a deletion.", "Every deletion has a key.", "Every d_command that names an inactive_transaction causes an error.", "Every c_command commits the transaction atomically.", "Every c_command applies the staged_changes.", "Every staged_changes forms a new_committed_version.", "Every c_command increments the commit_id.", "Every c_command ends the transaction.", "Every c_command that names an empty_transaction increments the commit_id.", "Every c_command that names an inactive_transaction causes an error.", "Every a_command aborts the transaction.", "Every a_command discards the staged_changes.", "Every a_command ends the transaction.", "Every a_command that names an inactive_transaction causes an error.", "Every r_command that names a visible_key prints \"yes\".", "Every r_command that names an invisible_key prints \"no\".", "Every r_command that names an inactive_transaction causes an error.", "Every p_command prints the visible_keys in the ascending_order.", "Every visible_key gets a line.", "Every p_command that names an empty_view prints nothing.", "Every p_command that names an inactive_transaction causes an error.", "Every g_command that names a latest_key prints \"yes\".", "Every g_command that names an absent_key prints \"no\".", "Every v_command prints the latest_commit_id.", "Every view holds the committed_version at the begin_snapshot.", "Every view holds the staged_insertions.", "Every view holds the staged_deletions.", "Every later_commit is invisible to the transaction.", "Every transaction keeps a staged_change.", "Every transaction keeps the last staged_change.", "Every staged_deletion that names an invisible_key is staged.", "Every commit applies the staged_changes to the latest_committed_version.", "Every last_committer wins.", "Every insertion that names a present_key changes nothing.", "Every deletion that names an absent_key changes nothing.", "Every transaction that is active at the end_of_input is abandoned.", "Every transaction that is active at the end_of_input is not committed.", "Multiversion_Tree uses a B_tree for the committed_versions.", "Every B_tree has a minimum_degree.", "The minimum_degree is 2.", "Multiversion_Tree uses a recursion for the insertion.", "Multiversion_Tree uses a recursion for the deletion.", "Multiversion_Tree allocates the nodes dynamically.", "Multiversion_Tree has an unbounded number_of_keys.", "Multiversion_Tree has an unbounded number_of_transactions.", "Multiversion_Tree does not print a prompt.", "Multiversion_Tree does not print a debug_output."]}
+
+== round 3
+-- prompt
+The requirement:
+
+Write a complete Python 3 program. It simulates a multi-version B-tree of
+minimum degree 2 (a 2-3-4 tree) holding integer keys, with transactions and
+snapshot isolation. Read commands from standard input until EOF, one command
+per line. Blank lines are ignored.
+
+  b T          begin transaction T at the latest committed version; error if T is active
+  i T KEY      stage an insertion of KEY in T; error if T is not active
+  d T KEY      stage a deletion of KEY in T; error if T is not active
+  c T          commit T atomically: apply all its staged changes as one new
+               committed version, increment the commit id, and end T;
+               error if T is not active. An empty commit still increments.
+  a T          abort T, discard all its staged changes, and end T;
+               error if T is not active
+  r T KEY      print yes if KEY is visible in T's view, otherwise no;
+               error if T is not active
+  p T          print every key visible in T's view in ascending order, one per
+               line; print nothing for an empty view; error if T is not active
+  g KEY        print yes if KEY is in the latest committed version, otherwise no
+  v            print the latest commit id
+
+T is a word of ASCII letters or digits. KEY is an integer, possibly negative.
+A transaction's view is the committed version at its begin snapshot plus its
+own staged insertions and deletions; commits by other transactions after its
+snapshot are invisible to it. T keeps one staged change per key, the last one
+staged, even when it does not change T's view: a deletion of a key T cannot
+see is still staged. A commit applies each staged change to the latest
+committed version (last committer wins for keys it changed); inserting a key
+that is already there, or deleting a key that is not there, changes nothing.
+At EOF, active transactions are abandoned without committing.
+
+Use a B-tree for the committed versions, recursion for insertion and deletion,
+and dynamic allocation for nodes; the number of keys and transactions is not
+fixed. Print exactly what each command asks for, with no prompts or debug output.
+
+Your sentences, and whether the parser read each:
+
+1. Multiversion_Tree is a program. (read)
+2. Multiversion_Tree reads the commands from the standard_input. (read)
+3. Multiversion_Tree reads the commands until the end_of_input. (read)
+4. Every command is a line. (read)
+5. Every line that is blank is ignored. (read)
+6. Every transaction_name is a word. (read)
+7. Every key is an integer. (read)
+8. Every key that is negative is an integer. (read)
+9. Every b_command begins a transaction at the latest_committed_version. (read)
+10. Every b_command that names an active_transaction causes an error. (read)
+11. Every i_command stages an insertion. (read)
+12. Every insertion has a key. (read)
+13. Every i_command that names an inactive_transaction causes an error. (read)
+14. Every d_command stages a deletion. (read)
+15. Every deletion has a key. (read)
+16. Every d_command that names an inactive_transaction causes an error. (read)
+17. Every c_command commits the transaction atomically. (read)
+18. Every c_command applies the staged_changes. (read)
+19. Every staged_changes forms a new_committed_version. (read)
+20. Every c_command increments the commit_id. (read)
+21. Every c_command ends the transaction. (read)
+22. Every c_command that names an empty_transaction increments the commit_id. (read)
+23. Every c_command that names an inactive_transaction causes an error. (read)
+24. Every a_command aborts the transaction. (read)
+25. Every a_command discards the staged_changes. (read)
+26. Every a_command ends the transaction. (read)
+27. Every a_command that names an inactive_transaction causes an error. (read)
+28. Every r_command that names a visible_key prints "yes". (read)
+29. Every r_command that names an invisible_key prints "no". (read)
+30. Every r_command that names an inactive_transaction causes an error. (read)
+31. Every p_command prints the visible_keys in the ascending_order. (read)
+32. Every visible_key gets a line. (read)
+33. Every p_command that names an empty_view prints nothing. (read)
+34. Every p_command that names an inactive_transaction causes an error. (read)
+35. Every g_command that names a latest_key prints "yes". (read)
+36. Every g_command that names an absent_key prints "no". (read)
+37. Every v_command prints the latest_commit_id. (read)
+38. Every view holds the committed_version at the begin_snapshot. (read)
+39. Every view holds the staged_insertions. (read)
+40. Every view holds the staged_deletions. (read)
+41. Every later_commit is invisible to the transaction. (NOT READ)
+42. Every transaction keeps a staged_change. (read)
+43. Every transaction keeps the last staged_change. (read)
+44. Every staged_deletion that names an invisible_key is staged. (read)
+45. Every commit applies the staged_changes to the latest_committed_version. (read)
+46. Every last_committer wins. (read)
+47. Every insertion that names a present_key changes nothing. (read)
+48. Every deletion that names an absent_key changes nothing. (read)
+49. Every transaction that is active at the end_of_input is abandoned. (NOT READ)
+50. Every transaction that is active at the end_of_input is not committed. (NOT READ)
+51. Multiversion_Tree uses a B_tree for the committed_versions. (read)
+52. Every B_tree has a minimum_degree. (read)
+53. The minimum_degree is 2. (read)
+54. Multiversion_Tree uses a recursion for the insertion. (read)
+55. Multiversion_Tree uses a recursion for the deletion. (read)
+56. Multiversion_Tree allocates the nodes dynamically. (read)
+57. Multiversion_Tree has an unbounded number_of_keys. (read)
+58. Multiversion_Tree has an unbounded number_of_transactions. (read)
+59. Multiversion_Tree does not print a prompt. (read)
+60. Multiversion_Tree does not print a debug_output. (read)
+
+Give the whole list again: each read sentence as it is, and each sentence the parser did not read said again in other forms, in two or three sentences where one will not do (the list of what the parser refuses says how). Leave a sentence out only when no form can carry its rule.
+-- reply
+{"sentences": ["Multiversion_Tree is a program.", "Multiversion_Tree reads the commands from the standard_input.", "Multiversion_Tree reads the commands until the end_of_input.", "Every command is a line.", "Every line that is blank is ignored.", "Every transaction_name is a word.", "Every key is an integer.", "Every key that is negative is an integer.", "Every b_command begins a transaction at the latest_committed_version.", "Every b_command that names an active_transaction causes an error.", "Every i_command stages an insertion.", "Every insertion has a key.", "Every i_command that names an inactive_transaction causes an error.", "Every d_command stages a deletion.", "Every deletion has a key.", "Every d_command that names an inactive_transaction causes an error.", "Every c_command commits the transaction atomically.", "Every c_command applies the staged_changes.", "Every staged_changes forms a new_committed_version.", "Every c_command increments the commit_id.", "Every c_command ends the transaction.", "Every c_command that names an empty_transaction increments the commit_id.", "Every c_command that names an inactive_transaction causes an error.", "Every a_command aborts the transaction.", "Every a_command discards the staged_changes.", "Every a_command ends the transaction.", "Every a_command that names an inactive_transaction causes an error.", "Every r_command that names a visible_key prints \"yes\".", "Every r_command that names an invisible_key prints \"no\".", "Every r_command that names an inactive_transaction causes an error.", "Every p_command prints the visible_keys in the ascending_order.", "Every visible_key gets a line.", "Every p_command that names an empty_view prints nothing.", "Every p_command that names an inactive_transaction causes an error.", "Every g_command that names a latest_key prints \"yes\".", "Every g_command that names an absent_key prints \"no\".", "Every v_command prints the latest_commit_id.", "Every view holds the committed_version at the begin_snapshot.", "Every view holds the staged_insertions.", "Every view holds the staged_deletions.", "Every later_commit is invisible_to the transaction.", "Every transaction keeps a staged_change.", "Every transaction keeps the last staged_change.", "Every staged_deletion that names an invisible_key is staged.", "Every commit applies the staged_changes to the latest_committed_version.", "Every last_committer wins.", "Every insertion that names a present_key changes nothing.", "Every deletion that names an absent_key changes nothing.", "Every transaction that is active at the end_of_input is abandoned.", "Every transaction that is active at the end_of_input is not committed.", "Multiversion_Tree uses a B_tree for the committed_versions.", "Every B_tree has a minimum_degree.", "The minimum_degree is 2.", "Multiversion_Tree uses a recursion for the insertion.", "Multiversion_Tree uses a recursion for the deletion.", "Multiversion_Tree allocates the nodes dynamically.", "Multiversion_Tree has an unbounded number_of_keys.", "Multiversion_Tree has an unbounded number_of_transactions.", "Multiversion_Tree does not print a prompt.", "Multiversion_Tree does not print a debug_output."]}
+

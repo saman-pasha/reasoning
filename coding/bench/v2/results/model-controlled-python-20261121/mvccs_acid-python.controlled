@@ -1,0 +1,63 @@
+
+
+# The request in controlled English
+
+The same requirement, said again in the controlled English the repository's reasoner reads, one sentence a line:
+
+Multiversion_Tree is a program.
+Multiversion_Tree reads the commands from the standard_input.
+Multiversion_Tree reads the commands until the end_of_input.
+Every command is a line.
+Every line that is blank is ignored.
+Every transaction_name is a word.
+Every key is an integer.
+Every key that is negative is an integer.
+Every b_command begins a transaction at the latest_committed_version.
+Every b_command that names an active_transaction causes an error.
+Every i_command stages an insertion.
+Every insertion has a key.
+Every i_command that names an inactive_transaction causes an error.
+Every d_command stages a deletion.
+Every deletion has a key.
+Every d_command that names an inactive_transaction causes an error.
+Every c_command commits the transaction atomically.
+Every c_command applies the staged_changes.
+Every staged_changes forms a new_committed_version.
+Every c_command increments the commit_id.
+Every c_command ends the transaction.
+Every c_command that names an empty_transaction increments the commit_id.
+Every c_command that names an inactive_transaction causes an error.
+Every a_command aborts the transaction.
+Every a_command discards the staged_changes.
+Every a_command ends the transaction.
+Every a_command that names an inactive_transaction causes an error.
+Every r_command that names a visible_key prints "yes".
+Every r_command that names an invisible_key prints "no".
+Every r_command that names an inactive_transaction causes an error.
+Every p_command prints the visible_keys in the ascending_order.
+Every visible_key gets a line.
+Every p_command that names an empty_view prints nothing.
+Every p_command that names an inactive_transaction causes an error.
+Every g_command that names a latest_key prints "yes".
+Every g_command that names an absent_key prints "no".
+Every v_command prints the latest_commit_id.
+Every view holds the committed_version at the begin_snapshot.
+Every view holds the staged_insertions.
+Every view holds the staged_deletions.
+Every transaction keeps a staged_change.
+Every transaction keeps the last staged_change.
+Every staged_deletion that names an invisible_key is staged.
+Every commit applies the staged_changes to the latest_committed_version.
+Every last_committer wins.
+Every insertion that names a present_key changes nothing.
+Every deletion that names an absent_key changes nothing.
+Multiversion_Tree uses a B_tree for the committed_versions.
+Every B_tree has a minimum_degree.
+The minimum_degree is 2.
+Multiversion_Tree uses a recursion for the insertion.
+Multiversion_Tree uses a recursion for the deletion.
+Multiversion_Tree allocates the nodes dynamically.
+Multiversion_Tree has an unbounded number_of_keys.
+Multiversion_Tree has an unbounded number_of_transactions.
+Multiversion_Tree does not print a prompt.
+Multiversion_Tree does not print a debug_output.

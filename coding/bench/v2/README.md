@@ -263,6 +263,16 @@ CODING_BENCH_BASE_URL=https://api.anthropic.com/v1/messages \
   its run: it makes the first program right more often in no lane, and
   in Python far less often (3/60 against 32/60), at 4.4 times the
   tokens.
+- **The note the endpoint writes itself** (reasoning 1.18.0): a model
+  says the requirement again (`reason_restate/3` in live mode), the
+  grammar keeps what it reads, and no hand-written text is in it.
+  `restate_prep.pl` makes it with the endpoint's own `ep_controlled/6`,
+  before the run and counted apart, into `DIR/TASK-LANG.controlled` for
+  the `controlled` arm (`--ir-notes DIR`), and its calls and tokens into
+  `DIR/restate-prep.jsonl`; run it without `--embed`, so no restatement
+  saved before is used. Tested in
+  `results/model-controlled-python-20261121/`, the test written before
+  the run.
 
 ### The reasoning arms and the cocolog lane without its guide (1.15.0)
 
