@@ -268,7 +268,13 @@ effort (`low` for `claude-sonnet-5-5`, whose lowest effort that is):
   `swipl`, whose generator is the same shape, is the runtime and the
   language's name. Its notes are the `cocolog` lane's, as the requirement
   is (`ir_prep.pl --langs cocolog_noguide` makes no call). The default
-  languages stay the four.
+  languages stay the four. **Since 1.15.2 the short prompt names one fact
+  of cocolog**: begin with `:- use_module(library(stream)).`, which loads
+  the stream predicates. Under 1.15.0's prompt every program of the
+  lane's two reasoning arms (20 cells, 60 attempts) called SWI-Prolog's
+  `read_line_to_string/2`, `get_char/1` or `get_code/1` without it and
+  stopped at the first case, or answered a repair with prose before the
+  code; none passed.
 
 ## Declarative vs imperative (Phase 5)
 

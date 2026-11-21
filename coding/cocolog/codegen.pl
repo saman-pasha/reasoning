@@ -90,9 +90,14 @@ cocolog_system_prompt(Skill, Prompt) :-
 ~s',
            [Skill]).
 
+%% The control's one fact about cocolog (reasoning 1.15.2): its stream
+%% predicates are library(stream)'s, which a program loads itself. Without
+%% it, every program of the cocolog_noguide lane's reasoning arms called
+%% read_line_to_string/2, get_char/1 or get_code/1 and stopped at the
+%% first case, an unknown procedure (bench v2, 2026-11-21).
 cocolog_no_skill_prompt(Prompt) :-
     format(atom(Prompt),
-'You are a cocolog programmer. Write a complete cocolog program for the requirement. Define main/0 unless the requirement names another goal. Output only the complete source code, with no Markdown fences and no explanation.',
+'You are a cocolog programmer. Write a complete cocolog program for the requirement. Define main/0 unless the requirement names another goal. Begin the program with `:- use_module(library(stream)).`: cocolog does not load its stream predicates (read_line_to_string/2, read_line_to_codes/2, get_char/1, read_term/2 and the rest) without it. Output only the complete source code, with no Markdown fences and no explanation.',
            []).
 
 cocolog_user_prompt(Spec, Goal, Prompt) :-
