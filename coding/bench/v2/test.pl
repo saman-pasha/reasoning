@@ -1091,7 +1091,7 @@ test_lang_reasoning :-
     check('the arms and the notes each adds', Arms,
           [plain-[], reasoning-[reasoning], reasoning_ir-[reasoning, ir],
            ir-[ir], controlled-[controlled], terms-[terms], concepts-[concepts],
-           outline-[outline]]),
+           outline-[outline], alt1-[alt1], alt2-[alt2], alt3-[alt3]]),
     yes_no(v2_language_supported(cocolog_noguide), Lane),
     check('cocolog_noguide is a language lane', Lane, yes),
     once(v2_language_runtime(cocolog_noguide, Runtime)),

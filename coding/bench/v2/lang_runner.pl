@@ -211,7 +211,7 @@ v2_lang_note_file(Dir, Task, Lang, Kind, File) :-
 v2_lang_note_error(ir, no_ir_note, 'IR').
 v2_lang_note_error(reasoning, no_reasoning_note, reasoning).
 v2_lang_note_error(Kind, no_reason_note, Kind) :-
-    memberchk(Kind, [controlled, terms, concepts, outline]).
+    memberchk(Kind, [controlled, terms, concepts, outline, alt1, alt2, alt3]).
 
 %% The arms, and the notes each puts after the requirement, in the
 %% endpoint's order: the prompt alone, the prompt with the reasoning
@@ -229,6 +229,11 @@ v2_lang_arm_notes(controlled, [controlled]).
 v2_lang_arm_notes(terms, [terms]).
 v2_lang_arm_notes(concepts, [concepts]).
 v2_lang_arm_notes(outline, [outline]).
+%% three hand-made notes for an ablation (since reasoning 1.17.2): each reads
+%% TASK-LANG.altN from the notes directory, whose README says what each holds
+v2_lang_arm_notes(alt1, [alt1]).
+v2_lang_arm_notes(alt2, [alt2]).
+v2_lang_arm_notes(alt3, [alt3]).
 
 %% The requirement a cell is given: the language's, and after it the
 %% arm's notes. Chars is chars(IR, Reasoning), each note's length.
@@ -249,7 +254,7 @@ v2_lang_add_chars(ir, N, chars(I0, R), chars(I, R)) :- I is I0 + N.
 v2_lang_add_chars(reasoning, N, chars(I, R0), chars(I, R)) :- R is R0 + N.
 %% a reason_* note counts as the reasoning's
 v2_lang_add_chars(Kind, N, chars(I, R0), chars(I, R)) :-
-    memberchk(Kind, [controlled, terms, concepts, outline]),
+    memberchk(Kind, [controlled, terms, concepts, outline, alt1, alt2, alt3]),
     R is R0 + N.
 
 v2_lang_keep_option(Opts) :-
@@ -265,7 +270,7 @@ v2_lang_usage :-
     format("  --run           run the comparison~n", []),
     format("  --tasks A,B     lcs, stable_sort, calculator, mvccs_acid~n", []),
     format("  --langs A,B     c, python, cocolog, swipl, cocolog_noguide~n", []),
-    format("  --arms A,B      plain, reasoning, reasoning_ir, ir, controlled, terms, concepts, outline~n", []),
+    format("  --arms A,B      plain, reasoning, reasoning_ir, ir, controlled, terms, concepts, outline, alt1, alt2, alt3~n", []),
     format("  --ir-notes DIR  the notes coding/bench/v2/ir_prep.pl wrote~n", []),
     format("  --trials N      trials per task and language~n", []),
     format("  --seed N        order seed~n", []),
