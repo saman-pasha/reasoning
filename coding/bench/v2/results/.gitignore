@@ -40,3 +40,4 @@
 !controlled-english-python-20261121/bench.jsonl
 !complete-ir-python-20261121/bench.jsonl
 !complete-ir-prolog-20261121/bench.jsonl
+!controlled-gzip-python-20261121/bench.jsonl
