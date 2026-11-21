@@ -46,7 +46,17 @@ a part of the grammar that asks it, never a language's own clause.
 `typology_check/2` names a template's gaps, and test/typology.pl holds
 every clause of a sample (1 632 a language) to a round trip, and the
 outputs to sentences written out. It shares nothing with translate.pl's
-IR yet.
+IR yet. TYPOLOGY-PLAN.md is the plan, phase by phase. **The word tables
+are generated** (1.20.0): `templates/<name>-words.pl` is what
+`typology_import/1` writes from corpus/vocabulary (`cocolog -s
+tools/typology/import.pl`, some 18 s for the three), committed, and
+test/typology.pl's `reproduced` section imports again into a scratch
+directory and holds the committed files to it byte for byte: edit a hand
+template, import again, commit both. **The import reads the hand template
+from its FILE** (`tyi_hand/1`, through library(stream)), never from the
+knowledge base: cocolog 3.65.0's consult of a file a second time, after a
+retractall/1 took its clauses, adds none of them back (the first cut
+retracted and consulted, and the test's import wrote a different file).
 
 **Every reader has two modes, static and live** (1.16.0; reason.pl's header,
 STATIC AND LIVE, and live.pl's). What a session must keep:

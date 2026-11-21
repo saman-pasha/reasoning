@@ -36,8 +36,10 @@
 %%                                     language uses; the first is written
 %%     ty_noun(L, Meaning, Gender, Animacy, Singular, Plural)
 %%                                     Gender: the language's own (m, f,
-%%                                     ...), or none; Animacy: animate or
-%%                                     inanimate
+%%                                     ...), or none; Animacy: animate,
+%%                                     inanimate, or unknown (an imported
+%%                                     noun the vocabulary says nothing of:
+%%                                     no mark asks for it)
 %%     ty_adjective(L, Meaning, Gender, Number, Word)
 %%                                     a form for a gender and a number;
 %%                                     any for a form that does not change
@@ -60,6 +62,25 @@
 %%                                     Spanish `a' before an animate one
 %%     ty_contraction(L, Words, Word)  two words written as one (`a el' is
 %%                                     `al'), and read back as two
+%%     ty_negation(L, Tense, Number, Words, Form)
+%%                                     a negative the template does not list
+%%                                     is Words before a positive form: the
+%%                                     same one (Form `same': `no ve') or
+%%                                     another (`form(T, N)': English `does
+%%                                     not' before the present plural, `see');
+%%                                     Tense and Number may be any
+%%     ty_ending(L, Feature, From, To) a form a rule makes: a word ending in
+%%                                     From takes To in its place, the
+%%                                     longest From that fits winning
+%%                                     (English plural: `y' to `ies', `ay' to
+%%                                     `ays', `' to `s'); the import uses it
+%%                                     where the vocabulary states no form
+%%
+%% THE WORD TABLES. templates/<name>-words.pl holds the rows
+%% typology_import/1 writes from corpus/vocabulary/<name>.txt (and, for
+%% English, from every vocabulary's English meanings); typology_load/1 reads
+%% it after the hand template, whose rows come first and win. Edit the hand
+%% template, never the words file, and import again.
 %%
 %% THE IR is the meaning with English words in it, the same for every
 %% language:
@@ -70,7 +91,10 @@
 %%
 %% WHAT IS PUBLIC:
 %%
-%%     typology_load(+Name)            consult templates/Name.pl
+%%     typology_load(+Name)            consult templates/Name.pl, then
+%%                                     templates/Name-words.pl if it exists
+%%     typology_import(+Name)          write templates/Name-words.pl
+%%     typology_import(+Name, +File)   or File, and report the counts
 %%     typology_languages(-Names)      the languages loaded
 %%     typology_choices(+Level, -Orders)  every order of a level's parts
 %%     typology_template(+Name)        a blank template on the output:
@@ -94,22 +118,26 @@
 %% phrase needs -- so the same clauses read (the words given) and write
 %% (the IR given), and no order is written into them.
 %%
-%% NOT YET (each is a slot to add, not a change to the grammar): a/an and
+%% TYPOLOGY-PLAN.md says what comes next. NOT YET (each is a slot to add,
+%% not a change to the grammar): a/an and
 %% Italian il/lo, which choose a form by the sound after them; a
 %% Persian ezafe that is written (it is unwritten after a consonant, and
 %% the nouns here end in one); prepositions, adverbs, questions,
 %% relative clauses, persons other than the third, more tenses; a
-%% language written without spaces; reading the lexicon from
-%% corpus/vocabulary/.
+%% language written without spaces.
 
 :- module(typology, [ typology_load/1, typology_languages/1, typology_choices/2,
                       typology_template/1, typology_check/2, typology_read/3,
-                      typology_write/3, typology_translate/4 ]).
+                      typology_write/3, typology_translate/4,
+                      typology_import/1, typology_import/2 ]).
+
+:- use_module(library(reasoning/reason), [ reason_base/2 ]).
 
 :- dynamic ty_order/3, ty_noun/6, ty_adjective/5, ty_verb/6, ty_article/5,
-           ty_mark/5, ty_contraction/3.
+           ty_mark/5, ty_contraction/3, ty_negation/5, ty_ending/4.
 :- discontiguous ty_order/3, ty_noun/6, ty_adjective/5, ty_verb/6,
-                 ty_article/5, ty_mark/5, ty_contraction/3.
+                 ty_article/5, ty_mark/5, ty_contraction/3, ty_negation/5,
+                 ty_ending/4.
 
 %% ---- the levels and the values a slot takes -----------------------------------
 
@@ -120,7 +148,7 @@ ty_values(tense, [present, past]).
 ty_values(number, [sg, pl]).
 ty_values(polarity, [pos, neg]).
 ty_values(definiteness, [def, indef]).
-ty_values(animacy, [animate, inanimate]).
+ty_values(animacy, [animate, inanimate, unknown]).
 ty_values(place, [before, after]).
 ty_values(role, [s, o]).
 
@@ -128,7 +156,17 @@ ty_values(role, [s, o]).
 
 typology_load(Name) :-
     must_be(atom, Name),
-    consult(library(reasoning/templates/Name)).
+    consult(library(reasoning/templates/Name)),
+    atom_concat(Name, '-words', Words),
+    (   ty_file(Words, File)
+    ->  consult(File)
+    ;   true
+    ).
+
+%% templates/Base.pl, found on the library path.
+ty_file(Base, File) :-
+    atomic_list_concat(['templates/', Base, '.pl'], Rel),
+    catch(absolute_file_name(library(reasoning/Rel), File, [access(read)]), _, fail).
 
 typology_languages(Names) :-
     (   setof(L, O^ty_order(L, clause, O), Names) -> true ; Names = [] ).
@@ -157,6 +195,8 @@ ty_row_shape('ty_verb(L, Meaning, Tense, Number, Polarity, Words).').
 ty_row_shape('ty_article(L, Definiteness, Gender, Number, Word).').
 ty_row_shape('ty_mark(L, Role, Place, Word, Conditions).').
 ty_row_shape('ty_contraction(L, Words, Word).').
+ty_row_shape('ty_negation(L, Tense, Number, Words, Form).').
+ty_row_shape('ty_ending(L, Feature, From, To).').
 
 %% ---- the check ----------------------------------------------------------------------
 
@@ -176,7 +216,7 @@ ty_missing(L, verb_form(V, T, N, P)) :-
     ty_values(tense, Ts), member(T, Ts),
     ty_values(number, Ns), member(N, Ns),
     ty_values(polarity, Ps), member(P, Ps),
-    \+ ty_verb(L, V, T, N, P, _).
+    \+ ty_verb_form(L, V, T, N, P, _).
 ty_missing(L, adjective_form(A, G, N)) :-
     ty_adjective_meaning(L, A),
     ty_gender(L, G),
@@ -273,11 +313,31 @@ ty_clause_parts([P|Ps], L, C) --> ty_clause_part(P, L, C), ty_clause_parts(Ps, L
 ty_clause_part(s, L, clause(_, _, _, S, _)) --> ty_role(L, s, S).
 ty_clause_part(o, L, clause(_, _, _, _, O)) --> ty_role(L, o, O).
 ty_clause_part(v, L, clause(V, T, P, np(_, N, _, _), _)) -->
-    { ty_verb(L, V, T, N, P, Words) },
-    ty_seq(Words).
+    ty_verb_words(L, V, T, N, P).
 
-ty_seq([]) --> [].
-ty_seq([W|Ws]) --> [W], ty_seq(Ws).
+%% Reading, the words are taken first and looked up (one to four of them),
+%% so a table of thousands of verbs is asked by the words read; writing,
+%% the form is looked up by its meaning and its words written.
+ty_verb_words(L, V, T, N, P, S0, S) :-
+    (   nonvar(S0)
+    ->  between(1, 4, K), length(Words, K), append(Words, S, S0),
+        ty_verb_form(L, V, T, N, P, Words)
+    ;   ty_verb_form(L, V, T, N, P, Words),
+        append(Words, S, S0)
+    ).
+
+%% A form the template lists, or a negative its negation rule makes from a
+%% positive form it lists.
+ty_verb_form(L, V, T, N, P, Words) :-
+    ty_verb(L, V, T, N, P, Words).
+ty_verb_form(L, V, T, N, neg, Words) :-
+    ty_negation(L, T0, N0, Neg, Form),
+    append(Neg, Pos, Words),
+    ( Form == same -> T1 = T, N1 = N ; Form = form(T1, N1) ),
+    ty_verb(L, V, T1, N1, pos, Pos),
+    ty_values(tense, Ts), member(T, Ts), ty_fits(T0, T),
+    ty_values(number, Ns), member(N, Ns), ty_fits(N0, N),
+    \+ ty_verb(L, V, T, N, neg, _).
 
 %% A role's phrase, with the marks the template puts before or after it.
 ty_role(L, Role, NP) -->
@@ -310,8 +370,12 @@ ty_np_parts([P|Ps], L, NP, Got) --> ty_np_part(P, L, NP, Got), ty_np_parts(Ps, L
 ty_np_part(d, L, _, got(Det, _, _)) --> ty_det(L, Det).
 ty_np_part(n, L, np(M, N, _, _), got(_, noun(G, A), _)) -->
     [W],
-    { ty_noun(L, M, G, A, Sg, Pl),
-      ( N = sg, W = Sg ; N = pl, W = Pl ) }.
+    { ty_noun_form(L, M, G, A, N, W) }.
+
+%% Reading the word is bound and the table is asked by it; writing, by the
+%% meaning.
+ty_noun_form(L, M, G, A, sg, W) :- ty_noun(L, M, G, A, W, _).
+ty_noun_form(L, M, G, A, pl, W) :- ty_noun(L, M, G, A, _, W).
 ty_np_part(a, L, np(_, _, _, As), got(_, _, Rows)) --> ty_adjs(L, As, Rows).
 
 ty_det(L, art(W)) --> [W], { ty_article(L, _, _, _, W) }.
@@ -332,3 +396,220 @@ ty_np_ok(L, np(_, N, Def, _), Det, noun(G, Anim), Rows, Anim) :-
 
 ty_fits(any, _) :- !.
 ty_fits(X, X).
+
+%% ---- the word tables from corpus/vocabulary ---------------------------------------
+%%
+%% A vocabulary file is lesson lines of a few fixed shapes, read here by
+%% their shape and not by the grammar, so 160 000 lines take seconds:
+%%
+%%     The masculine noun "perro" means "dog".      (feminine, or no gender)
+%%     The feminine adjective "negra" means "black".
+%%     The verb "ve" means "sees".                  (the third person)
+%%     "perros" is the plural of "perro".           (a verb's too: "ven")
+%%     "vio" is the past of "ve".                   ("vieron" of "ven")
+%%     "perro" is animate.   "niño" is a person.   "casa" is feminine.
+%%
+%% Only complete entries are written, and only single words; a row the hand
+%% template has already (its meaning and its word) is not written again.
+
+:- dynamic tyi_entry/4, tyi_form/3, tyi_animate/1, tyi_gender/2, tyi_count/2,
+           tyi_hand/1.
+
+typology_import(Name) :-
+    must_be(atom, Name),
+    ty_dir(Dir),
+    atomic_list_concat([Dir, '/templates/', Name, '-words.pl'], File),
+    typology_import(Name, File).
+
+%% The hand template's rows are READ from its file, not asked of the
+%% knowledge base, so what is loaded (a words file, an earlier import)
+%% changes nothing in what is written.
+typology_import(Name, File) :-
+    must_be(atom, Name),
+    ty_import_reset,
+    ty_hand_rows(Name, Hand),
+    forall(member(H, Hand), assertz(tyi_hand(H))),
+    (   Name == english
+    ->  findall(V, ( member(Src, [spanish, italian]), ty_vocabulary_file(Src, V) ), Vs),
+        Vs \== [],
+        forall(member(V, Vs), ty_read_vocabulary(V)),
+        findall(R, ty_english_row(R), Rows0)
+    ;   ty_vocabulary_file(Name, V),
+        ty_read_vocabulary(V),
+        findall(R, ty_import_row(Name, R), Rows0)
+    ),
+    ty_dedupe(Rows0, Rows),
+    length(Rows, NRows),
+    with_output_to(codes(Codes), ty_write_rows(Name, Rows)),
+    write_file_from_codes(File, Codes),
+    format("~w: ~w rows into ~w~n", [Name, NRows, File]),
+    forall(tyi_count(What, N), format("  ~w: ~w~n", [What, N])),
+    ty_import_reset.
+
+%% The rows once each, in the vocabulary's order: a word's first meaning
+%% there is the first it is read as.
+ty_dedupe(Rows0, Rows) :-
+    findall(R-I, nth1(I, Rows0, R), Pairs0),
+    msort(Pairs0, Pairs1),
+    ty_first_of_each(Pairs1, Firsts),
+    findall(I-R, member(R-I, Firsts), ByPlace0),
+    keysort(ByPlace0, ByPlace),
+    findall(R, member(_-R, ByPlace), Rows).
+
+ty_first_of_each([], []).
+ty_first_of_each([R-I|Ps], [R-I|Fs]) :-
+    ty_skip_same(R, Ps, Rest),
+    ty_first_of_each(Rest, Fs).
+
+ty_skip_same(R, [R1-_|Ps], Rest) :- R1 == R, !, ty_skip_same(R, Ps, Rest).
+ty_skip_same(_, Ps, Ps).
+
+ty_dir(Dir) :-
+    absolute_file_name(library(reasoning/typology), F, [file_type(prolog), access(read)]),
+    file_directory_name(F, Dir).
+
+ty_vocabulary_file(Name, File) :-
+    atomic_list_concat(['corpus/vocabulary/', Name, '.txt'], Rel),
+    catch(absolute_file_name(library(reasoning/Rel), File, [access(read)]), _, fail).
+
+ty_hand_rows(Name, Rows) :-
+    ty_file(Name, File),
+    use_module(library(stream)),
+    setup_call_cleanup(open(File, read, S), ty_read_terms(S, Rows), close(S)).
+
+ty_read_terms(S, Ts) :-
+    read_term(S, T, []),
+    (   T == end_of_file -> Ts = [] ; Ts = [T|Ts1], ty_read_terms(S, Ts1) ).
+
+ty_import_reset :-
+    retractall(tyi_entry(_, _, _, _)), retractall(tyi_form(_, _, _)),
+    retractall(tyi_animate(_)), retractall(tyi_gender(_, _)),
+    retractall(tyi_count(_, _)), retractall(tyi_hand(_)).
+
+ty_count(What) :-
+    (   retract(tyi_count(What, N0)) -> N is N0 + 1 ; N = 1 ),
+    assertz(tyi_count(What, N)).
+
+ty_read_vocabulary(File) :-
+    read_file_to_codes(File, Codes),
+    split_string(Codes, "\n", "", Lines),
+    forall(member(S, Lines), ( atom_string(Line, S), ty_vocabulary_line(Line) )).
+
+ty_vocabulary_line(Line) :-
+    atomic_list_concat(Parts, '"', Line),
+    (   Parts = [Head, W, ' means ', M, '.'], ty_entry_head(Head, Class, G)
+    ->  assertz(tyi_entry(Class, G, W, M))
+    ;   Parts = ['', A, Rel, B, '.'], ty_form_relation(Rel, Kind)
+    ->  assertz(tyi_form(Kind, A, B))
+    ;   Parts = ['', W, Says], ty_says(Says, Fact, W)
+    ->  assertz(Fact)
+    ;   true
+    ).
+
+ty_entry_head('The masculine noun ', noun, m).
+ty_entry_head('The feminine noun ', noun, f).
+ty_entry_head('The noun ', noun, none).
+ty_entry_head('The masculine adjective ', adjective, m).
+ty_entry_head('The feminine adjective ', adjective, f).
+ty_entry_head('The adjective ', adjective, none).
+ty_entry_head('The verb ', verb, none).
+
+ty_form_relation(' is the plural of ', plural).
+ty_form_relation(' is the past of ', past).
+
+ty_says(' is animate.', tyi_animate(W), W).
+ty_says(' is a person.', tyi_animate(W), W).
+ty_says(' is feminine.', tyi_gender(W, f), W).
+ty_says(' is not feminine.', tyi_gender(W, m), W).
+
+ty_single(W) :- \+ sub_atom(W, _, _, _, ' ').
+
+ty_once_form(Kind, Of, Form) :- once(( tyi_form(Kind, Form, Of), ty_single(Form) )).
+
+%% The rows of a language that has a vocabulary.
+ty_import_row(L, ty_noun(L, M, G, Anim, W, P)) :-
+    tyi_entry(noun, G0, W, M),
+    (   ty_single(W), ty_single(M) -> true ; ty_count(noun_not_a_single_word), fail ),
+    (   G0 \== none -> G = G0
+    ;   once(tyi_gender(W, G)) -> true
+    ;   ty_count(noun_with_no_gender), fail
+    ),
+    (   ty_once_form(plural, W, P) -> true ; ty_count(noun_with_no_plural), fail ),
+    (   tyi_animate(W) -> Anim = animate ; Anim = unknown ),
+    (   tyi_hand(ty_noun(L, M, _, _, W, _)) -> ty_count(noun_in_the_hand_template), fail ; true ).
+ty_import_row(L, ty_adjective(L, M, G, N, W)) :-
+    setof(M0, G0^W0^tyi_entry(adjective, G0, W0, M0), Ms),
+    member(M, Ms),
+    ty_single(M),
+    findall(R, ty_adjective_form(M, R), Forms),
+    (   ty_adjective_complete(Forms) -> true ; ty_count(adjective_meaning_incomplete), fail ),
+    member(form(G, N, W), Forms),
+    \+ tyi_hand(ty_adjective(L, M, _, _, W)).
+ty_import_row(L, ty_verb(L, B, T, N, pos, [W])) :-
+    tyi_entry(verb, _, W3, M3),
+    (   ty_single(W3), ty_single(M3) -> true ; ty_count(verb_not_a_single_word), fail ),
+    (   ty_once_form(plural, W3, W3p), ty_once_form(past, W3, Wp), ty_once_form(past, W3p, Wpp)
+    ->  true
+    ;   ty_count(verb_with_a_form_missing), fail
+    ),
+    reason_base(M3, B),
+    (   tyi_hand(ty_verb(L, B, present, sg, pos, [W3])) -> ty_count(verb_in_the_hand_template), fail ; true ),
+    member(T-N-W, [present-sg-W3, present-pl-W3p, past-sg-Wp, past-pl-Wpp]).
+
+%% An adjective's forms: a word with no gender stands for both, and each
+%% word needs its plural.
+ty_adjective_form(M, form(G, N, W)) :-
+    tyi_entry(adjective, G0, W0, M),
+    ty_single(W0),
+    ty_once_form(plural, W0, P),
+    ( G0 == none -> G = any ; G = G0 ),
+    member(N-W, [sg-W0, pl-P]).
+
+ty_adjective_complete(Forms) :-
+    forall(( member(G, [m, f]), member(N, [sg, pl]) ),
+           ( member(form(G1, N, _), Forms), ( G1 == any ; G1 == G ) )).
+
+%% English: a row for every meaning the vocabularies give, its forms by the
+%% reason library (the base of a third person) and by the English
+%% template's endings, and a past the vocabulary states where it states one
+%% (`"saw" is the past of "sees"').
+ty_english_row(ty_noun(english, M, none, Anim, M, P)) :-
+    setof(M0, G^W^tyi_entry(noun, G, W, M0), Ms),
+    member(M, Ms),
+    ty_single(M),
+    \+ tyi_hand(ty_noun(english, M, _, _, _, _)),
+    ty_apply_ending(english, plural, M, P),
+    (   tyi_entry(noun, _, W, M), tyi_animate(W) -> Anim = animate ; Anim = unknown ).
+ty_english_row(ty_adjective(english, M, any, any, M)) :-
+    setof(M0, G^W^tyi_entry(adjective, G, W, M0), Ms),
+    member(M, Ms),
+    ty_single(M),
+    \+ tyi_hand(ty_adjective(english, M, _, _, _)).
+ty_english_row(ty_verb(english, B, T, N, pos, [W])) :-
+    setof(M3, G^W3^tyi_entry(verb, G, W3, M3), M3s),
+    member(M3, M3s),
+    ty_single(M3),
+    reason_base(M3, B),
+    \+ tyi_hand(ty_verb(english, B, _, _, _, _)),
+    (   tyi_form(past, P0, M3), \+ tyi_entry(verb, _, M3, _), ty_single(P0)
+    ->  P = P0
+    ;   ty_apply_ending(english, past, B, P)
+    ),
+    member(T-N-W, [present-sg-M3, present-pl-B, past-sg-P, past-pl-P]).
+
+%% The form the hand template's ending rule makes: the longest From that
+%% fits.
+ty_apply_ending(L, Feature, Word, Form) :-
+    findall(Len-(From-To), ( tyi_hand(ty_ending(L, Feature, From, To)),
+                             atom_concat(_, From, Word),
+                             atom_length(From, Len) ), Fits),
+    keysort(Fits, Sorted),
+    last(Sorted, _-(From-To)),
+    atom_concat(Stem, From, Word),
+    atom_concat(Stem, To, Form).
+
+ty_write_rows(L, Rows) :-
+    format("%% templates/~w-words.pl -- GENERATED by typology_import(~w) from~n", [L, L]),
+    format("%% corpus/vocabulary/. Do not edit: edit templates/~w.pl, whose rows~n", [L]),
+    format("%% win, and import again.~n~n", []),
+    forall(member(R, Rows), portray_clause(R)).

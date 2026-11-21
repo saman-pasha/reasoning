@@ -31,23 +31,21 @@ ty_adjective(italian, red, f, sg, rossa).
 ty_adjective(italian, red, m, pl, rossi).
 ty_adjective(italian, red, f, pl, rosse).
 
-%% The verbs. The past is the passato prossimo; the negative is `non'.
+%% The verbs: the positive forms. The past is the passato remoto, as
+%% corpus/vocabulary/italian.txt has it; the passato prossimo needs the
+%% participle to agree with the subject, which the template has no slot for
+%% yet.
 ty_verb(italian, see, present, sg, pos, [vede]).
 ty_verb(italian, see, present, pl, pos, [vedono]).
-ty_verb(italian, see, present, sg, neg, [non, vede]).
-ty_verb(italian, see, present, pl, neg, [non, vedono]).
-ty_verb(italian, see, past, sg, pos, [ha, visto]).
-ty_verb(italian, see, past, pl, pos, [hanno, visto]).
-ty_verb(italian, see, past, sg, neg, [non, ha, visto]).
-ty_verb(italian, see, past, pl, neg, [non, hanno, visto]).
+ty_verb(italian, see, past, sg, pos, [vide]).
+ty_verb(italian, see, past, pl, pos, [videro]).
 ty_verb(italian, sleep, present, sg, pos, [dorme]).
 ty_verb(italian, sleep, present, pl, pos, [dormono]).
-ty_verb(italian, sleep, present, sg, neg, [non, dorme]).
-ty_verb(italian, sleep, present, pl, neg, [non, dormono]).
-ty_verb(italian, sleep, past, sg, pos, [ha, dormito]).
-ty_verb(italian, sleep, past, pl, pos, [hanno, dormito]).
-ty_verb(italian, sleep, past, sg, neg, [non, ha, dormito]).
-ty_verb(italian, sleep, past, pl, neg, [non, hanno, dormito]).
+ty_verb(italian, sleep, past, sg, pos, [dormì]).
+ty_verb(italian, sleep, past, pl, pos, [dormirono]).
+
+%% The negative: `non' before the verb.
+ty_negation(italian, any, any, [non], same).
 
 %% The articles agree with the noun. A plural indefinite has none.
 ty_article(italian, def, m, sg, il).

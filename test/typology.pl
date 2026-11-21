@@ -8,8 +8,8 @@
 
 main :-
     forall(member(L, [english, spanish, italian, persian]), typology_load(L)),
-    choices, complete, written, round_trips, refused, marks, free_order,
-    incomplete, blank_template,
+    choices, complete, written, round_trips, refused, marks, word_tables,
+    reproduced, free_order, incomplete, blank_template,
     checks_done.
 
 %% ---- the choices ----------------------------------------------------------------
@@ -112,13 +112,64 @@ marks :-
     typology_write(persian, clause(see, present, pos, np(boy, sg, def, []), np(book, sg, indef, [])), S4),
     check('Persian: no را after an indefinite object', S4, 'پسر یک کتاب می‌بیند.').
 
+%% ---- the word tables from corpus/vocabulary --------------------------------------
+
+word_tables :-
+    section('the word tables from corpus/vocabulary'),
+    forall(member(L-Want, [spanish-36000, italian-25000, english-25000]),
+           ( aggregate_all(count, ty_noun(L, _, _, _, _, _), Nn),
+             aggregate_all(count, ty_adjective(L, _, _, _, _), Na),
+             aggregate_all(count, ty_verb(L, _, _, _, _, _), Nv),
+             N is Nn + Na + Nv,
+             ( N >= Want -> R = enough ; R = N ),
+             atomic_list_concat([L, ' has its word tables: ', Want, ' rows or more'], Label),
+             check(Label, R, enough) )),
+    typology_translate(spanish, english, 'El abogado vio una casa roja.', E1),
+    check('Spanish into English with the vocabulary: a word''s first meaning there is read first', E1,
+          'The lawyer saw a red home.'),
+    typology_translate(spanish, italian, 'Los médicos no comieron las manzanas verdes.', I2),
+    check('Spanish into Italian: the plural, the past, the negation rule, agreement', I2,
+          'I medici non mangiarono le mele verdi.'),
+    typology_translate(english, spanish, 'The farmers carried the heavy boxes.', S3),
+    check('English into Spanish: a plural and a past the English endings made', S3,
+          'Los labradores llevaron las cajas pesadas.'),
+    findall(W, ( member(M-F, [city-plural, day-plural, carry-past, like-past, play-past, eat-past]),
+                 ( F == plural -> ty_noun(english, M, _, _, _, W)
+                 ; ty_verb(english, M, past, sg, pos, [W]) ) ), Ws),
+    check('the English endings, and a past the vocabulary states', Ws,
+          [cities, days, carried, liked, played, ate]),
+    typology_write(english, clause(eat, present, neg, np(lawyer, pl, def, []), none), E5),
+    check('an imported English verb takes the negation rule', E5, 'The lawyers do not eat.'),
+    statistics(inferences, I0),
+    findall(x, typology_read(spanish, 'Los médicos no comieron las manzanas verdes.', _), Rs),
+    statistics(inferences, I1),
+    Cost is I1 - I0,
+    length(Rs, NR),
+    ( Cost < 20000 -> Cheap = cheap ; Cheap = Cost ),
+    format("   every reading of a sentence over 36 000 rows: ~w readings, ~w inferences~n", [NR, Cost]),
+    check('every reading over the full tables costs under 20 000 inferences', Cheap, cheap).
+
+%% The import run again reproduces the committed files byte for byte.
+reproduced :-
+    section('the word tables are what the import writes'),
+    scratch(Dir),
+    forall(member(L, [spanish, italian, english]),
+           ( atomic_list_concat([Dir, '/', L, '-words.pl'], Fresh),
+             with_output_to(string(_), typology_import(L, Fresh)),
+             read_file_to_codes(Fresh, New),
+             atomic_list_concat(['templates/', L, '-words.pl'], Committed),
+             read_file_to_codes(Committed, Old),
+             ( New == Old -> R = same ; R = differs ),
+             atomic_list_concat(['templates/', L, '-words.pl is what typology_import(', L, ') writes'], Label),
+             check(Label, R, same) )).
+
 %% ---- a language with two orders ---------------------------------------------------
 
 free_order :-
     section('a language that keeps two orders'),
     forall(( member(F, [ty_order(english, clause, _), ty_noun(english, _, _, _, _, _),
                         ty_adjective(english, _, _, _, _), ty_verb(english, _, _, _, _, _),
-                        ty_article(english, _, _, _, _)]),
+                        ty_article(english, _, _, _, _), ty_negation(english, _, _, _, _)]),
              call(F) ),
            ( F =.. [P, english|Args], G =.. [P, free|Args], assertz(G) )),
     retractall(ty_order(free, clause, _)),
@@ -135,18 +186,18 @@ free_order :-
 
 incomplete :-
     section('typology_check/2 names what a template lacks'),
-    retract(ty_verb(free, sleep, past, pl, neg, _)),
+    retract(ty_verb(free, sleep, past, pl, pos, _)),
     retractall(ty_adjective(free, red, _, _, _)),
     assertz(ty_adjective(free, red, any, sg, red)),
     assertz(ty_order(free, np, [d, n])),
     retractall(ty_noun(free, book, _, _, _, _)),
     assertz(ty_noun(free, book, none, thing, book, books)),
     typology_check(free, M),
-    check('a missing verb form, a missing adjective form, an order of the wrong parts, a value no slot takes', M,
+    check('a missing verb form (its negative is still the rule''s), a missing adjective form, an order of the wrong parts, a value no slot takes', M,
           [ bad(ty_noun(free, book, none, thing, book, books)),
             not_an_order(np, [d, n]),
             adjective_form(red, none, pl),
-            verb_form(sleep, past, pl, neg) ]).
+            verb_form(sleep, past, pl, pos) ]).
 
 blank_template :-
     section('the blank template'),

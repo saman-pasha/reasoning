@@ -2,7 +2,8 @@
 %% filled template.
 %%
 %% TIER 2: `use_module(library(reasoning/typology))', from typology.pl, and
-%% the templates in templates/. Clauses only: no model, no store.
+%% the templates in templates/ with their word tables. Clauses only: no
+%% model, no store. TYPOLOGY-PLAN.md says what comes next.
 %%
 %%     cocolog -s tutorials/06-typology.pl
 %%
@@ -66,6 +67,21 @@ main :-
     retract(ty_verb(verbish, see, past, pl, neg, _)),
     typology_check(verbish, M7),
     must('typology_check/2 names the missing form', M7, [verb_form(see, past, pl, neg)]),
+
+    %% 8. THE WORD TABLES. templates/<name>-words.pl holds the rows
+    %% typology_import/1 wrote from corpus/vocabulary: some twelve thousand
+    %% Spanish nouns with their gender and plural, the adjectives' forms,
+    %% the verbs' present and past. A negative no table lists is the
+    %% template's negation rule (`no', `non', `does not'), and the English
+    %% plurals and pasts are its ending rules. Round the three languages
+    %% and back, with no word of the sentence in a hand template:
+    typology_translate(spanish, english, 'Los médicos no comieron las manzanas verdes.', E8),
+    must('Spanish into English', E8, 'The doctors did not eat the green apples.'),
+    typology_translate(english, italian, E8, I8),
+    must('English into Italian', I8, 'I medici non mangiarono le mele verdi.'),
+    typology_translate(italian, spanish, I8, S8),
+    must('and Italian into Spanish, the sentence it began as', S8,
+         'Los médicos no comieron las manzanas verdes.'),
     format("~ndone~n", []).
 
 new_language :-

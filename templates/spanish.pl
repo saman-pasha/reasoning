@@ -29,23 +29,18 @@ ty_adjective(spanish, red, f, sg, roja).
 ty_adjective(spanish, red, m, pl, rojos).
 ty_adjective(spanish, red, f, pl, rojas).
 
-%% The verbs. The negative is `no' before the verb.
+%% The verbs: the positive forms. The pretérito is the past.
 ty_verb(spanish, see, present, sg, pos, [ve]).
 ty_verb(spanish, see, present, pl, pos, [ven]).
-ty_verb(spanish, see, present, sg, neg, [no, ve]).
-ty_verb(spanish, see, present, pl, neg, [no, ven]).
 ty_verb(spanish, see, past, sg, pos, [vio]).
 ty_verb(spanish, see, past, pl, pos, [vieron]).
-ty_verb(spanish, see, past, sg, neg, [no, vio]).
-ty_verb(spanish, see, past, pl, neg, [no, vieron]).
 ty_verb(spanish, sleep, present, sg, pos, [duerme]).
 ty_verb(spanish, sleep, present, pl, pos, [duermen]).
-ty_verb(spanish, sleep, present, sg, neg, [no, duerme]).
-ty_verb(spanish, sleep, present, pl, neg, [no, duermen]).
 ty_verb(spanish, sleep, past, sg, pos, [durmió]).
 ty_verb(spanish, sleep, past, pl, pos, [durmieron]).
-ty_verb(spanish, sleep, past, sg, neg, [no, durmió]).
-ty_verb(spanish, sleep, past, pl, neg, [no, durmieron]).
+
+%% The negative: `no' before the verb.
+ty_negation(spanish, any, any, [no], same).
 
 %% The articles agree with the noun. A plural indefinite has none.
 ty_article(spanish, def, m, sg, el).
