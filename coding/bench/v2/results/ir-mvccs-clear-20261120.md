@@ -188,4 +188,4 @@ and `ir`), `bench-reasoning.jsonl` (run A, the two reasoning arms),
 `bench-swipl-1.15.1.jsonl`, `bench-noguide-1.15.2.jsonl`,
 `bench-noguide-1.15.3.jsonl`, the notes (`*.ir`, `*.reasoning`), and the
 translation phase's rows (`ir-prep.jsonl`; `ir-prep-rerun-1.15.0.jsonl`,
-whose notes were not used). Commits `4816a72` (1.14.0), `3475b3f` (1.14.1), `7beae66` (1.15.0), `2f014be` (1.15.1), `7ff352a` (1.15.2), `b918c99` (1.15.3) and the commit that adds this report.
+whose notes were not used). Commits `4816a72` (1.14.0), `3475b3f` (1.14.1), `7beae66` (1.15.0), `2f014be` (1.15.1), `7ff352a` (1.15.2), `b918c99` (1.15.3) and the commit that adds this report. The same report as a page, with its tables drawn: `ir-mvccs-clear-20261120.html`.

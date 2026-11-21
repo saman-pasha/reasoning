@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>mvccs_acid Reasoning Bench</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column of 46rem, wide tables in their own scrollers; a lab report, not a dashboard. */
+:root {
+  --bg: #f6f7f6;
+  --surface: #ffffff;
+  --fg: #1b2321;
+  --muted: #5a6763;
+  --rule: #d9dfdc;
+  --accent: #0e6a63;
+  --accent-soft: #dcefec;
+  --good: #1f7a3d;
+  --good-soft: #dff1e4;
+  --bad: #a33a2a;
+  --bad-soft: #f6e1dc;
+  --code-bg: #eef1ef;
+  --font-text: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121716; --surface: #1a201f; --fg: #e3e9e6; --muted: #9aa8a3; --rule: #2e3735;
+    --accent: #5cc4b9; --accent-soft: #173431; --good: #6fcf8e; --good-soft: #17301f;
+    --bad: #ef8b78; --bad-soft: #3a1f1a; --code-bg: #202826; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121716; --surface: #1a201f; --fg: #e3e9e6; --muted: #9aa8a3; --rule: #2e3735;
+  --accent: #5cc4b9; --accent-soft: #173431; --good: #6fcf8e; --good-soft: #17301f;
+  --bad: #ef8b78; --bad-soft: #3a1f1a; --code-bg: #202826; color-scheme: dark;
+}
+body { background: var(--bg); color: var(--fg); font-family: var(--font-text); font-size: 16px; line-height: 1.55; }
+.page { max-width: 46rem; margin: 0 auto; padding-block: 2.5rem 4rem;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 2.25rem; }
+header { display: flex; flex-direction: column; gap: .6rem; }
+.eyebrow { font-family: var(--font-mono); font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+h1 { font-size: 2rem; line-height: 1.15; font-weight: 600; margin: 0; text-wrap: balance; }
+h2 { font-size: 1.3rem; line-height: 1.25; font-weight: 600; margin: 0; text-wrap: balance; }
+h3 { font-size: 1.02rem; font-weight: 600; margin: 0; }
+p { margin: 0; max-width: 65ch; }
+section { display: flex; flex-direction: column; gap: .9rem; min-width: 0; }
+.lede { font-size: 1.08rem; color: var(--fg); }
+.meta { font-size: .86rem; color: var(--muted); font-family: var(--font-mono); }
+ul, ol { margin: 0; padding-left: 1.2rem; display: flex; flex-direction: column; gap: .4rem; max-width: 65ch; }
+code, .mono { font-family: var(--font-mono); font-size: .88em; }
+code { background: var(--code-bg); padding: .05em .3em; border-radius: 3px; }
+.findings { display: grid; gap: .75rem; }
+.finding { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: .9rem 1rem; display: flex; flex-direction: column; gap: .35rem; }
+.finding b { font-weight: 600; }
+.scroll { overflow-x: auto; min-width: 0; border: 1px solid var(--rule); border-radius: 6px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: .88rem; font-variant-numeric: tabular-nums; }
+th, td { padding: .45rem .6rem; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--rule); }
+th { font-weight: 600; color: var(--muted); font-size: .76rem; letter-spacing: .03em; text-transform: uppercase; background: var(--bg); }
+td:first-child, th:first-child, td.l, th.l { text-align: left; }
+tbody tr:last-child td { border-bottom: 0; }
+tr.group td { background: var(--bg); font-weight: 600; text-align: left; color: var(--fg); }
+tr.total td { font-weight: 600; }
+.rate { display: inline-flex; align-items: center; gap: .45rem; justify-content: flex-end; }
+.bar { width: 3.2rem; height: .45rem; background: var(--rule); border-radius: 2px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--accent); }
+.pill { display: inline-block; font-family: var(--font-mono); font-size: .74rem; padding: .05rem .4rem; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
+.pill.bad { background: var(--bad-soft); color: var(--bad); }
+.pill.good { background: var(--good-soft); color: var(--good); }
+pre { margin: 0; background: var(--code-bg); border-radius: 6px; padding: .8rem 1rem; overflow-x: auto; font-family: var(--font-mono); font-size: .85rem; line-height: 1.5; }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: .75rem; }
+.two > div { min-width: 0; display: flex; flex-direction: column; gap: .35rem; }
+.caption { font-size: .84rem; color: var(--muted); max-width: 65ch; }
+.note { font-size: .9rem; color: var(--muted); }
+a { color: var(--accent); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 0; }
+</style>
+</head>
+<body>
+<div class="page">
+<header>
+  <div class="eyebrow">reasoning 1.15.3 · coding bench v2 · 2026-11-20 to 21</div>
+  <h1>What the reasoning library adds to a coding prompt</h1>
+  <p class="lede">One hard task, <code>mvccs_acid</code> (a multi-version B-tree with transactions and snapshot isolation), written by <code>claude-sonnet-5-5</code> at effort <code>low</code> in five lanes. Each cell got the prompt forwarded as it is, the prompt with the reasoning pre-pass, or the prompt with the pre-pass and the translator's IR. Ten trials a cell, up to three model calls each.</p>
+  <p class="meta">324 cells in six runs, 634 generator calls, 6&#8201;009&#8201;849 tokens and 2 h 59 min of cell time: $25.46 at list prices, $25.81 with the translation phase and two requests sent again by hand.
+</p>
+</header>
+
+<section>
+  <h2>What the runs show</h2>
+  <div class="findings">
+    <div class="finding"><b>The pre-pass's checks alone change nothing measurable here.</b><p>For this requirement the pre-pass adds two input and output checks (341 characters; 404 for Python) and no "What the request is about" note, because the reasoner parsed no terms of the text. Run A, which ran the two reasoning arms together, gives 13/50 first-attempt passes for <i>+ reasoning</i> and 14/50 for <i>+ reasoning + IR</i> (p&nbsp;=&nbsp;1.0). In the SWI-Prolog rerun, which ran all four arms together, <i>prompt forwarded</i> and <i>+ reasoning</i> both pass 0/10 at the first attempt. In cocolog without its guide, also run as one, they pass 7/10 and 5/10.</p></div>
+    <div class="finding"><b>The IR note helps the two Prolog lanes at the first attempt, and not C or Python.</b><p>In the clear-text run, IR only against the prompt forwarded: cocolog 9/10 against 3/10 (p&nbsp;=&nbsp;0.020), SWI-Prolog 5/10 against 0/10 (p&nbsp;=&nbsp;0.033), all four lanes 21/40 against 10/40 (p&nbsp;=&nbsp;0.021). C and Python do not move. The SWI-Prolog rerun points the same way, 3/10 against 0/10 (p&nbsp;=&nbsp;0.21). With fewer repair rounds the IR arm also spent fewer tokens and seconds in those lanes. cocolog without its guide, on its two-line prompt, does not show it: 6/10 against 7/10. These tests were not chosen before the run: read them as a description.</p></div>
+    <div class="finding"><b>Checks in front of the IR do not add to it.</b><p>In the SWI-Prolog rerun the IR alone passed 3/10 at the first attempt and <i>+ reasoning + IR</i> 1/10, with 75 % more tokens. In cocolog without its guide, whose four arms also ran as one run, both passed 6/10 with about the same tokens. In C, Python and guided cocolog the two IR arms ran an hour apart, so they are not compared here.</p></div>
+    <div class="finding"><b>The final pass hides the differences.</b><p>Almost every cell of C, Python, both cocolog lanes and SWI-Prolog passes within its three calls (final 38/40 to 40/40 a lane). What the arms change is how often the first program is right, and so the calls, tokens and seconds a correct program costs.</p></div>
+    <div class="finding"><b>Two lines do the cocolog guide's work on this task.</b><p>With the two lines in its short prompt, cocolog without its guide passed 24/40 at the first attempt and 40/40 in the end. The guided lane passed 23/40 and 39/40, and spent 2&#8201;264&#8201;582 tokens where the lane without the guide spent 338&#8201;045, 6.7 times fewer (62 calls against 56). The rows come from runs on the same text but on different days, so read this as a description, not a paired test. Without both lines the same lane passed none of its 60 first attempts: 20 with neither line, 40 with the stream import alone.
+</p></div>
+    <div class="finding"><b>SWI-Prolog's low first-attempt rate is partly its prompt's.</b><p>Its user message is the requirement alone. Every cocolog lane's begins "Write a complete cocolog program for this requirement." In the SWI-Prolog rerun, 22 of the 40 first replies began with English design notes before the code and did not load; no first reply of either cocolog lane did. So the gap at the first attempt between SWI-Prolog and cocolog without its guide, 4/40 against 24/40, is not only a gap between the two languages.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>The results, lane by lane</h2>
+  <p class="caption">First attempt: the first program passed the eight repair cases and the two held-out cases. Final: a program passed within three calls. A run line names which run a row comes from; only rows of one run are shuffled together and so compare cleanly. Tokens are the benchmark's alone: the translation phase that wrote the IR notes is not in them.</p>
+  <div class="scroll"><table><thead><tr><th class="l">arm</th><th>first attempt</th><th>final</th><th>calls / cell</th><th>prompt tokens</th><th>completion tokens</th><th>s / cell</th><th class="l">run</th></tr></thead><tbody>
+<tr class="group"><td colspan="8">C</td></tr>
+<tr><td class="l">prompt forwarded</td><td><span class="rate">4/10<span class="bar"><i style="width:40%"></i></span></span></td><td><span class="rate">10/10<span class="bar"><i style="width:100%"></i></span></span></td><td>1.90</td><td>54&#8201;506</td><td>75&#8201;053</td><td>37.5</td><td class="l"><span class="meta">1.14.1 run</span></td></tr>
+<tr><td class="l">+ reasoning</td><td><span class="rate">4/10<span class="bar"><i style="width:40%"></i></span></span></td><td><span class="rate">9/10<span class="bar"><i style="width:90%"></i></span></span></td><td>2.00</td><td>56&#8201;602</td><td>72&#8201;494</td><td>38.4</td><td class="l"><span class="meta">run A (1.15.0)</span></td></tr>
+<tr><td class="l">+ reasoning + IR</td><td><span class="rate">1/10<span class="bar"><i style="width:10%"></i></span></span></td><td><span class="rate">10/10<span class="bar"><i style="width:100%"></i></span></span></td><td>2.10</td><td>95&#8201;877</td><td>85&#8201;507</td><td>46.1</td><td class="l"><span class="meta">run A (1.15.0)</span></td></tr>
+<tr><td class="l">+ IR only</td><td><span class="rate">5/10<span class="bar"><i style="width:50%"></i></span></span></td><td><span class="rate">9/10<span class="bar"><i style="width:90%"></i></span></span></td><td>1.50</td><td>55&#8201;898</td><td>60&#8201;169</td><td>29.9</td><td class="l"><span class="meta">1.14.1 run</span></td></tr>
+<tr class="group"><td colspan="8">Python</td></tr>
+<tr><td class="l">prompt forwarded</td><td><span class="rate">3/10<span class="bar"><i style="width:30%"></i></span></span></td><td><span class="rate">10/10<span class="bar"><i style="width:100%"></i></span></span></td><td>1.70</td><td>38&#8201;340</td><td>32&#8201;890</td><td>18.4</td><td class="l"><span class="meta">1.14.1 run</span></td></tr>
+<tr><td class="l">+ reasoning</td><td><span class="rate">4/10<span class="bar"><i style="width:40%"></i></span></span></td><td><span class="rate">10/10<span class="bar"><i style="width:100%"></i></span></span></td><td>1.60</td><td>36&#8201;547</td><td>36&#8201;017</td><td>20.9</td><td class="l"><span class="meta">run A (1.15.0)</span></td></tr>
+<tr><td class="l">+ reasoning + IR</td><td><span class="rate">4/10<span class="bar"><i style="width:40%"></i></span></span></td><td><span class="rate">10/10<span class="bar"><i style="width:100%"></i></span></span></td><td>1.60</td><td>59&#8201;575</td><td>44&#8201;095</td><td>27.9</td><td class="l"><span class="meta">run A (1.15.0)</span></td></tr>
+<tr><td class="l">+ IR only</td><td><span class="rate">2/10<span class="bar"><i style="width:20%"></i></span></span></td><td><span class="rate">10/10<span class="bar"><i style="width:100%"></i></span></span></td><td>1.90</td><td>73&#8201;350</td><td>38&#8201;300</td><td>21.3</td><td class="l"><span class="meta">1.14.1 run</span></td></tr>
+<tr class="group"><td colspan="8">cocolog, with its guide</td></tr>
+<tr><td class="l">prompt forwarded</td><td><span class="rate">3/10<span class="bar"><i style="width:30%"></i></span></span></td><td><span class="rate">9/10<span class="bar"><i style="width:90%"></i></span></span></td><td>2.00</td><td>670&#8201;794</td><td>63&#8201;519</td><td>45.2</td><td class="l"><span class="meta">1.14.1 run</span></td></tr>
+<tr><td class="l">+ reasoning</td><td><span class="rate">5/10<span class="bar"><i style="width:50%"></i></span></span></td><td><span class="rate">10/10<span class="bar"><i style="width:100%"></i></span></span></td><td>1.50</td><td>492&#8201;476</td><td>37&#8201;134</td><td>25.5</td><td class="l"><span class="meta">run A (1.15.0)</span></td></tr>
+<tr><td class="l">+ reasoning + IR</td><td><span class="rate">6/10<span class="bar"><i style="width:60%"></i></span></span></td><td><span class="rate">10/10<span class="bar"><i style="width:100%"></i></span></span></td><td>1.60</td><td>557&#8201;812</td><td>38&#8201;553</td><td>28.4</td><td class="l"><span class="meta">run A (1.15.0)</span></td></tr>
+<tr><td class="l">+ IR only</td><td><span class="rate">9/10<span class="bar"><i style="width:90%"></i></span></span></td><td><span class="rate">10/10<span class="bar"><i style="width:100%"></i></span></span></td><td>1.10</td><td>375&#8201;647</td><td>28&#8201;647</td><td>21.0</td><td class="l"><span class="meta">1.14.1 run</span></td></tr>
+<tr class="group"><td colspan="8">cocolog, no guide</td></tr>
+<tr><td class="l">prompt forwarded</td><td><span class="rate">7/10<span class="bar"><i style="width:70%"></i></span></span></td><td><span class="rate">10/10<span class="bar"><i style="width:100%"></i></span></span></td><td>1.30</td><td>23&#8201;065</td><td>34&#8201;885</td><td>21.0</td><td class="l"><span class="meta">no-guide rerun (1.15.3)</span></td></tr>
+<tr><td class="l">+ reasoning</td><td><span class="rate">5/10<span class="bar"><i style="width:50%"></i></span></span></td><td><span class="rate">10/10<span class="bar"><i style="width:100%"></i></span></span></td><td>1.50</td><td>35&#8201;640</td><td>35&#8201;233</td><td>21.7</td><td class="l"><span class="meta">no-guide rerun (1.15.3)</span></td></tr>
+<tr><td class="l">+ reasoning + IR</td><td><span class="rate">6/10<span class="bar"><i style="width:60%"></i></span></span></td><td><span class="rate">10/10<span class="bar"><i style="width:100%"></i></span></span></td><td>1.40</td><td>60&#8201;370</td><td>44&#8201;158</td><td>27.0</td><td class="l"><span class="meta">no-guide rerun (1.15.3)</span></td></tr>
+<tr><td class="l">+ IR only</td><td><span class="rate">6/10<span class="bar"><i style="width:60%"></i></span></span></td><td><span class="rate">10/10<span class="bar"><i style="width:100%"></i></span></span></td><td>1.40</td><td>61&#8201;993</td><td>42&#8201;701</td><td>24.9</td><td class="l"><span class="meta">no-guide rerun (1.15.3)</span></td></tr>
+<tr class="group"><td colspan="8">SWI-Prolog</td></tr>
+<tr><td class="l">prompt forwarded</td><td><span class="rate">0/10<span class="bar"><i style="width:0%"></i></span></span></td><td><span class="rate">8/10<span class="bar"><i style="width:80%"></i></span></span></td><td>2.40</td><td>79&#8201;483</td><td>64&#8201;123</td><td>43.8</td><td class="l"><span class="meta">SWI rerun (1.15.1)</span></td></tr>
+<tr><td class="l">+ reasoning</td><td><span class="rate">0/10<span class="bar"><i style="width:0%"></i></span></span></td><td><span class="rate">10/10<span class="bar"><i style="width:100%"></i></span></span></td><td>2.30</td><td>76&#8201;584</td><td>65&#8201;746</td><td>44.2</td><td class="l"><span class="meta">SWI rerun (1.15.1)</span></td></tr>
+<tr><td class="l">+ reasoning + IR</td><td><span class="rate">1/10<span class="bar"><i style="width:10%"></i></span></span></td><td><span class="rate">10/10<span class="bar"><i style="width:100%"></i></span></span></td><td>2.10</td><td>98&#8201;868</td><td>69&#8201;021</td><td>46.4</td><td class="l"><span class="meta">SWI rerun (1.15.1)</span></td></tr>
+<tr><td class="l">+ IR only</td><td><span class="rate">3/10<span class="bar"><i style="width:30%"></i></span></span></td><td><span class="rate">10/10<span class="bar"><i style="width:100%"></i></span></span></td><td>1.70</td><td>66&#8201;612</td><td>29&#8201;414</td><td>18.8</td><td class="l"><span class="meta">SWI rerun (1.15.1)</span></td></tr>
+</tbody></table></div>
+
+</section>
+
+<section>
+  <h2>The arms</h2>
+  <p>Each arm is one of the coding endpoint's settings. The notes are the endpoint's own text, written before the run by <code>ir_prep.pl</code> and read from files, so the benchmark calls no translator and no model for them. They go after the requirement in the user prompt; the endpoint puts them in the system prompt after the guide.</p>
+  <div class="scroll"><table>
+    <thead><tr><th class="l">arm</th><th class="l">what follows the requirement</th><th class="l">endpoint setting</th></tr></thead>
+    <tbody>
+      <tr><td class="l">prompt forwarded</td><td class="l">nothing</td><td class="l"><code>-r0</code>, plain mode</td></tr>
+      <tr><td class="l">+ reasoning</td><td class="l">"Reasoning pre-pass": two checks; "What the request is about" when the text parses</td><td class="l">the pre-pass without the IR note</td></tr>
+      <tr><td class="l">+ reasoning + IR</td><td class="l">those, then "The request in the translator's IR"</td><td class="l">the full pre-pass, the default</td></tr>
+      <tr><td class="l">+ IR only</td><td class="l">the IR note alone</td><td class="l">reasoning 1.14's arm</td></tr>
+    </tbody>
+  </table></div>
+  <p>The lanes are C, Python, cocolog with its 19&#8201;000-token guide, cocolog with a short prompt in place of the guide, and SWI-Prolog with a short prompt. The requirement is the same in every lane but its first sentence, which names the language.</p>
+</section>
+
+<section>
+  <h2>Why cocolog with the IR failed every cell in the first run</h2>
+  <p>The first run (reasoning 1.14.0, 24 cells) failed held-out case 8 five times, three of them in all three cocolog IR cells:</p>
+  <div class="two">
+    <div><span class="meta">input</span><pre>b T1
+b T2
+i T1 5
+c T1
+d T2 5
+c T2
+g 5
+v</pre></div>
+    <div><span class="meta">expected · what the failures printed</span><pre>no      yes
+2       2</pre><p class="caption">T2 deletes the 5 that T1 committed after T2 began. The expected answer applies the stale deletion at commit. The failing programs ignored it, because 5 was absent from T2's view.</p></div>
+  </div>
+  <p>The text said "a deletion of an absent key is ignored" and did not say absent from what. Running case 8 on every kept attempt showed that the view reading came only from the Prolog lanes: 0 of 19 C and Python attempts, 5 of 15 Prolog attempts. The Prolog programs kept each view as a sorted set and either ignored the deletion when it was staged or computed the commit as view minus snapshot. All four IR notes held only the rule that leads there ("If a key is absent, the program ignores a deletion of the key"); the sentence that the last committer wins was among the sentences the translator did not read. Since reasoning 1.14.1 the text says the rule: a transaction keeps one staged change per key, and the commit applies each to the latest version. On that text no attempt of any lane read the view again, and cocolog with the IR passed 9/10 at the first attempt.</p>
+</section>
+
+<section>
+  <h2>Two lines a model not trained on cocolog needs</h2>
+  <p>cocolog is this project's own Prolog, and no model was trained on it. Without the guide, <code>claude-sonnet-5-5</code> writes the dialect it knows best, SWI-Prolog 7, and said as much in a repair reply: "I can't see which Prolog dialect cocolog is." cocolog runs nearly all of that code. Two of its defaults are not SWI-Prolog 7's. Without the lines that change them, no first attempt passed even the first case:</p>
+  <pre>:- set_prolog_flag(double_quotes, string).
+:- use_module(library(stream)).</pre>
+  <div class="scroll"><table>
+    <thead><tr><th class="l">line</th><th class="l">what the model writes</th><th class="l">what cocolog does without the line</th></tr></thead>
+    <tbody>
+      <tr><td class="l"><code>double_quotes</code></td><td class="l">clause heads such as <code>cmd(["v"])</code>, matched against the strings <code>split_string/4</code> returns</td><td class="l">reads <code>"v"</code> as the list of codes <code>[118]</code>, its default; no head matches, and the program prints nothing or its error line</td></tr>
+      <tr><td class="l"><code>library(stream)</code></td><td class="l"><code>read_line_to_string/2</code>, <code>get_char/1</code>, <code>get_code/1</code></td><td class="l">does not load its stream predicates by default; each call is an unknown procedure</td></tr>
+    </tbody>
+  </table></div>
+  <p>The cocolog guide teaches both, which is why the guided lane never met them. The no-guide prompt was given one line at a time:</p>
+  <div class="scroll"><table><thead><tr><th class="l">short prompt</th><th class="l">arms</th><th>cells</th><th>first attempt</th><th>final</th><th>calls / cell</th><th>tokens</th></tr></thead><tbody>
+<tr><td class="l">1.15.0: neither line</td><td class="l">+ reasoning, + reasoning + IR</td><td>20</td><td>0/20</td><td>0/20</td><td>3</td><td>436&#8201;084</td></tr>
+<tr><td class="l">1.15.2: the stream import</td><td class="l">all four</td><td>40</td><td>0/40</td><td>18/40</td><td>2.7</td><td>564&#8201;678</td></tr>
+<tr><td class="l">1.15.3: both lines</td><td class="l">all four</td><td>40</td><td>24/40</td><td>40/40</td><td>1.4</td><td>338&#8201;045</td></tr>
+</tbody></table></div>
+
+  <p class="caption">Of the 16 first attempts that failed on the 1.15.3 prompt, 10 printed the expected output and failed only because stderr held load warnings (singleton variables 9, clauses not together 1): the benchmark passes a case only when stderr is empty, in every lane, and SWI-Prolog prints the same warnings. 3 printed the expected output with a load error: SWI-Prolog's <code>arithmetic_function/1</code>, which cocolog does not have, a syntax error, and a clause for <code>(&gt;=)/2</code>. 3 printed a wrong answer. Each of the 16 cells passed at its second attempt.
+</p>
+</section>
+
+<section>
+  <h2>Fixes made on the way</h2>
+  <ul>
+    <li><b>1.14.0, the IR check shows the logical form.</b> The model judged each reading by its English said back, and two wrong readings said back the same sentence ("Blank lines are ignored." with <i>lines</i> as the verb). The check now shows the terms and asks for each word's role.</li>
+    <li><b>1.14.1, the task's text states which deletion a commit applies.</b> No expected output changed; runs before and after are not comparable.</li>
+    <li><b>1.15.1, a reply with no text is sent again, once, and counted.</b> The model's safety classifier refused three repair attempts of the some 400 calls made by then, category <code>reasoning_extraction</code> ("reverse engineering or duplicating model outputs"; a repair prompt sends the model its own previous program). Two came back as a thinking block and no text. Each was a generator failure that counted no tokens. The same requests sent again were answered, and server-side fallback does not retry this category on this model. Now the child sends it once more, counts its tokens and names its stop reason in the row. The SWI-Prolog lane was run again under this fix and met no empty reply.</li>
+    <li><b>1.15.2 and 1.15.3, the no-guide prompt names the two lines.</b> The first no-guide prompt (1.15.0) said only that the program is cocolog. In run A its 20 cells failed all 60 attempts: 46 programs stopped at an unknown stream predicate (<code>read_line_to_string/2</code>, <code>get_char/1</code>, <code>get_code/1</code>, <code>read_line_to_codes/2</code>), 9 printed nothing, 4 ended with main/0 failing, and 1 reply was empty. 1.15.2 added the stream import, and no program stopped at a stream predicate again. But every first attempt still failed case 1, whose input is the one command <code>v</code>: 26 printed nothing and 14 printed <code>error</code>, because no clause head written with <code>"v"</code> matched the string that was read. In the end 18 of 40 cells passed, none at the first attempt. Run offline on 12 of those first attempts, the double_quotes flag alone made 9 of them pass all ten cases. 1.15.3 added that flag as the second line.
+</li>
+  </ul>
+  <p>The SWI-Prolog lane before the fix and in its rerun. Before the fix, its prompt-forwarded and IR-only cells come from the clear-text run, and its two reasoning cells from run A. The rerun ran all four arms together.</p>
+  <div class="scroll"><table><thead><tr><th class="l">arm</th><th>before the fix: first · final</th><th>1.15.1 rerun: first · final</th></tr></thead><tbody>
+<tr><td class="l">prompt forwarded</td><td>0/10 · 8/10</td><td>0/10 · 8/10</td></tr>
+<tr><td class="l">+ reasoning</td><td>0/10 · 9/10</td><td>0/10 · 10/10</td></tr>
+<tr><td class="l">+ reasoning + IR</td><td>3/10 · 10/10</td><td>1/10 · 10/10</td></tr>
+<tr><td class="l">+ IR only</td><td>5/10 · 9/10</td><td>3/10 · 10/10</td></tr>
+</tbody></table></div>
+
+</section>
+
+<section>
+  <h2>What it cost</h2>
+  <div class="scroll"><table><thead><tr><th class="l">run</th><th>cells or calls</th><th>prompt tokens</th><th>completion tokens</th><th>cost</th></tr></thead><tbody>
+<tr class="group"><td colspan="5">the benchmark</td></tr>
+<tr><td class="l">first run, 1.14.0 (old text)</td><td>24</td><td>353&#8201;139</td><td>100&#8201;423</td><td>$1.71</td></tr>
+<tr><td class="l">clear-text run, 1.14.1</td><td>80</td><td>1&#8201;399&#8201;904</td><td>390&#8201;788</td><td>$6.71</td></tr>
+<tr><td class="l">run A, 1.15.0 (reasoning arms)</td><td>100</td><td>1&#8201;712&#8201;365</td><td>600&#8201;656</td><td>$9.43</td></tr>
+<tr><td class="l">SWI-Prolog rerun, 1.15.1</td><td>40</td><td>321&#8201;547</td><td>228&#8201;304</td><td>$2.93</td></tr>
+<tr><td class="l">no-guide rerun, 1.15.2 (the stream import)</td><td>40</td><td>362&#8201;666</td><td>202&#8201;012</td><td>$2.75</td></tr>
+<tr><td class="l">no-guide rerun, 1.15.3 (both lines)</td><td>40</td><td>181&#8201;068</td><td>156&#8201;977</td><td>$1.93</td></tr>
+<tr class="group"><td colspan="5">not in the benchmark</td></tr>
+<tr><td class="l">translation, 1.14.0 (first batch, discarded)</td><td>11 calls</td><td>14&#8201;394</td><td>2&#8201;563</td><td>$0.05</td></tr>
+<tr><td class="l">translation, 1.14.0</td><td>9 calls</td><td>17&#8201;035</td><td>1&#8201;310</td><td>$0.05</td></tr>
+<tr><td class="l">translation, 1.14.1 (the notes used)</td><td>6 calls</td><td>22&#8201;114</td><td>3&#8201;747</td><td>$0.08</td></tr>
+<tr><td class="l">translation, 1.15.0 (notes not used)</td><td>6 calls</td><td>16&#8201;124</td><td>3&#8201;393</td><td>$0.07</td></tr>
+<tr><td class="l">two SWI requests sent again by hand</td><td>2 calls</td><td>13&#8201;623</td><td>6&#8201;778</td><td>$0.10</td></tr>
+</tbody></table></div>
+
+  <p class="caption">At $2 and $10 per million input and output tokens, every prompt token at the full price (an upper bound: some were cache reads). The translation phase is listed apart and is in no benchmark figure.</p>
+</section>
+
+<section>
+  <h2>Limits of these runs</h2>
+  <ul>
+    <li>Ten trials a cell. A difference of two or three cells in ten is inside the noise; only the clear-text run's pooled IR effect passes p&nbsp;&lt;&nbsp;0.05.</li>
+    <li>The arms of C, Python and guided cocolog come from two runs an hour apart (prompt forwarded and IR only in one, the two reasoning arms in the other). SWI-Prolog and cocolog without its guide ran all four arms in one run each.</li>
+    <li>One task. The reasoning pre-pass reads controlled English; this requirement is not, so its checks are generic and its about note is empty. A request the reasoner can read is where the pre-pass would show more.</li>
+    <li>The notes sit in the user prompt, not in the system prompt as the endpoint puts them.</li>
+    <li>The lanes' prompts differ in more than the language: the SWI-Prolog lane's user message is the requirement alone, and every cocolog lane's begins with an instruction to write the program.</li>
+    <li>The translator read 4 to 6 of the 14 sentences. The IR note never held the command table, which holds most of the rules.</li>
+    <li>No case checks that the program uses a B-tree, and C gets 5 s a case where the others get 10 s.</li>
+    <li>The model takes no temperature; trials are samples of a generator that is not deterministic.</li>
+  </ul>
+</section>
+
+<hr>
+<section>
+  <h3>Files</h3>
+  <p class="note">In <code>saman-pasha/reasoning</code>, <code>coding/bench/v2/results/ir-mvccs-clear-20261120/</code>: <code>bench.jsonl</code> (clear-text run), <code>bench-reasoning.jsonl</code> (run A), <code>bench-swipl-1.15.1.jsonl</code>, <code>bench-noguide-1.15.2.jsonl</code>, <code>bench-noguide-1.15.3.jsonl</code>, the notes (<code>*.ir</code>, <code>*.reasoning</code>) and the translation phase's rows. The first run is <code>ir-mvccs-20261120/</code>. Commits <code>4816a72</code> (1.14.0), <code>3475b3f</code> (1.14.1), <code>7beae66</code> (1.15.0), <code>2f014be</code> (1.15.1), <code>7ff352a</code> (1.15.2), <code>b918c99</code> (1.15.3) and <code>426fbbc</code> (this report)
+.</p>
+</section>
+</div>
+</body>
+</html>
