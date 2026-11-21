@@ -207,6 +207,18 @@ CODING_BENCH_BASE_URL=https://api.anthropic.com/v1/messages \
   and 16000 tokens a reply: the model thinks by default, and the thinking
   counts against the limit. Its usage is Anthropic's `input_tokens`,
   `output_tokens` and cache fields.
+- **A reply with no text is sent again, once, and counted** (1.15.1,
+  `v2_lang_code_replied/6`). `claude-sonnet-5-5`'s safety classifier
+  refused three repair attempts of some 400 calls, category
+  `reasoning_extraction` (a repair prompt sends the model its own
+  previous program): an empty content, or a thinking block and no text.
+  Through 1.15.0 each was a generator failure whose tokens were not
+  counted. The same requests sent again were answered, and server-side
+  fallback does not retry that category on this model. Now the child
+  sends it again (with twice the token limit when it stopped at
+  `max_tokens`), its tokens go into USAGE, a failed child's USAGE is read
+  too, and each row names its `empty_replies` and their `empty_reasons`
+  (stop reason, category, blocks).
 - **The first run** is `results/ir-mvccs-20261120.md`: 24 cells on
   `claude-sonnet-5-5`, the translation phase's 9 calls apart. Every
   held-out failure there is case 8, whose expected output reads "a

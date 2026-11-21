@@ -18,6 +18,9 @@
                 v2_language_spec/3,
                 v2_language_verify/4,
                 v2_language_runtime/2,
+                v2_lang_empty_begin/0,
+                v2_lang_note_empty/1,
+                v2_lang_empty_list/1,
                 v2_lang_verify/7
               ]).
 :- use_module('coding/bench/v2/lang_runner.pl',
@@ -28,7 +31,10 @@
 :- dynamic v2test_seen_spec/1.
 :- use_module('coding/bench/v2/lang_gen.pl',
               [ v2_lang_strip_fence/2,
-                v2_lang_gen_args/7
+                v2_lang_gen_args/7,
+                v2_lang_empty_reason/2,
+                v2_lang_retry_options/3,
+                v2_lang_usage_parts/6
               ]).
 :- use_module('coding/cocolog/codegen.pl',
               [ cocolog_skill_text/1 ]).
@@ -834,7 +840,44 @@ test_lang_gen_args :-
     ->  Missing = no
     ;   Missing = yes
     ),
-    check('a child with missing flags is refused', Missing, yes).
+    check('a child with missing flags is refused', Missing, yes),
+    test_lang_empty_reply.
+
+%% A reply with no text (reasoning 1.15.1): its stop reason, category and
+%% blocks are named, a reply cut at max_tokens is sent with twice the
+%% limit, any other as it was, its usage is read like any reply's, and
+%% the parent keeps each EMPTY line for the cell's row.
+test_lang_empty_reply :-
+    Refused = json([content-[], stop_reason-refusal,
+                    stop_details-json([type-refusal,
+                                       category-reasoning_extraction]),
+                    usage-json([input_tokens-4936, output_tokens-0])]),
+    v2_lang_empty_reason(Refused, R1),
+    check('a refusal names its category and no blocks', R1,
+          'stop_reason=refusal category=reasoning_extraction blocks=none'),
+    Thought = json([content-[json([type-thinking, thinking-''])],
+                    stop_reason-max_tokens,
+                    usage-json([input_tokens-10, output_tokens-16000])]),
+    v2_lang_empty_reason(Thought, R2),
+    check('a reply cut in its thinking names the thinking block', R2,
+          'stop_reason=max_tokens category=none blocks=thinking'),
+    Opts = [max_tokens(16000), provider(anthropic), reasoning_effort(low)],
+    v2_lang_retry_options(Thought, Opts, Opts2),
+    check('a reply cut at max_tokens is sent with twice the limit', Opts2,
+          [max_tokens(32000), provider(anthropic), reasoning_effort(low)]),
+    v2_lang_retry_options(Refused, Opts, Opts3),
+    check('a refusal is sent as it was', Opts3, Opts),
+    v2_lang_usage_parts(json([input_tokens-4936, output_tokens-0]),
+                        P, C, T, Rz, H),
+    check('an empty reply''s usage is read', [P, C, T, Rz, H],
+          [4936, 0, 4936, 0, 0]),
+    v2_lang_empty_begin,
+    v2_lang_note_empty('EMPTY stop_reason=refusal category=x blocks=none\nUSAGE 1 2 3 0 0\n'),
+    v2_lang_note_empty('USAGE 1 2 3 0 0\n'),
+    v2_lang_empty_list(Empties),
+    check('the parent keeps each EMPTY line for the row', Empties,
+          ['stop_reason=refusal category=x blocks=none']),
+    v2_lang_empty_begin.
 
 test_lang_context :-
     section('language diagnostics'),

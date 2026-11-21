@@ -115,6 +115,7 @@ v2_language_generate_child(Lang, Spec, Prev, Code, Usage, Error) :-
           )),
     (   var(RunError) -> RunError = none ; true ),
     atom_codes(OutText, OutCodes0),
+    v2_lang_note_empty(OutText),
     (   RunError == none,
         Exit0 == 0,
         exists_file(CodeFile)
@@ -128,7 +129,10 @@ v2_language_generate_child(Lang, Spec, Prev, Code, Usage, Error) :-
             Error = none
         )
     ;   Code = '',
-        Usage = usage(0, 0, 0, 0, 0),
+        %% A child that failed still says what its calls cost, when it
+        %% printed USAGE (two replies with no text, reasoning 1.15.1).
+        catch(v2_lang_parse_usage(OutText, Usage), _,
+              Usage = usage(0, 0, 0, 0, 0)),
         v2_lang_limit(OutText, OutTail),
         (   RunError == none
         ->  format(atom(Error0), 'language child failed (exit ~w)~n~s',
@@ -140,6 +144,29 @@ v2_language_generate_child(Lang, Spec, Prev, Code, Usage, Error) :-
     v2_lang_remove_files([SpecFile, CodeFile, PrevFile, DiagFile]).
 
 v2_language_effort(_, none).
+
+%% The replies with no text a child met and sent again (its `EMPTY REASON'
+%% lines), kept for the cell's row: v2_lang_empty_begin/0 empties the list
+%% as a cell begins and v2_lang_empty_list/1 reads it as it ends.
+v2_lang_empty_begin :-
+    nb_setval(v2_lang_empty, []).
+
+v2_lang_empty_list(Reasons) :-
+    catch(nb_getval(v2_lang_empty, Reasons0), _, Reasons0 = []),
+    reverse(Reasons0, Reasons).
+
+v2_lang_note_empty(Text) :-
+    split_string(Text, "\n", " \t\r", Lines),
+    findall(Reason,
+            ( member(Line, Lines),
+              sub_string(Line, 0, 6, _, 'EMPTY '),
+              sub_string(Line, 6, _, 0, R),
+              atom_string(Reason, R) ),
+            New),
+    catch(nb_getval(v2_lang_empty, Old), _, Old = []),
+    reverse(New, NewRev),
+    append(NewRev, Old, All),
+    catch(nb_setval(v2_lang_empty, All), _, true).
 
 v2_language_prev_files(none, '-', '-') :- !.
 v2_language_prev_files(prev(Code, Diag), PrevFile, DiagFile) :-
