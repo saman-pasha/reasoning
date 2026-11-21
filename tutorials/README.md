@@ -1,6 +1,6 @@
 # Lessons
 
-The four reasoning lessons, moved here from cocolog's library tutorial
+The reasoning lessons, moved here from cocolog's library tutorial
 track with the library. Run one from this repository's root, with the
 repository's PARENT directory on the library path (the module names are
 `library(reasoning/...)`):
@@ -16,3 +16,4 @@ repository's PARENT directory on the library path (the module names are
 | 02-normalise | `normalise.pl` | the training data for the tagger: shapes with gold tags, the noise transforms, the round trip | nothing |
 | 03-tagger | `tagger.pl` | prose in, `reason.pl`'s terms out: the network, trained and measured | `sh modules/torch/build.sh` |
 | 04-translate | `translate.pl` | a sentence read on one language's side and written on another's, through an IR that is English | nothing |
+| 05-live | `live.pl` | a reader's two modes: static, and live, which asks a model (a stub here) about the reading, saves what it teaches and reads again with it -- and static mode reads what was saved | nothing |

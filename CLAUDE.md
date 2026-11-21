@@ -26,8 +26,42 @@ explanations, topics), `normalise.pl` (the generator of tagged training
 pairs), `tagger.pl` (a GRU tagger over `tensor_expr`, plus the deterministic
 judge `tagger_sane/2` and repair `tg_repair/3`), `translate.pl` (sentences
 read into an English-worded IR and written into any lesson's language),
-`teach.pl` and `page.pl`. Cases: `test/reason.pl`, `normalise.pl`,
-`tagger.pl`, `translate.pl`; lessons 01-04 in `tutorials/`.
+`live.pl` (the readers' live mode), `teach.pl` and `page.pl`. Cases:
+`test/reason.pl`, `live.pl`, `normalise.pl`, `tagger.pl`, `translate.pl`;
+lessons 01-05 in `tutorials/`.
+
+**Every reader has two modes, static and live** (1.16.0; reason.pl's header,
+STATIC AND LIVE, and live.pl's). What a session must keep:
+
+* **A new reader goes through the mode**: a reader of text calls
+  `rv_input(Kind, Text0, Options, Text)` first and reads Text (Kind text,
+  prose or ir(From)); a reader of terms or a goal asks `rv_live/1` and, live,
+  hands its static result to live.pl and reads again. Or it is static only,
+  and the header's list says so.
+* **Inside live mode every reader is static and reads its text as it is
+  given** (`rv_quiet/0`, the global ``): the readings shown
+  to the model are the static ones, a rewrite is not rewritten again, and no
+  reader live mode calls asks the model again.
+* **The mode is a global, never a fact** (``): an assert under
+  `--embed` is written into the store, and the next process would start
+  live. **What live mode saves IS facts, on purpose**: `reason_live_verdict/4`,
+  `_rewrite/3`, `_kind/2`, `_third/2`, `_lesson/2` and the lexicon facts it
+  teaches, declared in reason.pl so a static reader asks them with live.pl
+  never loaded, and written into the store under `--embed`. So is a
+  `reason_live_stub/3` a program asserts there: test/live.pl and lesson 05
+  run with no store.
+* **A static reader pays a mode lookup and a rewrite lookup a call**
+  (`rv_mode/2`: a global and `getenv/2`; `rv_apply/3`: one call of
+  `reason_live_rewrite/3`), and nothing more while nothing is saved.
+* **A translator lesson line is taught PLAIN**, in the English lesson's form
+  (`The noun "x_cake" means "cake".`), as coding/endpoint/english_lesson.pl
+  teaches English: it reaches a reader whose English words come from a plain
+  lesson, and not one under a named lesson (`reason_learn/3`). Words are
+  taught only where `reason_untranslated/3` names them unknown, and only for
+  an English source (`any` or `english`); a rewrite works for any language.
+* **coding/endpoint/ir_repair.pl is not built on it yet**: the endpoint's IR
+  note keeps its own repair, its own facts (`ep_ir_*`) and its own
+  environment (`CODING_ENDPOINT_IR_*`).
 
 **Where the data is, and who reads it:**
 

@@ -213,6 +213,13 @@
 %%     reason_verb(?Word, ?Base)
 %%     reason_proper(?Word, ?Constant)
 %%
+%%     reason_mode(-Mode)
+%%     reason_set_mode(+Mode)
+%%         static or live, the mode of every reader (STATIC AND LIVE,
+%%         below): what reason_set_mode/1 set in this process, else the
+%%         environment's REASON_MODE, else static. A reader that takes
+%%         Options takes mode(static) or mode(live) for one call.
+%%
 %%     reason_version(-Version)
 %%     reason_version(-Major, -Minor, -Patch)
 %%         The version of THIS LIBRARY -- everything under library/reasoning/:
@@ -222,6 +229,63 @@
 %%         is an atom, 'X.Y.Z'; the three integers are what a program
 %%         compares, since '1.10.0' sorts before '1.9.0' as an atom. The
 %%         rules for moving it are in CLAUDE.md, under The version.
+%%
+%% ---- STATIC AND LIVE (since 1.16.0) --------------------------------------
+%%
+%% Every READER has two modes. STATIC reads with the grammar and the
+%% lexicon as they stand and asks nothing of anyone: what the library has
+%% always done. LIVE first asks a language model about the static result,
+%% SAVES what the model teaches, and then reads statically again, with what
+%% was saved. The readers are reason_text/2,3, reason_sentence/2,3,
+%% reason_learn/1,2, reason_question/2, reason_ask/2,3, reason_refused/2,
+%% reason_prose/2, reason_ask_prose/2,3, reason_concepts/2,
+%% reason_topics/2, reason_outline/2, reason_outline_prose/2 and
+%% reason_explanation/2, and library(reasoning/translate)'s reason_ir/2,3,
+%% reason_translate/2,3,4, reason_translate_page/2,3,4 and
+%% reason_untranslated/2,3. The rest -- reason_tokens/2, reason_base/2,
+%% reason_third/2, reason_name/2, the lexicon, reason_explain/2 and
+%% reason_why/2 (the proof of a goal, with no text to read) and the
+%% version -- have nothing to ask and are static only.
+%%
+%% WHAT THE MODEL IS ASKED, and what is saved (library(reasoning/live),
+%% loaded at the first live call, has the prompts):
+%%
+%%   a text       each sentence and the static reading of it (its logical
+%%                form, or that it did not read); the model says whether
+%%                the reading keeps the sentence's meaning, and for one it
+%%                does not, the words the reader got wrong or did not know
+%%                (each with its class and base form) and a REWRITE in
+%%                short plain sentences. A word becomes a lexicon fact
+%%                (reason_noun/1, reason_adj/1, reason_verb/2,
+%%                reason_proper/2; for the translator, a lesson line),
+%%                each kept as reason_live_lesson(Kind, Lesson); a rewrite
+%%                that reads becomes reason_live_rewrite(Kind, Sentence,
+%%                Sentences).
+%%   concepts,    each subject and the kind the static reading gave it; a
+%%   topics       kind the model corrects becomes reason_live_kind(Name,
+%%                Kind).
+%%   an           its sentences; a verb whose third person the model
+%%   explanation  corrects becomes reason_live_third(Base, Third).
+%%
+%% Each verdict is saved as reason_live_verdict(Kind, Item, Reading,
+%% right | wrong(Minor)), so a reading the model judged is not sent again:
+%% a right one never, a wrong one when the library's minor version moves.
+%% A word that would change a reading the model confirmed is taken back.
+%%
+%% WHAT IS SAVED IS READ IN BOTH MODES. The facts are dynamic, so under
+%% `cocolog --embed' they are written into the store and the next process
+%% reads them; without a store they last as long as the process. A static
+%% reader reads the saved lexicon, rewrites, kinds and verb forms as
+%% knowledge of its own, with no model call: a text read once in live mode
+%% reads the same in static mode afterwards.
+%%
+%% THE MODEL comes from the environment (library(reasoning/live) has the
+%% whole list): REASON_LIVE_KEY and REASON_LIVE_MODEL, REASON_LIVE_API
+%% (anthropic, the default, or openai) and REASON_LIVE_URL. With no key or
+%% no model, or for five minutes after a call failed, live mode asks
+%% nothing and reads as static mode does. A failure is never the reader's:
+%% the network, a refusal or a reply that is not the JSON asked for leaves
+%% the static result in place.
 %%
 %% ---- THE SENTENCES IT READS -------------------------------------------
 %%
@@ -468,17 +532,153 @@
 %% made from it, and no code, test or lesson in the tree spells the number.
 %% Bump it in the commit that changes this repository, never afterwards.
 
-reason_version(1, 15, 4).
+reason_version(1, 16, 0).
 
 reason_version(Version) :-
     reason_version(Major, Minor, Patch),
     atomic_list_concat([Major, Minor, Patch], '.', Version).
 
+%% ---- static and live ---------------------------------------------------
+%%
+%% What live mode saved (the header, STATIC AND LIVE). Declared here, not
+%% in library(reasoning/live), so a static reader asks them with that
+%% library never loaded. reason_live_stub/3 is a test's model (live.pl).
+
+:- dynamic reason_live_verdict/4.
+:- dynamic reason_live_rewrite/3.
+:- dynamic reason_live_kind/2.
+:- dynamic reason_live_third/2.
+:- dynamic reason_live_lesson/2.
+:- dynamic reason_live_stub/3.
+
+%% THE MODE IS A GLOBAL, NEVER A FACT: an assert under `--embed' would be
+%% written into the store, and the next process would start live.
+reason_mode(Mode) :-
+    (   catch(nb_getval('$reason_mode', Mode0), _, fail),
+        memberchk(Mode0, [static, live])
+    ->  Mode = Mode0
+    ;   getenv('REASON_MODE', Env),
+        rv_mode_text(Env, Mode0)
+    ->  Mode = Mode0
+    ;   Mode = static
+    ).
+
+reason_set_mode(Mode) :-
+    (   atom(Mode), memberchk(Mode, [static, live])
+    ->  nb_setval('$reason_mode', Mode)
+    ;   throw(error(domain_error(reason_mode, Mode), reason_set_mode/1))
+    ).
+
+rv_mode_text(Text, Mode) :-
+    atom_string(A, Text),
+    downcase_atom(A, Mode),
+    memberchk(Mode, [static, live]).
+
+%% A call's mode: its mode(M) option, else the process's.
+rv_mode(Options, Mode) :-
+    (   is_list(Options), memberchk(mode(M), Options)
+    ->  (   atom(M), memberchk(M, [static, live])
+        ->  Mode = M
+        ;   throw(error(domain_error(reason_mode, M), context(reason_text/3, _)))
+        )
+    ;   reason_mode(Mode)
+    ).
+
+%% Inside live mode's own work every reader is static, and reads its text
+%% as it is given: the readings the model is asked about are the static
+%% ones, and a rewrite is not rewritten again.
+rv_quiet :- catch(nb_getval('$reason_live_busy', yes), _, fail).
+
+rv_live(Options) :- \+ rv_quiet, rv_mode(Options, live).
+
+rv_load_live :- use_module(library(reasoning/live)).
+
+%% rv_input(+Kind, +Text0, +Options, -Text): the text a reader reads. In
+%% live mode the model is asked about Text0 first; in both modes each
+%% sentence with a saved rewrite is read as its rewrite. Kind is text,
+%% prose or ir(From). A text with nothing to rewrite is handed back as it
+%% came, an atom, a string or codes.
+rv_input(_, Text0, _, Text) :- rv_quiet, !, Text = Text0.
+rv_input(Kind, Text0, Options, Text) :-
+    (   rv_mode(Options, live)
+    ->  rv_load_live,
+        reason_live_read(Kind, Text0)
+    ;   true
+    ),
+    rv_apply(Kind, Text0, Text).
+
+rv_apply(Kind, Text0, Text) :-
+    (   \+ reason_live_rewrite(Kind, _, _)
+    ->  Text = Text0
+    ;   rv_split(Text0, Ss),
+        rv_rewritten(Kind, Ss, Ts),
+        (   Ts == Ss
+        ->  Text = Text0
+        ;   atomic_list_concat(Ts, ' ', Text)
+        )
+    ).
+
+rv_rewritten(_, [], []).
+rv_rewritten(Kind, [S|Ss], Out) :-
+    (   reason_live_rewrite(Kind, S, Rs)
+    ->  append(Rs, Rest, Out)
+    ;   Out = [S|Rest]
+    ),
+    rv_rewritten(Kind, Ss, Rest).
+
+%% rv_split(+Text, -Sentences): the sentences of a text, each an atom with
+%% its stop, layout trimmed: a sentence ends at `.', `!' or `?' before
+%% layout or the end, so `5.5' and `e.g.,' stay inside one. Live mode keys
+%% what it saves by these sentences, and applies it by them.
+rv_split(Text, Ss) :-
+    (   is_list(Text) -> Cs = Text ; atom_codes(Text, Cs) ),
+    rv_split_codes(Cs, [], Ss).
+
+rv_split_codes([], Acc, Ss) :- !, rv_flush(Acc, Ss, []).
+rv_split_codes([C|Cs], Acc, Ss) :-
+    memberchk(C, [0'., 0'!, 0'?]),
+    (   Cs == [] -> true ; Cs = [N|_], N =< 32 ),
+    !,
+    rv_flush([C|Acc], Ss, More),
+    rv_split_codes(Cs, [], More).
+rv_split_codes([C|Cs], Acc, Ss) :- rv_split_codes(Cs, [C|Acc], Ss).
+
+rv_flush(Acc, Ss, More) :-
+    reverse(Acc, Cs0),
+    rv_trim(Cs0, Cs),
+    (   Cs == [] -> Ss = More ; atom_codes(S, Cs), Ss = [S|More] ).
+
+rv_trim(Cs0, Cs) :-
+    rv_drop_layout(Cs0, Cs1),
+    reverse(Cs1, R0), rv_drop_layout(R0, R1), reverse(R1, Cs).
+rv_drop_layout([C|Cs], Ds) :- C =< 32, !, rv_drop_layout(Cs, Ds).
+rv_drop_layout(Cs, Cs).
+
+%% The static reading of each sentence in turn, the state carried as
+%% reason_text/2 carries it (a pronoun reads after its antecedent):
+%% read(Terms), or refused. Live mode shows these to the model.
+rv_text_readings(Sentences, Readings) :-
+    nb_setval('$rs_subject', none),
+    rv_text_readings_(Sentences, Readings).
+rv_text_readings_([], []).
+rv_text_readings_([S|Ss], [R|Rs]) :-
+    (   catch(( reason_tokens(S, Tokens), rs_sentences(Tokens, TSs), TSs \== [],
+                rs_each(TSs, Raw) ), _, fail)
+    ->  R = read(Raw)
+    ;   R = refused
+    ),
+    rv_text_readings_(Ss, Rs).
+
+%% A saved kind in place of the reading's (reason_live_kind/2).
+rv_kind(N, K0, K) :-
+    (   atom(N), reason_live_kind(N, K1) -> K = K1 ; K = K0 ).
+
 %% ---- text ------------------------------------------------------------
 
 reason_text(Text, Terms) :- reason_text(Text, [], Terms).
 
-reason_text(Text, Options, Terms) :-
+reason_text(Text0, Options, Terms) :-
+    rv_input(text, Text0, Options, Text),
     reason_tokens(Text, Tokens),
     rs_sentences(Tokens, Sentences),
     nb_setval('$rs_subject', none),
@@ -541,21 +741,24 @@ re_helper(begin_with(_, _)). re_helper(start_with(_, _)).
 %% The state is NOT reset here: a question may follow the paragraph the
 %% last reason_text/2 read, and `Is she licensed?' asks about its subject.
 
-reason_question(Text, Question) :-
+reason_question(Text0, Question) :-
+    rv_input(text, Text0, [], Text),
     reason_tokens(Text, Tokens),
     rs_sentences(Tokens, [S|_]),
     rs_notes_reset,
     phrase(rs_question(Question), S),
     rs_notes_commit.
 
-reason_ask(Text, Answers) :-
+reason_ask(Text0, Answers) :-
+    rv_input(text, Text0, [], Text),
     reason_tokens(Text, Tokens),
     rs_sentences(Tokens, Sentences),
     rs_read(Sentences, [variables(true)], Terms),
     findall(A, ( member(Q, Terms), rq_answer(Q, A) ), Answers).
 
 %% the same, and beside each answer its explanation in sentences
-reason_ask(Text, Answers, Explanations) :-
+reason_ask(Text0, Answers, Explanations) :-
+    rv_input(text, Text0, [], Text),
     reason_tokens(Text, Tokens),
     rs_sentences(Tokens, Sentences),
     rs_read(Sentences, [variables(true)], Terms),
@@ -579,9 +782,9 @@ rq_explain(question(X, Goal), As, Es) :-
 
 %% ---- prose, through the shipped tagger: optional ----------------------
 
-reason_prose(Text, Terms) :- rp_model(M), tagger_normalise(M, Text, _, Terms).
-reason_ask_prose(Text, Answers) :- rp_model(M), tagger_ask(M, Text, Answers).
-reason_ask_prose(Text, Answers, Explanations) :- rp_model(M), tagger_ask(M, Text, Answers, Explanations).
+reason_prose(Text0, Terms) :- rp_model(M), rv_input(prose, Text0, [], Text), tagger_normalise(M, Text, _, Terms).
+reason_ask_prose(Text0, Answers) :- rp_model(M), rv_input(prose, Text0, [], Text), tagger_ask(M, Text, Answers).
+reason_ask_prose(Text0, Answers, Explanations) :- rp_model(M), rv_input(prose, Text0, [], Text), tagger_ask(M, Text, Answers, Explanations).
 
 %% LIBRARY(TORCH) IS ASKED FOR FIRST. The tagger LOADS where torch is
 %% absent -- its vocabulary, encoding and tag ids are clauses -- so a load
@@ -718,6 +921,15 @@ re_not(G, W) :-
 %% ---- the proof in sentences ------------------------------------------------
 
 reason_explanation(Goal, Text) :-
+    rv_explanation(Goal, Text0),
+    (   rv_live([])
+    ->  rv_load_live,
+        reason_live_explanation(Text0),
+        rv_explanation(Goal, Text)
+    ;   Text = Text0
+    ).
+
+rv_explanation(Goal, Text) :-
     (   once(re_goal(Goal, W)) -> true
     ;   once(re_goal(neg(Goal), W))
     ),
@@ -815,7 +1027,21 @@ re_stop(Parts, T) :-
 %% outlines the same way.
 
 reason_concepts(Terms, Concepts) :-
-    rc_mentions(Terms, Ms),
+    rv_concepts(Terms, Concepts0),
+    (   rv_live([])
+    ->  rv_load_live,
+        reason_live_kinds(Terms, Concepts0),
+        rv_concepts(Terms, Concepts)
+    ;   Concepts = Concepts0
+    ).
+
+%% a kind live mode saved (reason_live_kind/2) is the subject's kind
+rv_concepts(Terms, Concepts) :-
+    rc_mentions(Terms, Ms0),
+    (   \+ reason_live_kind(_, _)
+    ->  Ms = Ms0
+    ;   findall(N1-K1, ( member(N1-K0, Ms0), rv_kind(N1, K0, K1) ), Ms)
+    ),
     rc_count(Ms, 0, [], Counted),
     findall(K-concept(N, Kind, C), ( member(c(N, Kind, C, F), Counted), NC is -C, K = NC-F ), Keyed),
     keysort(Keyed, Sorted),
@@ -867,8 +1093,21 @@ re_individual(A) :-
 %% ---- topics ------------------------------------------------------------------
 
 reason_topics(Terms, Topics) :-
+    rv_topics(Terms, Topics0),
+    (   rv_live([])
+    ->  rv_load_live,
+        reason_live_kinds(Terms, Topics0),
+        rv_topics(Terms, Topics)
+    ;   Topics = Topics0
+    ).
+
+rv_topics(Terms, Topics) :-
     rt_claims(Terms, Cs),
-    rt_group(Cs, [], Grouped),
+    rt_group(Cs, [], Grouped0),
+    (   \+ reason_live_kind(_, _)
+    ->  Grouped = Grouped0
+    ;   findall(t(S1, K1, F1, Gs), ( member(t(S1, K0, F1, Gs), Grouped0), rv_kind(S1, K0, K1) ), Grouped)
+    ),
     findall(K-topic(S, Kind, Groups), ( member(t(S, Kind, F, Groups), Grouped), rt_weight(Groups, W), NW is -W, K = NW-F ), Keyed),
     keysort(Keyed, Sorted),
     findall(X, member(_-X, Sorted), Topics).
@@ -1161,7 +1400,8 @@ rs_remember(_).
 
 reason_sentence(Text, Terms) :- reason_sentence(Text, [], Terms).
 
-reason_sentence(Text, Options, Terms) :-
+reason_sentence(Text0, Options, Terms) :-
+    rv_input(text, Text0, Options, Text),
     reason_tokens(Text, Tokens),
     rs_sentences(Tokens, [S|_]),
     nb_setval('$rs_subject', none),
@@ -1212,7 +1452,8 @@ rs_upto([T|Ts], [T|S], Rest) :- rs_upto(Ts, S, Rest).
 
 %% ---- what was refused -------------------------------------------------
 
-reason_refused(Text, Sentence) :-
+reason_refused(Text0, Sentence) :-
+    rv_input(text, Text0, [], Text),
     reason_tokens(Text, Tokens),
     rs_sentences(Tokens, Sentences),
     nb_setval('$rs_subject', none),
@@ -1754,6 +1995,7 @@ rs_base(W, W).
 %% base back, so the pair lives here and is changed together;
 %% library(reasoning/normalise)'s normalise_third/2 is this, and the
 %% explanation writes `Re8 attacks H8' with it.
+reason_third(B, T) :- atom(B), reason_live_third(B, T0), !, T = T0.
 reason_third(have, has) :- !.
 reason_third(B, T) :- atom_codes(B, Cs), rl_es_stem(Cs), !, atom_concat(B, es, T).
 reason_third(B, T) :- rl_y_stem(B, Stem), !, atom_concat(Stem, ies, T).

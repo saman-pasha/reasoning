@@ -524,8 +524,9 @@ tr_lessons_moved :- nb_getval('$tr_lessons', V0), V is V0 + 1, nb_setval('$tr_le
 %% shape was not one this translates. Into is as in reason_translate/3,
 %% or `any'.
 reason_translate_page(Text, Lines) :- reason_translate_page(Text, any, Lines).
-reason_translate_page(Text, Into, Lines) :-
+reason_translate_page(Text0, Into, Lines) :-
     ( Into == any -> Way = any ; tr_into(Into, Way) ),
+    rv_input(ir(any), Text0, [], Text),
     tr_pieces(Text, Pieces),
     findall(Sentence-Out, ( member(Piece-Stop, Pieces), atom_codes(P0, Piece), tr_trim(P0, P1),
                             tr_stop_text(P1, Stop, Sentence),
@@ -542,13 +543,15 @@ tr_trim_codes(Cs, Ds) :- append(Sp, Rest, Cs), \+ ( Sp = [C|_], C > 32 ), Rest =
 tr_trim_codes(Cs, Cs).
 tr_trim_end(Cs, Ds) :- append(Ds, Sp, Cs), \+ ( member(C, Sp), C > 32 ), ( Ds = [] ; last(Ds, L), L > 32 ), !.
 
-reason_translate(Text, Out) :-
+reason_translate(Text0, Out) :-
+    rv_input(ir(any), Text0, [], Text),
     tr_pieces(Text, Pieces), Pieces \== [],
     tr_each(Pieces, any, Outs),
     atomic_list_concat(Outs, ' ', Out).
 
-reason_translate(Text, Into, Out) :-
+reason_translate(Text0, Into, Out) :-
     tr_into(Into, Way),
+    rv_input(ir(any), Text0, [], Text),
     tr_pieces(Text, Pieces), Pieces \== [],
     tr_each(Pieces, Way, Outs),
     atomic_list_concat(Outs, ' ', Out).
@@ -566,7 +569,8 @@ reason_languages([english|Ls]) :- tr_languages(Ls).
 %% words vote for one. It FAILS on a sentence it cannot read -- use
 %% reason_translate_page/4 for a page.
 reason_ir(Text, IRs) :- reason_ir(Text, any, IRs).
-reason_ir(Text, From, IRs) :-
+reason_ir(Text0, From, IRs) :-
+    rv_input(ir(From), Text0, [], Text),
     tr_pieces(Text, Pieces), Pieces \== [],
     nb_setval('$tr_xnames', []),
     tr_each_ir(Pieces, From, IRs).
@@ -591,8 +595,9 @@ reason_translate(Text, From, Into, Out) :-
 
 %% ... a page of it: what translates is translated and what does not is
 %% named, as reason_translate_page/2,3 does
-reason_translate_page(Text, From, Into, Lines) :-
+reason_translate_page(Text0, From, Into, Lines) :-
     tr_side_of(Into, _),
+    rv_input(ir(From), Text0, [], Text),
     tr_pieces(Text, Pieces),
     findall(Sentence-Out, ( member(Piece-Stop, Pieces), atom_codes(P0, Piece), tr_trim(P0, P1),
                             tr_stop_text(P1, Stop, Sentence),
@@ -1427,7 +1432,8 @@ reason_untranslated(Text, Words) :- reason_untranslated(Text, any, Words).
 %% direction, where the index keys 0 and skips nothing. Named, every
 %% question is asked with the lesson's word bound, and the walk is gone.
 %% The page path knows the language it was given, so it says so.
-reason_untranslated(Text, From, Words) :-
+reason_untranslated(Text0, From, Words) :-
+    rv_input(ir(From), Text0, [], Text),
     tr_pieces(Text, Pieces),
     findall(W, ( member(Piece0-_, Pieces), tr_caps_piece(Piece0, Piece), tr_piece_words(Piece, Ws0c),
                  tr_uncomma(Ws0c, Ws), tr_unknown_in(From, Ws, W) ),
