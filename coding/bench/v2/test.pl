@@ -1088,9 +1088,10 @@ test_lang_ir :-
 test_lang_reasoning :-
     section('language reasoning arms and cocolog_noguide lane'),
     findall(A-K, v2_lang_arm_notes(A, K), Arms),
-    check('the four arms and the notes each adds', Arms,
+    check('the arms and the notes each adds', Arms,
           [plain-[], reasoning-[reasoning], reasoning_ir-[reasoning, ir],
-           ir-[ir]]),
+           ir-[ir], controlled-[controlled], terms-[terms], concepts-[concepts],
+           outline-[outline]]),
     yes_no(v2_language_supported(cocolog_noguide), Lane),
     check('cocolog_noguide is a language lane', Lane, yes),
     once(v2_language_runtime(cocolog_noguide, Runtime)),

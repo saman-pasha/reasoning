@@ -203,13 +203,15 @@ v2_lang_note_file(Dir, Task, Lang, Kind, File) :-
     (   exists_file(File)
     ->  true
     ;   v2_lang_note_error(Kind, Error, Name),
-        format(atom(Msg), 'no ~w note ~w: run coding/bench/v2/ir_prep.pl for ~w in ~w first',
+        format(atom(Msg), 'no ~w note ~w: run coding/bench/v2/ir_prep.pl (reason_prep.pl for a reason_* note) for ~w in ~w first',
                [Name, File, Task, Lang]),
         throw(error(v2_lang_error(Error, Msg), v2_lang_note_file/5))
     ).
 
 v2_lang_note_error(ir, no_ir_note, 'IR').
 v2_lang_note_error(reasoning, no_reasoning_note, reasoning).
+v2_lang_note_error(Kind, no_reason_note, Kind) :-
+    memberchk(Kind, [controlled, terms, concepts, outline]).
 
 %% The arms, and the notes each puts after the requirement, in the
 %% endpoint's order: the prompt alone, the prompt with the reasoning
@@ -218,6 +220,15 @@ v2_lang_arm_notes(plain, []).
 v2_lang_arm_notes(reasoning, [reasoning]).
 v2_lang_arm_notes(reasoning_ir, [reasoning, ir]).
 v2_lang_arm_notes(ir, [ir]).
+%% the reason_* readers' notes (since reasoning 1.17.1), each made by
+%% coding/bench/v2/reason_prep.pl from a CONTROLLED restatement of the
+%% requirement the grammar reads whole: the restatement itself, then what
+%% reason_text/2, reason_concepts/2 and reason_topics/2 with
+%% reason_topic_lines/2 make of it
+v2_lang_arm_notes(controlled, [controlled]).
+v2_lang_arm_notes(terms, [terms]).
+v2_lang_arm_notes(concepts, [concepts]).
+v2_lang_arm_notes(outline, [outline]).
 
 %% The requirement a cell is given: the language's, and after it the
 %% arm's notes. Chars is chars(IR, Reasoning), each note's length.
@@ -236,6 +247,10 @@ v2_lang_arm_note(Notes, Task, Lang, Kind, Spec0-Chars0, Spec-Chars) :-
 
 v2_lang_add_chars(ir, N, chars(I0, R), chars(I, R)) :- I is I0 + N.
 v2_lang_add_chars(reasoning, N, chars(I, R0), chars(I, R)) :- R is R0 + N.
+%% a reason_* note counts as the reasoning's
+v2_lang_add_chars(Kind, N, chars(I, R0), chars(I, R)) :-
+    memberchk(Kind, [controlled, terms, concepts, outline]),
+    R is R0 + N.
 
 v2_lang_keep_option(Opts) :-
     (   memberchk(keep(KeepDir), Opts)
@@ -250,7 +265,7 @@ v2_lang_usage :-
     format("  --run           run the comparison~n", []),
     format("  --tasks A,B     lcs, stable_sort, calculator, mvccs_acid~n", []),
     format("  --langs A,B     c, python, cocolog, swipl, cocolog_noguide~n", []),
-    format("  --arms A,B      plain, reasoning, reasoning_ir, ir~n", []),
+    format("  --arms A,B      plain, reasoning, reasoning_ir, ir, controlled, terms, concepts, outline~n", []),
     format("  --ir-notes DIR  the notes coding/bench/v2/ir_prep.pl wrote~n", []),
     format("  --trials N      trials per task and language~n", []),
     format("  --seed N        order seed~n", []),

@@ -14,6 +14,11 @@
 # running cocolog's own library/) supplies the other libraries.
 #
 #   sh tools/tagger/train.sh [FILE]     FILE defaults to model.rows
+#
+# STORE=DIR trains into that --embed store and KEEPS it (since reasoning
+# 1.17.0): the knowledge base the model was trained in, which a program run
+# over it reads the tagger from with no file -- the exported rows are the
+# same model, for every other store, which consults them in at first use.
 set -e
 HERE=$(cd "$(dirname "$0")" && pwd)
 ROOT=$(cd "$HERE/../.." && pwd)
@@ -29,7 +34,8 @@ LIBS="$PARENT"
 export COCOLOG_LIBRARY="$LIBS"
 TMP=$(mktemp -d)
 trap 'rm -rf "$TMP"' EXIT
+KB=${STORE:-$TMP/train}
 "$COCOLOG" -s "$ROOT/generate.pl"
-"$COCOLOG" --embed "$TMP/train" -s "$ROOT/train.pl"
-"$COCOLOG" --embed "$TMP/train" query "use_module(library(reasoning/tagger)), tagger_export(tagger, '$FILE')" > /dev/null
+"$COCOLOG" --embed "$KB" -s "$ROOT/train.pl"
+"$COCOLOG" --embed "$KB" query "use_module(library(reasoning/tagger)), tagger_export(tagger, '$FILE')" > /dev/null
 echo "tagger: wrote $FILE ($(du -sh "$FILE" | cut -f1))"
