@@ -271,8 +271,11 @@ CODING_BENCH_BASE_URL=https://api.anthropic.com/v1/messages \
   the `controlled` arm (`--ir-notes DIR`), and its calls and tokens into
   `DIR/restate-prep.jsonl`; run it without `--embed`, so no restatement
   saved before is used. Tested in
-  `results/model-controlled-python-20261121/`, the test written before
-  the run.
+  `results/model-controlled-python-20261121.md`, the test written before
+  the run: in Python it made the first program right 7/60 against 18/60
+  without it (one-sided p = 0.997, not supported; two-sided p = 0.023,
+  described), at 48 % more tokens. With it 7 first programs of 60 print
+  `error`, against 27 without.
 
 ### The reasoning arms and the cocolog lane without its guide (1.15.0)
 

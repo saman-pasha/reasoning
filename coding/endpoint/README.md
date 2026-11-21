@@ -193,6 +193,14 @@ and `reason-python-20261121.md`):
 | C | 15/20 | 14/20 | two-sided p = 1.0 |
 | cocolog with its guide | 2/20 | 15/20 | two-sided p = 0.00007: the four input sentences are read as a code list to match (`controlled-ablation-20261121/`) |
 
+**That table is the hand-written note's.** The note the endpoint writes
+itself, a model's restatement, was tested after it, in Python, 60 trials
+an arm (`results/model-controlled-python-20261121.md`): 7/60 first
+programs right against 18/60 without it, and 48 % more tokens. With it,
+7 first programs of 60 printed the word `error` that the error case
+expects, against 27 of 60 without; the hand-written note has the
+sentence `Every command prints an answer.` and the model's has not.
+
 So it is on for C and Python and off for cocolog:
 `CODING_ENDPOINT_CONTROLLED_LANGS` (comma-separated, `c,python` unless set,
 `none` for no language) chooses. In Python it cost 5 % more tokens over

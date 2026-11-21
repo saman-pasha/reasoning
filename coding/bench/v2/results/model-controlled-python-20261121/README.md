@@ -58,3 +58,16 @@ tokens, the error case's failures and how many first programs print
 `error`, and how this run's rates stand beside the three hand-written
 runs' (across runs, which drift; not a test). A refused cell counts as it
 comes; the report says how many.
+
+## The result (written after the run)
+
+1. The model-written note: 7/60 first programs right, the requirement
+   alone 18/60. Fisher one-sided (controlled greater) **p = 0.997: the
+   hypothesis is not supported.** The note made the first program right
+   LESS often; that direction was not tested before the run, and is
+   described in the report (two-sided p = 0.023).
+
+One cell (controlled, trial 60) was refused twice by the safety
+classifier (`reasoning_extraction`) after a first program that failed,
+and counts as it came. The report is
+`../model-controlled-python-20261121.md`.

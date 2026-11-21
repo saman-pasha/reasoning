@@ -87,7 +87,9 @@ STATIC AND LIVE, and live.pl's). What a session must keep:
   by `reason_restate/3` in live mode, after the task in that turn -- the
   note and the place coding/bench/v2 measured (Python 104/180 against
   79/180) -- for C and Python (`CODING_ENDPOINT_CONTROLLED_LANGS`; guided
-  cocolog went 15/20 to 2/20 with it). The system prompt is the guide
+  cocolog went 15/20 to 2/20 with it). **That gain was the hand-written
+  note's: the note the model writes made Python 7/60 against 18/60**
+  (coding/bench/v2/results/model-controlled-python-20261121.md). The system prompt is the guide
   alone: the checks, the about note and the IR note are not sent, and
   `ir_prep.pl` still writes them for a benchmark arm. A restatement is
   kept as `reason_live_restatement(Task, Sentences)`, the WHOLE first turn

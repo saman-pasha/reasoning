@@ -1,0 +1,176 @@
+<title>The Model-Written Note</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column of 46rem, wide tables in their own scrollers; a lab report, not a dashboard. */
+:root {
+  --bg: #f6f7f6;
+  --surface: #ffffff;
+  --fg: #1b2321;
+  --muted: #5a6763;
+  --rule: #d9dfdc;
+  --accent: #0e6a63;
+  --accent-soft: #dcefec;
+  --good: #1f7a3d;
+  --good-soft: #dff1e4;
+  --bad: #a33a2a;
+  --bad-soft: #f6e1dc;
+  --code-bg: #eef1ef;
+  --font-text: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121716; --surface: #1a201f; --fg: #e3e9e6; --muted: #9aa8a3; --rule: #2e3735;
+    --accent: #5cc4b9; --accent-soft: #173431; --good: #6fcf8e; --good-soft: #17301f;
+    --bad: #ef8b78; --bad-soft: #3a1f1a; --code-bg: #202826; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121716; --surface: #1a201f; --fg: #e3e9e6; --muted: #9aa8a3; --rule: #2e3735;
+  --accent: #5cc4b9; --accent-soft: #173431; --good: #6fcf8e; --good-soft: #17301f;
+  --bad: #ef8b78; --bad-soft: #3a1f1a; --code-bg: #202826; color-scheme: dark;
+}
+body { background: var(--bg); color: var(--fg); font-family: var(--font-text); font-size: 16px; line-height: 1.55; }
+.page { max-width: 46rem; margin: 0 auto; padding-block: 2.5rem 4rem;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 2.25rem; }
+header { display: flex; flex-direction: column; gap: .6rem; }
+.eyebrow { font-family: var(--font-mono); font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+h1 { font-size: 2rem; line-height: 1.15; font-weight: 600; margin: 0; text-wrap: balance; }
+h2 { font-size: 1.3rem; line-height: 1.25; font-weight: 600; margin: 0; text-wrap: balance; }
+h3 { font-size: 1.02rem; font-weight: 600; margin: 0; }
+p { margin: 0; max-width: 65ch; }
+section { display: flex; flex-direction: column; gap: .9rem; min-width: 0; }
+.lede { font-size: 1.08rem; color: var(--fg); }
+.meta { font-size: .86rem; color: var(--muted); font-family: var(--font-mono); }
+ul, ol { margin: 0; padding-left: 1.2rem; display: flex; flex-direction: column; gap: .4rem; max-width: 65ch; }
+code, .mono { font-family: var(--font-mono); font-size: .88em; }
+code { background: var(--code-bg); padding: .05em .3em; border-radius: 3px; }
+.findings { display: grid; gap: .75rem; }
+.finding { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: .9rem 1rem; display: flex; flex-direction: column; gap: .35rem; }
+.finding b { font-weight: 600; }
+.scroll { overflow-x: auto; min-width: 0; border: 1px solid var(--rule); border-radius: 6px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: .88rem; font-variant-numeric: tabular-nums; }
+th, td { padding: .45rem .6rem; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--rule); }
+th { font-weight: 600; color: var(--muted); font-size: .76rem; letter-spacing: .03em; text-transform: uppercase; background: var(--bg); }
+td:first-child, th:first-child, td.l, th.l { text-align: left; }
+tbody tr:last-child td { border-bottom: 0; }
+tr.group td { background: var(--bg); font-weight: 600; text-align: left; color: var(--fg); }
+tr.total td { font-weight: 600; }
+.rate { display: inline-flex; align-items: center; gap: .45rem; justify-content: flex-end; }
+.bar { width: 3.2rem; height: .45rem; background: var(--rule); border-radius: 2px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--accent); }
+.pill { display: inline-block; font-family: var(--font-mono); font-size: .74rem; padding: .05rem .4rem; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
+.pill.bad { background: var(--bad-soft); color: var(--bad); }
+.pill.good { background: var(--good-soft); color: var(--good); }
+tr.best td { background: var(--accent-soft); }
+tr.best td:first-child { box-shadow: inset 3px 0 0 var(--accent); }
+.excerpts { display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: .75rem; }
+.excerpts > div { min-width: 0; display: flex; flex-direction: column; gap: .35rem; }
+.excerpts pre { font-size: .78rem; white-space: pre; }
+pre { margin: 0; background: var(--code-bg); border-radius: 6px; padding: .8rem 1rem; overflow-x: auto; font-family: var(--font-mono); font-size: .85rem; line-height: 1.5; }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: .75rem; }
+.two > div { min-width: 0; display: flex; flex-direction: column; gap: .35rem; }
+.caption { font-size: .84rem; color: var(--muted); max-width: 65ch; }
+.note { font-size: .9rem; color: var(--muted); }
+a { color: var(--accent); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 0; }
+</style>
+<div class="page">
+<header>
+  <div class="eyebrow">reasoning 1.18.1 · coding bench v2 · 2026-11-21</div>
+  <h1>The model-written controlled note in Python codegen</h1>
+  <p class="lede">Since reasoning 1.18.0 the coding endpoint writes its controlled English note itself: a model says the requirement again, and the grammar keeps each sentence it reads. Three earlier runs measured a note written by hand. Does the note the endpoint writes, with no hand-written text, have the same effect?</p>
+  <p class="meta">120 cells, 232 calls, 1&#8201;218&#8201;359 tokens, 46 min of cell time, $6.35. The note itself: 3 calls, 12&#8201;624 tokens, $0.05.</p>
+</header>
+
+<section>
+  <h2>The answer</h2>
+  <div class="findings">
+    <div class="finding"><b>No. It made the first program right less often: 7/60 with the note, against 18/60 without it.</b><p>The test written before the run asked whether the note helps: one-sided p&nbsp;=&nbsp;0.997, not supported. The other direction was not tested before the run; two-sided p&nbsp;=&nbsp;0.023, described.</p></div>
+    <div class="finding"><b>The loss is at the error case.</b><p>With the note, 7 first programs of 60 contain the word <code>error</code> at all, against 27 of 60 without it. Every program that failed the error case printed nothing there.</p></div>
+    <div class="finding"><b>It costs more.</b><p>21&#8201;% more calls and 48&#8201;% more tokens than the requirement alone.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>The test, chosen before the run</h2>
+  <p>Written down and pushed before the first cell (commit <code>f2929b2</code>), with the note already made and not edited.</p>
+  <div class="scroll"><table>
+    <thead><tr><th class="l">test</th><th>note</th><th>alone</th><th>p</th><th class="l">answer</th></tr></thead>
+    <tbody>
+      <tr><td class="l">the note helps (Fisher, one-sided)</td><td>7/60</td><td>18/60</td><td>0.997</td><td class="l"><span class="pill bad">not supported</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>The results</h2>
+  <div class="scroll"><table>
+    <thead><tr><th class="l">arm</th><th>first</th><th>final</th><th>calls</th><th>tokens</th><th>cost</th></tr></thead>
+    <tbody>
+      <tr><td class="l">requirement alone</td><td><span class="rate">18/60<span class="bar"><i style="width:30%"></i></span></span></td><td>60/60</td><td>105</td><td>490&#8201;755</td><td>$2.81</td></tr>
+      <tr><td class="l">model-written note</td><td><span class="rate">7/60<span class="bar"><i style="width:11.7%"></i></span></span></td><td>58/60</td><td>127</td><td>727&#8201;604</td><td>$3.54</td></tr>
+    </tbody>
+  </table></div>
+  <p class="caption">Of the two cells that did not pass in the end, one failed its three calls and one was refused twice by the safety classifier (<code>reasoning_extraction</code>) after a first program that failed; it counts as it came.</p>
+</section>
+
+<section>
+  <h2>How the first programs failed</h2>
+  <div class="scroll"><table>
+    <thead><tr><th class="l">arm</th><th>pass</th><th>error case</th><th>no compile</th><th>other</th><th>print error</th></tr></thead>
+    <tbody>
+      <tr><td class="l">requirement alone</td><td>18</td><td>27</td><td>14</td><td>1</td><td>27/60</td></tr>
+      <tr><td class="l">model-written note</td><td>7</td><td><b>51</b></td><td>0</td><td>2</td><td><b>7/60</b></td></tr>
+    </tbody>
+  </table></div>
+  <p class="caption">"Print error": first programs that contain the text <code>error</code>. The error case expects the word <code>error</code> five times, a word the requirement never names (it says "error if T is not active"). The 14 programs that did not compile had an unterminated string (8), or <code>≥</code> and <code>→</code> in the code (3 each).</p>
+</section>
+
+<section>
+  <h2>What the two notes say about output</h2>
+  <p>The model's note says which commands print and what, and of an error only "causes an error":</p>
+  <pre class="mono">Every r_command that names an inactive_transaction causes an error.
+Every p_command that names an empty_view prints nothing.
+Multiversion_Tree does not print a prompt.
+Multiversion_Tree does not print a debug_output.</pre>
+  <p>The hand-written note also says "causes an error" and has the same two last lines, and it also has <b><code>Every command prints an answer.</code></b> The model's note does not have that sentence, and the requirement does not say it in those words: <code>b</code>, <code>i</code> and <code>d</code> print nothing when they succeed. That is the plainest difference at the error case, but no run took the sentence out or put it in. It is a reading of the counts, not a tested cause.</p>
+</section>
+
+<section>
+  <h2>Beside the hand-written note's runs</h2>
+  <div class="scroll"><table>
+    <thead><tr><th class="l">run</th><th class="l">the note</th><th>first, with it</th><th>first, without</th></tr></thead>
+    <tbody>
+      <tr><td class="l">first</td><td class="l">hand-written</td><td>37/60</td><td>25/60</td></tr>
+      <tr><td class="l">second (the gzip run)</td><td class="l">hand-written</td><td>34/60</td><td>30/60</td></tr>
+      <tr><td class="l">third</td><td class="l">hand-written</td><td>33/60</td><td>24/60</td></tr>
+      <tr class="best"><td class="l"><b>this run</b></td><td class="l"><b>model-written</b></td><td><b>7/60</b></td><td>18/60</td></tr>
+    </tbody>
+  </table></div>
+  <p class="caption">Across runs, which drift: described, not tested. The requirement alone did worse here than in any earlier run, and 14 of its failures were programs that did not compile.</p>
+</section>
+
+<section>
+  <h2>What this means for the endpoint</h2>
+  <p>Since reasoning 1.18.0 the coding endpoint sends this kind of note for C and Python by default (<code>CODING_ENDPOINT_CONTROLLED_LANGS</code>, <code>c,python</code>). The gain measured before was the hand-written note's. On this task the note the endpoint writes harms Python's first program. <code>CODING_ENDPOINT_CONTROLLED_LANGS=none</code> sends no note.</p>
+</section>
+
+<section>
+  <h2>Limits</h2>
+  <ul>
+    <li>One task, one model, one language, one note. Another note the model wrote could read differently, and no second note was made to choose from.</li>
+    <li>The cause is read from the counts; no arm took a sentence out or put one in.</li>
+    <li>One refused cell counts as it came.</li>
+  </ul>
+</section>
+
+<hr>
+<section>
+  <h3>Files</h3>
+  <p class="note">In <code>saman-pasha/reasoning</code>, <code>coding/bench/v2/results/</code>: <code>model-controlled-python-20261121/</code> (the README with the test and its result, <code>bench.jsonl</code>, the note, its calls and tokens in <code>restate-prep.jsonl</code> and its prompts and replies in <code>restate-rounds.log</code>), and this report as <code>model-controlled-python-20261121.md</code>. The note was made by <code>coding/bench/v2/restate_prep.pl</code>.</p>
+</section>
+</div>
