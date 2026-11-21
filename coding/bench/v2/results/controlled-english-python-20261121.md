@@ -24,6 +24,10 @@ one-sided (controlled greater), significant at p < 0.05.
 often: 37/60 against 25/60, p = 0.022.** The effect is significant by the
 test chosen before the run. (Two-sided, p = 0.044.)
 
+**It did not repeat.** The same test, asked again in
+`controlled-gzip-python-20261121.md` with a new seed, found 34/60 against
+30/60 (p = 0.29). Read the result below as one run's.
+
 | arm | first | final | calls | tokens | cell time |
 |---|---|---|---|---|---|
 | `plain` | 25/60 (42 %) | 59/60 | 102 | 443 950 | 19 min 20 s |

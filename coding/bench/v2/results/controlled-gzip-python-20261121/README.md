@@ -47,3 +47,12 @@ Everything else is described and not tested: the gzip arm against the
 controlled arm, the final pass, calls and tokens, the error case's
 failures and how many first programs print `error`. A refused cell
 counts as it comes; the report says how many.
+
+## The result (written after the run)
+
+1. gzip arm 31/60, the requirement alone 30/60: **p = 0.50, not
+   supported**.
+2. controlled arm 34/60, the requirement alone 30/60: **p = 0.29, not
+   supported**; the earlier run's result did not repeat.
+
+The report is `../controlled-gzip-python-20261121.md`.

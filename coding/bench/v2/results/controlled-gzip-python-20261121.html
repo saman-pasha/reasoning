@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gzip Bench</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column of 46rem, wide tables in their own scrollers; a lab report, not a dashboard. */
+:root {
+  --bg: #f6f7f6;
+  --surface: #ffffff;
+  --fg: #1b2321;
+  --muted: #5a6763;
+  --rule: #d9dfdc;
+  --accent: #0e6a63;
+  --accent-soft: #dcefec;
+  --good: #1f7a3d;
+  --good-soft: #dff1e4;
+  --bad: #a33a2a;
+  --bad-soft: #f6e1dc;
+  --code-bg: #eef1ef;
+  --font-text: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121716; --surface: #1a201f; --fg: #e3e9e6; --muted: #9aa8a3; --rule: #2e3735;
+    --accent: #5cc4b9; --accent-soft: #173431; --good: #6fcf8e; --good-soft: #17301f;
+    --bad: #ef8b78; --bad-soft: #3a1f1a; --code-bg: #202826; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121716; --surface: #1a201f; --fg: #e3e9e6; --muted: #9aa8a3; --rule: #2e3735;
+  --accent: #5cc4b9; --accent-soft: #173431; --good: #6fcf8e; --good-soft: #17301f;
+  --bad: #ef8b78; --bad-soft: #3a1f1a; --code-bg: #202826; color-scheme: dark;
+}
+body { background: var(--bg); color: var(--fg); font-family: var(--font-text); font-size: 16px; line-height: 1.55; }
+.page { max-width: 46rem; margin: 0 auto; padding-block: 2.5rem 4rem;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 2.25rem; }
+header { display: flex; flex-direction: column; gap: .6rem; }
+.eyebrow { font-family: var(--font-mono); font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+h1 { font-size: 2rem; line-height: 1.15; font-weight: 600; margin: 0; text-wrap: balance; }
+h2 { font-size: 1.3rem; line-height: 1.25; font-weight: 600; margin: 0; text-wrap: balance; }
+h3 { font-size: 1.02rem; font-weight: 600; margin: 0; }
+p { margin: 0; max-width: 65ch; }
+section { display: flex; flex-direction: column; gap: .9rem; min-width: 0; }
+.lede { font-size: 1.08rem; color: var(--fg); }
+.meta { font-size: .86rem; color: var(--muted); font-family: var(--font-mono); }
+ul, ol { margin: 0; padding-left: 1.2rem; display: flex; flex-direction: column; gap: .4rem; max-width: 65ch; }
+code, .mono { font-family: var(--font-mono); font-size: .88em; }
+code { background: var(--code-bg); padding: .05em .3em; border-radius: 3px; }
+.findings { display: grid; gap: .75rem; }
+.finding { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: .9rem 1rem; display: flex; flex-direction: column; gap: .35rem; }
+.finding b { font-weight: 600; }
+.scroll { overflow-x: auto; min-width: 0; border: 1px solid var(--rule); border-radius: 6px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: .88rem; font-variant-numeric: tabular-nums; }
+th, td { padding: .45rem .6rem; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--rule); }
+th { font-weight: 600; color: var(--muted); font-size: .76rem; letter-spacing: .03em; text-transform: uppercase; background: var(--bg); }
+td:first-child, th:first-child, td.l, th.l { text-align: left; }
+tbody tr:last-child td { border-bottom: 0; }
+tr.group td { background: var(--bg); font-weight: 600; text-align: left; color: var(--fg); }
+tr.total td { font-weight: 600; }
+.rate { display: inline-flex; align-items: center; gap: .45rem; justify-content: flex-end; }
+.bar { width: 3.2rem; height: .45rem; background: var(--rule); border-radius: 2px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--accent); }
+.pill { display: inline-block; font-family: var(--font-mono); font-size: .74rem; padding: .05rem .4rem; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
+.pill.bad { background: var(--bad-soft); color: var(--bad); }
+.pill.good { background: var(--good-soft); color: var(--good); }
+tr.best td { background: var(--accent-soft); }
+tr.best td:first-child { box-shadow: inset 3px 0 0 var(--accent); }
+.excerpts { display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: .75rem; }
+.excerpts > div { min-width: 0; display: flex; flex-direction: column; gap: .35rem; }
+.excerpts pre { font-size: .78rem; white-space: pre; }
+pre { margin: 0; background: var(--code-bg); border-radius: 6px; padding: .8rem 1rem; overflow-x: auto; font-family: var(--font-mono); font-size: .85rem; line-height: 1.5; }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: .75rem; }
+.two > div { min-width: 0; display: flex; flex-direction: column; gap: .35rem; }
+.caption { font-size: .84rem; color: var(--muted); max-width: 65ch; }
+.note { font-size: .9rem; color: var(--muted); }
+a { color: var(--accent); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 0; }
+</style>
+</head>
+<body>
+<div class="page">
+<header>
+  <div class="eyebrow">reasoning 1.17.3 · coding bench v2 · 2026-11-21</div>
+  <h1>Controlled English, gzip-compressed, in Python codegen</h1>
+  <p class="lede">Does the controlled English note still help when it is sent compressed? One hard task, <code>mvccs_acid</code>, written in Python by <code>claude-sonnet-5-5</code> at effort <code>low</code>. Three arms in one run, 60 trials each: the requirement alone, the requirement with the controlled English as plain text, and the requirement with the same text as gzip, then base64.</p>
+  <p class="meta">180 cells, 272 generator calls, 1&#8201;274&#8201;497 tokens and 53 min of cell time: $6.83 at list prices.</p>
+</header>
+
+<section>
+  <h2>The answer</h2>
+  <div class="findings">
+    <div class="finding"><b>The gzipped note does nothing: 31/60 first programs right, against 30/60 with the requirement alone (p&nbsp;=&nbsp;0.50).</b><p>The gzip arm behaves as the requirement alone does in every measure. No first program decodes the note, and nothing in them shows that the model unpacked it.</p></div>
+    <div class="finding"><b>Compression does not save tokens.</b><p>gzip halves the characters, but base64 is about 1.2 characters a token against English's 2.9. The 1&#8201;145-character note cost 959 prompt tokens a call, more than the 903 of the 2&#8201;590-character plain text it holds.</p></div>
+    <div class="finding"><b>The plain-text controlled note did not repeat its earlier result.</b><p>34/60 against 30/60 (p&nbsp;=&nbsp;0.29), where the first test found 37/60 against 25/60 (p&nbsp;=&nbsp;0.022). The note may help less than the first test showed, or not at all.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>The tests, chosen before the run</h2>
+  <p>Written down and pushed before the first cell (commit <code>7590ab2</code>): Fisher's exact test, one-sided, on first-attempt passes, each significant at p&nbsp;&lt;&nbsp;0.05 and also reported against 0.025 for the two together.</p>
+  <div class="scroll"><table>
+    <thead><tr><th class="l">test</th><th>first attempt</th><th>p, one-sided</th><th class="l">the hypothesis</th></tr></thead>
+    <tbody>
+      <tr><td class="l">1. gzip arm greater than the requirement alone</td><td>31/60 against 30/60</td><td>0.50</td><td class="l"><span class="pill bad">not supported</span></td></tr>
+      <tr><td class="l">2. controlled arm greater than the requirement alone</td><td>34/60 against 30/60</td><td>0.29</td><td class="l"><span class="pill bad">not supported</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>The three arms</h2>
+  <div class="scroll"><table>
+    <thead><tr><th class="l">arm</th><th>first attempt</th><th>failing first programs at the error case</th><th>first programs with the text "error"</th><th>final</th><th>calls</th><th>tokens</th></tr></thead>
+    <tbody>
+      <tr><td class="l">requirement alone</td><td><span class="rate">30/60<span class="bar"><i style="width:50%"></i></span></span></td><td>30 of 30</td><td>36/60</td><td>60/60</td><td>90</td><td>379&#8201;054</td></tr>
+      <tr><td class="l">+ controlled, plain text</td><td><span class="rate">34/60<span class="bar"><i style="width:56.7%"></i></span></span></td><td>26 of 26</td><td>34/60</td><td>57/60</td><td>89</td><td>442&#8201;644</td></tr>
+      <tr><td class="l">+ controlled, gzip + base64</td><td><span class="rate">31/60<span class="bar"><i style="width:51.7%"></i></span></span></td><td>27 of 29</td><td>34/60</td><td>60/60</td><td>93</td><td>452&#8201;799</td></tr>
+    </tbody>
+  </table></div>
+  <p class="caption">First attempt: the first program passed every case. Final: a program passed within three calls. Only the two tests above were chosen before the run; the rest is described.</p>
+</section>
+
+<section>
+  <h2>What the model was sent</h2>
+  <div class="two">
+    <div><span class="meta">the controlled note · 2&#8201;590 characters · 903 tokens</span><pre>Mvccs is a program.
+Mvccs simulates a tree.
+Every tree is a b_tree.
+The minimum_degree is 2.
+...</pre></div>
+    <div><span class="meta">the gzip note · 1&#8201;145 characters · 959 tokens</span><pre>H4sIAAAAAAACA5VWO3LjMAztcwpO
+DpBi77Bluu05EIlInEighqTs8e0D
+/iRKlh1vZZp4+AOP+rwo5YXxAsTs
+...</pre></div>
+  </div>
+  <p class="caption">Both notes carry the same 64 sentences under a header that says what they are; <code>base64 -d | gunzip</code> gives the restatement back byte for byte. The tokens are the mean extra prompt tokens of a first call over the requirement alone (1&#8201;257).</p>
+</section>
+
+<section>
+  <h2>The controlled note, asked again</h2>
+  <p>With the requirement alone the first programs did better in this run than in the first test (30/60 against 25/60, and the text "error" in 36/60 against 27/60), and the controlled note's gain was 4 cells where it was 12. Taken together, not as a test chosen before either run, the two runs give 71/120 against 55/120. A third run, or the two counted as one test chosen now, would say whether the note helps at all.</p>
+</section>
+
+<section>
+  <h2>Limits</h2>
+  <ul>
+    <li>One task, one model, one language; 60 trials an arm.</li>
+    <li>A model given a tool to run code could unpack the note; this run says nothing of that.</li>
+    <li>The model takes no temperature, and the same prompt passes at different rates in different runs, so only arms of one run are compared.</li>
+  </ul>
+</section>
+
+<hr>
+<section>
+  <h3>Files</h3>
+  <p class="note">In <code>saman-pasha/reasoning</code>, <code>coding/bench/v2/results/controlled-gzip-python-20261121/</code>: <code>README.md</code> (the tests, written before the run, and their result), <code>bench.jsonl</code>, <code>mvccs_acid-python.controlled</code> and <code>mvccs_acid-python.alt1</code> (the gzip note). The report in Markdown is <code>controlled-gzip-python-20261121.md</code>.</p>
+</section>
+</div>
+</body>
+</html>

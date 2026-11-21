@@ -48,3 +48,9 @@ comes, a failure where its program fails; the report says how many.
 `controlled` 37/60 first programs right, `plain` 25/60: Fisher's exact
 test, one-sided, **p = 0.022 < 0.05: the effect is significant**. The
 report is `../controlled-english-python-20261121.md`.
+
+## Asked again (written after a second run)
+
+`controlled-gzip-python-20261121/` asked the same test again, in a run
+of its own with a new seed: controlled 34/60, the requirement alone
+30/60, p = 0.29. The result did not repeat.
