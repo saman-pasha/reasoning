@@ -9,10 +9,11 @@
 - Arms: `plain` (the prompt forwarded), `reasoning` (the endpoint's
   reasoning pre-pass: its checks and its "What the request is about"
   note), `reasoning_ir` (those and the translator's IR note), `ir` (the IR
-  note alone, reasoning 1.14's arm)
+  note alone, reasoning 1.14's arm); and, in a run of its own,
+  `reasoning` with every check the keyword reader found (1.15.4)
 - Trials: 10 per lane and arm, seed `20261117`; up to 3 generator calls
   per cell; a case has 5 s in C and 10 s in the other languages
-- 324 cells in six runs, 634 generator calls, 6 009 849 tokens and 2 h 59 min of cell time: $25.46 at list prices, $25.81 with the translation phase and two requests sent again by hand.
+- 424 cells in seven runs, 811 generator calls, 8 119 201 tokens and 3 h 52 min of cell time: $33.88 at list prices, $34.23 with the translation phase and two requests sent again by hand.
 
 "Reasoning" here is what the coding endpoint adds to the prompt's
 context, not the model's own thinking. The model runs at effort `low` in
@@ -22,7 +23,7 @@ no model for them, and no translation token is in its figures.
 
 ## What the runs show
 
-- **The pre-pass's checks alone change nothing measurable here.** For this requirement the pre-pass adds two input and output checks (341 characters; 404 for Python) and no "What the request is about" note, because the reasoner parsed no terms of the text. The keyword reader found 13 checks in the C requirement and 12 in each other lane's, and the endpoint's default sends only the first two: the arm never saw the ten that name the task, among them the 2-3-4 tree's split, versions, snapshots and the atomic commit. Run A, which ran the two reasoning arms together, gives 13/50 first-attempt passes for *+ reasoning* and 14/50 for *+ reasoning + IR* (p = 1.0). In the SWI-Prolog rerun, which ran all four arms together, *prompt forwarded* and *+ reasoning* both pass 0/10 at the first attempt. In cocolog without its guide, also run as one, they pass 7/10 and 5/10.
+- **The pre-pass's checks change nothing measurable here, two of them or all of them.** For this requirement the pre-pass adds input and output checks and no "What the request is about" note, because the reasoner parsed no terms of the text. The keyword reader found 13 checks in the C requirement and 12 in each other lane's, and the endpoint's default sends only the first two, the generic input and output checks (341 characters; 404 for Python). In C and the three Prolog lanes the checks after them name the task: the 2-3-4 tree's split, versions, snapshots and the atomic commit. Python's do not. Run A, which ran the two reasoning arms together, gives 13/50 first-attempt passes for *+ reasoning* and 14/50 for *+ reasoning + IR* (p = 1.0). In the SWI-Prolog rerun, which ran all four arms together, *prompt forwarded* and *+ reasoning* both pass 0/10 at the first attempt. In cocolog without its guide, also run as one, they pass 7/10 and 5/10. **With every check, in a run of its own with the prompt forwarded, the arm passed 19/50 at the first attempt and the prompt forwarded 20/50 (p = 1.0).**
 - **The IR note helps the two Prolog lanes at the first attempt, and not C or Python.** In the clear-text run, IR only against the prompt forwarded: cocolog 9/10 against 3/10 (p = 0.020), SWI-Prolog 5/10 against 0/10 (p = 0.033), all four lanes 21/40 against 10/40 (p = 0.021). C and Python do not move. The SWI-Prolog rerun points the same way, 3/10 against 0/10 (p = 0.21). With fewer repair rounds the IR arm also spent fewer tokens and seconds in those lanes. cocolog without its guide, on its two-line prompt, does not show it: 6/10 against 7/10. These tests were not chosen before the run: read them as a description.
 - **Checks in front of the IR do not add to it.** In the SWI-Prolog rerun the IR alone passed 3/10 at the first attempt and *+ reasoning + IR* 1/10, with 75 % more tokens. In cocolog without its guide, whose four arms also ran as one run, both passed 6/10 with about the same tokens. In C, Python and guided cocolog the two IR arms ran an hour apart, so they are not compared here.
 - **The final pass hides the differences.** Almost every cell of C, Python, both cocolog lanes and SWI-Prolog passes within its three calls (final 38/40 to 40/40 a lane). What the arms change is how often the first program is right, and so the calls, tokens and seconds a correct program costs.
@@ -111,7 +112,56 @@ program was right 24 times in 40 and Python's 13, so it made 56 calls
 where Python made 68, and spent 6 % fewer tokens though each of its calls
 spent 14 % more.**
 
+## Every check against two
+
+The endpoint's default sends the first two checks the keyword reader
+finds. On this requirement those are the generic input and output
+checks. Reasoning 1.15.4 lets `ir_prep.pl` write the note with every
+check (`--checks all`): 13 in C and 12 in each other lane, 1 244 to
+1 597 characters. The prompt forwarded and this arm ran together, ten
+trials a lane and arm, 100 cells
+(`ir-mvccs-checks-20261121/bench.jsonl`).
+
+| lane | prompt forwarded: first · final | calls | tokens | + reasoning, every check: first · final | calls | tokens | p, first | + reasoning, two checks, earlier run: first |
+|---|---|---|---|---|---|---|---|---|
+| C | 5/10 · 9/10 | 14 | 85 567 | 2/10 · 10/10 | 22 | 169 342 | 0.350 | 4/10 (run A) |
+| Python | 4/10 · 10/10 | 17 | 72 416 | 6/10 · 10/10 | 15 | 69 809 | 0.656 | 4/10 (run A) |
+| cocolog | 3/10 · 10/10 | 19 | 700 836 | 4/10 · 10/10 | 16 | 595 015 | 1.000 | 5/10 (run A) |
+| cocolog without its guide | 8/10 · 9/10 | 13 | 54 161 | 7/10 · 10/10 | 13 | 56 063 | 1.000 | 5/10 (1.15.3 rerun) |
+| SWI-Prolog | 0/10 · 10/10 | 22 | 139 000 | 0/10 · 8/10 | 26 | 167 143 | 1.000 | 0/10 (1.15.1 rerun) |
+| all five lanes | 20/50 · 48/50 | 85 | 1 051 980 | 19/50 · 48/50 | 92 | 1 057 372 | 1.000 | 18/50 |
+
+
+p is Fisher's exact test, two-sided, on the first attempts of the two
+arms of this run. The last column is the two-check arm of an earlier
+run. It is there for comparison only, because its cells were not
+shuffled with these.
+
+- **No lane moves.** All five lanes pass 19/50 at the first attempt with
+  every check and 20/50 with no note (p = 1.0). With two checks, the
+  earlier runs gave 18/50. Both arms pass 48/50 within three calls.
+- **C and the three Prolog lanes got the task's own checks, and did not
+  gain.** Their notes name the 2-3-4 tree's split, versions, snapshots
+  and the atomic commit. C fell from 5/10 to 2/10 at the first attempt
+  (p = 0.35) and spent twice the tokens, 169 342 against 85 567. The
+  three Prolog lanes moved by one cell or none.
+- **Python got none of them.** Its twelve checks are Python's own
+  phrasings of generic checks: integers, `max` and `min`, recursion
+  depth, sort order, word splitting, and "An error the task names is
+  raised with `raise ValueError("...")`". The cases expect the program
+  to print the word `error`; the requirement does not say what an error
+  prints. Python rose from 4/10 to 6/10 (p = 0.66), with 4 % fewer
+  tokens.
+- **Checks that do not apply are sent too.** Every lane's note has
+  checks for words and recursion, which this task does not have, and the
+  Prolog lanes' note tells the program to check every allocation for
+  NULL.
+
+This run kept no attempt, so it does not show which case each failing
+first program failed.
+
 ## Why cocolog with the IR failed every cell in the first run
+
 
 The first run (reasoning 1.14.0, `ir-mvccs-20261120.md`) failed held-out
 case 8 five times, three of them in all three cocolog IR cells. The text
@@ -197,6 +247,7 @@ phase is listed apart and is in no benchmark figure.
 | SWI-Prolog rerun, 1.15.1 | 40 | 321 547 | 228 304 | $2.93 |
 | no-guide rerun, 1.15.2 (the stream import) | 40 | 362 666 | 202 012 | $2.75 |
 | no-guide rerun, 1.15.3 (both lines) | 40 | 181 068 | 156 977 | $1.93 |
+| every-check run, 1.15.4 | 100 | 1 583 180 | 526 172 | $8.43 |
 | **not in the benchmark** | | | | |
 | translation, 1.14.0 (first batch, discarded) | 11 calls | 14 394 | 2 563 | $0.05 |
 | translation, 1.14.0 | 9 calls | 17 035 | 1 310 | $0.05 |
@@ -216,7 +267,8 @@ phase is listed apart and is in no benchmark figure.
 - One task. The reasoning pre-pass reads controlled English; this
   requirement is not, so its about note is empty, and the default sent 2
   of the 12 checks the keyword reader found (13 for C): the two generic
-  I/O checks, 341 characters (404 for Python).
+  I/O checks, 341 characters (404 for Python). Every check, sent in a
+  run of its own, changed nothing either.
 - The notes sit in the user prompt, not in the system prompt as the
   endpoint puts them.
 - The lanes' prompts differ in more than the language: the SWI-Prolog
@@ -235,4 +287,6 @@ and `ir`), `bench-reasoning.jsonl` (run A, the two reasoning arms),
 `bench-swipl-1.15.1.jsonl`, `bench-noguide-1.15.2.jsonl`,
 `bench-noguide-1.15.3.jsonl`, the notes (`*.ir`, `*.reasoning`), and the
 translation phase's rows (`ir-prep.jsonl`; `ir-prep-rerun-1.15.0.jsonl`,
-whose notes were not used). Commits `4816a72` (1.14.0), `3475b3f` (1.14.1), `7beae66` (1.15.0), `2f014be` (1.15.1), `7ff352a` (1.15.2) and `b918c99` (1.15.3); the report came in `426fbbc` and its page in `526d165`. The same report as a page, with its tables drawn: `ir-mvccs-clear-20261120.html`.
+whose notes were not used). `ir-mvccs-checks-20261121/`: `bench.jsonl`
+(the every-check run), its notes (`*.reasoning`) and `ir-prep.jsonl`.
+Commits `4816a72` (1.14.0), `3475b3f` (1.14.1), `7beae66` (1.15.0), `2f014be` (1.15.1), `7ff352a` (1.15.2), `b918c99` (1.15.3) and `8119689` (1.15.4); the report came in `426fbbc`, its page in `526d165` and its token section in `225ba6c`. The same report as a page, with its tables drawn: `ir-mvccs-clear-20261120.html`.

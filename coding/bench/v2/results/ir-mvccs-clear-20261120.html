@@ -82,17 +82,17 @@ hr { border: 0; border-top: 1px solid var(--rule); margin: 0; }
 <body>
 <div class="page">
 <header>
-  <div class="eyebrow">reasoning 1.15.3 · coding bench v2 · 2026-11-20 to 21</div>
+  <div class="eyebrow">reasoning 1.15.4 · coding bench v2 · 2026-11-20 to 21</div>
   <h1>What the reasoning library adds to a coding prompt</h1>
-  <p class="lede">One hard task, <code>mvccs_acid</code> (a multi-version B-tree with transactions and snapshot isolation), written by <code>claude-sonnet-5-5</code> at effort <code>low</code> in five lanes. Each cell got the prompt forwarded as it is, the prompt with the reasoning pre-pass, or the prompt with the pre-pass and the translator's IR. Ten trials a cell, up to three model calls each.</p>
-  <p class="meta">324 cells in six runs, 634 generator calls, 6&#8201;009&#8201;849 tokens and 2 h 59 min of cell time: $25.46 at list prices, $25.81 with the translation phase and two requests sent again by hand.
+  <p class="lede">One hard task, <code>mvccs_acid</code> (a multi-version B-tree with transactions and snapshot isolation), written by <code>claude-sonnet-5-5</code> at effort <code>low</code> in five lanes. Each cell got the prompt forwarded as it is, the prompt with the reasoning pre-pass (its default two checks, or, in a run of its own, every check), or the prompt with the pre-pass and the translator's IR. Ten trials a cell, up to three model calls each.</p>
+  <p class="meta">424 cells in seven runs, 811 generator calls, 8&#8201;119&#8201;201 tokens and 3 h 52 min of cell time: $33.88 at list prices, $34.23 with the translation phase and two requests sent again by hand.
 </p>
 </header>
 
 <section>
   <h2>What the runs show</h2>
   <div class="findings">
-    <div class="finding"><b>The pre-pass's checks alone change nothing measurable here.</b><p>For this requirement the pre-pass adds two input and output checks (341 characters; 404 for Python) and no "What the request is about" note, because the reasoner parsed no terms of the text. The keyword reader found 13 checks in the C requirement and 12 in each other lane's, and the endpoint's default sends only the first two: the arm never saw the ten that name the task, among them the 2-3-4 tree's split, versions, snapshots and the atomic commit. Run A, which ran the two reasoning arms together, gives 13/50 first-attempt passes for <i>+ reasoning</i> and 14/50 for <i>+ reasoning + IR</i> (p&nbsp;=&nbsp;1.0). In the SWI-Prolog rerun, which ran all four arms together, <i>prompt forwarded</i> and <i>+ reasoning</i> both pass 0/10 at the first attempt. In cocolog without its guide, also run as one, they pass 7/10 and 5/10.</p></div>
+    <div class="finding"><b>The pre-pass's checks change nothing measurable here, two of them or all of them.</b><p>For this requirement the pre-pass adds input and output checks and no "What the request is about" note, because the reasoner parsed no terms of the text. The keyword reader found 13 checks in the C requirement and 12 in each other lane's, and the endpoint's default sends only the first two, the generic input and output checks (341 characters; 404 for Python). In C and the three Prolog lanes the checks after them name the task: the 2-3-4 tree's split, versions, snapshots and the atomic commit. Python's do not. Run A, which ran the two reasoning arms together, gives 13/50 first-attempt passes for <i>+ reasoning</i> and 14/50 for <i>+ reasoning + IR</i> (p&nbsp;=&nbsp;1.0). In the SWI-Prolog rerun, which ran all four arms together, <i>prompt forwarded</i> and <i>+ reasoning</i> both pass 0/10 at the first attempt. In cocolog without its guide, also run as one, they pass 7/10 and 5/10. <b>With every check, in a run of its own with the prompt forwarded, the arm passed 19/50 at the first attempt and the prompt forwarded 20/50 (p&nbsp;=&nbsp;1.0).</b></p></div>
     <div class="finding"><b>The IR note helps the two Prolog lanes at the first attempt, and not C or Python.</b><p>In the clear-text run, IR only against the prompt forwarded: cocolog 9/10 against 3/10 (p&nbsp;=&nbsp;0.020), SWI-Prolog 5/10 against 0/10 (p&nbsp;=&nbsp;0.033), all four lanes 21/40 against 10/40 (p&nbsp;=&nbsp;0.021). C and Python do not move. The SWI-Prolog rerun points the same way, 3/10 against 0/10 (p&nbsp;=&nbsp;0.21). With fewer repair rounds the IR arm also spent fewer tokens and seconds in those lanes. cocolog without its guide, on its two-line prompt, does not show it: 6/10 against 7/10. These tests were not chosen before the run: read them as a description.</p></div>
     <div class="finding"><b>Checks in front of the IR do not add to it.</b><p>In the SWI-Prolog rerun the IR alone passed 3/10 at the first attempt and <i>+ reasoning + IR</i> 1/10, with 75 % more tokens. In cocolog without its guide, whose four arms also ran as one run, both passed 6/10 with about the same tokens. In C, Python and guided cocolog the two IR arms ran an hour apart, so they are not compared here.</p></div>
     <div class="finding"><b>The final pass hides the differences.</b><p>Almost every cell of C, Python, both cocolog lanes and SWI-Prolog passes within its three calls (final 38/40 to 40/40 a lane). What the arms change is how often the first program is right, and so the calls, tokens and seconds a correct program costs.</p></div>
@@ -162,7 +162,30 @@ hr { border: 0; border-top: 1px solid var(--rule); margin: 0; }
 </section>
 
 <section>
+  <h2>Every check against two</h2>
+  <p>The endpoint's default sends the first two checks the keyword reader finds. On this requirement those are the generic input and output checks. Reasoning 1.15.4 lets <code>ir_prep.pl</code> write the note with every check (<code>--checks all</code>): 13 in C and 12 in each other lane, 1&#8201;244 to 1&#8201;597 characters. The prompt forwarded and this arm ran together, ten trials a lane and arm, 100 cells.</p>
+  <div class="scroll"><table><thead><tr><th class="l">lane</th><th>prompt forwarded: first · final</th><th>calls</th><th>tokens</th><th>+ reasoning, every check: first · final</th><th>calls</th><th>tokens</th><th>p, first</th><th class="l">+ reasoning, two checks, earlier run: first</th></tr></thead><tbody>
+<tr><td class="l">C</td><td>5/10 · 9/10</td><td>14</td><td>85&#8201;567</td><td>2/10 · 10/10</td><td>22</td><td>169&#8201;342</td><td>0.350</td><td class="l">4/10 (run A)</td></tr>
+<tr><td class="l">Python</td><td>4/10 · 10/10</td><td>17</td><td>72&#8201;416</td><td>6/10 · 10/10</td><td>15</td><td>69&#8201;809</td><td>0.656</td><td class="l">4/10 (run A)</td></tr>
+<tr><td class="l">cocolog</td><td>3/10 · 10/10</td><td>19</td><td>700&#8201;836</td><td>4/10 · 10/10</td><td>16</td><td>595&#8201;015</td><td>1.000</td><td class="l">5/10 (run A)</td></tr>
+<tr><td class="l">cocolog without its guide</td><td>8/10 · 9/10</td><td>13</td><td>54&#8201;161</td><td>7/10 · 10/10</td><td>13</td><td>56&#8201;063</td><td>1.000</td><td class="l">5/10 (1.15.3 rerun)</td></tr>
+<tr><td class="l">SWI-Prolog</td><td>0/10 · 10/10</td><td>22</td><td>139&#8201;000</td><td>0/10 · 8/10</td><td>26</td><td>167&#8201;143</td><td>1.000</td><td class="l">0/10 (1.15.1 rerun)</td></tr>
+<tr class="total"><td class="l">all five lanes</td><td>20/50 · 48/50</td><td>85</td><td>1&#8201;051&#8201;980</td><td>19/50 · 48/50</td><td>92</td><td>1&#8201;057&#8201;372</td><td>1.000</td><td class="l">18/50</td></tr>
+</tbody></table></div>
+
+  <p class="caption">p is Fisher's exact test, two-sided, on the first attempts of the two arms of this run. The last column is the two-check arm of an earlier run. It is there for comparison only, because its cells were not shuffled with these.</p>
+  <ul>
+    <li><b>No lane moves.</b> All five lanes pass 19/50 at the first attempt with every check and 20/50 with no note (p&nbsp;=&nbsp;1.0). With two checks, the earlier runs gave 18/50. Both arms pass 48/50 within three calls.</li>
+    <li><b>C and the three Prolog lanes got the task's own checks, and did not gain.</b> Their notes name the 2-3-4 tree's split, versions, snapshots and the atomic commit. C fell from 5/10 to 2/10 at the first attempt (p&nbsp;=&nbsp;0.35) and spent twice the tokens, 169&#8201;342 against 85&#8201;567. The three Prolog lanes moved by one cell or none.</li>
+    <li><b>Python got none of them.</b> Its twelve checks are Python's own phrasings of generic checks: integers, <code>max</code> and <code>min</code>, recursion depth, sort order, word splitting, and "An error the task names is raised with <code>raise ValueError("...")</code>". The cases expect the program to print the word <code>error</code>; the requirement does not say what an error prints. Python rose from 4/10 to 6/10 (p&nbsp;=&nbsp;0.66), with 4&#8201;% fewer tokens.</li>
+    <li><b>Checks that do not apply are sent too.</b> Every lane's note has checks for words and recursion, which this task does not have, and the Prolog lanes' note tells the program to check every allocation for NULL.</li>
+  </ul>
+  <p>This run kept no attempt, so it does not show which case each failing first program failed.</p>
+</section>
+
+<section>
   <h2>The arms</h2>
+
   <p>Each arm is one of the coding endpoint's settings. The notes are the endpoint's own text, written before the run by <code>ir_prep.pl</code> and read from files, so the benchmark calls no translator and no model for them. They go after the requirement in the user prompt; the endpoint puts them in the system prompt after the guide.</p>
   <div class="scroll"><table>
     <thead><tr><th class="l">arm</th><th class="l">what follows the requirement</th><th class="l">endpoint setting</th></tr></thead>
@@ -246,6 +269,7 @@ v</pre></div>
 <tr><td class="l">SWI-Prolog rerun, 1.15.1</td><td>40</td><td>321&#8201;547</td><td>228&#8201;304</td><td>$2.93</td></tr>
 <tr><td class="l">no-guide rerun, 1.15.2 (the stream import)</td><td>40</td><td>362&#8201;666</td><td>202&#8201;012</td><td>$2.75</td></tr>
 <tr><td class="l">no-guide rerun, 1.15.3 (both lines)</td><td>40</td><td>181&#8201;068</td><td>156&#8201;977</td><td>$1.93</td></tr>
+<tr><td class="l">every-check run, 1.15.4</td><td>100</td><td>1&#8201;583&#8201;180</td><td>526&#8201;172</td><td>$8.43</td></tr>
 <tr class="group"><td colspan="5">not in the benchmark</td></tr>
 <tr><td class="l">translation, 1.14.0 (first batch, discarded)</td><td>11 calls</td><td>14&#8201;394</td><td>2&#8201;563</td><td>$0.05</td></tr>
 <tr><td class="l">translation, 1.14.0</td><td>9 calls</td><td>17&#8201;035</td><td>1&#8201;310</td><td>$0.05</td></tr>
@@ -262,7 +286,7 @@ v</pre></div>
   <ul>
     <li>Ten trials a cell. A difference of two or three cells in ten is inside the noise; only the clear-text run's pooled IR effect passes p&nbsp;&lt;&nbsp;0.05.</li>
     <li>The arms of C, Python and guided cocolog come from two runs an hour apart (prompt forwarded and IR only in one, the two reasoning arms in the other). SWI-Prolog and cocolog without its guide ran all four arms in one run each.</li>
-    <li>One task. The reasoning pre-pass reads controlled English; this requirement is not, so its about note is empty, and the default sent 2 of the 12 checks the keyword reader found (13 for C), the two generic ones. A request the reasoner can read is where the pre-pass would show more.</li>
+    <li>One task. The reasoning pre-pass reads controlled English; this requirement is not, so its about note is empty, and the default sent 2 of the 12 checks the keyword reader found (13 for C), the two generic ones. Every check, sent in a run of its own, changed nothing either. A request the reasoner can read is where the pre-pass would show more.</li>
     <li>The notes sit in the user prompt, not in the system prompt as the endpoint puts them.</li>
     <li>The lanes' prompts differ in more than the language: the SWI-Prolog lane's user message is the requirement alone, and every cocolog lane's begins with an instruction to write the program.</li>
     <li>The translator read 4 to 6 of the 14 sentences. The IR note never held the command table, which holds most of the rules.</li>
@@ -274,7 +298,7 @@ v</pre></div>
 <hr>
 <section>
   <h3>Files</h3>
-  <p class="note">In <code>saman-pasha/reasoning</code>, <code>coding/bench/v2/results/ir-mvccs-clear-20261120/</code>: <code>bench.jsonl</code> (clear-text run), <code>bench-reasoning.jsonl</code> (run A), <code>bench-swipl-1.15.1.jsonl</code>, <code>bench-noguide-1.15.2.jsonl</code>, <code>bench-noguide-1.15.3.jsonl</code>, the notes (<code>*.ir</code>, <code>*.reasoning</code>) and the translation phase's rows. The first run is <code>ir-mvccs-20261120/</code>. Commits <code>4816a72</code> (1.14.0), <code>3475b3f</code> (1.14.1), <code>7beae66</code> (1.15.0), <code>2f014be</code> (1.15.1), <code>7ff352a</code> (1.15.2) and <code>b918c99</code> (1.15.3); the report came in <code>426fbbc</code> and its page in <code>526d165</code>
+  <p class="note">In <code>saman-pasha/reasoning</code>, <code>coding/bench/v2/results/ir-mvccs-clear-20261120/</code>: <code>bench.jsonl</code> (clear-text run), <code>bench-reasoning.jsonl</code> (run A), <code>bench-swipl-1.15.1.jsonl</code>, <code>bench-noguide-1.15.2.jsonl</code>, <code>bench-noguide-1.15.3.jsonl</code>, the notes (<code>*.ir</code>, <code>*.reasoning</code>) and the translation phase's rows. The every-check run is <code>ir-mvccs-checks-20261121/</code>: <code>bench.jsonl</code>, its notes and <code>ir-prep.jsonl</code>. The first run is <code>ir-mvccs-20261120/</code>. Commits <code>4816a72</code> (1.14.0), <code>3475b3f</code> (1.14.1), <code>7beae66</code> (1.15.0), <code>2f014be</code> (1.15.1), <code>7ff352a</code> (1.15.2), <code>b918c99</code> (1.15.3) and <code>8119689</code> (1.15.4); the report came in <code>426fbbc</code>, its page in <code>526d165</code> and its token section in <code>225ba6c</code>
 .</p>
 </section>
 </div>
