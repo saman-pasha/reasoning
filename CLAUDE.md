@@ -59,6 +59,25 @@ STATIC AND LIVE, and live.pl's). What a session must keep:
   lesson, and not one under a named lesson (`reason_learn/3`). Words are
   taught only where `reason_untranslated/3` names them unknown, and only for
   an English source (`any` or `english`); a rewrite works for any language.
+* **A sentence the grammar refuses goes to the tagger** (1.17.0; reason.pl's
+  THE TAGGER), in both modes, before any model, and its controlled text is
+  saved as the sentence's rewrite. A reader that reads text asks
+  `rv_tagged/3` where the grammar refused, never before, so a text the
+  grammar reads costs nothing more. **What the library reads as its own
+  input is read with the grammar alone** (`reason_grammar/1`): translate.pl's
+  reason_learn/3, teach.pl, the tagger's own controlled text and
+  measurements, live.pl's readings, and the coding endpoint's readers
+  (`endpoint_reason/5`, the contract, the IR repair's lesson lines) -- the
+  endpoint's store is in the tree, and its first refused sentence would
+  write the model's 7 MB into it. A new internal reader does the same.
+  test/reason.pl and lesson 01 set the tagger off (the grammar's case);
+  test/live.pl and lesson 05 hold its reading, and SKIP it by name with no
+  library(torch).
+* **The tagger's model is the knowledge base's** (1.17.0): tagger_pretrained/1
+  CONSULTS the shipped model.rows into the knowledge base where it holds no
+  model, so a store keeps it (some 7 MB, 4 254 chunks) and the next process
+  loads it from there; through 1.16 the rows were a muted module, never
+  written. A store trained by train.pl keeps its own.
 * **coding/endpoint/ir_repair.pl is not built on it yet**: the endpoint's IR
   note keeps its own repair, its own facts (`ep_ir_*`) and its own
   environment (`CODING_ENDPOINT_IR_*`).

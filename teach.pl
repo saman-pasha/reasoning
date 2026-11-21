@@ -60,5 +60,5 @@ teach_chunks(Lines, Name, N0, N) :-
     teach_text(Text, Name, Terms), length(Terms, K), N1 is N0 + K,
     teach_chunks(Rest, Name, N1, N).
 
-teach_text(Text, none, Terms) :- !, reason_learn(Text, Terms).
+teach_text(Text, none, Terms) :- !, reason_grammar(reason_learn(Text, Terms)).
 teach_text(Text, Name, Terms) :- reason_learn(Text, Name, Terms).

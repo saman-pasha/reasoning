@@ -38,7 +38,11 @@
 
 :- use_module(library(reasoning/reason)).
 
+%% THIS LESSON IS THE GRAMMAR'S, so the tagger -- which reads, since 1.17.0,
+%% a sentence the grammar refuses (lesson 05) -- is off, and every refusal
+%% below is the grammar's own.
 main :-
+    reason_set_tagger(off),
     format("~n1. One sentence, one fact -- and the individual it introduces~n", []),
     reason_sentence('Alice owns a red car.', T1),
     must('Alice owns a red car', T1, [car(car_1), red(car_1), own(alice, car_1)]),

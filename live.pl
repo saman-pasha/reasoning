@@ -102,7 +102,7 @@
 
 %% ---- the entry points ---------------------------------------------------
 
-reason_live_read(Kind, Text) :- lv_busy(lv_rounds(Kind, Text, 1)).
+reason_live_read(Kind, Text) :- ( rv_text(Text) -> lv_busy(lv_rounds(Kind, Text, 1)) ; true ).
 reason_live_kinds(Terms, Items) :- lv_busy(lv_kinds(Terms, Items)).
 reason_live_explanation(Text) :- lv_busy(lv_explanation(Text)).
 
@@ -188,7 +188,9 @@ lv_open(Kind, item(S, _, R)) :-
     \+ lv_judged(Kind, S, RT).
 
 lv_judged(Kind, S, RT) :-
-    (   reason_live_verdict(Kind, S, RT, right)
+    (   reason_live_verdict(Kind, S, tagger, tagger)     % the tagger's rewrite: no model asked
+    ->  true
+    ;   reason_live_verdict(Kind, S, RT, right)
     ->  true
     ;   reason_live_verdict(Kind, S, RT, wrong(M)),
         lv_minor(M)
@@ -701,6 +703,7 @@ reason_live_stats_reset :-
            ( atom_concat('$reason_live_', K, G), nb_setval(G, 0) )).
 
 reason_live_forget :-
+    nb_setval('$rv_tagged', []),
     forall(reason_live_lesson(Kind, Lesson), lv_unteach(Kind, Lesson)),
     retractall(reason_live_lesson(_, _)),
     retractall(reason_live_verdict(_, _, _, _)),

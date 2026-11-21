@@ -133,8 +133,12 @@
 %%         what a program over its own --embed store keeps after running
 %%         library/reasoning/train.pl there once -- and otherwise the model
 %%         shipped beside the library, library/reasoning/model.rows, the
-%%         rows tagger_export/2 wrote, consulted as a module (muted, so
-%%         nothing is written through) and loaded as tagger_load/2 loads.
+%%         rows tagger_export/2 wrote, CONSULTED INTO THE KNOWLEDGE BASE
+%%         (since reasoning 1.17.0; a module, muted, through 1.16) and
+%%         loaded as tagger_load/2 loads: under --embed the store keeps
+%%         the model from then on, as it keeps what live mode saves, and
+%%         the next process loads it from the store (some 7 MB of store
+%%         for the shipped model's 4 254 chunks).
 %%         Once a process, and tagger_free/1 on it forgets that.
 %%         $COCOLOG_TAGGER_MODEL names another such file. Raises
 %%         existence_error(tagger, pretrained) when there is neither.
@@ -884,10 +888,10 @@ tg_same_word(_, R, [], R).
 %% the subject that paragraph left.
 tagger_ask(Model, Text, Answers) :-
     tg_controlled(Model, Text, resolve, Controlled),
-    reason_ask(Controlled, Answers).
+    reason_grammar(reason_ask(Controlled, Answers)).
 tagger_ask(Model, Text, Answers, Explanations) :-
     tg_controlled(Model, Text, resolve, Controlled),
-    reason_ask(Controlled, Answers, Explanations).
+    reason_grammar(reason_ask(Controlled, Answers, Explanations)).
 
 %% ---- the trained model, kept -----------------------------------------------------------
 %% THE KNOWLEDGE BASE IS THE MODEL FILE. A program over its own --embed
@@ -906,7 +910,7 @@ tagger_pretrained(Model) :-
     ->  Model = Cached
     ;   (   catch(tagger_load(tagger, Model0), error(existence_error(tagger, _), _), fail)
         ->  true
-        ;   tg_model_file(File), tg_forget_model(tagger), use_module(File), tagger_load(tagger, Model0)
+        ;   tg_model_file(File), tg_forget_model(tagger), consult(File), tagger_load(tagger, Model0)
         ),
         nb_setval('$tg_pretrained', Model0),
         Model = Model0
@@ -951,7 +955,7 @@ tg_model_row(Name, '$te_chunk'(Name, I, Seq, Chunk)) :- '$te_chunk'(Name, I, Seq
 
 tagger_normalise(Model, Text, Controlled, Terms) :-
     tg_controlled(Model, Text, keep, Controlled),
-    reason_text(Controlled, Terms).
+    reason_grammar(reason_text(Controlled, Terms)).
 
 %% prose to the controlled text alone: every sentence tagged, judged and
 %% assembled -- FAILS on a refused sentence. With `resolve', a subject
@@ -1009,7 +1013,7 @@ tagger_refused(Model, From, N, Rate) :-
                  findall(Toks, member(pair(_, Toks, _, _, _), G), TLs),
                  tagger_tag_all(Model, TLs, Gots),
                  nth0(I, TLs, Toks), nth0(I, Gots, Got),
-                 \+ ( normalise_assemble(Toks, Got, Asm), catch(reason_text(Asm, _), _, fail) ) ),
+                 \+ ( normalise_assemble(Toks, Got, Asm), catch(reason_grammar(reason_text(Asm, _)), _, fail) ) ),
             Refused),
     length(Refused, NR), length(Pairs, NP),
     ( NP > 0 -> Rate is NR / NP ; Rate = 0.0 ).
@@ -1057,8 +1061,8 @@ tagger_lessons(Model, From, N, Rate) :-
 %% the assembled sentence parses, to the clean text's terms up to variable names
 tg_accepted(Toks, Got, Clean) :-
     normalise_assemble(Toks, Got, Asm),
-    catch(reason_text(Asm, T2), _, fail),
-    catch(reason_text(Clean, T1), _, fail),
+    catch(reason_grammar(reason_text(Asm, T2)), _, fail),
+    catch(reason_grammar(reason_text(Clean, T1)), _, fail),
     tg_variant(T1, T2).
 
 tg_variant(A, B) :-

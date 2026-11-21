@@ -25,6 +25,7 @@
 
 main :-
     reason_set_mode(static),
+    reason_set_tagger(off),           % sections 1-7 are the model's; 8 is the tagger's
 
     %% 1. A sentence static mode refuses: the grammar reads no conjunction.
     ( reason_text('Alice and Bob own a car.', _) -> R1 = read ; R1 = refused ),
@@ -83,6 +84,27 @@ main :-
     reason_set_mode(static),
     ( reason_text('Alice and Bob own a car.', _) -> R7 = read ; R7 = refused ),
     must('after reason_live_forget/0 static mode refuses again', R7, refused),
+
+    %% 8. THE TAGGER, a step before any model (since 1.17.0). A sentence the
+    %% grammar refuses is tagged alone by the network of lesson 03 -- its
+    %% model in the knowledge base, or the one shipped beside the library
+    %% -- and the controlled text it makes, if the grammar reads it, is
+    %% saved as the sentence's rewrite, in both modes; live mode then asks
+    %% the model only about what the tagger could not read. It is on unless
+    %% reason_set_tagger(off), REASON_TAGGER=off or a call's tagger(false)
+    %% says otherwise, and it needs library(torch).
+    reason_set_tagger(on),
+    (   catch(( use_module(library(torch)), use_module(library(reasoning/tagger)) ), _, fail)
+    ->  ( reason_text('Well, Bob lives in Bristol.', [tagger(false)], _) -> R8 = read ; R8 = refused ),
+        must('the grammar alone refuses a word of prose in front', R8, refused),
+        reason_text('Alice owns a red car. Well, Bob lives in Bristol.', T8),
+        must('the tagger reads it, and the grammar reads the rest', T8,
+             [car(car_1), red(car_1), own(alice, car_1), live_in(bob, bristol)]),
+        reason_live_rewrite(text, 'Well, Bob lives in Bristol.', Rw8),
+        show('the controlled text it made, saved', Rw8)
+    ;   show('the tagger', 'library(torch) is not built here, and the grammar reads alone')
+    ),
+    reason_live_forget,
     format("~ndone~n", []).
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

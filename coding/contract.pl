@@ -48,7 +48,7 @@
 
 codegen_contract_obligations(Text, Obligations) :-
     codegen_contract_text(Text, Atom),
-    (   catch(reason_text(Atom, Terms), _, fail)
+    (   catch(reason_grammar(reason_text(Atom, Terms)), _, fail)
     ->  codegen_contract_terms_obligations(Terms, Obligations)
     ;   Obligations = []
     ).

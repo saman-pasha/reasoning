@@ -19,14 +19,17 @@ main :-
     forall(member(V, ['REASON_LIVE_KEY', 'ANTHROPIC_API_KEY', 'OPENAI_API_KEY', 'REASON_MODE']),
            catch(unsetenv(V), _, true)),
     modes, splitting, static_asks_nothing, no_model, rewrite, words, take_back,
-    second_round, context, bad_reply, kinds, explanation, translator, forget,
+    second_round, context, bad_reply, kinds, explanation, translator, tagger, forget,
     checks_done.
 
+%% the model's sections run with the grammar alone in front of it; the
+%% tagger's own section turns it on
 fresh :-
     retractall(reason_live_stub(_, _, _)),
     reason_live_forget,
     reason_live_stats_reset,
-    reason_set_mode(static).
+    reason_set_mode(static),
+    reason_set_tagger(off).
 
 calls(N) :- reason_live_stats(S), memberchk(calls-N, S).
 
@@ -261,6 +264,62 @@ translator :-
     check('forgetting takes the line back', R4, no),
     forall(member(T, Lesson), ignore(retract(T))),
     catch(tr_lessons_moved, _, true).
+
+%% ---- the tagger, for a sentence the grammar refuses -----------------------------
+
+tagger :-
+    section('the tagger'),
+    fresh,
+    catch(unsetenv('REASON_TAGGER'), _, true),
+    nb_setval('$reason_tagger', none),
+    reason_tagger(D1),
+    check('on unless something says otherwise', D1, on),
+    setenv('REASON_TAGGER', off),
+    reason_tagger(D2),
+    check('REASON_TAGGER=off turns it off', D2, off),
+    unsetenv('REASON_TAGGER'),
+    catch(( reason_set_tagger(maybe), E3 = none ), error(E3, _), true),
+    check('a state that is none is a domain error', E3, domain_error(reason_tagger, maybe)),
+    (   catch(( use_module(library(torch)), use_module(library(reasoning/tagger)) ), _, fail)
+    ->  tagger_reads
+    ;   format("   SKIP the tagger's reading: library(torch) is not built here~n", [])
+    ).
+
+tagger_reads :-
+    fresh,
+    reason_set_tagger(on),
+    yes_no(reason_text('Well, Bob lives in Bristol.', [tagger(false)], _), R1),
+    check('the grammar alone refuses it', R1, no),
+    reason_text('Alice owns a red car. Well, Bob lives in Bristol.', T2),
+    check('the tagger reads the sentence the grammar refused, the rest as the grammar read it', T2,
+          [car(car_1), red(car_1), own(alice, car_1), live_in(bob, bristol)]),
+    findall(S-Rs, reason_live_rewrite(text, S, Rs), Saved),
+    check('the controlled text it made is saved as the sentence''s rewrite', Saved,
+          ['Well, Bob lives in Bristol.'-['Bob lives_in Bristol.']]),
+    yes_no(reason_live_verdict(text, 'Well, Bob lives in Bristol.', tagger, tagger), V3),
+    check('and marked the tagger''s', V3, yes),
+    reason_set_tagger(off),
+    reason_text('Well, Bob lives in Bristol.', T4),
+    check('what was saved is read with the tagger off', T4, [live_in(bob, bristol)]),
+    yes_no(reason_grammar(reason_text('Well, Bob lives in Bristol.', _)), R5),
+    check('reason_grammar/1 reads with the grammar alone', R5, no),
+    reason_set_tagger(on),
+    reason_refused('Well, Bob lives in Bristol. Alice and Bob own a car.', F6),
+    check('reason_refused/2 names what the tagger could not read either', F6, 'alice and bob own a car'),
+    catch(( reason_text(f(x), _), E7 = none ), error(E7, _), true),
+    check('a term that is no text raises the reader''s own error, rewrites saved or not', E7, type_error(text, f(x))),
+    yes_no('$tg_vocab'(tagger, _, _), K8),
+    check('the model the tagger read is in the knowledge base', K8, yes),
+    fresh,
+    reason_set_tagger(on),
+    reason_set_mode(live),
+    assertz(reason_live_stub('lives in Bristol', 1,
+        '{"sentences": [{"n": 1, "verdict": "wrong", "rewrite": ["Bob lives in Rome."]}]}')),
+    reason_text('Well, Bob lives in Bristol.', T9),
+    check('live mode asks the tagger first', T9, [live_in(bob, bristol)]),
+    calls(C9),
+    check('and no model about what the tagger read', C9, 0),
+    fresh.
 
 %% ---- forgetting --------------------------------------------------------------------
 

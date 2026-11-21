@@ -34,7 +34,7 @@ endpoint_reason(Text, Obs, CObs, Terms) :-
 endpoint_reason(Language, Text, Obs, CObs, Terms) :-
     endpoint_obligations(Language, Text, Obs),
     endpoint_contract(Language, Text, CObs),
-    (   catch(reason_text(Text, Terms0), _, fail)
+    (   catch(reason_grammar(reason_text(Text, Terms0)), _, fail)
     ->  true
     ;   Terms0 = []
     ),

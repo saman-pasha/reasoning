@@ -1245,7 +1245,7 @@ tr_english_language(Words) :-
     ( tr_winner(Vs, into, L1) -> tr_set_language(L1) ; tr_set_language(L0) ).
 
 reason_learn(Text, Language, Terms) :-
-    reason_text(Text, Terms), tr_lessons_moved,
+    reason_grammar(reason_text(Text, Terms)), tr_lessons_moved,
     assert_once(lesson_language(Language)),
     forall(member(T, Terms), tr_learn_term(Language, T)),
     tr_mean_links(Terms, Links0),

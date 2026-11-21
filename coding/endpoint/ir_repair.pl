@@ -477,7 +477,7 @@ ep_ir_learn(Words, Allowed) :-
 %% A lesson for a word truly unknown changes none, as no confirmed sentence
 %% holds an unknown word.
 ep_ir_learn_line(Line, Confirmed) :-
-    (   catch(reason_text(Line, Terms), _, fail),
+    (   catch(reason_grammar(reason_text(Line, Terms)), _, fail),
         Terms = [_|_]
     ->  exclude(ep_ir_holds, Terms, New),
         forall(member(T, New), assertz(T)),

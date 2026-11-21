@@ -10,7 +10,11 @@
 :- use_module('test/prelude.pl').
 :- use_module(library(reasoning/reason)).
 
+%% THE GRAMMAR'S CASE: the tagger, which reads a sentence the grammar
+%% refuses (reason.pl's THE TAGGER), is off here, so every refusal pinned
+%% below is the grammar's; test/live.pl holds the tagger's reading.
 main :-
+    reason_set_tagger(off),
     tokens, facts, copula, negation, rules, relative, mentions, lexicon, naming,
     round_trip, refusals, places, state, questions, quantities, explains, topics, prose, declares, refused, truth, errors,
     version,

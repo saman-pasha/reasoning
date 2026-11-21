@@ -213,6 +213,17 @@
 %%     reason_verb(?Word, ?Base)
 %%     reason_proper(?Word, ?Constant)
 %%
+%%     reason_tagger(-State)
+%%     reason_set_tagger(+State)
+%%     reason_grammar(:Goal)
+%%         on or off, whether a reader sends a sentence the grammar refuses
+%%         to the tagger (THE TAGGER, below): what reason_set_tagger/1 set,
+%%         else the environment's REASON_TAGGER, else on; a reader that
+%%         takes Options takes tagger(false) or tagger(true) for one call.
+%%         reason_grammar/1 runs Goal with every reader reading with the
+%%         grammar and the lexicon alone: no tagger, no saved rewrite, no
+%%         model -- how the library reads its own input.
+%%
 %%     reason_mode(-Mode)
 %%     reason_set_mode(+Mode)
 %%         static or live, the mode of every reader (STATIC AND LIVE,
@@ -286,6 +297,39 @@
 %% nothing and reads as static mode does. A failure is never the reader's:
 %% the network, a refusal or a reply that is not the JSON asked for leaves
 %% the static result in place.
+%%
+%% ---- THE TAGGER (since 1.17.0) ---------------------------------------------
+%%
+%% A SENTENCE THE GRAMMAR REFUSES GOES TO THE TAGGER, in both modes, before
+%% any model: library(reasoning/tagger), the network lesson 03 trains,
+%% tags it ALONE, the assembler writes the controlled text, and when the
+%% grammar reads that text it is saved as the sentence's rewrite,
+%% reason_live_rewrite(text, Sentence, Sentences), marked the tagger's
+%% (reason_live_verdict(text, Sentence, tagger, tagger)). The reader then
+%% reads the text again. So `Well, Bob lives in Bristol.' reads as
+%% live_in(bob, bristol) where the grammar refuses `Well'. What the tagger
+%% cannot read stays refused, and the lexicon's judge (tagger_sane/2)
+%% still refuses what it contradicts; and a reading the tagger makes can be
+%% wrong where the grammar's would have been a refusal (`Dave joins acme.'
+%% reads as join_acme(dave)). A static reader asks the tagger only when
+%% the grammar refused, so a text the grammar reads costs nothing more;
+%% live mode asks it first, and the model is asked only about what it
+%% could not read. reason_text/2,3, reason_sentence/2,3 (the grammar's
+%% readings first, on backtracking), reason_learn/1,2, reason_question/2,
+%% reason_ask/2,3 and reason_refused/2 do; reason_prose/2 IS the tagger,
+%% and the translator's readers do not.
+%%
+%% It is ON unless reason_set_tagger(off), REASON_TAGGER=off or a call's
+%% tagger(false) says otherwise, and it needs library(torch): on a box
+%% without it the grammar reads alone, as through 1.16. Its model is the
+%% knowledge base's (tagger_pretrained/1): one trained into the store
+%% (train.pl), else the shipped model.rows, consulted INTO the knowledge
+%% base at the first use, so a store keeps it as it keeps what live mode
+%% saves. The library reads its own input with the grammar alone
+%% (reason_grammar/1): the translator's lesson lines, teach.pl, the
+%% tagger's own controlled text and measurements, and the coding
+%% endpoint's readings (whose store is in the tree, and would take the
+%% model's 7 MB at its first refused sentence).
 %%
 %% ---- THE SENTENCES IT READS -------------------------------------------
 %%
@@ -532,7 +576,7 @@
 %% made from it, and no code, test or lesson in the tree spells the number.
 %% Bump it in the commit that changes this repository, never afterwards.
 
-reason_version(1, 16, 0).
+reason_version(1, 17, 0).
 
 reason_version(Version) :-
     reason_version(Major, Minor, Patch),
@@ -601,14 +645,20 @@ rv_load_live :- use_module(library(reasoning/live)).
 rv_input(_, Text0, _, Text) :- rv_quiet, !, Text = Text0.
 rv_input(Kind, Text0, Options, Text) :-
     (   rv_mode(Options, live)
-    ->  rv_load_live,
+    ->  (   Kind == text, rv_tagger_on(Options)
+        ->  ignore(rv_tagger_fix(Text0))           % the tagger first, the model after it
+        ;   true
+        ),
+        rv_load_live,
         reason_live_read(Kind, Text0)
     ;   true
     ),
     rv_apply(Kind, Text0, Text).
 
 rv_apply(Kind, Text0, Text) :-
-    (   \+ reason_live_rewrite(Kind, _, _)
+    (   \+ rv_text(Text0)
+    ->  Text = Text0                     % not text: the reader raises its own error
+    ;   \+ reason_live_rewrite(Kind, _, _)
     ->  Text = Text0
     ;   rv_split(Text0, Ss),
         rv_rewritten(Kind, Ss, Ts),
@@ -617,6 +667,8 @@ rv_apply(Kind, Text0, Text) :-
         ;   atomic_list_concat(Ts, ' ', Text)
         )
     ).
+
+rv_text(T) :- ( atom(T) ; string(T) ; is_list(T), T \== [], forall(member(C, T), integer(C)) ), !.
 
 rv_rewritten(_, [], []).
 rv_rewritten(Kind, [S|Ss], Out) :-
@@ -673,12 +725,119 @@ rv_text_readings_([S|Ss], [R|Rs]) :-
 rv_kind(N, K0, K) :-
     (   atom(N), reason_live_kind(N, K1) -> K = K1 ; K = K0 ).
 
+%% ---- the tagger, for a sentence the grammar refuses (THE TAGGER, above) ----
+
+reason_tagger(State) :-
+    (   catch(nb_getval('$reason_tagger', S0), _, fail),
+        memberchk(S0, [on, off])
+    ->  State = S0
+    ;   getenv('REASON_TAGGER', Env),
+        atom_string(E0, Env), downcase_atom(E0, E),
+        memberchk(E-S1, [off-off, '0'-off, no-off, false-off, on-on, '1'-on, yes-on, true-on])
+    ->  State = S1
+    ;   State = on
+    ).
+
+reason_set_tagger(State) :-
+    (   atom(State), memberchk(State, [on, off])
+    ->  nb_setval('$reason_tagger', State)
+    ;   throw(error(domain_error(reason_tagger, State), reason_set_tagger/1))
+    ).
+
+%% GRAMMAR ALONE: every reader Goal calls reads with the grammar and the
+%% lexicon and nothing else -- no saved rewrite, no tagger, no model. What
+%% the library reads as its own input (a lesson line, the tagger's own
+%% controlled text, its measurements) is read so.
+reason_grammar(Goal) :-
+    (   rv_quiet
+    ->  call(Goal)
+    ;   setup_call_cleanup(nb_setval('$reason_live_busy', yes),
+                           once(Goal),
+                           nb_setval('$reason_live_busy', no))
+    ).
+
+rv_tagger_on(Options) :-
+    \+ rv_quiet,
+    (   is_list(Options), memberchk(tagger(B), Options)
+    ->  (   B == true -> true
+        ;   B == false -> fail
+        ;   throw(error(domain_error(boolean, B), context(reason_text/3, tagger)))
+        )
+    ;   reason_tagger(on)
+    ).
+
+%% rv_tagged(+Text0, +Options, -Text): the text again, once the tagger has
+%% rewritten what it could of the sentences the grammar refuses. Fails
+%% where the tagger is off or absent, or rewrote nothing.
+rv_tagged(Text0, Options, Text) :-
+    rv_tagger_on(Options),
+    rv_tagger_fix(Text0),
+    rv_apply(text, Text0, Text).
+
+%% Each sentence the grammar refuses -- read in turn with the state
+%% carried, so a pronoun after its antecedent is no refusal -- that has no
+%% saved rewrite and that the tagger was not asked about in this process
+%% is tagged ALONE; the controlled text it makes, when the grammar reads
+%% it, is saved as the sentence's rewrite, reason_live_rewrite(text, S,
+%% Sentences), and marked the tagger's, reason_live_verdict(text, S,
+%% tagger, tagger), which live mode sends to no model. Succeeds when one
+%% was saved.
+rv_tagger_fix(Text0) :-
+    rv_text(Text0),
+    rv_tagger_model(Model),
+    rv_split(Text0, Ss),
+    findall(S-Cur, ( member(S, Ss), ( reason_live_rewrite(text, S, Rs) -> Cur = Rs ; Cur = [S] ) ), Pairs),
+    findall(C, ( member(_-Cur, Pairs), member(C, Cur) ), Flat),
+    rv_text_readings(Flat, Readings),
+    rv_refused_own(Pairs, Readings, Refused),
+    findall(S, ( member(S, Refused), rv_tag_one(Model, S) ), Saved),
+    Saved \== [].
+
+rv_refused_own([], _, []).
+rv_refused_own([S-Cur|Ps], Rs0, Refused) :-
+    length(Cur, N), length(Mine, N), append(Mine, Rest, Rs0),
+    (   Cur == [S], Mine == [refused]
+    ->  Refused = [S|More]
+    ;   Refused = More
+    ),
+    rv_refused_own(Ps, Rest, More).
+
+rv_tag_one(Model, S) :-
+    (   catch(nb_getval('$rv_tagged', Tried0), _, fail) -> true ; Tried0 = [] ),
+    \+ memberchk(S, Tried0),
+    nb_setval('$rv_tagged', [S|Tried0]),
+    catch(reason_grammar(tagger_normalise(Model, S, Controlled, _)), _, fail),
+    rv_split(Controlled, Cs),
+    Cs \== [], Cs \== [S],
+    retractall(reason_live_rewrite(text, S, _)),
+    assertz(reason_live_rewrite(text, S, Cs)),
+    retractall(reason_live_verdict(text, S, tagger, _)),
+    assertz(reason_live_verdict(text, S, tagger, tagger)).
+
+%% the tagger, loaded once (rp_model/1: the knowledge base's model, else the
+%% shipped one); a box without library(torch) has none, and is not asked
+%% again
+rv_tagger_model(Model) :-
+    \+ catch(nb_getval('$rv_no_tagger', yes), _, fail),
+    (   catch(reason_grammar(rp_model(M0)), _, fail)
+    ->  Model = M0
+    ;   nb_setval('$rv_no_tagger', yes),
+        fail
+    ).
+
 %% ---- text ------------------------------------------------------------
 
 reason_text(Text, Terms) :- reason_text(Text, [], Terms).
 
 reason_text(Text0, Options, Terms) :-
     rv_input(text, Text0, Options, Text),
+    (   rv_text_read(Text, Options, Terms)
+    ->  true
+    ;   rv_tagged(Text0, Options, Text1),
+        rv_text_read(Text1, Options, Terms)
+    ).
+
+rv_text_read(Text, Options, Terms) :-
     reason_tokens(Text, Tokens),
     rs_sentences(Tokens, Sentences),
     nb_setval('$rs_subject', none),
@@ -743,6 +902,13 @@ re_helper(begin_with(_, _)). re_helper(start_with(_, _)).
 
 reason_question(Text0, Question) :-
     rv_input(text, Text0, [], Text),
+    (   rv_question(Text, Question)
+    ;   \+ rv_question(Text, _),
+        rv_tagged(Text0, [], Text1),
+        rv_question(Text1, Question)
+    ).
+
+rv_question(Text, Question) :-
     reason_tokens(Text, Tokens),
     rs_sentences(Tokens, [S|_]),
     rs_notes_reset,
@@ -751,19 +917,28 @@ reason_question(Text0, Question) :-
 
 reason_ask(Text0, Answers) :-
     rv_input(text, Text0, [], Text),
-    reason_tokens(Text, Tokens),
-    rs_sentences(Tokens, Sentences),
-    rs_read(Sentences, [variables(true)], Terms),
+    rv_questions(Text0, Text, Terms),
     findall(A, ( member(Q, Terms), rq_answer(Q, A) ), Answers).
 
 %% the same, and beside each answer its explanation in sentences
 reason_ask(Text0, Answers, Explanations) :-
     rv_input(text, Text0, [], Text),
-    reason_tokens(Text, Tokens),
-    rs_sentences(Tokens, Sentences),
-    rs_read(Sentences, [variables(true)], Terms),
+    rv_questions(Text0, Text, Terms),
     findall(A-E, ( member(Q, Terms), rq_answer(Q, A), rq_explain(Q, A, E) ), Pairs),
     rq_unzip(Pairs, Answers, Explanations).
+
+%% the questions' terms, the tagger asked where the grammar refused one
+rv_questions(Text0, Text, Terms) :-
+    (   rv_ask_read(Text, Terms)
+    ->  true
+    ;   rv_tagged(Text0, [], Text1),
+        rv_ask_read(Text1, Terms)
+    ).
+
+rv_ask_read(Text, Terms) :-
+    reason_tokens(Text, Tokens),
+    rs_sentences(Tokens, Sentences),
+    rs_read(Sentences, [variables(true)], Terms).
 
 rq_unzip([], [], []).
 rq_unzip([A-E|Ps], [A|As], [E|Es]) :- rq_unzip(Ps, As, Es).
@@ -1400,8 +1575,17 @@ rs_remember(_).
 
 reason_sentence(Text, Terms) :- reason_sentence(Text, [], Terms).
 
+%% the grammar's readings first, on backtracking; the tagger only where
+%% there is none, so a program's grammar clauses keep their readings
 reason_sentence(Text0, Options, Terms) :-
     rv_input(text, Text0, Options, Text),
+    (   rv_sentence(Text, Options, Terms)
+    ;   \+ rv_sentence(Text, Options, _),
+        rv_tagged(Text0, Options, Text1),
+        rv_sentence(Text1, Options, Terms)
+    ).
+
+rv_sentence(Text, Options, Terms) :-
     reason_tokens(Text, Tokens),
     rs_sentences(Tokens, [S|_]),
     nb_setval('$rs_subject', none),
@@ -1452,8 +1636,14 @@ rs_upto([T|Ts], [T|S], Rest) :- rs_upto(Ts, S, Rest).
 
 %% ---- what was refused -------------------------------------------------
 
+%% what is refused once the tagger has read what it can
 reason_refused(Text0, Sentence) :-
-    rv_input(text, Text0, [], Text),
+    rv_input(text, Text0, [], Text1),
+    (   \+ rv_text_read(Text1, [], _),
+        rv_tagged(Text0, [], Text2)
+    ->  Text = Text2
+    ;   Text = Text1
+    ),
     reason_tokens(Text, Tokens),
     rs_sentences(Tokens, Sentences),
     nb_setval('$rs_subject', none),
