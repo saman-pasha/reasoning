@@ -209,7 +209,7 @@
 %% shapes it did.
 %%
 %% MEASURED, on a four-core box with no GPU, the defaults: 500 steps over
-%% 32768 pairs train in about four minutes; over 300 pairs training never
+%% 32768 pairs train in under a minute on four cores; over 300 pairs training never
 %% saw (seeds past the corpus) 0.988 of the tags and 0.93 to 0.96 of the
 %% sentences are right and 0.95 to 0.97 assemble and parse to the clean
 %% terms, a training apart (0.9997 and 0.997 before the ten lesson shapes

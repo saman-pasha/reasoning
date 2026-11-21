@@ -13,6 +13,9 @@
 :- use_module(library(reasoning/normalise)).
 
 main :-
+    %% the noise must be refused by the GRAMMAR; the tagger (on by default
+    %% since 1.17.0) would read it, as it is made to
+    reason_set_tagger(off),
     alphabet, determinism, clean, inflection, noise, assemble, roundtrip, saved,
     checks_done.
 

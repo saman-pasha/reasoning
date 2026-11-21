@@ -25,6 +25,7 @@
 :- use_module(library(reasoning/normalise)).
 
 main :-
+    reason_set_tagger(off),           % "the grammar refuses" below is the grammar alone; lesson 03 is the tagger's
     format("~n1. A clean pair: the sentence, its tokens, its gold tags~n", []),
     normalise_pair(3, [transforms([])], pair(N1, Toks1, Tags1, C1, A1)),
     show('clean text', C1),
