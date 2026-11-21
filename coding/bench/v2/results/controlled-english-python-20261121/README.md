@@ -54,3 +54,10 @@ report is `../controlled-english-python-20261121.md`.
 `controlled-gzip-python-20261121/` asked the same test again, in a run
 of its own with a new seed: controlled 34/60, the requirement alone
 30/60, p = 0.29. The result did not repeat.
+
+## Three runs (written after the third)
+
+`controlled-english-python-3-20261121/` found 33/60 against 24/60 (Fisher
+one-sided p = 0.072), and the three runs together 104/180 against 79/180,
+Cochran-Mantel-Haenszel one-sided p = 0.0058, a test chosen before the
+third run.

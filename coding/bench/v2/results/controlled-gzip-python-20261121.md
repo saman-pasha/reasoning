@@ -72,7 +72,9 @@ text `"error"` in 36/60 against 27/60), and the controlled note's gain
 was 4 cells where it was 12. Taken together, not as a test chosen before
 either run: 71/120 against 55/120. The note may help less than the first
 test showed, or not at all; a third run, or the two counted as one test
-chosen now, would say which.
+chosen now, would say which. The third run (`controlled-english-python-3-20261121.md`)
+found 33/60 against 24/60, and the three together 104/180 against
+79/180, Cochran-Mantel-Haenszel one-sided p = 0.0058.
 
 ## Limits
 

@@ -26,7 +26,11 @@ test chosen before the run. (Two-sided, p = 0.044.)
 
 **It did not repeat.** The same test, asked again in
 `controlled-gzip-python-20261121.md` with a new seed, found 34/60 against
-30/60 (p = 0.29). Read the result below as one run's.
+30/60 (p = 0.29). Read the result below as one run's. A third run found 33/60 against
+24/60 (p = 0.072), and the three together, by a test chosen before the
+third (`controlled-english-python-3-20261121.md`), 104/180 against
+79/180, Cochran-Mantel-Haenszel one-sided **p = 0.0058**: over three runs
+the effect holds, smaller than this run showed.
 
 | arm | first | final | calls | tokens | cell time |
 |---|---|---|---|---|---|

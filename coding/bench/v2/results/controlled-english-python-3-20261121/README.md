@@ -44,3 +44,12 @@ the same question again.
 Everything else is described and not tested: the final pass, calls and
 tokens, the error case's failures and how many first programs print
 `error`. A refused cell counts as it comes; the report says how many.
+
+## The result (written after the run)
+
+1. This run alone: controlled 33/60, the requirement alone 24/60, Fisher
+   one-sided **p = 0.072: not significant**.
+2. The three runs together: 104/180 against 79/180, Cochran-Mantel-
+   Haenszel one-sided **p = 0.0058: significant** (z = 2.52).
+
+The report is `../controlled-english-python-3-20261121.md`.

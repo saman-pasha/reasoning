@@ -252,6 +252,9 @@ CODING_BENCH_BASE_URL=https://api.anthropic.com/v1/messages \
   Asked again in `results/controlled-gzip-python-20261121.md`, it did not
   repeat (34/60 against 30/60, p = 0.29); the same note gzipped and sent
   as base64 did nothing (31/60) and cost more tokens than the text.
+  A third run found 33/60 against 24/60 (p = 0.072), and the three
+  together 104/180 against 79/180, Cochran-Mantel-Haenszel one-sided
+  p = 0.0058 (`results/controlled-english-python-3-20261121.md`).
 - **A complete IR** of the restatement (reasoning 1.17.3) is
   `controlled/mvccs_acid.ir`, written by `ir_complete.pl` with no model
   from `controlled/mvccs_acid.translator.txt`: all 64 sentences, 68 IR

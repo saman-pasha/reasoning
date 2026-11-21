@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Three Runs of Controlled English</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column of 46rem, wide tables in their own scrollers; a lab report, not a dashboard. */
+:root {
+  --bg: #f6f7f6;
+  --surface: #ffffff;
+  --fg: #1b2321;
+  --muted: #5a6763;
+  --rule: #d9dfdc;
+  --accent: #0e6a63;
+  --accent-soft: #dcefec;
+  --good: #1f7a3d;
+  --good-soft: #dff1e4;
+  --bad: #a33a2a;
+  --bad-soft: #f6e1dc;
+  --code-bg: #eef1ef;
+  --font-text: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121716; --surface: #1a201f; --fg: #e3e9e6; --muted: #9aa8a3; --rule: #2e3735;
+    --accent: #5cc4b9; --accent-soft: #173431; --good: #6fcf8e; --good-soft: #17301f;
+    --bad: #ef8b78; --bad-soft: #3a1f1a; --code-bg: #202826; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121716; --surface: #1a201f; --fg: #e3e9e6; --muted: #9aa8a3; --rule: #2e3735;
+  --accent: #5cc4b9; --accent-soft: #173431; --good: #6fcf8e; --good-soft: #17301f;
+  --bad: #ef8b78; --bad-soft: #3a1f1a; --code-bg: #202826; color-scheme: dark;
+}
+body { background: var(--bg); color: var(--fg); font-family: var(--font-text); font-size: 16px; line-height: 1.55; }
+.page { max-width: 46rem; margin: 0 auto; padding-block: 2.5rem 4rem;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 2.25rem; }
+header { display: flex; flex-direction: column; gap: .6rem; }
+.eyebrow { font-family: var(--font-mono); font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+h1 { font-size: 2rem; line-height: 1.15; font-weight: 600; margin: 0; text-wrap: balance; }
+h2 { font-size: 1.3rem; line-height: 1.25; font-weight: 600; margin: 0; text-wrap: balance; }
+h3 { font-size: 1.02rem; font-weight: 600; margin: 0; }
+p { margin: 0; max-width: 65ch; }
+section { display: flex; flex-direction: column; gap: .9rem; min-width: 0; }
+.lede { font-size: 1.08rem; color: var(--fg); }
+.meta { font-size: .86rem; color: var(--muted); font-family: var(--font-mono); }
+ul, ol { margin: 0; padding-left: 1.2rem; display: flex; flex-direction: column; gap: .4rem; max-width: 65ch; }
+code, .mono { font-family: var(--font-mono); font-size: .88em; }
+code { background: var(--code-bg); padding: .05em .3em; border-radius: 3px; }
+.findings { display: grid; gap: .75rem; }
+.finding { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: .9rem 1rem; display: flex; flex-direction: column; gap: .35rem; }
+.finding b { font-weight: 600; }
+.scroll { overflow-x: auto; min-width: 0; border: 1px solid var(--rule); border-radius: 6px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: .88rem; font-variant-numeric: tabular-nums; }
+th, td { padding: .45rem .6rem; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--rule); }
+th { font-weight: 600; color: var(--muted); font-size: .76rem; letter-spacing: .03em; text-transform: uppercase; background: var(--bg); }
+td:first-child, th:first-child, td.l, th.l { text-align: left; }
+tbody tr:last-child td { border-bottom: 0; }
+tr.group td { background: var(--bg); font-weight: 600; text-align: left; color: var(--fg); }
+tr.total td { font-weight: 600; }
+.rate { display: inline-flex; align-items: center; gap: .45rem; justify-content: flex-end; }
+.bar { width: 3.2rem; height: .45rem; background: var(--rule); border-radius: 2px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--accent); }
+.pill { display: inline-block; font-family: var(--font-mono); font-size: .74rem; padding: .05rem .4rem; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
+.pill.bad { background: var(--bad-soft); color: var(--bad); }
+.pill.good { background: var(--good-soft); color: var(--good); }
+tr.best td { background: var(--accent-soft); }
+tr.best td:first-child { box-shadow: inset 3px 0 0 var(--accent); }
+.excerpts { display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: .75rem; }
+.excerpts > div { min-width: 0; display: flex; flex-direction: column; gap: .35rem; }
+.excerpts pre { font-size: .78rem; white-space: pre; }
+pre { margin: 0; background: var(--code-bg); border-radius: 6px; padding: .8rem 1rem; overflow-x: auto; font-family: var(--font-mono); font-size: .85rem; line-height: 1.5; }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: .75rem; }
+.two > div { min-width: 0; display: flex; flex-direction: column; gap: .35rem; }
+.caption { font-size: .84rem; color: var(--muted); max-width: 65ch; }
+.note { font-size: .9rem; color: var(--muted); }
+a { color: var(--accent); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 0; }
+</style>
+</head>
+<body>
+<div class="page">
+<header>
+  <div class="eyebrow">reasoning 1.17.3 · coding bench v2 · 2026-11-21</div>
+  <h1>Controlled English in Python codegen, over three runs</h1>
+  <p class="lede">Does the requirement, said again in controlled English after the requirement itself, make Python's first program right more often? Three runs asked it, each with 60 trials an arm and its tests written down before it. The first found the effect, the second did not, and the third decides it.</p>
+  <p class="meta">This run: 120 cells, 191 calls, 898&#8201;638 tokens, 36 min of cell time, $4.90. The three runs: 360 cells.</p>
+</header>
+
+<section>
+  <h2>The answer</h2>
+  <div class="findings">
+    <div class="finding"><b>Over three runs, yes: 104/180 first programs right with the note, against 79/180 without (58&#8201;% against 44&#8201;%), p&nbsp;=&nbsp;0.0058.</b><p>Cochran–Mantel–Haenszel, one-sided, each run a stratum, chosen before the third run. The common odds ratio is 1.75.</p></div>
+    <div class="finding"><b>This run alone does not pass its own test: 33/60 against 24/60, p&nbsp;=&nbsp;0.072.</b><p>It points the same way as both earlier runs. A single run of 60 an arm is too small to show a gain of this size every time.</p></div>
+    <div class="finding"><b>It costs about as much as it saves.</b><p>Over the three runs the note saved 8&#8201;% of the calls and spent 5&#8201;% more tokens: each call carries about 900 tokens more, and fewer repair calls are needed.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>The tests, chosen before the run</h2>
+  <p>Written down and pushed before the first cell (commit <code>0c4526f</code>).</p>
+  <div class="scroll"><table>
+    <thead><tr><th class="l">test</th><th>controlled</th><th>requirement alone</th><th>p, one-sided</th><th class="l">answer</th></tr></thead>
+    <tbody>
+      <tr><td class="l">1. this run alone, Fisher's exact test</td><td>33/60</td><td>24/60</td><td>0.072</td><td class="l"><span class="pill bad">not significant</span></td></tr>
+      <tr class="best"><td class="l"><b>2. the three runs together, Cochran–Mantel–Haenszel</b></td><td><b>104/180</b></td><td><b>79/180</b></td><td><b>0.0058</b></td><td class="l"><span class="pill good">significant</span></td></tr>
+    </tbody>
+  </table></div>
+  <p class="caption">The second test compares the arms within each run, so the drift between runs does not confuse it: the requirement alone passed 25/60, 30/60 and 24/60. It was chosen when the first two runs' results were known and this run's was not. z&nbsp;=&nbsp;2.52; 104 observed against 91.5 expected with no effect.</p>
+</section>
+
+<section>
+  <h2>The three runs</h2>
+  <div class="scroll"><table>
+    <thead><tr><th class="l">run</th><th>seed</th><th>controlled</th><th>requirement alone</th><th>gain</th><th>p, the run alone</th></tr></thead>
+    <tbody>
+      <tr><td class="l">first</td><td>20261121</td><td><span class="rate">37/60<span class="bar"><i style="width:61.7%"></i></span></span></td><td><span class="rate">25/60<span class="bar"><i style="width:41.7%"></i></span></span></td><td>+12</td><td>0.022</td></tr>
+      <tr><td class="l">second (the gzip run)</td><td>20261123</td><td><span class="rate">34/60<span class="bar"><i style="width:56.7%"></i></span></span></td><td><span class="rate">30/60<span class="bar"><i style="width:50%"></i></span></span></td><td>+4</td><td>0.29</td></tr>
+      <tr><td class="l">third</td><td>20261124</td><td><span class="rate">33/60<span class="bar"><i style="width:55%"></i></span></span></td><td><span class="rate">24/60<span class="bar"><i style="width:40%"></i></span></span></td><td>+9</td><td>0.072</td></tr>
+      <tr class="total"><td class="l">the three</td><td></td><td><span class="rate">104/180<span class="bar"><i style="width:57.8%"></i></span></span></td><td><span class="rate">79/180<span class="bar"><i style="width:43.9%"></i></span></span></td><td>+25</td><td>0.0058</td></tr>
+    </tbody>
+  </table></div>
+  <p class="caption">Every run points the same way. The first overstated the gain, the second understated it, and the third is near the mean of the three.</p>
+</section>
+
+<section>
+  <h2>Calls and tokens</h2>
+  <div class="scroll"><table>
+    <thead><tr><th class="l"></th><th>controlled</th><th>requirement alone</th><th>change</th></tr></thead>
+    <tbody>
+      <tr><td class="l">this run: calls</td><td>93</td><td>98</td><td>−5&#8201;%</td></tr>
+      <tr><td class="l">this run: tokens</td><td>469&#8201;912</td><td>428&#8201;726</td><td>+10&#8201;%</td></tr>
+      <tr><td class="l">the three runs: calls</td><td>266</td><td>290</td><td>−8&#8201;%</td></tr>
+      <tr><td class="l">the three runs: tokens</td><td>1&#8201;318&#8201;506</td><td>1&#8201;251&#8201;730</td><td>+5&#8201;%</td></tr>
+    </tbody>
+  </table></div>
+  <p class="caption">Described, not tested.</p>
+</section>
+
+<section>
+  <h2>How the first programs failed</h2>
+  <p>As in every Python run, almost only at the error case, which expects the word <code>error</code> that the requirement never names: 35 of 36 failing first programs with the requirement alone, 26 of 27 with the note. The note's gain goes through that case, but the count of first programs with the text "error" moves from run to run as much as the passes do: 39, 34 and 34 with the note, and 27, 36 and 30 without.</p>
+</section>
+
+<section>
+  <h2>Limits</h2>
+  <ul>
+    <li>One task, one model, one language.</li>
+    <li>The pooled test was chosen after two of its three runs were known, and this run alone did not pass its own test.</li>
+    <li>The restatement was written by hand, by the assistant that ran the benchmark, from the requirement alone; another writer would make another text.</li>
+    <li>The same note harms guided cocolog and does nothing in C and in cocolog without its guide.</li>
+  </ul>
+</section>
+
+<hr>
+<section>
+  <h3>Files</h3>
+  <p class="note">In <code>saman-pasha/reasoning</code>, <code>coding/bench/v2/results/</code>: <code>controlled-english-python-3-20261121/</code> (this run's README with its tests and result, <code>bench.jsonl</code> and the note), and its report <code>controlled-english-python-3-20261121.md</code>. The earlier runs: <code>controlled-english-python-20261121.md</code> and <code>controlled-gzip-python-20261121.md</code>.</p>
+</section>
+</div>
+</body>
+</html>

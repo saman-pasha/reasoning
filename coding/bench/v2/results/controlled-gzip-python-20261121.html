@@ -98,7 +98,7 @@ hr { border: 0; border-top: 1px solid var(--rule); margin: 0; }
   <div class="findings">
     <div class="finding"><b>The gzipped note does nothing: 31/60 first programs right, against 30/60 with the requirement alone (p&nbsp;=&nbsp;0.50).</b><p>The gzip arm behaves as the requirement alone does in every measure. No first program decodes the note, and nothing in them shows that the model unpacked it.</p></div>
     <div class="finding"><b>Compression does not save tokens.</b><p>gzip halves the characters, but base64 is about 1.2 characters a token against English's 2.9. The 1&#8201;145-character note cost 959 prompt tokens a call, more than the 903 of the 2&#8201;590-character plain text it holds.</p></div>
-    <div class="finding"><b>The plain-text controlled note did not repeat its earlier result.</b><p>34/60 against 30/60 (p&nbsp;=&nbsp;0.29), where the first test found 37/60 against 25/60 (p&nbsp;=&nbsp;0.022). The note may help less than the first test showed, or not at all.</p></div>
+    <div class="finding"><b>The plain-text controlled note did not repeat its earlier result.</b><p>34/60 against 30/60 (p&nbsp;=&nbsp;0.29), where the first test found 37/60 against 25/60 (p&nbsp;=&nbsp;0.022). The note may help less than the first test showed, or not at all. A third run later found 33/60 against 24/60, and the three runs together 104/180 against 79/180 (Cochran–Mantel–Haenszel one-sided p&nbsp;=&nbsp;0.0058).</p></div>
   </div>
 </section>
 
@@ -145,7 +145,7 @@ DpBi77Bluu05EIlInEighqTs8e0D
 
 <section>
   <h2>The controlled note, asked again</h2>
-  <p>With the requirement alone the first programs did better in this run than in the first test (30/60 against 25/60, and the text "error" in 36/60 against 27/60), and the controlled note's gain was 4 cells where it was 12. Taken together, not as a test chosen before either run, the two runs give 71/120 against 55/120. A third run, or the two counted as one test chosen now, would say whether the note helps at all.</p>
+  <p>With the requirement alone the first programs did better in this run than in the first test (30/60 against 25/60, and the text "error" in 36/60 against 27/60), and the controlled note's gain was 4 cells where it was 12. Taken together, not as a test chosen before either run, the two runs give 71/120 against 55/120. A third run, with a test of the three together chosen before it, found 33/60 against 24/60, and the three together 104/180 against 79/180, p&nbsp;=&nbsp;0.0058: the note helps, by less than the first run showed.</p>
 </section>
 
 <section>
