@@ -27,6 +27,7 @@ no model for them, and no translation token is in its figures.
 - **Checks in front of the IR do not add to it.** In the SWI-Prolog rerun the IR alone passed 3/10 at the first attempt and *+ reasoning + IR* 1/10, with 75 % more tokens. In cocolog without its guide, whose four arms also ran as one run, both passed 6/10 with about the same tokens. In C, Python and guided cocolog the two IR arms ran an hour apart, so they are not compared here.
 - **The final pass hides the differences.** Almost every cell of C, Python, both cocolog lanes and SWI-Prolog passes within its three calls (final 38/40 to 40/40 a lane). What the arms change is how often the first program is right, and so the calls, tokens and seconds a correct program costs.
 - **Two lines do the cocolog guide's work on this task.** With the two lines in its short prompt, cocolog without its guide passed 24/40 at the first attempt and 40/40 in the end. The guided lane passed 23/40 and 39/40, and spent 2 264 582 tokens where the lane without the guide spent 338 045, 6.7 times fewer (62 calls against 56). The rows come from runs on the same text but on different days, so read this as a description, not a paired test. Without both lines the same lane passed none of its 60 first attempts: 20 with neither line, 40 with the stream import alone.
+- **cocolog without its guide spent fewer tokens than Python.** **Over its four arms it spent 338 045 tokens where Python spent 359 114, 6 % fewer, and fewer in three of the four arms** (all but *+ reasoning + IR*, 104 528 against 103 670). Its first program was right 24 times in 40 and Python's 13 times, so it needed 56 calls where Python needed 68. Python's rows come from runs on another day, so read this as a description.
 - **SWI-Prolog's low first-attempt rate is partly its prompt's.** Its user message is the requirement alone. Every cocolog lane's begins "Write a complete cocolog program for this requirement." In the SWI-Prolog rerun, 22 of the 40 first replies began with English design notes before the code and did not load; no first reply of either cocolog lane did. So the gap at the first attempt between SWI-Prolog and cocolog without its guide, 4/40 against 24/40, is not only a gap between the two languages.
 
 ## The results, lane by lane
@@ -64,6 +65,51 @@ together.
 | + reasoning + IR | 1/10 | 10/10 | 2.10 | 98 868 | 69 021 | 46.4 | SWI rerun (1.15.1) |
 | + IR only | 3/10 | 10/10 | 1.70 | 66 612 | 29 414 | 18.8 | SWI rerun (1.15.1) |
 
+
+## Why the IR note saves tokens in C and costs tokens in Python
+
+The first run's report (`ir-mvccs-20261120.md`) showed fewer tokens for
+the IR arm in C. The clear-text run shows the same in C, and more tokens
+in Python, as the first run also did. The direction is the same in both
+runs; only the size changed. Each total is its calls times its tokens a
+call:
+
+| lane and run | calls | tokens a call | tokens | change |
+|---|---|---|---|---|
+| **C, prompt forwarded → + IR only** | | | | |
+| first run (3 cells an arm) | 6 → 4 | 6 677 → 7 162 | 40 062 → 28 647 | −28 % |
+| clear-text run (10 cells an arm) | 19 → 15 | 6 819 → 7 738 | 129 559 → 116 067 | −10 % |
+| **Python, prompt forwarded → + IR only** | | | | |
+| first run (3 cells an arm) | 6 → 5 | 4 069 → 5 446 | 24 414 → 27 232 | +12 % |
+| clear-text run (10 cells an arm) | 17 → 19 | 4 190 → 5 876 | 71 230 → 111 650 | +57 % |
+| **all four arms, Python → cocolog without its guide** | | | | |
+| clear-text runs (40 cells a lane) | 68 → 56 | 5 281 → 6 037 | 359 114 → 338 045 | −6 % |
+
+The note makes every call dearer: it adds 1 435 prompt tokens to a call,
+in C and in Python (measured on the cells of one call). It makes a cell
+cheaper only by saving repair calls, and a repair call is expensive: it
+sends the requirement, the note, the previous program and the failure
+report, and the model writes a whole new program. In the clear-text run
+a C cell of one call spent about 5 750 tokens and a cell of two calls
+about 15 800; in Python about 3 800 and 10 200.
+
+- **C:** the note made the first program right 5 times in 10 against 4,
+  and the arm made 5 repair calls against 9. Its calls fell by 21 %, its
+  tokens a call rose by 13 %, and its tokens fell by 10 %.
+- **Python:** the first program was right 2 times in 10 against 3, and
+  the arm made 9 repair calls against 7. Its calls rose by 12 %, its
+  tokens a call by 40 %, and its tokens by 57 %.
+- **The first run:** C saved two calls of six, which paid for the note;
+  Python saved one, which did not. At three cells an arm one repair call
+  more or less moves an arm's tokens by about 30 %, and the first run
+  read the old text: its report says no difference in it is significant.
+
+On this task the note does not make C's or Python's first program right
+more often, and without that it only adds tokens. **The same rule makes
+cocolog without its guide spend fewer tokens than Python: its first
+program was right 24 times in 40 and Python's 13, so it made 56 calls
+where Python made 68, and spent 6 % fewer tokens though each of its calls
+spent 14 % more.**
 
 ## Why cocolog with the IR failed every cell in the first run
 
@@ -188,4 +234,4 @@ and `ir`), `bench-reasoning.jsonl` (run A, the two reasoning arms),
 `bench-swipl-1.15.1.jsonl`, `bench-noguide-1.15.2.jsonl`,
 `bench-noguide-1.15.3.jsonl`, the notes (`*.ir`, `*.reasoning`), and the
 translation phase's rows (`ir-prep.jsonl`; `ir-prep-rerun-1.15.0.jsonl`,
-whose notes were not used). Commits `4816a72` (1.14.0), `3475b3f` (1.14.1), `7beae66` (1.15.0), `2f014be` (1.15.1), `7ff352a` (1.15.2), `b918c99` (1.15.3) and the commit that adds this report. The same report as a page, with its tables drawn: `ir-mvccs-clear-20261120.html`.
+whose notes were not used). Commits `4816a72` (1.14.0), `3475b3f` (1.14.1), `7beae66` (1.15.0), `2f014be` (1.15.1), `7ff352a` (1.15.2) and `b918c99` (1.15.3); the report came in `426fbbc` and its page in `526d165`. The same report as a page, with its tables drawn: `ir-mvccs-clear-20261120.html`.

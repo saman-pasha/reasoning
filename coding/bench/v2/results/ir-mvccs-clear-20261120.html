@@ -98,6 +98,7 @@ hr { border: 0; border-top: 1px solid var(--rule); margin: 0; }
     <div class="finding"><b>The final pass hides the differences.</b><p>Almost every cell of C, Python, both cocolog lanes and SWI-Prolog passes within its three calls (final 38/40 to 40/40 a lane). What the arms change is how often the first program is right, and so the calls, tokens and seconds a correct program costs.</p></div>
     <div class="finding"><b>Two lines do the cocolog guide's work on this task.</b><p>With the two lines in its short prompt, cocolog without its guide passed 24/40 at the first attempt and 40/40 in the end. The guided lane passed 23/40 and 39/40, and spent 2&#8201;264&#8201;582 tokens where the lane without the guide spent 338&#8201;045, 6.7 times fewer (62 calls against 56). The rows come from runs on the same text but on different days, so read this as a description, not a paired test. Without both lines the same lane passed none of its 60 first attempts: 20 with neither line, 40 with the stream import alone.
 </p></div>
+    <div class="finding"><b>cocolog without its guide spent fewer tokens than Python.</b><p><b>Over its four arms it spent 338&#8201;045 tokens where Python spent 359&#8201;114, 6 % fewer, and fewer in three of the four arms</b> (all but <i>+ reasoning + IR</i>, 104&#8201;528 against 103&#8201;670). Its first program was right 24 times in 40 and Python's 13 times, so it needed 56 calls where Python needed 68. Python's rows come from runs on another day, so read this as a description.</p></div>
     <div class="finding"><b>SWI-Prolog's low first-attempt rate is partly its prompt's.</b><p>Its user message is the requirement alone. Every cocolog lane's begins "Write a complete cocolog program for this requirement." In the SWI-Prolog rerun, 22 of the 40 first replies began with English design notes before the code and did not load; no first reply of either cocolog lane did. So the gap at the first attempt between SWI-Prolog and cocolog without its guide, 4/40 against 24/40, is not only a gap between the two languages.</p></div>
   </div>
 </section>
@@ -133,6 +134,31 @@ hr { border: 0; border-top: 1px solid var(--rule); margin: 0; }
 <tr><td class="l">+ IR only</td><td><span class="rate">3/10<span class="bar"><i style="width:30%"></i></span></span></td><td><span class="rate">10/10<span class="bar"><i style="width:100%"></i></span></span></td><td>1.70</td><td>66&#8201;612</td><td>29&#8201;414</td><td>18.8</td><td class="l"><span class="meta">SWI rerun (1.15.1)</span></td></tr>
 </tbody></table></div>
 
+</section>
+
+<section>
+  <h2>Why the IR note saves tokens in C and costs tokens in Python</h2>
+  <p>The first run's report showed fewer tokens for the IR arm in C. The clear-text run shows the same in C, and more tokens in Python, as the first run also did. The direction is the same in both runs; only the size changed. Each total is its calls times its tokens a call:</p>
+  <div class="scroll"><table>
+    <thead><tr><th class="l">lane and run</th><th>calls</th><th>tokens a call</th><th>tokens</th><th>change</th></tr></thead>
+    <tbody>
+      <tr class="group"><td colspan="5">C, prompt forwarded → + IR only</td></tr>
+      <tr><td class="l">first run (3 cells an arm)</td><td>6 → 4</td><td>6&#8201;677 → 7&#8201;162</td><td>40&#8201;062 → 28&#8201;647</td><td>−28 %</td></tr>
+      <tr><td class="l">clear-text run (10 cells an arm)</td><td>19 → 15</td><td>6&#8201;819 → 7&#8201;738</td><td>129&#8201;559 → 116&#8201;067</td><td>−10 %</td></tr>
+      <tr class="group"><td colspan="5">Python, prompt forwarded → + IR only</td></tr>
+      <tr><td class="l">first run (3 cells an arm)</td><td>6 → 5</td><td>4&#8201;069 → 5&#8201;446</td><td>24&#8201;414 → 27&#8201;232</td><td>+12 %</td></tr>
+      <tr><td class="l">clear-text run (10 cells an arm)</td><td>17 → 19</td><td>4&#8201;190 → 5&#8201;876</td><td>71&#8201;230 → 111&#8201;650</td><td>+57 %</td></tr>
+      <tr class="group"><td colspan="5">all four arms, Python → cocolog without its guide</td></tr>
+      <tr><td class="l">clear-text runs (40 cells a lane)</td><td>68 → 56</td><td>5&#8201;281 → 6&#8201;037</td><td>359&#8201;114 → 338&#8201;045</td><td>−6 %</td></tr>
+    </tbody>
+  </table></div>
+  <p>The note makes every call dearer: it adds 1&#8201;435 prompt tokens to a call, in C and in Python (measured on the cells of one call). It makes a cell cheaper only by saving repair calls, and a repair call is expensive: it sends the requirement, the note, the previous program and the failure report, and the model writes a whole new program. In the clear-text run a C cell of one call spent about 5&#8201;750 tokens and a cell of two calls about 15&#8201;800; in Python about 3&#8201;800 and 10&#8201;200.</p>
+  <ul>
+    <li><b>C:</b> the note made the first program right 5 times in 10 against 4, and the arm made 5 repair calls against 9. Its calls fell by 21 %, its tokens a call rose by 13 %, and its tokens fell by 10 %.</li>
+    <li><b>Python:</b> the first program was right 2 times in 10 against 3, and the arm made 9 repair calls against 7. Its calls rose by 12 %, its tokens a call by 40 %, and its tokens by 57 %.</li>
+    <li><b>The first run:</b> C saved two calls of six, which paid for the note; Python saved one, which did not. At three cells an arm one repair call more or less moves an arm's tokens by about 30 %, and the first run read the old text: its report says no difference in it is significant.</li>
+  </ul>
+  <p>On this task the note does not make C's or Python's first program right more often, and without that it only adds tokens. <b>The same rule makes cocolog without its guide spend fewer tokens than Python: its first program was right 24 times in 40 and Python's 13, so it made 56 calls where Python made 68, and spent 6 % fewer tokens though each of its calls spent 14 % more.</b></p>
 </section>
 
 <section>
@@ -248,7 +274,7 @@ v</pre></div>
 <hr>
 <section>
   <h3>Files</h3>
-  <p class="note">In <code>saman-pasha/reasoning</code>, <code>coding/bench/v2/results/ir-mvccs-clear-20261120/</code>: <code>bench.jsonl</code> (clear-text run), <code>bench-reasoning.jsonl</code> (run A), <code>bench-swipl-1.15.1.jsonl</code>, <code>bench-noguide-1.15.2.jsonl</code>, <code>bench-noguide-1.15.3.jsonl</code>, the notes (<code>*.ir</code>, <code>*.reasoning</code>) and the translation phase's rows. The first run is <code>ir-mvccs-20261120/</code>. Commits <code>4816a72</code> (1.14.0), <code>3475b3f</code> (1.14.1), <code>7beae66</code> (1.15.0), <code>2f014be</code> (1.15.1), <code>7ff352a</code> (1.15.2), <code>b918c99</code> (1.15.3) and <code>426fbbc</code> (this report)
+  <p class="note">In <code>saman-pasha/reasoning</code>, <code>coding/bench/v2/results/ir-mvccs-clear-20261120/</code>: <code>bench.jsonl</code> (clear-text run), <code>bench-reasoning.jsonl</code> (run A), <code>bench-swipl-1.15.1.jsonl</code>, <code>bench-noguide-1.15.2.jsonl</code>, <code>bench-noguide-1.15.3.jsonl</code>, the notes (<code>*.ir</code>, <code>*.reasoning</code>) and the translation phase's rows. The first run is <code>ir-mvccs-20261120/</code>. Commits <code>4816a72</code> (1.14.0), <code>3475b3f</code> (1.14.1), <code>7beae66</code> (1.15.0), <code>2f014be</code> (1.15.1), <code>7ff352a</code> (1.15.2) and <code>b918c99</code> (1.15.3); the report came in <code>426fbbc</code> and its page in <code>526d165</code>
 .</p>
 </section>
 </div>
