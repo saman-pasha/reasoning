@@ -90,7 +90,7 @@ hr { border: 0; border-top: 1px solid var(--rule); margin: 0; }
   <div class="eyebrow">reasoning 1.17.1 · coding bench v2 · 2026-11-21</div>
   <h1>Which reasoner note helps Python's first program</h1>
   <p class="lede">One hard task, <code>mvccs_acid</code> (a multi-version B-tree with transactions and snapshot isolation), written in Python by <code>claude-sonnet-5-5</code> at effort <code>low</code>. Each cell got the requirement alone, or the requirement and one note: the requirement said again in controlled English, or what three of the reasoner's readers make of that text, or the translator's IR. Twenty trials an arm, up to three model calls each.</p>
-  <p class="meta">120 cells in one run, 213 generator calls, 1&#8201;159&#8201;412 tokens and 39 min of cell time: $5.75 at list prices.</p>
+  <p class="meta">120 cells in one run, 213 generator calls, 1&#8201;159&#8201;412 tokens and 39 min of cell time: $5.75 at list prices. A second run of 120 cells put the controlled text in C and cocolog: $10.72.</p>
 </header>
 
 <section>
@@ -99,6 +99,7 @@ hr { border: 0; border-top: 1px solid var(--rule); margin: 0; }
     <div class="finding"><b>No reader's note made the first program right more often.</b><p><code>reason_text/2</code>'s terms passed 7/20 at the first attempt, as the requirement alone did. The outline of <code>reason_topics/2</code> passed 5/20, <code>reason_concepts/2</code>'s list 3/20 and the translator's IR 3/20. No arm differs from the requirement alone at p&nbsp;&lt;&nbsp;0.05 (Fisher's exact test, two-sided).</p></div>
     <div class="finding"><b>The readers' input did best: the requirement in controlled English.</b><p>It passed 12/20 at the first attempt against 7/20 (p&nbsp;=&nbsp;0.21). It made the fewest calls, 29 against 34, and spent only 3&#8201;% more tokens, though each call carried 2&#8201;590 characters more. Every other note spent 42&#8201;% to 89&#8201;% more tokens than the requirement alone.</p></div>
     <div class="finding"><b>One unnamed word decides the first attempt.</b><p>Python's first programs fail almost only at the error case, whose expected output is the word <code>error</code>. The requirement never says what an error prints, and most failing programs print nothing there. 14 of the controlled text's 20 first programs print <code>error</code>, against 8 of 20 with no note.</p></div>
+    <div class="finding"><b>In C and in cocolog the controlled text did not help, and in cocolog with its guide it did harm.</b><p>In a second run, C passed 15/20 at the first attempt with it and 14/20 without it, and cocolog without its guide 15/20 and 14/20. Cocolog with its guide fell from 15/20 to 2/20 (p&nbsp;=&nbsp;0.00007), with 75&#8201;% more tokens.</p></div>
     <div class="finding"><b>Two cells failed for the safety classifier, not for their programs.</b><p>Both repair calls of two <code>concepts</code> cells were refused, category <code>reasoning_extraction</code>, and each request sent again was refused again. That is why <code>concepts</code> passes 18/20 at the end where every other arm passes 20/20.</p></div>
   </div>
 </section>
@@ -171,11 +172,33 @@ cause(A,error):-repeated_begin(A)</pre></div>
 </section>
 
 <section>
+  <h2>The controlled text in C and cocolog</h2>
+  <p>A second run, <code>controlled-mvccs-20261121/</code>, put the same controlled text after the requirement in C, in cocolog with its guide and in cocolog without its guide. Each lane also had the requirement alone, 20 trials a lane and arm: 120 cells, 171 calls, 3&#8201;076&#8201;591 tokens and 58 min of cell time, $10.72. The note is the same file, byte for byte, and it names no language.</p>
+  <div class="scroll"><table>
+    <thead><tr><th class="l">lane</th><th>requirement alone: first</th><th>+ controlled English: first</th><th>p</th><th>calls</th><th>tokens</th></tr></thead>
+    <tbody>
+      <tr><td class="l">C</td><td><span class="rate">14/20<span class="bar"><i style="width:70%"></i></span></span></td><td><span class="rate">15/20<span class="bar"><i style="width:75%"></i></span></span></td><td>1.0</td><td>27 → 25</td><td>152&#8201;363 → 164&#8201;971</td></tr>
+      <tr><td class="l">cocolog, with its guide</td><td><span class="rate">15/20<span class="bar"><i style="width:75%"></i></span></span></td><td><span class="rate"><b>2/20</b><span class="bar"><i style="width:10%"></i></span></span></td><td><span class="pill bad">0.00007</span></td><td>25 → 42</td><td>903&#8201;162 → 1&#8201;580&#8201;274</td></tr>
+      <tr><td class="l">cocolog, without its guide</td><td><span class="rate">14/20<span class="bar"><i style="width:70%"></i></span></span></td><td><span class="rate">15/20<span class="bar"><i style="width:75%"></i></span></span></td><td>1.0</td><td>27 → 25</td><td>122&#8201;062 → 153&#8201;759</td></tr>
+    </tbody>
+  </table></div>
+  <p class="caption">Final: 20/20 in every cell of the table but cocolog with its guide and the controlled text, 19/20. Calls and tokens: the requirement alone → with the controlled text.</p>
+  <ul>
+    <li><b>C and cocolog without its guide do not move.</b> The difference is one cell in twenty each way, with 8&#8201;% and 26&#8201;% more tokens. No C program called <code>strdup</code> in either arm, and one in each arm did not compile. So the compile errors of the every-check run came from its checks, not from a note as such.</li>
+    <li><b>In cocolog with its guide the controlled text made the first program much worse.</b> 12 of its 18 failing first programs split each line with <code>split_string/4</code>, which gives strings, and then match each command as a list of codes (<code>mv_cmd([[0'b], N])</code>). No command matches, and the program prints nothing. With the requirement alone, 3 of 20 programs did that. Most of the passing programs (12 of 17 in the two arms) turn the parts into atoms and match <code>[b, T]</code>. 5 more programs failed the error case and printed nothing there; with the requirement alone, none did. The note says nothing about strings, codes or how to read a line, and the run does not show why it moves the model away from what the guide teaches.</li>
+    <li><b>The same prompt passed more often in this run than in the earlier ones.</b> With the requirement alone, cocolog with its guide passed 15/20 here and 3/10 in each of the two runs before it (p&nbsp;=&nbsp;0.010 against the two together). C passed 14/20, against 4/10 and 5/10. The prompts are the same text byte for byte, and the runner's <code>plain</code> arm did not change. Rows of different runs do not compare; only arms shuffled together in one run do.</li>
+  </ul>
+  <p>So the controlled text helps where the first program's failure is the unnamed <code>error</code> (Python, not significantly), changes nothing in C and in cocolog without its guide, and harms cocolog with its 19&#8201;000-token guide.</p>
+</section>
+
+<section>
   <h2>What it cost</h2>
+
   <div class="scroll"><table>
     <thead><tr><th class="l">run</th><th>cells</th><th>prompt tokens</th><th>completion tokens</th><th>cost</th></tr></thead>
     <tbody>
       <tr><td class="l">Python reader notes, 1.17.1</td><td>120</td><td>730&#8201;308</td><td>429&#8201;104</td><td>$5.75</td></tr>
+      <tr><td class="l">controlled text in C and cocolog, 1.17.1</td><td>120</td><td>2&#8201;505&#8201;615</td><td>570&#8201;976</td><td>$10.72</td></tr>
     </tbody>
   </table></div>
   <p class="caption">At $2 and $10 per million input and output tokens, every prompt token at the full price (an upper bound: some were cache reads).</p>
@@ -184,7 +207,7 @@ cause(A,error):-repeated_begin(A)</pre></div>
 <section>
   <h2>Limits of this run</h2>
   <ul>
-    <li>One task and one language. Here a note helps or hurts through one word that the cases expect. A task whose failures are not one unnamed output would test the readers in another way.</li>
+    <li>One task. In Python a note helps or hurts through one word that the cases expect. A task whose failures are not one unnamed output would test the readers in another way. Only the controlled text ran in the other lanes.</li>
     <li>Twenty trials an arm. A difference of five cells in twenty is inside the noise (p&nbsp;=&nbsp;0.21).</li>
     <li>The restatement was written by hand, by the assistant that ran the benchmark, before the run and from the requirement alone. Its cost is not counted, and another writer would make another text. It tests what a controlled text gives the model, not what a reader gives it.</li>
     <li>The IR note reads the requirement as it is, not the restatement.</li>
@@ -196,7 +219,7 @@ cause(A,error):-repeated_begin(A)</pre></div>
 <hr>
 <section>
   <h3>Files</h3>
-  <p class="note">In <code>saman-pasha/reasoning</code>, <code>coding/bench/v2/results/reason-python-20261121/</code>: <code>bench.jsonl</code> (the run), the five notes (<code>mvccs_acid-python.controlled</code>, <code>.terms</code>, <code>.concepts</code>, <code>.outline</code> and <code>.ir</code>) and <code>reason-prep.jsonl</code> (the notes' sizes and the reasoning version that wrote them). The restatement is <code>coding/bench/v2/controlled/mvccs_acid.txt</code>, and the same report in Markdown is <code>results/reason-python-20261121.md</code>. Code at <code>5da3c6e</code> (1.17.1); results in <code>7e642d7</code>.</p>
+  <p class="note">In <code>saman-pasha/reasoning</code>, <code>coding/bench/v2/results/reason-python-20261121/</code>: <code>bench.jsonl</code> (the run), the five notes (<code>mvccs_acid-python.controlled</code>, <code>.terms</code>, <code>.concepts</code>, <code>.outline</code> and <code>.ir</code>) and <code>reason-prep.jsonl</code> (the notes' sizes and the reasoning version that wrote them). The second run is <code>controlled-mvccs-20261121/</code>: <code>bench.jsonl</code>, the notes it wrote (only <code>.controlled</code> ran) and <code>reason-prep.jsonl</code>. The restatement is <code>coding/bench/v2/controlled/mvccs_acid.txt</code>, and the same report in Markdown is <code>results/reason-python-20261121.md</code>. Code at <code>5da3c6e</code> (1.17.1); results in <code>7e642d7</code>.</p>
 </section>
 </div>
 </body>

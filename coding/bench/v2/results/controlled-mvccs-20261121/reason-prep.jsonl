@@ -1,0 +1,12 @@
+{"run":1795259725435,"task":"mvccs_acid","language":"c","kind":"controlled","reasoning":"1.17.1","lines":70,"chars":2590}
+{"run":1795259725435,"task":"mvccs_acid","language":"c","kind":"terms","reasoning":"1.17.1","lines":72,"chars":2387}
+{"run":1795259725435,"task":"mvccs_acid","language":"c","kind":"concepts","reasoning":"1.17.1","lines":100,"chars":3823}
+{"run":1795259725435,"task":"mvccs_acid","language":"c","kind":"outline","reasoning":"1.17.1","lines":59,"chars":3836}
+{"run":1795259725435,"task":"mvccs_acid","language":"cocolog","kind":"controlled","reasoning":"1.17.1","lines":70,"chars":2590}
+{"run":1795259725435,"task":"mvccs_acid","language":"cocolog","kind":"terms","reasoning":"1.17.1","lines":72,"chars":2387}
+{"run":1795259725435,"task":"mvccs_acid","language":"cocolog","kind":"concepts","reasoning":"1.17.1","lines":100,"chars":3823}
+{"run":1795259725435,"task":"mvccs_acid","language":"cocolog","kind":"outline","reasoning":"1.17.1","lines":59,"chars":3836}
+{"run":1795259725435,"task":"mvccs_acid","language":"cocolog_noguide","kind":"controlled","reasoning":"1.17.1","lines":70,"chars":2590}
+{"run":1795259725435,"task":"mvccs_acid","language":"cocolog_noguide","kind":"terms","reasoning":"1.17.1","lines":72,"chars":2387}
+{"run":1795259725435,"task":"mvccs_acid","language":"cocolog_noguide","kind":"concepts","reasoning":"1.17.1","lines":100,"chars":3823}
+{"run":1795259725435,"task":"mvccs_acid","language":"cocolog_noguide","kind":"outline","reasoning":"1.17.1","lines":59,"chars":3836}

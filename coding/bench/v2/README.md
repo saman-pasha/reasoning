@@ -237,6 +237,10 @@ CODING_BENCH_BASE_URL=https://api.anthropic.com/v1/messages \
   `reason_topics/2` make of it, each an arm (`reason_prep.pl` writes
   them). The restatement itself did best, 12/20 first programs against
   7/20 with no note (p = 0.21); no reader's note did better than none.
+  A second run put the restatement in C and both cocolog lanes
+  (`results/controlled-mvccs-20261121/`): no change in C or in cocolog
+  without its guide, and 2/20 against 15/20 in cocolog with its guide
+  (p = 0.00007).
 
 ### The reasoning arms and the cocolog lane without its guide (1.15.0)
 

@@ -1,0 +1,59 @@
+
+
+# What the request is about (reason_topics/2)
+
+An outline of the requirement, a line a subject, the subject most said about first:
+
+- Transaction: every transaction has the snapshot; every transaction begins at the latest_version; every transaction that is active may stage the insertion; every transaction that is active may stage the deletion; every transaction that is active is may_commit; every transaction that is active is may_abort; every transaction that is active may read the key; every transaction that is active may print the view; every transaction that is not active causes the error.
+- Key: every key is an integer; every key that is visible reads as "yes"; every key that is not visible reads as "no"; every key that is visible is printed; every key that is committed gets "yes"; every key that is not committed gets "no"; every key has the staged_change.
+- Commit: every commit is atomic; every commit applies the changes to the latest_version; every commit creates the version; every commit increments the commit_id; every commit ends the transaction; every commit that is empty increments the commit_id; every commit that follows the snapshot is invisible.
+- Mvccs, a program: simulates the tree; reads the line; does not print the prompt; does not print the debug_output.
+- B_tree: a tree; a committed_version; every b_tree holds the keys.
+- Ignored: a line that is blank; a redundant_insertion; a redundant_deletion.
+- Neg: a view that is empty; an absent_key; an unfinished_transaction.
+- View: every view that is empty does not print the line; every view is a snapshot; every view holds the changes.
+- Unfinished_transaction: every unfinished_transaction is active; every unfinished_transaction is abandoned; every unfinished_transaction is not committed.
+- The tree: Mvccs simulates it.
+- The line: Mvccs reads it.
+- Line: every line holds the command; every line that is blank is ignored.
+- Repeated_begin: every repeated_begin begins the active_transaction; every repeated_begin causes the error.
+- Abort: every abort discards the changes; every abort ends the transaction.
+- Blind_deletion: every blind_deletion deletes the invisible_key; every blind_deletion is staged.
+- Redundant_insertion: every redundant_insertion inserts the present_key; every redundant_insertion is ignored.
+- Redundant_deletion: every redundant_deletion deletes the absent_key; every redundant_deletion is ignored.
+- Recursive: an insertion; a deletion.
+- Unbounded: a key_count; a transaction_count.
+- Program (Mvccs).
+- Tree: every tree is a b_tree.
+- The minimum_degree: 2.
+- Integer: a key.
+- Negative_integer: every negative_integer may be the key.
+- May_commit: a transaction that is active.
+- May_abort: a transaction that is active.
+- Atomic: a commit.
+- Printed: a key that is visible.
+- Ascending: a printing.
+- Printing: every printing is ascending.
+- Version_command: every version_command prints the commit_id.
+- Word: a transaction_name.
+- Transaction_name: every transaction_name is a word.
+- Snapshot: a view.
+- Invisible: a commit that follows the snapshot.
+- Kept: a change that is last.
+- Change: every change that is last is kept.
+- Staged: a blind_deletion.
+- Win: a committer that is last.
+- Committer: every committer that is last is win.
+- Committed_key: a present_key.
+- Present_key: every present_key is a committed_key.
+- Absent_key: every absent_key is not a committed_key.
+- Active: an unfinished_transaction.
+- Abandoned: an unfinished_transaction.
+- Committed_version: every committed_version is a b_tree.
+- Insertion: every insertion is recursive.
+- Deletion: every deletion is recursive.
+- Heap_allocated: a node.
+- Node: every node is heap_allocated.
+- Key_count: every key_count is unbounded.
+- Transaction_count: every transaction_count is unbounded.
+- Command: every command prints the answer.

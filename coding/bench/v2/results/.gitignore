@@ -34,3 +34,5 @@
 !ir-mvccs-checks-20261121/ir-prep.jsonl
 !reason-python-20261121/bench.jsonl
 !reason-python-20261121/reason-prep.jsonl
+!controlled-mvccs-20261121/bench.jsonl
+!controlled-mvccs-20261121/reason-prep.jsonl

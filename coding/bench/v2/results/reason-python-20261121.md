@@ -1,5 +1,8 @@
 # v2 language comparison, mvccs_acid in Python: which reason_* note helps the first program, 2026-11-21
 
+With a second run: the controlled text in C and in cocolog with and
+without its guide (below).
+
 - Model: `claude-sonnet-5-5`, provider `anthropic`, effort `low`,
   `max_tokens` 16 000, no temperature (the model refuses one)
 - Task: `mvccs_acid` on the clear text of reasoning 1.14.1, repair cases
@@ -127,11 +130,59 @@ This is the same failure the clear-text run found in Python (24 of its
 Python rows agree with `plain` here: 3/10 in the clear-text run, 4/10 in
 the every-check run, 7/20 now.
 
+## The controlled text in C and cocolog
+
+A second run (`controlled-mvccs-20261121/`) put the same controlled
+text after the requirement in C, in cocolog with its guide and in
+cocolog without its guide, beside the requirement alone, 20 trials a
+lane and arm: 120 cells, 171 calls, 3 076 591 tokens, 58 min of cell
+time, $10.72. The note is the same file, byte for byte; it names no
+language.
+
+| lane | requirement alone: first | + controlled English: first | p | final | calls | tokens |
+|---|---|---|---|---|---|---|
+| C | 14/20 | 15/20 | 1.0 | 20/20 · 20/20 | 27 · 25 | 152 363 · 164 971 |
+| cocolog, with its guide | 15/20 | **2/20** | **0.00007** | 20/20 · 19/20 | 25 · 42 | 903 162 · 1 580 274 |
+| cocolog, without its guide | 14/20 | 15/20 | 1.0 | 20/20 · 20/20 | 27 · 25 | 122 062 · 153 759 |
+
+(Final, calls and tokens: the requirement alone · with the controlled
+text.)
+
+- **C and cocolog without its guide do not move.** One cell in twenty
+  each way, with 8 % and 26 % more tokens. No C program called `strdup`
+  in either arm, and one in each did not compile: the compile errors of
+  the every-check run came from its checks, not from a note as such.
+- **In cocolog with its guide the controlled text made the first program
+  much worse**: 2/20 against 15/20, with 42 calls against 25 and 75 %
+  more tokens. 12 of its 18 failing first programs split each line with
+  `split_string/4`, which gives strings, and then match each command as
+  a list of codes (`mv_cmd([[0'b], N])`), so no command matches and the
+  program prints nothing; with the requirement alone, 3 of 20 programs
+  did that. Most of the passing programs (12 of 17 in the two arms) turn
+  the parts into atoms and match `[b, T]`. 5 more failed the error case and printed nothing there;
+  with the requirement alone, none did. The note says nothing of strings,
+  codes or how to read a line, and the run does not show why it moves
+  the model away from what the guide teaches.
+- **The same prompt passed more often in this run than in the earlier
+  ones.** With the requirement alone, cocolog with its guide passed 15/20
+  here and 3/10 in each of the two runs before it (p = 0.010 against the
+  two together), and C 14/20 against 4/10 and 5/10. The prompts are the
+  same text byte for byte (the kept `spec.txt` of both runs, and the
+  runner's `plain` arm did not change). Rows of different runs do not
+  compare; only arms shuffled together in one run do.
+
+So the controlled text helps where the first program's failure is the
+unnamed `error` (Python, not significantly), changes nothing in C and in
+cocolog without its guide, and harms cocolog with its 19 000-token
+guide.
+
 ## Limits of this run
 
-- One task and one lane. The notes help or hurt through one word the
-  cases expect; a task whose failures are not one unnamed output would
-  test the readers in another way.
+
+- One task. In Python the notes help or hurt through one word the cases
+  expect; a task whose failures are not one unnamed output would test
+  the readers in another way. Only the controlled text ran in the other
+  lanes.
 - Twenty trials an arm. A difference of five cells in twenty is inside
   the noise (p = 0.21).
 - The restatement was written by hand, by the assistant that ran the
@@ -150,7 +201,9 @@ the every-check run, 7/20 now.
 `reason-python-20261121/`: `bench.jsonl` (the run), the five notes
 (`mvccs_acid-python.controlled`, `.terms`, `.concepts`, `.outline`, and
 the `.ir` copied from `ir-mvccs-clear-20261120/`) and `reason-prep.jsonl`
-(the notes' sizes and the reasoning version that wrote them). The
+(the notes' sizes and the reasoning version that wrote them). The second
+run is `controlled-mvccs-20261121/`: `bench.jsonl`, the notes it wrote
+(only `.controlled` ran) and `reason-prep.jsonl`. The
 restatement is `coding/bench/v2/controlled/mvccs_acid.txt`; the code is
 1.17.1's (`5da3c6e`). The same report as a page, with its tables drawn:
 `reason-python-20261121.html`.
