@@ -36,3 +36,5 @@
 !reason-python-20261121/reason-prep.jsonl
 !controlled-mvccs-20261121/bench.jsonl
 !controlled-mvccs-20261121/reason-prep.jsonl
+!controlled-ablation-20261121/bench.jsonl
+!controlled-english-python-20261121/bench.jsonl
