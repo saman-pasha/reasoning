@@ -253,6 +253,10 @@ CODING_BENCH_BASE_URL=https://api.anthropic.com/v1/messages \
   `controlled/mvccs_acid.ir`, written by `ir_complete.pl` with no model
   from `controlled/mvccs_acid.translator.txt`: all 64 sentences, 68 IR
   terms, where the endpoint's IR note of the requirement read 5 of 14.
+  Tested in `results/complete-ir-20261121.md`, each test written before
+  its run: it makes the first program right more often in no lane, and
+  in Python far less often (3/60 against 32/60), at 4.4 times the
+  tokens.
 
 ### The reasoning arms and the cocolog lane without its guide (1.15.0)
 

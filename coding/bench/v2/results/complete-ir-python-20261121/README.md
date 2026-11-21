@@ -37,3 +37,10 @@ whether the complete IR helps Python where the partial one did not.
 Everything else is described and not tested: the final pass, calls and
 tokens, the error case's failures, how many first programs print
 `error`. A refused cell counts as it comes; the report says how many.
+
+## The result (written after the run)
+
+`ir` 3/60 first programs right, `plain` 32/60: Fisher's exact test,
+one-sided (ir greater), **p = 1.0: the hypothesis is not supported**.
+The effect runs the other way (two-sided p = 3 × 10⁻⁹), with 4.4 times
+the tokens. The report is `../complete-ir-20261121.md`.

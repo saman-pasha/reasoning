@@ -40,3 +40,14 @@ Everything else is described and not tested: the final pass, calls and
 tokens, how the first programs failed (in cocolog, whether they match a
 line's parts as codes). A refused cell counts as it comes; the report
 says how many.
+
+## The result (written after the run)
+
+Fisher's exact test, one-sided (ir greater), on first-attempt passes:
+
+- cocolog with its guide: `ir` 13/20, `plain` 14/20, **p = 0.75: not
+  supported**;
+- SWI-Prolog: `ir` 0/20, `plain` 0/20, **p = 1.0: not supported**.
+
+In SWI-Prolog fewer programs passed at all within three calls, 10/20
+against 17/20. The report is `../complete-ir-20261121.md`.

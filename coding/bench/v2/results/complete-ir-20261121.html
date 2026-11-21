@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Complete IR Report</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column of 46rem, wide tables in their own scrollers; a lab report, not a dashboard. */
+:root {
+  --bg: #f6f7f6;
+  --surface: #ffffff;
+  --fg: #1b2321;
+  --muted: #5a6763;
+  --rule: #d9dfdc;
+  --accent: #0e6a63;
+  --accent-soft: #dcefec;
+  --good: #1f7a3d;
+  --good-soft: #dff1e4;
+  --bad: #a33a2a;
+  --bad-soft: #f6e1dc;
+  --code-bg: #eef1ef;
+  --font-text: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121716; --surface: #1a201f; --fg: #e3e9e6; --muted: #9aa8a3; --rule: #2e3735;
+    --accent: #5cc4b9; --accent-soft: #173431; --good: #6fcf8e; --good-soft: #17301f;
+    --bad: #ef8b78; --bad-soft: #3a1f1a; --code-bg: #202826; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121716; --surface: #1a201f; --fg: #e3e9e6; --muted: #9aa8a3; --rule: #2e3735;
+  --accent: #5cc4b9; --accent-soft: #173431; --good: #6fcf8e; --good-soft: #17301f;
+  --bad: #ef8b78; --bad-soft: #3a1f1a; --code-bg: #202826; color-scheme: dark;
+}
+body { background: var(--bg); color: var(--fg); font-family: var(--font-text); font-size: 16px; line-height: 1.55; }
+.page { max-width: 46rem; margin: 0 auto; padding-block: 2.5rem 4rem;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 2.25rem; }
+header { display: flex; flex-direction: column; gap: .6rem; }
+.eyebrow { font-family: var(--font-mono); font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+h1 { font-size: 2rem; line-height: 1.15; font-weight: 600; margin: 0; text-wrap: balance; }
+h2 { font-size: 1.3rem; line-height: 1.25; font-weight: 600; margin: 0; text-wrap: balance; }
+h3 { font-size: 1.02rem; font-weight: 600; margin: 0; }
+p { margin: 0; max-width: 65ch; }
+section { display: flex; flex-direction: column; gap: .9rem; min-width: 0; }
+.lede { font-size: 1.08rem; color: var(--fg); }
+.meta { font-size: .86rem; color: var(--muted); font-family: var(--font-mono); }
+ul, ol { margin: 0; padding-left: 1.2rem; display: flex; flex-direction: column; gap: .4rem; max-width: 65ch; }
+code, .mono { font-family: var(--font-mono); font-size: .88em; }
+code { background: var(--code-bg); padding: .05em .3em; border-radius: 3px; }
+.findings { display: grid; gap: .75rem; }
+.finding { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: .9rem 1rem; display: flex; flex-direction: column; gap: .35rem; }
+.finding b { font-weight: 600; }
+.scroll { overflow-x: auto; min-width: 0; border: 1px solid var(--rule); border-radius: 6px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: .88rem; font-variant-numeric: tabular-nums; }
+th, td { padding: .45rem .6rem; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--rule); }
+th { font-weight: 600; color: var(--muted); font-size: .76rem; letter-spacing: .03em; text-transform: uppercase; background: var(--bg); }
+td:first-child, th:first-child, td.l, th.l { text-align: left; }
+tbody tr:last-child td { border-bottom: 0; }
+tr.group td { background: var(--bg); font-weight: 600; text-align: left; color: var(--fg); }
+tr.total td { font-weight: 600; }
+.rate { display: inline-flex; align-items: center; gap: .45rem; justify-content: flex-end; }
+.bar { width: 3.2rem; height: .45rem; background: var(--rule); border-radius: 2px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--accent); }
+.pill { display: inline-block; font-family: var(--font-mono); font-size: .74rem; padding: .05rem .4rem; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
+.pill.bad { background: var(--bad-soft); color: var(--bad); }
+.pill.good { background: var(--good-soft); color: var(--good); }
+tr.best td { background: var(--accent-soft); }
+tr.best td:first-child { box-shadow: inset 3px 0 0 var(--accent); }
+.excerpts { display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: .75rem; }
+.excerpts > div { min-width: 0; display: flex; flex-direction: column; gap: .35rem; }
+.excerpts pre { font-size: .78rem; white-space: pre; }
+pre { margin: 0; background: var(--code-bg); border-radius: 6px; padding: .8rem 1rem; overflow-x: auto; font-family: var(--font-mono); font-size: .85rem; line-height: 1.5; }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: .75rem; }
+.two > div { min-width: 0; display: flex; flex-direction: column; gap: .35rem; }
+.caption { font-size: .84rem; color: var(--muted); max-width: 65ch; }
+.note { font-size: .9rem; color: var(--muted); }
+a { color: var(--accent); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 0; }
+</style>
+</head>
+<body>
+<div class="page">
+<header>
+  <div class="eyebrow">reasoning 1.17.3 · coding bench v2 · 2026-11-21</div>
+  <h1>A complete IR of the requirement</h1>
+  <p class="lede">The translator's IR note of <code>mvccs_acid</code> held 5 of the requirement's 14 sentences, never the command table. This page says how a complete IR was made from the controlled English restatement, every sentence of it, and what three tests chosen before the runs found in Python, guided cocolog and SWI-Prolog.</p>
+  <p class="meta">The IR: 64 sentences, 68 IR terms, 20&#8201;039 characters, made with no model call. The runs: 200 cells, 376 calls, 5&#8201;427&#8201;770 tokens, $18.37.</p>
+</header>
+
+<section>
+  <h2>Where it stands</h2>
+  <div class="findings">
+    <div class="finding"><b>The IR is complete: every sentence of the restatement has its IR.</b><p>The old note read 5 of the requirement's 14 sentences. The new one reads all 64 sentences of the controlled restatement, through a second form of it that the translator reads right, line for line. Every one of the 68 readings was read back by hand.</p></div>
+    <div class="finding"><b>Complete did not mean better. The complete IR helps the first program in no lane.</b><p>All three tests, chosen before the runs, fail: guided cocolog 13/20 against 14/20, SWI-Prolog 0/20 against 0/20.</p></div>
+    <div class="finding"><b>In Python it does great harm: 3/60 first programs right, against 32/60 with the requirement alone.</b><p>Nearly every first program skips the error case and prints nothing there. The arm spent 4.4 times the tokens. The test did not ask about this direction, so it is a description (two-sided p&nbsp;=&nbsp;3&nbsp;×&nbsp;10<sup>−9</sup>).</p></div>
+    <div class="finding"><b>It costs more everywhere.</b><p>The note adds about 5&#8201;000 tokens to every call and saves no repair call: +26&#8201;% tokens in cocolog, 3.1 times in SWI-Prolog, where fewer programs passed at all within three calls (10/20 against 17/20).</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>How far each way got</h2>
+  <div class="scroll"><table>
+    <thead><tr><th class="l">what read what</th><th>sentences read</th><th>model calls</th></tr></thead>
+    <tbody>
+      <tr><td class="l">the endpoint's translator and repair, over the requirement (the old IR note)</td><td><span class="rate">5/14<span class="bar"><i style="width:35.7%"></i></span></span></td><td>6</td></tr>
+      <tr><td class="l">the translator alone, over the controlled restatement</td><td><span class="rate">29/64<span class="bar"><i style="width:45.3%"></i></span></span></td><td>0</td></tr>
+      <tr><td class="l">the translator and the endpoint's repair, over the restatement, first run</td><td><span class="rate">54/64<span class="bar"><i style="width:84.4%"></i></span></span></td><td>6</td></tr>
+      <tr><td class="l">the same, run again on the same store</td><td><span class="rate">52/64<span class="bar"><i style="width:81.3%"></i></span></span></td><td>6</td></tr>
+      <tr class="best"><td class="l"><b>the translator alone, over the translator form of the restatement</b></td><td><span class="rate"><b>64/64</b><span class="bar"><i style="width:100%"></i></span></span></td><td>0</td></tr>
+    </tbody>
+  </table></div>
+  <p class="caption">The two repair runs cost $0.17 together. The second judged 23 readings wrong and read two sentences fewer, so the result moves from run to run; the complete IR does not use the model's check. The old note's 6 calls made the notes of four lanes.</p>
+</section>
+
+<section>
+  <h2>Why the translator did not read the restatement</h2>
+  <p>The restatement is written for the reasoner's grammar, and the translator's lexicon is another. Two things stopped it:</p>
+  <ul>
+    <li><b>Compounds joined by <code>_</code>.</b> The grammar reads <code>latest_version</code> or <code>commit_id</code> as one noun. The translator knows no such word.</li>
+    <li><b><code>commit</code> and <code>abort</code> as nouns.</b> The translator reads them only as verbs, so <code>Every commit is atomic.</code> has no reading. The model taught them as nouns, and its rewrites kept them as nouns (<code>A commit is atomic.</code>), so none of those was read either.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>The translator form</h2>
+  <p><code>controlled/mvccs_acid.translator.txt</code> says each line of the restatement again in a form the translator reads, and reads right. <code>ir_complete.pl</code> reads it with the translator alone (no model, no key, every sentence) and writes the note; if any line is not read, it stops and names it. The note is the same at every run.</p>
+  <div class="scroll"><table>
+    <thead><tr><th class="l">where a line of the translator form came from</th><th>lines</th></tr></thead>
+    <tbody>
+      <tr><td class="l">the restatement's sentence as it stands, read right</td><td>15</td></tr>
+      <tr><td class="l">the model's rewrite, from the endpoint's repair, read right</td><td>33</td></tr>
+      <tr><td class="l">by hand, where the model's rewrite was not read or was read wrong</td><td>16</td></tr>
+    </tbody>
+  </table></div>
+  <p>Some rewrites were read, but read wrong. A wrong reading is worse than none, so each was replaced and its new IR read back:</p>
+  <div class="scroll"><table>
+    <thead><tr><th class="l">the rewrite</th><th class="l">how the translator read it</th><th class="l">the line now</th></tr></thead>
+    <tbody>
+      <tr><td class="l"><code>A negative integer can be a key.</code></td><td class="l">"can" a noun</td><td class="l"><code>Some keys are negative.</code></td></tr>
+      <tr><td class="l"><code>A repeated begin causes an error.</code></td><td class="l">"begin" a verb</td><td class="l"><code>If an active transaction begins again, it causes an error.</code></td></tr>
+      <tr><td class="l"><code>... increments the version number.</code></td><td class="l">"number" the comparative of "numb"</td><td class="l"><code>... increments the counter.</code></td></tr>
+      <tr><td class="l"><code>The version command prints the version number.</code></td><td class="l">"command" a verb, "prints" a noun</td><td class="l"><code>The program prints the counter for the version command.</code></td></tr>
+      <tr><td class="l"><code>Commits after the snapshot are invisible.</code></td><td class="l">"commits" a command with no subject</td><td class="l"><code>Changes after the snapshot are invisible.</code></td></tr>
+      <tr><td class="l"><code>Every redundant insertion inserts a present key.</code></td><td class="l">"present" a noun</td><td class="l"><code>Every redundant insertion inserts a key that the tree holds.</code></td></tr>
+      <tr><td class="l"><code>The program prints no prompt.</code></td><td class="l">"no" a noun; the lexicon knows "prompt" only as an adjective</td><td class="l"><code>The program does not ask for input.</code></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>What the note looks like</h2>
+  <p>Each entry gives the restatement's sentence, its translator form where that differs, and the IR of each sentence of that form. The model gets the note after the requirement.</p>
+  <pre>- "Every transaction that is not active causes an error.", said for the translator as "If a transaction is not active, it causes an error.":
+  - `join(comma,join(w(if,upper),none,s(none,np(det(article,a,w(a,lower)),none,[],w(transaction,lower),singular),g(is,present,simple,yes),[adj([w(active,lower)])])),s(none,pronoun(third,singular,w(it,lower)),g(causes,present,simple,no),[obj(np(det(article,a,w(an,lower)),none,[],w(error,lower),singular))]))`
+- "Every key that is visible reads as "yes".", said for the translator as "If a key is visible, it reads as yes.":
+  - `join(comma,join(w(if,upper),none,s(none,np(det(article,a,w(a,lower)),none,[],w(key,lower),singular),g(is,present,simple,no),[adj([w(visible,lower)])])),s(none,pronoun(third,singular,w(it,lower)),g(reads,present,simple,no),[pp(w(as,lower),np(none,none,[],w(yes,lower),singular))]))`</pre>
+  <p class="caption">The note is about 5&#8201;000 tokens, against about 700 for the controlled-English note. Each call carries it, so it must save repair calls to pay for itself.</p>
+</section>
+
+<section>
+  <h2>The tests, chosen before the runs</h2>
+  <p>Each run's README was written and pushed before its first cell (commit <code>cbc3c82</code>). Each run has the requirement alone (<code>plain</code>) and the requirement with the complete IR (<code>ir</code>), shuffled together, seed <code>20261122</code>.</p>
+  <ul>
+    <li><b>Python:</b> 60 trials an arm. The old IR note did not help Python (2/10 against 3/10, and 3/20 against 7/20).</li>
+    <li><b>Guided cocolog and SWI-Prolog:</b> 20 trials a lane and arm. The old IR note helped both (9/10 against 3/10, and 5/10 against 0/10). The complete IR holds the four sentences on input that broke guided cocolog in the controlled-English note.</li>
+    <li><b>Hypothesis, in each lane:</b> the complete IR makes the first program right more often than the requirement alone.</li>
+    <li><b>Test:</b> Fisher's exact test, one-sided (ir greater), on first-attempt passes, one test a lane, each significant if p&nbsp;&lt;&nbsp;0.05. The report also says whether each passes p&nbsp;&lt;&nbsp;0.05&nbsp;/&nbsp;3&nbsp;=&nbsp;0.0167, the limit for three tests together.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>The results</h2>
+  <p>Each test as committed: Fisher's exact test, one-sided (ir greater), on first-attempt passes.</p>
+  <div class="scroll"><table>
+    <thead><tr><th class="l">lane</th><th>requirement alone: first</th><th>+ complete IR: first</th><th>p, one-sided</th><th class="l">the hypothesis</th></tr></thead>
+    <tbody>
+      <tr><td class="l">Python (60 an arm)</td><td><span class="rate">32/60<span class="bar"><i style="width:53.3%"></i></span></span></td><td><span class="rate"><b>3/60</b><span class="bar"><i style="width:5%"></i></span></span></td><td>1.0</td><td class="l"><span class="pill bad">not supported</span></td></tr>
+      <tr><td class="l">cocolog, with its guide (20)</td><td><span class="rate">14/20<span class="bar"><i style="width:70%"></i></span></span></td><td><span class="rate">13/20<span class="bar"><i style="width:65%"></i></span></span></td><td>0.75</td><td class="l"><span class="pill bad">not supported</span></td></tr>
+      <tr><td class="l">SWI-Prolog (20)</td><td><span class="rate">0/20<span class="bar"><i style="width:0%"></i></span></span></td><td><span class="rate">0/20<span class="bar"><i style="width:0%"></i></span></span></td><td>1.0</td><td class="l"><span class="pill bad">not supported</span></td></tr>
+    </tbody>
+  </table></div>
+  <div class="scroll"><table>
+    <thead><tr><th class="l">lane</th><th>final: alone · IR</th><th>calls: alone · IR</th><th>tokens: alone → IR</th></tr></thead>
+    <tbody>
+      <tr><td class="l">Python</td><td>60/60 · 59/60</td><td>92 · 127</td><td>390&#8201;376 → 1&#8201;721&#8201;122 (4.4 ×)</td></tr>
+      <tr><td class="l">cocolog</td><td>20/20 · 20/20</td><td>27 · 27</td><td>972&#8201;013 → 1&#8201;223&#8201;870 (+26&#8201;%)</td></tr>
+      <tr><td class="l">SWI-Prolog</td><td>17/20 · <b>10/20</b></td><td>46 · 57</td><td>276&#8201;129 → 844&#8201;260 (3.1 ×)</td></tr>
+    </tbody>
+  </table></div>
+  <p class="caption">Calls, tokens and the final pass are described, not tested. The final pass in SWI-Prolog: two-sided p&nbsp;=&nbsp;0.041.</p>
+  <h3>How the first programs failed</h3>
+  <ul>
+    <li><b>Python, at the error case.</b> 53 of the 57 failing first programs with the complete IR failed the error case, which expects the word <code>error</code>; 56 of the 57 print nothing there. Only 5 of 60 have the text "error", against 33 of 60 with the requirement alone. The note holds the rule, as the controlled-English note does, but as three entries among 64, each under a long logical form. Every long or structured note so far lowered that count (terms 7/20, outline 5/20, concepts 3/20, the old IR 4/20, against 8/20), and the controlled note alone raised it (39/60). The translator form also holds the model's rewrite <code>The program writes only the answers.</code>, and an error line may not read as an answer. The runs do not show which of the two does it.</li>
+    <li><b>Cocolog, at the first case, as always.</b> 6 of 7 failing first programs printed nothing for <code>v</code> (4 of 6 with the requirement alone). The four sentences on input that broke guided cocolog in the controlled note are in the complete IR too, and here they did not.</li>
+    <li><b>SWI-Prolog, before the first case.</b> No first program passed in either arm: most did not load. The lane's user message is the requirement alone, and its first replies often begin with prose before the code; that decides the first attempt here, not the note.</li>
+  </ul>
+  <p><b>What this says about the IR:</b> the old note, read from 5 of 14 sentences, helped the two Prolog lanes once and never Python. The complete IR, read from all 64 sentences, helps no lane and harms Python. On this task the model does better with a rule said once in plain or controlled English than with every rule said as a logical form.</p>
+</section>
+
+
+<hr>
+<section>
+  <h3>Files</h3>
+  <p class="note">In <code>saman-pasha/reasoning</code>, <code>coding/bench/v2/</code>: <code>controlled/mvccs_acid.txt</code> (the restatement), <code>controlled/mvccs_acid.translator.txt</code> (its translator form), <code>controlled/mvccs_acid.ir</code> (the complete IR note), <code>ir_complete.pl</code> (the tool), and <code>controlled/README.md</code> (where each line came from). The runs are <code>results/complete-ir-python-20261121/</code> and <code>results/complete-ir-prolog-20261121/</code>, each with its README. Commits <code>5f96637</code> (1.17.3) and <code>cbc3c82</code> (the tests). The report in Markdown is <code>results/complete-ir-20261121.md</code>.</p>
+</section>
+</div>
+</body>
+</html>
