@@ -18,8 +18,9 @@
                 ep_cors/2,
                 ep_add_guide/3,
                 ep_task_text/2,
-                ep_reasoning/8,
-                ep_reasoning/9,
+                ep_controlled/6,
+                ep_controlled_note/2,
+                ep_restate_backend/0,
                 ep_reasoning_setting/3,
                 ep_reasoning_count/3,
                 ep_mode/3,
@@ -61,7 +62,11 @@
               ]).
 :- use_module('coding/endpoint/reasoning_core.pl',
               [ endpoint_reason/4, endpoint_ir/2 ]).
-:- use_module(library(reasoning/reason), [ reason_learn/1 ]).
+:- use_module(library(reasoning/reason),
+              [ reason_learn/1, reason_live_stub/3, reason_live_restatement/2,
+                reason_set_mode/1 ]).
+:- use_module(library(reasoning/live), [ reason_live_forget/0, reason_live_stats/1,
+                                         reason_live_stats_reset/0 ]).
 :- use_module('coding/endpoint/english_lesson.pl', [ ep_english_lesson/0 ]).
 :- use_module('coding/endpoint/ir_repair.pl',
               [ ep_ir_readings/2, ep_ir_stats/1, ep_ir_stats_reset/0,
@@ -75,6 +80,9 @@ main :-
     %% no check here asks a real model: the repair's own section answers
     %% with ep_ir_model_stub/3
     setenv('CODING_ENDPOINT_IR_REPAIR', 'off'),
+    %% nor does the restatement: test_controlled_live answers it with
+    %% reason_live_stub/3
+    setenv('CODING_ENDPOINT_RESTATE', 'off'),
     test_models,
     test_health,
     test_token,
@@ -98,6 +106,8 @@ main :-
     test_reasoning_headers,
     test_model_suffix,
     test_python,
+    test_controlled_live,
+    test_restate_backend,
     test_check_cap,
     test_zero_checks,
     test_backend_key,
@@ -108,6 +118,7 @@ main :-
     test_ir_check,
     test_ir_store,
     unsetenv('CODING_ENDPOINT_TOKEN'),
+    unsetenv('CODING_ENDPOINT_RESTATE'),
     checks_done.
 
 test_models :-
@@ -117,7 +128,7 @@ test_models :-
     (   sub_atom(Text, _, _, _, '"id":"c-r8"'),
         sub_atom(Text, _, _, _, '"id":"cocolog-r0"'),
         sub_atom(Text, _, _, _, '"id":"python-r8"'),
-        sub_atom(Text, _, _, _, '"name":"Python (r8: eight checks)"'),
+        sub_atom(Text, _, _, _, '"name":"Python (r8: the controlled note)"'),
         sub_atom(Text, _, _, _, '"context_length":1000000'),
         sub_atom(Text, _, _, _, '"max_output_tokens":32768')
     ->  Got = all
@@ -726,36 +737,61 @@ test_about :-
     ep_about_note([], NoTerms),
     check('a request with no terms adds no concept note', NoTerms, '').
 
+%% A task the grammar reads already is its own controlled English, so these
+%% need no model; a stub answers the one that does (test_controlled_live).
+ep_controlled_task('Alice owns a car. Bob sleeps.').
+
+ep_first_user([json(Pairs)|_], Content) :-
+    memberchk(role-user, Pairs),
+    !,
+    memberchk(content-Content, Pairs).
+ep_first_user([_|Rest], Content) :-
+    ep_first_user(Rest, Content).
+
 test_c_reasoning :-
-    Messages = [json([role-user, content-'Write hello.c that prints hello.'])],
+    ep_controlled_task(Task),
+    Messages = [json([role-user, content-Task])],
     Request = request(post, '/v1/chat/completions', [], http(1, 1), [], []),
     ep_reasoning_setting(Request, c, Setting),
     ep_mode(false, Setting, Mode),
-    ep_reasoning(Setting, Mode, false, Messages, 'GUIDE', Guide, N, _),
-    (   Mode == reasoning,
-        N =:= 2,
-        sub_atom(Guide, _, _, _, 'Reasoning pre-pass'),
-        sub_atom(Guide, _, _, _, 'do not assume more input')
-    ->  Got = checks
-    ;   Got = wrong
+    ep_controlled(c, Mode, false, Messages, Messages1, N),
+    ep_controlled_note(['Alice owns a car.', 'Bob sleeps.'], Note),
+    atom_concat(Task, Note, Want),
+    ep_first_user(Messages1, Got),
+    check('the C model gets the controlled note after its task', Mode-N-Got,
+          reasoning-2-Want),
+    (   sub_atom(Note, _, _, _, '# The request in controlled English'),
+        sub_atom(Note, _, _, _, 'one sentence a line:\n\nAlice owns a car.\nBob sleeps.')
+    ->  Shape = bench
+    ;   Shape = other
     ),
-    check('the C model gets exactly two reasoning checks', Got, checks).
+    check('the note is the benchmark''s, one sentence a line', Shape, bench),
+    ep_add_guide(Messages1, 'GUIDE', Messages2),
+    Messages2 = [json(System)|_],
+    memberchk(content-SystemText, System),
+    check('the system prompt is the guide alone', SystemText, 'GUIDE'),
+    Prose = [json([role-user, content-'Write hello.c that prints hello.'])],
+    ep_controlled(c, reasoning, false, Prose, Prose1, ProseN),
+    check('prose with no model and nothing saved gets no note', ProseN-Prose1, 0-Prose),
+    ep_controlled(c, reasoning, true, Messages, Title1, TitleN),
+    check('a title request gets no note', TitleN-Title1, 0-Messages).
 
 test_reasoning_headers :-
-    Messages = [json([role-user, content-'Write hello.c that prints hello.'])],
+    ep_controlled_task(Task),
+    Messages = [json([role-user, content-Task])],
     Off = request(post, '/v1/chat/completions', [], http(1, 1),
                   ['x-coding-reasoning'-'0'], []),
     Eight = request(post, '/v1/chat/completions', [], http(1, 1),
                     ['x-coding-reasoning'-'8'], []),
-    ep_reasoning_setting(Off, cocolog, OffSetting),
+    ep_reasoning_setting(Off, c, OffSetting),
     ep_mode(false, OffSetting, OffMode),
-    ep_reasoning(OffSetting, OffMode, false, Messages, 'GUIDE', _, OffN, _),
-    ep_reasoning_setting(Eight, cocolog, EightSetting),
+    ep_controlled(c, OffMode, false, Messages, OffMessages, OffN),
+    ep_reasoning_setting(Eight, c, EightSetting),
     ep_mode(false, EightSetting, EightMode),
-    ep_reasoning(EightSetting, EightMode, false, Messages, 'GUIDE', _, EightN, _),
-    check('x-coding-reasoning 0 is plain', OffMode-OffN, plain-0),
-    check('x-coding-reasoning 8 is eight checks', EightMode-EightN,
-          reasoning-8).
+    ep_controlled(c, EightMode, false, Messages, _, EightN),
+    check('x-coding-reasoning 0 sends no note', OffMode-OffN-OffMessages,
+          plain-0-Messages),
+    check('x-coding-reasoning 8 sends the note', EightMode-EightN, reasoning-2).
 
 test_model_suffix :-
     Empty = request(post, '/v1/chat/completions', [], http(1, 1), [], []),
@@ -763,7 +799,7 @@ test_model_suffix :-
     ep_reasoning_setting(Empty, 'cocolog-r8', Setting),
     ep_mode(false, Setting, Mode),
     check('cocolog-r8 selects cocolog', Alias, cocolog),
-    check('cocolog-r8 asks for eight checks', Mode-Setting,
+    check('cocolog-r8 keeps the pass on', Mode-Setting,
           reasoning-count(8)).
 
 test_python :-
@@ -772,7 +808,7 @@ test_python :-
     ep_reasoning_setting(Empty, 'python-r8', Setting),
     ep_mode(false, Setting, Mode),
     check('python-r8 selects python', Alias, python),
-    check('python-r8 asks for eight checks', Mode-Setting,
+    check('python-r8 keeps the pass on', Mode-Setting,
           reasoning-count(8)),
     ep_guide(python, Guide),
     (   sub_atom(Guide, _, _, _, 'Python 3')
@@ -780,16 +816,107 @@ test_python :-
     ;   GuideRead = wrong
     ),
     check('python has its own guide', GuideRead, python),
-    Messages = [json([role-user,
-                      content-'Write a Python program that reads lines and sorts them.'])],
-    ep_reasoning(python, count(2), reasoning, false, Messages, 'GUIDE',
-                 Reasoned, N, _),
-    (   N =:= 2,
-        sub_atom(Reasoned, _, _, _, 'sys.stdin')
-    ->  ReasonRead = python
-    ;   ReasonRead = wrong
+    ep_controlled_task(Task),
+    Messages = [json([role-system, content-'SYSTEM']),
+                json([role-user, content-Task]),
+                json([role-assistant, content-'Done.']),
+                json([role-user, content-'Alice sleeps.'])],
+    ep_controlled(python, reasoning, false, Messages, Messages1, N),
+    Messages1 = [S1, json(U1), A1, L1],
+    memberchk(content-C1, U1),
+    (   sub_atom(C1, 0, _, _, Task),
+        sub_atom(C1, _, _, 0, 'Alice owns a car.\nBob sleeps.')
+    ->  First = noted
+    ;   First = other
     ),
-    check('python reasoning uses python checks', ReasonRead, python).
+    check('python: the note goes into the first user turn alone', N-First-[S1, A1, L1],
+          2-noted-[json([role-system, content-'SYSTEM']),
+                   json([role-assistant, content-'Done.']),
+                   json([role-user, content-'Alice sleeps.'])]),
+    ep_controlled(cocolog, reasoning, false, Messages, Cocolog1, CocologN),
+    check('cocolog gets no note unless asked for', CocologN-Cocolog1, 0-Messages),
+    setenv('CODING_ENDPOINT_CONTROLLED_LANGS', 'Python, cocolog'),
+    ep_controlled(cocolog, reasoning, false, Messages, _, AskedN),
+    ep_controlled(c, reasoning, false, Messages, _, CN),
+    check('CODING_ENDPOINT_CONTROLLED_LANGS names the languages', AskedN-CN, 2-0),
+    setenv('CODING_ENDPOINT_CONTROLLED_LANGS', none),
+    ep_controlled(python, reasoning, false, Messages, _, NoneN),
+    check('none names no language', NoneN, 0),
+    unsetenv('CODING_ENDPOINT_CONTROLLED_LANGS'),
+    setenv('CODING_ENDPOINT_CONTROLLED_MAX', '10'),
+    ep_controlled(python, reasoning, false, Messages, _, LongN),
+    check('a task past CODING_ENDPOINT_CONTROLLED_MAX gets no note', LongN, 0),
+    unsetenv('CODING_ENDPOINT_CONTROLLED_MAX').
+
+%% The restatement asks live mode's model, here a stub: no call leaves the
+%% process, and REASON_LIVE_KEY is a dummy, so ep_restate_backend/0 copies
+%% no key of the shell's.
+test_controlled_live :-
+    setenv('REASON_LIVE_KEY', 'test-live-key'),
+    setenv('CODING_ENDPOINT_RESTATE', on),
+    retractall(reason_live_stub(_, _, _)),
+    reason_live_forget,
+    reason_live_stats_reset,
+    Task = 'Write a Python program that prints the sum of two numbers it reads.',
+    assertz(reason_live_stub('sum of two numbers', 1,
+        '{"sentences": ["Every program reads two numbers.", "Every program prints a sum and a number."]}')),
+    assertz(reason_live_stub('sum of two numbers', 2,
+        '{"sentences": ["Every program reads two numbers.", "Every program prints a sum."]}')),
+    Messages = [json([role-user, content-Task])],
+    ep_controlled(python, reasoning, false, Messages, Messages1, N1),
+    ep_first_user(Messages1, C1),
+    (   sub_atom(C1, _, _, 0, 'one sentence a line:\n\nEvery program reads two numbers.\nEvery program prints a sum.')
+    ->  Live = noted
+    ;   Live = C1
+    ),
+    check('live: the task said again by a model, each sentence read', N1-Live, 2-noted),
+    reason_live_stats(Stats1),
+    memberchk(calls-Calls1, Stats1),
+    check('a sentence the grammar did not read went back once', Calls1, 2),
+    findall(S, reason_live_restatement(Task, S), Saved),
+    check('the restatement is kept in the knowledge base', Saved,
+          [['Every program reads two numbers.', 'Every program prints a sum.']]),
+    ep_controlled(python, reasoning, false, Messages, Messages2, _),
+    reason_live_stats(Stats2),
+    memberchk(calls-Calls2, Stats2),
+    check('the next turn of the session asks no model', Calls2-Messages2, 2-Messages1),
+    setenv('CODING_ENDPOINT_RESTATE', off),
+    retractall(reason_live_stub(_, _, _)),
+    ep_controlled(python, reasoning, false, Messages, Messages3, _),
+    check('with the restatement off, what was kept is still sent', Messages3, Messages1),
+    reason_live_forget,
+    reason_set_mode(static),
+    unsetenv('REASON_LIVE_KEY').
+
+test_restate_backend :-
+    forall(member(V, ['REASON_LIVE_KEY', 'REASON_LIVE_API', 'REASON_LIVE_URL',
+                      'REASON_LIVE_MODEL']),
+           unsetenv(V)),
+    setenv('CODING_ENDPOINT_IR_KEY', 'test-ir-key'),
+    setenv('CODING_ENDPOINT_IR_API', anthropic),
+    setenv('CODING_ENDPOINT_IR_MODEL', 'test-ir-model'),
+    nb_setval('$ep_restate_backend', none),
+    ep_restate_backend,
+    findall(V-X, ( member(V, ['REASON_LIVE_API', 'REASON_LIVE_URL', 'REASON_LIVE_MODEL',
+                              'REASON_LIVE_KEY']),
+                   getenv(V, X0), atom_string(X, X0) ), Got),
+    check('the restatement asks the IR repair''s model where REASON_LIVE_KEY is unset', Got,
+          ['REASON_LIVE_API'-anthropic,
+           'REASON_LIVE_URL'-'https://api.anthropic.com/v1/messages',
+           'REASON_LIVE_MODEL'-'test-ir-model',
+           'REASON_LIVE_KEY'-'test-ir-key']),
+    setenv('REASON_LIVE_KEY', 'own-key'),
+    setenv('REASON_LIVE_MODEL', 'own-model'),
+    nb_setval('$ep_restate_backend', none),
+    ep_restate_backend,
+    getenv('REASON_LIVE_KEY', K), getenv('REASON_LIVE_MODEL', M),
+    atom_string(KA, K), atom_string(MA, M),
+    check('a REASON_LIVE_KEY of its own is kept, with its model', KA-MA, 'own-key'-'own-model'),
+    forall(member(V, ['REASON_LIVE_KEY', 'REASON_LIVE_API', 'REASON_LIVE_URL',
+                      'REASON_LIVE_MODEL', 'CODING_ENDPOINT_IR_KEY',
+                      'CODING_ENDPOINT_IR_API', 'CODING_ENDPOINT_IR_MODEL']),
+           unsetenv(V)),
+    nb_setval('$ep_restate_backend', none).
 
 test_check_cap :-
     ep_checks([first, second, third], Checks),
@@ -1008,13 +1135,15 @@ test_ir :-
     ep_ir_note('The xyzzy eats the bread.', UnknownNote),
     check('a sentence with an unknown word adds no IR note',
           UnknownNote, ''),
-    Msgs = [json([role-user, content-'The dog eats the bread.'])],
-    ep_reasoning(count(2), reasoning, false, Msgs, 'GUIDE', Reasoned, _, _),
-    (   sub_atom(Reasoned, _, _, _, 'translator''s IR')
+    Msgs = [json([role-user, content-'Alice owns a car.'])],
+    ep_controlled(c, reasoning, false, Msgs, Reasoned, _),
+    ep_add_guide(Reasoned, 'GUIDE', Sent),
+    format(atom(SentText), '~q', [Sent]),
+    (   sub_atom(SentText, _, _, _, 'translator')
     ->  ReasonedIR = yes
     ;   ReasonedIR = no
     ),
-    check('the reasoning guide carries the IR note', ReasonedIR, yes),
+    check('the request carries no IR note', ReasonedIR, no),
     !.
 
 %% ---- the model helps the translator read (ir_repair.pl) ----------------

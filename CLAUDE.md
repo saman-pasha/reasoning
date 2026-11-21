@@ -45,7 +45,7 @@ STATIC AND LIVE, and live.pl's). What a session must keep:
 * **The mode is a global, never a fact** (``): an assert under
   `--embed` is written into the store, and the next process would start
   live. **What live mode saves IS facts, on purpose**: `reason_live_verdict/4`,
-  `_rewrite/3`, `_kind/2`, `_third/2`, `_lesson/2` and the lexicon facts it
+  `_rewrite/3`, `_kind/2`, `_third/2`, `_lesson/2`, `_restatement/2` (1.18.0) and the lexicon facts it
   teaches, declared in reason.pl so a static reader asks them with live.pl
   never loaded, and written into the store under `--embed`. So is a
   `reason_live_stub/3` a program asserts there: test/live.pl and lesson 05
@@ -78,9 +78,24 @@ STATIC AND LIVE, and live.pl's). What a session must keep:
   model, so a store keeps it (some 7 MB, 4 254 chunks) and the next process
   loads it from there; through 1.16 the rows were a muted module, never
   written. A store trained by train.pl keeps its own.
-* **coding/endpoint/ir_repair.pl is not built on it yet**: the endpoint's IR
-  note keeps its own repair, its own facts (`ep_ir_*`) and its own
-  environment (`CODING_ENDPOINT_IR_*`).
+* **coding/endpoint/ir_repair.pl is not built on it yet**: the IR repair
+  keeps its own facts (`ep_ir_*`) and its own environment
+  (`CODING_ENDPOINT_IR_*`), and since 1.18.0 no request calls it
+  (`live_ir.pl` and the benchmarks' `ir_prep.pl` do).
+* **The coding endpoint sends ONE note** (1.18.0, `ep_controlled/6` in
+  coding/endpoint/httpd_core.pl): the task, the first user turn, said again
+  by `reason_restate/3` in live mode, after the task in that turn -- the
+  note and the place coding/bench/v2 measured (Python 104/180 against
+  79/180) -- for C and Python (`CODING_ENDPOINT_CONTROLLED_LANGS`; guided
+  cocolog went 15/20 to 2/20 with it). The system prompt is the guide
+  alone: the checks, the about note and the IR note are not sent, and
+  `ir_prep.pl` still writes them for a benchmark arm. A restatement is
+  kept as `reason_live_restatement(Task, Sentences)`, the WHOLE first turn
+  its key, so it is in the committed store too. Its model is
+  `REASON_LIVE_*`, set from the IR repair's settings where
+  `REASON_LIVE_KEY` is unset; test.pl answers it with
+  `reason_live_stub/3` and a dummy key, and sets
+  `CODING_ENDPOINT_RESTATE=off` for every other section.
 
 **Where the data is, and who reads it:**
 

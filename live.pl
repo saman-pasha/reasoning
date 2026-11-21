@@ -20,6 +20,12 @@
 %%         topics, Terms the text's terms.
 %%     reason_live_explanation(+Text)
 %%         The check of an explanation's sentences.
+%%     reason_live_restate(+Text, -Sentences)
+%%         The restatement of a text in the grammar's forms
+%%         (reason_restate/2,3), saved as reason_live_restatement(Text,
+%%         Sentences) when any sentence of it reads; a save the store
+%%         refuses (a clause past its page) is said on stderr, and the
+%%         sentences are answered all the same.
 %%     reason_live_ready
 %%         There is a model to ask (or a stub, below).
 %%     reason_live_stats(-Pairs)
@@ -66,6 +72,8 @@
 %%
 %%   {"verdict": "right" | "wrong", "verbs": [{"base": B, "third": T}]}
 %%
+%%   {"sentences": ["One sentence.", "Another sentence."]}   (a restatement)
+%%
 %% The JSON may come in a fence or after prose: the first `{' to the last
 %% `}' is parsed. A reply that will not parse is no answer, and the round
 %% saves nothing.
@@ -84,6 +92,7 @@
 %%     REASON_LIVE_MAX_TOKENS  the reply's limit, thinking included (8000)
 %%     REASON_LIVE_TIMEOUT     seconds a call may take (120)
 %%     REASON_LIVE_ROUNDS      rounds at most a text (2)
+%%     REASON_LIVE_RESTATE_ROUNDS  calls at most a restatement (3)
 %%     REASON_LIVE_LOG         a file each call's prompt and reply are
 %%                             appended to (default none)
 %%
@@ -105,6 +114,9 @@
 reason_live_read(Kind, Text) :- ( rv_text(Text) -> lv_busy(lv_rounds(Kind, Text, 1)) ; true ).
 reason_live_kinds(Terms, Items) :- lv_busy(lv_kinds(Terms, Items)).
 reason_live_explanation(Text) :- lv_busy(lv_explanation(Text)).
+reason_live_restate(Text, Sentences) :-
+    lv_busy(lv_restate(Text, Sentences)),
+    is_list(Sentences).
 
 %% WHILE LIVE MODE WORKS, EVERY READER IS STATIC (reason.pl's rv_quiet/0):
 %% the readings it shows the model are the static ones, and nothing it
@@ -252,6 +264,130 @@ lv_describe(ir(_),
     'noun, verb, adjective, adverb, preposition, conjunction').
 
 lv_text_atom(Text, A) :- ( atom(Text) -> A = Text ; atom_codes(A, Text) ).
+
+%% ---- a restatement: the whole text said again in the grammar's forms ----
+%%
+%% ONE CALL A ROUND. The first sends the text; a later one sends the text
+%% and the last answer, each sentence marked read or not, and asks for the
+%% whole list again with each unread sentence said again or left out. A
+%% sentence counts where the grammar ALONE reads it (the reply's sentences
+%% are read with no saved rewrite and no tagger, live mode's own readers
+%% being static). The rounds end when every sentence reads or at
+%% REASON_LIVE_RESTATE_ROUNDS (3); a round that gets no answer leaves the last
+%% round's sentences. What reads is saved, in the model's order; a reply
+%% with nothing that reads saves nothing.
+lv_restate(Text, Read) :-
+    reason_live_ready,
+    lv_int('REASON_LIVE_RESTATE_ROUNDS', 3, Max0),
+    Max is max(1, Max0),
+    lv_restate_rounds(1, Max, Text, none, Read),
+    Read \== [],
+    lv_count(restatements),
+    catch(( retractall(reason_live_restatement(Text, _)),
+            assertz(reason_live_restatement(Text, Read)) ),
+          Ball, lv_warn(Ball)).
+
+lv_restate_rounds(R, Max, Text, Last, Read) :-
+    lv_restate_prompt(Text, Last, System, User),
+    (   lv_ask(R, System, User, Reply),
+        lv_restated(Reply, All),
+        All \== []
+    ->  partition(lv_grammar_reads, All, Read0, Unread),
+        (   ( Unread == [] ; R >= Max )
+        ->  Read = Read0
+        ;   R1 is R + 1,
+            lv_restate_rounds(R1, Max, Text, last(All, Unread, Read0), Read)
+        )
+    ;   Last = last(_, _, Read)
+    ).
+
+lv_grammar_reads(S) :- catch(reason_text(S, _), _, fail).
+
+%% the reply's sentences: each one sentence with its stop, short
+lv_restated(Reply, Sentences) :-
+    lv_json(Reply, J),
+    lv_get(J, sentences, Items), is_list(Items),
+    findall(S, ( member(I, Items), atom(I), lv_sentence(I, S) ), Sentences).
+
+lv_restate_prompt(Text, Last, System, User) :-
+    lv_restate_system(System),
+    lv_text_atom(Text, Whole),
+    (   Last == none
+    ->  format(atom(User), 'The requirement:~n~n~w', [Whole])
+    ;   Last = last(All, Unread, _),
+        findall(Line, ( nth1(N, All, S),
+                        ( memberchk(S, Unread) -> M = 'NOT READ' ; M = read ),
+                        format(atom(Line), '~w. ~w (~w)', [N, S, M]) ),
+                Lines),
+        atomic_list_concat(Lines, '\n', Body),
+        format(atom(User), 'The requirement:~n~n~w~n~nYour sentences, and whether the parser read each:~n~n~w~n~nGive the whole list again: each read sentence as it is, and each sentence the parser did not read said again in other forms, in two or three sentences where one will not do (the list of what the parser refuses says how). Leave a sentence out only when no form can carry its rule.',
+               [Whole, Body])
+    ).
+
+lv_restate_system(
+'You say a requirement again in controlled English: the input language of a deterministic parser, which reads each sentence into a logical term. A programmer will read your sentences beside the requirement, so they must say exactly what the requirement says.
+
+Rules:
+- Say what the requirement says, and nothing more. Never add a fact, a value, a default, an output or a format it does not state. Where the requirement leaves a thing open -- what an error prints, how the output is laid out -- leave it open.
+- Say every rule, each in a sentence of its own, in the order of the requirement. A rule that no one form says whole is said in two or three sentences of the forms. Leave a rule out only when no sentence of the forms can carry any of it, and never change a rule to fit a form.
+- One clause a sentence. No pronoun; no and, or, but, if, when, because; no comparison; no parentheses, code, symbols or lists. End each sentence with a full stop.
+- Name the program and each single thing with a proper noun (Ledger, Alice). Say a class with a noun (every account, a key).
+- Join the words of a compound noun or a name with _ (latest_version, commit_id, number_of_keys). A command named by a letter or a word is a compound noun: the command d is a d_command. After a verb with no object, join a preposition to the verb (Alice lives_in Rome).
+- A word between quotation marks stands for itself.
+
+What the parser refuses, and the form it reads instead:
+- An adjective after Every: not "Every visible key gets "yes"." but "Every key that is visible gets "yes"."
+- Every anywhere but at the head of the sentence: not "Ledger reads every line." but "Ledger reads the lines."
+- A condition said with for, with, per or of a: not "Every q_command prints "yes" for a known key." but "Every q_command that names a known_account prints "yes"."
+- No as a determiner: not "Ledger prints no prompt." but "Ledger does not print a prompt."
+- An object with no article: not "Ledger uses recursion." but "Ledger uses a recursion."
+- A or the before a noun as the subject of a verb: not "A view is a snapshot." or "The last_writer wins." but "Every view is a snapshot." and "Every last_writer wins." The goes before a subject only with is and a value: "The maximum_amount is 1000."
+- A phrase after an object takes the: "from the standard_input", "in the ascending_order", "to the balance", "of the account".
+
+The forms the parser reads:
+Alice owns a red car.
+Alice is happy.
+Alice is not happy.
+Bob does not own a car.
+Alice sleeps.
+Alice may access the server.
+Alice lives_in Rome.
+Alice pays 500 euros.
+The rent is 500 euros.
+Alice is the mother of Bob.
+Every employee is a person.
+Every employee has a badge.
+Every employee that is authorized may access the server.
+Every employee that owns a car may park.
+Every noun that ends in "a" is feminine.
+Ledger reads the lines from the standard_input.
+Every line that is blank is ignored.
+Every amount is an integer.
+Every account_name is a word.
+Every account has a balance.
+Every d_command adds an amount to the balance.
+Every w_command that names a closed_account causes an error.
+Every account that is not open causes an error.
+Every withdrawal that exceeds the balance causes an error.
+Every account that is open may receive a deposit.
+Every q_command that names a known_account prints "yes".
+Every account that is frozen gets "frozen".
+Every l_command prints the names in the ascending_order.
+Every l_command that names an empty_ledger prints nothing.
+Every c_command closes the account.
+Every report holds the balances of the accounts.
+Every b_command begins a session at the latest_state.
+Every session excludes the later deposits.
+Every output_line ends with a newline.
+Every insertion is recursive.
+Ledger allocates the records dynamically.
+Ledger uses a hash_table.
+Ledger does not print a prompt.
+Ledger has an unbounded number_of_accounts.
+The maximum_amount is 1000.
+
+Answer with one JSON object and nothing else:
+{"sentences": ["First sentence.", "Second sentence."]}').
 
 %% ---- the reply -------------------------------------------------------------------
 
@@ -692,14 +828,14 @@ lv_count(K, N) :-
 
 reason_live_stats(Pairs) :-
     findall(K-V, ( member(K, [calls, prompt_tokens, completion_tokens, verdicts,
-                              lessons, rewrites, kinds, thirds]),
+                              lessons, rewrites, kinds, thirds, restatements]),
                    atom_concat('$reason_live_', K, G),
                    ( catch(nb_getval(G, V0), _, fail), integer(V0) -> V = V0 ; V = 0 ) ),
             Pairs).
 
 reason_live_stats_reset :-
     forall(member(K, [calls, prompt_tokens, completion_tokens, verdicts,
-                      lessons, rewrites, kinds, thirds]),
+                      lessons, rewrites, kinds, thirds, restatements]),
            ( atom_concat('$reason_live_', K, G), nb_setval(G, 0) )).
 
 reason_live_forget :-
@@ -709,7 +845,8 @@ reason_live_forget :-
     retractall(reason_live_verdict(_, _, _, _)),
     retractall(reason_live_rewrite(_, _, _)),
     retractall(reason_live_kind(_, _)),
-    retractall(reason_live_third(_, _)).
+    retractall(reason_live_third(_, _)),
+    retractall(reason_live_restatement(_, _)).
 
 lv_unteach(ir(From), Line) :- !,
     (   atom(Line), catch(reason_text(Line, Terms), _, fail)

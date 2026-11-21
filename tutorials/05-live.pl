@@ -105,7 +105,32 @@ main :-
     ;   show('the tagger', 'library(torch) is not built here, and the grammar reads alone')
     ),
     reason_live_forget,
+    restate,
     format("~ndone~n", []).
+
+%% 9. A TEXT SAID AGAIN (since 1.18.0). reason_restate/2,3 gives a text in
+%% the grammar's own sentences, each one read by the grammar alone. A text
+%% that reads already is its own sentences; one restated before is read
+%% from the knowledge base; and in live mode a model says any other again,
+%% and each sentence the grammar does not read goes back to it once. The
+%% coding endpoint sends this after a C or Python request: its one note.
+restate :-
+    reason_set_mode(static),
+    reason_restate('Alice owns a car. Bob sleeps.', S9a),
+    must('a controlled text is its own sentences', S9a, ['Alice owns a car.', 'Bob sleeps.']),
+    ( reason_restate('Carol and Dan own a car.', _) -> R9 = restated ; R9 = refused ),
+    must('static mode cannot say prose again', R9, refused),
+    assertz(reason_live_stub('Carol and Dan', 1,
+        '{"sentences": ["Carol owns a car.", "Dan and Carol own a car."]}')),
+    assertz(reason_live_stub('Carol and Dan', 2,
+        '{"sentences": ["Carol owns a car.", "Dan owns a car."]}')),
+    reason_restate('Carol and Dan own a car.', [mode(live)], S9b),
+    must('live mode: the second sentence went back, and came back read', S9b,
+         ['Carol owns a car.', 'Dan owns a car.']),
+    retractall(reason_live_stub(_, _, _)),
+    reason_restate('Carol and Dan own a car.', S9c),
+    must('and static mode reads what was saved', S9c, S9b),
+    reason_live_forget.
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
 %% anywhere and run is worth six repeated lines, and one that needs a support

@@ -19,7 +19,7 @@ main :-
     forall(member(V, ['REASON_LIVE_KEY', 'ANTHROPIC_API_KEY', 'OPENAI_API_KEY', 'REASON_MODE']),
            catch(unsetenv(V), _, true)),
     modes, splitting, static_asks_nothing, no_model, rewrite, words, take_back,
-    second_round, context, bad_reply, kinds, explanation, translator, tagger, forget,
+    second_round, context, bad_reply, kinds, explanation, translator, tagger, restate, forget,
     checks_done.
 
 %% the model's sections run with the grammar alone in front of it; the
@@ -321,13 +321,68 @@ tagger_reads :-
     check('and no model about what the tagger read', C9, 0),
     fresh.
 
+%% ---- a text said again in controlled English ---------------------------------------
+
+restate :-
+    section('a text said again'),
+    fresh,
+    reason_restate('Alice owns a car.  Bob sleeps.', S1),
+    check('a text the grammar reads already is its own sentences', S1,
+          ['Alice owns a car.', 'Bob sleeps.']),
+    yes_no(reason_restate('Alice and Bob own a car.', _), R2),
+    check('prose with nothing saved fails in static mode', R2, no),
+    calls(C2),
+    check('and no model is asked', C2, 0),
+    reason_set_mode(live),
+    assertz(reason_live_stub('Alice and Bob', 1,
+        '{"sentences": ["Alice owns a car.", "Bob and Alice own a car."]}')),
+    assertz(reason_live_stub('Alice and Bob', 2,
+        '{"sentences": ["Alice owns a car.", "Bob owns a car"]}')),
+    reason_restate('Alice and Bob own a car.', S3),
+    check('live: a sentence the grammar does not read goes back once more', S3,
+          ['Alice owns a car.', 'Bob owns a car.']),
+    calls(C3),
+    check('two rounds, two calls', C3, 2),
+    findall(T-S, reason_live_restatement(T, S), Saved4),
+    check('the restatement is saved under the text', Saved4,
+          ['Alice and Bob own a car.'-['Alice owns a car.', 'Bob owns a car.']]),
+    reason_restate("  Alice and Bob own a car. ", S5),
+    calls(C5),
+    check('the same text again, as a string with layout, asks nothing', C5-S5,
+          2-['Alice owns a car.', 'Bob owns a car.']),
+    reason_set_mode(static),
+    reason_restate('Alice and Bob own a car.', S6),
+    check('static mode reads what live mode saved', S6, ['Alice owns a car.', 'Bob owns a car.']),
+    reason_restate('Alice owns a car.', [mode(live)], S7),
+    calls(C7),
+    check('a text that reads already asks no model in live mode', C7-S7, 2-['Alice owns a car.']),
+    fresh,
+    reason_set_mode(live),
+    assertz(reason_live_stub('Carol and Dan', 1,
+        '{"sentences": ["Carol owns a car.", "Dan and Carol own a car."]}')),
+    reason_restate('Carol and Dan own a car.', S8),
+    check('a round with no answer keeps what the round before read', S8, ['Carol owns a car.']),
+    fresh,
+    reason_set_mode(live),
+    assertz(reason_live_stub('Carol and Dan', 1, '{"sentences": ["Dan and Carol own a car."]}')),
+    yes_no(reason_restate('Carol and Dan own a car.', _), R9),
+    findall(x, reason_live_restatement(_, _), Saved9),
+    check('nothing read is no restatement, and nothing is saved', R9-Saved9, no-[]),
+    fresh,
+    reason_set_mode(live),
+    assertz(reason_live_stub('Carol and Dan', 1, 'No.')),
+    yes_no(reason_restate('Carol and Dan own a car.', _), R10),
+    check('a reply that is no answer fails', R10, no),
+    fresh.
+
 %% ---- forgetting --------------------------------------------------------------------
 
 forget :-
     section('forgetting'),
     fresh,
     findall(x, ( reason_live_verdict(_, _, _, _) ; reason_live_rewrite(_, _, _) ; reason_live_kind(_, _)
-               ; reason_live_third(_, _) ; reason_live_lesson(_, _) ), Left),
+               ; reason_live_third(_, _) ; reason_live_lesson(_, _)
+               ; reason_live_restatement(_, _) ), Left),
     check('reason_live_forget/0 leaves nothing saved', Left, []),
     reason_mode(M),
     check('and the tests leave the mode static', M, static).

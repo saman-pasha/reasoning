@@ -2,32 +2,36 @@
 
 An OpenAI-compatible endpoint for [OpenCode](https://opencode.ai), written
 in cocolog with `library(httpd)`. OpenCode sends its normal agent
-conversation, tools and stream; the endpoint appends the language guide and
-forwards the request to an OpenAI-compatible model.
+conversation, tools and stream; the endpoint appends the language guide to
+the system prompt, puts the task said again in controlled English after the
+task (C and Python), and forwards the request to an OpenAI-compatible model.
 
 Twelve model names are exposed:
 
-| model | guide and reasoning checks |
+| model | guide and note |
 |---|---|
-| `c` | `prompts/c.md`, C with clang and the sanitizers, C99 through C23; the endpoint's default two checks |
-| `cocolog` | this repository's `coding/cocolog/SKILL.md`, `prompts/cocolog.md`; the default two checks |
-| `python` | `prompts/python.md`, Python 3 with `py_compile`, pytest or unittest; the default two checks |
-| `c-r0`, `c-r2`, `c-r8` | the same C guide, with no checks, two checks or eight checks |
-| `cocolog-r0`, `cocolog-r2`, `cocolog-r8` | the same cocolog guide, with no checks, two checks or eight checks |
-| `python-r0`, `python-r2`, `python-r8` | the same Python guide, with no checks, two checks or eight checks |
+| `c` | `prompts/c.md`, C with clang and the sanitizers, C99 through C23; the controlled English note |
+| `cocolog` | this repository's `coding/cocolog/SKILL.md`, `prompts/cocolog.md`; no note unless `CODING_ENDPOINT_CONTROLLED_LANGS` names cocolog |
+| `python` | `prompts/python.md`, Python 3 with `py_compile`, pytest or unittest; the controlled English note |
+| `c-r0`, `c-r2`, `c-r8` | the same C guide; `-r0` with no note, `-r2` and `-r8` as `c` |
+| `cocolog-r0`, `cocolog-r2`, `cocolog-r8` | the same cocolog guide; `-r0` with no note, `-r2` and `-r8` as `cocolog` |
+| `python-r0`, `python-r2`, `python-r8` | the same Python guide; `-r0` with no note, `-r2` and `-r8` as `python` |
+
+Through reasoning 1.17 the number after `-r` was the number of reasoning
+checks sent. Since 1.18.0 the endpoint sends no checks (the next section),
+and the names stay because clients name them: `-r0` turns the note off.
 
 The endpoint is not a second agent loop. OpenCode still owns the read, edit
 and shell tools, the session and the permissions. Every model declares a
 1,000,000-token context and a 32,768-token output limit.
 
 Every model also defines the effort variants `none`, `minimal`, `low`,
-`medium`, `high`, `xhigh`, `ultra` and `max`, so the reasoning count and
-the effort are chosen independently:
+`medium`, `high`, `xhigh`, `ultra` and `max`, so the note and the effort
+are chosen independently:
 
 ```sh
-reasoning/cocolog-r8#high     # eight checks and high model effort
-reasoning/python#max          # two checks and max model effort
-reasoning/c-r0#none           # plain mode, no checks, no model effort
+reasoning/python#max          # the note and max model effort
+reasoning/c-r0#none           # plain mode, no note, no model effort
 ```
 
 `settings.reasoningEffort` defaults to `none`, and OpenCode sends the chosen
@@ -39,7 +43,7 @@ treated as `stream: true`.
 
 The `-rN` suffix is read by the endpoint itself, and the model config also
 carries `x-coding-reasoning: N`. A request header still overrides both for a
-one-off: `0`/`off` is plain mode, and a number keeps that many checks.
+one-off: `0`/`off` is plain mode, and any other number sends the note.
 
 ## Codex
 
@@ -48,7 +52,7 @@ Codex speaks only the Responses API, and since 0.163 it refuses
 request is translated to the same chat request -- developer messages become
 system messages, a run of `function_call` items becomes one assistant
 message with several tool calls, and `function_call_output` becomes the tool
-message that answers it -- passed through the same guide, reasoning checks
+message that answers it -- passed through the same guide, note
 and loop guard, and the chat reply is written back as Responses SSE events
 (or one Responses object). Codex's text and tool calls both round-trip.
 
@@ -161,122 +165,80 @@ opencode run --standalone --auto -m reasoning/c \
 `--auto` auto-approves OpenCode's shell and edit permissions; without it,
 OpenCode asks as usual.
 
-## The reasoning pre-pass
+## The controlled English note
 
-For every model, including the `-r0`, `-r2` and `-r8` names, the endpoint
-reads the session's first user turn with `reasoning_core.pl`, which runs
-locally and calls no model:
+The endpoint adds ONE note to a request, and only to C and Python: the
+task -- the session's first user turn -- said again in the controlled
+English this repository's reasoner reads, one sentence a line, after the
+task in that same turn:
 
-- `coding/obligations.pl` derives checks from the request's keywords.
-- `coding/contract.pl` reads controlled-English sentences through
-  `library(reasoning/reason)` and derives the contract's checks.
-- `library(reasoning/reason)` parses the text into terms; their count is
-  recorded in the trace, and `reason_concepts/2` and `reason_topics/2` give
-  what the request is about.
+```text
+<the task, as the client sent it>
 
-The deduplicated checks are appended to the model's system prompt under a
-"Reasoning pre-pass" heading. By default the pass keeps exactly two: the
-task's first two, general checks when the task's wording gives fewer, and no
-more when it gives more. That is the usual trace's `mode=reasoning` and
-`reasoning=2`. The `-rN` model suffix and a request's `x-coding-reasoning`
-header override both ends: `0` or `off` turns the pass off, and a number
-keeps that many checks. `CODING_ENDPOINT_REASONING_MIN` and
-`CODING_ENDPOINT_REASONING_MAX` change the two ends for requests with
-neither. The model still writes and runs the code with OpenCode's tools, but
-it is checked against this repository's own reading of the request.
-`CODING_ENDPOINT_REASONING=off` disables the pass for every model.
+# The request in controlled English
 
-When the request parses into terms, a second note follows the checks under
-"What the request is about": the six most mentioned concepts with their
-kinds and counts, the six subjects with what is said of them, and up to five
-questions, "Why is X important to this task?", one for the leading concepts
-and subjects. A request the reasoner cannot parse adds no second note.
+The same requirement, said again in the controlled English the repository's reasoner reads, one sentence a line:
 
-A third note, "The request in the translator's IR", gives the translator's
-reading of the request's first sentences (`reason_ir/2`, the English-worded
-intermediate representation). The translator reads plain English with the
-English lesson (`english_lesson.pl`), but only the words a lesson teaches and
-the shapes it knows, and a sentence it reads can be read wrongly:
-`Convert every word to lowercase.` reads as `Every convert words to
-lowercase.`. So the model checks every sentence (`ir_repair.pl`), in one call
-for the whole request. A sentence the translator read is sent with its
-reading said back in English (`reason_ir_text/3`) and its logical form, and the
-model says whether the reading keeps the sentence's meaning. The logical form,
-because a wrong parse that keeps the word order says itself back as the very
-sentence: `Blank lines are ignored.` read with `lines` for its verb came back
-`Blank lines are ignored.`, and the English alone was judged right. For a sentence read wrongly, or not
-read:
-
-- for each unknown English word, the model gives its class and base form.
-  The word is taught as a lesson line in the English lesson's own form,
-  `The noun "x_subarray" means "subarray".`, with `reason_learn/1`;
-- for each sentence, the model gives a rewrite in short plain sentences. The
-  rewrite counts only if the translator reads every sentence of it.
-
-What the reply made read -- a sentence after a lesson, or a rewrite -- is a new
-reading, and the next round sends it to be checked as well: a rewrite can be
-read wrongly too (`Glorp each word.` reads with `Glorp` as a name). A sentence
-that still does not read goes back with the rewrite that was tried and the
-words the translator did not know in it. That is `CODING_ENDPOINT_IR_ROUNDS`
-calls at most (default `3`): a round to check and repair, one to check what
-the repair made, and one for a rewrite read wrongly. A reading the rounds left
-unchecked is used as it stands. One the model was shown and passed over is
-kept as `unjudged` and not sent again. One made in the last round, which the
-model never saw, is sent with the next request, at most
-`CODING_ENDPOINT_IR_TRIES` requests (default `2`), and then the sentence is
-unread: the endpoint reads the task at every turn of the coding model, and a
-sentence the model judged wrong in every round cost three calls a turn.
-`CODING_ENDPOINT_IR_CHECK` chooses what is sent: `all` (the default), every
-reading the model has not judged; `always`, every reading with every
-request, judged or not; `failed`, only the sentences the translator could not
-read, with no check of a reading.
-
-The note gives each reading, and for a rewritten sentence the rewrite before
-its reading, so the coding model sees what the translator read; a reading the
-model judged wrong is never in it. What a reply may teach is bounded: only a
-word the translator named unknown, only a noun, verb, adjective, adverb,
-preposition or conjunction, and only in letters. **And a lesson may not change
-a reading the model confirmed**: each lesson is taught alone, every confirmed
-reading is read again, and a lesson that changed one is taken back. `if` is
-unknown in the middle of a sentence and the grammar's own at a sentence's
-head, and `The conjunction "x_if" means "if".` changed every if-sentence's
-reading; in the live run it was taken back five times. `live_ir.pl` prints
-each lesson so taken back.
-
-A reply is the last JSON object in it that has one of its keys: the model
-writes an answer, then `Wait, that violates the rule against "and". Here is
-the corrected answer:` and a second object. For Anthropic's own API the call
-sends `output_config.effort` `low` (`CODING_ENDPOINT_IR_EFFORT`, `none` for no
-field): the model thinks by default, the thinking counts against
-`max_tokens`, and at its default effort one call spent 2000 tokens and
-answered no text. At `low` a call spent about 300 completion tokens where it
-had spent about 1 150. No `temperature` is sent there, which
-`claude-sonnet-5-5` refuses. `CODING_ENDPOINT_IR_LOG=FILE` appends each round's
-prompt and reply to a file.
-
-What the model taught is kept. The lesson lines are facts the translator
-reads (`noun/1`, `mean/2`, ...); the rewrite that read is
-`ep_ir_rewrite(Sentence, Rewrites)`; each verdict is
-`ep_ir_verdict(Sentence, Reading, right|wrong|unjudged)`, the reading's text
-its key, so a reading a new lesson changes is checked again; a sentence that no
-rewrite read is `ep_ir_unread(Sentence, Version)`, not sent again until the
-reasoning version's minor number moves (`1.13`: this repository moves its
-patch number with every commit). `run-httpd.sh` runs the endpoint on an embedded
-store (`CODING_ENDPOINT_STORE`, `coding/endpoint/store` unless set), and each
-request commits what it taught, so the next request and the next process
-read the sentence with no model call. The English lesson loads while
-`httpd.pl` loads, which writes nothing to the store: the store holds only
-what the model taught. `ep_ir_lesson(Line)` keeps each lesson line:
-
-```sh
-../cocolog/cocolog --embed coding/endpoint/store query \
-    "forall(ep_ir_lesson(L), (write(L), nl))"
+Mvccs reads commands from the standard input.
+...
 ```
 
-With no key, or `CODING_ENDPOINT_IR_REPAIR=off`, no model is asked and the
-note gives what the translator read alone, less the readings a model judged
-wrong before. A call that fails rests the repair for five minutes, so a
-backend that is down does not cost every request a timeout.
+That note, in that place, is what `coding/bench/v2` measured on
+`mvccs_acid` (`coding/bench/v2/results/`: `controlled-english-python-3-20261121.md`
+and `reason-python-20261121.md`):
+
+| language | first program right, with the note | without | |
+|---|---|---|---|
+| Python | 104/180 | 79/180 | three runs, Cochran-Mantel-Haenszel one-sided p = 0.0058 |
+| C | 15/20 | 14/20 | two-sided p = 1.0 |
+| cocolog with its guide | 2/20 | 15/20 | two-sided p = 0.00007: the four input sentences are read as a code list to match (`controlled-ablation-20261121/`) |
+
+So it is on for C and Python and off for cocolog:
+`CODING_ENDPOINT_CONTROLLED_LANGS` (comma-separated, `c,python` unless set,
+`none` for no language) chooses. In Python it cost 5 % more tokens over
+the three runs and 8 % fewer calls. A task longer than
+`CODING_ENDPOINT_CONTROLLED_MAX` characters (`12000`) gets no note.
+
+The sentences are `reason_restate/3`'s (`library(reasoning/reason)`), in
+live mode:
+
+- a task the grammar reads already is its own sentences, and no model is
+  asked;
+- a task restated before is read from the knowledge base
+  (`reason_live_restatement(Task, Sentences)`, kept in the embedded store),
+  so the session's later turns, which send the same first turn, and the
+  next process ask no model;
+- any other task is said again by a model in the grammar's forms, and the
+  sentences the grammar does not read go back to it, marked, with what the
+  parser refuses and the form it reads instead
+  (`REASON_LIVE_RESTATE_ROUNDS`, `3` calls at most); what reads is kept, in
+  order, and what does not is left out. On `mvccs_acid`'s Python
+  requirement (2 125 characters) `claude-sonnet-5-5` gave 56 sentences
+  that read, 2 923 characters, in three calls: 9 336 prompt tokens and
+  3 530 completion tokens, once for the task.
+
+The model is `REASON_LIVE_*`'s (`library(reasoning/live)`). Where
+`REASON_LIVE_KEY` is unset, the endpoint sets the four from the IR
+repair's settings (`CODING_ENDPOINT_IR_API`, `_BACKEND`, `_KEY` and
+`_MODEL`, each the endpoint's own unless set), so one key serves both. With
+no key, or `CODING_ENDPOINT_RESTATE=off`, no model is asked: a task that
+is neither controlled English nor restated before gets no note.
+`REASON_LIVE_LOG=FILE` appends each round's prompt and reply to a file.
+
+The system prompt is the language guide alone. Through reasoning 1.17 the
+endpoint also sent, in the system prompt, the checks of a "Reasoning
+pre-pass" (two by default), "What the request is about" and "The request in
+the translator's IR", whose readings the model checked first
+(`ir_repair.pl`). None of them is sent now: the controlled note is the one
+the measurements back, and in Python the translator's IR and the readers'
+own notes did no better than the requirement alone
+(`reason-python-20261121.md`), and the complete IR did worse
+(`complete-ir-20261121.md`).
+`coding/bench/v2/ir_prep.pl` still writes them for a benchmark arm
+(`ep_reasoning_notes/7`, `ep_ir_note/2`), `reasoning.pl` still prints the
+checks, and `live_ir.pl` still grows the store's lessons; `ir_repair.pl`'s
+header says how the repair works. `CODING_ENDPOINT_REASONING=off` sends no
+note for any model.
 
 ### The store
 
@@ -293,9 +255,10 @@ it, rebuilt from 1.13.1's store; the first three found the faults 1.13.2
 fixes, and the last two made no call. What a session needs to know before
 committing it:
 
-- **It holds the first sentences of every request the endpoint read**, word
-  for word, in its rewrites, verdicts and unread sentences, and the
-  repository is public. An endpoint whose requests are private names a store
+- **It holds every task the endpoint restated**, the whole first user turn
+  word for word, as the key of its restatement (since 1.18.0), and the first
+  sentences of every request `live_ir.pl` read, in its rewrites, verdicts
+  and unread sentences; and the repository is public. An endpoint whose requests are private names a store
   of its own (`CODING_ENDPOINT_STORE=/path`), and a store is moved on into
   the tree only by a run whose sentences may be published (`live_ir.pl`).
 - **It is one process's at a time**: stop the endpoint (`pgrep -x cocolog`
@@ -311,8 +274,9 @@ Set `CODING_ENDPOINT_TRACE=/path/to/trace.jsonl` to write one JSON line per
 completion request. A line carries the time, the session (`x-opencode-session`
 or Codex's `session-id`) and project
 ids, model, backend model, effort, `mode` (`reasoning`, `title`, or `plain`
-when the pre-pass is off),
-the number of reasoning checks and parsed terms, message and tool counts,
+when the note is off),
+`reasoning`, the note's sentences (0 for no note; the number of checks
+through 1.17), `terms` (0 since 1.18.0), message and tool counts,
 `continued` (the extra backend calls made after a preamble), the HTTP
 status and the seconds. It also carries the backend's usage, the
 continuation's calls included, as
@@ -368,10 +332,15 @@ endpoint with the backend key in `CODING_ENDPOINT_KEY_ENV`:
 | `CODING_ENDPOINT_KEY_ENV` | the backend key itself; required |
 | `CODING_ENDPOINT_TOKEN` | unset; one or more bearer tokens, comma-separated |
 | `CODING_ENDPOINT_ALLOW_ORIGIN` | the local OpenCode web origins |
-| `CODING_ENDPOINT_REASONING` | `on` for every model; `off` disables the pre-pass |
-| `CODING_ENDPOINT_REASONING_MIN` | `2`, filled with general checks if needed |
-| `CODING_ENDPOINT_REASONING_MAX` | `2`, the checks kept from a longer reading |
-| `x-coding-reasoning` header | per request: `0`/`off`, `2`, `8`, … |
+| `CODING_ENDPOINT_REASONING` | `on` for every model; `off` sends no note |
+| `CODING_ENDPOINT_CONTROLLED_LANGS` | `c,python`; the languages the note is sent for, `none` for none |
+| `CODING_ENDPOINT_CONTROLLED_MAX` | `12000`; a longer task gets no note |
+| `CODING_ENDPOINT_RESTATE` | `on`; `off` asks no model to restate a task |
+| `REASON_LIVE_API`, `_URL`, `_KEY`, `_MODEL` | the restatement's model; the IR repair's settings where `REASON_LIVE_KEY` is unset |
+| `REASON_LIVE_RESTATE_ROUNDS` | `3`; calls at most for one restatement |
+| `CODING_ENDPOINT_REASONING_MIN` | `2`; `ir_prep.pl`'s checks only since 1.18.0 |
+| `CODING_ENDPOINT_REASONING_MAX` | `2`; `ir_prep.pl`'s checks only since 1.18.0 |
+| `x-coding-reasoning` header | per request: `0`/`off` for no note, a number for the note |
 | `CODING_ENDPOINT_TRACE` | unset; a JSONL path turns tracing on |
 | `CODING_ENDPOINT_CONTINUE` | `on`; `off` disables the preamble continuation |
 | `CODING_ENDPOINT_CONTINUE_LIMIT` | `2`; extra backend calls after a preamble |
@@ -382,7 +351,7 @@ endpoint with the backend key in `CODING_ENDPOINT_KEY_ENV`:
 | `CODING_ENDPOINT_CONTEXT` | `1000000` |
 | `CODING_ENDPOINT_TIMEOUT` | `600` seconds; the backend call's timeout |
 | `CODING_ENDPOINT_STORE` | `coding/endpoint/store`; the embedded store `run-httpd.sh` runs on, `local` for none |
-| `CODING_ENDPOINT_IR_REPAIR` | `on`; `off` asks no model about the translator's reading |
+| `CODING_ENDPOINT_IR_REPAIR` | `on`; `off` asks no model about the translator's reading (`live_ir.pl` alone since 1.18.0, as are the IR rows below but the four the restatement takes) |
 | `CODING_ENDPOINT_IR_CHECK` | `all`; every reading the model has not judged is checked, `always` every reading with every request, `failed` only what the translator could not read |
 | `CODING_ENDPOINT_IR_API` | `CODING_ENDPOINT_API`; `openai` or `anthropic` for the repair's model |
 | `CODING_ENDPOINT_IR_BACKEND` | the endpoint's backend, or the provider's own URL when `CODING_ENDPOINT_IR_API` is set |
@@ -456,8 +425,9 @@ COCOLOG_LIBRARY="$(dirname "$PWD"):$PWD/../cocolog/library" \
 
 The test checks the model and health replies, the bearer-token guard, the
 guide merge, the usage reading and trace fields, the SSE synthesis for
-text and tool calls, and the reasoning reader. No model is called and no
-socket is opened: the IR repair's checks answer with a stub model
+text and tool calls, the controlled English note, and the reasoning reader.
+No model is called and no socket is opened: the restatement answers with a
+stub model (`reason_live_stub/3`), and the IR repair's checks with another
 (`ep_ir_model_stub/3`): a reading judged wrong and rewritten, a reading
 confirmed, a rewrite read wrongly and caught, and a child process on an
 embedded store that learns what a second child then reads with no call.
@@ -484,13 +454,13 @@ gave, `ir_checked` (right) and `ir_wrong`.
 | path | what |
 |---|---|
 | `httpd.pl` | the port, guards and `httpd_serve/2` |
-| `httpd_core.pl` | pages, JSON, backend call, SSE synthesis, token/CORS, trace |
+| `httpd_core.pl` | pages, JSON, backend call, the controlled English note, SSE synthesis, token/CORS, trace |
 | `run-httpd.sh` | starts `httpd.pl` with the repository's library path |
 | `reasoning_core.pl` | obligations, contract and reasoner reading |
 | `english_lesson.pl` | the English lesson the translator reads a request by |
 | `ir_repair.pl` | the model's check of each reading, its help with a sentence read wrongly or not read, and what it taught, kept |
 | `live_ir.pl` | the check and the repair against a real model, on three benchmark requirements |
-| `store/` | the embedded store the endpoint runs on: the lessons, rewrites and verdicts, committed |
+| `store/` | the embedded store the endpoint runs on: the restatements, and the lessons, rewrites and verdicts, committed |
 | `reasoning.pl` | the command-line form of the pre-pass |
 | `config/opencode.json` | the provider, the two models and their variants |
 | `config/codex.toml` | Codex's top-level defaults and provider block, with a placeholder token |

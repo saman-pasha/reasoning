@@ -96,8 +96,10 @@ ep_guide(cocolog, Guide) :-
 ep_guide(python, Guide) :-
     ep_read_text('coding/endpoint/prompts/python.md', Guide).
 
-%% A model name may end in -rN: c-r8, cocolog-r2. The suffix chooses the
-%% number of reasoning checks, and the base chooses the language guide.
+%% A model name may end in -rN: c-r8, cocolog-r2. The base chooses the
+%% language guide; -r0 turns the controlled English note off, and any
+%% other N leaves it on (N was the number of reasoning checks, which the
+%% endpoint no longer sends; the names stay, as clients name them).
 ep_model_count(Model, N) :-
     atom(Model),
     atom_string(Model, String),
@@ -439,18 +441,105 @@ ep_fill_checks(General, Min, Max, Checks, Out) :-
     ;   Out = Checks
     ).
 
-ep_reasoning(Setting, Mode, Title, Messages, Guide0, Guide, N, Terms) :-
-    ep_reasoning(c, Setting, Mode, Title, Messages, Guide0, Guide, N, Terms).
+%% ---- the controlled English note --------------------------------------
+%%
+%% The ONE note the endpoint adds: the task -- the session's first user
+%% turn, ep_task_text/2 -- said again in the controlled English the
+%% repository's reasoner reads, one sentence a line, after the task in that
+%% same turn. That is the note and the place coding/bench/v2 measured: in
+%% Python it made the first program right in 104 of 180 trials against 79
+%% of 180 (three runs, Cochran-Mantel-Haenszel one-sided p = 0.0058),
+%% in C it changed nothing, and in cocolog with its guide it made 2 of 20
+%% right against 15 of 20. So it is on for C and Python and off for cocolog
+%% (CODING_ENDPOINT_CONTROLLED_LANGS, comma-separated: c,python unless
+%% set; none for no language). The checks, the about note and the IR note
+%% are no longer sent (coding/bench/v2/ir_prep.pl still writes them for a
+%% benchmark), and the system prompt is the language guide alone.
+%%
+%% The sentences are reason_restate/3's in live mode: a text the grammar
+%% reads already is its own sentences, one restated before is read from
+%% the knowledge base (reason_live_restatement/2, kept in the endpoint's
+%% embedded store), and any other is said again by a model and kept, so a
+%% session's later turns and the next process ask no model. The model is
+%% REASON_LIVE_*'s, and where REASON_LIVE_KEY is unset, the IR repair's:
+%% its API, URL, key and model (ep_restate_backend/0). With no key, or
+%% CODING_ENDPOINT_RESTATE=off, no model is asked, and a task that is
+%% neither controlled nor restated before gets no note. A task past
+%% CODING_ENDPOINT_CONTROLLED_MAX characters (12000) gets none either: a
+%% first turn that long carries more than the request.
+%%
+%% N is the note's sentences, 0 for no note.
 
-ep_reasoning(Language, Setting, Mode, Title, Messages, Guide0, Guide, N, Terms) :-
+ep_controlled(Language, Mode, Title, Messages0, Messages, N) :-
     (   Mode == reasoning,
-        \+ Title,
-        ep_task_text(Messages, Text)
-    ->  ep_reasoning_notes(Language, Setting, Text, Note, About, N, Terms),
-        ep_ir_note(Text, IRNote),
-        atomic_list_concat([Guide0, Note, About, IRNote], Guide)
-    ;   Guide = Guide0, N = 0, Terms = 0
+        Title == false,
+        ep_controlled_on(Language),
+        ep_task_text(Messages0, Text),
+        ep_int('CODING_ENDPOINT_CONTROLLED_MAX', 12000, Max),
+        atom_length(Text, Length),
+        Length =< Max,
+        ep_restated(Text, Sentences),
+        Sentences = [_|_]
+    ->  ep_controlled_note(Sentences, Note),
+        ep_append_task(Messages0, Text, Note, Messages),
+        length(Sentences, N)
+    ;   Messages = Messages0,
+        N = 0
     ).
+
+ep_controlled_on(Language) :-
+    ep_env('CODING_ENDPOINT_CONTROLLED_LANGS', 'c,python', V),
+    split_string(V, ",", " \t", Parts),
+    member(Part, Parts),
+    atom_string(Atom, Part),
+    downcase_atom(Atom, Language),
+    !.
+
+ep_restated(Text, Sentences) :-
+    (   ep_env('CODING_ENDPOINT_RESTATE', on, Switch),
+        \+ memberchk(Switch, [off, '0', no, false])
+    ->  ep_restate_backend,
+        Options = [mode(live)]
+    ;   Options = [mode(static)]
+    ),
+    catch(reason_restate(Text, Options, Sentences), _, fail).
+
+%% Live mode's model is REASON_LIVE_*'s. Where REASON_LIVE_KEY is unset,
+%% the four are set once from the IR repair's settings, so one key and
+%% one model serve the endpoint's two model calls.
+ep_restate_backend :-
+    (   catch(nb_getval('$ep_restate_backend', done), _, fail)
+    ->  true
+    ;   ep_env('REASON_LIVE_KEY', '', Own),
+        (   Own == '',
+            ep_ir_key(Key)
+        ->  ep_ir_mode(Api),
+            ep_ir_url(Api, Url),
+            ep_ir_model(Model),
+            setenv('REASON_LIVE_API', Api),
+            setenv('REASON_LIVE_URL', Url),
+            setenv('REASON_LIVE_MODEL', Model),
+            setenv('REASON_LIVE_KEY', Key)
+        ;   true
+        ),
+        nb_setval('$ep_restate_backend', done)
+    ).
+
+ep_controlled_note(Sentences, Note) :-
+    atomic_list_concat(Sentences, '\n', Body),
+    format(atom(Note),
+           '~n~n# The request in controlled English~n~nThe same requirement, said again in the controlled English the repository''s reasoner reads, one sentence a line:~n~n~w',
+           [Body]).
+
+%% The note goes after the task in the turn ep_task_text/2 took it from.
+ep_append_task([json(Pairs)|Rest], Text, Note, [json(Pairs1)|Rest]) :-
+    memberchk(role-user, Pairs),
+    memberchk(content-Text, Pairs),
+    !,
+    atom_concat(Text, Note, Text1),
+    ep_json_set(json(Pairs), content, Text1, json(Pairs1)).
+ep_append_task([M|Rest], Text, Note, [M|Rest1]) :-
+    ep_append_task(Rest, Text, Note, Rest1).
 
 %% ep_reasoning_notes(+Language, +Setting, +Text, -Note, -About, -N, -Terms)
 %%
@@ -1368,13 +1457,12 @@ ep_chat_body_1(Request, Body, Start, Reply) :-
             ),
             ep_reasoning_setting(Request, Model0, Setting),
             ep_mode(Title, Setting, Mode),
-            ep_reasoning(Alias, Setting, Mode, Title, Messages, Guide0, Guide,
-                         N, Terms),
+            ep_controlled(Alias, Mode, Title, Messages, Messages0, N),
+            TermCount = 0,
             ep_backend_model(Alias, BackendModel),
-            (   is_list(Terms) -> length(Terms, TermCount) ; TermCount = 0 ),
             (   Title == true
             ->  Body1 = Body
-            ;   ep_add_guide(Messages, Guide, Messages1),
+            ;   ep_add_guide(Messages0, Guide0, Messages1),
                 ep_chat_restore(Request, Messages1, Messages2),
                 ep_json_set(Body, messages, Messages2, Body1)
             ),
@@ -2952,16 +3040,16 @@ ep_models([c, 'c-r0', 'c-r2', 'c-r8',
 
 ep_model_name(c, 'C (C99-C23)').
 ep_model_name('c-r0', 'C (r0: plain)').
-ep_model_name('c-r2', 'C (r2: two checks)').
-ep_model_name('c-r8', 'C (r8: eight checks)').
+ep_model_name('c-r2', 'C (r2: the controlled note)').
+ep_model_name('c-r8', 'C (r8: the controlled note)').
 ep_model_name(cocolog, cocolog).
 ep_model_name('cocolog-r0', 'cocolog (r0: plain)').
-ep_model_name('cocolog-r2', 'cocolog (r2: two checks)').
-ep_model_name('cocolog-r8', 'cocolog (r8: eight checks)').
+ep_model_name('cocolog-r2', 'cocolog (r2: the controlled note)').
+ep_model_name('cocolog-r8', 'cocolog (r8: the controlled note)').
 ep_model_name(python, 'Python 3').
 ep_model_name('python-r0', 'Python (r0: plain)').
-ep_model_name('python-r2', 'Python (r2: two checks)').
-ep_model_name('python-r8', 'Python (r8: eight checks)').
+ep_model_name('python-r2', 'Python (r2: the controlled note)').
+ep_model_name('python-r8', 'Python (r8: the controlled note)').
 
 ep_models_reply(Request, reply(200, Headers, Codes)) :-
     ep_cors(Request, Cors),

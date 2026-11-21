@@ -175,7 +175,11 @@ codex-c-r8#high    1     1      33       2378233 49075      31407     2427308 23
 
 The OpenCode rows are not benchmark modes: they are the same task
 through OpenCode, in a fresh directory holding only `spec.txt` and
-`cases/`, with the model's `#high` variant. `attempts` counts endpoint
+`cases/`, with the model's `#high` variant. They were made by the
+endpoint of 2026-11-15, whose `-r2` and `-r8` sent two and eight
+reasoning checks; since reasoning 1.18.0 both send the controlled English
+note instead (`coding/endpoint/README.md`), so a run now is another arm.
+`attempts` counts endpoint
 calls and `seconds` is the session's wall time; the token columns are the
 sums of the backend's reported usage over those calls. The call times
 were 349.3 s for `c-r0`, 228.9 s for `c-r2` and 169.4 s for `c-r8`.

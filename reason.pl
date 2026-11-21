@@ -148,6 +148,22 @@
 %%         reason_text/2, or the shipped tagger over typed prose, and then
 %%         the topics as lines.
 %%
+%%     reason_restate(+Text, -Sentences)
+%%     reason_restate(+Text, +Options, -Sentences)
+%%         Text -- a requirement, prose, a command table -- said again in
+%%         the controlled English the grammar reads: Sentences is a list of
+%%         atoms, one sentence each, every one read by the grammar alone
+%%         (since 1.18.0). In both modes: the restatement live mode saved
+%%         for Text, else Text's own sentences when the grammar reads every
+%%         one of them; past that, STATIC fails, and LIVE (the mode, or
+%%         mode(live) in Options) asks: a model says the text again in
+%%         the grammar's forms, saying nothing the text does not say; the
+%%         sentences the grammar does not read go back to it, marked
+%%         (REASON_LIVE_RESTATE_ROUNDS, 3 calls at most), and what reads is
+%%         kept, in order, and saved as reason_live_restatement(Text,
+%%         Sentences). The coding endpoint sends it after a request, its
+%%         one note.
+%%
 %%     reason_third(+Base, -ThirdPerson)
 %%         The inflector, rs_base/2's inverse: own -> owns, watch ->
 %%         watches, carry -> carries, have -> has. library(reasoning/normalise)'s
@@ -277,6 +293,10 @@
 %%                Kind).
 %%   an           its sentences; a verb whose third person the model
 %%   explanation  corrects becomes reason_live_third(Base, Third).
+%%   a text to    the whole text; the model says it again in the
+%%   restate      grammar's forms (reason_restate/2,3), the sentences the
+%%                grammar reads become reason_live_restatement(Text,
+%%                Sentences), and one it does not read is sent back once.
 %%
 %% Each verdict is saved as reason_live_verdict(Kind, Item, Reading,
 %% right | wrong(Minor)), so a reading the model judged is not sent again:
@@ -576,7 +596,7 @@
 %% made from it, and no code, test or lesson in the tree spells the number.
 %% Bump it in the commit that changes this repository, never afterwards.
 
-reason_version(1, 17, 3).
+reason_version(1, 18, 0).
 
 reason_version(Version) :-
     reason_version(Major, Minor, Patch),
@@ -593,6 +613,7 @@ reason_version(Version) :-
 :- dynamic reason_live_kind/2.
 :- dynamic reason_live_third/2.
 :- dynamic reason_live_lesson/2.
+:- dynamic reason_live_restatement/2.
 :- dynamic reason_live_stub/3.
 
 %% THE MODE IS A GLOBAL, NEVER A FACT: an assert under `--embed' would be
@@ -724,6 +745,43 @@ rv_text_readings_([S|Ss], [R|Rs]) :-
 %% A saved kind in place of the reading's (reason_live_kind/2).
 rv_kind(N, K0, K) :-
     (   atom(N), reason_live_kind(N, K1) -> K = K1 ; K = K0 ).
+
+%% ---- restatement: a text said again in controlled English (since 1.18.0) ----
+%%
+%% THE KEY IS THE TEXT, trimmed, as an atom: a request sent again is the
+%% same text, and reads its restatement with no model. A sentence is kept
+%% only where the GRAMMAR ALONE reads it -- no saved rewrite, no tagger --
+%% so what is handed on is controlled English, whoever wrote it.
+
+reason_restate(Text, Sentences) :- reason_restate(Text, [], Sentences).
+
+reason_restate(Text0, Options, Sentences) :-
+    rv_text(Text0),
+    rv_restate_key(Text0, Text),
+    Text \== '',
+    (   reason_live_restatement(Text, Saved)
+    ->  Sentences = Saved
+    ;   rv_split(Text, Ss),
+        Ss \== [],
+        forall(member(S, Ss), rv_grammar_reads(S))
+    ->  Sentences = Ss                   % controlled already: no model
+    ;   rv_live(Options)
+    ->  rv_load_live,
+        reason_live_restate(Text, Sentences)
+    ).
+
+rv_restate_key(T0, T) :-
+    (   atom(T0) -> A = T0
+    ;   string(T0) -> atom_string(A, T0)
+    ;   atom_codes(A, T0)
+    ),
+    atom_codes(A, Cs0),
+    rv_trim(Cs0, Cs),
+    atom_codes(T, Cs).
+
+%% one sentence the grammar reads alone, with nothing saved and no tagger
+rv_grammar_reads(S) :-
+    reason_grammar(catch(reason_text(S, _), _, fail)).
 
 %% ---- the tagger, for a sentence the grammar refuses (THE TAGGER, above) ----
 
