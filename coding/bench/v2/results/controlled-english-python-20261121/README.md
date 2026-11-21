@@ -42,3 +42,9 @@ tokens per arm, the error case's failures among the first programs, and
 how many first programs print the word `error`. A cell the model
 refuses (an empty reply sent again and refused again) counts as it
 comes, a failure where its program fails; the report says how many.
+
+## The result (written after the run)
+
+`controlled` 37/60 first programs right, `plain` 25/60: Fisher's exact
+test, one-sided, **p = 0.022 < 0.05: the effect is significant**. The
+report is `../controlled-english-python-20261121.md`.

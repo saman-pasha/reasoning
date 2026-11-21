@@ -244,6 +244,11 @@ CODING_BENCH_BASE_URL=https://api.anthropic.com/v1/messages \
   `results/controlled-ablation-20261121/` took the note apart there: the
   cause is its four sentences on input (without them 6/10, with them
   0/10); the first programs then match the parts of a line as codes.
+- **Controlled English effect on Python codegen** is
+  `results/controlled-english-python-20261121.md`: the test written before
+  the run, 60 trials an arm. The restatement makes Python's first program
+  right 37/60 against 25/60 (Fisher, one-sided, p = 0.022), with 18 %
+  fewer calls and 9 % fewer tokens.
 
 ### The reasoning arms and the cocolog lane without its guide (1.15.0)
 

@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Controlled English Effect on Python Codegen</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column of 46rem, wide tables in their own scrollers; a lab report, not a dashboard. */
+:root {
+  --bg: #f6f7f6;
+  --surface: #ffffff;
+  --fg: #1b2321;
+  --muted: #5a6763;
+  --rule: #d9dfdc;
+  --accent: #0e6a63;
+  --accent-soft: #dcefec;
+  --good: #1f7a3d;
+  --good-soft: #dff1e4;
+  --bad: #a33a2a;
+  --bad-soft: #f6e1dc;
+  --code-bg: #eef1ef;
+  --font-text: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121716; --surface: #1a201f; --fg: #e3e9e6; --muted: #9aa8a3; --rule: #2e3735;
+    --accent: #5cc4b9; --accent-soft: #173431; --good: #6fcf8e; --good-soft: #17301f;
+    --bad: #ef8b78; --bad-soft: #3a1f1a; --code-bg: #202826; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121716; --surface: #1a201f; --fg: #e3e9e6; --muted: #9aa8a3; --rule: #2e3735;
+  --accent: #5cc4b9; --accent-soft: #173431; --good: #6fcf8e; --good-soft: #17301f;
+  --bad: #ef8b78; --bad-soft: #3a1f1a; --code-bg: #202826; color-scheme: dark;
+}
+body { background: var(--bg); color: var(--fg); font-family: var(--font-text); font-size: 16px; line-height: 1.55; }
+.page { max-width: 46rem; margin: 0 auto; padding-block: 2.5rem 4rem;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 2.25rem; }
+header { display: flex; flex-direction: column; gap: .6rem; }
+.eyebrow { font-family: var(--font-mono); font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+h1 { font-size: 2rem; line-height: 1.15; font-weight: 600; margin: 0; text-wrap: balance; }
+h2 { font-size: 1.3rem; line-height: 1.25; font-weight: 600; margin: 0; text-wrap: balance; }
+h3 { font-size: 1.02rem; font-weight: 600; margin: 0; }
+p { margin: 0; max-width: 65ch; }
+section { display: flex; flex-direction: column; gap: .9rem; min-width: 0; }
+.lede { font-size: 1.08rem; color: var(--fg); }
+.meta { font-size: .86rem; color: var(--muted); font-family: var(--font-mono); }
+ul, ol { margin: 0; padding-left: 1.2rem; display: flex; flex-direction: column; gap: .4rem; max-width: 65ch; }
+code, .mono { font-family: var(--font-mono); font-size: .88em; }
+code { background: var(--code-bg); padding: .05em .3em; border-radius: 3px; }
+.findings { display: grid; gap: .75rem; }
+.finding { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: .9rem 1rem; display: flex; flex-direction: column; gap: .35rem; }
+.finding b { font-weight: 600; }
+.scroll { overflow-x: auto; min-width: 0; border: 1px solid var(--rule); border-radius: 6px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: .88rem; font-variant-numeric: tabular-nums; }
+th, td { padding: .45rem .6rem; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--rule); }
+th { font-weight: 600; color: var(--muted); font-size: .76rem; letter-spacing: .03em; text-transform: uppercase; background: var(--bg); }
+td:first-child, th:first-child, td.l, th.l { text-align: left; }
+tbody tr:last-child td { border-bottom: 0; }
+tr.group td { background: var(--bg); font-weight: 600; text-align: left; color: var(--fg); }
+tr.total td { font-weight: 600; }
+.rate { display: inline-flex; align-items: center; gap: .45rem; justify-content: flex-end; }
+.bar { width: 3.2rem; height: .45rem; background: var(--rule); border-radius: 2px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--accent); }
+.pill { display: inline-block; font-family: var(--font-mono); font-size: .74rem; padding: .05rem .4rem; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
+.pill.bad { background: var(--bad-soft); color: var(--bad); }
+.pill.good { background: var(--good-soft); color: var(--good); }
+tr.best td { background: var(--accent-soft); }
+tr.best td:first-child { box-shadow: inset 3px 0 0 var(--accent); }
+.excerpts { display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: .75rem; }
+.excerpts > div { min-width: 0; display: flex; flex-direction: column; gap: .35rem; }
+.excerpts pre { font-size: .78rem; white-space: pre; }
+pre { margin: 0; background: var(--code-bg); border-radius: 6px; padding: .8rem 1rem; overflow-x: auto; font-family: var(--font-mono); font-size: .85rem; line-height: 1.5; }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: .75rem; }
+.two > div { min-width: 0; display: flex; flex-direction: column; gap: .35rem; }
+.caption { font-size: .84rem; color: var(--muted); max-width: 65ch; }
+.note { font-size: .9rem; color: var(--muted); }
+a { color: var(--accent); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 0; }
+</style>
+</head>
+<body>
+<div class="page">
+<header>
+  <div class="eyebrow">reasoning 1.17.2 · coding bench v2 · 2026-11-21</div>
+  <h1>Controlled English effect on Python codegen</h1>
+  <p class="lede">Does the requirement, said again in controlled English after the requirement itself, make Python's first program right more often? One hard task, <code>mvccs_acid</code> (a multi-version B-tree with transactions and snapshot isolation), written by <code>claude-sonnet-5-5</code> at effort <code>low</code>. Sixty trials an arm, the two arms shuffled together in one run.</p>
+  <p class="meta">120 cells, 186 generator calls, 849&#8201;900 tokens and 35 min of cell time: $4.69 at list prices.</p>
+</header>
+
+<section>
+  <h2>The answer</h2>
+  <div class="findings">
+    <div class="finding"><b>Yes. The controlled restatement makes the first program right more often: 37/60 against 25/60, p&nbsp;=&nbsp;0.022.</b><p>The test was written down and committed before the first cell ran: first-attempt passes, Fisher's exact test, one-sided, significant at p&nbsp;&lt;&nbsp;0.05. The result passes it. (Two-sided, p&nbsp;=&nbsp;0.044.)</p></div>
+    <div class="finding"><b>It also costs less.</b><p>With more first programs right, the arm made 84 calls against 102 (−18&#8201;%) and spent 9&#8201;% fewer tokens and 20&#8201;% less time, though the note adds 2&#8201;590 characters to every call. These figures are described, not tested.</p></div>
+    <div class="finding"><b>It works through one word the requirement does not name.</b><p>Python's first programs fail almost only at the error case, which expects the word <code>error</code>. The note says "causes an error" in two sentences of its own, and 39 of its 60 first programs print the word, against 27 of 60 with the requirement alone.</p></div>
+    <div class="finding"><b>It is no general aid.</b><p>The same note makes guided cocolog's first program right far less often (2/20 against 15/20), through its sentences on input. In C and in cocolog without its guide it changes nothing.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>The test, chosen before the run</h2>
+  <p>The earlier run of these two arms, <code>reason-python-20261121</code>, gave 12/20 against 7/20 (two-sided p&nbsp;=&nbsp;0.21). The gap was large, but twenty trials an arm cannot tell a gap of five cells from chance, and that arm was the best of five notes. So this run asked the one question again, with three times the trials and a new seed. Its README, committed in <code>cbb2150</code> before any cell ran, says:</p>
+  <ul>
+    <li><b>Hypothesis:</b> the controlled note makes the first program right more often than the requirement alone.</li>
+    <li><b>Measure:</b> first-attempt passes: the first program passes the eight repair cases and the two held-out cases.</li>
+    <li><b>Test:</b> Fisher's exact test, one-sided (controlled greater), significant if p&nbsp;&lt;&nbsp;0.05.</li>
+    <li>Everything else (the final pass, calls, tokens, the error case) is described and not tested.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>The results</h2>
+  <div class="scroll"><table>
+    <thead><tr><th class="l">arm</th><th>first attempt</th><th>95&#8201;% range</th><th>final</th><th>calls</th><th>tokens</th><th>cell time</th></tr></thead>
+    <tbody>
+      <tr><td class="l">requirement alone</td><td><span class="rate">25/60<span class="bar"><i style="width:41.7%"></i></span></span></td><td>30–54&#8201;%</td><td>59/60</td><td>102</td><td>443&#8201;950</td><td>19 min 20 s</td></tr>
+      <tr class="best"><td class="l"><b>+ controlled English</b></td><td><span class="rate"><b>37/60</b><span class="bar"><i style="width:61.7%"></i></span></span></td><td>49–73&#8201;%</td><td>59/60</td><td><b>84</b></td><td><b>405&#8201;950</b></td><td>15 min 34 s</td></tr>
+    </tbody>
+  </table></div>
+  <p class="caption">First attempt: the first program passed every case. Final: a program passed within three calls. The 95&#8201;% range is the Wilson interval of the first-attempt rate.</p>
+</section>
+
+<section>
+  <h2>Why it works here</h2>
+  <p>As in every Python run before it, the first programs fail almost only at the error case. That case sends commands to a transaction that has not begun, then a second begin, and expects <code>error</code> five times. The requirement says "error if T is not active" and never what an error prints.</p>
+  <div class="scroll"><table>
+    <thead><tr><th class="l">arm</th><th>first programs that failed</th><th>of them, at the error case</th><th>first programs with the text "error"</th></tr></thead>
+    <tbody>
+      <tr><td class="l">requirement alone</td><td>35</td><td>35</td><td>27/60</td></tr>
+      <tr class="best"><td class="l"><b>+ controlled English</b></td><td>23</td><td>22</td><td><b>39/60</b></td></tr>
+    </tbody>
+  </table></div>
+  <p>The note adds no fact the requirement does not have. It says the rule as a sentence of its own, <code>Every transaction that is not active causes an error.</code>, where the requirement says it at the end of each line of a command table.</p>
+  <div class="two">
+    <div><span class="meta">the requirement</span><pre>  i T KEY      stage an insertion of KEY in T; error if T is not active</pre></div>
+    <div><span class="meta">the controlled note</span><pre>Every repeated_begin causes an error.
+...
+Every transaction that is not active
+causes an error.</pre></div>
+  </div>
+</section>
+
+<section>
+  <h2>Limits</h2>
+  <ul>
+    <li><b>One task, one model, one language.</b> The effect goes through one word that the cases expect and the requirement does not name. A requirement that names its outputs would likely not show it; that is not tested.</li>
+    <li><b>The same note harms guided cocolog</b> (2/20 against 15/20, and 0/10 against 6/10 in the ablation), through its four sentences on input.</li>
+    <li><b>The restatement was written by hand</b>, by the assistant that ran the benchmark, from the requirement alone. Its cost is not counted, and another writer would make another text.</li>
+    <li><b>One cell met the safety classifier.</b> Both repair calls of one <code>plain</code> cell were refused (<code>reasoning_extraction</code>). Its first program had failed already, so the test does not change. It is that arm's one final failure.</li>
+    <li>The note sits in the user prompt, not in the system prompt as the coding endpoint puts its notes.</li>
+    <li>The model takes no temperature, and the same prompt passes at different rates in different runs, so only arms of one run are compared.</li>
+  </ul>
+</section>
+
+<hr>
+<section>
+  <h3>Files</h3>
+  <p class="note">In <code>saman-pasha/reasoning</code>, <code>coding/bench/v2/results/controlled-english-python-20261121/</code>: <code>README.md</code> (the test, written before the run, and its result), <code>bench.jsonl</code> (the run) and <code>mvccs_acid-python.controlled</code> (the note). The report in Markdown is <code>controlled-english-python-20261121.md</code>. The earlier runs are <code>reason-python-20261121.md</code> (with the C, cocolog and ablation runs) and <code>ir-mvccs-clear-20261120.md</code>.</p>
+</section>
+</div>
+</body>
+</html>

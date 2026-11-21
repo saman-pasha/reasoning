@@ -187,6 +187,10 @@ quotes nor a second statement as such do it. The run does not show which
 of the four sentences does it, or why. These comparisons were not chosen
 before the run: read them as a description.
 
+A test of `controlled` against `plain` alone, written before its run,
+with 60 trials an arm, is `controlled-english-python-20261121.md`: 37/60
+against 25/60, Fisher one-sided p = 0.022, significant.
+
 So the controlled text helps where the first program's failure is the
 unnamed `error` (Python, not significantly), changes nothing in C and in
 cocolog without its guide, and harms cocolog with its 19 000-token
