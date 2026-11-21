@@ -26,9 +26,27 @@ explanations, topics), `normalise.pl` (the generator of tagged training
 pairs), `tagger.pl` (a GRU tagger over `tensor_expr`, plus the deterministic
 judge `tagger_sane/2` and repair `tg_repair/3`), `translate.pl` (sentences
 read into an English-worded IR and written into any lesson's language),
-`live.pl` (the readers' live mode), `teach.pl` and `page.pl`. Cases:
-`test/reason.pl`, `live.pl`, `normalise.pl`, `tagger.pl`, `translate.pl`;
-lessons 01-05 in `tutorials/`.
+`live.pl` (the readers' live mode), `typology.pl` (a language as a filled
+template, one file a language in `templates/`), `teach.pl` and `page.pl`.
+Cases: `test/reason.pl`, `live.pl`, `normalise.pl`, `tagger.pl`,
+`translate.pl`, `typology.pl`; lessons 01-06 in `tutorials/`.
+
+**typology.pl is a second translator, beside translate.pl** (1.19.0): a
+language is a TEMPLATE, facts in `templates/<name>.pl` -- the orders it
+keeps of each level's parts (`ty_order/3`: the clause's s, v, o and the
+noun phrase's d, a, n, six orders each, `typology_choices/2`), its words
+and forms (`ty_noun/6`, `ty_adjective/5`, `ty_verb/6` with a list of words
+a form, `ty_article/5`), the marks a role's phrase takes (`ty_mark/5`:
+Persian `را`, Spanish `a`) and its contractions (`ty_contraction/3`). ONE
+DCG reads and writes every language: each slot offers what may stand
+there and a check at the end of its level keeps what the template allows,
+so no order and no word of a language is in the code. A new slot (a/an,
+an ezafe that is written, prepositions, questions) is a new fact shape and
+a part of the grammar that asks it, never a language's own clause.
+`typology_check/2` names a template's gaps, and test/typology.pl holds
+every clause of a sample (1 632 a language) to a round trip, and the
+outputs to sentences written out. It shares nothing with translate.pl's
+IR yet.
 
 **Every reader has two modes, static and live** (1.16.0; reason.pl's header,
 STATIC AND LIVE, and live.pl's). What a session must keep:

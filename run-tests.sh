@@ -1,7 +1,7 @@
 #!/bin/sh
 # Runs the reasoning test cases from this repository's root.
 #
-#   sh run-tests.sh              all seven: version, reason, live, normalise, tagger, translate, coding
+#   sh run-tests.sh              all eight: version, reason, live, normalise, tagger, translate, typology, coding
 #   sh run-tests.sh reason       one of them
 #
 # `version` is first on purpose: it fails when reason.pl is changed and
@@ -27,8 +27,8 @@ export COCOLOG_LIBRARY="$LIBS"
 cd "$ROOT"
 CASE=${1:-all}
 case "$CASE" in
-    all)      CASES="version reason live normalise tagger translate coding" ;;
-    version|reason|live|normalise|tagger|translate|coding) CASES=$CASE ;;
+    all)      CASES="version reason live normalise tagger translate typology coding" ;;
+    version|reason|live|normalise|tagger|translate|typology|coding) CASES=$CASE ;;
     *) echo "run-tests: no such case: $CASE" >&2; exit 1 ;;
 esac
 RED=0

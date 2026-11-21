@@ -1,0 +1,157 @@
+%% library(reasoning/typology) -- a language as a filled template, and one
+%% grammar that reads it into the IR and writes it from the IR.
+%%
+%%     cocolog -s test/typology.pl        from this repository's root
+
+:- use_module('test/prelude.pl').
+:- use_module(library(reasoning/typology)).
+
+main :-
+    forall(member(L, [english, spanish, italian, persian]), typology_load(L)),
+    choices, complete, written, round_trips, refused, marks, free_order,
+    incomplete, blank_template,
+    checks_done.
+
+%% ---- the choices ----------------------------------------------------------------
+
+choices :-
+    section('every order of a level'),
+    typology_choices(clause, C1), length(C1, N1),
+    check('the clause has six orders', N1, 6),
+    typology_choices(np, C2), length(C2, N2),
+    check('the noun phrase has six orders', N2, 6),
+    typology_languages(Ls),
+    check('the four templates are loaded', Ls, [english, italian, persian, spanish]).
+
+complete :-
+    section('the four templates are complete'),
+    forall(member(L, [english, spanish, italian, persian]),
+           ( typology_check(L, M), atom_concat(L, ' lacks nothing', Label),
+             check(Label, M, []) )).
+
+%% ---- one IR, four sentences ---------------------------------------------------------
+
+written :-
+    section('one IR written in each language'),
+    IR = clause(see, present, pos, np(boy, sg, def, []), np(dog, sg, def, [black])),
+    findall(L-T, ( member(L, [english, spanish, italian, persian]), typology_write(L, IR, T) ), Ts),
+    check('each language in its own order and forms', Ts,
+          [ english-'The boy sees the black dog.',
+            spanish-'El niño ve al perro negro.',
+            italian-'Il ragazzo vede il cane nero.',
+            persian-'پسر سگ سیاه را می‌بیند.' ]),
+    typology_translate(spanish, persian, 'Las niñas no vieron un libro rojo.', P2),
+    check('Spanish into Persian: the article, the plural, the past, the negative', P2,
+          'دخترها یک کتاب قرمز ندیدند.'),
+    typology_translate(persian, english, 'پسرها سگ سیاه را دیدند.', E3),
+    check('Persian into English: را is read as the definite object', E3,
+          'The boys saw the black dog.'),
+    typology_translate(english, italian, 'A small girl does not sleep.', I4),
+    check('English into Italian: an intransitive clause', I4, 'Una ragazza piccola non dorme.').
+
+%% ---- every clause of a sample, written and read back ---------------------------
+
+sample_np(Nouns, Adjs, np(N, Num, Def, A)) :-
+    member(N, Nouns), member(Num, [sg, pl]), member(Def, [def, indef]), member(A, Adjs).
+
+sample_ir(clause(see, T, P, S, O)) :-
+    member(T, [present, past]), member(P, [pos, neg]),
+    sample_np([boy, girl], [[], [small]], S),
+    sample_np([dog, girl, book], [[], [red]], O).
+sample_ir(clause(sleep, T, P, S, none)) :-
+    member(T, [present, past]), member(P, [pos, neg]),
+    sample_np([boy, girl, mouse], [[], [small, red]], S).
+
+round_trips :-
+    section('every clause of a sample: written, and read back'),
+    aggregate_all(count, sample_ir(_), N),
+    format("   ~w clauses a language~n", [N]),
+    forall(member(L, [english, spanish, italian, persian]),
+           ( aggregate_all(count, ( sample_ir(IR), \+ round_trip(L, IR) ), Bad),
+             atom_concat(L, ': each reads back as its own IR', Label),
+             check(Label, Bad, 0) )),
+    findall(R, typology_read(persian, 'پسرها می‌خوابند.', R), Rs),
+    check('a reading the forms leave open is two readings: Persian has no definite article',
+          Rs, [ clause(sleep, present, pos, np(boy, pl, def, []), none),
+                clause(sleep, present, pos, np(boy, pl, indef, []), none) ]).
+
+round_trip(L, IR) :-
+    typology_write(L, IR, Text),
+    once(typology_read(L, Text, IR)).
+
+%% ---- what the template does not allow ----------------------------------------------
+
+refused :-
+    section('a sentence the template does not allow is not read'),
+    forall(member(L-T-Why,
+                  [ spanish-'Perro el ve al gato.'-'the article after the noun',
+                    spanish-'Los perro ven al gato.'-'an article that does not agree',
+                    spanish-'La niño duerme.'-'a gender that does not agree',
+                    spanish-'La niña pequeño duerme.'-'an adjective that does not agree',
+                    spanish-'Los niños ve al gato.'-'a verb that does not agree',
+                    spanish-'El niño ve el perro.'-'an animate object with no personal a',
+                    spanish-'El niño ve a un libro.'-'a personal a before a thing',
+                    english-'The dog black sleeps.'-'an English adjective after its noun',
+                    english-'Dog the sleeps.'-'an English article after its noun',
+                    persian-'پسر سگ می‌بیند.'-'a Persian object that is neither definite nor indefinite',
+                    persian-'پسر می‌بیند سگ را.'-'a Persian verb before its object',
+                    italian-'Il ragazzo vede la cane.'-'an Italian article that does not agree' ]),
+           ( yes_no(typology_read(L, T, _), R),
+             atomic_list_concat([L, ': ', Why], Label),
+             check(Label, R, no) )).
+
+marks :-
+    section('marks and contractions'),
+    typology_write(spanish, clause(see, present, pos, np(boy, sg, def, []), np(girl, sg, indef, [])), S1),
+    check('Spanish: a before an animate singular object', S1, 'El niño ve a una niña.'),
+    typology_write(spanish, clause(see, present, pos, np(boy, sg, def, []), np(dog, pl, indef, [])), S2),
+    check('Spanish: none before an animate plural indefinite object', S2, 'El niño ve perros.'),
+    typology_read(spanish, 'El niño ve al perro.', R3),
+    check('Spanish: al is read as a el', R3,
+          clause(see, present, pos, np(boy, sg, def, []), np(dog, sg, def, []))),
+    typology_write(persian, clause(see, present, pos, np(boy, sg, def, []), np(book, sg, indef, [])), S4),
+    check('Persian: no را after an indefinite object', S4, 'پسر یک کتاب می‌بیند.').
+
+%% ---- a language with two orders ---------------------------------------------------
+
+free_order :-
+    section('a language that keeps two orders'),
+    forall(( member(F, [ty_order(english, clause, _), ty_noun(english, _, _, _, _, _),
+                        ty_adjective(english, _, _, _, _), ty_verb(english, _, _, _, _, _),
+                        ty_article(english, _, _, _, _)]),
+             call(F) ),
+           ( F =.. [P, english|Args], G =.. [P, free|Args], assertz(G) )),
+    retractall(ty_order(free, clause, _)),
+    assertz(ty_order(free, clause, [s, v, o])),
+    assertz(ty_order(free, clause, [o, v, s])),
+    assertz(ty_order(free, np, [d, a, n])),
+    findall(R, typology_read(free, 'The cat sees the dog.', R), Rs),
+    length(Rs, N),
+    check('either order is read, so one sentence is two readings', N, 2),
+    typology_write(free, clause(see, present, pos, np(cat, sg, def, []), np(dog, sg, def, [])), W),
+    check('the first order is the one written', W, 'The cat sees the dog.').
+
+%% ---- what typology_check/2 reports ---------------------------------------------
+
+incomplete :-
+    section('typology_check/2 names what a template lacks'),
+    retract(ty_verb(free, sleep, past, pl, neg, _)),
+    retractall(ty_adjective(free, red, _, _, _)),
+    assertz(ty_adjective(free, red, any, sg, red)),
+    assertz(ty_order(free, np, [d, n])),
+    retractall(ty_noun(free, book, _, _, _, _)),
+    assertz(ty_noun(free, book, none, thing, book, books)),
+    typology_check(free, M),
+    check('a missing verb form, a missing adjective form, an order of the wrong parts, a value no slot takes', M,
+          [ bad(ty_noun(free, book, none, thing, book, books)),
+            not_an_order(np, [d, n]),
+            adjective_form(red, none, pl),
+            verb_form(sleep, past, pl, neg) ]).
+
+blank_template :-
+    section('the blank template'),
+    with_output_to(string(S), typology_template(klingon)),
+    split_string(S, "\n", "", Lines),
+    include([Line]>>sub_string(Line, 0, _, _, 'ty_order(klingon'), Lines, Orders),
+    length(Orders, N),
+    check('every order of every level is offered', N, 12).
