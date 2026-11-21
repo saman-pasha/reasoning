@@ -274,7 +274,13 @@ effort (`low` for `claude-sonnet-5-5`, whose lowest effort that is):
   lane's two reasoning arms (20 cells, 60 attempts) called SWI-Prolog's
   `read_line_to_string/2`, `get_char/1` or `get_code/1` without it and
   stopped at the first case, or answered a repair with prose before the
-  code; none passed.
+  code; none passed. **Since 1.15.3 it names a second**: begin with
+  `:- set_prolog_flag(double_quotes, string).` too. With the import
+  alone (1.15.2, 40 cells) no first program passed and 18 cells passed
+  by the end: the programs matched `split_string/4`'s strings against
+  `"v"` in their clause heads, which cocolog reads as a list of codes by
+  default, and printed nothing. Both are where cocolog is not SWI-Prolog
+  7, the dialect a model that was never trained on cocolog writes.
 
 ## Declarative vs imperative (Phase 5)
 

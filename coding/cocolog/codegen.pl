@@ -90,14 +90,19 @@ cocolog_system_prompt(Skill, Prompt) :-
 ~s',
            [Skill]).
 
-%% The control's one fact about cocolog (reasoning 1.15.2): its stream
-%% predicates are library(stream)'s, which a program loads itself. Without
-%% it, every program of the cocolog_noguide lane's reasoning arms called
+%% The control's two facts about cocolog, both where it is not SWI-Prolog 7
+%% (bench v2, 2026-11-21). 1.15.2: its stream predicates are
+%% library(stream)'s, which a program loads itself; without it, every
+%% program of the cocolog_noguide lane's reasoning arms called
 %% read_line_to_string/2, get_char/1 or get_code/1 and stopped at the
-%% first case, an unknown procedure (bench v2, 2026-11-21).
+%% first case, an unknown procedure. 1.15.3: "text" is a list of codes
+%% unless double_quotes says otherwise; with the import alone, the first
+%% programs matched split_string/4's strings against "v" in their clause
+%% heads, matched nothing and printed nothing, and with the flag added and
+%% nothing else 9 of 12 such programs passed every case.
 cocolog_no_skill_prompt(Prompt) :-
     format(atom(Prompt),
-'You are a cocolog programmer. Write a complete cocolog program for the requirement. Define main/0 unless the requirement names another goal. Begin the program with `:- use_module(library(stream)).`: cocolog does not load its stream predicates (read_line_to_string/2, read_line_to_codes/2, get_char/1, read_term/2 and the rest) without it. Output only the complete source code, with no Markdown fences and no explanation.',
+'You are a cocolog programmer. Write a complete cocolog program for the requirement. Define main/0 unless the requirement names another goal. Begin the program with these two lines: `:- set_prolog_flag(double_quotes, string).` (cocolog reads "text" in double quotes as a list of codes unless the flag says otherwise, where SWI-Prolog 7 reads it as a string) and `:- use_module(library(stream)).` (cocolog does not load its stream predicates, read_line_to_string/2, read_line_to_codes/2, get_char/1, read_term/2 and the rest, without it). Output only the complete source code, with no Markdown fences and no explanation.',
            []).
 
 cocolog_user_prompt(Spec, Goal, Prompt) :-
