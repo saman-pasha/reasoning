@@ -171,6 +171,22 @@ text.)
   runner's `plain` arm did not change). Rows of different runs do not
   compare; only arms shuffled together in one run do.
 
+### Why it breaks cocolog with its guide
+
+A third run, `controlled-ablation-20261121/` (50 cells, $9.03, its
+README has the table), took the note apart in guided cocolog, ten
+trials an arm: the requirement alone 6/10 at the first attempt, the
+controlled note **0/10** (p = 0.011), the requirement said again in plain
+English 5/10, the note with its quoted words unquoted 1/10, and **the note
+without its four sentences on input 6/10** (p = 0.011 against the whole
+note). So the cause is those four sentences: `Mvccs reads a line.`,
+`Every line holds a command.`, `Every line that is blank is ignored.`,
+`Every transaction_name is a word.` With them, 8 of 10 first programs
+match the parts of a line as codes; without them, 1 of 10. Neither the
+quotes nor a second statement as such do it. The run does not show which
+of the four sentences does it, or why. These comparisons were not chosen
+before the run: read them as a description.
+
 So the controlled text helps where the first program's failure is the
 unnamed `error` (Python, not significantly), changes nothing in C and in
 cocolog without its guide, and harms cocolog with its 19 000-token

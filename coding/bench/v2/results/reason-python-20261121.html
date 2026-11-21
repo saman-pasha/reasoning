@@ -90,7 +90,7 @@ hr { border: 0; border-top: 1px solid var(--rule); margin: 0; }
   <div class="eyebrow">reasoning 1.17.1 · coding bench v2 · 2026-11-21</div>
   <h1>Which reasoner note helps Python's first program</h1>
   <p class="lede">One hard task, <code>mvccs_acid</code> (a multi-version B-tree with transactions and snapshot isolation), written in Python by <code>claude-sonnet-5-5</code> at effort <code>low</code>. Each cell got the requirement alone, or the requirement and one note: the requirement said again in controlled English, or what three of the reasoner's readers make of that text, or the translator's IR. Twenty trials an arm, up to three model calls each.</p>
-  <p class="meta">120 cells in one run, 213 generator calls, 1&#8201;159&#8201;412 tokens and 39 min of cell time: $5.75 at list prices. A second run of 120 cells put the controlled text in C and cocolog: $10.72.</p>
+  <p class="meta">120 cells in one run, 213 generator calls, 1&#8201;159&#8201;412 tokens and 39 min of cell time: $5.75 at list prices. A second run of 120 cells put the controlled text in C and cocolog: $10.72. A third, of 50 cells, took the note apart in guided cocolog: $9.03.</p>
 </header>
 
 <section>
@@ -188,6 +188,19 @@ cause(A,error):-repeated_begin(A)</pre></div>
     <li><b>In cocolog with its guide the controlled text made the first program much worse.</b> 12 of its 18 failing first programs split each line with <code>split_string/4</code>, which gives strings, and then match each command as a list of codes (<code>mv_cmd([[0'b], N])</code>). No command matches, and the program prints nothing. With the requirement alone, 3 of 20 programs did that. Most of the passing programs (12 of 17 in the two arms) turn the parts into atoms and match <code>[b, T]</code>. 5 more programs failed the error case and printed nothing there; with the requirement alone, none did. The note says nothing about strings, codes or how to read a line, and the run does not show why it moves the model away from what the guide teaches.</li>
     <li><b>The same prompt passed more often in this run than in the earlier ones.</b> With the requirement alone, cocolog with its guide passed 15/20 here and 3/10 in each of the two runs before it (p&nbsp;=&nbsp;0.010 against the two together). C passed 14/20, against 4/10 and 5/10. The prompts are the same text byte for byte, and the runner's <code>plain</code> arm did not change. Rows of different runs do not compare; only arms shuffled together in one run do.</li>
   </ul>
+  <h3>Why it breaks cocolog with its guide</h3>
+  <p>A third run, <code>controlled-ablation-20261121/</code> (50 cells, $9.03), took the note apart in guided cocolog, ten trials an arm. Each arm changed one thing:</p>
+  <div class="scroll"><table>
+    <thead><tr><th class="l">note after the requirement</th><th>first attempt</th><th>first programs that match a part as codes</th></tr></thead>
+    <tbody>
+      <tr><td class="l">none</td><td><span class="rate">6/10<span class="bar"><i style="width:60%"></i></span></span></td><td>4/10</td></tr>
+      <tr><td class="l">the controlled note</td><td><span class="rate"><b>0/10</b><span class="bar"><i style="width:0%"></i></span></span></td><td>8/10</td></tr>
+      <tr><td class="l">the requirement said again in plain English</td><td><span class="rate">5/10<span class="bar"><i style="width:50%"></i></span></span></td><td>4/10</td></tr>
+      <tr><td class="l">the controlled note, its quoted words unquoted</td><td><span class="rate">1/10<span class="bar"><i style="width:10%"></i></span></span></td><td>7/10</td></tr>
+      <tr class="best"><td class="l"><b>the controlled note without its four sentences on input</b></td><td><span class="rate"><b>6/10</b><span class="bar"><i style="width:60%"></i></span></span></td><td>1/10</td></tr>
+    </tbody>
+  </table></div>
+  <p><b>The cause is the four sentences on input:</b> <code>Mvccs reads a line.</code>, <code>Every line holds a command.</code>, <code>Every line that is blank is ignored.</code>, <code>Every transaction_name is a word.</code> Without them the note gives 6/10, as no note does (p&nbsp;=&nbsp;0.011 against the whole note), and only 1 of 10 first programs matches the parts of a line as codes. Neither the quotes nor a second statement as such do it. The run does not show which of the four sentences does it, or why. These comparisons were not chosen before the run, so read them as a description.</p>
   <p>So the controlled text helps where the first program's failure is the unnamed <code>error</code> (Python, not significantly), changes nothing in C and in cocolog without its guide, and harms cocolog with its 19&#8201;000-token guide.</p>
 </section>
 
@@ -199,6 +212,7 @@ cause(A,error):-repeated_begin(A)</pre></div>
     <tbody>
       <tr><td class="l">Python reader notes, 1.17.1</td><td>120</td><td>730&#8201;308</td><td>429&#8201;104</td><td>$5.75</td></tr>
       <tr><td class="l">controlled text in C and cocolog, 1.17.1</td><td>120</td><td>2&#8201;505&#8201;615</td><td>570&#8201;976</td><td>$10.72</td></tr>
+      <tr><td class="l">the controlled note taken apart in guided cocolog, 1.17.2</td><td>50</td><td>2&#8201;899&#8201;296</td><td>323&#8201;415</td><td>$9.03</td></tr>
     </tbody>
   </table></div>
   <p class="caption">At $2 and $10 per million input and output tokens, every prompt token at the full price (an upper bound: some were cache reads).</p>

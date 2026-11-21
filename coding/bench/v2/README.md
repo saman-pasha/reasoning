@@ -241,6 +241,9 @@ CODING_BENCH_BASE_URL=https://api.anthropic.com/v1/messages \
   (`results/controlled-mvccs-20261121/`): no change in C or in cocolog
   without its guide, and 2/20 against 15/20 in cocolog with its guide
   (p = 0.00007).
+  `results/controlled-ablation-20261121/` took the note apart there: the
+  cause is its four sentences on input (without them 6/10, with them
+  0/10); the first programs then match the parts of a line as codes.
 
 ### The reasoning arms and the cocolog lane without its guide (1.15.0)
 

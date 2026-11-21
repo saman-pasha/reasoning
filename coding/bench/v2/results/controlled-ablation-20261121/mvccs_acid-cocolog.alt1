@@ -1,0 +1,39 @@
+
+
+# The request, said again
+
+The same requirement, said again word for word:
+
+Write a complete cocolog program whose main/0 reads standard input and writes standard output. It simulates a multi-version B-tree of
+minimum degree 2 (a 2-3-4 tree) holding integer keys, with transactions and
+snapshot isolation. Read commands from standard input until EOF, one command
+per line. Blank lines are ignored.
+
+  b T          begin transaction T at the latest committed version; error if T is active
+  i T KEY      stage an insertion of KEY in T; error if T is not active
+  d T KEY      stage a deletion of KEY in T; error if T is not active
+  c T          commit T atomically: apply all its staged changes as one new
+               committed version, increment the commit id, and end T;
+               error if T is not active. An empty commit still increments.
+  a T          abort T, discard all its staged changes, and end T;
+               error if T is not active
+  r T KEY      print yes if KEY is visible in T's view, otherwise no;
+               error if T is not active
+  p T          print every key visible in T's view in ascending order, one per
+               line; print nothing for an empty view; error if T is not active
+  g KEY        print yes if KEY is in the latest committed version, otherwise no
+  v            print the latest commit id
+
+T is a word of ASCII letters or digits. KEY is an integer, possibly negative.
+A transaction's view is the committed version at its begin snapshot plus its
+own staged insertions and deletions; commits by other transactions after its
+snapshot are invisible to it. T keeps one staged change per key, the last one
+staged, even when it does not change T's view: a deletion of a key T cannot
+see is still staged. A commit applies each staged change to the latest
+committed version (last committer wins for keys it changed); inserting a key
+that is already there, or deleting a key that is not there, changes nothing.
+At EOF, active transactions are abandoned without committing.
+
+Use a B-tree for the committed versions, recursion for insertion and deletion,
+and dynamic allocation for nodes; the number of keys and transactions is not
+fixed. Print exactly what each command asks for, with no prompts or debug output.

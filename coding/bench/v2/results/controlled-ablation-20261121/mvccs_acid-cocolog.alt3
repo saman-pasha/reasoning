@@ -1,0 +1,66 @@
+
+
+# The request in controlled English
+
+The same requirement, said again in the controlled English the repository's reasoner reads, one sentence a line:
+
+Mvccs is a program.
+Mvccs simulates a tree.
+Every tree is a b_tree.
+The minimum_degree is 2.
+Every b_tree holds the keys.
+Every key is an integer.
+Every negative_integer may be a key.
+Every transaction has a snapshot.
+Every transaction begins at the latest_version.
+Every repeated_begin begins an active_transaction.
+Every repeated_begin causes an error.
+Every transaction that is active may stage an insertion.
+Every transaction that is active may stage a deletion.
+Every transaction that is active may commit.
+Every transaction that is active may abort.
+Every transaction that is active may read a key.
+Every transaction that is active may print the view.
+Every transaction that is not active causes an error.
+Every commit is atomic.
+Every commit applies the changes to the latest_version.
+Every commit creates a version.
+Every commit increments the commit_id.
+Every commit ends the transaction.
+Every commit that is empty increments the commit_id.
+Every abort discards the changes.
+Every abort ends the transaction.
+Every key that is visible reads as "yes".
+Every key that is not visible reads as "no".
+Every key that is visible is printed.
+Every printing is ascending.
+Every view that is empty does not print a line.
+Every key that is committed gets "yes".
+Every key that is not committed gets "no".
+Every version_command prints the commit_id.
+Every view is a snapshot.
+Every view holds the staged changes.
+Every commit that follows the snapshot is invisible.
+Every key has a staged_change.
+Every change that is last is kept.
+Every blind_deletion deletes an invisible_key.
+Every blind_deletion is staged.
+Every committer that is last wins.
+Every redundant_insertion inserts a present_key.
+Every present_key is a committed_key.
+Every redundant_insertion is ignored.
+Every redundant_deletion deletes an absent_key.
+Every absent_key is not a committed_key.
+Every redundant_deletion is ignored.
+Every unfinished_transaction is active.
+Every unfinished_transaction is abandoned.
+Every unfinished_transaction is not committed.
+Every committed_version is a b_tree.
+Every insertion is recursive.
+Every deletion is recursive.
+Every node is heap_allocated.
+Every key_count is unbounded.
+Every transaction_count is unbounded.
+Every command prints an answer.
+Mvccs does not print a prompt.
+Mvccs does not print a debug_output.
