@@ -264,9 +264,12 @@ effort (`low` for `claude-sonnet-5-5`, whose lowest effort that is):
   generator's short `--no-skill` system prompt in place of the guide's
   19 000 tokens, and the `cocolog` lane's requirement, user prompt,
   runtime and verifier (`v2_language_runtime/2`). `cocolog` against
-  `cocolog_noguide` is what the guide is worth; `cocolog_noguide` against
-  `swipl`, whose generator is the same shape, is the runtime and the
-  language's name. Its notes are the `cocolog` lane's, as the requirement
+  `cocolog_noguide` is what the guide is worth. `cocolog_noguide` against
+  `swipl` is not only the runtime and the language's name: the `swipl`
+  generator's user message is the requirement alone, where the cocolog
+  generator's begins "Write a complete cocolog program for this
+  requirement.", and in the 1.15.1 run 22 of SWI-Prolog's 40 first
+  replies began with English notes before the code and did not load. Its notes are the `cocolog` lane's, as the requirement
   is (`ir_prep.pl --langs cocolog_noguide` makes no call). The default
   languages stay the four. **Since 1.15.2 the short prompt names one fact
   of cocolog**: begin with `:- use_module(library(stream)).`, which loads
@@ -279,8 +282,11 @@ effort (`low` for `claude-sonnet-5-5`, whose lowest effort that is):
   alone (1.15.2, 40 cells) no first program passed and 18 cells passed
   by the end: the programs matched `split_string/4`'s strings against
   `"v"` in their clause heads, which cocolog reads as a list of codes by
-  default, and printed nothing. Both are where cocolog is not SWI-Prolog
-  7, the dialect a model that was never trained on cocolog writes.
+  default, and printed nothing or `error`. Both are where cocolog is not
+  SWI-Prolog 7, the dialect a model that was never trained on cocolog
+  writes. With both lines (1.15.3, 40 cells) 24 first programs passed and
+  all 40 cells by the end, at 338 045 tokens against the guided lane's
+  2 264 582 for its 40 (`results/ir-mvccs-clear-20261120.md`).
 
 ## Declarative vs imperative (Phase 5)
 
