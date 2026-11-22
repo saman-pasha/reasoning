@@ -6,10 +6,16 @@
 :- use_module('test/prelude.pl').
 :- use_module(library(reasoning/typology)).
 
+%% Each section runs ONCE: a red check makes checks_done/0 fail, and a
+%% main written as one conjunction then backtracked into the sections'
+%% choice points and ran the later ones again over a changed state (the
+%% free language's rows asserted twice), a second report that was not
+%% true.
 main :-
     forall(member(L, [english, spanish, italian, persian]), typology_load(L)),
-    choices, complete, written, round_trips, refused, marks, word_tables,
-    reproduced, free_order, incomplete, blank_template,
+    forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
+                      word_tables, reproduced, free_order, incomplete, blank_template]),
+           once(S)),
     checks_done.
 
 %% ---- the choices ----------------------------------------------------------------
@@ -112,6 +118,41 @@ marks :-
     typology_write(persian, clause(see, present, pos, np(boy, sg, def, []), np(book, sg, indef, [])), S4),
     check('Persian: no را after an indefinite object', S4, 'پسر یک کتاب می‌بیند.').
 
+%% ---- forms chosen by sound (Phase 3) -------------------------------------------
+
+sounds :-
+    section('forms chosen by the next word and by the word''s own ending'),
+    forall(member(L-IR-Want,
+                  [ english-clause(eat, present, pos, np(boy, sg, def, []), np(apple, sg, indef, []))-'The boy eats an apple.',
+                    english-clause(see, present, pos, np(boy, sg, def, []), np(university, sg, indef, []))-'The boy sees a university.',
+                    english-clause(see, present, pos, np(boy, sg, def, []), np(hour, sg, indef, []))-'The boy sees an hour.',
+                    italian-clause(see, present, pos, np(lawyer, sg, def, []), np(student, pl, def, []))-'L\'avvocato vede gli studenti.',
+                    italian-clause(see, past, neg, np(lawyer, pl, def, []), np(student, sg, indef, []))-'Gli avvocati non videro uno studente.',
+                    spanish-clause(see, present, pos, np(boy, sg, def, []), np(water, sg, def, [cold]))-'El niño ve el agua fría.',
+                    spanish-clause(see, present, pos, np(boy, pl, def, []), np(water, pl, def, [cold]))-'Los niños ven las aguas frías.',
+                    persian-clause(see, present, pos, np(boy, sg, def, []), np(cat, sg, def, [black]))-'پسر گربه‌ی سیاه را می‌بیند.',
+                    persian-clause(see, past, pos, np(boy, pl, def, []), np(dog, pl, def, [black, small]))-'پسرها سگ‌های سیاه کوچک را دیدند.',
+                    persian-clause(see, present, pos, np(boy, sg, def, []), np(cat, sg, def, []))-'پسر گربه را می‌بیند.' ]),
+           ( typology_write(L, IR, T),
+             atomic_list_concat([L, ': ', Want], Label),
+             check(Label, T, Want),
+             ( typology_read(L, T, IR) -> Back = read ; Back = not_read ),
+             atomic_list_concat([L, ': and read back: ', Want], Label2),
+             check(Label2, Back, read) )),
+    ( typology_read(italian, 'Il ragazzo vede un\'amica.', _) -> R1 = read ; R1 = refused ),
+    check('Italian: un\' joined to a feminine noun is read', R1, read),
+    forall(member(L-T-Why,
+                  [ english-'The boy eats a apple.'-'a before a vowel',
+                    english-'The boy sees an university.'-'an before uni',
+                    italian-'Il avvocato vede i studenti.'-'il before a vowel, i before s and a consonant',
+                    italian-'Lo ragazzo vede il cane.'-'lo before a plain consonant',
+                    spanish-'El niño ve la agua fría.'-'la before a stressed a',
+                    persian-'پسر گربه سیاه را می‌بیند.'-'a silent h with no ezafe before its adjective',
+                    persian-'پسر گربه‌ی را می‌بیند.'-'an ezafe with no adjective after it' ]),
+           ( yes_no(typology_read(L, T, _), R),
+             atomic_list_concat([L, ': not read: ', Why], Label),
+             check(Label, R, no) )).
+
 %% ---- the word tables from corpus/vocabulary --------------------------------------
 
 word_tables :-
@@ -192,9 +233,11 @@ incomplete :-
     assertz(ty_order(free, np, [d, n])),
     retractall(ty_noun(free, book, _, _, _, _)),
     assertz(ty_noun(free, book, none, thing, book, books)),
+    assertz(ty_before(free, a, [[nonclass]], an, space)),
     typology_check(free, M),
-    check('a missing verb form (its negative is still the rule''s), a missing adjective form, an order of the wrong parts, a value no slot takes', M,
-          [ bad(ty_noun(free, book, none, thing, book, books)),
+    check('a missing verb form (its negative is still the rule''s), a missing adjective form, an order of the wrong parts, a value no slot takes, a class no row names', M,
+          [ bad(ty_before(free, a, [[nonclass]], an, space)),
+            bad(ty_noun(free, book, none, thing, book, books)),
             not_an_order(np, [d, n]),
             adjective_form(red, none, pl),
             verb_form(sleep, past, pl, pos) ]).

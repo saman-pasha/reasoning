@@ -75,3 +75,10 @@ ty_ending(english, past, ay, ayed).
 ty_ending(english, past, ey, eyed).
 ty_ending(english, past, oy, oyed).
 ty_ending(english, past, uy, uyed).
+
+%% `a' is `an' before a vowel sound: spelled with a vowel, but not `uni',
+%% `use', `eu', `one'; and before the silent h of `hour' and `honest'.
+ty_letters(english, vowel, [a, e, i, o, u]).
+ty_before(english, a, [[vowel]], an, space).
+ty_before(english, a, [[u, n, i], [u, s, e], [u, s, u], [e, u], [o, n, e]], a, space).
+ty_before(english, a, [[h, o, u, r], [h, o, n, e, s, t], [h, o, n, o, u, r], [h, e, i, r]], an, space).

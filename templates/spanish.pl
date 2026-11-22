@@ -56,3 +56,13 @@ ty_mark(spanish, o, before, a, [[animate, def], [animate, sg]]).
 
 %% `a el' is written `al'.
 ty_contraction(spanish, [a, el], al).
+
+%% A feminine noun that begins with a stressed `a' takes `el' and `un' in
+%% the singular (`el agua', `un arma'; `las aguas', `la amiga'). Stress is
+%% not in the spelling, so the words are named, each to its end.
+ty_before(spanish, la, [[a, g, u, a, end], [á, g, u, i, l, a, end], [h, a, m, b, r, e, end],
+                        [a, l, m, a, end], [a, r, m, a, end], [a, u, l, a, end],
+                        [h, a, c, h, a, end], [á, r, e, a, end], [h, a, b, l, a, end]], el, space).
+ty_before(spanish, una, [[a, g, u, a, end], [á, g, u, i, l, a, end], [h, a, m, b, r, e, end],
+                         [a, l, m, a, end], [a, r, m, a, end], [a, u, l, a, end],
+                         [h, a, c, h, a, end], [á, r, e, a, end], [h, a, b, l, a, end]], un, space).

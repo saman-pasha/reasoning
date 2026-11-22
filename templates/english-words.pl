@@ -23980,8 +23980,8 @@ ty_verb(english, singe, past, sg, pos, [singed]).
 ty_verb(english, singe, past, pl, pos, [singed]).
 ty_verb(english, sing, present, sg, pos, [sings]).
 ty_verb(english, sing, present, pl, pos, [sing]).
-ty_verb(english, sing, past, sg, pos, [sang]).
-ty_verb(english, sing, past, pl, pos, [sang]).
+ty_verb(english, sing, past, sg, pos, [sung]).
+ty_verb(english, sing, past, pl, pos, [sung]).
 ty_verb(english, sink, present, sg, pos, [sinks]).
 ty_verb(english, sink, present, pl, pos, [sink]).
 ty_verb(english, sink, past, sg, pos, [sunk]).

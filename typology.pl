@@ -69,6 +69,27 @@
 %%                                     another (`form(T, N)': English `does
 %%                                     not' before the present plural, `see');
 %%                                     Tense and Number may be any
+%%     ty_letters(L, Class, Letters)   a class of letters a pattern names
+%%                                     (vowel, consonant)
+%%     ty_before(L, Word, Patterns, Form, Join)
+%%                                     Word is written Form before a word
+%%                                     that begins with a pattern, the
+%%                                     longest pattern winning: English `an'
+%%                                     before a vowel and `a' before `uni',
+%%                                     Italian `lo', `gli', `uno', and `l''
+%%                                     and `un'' written joined to the noun
+%%                                     (Join `joined', else `space'),
+%%                                     Spanish `el' before `agua'. A pattern
+%%                                     is a list of letters, classes and
+%%                                     `end' (the word ends there)
+%%     ty_linked(L, Class, NextClass, From, To)
+%%                                     a word of Class right before a word of
+%%                                     NextClass in its phrase ends in To in
+%%                                     place of From, the longest From
+%%                                     winning: the written Persian ezafe
+%%                                     (`گربه' before an adjective is
+%%                                     `گربه‌ی'); a word no row fits is
+%%                                     unchanged
 %%     ty_ending(L, Feature, From, To) a form a rule makes: a word ending in
 %%                                     From takes To in its place, the
 %%                                     longest From that fits winning
@@ -119,10 +140,7 @@
 %% (the IR given), and no order is written into them.
 %%
 %% TYPOLOGY-PLAN.md says what comes next. NOT YET (each is a slot to add,
-%% not a change to the grammar): a/an and
-%% Italian il/lo, which choose a form by the sound after them; a
-%% Persian ezafe that is written (it is unwritten after a consonant, and
-%% the nouns here end in one); prepositions, adverbs, questions,
+%% not a change to the grammar): prepositions, adverbs, questions,
 %% relative clauses, persons other than the third, more tenses; a
 %% language written without spaces.
 
@@ -134,10 +152,11 @@
 :- use_module(library(reasoning/reason), [ reason_base/2 ]).
 
 :- dynamic ty_order/3, ty_noun/6, ty_adjective/5, ty_verb/6, ty_article/5,
-           ty_mark/5, ty_contraction/3, ty_negation/5, ty_ending/4.
+           ty_mark/5, ty_contraction/3, ty_negation/5, ty_ending/4,
+           ty_letters/3, ty_before/5, ty_linked/5.
 :- discontiguous ty_order/3, ty_noun/6, ty_adjective/5, ty_verb/6,
                  ty_article/5, ty_mark/5, ty_contraction/3, ty_negation/5,
-                 ty_ending/4.
+                 ty_ending/4, ty_letters/3, ty_before/5, ty_linked/5.
 
 %% ---- the levels and the values a slot takes -----------------------------------
 
@@ -197,6 +216,9 @@ ty_row_shape('ty_mark(L, Role, Place, Word, Conditions).').
 ty_row_shape('ty_contraction(L, Words, Word).').
 ty_row_shape('ty_negation(L, Tense, Number, Words, Form).').
 ty_row_shape('ty_ending(L, Feature, From, To).').
+ty_row_shape('ty_letters(L, Class, Letters).').
+ty_row_shape('ty_before(L, Word, Patterns, Form, Join).').
+ty_row_shape('ty_linked(L, Class, NextClass, From, To).').
 
 %% ---- the check ----------------------------------------------------------------------
 
@@ -231,6 +253,11 @@ ty_missing(L, bad(ty_verb(L, V, T, N, P, Ws))) :-
 ty_missing(L, bad(ty_noun(L, M, G, A, S, P))) :-
     ty_noun(L, M, G, A, S, P),
     \+ ( ty_values(animacy, As), memberchk(A, As) ).
+ty_missing(L, bad(ty_before(L, W, Ps, F, J))) :-
+    ty_before(L, W, Ps, F, J),
+    \+ ( memberchk(J, [space, joined]), is_list(Ps),
+         forall(( member(P, Ps), member(E, P) ),
+                ( E == end ; atom_length(E, 1) ; ty_letters(L, E, _) )) ).
 ty_missing(L, bad(ty_mark(L, R, Pl, W, Cs))) :-
     ty_mark(L, R, Pl, W, Cs),
     \+ ( ty_values(role, Rs), memberchk(R, Rs),
@@ -243,15 +270,23 @@ ty_gender(L, G) :- setof(G0, M^A^S^P^ty_noun(L, M, G0, A, S, P), Gs), member(G, 
 
 %% ---- reading and writing -------------------------------------------------------------
 
+%% Reading takes each word back to the word of the table it may stand for
+%% (`an' to `a', `l'avvocato' to `il avvocato' or `la avvocato'), parses
+%% those, and keeps a reading only where the writer would write the very
+%% words read: `il avvocato' and `a apple' are not read.
 typology_read(L, Text, IR) :-
     must_be(atom, L),
     ty_tokens(L, Text, Tokens),
-    phrase(ty_clause(L, IR), Tokens).
+    ty_unsound(L, Tokens, Bases),
+    phrase(ty_clause(L, IR), Bases),
+    ty_sound(L, Bases, Again),
+    Again == Tokens.
 
 typology_write(L, IR, Text) :-
     must_be(atom, L),
     once(phrase(ty_clause(L, IR), Tokens0)),
-    ty_contract(L, Tokens0, Tokens),
+    ty_sound(L, Tokens0, Tokens1),
+    ty_contract(L, Tokens1, Tokens),
     ty_text(Tokens, Text).
 
 typology_translate(From, To, Text, Text2) :-
@@ -272,6 +307,57 @@ ty_tokens(L, Text, Tokens) :-
 %% The text without its full stop.
 ty_unstop(A0, A) :-
     (   sub_atom(A0, B, 1, 0, '.') -> sub_atom(A0, 0, B, _, A) ; A = A0 ).
+
+%% ---- forms chosen by the next word's sound -----------------------------------
+%%
+%% ty_before(L, Word, Patterns, Form, Join): Word is written Form when the
+%% next word begins with one of Patterns, the longest pattern of all the
+%% word's rows winning (so `a uni...' keeps `a' where `a' + a vowel is
+%% `an'). A pattern is a list of letters, ty_letters/3 classes and `end'
+%% (the word ends there: `agua' and not `aguacate'). Join `joined' writes
+%% the form and the next word as one (`l'avvocato').
+
+ty_sound(_, [], []).
+ty_sound(L, [W, N|Ws], Out) :-
+    ty_sound_form(L, W, N, F, J), !,
+    (   J == joined
+    ->  atom_concat(F, N, WN), Out = [WN|Rest], ty_sound(L, Ws, Rest)
+    ;   Out = [F|Rest], ty_sound(L, [N|Ws], Rest)
+    ).
+ty_sound(L, [W|Ws], [W|Rest]) :-
+    ty_sound(L, Ws, Rest).
+
+ty_sound_form(L, W, Next, Form, Join) :-
+    atom_chars(Next, Cs),
+    findall(Len-(F-J), ( ty_before(L, W, Patterns, F, J),
+                         member(P, Patterns),
+                         ty_pattern(L, P, Cs),
+                         length(P, Len) ), Fits),
+    Fits \== [],
+    keysort(Fits, Sorted),
+    last(Sorted, _-(Form-Join)),
+    Form \== W.
+
+ty_pattern(_, [], _).
+ty_pattern(_, [end], []) :- !.
+ty_pattern(L, [E|Es], [C|Cs]) :-
+    E \== end,
+    (   atom_length(E, 1) -> E == C ; ty_letters(L, E, Ls), memberchk(C, Ls) ),
+    ty_pattern(L, Es, Cs).
+
+%% Each word as the word of the table it may stand for: itself, the word
+%% whose form it is, or a joined form and the word after it.
+ty_unsound(_, [], []).
+ty_unsound(L, [T|Ts], Bases) :-
+    (   Bases = [T|Bs]
+    ;   setof(B, P^ty_before(L, B, P, T, space), Bs0),
+        member(B, Bs0), B \== T,
+        Bases = [B|Bs]
+    ;   setof(B-F, P^ty_before(L, B, P, F, joined), Pairs),
+        member(B-F, Pairs), atom_concat(F, Rest, T), Rest \== '',
+        Bases = [B, Rest|Bs]
+    ),
+    ty_unsound(L, Ts, Bs).
 
 ty_open(_, [], []).
 ty_open(L, [W|Ws], Out) :-
@@ -365,26 +451,65 @@ ty_np(L, NP, [Def, N, Anim]) -->
     { ty_np_ok(L, NP, Det, Noun, Adjs, Anim) }.
 
 ty_np_parts([], _, _, _) --> [].
-ty_np_parts([P|Ps], L, NP, Got) --> ty_np_part(P, L, NP, Got), ty_np_parts(Ps, L, NP, Got).
+ty_np_parts([P|Ps], L, NP, Got) --> ty_np_part(P, Ps, L, NP, Got), ty_np_parts(Ps, L, NP, Got).
 
-ty_np_part(d, L, _, got(Det, _, _)) --> ty_det(L, Det).
-ty_np_part(n, L, np(M, N, _, _), got(_, noun(G, A), _)) -->
+%% Each part knows the parts after it: a noun right before the adjectives
+%% takes its linked form (the Persian ezafe), and so does each adjective
+%% before another.
+ty_np_part(d, _, L, _, got(Det, _, _)) --> ty_det(L, Det).
+ty_np_part(n, Ps, L, np(M, N, _, As), got(_, noun(G, A), _)) -->
     [W],
-    { ty_noun_form(L, M, G, A, N, W) }.
+    { ty_linked_here(Ps, As, Linked),
+      ty_linked_word(L, n, a, Linked, W0, W, ty_noun_form(L, M, G, A, N, W0)) }.
+ty_np_part(a, _, L, np(_, _, _, As), got(_, _, Rows)) --> ty_adjs(L, As, Rows).
+
+ty_linked_here([a|_], As, Linked) :- !, ( As = [_|_], Linked = yes ; As = [], Linked = no ).
+ty_linked_here(_, _, no).
 
 %% Reading the word is bound and the table is asked by it; writing, by the
 %% meaning.
 ty_noun_form(L, M, G, A, sg, W) :- ty_noun(L, M, G, A, W, _).
 ty_noun_form(L, M, G, A, pl, W) :- ty_noun(L, M, G, A, _, W).
-ty_np_part(a, L, np(_, _, _, As), got(_, _, Rows)) --> ty_adjs(L, As, Rows).
 
 ty_det(L, art(W)) --> [W], { ty_article(L, _, _, _, W) }.
 ty_det(_, none) --> [].
 
 ty_adjs(_, [], []) --> [].
 ty_adjs(L, [A|As], [adj(G, N)|Rows]) -->
-    [W], { ty_adjective(L, A, G, N, W) },
+    [W],
+    { ( As = [_|_], Linked = yes ; As = [], Linked = no ),
+      ty_linked_word(L, a, a, Linked, W0, W, ty_adjective(L, A, G, N, W0)) },
     ty_adjs(L, As, Rows).
+
+%% The word W0 of the table, written W: itself, or its linked form when a
+%% word of class C2 follows it. Lookup finds W0; reading it runs after W0 is
+%% taken back from W, writing before W is made from it.
+ty_linked_word(_, _, _, no, W, W, Lookup) :- !, call(Lookup).
+ty_linked_word(L, C1, C2, yes, W0, W, Lookup) :-
+    (   nonvar(W)
+    ->  ty_unlinked(L, C1, C2, W, W0), call(Lookup), ty_link_form(L, C1, C2, W0, W1), W1 == W
+    ;   call(Lookup), ty_link_form(L, C1, C2, W0, W)
+    ).
+
+%% The linked form: the longest ending a ty_linked/5 row names, replaced;
+%% a word no row fits is unchanged (the ezafe is not written after a
+%% consonant).
+ty_link_form(L, C1, C2, W0, W) :-
+    findall(Len-(From-To), ( ty_linked(L, C1, C2, From, To),
+                             atom_concat(_, From, W0),
+                             atom_length(From, Len) ), Fits),
+    (   Fits == []
+    ->  W = W0
+    ;   keysort(Fits, Sorted), last(Sorted, _-(From-To)),
+        atom_concat(Stem, From, W0), atom_concat(Stem, To, W)
+    ).
+
+ty_unlinked(_, _, _, W, W).
+ty_unlinked(L, C1, C2, W, W0) :-
+    ty_linked(L, C1, C2, From, To),
+    atom_concat(Stem, To, W),
+    atom_concat(Stem, From, W0),
+    W0 \== W.
 
 ty_np_ok(L, np(_, N, Def, _), Det, noun(G, Anim), Rows, Anim) :-
     ty_values(definiteness, Defs), member(Def, Defs),
@@ -411,8 +536,15 @@ ty_fits(X, X).
 %%
 %% Only complete entries are written, and only single words; a row the hand
 %% template has already (its meaning and its word) is not written again.
+%%
+%% A FORM BELONGS TO THE CLASS OF THE ENTRY ITS LINE FOLLOWS. The file puts
+%% each entry's forms right after it, and one spelling can be two words:
+%% `fría' is an adjective whose plural is `frías', and a form of `freír'
+%% whose plural is `frían'. So a form line is kept with the class of the
+%% last entry line (tyi_form(Kind, Form, Of, Class)), and a noun's plural is
+%% asked of the nouns' blocks alone.
 
-:- dynamic tyi_entry/4, tyi_form/3, tyi_animate/1, tyi_gender/2, tyi_count/2,
+:- dynamic tyi_entry/4, tyi_form/4, tyi_animate/1, tyi_gender/2, tyi_count/2,
            tyi_hand/1.
 
 typology_import(Name) :-
@@ -482,7 +614,7 @@ ty_read_terms(S, Ts) :-
     (   T == end_of_file -> Ts = [] ; Ts = [T|Ts1], ty_read_terms(S, Ts1) ).
 
 ty_import_reset :-
-    retractall(tyi_entry(_, _, _, _)), retractall(tyi_form(_, _, _)),
+    retractall(tyi_entry(_, _, _, _)), retractall(tyi_form(_, _, _, _)),
     retractall(tyi_animate(_)), retractall(tyi_gender(_, _)),
     retractall(tyi_count(_, _)), retractall(tyi_hand(_)).
 
@@ -493,14 +625,17 @@ ty_count(What) :-
 ty_read_vocabulary(File) :-
     read_file_to_codes(File, Codes),
     split_string(Codes, "\n", "", Lines),
+    nb_setval('$ty_block', none),
     forall(member(S, Lines), ( atom_string(Line, S), ty_vocabulary_line(Line) )).
 
 ty_vocabulary_line(Line) :-
     atomic_list_concat(Parts, '"', Line),
     (   Parts = [Head, W, ' means ', M, '.'], ty_entry_head(Head, Class, G)
-    ->  assertz(tyi_entry(Class, G, W, M))
+    ->  assertz(tyi_entry(Class, G, W, M)),
+        nb_setval('$ty_block', Class)
     ;   Parts = ['', A, Rel, B, '.'], ty_form_relation(Rel, Kind)
-    ->  assertz(tyi_form(Kind, A, B))
+    ->  nb_getval('$ty_block', Class),
+        assertz(tyi_form(Kind, A, B, Class))
     ;   Parts = ['', W, Says], ty_says(Says, Fact, W)
     ->  assertz(Fact)
     ;   true
@@ -524,7 +659,7 @@ ty_says(' is not feminine.', tyi_gender(W, m), W).
 
 ty_single(W) :- \+ sub_atom(W, _, _, _, ' ').
 
-ty_once_form(Kind, Of, Form) :- once(( tyi_form(Kind, Form, Of), ty_single(Form) )).
+ty_once_form(Kind, Class, Of, Form) :- once(( tyi_form(Kind, Form, Of, Class), ty_single(Form) )).
 
 %% The rows of a language that has a vocabulary.
 ty_import_row(L, ty_noun(L, M, G, Anim, W, P)) :-
@@ -534,7 +669,7 @@ ty_import_row(L, ty_noun(L, M, G, Anim, W, P)) :-
     ;   once(tyi_gender(W, G)) -> true
     ;   ty_count(noun_with_no_gender), fail
     ),
-    (   ty_once_form(plural, W, P) -> true ; ty_count(noun_with_no_plural), fail ),
+    (   ty_once_form(plural, noun, W, P) -> true ; ty_count(noun_with_no_plural), fail ),
     (   tyi_animate(W) -> Anim = animate ; Anim = unknown ),
     (   tyi_hand(ty_noun(L, M, _, _, W, _)) -> ty_count(noun_in_the_hand_template), fail ; true ).
 ty_import_row(L, ty_adjective(L, M, G, N, W)) :-
@@ -548,7 +683,8 @@ ty_import_row(L, ty_adjective(L, M, G, N, W)) :-
 ty_import_row(L, ty_verb(L, B, T, N, pos, [W])) :-
     tyi_entry(verb, _, W3, M3),
     (   ty_single(W3), ty_single(M3) -> true ; ty_count(verb_not_a_single_word), fail ),
-    (   ty_once_form(plural, W3, W3p), ty_once_form(past, W3, Wp), ty_once_form(past, W3p, Wpp)
+    (   ty_once_form(plural, verb, W3, W3p), ty_once_form(past, verb, W3, Wp),
+        ty_once_form(past, verb, W3p, Wpp)
     ->  true
     ;   ty_count(verb_with_a_form_missing), fail
     ),
@@ -561,7 +697,7 @@ ty_import_row(L, ty_verb(L, B, T, N, pos, [W])) :-
 ty_adjective_form(M, form(G, N, W)) :-
     tyi_entry(adjective, G0, W0, M),
     ty_single(W0),
-    ty_once_form(plural, W0, P),
+    ty_once_form(plural, adjective, W0, P),
     ( G0 == none -> G = any ; G = G0 ),
     member(N-W, [sg-W0, pl-P]).
 
@@ -591,7 +727,7 @@ ty_english_row(ty_verb(english, B, T, N, pos, [W])) :-
     ty_single(M3),
     reason_base(M3, B),
     \+ tyi_hand(ty_verb(english, B, _, _, _, _)),
-    (   tyi_form(past, P0, M3), \+ tyi_entry(verb, _, M3, _), ty_single(P0)
+    (   tyi_form(past, P0, M3, verb), \+ tyi_entry(verb, _, M3, _), ty_single(P0)
     ->  P = P0
     ;   ty_apply_ending(english, past, B, P)
     ),

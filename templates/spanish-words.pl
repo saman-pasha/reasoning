@@ -5,7 +5,6 @@
 ty_noun(spanish, right, m, unknown, derecho, derechos).
 ty_noun(spanish, cleanup, f, unknown, depuración, depuraciones).
 ty_noun(spanish, saturday, m, unknown, sábado, sábados).
-ty_noun(spanish, tactician, m, unknown, táctico, tácticos).
 ty_noun(spanish, damage, m, unknown, daño, daños).
 ty_noun(spanish, damage, m, unknown, destrozo, destrozos).
 ty_noun(spanish, luthier, m, unknown, luthier, luthiers).
@@ -56,7 +55,6 @@ ty_noun(spanish, backing, m, unknown, respaldo, respaldos).
 ty_noun(spanish, sympathy, f, unknown, simpatía, simpatías).
 ty_noun(spanish, mobile, m, unknown, móvil, móviles).
 ty_noun(spanish, mobile, m, unknown, telefonino, telefoninos).
-ty_noun(spanish, victim, m, animate, accidentado, accidentados).
 ty_noun(spanish, price, m, unknown, precio, precios).
 ty_noun(spanish, end, m, unknown, fin, fines).
 ty_noun(spanish, end, m, unknown, final, finales).
@@ -66,12 +64,10 @@ ty_noun(spanish, boy, m, animate, chico, chicos).
 ty_noun(spanish, lad, m, animate, chico, chicos).
 ty_noun(spanish, bottle, f, unknown, botella, botellas).
 ty_noun(spanish, gentleman, m, animate, señor, señores).
-ty_noun(spanish, ridicule, m, unknown, ridículo, ridículos).
 ty_noun(spanish, night, f, unknown, noche, noches).
 ty_noun(spanish, evening, f, unknown, noche, noches).
 ty_noun(spanish, people, f, animate, gente, gentes).
 ty_noun(spanish, newscast, m, unknown, telediario, telediarios).
-ty_noun(spanish, newscast, m, unknown, informativo, informativos).
 ty_noun(spanish, polytechnic, m, unknown, politécnico, politécnicos).
 ty_noun(spanish, barretina, f, unknown, barretina, barretinas).
 ty_noun(spanish, game, m, unknown, juego, juegos).
@@ -90,17 +86,14 @@ ty_noun(spanish, court, m, unknown, tribunal, tribunales).
 ty_noun(spanish, judgment, f, unknown, sentencia, sentencias).
 ty_noun(spanish, chamber, f, unknown, cámara, cámaras).
 ty_noun(spanish, camera, f, unknown, cámara, cámaras).
-ty_noun(spanish, communique, m, unknown, comunicado, comunicados).
 ty_noun(spanish, march, f, unknown, marcha, marchas).
 ty_noun(spanish, willingness, f, unknown, disposición, disposiciones).
 ty_noun(spanish, letter, f, unknown, carta, cartas).
 ty_noun(spanish, associate, m, animate, socio, socios).
 ty_noun(spanish, stir, m, unknown, revuelo, revuelos).
-ty_noun(spanish, stir, f, unknown, movida, movidas).
 ty_noun(spanish, lion, m, animate, león, leones).
 ty_noun(spanish, sight, f, unknown, vista, vistas).
 ty_noun(spanish, serendipity, f, unknown, serendipia, serendipia).
-ty_noun(spanish, medieval, m, animate, medieval, medievales).
 ty_noun(spanish, vicar, m, animate, vicario, vicarios).
 ty_noun(spanish, vicar, m, unknown, párroco, párrocos).
 ty_noun(spanish, referendum, m, unknown, referéndum, referéndums).
@@ -206,23 +199,19 @@ ty_noun(spanish, milanese, m, animate, milanés, milaneses).
 ty_noun(spanish, lira, f, unknown, lira, liras).
 ty_noun(spanish, toll, m, unknown, peaje, peajes).
 ty_noun(spanish, tollgate, m, unknown, peaje, peajes).
-ty_noun(spanish, satanist, m, animate, satánico, satánicos).
 ty_noun(spanish, satanist, m, animate, satanista, satanistas).
 ty_noun(spanish, fan, m, unknown, seguidor, seguidores).
 ty_noun(spanish, follower, m, unknown, seguidor, seguidores).
-ty_noun(spanish, follower, m, animate, adepto, adeptos).
 ty_noun(spanish, website, f, unknown, web, webs).
 ty_noun(spanish, noticeboard, m, unknown, tablón, tablones).
 ty_noun(spanish, victor, m, animate, triunfador, triunfadores).
 ty_noun(spanish, 'singer-songwriter', m, animate, cantautor, cantautores).
-ty_noun(spanish, 'Neapolitan', m, unknown, napolitano, napolitanos).
 ty_noun(spanish, correspondent, m, animate, corresponsal, corresponsales).
 ty_noun(spanish, bit, f, unknown, pizca, pizcas).
 ty_noun(spanish, thief, m, animate, ladrón, ladrones).
 ty_noun(spanish, police, f, unknown, policía, policías).
 ty_noun(spanish, policeman, m, unknown, policía, policías).
 ty_noun(spanish, 'Gaullist', m, animate, gaullista, gaullistas).
-ty_noun(spanish, 'Corsican', m, animate, corso, corsos).
 ty_noun(spanish, guarantor, m, animate, garante, garantes).
 ty_noun(spanish, 're-establishment', m, unknown, restablecimiento, restablecimientos).
 ty_noun(spanish, unity, f, unknown, unidad, unidades).
@@ -239,8 +228,8 @@ ty_noun(spanish, bulk, m, unknown, grueso, gruesos).
 ty_noun(spanish, councilwoman, f, animate, concejala, concejalas).
 ty_noun(spanish, collection, f, unknown, recogida, recogidas).
 ty_noun(spanish, fault, f, unknown, culpa, culpas).
-ty_noun(spanish, fault, f, unknown, falta, faltan).
-ty_noun(spanish, lack, f, unknown, falta, faltan).
+ty_noun(spanish, fault, f, unknown, falta, faltas).
+ty_noun(spanish, lack, f, unknown, falta, faltas).
 ty_noun(spanish, worker, m, animate, trabajador, trabajadores).
 ty_noun(spanish, audience, f, unknown, audiencia, audiencias).
 ty_noun(spanish, hearing, f, unknown, audiencia, audiencias).
@@ -294,7 +283,6 @@ ty_noun(spanish, insult, m, unknown, insulto, insultos).
 ty_noun(spanish, insult, f, unknown, descalificación, descalificaciones).
 ty_noun(spanish, maturation, f, unknown, maduración, maduraciones).
 ty_noun(spanish, relevance, f, unknown, relevancia, relevancias).
-ty_noun(spanish, semiotics, f, unknown, semiótica, semióticas).
 ty_noun(spanish, child, f, animate, niña, niñas).
 ty_noun(spanish, partner, m, animate, compañero, compañeros).
 ty_noun(spanish, partner, f, animate, compañera, compañeras).
@@ -428,7 +416,6 @@ ty_noun(spanish, ecotourism, m, unknown, ecoturismo, ecoturismos).
 ty_noun(spanish, formality, f, unknown, formalidad, formalidades).
 ty_noun(spanish, decalogue, m, unknown, decálogo, decálogos).
 ty_noun(spanish, gastronomy, f, unknown, gastronomía, gastronomías).
-ty_noun(spanish, goring, f, unknown, cogida, cogidas).
 ty_noun(spanish, retention, f, unknown, retención, retenciones).
 ty_noun(spanish, ikastola, f, unknown, ikastola, ikastolas).
 ty_noun(spanish, hunger, f, unknown, hambre, hambres).
@@ -1745,7 +1732,6 @@ ty_noun(spanish, earring, f, unknown, pendiente, pendientes).
 ty_noun(spanish, earth, f, unknown, tierra, tierras).
 ty_noun(spanish, earthquake, m, unknown, terremoto, terremotos).
 ty_noun(spanish, ease, f, unknown, facilidad, facilidades).
-ty_noun(spanish, east, m, unknown, este, estos).
 ty_noun(spanish, eccentricity, f, unknown, excentricidad, excentricidades).
 ty_noun(spanish, echelon, m, unknown, escalafón, escalafones).
 ty_noun(spanish, echo, m, unknown, eco, ecos).
@@ -3810,7 +3796,6 @@ ty_noun(spanish, saying, m, unknown, refrán, refranes).
 ty_noun(spanish, scabies, f, unknown, sarna, sarnas).
 ty_noun(spanish, scale, f, unknown, balanza, balanzas).
 ty_noun(spanish, scale, f, unknown, escala, escalas).
-ty_noun(spanish, escape, f, unknown, escapada, escapadas).
 ty_noun(spanish, scan, m, unknown, escáner, escáneres).
 ty_noun(spanish, scandal, m, unknown, escándalo, escándalos).
 ty_noun(spanish, scanner, m, unknown, escáner, escáneres).
@@ -3903,7 +3888,6 @@ ty_noun(spanish, sewerage, m, unknown, alcantarillado, alcantarillados).
 ty_noun(spanish, sewing, f, unknown, costura, costuras).
 ty_noun(spanish, sex, m, unknown, sexo, sexos).
 ty_noun(spanish, sexuality, f, unknown, sexualidad, sexualidades).
-ty_noun(spanish, shake, f, unknown, sacudida, sacudidas).
 ty_noun(spanish, shadow, f, unknown, sombra, sombras).
 ty_noun(spanish, shame, f, unknown, vergüenza, vergüenzas).
 ty_noun(spanish, share, f, unknown, participación, participaciones).
@@ -8576,7 +8560,7 @@ ty_noun(spanish, slime, f, unknown, baba, babas).
 ty_noun(spanish, spittle, m, unknown, escupitajo, escupitajos).
 ty_noun(spanish, byline, f, unknown, firma, firmas).
 ty_noun(spanish, pal, m, animate, colega, colegas).
-ty_noun(spanish, foul, f, unknown, falta, faltan).
+ty_noun(spanish, foul, f, unknown, falta, faltas).
 ty_noun(spanish, homecoming, m, unknown, regreso, regresos).
 ty_noun(spanish, funky, m, unknown, funky, funkys).
 ty_noun(spanish, disguise, m, unknown, disfraz, disfraces).
@@ -8801,7 +8785,6 @@ ty_noun(spanish, funnel, f, unknown, chimenea, chimeneas).
 ty_noun(spanish, belly, m, unknown, vientre, vientres).
 ty_noun(spanish, quarrel, f, unknown, pelea, peleas).
 ty_noun(spanish, shutdown, m, unknown, cierre, cierres).
-ty_noun(spanish, jolt, f, unknown, sacudida, sacudidas).
 ty_noun(spanish, overhaul, f, unknown, revisión, revisiones).
 ty_noun(spanish, outcry, f, unknown, protesta, protestas).
 ty_noun(spanish, coaching, m, unknown, entrenamiento, entrenamientos).
@@ -9568,7 +9551,6 @@ ty_noun(spanish, latin, m, unknown, latino, latinos).
 ty_noun(spanish, latin, f, unknown, latina, latinas).
 ty_noun(spanish, monday, m, unknown, lunes, lunes).
 ty_noun(spanish, muslim, m, unknown, moro, moros).
-ty_noun(spanish, muslim, f, unknown, mora, moran).
 ty_noun(spanish, palestinian, m, unknown, palestino, palestinos).
 ty_noun(spanish, palestinian, f, unknown, palestina, palestinas).
 ty_noun(spanish, russian, m, animate, ruso, rusos).
@@ -12254,8 +12236,6 @@ ty_adjective(spanish, abnormal, any, sg, anormal).
 ty_adjective(spanish, abnormal, any, pl, anormales).
 ty_adjective(spanish, abominable, any, sg, abominable).
 ty_adjective(spanish, abominable, any, pl, abominables).
-ty_adjective(spanish, aboriginal, any, sg, aborigen).
-ty_adjective(spanish, aboriginal, any, pl, aborígenes).
 ty_adjective(spanish, abrasive, m, sg, abrasivo).
 ty_adjective(spanish, abrasive, m, pl, abrasivos).
 ty_adjective(spanish, abrasive, f, sg, abrasiva).
@@ -12318,8 +12298,6 @@ ty_adjective(spanish, academic, f, sg, académica).
 ty_adjective(spanish, academic, f, pl, académicas).
 ty_adjective(spanish, accentual, any, sg, acentual).
 ty_adjective(spanish, accentual, any, pl, acentuales).
-ty_adjective(spanish, accentuated, any, sg, acentuado).
-ty_adjective(spanish, accentuated, any, pl, acentuados).
 ty_adjective(spanish, acceptable, any, sg, aceptable).
 ty_adjective(spanish, acceptable, any, pl, aceptables).
 ty_adjective(spanish, accessible, any, sg, accesible).
@@ -12373,7 +12351,7 @@ ty_adjective(spanish, acting, any, pl, suplentes).
 ty_adjective(spanish, active, m, sg, activo).
 ty_adjective(spanish, active, m, pl, activos).
 ty_adjective(spanish, active, f, sg, activa).
-ty_adjective(spanish, active, f, pl, activan).
+ty_adjective(spanish, active, f, pl, activas).
 ty_adjective(spanish, actual, any, sg, real).
 ty_adjective(spanish, actual, any, pl, reales).
 ty_adjective(spanish, actuarial, any, sg, actuarial).
@@ -12387,7 +12365,7 @@ ty_adjective(spanish, acyclic, m, pl, acíclicos).
 ty_adjective(spanish, acyclic, f, sg, acíclica).
 ty_adjective(spanish, acyclic, f, pl, acíclicas).
 ty_adjective(spanish, adamant, any, sg, firme).
-ty_adjective(spanish, adamant, any, pl, firmen).
+ty_adjective(spanish, adamant, any, pl, firmes).
 ty_adjective(spanish, adaptable, any, sg, adaptable).
 ty_adjective(spanish, adaptable, any, pl, adaptables).
 ty_adjective(spanish, adaptative, m, sg, adaptativo).
@@ -12596,8 +12574,6 @@ ty_adjective(spanish, african, f, sg, africana).
 ty_adjective(spanish, african, f, pl, africanas).
 ty_adjective(spanish, ageless, any, sg, intemporal).
 ty_adjective(spanish, ageless, any, pl, intemporales).
-ty_adjective(spanish, agglomerated, any, sg, aglomerado).
-ty_adjective(spanish, agglomerated, any, pl, aglomerados).
 ty_adjective(spanish, agglutinative, any, sg, aglutinante).
 ty_adjective(spanish, agglutinative, any, pl, aglutinantes).
 ty_adjective(spanish, aggravating, any, sg, agravante).
@@ -12614,8 +12590,6 @@ ty_adjective(spanish, aggrieved, m, sg, perjudicado).
 ty_adjective(spanish, aggrieved, m, pl, perjudicados).
 ty_adjective(spanish, aggrieved, f, sg, perjudicada).
 ty_adjective(spanish, aggrieved, f, pl, perjudicadas).
-ty_adjective(spanish, aghast, any, sg, aterrado).
-ty_adjective(spanish, aghast, any, pl, aterrados).
 ty_adjective(spanish, agile, any, sg, ágil).
 ty_adjective(spanish, agile, any, pl, ágiles).
 ty_adjective(spanish, agnostic, m, sg, agnóstico).
@@ -12630,16 +12604,12 @@ ty_adjective(spanish, agrarian, f, sg, agraria).
 ty_adjective(spanish, agrarian, f, pl, agrarias).
 ty_adjective(spanish, agreeable, any, sg, agradable).
 ty_adjective(spanish, agreeable, any, pl, agradables).
-ty_adjective(spanish, agreed, any, sg, acordado).
-ty_adjective(spanish, agreed, any, pl, acordados).
 ty_adjective(spanish, agricultural, any, sg, agrícola).
 ty_adjective(spanish, agricultural, any, pl, agrícolas).
 ty_adjective(spanish, agricultural, m, sg, agrario).
 ty_adjective(spanish, agricultural, m, pl, agrarios).
 ty_adjective(spanish, agricultural, f, sg, agraria).
 ty_adjective(spanish, agricultural, f, pl, agrarias).
-ty_adjective(spanish, aground, any, sg, encallado).
-ty_adjective(spanish, aground, any, pl, encallados).
 ty_adjective(spanish, ailing, m, sg, achacoso).
 ty_adjective(spanish, ailing, m, pl, achacosos).
 ty_adjective(spanish, ailing, f, sg, achacosa).
@@ -12648,10 +12618,6 @@ ty_adjective(spanish, ailing, m, sg, enfermo).
 ty_adjective(spanish, ailing, m, pl, enfermos).
 ty_adjective(spanish, ailing, f, sg, enferma).
 ty_adjective(spanish, ailing, f, pl, enfermas).
-ty_adjective(spanish, airy, any, sg, ventilado).
-ty_adjective(spanish, airy, any, pl, ventilados).
-ty_adjective(spanish, airy, any, sg, aireado).
-ty_adjective(spanish, airy, any, pl, aireados).
 ty_adjective(spanish, akin, any, sg, semejante).
 ty_adjective(spanish, akin, any, pl, semejantes).
 ty_adjective(spanish, alarming, any, sg, alarmante).
@@ -12709,7 +12675,7 @@ ty_adjective(spanish, alimentary, f, pl, alimenticias).
 ty_adjective(spanish, alive, m, sg, vivo).
 ty_adjective(spanish, alive, m, pl, vivos).
 ty_adjective(spanish, alive, f, sg, viva).
-ty_adjective(spanish, alive, f, pl, vivan).
+ty_adjective(spanish, alive, f, pl, vivas).
 ty_adjective(spanish, alkaline, m, sg, alcalino).
 ty_adjective(spanish, alkaline, m, pl, alcalinos).
 ty_adjective(spanish, alkaline, f, sg, alcalina).
@@ -12785,7 +12751,7 @@ ty_adjective(spanish, altaic, f, pl, altaicas).
 ty_adjective(spanish, alternating, m, sg, alterno).
 ty_adjective(spanish, alternating, m, pl, alternos).
 ty_adjective(spanish, alternating, f, sg, alterna).
-ty_adjective(spanish, alternating, f, pl, alternan).
+ty_adjective(spanish, alternating, f, pl, alternas).
 ty_adjective(spanish, alternative, m, sg, alternativo).
 ty_adjective(spanish, alternative, m, pl, alternativos).
 ty_adjective(spanish, alternative, f, sg, alternativa).
@@ -12846,8 +12812,6 @@ ty_adjective(spanish, american, m, sg, norteamericano).
 ty_adjective(spanish, american, m, pl, norteamericanos).
 ty_adjective(spanish, american, f, sg, norteamericana).
 ty_adjective(spanish, american, f, pl, norteamericanas).
-ty_adjective(spanish, amethyst, any, sg, amatista).
-ty_adjective(spanish, amethyst, any, pl, amatistas).
 ty_adjective(spanish, amiable, any, sg, amable).
 ty_adjective(spanish, amiable, any, pl, amables).
 ty_adjective(spanish, amicable, any, sg, amigable).
@@ -12982,8 +12946,6 @@ ty_adjective(spanish, angry, m, sg, enojado).
 ty_adjective(spanish, angry, m, pl, enojados).
 ty_adjective(spanish, angry, f, sg, enojada).
 ty_adjective(spanish, angry, f, pl, enojadas).
-ty_adjective(spanish, anguished, any, sg, angustiado).
-ty_adjective(spanish, anguished, any, pl, angustiados).
 ty_adjective(spanish, angular, any, sg, angular).
 ty_adjective(spanish, angular, any, pl, angulares).
 ty_adjective(spanish, animal, any, sg, animal).
@@ -13013,7 +12975,7 @@ ty_adjective(spanish, annexationist, any, pl, anexionistas).
 ty_adjective(spanish, annoying, m, sg, molesto).
 ty_adjective(spanish, annoying, m, pl, molestos).
 ty_adjective(spanish, annoying, f, sg, molesta).
-ty_adjective(spanish, annoying, f, pl, molestan).
+ty_adjective(spanish, annoying, f, pl, molestas).
 ty_adjective(spanish, annual, any, sg, anual).
 ty_adjective(spanish, annual, any, pl, anuales).
 ty_adjective(spanish, annual, any, sg, anal).
@@ -13078,8 +13040,6 @@ ty_adjective(spanish, antidepressant, m, sg, antidepresivo).
 ty_adjective(spanish, antidepressant, m, pl, antidepresivos).
 ty_adjective(spanish, antidepressant, f, sg, antidepresiva).
 ty_adjective(spanish, antidepressant, f, pl, antidepresivas).
-ty_adjective(spanish, antidoping, any, sg, antidopaje).
-ty_adjective(spanish, antidoping, any, pl, antidopaje).
 ty_adjective(spanish, antifederalist, any, sg, antifederalista).
 ty_adjective(spanish, antifederalist, any, pl, antifederalistas).
 ty_adjective(spanish, antiferromagnetic, m, sg, antiferromagnético).
@@ -13165,7 +13125,7 @@ ty_adjective(spanish, apologetic, f, pl, apologéticas).
 ty_adjective(spanish, appalling, any, sg, atroz).
 ty_adjective(spanish, appalling, any, pl, atroces).
 ty_adjective(spanish, apparent, any, sg, aparente).
-ty_adjective(spanish, apparent, any, pl, aparenten).
+ty_adjective(spanish, apparent, any, pl, aparentes).
 ty_adjective(spanish, appealable, any, sg, apelable).
 ty_adjective(spanish, appealable, any, pl, apelables).
 ty_adjective(spanish, appetizing, m, sg, apetitoso).
@@ -13204,8 +13164,6 @@ ty_adjective(spanish, apterous, m, sg, áptero).
 ty_adjective(spanish, apterous, m, pl, ápteros).
 ty_adjective(spanish, apterous, f, sg, áptera).
 ty_adjective(spanish, apterous, f, pl, ápteras).
-ty_adjective(spanish, aquarius, any, sg, acuario).
-ty_adjective(spanish, aquarius, any, pl, acuarios).
 ty_adjective(spanish, aquatic, m, sg, acuático).
 ty_adjective(spanish, aquatic, m, pl, acuáticos).
 ty_adjective(spanish, aquatic, f, sg, acuática).
@@ -13308,14 +13266,10 @@ ty_adjective(spanish, arithmetical, m, sg, aritmético).
 ty_adjective(spanish, arithmetical, m, pl, aritméticos).
 ty_adjective(spanish, arithmetical, f, sg, aritmética).
 ty_adjective(spanish, arithmetical, f, pl, aritméticas).
-ty_adjective(spanish, armed, any, sg, armado).
-ty_adjective(spanish, armed, any, pl, armados).
 ty_adjective(spanish, armoured, m, sg, blindado).
 ty_adjective(spanish, armoured, m, pl, blindados).
 ty_adjective(spanish, armoured, f, sg, blindada).
 ty_adjective(spanish, armoured, f, pl, blindadas).
-ty_adjective(spanish, armoured, any, sg, acorazado).
-ty_adjective(spanish, armoured, any, pl, acorazados).
 ty_adjective(spanish, aromatic, m, sg, aromático).
 ty_adjective(spanish, aromatic, m, pl, aromáticos).
 ty_adjective(spanish, aromatic, f, sg, aromática).
@@ -13483,7 +13437,7 @@ ty_adjective(spanish, attainable, any, pl, realizables).
 ty_adjective(spanish, attentive, m, sg, atento).
 ty_adjective(spanish, attentive, m, pl, atentos).
 ty_adjective(spanish, attentive, f, sg, atenta).
-ty_adjective(spanish, attentive, f, pl, atentan).
+ty_adjective(spanish, attentive, f, pl, atentas).
 ty_adjective(spanish, attractive, m, sg, atractivo).
 ty_adjective(spanish, attractive, m, pl, atractivos).
 ty_adjective(spanish, attractive, f, sg, atractiva).
@@ -13621,9 +13575,7 @@ ty_adjective(spanish, avoidable, any, pl, evitables).
 ty_adjective(spanish, awake, m, sg, despierto).
 ty_adjective(spanish, awake, m, pl, despiertos).
 ty_adjective(spanish, awake, f, sg, despierta).
-ty_adjective(spanish, awake, f, pl, despiertan).
-ty_adjective(spanish, aware, m, sg, conocedor).
-ty_adjective(spanish, aware, m, pl, conocedores).
+ty_adjective(spanish, awake, f, pl, despiertas).
 ty_adjective(spanish, aware, f, sg, conocedora).
 ty_adjective(spanish, aware, f, pl, conocedoras).
 ty_adjective(spanish, aware, any, sg, consciente).
@@ -13671,7 +13623,6 @@ ty_adjective(spanish, bad, f, pl, malas).
 ty_adjective(spanish, bad, any, sg, peor).
 ty_adjective(spanish, bad, any, pl, peores).
 ty_adjective(spanish, bad, m, sg, mal).
-ty_adjective(spanish, bad, m, pl, males).
 ty_adjective(spanish, baffling, any, sg, desconcertante).
 ty_adjective(spanish, baffling, any, pl, desconcertantes).
 ty_adjective(spanish, balearic, any, sg, balear).
@@ -13734,8 +13685,6 @@ ty_adjective(spanish, basic, m, sg, básico).
 ty_adjective(spanish, basic, m, pl, básicos).
 ty_adjective(spanish, basic, f, sg, básica).
 ty_adjective(spanish, basic, f, pl, básicas).
-ty_adjective(spanish, basic, any, sg, base).
-ty_adjective(spanish, basic, any, pl, bases).
 ty_adjective(spanish, basophile, m, sg, basófilo).
 ty_adjective(spanish, basophile, m, pl, basófilos).
 ty_adjective(spanish, basophile, f, sg, basófila).
@@ -13802,8 +13751,6 @@ ty_adjective(spanish, bellunese, m, sg, bellunés).
 ty_adjective(spanish, bellunese, m, pl, belluneses).
 ty_adjective(spanish, bellunese, f, sg, bellunesa).
 ty_adjective(spanish, bellunese, f, pl, bellunesas).
-ty_adjective(spanish, beloved, any, sg, amado).
-ty_adjective(spanish, beloved, any, pl, amadoes).
 ty_adjective(spanish, beneficial, m, sg, beneficioso).
 ty_adjective(spanish, beneficial, m, pl, beneficiosos).
 ty_adjective(spanish, beneficial, f, sg, beneficiosa).
@@ -13955,7 +13902,7 @@ ty_adjective(spanish, blessed, f, pl, benditas).
 ty_adjective(spanish, blind, m, sg, ciego).
 ty_adjective(spanish, blind, m, pl, ciegos).
 ty_adjective(spanish, blind, f, sg, ciega).
-ty_adjective(spanish, blind, f, pl, ciegan).
+ty_adjective(spanish, blind, f, pl, ciegas).
 ty_adjective(spanish, blinding, m, sg, cegador).
 ty_adjective(spanish, blinding, m, pl, cegadores).
 ty_adjective(spanish, blinding, f, sg, cegadora).
@@ -14018,8 +13965,6 @@ ty_adjective(spanish, bolivian, m, sg, boliviano).
 ty_adjective(spanish, bolivian, m, pl, bolivianos).
 ty_adjective(spanish, bolivian, f, sg, boliviana).
 ty_adjective(spanish, bolivian, f, pl, bolivianas).
-ty_adjective(spanish, bombarded, any, sg, bombardeado).
-ty_adjective(spanish, bombarded, any, pl, bombardeados).
 ty_adjective(spanish, bomber, m, sg, bombardero).
 ty_adjective(spanish, bomber, m, pl, bombarderos).
 ty_adjective(spanish, bomber, f, sg, bombardera).
@@ -14068,8 +14013,6 @@ ty_adjective(spanish, botanical, f, sg, botánica).
 ty_adjective(spanish, botanical, f, pl, botánicas).
 ty_adjective(spanish, bottom, any, sg, inferior).
 ty_adjective(spanish, bottom, any, pl, inferiores).
-ty_adjective(spanish, bounded, any, sg, acotado).
-ty_adjective(spanish, bounded, any, pl, acotados).
 ty_adjective(spanish, boundless, m, sg, ilimitado).
 ty_adjective(spanish, boundless, m, pl, ilimitados).
 ty_adjective(spanish, boundless, f, sg, ilimitada).
@@ -14118,10 +14061,6 @@ ty_adjective(spanish, broad, m, sg, ancho).
 ty_adjective(spanish, broad, m, pl, anchos).
 ty_adjective(spanish, broad, f, sg, ancha).
 ty_adjective(spanish, broad, f, pl, anchas).
-ty_adjective(spanish, broken, m, sg, roto).
-ty_adjective(spanish, broken, m, pl, rotos).
-ty_adjective(spanish, broken, f, sg, rota).
-ty_adjective(spanish, broken, f, pl, rotas).
 ty_adjective(spanish, bronchial, any, sg, bronquial).
 ty_adjective(spanish, bronchial, any, pl, bronquiales).
 ty_adjective(spanish, bronchopulmonary, any, sg, broncopulmonar).
@@ -14320,8 +14259,6 @@ ty_adjective(spanish, caseous, m, sg, caseoso).
 ty_adjective(spanish, caseous, m, pl, caseosos).
 ty_adjective(spanish, caseous, f, sg, caseosa).
 ty_adjective(spanish, caseous, f, pl, caseosas).
-ty_adjective(spanish, castrated, any, sg, castrado).
-ty_adjective(spanish, castrated, any, pl, castrados).
 ty_adjective(spanish, casual, any, sg, casual).
 ty_adjective(spanish, casual, any, pl, casuales).
 ty_adjective(spanish, catalan, m, sg, catalán).
@@ -14475,7 +14412,7 @@ ty_adjective(spanish, chechen, m, pl, chechenos).
 ty_adjective(spanish, chechen, f, sg, chechena).
 ty_adjective(spanish, chechen, f, pl, chechenas).
 ty_adjective(spanish, cheerful, any, sg, alegre).
-ty_adjective(spanish, cheerful, any, pl, alegren).
+ty_adjective(spanish, cheerful, any, pl, alegres).
 ty_adjective(spanish, cheesy, m, sg, caseoso).
 ty_adjective(spanish, cheesy, m, pl, caseosos).
 ty_adjective(spanish, cheesy, f, sg, caseosa).
@@ -14602,12 +14539,10 @@ ty_adjective(spanish, classical, f, sg, clásica).
 ty_adjective(spanish, classical, f, pl, clásicas).
 ty_adjective(spanish, classicistic, any, sg, clasicista).
 ty_adjective(spanish, classicistic, any, pl, clasicistas).
-ty_adjective(spanish, classified, any, sg, clasificado).
-ty_adjective(spanish, classified, any, pl, clasificados).
 ty_adjective(spanish, clean, m, sg, limpio).
 ty_adjective(spanish, clean, m, pl, limpios).
 ty_adjective(spanish, clean, f, sg, limpia).
-ty_adjective(spanish, clean, f, pl, limpian).
+ty_adjective(spanish, clean, f, pl, limpias).
 ty_adjective(spanish, cleansing, m, sg, limpiador).
 ty_adjective(spanish, cleansing, m, pl, limpiadores).
 ty_adjective(spanish, cleansing, f, sg, limpiadora).
@@ -14687,7 +14622,7 @@ ty_adjective(spanish, coincidental, any, pl, coincidentes).
 ty_adjective(spanish, cold, m, sg, frío).
 ty_adjective(spanish, cold, m, pl, fríos).
 ty_adjective(spanish, cold, f, sg, fría).
-ty_adjective(spanish, cold, f, pl, frían).
+ty_adjective(spanish, cold, f, pl, frías).
 ty_adjective(spanish, collapsible, any, sg, plegable).
 ty_adjective(spanish, collapsible, any, pl, plegables).
 ty_adjective(spanish, collateral, any, sg, colateral).
@@ -14789,7 +14724,7 @@ ty_adjective(spanish, community, f, pl, comunitarias).
 ty_adjective(spanish, compact, m, sg, compacto).
 ty_adjective(spanish, compact, m, pl, compactos).
 ty_adjective(spanish, compact, f, sg, compacta).
-ty_adjective(spanish, compact, f, pl, compactan).
+ty_adjective(spanish, compact, f, pl, compactas).
 ty_adjective(spanish, comparable, any, sg, comparable).
 ty_adjective(spanish, comparable, any, pl, comparables).
 ty_adjective(spanish, comparative, m, sg, comparativo).
@@ -14819,7 +14754,7 @@ ty_adjective(spanish, complementary, f, pl, complementarias).
 ty_adjective(spanish, complete, m, sg, completo).
 ty_adjective(spanish, complete, m, pl, completos).
 ty_adjective(spanish, complete, f, sg, completa).
-ty_adjective(spanish, complete, f, pl, completan).
+ty_adjective(spanish, complete, f, pl, completas).
 ty_adjective(spanish, complex, m, sg, complejo).
 ty_adjective(spanish, complex, m, pl, complejos).
 ty_adjective(spanish, complex, f, sg, compleja).
@@ -14892,8 +14827,6 @@ ty_adjective(spanish, condemnatory, m, sg, condenatorio).
 ty_adjective(spanish, condemnatory, m, pl, condenatorios).
 ty_adjective(spanish, condemnatory, f, sg, condenatoria).
 ty_adjective(spanish, condemnatory, f, pl, condenatorias).
-ty_adjective(spanish, condensed, any, sg, condensado).
-ty_adjective(spanish, condensed, any, pl, condensados).
 ty_adjective(spanish, conditional, any, sg, condicional).
 ty_adjective(spanish, conditional, any, pl, condicionales).
 ty_adjective(spanish, conductive, m, sg, conductor).
@@ -14913,7 +14846,7 @@ ty_adjective(spanish, conflictive, m, pl, conflictivos).
 ty_adjective(spanish, conflictive, f, sg, conflictiva).
 ty_adjective(spanish, conflictive, f, pl, conflictivas).
 ty_adjective(spanish, conformal, any, sg, conforme).
-ty_adjective(spanish, conformal, any, pl, conformen).
+ty_adjective(spanish, conformal, any, pl, conformes).
 ty_adjective(spanish, confused, m, sg, confuso).
 ty_adjective(spanish, confused, m, pl, confusos).
 ty_adjective(spanish, confused, f, sg, confusa).
@@ -15084,8 +15017,6 @@ ty_adjective(spanish, convergent, any, sg, convergente).
 ty_adjective(spanish, convergent, any, pl, convergentes).
 ty_adjective(spanish, conversational, any, sg, conversacional).
 ty_adjective(spanish, conversational, any, pl, conversacionales).
-ty_adjective(spanish, converted, any, sg, convertido).
-ty_adjective(spanish, converted, any, pl, convertidos).
 ty_adjective(spanish, convertible, any, sg, convertible).
 ty_adjective(spanish, convertible, any, pl, convertibles).
 ty_adjective(spanish, convertible, any, sg, transformable).
@@ -15234,8 +15165,6 @@ ty_adjective(spanish, critical, f, sg, crítica).
 ty_adjective(spanish, critical, f, pl, críticas).
 ty_adjective(spanish, croatian, any, sg, croata).
 ty_adjective(spanish, croatian, any, pl, croatas).
-ty_adjective(spanish, crooked, any, sg, cuervo).
-ty_adjective(spanish, crooked, any, pl, cuervos).
 ty_adjective(spanish, crowded, m, sg, multitudinario).
 ty_adjective(spanish, crowded, m, pl, multitudinarios).
 ty_adjective(spanish, crowded, f, sg, multitudinaria).
@@ -15288,8 +15217,6 @@ ty_adjective(spanish, culpable, f, sg, culposa).
 ty_adjective(spanish, culpable, f, pl, culposas).
 ty_adjective(spanish, cultural, any, sg, cultural).
 ty_adjective(spanish, cultural, any, pl, culturales).
-ty_adjective(spanish, cultured, any, sg, cultivado).
-ty_adjective(spanish, cultured, any, pl, cultivados).
 ty_adjective(spanish, cumbersome, m, sg, pesado).
 ty_adjective(spanish, cumbersome, m, pl, pesados).
 ty_adjective(spanish, cumbersome, f, sg, pesada).
@@ -15617,7 +15544,7 @@ ty_adjective(spanish, dense, f, pl, densas).
 ty_adjective(spanish, dense, m, sg, espeso).
 ty_adjective(spanish, dense, m, pl, espesos).
 ty_adjective(spanish, dense, f, sg, espesa).
-ty_adjective(spanish, dense, f, pl, espesan).
+ty_adjective(spanish, dense, f, pl, espesas).
 ty_adjective(spanish, dental, any, sg, dental).
 ty_adjective(spanish, dental, any, pl, dentales).
 ty_adjective(spanish, denumerable, any, sg, numerable).
@@ -15678,8 +15605,6 @@ ty_adjective(spanish, despicable, any, sg, despreciable).
 ty_adjective(spanish, despicable, any, pl, despreciables).
 ty_adjective(spanish, despicable, any, sg, deleznable).
 ty_adjective(spanish, despicable, any, pl, deleznables).
-ty_adjective(spanish, destined, any, sg, destinado).
-ty_adjective(spanish, destined, any, pl, destinados).
 ty_adjective(spanish, destroyer, m, sg, destructor).
 ty_adjective(spanish, destroyer, m, pl, destructores).
 ty_adjective(spanish, destroyer, f, sg, destructora).
@@ -15850,8 +15775,6 @@ ty_adjective(spanish, disciplinary, m, sg, disciplinario).
 ty_adjective(spanish, disciplinary, m, pl, disciplinarios).
 ty_adjective(spanish, disciplinary, f, sg, disciplinaria).
 ty_adjective(spanish, disciplinary, f, pl, disciplinarias).
-ty_adjective(spanish, disciplined, any, sg, disciplinado).
-ty_adjective(spanish, disciplined, any, pl, disciplinados).
 ty_adjective(spanish, discographic, m, sg, discográfico).
 ty_adjective(spanish, discographic, m, pl, discográficos).
 ty_adjective(spanish, discographic, f, sg, discográfica).
@@ -15864,8 +15787,6 @@ ty_adjective(spanish, discordant, any, sg, discordante).
 ty_adjective(spanish, discordant, any, pl, discordantes).
 ty_adjective(spanish, discountable, any, sg, descontable).
 ty_adjective(spanish, discountable, any, pl, descontables).
-ty_adjective(spanish, discouraged, any, sg, desanimado).
-ty_adjective(spanish, discouraged, any, pl, desanimados).
 ty_adjective(spanish, discreet, m, sg, discreto).
 ty_adjective(spanish, discreet, m, pl, discretos).
 ty_adjective(spanish, discreet, f, sg, discreta).
@@ -15890,8 +15811,6 @@ ty_adjective(spanish, disgruntled, m, sg, descontento).
 ty_adjective(spanish, disgruntled, m, pl, descontentos).
 ty_adjective(spanish, disgruntled, f, sg, descontenta).
 ty_adjective(spanish, disgruntled, f, pl, descontentas).
-ty_adjective(spanish, disguised, any, sg, disfrazado).
-ty_adjective(spanish, disguised, any, pl, disfrazados).
 ty_adjective(spanish, disgusting, m, sg, asqueroso).
 ty_adjective(spanish, disgusting, m, pl, asquerosos).
 ty_adjective(spanish, disgusting, f, sg, asquerosa).
@@ -15958,10 +15877,6 @@ ty_adjective(spanish, distinguished, m, sg, señalado).
 ty_adjective(spanish, distinguished, m, pl, señalados).
 ty_adjective(spanish, distinguished, f, sg, señalada).
 ty_adjective(spanish, distinguished, f, pl, señaladas).
-ty_adjective(spanish, distressed, any, sg, angustiado).
-ty_adjective(spanish, distressed, any, pl, angustiados).
-ty_adjective(spanish, distressed, any, sg, afligido).
-ty_adjective(spanish, distressed, any, pl, afligidos).
 ty_adjective(spanish, distributional, any, sg, distribucional).
 ty_adjective(spanish, distributional, any, pl, distribucionales).
 ty_adjective(spanish, distrustful, m, sg, desconfiado).
@@ -16012,8 +15927,6 @@ ty_adjective(spanish, domestic, m, sg, doméstico).
 ty_adjective(spanish, domestic, m, pl, domésticos).
 ty_adjective(spanish, domestic, f, sg, doméstica).
 ty_adjective(spanish, domestic, f, pl, domésticas).
-ty_adjective(spanish, domesticated, any, sg, domesticado).
-ty_adjective(spanish, domesticated, any, pl, domesticados).
 ty_adjective(spanish, domiciliary, m, sg, domiciliario).
 ty_adjective(spanish, domiciliary, m, pl, domiciliarios).
 ty_adjective(spanish, domiciliary, f, sg, domiciliaria).
@@ -16030,10 +15943,8 @@ ty_adjective(spanish, doric, f, sg, dórica).
 ty_adjective(spanish, doric, f, pl, dóricas).
 ty_adjective(spanish, dorsal, any, sg, dorsal).
 ty_adjective(spanish, dorsal, any, pl, dorsales).
-ty_adjective(spanish, dotted, any, sg, salpicado).
-ty_adjective(spanish, dotted, any, pl, salpicados).
 ty_adjective(spanish, double, any, sg, doble).
-ty_adjective(spanish, double, any, pl, doblen).
+ty_adjective(spanish, double, any, pl, dobles).
 ty_adjective(spanish, doubtful, m, sg, dudoso).
 ty_adjective(spanish, doubtful, m, pl, dudosos).
 ty_adjective(spanish, doubtful, f, sg, dudosa).
@@ -16046,8 +15957,6 @@ ty_adjective(spanish, downcast, m, sg, alicaído).
 ty_adjective(spanish, downcast, m, pl, alicaídos).
 ty_adjective(spanish, downcast, f, sg, alicaída).
 ty_adjective(spanish, downcast, f, pl, alicaídas).
-ty_adjective(spanish, downhearted, any, sg, desanimado).
-ty_adjective(spanish, downhearted, any, pl, desanimados).
 ty_adjective(spanish, downtown, m, sg, céntrico).
 ty_adjective(spanish, downtown, m, pl, céntricos).
 ty_adjective(spanish, downtown, f, sg, céntrica).
@@ -16072,14 +15981,10 @@ ty_adjective(spanish, dreamy, f, sg, soñadora).
 ty_adjective(spanish, dreamy, f, pl, soñadoras).
 ty_adjective(spanish, drinkable, any, sg, potable).
 ty_adjective(spanish, drinkable, any, pl, potables).
-ty_adjective(spanish, drowned, any, sg, ahogado).
-ty_adjective(spanish, drowned, any, pl, ahogados).
-ty_adjective(spanish, drunk, any, sg, bebido).
-ty_adjective(spanish, drunk, any, pl, bebidos).
 ty_adjective(spanish, dry, m, sg, seco).
 ty_adjective(spanish, dry, m, pl, secos).
 ty_adjective(spanish, dry, f, sg, seca).
-ty_adjective(spanish, dry, f, pl, secan).
+ty_adjective(spanish, dry, f, pl, secas).
 ty_adjective(spanish, dual, any, sg, dual).
 ty_adjective(spanish, dual, any, pl, duales).
 ty_adjective(spanish, ductile, any, sg, dúctil).
@@ -16354,8 +16259,6 @@ ty_adjective(spanish, embarrassing, m, sg, embarazoso).
 ty_adjective(spanish, embarrassing, m, pl, embarazosos).
 ty_adjective(spanish, embarrassing, f, sg, embarazosa).
 ty_adjective(spanish, embarrassing, f, pl, embarazosas).
-ty_adjective(spanish, embattled, any, sg, asediado).
-ty_adjective(spanish, embattled, any, pl, asediados).
 ty_adjective(spanish, emblematic, m, sg, emblemático).
 ty_adjective(spanish, emblematic, m, pl, emblemáticos).
 ty_adjective(spanish, emblematic, f, sg, emblemática).
@@ -16400,8 +16303,6 @@ ty_adjective(spanish, enabling, m, sg, habilitador).
 ty_adjective(spanish, enabling, m, pl, habilitadores).
 ty_adjective(spanish, enabling, f, sg, habilitadora).
 ty_adjective(spanish, enabling, f, pl, habilitadoras).
-ty_adjective(spanish, enamoured, any, sg, enamorado).
-ty_adjective(spanish, enamoured, any, pl, enamorados).
 ty_adjective(spanish, encephalic, m, sg, encefálico).
 ty_adjective(spanish, encephalic, m, pl, encefálicos).
 ty_adjective(spanish, encephalic, f, sg, encefálica).
@@ -16466,14 +16367,12 @@ ty_adjective(spanish, enigmatic, f, sg, enigmática).
 ty_adjective(spanish, enigmatic, f, pl, enigmáticas).
 ty_adjective(spanish, enormous, any, sg, enorme).
 ty_adjective(spanish, enormous, any, pl, enormes).
-ty_adjective(spanish, enslaved, any, sg, esclavizado).
-ty_adjective(spanish, enslaved, any, pl, esclavizados).
 ty_adjective(spanish, enthusiastic, any, sg, entusiasta).
 ty_adjective(spanish, enthusiastic, any, pl, entusiastas).
 ty_adjective(spanish, entire, m, sg, entero).
 ty_adjective(spanish, entire, m, pl, enteros).
 ty_adjective(spanish, entire, f, sg, entera).
-ty_adjective(spanish, entire, f, pl, enteran).
+ty_adjective(spanish, entire, f, pl, enteras).
 ty_adjective(spanish, enumerable, any, sg, enumerable).
 ty_adjective(spanish, enumerable, any, pl, enumerables).
 ty_adjective(spanish, environmental, any, sg, medioambiental).
@@ -16820,8 +16719,6 @@ ty_adjective(spanish, exporting, m, sg, exportador).
 ty_adjective(spanish, exporting, m, pl, exportadores).
 ty_adjective(spanish, exporting, f, sg, exportadora).
 ty_adjective(spanish, exporting, f, pl, exportadoras).
-ty_adjective(spanish, exposed, any, sg, expuesto).
-ty_adjective(spanish, exposed, any, pl, expuestos).
 ty_adjective(spanish, expressible, any, sg, expresable).
 ty_adjective(spanish, expressible, any, pl, expresables).
 ty_adjective(spanish, expressionist, any, sg, expresionista).
@@ -16989,7 +16886,7 @@ ty_adjective(spanish, favourable, any, pl, favorables).
 ty_adjective(spanish, favourable, m, sg, propicio).
 ty_adjective(spanish, favourable, m, pl, propicios).
 ty_adjective(spanish, favourable, f, sg, propicia).
-ty_adjective(spanish, favourable, f, pl, propician).
+ty_adjective(spanish, favourable, f, pl, propicias).
 ty_adjective(spanish, favourite, m, sg, favorito).
 ty_adjective(spanish, favourite, m, pl, favoritos).
 ty_adjective(spanish, favourite, f, sg, favorita).
@@ -17038,16 +16935,12 @@ ty_adjective(spanish, fellow, m, sg, amigo).
 ty_adjective(spanish, fellow, m, pl, amigos).
 ty_adjective(spanish, fellow, f, sg, amiga).
 ty_adjective(spanish, fellow, f, pl, amigas).
-ty_adjective(spanish, female, any, sg, hembra).
-ty_adjective(spanish, female, any, pl, hembras).
 ty_adjective(spanish, feminine, m, sg, femenino).
 ty_adjective(spanish, feminine, m, pl, femeninos).
 ty_adjective(spanish, feminine, f, sg, femenina).
 ty_adjective(spanish, feminine, f, pl, femeninas).
 ty_adjective(spanish, feminist, any, sg, feminista).
 ty_adjective(spanish, feminist, any, pl, feministas).
-ty_adjective(spanish, fenced, any, sg, vallado).
-ty_adjective(spanish, fenced, any, pl, vallados).
 ty_adjective(spanish, ferric, m, sg, férrico).
 ty_adjective(spanish, ferric, m, pl, férricos).
 ty_adjective(spanish, ferric, f, sg, férrica).
@@ -17120,8 +17013,6 @@ ty_adjective(spanish, fighting, f, sg, luchadora).
 ty_adjective(spanish, fighting, f, pl, luchadoras).
 ty_adjective(spanish, filial, any, sg, filial).
 ty_adjective(spanish, filial, any, pl, filiales).
-ty_adjective(spanish, fimbriated, any, sg, perfilado).
-ty_adjective(spanish, fimbriated, any, pl, perfilados).
 ty_adjective(spanish, final, any, sg, final).
 ty_adjective(spanish, final, any, pl, finales).
 ty_adjective(spanish, financial, m, sg, financiero).
@@ -17145,7 +17036,7 @@ ty_adjective(spanish, fireproof, m, pl, ignífugos).
 ty_adjective(spanish, fireproof, f, sg, ignífuga).
 ty_adjective(spanish, fireproof, f, pl, ignífugas).
 ty_adjective(spanish, firm, any, sg, firme).
-ty_adjective(spanish, firm, any, pl, firmen).
+ty_adjective(spanish, firm, any, pl, firmes).
 ty_adjective(spanish, first, m, sg, primero).
 ty_adjective(spanish, first, m, pl, primeros).
 ty_adjective(spanish, first, f, sg, primera).
@@ -17161,7 +17052,7 @@ ty_adjective(spanish, fitful, any, pl, irregulares).
 ty_adjective(spanish, fixed, m, sg, fijo).
 ty_adjective(spanish, fixed, m, pl, fijos).
 ty_adjective(spanish, fixed, f, sg, fija).
-ty_adjective(spanish, fixed, f, pl, fijan).
+ty_adjective(spanish, fixed, f, pl, fijas).
 ty_adjective(spanish, flabbergasted, m, sg, atónito).
 ty_adjective(spanish, flabbergasted, m, pl, atónitos).
 ty_adjective(spanish, flabbergasted, f, sg, atónita).
@@ -17407,7 +17298,7 @@ ty_adjective(spanish, fugitive, f, pl, fugitivas).
 ty_adjective(spanish, full, m, sg, lleno).
 ty_adjective(spanish, full, m, pl, llenos).
 ty_adjective(spanish, full, f, sg, llena).
-ty_adjective(spanish, full, f, pl, llenan).
+ty_adjective(spanish, full, f, pl, llenas).
 ty_adjective(spanish, full, m, sg, pleno).
 ty_adjective(spanish, full, m, pl, plenos).
 ty_adjective(spanish, full, f, sg, plena).
@@ -17618,8 +17509,6 @@ ty_adjective(spanish, gibraltarian, m, sg, gibraltareño).
 ty_adjective(spanish, gibraltarian, m, pl, gibraltareños).
 ty_adjective(spanish, gibraltarian, f, sg, gibraltareña).
 ty_adjective(spanish, gibraltarian, f, pl, gibraltareñas).
-ty_adjective(spanish, gifted, any, sg, dotado).
-ty_adjective(spanish, gifted, any, pl, dotados).
 ty_adjective(spanish, gigantic, m, sg, gigantesco).
 ty_adjective(spanish, gigantic, m, pl, gigantescos).
 ty_adjective(spanish, gigantic, f, sg, gigantesca).
@@ -17740,7 +17629,7 @@ ty_adjective(spanish, grateful, m, pl, agradecidos).
 ty_adjective(spanish, grateful, f, sg, agradecida).
 ty_adjective(spanish, grateful, f, pl, agradecidas).
 ty_adjective(spanish, grave, any, sg, grave).
-ty_adjective(spanish, grave, any, pl, graven).
+ty_adjective(spanish, grave, any, pl, graves).
 ty_adjective(spanish, gravitational, any, sg, gravitacional).
 ty_adjective(spanish, gravitational, any, pl, gravitacionales).
 ty_adjective(spanish, gravitational, m, sg, gravitatorio).
@@ -17784,7 +17673,7 @@ ty_adjective(spanish, grenadian, f, pl, granadinas).
 ty_adjective(spanish, grey, any, sg, gris).
 ty_adjective(spanish, grey, any, pl, grises).
 ty_adjective(spanish, grievous, any, sg, grave).
-ty_adjective(spanish, grievous, any, pl, graven).
+ty_adjective(spanish, grievous, any, pl, graves).
 ty_adjective(spanish, grim, m, sg, siniestro).
 ty_adjective(spanish, grim, m, pl, siniestros).
 ty_adjective(spanish, grim, f, sg, siniestra).
@@ -17900,11 +17789,11 @@ ty_adjective(spanish, happy, any, pl, felices).
 ty_adjective(spanish, happy, m, sg, contento).
 ty_adjective(spanish, happy, m, pl, contentos).
 ty_adjective(spanish, happy, f, sg, contenta).
-ty_adjective(spanish, happy, f, pl, contentan).
+ty_adjective(spanish, happy, f, pl, contentas).
 ty_adjective(spanish, hard, m, sg, duro).
 ty_adjective(spanish, hard, m, pl, duros).
 ty_adjective(spanish, hard, f, sg, dura).
-ty_adjective(spanish, hard, f, pl, duran).
+ty_adjective(spanish, hard, f, pl, duras).
 ty_adjective(spanish, hardy, any, sg, fuerte).
 ty_adjective(spanish, hardy, any, pl, fuertes).
 ty_adjective(spanish, harmful, m, sg, dañino).
@@ -17934,7 +17823,7 @@ ty_adjective(spanish, harrowing, f, pl, desgarradoras).
 ty_adjective(spanish, harsh, m, sg, duro).
 ty_adjective(spanish, harsh, m, pl, duros).
 ty_adjective(spanish, harsh, f, sg, dura).
-ty_adjective(spanish, harsh, f, pl, duran).
+ty_adjective(spanish, harsh, f, pl, duras).
 ty_adjective(spanish, hasty, m, sg, apresurado).
 ty_adjective(spanish, hasty, m, pl, apresurados).
 ty_adjective(spanish, hasty, f, sg, apresurada).
@@ -18200,7 +18089,7 @@ ty_adjective(spanish, host, f, pl, animadoras).
 ty_adjective(spanish, hostile, any, sg, hostil).
 ty_adjective(spanish, hostile, any, pl, hostiles).
 ty_adjective(spanish, hot, any, sg, caliente).
-ty_adjective(spanish, hot, any, pl, calienten).
+ty_adjective(spanish, hot, any, pl, calientes).
 ty_adjective(spanish, hotel, m, sg, hotelero).
 ty_adjective(spanish, hotel, m, pl, hoteleros).
 ty_adjective(spanish, hotel, f, sg, hotelera).
@@ -18439,16 +18328,10 @@ ty_adjective(spanish, illogical, m, sg, ilógico).
 ty_adjective(spanish, illogical, m, pl, ilógicos).
 ty_adjective(spanish, illogical, f, sg, ilógica).
 ty_adjective(spanish, illogical, f, pl, ilógicas).
-ty_adjective(spanish, illusionistic, any, sg, ilusionista).
-ty_adjective(spanish, illusionistic, any, pl, ilusionistas).
 ty_adjective(spanish, illustrative, m, sg, ilustrativo).
 ty_adjective(spanish, illustrative, m, pl, ilustrativos).
 ty_adjective(spanish, illustrative, f, sg, ilustrativa).
 ty_adjective(spanish, illustrative, f, pl, ilustrativas).
-ty_adjective(spanish, illustrious, m, sg, destacado).
-ty_adjective(spanish, illustrious, m, pl, destacados).
-ty_adjective(spanish, illustrious, f, sg, destacada).
-ty_adjective(spanish, illustrious, f, pl, destacadas).
 ty_adjective(spanish, imaginary, m, sg, imaginario).
 ty_adjective(spanish, imaginary, m, pl, imaginarios).
 ty_adjective(spanish, imaginary, f, sg, imaginaria).
@@ -18643,8 +18526,6 @@ ty_adjective(spanish, incisive, f, sg, incisiva).
 ty_adjective(spanish, incisive, f, pl, incisivas).
 ty_adjective(spanish, inclement, any, sg, inclemente).
 ty_adjective(spanish, inclement, any, pl, inclementes).
-ty_adjective(spanish, included, any, sg, incluido).
-ty_adjective(spanish, included, any, pl, incluidos).
 ty_adjective(spanish, incoherent, any, sg, incoherente).
 ty_adjective(spanish, incoherent, any, pl, incoherentes).
 ty_adjective(spanish, incommensurable, any, sg, inconmensurable).
@@ -18719,8 +18600,6 @@ ty_adjective(spanish, indifferent, f, sg, ajena).
 ty_adjective(spanish, indifferent, f, pl, ajenas).
 ty_adjective(spanish, indigestible, any, sg, indigerible).
 ty_adjective(spanish, indigestible, any, pl, indigeribles).
-ty_adjective(spanish, indignant, any, sg, indignado).
-ty_adjective(spanish, indignant, any, pl, indignados).
 ty_adjective(spanish, indirect, m, sg, indirecto).
 ty_adjective(spanish, indirect, m, pl, indirectos).
 ty_adjective(spanish, indirect, f, sg, indirecta).
@@ -18935,8 +18814,6 @@ ty_adjective(spanish, inspiring, m, sg, inspirador).
 ty_adjective(spanish, inspiring, m, pl, inspiradores).
 ty_adjective(spanish, inspiring, f, sg, inspiradora).
 ty_adjective(spanish, inspiring, f, pl, inspiradoras).
-ty_adjective(spanish, installed, any, sg, instalado).
-ty_adjective(spanish, installed, any, pl, instalados).
 ty_adjective(spanish, instantaneous, m, sg, instantáneo).
 ty_adjective(spanish, instantaneous, m, pl, instantáneos).
 ty_adjective(spanish, instantaneous, f, sg, instantánea).
@@ -18979,8 +18856,6 @@ ty_adjective(spanish, integral, any, sg, integral).
 ty_adjective(spanish, integral, any, pl, integrales).
 ty_adjective(spanish, integral, any, sg, integrante).
 ty_adjective(spanish, integral, any, pl, integrantes).
-ty_adjective(spanish, integrated, any, sg, integrado).
-ty_adjective(spanish, integrated, any, pl, integrados).
 ty_adjective(spanish, intellectual, any, sg, intelectual).
 ty_adjective(spanish, intellectual, any, pl, intelectuales).
 ty_adjective(spanish, intelligent, any, sg, inteligente).
@@ -19034,7 +18909,7 @@ ty_adjective(spanish, interlocutory, f, pl, interlocutorias).
 ty_adjective(spanish, intermediate, m, sg, intermedio).
 ty_adjective(spanish, intermediate, m, pl, intermedios).
 ty_adjective(spanish, intermediate, f, sg, intermedia).
-ty_adjective(spanish, intermediate, f, pl, intermedian).
+ty_adjective(spanish, intermediate, f, pl, intermedias).
 ty_adjective(spanish, intermediate, m, sg, intermediario).
 ty_adjective(spanish, intermediate, m, pl, intermediarios).
 ty_adjective(spanish, intermediate, f, sg, intermediaria).
@@ -19091,8 +18966,6 @@ ty_adjective(spanish, intimate, m, sg, íntimo).
 ty_adjective(spanish, intimate, m, pl, íntimos).
 ty_adjective(spanish, intimate, f, sg, íntima).
 ty_adjective(spanish, intimate, f, pl, íntimas).
-ty_adjective(spanish, intimidated, any, sg, intimidado).
-ty_adjective(spanish, intimidated, any, pl, intimidados).
 ty_adjective(spanish, intolerable, any, sg, intolerable).
 ty_adjective(spanish, intolerable, any, pl, intolerables).
 ty_adjective(spanish, intoxicated, m, sg, ebrio).
@@ -19161,10 +19034,6 @@ ty_adjective(spanish, inventive, f, sg, ingeniosa).
 ty_adjective(spanish, inventive, f, pl, ingeniosas).
 ty_adjective(spanish, invertible, any, sg, invertible).
 ty_adjective(spanish, invertible, any, pl, invertibles).
-ty_adjective(spanish, investor, m, sg, inversor).
-ty_adjective(spanish, investor, m, pl, inversores).
-ty_adjective(spanish, investor, f, sg, inversora).
-ty_adjective(spanish, investor, f, pl, inversoras).
 ty_adjective(spanish, invincible, any, sg, invencible).
 ty_adjective(spanish, invincible, any, pl, invencibles).
 ty_adjective(spanish, inviolable, any, sg, inviolable).
@@ -19393,10 +19262,6 @@ ty_adjective(spanish, kenyan, f, sg, keniana).
 ty_adjective(spanish, kenyan, f, pl, kenianas).
 ty_adjective(spanish, key, any, sg, clave).
 ty_adjective(spanish, key, any, pl, claves).
-ty_adjective(spanish, khaki, any, sg, caqui).
-ty_adjective(spanish, khaki, any, pl, caquis).
-ty_adjective(spanish, killed, any, sg, asesinado).
-ty_adjective(spanish, killed, any, pl, asesinados).
 ty_adjective(spanish, kind, any, sg, amable).
 ty_adjective(spanish, kind, any, pl, amables).
 ty_adjective(spanish, kinematic, m, sg, cinemático).
@@ -19421,8 +19286,6 @@ ty_adjective(spanish, knotty, m, sg, nudoso).
 ty_adjective(spanish, knotty, m, pl, nudosos).
 ty_adjective(spanish, knotty, f, sg, nudosa).
 ty_adjective(spanish, knotty, f, pl, nudosas).
-ty_adjective(spanish, known, any, sg, sabido).
-ty_adjective(spanish, known, any, pl, sabidos).
 ty_adjective(spanish, korean, m, sg, coreano).
 ty_adjective(spanish, korean, m, pl, coreanos).
 ty_adjective(spanish, korean, f, sg, coreana).
@@ -19446,7 +19309,7 @@ ty_adjective(spanish, labour, any, pl, laborales).
 ty_adjective(spanish, lacking, m, sg, falto).
 ty_adjective(spanish, lacking, m, pl, faltos).
 ty_adjective(spanish, lacking, f, sg, falta).
-ty_adjective(spanish, lacking, f, pl, faltan).
+ty_adjective(spanish, lacking, f, pl, faltas).
 ty_adjective(spanish, lacrimal, any, sg, lacrimal).
 ty_adjective(spanish, lacrimal, any, pl, lacrimales).
 ty_adjective(spanish, lactiferous, m, sg, lactífero).
@@ -19462,7 +19325,7 @@ ty_adjective(spanish, lagrangian, f, pl, lagrangianas).
 ty_adjective(spanish, lame, m, sg, cojo).
 ty_adjective(spanish, lame, m, pl, cojos).
 ty_adjective(spanish, lame, f, sg, coja).
-ty_adjective(spanish, lame, f, pl, cojan).
+ty_adjective(spanish, lame, f, pl, cojas).
 ty_adjective(spanish, languid, m, sg, lánguido).
 ty_adjective(spanish, languid, m, pl, lánguidos).
 ty_adjective(spanish, languid, f, sg, lánguida).
@@ -19557,8 +19420,6 @@ ty_adjective(spanish, lefthand, f, sg, izquierda).
 ty_adjective(spanish, lefthand, f, pl, izquierdas).
 ty_adjective(spanish, legal, any, sg, legal).
 ty_adjective(spanish, legal, any, pl, legales).
-ty_adjective(spanish, legated, any, sg, legado).
-ty_adjective(spanish, legated, any, pl, legados).
 ty_adjective(spanish, legendary, m, sg, legendario).
 ty_adjective(spanish, legendary, m, pl, legendarios).
 ty_adjective(spanish, legendary, f, sg, legendaria).
@@ -19734,7 +19595,7 @@ ty_adjective(spanish, liturgical, f, pl, litúrgicas).
 ty_adjective(spanish, live, m, sg, vivo).
 ty_adjective(spanish, live, m, pl, vivos).
 ty_adjective(spanish, live, f, sg, viva).
-ty_adjective(spanish, live, f, pl, vivan).
+ty_adjective(spanish, live, f, pl, vivas).
 ty_adjective(spanish, lively, m, sg, animado).
 ty_adjective(spanish, lively, m, pl, animados).
 ty_adjective(spanish, lively, f, sg, animada).
@@ -19796,15 +19657,13 @@ ty_adjective(spanish, longshore, any, pl, litorales).
 ty_adjective(spanish, loose, m, sg, suelto).
 ty_adjective(spanish, loose, m, pl, sueltos).
 ty_adjective(spanish, loose, f, sg, suelta).
-ty_adjective(spanish, loose, f, pl, sueltan).
+ty_adjective(spanish, loose, f, pl, sueltas).
 ty_adjective(spanish, loquacious, any, sg, locuaz).
 ty_adjective(spanish, loquacious, any, pl, locuaces).
 ty_adjective(spanish, losing, m, sg, perdedor).
 ty_adjective(spanish, losing, m, pl, perdedores).
 ty_adjective(spanish, losing, f, sg, perdedora).
 ty_adjective(spanish, losing, f, pl, perdedoras).
-ty_adjective(spanish, lossy, any, sg, disipado).
-ty_adjective(spanish, lossy, any, pl, disipados).
 ty_adjective(spanish, loud, any, sg, fuerte).
 ty_adjective(spanish, loud, any, pl, fuertes).
 ty_adjective(spanish, lovable, m, sg, encantador).
@@ -19937,8 +19796,6 @@ ty_adjective(spanish, malayan, m, sg, malayo).
 ty_adjective(spanish, malayan, m, pl, malayos).
 ty_adjective(spanish, malayan, f, sg, malaya).
 ty_adjective(spanish, malayan, f, pl, malayas).
-ty_adjective(spanish, male, any, sg, macho).
-ty_adjective(spanish, male, any, pl, machos).
 ty_adjective(spanish, malevolent, m, sg, malévolo).
 ty_adjective(spanish, malevolent, m, pl, malévolos).
 ty_adjective(spanish, malevolent, f, sg, malévola).
@@ -20084,7 +19941,7 @@ ty_adjective(spanish, matt, any, pl, mates).
 ty_adjective(spanish, mature, m, sg, maduro).
 ty_adjective(spanish, mature, m, pl, maduros).
 ty_adjective(spanish, mature, f, sg, madura).
-ty_adjective(spanish, mature, f, pl, maduran).
+ty_adjective(spanish, mature, f, pl, maduras).
 ty_adjective(spanish, matutinal, m, sg, matutino).
 ty_adjective(spanish, matutinal, m, pl, matutinos).
 ty_adjective(spanish, matutinal, f, sg, matutina).
@@ -20210,7 +20067,7 @@ ty_adjective(spanish, meromorphic, m, pl, meromorfos).
 ty_adjective(spanish, meromorphic, f, sg, meromorfa).
 ty_adjective(spanish, meromorphic, f, pl, meromorfas).
 ty_adjective(spanish, merry, any, sg, alegre).
-ty_adjective(spanish, merry, any, pl, alegren).
+ty_adjective(spanish, merry, any, pl, alegres).
 ty_adjective(spanish, mesenchymatous, m, sg, mesenquimatoso).
 ty_adjective(spanish, mesenchymatous, m, pl, mesenquimatosos).
 ty_adjective(spanish, mesenchymatous, f, sg, mesenquimatosa).
@@ -20339,10 +20196,6 @@ ty_adjective(spanish, migratory, m, sg, migratorio).
 ty_adjective(spanish, migratory, m, pl, migratorios).
 ty_adjective(spanish, migratory, f, sg, migratoria).
 ty_adjective(spanish, migratory, f, pl, migratorias).
-ty_adjective(spanish, milanese, m, sg, milanés).
-ty_adjective(spanish, milanese, m, pl, milaneses).
-ty_adjective(spanish, milanese, f, sg, milanesa).
-ty_adjective(spanish, milanese, f, pl, milanesas).
 ty_adjective(spanish, mild, any, sg, suave).
 ty_adjective(spanish, mild, any, pl, suaves).
 ty_adjective(spanish, militant, any, sg, militante).
@@ -20413,8 +20266,6 @@ ty_adjective(spanish, mistaken, m, sg, equivocado).
 ty_adjective(spanish, mistaken, m, pl, equivocados).
 ty_adjective(spanish, mistaken, f, sg, equivocada).
 ty_adjective(spanish, mistaken, f, pl, equivocadas).
-ty_adjective(spanish, misty, any, sg, empañado).
-ty_adjective(spanish, misty, any, pl, empañados).
 ty_adjective(spanish, misty, m, sg, neblinoso).
 ty_adjective(spanish, misty, m, pl, neblinosos).
 ty_adjective(spanish, misty, f, sg, neblinosa).
@@ -20443,8 +20294,6 @@ ty_adjective(spanish, mnemonic, f, sg, mnemónica).
 ty_adjective(spanish, mnemonic, f, pl, mnemónicas).
 ty_adjective(spanish, mobile, any, sg, móvil).
 ty_adjective(spanish, mobile, any, pl, móviles).
-ty_adjective(spanish, mock, any, sg, simulado).
-ty_adjective(spanish, mock, any, pl, simulados).
 ty_adjective(spanish, modal, any, sg, modal).
 ty_adjective(spanish, modal, any, pl, modales).
 ty_adjective(spanish, moderate, m, sg, moderado).
@@ -20619,8 +20468,6 @@ ty_adjective(spanish, motivational, any, sg, motivacional).
 ty_adjective(spanish, motivational, any, pl, motivacionales).
 ty_adjective(spanish, motorcycling, any, sg, motociclista).
 ty_adjective(spanish, motorcycling, any, pl, motociclistas).
-ty_adjective(spanish, motorised, any, sg, motorizado).
-ty_adjective(spanish, motorised, any, pl, motorizados).
 ty_adjective(spanish, mountainous, m, sg, montañoso).
 ty_adjective(spanish, mountainous, m, pl, montañosos).
 ty_adjective(spanish, mountainous, f, sg, montañosa).
@@ -20694,7 +20541,7 @@ ty_adjective(spanish, musculoskeletal, f, pl, musculoesqueléticas).
 ty_adjective(spanish, mushy, m, sg, blando).
 ty_adjective(spanish, mushy, m, pl, blandos).
 ty_adjective(spanish, mushy, f, sg, blanda).
-ty_adjective(spanish, mushy, f, pl, blandan).
+ty_adjective(spanish, mushy, f, pl, blandas).
 ty_adjective(spanish, musical, any, sg, musical).
 ty_adjective(spanish, musical, any, pl, musicales).
 ty_adjective(spanish, muslim, m, sg, musulmán).
@@ -20750,11 +20597,11 @@ ty_adjective(spanish, narrative, f, pl, narrativas).
 ty_adjective(spanish, narrow, m, sg, estrecho).
 ty_adjective(spanish, narrow, m, pl, estrechos).
 ty_adjective(spanish, narrow, f, sg, estrecha).
-ty_adjective(spanish, narrow, f, pl, estrechan).
+ty_adjective(spanish, narrow, f, pl, estrechas).
 ty_adjective(spanish, narrow, m, sg, angosto).
 ty_adjective(spanish, narrow, m, pl, angostos).
 ty_adjective(spanish, narrow, f, sg, angosta).
-ty_adjective(spanish, narrow, f, pl, angostan).
+ty_adjective(spanish, narrow, f, pl, angostas).
 ty_adjective(spanish, nasal, any, sg, nasal).
 ty_adjective(spanish, nasal, any, pl, nasales).
 ty_adjective(spanish, nasty, m, sg, malo).
@@ -20801,8 +20648,6 @@ ty_adjective(spanish, nearby, m, sg, cercano).
 ty_adjective(spanish, nearby, m, pl, cercanos).
 ty_adjective(spanish, nearby, f, sg, cercana).
 ty_adjective(spanish, nearby, f, pl, cercanas).
-ty_adjective(spanish, neat, any, sg, ordenado).
-ty_adjective(spanish, neat, any, pl, ordenados).
 ty_adjective(spanish, necessary, m, sg, necesario).
 ty_adjective(spanish, necessary, m, pl, necesarios).
 ty_adjective(spanish, necessary, f, sg, necesaria).
@@ -20811,8 +20656,6 @@ ty_adjective(spanish, necrophagous, m, sg, necrófago).
 ty_adjective(spanish, necrophagous, m, pl, necrófagos).
 ty_adjective(spanish, necrophagous, f, sg, necrófaga).
 ty_adjective(spanish, necrophagous, f, pl, necrófagas).
-ty_adjective(spanish, needy, any, sg, necesitado).
-ty_adjective(spanish, needy, any, pl, necesitados).
 ty_adjective(spanish, negative, m, sg, negativo).
 ty_adjective(spanish, negative, m, pl, negativos).
 ty_adjective(spanish, negative, f, sg, negativa).
@@ -20823,10 +20666,6 @@ ty_adjective(spanish, negligible, any, sg, insignificante).
 ty_adjective(spanish, negligible, any, pl, insignificantes).
 ty_adjective(spanish, negotiable, any, sg, negociable).
 ty_adjective(spanish, negotiable, any, pl, negociables).
-ty_adjective(spanish, negotiating, m, sg, negociador).
-ty_adjective(spanish, negotiating, m, pl, negociadores).
-ty_adjective(spanish, negotiating, f, sg, negociadora).
-ty_adjective(spanish, negotiating, f, pl, negociadoras).
 ty_adjective(spanish, neighbouring, m, sg, vecino).
 ty_adjective(spanish, neighbouring, m, pl, vecinos).
 ty_adjective(spanish, neighbouring, f, sg, vecina).
@@ -21020,7 +20859,7 @@ ty_adjective(spanish, nuclear, any, pl, nucleares).
 ty_adjective(spanish, nude, m, sg, desnudo).
 ty_adjective(spanish, nude, m, pl, desnudos).
 ty_adjective(spanish, nude, f, sg, desnuda).
-ty_adjective(spanish, nude, f, pl, desnudan).
+ty_adjective(spanish, nude, f, pl, desnudas).
 ty_adjective(spanish, nudist, any, sg, nudista).
 ty_adjective(spanish, nudist, any, pl, nudistas).
 ty_adjective(spanish, numberless, any, sg, innumerable).
@@ -21313,8 +21152,6 @@ ty_adjective(spanish, orbital, any, sg, orbital).
 ty_adjective(spanish, orbital, any, pl, orbitales).
 ty_adjective(spanish, orchestral, any, sg, orquestal).
 ty_adjective(spanish, orchestral, any, pl, orquestales).
-ty_adjective(spanish, orderly, any, sg, ordenado).
-ty_adjective(spanish, orderly, any, pl, ordenados).
 ty_adjective(spanish, ordinal, any, sg, ordinal).
 ty_adjective(spanish, ordinal, any, pl, ordinales).
 ty_adjective(spanish, ordinary, m, sg, ordinario).
@@ -21411,8 +21248,6 @@ ty_adjective(spanish, outlaw, m, sg, forajido).
 ty_adjective(spanish, outlaw, m, pl, forajidos).
 ty_adjective(spanish, outlaw, f, sg, forajida).
 ty_adjective(spanish, outlaw, f, pl, forajidas).
-ty_adjective(spanish, outraged, any, sg, indignado).
-ty_adjective(spanish, outraged, any, pl, indignados).
 ty_adjective(spanish, outrageous, any, sg, indignante).
 ty_adjective(spanish, outrageous, any, pl, indignantes).
 ty_adjective(spanish, outright, any, sg, frontal).
@@ -21431,14 +21266,10 @@ ty_adjective(spanish, ovarian, f, sg, ovárica).
 ty_adjective(spanish, ovarian, f, pl, ováricas).
 ty_adjective(spanish, overall, any, sg, global).
 ty_adjective(spanish, overall, any, pl, globales).
-ty_adjective(spanish, overburden, any, sg, sobrecargado).
-ty_adjective(spanish, overburden, any, pl, sobrecargados).
 ty_adjective(spanish, overhead, m, sg, elevado).
 ty_adjective(spanish, overhead, m, pl, elevados).
 ty_adjective(spanish, overhead, f, sg, elevada).
 ty_adjective(spanish, overhead, f, pl, elevadas).
-ty_adjective(spanish, overlapped, any, sg, superpuesto).
-ty_adjective(spanish, overlapped, any, pl, superpuestos).
 ty_adjective(spanish, overriding, any, sg, primordial).
 ty_adjective(spanish, overriding, any, pl, primordiales).
 ty_adjective(spanish, overwhelming, m, sg, abrumador).
@@ -21669,8 +21500,6 @@ ty_adjective(spanish, patrol, m, sg, patrullero).
 ty_adjective(spanish, patrol, m, pl, patrulleros).
 ty_adjective(spanish, patrol, f, sg, patrullera).
 ty_adjective(spanish, patrol, f, pl, patrulleras).
-ty_adjective(spanish, patterned, any, sg, estampado).
-ty_adjective(spanish, patterned, any, pl, estampados).
 ty_adjective(spanish, payable, m, sg, pagadero).
 ty_adjective(spanish, payable, m, pl, pagaderos).
 ty_adjective(spanish, payable, f, sg, pagadera).
@@ -21838,7 +21667,7 @@ ty_adjective(spanish, pessimistic, any, pl, pesimistas).
 ty_adjective(spanish, pestering, m, sg, molesto).
 ty_adjective(spanish, pestering, m, pl, molestos).
 ty_adjective(spanish, pestering, f, sg, molesta).
-ty_adjective(spanish, pestering, f, pl, molestan).
+ty_adjective(spanish, pestering, f, pl, molestas).
 ty_adjective(spanish, petrochemical, m, sg, petroquímico).
 ty_adjective(spanish, petrochemical, m, pl, petroquímicos).
 ty_adjective(spanish, petrochemical, f, sg, petroquímica).
@@ -22025,8 +21854,6 @@ ty_adjective(spanish, pitiful, m, sg, lastimoso).
 ty_adjective(spanish, pitiful, m, pl, lastimosos).
 ty_adjective(spanish, pitiful, f, sg, lastimosa).
 ty_adjective(spanish, pitiful, f, pl, lastimosas).
-ty_adjective(spanish, placed, any, sg, colocado).
-ty_adjective(spanish, placed, any, pl, colocados).
 ty_adjective(spanish, plain, m, sg, sencillo).
 ty_adjective(spanish, plain, m, pl, sencillos).
 ty_adjective(spanish, plain, f, sg, sencilla).
@@ -22129,8 +21956,6 @@ ty_adjective(spanish, poikilothermic, m, sg, poiquilotermo).
 ty_adjective(spanish, poikilothermic, m, pl, poiquilotermos).
 ty_adjective(spanish, poikilothermic, f, sg, poiquiloterma).
 ty_adjective(spanish, poikilothermic, f, pl, poiquilotermas).
-ty_adjective(spanish, pointed, any, sg, apuntado).
-ty_adjective(spanish, pointed, any, pl, apuntados).
 ty_adjective(spanish, pointy, m, sg, puntiagudo).
 ty_adjective(spanish, pointy, m, pl, puntiagudos).
 ty_adjective(spanish, pointy, f, sg, puntiaguda).
@@ -22342,7 +22167,7 @@ ty_adjective(spanish, precious, f, pl, preciosas).
 ty_adjective(spanish, precise, m, sg, preciso).
 ty_adjective(spanish, precise, m, pl, precisos).
 ty_adjective(spanish, precise, f, sg, precisa).
-ty_adjective(spanish, precise, f, pl, precisan).
+ty_adjective(spanish, precise, f, pl, precisas).
 ty_adjective(spanish, precise, m, sg, certero).
 ty_adjective(spanish, precise, m, pl, certeros).
 ty_adjective(spanish, precise, f, sg, certera).
@@ -22400,7 +22225,7 @@ ty_adjective(spanish, premature, m, pl, prematuros).
 ty_adjective(spanish, premature, f, sg, prematura).
 ty_adjective(spanish, premature, f, pl, prematuras).
 ty_adjective(spanish, premolar, any, sg, premolar).
-ty_adjective(spanish, premolar, any, pl, premolars).
+ty_adjective(spanish, premolar, any, pl, premolares).
 ty_adjective(spanish, preparatory, m, sg, preparatorio).
 ty_adjective(spanish, preparatory, m, pl, preparatorios).
 ty_adjective(spanish, preparatory, f, sg, preparatoria).
@@ -22507,10 +22332,6 @@ ty_adjective(spanish, privileged, m, sg, privilegiado).
 ty_adjective(spanish, privileged, m, pl, privilegiados).
 ty_adjective(spanish, privileged, f, sg, privilegiada).
 ty_adjective(spanish, privileged, f, pl, privilegiadas).
-ty_adjective(spanish, prized, m, sg, cotizado).
-ty_adjective(spanish, prized, m, pl, cotizados).
-ty_adjective(spanish, prized, f, sg, cotizada).
-ty_adjective(spanish, prized, f, pl, cotizadas).
 ty_adjective(spanish, 'pro-western', any, sg, prooccidental).
 ty_adjective(spanish, 'pro-western', any, pl, prooccidentales).
 ty_adjective(spanish, probabilistic, any, sg, probabilista).
@@ -22546,7 +22367,7 @@ ty_adjective(spanish, productive, f, pl, productivas).
 ty_adjective(spanish, profane, m, sg, profano).
 ty_adjective(spanish, profane, m, pl, profanos).
 ty_adjective(spanish, profane, f, sg, profana).
-ty_adjective(spanish, profane, f, pl, profanan).
+ty_adjective(spanish, profane, f, pl, profanas).
 ty_adjective(spanish, professional, any, sg, profesional).
 ty_adjective(spanish, professional, any, pl, profesionales).
 ty_adjective(spanish, profitable, m, sg, provechoso).
@@ -22619,8 +22440,6 @@ ty_adjective(spanish, proper, f, sg, apropiada).
 ty_adjective(spanish, proper, f, pl, apropiadas).
 ty_adjective(spanish, proportional, any, sg, proporcional).
 ty_adjective(spanish, proportional, any, pl, proporcionales).
-ty_adjective(spanish, proportionate, any, sg, proporcionado).
-ty_adjective(spanish, proportionate, any, pl, proporcionados).
 ty_adjective(spanish, propositional, any, sg, proposicional).
 ty_adjective(spanish, propositional, any, pl, proposicionales).
 ty_adjective(spanish, proprietary, m, sg, propietario).
@@ -22787,8 +22606,6 @@ ty_adjective(spanish, purple, m, sg, morado).
 ty_adjective(spanish, purple, m, pl, morados).
 ty_adjective(spanish, purple, f, sg, morada).
 ty_adjective(spanish, purple, f, pl, moradas).
-ty_adjective(spanish, purple, any, sg, púrpura).
-ty_adjective(spanish, purple, any, pl, púrpuras).
 ty_adjective(spanish, purposeful, m, sg, resoluto).
 ty_adjective(spanish, purposeful, m, pl, resolutos).
 ty_adjective(spanish, purposeful, f, sg, resoluta).
@@ -22873,8 +22690,6 @@ ty_adjective(spanish, quixotic, m, sg, quijotesco).
 ty_adjective(spanish, quixotic, m, pl, quijotescos).
 ty_adjective(spanish, quixotic, f, sg, quijotesca).
 ty_adjective(spanish, quixotic, f, pl, quijotescas).
-ty_adjective(spanish, quoted, any, sg, citado).
-ty_adjective(spanish, quoted, any, pl, citados).
 ty_adjective(spanish, racial, any, sg, racial).
 ty_adjective(spanish, racial, any, pl, raciales).
 ty_adjective(spanish, racist, any, sg, racista).
@@ -22946,7 +22761,7 @@ ty_adjective(spanish, reactionary, f, pl, reaccionarias).
 ty_adjective(spanish, reactive, m, sg, reactivo).
 ty_adjective(spanish, reactive, m, pl, reactivos).
 ty_adjective(spanish, reactive, f, sg, reactiva).
-ty_adjective(spanish, reactive, f, pl, reactivan).
+ty_adjective(spanish, reactive, f, pl, reactivas).
 ty_adjective(spanish, readable, any, sg, legible).
 ty_adjective(spanish, readable, any, pl, legibles).
 ty_adjective(spanish, ready, m, sg, listo).
@@ -22985,8 +22800,6 @@ ty_adjective(spanish, recognizable, any, sg, reconocible).
 ty_adjective(spanish, recognizable, any, pl, reconocibles).
 ty_adjective(spanish, recommended, any, sg, recomendable).
 ty_adjective(spanish, recommended, any, pl, recomendables).
-ty_adjective(spanish, record, any, sg, récord).
-ty_adjective(spanish, record, any, pl, récords).
 ty_adjective(spanish, recordable, any, sg, grabable).
 ty_adjective(spanish, recordable, any, pl, grabables).
 ty_adjective(spanish, recorder, m, sg, registrador).
@@ -23204,15 +23017,13 @@ ty_adjective(spanish, responsible, any, pl, responsables).
 ty_adjective(spanish, restless, m, sg, inquieto).
 ty_adjective(spanish, restless, m, pl, inquietos).
 ty_adjective(spanish, restless, f, sg, inquieta).
-ty_adjective(spanish, restless, f, pl, inquietan).
+ty_adjective(spanish, restless, f, pl, inquietas).
 ty_adjective(spanish, resultant, any, sg, resultante).
 ty_adjective(spanish, resultant, any, pl, resultantes).
 ty_adjective(spanish, resulting, any, sg, resultante).
 ty_adjective(spanish, resulting, any, pl, resultantes).
 ty_adjective(spanish, retail, any, sg, minorista).
 ty_adjective(spanish, retail, any, pl, minoristas).
-ty_adjective(spanish, retarded, any, sg, retrasado).
-ty_adjective(spanish, retarded, any, pl, retrasados).
 ty_adjective(spanish, reticular, any, sg, reticular).
 ty_adjective(spanish, reticular, any, pl, reticulares).
 ty_adjective(spanish, retractable, any, sg, retráctil).
@@ -23243,8 +23054,6 @@ ty_adjective(spanish, reverse, f, sg, inversa).
 ty_adjective(spanish, reverse, f, pl, inversas).
 ty_adjective(spanish, reversible, any, sg, reversible).
 ty_adjective(spanish, reversible, any, pl, reversibles).
-ty_adjective(spanish, revised, any, sg, revisado).
-ty_adjective(spanish, revised, any, pl, revisados).
 ty_adjective(spanish, revisionist, any, sg, revisionista).
 ty_adjective(spanish, revisionist, any, pl, revisionistas).
 ty_adjective(spanish, revocable, any, sg, revocable).
@@ -23314,7 +23123,7 @@ ty_adjective(spanish, rigorous, f, pl, rigurosas).
 ty_adjective(spanish, ripe, m, sg, maduro).
 ty_adjective(spanish, ripe, m, pl, maduros).
 ty_adjective(spanish, ripe, f, sg, madura).
-ty_adjective(spanish, ripe, f, pl, maduran).
+ty_adjective(spanish, ripe, f, pl, maduras).
 ty_adjective(spanish, risky, m, sg, arriesgado).
 ty_adjective(spanish, risky, m, pl, arriesgados).
 ty_adjective(spanish, risky, f, sg, arriesgada).
@@ -23365,8 +23174,6 @@ ty_adjective(spanish, romantic, m, sg, romántico).
 ty_adjective(spanish, romantic, m, pl, románticos).
 ty_adjective(spanish, romantic, f, sg, romántica).
 ty_adjective(spanish, romantic, f, pl, románticas).
-ty_adjective(spanish, rooted, any, sg, radicado).
-ty_adjective(spanish, rooted, any, pl, radicados).
 ty_adjective(spanish, rosy, m, sg, sonrosado).
 ty_adjective(spanish, rosy, m, pl, sonrosados).
 ty_adjective(spanish, rosy, f, sg, sonrosada).
@@ -23548,7 +23355,7 @@ ty_adjective(spanish, satisfied, m, pl, satisfechos).
 ty_adjective(spanish, satisfied, f, sg, satisfecha).
 ty_adjective(spanish, satisfied, f, pl, satisfechas).
 ty_adjective(spanish, satisfied, any, sg, conforme).
-ty_adjective(spanish, satisfied, any, pl, conformen).
+ty_adjective(spanish, satisfied, any, pl, conformes).
 ty_adjective(spanish, saturated, m, sg, saturado).
 ty_adjective(spanish, saturated, m, pl, saturados).
 ty_adjective(spanish, saturated, f, sg, saturada).
@@ -23831,8 +23638,6 @@ ty_adjective(spanish, shabby, m, sg, raído).
 ty_adjective(spanish, shabby, m, pl, raídos).
 ty_adjective(spanish, shabby, f, sg, raída).
 ty_adjective(spanish, shabby, f, pl, raídas).
-ty_adjective(spanish, shabby, any, sg, gastado).
-ty_adjective(spanish, shabby, any, pl, gastados).
 ty_adjective(spanish, shady, m, sg, sombrío).
 ty_adjective(spanish, shady, m, pl, sombríos).
 ty_adjective(spanish, shady, f, sg, sombría).
@@ -23874,7 +23679,7 @@ ty_adjective(spanish, shocking, any, pl, impresionantes).
 ty_adjective(spanish, short, m, sg, corto).
 ty_adjective(spanish, short, m, pl, cortos).
 ty_adjective(spanish, short, f, sg, corta).
-ty_adjective(spanish, short, f, pl, cortan).
+ty_adjective(spanish, short, f, pl, cortas).
 ty_adjective(spanish, short, m, sg, bajo).
 ty_adjective(spanish, short, m, pl, bajos).
 ty_adjective(spanish, short, f, sg, baja).
@@ -23921,8 +23726,6 @@ ty_adjective(spanish, silent, m, sg, silencioso).
 ty_adjective(spanish, silent, m, pl, silenciosos).
 ty_adjective(spanish, silent, f, sg, silenciosa).
 ty_adjective(spanish, silent, f, pl, silenciosas).
-ty_adjective(spanish, silicious, any, sg, silicio).
-ty_adjective(spanish, silicious, any, pl, silicios).
 ty_adjective(spanish, silky, m, sg, sedoso).
 ty_adjective(spanish, silky, m, pl, sedosos).
 ty_adjective(spanish, silky, f, sg, sedosa).
@@ -24028,7 +23831,7 @@ ty_adjective(spanish, sliding, m, pl, correderos).
 ty_adjective(spanish, sliding, f, sg, corredera).
 ty_adjective(spanish, sliding, f, pl, correderas).
 ty_adjective(spanish, slight, any, sg, leve).
-ty_adjective(spanish, slight, any, pl, leven).
+ty_adjective(spanish, slight, any, pl, leves).
 ty_adjective(spanish, slim, m, sg, esbelto).
 ty_adjective(spanish, slim, m, pl, esbeltos).
 ty_adjective(spanish, slim, f, sg, esbelta).
@@ -24057,8 +23860,6 @@ ty_adjective(spanish, smooth, m, sg, liso).
 ty_adjective(spanish, smooth, m, pl, lisos).
 ty_adjective(spanish, smooth, f, sg, lisa).
 ty_adjective(spanish, smooth, f, pl, lisas).
-ty_adjective(spanish, snobbish, any, sg, esnob).
-ty_adjective(spanish, snobbish, any, pl, esnobs).
 ty_adjective(spanish, snowy, m, sg, nevado).
 ty_adjective(spanish, snowy, m, pl, nevados).
 ty_adjective(spanish, snowy, f, sg, nevada).
@@ -24098,7 +23899,7 @@ ty_adjective(spanish, sociopathic, f, pl, sociopáticas).
 ty_adjective(spanish, soft, m, sg, blando).
 ty_adjective(spanish, soft, m, pl, blandos).
 ty_adjective(spanish, soft, f, sg, blanda).
-ty_adjective(spanish, soft, f, pl, blandan).
+ty_adjective(spanish, soft, f, pl, blandas).
 ty_adjective(spanish, soft, any, sg, suave).
 ty_adjective(spanish, soft, any, pl, suaves).
 ty_adjective(spanish, soiled, m, sg, sucio).
@@ -24128,7 +23929,7 @@ ty_adjective(spanish, soluble, any, pl, solubles).
 ty_adjective(spanish, solvable, any, sg, resoluble).
 ty_adjective(spanish, solvable, any, pl, resolubles).
 ty_adjective(spanish, solvent, any, sg, solvente).
-ty_adjective(spanish, solvent, any, pl, solventen).
+ty_adjective(spanish, solvent, any, pl, solventes).
 ty_adjective(spanish, somali, any, sg, somalí).
 ty_adjective(spanish, somali, any, pl, somalíes).
 ty_adjective(spanish, somatopsychic, m, sg, somatopsíquico).
@@ -24310,7 +24111,7 @@ ty_adjective(spanish, standard, any, pl, estándares).
 ty_adjective(spanish, stark, m, sg, duro).
 ty_adjective(spanish, stark, m, pl, duros).
 ty_adjective(spanish, stark, f, sg, dura).
-ty_adjective(spanish, stark, f, pl, duran).
+ty_adjective(spanish, stark, f, pl, duras).
 ty_adjective(spanish, starry, m, sg, estrellado).
 ty_adjective(spanish, starry, m, pl, estrellados).
 ty_adjective(spanish, starry, f, sg, estrellada).
@@ -24334,7 +24135,7 @@ ty_adjective(spanish, statutory, m, pl, reglamentarios).
 ty_adjective(spanish, statutory, f, sg, reglamentaria).
 ty_adjective(spanish, statutory, f, pl, reglamentarias).
 ty_adjective(spanish, steady, any, sg, firme).
-ty_adjective(spanish, steady, any, pl, firmen).
+ty_adjective(spanish, steady, any, pl, firmes).
 ty_adjective(spanish, steamy, m, sg, vaporoso).
 ty_adjective(spanish, steamy, m, pl, vaporosos).
 ty_adjective(spanish, steamy, f, sg, vaporosa).
@@ -24419,8 +24220,6 @@ ty_adjective(spanish, stray, m, sg, perdido).
 ty_adjective(spanish, stray, m, pl, perdidos).
 ty_adjective(spanish, stray, f, sg, perdida).
 ty_adjective(spanish, stray, f, pl, perdidas).
-ty_adjective(spanish, streaky, any, sg, tachado).
-ty_adjective(spanish, streaky, any, pl, tachados).
 ty_adjective(spanish, street, m, sg, callejero).
 ty_adjective(spanish, street, m, pl, callejeros).
 ty_adjective(spanish, street, f, sg, callejera).
@@ -24429,8 +24228,6 @@ ty_adjective(spanish, strenuous, m, sg, agotador).
 ty_adjective(spanish, strenuous, m, pl, agotadores).
 ty_adjective(spanish, strenuous, f, sg, agotadora).
 ty_adjective(spanish, strenuous, f, pl, agotadoras).
-ty_adjective(spanish, stressed, any, sg, acentuado).
-ty_adjective(spanish, stressed, any, pl, acentuados).
 ty_adjective(spanish, strict, m, sg, estricto).
 ty_adjective(spanish, strict, m, pl, estrictos).
 ty_adjective(spanish, strict, f, sg, estricta).
@@ -24447,10 +24244,6 @@ ty_adjective(spanish, strombolian, f, sg, estromboliana).
 ty_adjective(spanish, strombolian, f, pl, estrombolianas).
 ty_adjective(spanish, strong, any, sg, fuerte).
 ty_adjective(spanish, strong, any, pl, fuertes).
-ty_adjective(spanish, struck, m, sg, golpeado).
-ty_adjective(spanish, struck, m, pl, golpeados).
-ty_adjective(spanish, struck, f, sg, golpeada).
-ty_adjective(spanish, struck, f, pl, golpeadas).
 ty_adjective(spanish, structural, any, sg, estructural).
 ty_adjective(spanish, structural, any, pl, estructurales).
 ty_adjective(spanish, structuralist, any, sg, estructuralista).
@@ -24506,13 +24299,13 @@ ty_adjective(spanish, subcostal, any, pl, subcostales).
 ty_adjective(spanish, subject, m, sg, sujeto).
 ty_adjective(spanish, subject, m, pl, sujetos).
 ty_adjective(spanish, subject, f, sg, sujeta).
-ty_adjective(spanish, subject, f, pl, sujetan).
+ty_adjective(spanish, subject, f, pl, sujetas).
 ty_adjective(spanish, subjective, m, sg, subjetivo).
 ty_adjective(spanish, subjective, m, pl, subjetivos).
 ty_adjective(spanish, subjective, f, sg, subjetiva).
 ty_adjective(spanish, subjective, f, pl, subjetivas).
 ty_adjective(spanish, sublime, any, sg, sublime).
-ty_adjective(spanish, sublime, any, pl, sublimen).
+ty_adjective(spanish, sublime, any, pl, sublimes).
 ty_adjective(spanish, subliminal, any, sg, subliminal).
 ty_adjective(spanish, subliminal, any, pl, subliminales).
 ty_adjective(spanish, submissive, m, sg, sumiso).
@@ -24529,8 +24322,6 @@ ty_adjective(spanish, subsidiary, m, sg, subsidiario).
 ty_adjective(spanish, subsidiary, m, pl, subsidiarios).
 ty_adjective(spanish, subsidiary, f, sg, subsidiaria).
 ty_adjective(spanish, subsidiary, f, pl, subsidiarias).
-ty_adjective(spanish, subsidized, any, sg, subvencionado).
-ty_adjective(spanish, subsidized, any, pl, subvencionados).
 ty_adjective(spanish, subsonic, m, sg, subsónico).
 ty_adjective(spanish, subsonic, m, pl, subsónicos).
 ty_adjective(spanish, subsonic, f, sg, subsónica).
@@ -24681,8 +24472,6 @@ ty_adjective(spanish, supplying, m, sg, suministrador).
 ty_adjective(spanish, supplying, m, pl, suministradores).
 ty_adjective(spanish, supplying, f, sg, suministradora).
 ty_adjective(spanish, supplying, f, pl, suministradoras).
-ty_adjective(spanish, supported, any, sg, soportado).
-ty_adjective(spanish, supported, any, pl, soportados).
 ty_adjective(spanish, supporting, m, sg, acreditativo).
 ty_adjective(spanish, supporting, m, pl, acreditativos).
 ty_adjective(spanish, supporting, f, sg, acreditativa).
@@ -24867,14 +24656,10 @@ ty_adjective(spanish, tangential, any, sg, tangencial).
 ty_adjective(spanish, tangential, any, pl, tangenciales).
 ty_adjective(spanish, tangible, any, sg, tangible).
 ty_adjective(spanish, tangible, any, pl, tangibles).
-ty_adjective(spanish, tangled, any, sg, enredado).
-ty_adjective(spanish, tangled, any, pl, enredados).
 ty_adjective(spanish, targeted, m, sg, específico).
 ty_adjective(spanish, targeted, m, pl, específicos).
 ty_adjective(spanish, targeted, f, sg, específica).
 ty_adjective(spanish, targeted, f, pl, específicas).
-ty_adjective(spanish, tarnished, any, sg, empañado).
-ty_adjective(spanish, tarnished, any, pl, empañados).
 ty_adjective(spanish, tasteless, m, sg, insípido).
 ty_adjective(spanish, tasteless, m, pl, insípidos).
 ty_adjective(spanish, tasteless, f, sg, insípida).
@@ -24882,7 +24667,7 @@ ty_adjective(spanish, tasteless, f, pl, insípidas).
 ty_adjective(spanish, taut, m, sg, tenso).
 ty_adjective(spanish, taut, m, pl, tensos).
 ty_adjective(spanish, taut, f, sg, tensa).
-ty_adjective(spanish, taut, f, pl, tensan).
+ty_adjective(spanish, taut, f, pl, tensas).
 ty_adjective(spanish, tautophonic, m, sg, tautofónico).
 ty_adjective(spanish, tautophonic, m, pl, tautofónicos).
 ty_adjective(spanish, tautophonic, f, sg, tautofónica).
@@ -24962,7 +24747,7 @@ ty_adjective(spanish, tenerifean, f, pl, tinerfeñas).
 ty_adjective(spanish, tense, m, sg, tenso).
 ty_adjective(spanish, tense, m, pl, tensos).
 ty_adjective(spanish, tense, f, sg, tensa).
-ty_adjective(spanish, tense, f, pl, tensan).
+ty_adjective(spanish, tense, f, pl, tensas).
 ty_adjective(spanish, tensional, any, sg, tensional).
 ty_adjective(spanish, tensional, any, pl, tensionales).
 ty_adjective(spanish, tentative, any, sg, provisional).
@@ -24991,8 +24776,6 @@ ty_adjective(spanish, terrific, m, sg, fabuloso).
 ty_adjective(spanish, terrific, m, pl, fabulosos).
 ty_adjective(spanish, terrific, f, sg, fabulosa).
 ty_adjective(spanish, terrific, f, pl, fabulosas).
-ty_adjective(spanish, terrified, any, sg, aterrado).
-ty_adjective(spanish, terrified, any, pl, aterrados).
 ty_adjective(spanish, territorial, any, sg, territorial).
 ty_adjective(spanish, territorial, any, pl, territoriales).
 ty_adjective(spanish, terrorist, any, sg, terrorista).
@@ -25147,12 +24930,10 @@ ty_adjective(spanish, thriving, f, sg, próspera).
 ty_adjective(spanish, thriving, f, pl, prósperas).
 ty_adjective(spanish, tibial, any, sg, tibial).
 ty_adjective(spanish, tibial, any, pl, tibiales).
-ty_adjective(spanish, tidy, any, sg, ordenado).
-ty_adjective(spanish, tidy, any, pl, ordenados).
 ty_adjective(spanish, tight, m, sg, estanco).
 ty_adjective(spanish, tight, m, pl, estancos).
 ty_adjective(spanish, tight, f, sg, estanca).
-ty_adjective(spanish, tight, f, pl, estancan).
+ty_adjective(spanish, tight, f, pl, estancas).
 ty_adjective(spanish, tiltable, any, sg, inclinable).
 ty_adjective(spanish, tiltable, any, pl, inclinables).
 ty_adjective(spanish, time, m, sg, horario).
@@ -25242,7 +25023,7 @@ ty_adjective(spanish, totalitarian, f, pl, totalitarias).
 ty_adjective(spanish, tough, m, sg, duro).
 ty_adjective(spanish, tough, m, pl, duros).
 ty_adjective(spanish, tough, f, sg, dura).
-ty_adjective(spanish, tough, f, pl, duran).
+ty_adjective(spanish, tough, f, pl, duras).
 ty_adjective(spanish, tourist, m, sg, turístico).
 ty_adjective(spanish, tourist, m, pl, turísticos).
 ty_adjective(spanish, tourist, f, sg, turística).
@@ -25448,7 +25229,7 @@ ty_adjective(spanish, twilight, any, pl, crepusculares).
 ty_adjective(spanish, twinaxial, any, sg, biaxial).
 ty_adjective(spanish, twinaxial, any, pl, biaxiales).
 ty_adjective(spanish, twofold, any, sg, doble).
-ty_adjective(spanish, twofold, any, pl, doblen).
+ty_adjective(spanish, twofold, any, pl, dobles).
 ty_adjective(spanish, tympanic, m, sg, timpánico).
 ty_adjective(spanish, tympanic, m, pl, timpánicos).
 ty_adjective(spanish, tympanic, f, sg, timpánica).
@@ -25501,8 +25282,6 @@ ty_adjective(spanish, unanimous, any, sg, unánime).
 ty_adjective(spanish, unanimous, any, pl, unánimes).
 ty_adjective(spanish, unappealable, any, sg, inapelable).
 ty_adjective(spanish, unappealable, any, pl, inapelables).
-ty_adjective(spanish, unarmed, any, sg, desarmado).
-ty_adjective(spanish, unarmed, any, pl, desarmados).
 ty_adjective(spanish, unashamed, m, sg, desvergonzado).
 ty_adjective(spanish, unashamed, m, pl, desvergonzados).
 ty_adjective(spanish, unashamed, f, sg, desvergonzada).
@@ -25613,8 +25392,6 @@ ty_adjective(spanish, unemployed, m, sg, desocupado).
 ty_adjective(spanish, unemployed, m, pl, desocupados).
 ty_adjective(spanish, unemployed, f, sg, desocupada).
 ty_adjective(spanish, unemployed, f, pl, desocupadas).
-ty_adjective(spanish, unemployed, any, sg, parado).
-ty_adjective(spanish, unemployed, any, pl, parados).
 ty_adjective(spanish, unequal, any, sg, desigual).
 ty_adjective(spanish, unequal, any, pl, desiguales).
 ty_adjective(spanish, uneven, any, sg, desigual).
@@ -25741,8 +25518,6 @@ ty_adjective(spanish, unlucky, m, sg, desafortunado).
 ty_adjective(spanish, unlucky, m, pl, desafortunados).
 ty_adjective(spanish, unlucky, f, sg, desafortunada).
 ty_adjective(spanish, unlucky, f, pl, desafortunadas).
-ty_adjective(spanish, unmasked, any, sg, desenmascarado).
-ty_adjective(spanish, unmasked, any, pl, desenmascarados).
 ty_adjective(spanish, unmodifiable, any, sg, inmodificable).
 ty_adjective(spanish, unmodifiable, any, pl, inmodificables).
 ty_adjective(spanish, unmovable, any, sg, inamovible).
@@ -25812,7 +25587,7 @@ ty_adjective(spanish, unsatisfied, f, pl, insatisfechas).
 ty_adjective(spanish, unseen, m, sg, oculto).
 ty_adjective(spanish, unseen, m, pl, ocultos).
 ty_adjective(spanish, unseen, f, sg, oculta).
-ty_adjective(spanish, unseen, f, pl, ocultan).
+ty_adjective(spanish, unseen, f, pl, ocultas).
 ty_adjective(spanish, unshakeable, any, sg, inquebrantable).
 ty_adjective(spanish, unshakeable, any, pl, inquebrantables).
 ty_adjective(spanish, unsolvable, any, sg, irresoluble).
@@ -25860,7 +25635,7 @@ ty_adjective(spanish, unwanted, f, pl, indeseadas).
 ty_adjective(spanish, unworthy, m, sg, indigno).
 ty_adjective(spanish, unworthy, m, pl, indignos).
 ty_adjective(spanish, unworthy, f, sg, indigna).
-ty_adjective(spanish, unworthy, f, pl, indignan).
+ty_adjective(spanish, unworthy, f, pl, indignas).
 ty_adjective(spanish, upper, any, sg, superior).
 ty_adjective(spanish, upper, any, pl, superiores).
 ty_adjective(spanish, uppercase, m, sg, mayúsculo).
@@ -25875,8 +25650,6 @@ ty_adjective(spanish, upset, m, sg, trastornado).
 ty_adjective(spanish, upset, m, pl, trastornados).
 ty_adjective(spanish, upset, f, sg, trastornada).
 ty_adjective(spanish, upset, f, pl, trastornadas).
-ty_adjective(spanish, upset, any, sg, afligido).
-ty_adjective(spanish, upset, any, pl, afligidos).
 ty_adjective(spanish, upset, m, sg, disgustado).
 ty_adjective(spanish, upset, m, pl, disgustados).
 ty_adjective(spanish, upset, f, sg, disgustada).
@@ -25884,7 +25657,7 @@ ty_adjective(spanish, upset, f, pl, disgustadas).
 ty_adjective(spanish, uptight, m, sg, tenso).
 ty_adjective(spanish, uptight, m, pl, tensos).
 ty_adjective(spanish, uptight, f, sg, tensa).
-ty_adjective(spanish, uptight, f, pl, tensan).
+ty_adjective(spanish, uptight, f, pl, tensas).
 ty_adjective(spanish, upward, any, sg, ascendente).
 ty_adjective(spanish, upward, any, pl, ascendentes).
 ty_adjective(spanish, upward, any, sg, alcista).
@@ -26027,8 +25800,6 @@ ty_adjective(spanish, venous, m, sg, venoso).
 ty_adjective(spanish, venous, m, pl, venosos).
 ty_adjective(spanish, venous, f, sg, venosa).
 ty_adjective(spanish, venous, f, pl, venosas).
-ty_adjective(spanish, ventilated, any, sg, ventilado).
-ty_adjective(spanish, ventilated, any, pl, ventilados).
 ty_adjective(spanish, ventral, any, sg, ventral).
 ty_adjective(spanish, ventral, any, pl, ventrales).
 ty_adjective(spanish, verbal, any, sg, verbal).
@@ -26270,7 +26041,7 @@ ty_adjective(spanish, whitish, f, pl, blanquecinas).
 ty_adjective(spanish, whole, m, sg, entero).
 ty_adjective(spanish, whole, m, pl, enteros).
 ty_adjective(spanish, whole, f, sg, entera).
-ty_adjective(spanish, whole, f, pl, enteran).
+ty_adjective(spanish, whole, f, pl, enteras).
 ty_adjective(spanish, whole, m, sg, íntegro).
 ty_adjective(spanish, whole, m, pl, íntegros).
 ty_adjective(spanish, whole, f, sg, íntegra).
@@ -26289,8 +26060,6 @@ ty_adjective(spanish, wide, m, sg, amplio).
 ty_adjective(spanish, wide, m, pl, amplios).
 ty_adjective(spanish, wide, f, sg, amplia).
 ty_adjective(spanish, wide, f, pl, amplias).
-ty_adjective(spanish, widespread, any, sg, extendido).
-ty_adjective(spanish, widespread, any, pl, extendidos).
 ty_adjective(spanish, widowed, m, sg, viudo).
 ty_adjective(spanish, widowed, m, pl, viudos).
 ty_adjective(spanish, widowed, f, sg, viuda).
@@ -26336,7 +26105,7 @@ ty_adjective(spanish, withered, f, pl, marchitas).
 ty_adjective(spanish, witless, m, sg, corto).
 ty_adjective(spanish, witless, m, pl, cortos).
 ty_adjective(spanish, witless, f, sg, corta).
-ty_adjective(spanish, witless, f, pl, cortan).
+ty_adjective(spanish, witless, f, pl, cortas).
 ty_adjective(spanish, wonderful, m, sg, maravilloso).
 ty_adjective(spanish, wonderful, m, pl, maravillosos).
 ty_adjective(spanish, wonderful, f, sg, maravillosa).
@@ -26355,8 +26124,6 @@ ty_adjective(spanish, working, f, sg, obrera).
 ty_adjective(spanish, working, f, pl, obreras).
 ty_adjective(spanish, world, any, sg, mundial).
 ty_adjective(spanish, world, any, pl, mundiales).
-ty_adjective(spanish, worn, any, sg, gastado).
-ty_adjective(spanish, worn, any, pl, gastados).
 ty_adjective(spanish, worn, m, sg, desgastado).
 ty_adjective(spanish, worn, m, pl, desgastados).
 ty_adjective(spanish, worn, f, sg, desgastada).
@@ -26457,10 +26224,18 @@ ty_verb(spanish, note, present, sg, pos, [apunta]).
 ty_verb(spanish, note, present, pl, pos, [apuntan]).
 ty_verb(spanish, note, past, sg, pos, [apuntó]).
 ty_verb(spanish, note, past, pl, pos, [apuntaron]).
+ty_verb(spanish, take, present, sg, pos, [toma]).
+ty_verb(spanish, take, present, pl, pos, [toman]).
+ty_verb(spanish, take, past, sg, pos, [tomó]).
+ty_verb(spanish, take, past, pl, pos, [tomaron]).
 ty_verb(spanish, want, present, sg, pos, [quiere]).
 ty_verb(spanish, want, present, pl, pos, [quieren]).
 ty_verb(spanish, want, past, sg, pos, [quiso]).
 ty_verb(spanish, want, past, pl, pos, [quisieron]).
+ty_verb(spanish, dispute, present, sg, pos, [disputa]).
+ty_verb(spanish, dispute, present, pl, pos, [disputan]).
+ty_verb(spanish, dispute, past, sg, pos, [disputó]).
+ty_verb(spanish, dispute, past, pl, pos, [disputaron]).
 ty_verb(spanish, eliminate, present, sg, pos, [elimina]).
 ty_verb(spanish, eliminate, present, pl, pos, [eliminan]).
 ty_verb(spanish, eliminate, past, sg, pos, [eliminó]).
@@ -26493,6 +26268,10 @@ ty_verb(spanish, reveal, present, sg, pos, [revela]).
 ty_verb(spanish, reveal, present, pl, pos, [revelan]).
 ty_verb(spanish, reveal, past, sg, pos, [reveló]).
 ty_verb(spanish, reveal, past, pl, pos, [revelaron]).
+ty_verb(spanish, threaten, present, sg, pos, [amenaza]).
+ty_verb(spanish, threaten, present, pl, pos, [amenazan]).
+ty_verb(spanish, threaten, past, sg, pos, [amenazó]).
+ty_verb(spanish, threaten, past, pl, pos, [amenazaron]).
 ty_verb(spanish, go, present, sg, pos, [va]).
 ty_verb(spanish, go, present, pl, pos, [van]).
 ty_verb(spanish, go, past, sg, pos, [fue]).
@@ -26525,6 +26304,10 @@ ty_verb(spanish, work, present, sg, pos, [trabaja]).
 ty_verb(spanish, work, present, pl, pos, [trabajan]).
 ty_verb(spanish, work, past, sg, pos, [trabajó]).
 ty_verb(spanish, work, past, pl, pos, [trabajaron]).
+ty_verb(spanish, love, present, sg, pos, [ama]).
+ty_verb(spanish, love, present, pl, pos, [aman]).
+ty_verb(spanish, love, past, sg, pos, [amó]).
+ty_verb(spanish, love, past, pl, pos, [amaron]).
 ty_verb(spanish, return, present, sg, pos, [regresa]).
 ty_verb(spanish, return, present, pl, pos, [regresan]).
 ty_verb(spanish, return, past, sg, pos, [regresó]).
@@ -26597,6 +26380,10 @@ ty_verb(spanish, reduce, present, sg, pos, [reduce]).
 ty_verb(spanish, reduce, present, pl, pos, [reducen]).
 ty_verb(spanish, reduce, past, sg, pos, [redujo]).
 ty_verb(spanish, reduce, past, pl, pos, [redujeron]).
+ty_verb(spanish, reduce, present, sg, pos, [rebaja]).
+ty_verb(spanish, reduce, present, pl, pos, [rebajan]).
+ty_verb(spanish, reduce, past, sg, pos, [rebajó]).
+ty_verb(spanish, reduce, past, pl, pos, [rebajaron]).
 ty_verb(spanish, pledge, present, sg, pos, [compromete]).
 ty_verb(spanish, pledge, present, pl, pos, [comprometen]).
 ty_verb(spanish, pledge, past, sg, pos, [comprometió]).
@@ -26641,10 +26428,6 @@ ty_verb(spanish, receive, present, sg, pos, [recibe]).
 ty_verb(spanish, receive, present, pl, pos, [reciben]).
 ty_verb(spanish, receive, past, sg, pos, [recibió]).
 ty_verb(spanish, receive, past, pl, pos, [recibieron]).
-ty_verb(spanish, lack, present, sg, pos, [falta]).
-ty_verb(spanish, lack, present, pl, pos, [faltan]).
-ty_verb(spanish, lack, past, sg, pos, [faltó]).
-ty_verb(spanish, lack, past, pl, pos, [faltaron]).
 ty_verb(spanish, maintain, present, sg, pos, [sostiene]).
 ty_verb(spanish, maintain, present, pl, pos, [sostienen]).
 ty_verb(spanish, maintain, past, sg, pos, [sostuvo]).
@@ -26657,6 +26440,10 @@ ty_verb(spanish, intend, present, sg, pos, [pretende]).
 ty_verb(spanish, intend, present, pl, pos, [pretenden]).
 ty_verb(spanish, intend, past, sg, pos, [pretendió]).
 ty_verb(spanish, intend, past, pl, pos, [pretendieron]).
+ty_verb(spanish, depart, present, sg, pos, [parte]).
+ty_verb(spanish, depart, present, pl, pos, [parten]).
+ty_verb(spanish, depart, past, sg, pos, [partió]).
+ty_verb(spanish, depart, past, pl, pos, [partieron]).
 ty_verb(spanish, treat, present, sg, pos, [trata]).
 ty_verb(spanish, treat, present, pl, pos, [tratan]).
 ty_verb(spanish, treat, past, sg, pos, [trató]).
@@ -26681,6 +26468,10 @@ ty_verb(spanish, convert, present, sg, pos, [convierte]).
 ty_verb(spanish, convert, present, pl, pos, [convierten]).
 ty_verb(spanish, convert, past, sg, pos, [convirtió]).
 ty_verb(spanish, convert, past, pl, pos, [convirtieron]).
+ty_verb(spanish, denounce, present, sg, pos, [denuncia]).
+ty_verb(spanish, denounce, present, pl, pos, [denuncian]).
+ty_verb(spanish, denounce, past, sg, pos, [denunció]).
+ty_verb(spanish, denounce, past, pl, pos, [denunciaron]).
 ty_verb(spanish, achieve, present, sg, pos, [consigue]).
 ty_verb(spanish, achieve, present, pl, pos, [consiguen]).
 ty_verb(spanish, achieve, past, sg, pos, [consiguió]).
@@ -26693,6 +26484,10 @@ ty_verb(spanish, prolong, present, sg, pos, [prolonga]).
 ty_verb(spanish, prolong, present, pl, pos, [prolongan]).
 ty_verb(spanish, prolong, past, sg, pos, [prolongó]).
 ty_verb(spanish, prolong, past, pl, pos, [prolongaron]).
+ty_verb(spanish, expect, present, sg, pos, [espera]).
+ty_verb(spanish, expect, present, pl, pos, [esperan]).
+ty_verb(spanish, expect, past, sg, pos, [esperó]).
+ty_verb(spanish, expect, past, pl, pos, [esperaron]).
 ty_verb(spanish, complete, present, sg, pos, [finaliza]).
 ty_verb(spanish, complete, present, pl, pos, [finalizan]).
 ty_verb(spanish, complete, past, sg, pos, [finalizó]).
@@ -26725,6 +26520,10 @@ ty_verb(spanish, collect, present, sg, pos, [recoge]).
 ty_verb(spanish, collect, present, pl, pos, [recogen]).
 ty_verb(spanish, collect, past, sg, pos, [recogió]).
 ty_verb(spanish, collect, past, pl, pos, [recogieron]).
+ty_verb(spanish, calm, present, sg, pos, [calma]).
+ty_verb(spanish, calm, present, pl, pos, [calman]).
+ty_verb(spanish, calm, past, sg, pos, [calmó]).
+ty_verb(spanish, calm, past, pl, pos, [calmaron]).
 ty_verb(spanish, activate, present, sg, pos, [activa]).
 ty_verb(spanish, activate, present, pl, pos, [activan]).
 ty_verb(spanish, activate, past, sg, pos, [activó]).
@@ -26733,6 +26532,10 @@ ty_verb(spanish, think, present, sg, pos, [piensa]).
 ty_verb(spanish, think, present, pl, pos, [piensan]).
 ty_verb(spanish, think, past, sg, pos, [pensó]).
 ty_verb(spanish, think, past, pl, pos, [pensaron]).
+ty_verb(spanish, drop, present, sg, pos, [baja]).
+ty_verb(spanish, drop, present, pl, pos, [bajan]).
+ty_verb(spanish, drop, past, sg, pos, [bajó]).
+ty_verb(spanish, drop, past, pl, pos, [bajaron]).
 ty_verb(spanish, walk, present, sg, pos, [pasea]).
 ty_verb(spanish, walk, present, pl, pos, [pasean]).
 ty_verb(spanish, walk, past, sg, pos, [paseó]).
@@ -26741,6 +26544,10 @@ ty_verb(spanish, touch, present, sg, pos, [toca]).
 ty_verb(spanish, touch, present, pl, pos, [tocan]).
 ty_verb(spanish, touch, past, sg, pos, [tocó]).
 ty_verb(spanish, touch, past, pl, pos, [tocaron]).
+ty_verb(spanish, renounce, present, sg, pos, [renuncia]).
+ty_verb(spanish, renounce, present, pl, pos, [renuncian]).
+ty_verb(spanish, renounce, past, sg, pos, [renunció]).
+ty_verb(spanish, renounce, past, pl, pos, [renunciaron]).
 ty_verb(spanish, state, present, sg, pos, [manifiesta]).
 ty_verb(spanish, state, present, pl, pos, [manifiestan]).
 ty_verb(spanish, state, past, sg, pos, [manifestó]).
@@ -26765,6 +26572,10 @@ ty_verb(spanish, exalt, present, sg, pos, [exalta]).
 ty_verb(spanish, exalt, present, pl, pos, [exaltan]).
 ty_verb(spanish, exalt, past, sg, pos, [exaltó]).
 ty_verb(spanish, exalt, past, pl, pos, [exaltaron]).
+ty_verb(spanish, censure, present, sg, pos, [censura]).
+ty_verb(spanish, censure, present, pl, pos, [censuran]).
+ty_verb(spanish, censure, past, sg, pos, [censuró]).
+ty_verb(spanish, censure, past, pl, pos, [censuraron]).
 ty_verb(spanish, ensure, present, sg, pos, [asegura]).
 ty_verb(spanish, ensure, present, pl, pos, [aseguran]).
 ty_verb(spanish, ensure, past, sg, pos, [aseguró]).
@@ -26773,6 +26584,14 @@ ty_verb(spanish, send, present, sg, pos, [manda]).
 ty_verb(spanish, send, present, pl, pos, [mandan]).
 ty_verb(spanish, send, past, sg, pos, [mandó]).
 ty_verb(spanish, send, past, pl, pos, [mandaron]).
+ty_verb(spanish, hand, present, sg, pos, [entrega]).
+ty_verb(spanish, hand, present, pl, pos, [entregan]).
+ty_verb(spanish, hand, past, sg, pos, [entregó]).
+ty_verb(spanish, hand, past, pl, pos, [entregaron]).
+ty_verb(spanish, submit, present, sg, pos, [entrega]).
+ty_verb(spanish, submit, present, pl, pos, [entregan]).
+ty_verb(spanish, submit, past, sg, pos, [entregó]).
+ty_verb(spanish, submit, past, pl, pos, [entregaron]).
 ty_verb(spanish, disturb, present, sg, pos, [perturba]).
 ty_verb(spanish, disturb, present, pl, pos, [perturban]).
 ty_verb(spanish, disturb, past, sg, pos, [perturbó]).
@@ -26785,6 +26604,10 @@ ty_verb(spanish, transcend, present, sg, pos, [trasciende]).
 ty_verb(spanish, transcend, present, pl, pos, [trascienden]).
 ty_verb(spanish, transcend, past, sg, pos, [trascendió]).
 ty_verb(spanish, transcend, past, pl, pos, [trascendieron]).
+ty_verb(spanish, blame, present, sg, pos, [culpa]).
+ty_verb(spanish, blame, present, pl, pos, [culpan]).
+ty_verb(spanish, blame, past, sg, pos, [culpó]).
+ty_verb(spanish, blame, past, pl, pos, [culparon]).
 ty_verb(spanish, hinder, present, sg, pos, [obstaculiza]).
 ty_verb(spanish, hinder, present, pl, pos, [obstaculizan]).
 ty_verb(spanish, hinder, past, sg, pos, [obstaculizó]).
@@ -26797,6 +26620,10 @@ ty_verb(spanish, clarify, present, sg, pos, [aclara]).
 ty_verb(spanish, clarify, present, pl, pos, [aclaran]).
 ty_verb(spanish, clarify, past, sg, pos, [aclaró]).
 ty_verb(spanish, clarify, past, pl, pos, [aclararon]).
+ty_verb(spanish, help, present, sg, pos, [ayuda]).
+ty_verb(spanish, help, present, pl, pos, [ayudan]).
+ty_verb(spanish, help, past, sg, pos, [ayudó]).
+ty_verb(spanish, help, past, pl, pos, [ayudaron]).
 ty_verb(spanish, ski, present, sg, pos, [esquía]).
 ty_verb(spanish, ski, present, pl, pos, [esquían]).
 ty_verb(spanish, ski, past, sg, pos, [esquió]).
@@ -26805,6 +26632,10 @@ ty_verb(spanish, joke, present, sg, pos, [bromea]).
 ty_verb(spanish, joke, present, pl, pos, [bromean]).
 ty_verb(spanish, joke, past, sg, pos, [bromeó]).
 ty_verb(spanish, joke, past, pl, pos, [bromearon]).
+ty_verb(spanish, patrol, present, sg, pos, [patrulla]).
+ty_verb(spanish, patrol, present, pl, pos, [patrullan]).
+ty_verb(spanish, patrol, past, sg, pos, [patrulló]).
+ty_verb(spanish, patrol, past, pl, pos, [patrullaron]).
 ty_verb(spanish, extinguish, present, sg, pos, [apaga]).
 ty_verb(spanish, extinguish, present, pl, pos, [apagan]).
 ty_verb(spanish, extinguish, past, sg, pos, [apagó]).
@@ -26849,10 +26680,18 @@ ty_verb(spanish, pocket, present, sg, pos, [embolsa]).
 ty_verb(spanish, pocket, present, pl, pos, [embolsan]).
 ty_verb(spanish, pocket, past, sg, pos, [embolsó]).
 ty_verb(spanish, pocket, past, pl, pos, [embolsaron]).
+ty_verb(spanish, swindle, present, sg, pos, [estafa]).
+ty_verb(spanish, swindle, present, pl, pos, [estafan]).
+ty_verb(spanish, swindle, past, sg, pos, [estafó]).
+ty_verb(spanish, swindle, past, pl, pos, [estafaron]).
 ty_verb(spanish, intone, present, sg, pos, [entona]).
 ty_verb(spanish, intone, present, pl, pos, [entonan]).
 ty_verb(spanish, intone, past, sg, pos, [entonó]).
 ty_verb(spanish, intone, past, pl, pos, [entonaron]).
+ty_verb(spanish, mediate, present, sg, pos, [media]).
+ty_verb(spanish, mediate, present, pl, pos, [median]).
+ty_verb(spanish, mediate, past, sg, pos, [medió]).
+ty_verb(spanish, mediate, past, pl, pos, [mediaron]).
 ty_verb(spanish, gut, present, sg, pos, [destripa]).
 ty_verb(spanish, gut, present, pl, pos, [destripan]).
 ty_verb(spanish, gut, past, sg, pos, [destripó]).
@@ -26921,6 +26760,10 @@ ty_verb(spanish, lie, present, sg, pos, [miente]).
 ty_verb(spanish, lie, present, pl, pos, [mienten]).
 ty_verb(spanish, lie, past, sg, pos, [mintió]).
 ty_verb(spanish, lie, past, pl, pos, [mintieron]).
+ty_verb(spanish, complain, present, sg, pos, [queja]).
+ty_verb(spanish, complain, present, pl, pos, [quejan]).
+ty_verb(spanish, complain, past, sg, pos, [quejó]).
+ty_verb(spanish, complain, past, pl, pos, [quejaron]).
 ty_verb(spanish, trample, present, sg, pos, [pisa]).
 ty_verb(spanish, trample, present, pl, pos, [pisan]).
 ty_verb(spanish, trample, past, sg, pos, [pisó]).
@@ -26945,6 +26788,10 @@ ty_verb(spanish, preside, present, sg, pos, [preside]).
 ty_verb(spanish, preside, present, pl, pos, [presiden]).
 ty_verb(spanish, preside, past, sg, pos, [presidió]).
 ty_verb(spanish, preside, past, pl, pos, [presidieron]).
+ty_verb(spanish, mark, present, sg, pos, [marca]).
+ty_verb(spanish, mark, present, pl, pos, [marcan]).
+ty_verb(spanish, mark, past, sg, pos, [marcó]).
+ty_verb(spanish, mark, past, pl, pos, [marcaron]).
 ty_verb(spanish, double, present, sg, pos, [duplica]).
 ty_verb(spanish, double, present, pl, pos, [duplican]).
 ty_verb(spanish, double, past, sg, pos, [duplicó]).
@@ -26973,6 +26820,10 @@ ty_verb(spanish, involve, present, sg, pos, [involucra]).
 ty_verb(spanish, involve, present, pl, pos, [involucran]).
 ty_verb(spanish, involve, past, sg, pos, [involucró]).
 ty_verb(spanish, involve, past, pl, pos, [involucraron]).
+ty_verb(spanish, distance, present, sg, pos, [distancia]).
+ty_verb(spanish, distance, present, pl, pos, [distancian]).
+ty_verb(spanish, distance, past, sg, pos, [distanció]).
+ty_verb(spanish, distance, past, pl, pos, [distanciaron]).
 ty_verb(spanish, torpedo, present, sg, pos, [torpedea]).
 ty_verb(spanish, torpedo, present, pl, pos, [torpedean]).
 ty_verb(spanish, torpedo, past, sg, pos, [torpedeó]).
@@ -27005,6 +26856,10 @@ ty_verb(spanish, vie, present, sg, pos, [rivaliza]).
 ty_verb(spanish, vie, present, pl, pos, [rivalizan]).
 ty_verb(spanish, vie, past, sg, pos, [rivalizó]).
 ty_verb(spanish, vie, past, pl, pos, [rivalizaron]).
+ty_verb(spanish, crown, present, sg, pos, [corona]).
+ty_verb(spanish, crown, present, pl, pos, [coronan]).
+ty_verb(spanish, crown, past, sg, pos, [coronó]).
+ty_verb(spanish, crown, past, pl, pos, [coronaron]).
 ty_verb(spanish, dismember, present, sg, pos, [desmembra]).
 ty_verb(spanish, dismember, present, pl, pos, [desmembran]).
 ty_verb(spanish, dismember, past, sg, pos, [desmembró]).
@@ -27053,6 +26908,10 @@ ty_verb(spanish, forge, present, sg, pos, [forja]).
 ty_verb(spanish, forge, present, pl, pos, [forjan]).
 ty_verb(spanish, forge, past, sg, pos, [forjó]).
 ty_verb(spanish, forge, past, pl, pos, [forjaron]).
+ty_verb(spanish, program, present, sg, pos, [programa]).
+ty_verb(spanish, program, present, pl, pos, [programan]).
+ty_verb(spanish, program, past, sg, pos, [programó]).
+ty_verb(spanish, program, past, pl, pos, [programaron]).
 ty_verb(spanish, rise, present, sg, pos, [asciende]).
 ty_verb(spanish, rise, present, pl, pos, [ascienden]).
 ty_verb(spanish, rise, past, sg, pos, [ascendió]).
@@ -27065,6 +26924,10 @@ ty_verb(spanish, hallucinate, present, sg, pos, [alucina]).
 ty_verb(spanish, hallucinate, present, pl, pos, [alucinan]).
 ty_verb(spanish, hallucinate, past, sg, pos, [alucinó]).
 ty_verb(spanish, hallucinate, past, pl, pos, [alucinaron]).
+ty_verb(spanish, twin, present, sg, pos, [hermana]).
+ty_verb(spanish, twin, present, pl, pos, [hermanan]).
+ty_verb(spanish, twin, past, sg, pos, [hermanó]).
+ty_verb(spanish, twin, past, pl, pos, [hermanaron]).
 ty_verb(spanish, reside, present, sg, pos, [reside]).
 ty_verb(spanish, reside, present, pl, pos, [residen]).
 ty_verb(spanish, reside, past, sg, pos, [residió]).
@@ -27081,6 +26944,10 @@ ty_verb(spanish, plead, present, sg, pos, [aboga]).
 ty_verb(spanish, plead, present, pl, pos, [abogan]).
 ty_verb(spanish, plead, past, sg, pos, [abogó]).
 ty_verb(spanish, plead, past, pl, pos, [abogaron]).
+ty_verb(spanish, veto, present, sg, pos, [veta]).
+ty_verb(spanish, veto, present, pl, pos, [vetan]).
+ty_verb(spanish, veto, past, sg, pos, [vetó]).
+ty_verb(spanish, veto, past, pl, pos, [vetaron]).
 ty_verb(spanish, lessen, present, sg, pos, [menoscaba]).
 ty_verb(spanish, lessen, present, pl, pos, [menoscaban]).
 ty_verb(spanish, lessen, past, sg, pos, [menoscabó]).
@@ -27245,6 +27112,10 @@ ty_verb(spanish, starch, present, sg, pos, [almidona]).
 ty_verb(spanish, starch, present, pl, pos, [almidonan]).
 ty_verb(spanish, starch, past, sg, pos, [almidonó]).
 ty_verb(spanish, starch, past, pl, pos, [almidonaron]).
+ty_verb(spanish, amalgamate, present, sg, pos, [amalgama]).
+ty_verb(spanish, amalgamate, present, pl, pos, [amalgaman]).
+ty_verb(spanish, amalgamate, past, sg, pos, [amalgamó]).
+ty_verb(spanish, amalgamate, past, pl, pos, [amalgamaron]).
 ty_verb(spanish, soothe, present, sg, pos, [amansa]).
 ty_verb(spanish, soothe, present, pl, pos, [amansan]).
 ty_verb(spanish, soothe, past, sg, pos, [amansó]).
@@ -27269,6 +27140,10 @@ ty_verb(spanish, anathematise, present, sg, pos, [anatematiza]).
 ty_verb(spanish, anathematise, present, pl, pos, [anatematizan]).
 ty_verb(spanish, anathematise, past, sg, pos, [anatematizó]).
 ty_verb(spanish, anathematise, past, pl, pos, [anatematizaron]).
+ty_verb(spanish, attach, present, sg, pos, [anexa]).
+ty_verb(spanish, attach, present, pl, pos, [anexan]).
+ty_verb(spanish, attach, past, sg, pos, [anexó]).
+ty_verb(spanish, attach, past, pl, pos, [anexaron]).
 ty_verb(spanish, narrow, present, sg, pos, [angosta]).
 ty_verb(spanish, narrow, present, pl, pos, [angostan]).
 ty_verb(spanish, narrow, past, sg, pos, [angostó]).
@@ -27481,6 +27356,10 @@ ty_verb(spanish, aim, present, sg, pos, [apunta]).
 ty_verb(spanish, aim, present, pl, pos, [apuntan]).
 ty_verb(spanish, aim, past, sg, pos, [apuntó]).
 ty_verb(spanish, aim, past, pl, pos, [apuntaron]).
+ty_verb(spanish, alarm, present, sg, pos, [alarma]).
+ty_verb(spanish, alarm, present, pl, pos, [alarman]).
+ty_verb(spanish, alarm, past, sg, pos, [alarmó]).
+ty_verb(spanish, alarm, past, pl, pos, [alarmaron]).
 ty_verb(spanish, allege, present, sg, pos, [alega]).
 ty_verb(spanish, allege, present, pl, pos, [alegan]).
 ty_verb(spanish, allege, past, sg, pos, [alegó]).
@@ -27493,6 +27372,10 @@ ty_verb(spanish, alternate, present, sg, pos, [alterna]).
 ty_verb(spanish, alternate, present, pl, pos, [alternan]).
 ty_verb(spanish, alternate, past, sg, pos, [alternó]).
 ty_verb(spanish, alternate, past, pl, pos, [alternaron]).
+ty_verb(spanish, amend, present, sg, pos, [enmienda]).
+ty_verb(spanish, amend, present, pl, pos, [enmiendan]).
+ty_verb(spanish, amend, past, sg, pos, [enmendó]).
+ty_verb(spanish, amend, past, pl, pos, [enmendaron]).
 ty_verb(spanish, amortise, present, sg, pos, [amortiza]).
 ty_verb(spanish, amortise, present, pl, pos, [amortizan]).
 ty_verb(spanish, amortise, past, sg, pos, [amortizó]).
@@ -27501,10 +27384,18 @@ ty_verb(spanish, amplify, present, sg, pos, [amplifica]).
 ty_verb(spanish, amplify, present, pl, pos, [amplifican]).
 ty_verb(spanish, amplify, past, sg, pos, [amplificó]).
 ty_verb(spanish, amplify, past, pl, pos, [amplificaron]).
+ty_verb(spanish, anaesthetise, present, sg, pos, [anestesia]).
+ty_verb(spanish, anaesthetise, present, pl, pos, [anestesian]).
+ty_verb(spanish, anaesthetise, past, sg, pos, [anestesió]).
+ty_verb(spanish, anaesthetise, past, pl, pos, [anestesiaron]).
 ty_verb(spanish, analyse, present, sg, pos, [analiza]).
 ty_verb(spanish, analyse, present, pl, pos, [analizan]).
 ty_verb(spanish, analyse, past, sg, pos, [analizó]).
 ty_verb(spanish, analyse, past, pl, pos, [analizaron]).
+ty_verb(spanish, anchor, present, sg, pos, [ancla]).
+ty_verb(spanish, anchor, present, pl, pos, [anclan]).
+ty_verb(spanish, anchor, past, sg, pos, [ancló]).
+ty_verb(spanish, anchor, past, pl, pos, [anclaron]).
 ty_verb(spanish, annex, present, sg, pos, [anexiona]).
 ty_verb(spanish, annex, present, pl, pos, [anexionan]).
 ty_verb(spanish, annex, past, sg, pos, [anexionó]).
@@ -27545,6 +27436,10 @@ ty_verb(spanish, appreciate, present, sg, pos, [aprecia]).
 ty_verb(spanish, appreciate, present, pl, pos, [aprecian]).
 ty_verb(spanish, appreciate, past, sg, pos, [apreció]).
 ty_verb(spanish, appreciate, past, pl, pos, [apreciaron]).
+ty_verb(spanish, estimate, present, sg, pos, [estima]).
+ty_verb(spanish, estimate, present, pl, pos, [estiman]).
+ty_verb(spanish, estimate, past, sg, pos, [estimó]).
+ty_verb(spanish, estimate, past, pl, pos, [estimaron]).
 ty_verb(spanish, approve, present, sg, pos, [aprueba]).
 ty_verb(spanish, approve, present, pl, pos, [aprueban]).
 ty_verb(spanish, approve, past, sg, pos, [aprobó]).
@@ -27573,6 +27468,10 @@ ty_verb(spanish, arise, present, sg, pos, [surge]).
 ty_verb(spanish, arise, present, pl, pos, [surgen]).
 ty_verb(spanish, arise, past, sg, pos, [surgió]).
 ty_verb(spanish, arise, past, pl, pos, [surgieron]).
+ty_verb(spanish, arm, present, sg, pos, [arma]).
+ty_verb(spanish, arm, present, pl, pos, [arman]).
+ty_verb(spanish, arm, past, sg, pos, [armó]).
+ty_verb(spanish, arm, past, pl, pos, [armaron]).
 ty_verb(spanish, armour, present, sg, pos, [blinda]).
 ty_verb(spanish, armour, present, pl, pos, [blindan]).
 ty_verb(spanish, armour, past, sg, pos, [blindó]).
@@ -27605,6 +27504,10 @@ ty_verb(spanish, ask, present, sg, pos, [pide]).
 ty_verb(spanish, ask, present, pl, pos, [piden]).
 ty_verb(spanish, ask, past, sg, pos, [pidió]).
 ty_verb(spanish, ask, past, pl, pos, [pidieron]).
+ty_verb(spanish, ask, present, sg, pos, [pregunta]).
+ty_verb(spanish, ask, present, pl, pos, [preguntan]).
+ty_verb(spanish, ask, past, sg, pos, [preguntó]).
+ty_verb(spanish, ask, past, pl, pos, [preguntaron]).
 ty_verb(spanish, asphalt, present, sg, pos, [asfalta]).
 ty_verb(spanish, asphalt, present, pl, pos, [asfaltan]).
 ty_verb(spanish, asphalt, past, sg, pos, [asfaltó]).
@@ -27657,6 +27560,10 @@ ty_verb(spanish, attribute, present, sg, pos, [atribuye]).
 ty_verb(spanish, attribute, present, pl, pos, [atribuyen]).
 ty_verb(spanish, attribute, past, sg, pos, [atribuyó]).
 ty_verb(spanish, attribute, past, pl, pos, [atribuyeron]).
+ty_verb(spanish, auction, present, sg, pos, [subasta]).
+ty_verb(spanish, auction, present, pl, pos, [subastan]).
+ty_verb(spanish, auction, past, sg, pos, [subastó]).
+ty_verb(spanish, auction, past, pl, pos, [subastaron]).
 ty_verb(spanish, audit, present, sg, pos, [audita]).
 ty_verb(spanish, audit, present, pl, pos, [auditan]).
 ty_verb(spanish, audit, past, sg, pos, [auditó]).
@@ -27793,10 +27700,18 @@ ty_verb(spanish, harass, present, sg, pos, [acosa]).
 ty_verb(spanish, harass, present, pl, pos, [acosan]).
 ty_verb(spanish, harass, past, sg, pos, [acosó]).
 ty_verb(spanish, harass, past, pl, pos, [acosaron]).
+ty_verb(spanish, bet, present, sg, pos, [apuesta]).
+ty_verb(spanish, bet, present, pl, pos, [apuestan]).
+ty_verb(spanish, bet, past, sg, pos, [apostó]).
+ty_verb(spanish, bet, past, pl, pos, [apostaron]).
 ty_verb(spanish, betray, present, sg, pos, [traiciona]).
 ty_verb(spanish, betray, present, pl, pos, [traicionan]).
 ty_verb(spanish, betray, past, sg, pos, [traicionó]).
 ty_verb(spanish, betray, past, pl, pos, [traicionaron]).
+ty_verb(spanish, bid, present, sg, pos, [puja]).
+ty_verb(spanish, bid, present, pl, pos, [pujan]).
+ty_verb(spanish, bid, past, sg, pos, [pujó]).
+ty_verb(spanish, bid, past, pl, pos, [pujaron]).
 ty_verb(spanish, bill, present, sg, pos, [enuncia]).
 ty_verb(spanish, bill, present, pl, pos, [enuncian]).
 ty_verb(spanish, bill, past, sg, pos, [enunció]).
@@ -27813,6 +27728,10 @@ ty_verb(spanish, bleach, present, sg, pos, [blanquea]).
 ty_verb(spanish, bleach, present, pl, pos, [blanquean]).
 ty_verb(spanish, bleach, past, sg, pos, [blanqueó]).
 ty_verb(spanish, bleach, past, pl, pos, [blanquearon]).
+ty_verb(spanish, bleat, present, sg, pos, [bala]).
+ty_verb(spanish, bleat, present, pl, pos, [balan]).
+ty_verb(spanish, bleat, past, sg, pos, [baló]).
+ty_verb(spanish, bleat, past, pl, pos, [balaron]).
 ty_verb(spanish, bless, present, sg, pos, [bendice]).
 ty_verb(spanish, bless, present, pl, pos, [bendicen]).
 ty_verb(spanish, bless, past, sg, pos, [bendijo]).
@@ -27857,6 +27776,10 @@ ty_verb(spanish, bottle, present, sg, pos, [embotella]).
 ty_verb(spanish, bottle, present, pl, pos, [embotellan]).
 ty_verb(spanish, bottle, past, sg, pos, [embotelló]).
 ty_verb(spanish, bottle, past, pl, pos, [embotellaron]).
+ty_verb(spanish, bounce, present, sg, pos, [bota]).
+ty_verb(spanish, bounce, present, pl, pos, [botan]).
+ty_verb(spanish, bounce, past, sg, pos, [botó]).
+ty_verb(spanish, bounce, past, pl, pos, [botaron]).
 ty_verb(spanish, boycott, present, sg, pos, [boicotea]).
 ty_verb(spanish, boycott, present, pl, pos, [boicotean]).
 ty_verb(spanish, boycott, past, sg, pos, [boicoteó]).
@@ -27873,6 +27796,10 @@ ty_verb(spanish, breathe, present, sg, pos, [respira]).
 ty_verb(spanish, breathe, present, pl, pos, [respiran]).
 ty_verb(spanish, breathe, past, sg, pos, [respiró]).
 ty_verb(spanish, breathe, past, pl, pos, [respiraron]).
+ty_verb(spanish, breed, present, sg, pos, [cría]).
+ty_verb(spanish, breed, present, pl, pos, [crían]).
+ty_verb(spanish, breed, past, sg, pos, [crio]).
+ty_verb(spanish, breed, past, pl, pos, [criaron]).
 ty_verb(spanish, bribe, present, sg, pos, [soborna]).
 ty_verb(spanish, bribe, present, pl, pos, [sobornan]).
 ty_verb(spanish, bribe, past, sg, pos, [sobornó]).
@@ -27905,10 +27832,18 @@ ty_verb(spanish, bury, present, sg, pos, [entierra]).
 ty_verb(spanish, bury, present, pl, pos, [entierran]).
 ty_verb(spanish, bury, past, sg, pos, [enterró]).
 ty_verb(spanish, bury, past, pl, pos, [enterraron]).
+ty_verb(spanish, buy, present, sg, pos, [compra]).
+ty_verb(spanish, buy, present, pl, pos, [compran]).
+ty_verb(spanish, buy, past, sg, pos, [compró]).
+ty_verb(spanish, buy, past, pl, pos, [compraron]).
 ty_verb(spanish, calculate, present, sg, pos, [calcula]).
 ty_verb(spanish, calculate, present, pl, pos, [calculan]).
 ty_verb(spanish, calculate, past, sg, pos, [calculó]).
 ty_verb(spanish, calculate, past, pl, pos, [calcularon]).
+ty_verb(spanish, call, present, sg, pos, [llama]).
+ty_verb(spanish, call, present, pl, pos, [llaman]).
+ty_verb(spanish, call, past, sg, pos, [llamó]).
+ty_verb(spanish, call, past, pl, pos, [llamaron]).
 ty_verb(spanish, camp, present, sg, pos, [acampa]).
 ty_verb(spanish, camp, present, pl, pos, [acampan]).
 ty_verb(spanish, camp, past, sg, pos, [acampó]).
@@ -27921,10 +27856,18 @@ ty_verb(spanish, capitalise, present, sg, pos, [capitaliza]).
 ty_verb(spanish, capitalise, present, pl, pos, [capitalizan]).
 ty_verb(spanish, capitalise, past, sg, pos, [capitalizó]).
 ty_verb(spanish, capitalise, past, pl, pos, [capitalizaron]).
+ty_verb(spanish, captivate, present, sg, pos, [cautiva]).
+ty_verb(spanish, captivate, present, pl, pos, [cautivan]).
+ty_verb(spanish, captivate, past, sg, pos, [cautivó]).
+ty_verb(spanish, captivate, past, pl, pos, [cautivaron]).
 ty_verb(spanish, capture, present, sg, pos, [apresa]).
 ty_verb(spanish, capture, present, pl, pos, [apresan]).
 ty_verb(spanish, capture, past, sg, pos, [apresó]).
 ty_verb(spanish, capture, past, pl, pos, [apresaron]).
+ty_verb(spanish, capture, present, sg, pos, [captura]).
+ty_verb(spanish, capture, present, pl, pos, [capturan]).
+ty_verb(spanish, capture, past, sg, pos, [capturó]).
+ty_verb(spanish, capture, past, pl, pos, [capturaron]).
 ty_verb(spanish, caricature, present, sg, pos, [caricaturiza]).
 ty_verb(spanish, caricature, present, pl, pos, [caricaturizan]).
 ty_verb(spanish, caricature, past, sg, pos, [caricaturizó]).
@@ -27941,14 +27884,26 @@ ty_verb(spanish, catalog, present, sg, pos, [cataloga]).
 ty_verb(spanish, catalog, present, pl, pos, [catalogan]).
 ty_verb(spanish, catalog, past, sg, pos, [catalogó]).
 ty_verb(spanish, catalog, past, pl, pos, [catalogaron]).
+ty_verb(spanish, catapult, present, sg, pos, [catapulta]).
+ty_verb(spanish, catapult, present, pl, pos, [catapultan]).
+ty_verb(spanish, catapult, past, sg, pos, [catapultó]).
+ty_verb(spanish, catapult, past, pl, pos, [catapultaron]).
 ty_verb(spanish, cater, present, sg, pos, [provee]).
 ty_verb(spanish, cater, present, pl, pos, [proveen]).
 ty_verb(spanish, cater, past, sg, pos, [proveyó]).
 ty_verb(spanish, cater, past, pl, pos, [proveyeron]).
+ty_verb(spanish, cause, present, sg, pos, [causa]).
+ty_verb(spanish, cause, present, pl, pos, [causan]).
+ty_verb(spanish, cause, past, sg, pos, [causó]).
+ty_verb(spanish, cause, past, pl, pos, [causaron]).
 ty_verb(spanish, celebrate, present, sg, pos, [celebra]).
 ty_verb(spanish, celebrate, present, pl, pos, [celebran]).
 ty_verb(spanish, celebrate, past, sg, pos, [celebró]).
 ty_verb(spanish, celebrate, past, pl, pos, [celebraron]).
+ty_verb(spanish, censor, present, sg, pos, [censura]).
+ty_verb(spanish, censor, present, pl, pos, [censuran]).
+ty_verb(spanish, censor, past, sg, pos, [censuró]).
+ty_verb(spanish, censor, past, pl, pos, [censuraron]).
 ty_verb(spanish, centralise, present, sg, pos, [centraliza]).
 ty_verb(spanish, centralise, present, pl, pos, [centralizan]).
 ty_verb(spanish, centralise, past, sg, pos, [centralizó]).
@@ -27985,6 +27940,10 @@ ty_verb(spanish, chase, present, sg, pos, [persigue]).
 ty_verb(spanish, chase, present, pl, pos, [persiguen]).
 ty_verb(spanish, chase, past, sg, pos, [persiguió]).
 ty_verb(spanish, chase, past, pl, pos, [persiguieron]).
+ty_verb(spanish, chat, present, sg, pos, [charla]).
+ty_verb(spanish, chat, present, pl, pos, [charlan]).
+ty_verb(spanish, chat, past, sg, pos, [charló]).
+ty_verb(spanish, chat, past, pl, pos, [charlaron]).
 ty_verb(spanish, check, present, sg, pos, [comprueba]).
 ty_verb(spanish, check, present, pl, pos, [comprueban]).
 ty_verb(spanish, check, past, sg, pos, [comprobó]).
@@ -28049,6 +28008,10 @@ ty_verb(spanish, comb, present, sg, pos, [peina]).
 ty_verb(spanish, comb, present, pl, pos, [peinan]).
 ty_verb(spanish, comb, past, sg, pos, [peinó]).
 ty_verb(spanish, comb, past, pl, pos, [peinaron]).
+ty_verb(spanish, combat, present, sg, pos, [combate]).
+ty_verb(spanish, combat, present, pl, pos, [combaten]).
+ty_verb(spanish, combat, past, sg, pos, [combatió]).
+ty_verb(spanish, combat, past, pl, pos, [combatieron]).
 ty_verb(spanish, combine, present, sg, pos, [combina]).
 ty_verb(spanish, combine, present, pl, pos, [combinan]).
 ty_verb(spanish, combine, past, sg, pos, [combinó]).
@@ -28161,6 +28124,14 @@ ty_verb(spanish, conclude, present, sg, pos, [concluye]).
 ty_verb(spanish, conclude, present, pl, pos, [concluyen]).
 ty_verb(spanish, conclude, past, sg, pos, [concluyó]).
 ty_verb(spanish, conclude, past, pl, pos, [concluyeron]).
+ty_verb(spanish, concretise, present, sg, pos, [concreta]).
+ty_verb(spanish, concretise, present, pl, pos, [concretan]).
+ty_verb(spanish, concretise, past, sg, pos, [concretó]).
+ty_verb(spanish, concretise, past, pl, pos, [concretaron]).
+ty_verb(spanish, condemn, present, sg, pos, [condena]).
+ty_verb(spanish, condemn, present, pl, pos, [condenan]).
+ty_verb(spanish, condemn, past, sg, pos, [condenó]).
+ty_verb(spanish, condemn, past, pl, pos, [condenaron]).
 ty_verb(spanish, condition, present, sg, pos, [acondiciona]).
 ty_verb(spanish, condition, present, pl, pos, [acondicionan]).
 ty_verb(spanish, condition, past, sg, pos, [acondicionó]).
@@ -28201,6 +28172,10 @@ ty_verb(spanish, connect, present, sg, pos, [conecta]).
 ty_verb(spanish, connect, present, pl, pos, [conectan]).
 ty_verb(spanish, connect, past, sg, pos, [conectó]).
 ty_verb(spanish, connect, past, pl, pos, [conectaron]).
+ty_verb(spanish, conquer, present, sg, pos, [conquista]).
+ty_verb(spanish, conquer, present, pl, pos, [conquistan]).
+ty_verb(spanish, conquer, past, sg, pos, [conquistó]).
+ty_verb(spanish, conquer, past, pl, pos, [conquistaron]).
 ty_verb(spanish, consecrate, present, sg, pos, [consagra]).
 ty_verb(spanish, consecrate, present, pl, pos, [consagran]).
 ty_verb(spanish, consecrate, past, sg, pos, [consagró]).
@@ -28209,6 +28184,10 @@ ty_verb(spanish, consider, present, sg, pos, [considera]).
 ty_verb(spanish, consider, present, pl, pos, [consideran]).
 ty_verb(spanish, consider, past, sg, pos, [consideró]).
 ty_verb(spanish, consider, past, pl, pos, [consideraron]).
+ty_verb(spanish, consign, present, sg, pos, [consigna]).
+ty_verb(spanish, consign, present, pl, pos, [consignan]).
+ty_verb(spanish, consign, past, sg, pos, [consignó]).
+ty_verb(spanish, consign, past, pl, pos, [consignaron]).
 ty_verb(spanish, consist, present, sg, pos, [consiste]).
 ty_verb(spanish, consist, present, pl, pos, [consisten]).
 ty_verb(spanish, consist, past, sg, pos, [consistió]).
@@ -28229,6 +28208,10 @@ ty_verb(spanish, constrain, present, sg, pos, [apremia]).
 ty_verb(spanish, constrain, present, pl, pos, [apremian]).
 ty_verb(spanish, constrain, past, sg, pos, [apremió]).
 ty_verb(spanish, constrain, past, pl, pos, [apremiaron]).
+ty_verb(spanish, consult, present, sg, pos, [consulta]).
+ty_verb(spanish, consult, present, pl, pos, [consultan]).
+ty_verb(spanish, consult, past, sg, pos, [consultó]).
+ty_verb(spanish, consult, past, pl, pos, [consultaron]).
 ty_verb(spanish, consume, present, sg, pos, [consume]).
 ty_verb(spanish, consume, present, pl, pos, [consumen]).
 ty_verb(spanish, consume, past, sg, pos, [consumió]).
@@ -28253,6 +28236,10 @@ ty_verb(spanish, content, present, sg, pos, [contenta]).
 ty_verb(spanish, content, present, pl, pos, [contentan]).
 ty_verb(spanish, content, past, sg, pos, [contentó]).
 ty_verb(spanish, content, past, pl, pos, [contentaron]).
+ty_verb(spanish, contest, present, sg, pos, [disputa]).
+ty_verb(spanish, contest, present, pl, pos, [disputan]).
+ty_verb(spanish, contest, past, sg, pos, [disputó]).
+ty_verb(spanish, contest, past, pl, pos, [disputaron]).
 ty_verb(spanish, contract, present, sg, pos, [contrae]).
 ty_verb(spanish, contract, present, pl, pos, [contraen]).
 ty_verb(spanish, contract, past, sg, pos, [contrajo]).
@@ -28273,6 +28260,10 @@ ty_verb(spanish, contribute, present, sg, pos, [contribuye]).
 ty_verb(spanish, contribute, present, pl, pos, [contribuyen]).
 ty_verb(spanish, contribute, past, sg, pos, [contribuyó]).
 ty_verb(spanish, contribute, past, pl, pos, [contribuyeron]).
+ty_verb(spanish, contrive, present, sg, pos, [idea]).
+ty_verb(spanish, contrive, present, pl, pos, [idean]).
+ty_verb(spanish, contrive, past, sg, pos, [ideó]).
+ty_verb(spanish, contrive, past, pl, pos, [idearon]).
 ty_verb(spanish, control, present, sg, pos, [controla]).
 ty_verb(spanish, control, present, pl, pos, [controlan]).
 ty_verb(spanish, control, past, sg, pos, [controló]).
@@ -28293,6 +28284,10 @@ ty_verb(spanish, immigrate, present, sg, pos, [inmigra]).
 ty_verb(spanish, immigrate, present, pl, pos, [inmigran]).
 ty_verb(spanish, immigrate, past, sg, pos, [inmigró]).
 ty_verb(spanish, immigrate, past, pl, pos, [inmigraron]).
+ty_verb(spanish, notice, present, sg, pos, [nota]).
+ty_verb(spanish, notice, present, pl, pos, [notan]).
+ty_verb(spanish, notice, past, sg, pos, [notó]).
+ty_verb(spanish, notice, past, pl, pos, [notaron]).
 ty_verb(spanish, rob, present, sg, pos, [atraca]).
 ty_verb(spanish, rob, present, pl, pos, [atracan]).
 ty_verb(spanish, rob, past, sg, pos, [atracó]).
@@ -28321,6 +28316,10 @@ ty_verb(spanish, convince, present, sg, pos, [convence]).
 ty_verb(spanish, convince, present, pl, pos, [convencen]).
 ty_verb(spanish, convince, past, sg, pos, [convenció]).
 ty_verb(spanish, convince, past, pl, pos, [convencieron]).
+ty_verb(spanish, cook, present, sg, pos, [cocina]).
+ty_verb(spanish, cook, present, pl, pos, [cocinan]).
+ty_verb(spanish, cook, past, sg, pos, [cocinó]).
+ty_verb(spanish, cook, past, pl, pos, [cocinaron]).
 ty_verb(spanish, cool, present, sg, pos, [enfría]).
 ty_verb(spanish, cool, present, pl, pos, [enfrían]).
 ty_verb(spanish, cool, past, sg, pos, [enfrió]).
@@ -28337,6 +28336,10 @@ ty_verb(spanish, abjure, present, sg, pos, [abjura]).
 ty_verb(spanish, abjure, present, pl, pos, [abjuran]).
 ty_verb(spanish, abjure, past, sg, pos, [abjuró]).
 ty_verb(spanish, abjure, past, pl, pos, [abjuraron]).
+ty_verb(spanish, copy, present, sg, pos, [copia]).
+ty_verb(spanish, copy, present, pl, pos, [copian]).
+ty_verb(spanish, copy, past, sg, pos, [copió]).
+ty_verb(spanish, copy, past, pl, pos, [copiaron]).
 ty_verb(spanish, correct, present, sg, pos, [corrige]).
 ty_verb(spanish, correct, present, pl, pos, [corrigen]).
 ty_verb(spanish, correct, past, sg, pos, [corrigió]).
@@ -28345,6 +28348,14 @@ ty_verb(spanish, correspond, present, sg, pos, [corresponde]).
 ty_verb(spanish, correspond, present, pl, pos, [corresponden]).
 ty_verb(spanish, correspond, past, sg, pos, [correspondió]).
 ty_verb(spanish, correspond, past, pl, pos, [correspondieron]).
+ty_verb(spanish, cost, present, sg, pos, [cuesta]).
+ty_verb(spanish, cost, present, pl, pos, [cuestan]).
+ty_verb(spanish, cost, past, sg, pos, [costó]).
+ty_verb(spanish, cost, past, pl, pos, [costaron]).
+ty_verb(spanish, count, present, sg, pos, [cuenta]).
+ty_verb(spanish, count, present, pl, pos, [cuentan]).
+ty_verb(spanish, count, past, sg, pos, [contó]).
+ty_verb(spanish, count, past, pl, pos, [contaron]).
 ty_verb(spanish, counter, present, sg, pos, [contrarresta]).
 ty_verb(spanish, counter, present, pl, pos, [contrarrestan]).
 ty_verb(spanish, counter, past, sg, pos, [contrarrestó]).
@@ -28393,6 +28404,10 @@ ty_verb(spanish, cultivate, present, sg, pos, [cultiva]).
 ty_verb(spanish, cultivate, present, pl, pos, [cultivan]).
 ty_verb(spanish, cultivate, past, sg, pos, [cultivó]).
 ty_verb(spanish, cultivate, past, pl, pos, [cultivaron]).
+ty_verb(spanish, cure, present, sg, pos, [cura]).
+ty_verb(spanish, cure, present, pl, pos, [curan]).
+ty_verb(spanish, cure, past, sg, pos, [curó]).
+ty_verb(spanish, cure, past, pl, pos, [curaron]).
 ty_verb(spanish, curse, present, sg, pos, [maldice]).
 ty_verb(spanish, curse, present, pl, pos, [maldicen]).
 ty_verb(spanish, curse, past, sg, pos, [maldijo]).
@@ -28401,6 +28416,10 @@ ty_verb(spanish, cut, present, sg, pos, [corta]).
 ty_verb(spanish, cut, present, pl, pos, [cortan]).
 ty_verb(spanish, cut, past, sg, pos, [cortó]).
 ty_verb(spanish, cut, past, pl, pos, [cortaron]).
+ty_verb(spanish, damage, present, sg, pos, [avería]).
+ty_verb(spanish, damage, present, pl, pos, [averían]).
+ty_verb(spanish, damage, past, sg, pos, [averió]).
+ty_verb(spanish, damage, past, pl, pos, [averiaron]).
 ty_verb(spanish, dampen, present, sg, pos, [humedece]).
 ty_verb(spanish, dampen, present, pl, pos, [humedecen]).
 ty_verb(spanish, dampen, past, sg, pos, [humedeció]).
@@ -28409,6 +28428,10 @@ ty_verb(spanish, dance, present, sg, pos, [baila]).
 ty_verb(spanish, dance, present, pl, pos, [bailan]).
 ty_verb(spanish, dance, past, sg, pos, [bailó]).
 ty_verb(spanish, dance, past, pl, pos, [bailaron]).
+ty_verb(spanish, dare, present, sg, pos, [osa]).
+ty_verb(spanish, dare, present, pl, pos, [osan]).
+ty_verb(spanish, dare, past, sg, pos, [osó]).
+ty_verb(spanish, dare, past, pl, pos, [osaron]).
 ty_verb(spanish, darken, present, sg, pos, [oscurece]).
 ty_verb(spanish, darken, present, pl, pos, [oscurecen]).
 ty_verb(spanish, darken, past, sg, pos, [oscureció]).
@@ -28421,6 +28444,10 @@ ty_verb(spanish, dazzle, present, sg, pos, [deslumbra]).
 ty_verb(spanish, dazzle, present, pl, pos, [deslumbran]).
 ty_verb(spanish, dazzle, past, sg, pos, [deslumbró]).
 ty_verb(spanish, dazzle, past, pl, pos, [deslumbraron]).
+ty_verb(spanish, debate, present, sg, pos, [debate]).
+ty_verb(spanish, debate, present, pl, pos, [debaten]).
+ty_verb(spanish, debate, past, sg, pos, [debatió]).
+ty_verb(spanish, debate, past, pl, pos, [debatieron]).
 ty_verb(spanish, debug, present, sg, pos, [depura]).
 ty_verb(spanish, debug, present, pl, pos, [depuran]).
 ty_verb(spanish, debug, past, sg, pos, [depuró]).
@@ -28473,6 +28500,10 @@ ty_verb(spanish, deepen, present, sg, pos, [profundiza]).
 ty_verb(spanish, deepen, present, pl, pos, [profundizan]).
 ty_verb(spanish, deepen, past, sg, pos, [profundizó]).
 ty_verb(spanish, deepen, past, pl, pos, [profundizaron]).
+ty_verb(spanish, defeat, present, sg, pos, [derrota]).
+ty_verb(spanish, defeat, present, pl, pos, [derrotan]).
+ty_verb(spanish, defeat, past, sg, pos, [derrotó]).
+ty_verb(spanish, defeat, past, pl, pos, [derrotaron]).
 ty_verb(spanish, defend, present, sg, pos, [defiende]).
 ty_verb(spanish, defend, present, pl, pos, [defienden]).
 ty_verb(spanish, defend, past, sg, pos, [defendió]).
@@ -28709,6 +28740,10 @@ ty_verb(spanish, disburse, present, sg, pos, [desembolsa]).
 ty_verb(spanish, disburse, present, pl, pos, [desembolsan]).
 ty_verb(spanish, disburse, past, sg, pos, [desembolsó]).
 ty_verb(spanish, disburse, past, pl, pos, [desembolsaron]).
+ty_verb(spanish, discipline, present, sg, pos, [disciplina]).
+ty_verb(spanish, discipline, present, pl, pos, [disciplinan]).
+ty_verb(spanish, discipline, past, sg, pos, [disciplinó]).
+ty_verb(spanish, discipline, past, pl, pos, [disciplinaron]).
 ty_verb(spanish, discount, present, sg, pos, [descuenta]).
 ty_verb(spanish, discount, present, pl, pos, [descuentan]).
 ty_verb(spanish, discount, past, sg, pos, [descontó]).
@@ -28813,6 +28848,22 @@ ty_verb(spanish, dope, present, sg, pos, [dopa]).
 ty_verb(spanish, dope, present, pl, pos, [dopan]).
 ty_verb(spanish, dope, past, sg, pos, [dopó]).
 ty_verb(spanish, dope, past, pl, pos, [doparon]).
+ty_verb(spanish, doubt, present, sg, pos, [duda]).
+ty_verb(spanish, doubt, present, pl, pos, [dudan]).
+ty_verb(spanish, doubt, past, sg, pos, [dudó]).
+ty_verb(spanish, doubt, past, pl, pos, [dudaron]).
+ty_verb(spanish, download, present, sg, pos, [descarga]).
+ty_verb(spanish, download, present, pl, pos, [descargan]).
+ty_verb(spanish, download, past, sg, pos, [descargó]).
+ty_verb(spanish, download, past, pl, pos, [descargaron]).
+ty_verb(spanish, unload, present, sg, pos, [descarga]).
+ty_verb(spanish, unload, present, pl, pos, [descargan]).
+ty_verb(spanish, unload, past, sg, pos, [descargó]).
+ty_verb(spanish, unload, past, pl, pos, [descargaron]).
+ty_verb(spanish, draft, present, sg, pos, [recluta]).
+ty_verb(spanish, draft, present, pl, pos, [reclutan]).
+ty_verb(spanish, draft, past, sg, pos, [reclutó]).
+ty_verb(spanish, draft, past, pl, pos, [reclutaron]).
 ty_verb(spanish, draft, present, sg, pos, [redacta]).
 ty_verb(spanish, draft, present, pl, pos, [redactan]).
 ty_verb(spanish, draft, past, sg, pos, [redactó]).
@@ -28845,6 +28896,10 @@ ty_verb(spanish, drop, present, sg, pos, [suelta]).
 ty_verb(spanish, drop, present, pl, pos, [sueltan]).
 ty_verb(spanish, drop, past, sg, pos, [soltó]).
 ty_verb(spanish, drop, past, pl, pos, [soltaron]).
+ty_verb(spanish, drug, present, sg, pos, [droga]).
+ty_verb(spanish, drug, present, pl, pos, [drogan]).
+ty_verb(spanish, drug, past, sg, pos, [drogó]).
+ty_verb(spanish, drug, past, pl, pos, [drogaron]).
 ty_verb(spanish, dry, present, sg, pos, [seca]).
 ty_verb(spanish, dry, present, pl, pos, [secan]).
 ty_verb(spanish, dry, past, sg, pos, [secó]).
@@ -28929,6 +28984,10 @@ ty_verb(spanish, enable, present, sg, pos, [habilita]).
 ty_verb(spanish, enable, present, pl, pos, [habilitan]).
 ty_verb(spanish, enable, past, sg, pos, [habilitó]).
 ty_verb(spanish, enable, past, pl, pos, [habilitaron]).
+ty_verb(spanish, encipher, present, sg, pos, [cifra]).
+ty_verb(spanish, encipher, present, pl, pos, [cifran]).
+ty_verb(spanish, encipher, past, sg, pos, [cifró]).
+ty_verb(spanish, encipher, past, pl, pos, [cifraron]).
 ty_verb(spanish, encourage, present, sg, pos, [anima]).
 ty_verb(spanish, encourage, present, pl, pos, [animan]).
 ty_verb(spanish, encourage, past, sg, pos, [animó]).
@@ -28965,6 +29024,10 @@ ty_verb(spanish, enumerate, present, sg, pos, [enumera]).
 ty_verb(spanish, enumerate, present, pl, pos, [enumeran]).
 ty_verb(spanish, enumerate, past, sg, pos, [enumeró]).
 ty_verb(spanish, enumerate, past, pl, pos, [enumeraron]).
+ty_verb(spanish, envy, present, sg, pos, [envidia]).
+ty_verb(spanish, envy, present, pl, pos, [envidian]).
+ty_verb(spanish, envy, past, sg, pos, [envidió]).
+ty_verb(spanish, envy, past, pl, pos, [envidiaron]).
 ty_verb(spanish, equate, present, sg, pos, [equipara]).
 ty_verb(spanish, equate, present, pl, pos, [equiparan]).
 ty_verb(spanish, equate, past, sg, pos, [equiparó]).
@@ -29205,10 +29268,18 @@ ty_verb(spanish, find, present, sg, pos, [encuentra]).
 ty_verb(spanish, find, present, pl, pos, [encuentran]).
 ty_verb(spanish, find, past, sg, pos, [encontró]).
 ty_verb(spanish, find, past, pl, pos, [encontraron]).
+ty_verb(spanish, fine, present, sg, pos, [multa]).
+ty_verb(spanish, fine, present, pl, pos, [multan]).
+ty_verb(spanish, fine, past, sg, pos, [multó]).
+ty_verb(spanish, fine, past, pl, pos, [multaron]).
 ty_verb(spanish, fire, present, sg, pos, [despide]).
 ty_verb(spanish, fire, present, pl, pos, [despiden]).
 ty_verb(spanish, fire, past, sg, pos, [despidió]).
 ty_verb(spanish, fire, past, pl, pos, [despidieron]).
+ty_verb(spanish, fish, present, sg, pos, [pesca]).
+ty_verb(spanish, fish, present, pl, pos, [pescan]).
+ty_verb(spanish, fish, past, sg, pos, [pescó]).
+ty_verb(spanish, fish, past, pl, pos, [pescaron]).
 ty_verb(spanish, fit, present, sg, pos, [cabe]).
 ty_verb(spanish, fit, present, pl, pos, [caben]).
 ty_verb(spanish, fit, past, sg, pos, [cupo]).
@@ -29245,6 +29316,10 @@ ty_verb(spanish, fly, present, sg, pos, [vuela]).
 ty_verb(spanish, fly, present, pl, pos, [vuelan]).
 ty_verb(spanish, fly, past, sg, pos, [voló]).
 ty_verb(spanish, fly, past, pl, pos, [volaron]).
+ty_verb(spanish, foam, present, sg, pos, [espuma]).
+ty_verb(spanish, foam, present, pl, pos, [espuman]).
+ty_verb(spanish, foam, past, sg, pos, [espumó]).
+ty_verb(spanish, foam, past, pl, pos, [espumaron]).
 ty_verb(spanish, focuss, present, sg, pos, [enfoca]).
 ty_verb(spanish, focuss, present, pl, pos, [enfocan]).
 ty_verb(spanish, focuss, past, sg, pos, [enfocó]).
@@ -29257,6 +29332,10 @@ ty_verb(spanish, forbid, present, sg, pos, [prohíbe]).
 ty_verb(spanish, forbid, present, pl, pos, [prohíben]).
 ty_verb(spanish, forbid, past, sg, pos, [prohibió]).
 ty_verb(spanish, forbid, past, pl, pos, [prohibieron]).
+ty_verb(spanish, force, present, sg, pos, [fuerza]).
+ty_verb(spanish, force, present, pl, pos, [fuerzan]).
+ty_verb(spanish, force, past, sg, pos, [forzó]).
+ty_verb(spanish, force, past, pl, pos, [forzaron]).
 ty_verb(spanish, foresee, present, sg, pos, [prevé]).
 ty_verb(spanish, foresee, present, pl, pos, [prevén]).
 ty_verb(spanish, foresee, past, sg, pos, [previó]).
@@ -29269,6 +29348,10 @@ ty_verb(spanish, forgive, present, sg, pos, [perdona]).
 ty_verb(spanish, forgive, present, pl, pos, [perdonan]).
 ty_verb(spanish, forgive, past, sg, pos, [perdonó]).
 ty_verb(spanish, forgive, past, pl, pos, [perdonaron]).
+ty_verb(spanish, form, present, sg, pos, [forma]).
+ty_verb(spanish, form, present, pl, pos, [forman]).
+ty_verb(spanish, form, past, sg, pos, [formó]).
+ty_verb(spanish, form, past, pl, pos, [formaron]).
 ty_verb(spanish, formalise, present, sg, pos, [formaliza]).
 ty_verb(spanish, formalise, present, pl, pos, [formalizan]).
 ty_verb(spanish, formalise, past, sg, pos, [formalizó]).
@@ -29361,6 +29444,10 @@ ty_verb(spanish, glimpse, present, sg, pos, [entrevé]).
 ty_verb(spanish, glimpse, present, pl, pos, [entrevén]).
 ty_verb(spanish, glimpse, past, sg, pos, [entrevió]).
 ty_verb(spanish, glimpse, past, pl, pos, [entrevieron]).
+ty_verb(spanish, gloss, present, sg, pos, [glosa]).
+ty_verb(spanish, gloss, present, pl, pos, [glosan]).
+ty_verb(spanish, gloss, past, sg, pos, [glosó]).
+ty_verb(spanish, gloss, past, pl, pos, [glosaron]).
 ty_verb(spanish, govern, present, sg, pos, [gobierna]).
 ty_verb(spanish, govern, present, pl, pos, [gobiernan]).
 ty_verb(spanish, govern, past, sg, pos, [gobernó]).
@@ -29393,6 +29480,14 @@ ty_verb(spanish, guess, present, sg, pos, [adivina]).
 ty_verb(spanish, guess, present, pl, pos, [adivinan]).
 ty_verb(spanish, guess, past, sg, pos, [adivinó]).
 ty_verb(spanish, guess, past, pl, pos, [adivinaron]).
+ty_verb(spanish, guide, present, sg, pos, [guía]).
+ty_verb(spanish, guide, present, pl, pos, [guían]).
+ty_verb(spanish, guide, past, sg, pos, [guio]).
+ty_verb(spanish, guide, past, pl, pos, [guiaron]).
+ty_verb(spanish, hammer, present, sg, pos, [pica]).
+ty_verb(spanish, hammer, present, pl, pos, [pican]).
+ty_verb(spanish, hammer, past, sg, pos, [picó]).
+ty_verb(spanish, hammer, past, pl, pos, [picaron]).
 ty_verb(spanish, hamper, present, sg, pos, [dificulta]).
 ty_verb(spanish, hamper, present, pl, pos, [dificultan]).
 ty_verb(spanish, hamper, past, sg, pos, [dificultó]).
@@ -29405,10 +29500,18 @@ ty_verb(spanish, hang, present, sg, pos, [cuelga]).
 ty_verb(spanish, hang, present, pl, pos, [cuelgan]).
 ty_verb(spanish, hang, past, sg, pos, [colgó]).
 ty_verb(spanish, hang, past, pl, pos, [colgaron]).
+ty_verb(spanish, happen, present, sg, pos, [pasa]).
+ty_verb(spanish, happen, present, pl, pos, [pasan]).
+ty_verb(spanish, happen, past, sg, pos, [pasó]).
+ty_verb(spanish, happen, past, pl, pos, [pasaron]).
 ty_verb(spanish, harmonise, present, sg, pos, [armoniza]).
 ty_verb(spanish, harmonise, present, pl, pos, [armonizan]).
 ty_verb(spanish, harmonise, past, sg, pos, [armonizó]).
 ty_verb(spanish, harmonise, past, pl, pos, [armonizaron]).
+ty_verb(spanish, harvest, present, sg, pos, [cosecha]).
+ty_verb(spanish, harvest, present, pl, pos, [cosechan]).
+ty_verb(spanish, harvest, past, sg, pos, [cosechó]).
+ty_verb(spanish, harvest, past, pl, pos, [cosecharon]).
 ty_verb(spanish, hatch, present, sg, pos, [empolla]).
 ty_verb(spanish, hatch, present, pl, pos, [empollan]).
 ty_verb(spanish, hatch, past, sg, pos, [empolló]).
@@ -29465,6 +29568,26 @@ ty_verb(spanish, hold, present, sg, pos, [aguanta]).
 ty_verb(spanish, hold, present, pl, pos, [aguantan]).
 ty_verb(spanish, hold, past, sg, pos, [aguantó]).
 ty_verb(spanish, hold, past, pl, pos, [aguantaron]).
+ty_verb(spanish, honour, present, sg, pos, [honra]).
+ty_verb(spanish, honour, present, pl, pos, [honran]).
+ty_verb(spanish, honour, past, sg, pos, [honró]).
+ty_verb(spanish, honour, past, pl, pos, [honraron]).
+ty_verb(spanish, hope, present, sg, pos, [espera]).
+ty_verb(spanish, hope, present, pl, pos, [esperan]).
+ty_verb(spanish, hope, past, sg, pos, [esperó]).
+ty_verb(spanish, hope, past, pl, pos, [esperaron]).
+ty_verb(spanish, hover, present, sg, pos, [cerca]).
+ty_verb(spanish, hover, present, pl, pos, [cercan]).
+ty_verb(spanish, hover, past, sg, pos, [cercó]).
+ty_verb(spanish, hover, past, pl, pos, [cercaron]).
+ty_verb(spanish, hunt, present, sg, pos, [caza]).
+ty_verb(spanish, hunt, present, pl, pos, [cazan]).
+ty_verb(spanish, hunt, past, sg, pos, [cazó]).
+ty_verb(spanish, hunt, past, pl, pos, [cazaron]).
+ty_verb(spanish, marry, present, sg, pos, [casa]).
+ty_verb(spanish, marry, present, pl, pos, [casan]).
+ty_verb(spanish, marry, past, sg, pos, [casó]).
+ty_verb(spanish, marry, past, pl, pos, [casaron]).
 ty_verb(spanish, identify, present, sg, pos, [identifica]).
 ty_verb(spanish, identify, present, pl, pos, [identifican]).
 ty_verb(spanish, identify, past, sg, pos, [identificó]).
@@ -29521,6 +29644,10 @@ ty_verb(spanish, imprison, present, sg, pos, [encarcela]).
 ty_verb(spanish, imprison, present, pl, pos, [encarcelan]).
 ty_verb(spanish, imprison, past, sg, pos, [encarceló]).
 ty_verb(spanish, imprison, past, pl, pos, [encarcelaron]).
+ty_verb(spanish, improve, present, sg, pos, [mejora]).
+ty_verb(spanish, improve, present, pl, pos, [mejoran]).
+ty_verb(spanish, improve, past, sg, pos, [mejoró]).
+ty_verb(spanish, improve, past, pl, pos, [mejoraron]).
 ty_verb(spanish, improvise, present, sg, pos, [improvisa]).
 ty_verb(spanish, improvise, present, pl, pos, [improvisan]).
 ty_verb(spanish, improvise, past, sg, pos, [improvisó]).
@@ -29581,6 +29708,10 @@ ty_verb(spanish, infect, present, sg, pos, [infecta]).
 ty_verb(spanish, infect, present, pl, pos, [infectan]).
 ty_verb(spanish, infect, past, sg, pos, [infectó]).
 ty_verb(spanish, infect, past, pl, pos, [infectaron]).
+ty_verb(spanish, inflate, present, sg, pos, [hincha]).
+ty_verb(spanish, inflate, present, pl, pos, [hinchan]).
+ty_verb(spanish, inflate, past, sg, pos, [hinchó]).
+ty_verb(spanish, inflate, past, pl, pos, [hincharon]).
 ty_verb(spanish, influence, present, sg, pos, [influye]).
 ty_verb(spanish, influence, present, pl, pos, [influyen]).
 ty_verb(spanish, influence, past, sg, pos, [influyó]).
@@ -29721,6 +29852,10 @@ ty_verb(spanish, invite, present, sg, pos, [invita]).
 ty_verb(spanish, invite, present, pl, pos, [invitan]).
 ty_verb(spanish, invite, past, sg, pos, [invitó]).
 ty_verb(spanish, invite, past, pl, pos, [invitaron]).
+ty_verb(spanish, invoice, present, sg, pos, [factura]).
+ty_verb(spanish, invoice, present, pl, pos, [facturan]).
+ty_verb(spanish, invoice, past, sg, pos, [facturó]).
+ty_verb(spanish, invoice, past, pl, pos, [facturaron]).
 ty_verb(spanish, invoke, present, sg, pos, [invoca]).
 ty_verb(spanish, invoke, present, pl, pos, [invocan]).
 ty_verb(spanish, invoke, past, sg, pos, [invocó]).
@@ -29733,6 +29868,10 @@ ty_verb(spanish, involve, present, sg, pos, [implica]).
 ty_verb(spanish, involve, present, pl, pos, [implican]).
 ty_verb(spanish, involve, past, sg, pos, [implicó]).
 ty_verb(spanish, involve, past, pl, pos, [implicaron]).
+ty_verb(spanish, iron, present, sg, pos, [plancha]).
+ty_verb(spanish, iron, present, pl, pos, [planchan]).
+ty_verb(spanish, iron, past, sg, pos, [planchó]).
+ty_verb(spanish, iron, past, pl, pos, [plancharon]).
 ty_verb(spanish, isolate, present, sg, pos, [aísla]).
 ty_verb(spanish, isolate, present, pl, pos, [aíslan]).
 ty_verb(spanish, isolate, past, sg, pos, [aisló]).
@@ -29989,6 +30128,10 @@ ty_verb(spanish, quarter, present, sg, pos, [acuartela]).
 ty_verb(spanish, quarter, present, pl, pos, [acuartelan]).
 ty_verb(spanish, quarter, past, sg, pos, [acuarteló]).
 ty_verb(spanish, quarter, past, pl, pos, [acuartelaron]).
+ty_verb(spanish, mill, present, sg, pos, [fresa]).
+ty_verb(spanish, mill, present, pl, pos, [fresan]).
+ty_verb(spanish, mill, past, sg, pos, [fresó]).
+ty_verb(spanish, mill, past, pl, pos, [fresaron]).
 ty_verb(spanish, condense, present, sg, pos, [condensa]).
 ty_verb(spanish, condense, present, pl, pos, [condensan]).
 ty_verb(spanish, condense, past, sg, pos, [condensó]).
@@ -30185,6 +30328,10 @@ ty_verb(spanish, join, present, sg, pos, [une]).
 ty_verb(spanish, join, present, pl, pos, [unen]).
 ty_verb(spanish, join, past, sg, pos, [unió]).
 ty_verb(spanish, join, past, pl, pos, [unieron]).
+ty_verb(spanish, joint, present, sg, pos, [junta]).
+ty_verb(spanish, joint, present, pl, pos, [juntan]).
+ty_verb(spanish, joint, past, sg, pos, [juntó]).
+ty_verb(spanish, joint, past, pl, pos, [juntaron]).
 ty_verb(spanish, judge, present, sg, pos, [juzga]).
 ty_verb(spanish, judge, present, pl, pos, [juzgan]).
 ty_verb(spanish, judge, past, sg, pos, [juzgó]).
@@ -30237,6 +30384,10 @@ ty_verb(spanish, know, present, sg, pos, [conoce]).
 ty_verb(spanish, know, present, pl, pos, [conocen]).
 ty_verb(spanish, know, past, sg, pos, [conoció]).
 ty_verb(spanish, know, past, pl, pos, [conocieron]).
+ty_verb(spanish, label, present, sg, pos, [etiqueta]).
+ty_verb(spanish, label, present, pl, pos, [etiquetan]).
+ty_verb(spanish, label, past, sg, pos, [etiquetó]).
+ty_verb(spanish, label, past, pl, pos, [etiquetaron]).
 ty_verb(spanish, land, present, sg, pos, [aterriza]).
 ty_verb(spanish, land, present, pl, pos, [aterrizan]).
 ty_verb(spanish, land, past, sg, pos, [aterrizó]).
@@ -30245,6 +30396,10 @@ ty_verb(spanish, laugh, present, sg, pos, [ríe]).
 ty_verb(spanish, laugh, present, pl, pos, [ríen]).
 ty_verb(spanish, laugh, past, sg, pos, [rio]).
 ty_verb(spanish, laugh, past, pl, pos, [rieron]).
+ty_verb(spanish, launch, present, sg, pos, [lanza]).
+ty_verb(spanish, launch, present, pl, pos, [lanzan]).
+ty_verb(spanish, launch, past, sg, pos, [lanzó]).
+ty_verb(spanish, launch, past, pl, pos, [lanzaron]).
 ty_verb(spanish, leak, present, sg, pos, [filtra]).
 ty_verb(spanish, leak, present, pl, pos, [filtran]).
 ty_verb(spanish, leak, past, sg, pos, [filtró]).
@@ -30265,6 +30420,10 @@ ty_verb(spanish, leave, present, sg, pos, [deja]).
 ty_verb(spanish, leave, present, pl, pos, [dejan]).
 ty_verb(spanish, leave, past, sg, pos, [dejó]).
 ty_verb(spanish, leave, past, pl, pos, [dejaron]).
+ty_verb(spanish, leave, present, sg, pos, [marcha]).
+ty_verb(spanish, leave, present, pl, pos, [marchan]).
+ty_verb(spanish, leave, past, sg, pos, [marchó]).
+ty_verb(spanish, leave, past, pl, pos, [marcharon]).
 ty_verb(spanish, legalise, present, sg, pos, [legaliza]).
 ty_verb(spanish, legalise, present, pl, pos, [legalizan]).
 ty_verb(spanish, legalise, past, sg, pos, [legalizó]).
@@ -30309,10 +30468,18 @@ ty_verb(spanish, line, present, sg, pos, [forra]).
 ty_verb(spanish, line, present, pl, pos, [forran]).
 ty_verb(spanish, line, past, sg, pos, [forró]).
 ty_verb(spanish, line, past, pl, pos, [forraron]).
+ty_verb(spanish, line, present, sg, pos, [tacha]).
+ty_verb(spanish, line, present, pl, pos, [tachan]).
+ty_verb(spanish, line, past, sg, pos, [tachó]).
+ty_verb(spanish, line, past, pl, pos, [tacharon]).
 ty_verb(spanish, link, present, sg, pos, [enlaza]).
 ty_verb(spanish, link, present, pl, pos, [enlazan]).
 ty_verb(spanish, link, past, sg, pos, [enlazó]).
 ty_verb(spanish, link, past, pl, pos, [enlazaron]).
+ty_verb(spanish, list, present, sg, pos, [lista]).
+ty_verb(spanish, list, present, pl, pos, [listan]).
+ty_verb(spanish, list, past, sg, pos, [listó]).
+ty_verb(spanish, list, past, pl, pos, [listaron]).
 ty_verb(spanish, listen, present, sg, pos, [escucha]).
 ty_verb(spanish, listen, present, pl, pos, [escuchan]).
 ty_verb(spanish, listen, past, sg, pos, [escuchó]).
@@ -30329,6 +30496,10 @@ ty_verb(spanish, coexist, present, sg, pos, [convive]).
 ty_verb(spanish, coexist, present, pl, pos, [conviven]).
 ty_verb(spanish, coexist, past, sg, pos, [convivió]).
 ty_verb(spanish, coexist, past, pl, pos, [convivieron]).
+ty_verb(spanish, load, present, sg, pos, [carga]).
+ty_verb(spanish, load, present, pl, pos, [cargan]).
+ty_verb(spanish, load, past, sg, pos, [cargó]).
+ty_verb(spanish, load, past, pl, pos, [cargaron]).
 ty_verb(spanish, loan, present, sg, pos, [presta]).
 ty_verb(spanish, loan, present, pl, pos, [prestan]).
 ty_verb(spanish, loan, past, sg, pos, [prestó]).
@@ -30349,6 +30520,10 @@ ty_verb(spanish, look, present, sg, pos, [parece]).
 ty_verb(spanish, look, present, pl, pos, [parecen]).
 ty_verb(spanish, look, past, sg, pos, [pareció]).
 ty_verb(spanish, look, past, pl, pos, [parecieron]).
+ty_verb(spanish, loom, present, sg, pos, [amenaza]).
+ty_verb(spanish, loom, present, pl, pos, [amenazan]).
+ty_verb(spanish, loom, past, sg, pos, [amenazó]).
+ty_verb(spanish, loom, past, pl, pos, [amenazaron]).
 ty_verb(spanish, lose, present, sg, pos, [pierde]).
 ty_verb(spanish, lose, present, pl, pos, [pierden]).
 ty_verb(spanish, lose, past, sg, pos, [perdió]).
@@ -30381,10 +30556,18 @@ ty_verb(spanish, manipulate, present, sg, pos, [manipula]).
 ty_verb(spanish, manipulate, present, pl, pos, [manipulan]).
 ty_verb(spanish, manipulate, past, sg, pos, [manipuló]).
 ty_verb(spanish, manipulate, past, pl, pos, [manipularon]).
+ty_verb(spanish, manoeuvre, present, sg, pos, [maniobra]).
+ty_verb(spanish, manoeuvre, present, pl, pos, [maniobran]).
+ty_verb(spanish, manoeuvre, past, sg, pos, [maniobró]).
+ty_verb(spanish, manoeuvre, past, pl, pos, [maniobraron]).
 ty_verb(spanish, manufacture, present, sg, pos, [fabrica]).
 ty_verb(spanish, manufacture, present, pl, pos, [fabrican]).
 ty_verb(spanish, manufacture, past, sg, pos, [fabricó]).
 ty_verb(spanish, manufacture, past, pl, pos, [fabricaron]).
+ty_verb(spanish, mark, present, sg, pos, [mancha]).
+ty_verb(spanish, mark, present, pl, pos, [manchan]).
+ty_verb(spanish, mark, past, sg, pos, [manchó]).
+ty_verb(spanish, mark, past, pl, pos, [mancharon]).
 ty_verb(spanish, mark, present, sg, pos, [puntúa]).
 ty_verb(spanish, mark, present, pl, pos, [puntúan]).
 ty_verb(spanish, mark, past, sg, pos, [puntuó]).
@@ -30453,6 +30636,10 @@ ty_verb(spanish, mitigate, present, sg, pos, [mitiga]).
 ty_verb(spanish, mitigate, present, pl, pos, [mitigan]).
 ty_verb(spanish, mitigate, past, sg, pos, [mitigó]).
 ty_verb(spanish, mitigate, past, pl, pos, [mitigaron]).
+ty_verb(spanish, mix, present, sg, pos, [mezcla]).
+ty_verb(spanish, mix, present, pl, pos, [mezclan]).
+ty_verb(spanish, mix, past, sg, pos, [mezcló]).
+ty_verb(spanish, mix, past, pl, pos, [mezclaron]).
 ty_verb(spanish, moderate, present, sg, pos, [modera]).
 ty_verb(spanish, moderate, present, pl, pos, [moderan]).
 ty_verb(spanish, moderate, past, sg, pos, [moderó]).
@@ -30465,6 +30652,10 @@ ty_verb(spanish, monopolise, present, sg, pos, [monopoliza]).
 ty_verb(spanish, monopolise, present, pl, pos, [monopolizan]).
 ty_verb(spanish, monopolise, past, sg, pos, [monopolizó]).
 ty_verb(spanish, monopolise, past, pl, pos, [monopolizaron]).
+ty_verb(spanish, mortgage, present, sg, pos, [hipoteca]).
+ty_verb(spanish, mortgage, present, pl, pos, [hipotecan]).
+ty_verb(spanish, mortgage, past, sg, pos, [hipotecó]).
+ty_verb(spanish, mortgage, past, pl, pos, [hipotecaron]).
 ty_verb(spanish, motivate, present, sg, pos, [motiva]).
 ty_verb(spanish, motivate, present, pl, pos, [motivan]).
 ty_verb(spanish, motivate, past, sg, pos, [motivó]).
@@ -30485,6 +30676,10 @@ ty_verb(spanish, multiply, present, sg, pos, [multiplica]).
 ty_verb(spanish, multiply, present, pl, pos, [multiplican]).
 ty_verb(spanish, multiply, past, sg, pos, [multiplicó]).
 ty_verb(spanish, multiply, past, pl, pos, [multiplicaron]).
+ty_verb(spanish, murder, present, sg, pos, [asesina]).
+ty_verb(spanish, murder, present, pl, pos, [asesinan]).
+ty_verb(spanish, murder, past, sg, pos, [asesinó]).
+ty_verb(spanish, murder, past, pl, pos, [asesinaron]).
 ty_verb(spanish, mutate, present, sg, pos, [muta]).
 ty_verb(spanish, mutate, present, pl, pos, [mutan]).
 ty_verb(spanish, mutate, past, sg, pos, [mutó]).
@@ -30649,6 +30844,10 @@ ty_verb(spanish, patent, present, sg, pos, [patenta]).
 ty_verb(spanish, patent, present, pl, pos, [patentan]).
 ty_verb(spanish, patent, past, sg, pos, [patentó]).
 ty_verb(spanish, patent, past, pl, pos, [patentaron]).
+ty_verb(spanish, pay, present, sg, pos, [paga]).
+ty_verb(spanish, pay, present, pl, pos, [pagan]).
+ty_verb(spanish, pay, past, sg, pos, [pagó]).
+ty_verb(spanish, pay, past, pl, pos, [pagaron]).
 ty_verb(spanish, peel, present, sg, pos, [pela]).
 ty_verb(spanish, peel, present, pl, pos, [pelan]).
 ty_verb(spanish, peel, past, sg, pos, [peló]).
@@ -30677,6 +30876,14 @@ ty_verb(spanish, persuade, present, sg, pos, [persuade]).
 ty_verb(spanish, persuade, present, pl, pos, [persuaden]).
 ty_verb(spanish, persuade, past, sg, pos, [persuadió]).
 ty_verb(spanish, persuade, past, pl, pos, [persuadieron]).
+ty_verb(spanish, photocopy, present, sg, pos, [fotocopia]).
+ty_verb(spanish, photocopy, present, pl, pos, [fotocopian]).
+ty_verb(spanish, photocopy, past, sg, pos, [fotocopió]).
+ty_verb(spanish, photocopy, past, pl, pos, [fotocopiaron]).
+ty_verb(spanish, photograph, present, sg, pos, [fotografía]).
+ty_verb(spanish, photograph, present, pl, pos, [fotografían]).
+ty_verb(spanish, photograph, past, sg, pos, [fotografió]).
+ty_verb(spanish, photograph, past, pl, pos, [fotografiaron]).
 ty_verb(spanish, pilot, present, sg, pos, [pilota]).
 ty_verb(spanish, pilot, present, pl, pos, [pilotan]).
 ty_verb(spanish, pilot, past, sg, pos, [pilotó]).
@@ -30701,6 +30908,10 @@ ty_verb(spanish, plan, present, sg, pos, [planea]).
 ty_verb(spanish, plan, present, pl, pos, [planean]).
 ty_verb(spanish, plan, past, sg, pos, [planeó]).
 ty_verb(spanish, plan, past, pl, pos, [planearon]).
+ty_verb(spanish, plant, present, sg, pos, [planta]).
+ty_verb(spanish, plant, present, pl, pos, [plantan]).
+ty_verb(spanish, plant, past, sg, pos, [plantó]).
+ty_verb(spanish, plant, past, pl, pos, [plantaron]).
 ty_verb(spanish, plant, present, sg, pos, [coloca]).
 ty_verb(spanish, plant, present, pl, pos, [colocan]).
 ty_verb(spanish, plant, past, sg, pos, [colocó]).
@@ -30741,6 +30952,10 @@ ty_verb(spanish, poison, present, sg, pos, [envenena]).
 ty_verb(spanish, poison, present, pl, pos, [envenenan]).
 ty_verb(spanish, poison, past, sg, pos, [envenenó]).
 ty_verb(spanish, poison, past, pl, pos, [envenenaron]).
+ty_verb(spanish, poll, present, sg, pos, [encuesta]).
+ty_verb(spanish, poll, present, pl, pos, [encuestan]).
+ty_verb(spanish, poll, past, sg, pos, [encuestó]).
+ty_verb(spanish, poll, past, pl, pos, [encuestaron]).
 ty_verb(spanish, pop, present, sg, pos, [revienta]).
 ty_verb(spanish, pop, present, pl, pos, [revientan]).
 ty_verb(spanish, pop, past, sg, pos, [reventó]).
@@ -30861,6 +31076,10 @@ ty_verb(spanish, prevail, present, sg, pos, [prevalece]).
 ty_verb(spanish, prevail, present, pl, pos, [prevalecen]).
 ty_verb(spanish, prevail, past, sg, pos, [prevaleció]).
 ty_verb(spanish, prevail, past, pl, pos, [prevalecieron]).
+ty_verb(spanish, price, present, sg, pos, [tasa]).
+ty_verb(spanish, price, present, pl, pos, [tasan]).
+ty_verb(spanish, price, past, sg, pos, [tasó]).
+ty_verb(spanish, price, past, pl, pos, [tasaron]).
 ty_verb(spanish, print, present, sg, pos, [imprime]).
 ty_verb(spanish, print, present, pl, pos, [imprimen]).
 ty_verb(spanish, print, past, sg, pos, [imprimió]).
@@ -30929,6 +31148,10 @@ ty_verb(spanish, protect, present, sg, pos, [protege]).
 ty_verb(spanish, protect, present, pl, pos, [protegen]).
 ty_verb(spanish, protect, past, sg, pos, [protegió]).
 ty_verb(spanish, protect, past, pl, pos, [protegieron]).
+ty_verb(spanish, protest, present, sg, pos, [protesta]).
+ty_verb(spanish, protest, present, pl, pos, [protestan]).
+ty_verb(spanish, protest, past, sg, pos, [protestó]).
+ty_verb(spanish, protest, past, pl, pos, [protestaron]).
 ty_verb(spanish, provide, present, sg, pos, [proporciona]).
 ty_verb(spanish, provide, present, pl, pos, [proporcionan]).
 ty_verb(spanish, provide, past, sg, pos, [proporcionó]).
@@ -30981,6 +31204,10 @@ ty_verb(spanish, question, present, sg, pos, [cuestiona]).
 ty_verb(spanish, question, present, pl, pos, [cuestionan]).
 ty_verb(spanish, question, past, sg, pos, [cuestionó]).
 ty_verb(spanish, question, past, pl, pos, [cuestionaron]).
+ty_verb(spanish, quote, present, sg, pos, [cita]).
+ty_verb(spanish, quote, present, pl, pos, [citan]).
+ty_verb(spanish, quote, past, sg, pos, [citó]).
+ty_verb(spanish, quote, past, pl, pos, [citaron]).
 ty_verb(spanish, raise, present, sg, pos, [levanta]).
 ty_verb(spanish, raise, present, pl, pos, [levantan]).
 ty_verb(spanish, raise, past, sg, pos, [levantó]).
@@ -31033,6 +31260,10 @@ ty_verb(spanish, rebound, present, sg, pos, [rebota]).
 ty_verb(spanish, rebound, present, pl, pos, [rebotan]).
 ty_verb(spanish, rebound, past, sg, pos, [rebotó]).
 ty_verb(spanish, rebound, past, pl, pos, [rebotaron]).
+ty_verb(spanish, recess, present, sg, pos, [rebaja]).
+ty_verb(spanish, recess, present, pl, pos, [rebajan]).
+ty_verb(spanish, recess, past, sg, pos, [rebajó]).
+ty_verb(spanish, recess, past, pl, pos, [rebajaron]).
 ty_verb(spanish, recite, present, sg, pos, [recita]).
 ty_verb(spanish, recite, present, pl, pos, [recitan]).
 ty_verb(spanish, recite, past, sg, pos, [recitó]).
@@ -31089,6 +31320,10 @@ ty_verb(spanish, reflect, present, sg, pos, [refleja]).
 ty_verb(spanish, reflect, present, pl, pos, [reflejan]).
 ty_verb(spanish, reflect, past, sg, pos, [reflejó]).
 ty_verb(spanish, reflect, past, pl, pos, [reflejaron]).
+ty_verb(spanish, reform, present, sg, pos, [reforma]).
+ty_verb(spanish, reform, present, pl, pos, [reforman]).
+ty_verb(spanish, reform, past, sg, pos, [reformó]).
+ty_verb(spanish, reform, past, pl, pos, [reformaron]).
 ty_verb(spanish, refuse, present, sg, pos, [rechaza]).
 ty_verb(spanish, refuse, present, pl, pos, [rechazan]).
 ty_verb(spanish, refuse, past, sg, pos, [rechazó]).
@@ -31197,6 +31432,10 @@ ty_verb(spanish, reproduce, present, sg, pos, [reproduce]).
 ty_verb(spanish, reproduce, present, pl, pos, [reproducen]).
 ty_verb(spanish, reproduce, past, sg, pos, [reprodujo]).
 ty_verb(spanish, reproduce, past, pl, pos, [reprodujeron]).
+ty_verb(spanish, repurchase, present, sg, pos, [recompra]).
+ty_verb(spanish, repurchase, present, pl, pos, [recompran]).
+ty_verb(spanish, repurchase, past, sg, pos, [recompró]).
+ty_verb(spanish, repurchase, past, pl, pos, [recompraron]).
 ty_verb(spanish, require, present, sg, pos, [requiere]).
 ty_verb(spanish, require, present, pl, pos, [requieren]).
 ty_verb(spanish, require, past, sg, pos, [requirió]).
@@ -31217,6 +31456,10 @@ ty_verb(spanish, research, present, sg, pos, [investiga]).
 ty_verb(spanish, research, present, pl, pos, [investigan]).
 ty_verb(spanish, research, past, sg, pos, [investigó]).
 ty_verb(spanish, research, past, pl, pos, [investigaron]).
+ty_verb(spanish, reserve, present, sg, pos, [reserva]).
+ty_verb(spanish, reserve, present, pl, pos, [reservan]).
+ty_verb(spanish, reserve, past, sg, pos, [reservó]).
+ty_verb(spanish, reserve, past, pl, pos, [reservaron]).
 ty_verb(spanish, resist, present, sg, pos, [resiste]).
 ty_verb(spanish, resist, present, pl, pos, [resisten]).
 ty_verb(spanish, resist, past, sg, pos, [resistió]).
@@ -31321,6 +31564,14 @@ ty_verb(spanish, reward, present, sg, pos, [premia]).
 ty_verb(spanish, reward, present, pl, pos, [premian]).
 ty_verb(spanish, reward, past, sg, pos, [premió]).
 ty_verb(spanish, reward, past, pl, pos, [premiaron]).
+ty_verb(spanish, rhyme, present, sg, pos, [rima]).
+ty_verb(spanish, rhyme, present, pl, pos, [riman]).
+ty_verb(spanish, rhyme, past, sg, pos, [rimó]).
+ty_verb(spanish, rhyme, past, pl, pos, [rimaron]).
+ty_verb(spanish, rid, present, sg, pos, [libra]).
+ty_verb(spanish, rid, present, pl, pos, [libran]).
+ty_verb(spanish, rid, past, sg, pos, [libró]).
+ty_verb(spanish, rid, past, pl, pos, [libraron]).
 ty_verb(spanish, rise, present, sg, pos, [aumenta]).
 ty_verb(spanish, rise, present, pl, pos, [aumentan]).
 ty_verb(spanish, rise, past, sg, pos, [aumentó]).
@@ -31389,6 +31640,10 @@ ty_verb(spanish, save, present, sg, pos, [guarda]).
 ty_verb(spanish, save, present, pl, pos, [guardan]).
 ty_verb(spanish, save, past, sg, pos, [guardó]).
 ty_verb(spanish, save, past, pl, pos, [guardaron]).
+ty_verb(spanish, saw, present, sg, pos, [sierra]).
+ty_verb(spanish, saw, present, pl, pos, [sierran]).
+ty_verb(spanish, saw, past, sg, pos, [serró]).
+ty_verb(spanish, saw, past, pl, pos, [serraron]).
 ty_verb(spanish, say, present, sg, pos, [dice]).
 ty_verb(spanish, say, present, pl, pos, [dicen]).
 ty_verb(spanish, say, past, sg, pos, [dijo]).
@@ -31445,6 +31700,10 @@ ty_verb(spanish, sensitise, present, sg, pos, [sensibiliza]).
 ty_verb(spanish, sensitise, present, pl, pos, [sensibilizan]).
 ty_verb(spanish, sensitise, past, sg, pos, [sensibilizó]).
 ty_verb(spanish, sensitise, past, pl, pos, [sensibilizaron]).
+ty_verb(spanish, sentence, present, sg, pos, [sentencia]).
+ty_verb(spanish, sentence, present, pl, pos, [sentencian]).
+ty_verb(spanish, sentence, past, sg, pos, [sentenció]).
+ty_verb(spanish, sentence, past, pl, pos, [sentenciaron]).
 ty_verb(spanish, separate, present, sg, pos, [separa]).
 ty_verb(spanish, separate, present, pl, pos, [separan]).
 ty_verb(spanish, separate, past, sg, pos, [separó]).
@@ -31505,6 +31764,10 @@ ty_verb(spanish, shout, present, sg, pos, [grita]).
 ty_verb(spanish, shout, present, pl, pos, [gritan]).
 ty_verb(spanish, shout, past, sg, pos, [gritó]).
 ty_verb(spanish, shout, past, pl, pos, [gritaron]).
+ty_verb(spanish, show, present, sg, pos, [muestra]).
+ty_verb(spanish, show, present, pl, pos, [muestran]).
+ty_verb(spanish, show, past, sg, pos, [mostró]).
+ty_verb(spanish, show, past, pl, pos, [mostraron]).
 ty_verb(spanish, shun, present, sg, pos, [rehuye]).
 ty_verb(spanish, shun, present, pl, pos, [rehuyen]).
 ty_verb(spanish, shun, past, sg, pos, [rehuyó]).
@@ -31513,6 +31776,10 @@ ty_verb(spanish, sigh, present, sg, pos, [suspira]).
 ty_verb(spanish, sigh, present, pl, pos, [suspiran]).
 ty_verb(spanish, sigh, past, sg, pos, [suspiró]).
 ty_verb(spanish, sigh, past, pl, pos, [suspiraron]).
+ty_verb(spanish, sign, present, sg, pos, [firma]).
+ty_verb(spanish, sign, present, pl, pos, [firman]).
+ty_verb(spanish, sign, past, sg, pos, [firmó]).
+ty_verb(spanish, sign, past, pl, pos, [firmaron]).
 ty_verb(spanish, signal, present, sg, pos, [señala]).
 ty_verb(spanish, signal, present, pl, pos, [señalan]).
 ty_verb(spanish, signal, past, sg, pos, [señaló]).
@@ -31585,6 +31852,10 @@ ty_verb(spanish, space, present, sg, pos, [espacía]).
 ty_verb(spanish, space, present, pl, pos, [espacían]).
 ty_verb(spanish, space, past, sg, pos, [espació]).
 ty_verb(spanish, space, past, pl, pos, [espaciaron]).
+ty_verb(spanish, speak, present, sg, pos, [habla]).
+ty_verb(spanish, speak, present, pl, pos, [hablan]).
+ty_verb(spanish, speak, past, sg, pos, [habló]).
+ty_verb(spanish, speak, past, pl, pos, [hablaron]).
 ty_verb(spanish, specify, present, sg, pos, [especifica]).
 ty_verb(spanish, specify, present, pl, pos, [especifican]).
 ty_verb(spanish, specify, past, sg, pos, [especificó]).
@@ -31613,6 +31884,10 @@ ty_verb(spanish, spend, present, sg, pos, [gasta]).
 ty_verb(spanish, spend, present, pl, pos, [gastan]).
 ty_verb(spanish, spend, past, sg, pos, [gastó]).
 ty_verb(spanish, spend, past, pl, pos, [gastaron]).
+ty_verb(spanish, spend, present, sg, pos, [pasa]).
+ty_verb(spanish, spend, present, pl, pos, [pasan]).
+ty_verb(spanish, spend, past, sg, pos, [pasó]).
+ty_verb(spanish, spend, past, pl, pos, [pasaron]).
 ty_verb(spanish, spend, present, sg, pos, [emplea]).
 ty_verb(spanish, spend, present, pl, pos, [emplean]).
 ty_verb(spanish, spend, past, sg, pos, [empleó]).
@@ -31633,6 +31908,10 @@ ty_verb(spanish, spill, present, sg, pos, [derrama]).
 ty_verb(spanish, spill, present, pl, pos, [derraman]).
 ty_verb(spanish, spill, past, sg, pos, [derramó]).
 ty_verb(spanish, spill, past, pl, pos, [derramaron]).
+ty_verb(spanish, split, present, sg, pos, [parte]).
+ty_verb(spanish, split, present, pl, pos, [parten]).
+ty_verb(spanish, split, past, sg, pos, [partió]).
+ty_verb(spanish, split, past, pl, pos, [partieron]).
 ty_verb(spanish, sponsor, present, sg, pos, [patrocina]).
 ty_verb(spanish, sponsor, present, pl, pos, [patrocinan]).
 ty_verb(spanish, sponsor, past, sg, pos, [patrocinó]).
@@ -31653,6 +31932,10 @@ ty_verb(spanish, stage, present, sg, pos, [escenifica]).
 ty_verb(spanish, stage, present, pl, pos, [escenifican]).
 ty_verb(spanish, stage, past, sg, pos, [escenificó]).
 ty_verb(spanish, stage, past, pl, pos, [escenificaron]).
+ty_verb(spanish, stamp, present, sg, pos, [estampa]).
+ty_verb(spanish, stamp, present, pl, pos, [estampan]).
+ty_verb(spanish, stamp, past, sg, pos, [estampó]).
+ty_verb(spanish, stamp, past, pl, pos, [estamparon]).
 ty_verb(spanish, steal, present, sg, pos, [roba]).
 ty_verb(spanish, steal, present, pl, pos, [roban]).
 ty_verb(spanish, steal, past, sg, pos, [robó]).
@@ -31701,6 +31984,14 @@ ty_verb(spanish, stroll, present, sg, pos, [pasea]).
 ty_verb(spanish, stroll, present, pl, pos, [pasean]).
 ty_verb(spanish, stroll, past, sg, pos, [paseó]).
 ty_verb(spanish, stroll, past, pl, pos, [pasearon]).
+ty_verb(spanish, structure, present, sg, pos, [estructura]).
+ty_verb(spanish, structure, present, pl, pos, [estructuran]).
+ty_verb(spanish, structure, past, sg, pos, [estructuró]).
+ty_verb(spanish, structure, past, pl, pos, [estructuraron]).
+ty_verb(spanish, struggle, present, sg, pos, [lucha]).
+ty_verb(spanish, struggle, present, pl, pos, [luchan]).
+ty_verb(spanish, struggle, past, sg, pos, [luchó]).
+ty_verb(spanish, struggle, past, pl, pos, [lucharon]).
 ty_verb(spanish, study, present, sg, pos, [estudia]).
 ty_verb(spanish, study, present, pl, pos, [estudian]).
 ty_verb(spanish, study, past, sg, pos, [estudió]).
@@ -31721,6 +32012,10 @@ ty_verb(spanish, submerge, present, sg, pos, [sumerge]).
 ty_verb(spanish, submerge, present, pl, pos, [sumergen]).
 ty_verb(spanish, submerge, past, sg, pos, [sumergió]).
 ty_verb(spanish, submerge, past, pl, pos, [sumergieron]).
+ty_verb(spanish, deliver, present, sg, pos, [entrega]).
+ty_verb(spanish, deliver, present, pl, pos, [entregan]).
+ty_verb(spanish, deliver, past, sg, pos, [entregó]).
+ty_verb(spanish, deliver, past, pl, pos, [entregaron]).
 ty_verb(spanish, subordinate, present, sg, pos, [subordina]).
 ty_verb(spanish, subordinate, present, pl, pos, [subordinan]).
 ty_verb(spanish, subordinate, past, sg, pos, [subordinó]).
@@ -31745,6 +32040,10 @@ ty_verb(spanish, suckle, present, sg, pos, [amamanta]).
 ty_verb(spanish, suckle, present, pl, pos, [amamantan]).
 ty_verb(spanish, suckle, past, sg, pos, [amamantó]).
 ty_verb(spanish, suckle, past, pl, pos, [amamantaron]).
+ty_verb(spanish, sue, present, sg, pos, [demanda]).
+ty_verb(spanish, sue, present, pl, pos, [demandan]).
+ty_verb(spanish, sue, past, sg, pos, [demandó]).
+ty_verb(spanish, sue, past, pl, pos, [demandaron]).
 ty_verb(spanish, suffer, present, sg, pos, [padece]).
 ty_verb(spanish, suffer, present, pl, pos, [padecen]).
 ty_verb(spanish, suffer, past, sg, pos, [padeció]).
@@ -31753,6 +32052,10 @@ ty_verb(spanish, suffice, present, sg, pos, [basta]).
 ty_verb(spanish, suffice, present, pl, pos, [bastan]).
 ty_verb(spanish, suffice, past, sg, pos, [bastó]).
 ty_verb(spanish, suffice, past, pl, pos, [bastaron]).
+ty_verb(spanish, suffocate, present, sg, pos, [asfixia]).
+ty_verb(spanish, suffocate, present, pl, pos, [asfixian]).
+ty_verb(spanish, suffocate, past, sg, pos, [asfixió]).
+ty_verb(spanish, suffocate, past, pl, pos, [asfixiaron]).
 ty_verb(spanish, suggest, present, sg, pos, [sugiere]).
 ty_verb(spanish, suggest, present, pl, pos, [sugieren]).
 ty_verb(spanish, suggest, past, sg, pos, [sugirió]).
@@ -31809,6 +32112,10 @@ ty_verb(spanish, survive, present, sg, pos, [sobrevive]).
 ty_verb(spanish, survive, present, pl, pos, [sobreviven]).
 ty_verb(spanish, survive, past, sg, pos, [sobrevivió]).
 ty_verb(spanish, survive, past, pl, pos, [sobrevivieron]).
+ty_verb(spanish, suspect, present, sg, pos, [sospecha]).
+ty_verb(spanish, suspect, present, pl, pos, [sospechan]).
+ty_verb(spanish, suspect, past, sg, pos, [sospechó]).
+ty_verb(spanish, suspect, past, pl, pos, [sospecharon]).
 ty_verb(spanish, suspend, present, sg, pos, [suspende]).
 ty_verb(spanish, suspend, present, pl, pos, [suspenden]).
 ty_verb(spanish, suspend, past, sg, pos, [suspendió]).
@@ -31857,6 +32164,10 @@ ty_verb(spanish, take, present, sg, pos, [lleva]).
 ty_verb(spanish, take, present, pl, pos, [llevan]).
 ty_verb(spanish, take, past, sg, pos, [llevó]).
 ty_verb(spanish, take, past, pl, pos, [llevaron]).
+ty_verb(spanish, tax, present, sg, pos, [grava]).
+ty_verb(spanish, tax, present, pl, pos, [gravan]).
+ty_verb(spanish, tax, past, sg, pos, [gravó]).
+ty_verb(spanish, tax, past, pl, pos, [gravaron]).
 ty_verb(spanish, teach, present, sg, pos, [enseña]).
 ty_verb(spanish, teach, present, pl, pos, [enseñan]).
 ty_verb(spanish, teach, past, sg, pos, [enseñó]).
@@ -31889,6 +32200,10 @@ ty_verb(spanish, tend, present, sg, pos, [tiende]).
 ty_verb(spanish, tend, present, pl, pos, [tienden]).
 ty_verb(spanish, tend, past, sg, pos, [tendió]).
 ty_verb(spanish, tend, past, pl, pos, [tendieron]).
+ty_verb(spanish, test, present, sg, pos, [prueba]).
+ty_verb(spanish, test, present, pl, pos, [prueban]).
+ty_verb(spanish, test, past, sg, pos, [probó]).
+ty_verb(spanish, test, past, pl, pos, [probaron]).
 ty_verb(spanish, testify, present, sg, pos, [atestigua]).
 ty_verb(spanish, testify, present, pl, pos, [atestiguan]).
 ty_verb(spanish, testify, past, sg, pos, [atestiguó]).
@@ -31909,6 +32224,10 @@ ty_verb(spanish, thunder, present, sg, pos, [truena]).
 ty_verb(spanish, thunder, present, pl, pos, [truenan]).
 ty_verb(spanish, thunder, past, sg, pos, [tronó]).
 ty_verb(spanish, thunder, past, pl, pos, [tronaron]).
+ty_verb(spanish, tie, present, sg, pos, [liga]).
+ty_verb(spanish, tie, present, pl, pos, [ligan]).
+ty_verb(spanish, tie, past, sg, pos, [ligó]).
+ty_verb(spanish, tie, past, pl, pos, [ligaron]).
 ty_verb(spanish, tighten, present, sg, pos, [aprieta]).
 ty_verb(spanish, tighten, present, pl, pos, [aprietan]).
 ty_verb(spanish, tighten, past, sg, pos, [apretó]).
@@ -31929,6 +32248,14 @@ ty_verb(spanish, tolerate, present, sg, pos, [tolera]).
 ty_verb(spanish, tolerate, present, pl, pos, [toleran]).
 ty_verb(spanish, tolerate, past, sg, pos, [toleró]).
 ty_verb(spanish, tolerate, past, pl, pos, [toleraron]).
+ty_verb(spanish, top, present, sg, pos, [corona]).
+ty_verb(spanish, top, present, pl, pos, [coronan]).
+ty_verb(spanish, top, past, sg, pos, [coronó]).
+ty_verb(spanish, top, past, pl, pos, [coronaron]).
+ty_verb(spanish, torture, present, sg, pos, [tortura]).
+ty_verb(spanish, torture, present, pl, pos, [torturan]).
+ty_verb(spanish, torture, past, sg, pos, [torturó]).
+ty_verb(spanish, torture, past, pl, pos, [torturaron]).
 ty_verb(spanish, toughen, present, sg, pos, [endurece]).
 ty_verb(spanish, toughen, present, pl, pos, [endurecen]).
 ty_verb(spanish, toughen, past, sg, pos, [endureció]).
@@ -31989,6 +32316,10 @@ ty_verb(spanish, truncate, present, sg, pos, [trunca]).
 ty_verb(spanish, truncate, present, pl, pos, [truncan]).
 ty_verb(spanish, truncate, past, sg, pos, [truncó]).
 ty_verb(spanish, truncate, past, pl, pos, [truncaron]).
+ty_verb(spanish, try, present, sg, pos, [prueba]).
+ty_verb(spanish, try, present, pl, pos, [prueban]).
+ty_verb(spanish, try, past, sg, pos, [probó]).
+ty_verb(spanish, try, past, pl, pos, [probaron]).
 ty_verb(spanish, turn, present, sg, pos, [gira]).
 ty_verb(spanish, turn, present, pl, pos, [giran]).
 ty_verb(spanish, turn, past, sg, pos, [giró]).
@@ -32073,10 +32404,18 @@ ty_verb(spanish, vary, present, sg, pos, [varía]).
 ty_verb(spanish, vary, present, pl, pos, [varían]).
 ty_verb(spanish, vary, past, sg, pos, [varió]).
 ty_verb(spanish, vary, past, pl, pos, [variaron]).
+ty_verb(spanish, visit, present, sg, pos, [visita]).
+ty_verb(spanish, visit, present, pl, pos, [visitan]).
+ty_verb(spanish, visit, past, sg, pos, [visitó]).
+ty_verb(spanish, visit, past, pl, pos, [visitaron]).
 ty_verb(spanish, vote, present, sg, pos, [vota]).
 ty_verb(spanish, vote, present, pl, pos, [votan]).
 ty_verb(spanish, vote, past, sg, pos, [votó]).
 ty_verb(spanish, vote, past, pl, pos, [votaron]).
+ty_verb(spanish, wait, present, sg, pos, [espera]).
+ty_verb(spanish, wait, present, pl, pos, [esperan]).
+ty_verb(spanish, wait, past, sg, pos, [esperó]).
+ty_verb(spanish, wait, past, pl, pos, [esperaron]).
 ty_verb(spanish, walk, present, sg, pos, [anda]).
 ty_verb(spanish, walk, present, pl, pos, [andan]).
 ty_verb(spanish, walk, past, sg, pos, [anduvo]).
@@ -32085,6 +32424,10 @@ ty_verb(spanish, wander, present, sg, pos, [vaga]).
 ty_verb(spanish, wander, present, pl, pos, [vagan]).
 ty_verb(spanish, wander, past, sg, pos, [vagó]).
 ty_verb(spanish, wander, past, pl, pos, [vagaron]).
+ty_verb(spanish, wash, present, sg, pos, [lava]).
+ty_verb(spanish, wash, present, pl, pos, [lavan]).
+ty_verb(spanish, wash, past, sg, pos, [lavó]).
+ty_verb(spanish, wash, past, pl, pos, [lavaron]).
 ty_verb(spanish, waste, present, sg, pos, [malgasta]).
 ty_verb(spanish, waste, present, pl, pos, [malgastan]).
 ty_verb(spanish, waste, past, sg, pos, [malgastó]).
@@ -32121,6 +32464,10 @@ ty_verb(spanish, withdraw, present, sg, pos, [retira]).
 ty_verb(spanish, withdraw, present, pl, pos, [retiran]).
 ty_verb(spanish, withdraw, past, sg, pos, [retiró]).
 ty_verb(spanish, withdraw, past, pl, pos, [retiraron]).
+ty_verb(spanish, witness, present, sg, pos, [presencia]).
+ty_verb(spanish, witness, present, pl, pos, [presencian]).
+ty_verb(spanish, witness, past, sg, pos, [presenció]).
+ty_verb(spanish, witness, past, pl, pos, [presenciaron]).
 ty_verb(spanish, work, present, sg, pos, [explota]).
 ty_verb(spanish, work, present, pl, pos, [explotan]).
 ty_verb(spanish, work, past, sg, pos, [explotó]).
@@ -32265,6 +32612,10 @@ ty_verb(spanish, extort, present, sg, pos, [extorsiona]).
 ty_verb(spanish, extort, present, pl, pos, [extorsionan]).
 ty_verb(spanish, extort, past, sg, pos, [extorsionó]).
 ty_verb(spanish, extort, past, pl, pos, [extorsionaron]).
+ty_verb(spanish, float, present, sg, pos, [flota]).
+ty_verb(spanish, float, present, pl, pos, [flotan]).
+ty_verb(spanish, float, past, sg, pos, [flotó]).
+ty_verb(spanish, float, past, pl, pos, [flotaron]).
 ty_verb(spanish, creak, present, sg, pos, [gañe]).
 ty_verb(spanish, creak, present, pl, pos, [gañen]).
 ty_verb(spanish, creak, past, sg, pos, [gañió]).
@@ -32385,6 +32736,10 @@ ty_verb(spanish, horrify, present, sg, pos, [horroriza]).
 ty_verb(spanish, horrify, present, pl, pos, [horrorizan]).
 ty_verb(spanish, horrify, past, sg, pos, [horrorizó]).
 ty_verb(spanish, horrify, past, pl, pos, [horrorizaron]).
+ty_verb(spanish, alert, present, sg, pos, [alerta]).
+ty_verb(spanish, alert, present, pl, pos, [alertan]).
+ty_verb(spanish, alert, past, sg, pos, [alertó]).
+ty_verb(spanish, alert, past, pl, pos, [alertaron]).
 ty_verb(spanish, enrich, present, sg, pos, [enriquece]).
 ty_verb(spanish, enrich, present, pl, pos, [enriquecen]).
 ty_verb(spanish, enrich, past, sg, pos, [enriqueció]).
@@ -32401,6 +32756,10 @@ ty_verb(spanish, redo, present, sg, pos, [rehace]).
 ty_verb(spanish, redo, present, pl, pos, [rehacen]).
 ty_verb(spanish, redo, past, sg, pos, [rehizo]).
 ty_verb(spanish, redo, past, pl, pos, [rehicieron]).
+ty_verb(spanish, dine, present, sg, pos, [cena]).
+ty_verb(spanish, dine, present, pl, pos, [cenan]).
+ty_verb(spanish, dine, past, sg, pos, [cenó]).
+ty_verb(spanish, dine, past, pl, pos, [cenaron]).
 ty_verb(spanish, groan, present, sg, pos, [gime]).
 ty_verb(spanish, groan, present, pl, pos, [gimen]).
 ty_verb(spanish, groan, past, sg, pos, [gimió]).
@@ -32437,6 +32796,10 @@ ty_verb(spanish, reproach, present, sg, pos, [reprocha]).
 ty_verb(spanish, reproach, present, pl, pos, [reprochan]).
 ty_verb(spanish, reproach, past, sg, pos, [reprochó]).
 ty_verb(spanish, reproach, past, pl, pos, [reprocharon]).
+ty_verb(spanish, sift, present, sg, pos, [criba]).
+ty_verb(spanish, sift, present, pl, pos, [criban]).
+ty_verb(spanish, sift, past, sg, pos, [cribó]).
+ty_verb(spanish, sift, past, pl, pos, [cribaron]).
 ty_verb(spanish, discern, present, sg, pos, [vislumbra]).
 ty_verb(spanish, discern, present, pl, pos, [vislumbran]).
 ty_verb(spanish, discern, past, sg, pos, [vislumbró]).
@@ -32493,6 +32856,10 @@ ty_verb(spanish, bronz, present, sg, pos, [broncea]).
 ty_verb(spanish, bronz, present, pl, pos, [broncean]).
 ty_verb(spanish, bronz, past, sg, pos, [bronceó]).
 ty_verb(spanish, bronz, past, pl, pos, [broncearon]).
+ty_verb(spanish, trick, present, sg, pos, [burla]).
+ty_verb(spanish, trick, present, pl, pos, [burlan]).
+ty_verb(spanish, trick, past, sg, pos, [burló]).
+ty_verb(spanish, trick, past, pl, pos, [burlaron]).
 ty_verb(spanish, exasperate, present, sg, pos, [desespera]).
 ty_verb(spanish, exasperate, present, pl, pos, [desesperan]).
 ty_verb(spanish, exasperate, past, sg, pos, [desesperó]).
@@ -32509,6 +32876,10 @@ ty_verb(spanish, denationalise, present, sg, pos, [desnacionaliza]).
 ty_verb(spanish, denationalise, present, pl, pos, [desnacionalizan]).
 ty_verb(spanish, denationalise, past, sg, pos, [desnacionalizó]).
 ty_verb(spanish, denationalise, past, pl, pos, [desnacionalizaron]).
+ty_verb(spanish, differentiate, present, sg, pos, [diferencia]).
+ty_verb(spanish, differentiate, present, pl, pos, [diferencian]).
+ty_verb(spanish, differentiate, past, sg, pos, [diferenció]).
+ty_verb(spanish, differentiate, past, pl, pos, [diferenciaron]).
 ty_verb(spanish, dissemble, present, sg, pos, [disimula]).
 ty_verb(spanish, dissemble, present, pl, pos, [disimulan]).
 ty_verb(spanish, dissemble, past, sg, pos, [disimuló]).
@@ -32557,6 +32928,10 @@ ty_verb(spanish, clone, present, sg, pos, [clona]).
 ty_verb(spanish, clone, present, pl, pos, [clonan]).
 ty_verb(spanish, clone, past, sg, pos, [clonó]).
 ty_verb(spanish, clone, past, pl, pos, [clonaron]).
+ty_verb(spanish, square, present, sg, pos, [cuadra]).
+ty_verb(spanish, square, present, pl, pos, [cuadran]).
+ty_verb(spanish, square, past, sg, pos, [cuadró]).
+ty_verb(spanish, square, past, pl, pos, [cuadraron]).
 ty_verb(spanish, grease, present, sg, pos, [engrasa]).
 ty_verb(spanish, grease, present, pl, pos, [engrasan]).
 ty_verb(spanish, grease, past, sg, pos, [engrasó]).
@@ -32573,10 +32948,18 @@ ty_verb(spanish, compress, present, sg, pos, [comprime]).
 ty_verb(spanish, compress, present, pl, pos, [comprimen]).
 ty_verb(spanish, compress, past, sg, pos, [comprimió]).
 ty_verb(spanish, compress, past, pl, pos, [comprimieron]).
+ty_verb(spanish, conserve, present, sg, pos, [conserva]).
+ty_verb(spanish, conserve, present, pl, pos, [conservan]).
+ty_verb(spanish, conserve, past, sg, pos, [conservó]).
+ty_verb(spanish, conserve, past, pl, pos, [conservaron]).
 ty_verb(spanish, crystallise, present, sg, pos, [cristaliza]).
 ty_verb(spanish, crystallise, present, pl, pos, [cristalizan]).
 ty_verb(spanish, crystallise, past, sg, pos, [cristalizó]).
 ty_verb(spanish, crystallise, past, pl, pos, [cristalizaron]).
+ty_verb(spanish, reign, present, sg, pos, [reina]).
+ty_verb(spanish, reign, present, pl, pos, [reinan]).
+ty_verb(spanish, reign, past, sg, pos, [reinó]).
+ty_verb(spanish, reign, past, pl, pos, [reinaron]).
 ty_verb(spanish, remedy, present, sg, pos, [remedia]).
 ty_verb(spanish, remedy, present, pl, pos, [remedian]).
 ty_verb(spanish, remedy, past, sg, pos, [remedió]).
@@ -32589,6 +32972,10 @@ ty_verb(spanish, specialise, present, sg, pos, [especializa]).
 ty_verb(spanish, specialise, present, pl, pos, [especializan]).
 ty_verb(spanish, specialise, past, sg, pos, [especializó]).
 ty_verb(spanish, specialise, past, pl, pos, [especializaron]).
+ty_verb(spanish, spy, present, sg, pos, [espía]).
+ty_verb(spanish, spy, present, pl, pos, [espían]).
+ty_verb(spanish, spy, past, sg, pos, [espió]).
+ty_verb(spanish, spy, past, pl, pos, [espiaron]).
 ty_verb(spanish, transcribe, present, sg, pos, [transcribe]).
 ty_verb(spanish, transcribe, present, pl, pos, [transcriben]).
 ty_verb(spanish, transcribe, past, sg, pos, [transcribió]).
@@ -32709,6 +33096,10 @@ ty_verb(spanish, gratify, present, sg, pos, [gratifica]).
 ty_verb(spanish, gratify, present, pl, pos, [gratifican]).
 ty_verb(spanish, gratify, past, sg, pos, [gratificó]).
 ty_verb(spanish, gratify, past, pl, pos, [gratificaron]).
+ty_verb(spanish, weave, present, sg, pos, [trama]).
+ty_verb(spanish, weave, present, pl, pos, [traman]).
+ty_verb(spanish, weave, past, sg, pos, [tramó]).
+ty_verb(spanish, weave, past, pl, pos, [tramaron]).
 ty_verb(spanish, verify, present, sg, pos, [verifica]).
 ty_verb(spanish, verify, present, pl, pos, [verifican]).
 ty_verb(spanish, verify, past, sg, pos, [verificó]).
@@ -32745,6 +33136,10 @@ ty_verb(spanish, sublimate, present, sg, pos, [sublima]).
 ty_verb(spanish, sublimate, present, pl, pos, [subliman]).
 ty_verb(spanish, sublimate, past, sg, pos, [sublimó]).
 ty_verb(spanish, sublimate, past, pl, pos, [sublimaron]).
+ty_verb(spanish, urinate, present, sg, pos, [orina]).
+ty_verb(spanish, urinate, present, pl, pos, [orinan]).
+ty_verb(spanish, urinate, past, sg, pos, [orinó]).
+ty_verb(spanish, urinate, past, pl, pos, [orinaron]).
 ty_verb(spanish, toast, present, sg, pos, [tuesta]).
 ty_verb(spanish, toast, present, pl, pos, [tuestan]).
 ty_verb(spanish, toast, past, sg, pos, [tostó]).
@@ -32837,6 +33232,10 @@ ty_verb(spanish, stagnate, present, sg, pos, [estanca]).
 ty_verb(spanish, stagnate, present, pl, pos, [estancan]).
 ty_verb(spanish, stagnate, past, sg, pos, [estancó]).
 ty_verb(spanish, stagnate, past, pl, pos, [estancaron]).
+ty_verb(spanish, salivate, present, sg, pos, [saliva]).
+ty_verb(spanish, salivate, present, pl, pos, [salivan]).
+ty_verb(spanish, salivate, past, sg, pos, [salivó]).
+ty_verb(spanish, salivate, past, pl, pos, [salivaron]).
 ty_verb(spanish, sanctify, present, sg, pos, [santifica]).
 ty_verb(spanish, sanctify, present, pl, pos, [santifican]).
 ty_verb(spanish, sanctify, past, sg, pos, [santificó]).
@@ -32857,6 +33256,10 @@ ty_verb(spanish, incur, present, sg, pos, [incurre]).
 ty_verb(spanish, incur, present, pl, pos, [incurren]).
 ty_verb(spanish, incur, past, sg, pos, [incurrió]).
 ty_verb(spanish, incur, past, pl, pos, [incurrieron]).
+ty_verb(spanish, litigate, present, sg, pos, [pelea]).
+ty_verb(spanish, litigate, present, pl, pos, [pelean]).
+ty_verb(spanish, litigate, past, sg, pos, [peleó]).
+ty_verb(spanish, litigate, past, pl, pos, [pelearon]).
 ty_verb(spanish, embezzle, present, sg, pos, [sustrae]).
 ty_verb(spanish, embezzle, present, pl, pos, [sustraen]).
 ty_verb(spanish, embezzle, past, sg, pos, [sustrajo]).
@@ -32865,6 +33268,18 @@ ty_verb(spanish, paginate, present, sg, pos, [compagina]).
 ty_verb(spanish, paginate, present, pl, pos, [compaginan]).
 ty_verb(spanish, paginate, past, sg, pos, [compaginó]).
 ty_verb(spanish, paginate, past, pl, pos, [compaginaron]).
+ty_verb(spanish, watch, present, sg, pos, [vela]).
+ty_verb(spanish, watch, present, pl, pos, [velan]).
+ty_verb(spanish, watch, past, sg, pos, [veló]).
+ty_verb(spanish, watch, past, pl, pos, [velaron]).
+ty_verb(spanish, act, present, sg, pos, [obra]).
+ty_verb(spanish, act, present, pl, pos, [obran]).
+ty_verb(spanish, act, past, sg, pos, [obró]).
+ty_verb(spanish, act, past, pl, pos, [obraron]).
+ty_verb(spanish, work, present, sg, pos, [obra]).
+ty_verb(spanish, work, present, pl, pos, [obran]).
+ty_verb(spanish, work, past, sg, pos, [obró]).
+ty_verb(spanish, work, past, pl, pos, [obraron]).
 ty_verb(spanish, govern, present, sg, pos, [rige]).
 ty_verb(spanish, govern, present, pl, pos, [rigen]).
 ty_verb(spanish, govern, past, sg, pos, [rigió]).
@@ -32877,6 +33292,10 @@ ty_verb(spanish, reward, present, sg, pos, [retribuye]).
 ty_verb(spanish, reward, present, pl, pos, [retribuyen]).
 ty_verb(spanish, reward, past, sg, pos, [retribuyó]).
 ty_verb(spanish, reward, past, pl, pos, [retribuyeron]).
+ty_verb(spanish, battle, present, sg, pos, [batalla]).
+ty_verb(spanish, battle, present, pl, pos, [batallan]).
+ty_verb(spanish, battle, past, sg, pos, [batalló]).
+ty_verb(spanish, battle, past, pl, pos, [batallaron]).
 ty_verb(spanish, attract, present, sg, pos, [capta]).
 ty_verb(spanish, attract, present, pl, pos, [captan]).
 ty_verb(spanish, attract, past, sg, pos, [captó]).
@@ -32901,6 +33320,10 @@ ty_verb(spanish, enjoy, present, sg, pos, [goza]).
 ty_verb(spanish, enjoy, present, pl, pos, [gozan]).
 ty_verb(spanish, enjoy, past, sg, pos, [gozó]).
 ty_verb(spanish, enjoy, past, pl, pos, [gozaron]).
+ty_verb(spanish, appear, present, sg, pos, [figura]).
+ty_verb(spanish, appear, present, pl, pos, [figuran]).
+ty_verb(spanish, appear, past, sg, pos, [figuró]).
+ty_verb(spanish, appear, past, pl, pos, [figuraron]).
 ty_verb(spanish, exempt, present, sg, pos, [exime]).
 ty_verb(spanish, exempt, present, pl, pos, [eximen]).
 ty_verb(spanish, exempt, past, sg, pos, [eximió]).
@@ -33021,6 +33444,14 @@ ty_verb(spanish, reunite, present, sg, pos, [reúne]).
 ty_verb(spanish, reunite, present, pl, pos, [reúnen]).
 ty_verb(spanish, reunite, past, sg, pos, [reunió]).
 ty_verb(spanish, reunite, past, pl, pos, [reunieron]).
+ty_verb(spanish, slander, present, sg, pos, [calumnia]).
+ty_verb(spanish, slander, present, pl, pos, [calumnian]).
+ty_verb(spanish, slander, past, sg, pos, [calumnió]).
+ty_verb(spanish, slander, past, pl, pos, [calumniaron]).
+ty_verb(spanish, upload, present, sg, pos, [carga]).
+ty_verb(spanish, upload, present, pl, pos, [cargan]).
+ty_verb(spanish, upload, past, sg, pos, [cargó]).
+ty_verb(spanish, upload, past, pl, pos, [cargaron]).
 ty_verb(spanish, boo, present, sg, pos, [abuchea]).
 ty_verb(spanish, boo, present, pl, pos, [abuchean]).
 ty_verb(spanish, boo, past, sg, pos, [abucheó]).
@@ -33157,6 +33588,10 @@ ty_verb(spanish, affix, present, sg, pos, [fija]).
 ty_verb(spanish, affix, present, pl, pos, [fijan]).
 ty_verb(spanish, affix, past, sg, pos, [fijó]).
 ty_verb(spanish, affix, past, pl, pos, [fijaron]).
+ty_verb(spanish, affront, present, sg, pos, [afrenta]).
+ty_verb(spanish, affront, present, pl, pos, [afrentan]).
+ty_verb(spanish, affront, past, sg, pos, [afrentó]).
+ty_verb(spanish, affront, past, pl, pos, [afrentaron]).
 ty_verb(spanish, aground, present, sg, pos, [encalla]).
 ty_verb(spanish, aground, present, pl, pos, [encallan]).
 ty_verb(spanish, aground, past, sg, pos, [encalló]).
@@ -33237,6 +33672,10 @@ ty_verb(spanish, animate, present, sg, pos, [anima]).
 ty_verb(spanish, animate, present, pl, pos, [animan]).
 ty_verb(spanish, animate, past, sg, pos, [animó]).
 ty_verb(spanish, animate, past, pl, pos, [animaron]).
+ty_verb(spanish, note, present, sg, pos, [nota]).
+ty_verb(spanish, note, present, pl, pos, [notan]).
+ty_verb(spanish, note, past, sg, pos, [notó]).
+ty_verb(spanish, note, past, pl, pos, [notaron]).
 ty_verb(spanish, annotate, present, sg, pos, [anota]).
 ty_verb(spanish, annotate, present, pl, pos, [anotan]).
 ty_verb(spanish, annotate, past, sg, pos, [anotó]).
@@ -33249,6 +33688,10 @@ ty_verb(spanish, appal, present, sg, pos, [horroriza]).
 ty_verb(spanish, appal, present, pl, pos, [horrorizan]).
 ty_verb(spanish, appal, past, sg, pos, [horrorizó]).
 ty_verb(spanish, appal, past, pl, pos, [horrorizaron]).
+ty_verb(spanish, append, present, sg, pos, [anexa]).
+ty_verb(spanish, append, present, pl, pos, [anexan]).
+ty_verb(spanish, append, past, sg, pos, [anexó]).
+ty_verb(spanish, append, past, pl, pos, [anexaron]).
 ty_verb(spanish, apprehend, present, sg, pos, [aprehende]).
 ty_verb(spanish, apprehend, present, pl, pos, [aprehenden]).
 ty_verb(spanish, apprehend, past, sg, pos, [aprehendió]).
@@ -33257,10 +33700,18 @@ ty_verb(spanish, ascend, present, sg, pos, [asciende]).
 ty_verb(spanish, ascend, present, pl, pos, [ascienden]).
 ty_verb(spanish, ascend, past, sg, pos, [ascendió]).
 ty_verb(spanish, ascend, past, pl, pos, [ascendieron]).
+ty_verb(spanish, asphyxiate, present, sg, pos, [asfixia]).
+ty_verb(spanish, asphyxiate, present, pl, pos, [asfixian]).
+ty_verb(spanish, asphyxiate, past, sg, pos, [asfixió]).
+ty_verb(spanish, asphyxiate, past, pl, pos, [asfixiaron]).
 ty_verb(spanish, aspirate, present, sg, pos, [aspira]).
 ty_verb(spanish, aspirate, present, pl, pos, [aspiran]).
 ty_verb(spanish, aspirate, past, sg, pos, [aspiró]).
 ty_verb(spanish, aspirate, past, pl, pos, [aspiraron]).
+ty_verb(spanish, assassinate, present, sg, pos, [asesina]).
+ty_verb(spanish, assassinate, present, pl, pos, [asesinan]).
+ty_verb(spanish, assassinate, past, sg, pos, [asesinó]).
+ty_verb(spanish, assassinate, past, pl, pos, [asesinaron]).
 ty_verb(spanish, assay, present, sg, pos, [ensaya]).
 ty_verb(spanish, assay, present, pl, pos, [ensayan]).
 ty_verb(spanish, assay, past, sg, pos, [ensayó]).
@@ -33345,6 +33796,10 @@ ty_verb(spanish, minimise, present, sg, pos, [minimiza]).
 ty_verb(spanish, minimise, present, pl, pos, [minimizan]).
 ty_verb(spanish, minimise, past, sg, pos, [minimizó]).
 ty_verb(spanish, minimise, past, pl, pos, [minimizaron]).
+ty_verb(spanish, vent, present, sg, pos, [descarga]).
+ty_verb(spanish, vent, present, pl, pos, [descargan]).
+ty_verb(spanish, vent, past, sg, pos, [descargó]).
+ty_verb(spanish, vent, past, pl, pos, [descargaron]).
 ty_verb(spanish, unravel, present, sg, pos, [desenmaraña]).
 ty_verb(spanish, unravel, present, pl, pos, [desenmarañan]).
 ty_verb(spanish, unravel, past, sg, pos, [desenmarañó]).
@@ -33429,6 +33884,10 @@ ty_verb(spanish, rig, present, sg, pos, [apareja]).
 ty_verb(spanish, rig, present, pl, pos, [aparejan]).
 ty_verb(spanish, rig, past, sg, pos, [aparejó]).
 ty_verb(spanish, rig, past, pl, pos, [aparejaron]).
+ty_verb(spanish, curate, present, sg, pos, [comisaría]).
+ty_verb(spanish, curate, present, pl, pos, [comisarían]).
+ty_verb(spanish, curate, past, sg, pos, [comisarió]).
+ty_verb(spanish, curate, past, pl, pos, [comisariaron]).
 ty_verb(spanish, overrun, present, sg, pos, [invade]).
 ty_verb(spanish, overrun, present, pl, pos, [invaden]).
 ty_verb(spanish, overrun, past, sg, pos, [invadió]).
@@ -33457,6 +33916,10 @@ ty_verb(spanish, pit, present, sg, pos, [deshuesa]).
 ty_verb(spanish, pit, present, pl, pos, [deshuesan]).
 ty_verb(spanish, pit, past, sg, pos, [deshuesó]).
 ty_verb(spanish, pit, past, pl, pos, [deshuesaron]).
+ty_verb(spanish, escort, present, sg, pos, [escolta]).
+ty_verb(spanish, escort, present, pl, pos, [escoltan]).
+ty_verb(spanish, escort, past, sg, pos, [escoltó]).
+ty_verb(spanish, escort, past, pl, pos, [escoltaron]).
 ty_verb(spanish, defect, present, sg, pos, [deserta]).
 ty_verb(spanish, defect, present, pl, pos, [desertan]).
 ty_verb(spanish, defect, past, sg, pos, [desertó]).
@@ -33517,6 +33980,14 @@ ty_verb(spanish, hail, present, sg, pos, [saluda]).
 ty_verb(spanish, hail, present, pl, pos, [saludan]).
 ty_verb(spanish, hail, past, sg, pos, [saludó]).
 ty_verb(spanish, hail, past, pl, pos, [saludaron]).
+ty_verb(spanish, rape, present, sg, pos, [viola]).
+ty_verb(spanish, rape, present, pl, pos, [violan]).
+ty_verb(spanish, rape, past, sg, pos, [violó]).
+ty_verb(spanish, rape, past, pl, pos, [violaron]).
+ty_verb(spanish, violate, present, sg, pos, [viola]).
+ty_verb(spanish, violate, present, pl, pos, [violan]).
+ty_verb(spanish, violate, past, sg, pos, [violó]).
+ty_verb(spanish, violate, past, pl, pos, [violaron]).
 ty_verb(spanish, dread, present, sg, pos, [teme]).
 ty_verb(spanish, dread, present, pl, pos, [temen]).
 ty_verb(spanish, dread, past, sg, pos, [temió]).
@@ -33569,6 +34040,10 @@ ty_verb(spanish, monitor, present, sg, pos, [monitorea]).
 ty_verb(spanish, monitor, present, pl, pos, [monitorean]).
 ty_verb(spanish, monitor, past, sg, pos, [monitoreó]).
 ty_verb(spanish, monitor, past, pl, pos, [monitorearon]).
+ty_verb(spanish, launder, present, sg, pos, [lava]).
+ty_verb(spanish, launder, present, pl, pos, [lavan]).
+ty_verb(spanish, launder, past, sg, pos, [lavó]).
+ty_verb(spanish, launder, past, pl, pos, [lavaron]).
 ty_verb(spanish, launder, present, sg, pos, [blanquea]).
 ty_verb(spanish, launder, present, pl, pos, [blanquean]).
 ty_verb(spanish, launder, past, sg, pos, [blanqueó]).
@@ -33733,6 +34208,14 @@ ty_verb(spanish, delineate, present, sg, pos, [delinea]).
 ty_verb(spanish, delineate, present, pl, pos, [delinean]).
 ty_verb(spanish, delineate, past, sg, pos, [delineó]).
 ty_verb(spanish, delineate, past, pl, pos, [delinearon]).
+ty_verb(spanish, doom, present, sg, pos, [condena]).
+ty_verb(spanish, doom, present, pl, pos, [condenan]).
+ty_verb(spanish, doom, past, sg, pos, [condenó]).
+ty_verb(spanish, doom, past, pl, pos, [condenaron]).
+ty_verb(spanish, tame, present, sg, pos, [doma]).
+ty_verb(spanish, tame, present, pl, pos, [doman]).
+ty_verb(spanish, tame, past, sg, pos, [domó]).
+ty_verb(spanish, tame, past, pl, pos, [domaron]).
 ty_verb(spanish, domesticate, present, sg, pos, [domestica]).
 ty_verb(spanish, domesticate, present, pl, pos, [domestican]).
 ty_verb(spanish, domesticate, past, sg, pos, [domesticó]).
@@ -33741,6 +34224,10 @@ ty_verb(spanish, displease, present, sg, pos, [desagrada]).
 ty_verb(spanish, displease, present, pl, pos, [desagradan]).
 ty_verb(spanish, displease, past, sg, pos, [desagradó]).
 ty_verb(spanish, displease, past, pl, pos, [desagradaron]).
+ty_verb(spanish, blemish, present, sg, pos, [mancha]).
+ty_verb(spanish, blemish, present, pl, pos, [manchan]).
+ty_verb(spanish, blemish, past, sg, pos, [manchó]).
+ty_verb(spanish, blemish, past, pl, pos, [mancharon]).
 ty_verb(spanish, foreshadow, present, sg, pos, [presagia]).
 ty_verb(spanish, foreshadow, present, pl, pos, [presagian]).
 ty_verb(spanish, foreshadow, past, sg, pos, [presagió]).
@@ -33825,6 +34312,10 @@ ty_verb(spanish, overhaul, present, sg, pos, [revisa]).
 ty_verb(spanish, overhaul, present, pl, pos, [revisan]).
 ty_verb(spanish, overhaul, past, sg, pos, [revisó]).
 ty_verb(spanish, overhaul, past, pl, pos, [revisaron]).
+ty_verb(spanish, libel, present, sg, pos, [calumnia]).
+ty_verb(spanish, libel, present, pl, pos, [calumnian]).
+ty_verb(spanish, libel, past, sg, pos, [calumnió]).
+ty_verb(spanish, libel, past, pl, pos, [calumniaron]).
 ty_verb(spanish, unfold, present, sg, pos, [despliega]).
 ty_verb(spanish, unfold, present, pl, pos, [despliegan]).
 ty_verb(spanish, unfold, past, sg, pos, [desplegó]).
@@ -33885,10 +34376,18 @@ ty_verb(spanish, commemorate, present, sg, pos, [conmemora]).
 ty_verb(spanish, commemorate, present, pl, pos, [conmemoran]).
 ty_verb(spanish, commemorate, past, sg, pos, [conmemoró]).
 ty_verb(spanish, commemorate, past, pl, pos, [conmemoraron]).
+ty_verb(spanish, advise, present, sg, pos, [asesora]).
+ty_verb(spanish, advise, present, pl, pos, [asesoran]).
+ty_verb(spanish, advise, past, sg, pos, [asesoró]).
+ty_verb(spanish, advise, past, pl, pos, [asesoraron]).
 ty_verb(spanish, endorse, present, sg, pos, [avala]).
 ty_verb(spanish, endorse, present, pl, pos, [avalan]).
 ty_verb(spanish, endorse, past, sg, pos, [avaló]).
 ty_verb(spanish, endorse, past, pl, pos, [avalaron]).
+ty_verb(spanish, ameliorate, present, sg, pos, [mejora]).
+ty_verb(spanish, ameliorate, present, pl, pos, [mejoran]).
+ty_verb(spanish, ameliorate, past, sg, pos, [mejoró]).
+ty_verb(spanish, ameliorate, past, pl, pos, [mejoraron]).
 ty_verb(spanish, qualify, present, sg, pos, [capacita]).
 ty_verb(spanish, qualify, present, pl, pos, [capacitan]).
 ty_verb(spanish, qualify, past, sg, pos, [capacitó]).
@@ -33985,6 +34484,10 @@ ty_verb(spanish, reduce, present, sg, pos, [abarata]).
 ty_verb(spanish, reduce, present, pl, pos, [abaratan]).
 ty_verb(spanish, reduce, past, sg, pos, [abarató]).
 ty_verb(spanish, reduce, past, pl, pos, [abarataron]).
+ty_verb(spanish, engage, present, sg, pos, [ficha]).
+ty_verb(spanish, engage, present, pl, pos, [fichan]).
+ty_verb(spanish, engage, past, sg, pos, [fichó]).
+ty_verb(spanish, engage, past, pl, pos, [ficharon]).
 ty_verb(spanish, honour, present, sg, pos, [homenajea]).
 ty_verb(spanish, honour, present, pl, pos, [homenajean]).
 ty_verb(spanish, honour, past, sg, pos, [homenajeó]).
@@ -34041,6 +34544,10 @@ ty_verb(spanish, convey, present, sg, pos, [traslada]).
 ty_verb(spanish, convey, present, pl, pos, [trasladan]).
 ty_verb(spanish, convey, past, sg, pos, [trasladó]).
 ty_verb(spanish, convey, past, pl, pos, [trasladaron]).
+ty_verb(spanish, boost, present, sg, pos, [potencia]).
+ty_verb(spanish, boost, present, pl, pos, [potencian]).
+ty_verb(spanish, boost, past, sg, pos, [potenció]).
+ty_verb(spanish, boost, past, pl, pos, [potenciaron]).
 ty_verb(spanish, dignify, present, sg, pos, [engrandece]).
 ty_verb(spanish, dignify, present, pl, pos, [engrandecen]).
 ty_verb(spanish, dignify, past, sg, pos, [engrandeció]).
@@ -34105,6 +34612,10 @@ ty_verb(spanish, place, present, sg, pos, [encuadra]).
 ty_verb(spanish, place, present, pl, pos, [encuadran]).
 ty_verb(spanish, place, past, sg, pos, [encuadró]).
 ty_verb(spanish, place, past, pl, pos, [encuadraron]).
+ty_verb(spanish, row, present, sg, pos, [boga]).
+ty_verb(spanish, row, present, pl, pos, [bogan]).
+ty_verb(spanish, row, past, sg, pos, [bogó]).
+ty_verb(spanish, row, past, pl, pos, [bogaron]).
 ty_verb(spanish, manage, present, sg, pos, [desenvuelve]).
 ty_verb(spanish, manage, present, pl, pos, [desenvuelven]).
 ty_verb(spanish, manage, past, sg, pos, [desenvolvió]).
@@ -34125,6 +34636,10 @@ ty_verb(spanish, establish, present, sg, pos, [instaura]).
 ty_verb(spanish, establish, present, pl, pos, [instauran]).
 ty_verb(spanish, establish, past, sg, pos, [instauró]).
 ty_verb(spanish, establish, past, pl, pos, [instauraron]).
+ty_verb(spanish, reflect, present, sg, pos, [plasma]).
+ty_verb(spanish, reflect, present, pl, pos, [plasman]).
+ty_verb(spanish, reflect, past, sg, pos, [plasmó]).
+ty_verb(spanish, reflect, past, pl, pos, [plasmaron]).
 ty_verb(spanish, position, present, sg, pos, [posiciona]).
 ty_verb(spanish, position, present, pl, pos, [posicionan]).
 ty_verb(spanish, position, past, sg, pos, [posicionó]).
@@ -34149,6 +34664,10 @@ ty_verb(spanish, increase, present, sg, pos, [incrementa]).
 ty_verb(spanish, increase, present, pl, pos, [incrementan]).
 ty_verb(spanish, increase, past, sg, pos, [incrementó]).
 ty_verb(spanish, increase, past, pl, pos, [incrementaron]).
+ty_verb(spanish, improve, present, sg, pos, [potencia]).
+ty_verb(spanish, improve, present, pl, pos, [potencian]).
+ty_verb(spanish, improve, past, sg, pos, [potenció]).
+ty_verb(spanish, improve, past, pl, pos, [potenciaron]).
 ty_verb(spanish, neglect, present, sg, pos, [descuida]).
 ty_verb(spanish, neglect, present, pl, pos, [descuidan]).
 ty_verb(spanish, neglect, past, sg, pos, [descuidó]).
@@ -34273,6 +34792,10 @@ ty_verb(spanish, hide, present, sg, pos, [agazapa]).
 ty_verb(spanish, hide, present, pl, pos, [agazapan]).
 ty_verb(spanish, hide, past, sg, pos, [agazapó]).
 ty_verb(spanish, hide, past, pl, pos, [agazaparon]).
+ty_verb(spanish, obtain, present, sg, pos, [agencia]).
+ty_verb(spanish, obtain, present, pl, pos, [agencian]).
+ty_verb(spanish, obtain, past, sg, pos, [agenció]).
+ty_verb(spanish, obtain, past, pl, pos, [agenciaron]).
 ty_verb(spanish, enlarge, present, sg, pos, [agiganta]).
 ty_verb(spanish, enlarge, present, pl, pos, [agigantan]).
 ty_verb(spanish, enlarge, past, sg, pos, [agigantó]).
@@ -34285,6 +34808,10 @@ ty_verb(spanish, offend, present, sg, pos, [agravia]).
 ty_verb(spanish, offend, present, pl, pos, [agravian]).
 ty_verb(spanish, offend, past, sg, pos, [agravió]).
 ty_verb(spanish, offend, past, pl, pos, [agraviaron]).
+ty_verb(spanish, water, present, sg, pos, [agua]).
+ty_verb(spanish, water, present, pl, pos, [aguan]).
+ty_verb(spanish, water, past, sg, pos, [aguó]).
+ty_verb(spanish, water, past, pl, pos, [aguaron]).
 ty_verb(spanish, sharpen, present, sg, pos, [aguza]).
 ty_verb(spanish, sharpen, present, pl, pos, [aguzan]).
 ty_verb(spanish, sharpen, past, sg, pos, [aguzó]).
@@ -34381,6 +34908,10 @@ ty_verb(spanish, flood, present, sg, pos, [anega]).
 ty_verb(spanish, flood, present, pl, pos, [anegan]).
 ty_verb(spanish, flood, past, sg, pos, [anegó]).
 ty_verb(spanish, flood, past, pl, pos, [anegaron]).
+ty_verb(spanish, distress, present, sg, pos, [angustia]).
+ty_verb(spanish, distress, present, pl, pos, [angustian]).
+ty_verb(spanish, distress, past, sg, pos, [angustió]).
+ty_verb(spanish, distress, past, pl, pos, [angustiaron]).
 ty_verb(spanish, miss, present, sg, pos, [añora]).
 ty_verb(spanish, miss, present, pl, pos, [añoran]).
 ty_verb(spanish, miss, past, sg, pos, [añoró]).
@@ -34413,6 +34944,10 @@ ty_verb(spanish, be, present, sg, pos, [está]).
 ty_verb(spanish, be, present, pl, pos, [están]).
 ty_verb(spanish, be, past, sg, pos, [estuvo]).
 ty_verb(spanish, be, past, pl, pos, [estuvieron]).
+ty_verb(spanish, add, present, sg, pos, [suma]).
+ty_verb(spanish, add, present, pl, pos, [suman]).
+ty_verb(spanish, add, past, sg, pos, [sumó]).
+ty_verb(spanish, add, past, pl, pos, [sumaron]).
 ty_verb(spanish, advance, present, sg, pos, [avanza]).
 ty_verb(spanish, advance, present, pl, pos, [avanzan]).
 ty_verb(spanish, advance, past, sg, pos, [avanzó]).
@@ -34493,6 +35028,10 @@ ty_verb(spanish, break, present, sg, pos, [incumple]).
 ty_verb(spanish, break, present, pl, pos, [incumplen]).
 ty_verb(spanish, break, past, sg, pos, [incumplió]).
 ty_verb(spanish, break, past, pl, pos, [incumplieron]).
+ty_verb(spanish, break, present, sg, pos, [quiebra]).
+ty_verb(spanish, break, present, pl, pos, [quiebran]).
+ty_verb(spanish, break, past, sg, pos, [quebró]).
+ty_verb(spanish, break, past, pl, pos, [quebraron]).
 ty_verb(spanish, expand, present, sg, pos, [amplía]).
 ty_verb(spanish, expand, present, pl, pos, [amplían]).
 ty_verb(spanish, expand, past, sg, pos, [amplió]).
@@ -34501,6 +35040,10 @@ ty_verb(spanish, burn, present, sg, pos, [arde]).
 ty_verb(spanish, burn, present, pl, pos, [arden]).
 ty_verb(spanish, burn, past, sg, pos, [ardió]).
 ty_verb(spanish, burn, past, pl, pos, [ardieron]).
+ty_verb(spanish, calm, present, sg, pos, [seda]).
+ty_verb(spanish, calm, present, pl, pos, [sedan]).
+ty_verb(spanish, calm, past, sg, pos, [sedó]).
+ty_verb(spanish, calm, past, pl, pos, [sedaron]).
 ty_verb(spanish, carry, present, sg, pos, [porta]).
 ty_verb(spanish, carry, present, pl, pos, [portan]).
 ty_verb(spanish, carry, past, sg, pos, [portó]).
@@ -34577,6 +35120,10 @@ ty_verb(spanish, contribute, present, sg, pos, [aporta]).
 ty_verb(spanish, contribute, present, pl, pos, [aportan]).
 ty_verb(spanish, contribute, past, sg, pos, [aportó]).
 ty_verb(spanish, contribute, past, pl, pos, [aportaron]).
+ty_verb(spanish, cost, present, sg, pos, [vale]).
+ty_verb(spanish, cost, present, pl, pos, [valen]).
+ty_verb(spanish, cost, past, sg, pos, [valió]).
+ty_verb(spanish, cost, past, pl, pos, [valieron]).
 ty_verb(spanish, crack, present, sg, pos, [casca]).
 ty_verb(spanish, crack, present, pl, pos, [cascan]).
 ty_verb(spanish, crack, past, sg, pos, [cascó]).
@@ -34585,10 +35132,22 @@ ty_verb(spanish, crack, present, sg, pos, [resquebraja]).
 ty_verb(spanish, crack, present, pl, pos, [resquebrajan]).
 ty_verb(spanish, crack, past, sg, pos, [resquebrajó]).
 ty_verb(spanish, crack, past, pl, pos, [resquebrajaron]).
+ty_verb(spanish, crash, present, sg, pos, [estrella]).
+ty_verb(spanish, crash, present, pl, pos, [estrellan]).
+ty_verb(spanish, crash, past, sg, pos, [estrelló]).
+ty_verb(spanish, crash, past, pl, pos, [estrellaron]).
 ty_verb(spanish, cross, present, sg, pos, [atraviesa]).
 ty_verb(spanish, cross, present, pl, pos, [atraviesan]).
 ty_verb(spanish, cross, past, sg, pos, [atravesó]).
 ty_verb(spanish, cross, past, pl, pos, [atravesaron]).
+ty_verb(spanish, cut, present, sg, pos, [talla]).
+ty_verb(spanish, cut, present, pl, pos, [tallan]).
+ty_verb(spanish, cut, past, sg, pos, [talló]).
+ty_verb(spanish, cut, past, pl, pos, [tallaron]).
+ty_verb(spanish, date, present, sg, pos, [fecha]).
+ty_verb(spanish, date, present, pl, pos, [fechan]).
+ty_verb(spanish, date, past, sg, pos, [fechó]).
+ty_verb(spanish, date, past, pl, pos, [fecharon]).
 ty_verb(spanish, dazzle, present, sg, pos, [encandila]).
 ty_verb(spanish, dazzle, present, pl, pos, [encandilan]).
 ty_verb(spanish, dazzle, past, sg, pos, [encandiló]).
@@ -34661,6 +35220,10 @@ ty_verb(spanish, favour, present, sg, pos, [auspicia]).
 ty_verb(spanish, favour, present, pl, pos, [auspician]).
 ty_verb(spanish, favour, past, sg, pos, [auspició]).
 ty_verb(spanish, favour, past, pl, pos, [auspiciaron]).
+ty_verb(spanish, film, present, sg, pos, [rueda]).
+ty_verb(spanish, film, present, pl, pos, [ruedan]).
+ty_verb(spanish, film, past, sg, pos, [rodó]).
+ty_verb(spanish, film, past, pl, pos, [rodaron]).
 ty_verb(spanish, find, present, sg, pos, [halla]).
 ty_verb(spanish, find, present, pl, pos, [hallan]).
 ty_verb(spanish, find, past, sg, pos, [halló]).
@@ -34669,6 +35232,10 @@ ty_verb(spanish, finish, present, sg, pos, [termina]).
 ty_verb(spanish, finish, present, pl, pos, [terminan]).
 ty_verb(spanish, finish, past, sg, pos, [terminó]).
 ty_verb(spanish, finish, past, pl, pos, [terminaron]).
+ty_verb(spanish, fish, present, sg, pos, [faena]).
+ty_verb(spanish, fish, present, pl, pos, [faenan]).
+ty_verb(spanish, fish, past, sg, pos, [faenó]).
+ty_verb(spanish, fish, past, pl, pos, [faenaron]).
 ty_verb(spanish, track, present, sg, pos, [rastrea]).
 ty_verb(spanish, track, present, pl, pos, [rastrean]).
 ty_verb(spanish, track, past, sg, pos, [rastreó]).
@@ -34677,6 +35244,10 @@ ty_verb(spanish, give, present, sg, pos, [regala]).
 ty_verb(spanish, give, present, pl, pos, [regalan]).
 ty_verb(spanish, give, past, sg, pos, [regaló]).
 ty_verb(spanish, give, past, pl, pos, [regalaron]).
+ty_verb(spanish, go, present, sg, pos, [rueda]).
+ty_verb(spanish, go, present, pl, pos, [ruedan]).
+ty_verb(spanish, go, past, sg, pos, [rodó]).
+ty_verb(spanish, go, past, pl, pos, [rodaron]).
 ty_verb(spanish, hammer, present, sg, pos, [machaca]).
 ty_verb(spanish, hammer, present, pl, pos, [machacan]).
 ty_verb(spanish, hammer, past, sg, pos, [machacó]).
@@ -34741,6 +35312,10 @@ ty_verb(spanish, lodge, present, sg, pos, [hospeda]).
 ty_verb(spanish, lodge, present, pl, pos, [hospedan]).
 ty_verb(spanish, lodge, past, sg, pos, [hospedó]).
 ty_verb(spanish, lodge, past, pl, pos, [hospedaron]).
+ty_verb(spanish, manacle, present, sg, pos, [esposa]).
+ty_verb(spanish, manacle, present, pl, pos, [esposan]).
+ty_verb(spanish, manacle, past, sg, pos, [esposó]).
+ty_verb(spanish, manacle, past, pl, pos, [esposaron]).
 ty_verb(spanish, melt, present, sg, pos, [derrite]).
 ty_verb(spanish, melt, present, pl, pos, [derriten]).
 ty_verb(spanish, melt, past, sg, pos, [derritió]).
@@ -34761,6 +35336,10 @@ ty_verb(spanish, offer, present, sg, pos, [depara]).
 ty_verb(spanish, offer, present, pl, pos, [deparan]).
 ty_verb(spanish, offer, past, sg, pos, [deparó]).
 ty_verb(spanish, offer, past, pl, pos, [depararon]).
+ty_verb(spanish, offer, present, sg, pos, [oferta]).
+ty_verb(spanish, offer, present, pl, pos, [ofertan]).
+ty_verb(spanish, offer, past, sg, pos, [ofertó]).
+ty_verb(spanish, offer, past, pl, pos, [ofertaron]).
 ty_verb(spanish, overwhelm, present, sg, pos, [apabulla]).
 ty_verb(spanish, overwhelm, present, pl, pos, [apabullan]).
 ty_verb(spanish, overwhelm, past, sg, pos, [apabulló]).
@@ -34805,6 +35384,10 @@ ty_verb(spanish, prevail, present, sg, pos, [prevale]).
 ty_verb(spanish, prevail, present, pl, pos, [prevalen]).
 ty_verb(spanish, prevail, past, sg, pos, [prevalió]).
 ty_verb(spanish, prevail, past, pl, pos, [prevalieron]).
+ty_verb(spanish, prevail, present, sg, pos, [prima]).
+ty_verb(spanish, prevail, present, pl, pos, [priman]).
+ty_verb(spanish, prevail, past, sg, pos, [primó]).
+ty_verb(spanish, prevail, past, pl, pos, [primaron]).
 ty_verb(spanish, protect, present, sg, pos, [resguarda]).
 ty_verb(spanish, protect, present, pl, pos, [resguardan]).
 ty_verb(spanish, protect, past, sg, pos, [resguardó]).
@@ -34825,6 +35408,10 @@ ty_verb(spanish, remain, present, sg, pos, [permanece]).
 ty_verb(spanish, remain, present, pl, pos, [permanecen]).
 ty_verb(spanish, remain, past, sg, pos, [permaneció]).
 ty_verb(spanish, remain, past, pl, pos, [permanecieron]).
+ty_verb(spanish, report, present, sg, pos, [denuncia]).
+ty_verb(spanish, report, present, pl, pos, [denuncian]).
+ty_verb(spanish, report, past, sg, pos, [denunció]).
+ty_verb(spanish, report, past, pl, pos, [denunciaron]).
 ty_verb(spanish, request, present, sg, pos, [solicita]).
 ty_verb(spanish, request, present, pl, pos, [solicitan]).
 ty_verb(spanish, request, past, sg, pos, [solicitó]).
@@ -34909,6 +35496,10 @@ ty_verb(spanish, stroll, present, sg, pos, [deambula]).
 ty_verb(spanish, stroll, present, pl, pos, [deambulan]).
 ty_verb(spanish, stroll, past, sg, pos, [deambuló]).
 ty_verb(spanish, stroll, past, pl, pos, [deambularon]).
+ty_verb(spanish, suck, present, sg, pos, [mama]).
+ty_verb(spanish, suck, present, pl, pos, [maman]).
+ty_verb(spanish, suck, past, sg, pos, [mamó]).
+ty_verb(spanish, suck, past, pl, pos, [mamaron]).
 ty_verb(spanish, suffer, present, sg, pos, [sufre]).
 ty_verb(spanish, suffer, present, pl, pos, [sufren]).
 ty_verb(spanish, suffer, past, sg, pos, [sufrió]).
@@ -35077,10 +35668,18 @@ ty_verb(spanish, concern, present, sg, pos, [preocupa]).
 ty_verb(spanish, concern, present, pl, pos, [preocupan]).
 ty_verb(spanish, concern, past, sg, pos, [preocupó]).
 ty_verb(spanish, concern, past, pl, pos, [preocuparon]).
+ty_verb(spanish, throw, present, sg, pos, [tira]).
+ty_verb(spanish, throw, present, pl, pos, [tiran]).
+ty_verb(spanish, throw, past, sg, pos, [tiró]).
+ty_verb(spanish, throw, past, pl, pos, [tiraron]).
 ty_verb(spanish, emerge, present, sg, pos, [aflora]).
 ty_verb(spanish, emerge, present, pl, pos, [afloran]).
 ty_verb(spanish, emerge, past, sg, pos, [afloró]).
 ty_verb(spanish, emerge, past, pl, pos, [afloraron]).
+ty_verb(spanish, confine, present, sg, pos, [interna]).
+ty_verb(spanish, confine, present, pl, pos, [internan]).
+ty_verb(spanish, confine, past, sg, pos, [internó]).
+ty_verb(spanish, confine, past, pl, pos, [internaron]).
 ty_verb(spanish, revive, present, sg, pos, [reanima]).
 ty_verb(spanish, revive, present, pl, pos, [reaniman]).
 ty_verb(spanish, revive, past, sg, pos, [reanimó]).
@@ -35217,6 +35816,10 @@ ty_verb(spanish, overtake, present, sg, pos, [sorprende]).
 ty_verb(spanish, overtake, present, pl, pos, [sorprenden]).
 ty_verb(spanish, overtake, past, sg, pos, [sorprendió]).
 ty_verb(spanish, overtake, past, pl, pos, [sorprendieron]).
+ty_verb(spanish, abate, present, sg, pos, [calma]).
+ty_verb(spanish, abate, present, pl, pos, [calman]).
+ty_verb(spanish, abate, past, sg, pos, [calmó]).
+ty_verb(spanish, abate, past, pl, pos, [calmaron]).
 ty_verb(spanish, abduct, present, sg, pos, [secuestra]).
 ty_verb(spanish, abduct, present, pl, pos, [secuestran]).
 ty_verb(spanish, abduct, past, sg, pos, [secuestró]).
@@ -35225,6 +35828,10 @@ ty_verb(spanish, climb, present, sg, pos, [sube]).
 ty_verb(spanish, climb, present, pl, pos, [suben]).
 ty_verb(spanish, climb, past, sg, pos, [subió]).
 ty_verb(spanish, climb, past, pl, pos, [subieron]).
+ty_verb(spanish, debit, present, sg, pos, [carga]).
+ty_verb(spanish, debit, present, pl, pos, [cargan]).
+ty_verb(spanish, debit, past, sg, pos, [cargó]).
+ty_verb(spanish, debit, past, pl, pos, [cargaron]).
 ty_verb(spanish, accomplish, present, sg, pos, [cumple]).
 ty_verb(spanish, accomplish, present, pl, pos, [cumplen]).
 ty_verb(spanish, accomplish, past, sg, pos, [cumplió]).
@@ -35273,6 +35880,10 @@ ty_verb(spanish, prohibit, present, sg, pos, [prohíbe]).
 ty_verb(spanish, prohibit, present, pl, pos, [prohíben]).
 ty_verb(spanish, prohibit, past, sg, pos, [prohibió]).
 ty_verb(spanish, prohibit, past, pl, pos, [prohibieron]).
+ty_verb(spanish, book, present, sg, pos, [reserva]).
+ty_verb(spanish, book, present, pl, pos, [reservan]).
+ty_verb(spanish, book, past, sg, pos, [reservó]).
+ty_verb(spanish, book, past, pl, pos, [reservaron]).
 ty_verb(spanish, boot, present, sg, pos, [chuta]).
 ty_verb(spanish, boot, present, pl, pos, [chutan]).
 ty_verb(spanish, boot, past, sg, pos, [chutó]).
@@ -35289,10 +35900,18 @@ ty_verb(spanish, broaden, present, sg, pos, [amplía]).
 ty_verb(spanish, broaden, present, pl, pos, [amplían]).
 ty_verb(spanish, broaden, past, sg, pos, [amplió]).
 ty_verb(spanish, broaden, past, pl, pos, [ampliaron]).
+ty_verb(spanish, burden, present, sg, pos, [carga]).
+ty_verb(spanish, burden, present, pl, pos, [cargan]).
+ty_verb(spanish, burden, past, sg, pos, [cargó]).
+ty_verb(spanish, burden, past, pl, pos, [cargaron]).
 ty_verb(spanish, capsiz, present, sg, pos, [cambia]).
 ty_verb(spanish, capsiz, present, pl, pos, [cambian]).
 ty_verb(spanish, capsiz, past, sg, pos, [cambió]).
 ty_verb(spanish, capsiz, past, pl, pos, [cambiaron]).
+ty_verb(spanish, cast, present, sg, pos, [lanza]).
+ty_verb(spanish, cast, present, pl, pos, [lanzan]).
+ty_verb(spanish, cast, past, sg, pos, [lanzó]).
+ty_verb(spanish, cast, past, pl, pos, [lanzaron]).
 ty_verb(spanish, catch, present, sg, pos, [coge]).
 ty_verb(spanish, catch, present, pl, pos, [cogen]).
 ty_verb(spanish, catch, past, sg, pos, [cogió]).
@@ -35313,6 +35932,10 @@ ty_verb(spanish, cheer, present, sg, pos, [alegra]).
 ty_verb(spanish, cheer, present, pl, pos, [alegran]).
 ty_verb(spanish, cheer, past, sg, pos, [alegró]).
 ty_verb(spanish, cheer, past, pl, pos, [alegraron]).
+ty_verb(spanish, cite, present, sg, pos, [cita]).
+ty_verb(spanish, cite, present, pl, pos, [citan]).
+ty_verb(spanish, cite, past, sg, pos, [citó]).
+ty_verb(spanish, cite, past, pl, pos, [citaron]).
 ty_verb(spanish, colour, present, sg, pos, [pinta]).
 ty_verb(spanish, colour, present, pl, pos, [pintan]).
 ty_verb(spanish, colour, past, sg, pos, [pintó]).
@@ -35341,6 +35964,10 @@ ty_verb(spanish, construct, present, sg, pos, [construye]).
 ty_verb(spanish, construct, present, pl, pos, [construyen]).
 ty_verb(spanish, construct, past, sg, pos, [construyó]).
 ty_verb(spanish, construct, past, pl, pos, [construyeron]).
+ty_verb(spanish, convict, present, sg, pos, [condena]).
+ty_verb(spanish, convict, present, pl, pos, [condenan]).
+ty_verb(spanish, convict, past, sg, pos, [condenó]).
+ty_verb(spanish, convict, past, pl, pos, [condenaron]).
 ty_verb(spanish, cope, present, sg, pos, [soporta]).
 ty_verb(spanish, cope, present, pl, pos, [soportan]).
 ty_verb(spanish, cope, past, sg, pos, [soportó]).
@@ -35393,6 +36020,10 @@ ty_verb(spanish, disable, present, sg, pos, [imposibilita]).
 ty_verb(spanish, disable, present, pl, pos, [imposibilitan]).
 ty_verb(spanish, disable, past, sg, pos, [imposibilitó]).
 ty_verb(spanish, disable, past, pl, pos, [imposibilitaron]).
+ty_verb(spanish, discharge, present, sg, pos, [descarga]).
+ty_verb(spanish, discharge, present, pl, pos, [descargan]).
+ty_verb(spanish, discharge, past, sg, pos, [descargó]).
+ty_verb(spanish, discharge, past, pl, pos, [descargaron]).
 ty_verb(spanish, discharge, present, sg, pos, [libera]).
 ty_verb(spanish, discharge, present, pl, pos, [liberan]).
 ty_verb(spanish, discharge, past, sg, pos, [liberó]).
@@ -35401,10 +36032,18 @@ ty_verb(spanish, disclose, present, sg, pos, [revela]).
 ty_verb(spanish, disclose, present, pl, pos, [revelan]).
 ty_verb(spanish, disclose, past, sg, pos, [reveló]).
 ty_verb(spanish, disclose, past, pl, pos, [revelaron]).
+ty_verb(spanish, discuss, present, sg, pos, [habla]).
+ty_verb(spanish, discuss, present, pl, pos, [hablan]).
+ty_verb(spanish, discuss, past, sg, pos, [habló]).
+ty_verb(spanish, discuss, past, pl, pos, [hablaron]).
 ty_verb(spanish, dish, present, sg, pos, [embute]).
 ty_verb(spanish, dish, present, pl, pos, [embuten]).
 ty_verb(spanish, dish, past, sg, pos, [embutió]).
 ty_verb(spanish, dish, past, pl, pos, [embutieron]).
+ty_verb(spanish, display, present, sg, pos, [muestra]).
+ty_verb(spanish, display, present, pl, pos, [muestran]).
+ty_verb(spanish, display, past, sg, pos, [mostró]).
+ty_verb(spanish, display, past, pl, pos, [mostraron]).
 ty_verb(spanish, dispose, present, sg, pos, [coloca]).
 ty_verb(spanish, dispose, present, pl, pos, [colocan]).
 ty_verb(spanish, dispose, past, sg, pos, [colocó]).
@@ -35481,6 +36120,10 @@ ty_verb(spanish, feature, present, sg, pos, [presenta]).
 ty_verb(spanish, feature, present, pl, pos, [presentan]).
 ty_verb(spanish, feature, past, sg, pos, [presentó]).
 ty_verb(spanish, feature, past, pl, pos, [presentaron]).
+ty_verb(spanish, fight, present, sg, pos, [lucha]).
+ty_verb(spanish, fight, present, pl, pos, [luchan]).
+ty_verb(spanish, fight, past, sg, pos, [luchó]).
+ty_verb(spanish, fight, past, pl, pos, [lucharon]).
 ty_verb(spanish, figure, present, sg, pos, [imagina]).
 ty_verb(spanish, figure, present, pl, pos, [imaginan]).
 ty_verb(spanish, figure, past, sg, pos, [imaginó]).
@@ -35529,6 +36172,10 @@ ty_verb(spanish, glance, present, sg, pos, [mira]).
 ty_verb(spanish, glance, present, pl, pos, [miran]).
 ty_verb(spanish, glance, past, sg, pos, [miró]).
 ty_verb(spanish, glance, past, pl, pos, [miraron]).
+ty_verb(spanish, lower, present, sg, pos, [baja]).
+ty_verb(spanish, lower, present, pl, pos, [bajan]).
+ty_verb(spanish, lower, past, sg, pos, [bajó]).
+ty_verb(spanish, lower, past, pl, pos, [bajaron]).
 ty_verb(spanish, grant, present, sg, pos, [concede]).
 ty_verb(spanish, grant, present, pl, pos, [conceden]).
 ty_verb(spanish, grant, past, sg, pos, [concedió]).
@@ -35609,6 +36256,10 @@ ty_verb(spanish, merit, present, sg, pos, [merece]).
 ty_verb(spanish, merit, present, pl, pos, [merecen]).
 ty_verb(spanish, merit, past, sg, pos, [mereció]).
 ty_verb(spanish, merit, past, pl, pos, [merecieron]).
+ty_verb(spanish, scramble, present, sg, pos, [mezcla]).
+ty_verb(spanish, scramble, present, pl, pos, [mezclan]).
+ty_verb(spanish, scramble, past, sg, pos, [mezcló]).
+ty_verb(spanish, scramble, past, pl, pos, [mezclaron]).
 ty_verb(spanish, name, present, sg, pos, [nombra]).
 ty_verb(spanish, name, present, pl, pos, [nombran]).
 ty_verb(spanish, name, past, sg, pos, [nombró]).
@@ -35689,6 +36340,10 @@ ty_verb(spanish, prompt, present, sg, pos, [incita]).
 ty_verb(spanish, prompt, present, pl, pos, [incitan]).
 ty_verb(spanish, prompt, past, sg, pos, [incitó]).
 ty_verb(spanish, prompt, past, pl, pos, [incitaron]).
+ty_verb(spanish, prove, present, sg, pos, [prueba]).
+ty_verb(spanish, prove, present, pl, pos, [prueban]).
+ty_verb(spanish, prove, past, sg, pos, [probó]).
+ty_verb(spanish, prove, past, pl, pos, [probaron]).
 ty_verb(spanish, provoke, present, sg, pos, [provoca]).
 ty_verb(spanish, provoke, present, pl, pos, [provocan]).
 ty_verb(spanish, provoke, past, sg, pos, [provocó]).
@@ -35745,6 +36400,10 @@ ty_verb(spanish, rip, present, sg, pos, [desgarra]).
 ty_verb(spanish, rip, present, pl, pos, [desgarran]).
 ty_verb(spanish, rip, past, sg, pos, [desgarró]).
 ty_verb(spanish, rip, past, pl, pos, [desgarraron]).
+ty_verb(spanish, roll, present, sg, pos, [rueda]).
+ty_verb(spanish, roll, present, pl, pos, [ruedan]).
+ty_verb(spanish, roll, past, sg, pos, [rodó]).
+ty_verb(spanish, roll, past, pl, pos, [rodaron]).
 ty_verb(spanish, rule, present, sg, pos, [gobierna]).
 ty_verb(spanish, rule, present, pl, pos, [gobiernan]).
 ty_verb(spanish, rule, past, sg, pos, [gobernó]).
@@ -35757,6 +36416,14 @@ ty_verb(spanish, scour, present, sg, pos, [registra]).
 ty_verb(spanish, scour, present, pl, pos, [registran]).
 ty_verb(spanish, scour, past, sg, pos, [registró]).
 ty_verb(spanish, scour, past, pl, pos, [registraron]).
+ty_verb(spanish, scratch, present, sg, pos, [tacha]).
+ty_verb(spanish, scratch, present, pl, pos, [tachan]).
+ty_verb(spanish, scratch, past, sg, pos, [tachó]).
+ty_verb(spanish, scratch, past, pl, pos, [tacharon]).
+ty_verb(spanish, search, present, sg, pos, [busca]).
+ty_verb(spanish, search, present, pl, pos, [buscan]).
+ty_verb(spanish, search, past, sg, pos, [buscó]).
+ty_verb(spanish, search, past, pl, pos, [buscaron]).
 ty_verb(spanish, secrete, present, sg, pos, [oculta]).
 ty_verb(spanish, secrete, present, pl, pos, [ocultan]).
 ty_verb(spanish, secrete, past, sg, pos, [ocultó]).
@@ -35765,6 +36432,10 @@ ty_verb(spanish, secure, present, sg, pos, [asegura]).
 ty_verb(spanish, secure, present, pl, pos, [aseguran]).
 ty_verb(spanish, secure, past, sg, pos, [aseguró]).
 ty_verb(spanish, secure, past, pl, pos, [aseguraron]).
+ty_verb(spanish, seek, present, sg, pos, [busca]).
+ty_verb(spanish, seek, present, pl, pos, [buscan]).
+ty_verb(spanish, seek, past, sg, pos, [buscó]).
+ty_verb(spanish, seek, past, pl, pos, [buscaron]).
 ty_verb(spanish, seiz, present, sg, pos, [coge]).
 ty_verb(spanish, seiz, present, pl, pos, [cogen]).
 ty_verb(spanish, seiz, past, sg, pos, [cogió]).
@@ -35773,6 +36444,10 @@ ty_verb(spanish, seiz, present, sg, pos, [confisca]).
 ty_verb(spanish, seiz, present, pl, pos, [confiscan]).
 ty_verb(spanish, seiz, past, sg, pos, [confiscó]).
 ty_verb(spanish, seiz, past, pl, pos, [confiscaron]).
+ty_verb(spanish, sense, present, sg, pos, [nota]).
+ty_verb(spanish, sense, present, pl, pos, [notan]).
+ty_verb(spanish, sense, past, sg, pos, [notó]).
+ty_verb(spanish, sense, past, pl, pos, [notaron]).
 ty_verb(spanish, set, present, sg, pos, [pone]).
 ty_verb(spanish, set, present, pl, pos, [ponen]).
 ty_verb(spanish, set, past, sg, pos, [puso]).
@@ -35793,6 +36468,10 @@ ty_verb(spanish, sit, present, sg, pos, [sienta]).
 ty_verb(spanish, sit, present, pl, pos, [sientan]).
 ty_verb(spanish, sit, past, sg, pos, [sentó]).
 ty_verb(spanish, sit, past, pl, pos, [sentaron]).
+ty_verb(spanish, sling, present, sg, pos, [lanza]).
+ty_verb(spanish, sling, present, pl, pos, [lanzan]).
+ty_verb(spanish, sling, past, sg, pos, [lanzó]).
+ty_verb(spanish, sling, past, pl, pos, [lanzaron]).
 ty_verb(spanish, smooth, present, sg, pos, [suaviza]).
 ty_verb(spanish, smooth, present, pl, pos, [suavizan]).
 ty_verb(spanish, smooth, past, sg, pos, [suavizó]).
@@ -35833,6 +36512,10 @@ ty_verb(spanish, stretch, present, sg, pos, [extiende]).
 ty_verb(spanish, stretch, present, pl, pos, [extienden]).
 ty_verb(spanish, stretch, past, sg, pos, [extendió]).
 ty_verb(spanish, stretch, past, pl, pos, [extendieron]).
+ty_verb(spanish, stripe, present, sg, pos, [tacha]).
+ty_verb(spanish, stripe, present, pl, pos, [tachan]).
+ty_verb(spanish, stripe, past, sg, pos, [tachó]).
+ty_verb(spanish, stripe, past, pl, pos, [tacharon]).
 ty_verb(spanish, strip, present, sg, pos, [desnuda]).
 ty_verb(spanish, strip, present, pl, pos, [desnudan]).
 ty_verb(spanish, strip, past, sg, pos, [desnudó]).
@@ -35873,6 +36556,10 @@ ty_verb(spanish, tip, present, sg, pos, [vierte]).
 ty_verb(spanish, tip, present, pl, pos, [vierten]).
 ty_verb(spanish, tip, past, sg, pos, [vertió]).
 ty_verb(spanish, tip, past, pl, pos, [vertieron]).
+ty_verb(spanish, tour, present, sg, pos, [visita]).
+ty_verb(spanish, tour, present, pl, pos, [visitan]).
+ty_verb(spanish, tour, past, sg, pos, [visitó]).
+ty_verb(spanish, tour, past, pl, pos, [visitaron]).
 ty_verb(spanish, tremble, present, sg, pos, [tiembla]).
 ty_verb(spanish, tremble, present, pl, pos, [tiemblan]).
 ty_verb(spanish, tremble, past, sg, pos, [tembló]).
@@ -35961,6 +36648,10 @@ ty_verb(spanish, stall, present, sg, pos, [para]).
 ty_verb(spanish, stall, present, pl, pos, [paran]).
 ty_verb(spanish, stall, past, sg, pos, [paró]).
 ty_verb(spanish, stall, past, pl, pos, [pararon]).
+ty_verb(spanish, inflict, present, sg, pos, [causa]).
+ty_verb(spanish, inflict, present, pl, pos, [causan]).
+ty_verb(spanish, inflict, past, sg, pos, [causó]).
+ty_verb(spanish, inflict, past, pl, pos, [causaron]).
 ty_verb(spanish, crowd, present, sg, pos, [llena]).
 ty_verb(spanish, crowd, present, pl, pos, [llenan]).
 ty_verb(spanish, crowd, past, sg, pos, [llenó]).
@@ -35981,6 +36672,10 @@ ty_verb(spanish, recreate, present, sg, pos, [recrea]).
 ty_verb(spanish, recreate, present, pl, pos, [recrean]).
 ty_verb(spanish, recreate, past, sg, pos, [recreó]).
 ty_verb(spanish, recreate, past, pl, pos, [recrearon]).
+ty_verb(spanish, sieve, present, sg, pos, [criba]).
+ty_verb(spanish, sieve, present, pl, pos, [criban]).
+ty_verb(spanish, sieve, past, sg, pos, [cribó]).
+ty_verb(spanish, sieve, past, pl, pos, [cribaron]).
 ty_verb(spanish, fuse, present, sg, pos, [fusiona]).
 ty_verb(spanish, fuse, present, pl, pos, [fusionan]).
 ty_verb(spanish, fuse, past, sg, pos, [fusionó]).

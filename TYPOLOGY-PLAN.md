@@ -89,7 +89,15 @@ line says `is animate` or `is a person`.
    reproduces the committed files byte for byte; a time limit on loading
    and reading.
 
-## Phase 3: forms chosen by sound
+## Phase 3: forms chosen by sound (done, reasoning 1.21.0)
+
+Done with two slots, not one: `ty_before/5` (a form chosen by how the next
+word begins, patterns of letters, `ty_letters/3` classes and `end`, the
+longest pattern winning) for English `a`/`an`, the Italian articles and
+Spanish `el agua`; and `ty_linked/5` (a form chosen by the word's own
+ending when a word of a class follows it) for the written Persian ezafe.
+The reader keeps a reading only where the writer writes the very words
+read. Apocope (`gran`) waits for an adjective before its noun (Phase 4).
 
 One slot, a form chosen by how the next word begins: English `a`/`an`,
 Italian `il`/`lo`/`l'`/`gli`/`i`, the written Persian ezafe (`گربه‌ی`),

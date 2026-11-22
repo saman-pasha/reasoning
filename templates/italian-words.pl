@@ -6,7 +6,6 @@ ty_noun(italian, headquarters, f, unknown, sede, sedi).
 ty_noun(italian, loser, m, unknown, vinto, vinti).
 ty_noun(italian, saturday, m, unknown, sabato, sabati).
 ty_noun(italian, damage, m, unknown, danno, danni).
-ty_noun(italian, interior, m, unknown, interno, interni).
 ty_noun(italian, neighbourhood, m, unknown, quartiere, quartieri).
 ty_noun(italian, girl, f, animate, bimba, bimbe).
 ty_noun(italian, closing, m, unknown, closing, closing).
@@ -37,7 +36,6 @@ ty_noun(italian, commitment, m, unknown, impegno, impegni).
 ty_noun(italian, injury, m, unknown, infortunio, infortuni).
 ty_noun(italian, talk, m, unknown, colloquio, colloqui).
 ty_noun(italian, squad, f, unknown, rosa, rose).
-ty_noun(italian, match, f, unknown, partita, partite).
 ty_noun(italian, relaxation, m, unknown, rilassamento, rilassamenti).
 ty_noun(italian, sign, m, unknown, segno, segni).
 ty_noun(italian, confidence, f, unknown, fiducia, fiduce).
@@ -90,7 +88,6 @@ ty_noun(italian, doctor, m, animate, medico, medici).
 ty_noun(italian, taking, f, unknown, presa, prese).
 ty_noun(italian, lehendakari, m, unknown, lehendakari, lehendakari).
 ty_noun(italian, agreement, m, unknown, accordo, accordi).
-ty_noun(italian, ridicule, m, unknown, ridicolo, ridicoli).
 ty_noun(italian, chamber, f, unknown, camera, camere).
 ty_noun(italian, bedroom, f, unknown, camera, camere).
 ty_noun(italian, camera, f, unknown, camera, camere).
@@ -101,12 +98,10 @@ ty_noun(italian, verse, m, unknown, verso, versi).
 ty_noun(italian, people, f, animate, gente, genti).
 ty_noun(italian, argument, m, unknown, argomento, argomenti).
 ty_noun(italian, subject, m, unknown, argomento, argomenti).
-ty_noun(italian, subject, m, unknown, soggetto, soggetti).
 ty_noun(italian, period, f, unknown, epoca, epoche).
 ty_noun(italian, period, m, unknown, periodo, periodi).
 ty_noun(italian, method, m, unknown, metodo, metodi).
 ty_noun(italian, detail, m, unknown, dettaglio, dettagli).
-ty_noun(italian, detail, m, unknown, particolare, particolari).
 ty_noun(italian, station, f, unknown, stazione, stazioni).
 ty_noun(italian, thousand, m, unknown, migliaio, migliai).
 ty_noun(italian, barretina, f, unknown, barretina, barretine).
@@ -125,7 +120,6 @@ ty_noun(italian, court, f, unknown, corte, corti).
 ty_noun(italian, law, f, unknown, legge, leggi).
 ty_noun(italian, judgment, f, unknown, sentenza, sentenze).
 ty_noun(italian, paragraph, m, unknown, comma, commi).
-ty_noun(italian, communique, m, unknown, comunicato, comunicati).
 ty_noun(italian, march, f, unknown, marcia, marce).
 ty_noun(italian, assembly, f, unknown, assemblea, assemblee).
 ty_noun(italian, medicine, m, unknown, farmaco, farmaci).
@@ -133,7 +127,6 @@ ty_noun(italian, medicine, f, animate, medicina, medicine).
 ty_noun(italian, tip, f, unknown, punta, punte).
 ty_noun(italian, sphericity, f, unknown, sfericità, sfericità).
 ty_noun(italian, serendipity, f, unknown, serendipità, serendipità).
-ty_noun(italian, medieval, m, animate, medievale, medievali).
 ty_noun(italian, stock, f, unknown, scorta, scorte).
 ty_noun(italian, escort, f, unknown, scorta, scorte).
 ty_noun(italian, file, m, unknown, archivio, archivi).
@@ -144,7 +137,6 @@ ty_noun(italian, competence, f, unknown, competenza, competenze).
 ty_noun(italian, unanimity, f, unknown, unanimità, unanimità).
 ty_noun(italian, newsagent, m, unknown, giornalaio, giornalai).
 ty_noun(italian, transfer, m, unknown, trasloco, traslochi).
-ty_noun(italian, boss, m, unknown, superiore, superiori).
 ty_noun(italian, transfer, m, unknown, passaggio, passaggi).
 ty_noun(italian, strip, f, unknown, fascia, fasce).
 ty_noun(italian, feeding, f, unknown, alimentazione, alimentazioni).
@@ -286,7 +278,6 @@ ty_noun(italian, screenwriter, m, animate, sceneggiatore, sceneggiatori).
 ty_noun(italian, director, m, animate, regista, registi).
 ty_noun(italian, auditorium, m, unknown, auditorio, auditori).
 ty_noun(italian, streetwalker, f, animate, passeggiatrice, passeggiatrici).
-ty_noun(italian, 'Neapolitan', m, unknown, napoletano, napoletani).
 ty_noun(italian, boss, m, animate, boss, boss).
 ty_noun(italian, morning, m, unknown, mattino, mattini).
 ty_noun(italian, correspondent, m, animate, inviato, inviati).
@@ -302,12 +293,9 @@ ty_noun(italian, custody, m, unknown, affidamento, affidamenti).
 ty_noun(italian, lack, f, unknown, mancanza, mancanze).
 ty_noun(italian, transport, m, unknown, trasporto, trasporti).
 ty_noun(italian, resource, f, unknown, risorsa, risorse).
-ty_noun(italian, statistics, f, unknown, statistica, statistiche).
 ty_noun(italian, chart, f, unknown, tabella, tabelle).
-ty_noun(italian, relative, m, unknown, familiare, familiari).
 ty_noun(italian, celebration, f, unknown, festa, feste).
 ty_noun(italian, sweeper, f, unknown, spazzatrice, spazzatrici).
-ty_noun(italian, bulk, m, unknown, grosso, grossi).
 ty_noun(italian, collection, f, unknown, raccolta, raccolte).
 ty_noun(italian, accident, m, unknown, incidente, incidenti).
 ty_noun(italian, expert, m, animate, esperto, esperti).
@@ -337,7 +325,6 @@ ty_noun(italian, corner, m, unknown, angolo, angoli).
 ty_noun(italian, counter, m, unknown, bancone, banconi).
 ty_noun(italian, misadventure, f, unknown, peripezia, peripezie).
 ty_noun(italian, workshop, m, unknown, laboratorio, laboratori).
-ty_noun(italian, call, f, unknown, chiamata, chiamate).
 ty_noun(italian, insurer, f, unknown, assicuratrice, assicuratrici).
 ty_noun(italian, restorer, m, animate, restauratore, restauratori).
 ty_noun(italian, restorer, f, animate, restauratrice, restauratrici).
@@ -357,7 +344,6 @@ ty_noun(italian, helplessness, f, unknown, impotenza, impotenze).
 ty_noun(italian, sample, m, unknown, campione, campioni).
 ty_noun(italian, assessment, m, unknown, scrutinio, scrutini).
 ty_noun(italian, sheet, m, unknown, foglio, fogli).
-ty_noun(italian, sort, f, unknown, sorta, sorte).
 ty_noun(italian, aeroplane, m, unknown, aereo, aerei).
 ty_noun(italian, passenger, m, animate, passeggero, passeggeri).
 ty_noun(italian, ring, m, unknown, anello, anelli).
@@ -393,7 +379,6 @@ ty_noun(italian, post, f, unknown, carica, cariche).
 ty_noun(italian, theorist, m, animate, teorico, teorici).
 ty_noun(italian, wail, m, unknown, vagito, vagiti).
 ty_noun(italian, basis, m, unknown, fondamento, fondamenti).
-ty_noun(italian, semiotics, f, unknown, semiotica, semiotiche).
 ty_noun(italian, orientation, m, unknown, orientamento, orientamenti).
 ty_noun(italian, search, f, unknown, ricerca, ricerche).
 ty_noun(italian, forest, m, unknown, bosco, boschi).
@@ -2542,7 +2527,7 @@ ty_noun(italian, dribble, f, unknown, bava, bave).
 ty_noun(italian, drill, m, unknown, trapano, trapani).
 ty_noun(italian, drilling, f, unknown, perforazione, perforazioni).
 ty_noun(italian, drink, f, unknown, bevanda, bevande).
-ty_noun(italian, drive, m, unknown, passeggio, passeggi).
+ty_noun(italian, drive, m, unknown, passeggio, passeggii).
 ty_noun(italian, drizzle, f, unknown, pioviggine, pioviggini).
 ty_noun(italian, drop, f, unknown, goccia, gocce).
 ty_noun(italian, drowning, m, unknown, annegamento, annegamenti).
@@ -4319,7 +4304,7 @@ ty_noun(italian, pathology, f, unknown, patologia, patologie).
 ty_noun(italian, patience, f, unknown, sopportazione, sopportazioni).
 ty_noun(italian, patriarch, m, unknown, patriarca, patriarchi).
 ty_noun(italian, patriotism, m, unknown, patriottismo, patriottismi).
-ty_noun(italian, patrol, f, unknown, pattuglia, pattugliano).
+ty_noun(italian, patrol, f, unknown, pattuglia, pattuglie).
 ty_noun(italian, patronage, m, unknown, mecenatismo, mecenatismi).
 ty_noun(italian, paving, f, unknown, pavimentazione, pavimentazioni).
 ty_noun(italian, peace, f, unknown, pace, paci).
@@ -4716,7 +4701,7 @@ ty_noun(italian, rebellion, f, unknown, ribellione, ribellioni).
 ty_noun(italian, receipt, f, unknown, ricezione, ricezioni).
 ty_noun(italian, receptacle, m, unknown, ricettacolo, ricettacoli).
 ty_noun(italian, recession, f, unknown, recessione, recessioni).
-ty_noun(italian, recital, m, unknown, recital, recital).
+ty_noun(italian, recital, m, unknown, recital, recitals).
 ty_noun(italian, recitation, f, unknown, recitazione, recitazioni).
 ty_noun(italian, recognition, f, unknown, visita, visite).
 ty_noun(italian, recombination, f, unknown, ricombinazione, ricombinazioni).
@@ -4842,7 +4827,6 @@ ty_noun(italian, rhombus, m, unknown, rombo, rombi).
 ty_noun(italian, rhyme, f, unknown, rima, rime).
 ty_noun(italian, rhythm, m, unknown, ritmo, ritmi).
 ty_noun(italian, rib, f, unknown, costola, costole).
-ty_noun(italian, rice, m, unknown, riso, risi).
 ty_noun(italian, rifle, m, unknown, fucile, fucili).
 ty_noun(italian, right, f, unknown, destra, destre).
 ty_noun(italian, rigour, m, unknown, rigore, rigori).
@@ -5230,7 +5214,6 @@ ty_noun(italian, boom, m, unknown, boom, boom).
 ty_noun(italian, boa, f, unknown, boa, boe).
 ty_noun(italian, breviary, m, unknown, breviario, breviari).
 ty_noun(italian, badminton, m, unknown, badminton, badminton).
-ty_noun(italian, grip, f, unknown, stretta, strette).
 ty_noun(italian, godson, m, unknown, figlioccio, figliocci).
 ty_noun(italian, goddaughter, f, animate, figlioccia, figlioccie).
 ty_noun(italian, ethyl, m, unknown, etile, etili).
@@ -5704,7 +5687,6 @@ ty_noun(italian, hologram, m, unknown, ologramma, ologrammi).
 ty_noun(italian, hump, f, unknown, gobba, gobbe).
 ty_noun(italian, hypotenuse, f, unknown, ipotenusa, ipotenuse).
 ty_noun(italian, incandescence, f, unknown, incandescenza, incandescenze).
-ty_noun(italian, indorsement, f, unknown, girata, girate).
 ty_noun(italian, insecurity, f, unknown, insicurezza, insicurezze).
 ty_noun(italian, insolence, f, unknown, insolenza, insolenze).
 ty_noun(italian, inventiveness, f, unknown, inventiva, inventive).
@@ -5767,7 +5749,6 @@ ty_noun(italian, stepmother, f, animate, matrigna, matrigne).
 ty_noun(italian, stratosphere, f, unknown, stratosfera, stratosfere).
 ty_noun(italian, subculture, f, unknown, sottocultura, sottoculture).
 ty_noun(italian, subsystem, m, unknown, sottosistema, sottosistemi).
-ty_noun(italian, suppository, f, unknown, supposta, supposte).
 ty_noun(italian, surveillance, f, unknown, sorveglianza, sorveglianze).
 ty_noun(italian, sweatshirt, f, unknown, felpa, felpe).
 ty_noun(italian, syllable, f, unknown, sillaba, sillabe).
@@ -5887,7 +5868,7 @@ ty_noun(italian, wall, f, unknown, parete, pareti).
 ty_noun(italian, wallet, m, unknown, portafoglio, portafogli).
 ty_noun(italian, walnut, f, unknown, noce, noci).
 ty_noun(italian, walrus, f, unknown, morsa, morse).
-ty_noun(italian, wand, f, unknown, bacchetta, bacchettano).
+ty_noun(italian, wand, f, unknown, bacchetta, bacchette).
 ty_noun(italian, war, f, unknown, guerra, guerre).
 ty_noun(italian, wardrobe, m, unknown, vestiario, vestiari).
 ty_noun(italian, warehouse, m, unknown, magazzino, magazzini).
@@ -6084,7 +6065,7 @@ ty_noun(italian, carmelite, m, unknown, carmelitano, carmelitani).
 ty_noun(italian, carob, m, unknown, carrubo, carrubi).
 ty_noun(italian, carousel, m, unknown, carosello, caroselli).
 ty_noun(italian, cartographer, m, unknown, cartografo, cartografi).
-ty_noun(italian, case, f, unknown, cassa, cassano).
+ty_noun(italian, case, f, unknown, cassa, casse).
 ty_noun(italian, cash, m, unknown, contante, contanti).
 ty_noun(italian, casket, m, unknown, cofanetto, cofanetti).
 ty_noun(italian, castellan, m, unknown, castellano, castellani).
@@ -6670,7 +6651,7 @@ ty_noun(italian, slap, m, unknown, schiaffo, schiaffi).
 ty_noun(italian, human, m, unknown, umano, umani).
 ty_noun(italian, pill, f, unknown, pillola, pillole).
 ty_noun(italian, spine, f, unknown, spina, spine).
-ty_noun(italian, figure, f, unknown, figura, figurano).
+ty_noun(italian, figure, f, unknown, figura, figure).
 ty_noun(italian, sum, f, unknown, somma, somme).
 ty_noun(italian, iodine, m, unknown, iodio, iodii).
 ty_noun(italian, marine, m, animate, marine, marine).
@@ -6804,7 +6785,6 @@ ty_noun(italian, collapse, m, unknown, crollo, crolli).
 ty_noun(italian, colloquium, m, unknown, colloquio, colloqui).
 ty_noun(italian, colonnade, m, unknown, colonnato, colonnati).
 ty_noun(italian, commissariat, m, unknown, commissariato, commissariati).
-ty_noun(italian, compote, f, unknown, composta, composte).
 ty_noun(italian, conditioning, m, unknown, condizionamento, condizionamenti).
 ty_noun(italian, consonantism, m, unknown, consonantismo, consonantismi).
 ty_noun(italian, consultant, m, animate, consulente, consulenti).
@@ -6939,7 +6919,7 @@ ty_noun(italian, tycoon, m, animate, magnate, magnati).
 ty_noun(italian, uncertainty, f, unknown, incertezza, incertezze).
 ty_noun(italian, session, f, unknown, sessione, sessioni).
 ty_noun(italian, assault, m, unknown, assalto, assalti).
-ty_noun(italian, garrison, m, unknown, presidio, presìdi).
+ty_noun(italian, garrison, m, unknown, presidio, presidii).
 ty_noun(italian, fugitive, m, animate, latitante, latitanti).
 ty_noun(italian, restriction, m, unknown, vincolo, vincoli).
 ty_noun(italian, kiosk, f, unknown, edicola, edicole).
@@ -7667,7 +7647,7 @@ ty_noun(italian, graduate, f, animate, laureata, laureate).
 ty_noun(italian, gratuity, f, unknown, gratuità, gratuità).
 ty_noun(italian, grazier, m, unknown, allevamento, allevamenti).
 ty_noun(italian, greed, f, unknown, avidità, avidità).
-ty_noun(italian, guerrilla, m, animate, guerrigliero, guerriglieri).
+ty_noun(italian, guerrilla, m, animate, guerrigliero, guerriglier).
 ty_noun(italian, guerrilla, f, animate, guerrigliera, guerrigliere).
 ty_noun(italian, guitarist, m, animate, chitarrista, chitarristi).
 ty_noun(italian, gynaecologist, m, unknown, ginecologo, ginecologi).
@@ -8964,7 +8944,7 @@ ty_noun(italian, captive, f, animate, prigioniera, prigioniere).
 ty_noun(italian, prize, m, unknown, premio, premi).
 ty_noun(italian, produce, m, unknown, prodotto, prodotti).
 ty_noun(italian, programme, m, unknown, programma, programmi).
-ty_noun(italian, promenade, m, unknown, passeggio, passeggi).
+ty_noun(italian, promenade, m, unknown, passeggio, passeggii).
 ty_noun(italian, promise, f, unknown, promessa, promesse).
 ty_noun(italian, prorate, f, unknown, ripartizione, ripartizioni).
 ty_noun(italian, prospect, f, unknown, prospettiva, prospettive).
@@ -9015,7 +8995,7 @@ ty_noun(italian, retirement, f, unknown, pensione, pensioni).
 ty_noun(italian, retort, f, unknown, replicazione, replicazioni).
 ty_noun(italian, review, f, unknown, rivista, riviste).
 ty_noun(italian, riddle, m, unknown, indovinello, indovinelli).
-ty_noun(italian, ride, m, unknown, passeggio, passeggi).
+ty_noun(italian, ride, m, unknown, passeggio, passeggii).
 ty_noun(italian, riding, f, unknown, equitazione, equitazioni).
 ty_noun(italian, riot, f, unknown, rivolta, rivolte).
 ty_noun(italian, rise, m, unknown, aumento, aumenti).
@@ -9226,12 +9206,6 @@ ty_noun(italian, shamrock, m, unknown, trifoglio, trifogli).
 ty_noun(italian, noon, m, unknown, mezzogiorno, mezzogiorni).
 ty_noun(italian, wagon, m, unknown, carro, carri).
 ty_noun(italian, coda, f, unknown, coda, code).
-ty_adjective(italian, 'Barça', any, sg, blaugrana).
-ty_adjective(italian, 'Barça', any, pl, blaugrana).
-ty_adjective(italian, 'Corsican', m, sg, corso).
-ty_adjective(italian, 'Corsican', m, pl, corsi).
-ty_adjective(italian, 'Corsican', f, sg, corsa).
-ty_adjective(italian, 'Corsican', f, pl, corse).
 ty_adjective(italian, 'Luciferian', m, sg, luciferino).
 ty_adjective(italian, 'Luciferian', m, pl, luciferini).
 ty_adjective(italian, 'Luciferian', f, sg, luciferina).
@@ -9259,7 +9233,7 @@ ty_adjective(italian, able, any, pl, capaci).
 ty_adjective(italian, abnormal, any, sg, anormale).
 ty_adjective(italian, abnormal, any, pl, anormali).
 ty_adjective(italian, absent, any, sg, assente).
-ty_adjective(italian, absent, any, pl, assentono).
+ty_adjective(italian, absent, any, pl, assenti).
 ty_adjective(italian, absolute, m, sg, assoluto).
 ty_adjective(italian, absolute, m, pl, assoluti).
 ty_adjective(italian, absolute, f, sg, assoluta).
@@ -9303,7 +9277,7 @@ ty_adjective(italian, accessible, any, pl, agibili).
 ty_adjective(italian, accessory, m, sg, accessorio).
 ty_adjective(italian, accessory, m, pl, accessori).
 ty_adjective(italian, accessory, f, sg, accessoria).
-ty_adjective(italian, accessory, f, pl, accessoriano).
+ty_adjective(italian, accessory, f, pl, accessorie).
 ty_adjective(italian, accident, any, sg, incidente).
 ty_adjective(italian, accident, any, pl, incidenti).
 ty_adjective(italian, accidental, any, sg, accidentale).
@@ -9345,7 +9319,7 @@ ty_adjective(italian, acting, any, pl, supplenti).
 ty_adjective(italian, active, m, sg, attivo).
 ty_adjective(italian, active, m, pl, attivi).
 ty_adjective(italian, active, f, sg, attiva).
-ty_adjective(italian, active, f, pl, attivano).
+ty_adjective(italian, active, f, pl, attive).
 ty_adjective(italian, actual, any, sg, reale).
 ty_adjective(italian, actual, any, pl, reali).
 ty_adjective(italian, actuarial, any, sg, attuariale).
@@ -9405,7 +9379,7 @@ ty_adjective(italian, adult, f, pl, adulte).
 ty_adjective(italian, adulterous, m, sg, adultero).
 ty_adjective(italian, adulterous, m, pl, adulteri).
 ty_adjective(italian, adulterous, f, sg, adultera).
-ty_adjective(italian, adulterous, f, pl, adulterano).
+ty_adjective(italian, adulterous, f, pl, adultere).
 ty_adjective(italian, advanced, m, sg, avanzato).
 ty_adjective(italian, advanced, m, pl, avanzati).
 ty_adjective(italian, advanced, f, sg, avanzata).
@@ -9561,7 +9535,7 @@ ty_adjective(italian, alimentary, any, pl, alimentari).
 ty_adjective(italian, alive, m, sg, vivo).
 ty_adjective(italian, alive, m, pl, vivi).
 ty_adjective(italian, alive, f, sg, viva).
-ty_adjective(italian, alive, f, pl, vivano).
+ty_adjective(italian, alive, f, pl, vive).
 ty_adjective(italian, alleged, m, sg, presunto).
 ty_adjective(italian, alleged, m, pl, presunti).
 ty_adjective(italian, alleged, f, sg, presunta).
@@ -9705,7 +9679,7 @@ ty_adjective(italian, annex, f, pl, annesse).
 ty_adjective(italian, annoying, m, sg, molesto).
 ty_adjective(italian, annoying, m, pl, molesti).
 ty_adjective(italian, annoying, f, sg, molesta).
-ty_adjective(italian, annoying, f, pl, molestano).
+ty_adjective(italian, annoying, f, pl, moleste).
 ty_adjective(italian, annual, any, sg, annuale).
 ty_adjective(italian, annual, any, pl, annuali).
 ty_adjective(italian, annual, m, sg, annuo).
@@ -9740,16 +9714,12 @@ ty_adjective(italian, anticyclonic, m, sg, anticiclonico).
 ty_adjective(italian, anticyclonic, m, pl, anticiclonici).
 ty_adjective(italian, anticyclonic, f, sg, anticiclonica).
 ty_adjective(italian, anticyclonic, f, pl, anticicloniche).
-ty_adjective(italian, antidoping, any, sg, antidoping).
-ty_adjective(italian, antidoping, any, pl, antidoping).
 ty_adjective(italian, antimonopoly, m, sg, antimonopolistico).
 ty_adjective(italian, antimonopoly, m, pl, antimonopolistici).
 ty_adjective(italian, antimonopoly, f, sg, antimonopolistica).
 ty_adjective(italian, antimonopoly, f, pl, antimonopolistiche).
 ty_adjective(italian, antioxidant, any, sg, antiossidante).
 ty_adjective(italian, antioxidant, any, pl, antiossidanti).
-ty_adjective(italian, antipodean, any, sg, antipode).
-ty_adjective(italian, antipodean, any, pl, antipodi).
 ty_adjective(italian, antiquarian, m, sg, antiquario).
 ty_adjective(italian, antiquarian, m, pl, antiquari).
 ty_adjective(italian, antiquarian, f, sg, antiquaria).
@@ -9802,8 +9772,6 @@ ty_adjective(italian, appropriate, m, sg, appropriato).
 ty_adjective(italian, appropriate, m, pl, appropriati).
 ty_adjective(italian, appropriate, f, sg, appropriata).
 ty_adjective(italian, appropriate, f, pl, appropriate).
-ty_adjective(italian, approximate, any, sg, approssimato).
-ty_adjective(italian, approximate, any, pl, approssimati).
 ty_adjective(italian, apt, m, sg, atto).
 ty_adjective(italian, apt, m, pl, atti).
 ty_adjective(italian, apt, f, sg, atta).
@@ -9875,7 +9843,7 @@ ty_adjective(italian, arid, f, pl, aride).
 ty_adjective(italian, aristocratic, m, sg, aristocratico).
 ty_adjective(italian, aristocratic, m, pl, aristocratici).
 ty_adjective(italian, aristocratic, f, sg, aristocratica).
-ty_adjective(italian, aristocratic, f, pl, aristocratice).
+ty_adjective(italian, aristocratic, f, pl, aristocratiche).
 ty_adjective(italian, aristotelian, m, sg, aristotelico).
 ty_adjective(italian, aristotelian, m, pl, aristotelici).
 ty_adjective(italian, aristotelian, f, sg, aristotelica).
@@ -10023,9 +9991,9 @@ ty_adjective(italian, autarchic, f, pl, autarchiche).
 ty_adjective(italian, authentic, m, sg, autentico).
 ty_adjective(italian, authentic, m, pl, autentici).
 ty_adjective(italian, authentic, f, sg, autentica).
-ty_adjective(italian, authentic, f, pl, autenticano).
+ty_adjective(italian, authentic, f, pl, autentiche).
 ty_adjective(italian, authoritarian, m, sg, autoritario).
-ty_adjective(italian, authoritarian, m, pl, autoritarii).
+ty_adjective(italian, authoritarian, m, pl, autoritari).
 ty_adjective(italian, authoritarian, f, sg, autoritaria).
 ty_adjective(italian, authoritarian, f, pl, autoritarie).
 ty_adjective(italian, autobiographical, m, sg, autobiografico).
@@ -10079,7 +10047,7 @@ ty_adjective(italian, avoidable, any, pl, evitabili).
 ty_adjective(italian, awake, m, sg, sveglio).
 ty_adjective(italian, awake, m, pl, svegli).
 ty_adjective(italian, awake, f, sg, sveglia).
-ty_adjective(italian, awake, f, pl, svegliano).
+ty_adjective(italian, awake, f, pl, sveglie).
 ty_adjective(italian, awake, any, sg, vigile).
 ty_adjective(italian, awake, any, pl, vigili).
 ty_adjective(italian, awarding, any, sg, attribuente).
@@ -10264,8 +10232,6 @@ ty_adjective(italian, 'black-and-blue', m, sg, nerazzurro).
 ty_adjective(italian, 'black-and-blue', m, pl, nerazzurri).
 ty_adjective(italian, 'black-and-blue', f, sg, nerazzurra).
 ty_adjective(italian, 'black-and-blue', f, pl, nerazzurre).
-ty_adjective(italian, blackmailer, any, sg, ricattatore).
-ty_adjective(italian, blackmailer, any, pl, ricattatori).
 ty_adjective(italian, blatant, m, sg, sfacciato).
 ty_adjective(italian, blatant, m, pl, sfacciati).
 ty_adjective(italian, blatant, f, sg, sfacciata).
@@ -10338,8 +10304,6 @@ ty_adjective(italian, brackish, m, sg, salmastro).
 ty_adjective(italian, brackish, m, pl, salmastri).
 ty_adjective(italian, brackish, f, sg, salmastra).
 ty_adjective(italian, brackish, f, pl, salmastre).
-ty_adjective(italian, brainless, any, sg, panfilo).
-ty_adjective(italian, brainless, any, pl, panfili).
 ty_adjective(italian, brave, m, sg, coraggioso).
 ty_adjective(italian, brave, m, pl, coraggiosi).
 ty_adjective(italian, brave, f, sg, coraggiosa).
@@ -10364,10 +10328,6 @@ ty_adjective(italian, broad, m, sg, largo).
 ty_adjective(italian, broad, m, pl, larghi).
 ty_adjective(italian, broad, f, sg, larga).
 ty_adjective(italian, broad, f, pl, larghe).
-ty_adjective(italian, broken, m, sg, rotto).
-ty_adjective(italian, broken, m, pl, rotti).
-ty_adjective(italian, broken, f, sg, rotta).
-ty_adjective(italian, broken, f, pl, rotte).
 ty_adjective(italian, bronchial, any, sg, bronchiale).
 ty_adjective(italian, bronchial, any, pl, bronchiali).
 ty_adjective(italian, brown, m, sg, bruno).
@@ -10457,7 +10417,7 @@ ty_adjective(italian, canarian, f, pl, canarie).
 ty_adjective(italian, candid, m, sg, candido).
 ty_adjective(italian, candid, m, pl, candidi).
 ty_adjective(italian, candid, f, sg, candida).
-ty_adjective(italian, candid, f, pl, candidano).
+ty_adjective(italian, candid, f, pl, candide).
 ty_adjective(italian, canicular, any, sg, canicolare).
 ty_adjective(italian, canicular, any, pl, canicolari).
 ty_adjective(italian, canine, m, sg, canino).
@@ -10545,7 +10505,7 @@ ty_adjective(italian, cathartic, m, pl, catartici).
 ty_adjective(italian, cathartic, f, sg, catartica).
 ty_adjective(italian, cathartic, f, pl, catartiche).
 ty_adjective(italian, catholic, m, sg, cattolico).
-ty_adjective(italian, catholic, m, pl, cattolichi).
+ty_adjective(italian, catholic, m, pl, cattolici).
 ty_adjective(italian, catholic, f, sg, cattolica).
 ty_adjective(italian, catholic, f, pl, cattoliche).
 ty_adjective(italian, causal, any, sg, causale).
@@ -10586,8 +10546,6 @@ ty_adjective(italian, certain, m, sg, sicuro).
 ty_adjective(italian, certain, m, pl, sicuri).
 ty_adjective(italian, certain, f, sg, sicura).
 ty_adjective(italian, certain, f, pl, sicure).
-ty_adjective(italian, certifier, any, sg, certificatore).
-ty_adjective(italian, certifier, any, pl, certificatori).
 ty_adjective(italian, cervical, any, sg, cervicale).
 ty_adjective(italian, cervical, any, pl, cervicali).
 ty_adjective(italian, chaotic, m, sg, caotico).
@@ -10702,10 +10660,8 @@ ty_adjective(italian, clean, m, sg, lindo).
 ty_adjective(italian, clean, m, pl, lindi).
 ty_adjective(italian, clean, f, sg, linda).
 ty_adjective(italian, clean, f, pl, linde).
-ty_adjective(italian, cleansing, any, sg, detergente).
-ty_adjective(italian, cleansing, any, pl, detergenti).
 ty_adjective(italian, clear, m, sg, chiaro).
-ty_adjective(italian, clear, m, pl, chiar).
+ty_adjective(italian, clear, m, pl, chiari).
 ty_adjective(italian, clear, f, sg, chiara).
 ty_adjective(italian, clear, f, pl, chiare).
 ty_adjective(italian, clement, any, sg, clemente).
@@ -10833,7 +10789,7 @@ ty_adjective(italian, communist, any, pl, comunisti).
 ty_adjective(italian, compact, m, sg, compatto).
 ty_adjective(italian, compact, m, pl, compatti).
 ty_adjective(italian, compact, f, sg, compatta).
-ty_adjective(italian, compact, f, pl, compattano).
+ty_adjective(italian, compact, f, pl, compatte).
 ty_adjective(italian, comparable, any, sg, comparabile).
 ty_adjective(italian, comparable, any, pl, comparabili).
 ty_adjective(italian, comparative, m, sg, comparativo).
@@ -10853,7 +10809,7 @@ ty_adjective(italian, complementary, any, pl, complementari).
 ty_adjective(italian, complete, m, sg, completo).
 ty_adjective(italian, complete, m, pl, completi).
 ty_adjective(italian, complete, f, sg, completa).
-ty_adjective(italian, complete, f, pl, completano).
+ty_adjective(italian, complete, f, pl, complete).
 ty_adjective(italian, complex, m, sg, complesso).
 ty_adjective(italian, complex, m, pl, complessi).
 ty_adjective(italian, complex, f, sg, complessa).
@@ -10907,7 +10863,7 @@ ty_adjective(italian, concordant, any, pl, concordi).
 ty_adjective(italian, concrete, m, sg, concreto).
 ty_adjective(italian, concrete, m, pl, concreti).
 ty_adjective(italian, concrete, f, sg, concreta).
-ty_adjective(italian, concrete, f, pl, concretano).
+ty_adjective(italian, concrete, f, pl, concrete).
 ty_adjective(italian, concurrent, any, sg, concorrente).
 ty_adjective(italian, concurrent, any, pl, concorrenti).
 ty_adjective(italian, condemnable, any, sg, condannabile).
@@ -11007,7 +10963,7 @@ ty_adjective(italian, contemporary, f, pl, contemporanee).
 ty_adjective(italian, content, m, sg, contento).
 ty_adjective(italian, content, m, pl, contenti).
 ty_adjective(italian, content, f, sg, contenta).
-ty_adjective(italian, content, f, pl, contentano).
+ty_adjective(italian, content, f, pl, contente).
 ty_adjective(italian, contentious, m, sg, contenzioso).
 ty_adjective(italian, contentious, m, pl, contenziosi).
 ty_adjective(italian, contentious, f, sg, contenziosa).
@@ -11025,7 +10981,7 @@ ty_adjective(italian, contingent, any, pl, contingenti).
 ty_adjective(italian, continuous, m, sg, continuo).
 ty_adjective(italian, continuous, m, pl, continui).
 ty_adjective(italian, continuous, f, sg, continua).
-ty_adjective(italian, continuous, f, pl, continuano).
+ty_adjective(italian, continuous, f, pl, continue).
 ty_adjective(italian, contraceptive, m, sg, contraccettivo).
 ty_adjective(italian, contraceptive, m, pl, contraccettivi).
 ty_adjective(italian, contraceptive, f, sg, contraccettiva).
@@ -11039,7 +10995,7 @@ ty_adjective(italian, contradictory, f, pl, contraddittorie).
 ty_adjective(italian, contrary, m, sg, contrario).
 ty_adjective(italian, contrary, m, pl, contrari).
 ty_adjective(italian, contrary, f, sg, contraria).
-ty_adjective(italian, contrary, f, pl, contrariano).
+ty_adjective(italian, contrary, f, pl, contrarie).
 ty_adjective(italian, controllable, any, sg, controllabile).
 ty_adjective(italian, controllable, any, pl, controllabili).
 ty_adjective(italian, controversial, m, sg, controverso).
@@ -11054,8 +11010,6 @@ ty_adjective(italian, conventional, any, sg, convenzionale).
 ty_adjective(italian, conventional, any, pl, convenzionali).
 ty_adjective(italian, convergent, any, sg, convergente).
 ty_adjective(italian, convergent, any, pl, convergenti).
-ty_adjective(italian, conversational, any, sg, conversazione).
-ty_adjective(italian, conversational, any, pl, conversazioni).
 ty_adjective(italian, convertible, any, sg, convertibile).
 ty_adjective(italian, convertible, any, pl, convertibili).
 ty_adjective(italian, convex, m, sg, convesso).
@@ -11316,8 +11270,6 @@ ty_adjective(italian, decisive, any, sg, determinante).
 ty_adjective(italian, decisive, any, pl, determinanti).
 ty_adjective(italian, declining, any, sg, decrescente).
 ty_adjective(italian, declining, any, pl, decrescenti).
-ty_adjective(italian, decoder, any, sg, decodificatore).
-ty_adjective(italian, decoder, any, pl, decodificatori).
 ty_adjective(italian, decorative, m, sg, decorativo).
 ty_adjective(italian, decorative, m, pl, decorativi).
 ty_adjective(italian, decorative, f, sg, decorativa).
@@ -11438,8 +11390,6 @@ ty_adjective(italian, descriptive, m, sg, descrittivo).
 ty_adjective(italian, descriptive, m, pl, descrittivi).
 ty_adjective(italian, descriptive, f, sg, descrittiva).
 ty_adjective(italian, descriptive, f, pl, descrittive).
-ty_adjective(italian, deserter, any, sg, disertore).
-ty_adjective(italian, deserter, any, pl, disertori).
 ty_adjective(italian, desirable, any, sg, desiderabile).
 ty_adjective(italian, desirable, any, pl, desiderabili).
 ty_adjective(italian, desolate, m, sg, desolato).
@@ -11561,7 +11511,7 @@ ty_adjective(italian, directional, any, pl, direzionali).
 ty_adjective(italian, dirty, m, sg, sporco).
 ty_adjective(italian, dirty, m, pl, sporchi).
 ty_adjective(italian, dirty, f, sg, sporca).
-ty_adjective(italian, dirty, f, pl, sporcano).
+ty_adjective(italian, dirty, f, pl, sporche).
 ty_adjective(italian, disabled, m, sg, disabilitato).
 ty_adjective(italian, disabled, m, pl, disabilitati).
 ty_adjective(italian, disabled, f, sg, disabilitata).
@@ -11696,12 +11646,10 @@ ty_adjective(italian, doric, f, sg, dorica).
 ty_adjective(italian, doric, f, pl, doriche).
 ty_adjective(italian, dorsal, any, sg, dorsale).
 ty_adjective(italian, dorsal, any, pl, dorsali).
-ty_adjective(italian, dorsal, any, sg, cresta).
-ty_adjective(italian, dorsal, any, pl, creste).
 ty_adjective(italian, double, m, sg, doppio).
 ty_adjective(italian, double, m, pl, doppi).
 ty_adjective(italian, double, f, sg, doppia).
-ty_adjective(italian, double, f, pl, doppiano).
+ty_adjective(italian, double, f, pl, doppie).
 ty_adjective(italian, doubtful, m, sg, dubbioso).
 ty_adjective(italian, doubtful, m, pl, dubbiosi).
 ty_adjective(italian, doubtful, f, sg, dubbiosa).
@@ -11735,7 +11683,7 @@ ty_adjective(italian, drunk, f, pl, ubriache).
 ty_adjective(italian, dry, m, sg, secco).
 ty_adjective(italian, dry, m, pl, secchi).
 ty_adjective(italian, dry, f, sg, secca).
-ty_adjective(italian, dry, f, pl, seccano).
+ty_adjective(italian, dry, f, pl, secche).
 ty_adjective(italian, dry, m, sg, asciutto).
 ty_adjective(italian, dry, m, pl, asciutti).
 ty_adjective(italian, dry, f, sg, asciutta).
@@ -11810,8 +11758,6 @@ ty_adjective(italian, ecumenical, f, sg, ecumenica).
 ty_adjective(italian, ecumenical, f, pl, ecumeniche).
 ty_adjective(italian, edible, any, sg, commestibile).
 ty_adjective(italian, edible, any, pl, commestibili).
-ty_adjective(italian, educating, any, sg, educatore).
-ty_adjective(italian, educating, any, pl, educatori).
 ty_adjective(italian, educational, any, sg, docente).
 ty_adjective(italian, educational, any, pl, docenti).
 ty_adjective(italian, educative, m, sg, educativo).
@@ -12039,7 +11985,7 @@ ty_adjective(italian, equivalent, any, pl, equivalenti).
 ty_adjective(italian, equivocal, m, sg, equivoco).
 ty_adjective(italian, equivocal, m, pl, equivoci).
 ty_adjective(italian, equivocal, f, sg, equivoca).
-ty_adjective(italian, equivocal, f, pl, equivocano).
+ty_adjective(italian, equivocal, f, pl, equivoche).
 ty_adjective(italian, erroneous, m, sg, erroneo).
 ty_adjective(italian, erroneous, m, pl, erronei).
 ty_adjective(italian, erroneous, f, sg, erronea).
@@ -12232,8 +12178,6 @@ ty_adjective(italian, external, m, sg, esterno).
 ty_adjective(italian, external, m, pl, esterni).
 ty_adjective(italian, external, f, sg, esterna).
 ty_adjective(italian, external, f, pl, esterne).
-ty_adjective(italian, extra, any, sg, extra).
-ty_adjective(italian, extra, any, pl, extra).
 ty_adjective(italian, extractor, any, sg, aspiratore).
 ty_adjective(italian, extractor, any, pl, aspiratori).
 ty_adjective(italian, extracurricular, any, sg, extrascolare).
@@ -12272,10 +12216,6 @@ ty_adjective(italian, fair, f, sg, giusta).
 ty_adjective(italian, fair, f, pl, giuste).
 ty_adjective(italian, faithful, any, sg, fedele).
 ty_adjective(italian, faithful, any, pl, fedeli).
-ty_adjective(italian, fake, m, sg, finto).
-ty_adjective(italian, fake, m, pl, finti).
-ty_adjective(italian, fake, f, sg, finta).
-ty_adjective(italian, fake, f, pl, finte).
 ty_adjective(italian, falangist, any, sg, falangista).
 ty_adjective(italian, falangist, any, pl, falangisti).
 ty_adjective(italian, fallible, any, sg, fallibile).
@@ -12283,7 +12223,7 @@ ty_adjective(italian, fallible, any, pl, fallibili).
 ty_adjective(italian, false, m, sg, falso).
 ty_adjective(italian, false, m, pl, falsi).
 ty_adjective(italian, false, f, sg, falsa).
-ty_adjective(italian, false, f, pl, falsano).
+ty_adjective(italian, false, f, pl, false).
 ty_adjective(italian, familiar, any, sg, familiare).
 ty_adjective(italian, familiar, any, pl, familiari).
 ty_adjective(italian, family, any, sg, familiare).
@@ -12348,8 +12288,6 @@ ty_adjective(italian, fearless, m, sg, impavido).
 ty_adjective(italian, fearless, m, pl, impavidi).
 ty_adjective(italian, fearless, f, sg, impavida).
 ty_adjective(italian, fearless, f, pl, impavide).
-ty_adjective(italian, fearless, any, sg, osato).
-ty_adjective(italian, fearless, any, pl, osati).
 ty_adjective(italian, fearsome, any, sg, temibile).
 ty_adjective(italian, fearsome, any, pl, temibili).
 ty_adjective(italian, feasible, any, sg, fattibile).
@@ -12423,7 +12361,7 @@ ty_adjective(italian, finnish, any, pl, finlandesi).
 ty_adjective(italian, firm, m, sg, fermo).
 ty_adjective(italian, firm, m, pl, fermi).
 ty_adjective(italian, firm, f, sg, ferma).
-ty_adjective(italian, firm, f, pl, fermano).
+ty_adjective(italian, firm, f, pl, ferme).
 ty_adjective(italian, first, m, sg, primo).
 ty_adjective(italian, first, m, pl, primi).
 ty_adjective(italian, first, f, sg, prima).
@@ -12436,8 +12374,6 @@ ty_adjective(italian, fit, f, sg, atta).
 ty_adjective(italian, fit, f, pl, atte).
 ty_adjective(italian, flagrant, any, sg, flagrante).
 ty_adjective(italian, flagrant, any, pl, flagranti).
-ty_adjective(italian, flamenco, any, sg, flamenco).
-ty_adjective(italian, flamenco, any, pl, flamenco).
 ty_adjective(italian, flat, m, sg, piatto).
 ty_adjective(italian, flat, m, pl, piatti).
 ty_adjective(italian, flat, f, sg, piatta).
@@ -12579,7 +12515,7 @@ ty_adjective(italian, free, f, pl, gratuite).
 ty_adjective(italian, free, m, sg, libero).
 ty_adjective(italian, free, m, pl, liberi).
 ty_adjective(italian, free, f, sg, libera).
-ty_adjective(italian, free, f, pl, liberano).
+ty_adjective(italian, free, f, pl, libere).
 ty_adjective(italian, freezing, m, sg, ghiacciato).
 ty_adjective(italian, freezing, m, pl, ghiacciati).
 ty_adjective(italian, freezing, f, sg, ghiacciata).
@@ -12863,7 +12799,7 @@ ty_adjective(italian, grumpy, m, pl, scontrosi).
 ty_adjective(italian, grumpy, f, sg, scontrosa).
 ty_adjective(italian, grumpy, f, pl, scontrose).
 ty_adjective(italian, guatemalan, m, sg, guatemalteco).
-ty_adjective(italian, guatemalan, m, pl, guatemalteci).
+ty_adjective(italian, guatemalan, m, pl, guatemaltechi).
 ty_adjective(italian, guatemalan, f, sg, guatemalteca).
 ty_adjective(italian, guatemalan, f, pl, guatemalteche).
 ty_adjective(italian, guerrilla, m, sg, guerrigliero).
@@ -12925,7 +12861,7 @@ ty_adjective(italian, happy, f, pl, liete).
 ty_adjective(italian, hard, m, sg, duro).
 ty_adjective(italian, hard, m, pl, duri).
 ty_adjective(italian, hard, f, sg, dura).
-ty_adjective(italian, hard, f, pl, durano).
+ty_adjective(italian, hard, f, pl, dure).
 ty_adjective(italian, harmful, m, sg, nocivo).
 ty_adjective(italian, harmful, m, pl, nocivi).
 ty_adjective(italian, harmful, f, sg, nociva).
@@ -12941,7 +12877,7 @@ ty_adjective(italian, harmonic, f, pl, armoniche).
 ty_adjective(italian, harsh, m, sg, duro).
 ty_adjective(italian, harsh, m, pl, duri).
 ty_adjective(italian, harsh, f, sg, dura).
-ty_adjective(italian, harsh, f, pl, durano).
+ty_adjective(italian, harsh, f, pl, dure).
 ty_adjective(italian, hateful, m, sg, odioso).
 ty_adjective(italian, hateful, m, pl, odiosi).
 ty_adjective(italian, hateful, f, sg, odiosa).
@@ -12953,7 +12889,7 @@ ty_adjective(italian, hazardous, f, pl, pericolose).
 ty_adjective(italian, healthy, m, sg, sano).
 ty_adjective(italian, healthy, m, pl, sani).
 ty_adjective(italian, healthy, f, sg, sana).
-ty_adjective(italian, healthy, f, pl, sanano).
+ty_adjective(italian, healthy, f, pl, sane).
 ty_adjective(italian, heavenly, any, sg, celestiale).
 ty_adjective(italian, heavenly, any, pl, celestiali).
 ty_adjective(italian, heavy, any, sg, pesante).
@@ -13088,8 +13024,6 @@ ty_adjective(italian, horizontal, any, sg, orizzontale).
 ty_adjective(italian, horizontal, any, pl, orizzontali).
 ty_adjective(italian, horrible, any, sg, orribile).
 ty_adjective(italian, horrible, any, pl, orribili).
-ty_adjective(italian, host, any, sg, anfitrione).
-ty_adjective(italian, host, any, pl, anfitrioni).
 ty_adjective(italian, hostile, any, sg, ostile).
 ty_adjective(italian, hostile, any, pl, ostili).
 ty_adjective(italian, hot, m, sg, caldo).
@@ -13493,7 +13427,7 @@ ty_adjective(italian, indonesian, f, pl, indonesiane).
 ty_adjective(italian, indoor, m, sg, interno).
 ty_adjective(italian, indoor, m, pl, interni).
 ty_adjective(italian, indoor, f, sg, interna).
-ty_adjective(italian, indoor, f, pl, internano).
+ty_adjective(italian, indoor, f, pl, interne).
 ty_adjective(italian, indulgent, any, sg, indulgente).
 ty_adjective(italian, indulgent, any, pl, indulgenti).
 ty_adjective(italian, industrial, any, sg, industriale).
@@ -13587,7 +13521,7 @@ ty_adjective(italian, innate, f, pl, innate).
 ty_adjective(italian, inner, m, sg, interno).
 ty_adjective(italian, inner, m, pl, interni).
 ty_adjective(italian, inner, f, sg, interna).
-ty_adjective(italian, inner, f, pl, internano).
+ty_adjective(italian, inner, f, pl, interne).
 ty_adjective(italian, innocent, any, sg, innocente).
 ty_adjective(italian, innocent, any, pl, innocenti).
 ty_adjective(italian, innocuous, m, sg, innocuo).
@@ -13717,7 +13651,7 @@ ty_adjective(italian, intermittent, any, pl, intermittenti).
 ty_adjective(italian, internal, m, sg, interno).
 ty_adjective(italian, internal, m, pl, interni).
 ty_adjective(italian, internal, f, sg, interna).
-ty_adjective(italian, internal, f, pl, internano).
+ty_adjective(italian, internal, f, pl, interne).
 ty_adjective(italian, international, any, sg, internazionale).
 ty_adjective(italian, international, any, pl, internazionali).
 ty_adjective(italian, interpersonal, any, sg, interpersonale).
@@ -13782,10 +13716,6 @@ ty_adjective(italian, inventive, m, sg, inventivo).
 ty_adjective(italian, inventive, m, pl, inventivi).
 ty_adjective(italian, inventive, f, sg, inventiva).
 ty_adjective(italian, inventive, f, pl, inventive).
-ty_adjective(italian, investor, m, sg, investitore).
-ty_adjective(italian, investor, m, pl, investitori).
-ty_adjective(italian, investor, f, sg, investitrice).
-ty_adjective(italian, investor, f, pl, investitrici).
 ty_adjective(italian, invincible, any, sg, invincibile).
 ty_adjective(italian, invincible, any, pl, invincibili).
 ty_adjective(italian, inviolable, any, sg, inviolabile).
@@ -13918,18 +13848,12 @@ ty_adjective(italian, kenyan, m, sg, keniano).
 ty_adjective(italian, kenyan, m, pl, keniani).
 ty_adjective(italian, kenyan, f, sg, keniana).
 ty_adjective(italian, kenyan, f, pl, keniane).
-ty_adjective(italian, key, any, sg, chiave).
-ty_adjective(italian, key, any, pl, chiavi).
-ty_adjective(italian, khaki, any, sg, cachi).
-ty_adjective(italian, khaki, any, pl, cachino).
 ty_adjective(italian, kind, any, sg, gentile).
 ty_adjective(italian, kind, any, pl, gentili).
 ty_adjective(italian, kinetical, m, sg, cinetico).
 ty_adjective(italian, kinetical, m, pl, cinetici).
 ty_adjective(italian, kinetical, f, sg, cinetica).
 ty_adjective(italian, kinetical, f, pl, cinetiche).
-ty_adjective(italian, knowledgeable, any, sg, imparato).
-ty_adjective(italian, knowledgeable, any, pl, imparati).
 ty_adjective(italian, korean, m, sg, coreano).
 ty_adjective(italian, korean, m, pl, coreani).
 ty_adjective(italian, korean, f, sg, coreana).
@@ -14035,7 +13959,7 @@ ty_adjective(italian, legislative, f, pl, legislative).
 ty_adjective(italian, legitimate, m, sg, legittimo).
 ty_adjective(italian, legitimate, m, pl, legittimi).
 ty_adjective(italian, legitimate, f, sg, legittima).
-ty_adjective(italian, legitimate, f, pl, legittimano).
+ty_adjective(italian, legitimate, f, pl, legittime).
 ty_adjective(italian, lengthy, m, sg, lungo).
 ty_adjective(italian, lengthy, m, pl, lunghi).
 ty_adjective(italian, lengthy, f, sg, lunga).
@@ -14075,7 +13999,7 @@ ty_adjective(italian, licit, m, pl, leciti).
 ty_adjective(italian, licit, f, sg, lecita).
 ty_adjective(italian, licit, f, pl, lecite).
 ty_adjective(italian, light, m, sg, chiaro).
-ty_adjective(italian, light, m, pl, chiar).
+ty_adjective(italian, light, m, pl, chiari).
 ty_adjective(italian, light, f, sg, chiara).
 ty_adjective(italian, light, f, pl, chiare).
 ty_adjective(italian, light, m, sg, leggero).
@@ -14111,7 +14035,7 @@ ty_adjective(italian, linguistic, f, pl, linguistiche).
 ty_adjective(italian, liquid, m, sg, liquido).
 ty_adjective(italian, liquid, m, pl, liquidi).
 ty_adjective(italian, liquid, f, sg, liquida).
-ty_adjective(italian, liquid, f, pl, liquidano).
+ty_adjective(italian, liquid, f, pl, liquide).
 ty_adjective(italian, literal, any, sg, letterale).
 ty_adjective(italian, literal, any, pl, letterali).
 ty_adjective(italian, literary, m, sg, letterario).
@@ -14145,13 +14069,9 @@ ty_adjective(italian, lively, any, pl, vivaci).
 ty_adjective(italian, lively, m, sg, vivo).
 ty_adjective(italian, lively, m, pl, vivi).
 ty_adjective(italian, lively, f, sg, viva).
-ty_adjective(italian, lively, f, pl, vivano).
+ty_adjective(italian, lively, f, pl, vive).
 ty_adjective(italian, living, any, sg, vivente).
 ty_adjective(italian, living, any, pl, viventi).
-ty_adjective(italian, loaded, m, sg, carico).
-ty_adjective(italian, loaded, m, pl, carichi).
-ty_adjective(italian, loaded, f, sg, carica).
-ty_adjective(italian, loaded, f, pl, cariche).
 ty_adjective(italian, local, any, sg, locale).
 ty_adjective(italian, local, any, pl, locali).
 ty_adjective(italian, local, any, sg, comarcale).
@@ -14188,8 +14108,6 @@ ty_adjective(italian, loose, m, sg, sciolto).
 ty_adjective(italian, loose, m, pl, sciolti).
 ty_adjective(italian, loose, f, sg, sciolta).
 ty_adjective(italian, loose, f, pl, sciolte).
-ty_adjective(italian, loose, any, sg, allentato).
-ty_adjective(italian, loose, any, pl, allentati).
 ty_adjective(italian, lordly, any, sg, signorile).
 ty_adjective(italian, lordly, any, pl, signorili).
 ty_adjective(italian, lovely, m, sg, prezioso).
@@ -14417,7 +14335,7 @@ ty_adjective(italian, matt, f, pl, matte).
 ty_adjective(italian, mature, m, sg, maturo).
 ty_adjective(italian, mature, m, pl, maturi).
 ty_adjective(italian, mature, f, sg, matura).
-ty_adjective(italian, mature, f, pl, maturano).
+ty_adjective(italian, mature, f, pl, mature).
 ty_adjective(italian, maximal, m, sg, massimo).
 ty_adjective(italian, maximal, m, pl, massimi).
 ty_adjective(italian, maximal, f, sg, massima).
@@ -14792,8 +14710,6 @@ ty_adjective(italian, mutual, m, sg, mutuo).
 ty_adjective(italian, mutual, m, pl, mutui).
 ty_adjective(italian, mutual, f, sg, mutua).
 ty_adjective(italian, mutual, f, pl, mutue).
-ty_adjective(italian, mutualistic, any, sg, mutualista).
-ty_adjective(italian, mutualistic, any, pl, mutualisti).
 ty_adjective(italian, mysterious, m, sg, misterioso).
 ty_adjective(italian, mysterious, m, pl, misteriosi).
 ty_adjective(italian, mysterious, f, sg, misteriosa).
@@ -15197,7 +15113,7 @@ ty_adjective(italian, ophthalmic, m, pl, oftalmici).
 ty_adjective(italian, ophthalmic, f, sg, oftalmica).
 ty_adjective(italian, ophthalmic, f, pl, oftalmiche).
 ty_adjective(italian, opportunist, any, sg, opportunista).
-ty_adjective(italian, opportunist, any, pl, opportuniste).
+ty_adjective(italian, opportunist, any, pl, opportunisti).
 ty_adjective(italian, opposable, any, sg, opponibile).
 ty_adjective(italian, opposable, any, pl, opponibili).
 ty_adjective(italian, opposed, m, sg, contrapposto).
@@ -15226,8 +15142,6 @@ ty_adjective(italian, optional, any, sg, opzionale).
 ty_adjective(italian, optional, any, pl, opzionali).
 ty_adjective(italian, oral, any, sg, orale).
 ty_adjective(italian, oral, any, pl, orali).
-ty_adjective(italian, orange, any, sg, arancione).
-ty_adjective(italian, orange, any, pl, arancioni).
 ty_adjective(italian, orbital, any, sg, orbitale).
 ty_adjective(italian, orbital, any, pl, orbitali).
 ty_adjective(italian, orchestral, any, sg, orchestrale).
@@ -15302,8 +15216,6 @@ ty_adjective(italian, outer, any, sg, esteriore).
 ty_adjective(italian, outer, any, pl, esteriori).
 ty_adjective(italian, outgoing, any, sg, uscente).
 ty_adjective(italian, outgoing, any, pl, uscenti).
-ty_adjective(italian, outlaw, any, sg, fuorilegge).
-ty_adjective(italian, outlaw, any, pl, fuorilegge).
 ty_adjective(italian, outside, any, sg, esteriore).
 ty_adjective(italian, outside, any, pl, esteriori).
 ty_adjective(italian, outstanding, any, sg, eccezionale).
@@ -15557,7 +15469,7 @@ ty_adjective(italian, perpendicular, any, pl, perpendicolari).
 ty_adjective(italian, perpetual, m, sg, perpetuo).
 ty_adjective(italian, perpetual, m, pl, perpetui).
 ty_adjective(italian, perpetual, f, sg, perpetua).
-ty_adjective(italian, perpetual, f, pl, perpetuano).
+ty_adjective(italian, perpetual, f, pl, perpetue).
 ty_adjective(italian, persian, m, sg, persiano).
 ty_adjective(italian, persian, m, pl, persiani).
 ty_adjective(italian, persian, f, sg, persiana).
@@ -15670,8 +15582,6 @@ ty_adjective(italian, pioneering, m, sg, pionieristico).
 ty_adjective(italian, pioneering, m, pl, pionieristici).
 ty_adjective(italian, pioneering, f, sg, pionieristica).
 ty_adjective(italian, pioneering, f, pl, pionieristiche).
-ty_adjective(italian, pirate, any, sg, pirata).
-ty_adjective(italian, pirate, any, pl, pirati).
 ty_adjective(italian, plain, any, sg, semplice).
 ty_adjective(italian, plain, any, pl, semplici).
 ty_adjective(italian, planetary, m, sg, planetario).
@@ -15760,8 +15670,6 @@ ty_adjective(italian, polysemic, m, sg, polisemico).
 ty_adjective(italian, polysemic, m, pl, polisemici).
 ty_adjective(italian, polysemic, f, sg, polisemica).
 ty_adjective(italian, polysemic, f, pl, polisemiche).
-ty_adjective(italian, polytechnical, any, sg, politecnico).
-ty_adjective(italian, polytechnical, any, pl, politecnici).
 ty_adjective(italian, polytheistic, any, sg, politeista).
 ty_adjective(italian, polytheistic, any, pl, politeisti).
 ty_adjective(italian, polyvalent, any, sg, polivalente).
@@ -15839,7 +15747,7 @@ ty_adjective(italian, precious, f, pl, preziose).
 ty_adjective(italian, precise, m, sg, preciso).
 ty_adjective(italian, precise, m, pl, precisi).
 ty_adjective(italian, precise, f, sg, precisa).
-ty_adjective(italian, precise, f, pl, precisano).
+ty_adjective(italian, precise, f, pl, precise).
 ty_adjective(italian, precocious, any, sg, precoce).
 ty_adjective(italian, precocious, any, pl, precoci).
 ty_adjective(italian, predictable, any, sg, prevedibile).
@@ -15907,7 +15815,7 @@ ty_adjective(italian, preventable, any, pl, evitabili).
 ty_adjective(italian, preventive, m, sg, preventivo).
 ty_adjective(italian, preventive, m, pl, preventivi).
 ty_adjective(italian, preventive, f, sg, preventiva).
-ty_adjective(italian, preventive, f, pl, preventivano).
+ty_adjective(italian, preventive, f, pl, preventive).
 ty_adjective(italian, previous, any, sg, precedente).
 ty_adjective(italian, previous, any, pl, precedenti).
 ty_adjective(italian, previous, m, sg, previo).
@@ -16067,7 +15975,7 @@ ty_adjective(italian, psychological, f, pl, psicologiche).
 ty_adjective(italian, public, m, sg, pubblico).
 ty_adjective(italian, public, m, pl, pubblici).
 ty_adjective(italian, public, f, sg, pubblica).
-ty_adjective(italian, public, f, pl, pubblicano).
+ty_adjective(italian, public, f, pl, pubbliche).
 ty_adjective(italian, publicised, m, sg, pubblicizzato).
 ty_adjective(italian, publicised, m, pl, pubblicizzati).
 ty_adjective(italian, publicised, f, sg, pubblicizzata).
@@ -16092,8 +16000,6 @@ ty_adjective(italian, pure, m, sg, puro).
 ty_adjective(italian, pure, m, pl, puri).
 ty_adjective(italian, pure, f, sg, pura).
 ty_adjective(italian, pure, f, pl, pure).
-ty_adjective(italian, purple, any, sg, porpora).
-ty_adjective(italian, purple, any, pl, porpore).
 ty_adjective(italian, pusillanimous, any, sg, pusillanime).
 ty_adjective(italian, pusillanimous, any, pl, pusillanimi).
 ty_adjective(italian, pyramidal, any, sg, piramidale).
@@ -16461,7 +16367,7 @@ ty_adjective(italian, ring, any, pl, anulari).
 ty_adjective(italian, ripe, m, sg, maturo).
 ty_adjective(italian, ripe, m, pl, maturi).
 ty_adjective(italian, ripe, f, sg, matura).
-ty_adjective(italian, ripe, f, pl, maturano).
+ty_adjective(italian, ripe, f, pl, mature).
 ty_adjective(italian, ritual, any, sg, rituale).
 ty_adjective(italian, ritual, any, pl, rituali).
 ty_adjective(italian, rival, any, sg, rivale).
@@ -16627,7 +16533,7 @@ ty_adjective(italian, satisfied, f, pl, soddisfatte).
 ty_adjective(italian, saturated, m, sg, saturo).
 ty_adjective(italian, saturated, m, pl, saturi).
 ty_adjective(italian, saturated, f, sg, satura).
-ty_adjective(italian, saturated, f, pl, saturano).
+ty_adjective(italian, saturated, f, pl, sature).
 ty_adjective(italian, savage, m, sg, selvaggio).
 ty_adjective(italian, savage, m, pl, selvaggi).
 ty_adjective(italian, savage, f, sg, selvaggia).
@@ -16670,8 +16576,6 @@ ty_adjective(italian, scholastic, m, sg, scolastico).
 ty_adjective(italian, scholastic, m, pl, scolastici).
 ty_adjective(italian, scholastic, f, sg, scolastica).
 ty_adjective(italian, scholastic, f, pl, scolastiche).
-ty_adjective(italian, school, any, sg, allievo).
-ty_adjective(italian, school, any, pl, allievi).
 ty_adjective(italian, scientific, m, sg, scientifico).
 ty_adjective(italian, scientific, m, pl, scientifici).
 ty_adjective(italian, scientific, f, sg, scientifica).
@@ -16679,7 +16583,7 @@ ty_adjective(italian, scientific, f, pl, scientifiche).
 ty_adjective(italian, scientific, m, sg, scienziato).
 ty_adjective(italian, scientific, m, pl, scienziati).
 ty_adjective(italian, scientific, f, sg, scienziata).
-ty_adjective(italian, scientific, f, pl, scienziate).
+ty_adjective(italian, scientific, f, pl, scienziathe).
 ty_adjective(italian, scottish, any, sg, scozzese).
 ty_adjective(italian, scottish, any, pl, scozzesi).
 ty_adjective(italian, sculptural, m, sg, scultoreo).
@@ -16716,8 +16620,6 @@ ty_adjective(italian, sedentary, m, sg, sedentario).
 ty_adjective(italian, sedentary, m, pl, sedentari).
 ty_adjective(italian, sedentary, f, sg, sedentaria).
 ty_adjective(italian, sedentary, f, pl, sedentarie).
-ty_adjective(italian, seductive, any, sg, seduttore).
-ty_adjective(italian, seductive, any, pl, seduttori).
 ty_adjective(italian, selective, m, sg, selettivo).
 ty_adjective(italian, selective, m, pl, selettivi).
 ty_adjective(italian, selective, f, sg, selettiva).
@@ -16736,8 +16638,6 @@ ty_adjective(italian, 'semi-working', f, sg, semilavorativa).
 ty_adjective(italian, 'semi-working', f, pl, semilavorative).
 ty_adjective(italian, semiannual, any, sg, semestrale).
 ty_adjective(italian, semiannual, any, pl, semestrali).
-ty_adjective(italian, semifinalist, any, sg, semifinalista).
-ty_adjective(italian, semifinalist, any, pl, semifinalisti).
 ty_adjective(italian, seminal, any, sg, seminale).
 ty_adjective(italian, seminal, any, pl, seminali).
 ty_adjective(italian, semiological, m, sg, semiologico).
@@ -16790,10 +16690,6 @@ ty_adjective(italian, seventh, m, sg, settimo).
 ty_adjective(italian, seventh, m, pl, settimi).
 ty_adjective(italian, seventh, f, sg, settima).
 ty_adjective(italian, seventh, f, pl, settime).
-ty_adjective(italian, several, m, sg, vario).
-ty_adjective(italian, several, m, pl, vari).
-ty_adjective(italian, several, f, sg, varia).
-ty_adjective(italian, several, f, pl, varie).
 ty_adjective(italian, severe, m, sg, severo).
 ty_adjective(italian, severe, m, pl, severi).
 ty_adjective(italian, severe, f, sg, severa).
@@ -16948,8 +16844,6 @@ ty_adjective(italian, smooth, m, sg, liscio).
 ty_adjective(italian, smooth, m, pl, lisci).
 ty_adjective(italian, smooth, f, sg, liscia).
 ty_adjective(italian, smooth, f, pl, lisce).
-ty_adjective(italian, snobbish, any, sg, snob).
-ty_adjective(italian, snobbish, any, pl, snob).
 ty_adjective(italian, snowy, m, sg, innevato).
 ty_adjective(italian, snowy, m, pl, innevati).
 ty_adjective(italian, snowy, f, sg, innevata).
@@ -17039,7 +16933,7 @@ ty_adjective(italian, special, any, pl, speciali).
 ty_adjective(italian, specific, m, sg, specifico).
 ty_adjective(italian, specific, m, pl, specifici).
 ty_adjective(italian, specific, f, sg, specifica).
-ty_adjective(italian, specific, f, pl, specificano).
+ty_adjective(italian, specific, f, pl, specifiche).
 ty_adjective(italian, spectacular, any, sg, spettacolare).
 ty_adjective(italian, spectacular, any, pl, spettacolari).
 ty_adjective(italian, spectral, any, sg, spettrale).
@@ -17106,14 +17000,12 @@ ty_adjective(italian, stable, any, sg, stabile).
 ty_adjective(italian, stable, any, pl, stabili).
 ty_adjective(italian, stainless, any, sg, inossidabile).
 ty_adjective(italian, stainless, any, pl, inossidabili).
-ty_adjective(italian, standard, any, sg, standard).
-ty_adjective(italian, standard, any, pl, standard).
 ty_adjective(italian, standard, any, sg, conforme).
 ty_adjective(italian, standard, any, pl, conformi).
 ty_adjective(italian, stark, m, sg, duro).
 ty_adjective(italian, stark, m, pl, duri).
 ty_adjective(italian, stark, f, sg, dura).
-ty_adjective(italian, stark, f, pl, durano).
+ty_adjective(italian, stark, f, pl, dure).
 ty_adjective(italian, starry, m, sg, stellato).
 ty_adjective(italian, starry, m, pl, stellati).
 ty_adjective(italian, starry, f, sg, stellata).
@@ -17256,8 +17148,6 @@ ty_adjective(italian, subsidiary, f, sg, sussidiaria).
 ty_adjective(italian, subsidiary, f, pl, sussidiarie).
 ty_adjective(italian, substantial, any, sg, sostanziale).
 ty_adjective(italian, substantial, any, pl, sostanziali).
-ty_adjective(italian, substantive, any, sg, sostantivo).
-ty_adjective(italian, substantive, any, pl, sostantivi).
 ty_adjective(italian, subterranean, m, sg, sotterraneo).
 ty_adjective(italian, subterranean, m, pl, sotterranei).
 ty_adjective(italian, subterranean, f, sg, sotterranea).
@@ -17663,7 +17553,7 @@ ty_adjective(italian, totalitarian, f, pl, totalitarie).
 ty_adjective(italian, tough, m, sg, duro).
 ty_adjective(italian, tough, m, pl, duri).
 ty_adjective(italian, tough, f, sg, dura).
-ty_adjective(italian, tough, f, pl, durano).
+ty_adjective(italian, tough, f, pl, dure).
 ty_adjective(italian, tourist, m, sg, turistico).
 ty_adjective(italian, tourist, m, pl, turistici).
 ty_adjective(italian, tourist, f, sg, turistica).
@@ -17789,7 +17679,7 @@ ty_adjective(italian, tuscan, f, pl, toscane).
 ty_adjective(italian, twofold, m, sg, doppio).
 ty_adjective(italian, twofold, m, pl, doppi).
 ty_adjective(italian, twofold, f, sg, doppia).
-ty_adjective(italian, twofold, f, pl, doppiano).
+ty_adjective(italian, twofold, f, pl, doppie).
 ty_adjective(italian, typical, m, sg, tipico).
 ty_adjective(italian, typical, m, pl, tipici).
 ty_adjective(italian, typical, f, sg, tipica).
@@ -18103,7 +17993,7 @@ ty_adjective(italian, valid, any, pl, vigenti).
 ty_adjective(italian, valid, m, sg, valido).
 ty_adjective(italian, valid, m, pl, validi).
 ty_adjective(italian, valid, f, sg, valida).
-ty_adjective(italian, valid, f, pl, validano).
+ty_adjective(italian, valid, f, pl, valide).
 ty_adjective(italian, valuable, m, sg, prezioso).
 ty_adjective(italian, valuable, m, pl, preziosi).
 ty_adjective(italian, valuable, f, sg, preziosa).
@@ -18193,7 +18083,7 @@ ty_adjective(italian, vile, any, pl, vili).
 ty_adjective(italian, violent, m, sg, violento).
 ty_adjective(italian, violent, m, pl, violenti).
 ty_adjective(italian, violent, f, sg, violenta).
-ty_adjective(italian, violent, f, pl, violentano).
+ty_adjective(italian, violent, f, pl, violente).
 ty_adjective(italian, violet, m, sg, violetto).
 ty_adjective(italian, violet, m, pl, violetti).
 ty_adjective(italian, violet, f, sg, violetta).
@@ -18456,10 +18346,6 @@ ty_verb(italian, err, present, sg, pos, [sbaglia]).
 ty_verb(italian, err, present, pl, pos, [sbagliano]).
 ty_verb(italian, err, past, sg, pos, [sbagliò]).
 ty_verb(italian, err, past, pl, pos, [sbagliarono]).
-ty_verb(italian, shatter, present, sg, pos, [spacca]).
-ty_verb(italian, shatter, present, pl, pos, [spaccano]).
-ty_verb(italian, shatter, past, sg, pos, [spaccò]).
-ty_verb(italian, shatter, past, pl, pos, [spaccarono]).
 ty_verb(italian, impose, present, sg, pos, [impone]).
 ty_verb(italian, impose, present, pl, pos, [impongono]).
 ty_verb(italian, impose, past, sg, pos, [impose]).
@@ -18644,6 +18530,14 @@ ty_verb(italian, disorganiz, present, sg, pos, [dissesta]).
 ty_verb(italian, disorganiz, present, pl, pos, [dissestano]).
 ty_verb(italian, disorganiz, past, sg, pos, [dissestò]).
 ty_verb(italian, disorganiz, past, pl, pos, [dissestarono]).
+ty_verb(italian, drive, present, sg, pos, [guida]).
+ty_verb(italian, drive, present, pl, pos, [guidano]).
+ty_verb(italian, drive, past, sg, pos, [guidò]).
+ty_verb(italian, drive, past, pl, pos, [guidarono]).
+ty_verb(italian, head, present, sg, pos, [guida]).
+ty_verb(italian, head, present, pl, pos, [guidano]).
+ty_verb(italian, head, past, sg, pos, [guidò]).
+ty_verb(italian, head, past, pl, pos, [guidarono]).
 ty_verb(italian, find, present, sg, pos, [trova]).
 ty_verb(italian, find, present, pl, pos, [trovano]).
 ty_verb(italian, find, past, sg, pos, [trovò]).
@@ -18780,6 +18674,14 @@ ty_verb(italian, agree, present, sg, pos, [concorda]).
 ty_verb(italian, agree, present, pl, pos, [concordano]).
 ty_verb(italian, agree, past, sg, pos, [concordò]).
 ty_verb(italian, agree, past, pl, pos, [concordarono]).
+ty_verb(italian, point, present, sg, pos, [punta]).
+ty_verb(italian, point, present, pl, pos, [puntano]).
+ty_verb(italian, point, past, sg, pos, [puntò]).
+ty_verb(italian, point, past, pl, pos, [puntarono]).
+ty_verb(italian, bet, present, sg, pos, [punta]).
+ty_verb(italian, bet, present, pl, pos, [puntano]).
+ty_verb(italian, bet, past, sg, pos, [puntò]).
+ty_verb(italian, bet, past, pl, pos, [puntarono]).
 ty_verb(italian, distance, present, sg, pos, [distanzia]).
 ty_verb(italian, distance, present, pl, pos, [distanziano]).
 ty_verb(italian, distance, past, sg, pos, [distanziò]).
@@ -18836,6 +18738,22 @@ ty_verb(italian, curb, present, sg, pos, [frena]).
 ty_verb(italian, curb, present, pl, pos, [frenano]).
 ty_verb(italian, curb, past, sg, pos, [frenò]).
 ty_verb(italian, curb, past, pl, pos, [frenarono]).
+ty_verb(italian, depart, present, sg, pos, [parte]).
+ty_verb(italian, depart, present, pl, pos, [partono]).
+ty_verb(italian, depart, past, sg, pos, [partì]).
+ty_verb(italian, depart, past, pl, pos, [partirono]).
+ty_verb(italian, split, present, sg, pos, [parte]).
+ty_verb(italian, split, present, pl, pos, [partono]).
+ty_verb(italian, split, past, sg, pos, [partì]).
+ty_verb(italian, split, past, pl, pos, [partirono]).
+ty_verb(italian, bring, present, sg, pos, [porta]).
+ty_verb(italian, bring, present, pl, pos, [portano]).
+ty_verb(italian, bring, past, sg, pos, [portò]).
+ty_verb(italian, bring, past, pl, pos, [portarono]).
+ty_verb(italian, influence, present, sg, pos, [influenza]).
+ty_verb(italian, influence, present, pl, pos, [influenzano]).
+ty_verb(italian, influence, past, sg, pos, [influenzò]).
+ty_verb(italian, influence, past, pl, pos, [influenzarono]).
 ty_verb(italian, attempt, present, sg, pos, [tenta]).
 ty_verb(italian, attempt, present, pl, pos, [tentano]).
 ty_verb(italian, attempt, past, sg, pos, [tentò]).
@@ -18884,6 +18802,10 @@ ty_verb(italian, resign, present, sg, pos, [dimette]).
 ty_verb(italian, resign, present, pl, pos, [dimettono]).
 ty_verb(italian, resign, past, sg, pos, [dimise]).
 ty_verb(italian, resign, past, pl, pos, [dimisero]).
+ty_verb(italian, resign, present, sg, pos, [rassegna]).
+ty_verb(italian, resign, present, pl, pos, [rassegnano]).
+ty_verb(italian, resign, past, sg, pos, [rassegnò]).
+ty_verb(italian, resign, past, pl, pos, [rassegnarono]).
 ty_verb(italian, entail, present, sg, pos, [comporta]).
 ty_verb(italian, entail, present, pl, pos, [comportano]).
 ty_verb(italian, entail, past, sg, pos, [comportò]).
@@ -18916,6 +18838,10 @@ ty_verb(italian, stop, present, sg, pos, [smette]).
 ty_verb(italian, stop, present, pl, pos, [smettono]).
 ty_verb(italian, stop, past, sg, pos, [smise]).
 ty_verb(italian, stop, past, pl, pos, [smisero]).
+ty_verb(italian, visit, present, sg, pos, [visita]).
+ty_verb(italian, visit, present, pl, pos, [visitano]).
+ty_verb(italian, visit, past, sg, pos, [visitò]).
+ty_verb(italian, visit, past, pl, pos, [visitarono]).
 ty_verb(italian, throw, present, sg, pos, [schiaffa]).
 ty_verb(italian, throw, present, pl, pos, [schiaffano]).
 ty_verb(italian, throw, past, sg, pos, [schiaffò]).
@@ -18944,6 +18870,10 @@ ty_verb(italian, crush, present, sg, pos, [schiaccia]).
 ty_verb(italian, crush, present, pl, pos, [schiacciano]).
 ty_verb(italian, crush, past, sg, pos, [schiacciò]).
 ty_verb(italian, crush, past, pl, pos, [schiacciarono]).
+ty_verb(italian, retort, present, sg, pos, [replica]).
+ty_verb(italian, retort, present, pl, pos, [replicano]).
+ty_verb(italian, retort, past, sg, pos, [replicò]).
+ty_verb(italian, retort, past, pl, pos, [replicarono]).
 ty_verb(italian, invest, present, sg, pos, [investe]).
 ty_verb(italian, invest, present, pl, pos, [investono]).
 ty_verb(italian, invest, past, sg, pos, [investì]).
@@ -18992,6 +18922,10 @@ ty_verb(italian, broadcast, present, sg, pos, [trasmette]).
 ty_verb(italian, broadcast, present, pl, pos, [trasmettono]).
 ty_verb(italian, broadcast, past, sg, pos, [trasmise]).
 ty_verb(italian, broadcast, past, pl, pos, [trasmisero]).
+ty_verb(italian, censure, present, sg, pos, [censura]).
+ty_verb(italian, censure, present, pl, pos, [censurano]).
+ty_verb(italian, censure, past, sg, pos, [censurò]).
+ty_verb(italian, censure, past, pl, pos, [censurarono]).
 ty_verb(italian, rent, present, sg, pos, [affitta]).
 ty_verb(italian, rent, present, pl, pos, [affittano]).
 ty_verb(italian, rent, past, sg, pos, [affittò]).
@@ -19008,6 +18942,10 @@ ty_verb(italian, entrust, present, sg, pos, [affida]).
 ty_verb(italian, entrust, present, pl, pos, [affidano]).
 ty_verb(italian, entrust, past, sg, pos, [affidò]).
 ty_verb(italian, entrust, past, pl, pos, [affidarono]).
+ty_verb(italian, link, present, sg, pos, [lega]).
+ty_verb(italian, link, present, pl, pos, [legano]).
+ty_verb(italian, link, past, sg, pos, [legò]).
+ty_verb(italian, link, past, pl, pos, [legarono]).
 ty_verb(italian, grasp, present, sg, pos, [coglie]).
 ty_verb(italian, grasp, present, pl, pos, [colgono]).
 ty_verb(italian, grasp, past, sg, pos, [colse]).
@@ -19072,6 +19010,10 @@ ty_verb(italian, discredit, present, sg, pos, [scredita]).
 ty_verb(italian, discredit, present, pl, pos, [screditano]).
 ty_verb(italian, discredit, past, sg, pos, [screditò]).
 ty_verb(italian, discredit, past, pl, pos, [screditarono]).
+ty_verb(italian, mediate, present, sg, pos, [media]).
+ty_verb(italian, mediate, present, pl, pos, [mediano]).
+ty_verb(italian, mediate, past, sg, pos, [mediò]).
+ty_verb(italian, mediate, past, pl, pos, [mediarono]).
 ty_verb(italian, gladden, present, sg, pos, [rallegra]).
 ty_verb(italian, gladden, present, pl, pos, [rallegrano]).
 ty_verb(italian, gladden, past, sg, pos, [rallegrò]).
@@ -19096,6 +19038,14 @@ ty_verb(italian, mummify, present, sg, pos, [mummifica]).
 ty_verb(italian, mummify, present, pl, pos, [mummificano]).
 ty_verb(italian, mummify, past, sg, pos, [mummificò]).
 ty_verb(italian, mummify, past, pl, pos, [mummificarono]).
+ty_verb(italian, captain, present, sg, pos, [capitana]).
+ty_verb(italian, captain, present, pl, pos, [capitanano]).
+ty_verb(italian, captain, past, sg, pos, [capitanò]).
+ty_verb(italian, captain, past, pl, pos, [capitanarono]).
+ty_verb(italian, torment, present, sg, pos, [tormenta]).
+ty_verb(italian, torment, present, pl, pos, [tormentano]).
+ty_verb(italian, torment, past, sg, pos, [tormentò]).
+ty_verb(italian, torment, past, pl, pos, [tormentarono]).
 ty_verb(italian, promulgate, present, sg, pos, [promulga]).
 ty_verb(italian, promulgate, present, pl, pos, [promulgano]).
 ty_verb(italian, promulgate, past, sg, pos, [promulgò]).
@@ -19124,6 +19074,10 @@ ty_verb(italian, hope, present, sg, pos, [spera]).
 ty_verb(italian, hope, present, pl, pos, [sperano]).
 ty_verb(italian, hope, past, sg, pos, [sperò]).
 ty_verb(italian, hope, past, pl, pos, [sperarono]).
+ty_verb(italian, taint, present, sg, pos, [macchia]).
+ty_verb(italian, taint, present, pl, pos, [macchiano]).
+ty_verb(italian, taint, past, sg, pos, [macchiò]).
+ty_verb(italian, taint, past, pl, pos, [macchiarono]).
 ty_verb(italian, thrill, present, sg, pos, [emoziona]).
 ty_verb(italian, thrill, present, pl, pos, [emozionano]).
 ty_verb(italian, thrill, past, sg, pos, [emozionò]).
@@ -19216,6 +19170,10 @@ ty_verb(italian, rig, present, sg, pos, [trucca]).
 ty_verb(italian, rig, present, pl, pos, [truccano]).
 ty_verb(italian, rig, past, sg, pos, [truccò]).
 ty_verb(italian, rig, past, pl, pos, [truccarono]).
+ty_verb(italian, trace, present, sg, pos, [traccia]).
+ty_verb(italian, trace, present, pl, pos, [tracciano]).
+ty_verb(italian, trace, past, sg, pos, [tracciò]).
+ty_verb(italian, trace, past, pl, pos, [tracciarono]).
 ty_verb(italian, oust, present, sg, pos, [spodesta]).
 ty_verb(italian, oust, present, pl, pos, [spodestano]).
 ty_verb(italian, oust, past, sg, pos, [spodestò]).
@@ -19268,6 +19226,10 @@ ty_verb(italian, shake, present, sg, pos, [scuote]).
 ty_verb(italian, shake, present, pl, pos, [scuotono]).
 ty_verb(italian, shake, past, sg, pos, [scosse]).
 ty_verb(italian, shake, past, pl, pos, [scossero]).
+ty_verb(italian, rise, present, sg, pos, [sale]).
+ty_verb(italian, rise, present, pl, pos, [salgono]).
+ty_verb(italian, rise, past, sg, pos, [salì]).
+ty_verb(italian, rise, past, pl, pos, [salirono]).
 ty_verb(italian, digest, present, sg, pos, [digerisce]).
 ty_verb(italian, digest, present, pl, pos, [digeriscono]).
 ty_verb(italian, digest, past, sg, pos, [digerì]).
@@ -19368,6 +19330,14 @@ ty_verb(italian, swallow, present, sg, pos, [inghiotte]).
 ty_verb(italian, swallow, present, pl, pos, [inghiottono]).
 ty_verb(italian, swallow, past, sg, pos, [inghiottì]).
 ty_verb(italian, swallow, past, pl, pos, [inghiottirono]).
+ty_verb(italian, reissue, present, sg, pos, [ristampa]).
+ty_verb(italian, reissue, present, pl, pos, [ristampano]).
+ty_verb(italian, reissue, past, sg, pos, [ristampò]).
+ty_verb(italian, reissue, past, pl, pos, [ristamparono]).
+ty_verb(italian, ruin, present, sg, pos, [rovina]).
+ty_verb(italian, ruin, present, pl, pos, [rovinano]).
+ty_verb(italian, ruin, past, sg, pos, [rovinò]).
+ty_verb(italian, ruin, past, pl, pos, [rovinarono]).
 ty_verb(italian, stir, present, sg, pos, [mescola]).
 ty_verb(italian, stir, present, pl, pos, [mescolano]).
 ty_verb(italian, stir, past, sg, pos, [mescolò]).
@@ -19416,6 +19386,10 @@ ty_verb(italian, abhor, present, sg, pos, [aborre]).
 ty_verb(italian, abhor, present, pl, pos, [aborrono]).
 ty_verb(italian, abhor, past, sg, pos, [aborrì]).
 ty_verb(italian, abhor, past, pl, pos, [aborrirono]).
+ty_verb(italian, abjure, present, sg, pos, [abiura]).
+ty_verb(italian, abjure, present, pl, pos, [abiurano]).
+ty_verb(italian, abjure, past, sg, pos, [abiurò]).
+ty_verb(italian, abjure, past, pl, pos, [abiurarono]).
 ty_verb(italian, abolish, present, sg, pos, [abolisce]).
 ty_verb(italian, abolish, present, pl, pos, [aboliscono]).
 ty_verb(italian, abolish, past, sg, pos, [abolì]).
@@ -19476,6 +19450,10 @@ ty_verb(italian, accumulate, present, sg, pos, [accumula]).
 ty_verb(italian, accumulate, present, pl, pos, [accumulano]).
 ty_verb(italian, accumulate, past, sg, pos, [accumulò]).
 ty_verb(italian, accumulate, past, pl, pos, [accumularono]).
+ty_verb(italian, accuse, present, sg, pos, [accusa]).
+ty_verb(italian, accuse, present, pl, pos, [accusano]).
+ty_verb(italian, accuse, past, sg, pos, [accusò]).
+ty_verb(italian, accuse, past, pl, pos, [accusarono]).
 ty_verb(italian, accustom, present, sg, pos, [abitua]).
 ty_verb(italian, accustom, present, pl, pos, [abituano]).
 ty_verb(italian, accustom, past, sg, pos, [abituò]).
@@ -19613,9 +19591,9 @@ ty_verb(italian, alarm, present, pl, pos, [allarmano]).
 ty_verb(italian, alarm, past, sg, pos, [allarmò]).
 ty_verb(italian, alarm, past, pl, pos, [allarmarono]).
 ty_verb(italian, alert, present, sg, pos, [allerta]).
-ty_verb(italian, alert, present, pl, pos, [allerta]).
+ty_verb(italian, alert, present, pl, pos, [allertano]).
 ty_verb(italian, alert, past, sg, pos, [allertò]).
-ty_verb(italian, alert, past, pl, pos, [allertò]).
+ty_verb(italian, alert, past, pl, pos, [allertarono]).
 ty_verb(italian, alienate, present, sg, pos, [aliena]).
 ty_verb(italian, alienate, present, pl, pos, [alienano]).
 ty_verb(italian, alienate, past, sg, pos, [alienò]).
@@ -19661,9 +19639,9 @@ ty_verb(italian, analyse, present, pl, pos, [analizzano]).
 ty_verb(italian, analyse, past, sg, pos, [analizzò]).
 ty_verb(italian, analyse, past, pl, pos, [analizzarono]).
 ty_verb(italian, anchor, present, sg, pos, [ancora]).
-ty_verb(italian, anchor, present, pl, pos, [ancora]).
+ty_verb(italian, anchor, present, pl, pos, [ancorano]).
 ty_verb(italian, anchor, past, sg, pos, [ancorò]).
-ty_verb(italian, anchor, past, pl, pos, [ancorò]).
+ty_verb(italian, anchor, past, pl, pos, [ancorarono]).
 ty_verb(italian, anger, present, sg, pos, [irrita]).
 ty_verb(italian, anger, present, pl, pos, [irritano]).
 ty_verb(italian, anger, past, sg, pos, [irritò]).
@@ -19692,6 +19670,10 @@ ty_verb(italian, apply, present, sg, pos, [applica]).
 ty_verb(italian, apply, present, pl, pos, [applicano]).
 ty_verb(italian, apply, past, sg, pos, [applicò]).
 ty_verb(italian, apply, past, pl, pos, [applicarono]).
+ty_verb(italian, appoint, present, sg, pos, [nomina]).
+ty_verb(italian, appoint, present, pl, pos, [nominano]).
+ty_verb(italian, appoint, past, sg, pos, [nominò]).
+ty_verb(italian, appoint, past, pl, pos, [nominarono]).
 ty_verb(italian, appreciate, present, sg, pos, [apprezza]).
 ty_verb(italian, appreciate, present, pl, pos, [apprezzano]).
 ty_verb(italian, appreciate, past, sg, pos, [apprezzò]).
@@ -19700,6 +19682,10 @@ ty_verb(italian, approach, present, sg, pos, [avvicina]).
 ty_verb(italian, approach, present, pl, pos, [avvicinano]).
 ty_verb(italian, approach, past, sg, pos, [avvicinò]).
 ty_verb(italian, approach, past, pl, pos, [avvicinarono]).
+ty_verb(italian, approve, present, sg, pos, [vista]).
+ty_verb(italian, approve, present, pl, pos, [vistano]).
+ty_verb(italian, approve, past, sg, pos, [vistò]).
+ty_verb(italian, approve, past, pl, pos, [vistarono]).
 ty_verb(italian, approximate, present, sg, pos, [approssima]).
 ty_verb(italian, approximate, present, pl, pos, [approssimano]).
 ty_verb(italian, approximate, past, sg, pos, [approssimò]).
@@ -19716,6 +19702,10 @@ ty_verb(italian, arise, present, sg, pos, [sorge]).
 ty_verb(italian, arise, present, pl, pos, [sorgono]).
 ty_verb(italian, arise, past, sg, pos, [sorse]).
 ty_verb(italian, arise, past, pl, pos, [sorsero]).
+ty_verb(italian, arm, present, sg, pos, [arma]).
+ty_verb(italian, arm, present, pl, pos, [armano]).
+ty_verb(italian, arm, past, sg, pos, [armò]).
+ty_verb(italian, arm, past, pl, pos, [armarono]).
 ty_verb(italian, armour, present, sg, pos, [blinda]).
 ty_verb(italian, armour, present, pl, pos, [blindano]).
 ty_verb(italian, armour, past, sg, pos, [blindò]).
@@ -19756,6 +19746,10 @@ ty_verb(italian, assemble, present, sg, pos, [assembla]).
 ty_verb(italian, assemble, present, pl, pos, [assemblano]).
 ty_verb(italian, assemble, past, sg, pos, [assemblò]).
 ty_verb(italian, assemble, past, pl, pos, [assemblarono]).
+ty_verb(italian, assess, present, sg, pos, [valuta]).
+ty_verb(italian, assess, present, pl, pos, [valutano]).
+ty_verb(italian, assess, past, sg, pos, [valutò]).
+ty_verb(italian, assess, past, pl, pos, [valutarono]).
 ty_verb(italian, assign, present, sg, pos, [assegna]).
 ty_verb(italian, assign, present, pl, pos, [assegnano]).
 ty_verb(italian, assign, past, sg, pos, [assegnò]).
@@ -19932,6 +19926,10 @@ ty_verb(italian, survive, present, sg, pos, [sopravvive]).
 ty_verb(italian, survive, present, pl, pos, [sopravvivono]).
 ty_verb(italian, survive, past, sg, pos, [sopravvisse]).
 ty_verb(italian, survive, past, pl, pos, [sopravvissero]).
+ty_verb(italian, structure, present, sg, pos, [struttura]).
+ty_verb(italian, structure, present, pl, pos, [strutturano]).
+ty_verb(italian, structure, past, sg, pos, [strutturò]).
+ty_verb(italian, structure, past, pl, pos, [strutturarono]).
 ty_verb(italian, stroll, present, sg, pos, [passeggia]).
 ty_verb(italian, stroll, present, pl, pos, [passeggiano]).
 ty_verb(italian, stroll, past, sg, pos, [passeggiò]).
@@ -20036,6 +20034,10 @@ ty_verb(italian, benefit, present, sg, pos, [avvantaggia]).
 ty_verb(italian, benefit, present, pl, pos, [avvantaggiano]).
 ty_verb(italian, benefit, past, sg, pos, [avvantaggiò]).
 ty_verb(italian, benefit, past, pl, pos, [avvantaggiarono]).
+ty_verb(italian, bequeath, present, sg, pos, [lega]).
+ty_verb(italian, bequeath, present, pl, pos, [legano]).
+ty_verb(italian, bequeath, past, sg, pos, [legò]).
+ty_verb(italian, bequeath, past, pl, pos, [legarono]).
 ty_verb(italian, besiege, present, sg, pos, [assedia]).
 ty_verb(italian, besiege, present, pl, pos, [assediano]).
 ty_verb(italian, besiege, past, sg, pos, [assediò]).
@@ -20056,6 +20058,10 @@ ty_verb(italian, bid, present, sg, pos, [offre]).
 ty_verb(italian, bid, present, pl, pos, [offrono]).
 ty_verb(italian, bid, past, sg, pos, [offrì]).
 ty_verb(italian, bid, past, pl, pos, [offrirono]).
+ty_verb(italian, bill, present, sg, pos, [fattura]).
+ty_verb(italian, bill, present, pl, pos, [fatturano]).
+ty_verb(italian, bill, past, sg, pos, [fatturò]).
+ty_verb(italian, bill, past, pl, pos, [fatturarono]).
 ty_verb(italian, billet, present, sg, pos, [alloggia]).
 ty_verb(italian, billet, present, pl, pos, [alloggiano]).
 ty_verb(italian, billet, past, sg, pos, [alloggiò]).
@@ -20172,10 +20178,18 @@ ty_verb(italian, broaden, present, sg, pos, [amplia]).
 ty_verb(italian, broaden, present, pl, pos, [ampliano]).
 ty_verb(italian, broaden, past, sg, pos, [ampliò]).
 ty_verb(italian, broaden, past, pl, pos, [ampliarono]).
+ty_verb(italian, brush, present, sg, pos, [spazzola]).
+ty_verb(italian, brush, present, pl, pos, [spazzolano]).
+ty_verb(italian, brush, past, sg, pos, [spazzolò]).
+ty_verb(italian, brush, past, pl, pos, [spazzolarono]).
 ty_verb(italian, build, present, sg, pos, [edifica]).
 ty_verb(italian, build, present, pl, pos, [edificano]).
 ty_verb(italian, build, past, sg, pos, [edificò]).
 ty_verb(italian, build, past, pl, pos, [edificarono]).
+ty_verb(italian, burden, present, sg, pos, [carica]).
+ty_verb(italian, burden, present, pl, pos, [caricano]).
+ty_verb(italian, burden, past, sg, pos, [caricò]).
+ty_verb(italian, burden, past, pl, pos, [caricarono]).
 ty_verb(italian, burgeon, present, sg, pos, [gemma]).
 ty_verb(italian, burgeon, present, pl, pos, [gemmano]).
 ty_verb(italian, burgeon, past, sg, pos, [gemmò]).
@@ -20200,6 +20214,10 @@ ty_verb(italian, call, present, sg, pos, [chiama]).
 ty_verb(italian, call, present, pl, pos, [chiamano]).
 ty_verb(italian, call, past, sg, pos, [chiamò]).
 ty_verb(italian, call, past, pl, pos, [chiamarono]).
+ty_verb(italian, calm, present, sg, pos, [calma]).
+ty_verb(italian, calm, present, pl, pos, [calmano]).
+ty_verb(italian, calm, past, sg, pos, [calmò]).
+ty_verb(italian, calm, past, pl, pos, [calmarono]).
 ty_verb(italian, camp, present, sg, pos, [accampa]).
 ty_verb(italian, camp, present, pl, pos, [accampano]).
 ty_verb(italian, camp, past, sg, pos, [accampò]).
@@ -20224,6 +20242,14 @@ ty_verb(italian, captivate, present, sg, pos, [affascina]).
 ty_verb(italian, captivate, present, pl, pos, [affascinano]).
 ty_verb(italian, captivate, past, sg, pos, [affascinò]).
 ty_verb(italian, captivate, past, pl, pos, [affascinarono]).
+ty_verb(italian, capture, present, sg, pos, [cattura]).
+ty_verb(italian, capture, present, pl, pos, [catturano]).
+ty_verb(italian, capture, past, sg, pos, [catturò]).
+ty_verb(italian, capture, past, pl, pos, [catturarono]).
+ty_verb(italian, caricature, present, sg, pos, [caricatura]).
+ty_verb(italian, caricature, present, pl, pos, [caricaturano]).
+ty_verb(italian, caricature, past, sg, pos, [caricaturò]).
+ty_verb(italian, caricature, past, pl, pos, [caricaturarono]).
 ty_verb(italian, castrate, present, sg, pos, [castra]).
 ty_verb(italian, castrate, present, pl, pos, [castrano]).
 ty_verb(italian, castrate, past, sg, pos, [castrò]).
@@ -20232,6 +20258,10 @@ ty_verb(italian, catalog, present, sg, pos, [cataloga]).
 ty_verb(italian, catalog, present, pl, pos, [catalogano]).
 ty_verb(italian, catalog, past, sg, pos, [catalogò]).
 ty_verb(italian, catalog, past, pl, pos, [catalogarono]).
+ty_verb(italian, catapult, present, sg, pos, [catapulta]).
+ty_verb(italian, catapult, present, pl, pos, [catapultano]).
+ty_verb(italian, catapult, past, sg, pos, [catapultò]).
+ty_verb(italian, catapult, past, pl, pos, [catapultarono]).
 ty_verb(italian, catch, present, sg, pos, [afferra]).
 ty_verb(italian, catch, present, pl, pos, [afferrano]).
 ty_verb(italian, catch, past, sg, pos, [afferrò]).
@@ -20240,6 +20270,10 @@ ty_verb(italian, cater, present, sg, pos, [provvede]).
 ty_verb(italian, cater, present, pl, pos, [provvedono]).
 ty_verb(italian, cater, past, sg, pos, [provvide]).
 ty_verb(italian, cater, past, pl, pos, [provvidero]).
+ty_verb(italian, cause, present, sg, pos, [causa]).
+ty_verb(italian, cause, present, pl, pos, [causano]).
+ty_verb(italian, cause, past, sg, pos, [causò]).
+ty_verb(italian, cause, past, pl, pos, [causarono]).
 ty_verb(italian, caution, present, sg, pos, [cautela]).
 ty_verb(italian, caution, present, pl, pos, [cautelano]).
 ty_verb(italian, caution, past, sg, pos, [cautelò]).
@@ -20248,6 +20282,10 @@ ty_verb(italian, celebrate, present, sg, pos, [celebra]).
 ty_verb(italian, celebrate, present, pl, pos, [celebrano]).
 ty_verb(italian, celebrate, past, sg, pos, [celebrò]).
 ty_verb(italian, celebrate, past, pl, pos, [celebrarono]).
+ty_verb(italian, censor, present, sg, pos, [censura]).
+ty_verb(italian, censor, present, pl, pos, [censurano]).
+ty_verb(italian, censor, past, sg, pos, [censurò]).
+ty_verb(italian, censor, past, pl, pos, [censurarono]).
 ty_verb(italian, centralise, present, sg, pos, [centralizza]).
 ty_verb(italian, centralise, present, pl, pos, [centralizzano]).
 ty_verb(italian, centralise, past, sg, pos, [centralizzò]).
@@ -20268,6 +20306,10 @@ ty_verb(italian, chair, present, sg, pos, [insedia]).
 ty_verb(italian, chair, present, pl, pos, [insediano]).
 ty_verb(italian, chair, past, sg, pos, [insediò]).
 ty_verb(italian, chair, past, pl, pos, [insediarono]).
+ty_verb(italian, challenge, present, sg, pos, [sfida]).
+ty_verb(italian, challenge, present, pl, pos, [sfidano]).
+ty_verb(italian, challenge, past, sg, pos, [sfidò]).
+ty_verb(italian, challenge, past, pl, pos, [sfidarono]).
 ty_verb(italian, characterise, present, sg, pos, [caratterizza]).
 ty_verb(italian, characterise, present, pl, pos, [caratterizzano]).
 ty_verb(italian, characterise, past, sg, pos, [caratterizzò]).
@@ -20288,6 +20330,10 @@ ty_verb(italian, cheat, present, sg, pos, [inganna]).
 ty_verb(italian, cheat, present, pl, pos, [ingannano]).
 ty_verb(italian, cheat, past, sg, pos, [ingannò]).
 ty_verb(italian, cheat, past, pl, pos, [ingannarono]).
+ty_verb(italian, check, present, sg, pos, [verifica]).
+ty_verb(italian, check, present, pl, pos, [verificano]).
+ty_verb(italian, check, past, sg, pos, [verificò]).
+ty_verb(italian, check, past, pl, pos, [verificarono]).
 ty_verb(italian, chew, present, sg, pos, [mastica]).
 ty_verb(italian, chew, present, pl, pos, [masticano]).
 ty_verb(italian, chew, past, sg, pos, [masticò]).
@@ -20312,6 +20358,10 @@ ty_verb(italian, civilise, present, sg, pos, [civilizza]).
 ty_verb(italian, civilise, present, pl, pos, [civilizzano]).
 ty_verb(italian, civilise, past, sg, pos, [civilizzò]).
 ty_verb(italian, civilise, past, pl, pos, [civilizzarono]).
+ty_verb(italian, classify, present, sg, pos, [classifica]).
+ty_verb(italian, classify, present, pl, pos, [classificano]).
+ty_verb(italian, classify, past, sg, pos, [classificò]).
+ty_verb(italian, classify, past, pl, pos, [classificarono]).
 ty_verb(italian, clean, present, sg, pos, [pulisce]).
 ty_verb(italian, clean, present, pl, pos, [puliscono]).
 ty_verb(italian, clean, past, sg, pos, [pulì]).
@@ -20488,6 +20538,10 @@ ty_verb(italian, concretise, present, sg, pos, [concreta]).
 ty_verb(italian, concretise, present, pl, pos, [concretano]).
 ty_verb(italian, concretise, past, sg, pos, [concretò]).
 ty_verb(italian, concretise, past, pl, pos, [concretarono]).
+ty_verb(italian, condemn, present, sg, pos, [condanna]).
+ty_verb(italian, condemn, present, pl, pos, [condannano]).
+ty_verb(italian, condemn, past, sg, pos, [condannò]).
+ty_verb(italian, condemn, past, pl, pos, [condannarono]).
 ty_verb(italian, condition, present, sg, pos, [condiziona]).
 ty_verb(italian, condition, present, pl, pos, [condizionano]).
 ty_verb(italian, condition, past, sg, pos, [condizionò]).
@@ -20516,6 +20570,10 @@ ty_verb(italian, confine, present, sg, pos, [confina]).
 ty_verb(italian, confine, present, pl, pos, [confinano]).
 ty_verb(italian, confine, past, sg, pos, [confinò]).
 ty_verb(italian, confine, past, pl, pos, [confinarono]).
+ty_verb(italian, confirm, present, sg, pos, [conferma]).
+ty_verb(italian, confirm, present, pl, pos, [confermano]).
+ty_verb(italian, confirm, past, sg, pos, [confermò]).
+ty_verb(italian, confirm, past, pl, pos, [confermarono]).
 ty_verb(italian, confiscate, present, sg, pos, [confisca]).
 ty_verb(italian, confiscate, present, pl, pos, [confiscano]).
 ty_verb(italian, confiscate, past, sg, pos, [confiscò]).
@@ -20532,6 +20590,10 @@ ty_verb(italian, connect, present, sg, pos, [connette]).
 ty_verb(italian, connect, present, pl, pos, [connettono]).
 ty_verb(italian, connect, past, sg, pos, [connettette]).
 ty_verb(italian, connect, past, pl, pos, [connettettero]).
+ty_verb(italian, conquer, present, sg, pos, [conquista]).
+ty_verb(italian, conquer, present, pl, pos, [conquistano]).
+ty_verb(italian, conquer, past, sg, pos, [conquistò]).
+ty_verb(italian, conquer, past, pl, pos, [conquistarono]).
 ty_verb(italian, consecrate, present, sg, pos, [consacra]).
 ty_verb(italian, consecrate, present, pl, pos, [consacrano]).
 ty_verb(italian, consecrate, past, sg, pos, [consacrò]).
@@ -20572,6 +20634,10 @@ ty_verb(italian, construct, present, sg, pos, [costruisce]).
 ty_verb(italian, construct, present, pl, pos, [costruiscono]).
 ty_verb(italian, construct, past, sg, pos, [costruì]).
 ty_verb(italian, construct, past, pl, pos, [costruirono]).
+ty_verb(italian, consult, present, sg, pos, [consulta]).
+ty_verb(italian, consult, present, pl, pos, [consultano]).
+ty_verb(italian, consult, past, sg, pos, [consultò]).
+ty_verb(italian, consult, past, pl, pos, [consultarono]).
 ty_verb(italian, consume, present, sg, pos, [consuma]).
 ty_verb(italian, consume, present, pl, pos, [consumano]).
 ty_verb(italian, consume, past, sg, pos, [consumò]).
@@ -20628,6 +20694,10 @@ ty_verb(italian, contribute, present, sg, pos, [contribuisce]).
 ty_verb(italian, contribute, present, pl, pos, [contribuiscono]).
 ty_verb(italian, contribute, past, sg, pos, [contribuì]).
 ty_verb(italian, contribute, past, pl, pos, [contribuirono]).
+ty_verb(italian, contrive, present, sg, pos, [idea]).
+ty_verb(italian, contrive, present, pl, pos, [ideano]).
+ty_verb(italian, contrive, past, sg, pos, [ideò]).
+ty_verb(italian, contrive, past, pl, pos, [idearono]).
 ty_verb(italian, control, present, sg, pos, [controlla]).
 ty_verb(italian, control, present, pl, pos, [controllano]).
 ty_verb(italian, control, past, sg, pos, [controllò]).
@@ -20656,6 +20726,10 @@ ty_verb(italian, convince, present, sg, pos, [convince]).
 ty_verb(italian, convince, present, pl, pos, [convincono]).
 ty_verb(italian, convince, past, sg, pos, [convinse]).
 ty_verb(italian, convince, past, pl, pos, [convinsero]).
+ty_verb(italian, cook, present, sg, pos, [cucina]).
+ty_verb(italian, cook, present, pl, pos, [cucinano]).
+ty_verb(italian, cook, past, sg, pos, [cucinò]).
+ty_verb(italian, cook, past, pl, pos, [cucinarono]).
 ty_verb(italian, cool, present, sg, pos, [rinfresca]).
 ty_verb(italian, cool, present, pl, pos, [rinfrescano]).
 ty_verb(italian, cool, past, sg, pos, [rinfrescò]).
@@ -20668,10 +20742,18 @@ ty_verb(italian, coordinate, present, sg, pos, [coordina]).
 ty_verb(italian, coordinate, present, pl, pos, [coordinano]).
 ty_verb(italian, coordinate, past, sg, pos, [coordinò]).
 ty_verb(italian, coordinate, past, pl, pos, [coordinarono]).
+ty_verb(italian, copy, present, sg, pos, [copia]).
+ty_verb(italian, copy, present, pl, pos, [copiano]).
+ty_verb(italian, copy, past, sg, pos, [copiò]).
+ty_verb(italian, copy, past, pl, pos, [copiarono]).
 ty_verb(italian, correspond, present, sg, pos, [corrisponde]).
 ty_verb(italian, correspond, present, pl, pos, [corrispondono]).
 ty_verb(italian, correspond, past, sg, pos, [corrispose]).
 ty_verb(italian, correspond, past, pl, pos, [corrisposero]).
+ty_verb(italian, cost, present, sg, pos, [costa]).
+ty_verb(italian, cost, present, pl, pos, [costano]).
+ty_verb(italian, cost, past, sg, pos, [costò]).
+ty_verb(italian, cost, past, pl, pos, [costarono]).
 ty_verb(italian, count, present, sg, pos, [racconta]).
 ty_verb(italian, count, present, pl, pos, [raccontano]).
 ty_verb(italian, count, past, sg, pos, [raccontò]).
@@ -20712,6 +20794,10 @@ ty_verb(italian, crimp, present, sg, pos, [arruola]).
 ty_verb(italian, crimp, present, pl, pos, [arruolano]).
 ty_verb(italian, crimp, past, sg, pos, [arruolò]).
 ty_verb(italian, crimp, past, pl, pos, [arruolarono]).
+ty_verb(italian, criticise, present, sg, pos, [critica]).
+ty_verb(italian, criticise, present, pl, pos, [criticano]).
+ty_verb(italian, criticise, past, sg, pos, [criticò]).
+ty_verb(italian, criticise, past, pl, pos, [criticarono]).
 ty_verb(italian, cross, present, sg, pos, [attraversa]).
 ty_verb(italian, cross, present, pl, pos, [attraversano]).
 ty_verb(italian, cross, past, sg, pos, [attraversò]).
@@ -20736,6 +20822,10 @@ ty_verb(italian, cultivate, present, sg, pos, [coltiva]).
 ty_verb(italian, cultivate, present, pl, pos, [coltivano]).
 ty_verb(italian, cultivate, past, sg, pos, [coltivò]).
 ty_verb(italian, cultivate, past, pl, pos, [coltivarono]).
+ty_verb(italian, cure, present, sg, pos, [cura]).
+ty_verb(italian, cure, present, pl, pos, [curano]).
+ty_verb(italian, cure, past, sg, pos, [curò]).
+ty_verb(italian, cure, past, pl, pos, [curarono]).
 ty_verb(italian, curse, present, sg, pos, [maledice]).
 ty_verb(italian, curse, present, pl, pos, [maledicono]).
 ty_verb(italian, curse, past, sg, pos, [maledisse]).
@@ -20756,10 +20846,18 @@ ty_verb(italian, dampen, present, sg, pos, [inumidisce]).
 ty_verb(italian, dampen, present, pl, pos, [inumidiscono]).
 ty_verb(italian, dampen, past, sg, pos, [inumidì]).
 ty_verb(italian, dampen, past, pl, pos, [inumidirono]).
+ty_verb(italian, dance, present, sg, pos, [balla]).
+ty_verb(italian, dance, present, pl, pos, [ballano]).
+ty_verb(italian, dance, past, sg, pos, [ballò]).
+ty_verb(italian, dance, past, pl, pos, [ballarono]).
 ty_verb(italian, dare, present, sg, pos, [osa]).
 ty_verb(italian, dare, present, pl, pos, [osano]).
 ty_verb(italian, dare, past, sg, pos, [osò]).
 ty_verb(italian, dare, past, pl, pos, [osarono]).
+ty_verb(italian, date, present, sg, pos, [data]).
+ty_verb(italian, date, present, pl, pos, [datano]).
+ty_verb(italian, date, past, sg, pos, [datò]).
+ty_verb(italian, date, past, pl, pos, [datarono]).
 ty_verb(italian, dazzle, present, sg, pos, [abbaglia]).
 ty_verb(italian, dazzle, present, pl, pos, [abbagliano]).
 ty_verb(italian, dazzle, past, sg, pos, [abbagliò]).
@@ -20856,6 +20954,10 @@ ty_verb(italian, delimit, present, sg, pos, [delimita]).
 ty_verb(italian, delimit, present, pl, pos, [delimitano]).
 ty_verb(italian, delimit, past, sg, pos, [delimitò]).
 ty_verb(italian, delimit, past, pl, pos, [delimitarono]).
+ty_verb(italian, deliver, present, sg, pos, [consegna]).
+ty_verb(italian, deliver, present, pl, pos, [consegnano]).
+ty_verb(italian, deliver, past, sg, pos, [consegnò]).
+ty_verb(italian, deliver, past, pl, pos, [consegnarono]).
 ty_verb(italian, demolish, present, sg, pos, [demolisce]).
 ty_verb(italian, demolish, present, pl, pos, [demoliscono]).
 ty_verb(italian, demolish, past, sg, pos, [demolì]).
@@ -20884,6 +20986,14 @@ ty_verb(italian, denote, present, sg, pos, [denota]).
 ty_verb(italian, denote, present, pl, pos, [denotano]).
 ty_verb(italian, denote, past, sg, pos, [denotò]).
 ty_verb(italian, denote, past, pl, pos, [denotarono]).
+ty_verb(italian, notice, present, sg, pos, [nota]).
+ty_verb(italian, notice, present, pl, pos, [notano]).
+ty_verb(italian, notice, past, sg, pos, [notò]).
+ty_verb(italian, notice, past, pl, pos, [notarono]).
+ty_verb(italian, denounce, present, sg, pos, [denuncia]).
+ty_verb(italian, denounce, present, pl, pos, [denunciano]).
+ty_verb(italian, denounce, past, sg, pos, [denunciò]).
+ty_verb(italian, denounce, past, pl, pos, [denunciarono]).
 ty_verb(italian, deny, present, sg, pos, [nega]).
 ty_verb(italian, deny, present, pl, pos, [negano]).
 ty_verb(italian, deny, past, sg, pos, [negò]).
@@ -21008,6 +21118,10 @@ ty_verb(italian, devour, present, sg, pos, [divora]).
 ty_verb(italian, devour, present, pl, pos, [divorano]).
 ty_verb(italian, devour, past, sg, pos, [divorò]).
 ty_verb(italian, devour, past, pl, pos, [divorarono]).
+ty_verb(italian, diagnose, present, sg, pos, [diagnostica]).
+ty_verb(italian, diagnose, present, pl, pos, [diagnosticano]).
+ty_verb(italian, diagnose, past, sg, pos, [diagnosticò]).
+ty_verb(italian, diagnose, past, pl, pos, [diagnosticarono]).
 ty_verb(italian, dictate, present, sg, pos, [detta]).
 ty_verb(italian, dictate, present, pl, pos, [dettano]).
 ty_verb(italian, dictate, past, sg, pos, [dettò]).
@@ -21044,6 +21158,10 @@ ty_verb(italian, diminish, present, sg, pos, [diminuisce]).
 ty_verb(italian, diminish, present, pl, pos, [diminuiscono]).
 ty_verb(italian, diminish, past, sg, pos, [diminuì]).
 ty_verb(italian, diminish, past, pl, pos, [diminuirono]).
+ty_verb(italian, dine, present, sg, pos, [cena]).
+ty_verb(italian, dine, present, pl, pos, [cenano]).
+ty_verb(italian, dine, past, sg, pos, [cenò]).
+ty_verb(italian, dine, past, pl, pos, [cenarono]).
 ty_verb(italian, direct, present, sg, pos, [dirige]).
 ty_verb(italian, direct, present, pl, pos, [dirigono]).
 ty_verb(italian, direct, past, sg, pos, [diresse]).
@@ -21080,6 +21198,10 @@ ty_verb(italian, discharge, present, sg, pos, [libera]).
 ty_verb(italian, discharge, present, pl, pos, [liberano]).
 ty_verb(italian, discharge, past, sg, pos, [liberò]).
 ty_verb(italian, discharge, past, pl, pos, [liberarono]).
+ty_verb(italian, discipline, present, sg, pos, [disciplina]).
+ty_verb(italian, discipline, present, pl, pos, [disciplinano]).
+ty_verb(italian, discipline, past, sg, pos, [disciplinò]).
+ty_verb(italian, discipline, past, pl, pos, [disciplinarono]).
 ty_verb(italian, discontinue, present, sg, pos, [interrompe]).
 ty_verb(italian, discontinue, present, pl, pos, [interrompono]).
 ty_verb(italian, discontinue, past, sg, pos, [interruppe]).
@@ -21140,6 +21262,10 @@ ty_verb(italian, displace, present, sg, pos, [sposta]).
 ty_verb(italian, displace, present, pl, pos, [spostano]).
 ty_verb(italian, displace, past, sg, pos, [spostò]).
 ty_verb(italian, displace, past, pl, pos, [spostarono]).
+ty_verb(italian, display, present, sg, pos, [mostra]).
+ty_verb(italian, display, present, pl, pos, [mostrano]).
+ty_verb(italian, display, past, sg, pos, [mostrò]).
+ty_verb(italian, display, past, pl, pos, [mostrarono]).
 ty_verb(italian, dispose, present, sg, pos, [colloca]).
 ty_verb(italian, dispose, present, pl, pos, [collocano]).
 ty_verb(italian, dispose, past, sg, pos, [collocò]).
@@ -21232,6 +21358,10 @@ ty_verb(italian, dream, present, sg, pos, [sogna]).
 ty_verb(italian, dream, present, pl, pos, [sognano]).
 ty_verb(italian, dream, past, sg, pos, [sognò]).
 ty_verb(italian, dream, past, pl, pos, [sognarono]).
+ty_verb(italian, dress, present, sg, pos, [veste]).
+ty_verb(italian, dress, present, pl, pos, [vestono]).
+ty_verb(italian, dress, past, sg, pos, [vestì]).
+ty_verb(italian, dress, past, pl, pos, [vestirono]).
 ty_verb(italian, drink, present, sg, pos, [beve]).
 ty_verb(italian, drink, present, pl, pos, [bevono]).
 ty_verb(italian, drink, past, sg, pos, [bevve]).
@@ -21244,6 +21374,10 @@ ty_verb(italian, drown, present, sg, pos, [inonda]).
 ty_verb(italian, drown, present, pl, pos, [inondano]).
 ty_verb(italian, drown, past, sg, pos, [inondò]).
 ty_verb(italian, drown, past, pl, pos, [inondarono]).
+ty_verb(italian, drug, present, sg, pos, [droga]).
+ty_verb(italian, drug, present, pl, pos, [drogano]).
+ty_verb(italian, drug, past, sg, pos, [drogò]).
+ty_verb(italian, drug, past, pl, pos, [drogarono]).
 ty_verb(italian, dry, present, sg, pos, [asciuga]).
 ty_verb(italian, dry, present, pl, pos, [asciugano]).
 ty_verb(italian, dry, past, sg, pos, [asciugò]).
@@ -21332,6 +21466,10 @@ ty_verb(italian, encircle, present, sg, pos, [cinge]).
 ty_verb(italian, encircle, present, pl, pos, [cingono]).
 ty_verb(italian, encircle, past, sg, pos, [cinse]).
 ty_verb(italian, encircle, past, pl, pos, [cinsero]).
+ty_verb(italian, encourage, present, sg, pos, [anima]).
+ty_verb(italian, encourage, present, pl, pos, [animano]).
+ty_verb(italian, encourage, past, sg, pos, [animò]).
+ty_verb(italian, encourage, past, pl, pos, [animarono]).
 ty_verb(italian, end, present, sg, pos, [termina]).
 ty_verb(italian, end, present, pl, pos, [terminano]).
 ty_verb(italian, end, past, sg, pos, [terminò]).
@@ -21356,6 +21494,10 @@ ty_verb(italian, enumerate, present, sg, pos, [elenca]).
 ty_verb(italian, enumerate, present, pl, pos, [elencano]).
 ty_verb(italian, enumerate, past, sg, pos, [elencò]).
 ty_verb(italian, enumerate, past, pl, pos, [elencarono]).
+ty_verb(italian, envy, present, sg, pos, [invidia]).
+ty_verb(italian, envy, present, pl, pos, [invidiano]).
+ty_verb(italian, envy, past, sg, pos, [invidiò]).
+ty_verb(italian, envy, past, pl, pos, [invidiarono]).
 ty_verb(italian, equate, present, sg, pos, [equipara]).
 ty_verb(italian, equate, present, pl, pos, [equiparano]).
 ty_verb(italian, equate, past, sg, pos, [equiparò]).
@@ -21388,6 +21530,10 @@ ty_verb(italian, establish, present, sg, pos, [stabilisce]).
 ty_verb(italian, establish, present, pl, pos, [stabiliscono]).
 ty_verb(italian, establish, past, sg, pos, [stabilì]).
 ty_verb(italian, establish, past, pl, pos, [stabilirono]).
+ty_verb(italian, estimate, present, sg, pos, [stima]).
+ty_verb(italian, estimate, present, pl, pos, [stimano]).
+ty_verb(italian, estimate, past, sg, pos, [stimò]).
+ty_verb(italian, estimate, past, pl, pos, [stimarono]).
 ty_verb(italian, evacuate, present, sg, pos, [evacua]).
 ty_verb(italian, evacuate, present, pl, pos, [evacuano]).
 ty_verb(italian, evacuate, past, sg, pos, [evacuò]).
@@ -21436,6 +21582,10 @@ ty_verb(italian, exclude, present, sg, pos, [esclude]).
 ty_verb(italian, exclude, present, pl, pos, [escludono]).
 ty_verb(italian, exclude, past, sg, pos, [escluse]).
 ty_verb(italian, exclude, past, pl, pos, [esclusero]).
+ty_verb(italian, excuse, present, sg, pos, [scusa]).
+ty_verb(italian, excuse, present, pl, pos, [scusano]).
+ty_verb(italian, excuse, past, sg, pos, [scusò]).
+ty_verb(italian, excuse, past, pl, pos, [scusarono]).
 ty_verb(italian, execute, present, sg, pos, [esegue]).
 ty_verb(italian, execute, present, pl, pos, [eseguono]).
 ty_verb(italian, execute, past, sg, pos, [eseguì]).
@@ -21576,10 +21726,18 @@ ty_verb(italian, find, present, sg, pos, [incontra]).
 ty_verb(italian, find, present, pl, pos, [incontrano]).
 ty_verb(italian, find, past, sg, pos, [incontrò]).
 ty_verb(italian, find, past, pl, pos, [incontrarono]).
+ty_verb(italian, fine, present, sg, pos, [multa]).
+ty_verb(italian, fine, present, pl, pos, [multano]).
+ty_verb(italian, fine, past, sg, pos, [multò]).
+ty_verb(italian, fine, past, pl, pos, [multarono]).
 ty_verb(italian, finish, present, sg, pos, [finisce]).
 ty_verb(italian, finish, present, pl, pos, [finiscono]).
 ty_verb(italian, finish, past, sg, pos, [finì]).
 ty_verb(italian, finish, past, pl, pos, [finirono]).
+ty_verb(italian, fish, present, sg, pos, [pesca]).
+ty_verb(italian, fish, present, pl, pos, [pescano]).
+ty_verb(italian, fish, past, sg, pos, [pescò]).
+ty_verb(italian, fish, past, pl, pos, [pescarono]).
 ty_verb(italian, float, present, sg, pos, [fluttua]).
 ty_verb(italian, float, present, pl, pos, [fluttuano]).
 ty_verb(italian, float, past, sg, pos, [fluttuò]).
@@ -21592,10 +21750,22 @@ ty_verb(italian, flower, present, sg, pos, [fiorisce]).
 ty_verb(italian, flower, present, pl, pos, [fioriscono]).
 ty_verb(italian, flower, past, sg, pos, [fiorì]).
 ty_verb(italian, flower, past, pl, pos, [fiorirono]).
+ty_verb(italian, foam, present, sg, pos, [spuma]).
+ty_verb(italian, foam, present, pl, pos, [spumano]).
+ty_verb(italian, foam, past, sg, pos, [spumò]).
+ty_verb(italian, foam, past, pl, pos, [spumarono]).
+ty_verb(italian, fold, present, sg, pos, [piega]).
+ty_verb(italian, fold, present, pl, pos, [piegano]).
+ty_verb(italian, fold, past, sg, pos, [piegò]).
+ty_verb(italian, fold, past, pl, pos, [piegarono]).
 ty_verb(italian, follow, present, sg, pos, [segue]).
 ty_verb(italian, follow, present, pl, pos, [seguono]).
 ty_verb(italian, follow, past, sg, pos, [seguì]).
 ty_verb(italian, follow, past, pl, pos, [seguirono]).
+ty_verb(italian, force, present, sg, pos, [forza]).
+ty_verb(italian, force, present, pl, pos, [forzano]).
+ty_verb(italian, force, past, sg, pos, [forzò]).
+ty_verb(italian, force, past, pl, pos, [forzarono]).
 ty_verb(italian, foresee, present, sg, pos, [prevede]).
 ty_verb(italian, foresee, present, pl, pos, [prevedono]).
 ty_verb(italian, foresee, past, sg, pos, [previde]).
@@ -21608,10 +21778,18 @@ ty_verb(italian, forgive, present, sg, pos, [perdona]).
 ty_verb(italian, forgive, present, pl, pos, [perdonano]).
 ty_verb(italian, forgive, past, sg, pos, [perdonò]).
 ty_verb(italian, forgive, past, pl, pos, [perdonarono]).
+ty_verb(italian, form, present, sg, pos, [forma]).
+ty_verb(italian, form, present, pl, pos, [formano]).
+ty_verb(italian, form, past, sg, pos, [formò]).
+ty_verb(italian, form, past, pl, pos, [formarono]).
 ty_verb(italian, formalise, present, sg, pos, [formalizza]).
 ty_verb(italian, formalise, present, pl, pos, [formalizzano]).
 ty_verb(italian, formalise, past, sg, pos, [formalizzò]).
 ty_verb(italian, formalise, past, pl, pos, [formalizzarono]).
+ty_verb(italian, formulate, present, sg, pos, [formula]).
+ty_verb(italian, formulate, present, pl, pos, [formulano]).
+ty_verb(italian, formulate, past, sg, pos, [formulò]).
+ty_verb(italian, formulate, past, pl, pos, [formularono]).
 ty_verb(italian, forward, present, sg, pos, [invia]).
 ty_verb(italian, forward, present, pl, pos, [inviano]).
 ty_verb(italian, forward, past, sg, pos, [inviò]).
@@ -21692,6 +21870,10 @@ ty_verb(italian, govern, present, sg, pos, [governa]).
 ty_verb(italian, govern, present, pl, pos, [governano]).
 ty_verb(italian, govern, past, sg, pos, [governò]).
 ty_verb(italian, govern, past, pl, pos, [governarono]).
+ty_verb(italian, graduate, present, sg, pos, [laurea]).
+ty_verb(italian, graduate, present, pl, pos, [laureano]).
+ty_verb(italian, graduate, past, sg, pos, [laureò]).
+ty_verb(italian, graduate, past, pl, pos, [laurearono]).
 ty_verb(italian, gratify, present, sg, pos, [gratifica]).
 ty_verb(italian, gratify, present, pl, pos, [gratificano]).
 ty_verb(italian, gratify, past, sg, pos, [gratificò]).
@@ -21716,6 +21898,10 @@ ty_verb(italian, guess, present, sg, pos, [indovina]).
 ty_verb(italian, guess, present, pl, pos, [indovinano]).
 ty_verb(italian, guess, past, sg, pos, [indovinò]).
 ty_verb(italian, guess, past, pl, pos, [indovinarono]).
+ty_verb(italian, guide, present, sg, pos, [guida]).
+ty_verb(italian, guide, present, pl, pos, [guidano]).
+ty_verb(italian, guide, past, sg, pos, [guidò]).
+ty_verb(italian, guide, past, pl, pos, [guidarono]).
 ty_verb(italian, hammer, present, sg, pos, [martella]).
 ty_verb(italian, hammer, present, pl, pos, [martellano]).
 ty_verb(italian, hammer, past, sg, pos, [martellò]).
@@ -21752,6 +21938,10 @@ ty_verb(italian, heal, present, sg, pos, [sana]).
 ty_verb(italian, heal, present, pl, pos, [sanano]).
 ty_verb(italian, heal, past, sg, pos, [sanò]).
 ty_verb(italian, heal, past, pl, pos, [sanarono]).
+ty_verb(italian, hear, present, sg, pos, [ode]).
+ty_verb(italian, hear, present, pl, pos, [odono]).
+ty_verb(italian, hear, past, sg, pos, [udì]).
+ty_verb(italian, hear, past, pl, pos, [udirono]).
 ty_verb(italian, heat, present, sg, pos, [riscalda]).
 ty_verb(italian, heat, present, pl, pos, [riscaldano]).
 ty_verb(italian, heat, past, sg, pos, [riscaldò]).
@@ -21796,6 +21986,10 @@ ty_verb(italian, humiliate, present, sg, pos, [umilia]).
 ty_verb(italian, humiliate, present, pl, pos, [umiliano]).
 ty_verb(italian, humiliate, past, sg, pos, [umiliò]).
 ty_verb(italian, humiliate, past, pl, pos, [umiliarono]).
+ty_verb(italian, hunt, present, sg, pos, [caccia]).
+ty_verb(italian, hunt, present, pl, pos, [cacciano]).
+ty_verb(italian, hunt, past, sg, pos, [cacciò]).
+ty_verb(italian, hunt, past, pl, pos, [cacciarono]).
 ty_verb(italian, hurry, present, sg, pos, [accorre]).
 ty_verb(italian, hurry, present, pl, pos, [accorrono]).
 ty_verb(italian, hurry, past, sg, pos, [accorse]).
@@ -22100,6 +22294,10 @@ ty_verb(italian, iron, present, sg, pos, [stira]).
 ty_verb(italian, iron, present, pl, pos, [stirano]).
 ty_verb(italian, iron, past, sg, pos, [stirò]).
 ty_verb(italian, iron, past, pl, pos, [stirarono]).
+ty_verb(italian, isolate, present, sg, pos, [isola]).
+ty_verb(italian, isolate, present, pl, pos, [isolano]).
+ty_verb(italian, isolate, past, sg, pos, [isolò]).
+ty_verb(italian, isolate, past, pl, pos, [isolarono]).
 ty_verb(italian, issue, present, sg, pos, [pubblica]).
 ty_verb(italian, issue, present, pl, pos, [pubblicano]).
 ty_verb(italian, issue, past, sg, pos, [pubblicò]).
@@ -22124,6 +22322,10 @@ ty_verb(italian, kick, present, sg, pos, [calcia]).
 ty_verb(italian, kick, present, pl, pos, [calciano]).
 ty_verb(italian, kick, past, sg, pos, [calciò]).
 ty_verb(italian, kick, past, pl, pos, [calciarono]).
+ty_verb(italian, kid, present, sg, pos, [figlia]).
+ty_verb(italian, kid, present, pl, pos, [figliano]).
+ty_verb(italian, kid, past, sg, pos, [figliò]).
+ty_verb(italian, kid, past, pl, pos, [figliarono]).
 ty_verb(italian, kidnap, present, sg, pos, [rapisce]).
 ty_verb(italian, kidnap, present, pl, pos, [rapiscono]).
 ty_verb(italian, kidnap, past, sg, pos, [rapì]).
@@ -22136,6 +22338,10 @@ ty_verb(italian, kiss, present, sg, pos, [bacia]).
 ty_verb(italian, kiss, present, pl, pos, [baciano]).
 ty_verb(italian, kiss, past, sg, pos, [baciò]).
 ty_verb(italian, kiss, past, pl, pos, [baciarono]).
+ty_verb(italian, label, present, sg, pos, [etichetta]).
+ty_verb(italian, label, present, pl, pos, [etichettano]).
+ty_verb(italian, label, past, sg, pos, [etichettò]).
+ty_verb(italian, label, past, pl, pos, [etichettarono]).
 ty_verb(italian, lack, present, sg, pos, [manca]).
 ty_verb(italian, lack, present, pl, pos, [mancano]).
 ty_verb(italian, lack, past, sg, pos, [mancò]).
@@ -22180,6 +22386,10 @@ ty_verb(italian, reelect, present, sg, pos, [rielegge]).
 ty_verb(italian, reelect, present, pl, pos, [rieleggono]).
 ty_verb(italian, reelect, past, sg, pos, [rielesse]).
 ty_verb(italian, reelect, past, pl, pos, [rielessero]).
+ty_verb(italian, reform, present, sg, pos, [riforma]).
+ty_verb(italian, reform, present, pl, pos, [riformano]).
+ty_verb(italian, reform, past, sg, pos, [riformò]).
+ty_verb(italian, reform, past, pl, pos, [riformarono]).
 ty_verb(italian, regenerate, present, sg, pos, [rigenera]).
 ty_verb(italian, regenerate, present, pl, pos, [rigenerano]).
 ty_verb(italian, regenerate, past, sg, pos, [rigenerò]).
@@ -22304,6 +22514,10 @@ ty_verb(italian, encode, present, sg, pos, [codifica]).
 ty_verb(italian, encode, present, pl, pos, [codificano]).
 ty_verb(italian, encode, past, sg, pos, [codificò]).
 ty_verb(italian, encode, past, pl, pos, [codificarono]).
+ty_verb(italian, encrypt, present, sg, pos, [cifra]).
+ty_verb(italian, encrypt, present, pl, pos, [cifrano]).
+ty_verb(italian, encrypt, past, sg, pos, [cifrò]).
+ty_verb(italian, encrypt, past, pl, pos, [cifrarono]).
 ty_verb(italian, enrich, present, sg, pos, [arricchisce]).
 ty_verb(italian, enrich, present, pl, pos, [arricchiscono]).
 ty_verb(italian, enrich, past, sg, pos, [arricchì]).
@@ -22332,6 +22546,10 @@ ty_verb(italian, lick, present, sg, pos, [lecca]).
 ty_verb(italian, lick, present, pl, pos, [leccano]).
 ty_verb(italian, lick, past, sg, pos, [leccò]).
 ty_verb(italian, lick, past, pl, pos, [leccarono]).
+ty_verb(italian, lie, present, sg, pos, [mente]).
+ty_verb(italian, lie, present, pl, pos, [mentono]).
+ty_verb(italian, lie, past, sg, pos, [mentì]).
+ty_verb(italian, lie, past, pl, pos, [mentirono]).
 ty_verb(italian, light, present, sg, pos, [accende]).
 ty_verb(italian, light, present, pl, pos, [accendono]).
 ty_verb(italian, light, past, sg, pos, [accese]).
@@ -22356,6 +22574,10 @@ ty_verb(italian, link, present, sg, pos, [allaccia]).
 ty_verb(italian, link, present, pl, pos, [allacciano]).
 ty_verb(italian, link, past, sg, pos, [allacciò]).
 ty_verb(italian, link, past, pl, pos, [allacciarono]).
+ty_verb(italian, list, present, sg, pos, [lista]).
+ty_verb(italian, list, present, pl, pos, [listano]).
+ty_verb(italian, list, past, sg, pos, [listò]).
+ty_verb(italian, list, past, pl, pos, [listarono]).
 ty_verb(italian, listen, present, sg, pos, [ascolta]).
 ty_verb(italian, listen, present, pl, pos, [ascoltano]).
 ty_verb(italian, listen, past, sg, pos, [ascoltò]).
@@ -22404,6 +22626,22 @@ ty_verb(italian, manifest, present, sg, pos, [manifesta]).
 ty_verb(italian, manifest, present, pl, pos, [manifestano]).
 ty_verb(italian, manifest, past, sg, pos, [manifestò]).
 ty_verb(italian, manifest, past, pl, pos, [manifestarono]).
+ty_verb(italian, manoeuvre, present, sg, pos, [manovra]).
+ty_verb(italian, manoeuvre, present, pl, pos, [manovrano]).
+ty_verb(italian, manoeuvre, past, sg, pos, [manovrò]).
+ty_verb(italian, manoeuvre, past, pl, pos, [manovrarono]).
+ty_verb(italian, manufacture, present, sg, pos, [fabbrica]).
+ty_verb(italian, manufacture, present, pl, pos, [fabbricano]).
+ty_verb(italian, manufacture, past, sg, pos, [fabbricò]).
+ty_verb(italian, manufacture, past, pl, pos, [fabbricarono]).
+ty_verb(italian, mark, present, sg, pos, [marca]).
+ty_verb(italian, mark, present, pl, pos, [marcano]).
+ty_verb(italian, mark, past, sg, pos, [marcò]).
+ty_verb(italian, mark, past, pl, pos, [marcarono]).
+ty_verb(italian, marry, present, sg, pos, [sposa]).
+ty_verb(italian, marry, present, pl, pos, [sposano]).
+ty_verb(italian, marry, past, sg, pos, [sposò]).
+ty_verb(italian, marry, past, pl, pos, [sposarono]).
 ty_verb(italian, mass, present, sg, pos, [concentra]).
 ty_verb(italian, mass, present, pl, pos, [concentrano]).
 ty_verb(italian, mass, past, sg, pos, [concentrò]).
@@ -22428,6 +22666,10 @@ ty_verb(italian, meander, present, sg, pos, [serpeggia]).
 ty_verb(italian, meander, present, pl, pos, [serpeggiano]).
 ty_verb(italian, meander, past, sg, pos, [serpeggiò]).
 ty_verb(italian, meander, past, pl, pos, [serpeggiarono]).
+ty_verb(italian, measure, present, sg, pos, [misura]).
+ty_verb(italian, measure, present, pl, pos, [misurano]).
+ty_verb(italian, measure, past, sg, pos, [misurò]).
+ty_verb(italian, measure, past, pl, pos, [misurarono]).
 ty_verb(italian, mechanise, present, sg, pos, [meccanizza]).
 ty_verb(italian, mechanise, present, pl, pos, [meccanizzano]).
 ty_verb(italian, mechanise, past, sg, pos, [meccanizzò]).
@@ -22448,6 +22690,10 @@ ty_verb(italian, mention, present, sg, pos, [menziona]).
 ty_verb(italian, mention, present, pl, pos, [menzionano]).
 ty_verb(italian, mention, past, sg, pos, [menzionò]).
 ty_verb(italian, mention, past, pl, pos, [menzionarono]).
+ty_verb(italian, merge, present, sg, pos, [amalgama]).
+ty_verb(italian, merge, present, pl, pos, [amalgamano]).
+ty_verb(italian, merge, past, sg, pos, [amalgamò]).
+ty_verb(italian, merge, past, pl, pos, [amalgamarono]).
 ty_verb(italian, milk, present, sg, pos, [munge]).
 ty_verb(italian, milk, present, pl, pos, [mungono]).
 ty_verb(italian, milk, past, sg, pos, [munse]).
@@ -22468,6 +22714,10 @@ ty_verb(italian, mitigate, present, sg, pos, [mitiga]).
 ty_verb(italian, mitigate, present, pl, pos, [mitigano]).
 ty_verb(italian, mitigate, past, sg, pos, [mitigò]).
 ty_verb(italian, mitigate, past, pl, pos, [mitigarono]).
+ty_verb(italian, mix, present, sg, pos, [miscela]).
+ty_verb(italian, mix, present, pl, pos, [miscelano]).
+ty_verb(italian, mix, past, sg, pos, [miscelò]).
+ty_verb(italian, mix, past, pl, pos, [miscelarono]).
 ty_verb(italian, moderate, present, sg, pos, [modera]).
 ty_verb(italian, moderate, present, pl, pos, [moderano]).
 ty_verb(italian, moderate, past, sg, pos, [moderò]).
@@ -22476,10 +22726,18 @@ ty_verb(italian, modernise, present, sg, pos, [modernizza]).
 ty_verb(italian, modernise, present, pl, pos, [modernizzano]).
 ty_verb(italian, modernise, past, sg, pos, [modernizzò]).
 ty_verb(italian, modernise, past, pl, pos, [modernizzarono]).
+ty_verb(italian, modify, present, sg, pos, [modifica]).
+ty_verb(italian, modify, present, pl, pos, [modificano]).
+ty_verb(italian, modify, past, sg, pos, [modificò]).
+ty_verb(italian, modify, past, pl, pos, [modificarono]).
 ty_verb(italian, monopolise, present, sg, pos, [monopolizza]).
 ty_verb(italian, monopolise, present, pl, pos, [monopolizzano]).
 ty_verb(italian, monopolise, past, sg, pos, [monopolizzò]).
 ty_verb(italian, monopolise, past, pl, pos, [monopolizzarono]).
+ty_verb(italian, mortgage, present, sg, pos, [ipoteca]).
+ty_verb(italian, mortgage, present, pl, pos, [ipotecano]).
+ty_verb(italian, mortgage, past, sg, pos, [ipotecò]).
+ty_verb(italian, mortgage, past, pl, pos, [ipotecarono]).
 ty_verb(italian, mortify, present, sg, pos, [mortifica]).
 ty_verb(italian, mortify, present, pl, pos, [mortificano]).
 ty_verb(italian, mortify, past, sg, pos, [mortificò]).
@@ -22500,6 +22758,14 @@ ty_verb(italian, multiply, present, sg, pos, [moltiplica]).
 ty_verb(italian, multiply, present, pl, pos, [moltiplicano]).
 ty_verb(italian, multiply, past, sg, pos, [moltiplicò]).
 ty_verb(italian, multiply, past, pl, pos, [moltiplicarono]).
+ty_verb(italian, murder, present, sg, pos, [assassina]).
+ty_verb(italian, murder, present, pl, pos, [assassinano]).
+ty_verb(italian, murder, past, sg, pos, [assassinò]).
+ty_verb(italian, murder, past, pl, pos, [assassinarono]).
+ty_verb(italian, mutate, present, sg, pos, [muta]).
+ty_verb(italian, mutate, present, pl, pos, [mutano]).
+ty_verb(italian, mutate, past, sg, pos, [mutò]).
+ty_verb(italian, mutate, past, pl, pos, [mutarono]).
 ty_verb(italian, mutter, present, sg, pos, [mormora]).
 ty_verb(italian, mutter, present, pl, pos, [mormorano]).
 ty_verb(italian, mutter, past, sg, pos, [mormorò]).
@@ -22536,6 +22802,10 @@ ty_verb(italian, note, present, sg, pos, [annota]).
 ty_verb(italian, note, present, pl, pos, [annotano]).
 ty_verb(italian, note, past, sg, pos, [annotò]).
 ty_verb(italian, note, past, pl, pos, [annotarono]).
+ty_verb(italian, notify, present, sg, pos, [notifica]).
+ty_verb(italian, notify, present, pl, pos, [notificano]).
+ty_verb(italian, notify, past, sg, pos, [notificò]).
+ty_verb(italian, notify, past, pl, pos, [notificarono]).
 ty_verb(italian, nourish, present, sg, pos, [nutre]).
 ty_verb(italian, nourish, present, pl, pos, [nutrono]).
 ty_verb(italian, nourish, past, sg, pos, [nutrì]).
@@ -22572,6 +22842,10 @@ ty_verb(italian, open, present, sg, pos, [apre]).
 ty_verb(italian, open, present, pl, pos, [aprono]).
 ty_verb(italian, open, past, sg, pos, [aprì]).
 ty_verb(italian, open, past, pl, pos, [aprirono]).
+ty_verb(italian, operate, present, sg, pos, [opera]).
+ty_verb(italian, operate, present, pl, pos, [operano]).
+ty_verb(italian, operate, past, sg, pos, [operò]).
+ty_verb(italian, operate, past, pl, pos, [operarono]).
 ty_verb(italian, opt, present, sg, pos, [opta]).
 ty_verb(italian, opt, present, pl, pos, [optano]).
 ty_verb(italian, opt, past, sg, pos, [optò]).
@@ -22580,6 +22854,10 @@ ty_verb(italian, optimise, present, sg, pos, [ottimizza]).
 ty_verb(italian, optimise, present, pl, pos, [ottimizzano]).
 ty_verb(italian, optimise, past, sg, pos, [ottimizzò]).
 ty_verb(italian, optimise, past, pl, pos, [ottimizzarono]).
+ty_verb(italian, orbit, present, sg, pos, [orbita]).
+ty_verb(italian, orbit, present, pl, pos, [orbitano]).
+ty_verb(italian, orbit, past, sg, pos, [orbitò]).
+ty_verb(italian, orbit, past, pl, pos, [orbitarono]).
 ty_verb(italian, order, present, sg, pos, [ordina]).
 ty_verb(italian, order, present, pl, pos, [ordinano]).
 ty_verb(italian, order, past, sg, pos, [ordinò]).
@@ -22644,6 +22922,10 @@ ty_verb(italian, pause, present, sg, pos, [sosta]).
 ty_verb(italian, pause, present, pl, pos, [sostano]).
 ty_verb(italian, pause, past, sg, pos, [sostò]).
 ty_verb(italian, pause, past, pl, pos, [sostarono]).
+ty_verb(italian, pay, present, sg, pos, [paga]).
+ty_verb(italian, pay, present, pl, pos, [pagano]).
+ty_verb(italian, pay, past, sg, pos, [pagò]).
+ty_verb(italian, pay, past, pl, pos, [pagarono]).
 ty_verb(italian, peel, present, sg, pos, [pela]).
 ty_verb(italian, peel, present, pl, pos, [pelano]).
 ty_verb(italian, peel, past, sg, pos, [pelò]).
@@ -22696,6 +22978,14 @@ ty_verb(italian, photocopy, present, sg, pos, [fotocopia]).
 ty_verb(italian, photocopy, present, pl, pos, [fotocopiano]).
 ty_verb(italian, photocopy, past, sg, pos, [fotocopiò]).
 ty_verb(italian, photocopy, past, pl, pos, [fotocopiarono]).
+ty_verb(italian, photograph, present, sg, pos, [fotografa]).
+ty_verb(italian, photograph, present, pl, pos, [fotografano]).
+ty_verb(italian, photograph, past, sg, pos, [fotografò]).
+ty_verb(italian, photograph, past, pl, pos, [fotografarono]).
+ty_verb(italian, pilot, present, sg, pos, [pilota]).
+ty_verb(italian, pilot, present, pl, pos, [pilotano]).
+ty_verb(italian, pilot, past, sg, pos, [pilotò]).
+ty_verb(italian, pilot, past, pl, pos, [pilotarono]).
 ty_verb(italian, pin, present, sg, pos, [appunta]).
 ty_verb(italian, pin, present, pl, pos, [appuntano]).
 ty_verb(italian, pin, past, sg, pos, [appuntò]).
@@ -22712,6 +23002,10 @@ ty_verb(italian, plan, present, sg, pos, [pianifica]).
 ty_verb(italian, plan, present, pl, pos, [pianificano]).
 ty_verb(italian, plan, past, sg, pos, [pianificò]).
 ty_verb(italian, plan, past, pl, pos, [pianificarono]).
+ty_verb(italian, plant, present, sg, pos, [pianta]).
+ty_verb(italian, plant, present, pl, pos, [piantano]).
+ty_verb(italian, plant, past, sg, pos, [piantò]).
+ty_verb(italian, plant, past, pl, pos, [piantarono]).
 ty_verb(italian, plaster, present, sg, pos, [intonaca]).
 ty_verb(italian, plaster, present, pl, pos, [intonacano]).
 ty_verb(italian, plaster, past, sg, pos, [intonacò]).
@@ -22780,6 +23074,10 @@ ty_verb(italian, powder, present, sg, pos, [impolvera]).
 ty_verb(italian, powder, present, pl, pos, [impolverano]).
 ty_verb(italian, powder, past, sg, pos, [impolverò]).
 ty_verb(italian, powder, past, pl, pos, [impolverarono]).
+ty_verb(italian, practise, present, sg, pos, [pratica]).
+ty_verb(italian, practise, present, pl, pos, [praticano]).
+ty_verb(italian, practise, past, sg, pos, [praticò]).
+ty_verb(italian, practise, past, pl, pos, [praticarono]).
 ty_verb(italian, praise, present, sg, pos, [loda]).
 ty_verb(italian, praise, present, pl, pos, [lodano]).
 ty_verb(italian, praise, past, sg, pos, [lodò]).
@@ -22856,6 +23154,10 @@ ty_verb(italian, prevent, present, sg, pos, [previene]).
 ty_verb(italian, prevent, present, pl, pos, [prevengono]).
 ty_verb(italian, prevent, past, sg, pos, [prevenne]).
 ty_verb(italian, prevent, past, pl, pos, [prevennero]).
+ty_verb(italian, print, present, sg, pos, [stampa]).
+ty_verb(italian, print, present, pl, pos, [stampano]).
+ty_verb(italian, print, past, sg, pos, [stampò]).
+ty_verb(italian, print, past, pl, pos, [stamparono]).
 ty_verb(italian, privatise, present, sg, pos, [privatizza]).
 ty_verb(italian, privatise, present, pl, pos, [privatizzano]).
 ty_verb(italian, privatise, past, sg, pos, [privatizzò]).
@@ -22872,10 +23174,18 @@ ty_verb(italian, procreate, present, sg, pos, [procrea]).
 ty_verb(italian, procreate, present, pl, pos, [procreano]).
 ty_verb(italian, procreate, past, sg, pos, [procreò]).
 ty_verb(italian, procreate, past, pl, pos, [procrearono]).
+ty_verb(italian, procure, present, sg, pos, [procura]).
+ty_verb(italian, procure, present, pl, pos, [procurano]).
+ty_verb(italian, procure, past, sg, pos, [procurò]).
+ty_verb(italian, procure, past, pl, pos, [procurarono]).
 ty_verb(italian, produce, present, sg, pos, [produce]).
 ty_verb(italian, produce, present, pl, pos, [producono]).
 ty_verb(italian, produce, past, sg, pos, [produsse]).
 ty_verb(italian, produce, past, pl, pos, [produssero]).
+ty_verb(italian, program, present, sg, pos, [programma]).
+ty_verb(italian, program, present, pl, pos, [programmano]).
+ty_verb(italian, program, past, sg, pos, [programmò]).
+ty_verb(italian, program, past, pl, pos, [programmarono]).
 ty_verb(italian, progress, present, sg, pos, [progredisce]).
 ty_verb(italian, progress, present, pl, pos, [progrediscono]).
 ty_verb(italian, progress, past, sg, pos, [progredì]).
@@ -22904,6 +23214,10 @@ ty_verb(italian, prompt, present, sg, pos, [incita]).
 ty_verb(italian, prompt, present, pl, pos, [incitano]).
 ty_verb(italian, prompt, past, sg, pos, [incitò]).
 ty_verb(italian, prompt, past, pl, pos, [incitarono]).
+ty_verb(italian, pronounce, present, sg, pos, [pronuncia]).
+ty_verb(italian, pronounce, present, pl, pos, [pronunciano]).
+ty_verb(italian, pronounce, past, sg, pos, [pronunciò]).
+ty_verb(italian, pronounce, past, pl, pos, [pronunciarono]).
 ty_verb(italian, propagate, present, sg, pos, [propaga]).
 ty_verb(italian, propagate, present, pl, pos, [propagano]).
 ty_verb(italian, propagate, past, sg, pos, [propagò]).
@@ -22924,6 +23238,10 @@ ty_verb(italian, protect, present, sg, pos, [protegge]).
 ty_verb(italian, protect, present, pl, pos, [proteggono]).
 ty_verb(italian, protect, past, sg, pos, [protesse]).
 ty_verb(italian, protect, past, pl, pos, [protessero]).
+ty_verb(italian, protest, present, sg, pos, [protesta]).
+ty_verb(italian, protest, present, pl, pos, [protestano]).
+ty_verb(italian, protest, past, sg, pos, [protestò]).
+ty_verb(italian, protest, past, pl, pos, [protestarono]).
 ty_verb(italian, prove, present, sg, pos, [comprova]).
 ty_verb(italian, prove, present, pl, pos, [comprovano]).
 ty_verb(italian, prove, past, sg, pos, [comprovò]).
@@ -22980,6 +23298,10 @@ ty_verb(italian, race, present, sg, pos, [corre]).
 ty_verb(italian, race, present, pl, pos, [corrono]).
 ty_verb(italian, race, past, sg, pos, [corse]).
 ty_verb(italian, race, past, pl, pos, [corsero]).
+ty_verb(italian, range, present, sg, pos, [varia]).
+ty_verb(italian, range, present, pl, pos, [variano]).
+ty_verb(italian, range, past, sg, pos, [variò]).
+ty_verb(italian, range, past, pl, pos, [variarono]).
 ty_verb(italian, range, present, sg, pos, [allinea]).
 ty_verb(italian, range, present, pl, pos, [allineano]).
 ty_verb(italian, range, past, sg, pos, [allineò]).
@@ -23000,6 +23322,10 @@ ty_verb(italian, reactivate, present, sg, pos, [riattiva]).
 ty_verb(italian, reactivate, present, pl, pos, [riattivano]).
 ty_verb(italian, reactivate, past, sg, pos, [riattivò]).
 ty_verb(italian, reactivate, past, pl, pos, [riattivarono]).
+ty_verb(italian, read, present, sg, pos, [legge]).
+ty_verb(italian, read, present, pl, pos, [leggono]).
+ty_verb(italian, read, past, sg, pos, [lesse]).
+ty_verb(italian, read, past, pl, pos, [lessero]).
 ty_verb(italian, readjust, present, sg, pos, [riadatta]).
 ty_verb(italian, readjust, present, pl, pos, [riadattano]).
 ty_verb(italian, readjust, past, sg, pos, [riadattò]).
@@ -23040,6 +23366,10 @@ ty_verb(italian, recommend, present, sg, pos, [raccomanda]).
 ty_verb(italian, recommend, present, pl, pos, [raccomandano]).
 ty_verb(italian, recommend, past, sg, pos, [raccomandò]).
 ty_verb(italian, recommend, past, pl, pos, [raccomandarono]).
+ty_verb(italian, recompensate, present, sg, pos, [ricompensa]).
+ty_verb(italian, recompensate, present, pl, pos, [ricompensano]).
+ty_verb(italian, recompensate, past, sg, pos, [ricompensò]).
+ty_verb(italian, recompensate, past, pl, pos, [ricompensarono]).
 ty_verb(italian, reconcile, present, sg, pos, [riconcilia]).
 ty_verb(italian, reconcile, present, pl, pos, [riconciliano]).
 ty_verb(italian, reconcile, past, sg, pos, [riconciliò]).
@@ -23104,6 +23434,10 @@ ty_verb(italian, regard, present, sg, pos, [riguarda]).
 ty_verb(italian, regard, present, pl, pos, [riguardano]).
 ty_verb(italian, regard, past, sg, pos, [riguardò]).
 ty_verb(italian, regard, past, pl, pos, [riguardarono]).
+ty_verb(italian, regulate, present, sg, pos, [regola]).
+ty_verb(italian, regulate, present, pl, pos, [regolano]).
+ty_verb(italian, regulate, past, sg, pos, [regolò]).
+ty_verb(italian, regulate, past, pl, pos, [regolarono]).
 ty_verb(italian, reign, present, sg, pos, [regna]).
 ty_verb(italian, reign, present, pl, pos, [regnano]).
 ty_verb(italian, reign, past, sg, pos, [regnò]).
@@ -23156,6 +23490,10 @@ ty_verb(italian, report, present, sg, pos, [riporta]).
 ty_verb(italian, report, present, pl, pos, [riportano]).
 ty_verb(italian, report, past, sg, pos, [riportò]).
 ty_verb(italian, report, past, pl, pos, [riportarono]).
+ty_verb(italian, report, present, sg, pos, [denuncia]).
+ty_verb(italian, report, present, pl, pos, [denunciano]).
+ty_verb(italian, report, past, sg, pos, [denunciò]).
+ty_verb(italian, report, past, pl, pos, [denunciarono]).
 ty_verb(italian, represent, present, sg, pos, [rappresenta]).
 ty_verb(italian, represent, present, pl, pos, [rappresentano]).
 ty_verb(italian, represent, past, sg, pos, [rappresentò]).
@@ -23168,6 +23506,14 @@ ty_verb(italian, require, present, sg, pos, [richiede]).
 ty_verb(italian, require, present, pl, pos, [richiedono]).
 ty_verb(italian, require, past, sg, pos, [richiese]).
 ty_verb(italian, require, past, pl, pos, [richiesero]).
+ty_verb(italian, research, present, sg, pos, [ricerca]).
+ty_verb(italian, research, present, pl, pos, [ricercano]).
+ty_verb(italian, research, past, sg, pos, [ricercò]).
+ty_verb(italian, research, past, pl, pos, [ricercarono]).
+ty_verb(italian, reserve, present, sg, pos, [riserva]).
+ty_verb(italian, reserve, present, pl, pos, [riservano]).
+ty_verb(italian, reserve, past, sg, pos, [riservò]).
+ty_verb(italian, reserve, past, pl, pos, [riservarono]).
 ty_verb(italian, resolve, present, sg, pos, [risolve]).
 ty_verb(italian, resolve, present, pl, pos, [risolvono]).
 ty_verb(italian, resolve, past, sg, pos, [risolse]).
@@ -23232,6 +23578,10 @@ ty_verb(italian, reward, present, sg, pos, [premia]).
 ty_verb(italian, reward, present, pl, pos, [premiano]).
 ty_verb(italian, reward, past, sg, pos, [premiò]).
 ty_verb(italian, reward, past, pl, pos, [premiarono]).
+ty_verb(italian, reward, present, sg, pos, [ricompensa]).
+ty_verb(italian, reward, present, pl, pos, [ricompensano]).
+ty_verb(italian, reward, past, sg, pos, [ricompensò]).
+ty_verb(italian, reward, past, pl, pos, [ricompensarono]).
 ty_verb(italian, rule, present, sg, pos, [impera]).
 ty_verb(italian, rule, present, pl, pos, [imperano]).
 ty_verb(italian, rule, past, sg, pos, [imperò]).
@@ -23248,6 +23598,10 @@ ty_verb(italian, sail, present, sg, pos, [naviga]).
 ty_verb(italian, sail, present, pl, pos, [navigano]).
 ty_verb(italian, sail, past, sg, pos, [navigò]).
 ty_verb(italian, sail, past, pl, pos, [navigarono]).
+ty_verb(italian, salivate, present, sg, pos, [saliva]).
+ty_verb(italian, salivate, present, pl, pos, [salivano]).
+ty_verb(italian, salivate, past, sg, pos, [salivò]).
+ty_verb(italian, salivate, past, pl, pos, [salivarono]).
 ty_verb(italian, sanctify, present, sg, pos, [santifica]).
 ty_verb(italian, sanctify, present, pl, pos, [santificano]).
 ty_verb(italian, sanctify, past, sg, pos, [santificò]).
@@ -23268,6 +23622,10 @@ ty_verb(italian, save, present, sg, pos, [salva]).
 ty_verb(italian, save, present, pl, pos, [salvano]).
 ty_verb(italian, save, past, sg, pos, [salvò]).
 ty_verb(italian, save, past, pl, pos, [salvarono]).
+ty_verb(italian, saw, present, sg, pos, [serra]).
+ty_verb(italian, saw, present, pl, pos, [serrano]).
+ty_verb(italian, saw, past, sg, pos, [serrò]).
+ty_verb(italian, saw, past, pl, pos, [serrarono]).
 ty_verb(italian, say, present, sg, pos, [dice]).
 ty_verb(italian, say, present, pl, pos, [dicono]).
 ty_verb(italian, say, past, sg, pos, [disse]).
@@ -23304,6 +23662,10 @@ ty_verb(italian, sew, present, sg, pos, [cuce]).
 ty_verb(italian, sew, present, pl, pos, [cuciono]).
 ty_verb(italian, sew, past, sg, pos, [cucì]).
 ty_verb(italian, sew, past, pl, pos, [cucirono]).
+ty_verb(italian, shape, present, sg, pos, [plasma]).
+ty_verb(italian, shape, present, pl, pos, [plasmano]).
+ty_verb(italian, shape, past, sg, pos, [plasmò]).
+ty_verb(italian, shape, past, pl, pos, [plasmarono]).
 ty_verb(italian, share, present, sg, pos, [condivide]).
 ty_verb(italian, share, present, pl, pos, [condividono]).
 ty_verb(italian, share, past, sg, pos, [condivise]).
@@ -23320,10 +23682,18 @@ ty_verb(italian, slacken, present, sg, pos, [allenta]).
 ty_verb(italian, slacken, present, pl, pos, [allentano]).
 ty_verb(italian, slacken, past, sg, pos, [allentò]).
 ty_verb(italian, slacken, past, pl, pos, [allentarono]).
+ty_verb(italian, show, present, sg, pos, [mostra]).
+ty_verb(italian, show, present, pl, pos, [mostrano]).
+ty_verb(italian, show, past, sg, pos, [mostrò]).
+ty_verb(italian, show, past, pl, pos, [mostrarono]).
 ty_verb(italian, sigh, present, sg, pos, [sospira]).
 ty_verb(italian, sigh, present, pl, pos, [sospirano]).
 ty_verb(italian, sigh, past, sg, pos, [sospirò]).
 ty_verb(italian, sigh, past, pl, pos, [sospirarono]).
+ty_verb(italian, sign, present, sg, pos, [firma]).
+ty_verb(italian, sign, present, pl, pos, [firmano]).
+ty_verb(italian, sign, past, sg, pos, [firmò]).
+ty_verb(italian, sign, past, pl, pos, [firmarono]).
 ty_verb(italian, weld, present, sg, pos, [salda]).
 ty_verb(italian, weld, present, pl, pos, [saldano]).
 ty_verb(italian, weld, past, sg, pos, [saldò]).
@@ -23404,10 +23774,18 @@ ty_verb(italian, spread, present, sg, pos, [diffonde]).
 ty_verb(italian, spread, present, pl, pos, [diffondono]).
 ty_verb(italian, spread, past, sg, pos, [diffuse]).
 ty_verb(italian, spread, past, pl, pos, [diffusero]).
+ty_verb(italian, spy, present, sg, pos, [spia]).
+ty_verb(italian, spy, present, pl, pos, [spiano]).
+ty_verb(italian, spy, past, sg, pos, [spiò]).
+ty_verb(italian, spy, past, pl, pos, [spiarono]).
 ty_verb(italian, squeez, present, sg, pos, [spreme]).
 ty_verb(italian, squeez, present, pl, pos, [spremono]).
 ty_verb(italian, squeez, past, sg, pos, [sprense]).
 ty_verb(italian, squeez, past, pl, pos, [sprensero]).
+ty_verb(italian, stew, present, sg, pos, [stufa]).
+ty_verb(italian, stew, present, pl, pos, [stufano]).
+ty_verb(italian, stew, past, sg, pos, [stufò]).
+ty_verb(italian, stew, past, pl, pos, [stufarono]).
 ty_verb(italian, stabilise, present, sg, pos, [stabilizza]).
 ty_verb(italian, stabilise, present, pl, pos, [stabilizzano]).
 ty_verb(italian, stabilise, past, sg, pos, [stabilizzò]).
@@ -23484,6 +23862,10 @@ ty_verb(italian, suffer, present, sg, pos, [soffre]).
 ty_verb(italian, suffer, present, pl, pos, [soffrono]).
 ty_verb(italian, suffer, past, sg, pos, [soffrì]).
 ty_verb(italian, suffer, past, pl, pos, [soffrirono]).
+ty_verb(italian, suffocate, present, sg, pos, [asfissia]).
+ty_verb(italian, suffocate, present, pl, pos, [asfissiano]).
+ty_verb(italian, suffocate, past, sg, pos, [asfissiò]).
+ty_verb(italian, suffocate, past, pl, pos, [asfissiarono]).
 ty_verb(italian, summarise, present, sg, pos, [riassume]).
 ty_verb(italian, summarise, present, pl, pos, [riassumono]).
 ty_verb(italian, summarise, past, sg, pos, [riassunse]).
@@ -23540,10 +23922,18 @@ ty_verb(italian, systematise, present, sg, pos, [sistematizza]).
 ty_verb(italian, systematise, present, pl, pos, [sistematizzano]).
 ty_verb(italian, systematise, past, sg, pos, [sistematizzò]).
 ty_verb(italian, systematise, past, pl, pos, [sistematizzarono]).
+ty_verb(italian, take, present, sg, pos, [porta]).
+ty_verb(italian, take, present, pl, pos, [portano]).
+ty_verb(italian, take, past, sg, pos, [portò]).
+ty_verb(italian, take, past, pl, pos, [portarono]).
 ty_verb(italian, taste, present, sg, pos, [degusta]).
 ty_verb(italian, taste, present, pl, pos, [degustano]).
 ty_verb(italian, taste, past, sg, pos, [degustò]).
 ty_verb(italian, taste, past, pl, pos, [degustarono]).
+ty_verb(italian, tax, present, sg, pos, [tassa]).
+ty_verb(italian, tax, present, pl, pos, [tassano]).
+ty_verb(italian, tax, past, sg, pos, [tassò]).
+ty_verb(italian, tax, past, pl, pos, [tassarono]).
 ty_verb(italian, teach, present, sg, pos, [insegna]).
 ty_verb(italian, teach, present, pl, pos, [insegnano]).
 ty_verb(italian, teach, past, sg, pos, [insegnò]).
@@ -23560,10 +23950,18 @@ ty_verb(italian, tend, present, sg, pos, [stende]).
 ty_verb(italian, tend, present, pl, pos, [stendono]).
 ty_verb(italian, tend, past, sg, pos, [stese]).
 ty_verb(italian, tend, past, pl, pos, [stesero]).
+ty_verb(italian, test, present, sg, pos, [testa]).
+ty_verb(italian, test, present, pl, pos, [testano]).
+ty_verb(italian, test, past, sg, pos, [testò]).
+ty_verb(italian, test, past, pl, pos, [testarono]).
 ty_verb(italian, think, present, sg, pos, [opina]).
 ty_verb(italian, think, present, pl, pos, [opinano]).
 ty_verb(italian, think, past, sg, pos, [opinò]).
 ty_verb(italian, think, past, pl, pos, [opinarono]).
+ty_verb(italian, threaten, present, sg, pos, [minaccia]).
+ty_verb(italian, threaten, present, pl, pos, [minacciano]).
+ty_verb(italian, threaten, past, sg, pos, [minacciò]).
+ty_verb(italian, threaten, past, pl, pos, [minacciarono]).
 ty_verb(italian, throw, present, sg, pos, [getta]).
 ty_verb(italian, throw, present, pl, pos, [gettano]).
 ty_verb(italian, throw, past, sg, pos, [gettò]).
@@ -23584,6 +23982,10 @@ ty_verb(italian, tolerate, present, sg, pos, [tollera]).
 ty_verb(italian, tolerate, present, pl, pos, [tollerano]).
 ty_verb(italian, tolerate, past, sg, pos, [tollerò]).
 ty_verb(italian, tolerate, past, pl, pos, [tollerarono]).
+ty_verb(italian, torture, present, sg, pos, [tortura]).
+ty_verb(italian, torture, present, pl, pos, [torturano]).
+ty_verb(italian, torture, past, sg, pos, [torturò]).
+ty_verb(italian, torture, past, pl, pos, [torturarono]).
 ty_verb(italian, touch, present, sg, pos, [tocca]).
 ty_verb(italian, touch, present, pl, pos, [toccano]).
 ty_verb(italian, touch, past, sg, pos, [toccò]).
@@ -23592,6 +23994,10 @@ ty_verb(italian, toughen, present, sg, pos, [indure]).
 ty_verb(italian, toughen, present, pl, pos, [indurono]).
 ty_verb(italian, toughen, past, sg, pos, [indurì]).
 ty_verb(italian, toughen, past, pl, pos, [indurirono]).
+ty_verb(italian, tour, present, sg, pos, [visita]).
+ty_verb(italian, tour, present, pl, pos, [visitano]).
+ty_verb(italian, tour, past, sg, pos, [visitò]).
+ty_verb(italian, tour, past, pl, pos, [visitarono]).
 ty_verb(italian, tow, present, sg, pos, [rimorchia]).
 ty_verb(italian, tow, present, pl, pos, [rimorchiano]).
 ty_verb(italian, tow, past, sg, pos, [rimorchiò]).
@@ -23712,6 +24118,10 @@ ty_verb(italian, upset, present, sg, pos, [rovescia]).
 ty_verb(italian, upset, present, pl, pos, [rovesciano]).
 ty_verb(italian, upset, past, sg, pos, [rovesciò]).
 ty_verb(italian, upset, past, pl, pos, [rovesciarono]).
+ty_verb(italian, urinate, present, sg, pos, [orina]).
+ty_verb(italian, urinate, present, pl, pos, [orinano]).
+ty_verb(italian, urinate, past, sg, pos, [orinò]).
+ty_verb(italian, urinate, past, pl, pos, [orinarono]).
 ty_verb(italian, use, present, sg, pos, [usa]).
 ty_verb(italian, use, present, pl, pos, [usano]).
 ty_verb(italian, use, past, sg, pos, [usò]).
@@ -23748,6 +24158,10 @@ ty_verb(italian, vibrate, present, sg, pos, [vibra]).
 ty_verb(italian, vibrate, present, pl, pos, [vibrano]).
 ty_verb(italian, vibrate, past, sg, pos, [vibrò]).
 ty_verb(italian, vibrate, past, pl, pos, [vibrarono]).
+ty_verb(italian, violate, present, sg, pos, [viola]).
+ty_verb(italian, violate, present, pl, pos, [violano]).
+ty_verb(italian, violate, past, sg, pos, [violò]).
+ty_verb(italian, violate, past, pl, pos, [violarono]).
 ty_verb(italian, visit, present, sg, pos, [ricorre]).
 ty_verb(italian, visit, present, pl, pos, [ricorrono]).
 ty_verb(italian, visit, past, sg, pos, [ricorse]).
@@ -23800,6 +24214,10 @@ ty_verb(italian, weaken, present, sg, pos, [debilita]).
 ty_verb(italian, weaken, present, pl, pos, [debilitano]).
 ty_verb(italian, weaken, past, sg, pos, [debilitò]).
 ty_verb(italian, weaken, past, pl, pos, [debilitarono]).
+ty_verb(italian, weave, present, sg, pos, [trama]).
+ty_verb(italian, weave, present, pl, pos, [tramano]).
+ty_verb(italian, weave, past, sg, pos, [tramò]).
+ty_verb(italian, weave, past, pl, pos, [tramarono]).
 ty_verb(italian, whisper, present, sg, pos, [bisbiglia]).
 ty_verb(italian, whisper, present, pl, pos, [bisbigliano]).
 ty_verb(italian, whisper, past, sg, pos, [bisbigliò]).
@@ -24372,6 +24790,10 @@ ty_verb(italian, water, present, sg, pos, [annaffia]).
 ty_verb(italian, water, present, pl, pos, [annaffiano]).
 ty_verb(italian, water, past, sg, pos, [annaffiò]).
 ty_verb(italian, water, past, pl, pos, [annaffiarono]).
+ty_verb(italian, swing, present, sg, pos, [altalena]).
+ty_verb(italian, swing, present, pl, pos, [altalenano]).
+ty_verb(italian, swing, past, sg, pos, [altalenò]).
+ty_verb(italian, swing, past, pl, pos, [altalenarono]).
 ty_verb(italian, wrinkle, present, sg, pos, [aggrinze]).
 ty_verb(italian, wrinkle, present, pl, pos, [aggrinzono]).
 ty_verb(italian, wrinkle, past, sg, pos, [aggrinzì]).
@@ -24422,7 +24844,7 @@ ty_verb(italian, move, past, sg, pos, [mosse]).
 ty_verb(italian, move, past, pl, pos, [mossero]).
 ty_verb(italian, need, present, sg, pos, [bisogna]).
 ty_verb(italian, need, present, pl, pos, [bisognano]).
-ty_verb(italian, need, past, sg, pos, [bisognava]).
+ty_verb(italian, need, past, sg, pos, [bisognò]).
 ty_verb(italian, need, past, pl, pos, [bisognarono]).
 ty_verb(italian, enter, present, sg, pos, [entra]).
 ty_verb(italian, enter, present, pl, pos, [entrano]).
@@ -24432,6 +24854,10 @@ ty_verb(italian, pocket, present, sg, pos, [intasca]).
 ty_verb(italian, pocket, present, pl, pos, [intascano]).
 ty_verb(italian, pocket, past, sg, pos, [intascò]).
 ty_verb(italian, pocket, past, pl, pos, [intascarono]).
+ty_verb(italian, swindle, present, sg, pos, [truffa]).
+ty_verb(italian, swindle, present, pl, pos, [truffano]).
+ty_verb(italian, swindle, past, sg, pos, [truffò]).
+ty_verb(italian, swindle, past, pl, pos, [truffarono]).
 ty_verb(italian, inflate, present, sg, pos, [gonfia]).
 ty_verb(italian, inflate, present, pl, pos, [gonfiano]).
 ty_verb(italian, inflate, past, sg, pos, [gonfiò]).
@@ -24620,6 +25046,10 @@ ty_verb(italian, intend, present, sg, pos, [intende]).
 ty_verb(italian, intend, present, pl, pos, [intendono]).
 ty_verb(italian, intend, past, sg, pos, [intese]).
 ty_verb(italian, intend, past, pl, pos, [intesero]).
+ty_verb(italian, suspend, present, sg, pos, [squalifica]).
+ty_verb(italian, suspend, present, pl, pos, [squalificano]).
+ty_verb(italian, suspend, past, sg, pos, [squalificò]).
+ty_verb(italian, suspend, past, pl, pos, [squalificarono]).
 ty_verb(italian, administer, present, sg, pos, [somministra]).
 ty_verb(italian, administer, present, pl, pos, [somministrano]).
 ty_verb(italian, administer, past, sg, pos, [somministrò]).
@@ -24660,6 +25090,10 @@ ty_verb(italian, house, present, sg, pos, [ospita]).
 ty_verb(italian, house, present, pl, pos, [ospitano]).
 ty_verb(italian, house, past, sg, pos, [ospitò]).
 ty_verb(italian, house, past, pl, pos, [ospitarono]).
+ty_verb(italian, prove, present, sg, pos, [prova]).
+ty_verb(italian, prove, present, pl, pos, [provano]).
+ty_verb(italian, prove, past, sg, pos, [provò]).
+ty_verb(italian, prove, past, pl, pos, [provarono]).
 ty_verb(italian, nominate, present, sg, pos, [candida]).
 ty_verb(italian, nominate, present, pl, pos, [candidano]).
 ty_verb(italian, nominate, past, sg, pos, [candidò]).
@@ -24684,6 +25118,10 @@ ty_verb(italian, arrive, present, sg, pos, [giunge]).
 ty_verb(italian, arrive, present, pl, pos, [giungono]).
 ty_verb(italian, arrive, past, sg, pos, [giunse]).
 ty_verb(italian, arrive, past, pl, pos, [giunsero]).
+ty_verb(italian, ask, present, sg, pos, [domanda]).
+ty_verb(italian, ask, present, pl, pos, [domandano]).
+ty_verb(italian, ask, past, sg, pos, [domandò]).
+ty_verb(italian, ask, past, pl, pos, [domandarono]).
 ty_verb(italian, assign, present, sg, pos, [destina]).
 ty_verb(italian, assign, present, pl, pos, [destinano]).
 ty_verb(italian, assign, past, sg, pos, [destinò]).
@@ -24828,6 +25266,10 @@ ty_verb(italian, inhale, present, sg, pos, [aspira]).
 ty_verb(italian, inhale, present, pl, pos, [aspirano]).
 ty_verb(italian, inhale, past, sg, pos, [aspirò]).
 ty_verb(italian, inhale, past, pl, pos, [aspirarono]).
+ty_verb(italian, interview, present, sg, pos, [intervista]).
+ty_verb(italian, interview, present, pl, pos, [intervistano]).
+ty_verb(italian, interview, past, sg, pos, [intervistò]).
+ty_verb(italian, interview, past, pl, pos, [intervistarono]).
 ty_verb(italian, investigate, present, sg, pos, [indaga]).
 ty_verb(italian, investigate, present, pl, pos, [indagano]).
 ty_verb(italian, investigate, past, sg, pos, [indagò]).
@@ -24920,6 +25362,10 @@ ty_verb(italian, satisfy, present, sg, pos, [soddisfa]).
 ty_verb(italian, satisfy, present, pl, pos, [soddisfano]).
 ty_verb(italian, satisfy, past, sg, pos, [soddisfece]).
 ty_verb(italian, satisfy, past, pl, pos, [soddisfecero]).
+ty_verb(italian, sign, present, sg, pos, [sigla]).
+ty_verb(italian, sign, present, pl, pos, [siglano]).
+ty_verb(italian, sign, past, sg, pos, [siglò]).
+ty_verb(italian, sign, past, pl, pos, [siglarono]).
 ty_verb(italian, situate, present, sg, pos, [ubica]).
 ty_verb(italian, situate, present, pl, pos, [ubicano]).
 ty_verb(italian, situate, past, sg, pos, [ubicò]).
@@ -24944,6 +25390,10 @@ ty_verb(italian, validate, present, sg, pos, [valida]).
 ty_verb(italian, validate, present, pl, pos, [validano]).
 ty_verb(italian, validate, past, sg, pos, [validò]).
 ty_verb(italian, validate, past, pl, pos, [validarono]).
+ty_verb(italian, wash, present, sg, pos, [lava]).
+ty_verb(italian, wash, present, pl, pos, [lavano]).
+ty_verb(italian, wash, past, sg, pos, [lavò]).
+ty_verb(italian, wash, past, pl, pos, [lavarono]).
 ty_verb(italian, weaken, present, sg, pos, [indebolisce]).
 ty_verb(italian, weaken, present, pl, pos, [indeboliscono]).
 ty_verb(italian, weaken, past, sg, pos, [indebolì]).
@@ -24980,6 +25430,10 @@ ty_verb(italian, emphasiz, present, sg, pos, [sottolinea]).
 ty_verb(italian, emphasiz, present, pl, pos, [sottolineano]).
 ty_verb(italian, emphasiz, past, sg, pos, [sottolineò]).
 ty_verb(italian, emphasiz, past, pl, pos, [sottolinearono]).
+ty_verb(italian, practice, present, sg, pos, [pratica]).
+ty_verb(italian, practice, present, pl, pos, [praticano]).
+ty_verb(italian, practice, past, sg, pos, [praticò]).
+ty_verb(italian, practice, past, pl, pos, [praticarono]).
 ty_verb(italian, reinstate, present, sg, pos, [ristabilisce]).
 ty_verb(italian, reinstate, present, pl, pos, [ristabiliscono]).
 ty_verb(italian, reinstate, past, sg, pos, [ristabilì]).
@@ -25012,6 +25466,18 @@ ty_verb(italian, accredit, present, sg, pos, [accredita]).
 ty_verb(italian, accredit, present, pl, pos, [accreditano]).
 ty_verb(italian, accredit, past, sg, pos, [accreditò]).
 ty_verb(italian, accredit, past, pl, pos, [accreditarono]).
+ty_verb(italian, aim, present, sg, pos, [punta]).
+ty_verb(italian, aim, present, pl, pos, [puntano]).
+ty_verb(italian, aim, past, sg, pos, [puntò]).
+ty_verb(italian, aim, past, pl, pos, [puntarono]).
+ty_verb(italian, amend, present, sg, pos, [modifica]).
+ty_verb(italian, amend, present, pl, pos, [modificano]).
+ty_verb(italian, amend, past, sg, pos, [modificò]).
+ty_verb(italian, amend, past, pl, pos, [modificarono]).
+ty_verb(italian, appraise, present, sg, pos, [valuta]).
+ty_verb(italian, appraise, present, pl, pos, [valutano]).
+ty_verb(italian, appraise, past, sg, pos, [valutò]).
+ty_verb(italian, appraise, past, pl, pos, [valutarono]).
 ty_verb(italian, argue, present, sg, pos, [litiga]).
 ty_verb(italian, argue, present, pl, pos, [litigano]).
 ty_verb(italian, argue, past, sg, pos, [litigò]).
@@ -25020,6 +25486,10 @@ ty_verb(italian, assert, present, sg, pos, [afferma]).
 ty_verb(italian, assert, present, pl, pos, [affermano]).
 ty_verb(italian, assert, past, sg, pos, [affermò]).
 ty_verb(italian, assert, past, pl, pos, [affermarono]).
+ty_verb(italian, audit, present, sg, pos, [verifica]).
+ty_verb(italian, audit, present, pl, pos, [verificano]).
+ty_verb(italian, audit, past, sg, pos, [verificò]).
+ty_verb(italian, audit, past, pl, pos, [verificarono]).
 ty_verb(italian, sieve, present, sg, pos, [setaccia]).
 ty_verb(italian, sieve, present, pl, pos, [setacciano]).
 ty_verb(italian, sieve, past, sg, pos, [setacciò]).
@@ -25036,6 +25506,10 @@ ty_verb(italian, suffice, present, sg, pos, [basta]).
 ty_verb(italian, suffice, present, pl, pos, [bastano]).
 ty_verb(italian, suffice, past, sg, pos, [bastò]).
 ty_verb(italian, suffice, past, pl, pos, [bastarono]).
+ty_verb(italian, stripe, present, sg, pos, [sbarra]).
+ty_verb(italian, stripe, present, pl, pos, [sbarrano]).
+ty_verb(italian, stripe, past, sg, pos, [sbarrò]).
+ty_verb(italian, stripe, past, pl, pos, [sbarrarono]).
 ty_verb(italian, second, present, sg, pos, [appoggia]).
 ty_verb(italian, second, present, pl, pos, [appoggiano]).
 ty_verb(italian, second, past, sg, pos, [appoggiò]).
@@ -25064,6 +25538,18 @@ ty_verb(italian, bewitch, present, sg, pos, [incanta]).
 ty_verb(italian, bewitch, present, pl, pos, [incantano]).
 ty_verb(italian, bewitch, past, sg, pos, [incantò]).
 ty_verb(italian, bewitch, past, pl, pos, [incantarono]).
+ty_verb(italian, biass, present, sg, pos, [influenza]).
+ty_verb(italian, biass, present, pl, pos, [influenzano]).
+ty_verb(italian, biass, past, sg, pos, [influenzò]).
+ty_verb(italian, biass, past, pl, pos, [influenzarono]).
+ty_verb(italian, bind, present, sg, pos, [lega]).
+ty_verb(italian, bind, present, pl, pos, [legano]).
+ty_verb(italian, bind, past, sg, pos, [legò]).
+ty_verb(italian, bind, past, pl, pos, [legarono]).
+ty_verb(italian, book, present, sg, pos, [riserva]).
+ty_verb(italian, book, present, pl, pos, [riservano]).
+ty_verb(italian, book, past, sg, pos, [riservò]).
+ty_verb(italian, book, past, pl, pos, [riservarono]).
 ty_verb(italian, bother, present, sg, pos, [molesta]).
 ty_verb(italian, bother, present, pl, pos, [molestano]).
 ty_verb(italian, bother, past, sg, pos, [molestò]).
@@ -25080,6 +25566,10 @@ ty_verb(italian, care, present, sg, pos, [importa]).
 ty_verb(italian, care, present, pl, pos, [importano]).
 ty_verb(italian, care, past, sg, pos, [importò]).
 ty_verb(italian, care, past, pl, pos, [importarono]).
+ty_verb(italian, carry, present, sg, pos, [porta]).
+ty_verb(italian, carry, present, pl, pos, [portano]).
+ty_verb(italian, carry, past, sg, pos, [portò]).
+ty_verb(italian, carry, past, pl, pos, [portarono]).
 ty_verb(italian, cast, present, sg, pos, [lancia]).
 ty_verb(italian, cast, present, pl, pos, [lanciano]).
 ty_verb(italian, cast, past, sg, pos, [lanciò]).
@@ -25112,6 +25602,10 @@ ty_verb(italian, pipe, present, sg, pos, [trasmette]).
 ty_verb(italian, pipe, present, pl, pos, [trasmettono]).
 ty_verb(italian, pipe, past, sg, pos, [trasmise]).
 ty_verb(italian, pipe, past, pl, pos, [trasmisero]).
+ty_verb(italian, convict, present, sg, pos, [condanna]).
+ty_verb(italian, convict, present, pl, pos, [condannano]).
+ty_verb(italian, convict, past, sg, pos, [condannò]).
+ty_verb(italian, convict, past, pl, pos, [condannarono]).
 ty_verb(italian, cope, present, sg, pos, [sopporta]).
 ty_verb(italian, cope, present, pl, pos, [sopportano]).
 ty_verb(italian, cope, past, sg, pos, [sopportò]).
@@ -25132,6 +25626,10 @@ ty_verb(italian, deceive, present, sg, pos, [inganna]).
 ty_verb(italian, deceive, present, pl, pos, [ingannano]).
 ty_verb(italian, deceive, past, sg, pos, [ingannò]).
 ty_verb(italian, deceive, past, pl, pos, [ingannarono]).
+ty_verb(italian, defy, present, sg, pos, [sfida]).
+ty_verb(italian, defy, present, pl, pos, [sfidano]).
+ty_verb(italian, defy, past, sg, pos, [sfidò]).
+ty_verb(italian, defy, past, pl, pos, [sfidarono]).
 ty_verb(italian, demand, present, sg, pos, [reclama]).
 ty_verb(italian, demand, present, pl, pos, [reclamano]).
 ty_verb(italian, demand, past, sg, pos, [reclamò]).
@@ -25176,6 +25674,10 @@ ty_verb(italian, distress, present, sg, pos, [affligge]).
 ty_verb(italian, distress, present, pl, pos, [affliggono]).
 ty_verb(italian, distress, past, sg, pos, [afflisse]).
 ty_verb(italian, distress, past, pl, pos, [afflissero]).
+ty_verb(italian, dope, present, sg, pos, [droga]).
+ty_verb(italian, dope, present, pl, pos, [drogano]).
+ty_verb(italian, dope, past, sg, pos, [drogò]).
+ty_verb(italian, dope, past, pl, pos, [drogarono]).
 ty_verb(italian, drain, present, sg, pos, [cola]).
 ty_verb(italian, drain, present, pl, pos, [colano]).
 ty_verb(italian, drain, past, sg, pos, [colò]).
@@ -25224,6 +25726,10 @@ ty_verb(italian, enable, present, sg, pos, [autorizza]).
 ty_verb(italian, enable, present, pl, pos, [autorizzano]).
 ty_verb(italian, enable, past, sg, pos, [autorizzò]).
 ty_verb(italian, enable, past, pl, pos, [autorizzarono]).
+ty_verb(italian, encipher, present, sg, pos, [cifra]).
+ty_verb(italian, encipher, present, pl, pos, [cifrano]).
+ty_verb(italian, encipher, past, sg, pos, [cifrò]).
+ty_verb(italian, encipher, past, pl, pos, [cifrarono]).
 ty_verb(italian, encounter, present, sg, pos, [trova]).
 ty_verb(italian, encounter, present, pl, pos, [trovano]).
 ty_verb(italian, encounter, past, sg, pos, [trovò]).
@@ -25248,6 +25754,10 @@ ty_verb(italian, shun, present, sg, pos, [evita]).
 ty_verb(italian, shun, present, pl, pos, [evitano]).
 ty_verb(italian, shun, past, sg, pos, [evitò]).
 ty_verb(italian, shun, past, pl, pos, [evitarono]).
+ty_verb(italian, evaluate, present, sg, pos, [valuta]).
+ty_verb(italian, evaluate, present, pl, pos, [valutano]).
+ty_verb(italian, evaluate, past, sg, pos, [valutò]).
+ty_verb(italian, evaluate, past, pl, pos, [valutarono]).
 ty_verb(italian, excavate, present, sg, pos, [scava]).
 ty_verb(italian, excavate, present, pl, pos, [scavano]).
 ty_verb(italian, excavate, past, sg, pos, [scavò]).
@@ -25352,6 +25862,10 @@ ty_verb(italian, halt, present, sg, pos, [arresta]).
 ty_verb(italian, halt, present, pl, pos, [arrestano]).
 ty_verb(italian, halt, past, sg, pos, [arrestò]).
 ty_verb(italian, halt, past, pl, pos, [arrestarono]).
+ty_verb(italian, hand, present, sg, pos, [consegna]).
+ty_verb(italian, hand, present, pl, pos, [consegnano]).
+ty_verb(italian, hand, past, sg, pos, [consegnò]).
+ty_verb(italian, hand, past, pl, pos, [consegnarono]).
 ty_verb(italian, harm, present, sg, pos, [danneggia]).
 ty_verb(italian, harm, present, pl, pos, [danneggiano]).
 ty_verb(italian, harm, past, sg, pos, [danneggiò]).
@@ -25384,6 +25898,10 @@ ty_verb(italian, incline, present, sg, pos, [inclina]).
 ty_verb(italian, incline, present, pl, pos, [inclinano]).
 ty_verb(italian, incline, past, sg, pos, [inclinò]).
 ty_verb(italian, incline, past, pl, pos, [inclinarono]).
+ty_verb(italian, inflict, present, sg, pos, [causa]).
+ty_verb(italian, inflict, present, pl, pos, [causano]).
+ty_verb(italian, inflict, past, sg, pos, [causò]).
+ty_verb(italian, inflict, past, pl, pos, [causarono]).
 ty_verb(italian, inform, present, sg, pos, [informa]).
 ty_verb(italian, inform, present, pl, pos, [informano]).
 ty_verb(italian, inform, past, sg, pos, [informò]).
@@ -25404,6 +25922,10 @@ ty_verb(italian, inundate, present, sg, pos, [inonda]).
 ty_verb(italian, inundate, present, pl, pos, [inondano]).
 ty_verb(italian, inundate, past, sg, pos, [inondò]).
 ty_verb(italian, inundate, past, pl, pos, [inondarono]).
+ty_verb(italian, invoice, present, sg, pos, [fattura]).
+ty_verb(italian, invoice, present, pl, pos, [fatturano]).
+ty_verb(italian, invoice, past, sg, pos, [fatturò]).
+ty_verb(italian, invoice, past, pl, pos, [fatturarono]).
 ty_verb(italian, involve, present, sg, pos, [implica]).
 ty_verb(italian, involve, present, pl, pos, [implicano]).
 ty_verb(italian, involve, past, sg, pos, [implicò]).
@@ -25460,6 +25982,10 @@ ty_verb(italian, line, present, sg, pos, [allinea]).
 ty_verb(italian, line, present, pl, pos, [allineano]).
 ty_verb(italian, line, past, sg, pos, [allineò]).
 ty_verb(italian, line, past, pl, pos, [allinearono]).
+ty_verb(italian, load, present, sg, pos, [carica]).
+ty_verb(italian, load, present, pl, pos, [caricano]).
+ty_verb(italian, load, past, sg, pos, [caricò]).
+ty_verb(italian, load, past, pl, pos, [caricarono]).
 ty_verb(italian, lock, present, sg, pos, [chiude]).
 ty_verb(italian, lock, present, pl, pos, [chiudono]).
 ty_verb(italian, lock, past, sg, pos, [chiuse]).
@@ -25516,6 +26042,10 @@ ty_verb(italian, monitor, present, sg, pos, [controlla]).
 ty_verb(italian, monitor, present, pl, pos, [controllano]).
 ty_verb(italian, monitor, past, sg, pos, [controllò]).
 ty_verb(italian, monitor, past, pl, pos, [controllarono]).
+ty_verb(italian, name, present, sg, pos, [nomina]).
+ty_verb(italian, name, present, pl, pos, [nominano]).
+ty_verb(italian, name, past, sg, pos, [nominò]).
+ty_verb(italian, name, past, pl, pos, [nominarono]).
 ty_verb(italian, negotiate, present, sg, pos, [tratta]).
 ty_verb(italian, negotiate, present, pl, pos, [trattano]).
 ty_verb(italian, negotiate, past, sg, pos, [trattò]).
@@ -25604,6 +26134,10 @@ ty_verb(italian, raise, present, sg, pos, [alza]).
 ty_verb(italian, raise, present, pl, pos, [alzano]).
 ty_verb(italian, raise, past, sg, pos, [alzò]).
 ty_verb(italian, raise, past, pl, pos, [alzarono]).
+ty_verb(italian, rate, present, sg, pos, [stima]).
+ty_verb(italian, rate, present, pl, pos, [stimano]).
+ty_verb(italian, rate, past, sg, pos, [stimò]).
+ty_verb(italian, rate, past, pl, pos, [stimarono]).
 ty_verb(italian, recall, present, sg, pos, [ricorda]).
 ty_verb(italian, recall, present, pl, pos, [ricordano]).
 ty_verb(italian, recall, past, sg, pos, [ricordò]).
@@ -25668,6 +26202,10 @@ ty_verb(italian, run, present, sg, pos, [corre]).
 ty_verb(italian, run, present, pl, pos, [corrono]).
 ty_verb(italian, run, past, sg, pos, [corse]).
 ty_verb(italian, run, past, pl, pos, [corsero]).
+ty_verb(italian, score, present, sg, pos, [marca]).
+ty_verb(italian, score, present, pl, pos, [marcano]).
+ty_verb(italian, score, past, sg, pos, [marcò]).
+ty_verb(italian, score, past, pl, pos, [marcarono]).
 ty_verb(italian, scour, present, sg, pos, [registra]).
 ty_verb(italian, scour, present, pl, pos, [registrano]).
 ty_verb(italian, scour, past, sg, pos, [registrò]).
@@ -25776,6 +26314,10 @@ ty_verb(italian, struggle, present, sg, pos, [combatte]).
 ty_verb(italian, struggle, present, pl, pos, [combattono]).
 ty_verb(italian, struggle, past, sg, pos, [combatté]).
 ty_verb(italian, struggle, past, pl, pos, [combatterono]).
+ty_verb(italian, submit, present, sg, pos, [consegna]).
+ty_verb(italian, submit, present, pl, pos, [consegnano]).
+ty_verb(italian, submit, past, sg, pos, [consegnò]).
+ty_verb(italian, submit, past, pl, pos, [consegnarono]).
 ty_verb(italian, suit, present, sg, pos, [adatta]).
 ty_verb(italian, suit, present, pl, pos, [adattano]).
 ty_verb(italian, suit, past, sg, pos, [adattò]).
@@ -25800,6 +26342,10 @@ ty_verb(italian, tap, present, sg, pos, [tocca]).
 ty_verb(italian, tap, present, pl, pos, [toccano]).
 ty_verb(italian, tap, past, sg, pos, [toccò]).
 ty_verb(italian, tap, past, pl, pos, [toccarono]).
+ty_verb(italian, target, present, sg, pos, [punta]).
+ty_verb(italian, target, present, pl, pos, [puntano]).
+ty_verb(italian, target, past, sg, pos, [puntò]).
+ty_verb(italian, target, past, pl, pos, [puntarono]).
 ty_verb(italian, telephone, present, sg, pos, [telefona]).
 ty_verb(italian, telephone, present, pl, pos, [telefonano]).
 ty_verb(italian, telephone, past, sg, pos, [telefonò]).
@@ -25880,6 +26426,14 @@ ty_verb(italian, urge, present, sg, pos, [spinge]).
 ty_verb(italian, urge, present, pl, pos, [spingono]).
 ty_verb(italian, urge, past, sg, pos, [spinse]).
 ty_verb(italian, urge, past, pl, pos, [spinsero]).
+ty_verb(italian, value, present, sg, pos, [valuta]).
+ty_verb(italian, value, present, pl, pos, [valutano]).
+ty_verb(italian, value, past, sg, pos, [valutò]).
+ty_verb(italian, value, past, pl, pos, [valutarono]).
+ty_verb(italian, vary, present, sg, pos, [varia]).
+ty_verb(italian, vary, present, pl, pos, [variano]).
+ty_verb(italian, vary, past, sg, pos, [variò]).
+ty_verb(italian, vary, past, pl, pos, [variarono]).
 ty_verb(italian, view, present, sg, pos, [vede]).
 ty_verb(italian, view, present, pl, pos, [vedono]).
 ty_verb(italian, view, past, sg, pos, [vide]).

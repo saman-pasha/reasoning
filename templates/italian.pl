@@ -5,9 +5,7 @@
 ty_order(italian, clause, [s, v, o]).
 ty_order(italian, np, [d, n, a]).
 
-%% The nouns: Meaning, Gender, Animacy, Singular, Plural. Each masculine
-%% noun here takes `il': lo and gli (before s and a consonant, z, a
-%% vowel) are not in the template yet.
+%% The nouns: Meaning, Gender, Animacy, Singular, Plural.
 ty_noun(italian, dog, m, animate, cane, cani).
 ty_noun(italian, cat, m, animate, gatto, gatti).
 ty_noun(italian, boy, m, animate, ragazzo, ragazzi).
@@ -54,3 +52,15 @@ ty_article(italian, def, m, pl, i).
 ty_article(italian, def, f, pl, le).
 ty_article(italian, indef, m, sg, un).
 ty_article(italian, indef, f, sg, una).
+
+%% The articles by the sound of the next word: `lo', `gli' and `uno' before
+%% s and a consonant, z, gn, ps, pn, x and y; `l'' and `un'' before a vowel,
+%% written joined to it (`l'avvocato', `un'amica'); `gli' before a vowel.
+ty_letters(italian, vowel, [a, e, i, o, u, à, è, é, ì, ò, ù]).
+ty_letters(italian, consonant, [b, c, d, f, g, h, j, k, l, m, n, p, q, r, s, t, v, w, x, y, z]).
+ty_before(italian, il, [[s, consonant], [z], [g, n], [p, s], [p, n], [x], [y]], lo, space).
+ty_before(italian, il, [[vowel], [h]], 'l\'', joined).
+ty_before(italian, la, [[vowel], [h]], 'l\'', joined).
+ty_before(italian, i, [[vowel], [h], [s, consonant], [z], [g, n], [p, s], [p, n], [x], [y]], gli, space).
+ty_before(italian, un, [[s, consonant], [z], [g, n], [p, s], [p, n], [x], [y]], uno, space).
+ty_before(italian, una, [[vowel]], 'un\'', joined).

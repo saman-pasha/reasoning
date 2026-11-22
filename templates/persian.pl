@@ -2,15 +2,15 @@
 %% library(reasoning/typology). Facts only; typology_load(persian) reads it.
 
 %% The orders: subject, object, verb; the article, the noun, the
-%% adjectives. The ezafe between a noun and its adjective is not written
-%% after a consonant, and every noun here ends in one.
+%% adjectives.
 ty_order(persian, clause, [s, o, v]).
 ty_order(persian, np, [d, n, a]).
 
 %% The nouns: Meaning, Gender (Persian has none), Animacy, Singular, Plural.
 ty_noun(persian, dog, none, animate, 'سگ', 'سگ‌ها').
 ty_noun(persian, mouse, none, animate, 'موش', 'موش‌ها').
-%% No cat yet: `گربه' ends in a vowel, and its ezafe is written.
+ty_noun(persian, cat, none, animate, 'گربه', 'گربه‌ها').
+ty_noun(persian, house, none, inanimate, 'خانه', 'خانه‌ها').
 ty_noun(persian, boy, none, animate, 'پسر', 'پسرها').
 ty_noun(persian, girl, none, animate, 'دختر', 'دخترها').
 ty_noun(persian, book, none, inanimate, 'کتاب', 'کتاب‌ها').
@@ -45,3 +45,15 @@ ty_article(persian, indef, any, sg, 'یک').
 
 %% `را' after a definite object.
 ty_mark(persian, o, after, 'را', [[def]]).
+
+%% The ezafe: a noun before its adjective, and an adjective before another,
+%% is linked to it. After a consonant the link is a vowel not written;
+%% after a silent `ه' it is `‌ی' (`گربه‌ی سیاه'), after `ا' and `و' it is `ی'
+%% (`سگ‌های سیاه'). `سیاه' ends in a spoken h, so it is named, unchanged.
+ty_linked(persian, n, a, 'ه', 'ه‌ی').
+ty_linked(persian, n, a, 'ا', 'ای').
+ty_linked(persian, n, a, 'و', 'وی').
+ty_linked(persian, a, a, 'ه', 'ه‌ی').
+ty_linked(persian, a, a, 'سیاه', 'سیاه').
+ty_linked(persian, a, a, 'ا', 'ای').
+ty_linked(persian, a, a, 'و', 'وی').

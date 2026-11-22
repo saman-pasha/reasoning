@@ -82,6 +82,24 @@ main :-
     typology_translate(italian, spanish, I8, S8),
     must('and Italian into Spanish, the sentence it began as', S8,
          'Los médicos no comieron las manzanas verdes.'),
+
+    %% 9. FORMS CHOSEN BY SOUND. ty_before/5 writes a word in another form
+    %% when the next word begins with a pattern, the longest pattern of the
+    %% word's rows winning: `an apple' but `a university', Italian `lo',
+    %% `gli' and `l'' joined to its noun. ty_linked/5 writes a word in
+    %% another form when a word of a class follows it, by the word's own
+    %% ending: the Persian ezafe, written after a silent h. Reading keeps
+    %% only what the writer would write.
+    findall(T, ( member(L-IR9, [ english-clause(eat, present, pos, np(boy, sg, def, []), np(apple, sg, indef, [])),
+                                 italian-clause(see, present, pos, np(lawyer, sg, def, []), np(student, pl, def, [])),
+                                 persian-clause(see, present, pos, np(boy, sg, def, []), np(cat, sg, def, [black])) ]),
+                 typology_write(L, IR9, T) ), Ts9),
+    must('an apple, l''avvocato and gli studenti, the ezafe', Ts9,
+         [ 'The boy eats an apple.',
+           'L\'avvocato vede gli studenti.',
+           'پسر گربه‌ی سیاه را می‌بیند.' ]),
+    ( typology_read(italian, 'Il avvocato vede i studenti.', _) -> R9 = read ; R9 = refused ),
+    must('what the writer would not write is not read', R9, refused),
     format("~ndone~n", []).
 
 new_language :-

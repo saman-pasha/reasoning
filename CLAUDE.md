@@ -57,6 +57,17 @@ from its FILE** (`tyi_hand/1`, through library(stream)), never from the
 knowledge base: cocolog 3.65.0's consult of a file a second time, after a
 retractall/1 took its clauses, adds none of them back (the first cut
 retracted and consulted, and the test's import wrote a different file).
+**A form line belongs to the class of the entry it follows** (1.21.0,
+`tyi_form/4`): `fría' is an adjective (plural `frías') and a form of
+`freír' (plural `frían'), and the first cut took any plural of the
+spelling. **Phase 3 reads by writing**: `typology_read/3` takes each word
+back to the words it may stand for (`ty_unsound`), parses, and keeps a
+reading only where `ty_sound/3` writes the very words read -- so a new
+form rule is a ty_before/5 or ty_linked/5 row, never a reader of its own.
+**test/typology.pl runs each section ONCE** (`forall(..., once(S))`): as
+one conjunction, a red check made main backtrack into the sections and
+run the later ones again over a changed state, a loop and a wrong reading
+that looked like the engine's and were the test's.
 
 **Every reader has two modes, static and live** (1.16.0; reason.pl's header,
 STATIC AND LIVE, and live.pl's). What a session must keep:
