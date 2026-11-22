@@ -51,6 +51,9 @@
 %%     ty_adjective(L, Meaning, Gender, Number, Word)
 %%                                     a form for a gender and a number;
 %%                                     any for a form that does not change
+%%     ty_adjective_before(L, Meaning) the adjective stands before the noun
+%%                                     where the others stand after it
+%%                                     (French `le petit chien noir')
 %%     ty_verb(L, Meaning, Tense, Number, Polarity, Words)
 %%                                     Tense present or past, Number the
 %%                                     subject's person and number (sg and
@@ -127,7 +130,9 @@
 %%                                     how a question of Kind (yes_no, or
 %%                                     wh: with a question word) changes a
 %%                                     Level's order (clause, copula): Rule
-%%                                     unchanged, particle(Word, start|end),
+%%                                     unchanged, particle(Word, start|end)
+%%                                     (Word a word or a list: French
+%%                                     `est-ce que'),
 %%                                     front(all) (the verb before the
 %%                                     subject: `¿Ve el niño al perro?') or
 %%                                     front(first) (its first word only:
@@ -166,7 +171,8 @@
 %%                                     the default, or resumptive) or pp (in
 %%                                     an adposition phrase: stays, moves or
 %%                                     resumptive) or poss (a possessor:
-%%                                     moves or resumptive); the first row written,
+%%                                     moves, resumptive, or stays: French
+%%                                     `dont'); the first row written,
 %%                                     every row read (below: the gap)
 %%     ty_relative_pronoun(L, Words, Conditions)
 %%                                     the pronoun after a moved adposition
@@ -440,7 +446,7 @@
            ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
            ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
            ty_pro_drop/2, ty_clitic/2, ty_verb_person/6, ty_capital/3,
-           ty_answer_echo/3, ty_kind/2.
+           ty_answer_echo/3, ty_kind/2, ty_adjective_before/2.
 :- discontiguous ty_order/3, ty_noun/6, ty_adjective/5, ty_verb/6,
                  ty_article/5, ty_mark/5, ty_contraction/3, ty_negation/5,
                  ty_ending/4, ty_letters/3, ty_before/5, ty_linked/5, ty_copula/6,
@@ -453,7 +459,7 @@
                  ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
                  ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
                  ty_pro_drop/2, ty_clitic/2, ty_verb_person/6, ty_capital/3,
-                 ty_answer_echo/3.
+                 ty_answer_echo/3, ty_adjective_before/2.
 
 %% ---- the levels and the values a slot takes -----------------------------------
 
@@ -596,6 +602,7 @@ ty_row_shape('ty_clitic(L, Role).').
 ty_row_shape('ty_verb_person(L, Tense, Person, Base, From, To).').
 ty_row_shape('ty_capital(L, Word, Written).').
 ty_row_shape('ty_answer_echo(L, Rule, Word).').
+ty_row_shape('ty_adjective_before(L, Meaning).').
 
 %% ---- the check ----------------------------------------------------------------------
 
@@ -629,6 +636,7 @@ ty_missing(L, verb_form(V, T, N, P)) :-
     ty_values(tense, Ts), member(T, Ts),
     ty_values(number, Ns), member(N, Ns),
     ty_values(polarity, Ps), member(P, Ps),
+    \+ ( P == neg, ty_neg_placed(L) ),
     \+ ty_verb_form(L, V, T, N, P, _).
 ty_missing(L, adjective_form(A, G, N)) :-
     ty_adjective_meaning(L, A),
@@ -747,6 +755,9 @@ ty_missing(L, bad(ty_capital(L, W, C))) :-
 ty_missing(L, bad(ty_answer_echo(L, R, W))) :-
     ty_answer_echo(L, R, W),
     \+ ( memberchk(R, [aux, verb]), memberchk(W, [keep, drop]) ).
+ty_missing(L, bad(ty_adjective_before(L, A))) :-
+    ty_adjective_before(L, A),
+    \+ ty_adjective(L, A, _, _, _).
 ty_missing(L, clitic_pronoun) :-
     ty_clitic(L, o),
     \+ ty_pronoun(L, o, _, _).
@@ -771,7 +782,7 @@ ty_pron_condition(C) :-
     forall(member(X, C), memberchk(X, [1, 2, 3, sg, pl, m, f, n])).
 
 ty_question_rule(R) :- memberchk(R, [unchanged, front(all), front(first)]), !.
-ty_question_rule(particle(W, P)) :- atom(W), memberchk(P, [start, end]).
+ty_question_rule(particle(W, P)) :- ( atom(W) ; is_list(W), W \== [] ), memberchk(P, [start, end]).
 
 %% The clause and the noun phrase are every language's; the copula clause
 %% and the adposition phrase only a language that has their words.
@@ -1647,16 +1658,15 @@ ty_comp_wh_ok(L, Order, clause(_, _, _, _, O, _), How) :-
     ).
 
 %% Where a question word stands: at the front, the rule on the rest; in
-%% place; or right after the subject, nothing else moved (Italian `La
+%% place, the statement's order kept (French `La fille vit qui ?', Persian;
+%% 1.36.0: through 1.35.0 the rule moved the verb there too); or right after the subject, nothing else moved (Italian `La
 %% ragazza chi vide?', whom the girl saw, where `Chi vide la ragazza?'
 %% would be who saw her).
 ty_wh_order(front, L, Part, Level, Order0, [Part|Rest1], Rule, Moved) :-
     ty_question_at(L, wh, Level, Rule),
     once(select(Part, Order0, Rest)),
     ty_ask_rule(Rule, Level, Rest, Rest1, Moved).
-ty_wh_order(in_place, L, _, Level, Order0, Order, Rule, Moved) :-
-    ty_question_at(L, wh, Level, Rule),
-    ty_ask_rule(Rule, Level, Order0, Order, Moved).
+ty_wh_order(in_place, _, _, _, Order, Order, unchanged, no).
 ty_wh_order(after(s), _, Part, _, Order0, Order, unchanged, no) :-
     once(select(Part, Order0, Rest)),
     once(append(A, [s|B], Rest)),
@@ -1730,7 +1740,7 @@ ty_ask_part(p, L, copula(_, _, _, Pred), q(_, _, _, _, R), _) --> ty_predicate(L
 ty_ask_part(v, L, C, Q, _) --> ty_ask_verb(L, C, Q).
 ty_ask_part(c, L, C, Q, _) --> ty_ask_verb(L, C, Q).
 ty_ask_part(f, L, C, Q, _) --> ty_ask_first(L, C, Q).
-ty_ask_part(q, _, _, q(particle(W, _), _, _, _, _), _) --> [W].
+ty_ask_part(q, _, _, q(particle(W, _), _, _, _, _), _) --> { atom(W) -> Ws = [W] ; Ws = W }, ty_tokens(Ws).
 ty_ask_part(n(Ws), _, _, _, _) --> ty_tokens(Ws).
 ty_ask_part(oh(X), L, clause(V, _, _, _, O, _), _, How) --> ty_object_head(L, V, O, How, X).
 ty_ask_part(ot(X), L, _, _, _) --> ty_rel_tail(L, X).
@@ -2550,6 +2560,7 @@ ty_poss_marks(L, PWs, Words, N) :-
 %% possessor's clitic (Persian `سگش', clitic(Number)).
 ty_poss_gap(_, moves, _, _, _) --> [].
 ty_poss_gap(L, resumptive, NP, F, [_, N, _, _]) --> ty_np(L, NP, F, clitic(N)).
+ty_poss_gap(L, stays, NP, F, _) --> ty_np(L, NP, F).
 
 %% Reading (the slot unbound), a possessor is tried only in a sentence
 %% with a possessive word (`$ty_poss'), and a possessor's gap only in one
@@ -3086,6 +3097,7 @@ ty_poss_gap_place(L, NP, F, R, copula(T, P, S0, Pred), copula(T, P, S, Pred)) :-
 ty_poss_gap_place(L, NP, F, R, clause(V, T, P, S, O, Js0), clause(V, T, P, S, O, Js)) :-
     (   var(Js0) -> \+ nb_current('$ty_whose', f(no)) ; true ),
     ty_gap(L, poss, Rule),
+    Rule \== stays,
     R = r(poss(j(Prep, _), NP2, _), Rule),
     ty_gap_adjunct(Js0, Prep, of(gap, NP2), of(gap(NP, F, R), NP2), Js).
 
@@ -3108,7 +3120,7 @@ ty_ahead(S0, S0, S0).
 ty_gap_possible(L, r(Pl, Rule), Ahead) :-
     (   var(Ahead) -> true
     ;   Rule == gap -> true
-    ;   Pl = poss(_, _, _) -> ( Rule == moves -> once(( ty_relative_possessive(L, Ws, _), ty_all_ahead(Ws, Ahead) )) ; true )
+    ;   Pl = poss(_, _, _) -> ( ( Rule == moves ; Rule == stays ) -> once(( ty_relative_possessive(L, Ws, _), ty_all_ahead(Ws, Ahead) )) ; true )
     ;   Rule = moves(_) -> once(( ty_relative_pronoun(L, Ws, _), ty_all_ahead(Ws, Ahead) ))
     ;   Rule == resumptive -> once(( ty_resumptive(L, Ws, _), ty_all_ahead(Ws, Ahead) ))
     ;   Pl = c(_) -> once(( ty_complement(L, _, Ws), ty_all_ahead(Ws, Ahead) ))
@@ -3214,6 +3226,8 @@ ty_marker_words(L, r(Pl, Rule), Ws) :-
     ->  ty_moved_words(L, Pl, AWs),
         ty_relative_pronoun(L, PWs, _),
         append(AWs, PWs, Ws)
+    ;   Rule == stays, Pl = poss(_, _, _)
+    ->  ty_relative_possessive(L, Ws, _)
     ;   ty_gap_marker_role(Pl, Role),
         ty_relative(L, R, Ws, _),
         ty_fits(R, Role)
@@ -3238,7 +3252,7 @@ ty_rel_clause(L, C) --> { C = copula(_, _, _, _) }, ty_copula_clause(L, C).
 %% (English `who' for an animate head, `which' for a thing; Spanish `en la
 %% que' for a feminine one).
 ty_rel_marker_ok(L, r(Pl, Rule), _, Ws) :-
-    Pl = poss(_, _, F2), Rule == moves, !,
+    Pl = poss(_, _, F2), ( Rule == moves ; Rule == stays ), !,
     ty_relative_possessive(L, Ws, Alternatives),
     member(Need, Alternatives),
     ty_features_have(Need, F2), !.
@@ -3283,12 +3297,31 @@ ty_np(L, NP, Features) --> ty_np(L, NP, Features, none).
 %% A noun phrase of `which' is definite to its marks (Spanish `a qué
 %% perro', Persian `کدام سگ را').
 ty_np(L, NP, [FDef, N, Anim, G], Next) -->
-    { NP = np(_, N, Def, _),
-      ty_order_at(L, np, Order) },
-    ty_np_parts(Order, L, NP, got(Det, Noun, Adjs), Next),
+    { NP = np(M, N, Def, As),
+      ty_order_at(L, np, Order0),
+      ty_np_split(L, Order0, Order, As, Bs, As2) },
+    ty_np_parts(Order, L, np(M, N, Def, As2), got(Det, Noun, ARows, b(Bs, BRows)), Next),
     { Noun = noun(G, _),
+      ( var(As) -> append(Bs, As2, As) ; true ),
+      ( var(BRows) -> Adjs = ARows ; append(BRows, ARows, Adjs) ),
       ty_np_ok(L, NP, Det, Noun, Adjs, Anim, Next),
       ( Def == which -> FDef = def ; FDef = Def ) }.
+
+%% ty_adjective_before(L, Meaning): the adjective stands before the noun
+%% (French `le petit chien noir'): where the order has the adjectives after
+%% the noun, a part b before it holds those of the IR's first adjectives
+%% that are so, the longest run written first; reading, either place takes
+%% one (`le chien petit' is read), and the IR's list is b's and then a's.
+ty_np_split(L, Order0, Order, As, Bs, As2) :-
+    (   once(ty_adjective_before(L, _)),
+        append(X, [n|Y], Order0), memberchk(a, Y)
+    ->  append(X, [b, n|Y], Order),
+        ( var(As) -> true ; ty_before_run(L, As, Bs, As2) )
+    ;   Order = Order0, Bs = [], As2 = As
+    ).
+
+ty_before_run(L, [A|As], [A|Bs], Rest) :- ty_adjective_before(L, A), ty_before_run(L, As, Bs, Rest).
+ty_before_run(_, As, [], As).
 
 ty_np_parts([], _, _, _, _) --> [].
 ty_np_parts([P|Ps], L, NP, Got, Next) -->
@@ -3304,7 +3337,7 @@ ty_np_parts([P|Ps], L, NP, Got, Next) -->
 %% so, and read with the article too.
 %% A noun phrase whose Next is bare(Next1) takes no article (English
 %% `the boy's dog': the possessor stands for it).
-ty_np_part(d, _, L, np(_, _, Def, _), got(Det, _, _), Next) -->
+ty_np_part(d, _, L, np(_, _, Def, _), got(Det, _, _, _), Next) -->
     (   { ty_no_article(Next, L, Def) }
     ->  { Det = none }
     ;   ty_det(L, Det)
@@ -3313,14 +3346,17 @@ ty_np_part(d, _, L, np(_, _, Def, _), got(Det, _, _), Next) -->
 %% Indexed by Next, so a phrase with nothing after it (none) asks nothing.
 ty_no_article(bare(_), _, _).
 ty_no_article(r, L, Def) :- nonvar(Def), ty_relative_bare(L, Def).
-ty_np_part(n, Ps, L, np(M, N, _, As), got(_, noun(G, A), _), Next) -->
+ty_np_part(n, Ps, L, np(M, N, _, As), got(_, noun(G, A), _, _), Next) -->
     [W],
     { ty_linked_here(Ps, As, Next, C2, Linked),
       ty_linked_word(L, n, C2, Linked, W0, W, ty_noun_lookup(L, M, G, A, N, W0)) },
     ty_meant(L, noun(M), [W]).
-ty_np_part(a, Ps, L, np(_, _, _, As), got(_, _, Rows), Next) -->
+ty_np_part(a, Ps, L, np(_, _, _, As), got(_, _, Rows, _), Next) -->
     { ( Ps == [] -> End = Next ; End = none ) },
     ty_adjs(L, As, Rows, End).
+ty_np_part(b, _, L, _, got(_, _, _, b(Bs, Rows)), _) -->
+    ty_adjs(L, Bs, Rows, none),
+    { forall(member(A, Bs), ty_adjective_before(L, A)) }.
 
 %% Reading, the adjectives are not known yet when the noun is: each case is
 %% a branch.

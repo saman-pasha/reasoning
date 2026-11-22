@@ -12,10 +12,10 @@
 %% free language's rows asserted twice), a second report that was not
 %% true.
 main :-
-    forall(member(L, [english, spanish, italian, persian]), typology_load(L)),
+    forall(member(L, [english, spanish, italian, persian, french]), typology_load(L)),
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
-                      question_words, answers, pronouns, echoes,
+                      question_words, answers, pronouns, echoes, french,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -31,11 +31,11 @@ choices :-
     typology_choices(np, C2), length(C2, N2),
     check('the noun phrase has six orders', N2, 6),
     typology_languages(Ls),
-    check('the four templates are loaded', Ls, [english, italian, persian, spanish]).
+    check('the five templates are loaded', Ls, [english, french, italian, persian, spanish]).
 
 complete :-
-    section('the four templates are complete'),
-    forall(member(L, [english, spanish, italian, persian]),
+    section('the five templates are complete'),
+    forall(member(L, [english, spanish, italian, persian, french]),
            ( typology_check(L, M), atom_concat(L, ' lacks nothing', Label),
              check(Label, M, []) )).
 
@@ -400,8 +400,10 @@ repairs :-
     once(typology_repair(italian, 'Il avvocato vede i studenti.', _, [sound(_)], F2)),
     check('Italian: a form the next word chooses, il avvocato', F2, 'L\'avvocato vede gli studenti.'),
     once(typology_repair(spanish, 'El niño ve qué.', _, Fs3, F3)),
-    check('Spanish: a question word in a statement, three faults', F3-Fs3,
-          '¿Qué ve el niño?'-[mood(question), wh_place(in_place), question(wh, clause, unchanged)]),
+    %% 1.36.0: a question word in place keeps the statement's order, so the
+    %% rule's order is no third fault.
+    check('Spanish: a question word in a statement, two faults', F3-Fs3,
+          '¿Qué ve el niño?'-[mood(question), wh_place(in_place)]),
     findall(F4, typology_repair(english, 'Boy sees the dog.', _, _, F4), F4s),
     check('English: an article missing, two repairs of one fault', F4s,
           ['The boy sees the dog.', 'A boy sees the dog.']),
@@ -1098,6 +1100,68 @@ echoes :-
     findall(M, ( typology_check(tiny, Ms), member(M, Ms), M = bad(ty_answer_echo(_, _, _)) ), M10),
     retractall(ty_answer_echo(tiny, _, _)),
     check('typology_check/2: an echo''s rule and word', M10, [bad(ty_answer_echo(tiny, x, y))]).
+
+%% ---- French ------------------------------------------------------------------
+
+%% 1.36.0: a French template: elision, contractions, the negation around
+%% the verb, adjectives before the noun, `est-ce que', `dont', `qui' and
+%% `que', `lequel', clitics inside the negation.
+french :-
+    section('French: elision, ne ... pas, adjectives before the noun, est-ce que, dont'),
+    B = np(boy, sg, def, []), D = np(dog, sg, def, []), G = np(girl, sg, def, []),
+    H = np(house, sg, def, []),
+    Rows = [ clause(see, present, pos, B, np(dog, sg, def, [black]))-'Le garçon voit le chien noir.',
+             clause(see, present, neg, B, D)-'Le garçon ne voit pas le chien.',
+             clause(see, past, pos, np(girl, pl, def, [small]), np(book, pl, indef, [red]))-
+                 'Les petites filles virent des livres rouges.',
+             clause(sleep, present, pos, np(man, sg, def, []), none)-'L\'homme dort.',
+             clause(sleep, present, neg, D, none, [pp(in, H)])-'Le chien ne dort pas dans la maison.',
+             clause(think, present, pos, B, D)-'Le garçon pense au chien.',
+             clause(see, present, pos, G, pron(3, sg, m))-'La fille le voit.',
+             clause(see, present, neg, pron(1, sg, _), pron(3, sg, f))-'Je ne la vois pas.',
+             copula(present, neg, pron(2, pl, _), adj([small]))-'Vous n\'êtes pas petits.',
+             clause(sleep, present, pos, of(B, D), none)-'Le chien du garçon dort.',
+             clause(see, present, pos, G, of(pron(3, pl, _), np(house, pl, def, [])))-'La fille voit leurs maisons.',
+             clause(sleep, present, pos, rel(D, clause(see, present, pos, B, gap)), none)-
+                 'Le chien que le garçon voit dort.',
+             clause(sleep, present, pos, rel(D, clause(sleep, present, pos, gap, none)), none)-'Le chien qui dort dort.',
+             clause(sleep, present, pos, rel(B, clause(sleep, present, pos, of(gap, D), none)), none)-
+                 'Le garçon dont le chien dort dort.',
+             clause(sleep, present, pos, D, none,
+                    [pp(in, rel(H, clause(sleep, present, pos, np(cat, sg, def, []), none, [pp(in, gap)])))])-
+                 'Le chien dort dans la maison dans laquelle le chat dort.',
+             clause(sleep, present, pos, rel(G, clause(think, present, pos, B, gap)), none)-
+                 'La fille à qui le garçon pense dort.',
+             question(clause(see, present, pos, B, D))-'Est-ce que le garçon voit le chien?',
+             question(clause(see, present, pos, B, wh(what)))-'Que voit le garçon?',
+             question(clause(see, past, pos, G, wh(who)))-'La fille vit qui?',
+             question(copula(present, pos, D, wh(where)))-'Où est le chien?',
+             answer(pos, neg)-'Si.' ],
+    forall(member(IR-Want, Rows),
+           ( typology_write(french, IR, T),
+             atomic_list_concat(['French: ', Want], Label),
+             check(Label, T, Want),
+             ( typology_read(french, T, IR) -> R = read ; R = not_read ),
+             atomic_list_concat(['French: read back: ', Want], Label2),
+             check(Label2, R, read) )),
+    ( typology_read(french, 'Le chien petit dort.', clause(sleep, present, pos, np(dog, sg, def, [small]), none))
+    -> R1 = read ; R1 = refused ),
+    check('French: an adjective written before is read after too', R1, read),
+    forall(member(T, [ 'Le homme dort.', 'La garçon dort.', 'Le garçon voit pas le chien.',
+                       'Le garçon ne voit le chien.', 'Le garçon ne le voit le chien pas.' ]),
+           ( ( typology_read(french, T, _) -> R = read ; R = refused ),
+             atomic_list_concat(['French: ', T], Label),
+             check(Label, R, refused) )),
+    forall(member(From-T-Want, [ spanish-'No lo veo.'-'Je ne le vois pas.',
+                                 english-'The girl sees the boy whose dog sleeps.'-'La fille voit le garçon dont le chien dort.',
+                                 italian-'Il ragazzo pensa al cane.'-'Le garçon pense au chien.',
+                                 persian-'دختر خانه‌مان را می‌بیند.'-'La fille voit notre maison.',
+                                 english-'Who did the girl see?'-'La fille vit qui?' ]),
+           ( typology_translate(From, french, T, F),
+             atomic_list_concat([From, ' into French: ', Want], Label),
+             check(Label, F, Want) )),
+    typology_translate(french, spanish, 'La fille à qui le garçon pense dort.', S2),
+    check('French into Spanish: à qui is en la que', S2, 'La niña en la que el niño piensa duerme.').
 
 %% A reading of a verb's other sense (`view' for `see', `little' for
 %% `small'): the checks above want the first sense's.

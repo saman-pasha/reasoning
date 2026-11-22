@@ -105,7 +105,7 @@ Spanish and Italian apocope (`gran`). Then `cat` goes into Persian, and
 Italian nouns that start with `s` and a consonant, `z` or a vowel are
 right.
 
-## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.35.0)
+## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.36.0)
 
 Done:
 
@@ -415,11 +415,36 @@ Done:
    `What where did the boy see?`); the parts at the front are held to the
    IR at the end, so `Who sees what?` is no reading there.
 
+18. **A French template** (1.36.0). `templates/french.pl`, a hand
+   template (the corpus has no French vocabulary): nine nouns, four
+   adjectives, four verbs of every person (the past the passé simple, as
+   Italian's passato remoto), the copula, the articles (`des` the plural
+   indefinite), elision (`ty_before/5`: `l'homme`, `n'est`, `qu'`, `d'`),
+   the contractions `au`, `aux`, `du`, `des`, `auquel`, `duquel`, the
+   negation around the verb (`ty_negation_place/3`: `ne ... pas`, a clitic
+   inside it: `Je ne la vois pas.`), `qui` and `que` by the gap's role,
+   `à qui` and `dans laquelle`, the possessive pronouns, `si`. The grammar
+   took three slots any template may use: `ty_adjective_before(L,
+   Meaning)`, the adjectives that stand before the noun where the others
+   stand after it (`les petites filles`; read after it too); a question
+   particle of several words (`particle(['est-ce', que], start)`); and
+   `ty_gap(L, poss, stays)`, a possessor's gap whose possessed stays where
+   it stands with its article, the marker a `ty_relative_possessive/3` row
+   (`le garçon dont le chien dort`). And one rule changed for every
+   language: a question word in place keeps the statement's order (`La
+   fille vit qui?`, whom the girl saw, where `Qui vit la fille?` is who
+   saw her); through 1.35.0 the question's rule moved the verb there too,
+   which only French's rows showed (Persian's rule is unchanged anyway). A
+   template whose negation has a place needs no negative verb form
+   (`typology_check/2`). Not yet in French: `quoi` after an adposition
+   (`À quoi pense le garçon?`), inversion with a pronoun (`Le garçon
+   voit-il le chien?`), the passé composé, `qu'est-ce que`.
+
 Not yet:
 
-3. A German or a French template:
-   the place of the negation is there for them, and German's `nicht`
-   before a predicate (`ist nicht groß`) and its verb second are not.
+3. A German template: the place of the negation is there for it, and
+   German's `nicht` before a predicate (`ist nicht groß`), its verb second
+   and its cases on the article are not.
 5. A pronoun that refers back to a noun of the text (which `his` is the
    boy's), which the IR does not hold.
 6. The topics the class lines do not give: the hand table's thirty rows,

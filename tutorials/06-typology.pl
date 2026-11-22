@@ -113,6 +113,7 @@ main :-
     more_possessors,
     pronouns,
     echoes,
+    french,
     format("~ndone~n", []).
 
 
@@ -386,6 +387,27 @@ echoes :-
     IR3 = question(clause(see, past, pos, np(boy, sg, def, []), wh(what), [wh(where)])),
     typology_write(front_all, IR3, F3),
     must('every question word at the front', F3, 'What where did the boy see?').
+
+
+%% 23. A FIFTH LANGUAGE, FRENCH, FROM ITS TEMPLATE ALONE. The grammar did
+%% not change for it but by three slots any language may use: the
+%% adjectives that stand before the noun (ty_adjective_before/2: `le petit
+%% chien'), a particle of two words (`est-ce que') and `dont', a
+%% possessor's gap whose possessed stays (ty_gap(french, poss, stays)).
+%% The negation is two words around the verb (ty_negation_place/3), and an
+%% object clitic stands inside them.
+french :-
+    typology_load(french),
+    typology_check(french, M1),
+    must('the French template lacks nothing', M1, []),
+    typology_translate(spanish, french, 'No lo veo.', F2),
+    must('I do not see him', F2, 'Je ne le vois pas.'),
+    typology_translate(english, french, 'The small girls saw the black dog.', F3),
+    must('an adjective before the noun, an adjective after it', F3, 'Les petites filles virent le chien noir.'),
+    typology_translate(english, french, 'The girl sees the boy whose dog sleeps.', F4),
+    must('dont', F4, 'La fille voit le garçon dont le chien dort.'),
+    typology_translate(french, english, 'Est-ce que l\'homme dort?', E5),
+    must('est-ce que, and l\'homme, into English', E5, 'Does the man sleep?').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
