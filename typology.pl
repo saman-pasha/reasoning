@@ -159,7 +159,8 @@
 %%                                     written at Place o (an object: gap,
 %%                                     the default, or resumptive) or pp (in
 %%                                     an adposition phrase: stays, moves or
-%%                                     resumptive); the first row written,
+%%                                     resumptive) or poss (a possessor:
+%%                                     moves or resumptive); the first row written,
 %%                                     every row read (below: the gap)
 %%     ty_relative_pronoun(L, Words, Conditions)
 %%                                     the pronoun after a moved adposition
@@ -180,6 +181,16 @@
 %%                                     article before its relative clause
 %%                                     (Persian `حیوانی که', not `یک حیوانی
 %%                                     که')
+%%     ty_possessive(L, Words, Article) a possessor's word (the poss level's
+%%                                     p: Spanish `de', Italian `di', none),
+%%                                     and whether the possessed keeps its
+%%                                     article (keep) or loses it to the
+%%                                     possessor (drop: English `the boy's
+%%                                     dog')
+%%     ty_relative_possessive(L, Words, Conditions)
+%%                                     the pronoun of a moved possessor gap
+%%                                     (`whose', `cuyo', `il cui'), its
+%%                                     Conditions the possessed's features
 %%     ty_complement(L, Verb, Words)   the object of Verb is an adposition
 %%                                     phrase with the adposition Words, in
 %%                                     the pp level's order and with no role
@@ -244,6 +255,10 @@
 %%                                     subject or object, or the noun
 %%                                     phrase of an adposition phrase:
 %%                                     pp(in, gap))
+%%     of(Possessor, NP)               a noun phrase of a possessor, where a
+%%                                     noun phrase stands (`the boy's dog'):
+%%                                     NP an np/4, Possessor an np/4, or in a
+%%                                     relative clause `gap' (`whose dog')
 %%
 %% WHAT IS PUBLIC:
 %%
@@ -359,7 +374,7 @@
            ty_role_animacy/3, ty_relative/4, ty_complement/3, ty_complement_wh/2, ty_negation_place/3,
            ty_answer/3, ty_answer_system/2, ty_answer_mark/2, ty_gap/3,
            ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
-           ty_relative_bare/2.
+           ty_relative_bare/2, ty_possessive/3, ty_relative_possessive/3.
 :- discontiguous ty_order/3, ty_noun/6, ty_adjective/5, ty_verb/6,
                  ty_article/5, ty_mark/5, ty_contraction/3, ty_negation/5,
                  ty_ending/4, ty_letters/3, ty_before/5, ty_linked/5, ty_copula/6,
@@ -369,7 +384,7 @@
                  ty_complement_wh/2, ty_negation_place/3, ty_answer/3,
                  ty_answer_system/2, ty_answer_mark/2, ty_gap/3,
                  ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
-                 ty_relative_bare/2.
+                 ty_relative_bare/2, ty_possessive/3, ty_relative_possessive/3.
 
 %% ---- the levels and the values a slot takes -----------------------------------
 
@@ -378,6 +393,7 @@ ty_level(np, [d, a, n]).
 ty_level(copula, [s, c, p]).
 ty_level(pp, [p, x]).
 ty_level(rel, [h, m, c]).
+ty_level(poss, [h, p, g]).
 
 ty_values(tense, [present, past]).
 ty_values(number, [sg, pl]).
@@ -394,7 +410,7 @@ ty_values(wh_place, [front, in_place, after(s)]).
 ty_values(wh, [who, what, where, when]).
 ty_values(relative_role, [s, o, any]).
 ty_values(complement_wh, [moves, stays]).
-ty_values(gap_place, [o, pp]).
+ty_values(gap_place, [o, pp, poss]).
 ty_values(gap, [gap, stays, moves, resumptive]).
 ty_values(relative_after, [s, o, p]).
 ty_values(answer, [yes, no, contradict]).
@@ -491,6 +507,8 @@ ty_row_shape('ty_relative_pronoun(L, Words, Conditions).').
 ty_row_shape('ty_resumptive(L, Words, Conditions).').
 ty_row_shape('ty_relative_after(L, Part, Rank).').
 ty_row_shape('ty_relative_bare(L, Definiteness).').
+ty_row_shape('ty_possessive(L, Words, Article).').
+ty_row_shape('ty_relative_possessive(L, Words, Conditions).').
 
 %% ---- the check ----------------------------------------------------------------------
 
@@ -609,6 +627,15 @@ ty_missing(L, bad(ty_resumptive(L, Ws, Cs))) :-
 ty_missing(L, bad(ty_relative_after(L, P, R))) :-
     ty_relative_after(L, P, R),
     \+ ( ty_values(relative_after, Ps), memberchk(P, Ps), memberchk(R, [first, second]) ).
+ty_missing(L, bad(ty_possessive(L, Ws, A))) :-
+    ty_possessive(L, Ws, A),
+    \+ ( is_list(Ws), memberchk(A, [keep, drop]) ).
+ty_missing(L, bad(ty_relative_possessive(L, Ws, Cs))) :-
+    ty_relative_possessive(L, Ws, Cs),
+    \+ ( is_list(Ws), Ws \== [], is_list(Cs) ).
+ty_missing(L, relative_possessive) :-
+    ty_gap(L, poss, moves),
+    \+ ty_relative_possessive(L, _, _).
 ty_missing(L, relative_pronoun) :-
     ty_gap(L, pp, moves),
     \+ ty_relative_pronoun(L, _, _).
@@ -631,6 +658,7 @@ ty_level_used(_, np).
 ty_level_used(L, copula) :- once(ty_copula(L, _, _, _, _, _)).
 ty_level_used(L, pp) :- once(ty_adposition(L, _, _)).
 ty_level_used(L, rel) :- once(ty_relative(L, _, _, _)).
+ty_level_used(L, poss) :- once(ty_possessive(L, _, _)).
 
 ty_verb_meaning(L, V) :- setof(V0, T^N^P^W^ty_verb(L, V0, T, N, P, W), Vs), member(V, Vs).
 ty_adjective_meaning(L, A) :- setof(A0, G^N^W^ty_adjective(L, A0, G, N, W), As), member(A, As).
@@ -671,6 +699,7 @@ ty_read_bases(L, Surface, Topics, Mood, IR0, C) :-
     ty_new_context(Bases, Topics, Context),
     b_setval('$ty_context', Context),
     b_setval('$ty_rel_open', f([])),
+    ty_poss_flag(L, Bases),
     ty_mood(Mood, L, IR0, C, Goal),
     phrase(Goal, Bases).
 
@@ -716,6 +745,7 @@ ty_reads_as(Mood, L, IR0, Tokens, Topics) :-
     ty_new_context(Tokens, Topics, Context),
     \+ \+ ( b_setval('$ty_context', Context),
            b_setval('$ty_rel_open', f([])),
+           ty_poss_flag(L, Tokens),
            aggregate_all(min(C), ( ty_mood(Mood, L, IR0, C, G), phrase(G, Tokens) ), C1),
            \+ ( C1 > 0,
                 ty_ir_senses(IR0, Ms),
@@ -763,6 +793,7 @@ ty_ir_map(D, copula(T, P, S, Pred), copula(T, P, S1, Pred1)) :- !,
     ty_ir_map(D, S, S1), ty_ir_map(D, Pred, Pred1).
 ty_ir_map(D, rel(NP, C), rel(NP1, C1)) :- !,
     ty_ir_map(D, NP, NP1), ty_ir_map(D, C, C1).
+ty_ir_map(D, of(G, NP), of(G1, NP1)) :- !, ty_ir_map(D, G, G1), ty_ir_map(D, NP, NP1).
 ty_ir_map(D, pp(M, NP), pp(M, NP1)) :- !, ty_ir_map(D, NP, NP1).
 ty_ir_map(D, answer(P, A, C), answer(P, A, C1)) :- !, ty_ir_map(D, C, C1).
 ty_ir_map(_, X, X).
@@ -827,6 +858,10 @@ ty_ir_meaning(pp(_, NP), M) :- ty_ir_meaning(NP, M).
 ty_ir_meaning(rel(NP, C), M) :-
     (   ty_ir_meaning(NP, M)
     ;   ty_ir_meaning(C, M)
+    ).
+ty_ir_meaning(of(G, NP), M) :-
+    (   ty_ir_meaning(G, M)
+    ;   ty_ir_meaning(NP, M)
     ).
 ty_ir_meaning(adv(M), M).
 
@@ -1220,6 +1255,8 @@ ty_known_base(L, B) :-
     ;   ty_relative(L, _, Ws, _), memberchk(B, Ws)
     ;   ty_relative_pronoun(L, Ws, _), memberchk(B, Ws)
     ;   ty_resumptive(L, Ws, _), memberchk(B, Ws)
+    ;   ty_possessive(L, Ws, _), memberchk(B, Ws)
+    ;   ty_relative_possessive(L, Ws, _), memberchk(B, Ws)
     ;   ty_complement(L, _, Ws), memberchk(B, Ws)
     ;   ty_negation_place(L, Ws, _), memberchk(B, Ws)
     ;   ty_answer(L, _, Ws), ( memberchk(B, Ws) ; last(Ws, W), ty_answer_comma(L, M), atom_concat(W, M, B) )
@@ -1563,6 +1600,7 @@ ty_subject_number(np(_, N, _, _), N).
 ty_subject_number(W, sg) :- nonvar(W), W = wh(_).
 ty_subject_number(G, N) :- nonvar(G), G = gap(H, _, _), ty_subject_number(H, N).
 ty_subject_number(rel(np(_, N, _, _), _), N).
+ty_subject_number(of(_, np(_, N, _, _)), N).
 
 %% A verb the rule moved, in a language with question forms, is the
 %% question form if positive (`does see') and its negative if negative
@@ -1748,6 +1786,7 @@ ty_np_animacy(_, wh(M), A) :-
     ty_animacy_fits(A, A1).
 ty_np_animacy(L, rel(NP, _), A) :- NP = np(_, _, _, _), ty_np_animacy(L, NP, A).
 ty_np_animacy(L, gap(NP, _, _), A) :- ty_np_animacy(L, NP, A).
+ty_np_animacy(L, of(_, NP), A) :- NP = np(_, _, _, _), ty_np_animacy(L, NP, A).
 
 %% A role asks an animacy, and a noun of it fits, or one the vocabulary
 %% says nothing of; a person is animate.
@@ -1936,6 +1975,96 @@ ty_pp_part(x, L, _, NP) --> ty_np_phrase(L, NP, _).
 %% predicate): a noun phrase, or a noun phrase with a relative clause.
 ty_np_phrase(L, NP, F) --> { ty_np_slot(NP) }, ty_np(L, NP, F).
 ty_np_phrase(L, R, F) --> { ty_rel_slot(R) }, ty_rel(L, none, R, F).
+ty_np_phrase(L, P, F) --> { ty_poss_slot(P) }, ty_poss(L, P, F).
+
+
+%% ---- the possessor ------------------------------------------------------------------
+%%
+%% A noun phrase of a possessor is of(Possessor, NP) where a noun phrase
+%% stands, a level of its own, poss: the possessed noun phrase (h), the
+%% possessive word (p, ty_possessive(L, Words, Article)) and the possessor
+%% (g), in the order the template keeps: English `the boy's dog' is g p h,
+%% the possessor's last word linked to the head (ty_linked(english, n, h,
+%% '', '\'s')) and the head with no article (Article drop); Spanish `el
+%% perro del niño' and Italian `il cane del ragazzo' h p g with `de' and
+%% `di'; Persian `سگ پسر' h g, the head's last word taking the ezafe before
+%% the possessor (ty_linked(persian, n, g, ...)). Its features are the
+%% possessed's, so the verb agrees with the dog and a mark asks the dog.
+%% Reading, a possessor is tried only where its word is among the words
+%% left, or a word in the linked form a possessed head asks.
+ty_poss(L, P, F) -->
+    { nonvar(P), P = of(G, NP), nonvar(G), G = gap(_, HF, r(poss(_, NP, F), Rule)) },
+    ty_poss_gap(L, Rule, NP, F, HF).
+ty_poss(L, of(G, NP), F) -->
+    ty_ahead(Ahead),
+    { ty_possessive(L, PWs, Art),
+      ty_poss_possible(L, PWs, Ahead),
+      ty_order_at(L, poss, Order0),
+      ( PWs == [] -> exclude(==(p), Order0, Order) ; Order = Order0 ) },
+    ty_poss_parts(Order, L, G, NP, F, PWs, Art).
+
+ty_poss_parts([], _, _, _, _, _, _) --> [].
+ty_poss_parts([P|Ps], L, G, NP, F, PWs, Art) -->
+    ty_poss_part(P, Ps, L, G, NP, F, PWs, Art),
+    ty_poss_parts(Ps, L, G, NP, F, PWs, Art).
+
+ty_poss_part(h, Ps, L, _, NP, F, _, Art) -->
+    { ty_poss_next(Ps, g, N0),
+      ( Art == drop -> Next = bare(N0) ; Next = N0 ) },
+    ty_np(L, NP, F, Next).
+ty_poss_part(p, _, _, _, _, _, PWs, _) --> ty_tokens(PWs).
+ty_poss_part(g, Ps, L, G, _, _, _, _) -->
+    { ty_poss_next(Ps, h, Next) },
+    ty_np(L, G, _, Next).
+
+%% The class a part's last word links to: the next part's, where that part
+%% is the one named.
+ty_poss_next([X|_], X, X) :- !.
+ty_poss_next(_, _, none).
+
+%% The sentence is asked once, where its parse starts (`$ty_poss'): a
+%% sentence with no possessive word tries no possessor at any noun phrase.
+ty_poss_possible(L, PWs, Ahead) :-
+    (   var(Ahead) -> true
+    ;   nb_current('$ty_poss', f(no)) -> fail
+    ;   ty_poss_words_in(L, PWs, Ahead)
+    ).
+
+ty_poss_words_in(L, PWs, Words) :-
+    (   PWs \== [] -> ty_all_ahead(PWs, Words)
+    ;   ty_linked(L, _, h, _, _)
+    ->  once(( ty_linked(L, _, h, _, To), To \== '', member(W, Words),
+               atom(W), atom_concat(_, To, W) ))
+    ;   true
+    ).
+
+ty_poss_flag(L, Words) :-
+    (   ty_possessive(L, PWs, _), ty_poss_words_in(L, PWs, Words) -> F = yes ; F = no ),
+    b_setval('$ty_poss', f(F)),
+    (   ty_gap(L, poss, resumptive) -> W = yes
+    ;   ty_relative_possessive(L, Ws, _), ty_all_ahead(Ws, Words) -> W = yes
+    ;   W = no
+    ),
+    b_setval('$ty_whose', f(W)).
+
+%% A possessor that is a relative clause's gap (`whose'): the rule
+%% ty_gap(L, poss, Rule) says. Moved, the possessed went into the marker
+%% with a possessive relative pronoun (ty_relative_possessive/3: English
+%% `whose dog', Spanish `cuyo perro', Italian `il cui cane') and nothing is
+%% written here; resumptive, the possessed stays and its last word takes the
+%% possessor's clitic (Persian `سگش', clitic(Number)).
+ty_poss_gap(_, moves, _, _, _) --> [].
+ty_poss_gap(L, resumptive, NP, F, [_, N, _, _]) --> ty_np(L, NP, F, clitic(N)).
+
+%% Reading (the slot unbound), a possessor is tried only in a sentence
+%% with a possessive word (`$ty_poss'), and a possessor's gap only in one
+%% with a possessive relative word or a clitic rule (`$ty_whose').
+ty_poss_slot(X) :- var(X), !, \+ nb_current('$ty_poss', f(no)), X = of(_, _).
+ty_poss_slot(of(_, _)).
+
+%% A possessed phrase that moved into its relative clause's marker.
+ty_poss_moved(P) :-
+    nonvar(P), P = of(G, _), nonvar(G), G = gap(_, _, r(poss(_, _, _), Rule)), Rule == moves.
 
 %% Words a table gives: reading, Min to Max words are taken and then
 %% looked up (Lookup names Ws), so a table is asked by the words read;
@@ -1980,6 +2109,7 @@ ty_predicate_head(L, rel(NP, Cl), x(NP, F, Cl)) --> ty_np(L, NP, F, r).
 ty_predicate_kind(adj(_), adj).
 ty_predicate_kind(np(_, _, _, _), np).
 ty_predicate_kind(rel(_, _), np).
+ty_predicate_kind(of(_, _), np).
 ty_predicate_kind(pp(_, _), pp).
 ty_predicate_kind(W, K) :- nonvar(W), W = wh(M), ty_wh_kind(M, K).
 
@@ -2011,6 +2141,7 @@ ty_copula_lookup(L, K, K1, T, N, P, Ws) :-
 ty_predicate(L, adj(As), Rows) --> { As = [_|_] }, ty_adjs(L, As, Rows).
 ty_predicate(L, np(M, N, D, A), []) --> ty_np(L, np(M, N, D, A), _).
 ty_predicate(L, R, []) --> { ty_rel_slot(R) }, ty_rel(L, none, R, _).
+ty_predicate(L, P, []) --> { ty_poss_slot(P) }, ty_poss(L, P, _).
 ty_predicate(L, pp(Prep, NP), []) --> ty_pp(L, Prep, NP).
 ty_predicate(L, W, []) --> { nonvar(W), W = wh(M) }, ty_wh_words(L, M).
 
@@ -2092,6 +2223,18 @@ ty_role(L, Role, G, [_, N, A, Gen]) -->
 
 %% A noun phrase with a relative clause.
 ty_role(L, Role, R, Features) --> { ty_rel_slot(R) }, ty_rel(L, Role, R, Features).
+
+%% A noun phrase of a possessor between its role's marks; moved into a
+%% relative clause's marker (`whose dog'), nothing.
+ty_role(L, Role, P, Features) -->
+    { ty_poss_slot(P), \+ ty_poss_moved(P) },
+    ty_mark_slot(L, Role, before, Before),
+    ty_poss(L, P, Features),
+    ty_mark_slot(L, Role, after, After),
+    { ty_marks_ok(L, Role, before, Features, Before),
+      ty_marks_ok(L, Role, after, Features, After) }.
+ty_role(_, _, P, Features) -->
+    { ty_poss_moved(P), P = of(gap(_, _, r(poss(_, _, Features), _)), _) }.
 
 %% A noun phrase between the marks its role asks for. Next is r when a
 %% relative clause follows it (its last word may take a linked form).
@@ -2214,6 +2357,7 @@ ty_rel_open(L, S0, S0) :-
 ty_marker_ahead(L, S0) :-
     (   ty_relative(L, _, [W|_], _), memberchk(W, S0)
     ;   ty_relative_pronoun(L, Ws, _), ty_all_ahead(Ws, S0)
+    ;   ty_relative_possessive(L, Ws, _), ty_all_ahead(Ws, S0)
     ), !.
 
 ty_all_ahead(Ws, S0) :- forall(member(W, Ws), memberchk(W, S0)).
@@ -2257,6 +2401,26 @@ ty_gap_place(L, NP, F, R, clause(V, T, P, S, O, Js0), clause(V, T, P, S, O, Js))
     R = r(j(Prep), Rule),
     ty_gap_adjunct(Js0, Prep, gap(NP, F, R), Js).
 ty_gap_place(_, NP, F, r(s, gap), copula(T, P, gap, Pred), copula(T, P, gap(NP, F, r(s, gap)), Pred)).
+ty_gap_place(L, NP, F, R, C0, C) :-
+    (   var(C0) -> \+ nb_current('$ty_whose', f(no)) ; true ),
+    ty_poss_gap_place(L, NP, F, R, C0, C).
+
+ty_poss_gap_place(L, NP, F, R, clause(V, T, P, S0, O, Js), clause(V, T, P, S, O, Js)) :-
+    ty_poss_gap_in(L, s, NP, F, R, S0, S).
+ty_poss_gap_place(L, NP, F, R, clause(V, T, P, S, O0, Js), clause(V, T, P, S, O, Js)) :-
+    ty_poss_gap_in(L, o, NP, F, R, O0, O).
+ty_poss_gap_place(L, NP, F, R, copula(T, P, S0, Pred), copula(T, P, S, Pred)) :-
+    ty_poss_gap_in(L, s, NP, F, R, S0, S).
+
+%% The possessor of a subject or an object as the gap (`the boy whose dog
+%% sleeps'): of(gap, Possessed) in the IR, the rule ty_gap(L, poss, Rule)'s;
+%% r(poss(Role, Possessed, Features), Rule) carries the possessed and its
+%% features from the marker to its place.
+ty_poss_gap_in(L, Role, NP, F, R, X0, of(gap(NP, F, R), NP2)) :-
+    (   var(X0) -> \+ nb_current('$ty_whose', f(no)) ; true ),
+    X0 = of(gap, NP2),
+    ty_gap(L, poss, Rule),
+    R = r(poss(Role, NP2, _), Rule).
 
 %% Reading, a gap is tried only where the words it needs are among the
 %% words left: a pronoun's, a moved adposition's pronoun, an adposition
@@ -2267,6 +2431,7 @@ ty_ahead(S0, S0, S0).
 ty_gap_possible(L, r(Pl, Rule), Ahead) :-
     (   var(Ahead) -> true
     ;   Rule == gap -> true
+    ;   Pl = poss(_, _, _) -> ( Rule == moves -> once(( ty_relative_possessive(L, Ws, _), ty_all_ahead(Ws, Ahead) )) ; true )
     ;   Rule = moves(_) -> once(( ty_relative_pronoun(L, Ws, _), ty_all_ahead(Ws, Ahead) ))
     ;   Rule == resumptive -> once(( ty_resumptive(L, Ws, _), ty_all_ahead(Ws, Ahead) ))
     ;   Pl = c(_) -> once(( ty_complement(L, _, Ws), ty_all_ahead(Ws, Ahead) ))
@@ -2335,6 +2500,14 @@ ty_rel_parts([P|Ps], L, Role, NP, F, C, M) -->
 %% marker is its words and a relative pronoun (`en la que', `in cui').
 ty_rel_part(h, L, Role, NP, F, _, _) --> ty_marked_np(L, Role, NP, F, r).
 ty_rel_part(m, L, _, _, _, _, m(Ws, R)) -->
+    { R = r(poss(Role, NP2, F2), Rule), Rule == moves }, !,
+    ty_mark_slot(L, Role, before, Before),
+    ty_words(1, 2, Ws, ty_relative_possessive(L, Ws, _)),
+    ty_np(L, NP2, F2, bare(none)),
+    ty_mark_slot(L, Role, after, After),
+    { ty_marks_ok(L, Role, before, F2, Before),
+      ty_marks_ok(L, Role, after, F2, After) }.
+ty_rel_part(m, L, _, _, _, _, m(Ws, R)) -->
     { ty_marker_span(R, Min, Max) },
     ty_words(Min, Max, Ws, ty_marker_words(L, R, Ws)).
 ty_rel_part(c, L, _, _, _, C, _) --> ty_rel_clause(L, C).
@@ -2362,6 +2535,7 @@ ty_gap_marker_role(s, s).
 ty_gap_marker_role(o, o).
 ty_gap_marker_role(c(_), o).
 ty_gap_marker_role(j(_), o).
+ty_gap_marker_role(poss(_, _, _), o).
 
 ty_rel_clause(L, C) --> { C = clause(_, _, _, _, _, _) }, ty_clause(L, C).
 ty_rel_clause(L, C) --> { C = copula(_, _, _, _) }, ty_copula_clause(L, C).
@@ -2369,6 +2543,11 @@ ty_rel_clause(L, C) --> { C = copula(_, _, _, _) }, ty_copula_clause(L, C).
 %% The marker read is one a row gives for the gap and the head's features
 %% (English `who' for an animate head, `which' for a thing; Spanish `en la
 %% que' for a feminine one).
+ty_rel_marker_ok(L, r(Pl, Rule), _, Ws) :-
+    Pl = poss(_, _, F2), Rule == moves, !,
+    ty_relative_possessive(L, Ws, Alternatives),
+    member(Need, Alternatives),
+    ty_features_have(Need, F2), !.
 ty_rel_marker_ok(L, r(Pl, Rule), Features, Ws) :-
     (   Rule = moves(AWs)
     ->  append(AWs, PWs, Ws),
@@ -2429,11 +2608,17 @@ ty_np_parts([P|Ps], L, NP, Got, Next) -->
 %% Before a relative clause a head of a definiteness ty_relative_bare/2
 %% names takes no article (Persian `حیوانی که', not `یک حیوانی که'): written
 %% so, and read with the article too.
+%% A noun phrase whose Next is bare(Next1) takes no article (English
+%% `the boy's dog': the possessor stands for it).
 ty_np_part(d, _, L, np(_, _, Def, _), got(Det, _, _), Next) -->
-    (   { Next == r, nonvar(Def), ty_relative_bare(L, Def) }
+    (   { ty_no_article(Next, L, Def) }
     ->  { Det = none }
     ;   ty_det(L, Det)
     ).
+
+%% Indexed by Next, so a phrase with nothing after it (none) asks nothing.
+ty_no_article(bare(_), _, _).
+ty_no_article(r, L, Def) :- nonvar(Def), ty_relative_bare(L, Def).
 ty_np_part(n, Ps, L, np(M, N, _, As), got(_, noun(G, A), _), Next) -->
     [W],
     { ty_linked_here(Ps, As, Next, C2, Linked),
@@ -2451,8 +2636,18 @@ ty_linked_here([a|Ps], As, Next, C2, Linked) :- !,
     ).
 ty_linked_here(Ps, _, Next, C2, Linked) :- ty_linked_end(Ps, Next, C2, Linked).
 
-ty_linked_end([], r, r, yes) :- !.
+%% The phrase's last word takes the form of what follows it: r a relative
+%% clause, g a possessor (the Persian ezafe), h the possessed (English
+%% `'s'), clitic(N) a possessor's clitic (Persian `ش').
+ty_linked_end([], Next, C2, Linked) :- !, ty_end_link(Next, C2, Linked).
 ty_linked_end(_, _, a, no).
+
+ty_end_link(none, a, no) :- !.
+ty_end_link(bare(N), C2, Linked) :- !, ty_end_link(N, C2, Linked).
+ty_end_link(C, C, yes).
+
+ty_next_link(Next, C) :- ( nonvar(Next), Next = bare(C0) -> C = C0 ; C = Next ).
+ty_next_bare(Next) :- nonvar(Next), Next = bare(_).
 
 %% Reading the word is bound and the table is asked by it; writing, by the
 %% meaning.
@@ -2537,7 +2732,11 @@ ty_np_agrees(L, np(_, N, Def, _), Det, noun(G, Anim), Rows, Anim, Next) :-
     (   Det = art(W)
     ->  ty_article(L, Def, AG, AN, W), ty_fits(AG, G), ty_fits(AN, N)
     ;   Def \== which,
-        (   Next == r, ty_relative_bare(L, Def)
+        (   Next == none
+        ->  \+ ( ty_article(L, Def, AG, AN, _), ty_fits(AG, G), ty_fits(AN, N) )
+        ;   Next = bare(_)
+        ->  Def == def
+        ;   Next == r, ty_relative_bare(L, Def)
         ->  true
         ;   \+ ( ty_article(L, Def, AG, AN, _), ty_fits(AG, G), ty_fits(AN, N) )
         )
@@ -2559,7 +2758,8 @@ ty_np_faults(L, np(_, N, Def, _), Det, noun(G, Anim), Rows, Anim, Next) :-
         ;   ty_fault(agreement(article, W))
         )
     ;   Def \== which,
-        (   (   Next == r, ty_relative_bare(L, Def)
+        (   (   ty_next_bare(Next), Def == def
+            ;   Next == r, ty_relative_bare(L, Def)
             ;   \+ ( ty_article(L, Def, AG, AN, _), ty_fits(AG, G), ty_fits(AN, N) )
             )
         ->  true

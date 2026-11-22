@@ -162,3 +162,22 @@ ty_relative_pronoun(italian, [cui], [[]]).
 %% The answer to a yes or no question (`Sì, il ragazzo vede il cane.').
 ty_answer(italian, yes, ['sì']).
 ty_answer(italian, no, [no]).
+
+%% A possessor (`il cane del ragazzo'): the possessed, `di' with the
+%% possessor's article, the possessor. `il cui' moves with the possessed
+%% into the marker, its article the possessed's (`il ragazzo il cui cane
+%% dorme', `la ragazza la cui casa').
+ty_order(italian, poss, [h, p, g]).
+ty_possessive(italian, [di], keep).
+ty_contraction(italian, [di, il], del).
+ty_contraction(italian, [di, lo], dello).
+ty_contraction(italian, [di, 'l\''], 'dell\'').
+ty_contraction(italian, [di, la], della).
+ty_contraction(italian, [di, i], dei).
+ty_contraction(italian, [di, gli], degli).
+ty_contraction(italian, [di, le], delle).
+ty_gap(italian, poss, moves).
+ty_relative_possessive(italian, [il, cui], [[m, sg]]).
+ty_relative_possessive(italian, [la, cui], [[f, sg]]).
+ty_relative_possessive(italian, [i, cui], [[m, pl]]).
+ty_relative_possessive(italian, [le, cui], [[f, pl]]).

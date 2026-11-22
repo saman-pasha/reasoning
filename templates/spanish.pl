@@ -123,6 +123,12 @@ ty_sense(spanish, a, mark(o), [class(noun), opt(class(article)), class(verb)],
          [opt(class(article)), class(noun, animate)]).
 ty_sense(spanish, a, mark(o), [], ['quién']).
 ty_sense(spanish, a, mark(o), [], ['qué', class(noun, animate)]).
+%% Before `cuyo' and an animate noun it is the mark too (`el niño a cuyo
+%% perro ve la niña').
+ty_sense(spanish, a, mark(o), [], [cuyo, class(noun, animate)]).
+ty_sense(spanish, a, mark(o), [], [cuya, class(noun, animate)]).
+ty_sense(spanish, a, mark(o), [], [cuyos, class(noun, animate)]).
+ty_sense(spanish, a, mark(o), [], [cuyas, class(noun, animate)]).
 ty_sense(spanish, a, adposition(to), [], []).
 
 %% Questions: `¿' and `?'; a yes or no question in the statement's order,
@@ -168,3 +174,14 @@ ty_relative_pronoun(spanish, [que], [[]]).
 %% The answer to a yes or no question (`Sí, el niño ve al perro.').
 ty_answer(spanish, yes, ['sí']).
 ty_answer(spanish, no, [no]).
+
+%% A possessor (`el perro del niño'): the possessed, `de', the possessor.
+%% `cuyo' moves with the possessed into the marker and agrees with it (`el
+%% niño cuyo perro duerme', `el niño cuyas niñas duermen').
+ty_order(spanish, poss, [h, p, g]).
+ty_possessive(spanish, [de], keep).
+ty_gap(spanish, poss, moves).
+ty_relative_possessive(spanish, [cuyo], [[m, sg]]).
+ty_relative_possessive(spanish, [cuya], [[f, sg]]).
+ty_relative_possessive(spanish, [cuyos], [[m, pl]]).
+ty_relative_possessive(spanish, [cuyas], [[f, pl]]).

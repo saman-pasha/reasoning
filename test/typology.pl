@@ -14,7 +14,7 @@
 main :-
     forall(member(L, [english, spanish, italian, persian]), typology_load(L)),
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
-                      copulas, adjuncts, meanings, questions, repairs, relatives, gaps, complements, negation_places,
+                      copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
@@ -102,7 +102,6 @@ refused :-
                     spanish-'El niño ve el perro.'-'an animate object with no personal a',
                     english-'The dog black sleeps.'-'an English adjective after its noun',
                     english-'Dog the sleeps.'-'an English article after its noun',
-                    persian-'پسر سگ می‌بیند.'-'a Persian object that is neither definite nor indefinite',
                     persian-'پسر می‌بیند سگ را.'-'a Persian verb before its object',
                     italian-'Il ragazzo vede la cane.'-'an Italian article that does not agree' ]),
            ( yes_no(typology_read(L, T, _), R),
@@ -634,6 +633,74 @@ more_gaps :-
     retractall(ty_relative_after(tiny, _, _)),
     check('typology_check/2: a rank is first or second', M9s, [bad(ty_relative_after(tiny, s, third))]).
 
+%% ---- the possessor, and `whose' ---------------------------------------------------
+
+possessors :-
+    section('a possessor in a noun phrase, and a relative clause whose gap is the possessor'),
+    B = np(boy, sg, def, []), D = np(dog, sg, def, []), G = np(girl, sg, def, []),
+    written_each(possessors, [
+        clause(sleep, present, pos, of(B, D), none)-
+            [english-'The boy\'s dog sleeps.', spanish-'El perro del niño duerme.',
+             italian-'Il cane del ragazzo dorme.', persian-'سگ پسر می‌خوابد.'],
+        clause(see, present, pos, G, of(np(boy, pl, def, []), np(house, sg, def, [black])))-
+            [english-'The girl sees the boys\' black house.',
+             spanish-'La niña ve la casa negra de los niños.',
+             italian-'La ragazza vede la casa nera dei ragazzi.',
+             persian-'دختر خانه‌ی سیاه پسرها را می‌بیند.'],
+        copula(present, pos, of(G, np(house, sg, def, [])), adj([big]))-
+            [english-'The girl\'s house is big.', spanish-'La casa de la niña es grande.',
+             italian-'La casa della ragazza è grande.', persian-'خانه‌ی دختر بزرگ است.'],
+        clause(sleep, present, pos, D, none, [pp(in, of(B, np(house, sg, def, [])))])-
+            [english-'The dog sleeps in the boy\'s house.', spanish-'El perro duerme en la casa del niño.',
+             italian-'Il cane dorme nella casa del ragazzo.', persian-'سگ در خانه‌ی پسر می‌خوابد.'],
+        clause(sleep, present, pos, rel(B, clause(sleep, present, pos, of(gap, D), none)), none)-
+            [english-'The boy whose dog sleeps sleeps.', spanish-'El niño cuyo perro duerme duerme.',
+             italian-'Il ragazzo il cui cane dorme dorme.', persian-'پسری که سگش می‌خوابد می‌خوابد.'],
+        clause(sleep, present, pos, rel(G, clause(see, present, pos, D, of(gap, np(house, sg, def, [])))), none)-
+            [english-'The girl whose house the dog sees sleeps.', spanish-'La niña cuya casa el perro ve duerme.',
+             italian-'La ragazza la cui casa il cane vede dorme.',
+             persian-'دختری که سگ خانه‌اش را می‌بیند می‌خوابد.'],
+        clause(see, present, pos, G, rel(B, clause(see, present, pos, np(cat, sg, def, []), of(gap, np(dog, pl, def, [])))))-
+            [english-'The girl sees the boy whose dogs the cat sees.',
+             spanish-'La niña ve al niño a cuyos perros el gato ve.',
+             italian-'La ragazza vede il ragazzo i cui cani il gatto vede.',
+             persian-'دختر پسری را می‌بیند که گربه سگ‌هایش را می‌بیند.'],
+        clause(sleep, present, pos, rel(np(boy, pl, def, []), clause(sleep, present, pos, of(gap, D), none)), none)-
+            [english-'The boys whose dog sleeps sleep.', spanish-'Los niños cuyo perro duerme duermen.',
+             italian-'I ragazzi il cui cane dorme dormono.',
+             persian-'پسرهایی که سگشان می‌خوابد می‌خوابند.'] ]),
+    %% `de' is a possessor's word and an adposition: both are read.
+    findall(O, ( typology_read(spanish, 'El niño ve al perro del niño.', IR1),
+                 ( IR1 = clause(see, _, _, B, of(B, D)) -> O = possessor
+                 ; IR1 = clause(see, _, _, B, D, [pp(from, B)]) -> O = adjunct ) ), Os0),
+    sort(Os0, Os1),
+    check('Spanish: del niño, a possessor or an adjunct', Os1, [adjunct, possessor]),
+    ( typology_read(english, 'The boys\' dog sleeps.', clause(sleep, present, pos, of(np(boy, pl, def, []), D), none))
+    -> R2 = read ; R2 = not_read ),
+    check('English: the boys\' dog, s\' after s', R2, read),
+    %% A Persian object that is neither definite nor indefinite is not read;
+    %% the two nouns are a possessor, the ezafe unwritten after a consonant
+    %% (the dog's boy sees).
+    findall(IR5, typology_read(persian, 'پسر سگ می‌بیند.', IR5), IRs5),
+    check('Persian: پسر سگ is the dog''s boy, never a bare object', IRs5,
+          [clause(see, present, pos, of(D, B), none)]),
+    %% Refused: an article before a possessor's head in English, `cuyo' that
+    %% does not agree with the possessed.
+    forall(member(L-T, [ english-'The the boy\'s dog sleeps.', english-'The boy\'s the dog sleeps.',
+                         spanish-'El niño cuya perro duerme duerme.' ]),
+           ( ( typology_read(L, T, _) -> R = read ; R = refused ),
+             atomic_list_concat([L, ': ', T], Label),
+             check(Label, R, refused) )),
+    typology_translate(english, persian, 'The girl sees the boy whose dog sleeps.', P3),
+    check('English into Persian: whose is a clitic on the possessed', P3, 'دختر پسری را می‌بیند که سگش می‌خوابد.'),
+    assertz(ty_gap(tiny, poss, moves)),
+    assertz(ty_possessive(tiny, [x], maybe)),
+    findall(M, ( typology_check(tiny, Ms), member(M, Ms),
+                 memberchk(M, [relative_possessive, bad(ty_possessive(tiny, [x], maybe))]) ), M4),
+    retractall(ty_gap(tiny, _, _)), retractall(ty_possessive(tiny, _, _)),
+    check('typology_check/2: a moved possessor needs its pronoun, and an article is keep or drop', M4,
+          [relative_possessive, bad(ty_possessive(tiny, [x], maybe))]).
+
 %% ---- a verb's complement ---------------------------------------------------------------
 
 complements :-
@@ -962,4 +1029,4 @@ blank_template :-
     split_string(S, "\n", "", Lines),
     include([Line]>>sub_string(Line, 0, _, _, 'ty_order(klingon'), Lines, Orders),
     length(Orders, N),
-    check('every order of every level is offered: 6 + 6 + 6 + 2 + 6', N, 26).
+    check('every order of every level is offered: 6 + 6 + 6 + 2 + 6 + 6', N, 32).

@@ -169,3 +169,31 @@ ty_answer(persian, yes, ['بله']).
 ty_answer(persian, no, ['نه']).
 ty_answer(persian, contradict, ['چرا']).
 ty_answer_mark(persian, '،').
+
+%% A possessor (`سگ پسر', the boy's dog): the possessed, its last word
+%% taking the ezafe as before an adjective (`خانه‌ی پسر'), then the
+%% possessor. `whose' is a clitic on the possessed, which stays: ش for one
+%% possessor, شان for several (`پسری که سگش می‌خوابد', `خانه‌اش').
+ty_order(persian, poss, [h, p, g]).
+ty_possessive(persian, [], keep).
+ty_linked(persian, n, g, 'ه', 'ه‌ی').
+ty_linked(persian, n, g, 'ا', 'ای').
+ty_linked(persian, n, g, 'و', 'وی').
+ty_linked(persian, a, g, 'ه', 'ه‌ی').
+ty_linked(persian, a, g, 'سیاه', 'سیاه').
+ty_linked(persian, a, g, 'ا', 'ای').
+ty_linked(persian, a, g, 'و', 'وی').
+ty_gap(persian, poss, resumptive).
+ty_linked(persian, n, clitic(sg), '', 'ش').
+ty_linked(persian, n, clitic(sg), 'ه', 'ه‌اش').
+ty_linked(persian, n, clitic(sg), 'ا', 'ایش').
+ty_linked(persian, n, clitic(sg), 'و', 'ویش').
+ty_linked(persian, a, clitic(sg), '', 'ش').
+ty_linked(persian, a, clitic(sg), 'ه', 'ه‌اش').
+ty_linked(persian, a, clitic(sg), 'سیاه', 'سیاهش').
+ty_linked(persian, n, clitic(pl), '', 'شان').
+ty_linked(persian, n, clitic(pl), 'ه', 'ه‌شان').
+ty_linked(persian, n, clitic(pl), 'ا', 'ایشان').
+ty_linked(persian, a, clitic(pl), '', 'شان').
+ty_linked(persian, a, clitic(pl), 'ه', 'ه‌شان').
+ty_linked(persian, a, clitic(pl), 'سیاه', 'سیاهشان').

@@ -105,7 +105,7 @@ Spanish and Italian apocope (`gran`). Then `cat` goes into Persian, and
 Italian nouns that start with `s` and a consonant, `z` or a vowel are
 right.
 
-## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.31.0)
+## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.32.0)
 
 Done:
 
@@ -297,17 +297,44 @@ Done:
    English), and the hand templates' people are persons. The round trips
    cost 0.5 to 2 % more inferences than 1.30.0.
 
+14. **The possessor, and `whose`** (1.32.0). `of(Possessor, NP)` stands
+   where a noun phrase stands, a level of its own, `poss` (h p g, six
+   orders): the possessed, the possessive word (`ty_possessive(L, Words,
+   Article)`) and the possessor. English `the boy's dog` (g p h, the
+   possessor's last word linked to the head, `'s` or `'` after s, and the
+   head bare: Article `drop`, `Next` `bare(N)` in the noun phrase);
+   Spanish `el perro del niño`, Italian `il cane del ragazzo` (`di` with
+   seven contractions); Persian `سگ پسر`, `خانه‌ی سیاه پسرها` (the ezafe as
+   before an adjective, `ty_linked(persian, n, g, ...)`). Its features are
+   the possessed's: the verb agrees with it, and a mark asks it (`al
+   perro del niño`, `سگ پسر را`). A relative clause's gap may be the
+   possessor of its subject or object, `ty_gap(L, poss, Rule)`: moves, the
+   possessed going into the marker with a pronoun that agrees with it
+   (`ty_relative_possessive/3`: `the boy whose dog sleeps`, `the girl whose
+   house the dog sees`, `el niño cuyo perro duerme`, `a cuyos perros`,
+   `il ragazzo il cui cane dorme`, `i cui cani`), or resumptive, the
+   possessed staying with a clitic for the head's number (Persian `سگش`,
+   `خانه‌اش`, `سگ‌هایش`, `سگشان`, `clitic(N)` links). Reading, a possessor
+   is tried only in a sentence with a possessive word (`'$ty_poss'`, set
+   where the parse starts) and a possessor's gap only with a possessive
+   relative word or a clitic rule (`'$ty_whose'`). The round trips cost 3
+   to 7 % more inferences in English, Spanish and Italian, the clock the
+   same; Persian 32 % more and its time with it, because its ezafe is not
+   written after a consonant and any two nouns side by side may be a
+   possessor (`پسر سگ می‌بیند` is the dog's boy who sees).
+
 Not yet:
 
 3. A German or a French template:
    the place of the negation is there for them, and German's `nicht`
    before a predicate (`ist nicht groß`) and its verb second are not.
-4. `whose`, which waits for a possessor in the noun phrase (Phase 5);
-   every question word at the front (Bulgarian, Russian), a slot of its
+4. Every question word at the front (Bulgarian, Russian), a slot of its
    own; an answer that repeats the verb (Portuguese `Vejo.`, Irish) and
    English `Yes, he does.`, which wait for pronouns.
-5. What the gap does not have yet: a gap inside a noun phrase of the
-   clause (`whose`).
+5. A possessor's possessor (`the boy's dog's house`), a possessor with a
+   relative clause, a possessor's gap in an adposition phrase (`the boy in
+   whose house the dog sleeps`), and a possessive pronoun (`his dog`,
+   Phase 5's pronouns).
 6. The topics the class lines do not give: the hand table's thirty rows,
    and every other meaning, are Phase 8's (a model fills a slot in live
    mode, with the reference sentences as its check). A meaning of its

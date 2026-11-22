@@ -193,6 +193,17 @@ trips 13 % more inferences, the readings the same. **A person is animate**
 (1.31.0): a row's condition is `ty_features_have/2`, a role's and a
 pattern's animacy `ty_animacy_fits/2` and `ty_item_fits/3`; a new test of
 animacy asks one of them, never `memberchk(animate, F)`.
+**A noun phrase knows what follows it** (1.32.0, its Next): `none`, `r` (a
+relative clause), `g` (a possessor: the Persian ezafe), `h` (the possessed:
+English `'s`), `clitic(N)` (Persian `ش`), or `bare(Next)`, with no article
+(English `the boy's dog`). The tests of Next are indexed by it
+(`ty_end_link/3`, `ty_no_article/3`, `Next == none` first in the article
+check): asked through two calls a noun phrase, the first cut cost English
+reading 12.7 % more inferences, now 5.9 %. **A sentence is asked once for a
+possessor** (`'$ty_poss'` and `'$ty_whose'`, set by `ty_poss_flag/2` where
+a parse starts, in `ty_read_bases/6` and `ty_reads_as/5`): a new place
+where a parse starts sets them, or a reading tries every possessor or
+none. Writing never asks them (the slot is bound).
 
 **Every reader has two modes, static and live** (1.16.0; reason.pl's header,
 STATIC AND LIVE, and live.pl's). What a session must keep:

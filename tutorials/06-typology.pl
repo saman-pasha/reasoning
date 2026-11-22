@@ -109,6 +109,7 @@ main :-
     asking_and_answering,
     class_topics,
     gaps,
+    possessors,
     format("~ndone~n", []).
 
 
@@ -290,6 +291,28 @@ gaps :-
     must('a predicate''s relative clause after the copula', P2, 'سگ حیوانی است که می‌خوابد.'),
     typology_translate(spanish, persian, 'El perro en el que el niño piensa duerme.', P3),
     must('an animal''s pronoun is آن, a person''s او', P3, 'سگی که پسر به آن فکر می‌کند می‌خوابد.').
+
+%% 19. A POSSESSOR, AND WHOSE. of(Possessor, NP) is a level of its own,
+%% poss: the possessed (h), the possessive word (p, ty_possessive/3) and
+%% the possessor (g). English writes the possessor first, its last word
+%% with `'s' and the possessed with no article; Spanish and Italian `de' and
+%% `di'; Persian the ezafe. A relative clause's gap may be a possessor:
+%% English `whose', Spanish `cuyo' and Italian `il cui' move into the marker
+%% with the possessed (ty_relative_possessive/3), Persian puts a clitic on
+%% the possessed, which stays (`سگش').
+possessors :-
+    IR1 = clause(sleep, present, pos, of(np(boy, sg, def, []), np(dog, sg, def, [])), none),
+    findall(L-T, ( member(L, [english, spanish, italian, persian]), typology_write(L, IR1, T) ), Ts1),
+    must('the boy''s dog, four times', Ts1,
+         [ english-'The boy\'s dog sleeps.', spanish-'El perro del niño duerme.',
+           italian-'Il cane del ragazzo dorme.', persian-'سگ پسر می‌خوابد.' ]),
+    IR2 = clause(sleep, present, pos, rel(np(boy, sg, def, []),
+                                          clause(sleep, present, pos, of(gap, np(dog, sg, def, [])), none)), none),
+    findall(L-T, ( member(L, [english, spanish, italian, persian]), typology_write(L, IR2, T) ), Ts2),
+    must('the boy whose dog sleeps, four times', Ts2,
+         [ english-'The boy whose dog sleeps sleeps.', spanish-'El niño cuyo perro duerme duerme.',
+           italian-'Il ragazzo il cui cane dorme dorme.', persian-'پسری که سگش می‌خوابد می‌خوابد.' ]).
+
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
 %% anywhere and run is worth six repeated lines, and one that needs a support

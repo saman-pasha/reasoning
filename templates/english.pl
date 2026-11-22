@@ -162,3 +162,14 @@ ty_relative_pronoun(english, [which], [[]]).
 %% the dog.'): `yes' for a positive answer, after a negative question too.
 ty_answer(english, yes, [yes]).
 ty_answer(english, no, [no]).
+
+%% A possessor (`the boy's dog'): the possessor, then the possessed with no
+%% article; the possessor's last word takes `'s', or `'' after s (`the
+%% boys' dog'). `whose' moves with the possessed into the marker (`the boy
+%% whose dog sleeps').
+ty_order(english, poss, [g, p, h]).
+ty_possessive(english, [], drop).
+ty_linked(english, n, h, '', '\'s').
+ty_linked(english, n, h, 's', 's\'').
+ty_gap(english, poss, moves).
+ty_relative_possessive(english, [whose], [[]]).
