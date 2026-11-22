@@ -40,10 +40,14 @@
 %%                                     language uses; the first is written
 %%     ty_noun(L, Meaning, Gender, Animacy, Singular, Plural)
 %%                                     Gender: the language's own (m, f,
-%%                                     ...), or none; Animacy: animate,
-%%                                     inanimate, or unknown (an imported
-%%                                     noun the vocabulary says nothing of:
-%%                                     no mark asks for it)
+%%                                     ...), or none; Animacy: person,
+%%                                     animate, inanimate, or unknown (an
+%%                                     imported noun the vocabulary says
+%%                                     nothing of: no mark asks for it); a
+%%                                     person is animate to every row and
+%%                                     role that asks animate (Spanish `a'),
+%%                                     and a row may ask person (Persian
+%%                                     `او')
 %%     ty_adjective(L, Meaning, Gender, Number, Word)
 %%                                     a form for a gender and a number;
 %%                                     any for a form that does not change
@@ -165,10 +169,12 @@
 %%     ty_resumptive(L, Words, Conditions)
 %%                                     the pronoun where a resumptive gap
 %%                                     stands (Persian `آن', `او')
-%%     ty_relative_after(L, Part)      the relative clause of an object (o)
-%%                                     or a copula's predicate (p) stands
-%%                                     after the verb, at the clause's end
-%%                                     (Persian), and in place is read too
+%%     ty_relative_after(L, Part, Rank) the relative clause of a subject (s),
+%%                                     an object (o) or a copula's predicate
+%%                                     (p) stands after the verb, at the
+%%                                     clause's end (Persian); Rank first:
+%%                                     written, and in place read too;
+%%                                     second: in place written, this read
 %%     ty_relative_bare(L, Definiteness)
 %%                                     a head of this definiteness takes no
 %%                                     article before its relative clause
@@ -352,7 +358,7 @@
            ty_question_form/5, ty_wh/2, ty_wh_word/3, ty_question_mark/3,
            ty_role_animacy/3, ty_relative/4, ty_complement/3, ty_complement_wh/2, ty_negation_place/3,
            ty_answer/3, ty_answer_system/2, ty_answer_mark/2, ty_gap/3,
-           ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/2,
+           ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
            ty_relative_bare/2.
 :- discontiguous ty_order/3, ty_noun/6, ty_adjective/5, ty_verb/6,
                  ty_article/5, ty_mark/5, ty_contraction/3, ty_negation/5,
@@ -362,7 +368,7 @@
                  ty_question_mark/3, ty_relative/4, ty_complement/3,
                  ty_complement_wh/2, ty_negation_place/3, ty_answer/3,
                  ty_answer_system/2, ty_answer_mark/2, ty_gap/3,
-                 ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/2,
+                 ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
                  ty_relative_bare/2.
 
 %% ---- the levels and the values a slot takes -----------------------------------
@@ -377,7 +383,7 @@ ty_values(tense, [present, past]).
 ty_values(number, [sg, pl]).
 ty_values(polarity, [pos, neg]).
 ty_values(definiteness, [def, indef, which]).
-ty_values(animacy, [animate, inanimate, unknown]).
+ty_values(animacy, [person, animate, inanimate, unknown]).
 ty_values(place, [before, after]).
 ty_values(role, [s, o]).
 ty_values(adjunct_place, [start, end, before(v), after(s)]).
@@ -390,7 +396,7 @@ ty_values(relative_role, [s, o, any]).
 ty_values(complement_wh, [moves, stays]).
 ty_values(gap_place, [o, pp]).
 ty_values(gap, [gap, stays, moves, resumptive]).
-ty_values(relative_after, [o, p]).
+ty_values(relative_after, [s, o, p]).
 ty_values(answer, [yes, no, contradict]).
 ty_values(answer_system, [polarity, agreement]).
 ty_values(negation_place, [start, end, before(s), after(s), before(v), after(v),
@@ -483,7 +489,7 @@ ty_row_shape('ty_answer_mark(L, Mark).').
 ty_row_shape('ty_gap(L, Place, Rule).').
 ty_row_shape('ty_relative_pronoun(L, Words, Conditions).').
 ty_row_shape('ty_resumptive(L, Words, Conditions).').
-ty_row_shape('ty_relative_after(L, Part).').
+ty_row_shape('ty_relative_after(L, Part, Rank).').
 ty_row_shape('ty_relative_bare(L, Definiteness).').
 
 %% ---- the check ----------------------------------------------------------------------
@@ -600,9 +606,9 @@ ty_missing(L, bad(ty_relative_pronoun(L, Ws, Cs))) :-
 ty_missing(L, bad(ty_resumptive(L, Ws, Cs))) :-
     ty_resumptive(L, Ws, Cs),
     \+ ( is_list(Ws), Ws \== [], is_list(Cs) ).
-ty_missing(L, bad(ty_relative_after(L, P))) :-
-    ty_relative_after(L, P),
-    \+ ( ty_values(relative_after, Ps), memberchk(P, Ps) ).
+ty_missing(L, bad(ty_relative_after(L, P, R))) :-
+    ty_relative_after(L, P, R),
+    \+ ( ty_values(relative_after, Ps), memberchk(P, Ps), memberchk(R, [first, second]) ).
 ty_missing(L, relative_pronoun) :-
     ty_gap(L, pp, moves),
     \+ ty_relative_pronoun(L, _, _).
@@ -1048,7 +1054,7 @@ ty_item_fits(_, I, W) :- atom(I), !, I == W.
 ty_item_fits(L, class(C), W) :- !, ty_word_class(L, C, W).
 ty_item_fits(L, class(noun, F), W) :-
     ( ty_noun(L, _, G, A, W, _) ; ty_noun(L, _, G, A, _, W) ),
-    ( F == G ; F == A ), !.
+    ( F == G ; F == A ; F == animate, A == person ), !.
 
 ty_word_class(L, noun, W) :- ty_class_meaning(L, noun, W, _), !.
 ty_word_class(L, adjective, W) :- ty_class_meaning(L, adjective, W, _), !.
@@ -1307,7 +1313,9 @@ ty_ask_clause(L, C, Cost) -->
       C = clause(_, _, P, _, _, _),
       ty_negation_order(L, P, Order, Order3) },
     ty_extraposed(L, o, O, Order3, Order4),
-    ty_ask_parts(Order4, L, C, Q, How),
+    { C = clause(_, _, _, S, _, _) },
+    ty_extraposed(L, s, S, Order4, Order5),
+    ty_ask_parts(Order5, L, C, Q, How),
     { ty_wh_count(C, Kind),
       ty_wh_first(C, Part),
       ty_roles_ok(L, C),
@@ -1322,7 +1330,9 @@ ty_ask_copula(L, C, Cost) -->
       ty_ask_order(L, Kind, Part, copula, Order0, Order, Q),
       ty_order_cost(Order, Order0, Cost) },
     ty_extraposed(L, p, Pred, Order, Order1),
-    ty_ask_parts(Order1, L, C, Q, _),
+    { C = copula(_, _, S, _) },
+    ty_extraposed(L, s, S, Order1, Order2),
+    ty_ask_parts(Order2, L, C, Q, _),
     { Features = [_, N, _, G],
       ty_predicate_ok(Pred, Rows, G, N),
       ty_wh_count(C, Kind),
@@ -1501,6 +1511,10 @@ ty_ask_part(oh(X), L, clause(V, _, _, _, O, _), _, How) --> ty_object_head(L, V,
 ty_ask_part(ot(X), L, _, _, _) --> ty_rel_tail(L, X).
 ty_ask_part(ph(X), L, copula(_, _, _, Pred), q(_, _, _, _, []), _) --> ty_predicate_head(L, Pred, X).
 ty_ask_part(pt(X), L, _, _, _) --> ty_rel_tail(L, X).
+ty_ask_part(sh(X), L, clause(_, _, _, S, _, _), _, _) --> ty_subject_head(L, S, X).
+ty_ask_part(sh(X), L, copula(_, _, S, _), q(_, _, _, F, _), _) -->
+    { X = x(_, F, _) }, ty_subject_head(L, S, X).
+ty_ask_part(st(X), L, _, _, _) --> ty_rel_tail(L, X).
 
 %% The verb (or the copula). Under front(first) part f, before the
 %% subject, is its first word and this part the rest: writing, f looks the
@@ -1584,7 +1598,7 @@ ty_question_verb(L, V, T, N, Words) :-
 %% A question word's words, and the features its marks ask for.
 ty_wh_words(L, M) --> ty_words(1, 3, Ws, ty_wh_word(L, M, Ws)).
 
-ty_wh_features(who, [def, sg, animate]).
+ty_wh_features(who, [def, sg, person]).
 ty_wh_features(what, [indef, sg, inanimate]).
 
 %% ---- statements ---------------------------------------------------------------------
@@ -1655,12 +1669,13 @@ typology_answer(L, Question, Pol, Text) :-
 %% A verb clause: its order of s, v and o, with the adjuncts (j) put where
 %% the template says (ty_adjunct/2); a language with no such row has none.
 ty_clause(L, C) -->
-    { C = clause(_, _, P, _, O, Js),
+    { C = clause(_, _, P, S, O, Js),
       ty_order_at(L, clause, Order0),
       ty_valency(Order0, O, Order1),
       ty_adjunct_order(L, Order1, Js, Order2),
       ty_negation_order(L, P, Order2, Order3) },
-    ty_extraposed(L, o, O, Order3, Order),
+    ty_extraposed(L, o, O, Order3, Order4),
+    ty_extraposed(L, s, S, Order4, Order),
     ty_clause_parts(Order, L, C, How),
     { ty_roles_ok(L, C),
       ty_object_ok(L, C, How) }.
@@ -1734,7 +1749,10 @@ ty_np_animacy(_, wh(M), A) :-
 ty_np_animacy(L, rel(NP, _), A) :- NP = np(_, _, _, _), ty_np_animacy(L, NP, A).
 ty_np_animacy(L, gap(NP, _, _), A) :- ty_np_animacy(L, NP, A).
 
-ty_animacy_fits(A, A).
+%% A role asks an animacy, and a noun of it fits, or one the vocabulary
+%% says nothing of; a person is animate.
+ty_animacy_fits(A, A1) :- A1 == A, !.
+ty_animacy_fits(animate, A1) :- A1 == person, !.
 ty_animacy_fits(_, unknown).
 
 ty_adjunct_order(L, Order0, Js, Order) :-
@@ -1772,6 +1790,8 @@ ty_clause_part(j, L, clause(_, _, _, _, _, Js), _) --> ty_adjuncts(L, Js).
 ty_clause_part(n(Ws), _, _, _) --> ty_tokens(Ws).
 ty_clause_part(oh(X), L, clause(V, _, _, _, O, _), How) --> ty_object_head(L, V, O, How, X).
 ty_clause_part(ot(X), L, _, _) --> ty_rel_tail(L, X).
+ty_clause_part(sh(X), L, clause(_, _, _, S, _, _), _) --> ty_subject_head(L, S, X).
+ty_clause_part(st(X), L, _, _) --> ty_rel_tail(L, X).
 
 %% ---- a verb's complement --------------------------------------------------------
 %%
@@ -1855,7 +1875,7 @@ ty_comp_rule(L, Rule) :-
 ty_object_ok(L, clause(V, _, _, _, O, Js), How) :-
     (   var(How)
     ->  \+ ( O == none, ty_complement(L, V, Ws),
-             member(pp(M, _), Js), ty_adposition(L, M, Ws) )
+             ty_js_items(Js, Items), member(pp(M, _), Items), ty_adposition(L, M, Ws) )
     ;   How = comp(Ws)
     ->  ty_complement(L, V, Ws)
     ;   ty_complement(L, V, Ws)
@@ -1866,6 +1886,25 @@ ty_object_ok(L, clause(V, _, _, _, O, Js), How) :-
 %% The adjuncts: adposition phrases and adverbs, in the IR's order.
 ty_adjuncts(_, []) --> [].
 ty_adjuncts(L, [J|Js]) --> ty_adjunct_item(L, J), ty_adjuncts(L, Js).
+ty_adjuncts(L, Gapped) -->
+    { nonvar(Gapped), Gapped = gapped(Prep, G, Js) },
+    ty_adjuncts_gapped(L, Prep, G, Js, no).
+
+%% The IR's adjuncts of a clause's list, gapped or not.
+ty_js_items(Js, Items) :- ( nonvar(Js), Js = gapped(_, _, Items) -> true ; Items = Js ).
+
+%% The adjuncts with a relative clause's gap in one of them, once. A gap
+%% that writes nothing (its adposition moved into the marker) stands first,
+%% so a sentence is one reading: `la casa en la que el perro duerme hoy' is
+%% [pp(in, gap), adv(today)].
+ty_adjuncts_gapped(_, _, _, [], yes) --> [].
+ty_adjuncts_gapped(L, Prep, G, [pp(Prep, gap)|Js], no) -->
+    ty_pp(L, Prep, G),
+    ty_adjuncts_gapped(L, Prep, G, Js, yes).
+ty_adjuncts_gapped(L, Prep, G, [J|Js], Taken) -->
+    { \+ ( Taken == no, ty_gap_moved_from(G, _) ) },
+    ty_adjunct_item(L, J),
+    ty_adjuncts_gapped(L, Prep, G, Js, Taken).
 
 ty_adjunct_item(L, pp(Prep, NP)) --> ty_pp(L, Prep, NP).
 ty_adjunct_item(L, W) --> { nonvar(W), W = wh(M), ty_wh_adjunct(M) }, ty_wh_words(L, M).
@@ -1912,9 +1951,10 @@ ty_words(Min, Max, Ws, Lookup, S0, S) :-
 %% chosen by the predicate's kind (Spanish `estar' for a place); a copula
 %% of no words is dropped. A predicate adjective agrees with the subject.
 ty_copula_clause(L, C) -->
-    { C = copula(_, _, _, Pred),
+    { C = copula(_, _, S, Pred),
       ty_order_at(L, copula, Order0) },
-    ty_extraposed(L, p, Pred, Order0, Order),
+    ty_extraposed(L, p, Pred, Order0, Order1),
+    ty_extraposed(L, s, S, Order1, Order),
     ty_copula_parts(Order, L, C, Features, Rows),
     { Features = [_, N, _, G],
       ty_predicate_ok(Pred, Rows, G, N) }.
@@ -1930,6 +1970,9 @@ ty_copula_part(c, L, copula(T, P, S, Pred), _, _) -->
 ty_copula_part(p, L, copula(_, _, _, Pred), _, Rows) --> ty_predicate(L, Pred, Rows).
 ty_copula_part(ph(X), L, copula(_, _, _, Pred), _, []) --> ty_predicate_head(L, Pred, X).
 ty_copula_part(pt(X), L, _, _, _) --> ty_rel_tail(L, X).
+ty_copula_part(sh(X), L, copula(_, _, S, _), Features, _) -->
+    { X = x(_, Features, _) }, ty_subject_head(L, S, X).
+ty_copula_part(st(X), L, _, _, _) --> ty_rel_tail(L, X).
 
 %% The head of a predicate whose relative clause stands after the copula.
 ty_predicate_head(L, rel(NP, Cl), x(NP, F, Cl)) --> ty_np(L, NP, F, r).
@@ -2088,7 +2131,7 @@ ty_rel_slot(rel(_, _)).
 %% last word takes a linked form before the clause (ty_linked(persian, n,
 %% r, From, To): `سگی که پسر می‌بیند', the dog that the boy sees).
 %% The relative clause of an object or a predicate may stand after the
-%% verb (ty_relative_after/2, below).
+%% verb (ty_relative_after/3, below).
 
 ty_rel(L, Role, rel(NP, C), Features) -->
     ty_rel_open(L),
@@ -2110,17 +2153,18 @@ ty_rel_tail(L, x(NP, Features, C)) -->
     ty_rel_parts(Order, L, none, NP, Features, C1, m(Ws, R)),
     { ty_rel_marker_ok(L, R, Features, Ws) }.
 
-%% THE RELATIVE CLAUSE OF AN OBJECT OR A PREDICATE AFTER THE VERB:
-%% ty_relative_after(L, Part), Part o (a verb clause's object) or p (a
-%% copula clause's predicate), moves the clause to the end of its clause,
-%% the head staying where its part stands (Persian `دختر سگ سیاهی را
-%% می‌بیند که می‌خوابد', `سگ حیوانی است که می‌خوابد'). The part becomes the
-%% head (oh(X), ph(X)), and the tail (ot(X), pt(X)) goes last. It is
-%% written first, and the clause in place is read too. Reading, it is
-%% tried only where a marker word is among the words left; the rel order
-%% must begin with the head.
+%% THE RELATIVE CLAUSE AFTER THE VERB: ty_relative_after(L, Part, Rank),
+%% Part s (a subject), o (a verb clause's object) or p (a copula clause's
+%% predicate), moves the clause to the end of its clause, the head staying
+%% where its part stands (Persian `دختر سگ سیاهی را می‌بیند که می‌خوابد',
+%% `سگ حیوانی است که می‌خوابد', `سگی می‌خوابد که پسر می‌بیند'). The part
+%% becomes the head (sh(X), oh(X), ph(X)), and the tail (st(X), ot(X),
+%% pt(X)) goes last. Rank first: it is written, and the clause in place is
+%% read too; second: the clause in place is written, and this one read
+%% (Persian's subject). Reading, it is tried only where a marker word is
+%% among the words left; the rel order must begin with the head.
 ty_extraposed(L, Part, X, Order0, Order, S0, S0) :-
-    (   ty_relative_after(L, Part),
+    (   ty_relative_after(L, Part, Rank),
         ty_order_at(L, rel, [h|_]),
         (   nonvar(X) -> X = rel(_, _)
         ;   nonvar(S0) -> ty_marker_ahead(L, S0)
@@ -2128,15 +2172,21 @@ ty_extraposed(L, Part, X, Order0, Order, S0, S0) :-
         ),
         ty_head_tail(Part, Head, Tail),
         append(Before, [Part|After], Order0)
-    ->  (   append(Before, [Head|After], Order1),
-            append(Order1, [Tail], Order)
-        ;   Order = Order0
+    ->  append(Before, [Head|After], Order1),
+        append(Order1, [Tail], Moved),
+        (   Rank == first
+        ->  ( Order = Moved ; Order = Order0 )
+        ;   ( Order = Order0 ; Order = Moved )
         )
     ;   Order = Order0
     ).
 
+ty_head_tail(s, sh(X), st(X)).
 ty_head_tail(o, oh(X), ot(X)).
 ty_head_tail(p, ph(X), pt(X)).
+
+%% The head of a subject whose relative clause stands after the verb.
+ty_subject_head(L, rel(NP, Cl), x(NP, F, Cl)) --> ty_marked_np(L, s, NP, F, r).
 
 %% Reading, a relative clause starts only where it may:
 %%   - not where one is open that has read no word yet: in an order with
@@ -2231,12 +2281,12 @@ ty_gap_rule(L, pp, Rule) :-
     ty_gap(L, pp, Rule0),
     ( Rule0 == moves -> Rule = moves(_) ; Rule = Rule0 ).
 
-ty_gap_adjunct(Js0, Prep, G, Js) :-
-    (   var(Js0)
-    ->  Js0 = [pp(Prep, gap)], Js = [pp(Prep, G)]
-    ;   append(Before, [pp(Prep, gap)|After], Js0),
-        append(Before, [pp(Prep, G)|After], Js)
-    ).
+%% An adjunct's gap: the clause's adjuncts are gapped(Prep, Gap, Js), Js
+%% the IR's list with pp(Prep, gap) in it once, which ty_adjuncts//2 reads
+%% or writes beside the other adjuncts (`la casa en la que el perro duerme
+%% hoy').
+ty_gap_adjunct(Js0, Prep, G, gapped(Prep, G, Js0)) :-
+    (   var(Js0) -> true ; once(member(pp(Prep, gap), Js0)) ).
 
 %% A role's gap is a subject's or a plain object's.
 ty_role_gap(s).
@@ -2261,7 +2311,18 @@ ty_fitting(Table, F, Ws) :-
     once(( member(Need, Alternatives), ty_known_subset(Need, F) )).
 
 ty_known_subset(Need, F) :-
-    forall(member(X, Need), ( member(Y, F), Y == X )).
+    forall(member(X, Need), ( member(Y, F), ty_feature_is(X, Y) )).
+
+%% A row's condition: every feature of Need among the Features (a person
+%% is animate too).
+ty_features_have([], _).
+ty_features_have([X|Xs], F) :-
+    (   memberchk(X, F) -> true
+    ;   X == animate, memberchk(person, F)
+    ),
+    ty_features_have(Xs, F).
+
+ty_feature_is(X, Y) :- ( Y == X -> true ; X == animate, Y == person ).
 
 ty_rel_parts([], _, _, _, _, _, _) --> [].
 ty_rel_parts([P|Ps], L, Role, NP, F, C, M) -->
@@ -2317,7 +2378,7 @@ ty_rel_marker_ok(L, r(Pl, Rule), Features, Ws) :-
         ty_fits(R, Role)
     ),
     member(Need, Alternatives),
-    subset(Need, Features), !.
+    ty_features_have(Need, Features), !.
 
 %% The marks read are the ones the features need; in a repair, a mark
 %% missing or too many is a fault.
@@ -2337,7 +2398,7 @@ ty_mark_slot(_, _, _, []) --> [].
 ty_marks_needed(L, Role, Place, Features, Marks) :-
     findall(W, ( ty_mark(L, Role, Place, W, Alternatives),
                  member(Need, Alternatives),
-                 subset(Need, Features) ), Marks0),
+                 ty_features_have(Need, Features) ), Marks0),
     sort(Marks0, Marks).
 
 %% A noun phrase: its parts in an order the template keeps, then the check
@@ -2535,7 +2596,7 @@ ty_fits(X, X).
 %% the verbs' one the English import asks.
 
 :- dynamic tyi_entry/4, tyi_form/4, tyi_animate/1, tyi_gender/2, tyi_count/2,
-           tyi_hand/1, tyi_class/2, tyi_name/1, tyi_class_word/4.
+           tyi_hand/1, tyi_class/2, tyi_name/1, tyi_class_word/4, tyi_person/1.
 
 typology_import(Name) :-
     must_be(atom, Name),
@@ -2619,7 +2680,7 @@ ty_import_reset :-
 ty_import_reset_words :-
     retractall(tyi_entry(_, _, _, _)), retractall(tyi_form(_, _, _, _)),
     retractall(tyi_animate(_)), retractall(tyi_gender(_, _)),
-    retractall(tyi_class(_, _)), retractall(tyi_name(_)).
+    retractall(tyi_class(_, _)), retractall(tyi_name(_)), retractall(tyi_person(_)).
 
 ty_count(What) :-
     (   retract(tyi_count(What, N0)) -> N is N0 + 1 ; N = 1 ),
@@ -2660,7 +2721,7 @@ ty_form_relation(' is the plural of ', plural).
 ty_form_relation(' is the past of ', past).
 
 ty_says(' is animate.', tyi_animate(W), W).
-ty_says(' is a person.', tyi_animate(W), W).
+ty_says(' is a person.', tyi_person(W), W).
 ty_says(' is feminine.', tyi_gender(W, f), W).
 ty_says(' is not feminine.', tyi_gender(W, m), W).
 
@@ -2726,6 +2787,14 @@ ty_class_shared(Src-W, C, M) :-
 
 ty_single(W) :- \+ sub_atom(W, _, _, _, ' ').
 
+%% A word's animacy as the vocabulary says it: a person (`"niño" is a
+%% person.'), animate (`"perro" is animate.'), or unknown.
+ty_word_animacy(W, Anim) :-
+    (   tyi_person(W) -> Anim = person
+    ;   tyi_animate(W) -> Anim = animate
+    ;   Anim = unknown
+    ).
+
 ty_once_form(Kind, Class, Of, Form) :- once(( tyi_form(Kind, Form, Of, Class), ty_single(Form) )).
 
 %% The rows of a language that has a vocabulary.
@@ -2737,7 +2806,7 @@ ty_import_row(L, ty_noun(L, M, G, Anim, W, P)) :-
     ;   ty_count(noun_with_no_gender), fail
     ),
     (   ty_once_form(plural, noun, W, P) -> true ; ty_count(noun_with_no_plural), fail ),
-    (   tyi_animate(W) -> Anim = animate ; Anim = unknown ),
+    ty_word_animacy(W, Anim),
     (   tyi_hand(ty_noun(L, M, _, _, W, _)) -> ty_count(noun_in_the_hand_template), fail ; true ).
 ty_import_row(L, ty_adjective(L, M, G, N, W)) :-
     setof(M0, G0^W0^tyi_entry(adjective, G0, W0, M0), Ms),
@@ -2790,7 +2859,10 @@ ty_english_row(ty_noun(english, M, none, Anim, M, P)) :-
     ty_single(M),
     \+ tyi_hand(ty_noun(english, M, _, _, _, _)),
     ty_apply_ending(english, plural, M, P),
-    (   tyi_entry(noun, _, W, M), tyi_animate(W) -> Anim = animate ; Anim = unknown ).
+    (   tyi_entry(noun, _, W, M), tyi_person(W) -> Anim = person
+    ;   tyi_entry(noun, _, W, M), tyi_animate(W) -> Anim = animate
+    ;   Anim = unknown
+    ).
 ty_english_row(ty_adjective(english, M, any, any, M)) :-
     setof(M0, G^W^tyi_entry(adjective, G, W, M0), Ms),
     member(M, Ms),

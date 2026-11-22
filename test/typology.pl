@@ -584,7 +584,55 @@ gaps :-
                  memberchk(M, [bad(ty_gap(tiny, o, moves)), resumptive_pronoun]) ), M3),
     retractall(ty_gap(tiny, _, _)),
     check('typology_check/2: moves is no object''s rule, and a resumptive gap needs a pronoun', M3,
-          [resumptive_pronoun, bad(ty_gap(tiny, o, moves))]).
+          [resumptive_pronoun, bad(ty_gap(tiny, o, moves))]),
+    more_gaps.
+
+%% 1.31.0: an adjunct's gap beside other adjuncts, a subject's relative
+%% clause after the verb (read), and a person apart from an animal.
+more_gaps :-
+    B = np(boy, sg, def, []), D = np(dog, sg, def, []),
+    Today = clause(see, present, pos, B, rel(np(house, sg, def, []),
+                                           clause(sleep, present, pos, D, none, [pp(in, gap), adv(today)]))),
+    written_each(more_gaps, [
+        Today-
+            [english-'The boy sees the house that the dog sleeps in today.',
+             spanish-'El niño ve la casa en la que el perro duerme hoy.',
+             italian-'Il ragazzo vede la casa in cui il cane dorme oggi.',
+             persian-'پسر خانه‌ای را می‌بیند که سگ در آن امروز می‌خوابد.'],
+        clause(sleep, present, pos, rel(D, clause(think, present, pos, B, gap)), none)-
+            [persian-'سگی که پسر به آن فکر می‌کند می‌خوابد.'],
+        clause(sleep, present, pos, rel(np(girl, pl, def, []), clause(think, present, pos, B, gap)), none)-
+            [persian-'دخترهایی که پسر به آنها فکر می‌کند می‌خوابند.'] ]),
+    %% A moved adposition's gap is the first adjunct: one reading.
+    findall(Js, ( typology_read(spanish, 'El niño ve la casa en la que el perro duerme hoy.', IR1),
+                  IR1 = clause(see, _, _, np(boy, _, _, _), rel(np(house, _, _, _), clause(_, _, _, _, _, Js))) ), Jss1),
+    sort(Jss1, Jss1s),
+    check('Spanish: hoy of the relative clause is read once, after its gap', Jss1s,
+          [[pp(in, gap), adv(today)]]),
+    ( typology_write(spanish, clause(see, present, pos, B, rel(np(house, sg, def, []),
+             clause(sleep, present, pos, D, none, [adv(today), pp(in, gap)]))), _) -> R2 = written ; R2 = not_written ),
+    check('Spanish: a moved gap after another adjunct is no IR of a sentence', R2, not_written),
+    %% A subject's relative clause after the verb: Persian reads it and
+    %% writes the clause in place.
+    Subj = clause(sleep, present, pos, rel(D, clause(see, present, pos, B, gap)), none),
+    ( typology_read(persian, 'سگی می‌خوابد که پسر می‌بیند.', Subj) -> R3 = read ; R3 = not_read ),
+    check('Persian: a subject''s relative clause after the verb is read', R3, read),
+    typology_write(persian, Subj, P4),
+    check('Persian: and written in place', P4, 'سگی که پسر می‌بیند می‌خوابد.'),
+    ( typology_read(persian, 'پسری بزرگ است که سگ را می‌بیند.',
+                    copula(present, pos, rel(B, clause(see, present, pos, gap, D)), adj([big]))) -> R5 = read ; R5 = not_read ),
+    check('Persian: a copula''s subject too', R5, read),
+    %% A person is animate to every rule, and Persian's pronoun tells them.
+    ( typology_read(persian, 'سگی که پسر به او فکر می‌کند می‌خوابد.', _) -> R6 = read ; R6 = refused ),
+    check('Persian: او is no animal''s', R6, refused),
+    findall(A, ( member(M, [boy, dog, book]), ty_noun(english, M, _, A, _, _) ), As7),
+    check('English: a person, an animal, a thing', As7, [person, animate, inanimate]),
+    typology_write(spanish, clause(see, present, pos, D, np(girl, sg, def, [])), S8),
+    check('Spanish: a person takes the personal a', S8, 'El perro ve a la niña.'),
+    assertz(ty_relative_after(tiny, s, third)),
+    findall(M9, ( typology_check(tiny, Ms9), member(M9, Ms9), M9 = bad(ty_relative_after(_, _, _)) ), M9s),
+    retractall(ty_relative_after(tiny, _, _)),
+    check('typology_check/2: a rank is first or second', M9s, [bad(ty_relative_after(tiny, s, third))]).
 
 %% ---- a verb's complement ---------------------------------------------------------------
 

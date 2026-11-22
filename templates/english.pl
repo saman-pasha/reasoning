@@ -5,23 +5,23 @@
 ty_order(english, clause, [s, v, o]).
 ty_order(english, np, [d, a, n]).
 
-%% The nouns: Meaning, Gender (English has none), Animacy, Singular, Plural.
+%% The nouns: Meaning, Gender (English has none), Animacy (person, animate, inanimate; a person is animate too), Singular, Plural.
 ty_noun(english, dog, none, animate, dog, dogs).
 ty_noun(english, cat, none, animate, cat, cats).
-ty_noun(english, boy, none, animate, boy, boys).
-ty_noun(english, girl, none, animate, girl, girls).
+ty_noun(english, boy, none, person, boy, boys).
+ty_noun(english, girl, none, person, girl, girls).
 ty_noun(english, book, none, inanimate, book, books).
 ty_noun(english, mouse, none, animate, mouse, mice).
 
 %% Plurals the ending rules below would get wrong.
-ty_noun(english, man, none, animate, man, men).
-ty_noun(english, woman, none, animate, woman, women).
-ty_noun(english, child, none, animate, child, children).
-ty_noun(english, person, none, animate, person, people).
+ty_noun(english, man, none, person, man, men).
+ty_noun(english, woman, none, person, woman, women).
+ty_noun(english, child, none, person, child, children).
+ty_noun(english, person, none, person, person, people).
 ty_noun(english, foot, none, inanimate, foot, feet).
 ty_noun(english, tooth, none, inanimate, tooth, teeth).
 ty_noun(english, goose, none, animate, goose, geese).
-ty_noun(english, wife, none, animate, wife, wives).
+ty_noun(english, wife, none, person, wife, wives).
 ty_noun(english, knife, none, inanimate, knife, knives).
 ty_noun(english, life, none, inanimate, life, lives).
 ty_noun(english, leaf, none, inanimate, leaf, leaves).

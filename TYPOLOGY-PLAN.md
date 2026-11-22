@@ -105,7 +105,7 @@ Spanish and Italian apocope (`gran`). Then `cat` goes into Persian, and
 Italian nouns that start with `s` and a consonant, `z` or a vowel are
 right.
 
-## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.30.0)
+## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.31.0)
 
 Done:
 
@@ -280,6 +280,23 @@ Done:
    (whose object's marker of no words tries a relative clause after each
    noun phrase), the clock the same in all four.
 
+13. **More of the gap, and the person** (1.31.0). An adjunct's gap stands
+   beside other adjuncts (`la casa en la que el perro duerme hoy`): the
+   clause's adjuncts are `gapped(Prep, Gap, Js)` inside the clause, the
+   IR's list with `pp(Prep, gap)` in it once, and a gap that writes
+   nothing stands first, so a sentence is one reading. A subject's
+   relative clause after the verb is read: `ty_relative_after(L, Part,
+   Rank)` takes a rank, `first` (written, the clause in place read too)
+   or `second` (the clause in place written, this one read), and Persian
+   reads `سگی می‌خوابد که پسر می‌بیند` (rank second). Animacy has a value
+   `person`, a kind of animate to every row and role that asks animate
+   (Spanish `a`, the roles of `see`), and a row may ask it: Persian `او`
+   is a person's pronoun, `آن` an animal's or a thing's (`سگی که پسر به آن
+   فکر می‌کند`, `دختری که پسر به او فکر می‌کند`). The import writes
+   `person` for `"niño" is a person.` (921 Spanish rows, 833 Italian, 826
+   English), and the hand templates' people are persons. The round trips
+   cost 0.5 to 2 % more inferences than 1.30.0.
+
 Not yet:
 
 3. A German or a French template:
@@ -289,12 +306,8 @@ Not yet:
    every question word at the front (Bulgarian, Russian), a slot of its
    own; an answer that repeats the verb (Portuguese `Vejo.`, Irish) and
    English `Yes, he does.`, which wait for pronouns.
-5. What the gap does not have yet: an adjunct's gap beside other
-   adjuncts, read (a reading takes the gap's adjunct as its clause's only
-   one); a gap inside a noun phrase of the clause (`whose`, Phase 5); a
-   subject's relative clause after the verb; a pronoun for a person apart
-   from an animal's (Persian `او` and `آن`: the features have animate
-   alone), which waits for a feature of its own.
+5. What the gap does not have yet: a gap inside a noun phrase of the
+   clause (`whose`).
 6. The topics the class lines do not give: the hand table's thirty rows,
    and every other meaning, are Phase 8's (a model fills a slot in live
    mode, with the reference sentences as its check). A meaning of its

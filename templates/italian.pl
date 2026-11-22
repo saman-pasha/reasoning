@@ -5,11 +5,11 @@
 ty_order(italian, clause, [s, v, o]).
 ty_order(italian, np, [d, n, a]).
 
-%% The nouns: Meaning, Gender, Animacy, Singular, Plural.
+%% The nouns: Meaning, Gender, Animacy (person, animate, inanimate; a person is animate too), Singular, Plural.
 ty_noun(italian, dog, m, animate, cane, cani).
 ty_noun(italian, cat, m, animate, gatto, gatti).
-ty_noun(italian, boy, m, animate, ragazzo, ragazzi).
-ty_noun(italian, girl, f, animate, ragazza, ragazze).
+ty_noun(italian, boy, m, person, ragazzo, ragazzi).
+ty_noun(italian, girl, f, person, ragazza, ragazze).
 ty_noun(italian, book, m, inanimate, libro, libri).
 ty_noun(italian, mouse, m, animate, topo, topi).
 ty_noun(italian, house, f, inanimate, casa, case).

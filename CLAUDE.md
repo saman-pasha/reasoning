@@ -186,6 +186,13 @@ Clause)`, by `ty_extraposed//5` in the verb clause, the copula clause and
 both questions): a new clause shape that has an object or a predicate
 calls it too. **A Persian head with `ی` reads definite and indefinite**
 (`ty_relative_bare/2`: `سگی که` is `the dog that` and `a dog that`).
+**A gapped list of adjuncts is taken only where it is bound** (1.31.0,
+`ty_adjuncts//2`'s third clause asks `nonvar`): an unbound list unified with
+`gapped(...)` too, and every main clause read tried it -- Spanish's round
+trips 13 % more inferences, the readings the same. **A person is animate**
+(1.31.0): a row's condition is `ty_features_have/2`, a role's and a
+pattern's animacy `ty_animacy_fits/2` and `ty_item_fits/3`; a new test of
+animacy asks one of them, never `memberchk(animate, F)`.
 
 **Every reader has two modes, static and live** (1.16.0; reason.pl's header,
 STATIC AND LIVE, and live.pl's). What a session must keep:

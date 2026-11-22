@@ -272,9 +272,10 @@ class_topics :-
 %% adposition stays (English `sleeps in'), moves into the marker with a
 %% relative pronoun of the head (ty_relative_pronoun/3: Spanish `en la
 %% que', Italian `in cui'), or stays with a pronoun (ty_resumptive/3:
-%% Persian `در آن'). ty_relative_after/2 puts the relative clause of an
+%% Persian `در آن'). ty_relative_after/3 puts the relative clause of an
 %% object or a predicate after the verb, as Persian does, and
-%% ty_relative_bare/2 drops Persian یک before it.
+%% ty_relative_bare/2 drops Persian یک before it. A person is an animacy
+%% of its own, animate to every rule, so Persian tells `او' from `آن'.
 gaps :-
     IR1 = clause(see, present, pos, np(boy, sg, def, []),
                  rel(np(house, sg, def, []),
@@ -286,7 +287,9 @@ gaps :-
            italian-'Il ragazzo vede la casa in cui il cane dorme.',
            persian-'پسر خانه‌ای را می‌بیند که سگ در آن می‌خوابد.' ]),
     typology_translate(spanish, persian, 'El perro es un animal que duerme.', P2),
-    must('a predicate''s relative clause after the copula', P2, 'سگ حیوانی است که می‌خوابد.').
+    must('a predicate''s relative clause after the copula', P2, 'سگ حیوانی است که می‌خوابد.'),
+    typology_translate(spanish, persian, 'El perro en el que el niño piensa duerme.', P3),
+    must('an animal''s pronoun is آن, a person''s او', P3, 'سگی که پسر به آن فکر می‌کند می‌خوابد.').
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
 %% anywhere and run is worth six repeated lines, and one that needs a support

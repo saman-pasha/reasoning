@@ -6,14 +6,14 @@
 ty_order(persian, clause, [s, o, v]).
 ty_order(persian, np, [d, n, a]).
 
-%% The nouns: Meaning, Gender (Persian has none), Animacy, Singular, Plural.
+%% The nouns: Meaning, Gender (Persian has none), Animacy (person, animate, inanimate; a person is animate too), Singular, Plural.
 ty_noun(persian, dog, none, animate, 'سگ', 'سگ‌ها').
 ty_noun(persian, mouse, none, animate, 'موش', 'موش‌ها').
 ty_noun(persian, cat, none, animate, 'گربه', 'گربه‌ها').
 ty_noun(persian, house, none, inanimate, 'خانه', 'خانه‌ها').
 ty_noun(persian, animal, none, animate, 'حیوان', 'حیوان‌ها').
-ty_noun(persian, boy, none, animate, 'پسر', 'پسرها').
-ty_noun(persian, girl, none, animate, 'دختر', 'دخترها').
+ty_noun(persian, boy, none, person, 'پسر', 'پسرها').
+ty_noun(persian, girl, none, person, 'دختر', 'دخترها').
 ty_noun(persian, book, none, inanimate, 'کتاب', 'کتاب‌ها').
 
 %% The adjectives do not change.
@@ -138,17 +138,21 @@ ty_linked(persian, a, r, 'و', 'ویی').
 %% The relative clause of an object or a predicate stands after the verb
 %% (`دختر سگ سیاهی را می‌بیند که می‌خوابد', `سگ حیوانی است که می‌خوابد'),
 %% and is read in place too; an indefinite head takes no یک before it
-%% (`حیوانی که'). The gap of an object is no word, or read as a pronoun
+%% (`حیوانی که'). A subject's relative clause after the verb is read
+%% (`سگی می‌خوابد که پسر می‌بیند'), and written in place. The gap of an
+%% object is no word, or read as a pronoun
 %% with its mark (`سگی که پسر آن را می‌بیند'); in an adposition phrase it
 %% is a pronoun (`خانه‌ای که سگ در آن می‌خوابد', `دختری که پسر به او فکر
-%% می‌کند'): `او' for a living thing, `آن' for a thing, `آنها' for several.
-ty_relative_after(persian, o).
-ty_relative_after(persian, p).
+%% می‌کند'): `او' for a person, `آن' for an animal or a thing, `آنها' for
+%% several.
+ty_relative_after(persian, o, first).
+ty_relative_after(persian, p, first).
+ty_relative_after(persian, s, second).
 ty_relative_bare(persian, indef).
 ty_gap(persian, o, gap).
 ty_gap(persian, o, resumptive).
 ty_gap(persian, pp, resumptive).
-ty_resumptive(persian, ['او'], [[animate, sg]]).
+ty_resumptive(persian, ['او'], [[person, sg]]).
 ty_resumptive(persian, ['آنها'], [[pl]]).
 ty_resumptive(persian, ['آن'], [[sg]]).
 

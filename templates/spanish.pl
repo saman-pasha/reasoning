@@ -5,11 +5,11 @@
 ty_order(spanish, clause, [s, v, o]).
 ty_order(spanish, np, [d, n, a]).
 
-%% The nouns: Meaning, Gender, Animacy, Singular, Plural.
+%% The nouns: Meaning, Gender, Animacy (person, animate, inanimate; a person is animate too), Singular, Plural.
 ty_noun(spanish, dog, m, animate, perro, perros).
 ty_noun(spanish, cat, m, animate, gato, gatos).
-ty_noun(spanish, boy, m, animate, niño, niños).
-ty_noun(spanish, girl, f, animate, niña, niñas).
+ty_noun(spanish, boy, m, person, niño, niños).
+ty_noun(spanish, girl, f, person, niña, niñas).
 ty_noun(spanish, book, m, inanimate, libro, libros).
 ty_noun(spanish, mouse, m, animate, ratón, ratones).
 ty_noun(spanish, house, f, inanimate, casa, casas).
