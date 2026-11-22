@@ -14,7 +14,7 @@
 main :-
     forall(member(L, [english, spanish, italian, persian]), typology_load(L)),
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
-                      copulas, adjuncts, meanings, questions, word_tables, reproduced, free_order,
+                      copulas, adjuncts, meanings, questions, repairs, word_tables, reproduced, free_order,
                       incomplete,
                       blank_template]),
            once(S)),
@@ -253,7 +253,7 @@ questions :-
              italian-'Chi vede il cane?', persian-'چه کسی سگ را می‌بیند؟'],
         question(clause(see, past, pos, G, wh(who)))-
             [english-'Who did the girl see?', spanish-'¿A quién vio la niña?',
-             italian-'Chi vide la ragazza?', persian-'دختر چه کسی را دید؟'],
+             italian-'La ragazza chi vide?', persian-'دختر چه کسی را دید؟'],
         question(clause(sleep, present, pos, D, none, [wh(where)]))-
             [english-'Where does the dog sleep?', spanish-'¿Dónde duerme el perro?',
              italian-'Dove dorme il cane?', persian-'سگ کجا می‌خوابد؟'],
@@ -280,10 +280,12 @@ questions :-
     check('Spanish: and never `to the dog''', R1b, [np(dog, sg, def, [])-[]]),
     once(typology_read(persian, 'آیا پسر سگ را می‌بیند؟', R2)),
     check('Persian: the particle آیا first', R2, question(clause(see, present, pos, B, D))),
-    findall(W3, ( typology_read(italian, 'Chi vede il ragazzo?', IR3),
-                  ( IR3 = question(clause(_, _, _, wh(_), _)) -> W3 = subject ; W3 = object ) ), W3s0),
-    sort(W3s0, W3s),
-    check('Italian: chi vede il ragazzo is who sees, and whom the boy sees', W3s, [object, subject]),
+    wh_roles('Chi vede il ragazzo?', W3s),
+    check('Italian: chi vede il ragazzo is who sees the boy, the order closest to the statement''s', W3s, [subject]),
+    wh_roles('Cosa vede il ragazzo?', W3bs),
+    check('Italian: cosa vede il ragazzo is what the boy sees, as a thing does not see', W3bs, [object]),
+    ( typology_read(spanish, 'El libro ve al perro.', _) -> R3c = read ; R3c = refused ),
+    check('Spanish: a book that sees is not read', R3c, refused),
     %% What the templates do not allow is not read.
     forall(member(L-T-Why,
                   [ english-'What the boy sees?'-'a question word at the front with no does',
@@ -364,6 +366,48 @@ meanings :-
     check('typology_check/2 names a sense the word lacks and an item that is none', Bad13,
           [bad(ty_sense(tiny, ta, adposition(to), [klass(verb)], [])),
            bad(ty_sense(tiny, ta, noun(dog), [], []))]).
+
+%% The role the question word has in every reading of an Italian question.
+wh_roles(T, Ws) :-
+    findall(W, ( typology_read(italian, T, question(clause(_, _, _, S, _))),
+                 ( S = wh(_) -> W = subject ; W = object ) ), Ws0),
+    sort(Ws0, Ws).
+
+%% ---- repairs ----------------------------------------------------------------------------
+
+repairs :-
+    section('a sentence the template does not allow, repaired'),
+    forall(member(L-T-Want-WantFs,
+                  [ spanish-'Los perro ven al gato.'-'Los perros ven al gato.'-[agreement(noun, perro)],
+                    spanish-'La niña pequeño duerme.'-'La niña pequeña duerme.'-[agreement(adjective)],
+                    spanish-'El niño ve el perro.'-'El niño ve al perro.'-[mark(o, [], [a])],
+                    spanish-'Los niños ve al gato.'-'Los niños ven al gato.'-[agreement(verb, [ve])],
+                    spanish-'El perro es en la casa.'-'El perro está en la casa.'-[copula([es])],
+                    spanish-'El niño ve al perro?'-'¿El niño ve al perro?'-[marks(question)],
+                    spanish-'¿Qué el niño ve?'-'¿Qué ve el niño?'-[question(wh, clause, unchanged)],
+                    english-'What the boy sees?'-'What does the boy see?'-[question(wh, clause, unchanged)],
+                    english-'Sees the boy the dog?'-'Does the boy see the dog?'-[question_form([sees])],
+                    english-'The dog black sleeps.'-'The black dog sleeps.'-[order(np, [d, n, a])],
+                    english-'Does the boy see the dog.'-'Does the boy see the dog?'-[mood(question)],
+                    italian-'Il ragazzo vede la cane.'-'Il ragazzo vede il cane.'-[agreement(article, la)],
+                    persian-'پسر می‌بیند سگ را.'-'پسر سگ را می‌بیند.'-[order(clause, [s, v, o])] ]),
+           ( ( once(typology_repair(L, T, _, Fs, F)) -> true ; F = none, Fs = none ),
+             atomic_list_concat([L, ': ', T, ' is ', Want], Label),
+             check(Label, F, Want),
+             atomic_list_concat([L, ': the faults of ', T], Label2),
+             check(Label2, Fs, WantFs) )),
+    once(typology_repair(italian, 'Il avvocato vede i studenti.', _, [sound(_)], F2)),
+    check('Italian: a form the next word chooses, il avvocato', F2, 'L\'avvocato vede gli studenti.'),
+    once(typology_repair(spanish, 'El niño ve qué.', _, Fs3, F3)),
+    check('Spanish: a question word in a statement, three faults', F3-Fs3,
+          '¿Qué ve el niño?'-[mood(question), wh_place(in_place), question(wh, clause, unchanged)]),
+    findall(F4, typology_repair(english, 'Boy sees the dog.', _, _, F4), F4s),
+    check('English: an article missing, two repairs of one fault', F4s,
+          ['The boy sees the dog.', 'A boy sees the dog.']),
+    once(typology_repair(spanish, 'El niño ve al perro.', _, Fs5, F5)),
+    check('a sentence the template allows needs no repair', F5-Fs5, 'El niño ve al perro.'-[]),
+    ( typology_repair(spanish, 'El niño ve un zzz.', _, _, _) -> R6 = repaired ; R6 = not ),
+    check('a word no table has is not repaired', R6, not).
 
 %% The object and the adjuncts of every reading of a Spanish sentence.
 object_parts(T, Ps) :-

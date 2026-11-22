@@ -102,6 +102,7 @@ main :-
     must('what the writer would not write is not read', R9, refused),
     meanings,
     questions,
+    repairs,
     format("~ndone~n", []).
 
 %% 10. A WORD WITH SEVERAL MEANINGS IN ONE PLACE. First the words around it
@@ -148,12 +149,28 @@ questions :-
     must('whom did the girl see, four times', Ts1,
          [ english-'Who did the girl see?',
            spanish-'¿A quién vio la niña?',
-           italian-'Chi vide la ragazza?',
+           italian-'La ragazza chi vide?',
            persian-'دختر چه کسی را دید؟' ]),
     typology_translate(english, spanish, 'Is the dog not big?', S2),
     must('a yes or no question, into Spanish', S2, '¿El perro no es grande?'),
     typology_translate(spanish, persian, '¿Dónde está el perro?', P3),
     must('a question word at the front, into Persian, where it stays in place', P3, 'سگ کجاست؟').
+
+%% 12. REPAIRS. Of several readings of a question the reader keeps the one
+%% whose order is closest to the statement's: `Chi vede il ragazzo?' is
+%% who sees the boy, so the writer puts whom the girl saw as `La ragazza
+%% chi vide?' (above). A sentence the template does not allow is read with
+%% the fewest faults -- each check of the template a second road that
+%% notes one -- and written as the template has it.
+repairs :-
+    once(typology_repair(spanish, 'Los perro ven al gato.', _, Fs1, T1)),
+    must('one fault, the noun: not the article and the verb, two', T1-Fs1,
+         'Los perros ven al gato.'-[agreement(noun, perro)]),
+    once(typology_repair(english, 'What the boy sees?', _, Fs2, T2)),
+    must('an English question with no does', T2-Fs2,
+         'What does the boy see?'-[question(wh, clause, unchanged)]),
+    once(typology_repair(persian, 'پسر می‌بیند سگ را.', _, Fs3, T3)),
+    must('a Persian verb before its object', T3-Fs3, 'پسر سگ را می‌بیند.'-[order(clause, [s, v, o])]).
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
 %% anywhere and run is worth six repeated lines, and one that needs a support

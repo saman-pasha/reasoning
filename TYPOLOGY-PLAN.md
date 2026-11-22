@@ -105,7 +105,7 @@ Spanish and Italian apocope (`gran`). Then `cat` goes into Persian, and
 Italian nouns that start with `s` and a consonant, `z` or a vowel are
 right.
 
-## Phase 4: more levels (in part done, reasoning 1.22.0 and 1.23.0)
+## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.24.0)
 
 Done:
 
@@ -148,6 +148,26 @@ Done:
    `ty_question_mark/3` (`¿ ?`, `؟`) give the words and the marks. A
    question word stands only where the kind put it, so a statement has
    none.
+   **Which noun is the subject** (1.24.0, the owner's): of several
+   readings of the same meanings the reader keeps the one whose order is
+   closest to the statement's (a question's cost: the pairs of parts it
+   puts the other way round), so `Chi vede il ragazzo?` is who sees the
+   boy; and a role is what its verb takes (`templates/roles.pl`,
+   `ty_role_animacy/3`: the subject of `see` is animate), so `Cosa vede il
+   ragazzo?` is what the boy sees, and `El libro ve al perro.` is not
+   read. The writer writes what a reader would read back first: whom the
+   girl saw is `La ragazza chi vide?` (`ty_wh(italian, after(s))`).
+7. **Repair** (1.24.0, the owner's): `typology_repair/5` reads a sentence
+   the template does not allow. Each check of the template -- an order, an
+   agreement, a mark, a copula's kind, a form the next word chooses, a
+   question's order, form or marks, the mood -- has a second road, taken
+   only where the first fails, that notes a fault; one fault is allowed,
+   then two, then three. The fewest faults win, weighed (a clause's order
+   and a mood count two), then the question's cost, then the most words
+   kept; the writer writes the IR as the template has it. `Los perro ven
+   al gato.` is `Los perros ven al gato.` (one fault, the noun), `What the
+   boy sees?` is `What does the boy see?`, `El niño ve qué.` is `¿Qué ve
+   el niño?`. A word no table has is not repaired.
 
 Not yet:
 

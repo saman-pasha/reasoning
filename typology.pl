@@ -123,8 +123,10 @@
 %%                                     positive, Words before its form Form
 %%                                     (English `does' before the base:
 %%                                     `Does the boy see the dog?')
-%%     ty_wh(L, Place)                 a question word stands at the front
-%%                                     or in place (in_place: Persian)
+%%     ty_wh(L, Place)                 a question word stands at the front,
+%%                                     in place (in_place: Persian), or
+%%                                     right after the subject (after(s):
+%%                                     Italian `La ragazza chi vide?')
 %%     ty_wh_word(L, Meaning, Words)   who, what, where, when
 %%     ty_question_mark(L, Open, Close)
 %%                                     the marks of a question (Spanish `¿'
@@ -163,7 +165,8 @@
 %%
 %%     typology_load(+Name)            consult templates/Name.pl, then
 %%                                     templates/Name-words.pl if it exists,
-%%                                     and templates/topics.pl once
+%%                                     and templates/topics.pl and
+%%                                     templates/roles.pl once
 %%     typology_import(+Name)          write templates/Name-words.pl
 %%     typology_import(+Name, +File)   or File, and report the counts
 %%     typology_languages(-Names)      the languages loaded
@@ -190,6 +193,13 @@
 %%                                     sentences in order, each read with
 %%                                     the topics of the sentences before it
 %%     typology_translate_text(+From, +To, +Texts, -Texts2)
+%%     typology_repair(+Name, +Text, -IR, -Faults, -Fixed)
+%%                                     a sentence the template does not
+%%                                     allow, read with the fewest faults
+%%                                     (an order, an agreement, a mark, a
+%%                                     form, a question's order or marks),
+%%                                     and written as the template has it;
+%%                                     Faults [] for one it allows
 %%
 %% A WORD WITH SEVERAL MEANINGS IN ONE PLACE of the grammar -- Spanish `a',
 %% the object's mark and `to', both after a verb and before a noun phrase;
@@ -213,6 +223,13 @@
 %%      context has the most of are kept; where the context has none of
 %%      any, every meaning is kept.
 %%
+%% OF SEVERAL READINGS OF A QUESTION THE READER KEEPS THE LEAST COSTLY of
+%% the same meanings: a question's cost is the pairs of the statement's
+%% parts its order puts the other way round, so the noun after an SVO verb
+%% is its object (`Chi vede il ragazzo?' is who sees the boy); a tie keeps
+%% every one. And a role is what its verb takes (templates/roles.pl:
+%% `Cosa vede il ragazzo?' is what the boy sees, as a thing does not see).
+%%
 %% A Sense is noun(M), adjective(M), verb(M), adverb(M), adposition(M),
 %% mark(Role) or copula(Kind). The writer writes the first way whose
 %% words, read in their context, give the IR back: `blade' in a sentence
@@ -233,7 +250,7 @@
                       typology_template/1, typology_check/2, typology_read/3,
                       typology_read/4, typology_write/3, typology_write/4,
                       typology_translate/4, typology_topics/2,
-                      typology_read_text/3, typology_translate_text/4,
+                      typology_read_text/3, typology_translate_text/4, typology_repair/5,
                       typology_import/1, typology_import/2 ]).
 
 :- use_module(library(reasoning/reason), [ reason_base/2 ]).
@@ -242,7 +259,8 @@
            ty_mark/5, ty_contraction/3, ty_negation/5, ty_ending/4,
            ty_letters/3, ty_before/5, ty_linked/5, ty_copula/6, ty_adposition/3,
            ty_adverb/3, ty_adjunct/2, ty_sense/5, ty_topic/2, ty_question/4,
-           ty_question_form/5, ty_wh/2, ty_wh_word/3, ty_question_mark/3.
+           ty_question_form/5, ty_wh/2, ty_wh_word/3, ty_question_mark/3,
+           ty_role_animacy/3.
 :- discontiguous ty_order/3, ty_noun/6, ty_adjective/5, ty_verb/6,
                  ty_article/5, ty_mark/5, ty_contraction/3, ty_negation/5,
                  ty_ending/4, ty_letters/3, ty_before/5, ty_linked/5, ty_copula/6,
@@ -268,7 +286,7 @@ ty_values(adjunct_place, [start, end, before(v), after(s)]).
 ty_values(predicate, [adj, np, pp]).
 ty_values(question_kind, [yes_no, wh]).
 ty_values(question_level, [clause, copula]).
-ty_values(wh_place, [front, in_place]).
+ty_values(wh_place, [front, in_place, after(s)]).
 ty_values(wh, [who, what, where, when]).
 
 %% ---- loading --------------------------------------------------------------------
@@ -283,6 +301,10 @@ typology_load(Name) :-
     ),
     (   \+ ty_topic(_, _), ty_file(topics, Topics)
     ->  consult(Topics)
+    ;   true
+    ),
+    (   \+ ty_role_animacy(_, _, _), ty_file(roles, Roles)
+    ->  consult(Roles)
     ;   true
     ).
 
@@ -319,7 +341,7 @@ typology_template(Name) :-
     forall(member(R, [unchanged, particle('Word', start), particle('Word', end), front(all), front(first)]),
            format("%% ty_question(~q, Kind, Level, ~q).~n", [Name, R])),
     format("%% where a question word stands (keep one):~n", []),
-    forall(member(Pl, [front, in_place]), format("%% ty_wh(~q, ~q).~n", [Name, Pl])),
+    forall(member(Pl, [front, in_place, after(s)]), format("%% ty_wh(~q, ~q).~n", [Name, Pl])),
     nl,
     forall(ty_row_shape(Shape), format("%% ~w~n", [Shape])).
 
@@ -455,16 +477,44 @@ typology_read(L, Text, IR, Topics) :-
     must_be(list, Topics),
     ty_surface(Text, Mood, Open, Close, Surface),
     ty_marks_fit(L, Mood, Open, Close),
+    (   Mood == question
+    ->  findall(C-IR0, ty_read_bases(L, Surface, Topics, Mood, IR0, C), All),
+        ty_least(All, IRs),
+        member(IR1, IRs)
+    ;   ty_read_bases(L, Surface, Topics, Mood, IR1, _)
+    ),
+    ty_ir_out(IR1, IR).
+
+%% The words as the tables have them, parsed in their context; C is the
+%% reading's cost, how far its order is from the statement's (0 for a
+%% statement).
+ty_read_bases(L, Surface, Topics, Mood, IR0, C) :-
     ty_unjoin(L, Surface, T1),
     ty_uncontract(L, T1, T2),
     ty_unsound(L, T2, Bases),
-    ty_write_tokens(L, Bases, Again),
-    Again == Surface,
+    ty_sound_ok(L, Bases, Surface),
     ty_new_context(Bases, Topics, Context),
     b_setval('$ty_context', Context),
-    ty_mood(Mood, L, IR0, Goal),
-    phrase(Goal, Bases),
-    ty_ir_out(IR0, IR).
+    ty_mood(Mood, L, IR0, C, Goal),
+    phrase(Goal, Bases).
+
+%% The writer writes the very words read; in a repair, a fault.
+ty_sound_ok(L, Bases, Surface) :-
+    ty_write_tokens(L, Bases, Again),
+    (   Again == Surface -> true ; ty_fault(sound(Again)) ).
+
+%% Of the readings Cost-IR, each that no reading of the same meanings
+%% (`ty_ir_senses/2': `vede' as see and as view are two) is under, once.
+ty_least(Pairs, Xs) :-
+    Pairs \== [],
+    findall(X, ( member(C-X, Pairs),
+                 ty_ir_senses(X, Ms),
+                 \+ ( member(C2-X2, Pairs), C2 < C, ty_ir_senses(X2, Ms) ) ), Xs0),
+    list_to_set(Xs0, Xs).
+
+ty_ir_senses(IR, Ms) :-
+    findall(M, ty_ir_meaning(IR, M), Ms0),
+    msort(Ms0, Ms).
 
 typology_write(L, IR, Text) :-
     typology_write(L, IR, Text, []).
@@ -476,21 +526,28 @@ typology_write(L, IR, Text, Topics) :-
     must_be(list, Topics),
     ty_ir_in(IR, IR0),
     ( IR0 = question(_) -> Mood = question ; Mood = statement ),
-    ty_mood(Mood, L, IR0, Goal),
+    ty_mood(Mood, L, IR0, _, Goal),
     b_setval('$ty_context', none),
     phrase(Goal, Tokens0),
-    ty_reads_as(Goal, Tokens0, Topics), !,
+    ty_reads_as(Mood, L, IR0, Tokens0, Topics), !,
     ty_write_tokens(L, Tokens0, Tokens),
     ty_text(L, Mood, Tokens, Text).
 
-ty_reads_as(Goal, Tokens, Topics) :-
+%% The words give the IR back, at a cost no other reading of them is under
+%% (`Chi vide la ragazza?' is who saw the girl, so whom the girl saw is
+%% written another way).
+ty_reads_as(Mood, L, IR0, Tokens, Topics) :-
     ty_new_context(Tokens, Topics, Context),
     \+ \+ ( b_setval('$ty_context', Context),
-           phrase(Goal, Tokens) ).
+           aggregate_all(min(C), ( ty_mood(Mood, L, IR0, C, G), phrase(G, Tokens) ), C1),
+           \+ ( C1 > 0,
+                ty_ir_senses(IR0, Ms),
+                ty_mood(Mood, L, IR2, C2, G2), phrase(G2, Tokens), C2 < C1,
+                ty_ir_senses(IR2, Ms) ) ).
 
-%% A statement is ty_sentence//2, a question ty_ask//2.
-ty_mood(statement, L, IR, ty_sentence(L, IR)).
-ty_mood(question, L, IR, ty_ask(L, IR)).
+%% A statement is ty_sentence//2, at cost 0; a question ty_ask//3.
+ty_mood(statement, L, IR, 0, ty_sentence(L, IR)).
+ty_mood(question, L, IR, C, ty_ask(L, IR, C)).
 
 %% A question's marks are the language's (ty_question_mark/3), a
 %% statement has none at its front.
@@ -874,6 +931,157 @@ ty_pattern_item(class(noun, F)) :- atom(F).
 
 %% ---- the grammar ---------------------------------------------------------------------
 
+%% ---- repair: a sentence the template does not allow --------------------------------
+%%
+%% The template's checks are where the reader refuses a sentence: an
+%% order, an agreement, a mark, a form the next word chooses, a question's
+%% order or its marks. In a repair each of them has a second road, taken
+%% only where the first fails, that reads on and notes a FAULT; the reader
+%% allows one fault, then two, then three (`$ty_fault_max'), keeps the
+%% readings with the fewest (and of those the least costly), and the
+%% writer writes each IR as the template has it:
+%%
+%%     ?- typology_repair(spanish, 'Los perro ven al gato.', IR, Fs, T).
+%%     Fs = [agreement(noun, perro)], T = 'Los perros ven al gato.'
+%%
+%% One fault rather than two (the article and the verb, `El perro ve al
+%% gato.') is the repair that changes the least. A word no table has is
+%% not repaired: the repair fails at once.
+
+typology_repair(L, Text, IR, Repairs, Fixed) :-
+    must_be(atom, L),
+    (   typology_read(L, Text, _)
+    ->  typology_read(L, Text, IR), Repairs = [], Fixed = Text
+    ;   ty_surface(Text, _, _, _, Surface),
+        ty_known_words(L, Surface),
+        ty_repairs(L, Text, Surface, Best),
+        member(Fixed-(IR-Repairs), Best)
+    ).
+
+%% The readings of the fewest faults, written, and ranked: the faults
+%% weighed (a clause's order and a mood are 2: `What the boy sees?' is
+%% `What does the boy see?', a question's order, not `What sees the boy?',
+%% the clause's), then the question's cost, then the most words of the
+%% sentence kept (`La niña pequeña duerme.', not `El niño pequeño
+%% duerme.', where `niña' is a child); one repair a text.
+ty_repairs(L, Text, Surface, Best) :-
+    ty_surface(Text, Mood0, Open, Close, _),
+    between(1, 3, Max),
+    findall(C-(IR-Fs), ty_lenient_read(L, Surface, Mood0, Open, Close, Max, IR, Fs, _, C), All),
+    All \== [], !,
+    findall(k(W, C, NK)-(Fixed-(IR-Fs)),
+            ( member(C-(IR-Fs), All),
+              typology_write(L, IR, Fixed),
+              ty_faults_weight(Fs, W),
+              ty_surface(Fixed, _, _, _, FixedWords),
+              ty_kept(FixedWords, Surface, 0, K), NK is -K ), Keyed),
+    keysort(Keyed, [Key-_|_]),
+    findall(X, member(Key-X, Keyed), Xs),
+    ty_one_a_text(Xs, [], Best).
+
+ty_faults_weight(Fs, W) :-
+    foldl([F, W0, W1]>>( ty_fault_weight(F, X), W1 is W0 + X ), Fs, 0, W).
+
+ty_fault_weight(order(clause, _), 2) :- !.
+ty_fault_weight(mood(_), 2) :- !.
+ty_fault_weight(_, 1).
+
+%% The words of Fixed that the sentence has (each once).
+ty_kept([], _, K, K).
+ty_kept([W|Ws], Have, K0, K) :-
+    (   selectchk(W, Have, Rest) -> K1 is K0 + 1 ; Rest = Have, K1 = K0 ),
+    ty_kept(Ws, Rest, K1, K).
+
+ty_one_a_text([], _, []).
+ty_one_a_text([F-X|Xs], Seen, Best) :-
+    (   memberchk(F, Seen)
+    ->  Best = Rest
+    ;   Best = [F-X|Rest]
+    ),
+    ty_one_a_text(Xs, [F|Seen], Rest).
+
+%% Every word is one the tables have, as some reading of it takes it apart
+%% (`nell'acqua' is `in', `l'' and `acqua'): a word no table has is no
+%% repair to search for.
+ty_known_words(L, Surface) :-
+    forall(member(W, Surface), ty_known_token(L, W)).
+
+ty_known_token(L, W) :-
+    ty_unjoin(L, [W], T1),
+    ty_uncontract(L, T1, T2),
+    ty_unsound(L, T2, Bs),
+    forall(member(B, Bs), ty_known_base(L, B)), !.
+
+ty_known_base(L, B) :-
+    (   member(C, [noun, adjective, verb, article, mark, adposition, adverb, copula]),
+        ty_word_class(L, C, B)
+    ;   ty_wh_word(L, _, Ws), memberchk(B, Ws)
+    ;   ty_question_form(L, _, _, Ws, _), memberchk(B, Ws)
+    ;   ty_question(L, _, _, particle(B, _))
+    ;   ty_verb(L, _, _, _, _, Ws), memberchk(B, Ws)
+    ), !.
+
+ty_lenient_read(L, Surface, Mood0, Open, Close, Max, IR, Fs, N, C) :-
+    b_setval('$ty_lenient', yes),
+    b_setval('$ty_fault_max', Max),
+    b_setval('$ty_faults', f([])),
+    ty_lenient_mood(L, Mood0, Open, Close, Mood),
+    ty_read_bases(L, Surface, [], Mood, IR0, C),
+    b_getval('$ty_faults', f(Fs0)),
+    reverse(Fs0, Fs),
+    length(Fs, N),
+    ty_ir_out(IR0, IR).
+
+%% The mood the marks say, its marks a fault where they are not the
+%% language's (`El niño ve al perro?'); or the other mood, a fault
+%% (`El niño ve qué.', `Does the boy see the dog.').
+ty_lenient_mood(L, Mood0, Open, Close, Mood) :-
+    (   Mood = Mood0,
+        (   ty_marks_fit(L, Mood, Open, Close) -> true ; ty_fault(marks(Mood)) )
+    ;   ty_other_mood(Mood0, Mood),
+        ty_fault(mood(Mood))
+    ).
+
+ty_other_mood(statement, question).
+ty_other_mood(question, statement).
+
+ty_lenient :- nb_current('$ty_lenient', yes).
+
+%% A fault noted, while the budget lasts. The list is kept inside f/1:
+%% cocolog 3.72.0's b_getval/2 of an atomic value (`[]') hands back the
+%% global's own cell, and a b_setval/2 of [F|Fs] over it made a cycle.
+ty_fault(F) :-
+    ty_lenient,
+    b_getval('$ty_faults', f(Fs)),
+    b_getval('$ty_fault_max', Max),
+    length(Fs, K), K < Max,
+    b_setval('$ty_faults', f([F|Fs])).
+
+%% An order the template keeps, or in a repair any other, a fault.
+ty_order_at(L, Level, Order) :-
+    (   ty_order(L, Level, Order)
+    ;   ty_lenient,
+        typology_choices(Level, Os), member(Order, Os),
+        \+ ty_order(L, Level, Order),
+        ty_fault(order(Level, Order))
+    ).
+
+ty_question_at(L, Kind, Level, Rule) :-
+    (   ty_question(L, Kind, Level, Rule)
+    ;   ty_lenient,
+        member(Rule, [unchanged, front(all), front(first)]),
+        \+ ty_question(L, Kind, Level, Rule),
+        ty_fault(question(Kind, Level, Rule))
+    ).
+
+ty_wh_at(L, Place) :-
+    (   ty_wh(L, Place)
+    ;   ty_lenient,
+        ty_values(wh_place, Ps), member(Place, Ps),
+        \+ ty_wh(L, Place),
+        ty_fault(wh_place(Place))
+    ).
+
 %% ---- questions ---------------------------------------------------------------------
 %%
 %% A question is a clause or a copula clause in an order its kind's rule
@@ -885,30 +1093,54 @@ ty_pattern_item(class(noun, F)) :- atom(F).
 %% first, and the IR is checked last: a yes or no question has no question
 %% word, a question with one has one.
 
-ty_ask(L, question(C)) --> ty_ask_clause(L, C).
-ty_ask(L, question(C)) --> ty_ask_copula(L, C).
+ty_ask(L, question(C), Cost) --> ty_ask_clause(L, C, Cost).
+ty_ask(L, question(C), Cost) --> ty_ask_copula(L, C, Cost).
 
-ty_ask_clause(L, C) -->
+ty_ask_clause(L, C, Cost) -->
     { C = clause(_, _, _, _, O, Js),
-      ty_order(L, clause, Order0),
+      ty_order_at(L, clause, Order0),
       ty_valency(Order0, O, Order1),
       ty_adjunct_order(L, Order1, Js, Order2),
       ty_ask_kind(C, Kind, Part),
       Q = q(_, _, _, _, _),
-      ty_ask_order(L, Kind, Part, clause, Order2, Order, Q) },
+      ty_ask_order(L, Kind, Part, clause, Order2, Order, Q),
+      ty_order_cost(Order, Order2, Cost) },
     ty_ask_parts(Order, L, C, Q),
-    { ty_wh_count(C, Kind) }.
+    { ty_wh_count(C, Kind),
+      ty_roles_ok(L, C) }.
 
-ty_ask_copula(L, C) -->
+ty_ask_copula(L, C, Cost) -->
     { C = copula(_, _, _, Pred),
-      ty_order(L, copula, Order0),
+      ty_order_at(L, copula, Order0),
       ty_ask_kind(C, Kind, Part),
       Q = q(_, _, _, Features, Rows),
-      ty_ask_order(L, Kind, Part, copula, Order0, Order, Q) },
+      ty_ask_order(L, Kind, Part, copula, Order0, Order, Q),
+      ty_order_cost(Order, Order0, Cost) },
     ty_ask_parts(Order, L, C, Q),
     { Features = [_, N, _, G],
       ty_predicate_ok(Pred, Rows, G, N),
       ty_wh_count(C, Kind) }.
+
+%% A question's cost: the pairs of the statement's parts it puts the other
+%% way round. Of several readings the reader keeps the least costly, so
+%% the part after an SVO verb is its object (`Chi vede il ragazzo?' is who
+%% sees the boy, at 0, not whom the boy sees, at 3); a tie keeps both.
+ty_order_cost(Order, Base, Cost) :-
+    ty_shared_parts(Order, Base, Shared),
+    ty_inversions(Shared, Base, 0, Cost).
+
+ty_shared_parts([], _, []).
+ty_shared_parts([P|Ps], Base, Shared) :-
+    (   memberchk(P, Base) -> Shared = [P|Rest] ; Shared = Rest ),
+    ty_shared_parts(Ps, Base, Rest).
+
+ty_inversions([], _, C, C).
+ty_inversions([P|Ps], Base, C0, C) :-
+    nth0(I, Base, P), !,
+    findall(x, ( member(Q, Ps), nth0(J, Base, Q), J < I ), Xs),
+    length(Xs, K),
+    C1 is C0 + K,
+    ty_inversions(Ps, Base, C1, C).
 
 %% The kind, and the part that holds the question word.
 ty_ask_kind(clause(_, _, _, S, O, Js), Kind, Part) :-
@@ -936,16 +1168,27 @@ ty_wh_in(copula(_, _, S, P)) :- ( S = wh(_) ; P = wh(_) ).
 ty_ask_order(L, wh, s, _, Order0, Order, q(unchanged, no, _, _, _)) :- !,
     (   ty_wh(L, front) -> ty_put_first(s, Order0, Order) ; Order = Order0 ).
 ty_ask_order(L, wh, Part, Level, Order0, Order, q(Rule, Moved, _, _, _)) :- !,
-    ty_question(L, wh, Level, Rule),
-    (   ty_wh(L, front)
-    ->  select(Part, Order0, Rest), !,
-        ty_ask_rule(Rule, Level, Rest, Rest1, Moved),
-        Order = [Part|Rest1]
-    ;   ty_ask_rule(Rule, Level, Order0, Order, Moved)
-    ).
+    ty_wh_at(L, Place),
+    ty_wh_order(Place, L, Part, Level, Order0, Order, Rule, Moved).
 ty_ask_order(L, yes_no, _, Level, Order0, Order, q(Rule, Moved, _, _, _)) :-
-    ty_question(L, yes_no, Level, Rule),
+    ty_question_at(L, yes_no, Level, Rule),
     ty_ask_rule(Rule, Level, Order0, Order, Moved).
+
+%% Where a question word stands: at the front, the rule on the rest; in
+%% place; or right after the subject, nothing else moved (Italian `La
+%% ragazza chi vide?', whom the girl saw, where `Chi vide la ragazza?'
+%% would be who saw her).
+ty_wh_order(front, L, Part, Level, Order0, [Part|Rest1], Rule, Moved) :-
+    ty_question_at(L, wh, Level, Rule),
+    once(select(Part, Order0, Rest)),
+    ty_ask_rule(Rule, Level, Rest, Rest1, Moved).
+ty_wh_order(in_place, L, _, Level, Order0, Order, Rule, Moved) :-
+    ty_question_at(L, wh, Level, Rule),
+    ty_ask_rule(Rule, Level, Order0, Order, Moved).
+ty_wh_order(after(s), _, Part, _, Order0, Order, unchanged, no) :-
+    once(select(Part, Order0, Rest)),
+    once(append(A, [s|B], Rest)),
+    append(A, [s, Part|B], Order).
 
 ty_put_first(P, Order0, [P|Rest]) :- select(P, Order0, Rest), !.
 
@@ -1016,8 +1259,7 @@ ty_ask_words(L, clause(V, T, P, Subj, _, _), Moved, Ws) :-
 ty_ask_words(L, copula(T, P, Subj, Pred), _, Ws) :-
     ty_subject_number(Subj, N),
     ty_predicate_kind(Pred, K),
-    ty_copula(L, K1, T, N, P, Ws),
-    ty_fits(K1, K).
+    ty_copula_lookup(L, K, _, T, N, P, Ws).
 
 ty_subject_number(np(_, N, _, _), N).
 ty_subject_number(W, sg) :- nonvar(W), W = wh(_).
@@ -1026,6 +1268,19 @@ ty_subject_number(W, sg) :- nonvar(W), W = wh(_).
 %% question form if positive (`does see') and its negative if negative
 %% (`does not see', of which f takes `does').
 ty_ask_verb_form(L, V, T, N, P, Moved, Ws) :-
+    (   ty_ask_verb_strict(L, V, T, N, P, Moved, Ws)
+    *-> true
+    ;   ty_lenient,
+        (   nonvar(N), ty_other_number(N, N1),
+            ty_ask_verb_strict(L, V, T, N1, P, Moved, Ws),
+            ty_fault(agreement(verb, Ws))
+        ;   Moved == yes, once(ty_question_form(L, _, _, _, _)),
+            P = pos, ty_verb_form(L, V, T, N, pos, Ws),
+            ty_fault(question_form(Ws))
+        )
+    ).
+
+ty_ask_verb_strict(L, V, T, N, P, Moved, Ws) :-
     (   Moved == yes, once(ty_question_form(L, _, _, _, _))
     ->  (   P = pos, ty_question_verb(L, V, T, N, Ws)
         ;   P = neg, ty_verb_form(L, V, T, N, neg, Ws)
@@ -1055,14 +1310,34 @@ ty_sentence(L, IR) --> ty_copula_clause(L, IR).
 %% the template says (ty_adjunct/2); a language with no such row has none.
 ty_clause(L, C) -->
     { C = clause(_, _, _, _, O, Js),
-      ty_order(L, clause, Order0),
+      ty_order_at(L, clause, Order0),
       ty_valency(Order0, O, Order1),
       ty_adjunct_order(L, Order1, Js, Order) },
-    ty_clause_parts(Order, L, C).
+    ty_clause_parts(Order, L, C),
+    { ty_roles_ok(L, C) }.
+
+%% The subject is what its verb takes (templates/roles.pl: the subject of
+%% `see' is animate), asked of the IR once the clause is read.
+ty_roles_ok(L, clause(V, _, _, S, _, _)) :-
+    (   ty_role_animacy(V, s, A) -> ty_np_animacy(L, S, A) ; true ).
+
+ty_np_animacy(L, np(M, _, _, _), A) :-
+    once(( ty_noun(L, M, _, A1, _, _), ty_animacy_fits(A, A1) )).
+ty_np_animacy(_, wh(M), A) :-
+    ty_wh_features(M, [_, _, A1]),
+    ty_animacy_fits(A, A1).
+
+ty_animacy_fits(A, A).
+ty_animacy_fits(_, unknown).
 
 ty_adjunct_order(L, Order0, Js, Order) :-
     (   ty_adjunct(L, Place)
-    ->  ty_place_j(Place, Order0, Order)
+    ->  (   ty_place_j(Place, Order0, Order)
+        ;   ty_lenient,
+            ty_values(adjunct_place, Ps), member(P2, Ps), P2 \== Place,
+            ty_place_j(P2, Order0, Order),
+            ty_fault(adjunct_place(P2))
+        )
     ;   Js = [], Order = Order0
     ).
 
@@ -1100,7 +1375,7 @@ ty_adjunct_item(L, adv(M)) --> [W], { ty_adverb(L, M, W) }, ty_meant(L, adverb(M
 %% An adposition phrase: the adposition (p) and its noun phrase (x) in the
 %% order the template keeps, a preposition or a postposition.
 ty_pp(L, Prep, NP) -->
-    { ty_order(L, pp, Order) },
+    { ty_order_at(L, pp, Order) },
     ty_pp_parts(Order, L, Prep, NP).
 
 ty_pp_parts([], _, _, _) --> [].
@@ -1126,7 +1401,7 @@ ty_words(Min, Max, Ws, Lookup, S0, S) :-
 %% of no words is dropped. A predicate adjective agrees with the subject.
 ty_copula_clause(L, C) -->
     { C = copula(_, _, np(_, N, _, _), Pred),
-      ty_order(L, copula, Order) },
+      ty_order_at(L, copula, Order) },
     ty_copula_parts(Order, L, C, Features, Rows),
     { Features = [_, _, _, G],
       ty_predicate_ok(Pred, Rows, G, N) }.
@@ -1152,8 +1427,23 @@ ty_wh_kind(what, np).
 ty_wh_kind(where, pp).
 
 ty_copula_words(L, K, T, N, P) -->
-    ty_words(0, 3, Ws, ( ty_copula(L, K1, T, N, P, Ws), ty_fits(K1, K) )),
+    ty_words(0, 3, Ws, ty_copula_lookup(L, K, K1, T, N, P, Ws)),
     ty_meant(L, copula(K1), Ws).
+
+%% The copula of the predicate's kind and the subject's number; in a
+%% repair, the other number's or another kind's (Spanish `es' for a place)
+%% is a fault.
+ty_copula_lookup(L, K, K1, T, N, P, Ws) :-
+    (   ty_copula(L, K1, T, N, P, Ws), ty_fits(K1, K)
+    *-> true
+    ;   ty_lenient,
+        (   nonvar(N), ty_other_number(N, N1),
+            ty_copula(L, K1, T, N1, P, Ws), ty_fits(K1, K),
+            ty_fault(agreement(copula, Ws))
+        ;   ty_copula(L, K1, T, N, P, Ws), \+ ty_fits(K1, K),
+            ty_fault(copula(Ws))
+        )
+    ).
 
 ty_predicate(L, adj(As), Rows) --> { As = [_|_] }, ty_adjs(L, As, Rows).
 ty_predicate(L, np(M, N, D, A), []) --> ty_np(L, np(M, N, D, A), _).
@@ -1161,7 +1451,11 @@ ty_predicate(L, pp(Prep, NP), []) --> ty_pp(L, Prep, NP).
 ty_predicate(L, W, []) --> { nonvar(W), W = wh(M) }, ty_wh_words(L, M).
 
 ty_predicate_ok(adj(_), Rows, G, N) :- !,
-    forall(member(adj(RG, RN), Rows), ( ty_fits(RG, G), ty_fits(RN, N) )).
+    (   forall(member(adj(RG, RN), Rows), ( ty_fits(RG, G), ty_fits(RN, N) ))
+    ->  true
+    ;   ty_lenient,
+        ty_fault(agreement(adjective))
+    ).
 ty_predicate_ok(_, _, _, _).
 
 %% Reading, the words are taken first and looked up (one to four of them),
@@ -1170,10 +1464,24 @@ ty_predicate_ok(_, _, _, _).
 ty_verb_words(L, V, T, N, P, Words, S0, S) :-
     (   nonvar(S0)
     ->  between(1, 4, K), length(Words, K), append(Words, S, S0),
-        ty_verb_form(L, V, T, N, P, Words)
+        ty_verb_agree(L, V, T, N, P, Words)
     ;   ty_verb_form(L, V, T, N, P, Words),
         append(Words, S, S0)
     ).
+
+%% A verb read agrees with its subject's number; in a repair, one that
+%% does not is a fault.
+ty_verb_agree(L, V, T, N, P, Words) :-
+    (   ty_verb_form(L, V, T, N, P, Words)
+    *-> true
+    ;   ty_lenient, nonvar(N),
+        ty_other_number(N, N1),
+        ty_verb_form(L, V, T, N1, P, Words),
+        ty_fault(agreement(verb, Words))
+    ).
+
+ty_other_number(sg, pl).
+ty_other_number(pl, sg).
 
 %% A form the template lists, or a negative its negation rule makes from a
 %% positive form it lists.
@@ -1199,15 +1507,25 @@ ty_role(L, Role, W, [Def, N, Anim, _]) -->
     ty_mark_slot(L, Role, before, Before),
     ty_wh_words(L, M),
     ty_mark_slot(L, Role, after, After),
-    { ty_marks_needed(L, Role, before, [Def, N, Anim], Before),
-      ty_marks_needed(L, Role, after, [Def, N, Anim], After) }.
+    { ty_marks_ok(L, Role, before, [Def, N, Anim], Before),
+      ty_marks_ok(L, Role, after, [Def, N, Anim], After) }.
 
 ty_role(L, Role, NP, Features) -->
     ty_mark_slot(L, Role, before, Before),
     ty_np(L, NP, Features),
     ty_mark_slot(L, Role, after, After),
-    { ty_marks_needed(L, Role, before, Features, Before),
-      ty_marks_needed(L, Role, after, Features, After) }.
+    { ty_marks_ok(L, Role, before, Features, Before),
+      ty_marks_ok(L, Role, after, Features, After) }.
+
+%% The marks read are the ones the features need; in a repair, a mark
+%% missing or too many is a fault.
+ty_marks_ok(L, Role, Place, Features, Marks) :-
+    ty_marks_needed(L, Role, Place, Features, Needed),
+    (   Needed = Marks
+    ->  true
+    ;   ty_lenient,
+        ty_fault(mark(Role, Marks, Needed))
+    ).
 
 ty_mark_slot(L, Role, Place, [W]) -->
     [W], { ty_mark(L, Role, Place, W, _) },
@@ -1226,7 +1544,7 @@ ty_marks_needed(L, Role, Place, Features, Marks) :-
 %% gender (which a predicate adjective agrees with).
 ty_np(L, NP, [Def, N, Anim, G]) -->
     { NP = np(_, N, Def, _),
-      ty_order(L, np, Order) },
+      ty_order_at(L, np, Order) },
     ty_np_parts(Order, L, NP, got(Det, Noun, Adjs)),
     { Noun = noun(G, _),
       ty_np_ok(L, NP, Det, Noun, Adjs, Anim) }.
@@ -1241,7 +1559,7 @@ ty_np_part(d, _, L, _, got(Det, _, _)) --> ty_det(L, Det).
 ty_np_part(n, Ps, L, np(M, N, _, As), got(_, noun(G, A), _)) -->
     [W],
     { ty_linked_here(Ps, As, Linked),
-      ty_linked_word(L, n, a, Linked, W0, W, ty_noun_form(L, M, G, A, N, W0)) },
+      ty_linked_word(L, n, a, Linked, W0, W, ty_noun_lookup(L, M, G, A, N, W0)) },
     ty_meant(L, noun(M), [W]).
 ty_np_part(a, _, L, np(_, _, _, As), got(_, _, Rows)) --> ty_adjs(L, As, Rows).
 
@@ -1250,6 +1568,16 @@ ty_linked_here(_, _, no).
 
 %% Reading the word is bound and the table is asked by it; writing, by the
 %% meaning.
+%% In a repair a noun may stand for its other number too, a fault: `Los
+%% perro ven' is `Los perros ven', one fault, not `El perro ve', two.
+ty_noun_lookup(L, M, G, A, N, W) :-
+    (   ty_noun_form(L, M, G, A, N, W)
+    ;   ty_lenient,
+        ty_noun_form(L, M, G, A, N1, W),
+        ty_other_number(N1, N),
+        ty_fault(agreement(noun, W))
+    ).
+
 ty_noun_form(L, M, G, A, sg, W) :- ty_noun(L, M, G, A, W, _).
 ty_noun_form(L, M, G, A, pl, W) :- ty_noun(L, M, G, A, _, W).
 
@@ -1294,12 +1622,40 @@ ty_unlinked(L, C1, C2, W, W0) :-
     atom_concat(Stem, From, W0),
     W0 \== W.
 
-ty_np_ok(L, np(_, N, Def, _), Det, noun(G, Anim), Rows, Anim) :-
+ty_np_ok(L, NP, Det, Noun, Rows, Anim) :-
+    (   ty_np_agrees(L, NP, Det, Noun, Rows, Anim)
+    *-> true
+    ;   ty_lenient,
+        ty_np_faults(L, NP, Det, Noun, Rows, Anim)
+    ).
+
+ty_np_agrees(L, np(_, N, Def, _), Det, noun(G, Anim), Rows, Anim) :-
     ty_values(definiteness, Defs), member(Def, Defs),
     forall(member(adj(RG, RN), Rows), ( ty_fits(RG, G), ty_fits(RN, N) )),
     (   Det = art(W)
     ->  ty_article(L, Def, AG, AN, W), ty_fits(AG, G), ty_fits(AN, N)
     ;   \+ ( ty_article(L, Def, AG, AN, _), ty_fits(AG, G), ty_fits(AN, N) )
+    ).
+
+%% In a repair: an adjective or an article that does not agree, and a noun
+%% phrase with no article where it needs one, are each a fault; the
+%% article keeps its own definiteness.
+ty_np_faults(L, np(_, N, Def, _), Det, noun(G, Anim), Rows, Anim) :-
+    ty_values(definiteness, Defs), member(Def, Defs),
+    (   forall(member(adj(RG, RN), Rows), ( ty_fits(RG, G), ty_fits(RN, N) ))
+    ->  true
+    ;   ty_fault(agreement(adjective))
+    ),
+    (   Det = art(W)
+    ->  once(ty_article(L, Def, _, _, W)),
+        (   ty_article(L, Def, AG, AN, W), ty_fits(AG, G), ty_fits(AN, N)
+        ->  true
+        ;   ty_fault(agreement(article, W))
+        )
+    ;   (   \+ ( ty_article(L, Def, AG, AN, _), ty_fits(AG, G), ty_fits(AN, N) )
+        ->  true
+        ;   ty_fault(article(missing))
+        )
     ).
 
 ty_fits(any, _) :- !.

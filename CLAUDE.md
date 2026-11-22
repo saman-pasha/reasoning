@@ -98,7 +98,21 @@ asks `nonvar(W), W = wh(M)` first, so a statement, whose IR the reader
 leaves unbound, never reads one (`El niño ve qué.` is refused), and
 `ty_wh_count/2` holds a question to its kind at the end. A verb split by
 front(first) (`Does ... see`) asks no `ty_meant//3`: its first word is
-read before the lookup that names its meaning.
+read before the lookup that names its meaning. **A question's readings
+compete only with readings of the same meanings** (1.24.0, `ty_least/2`
+over `ty_ir_senses/2`, and the writer's check the same): ranked across
+meanings, `vede` as view (no role row) made `Cosa vede il ragazzo?` a
+thing that views the boy, cheaper than what the boy sees. **Every check of
+the template has its repair road** (1.24.0): a new check that can refuse a
+sentence takes its strict goal first and, only where that fails, `ty_lenient`
+and a `ty_fault/1` -- `( Strict *-> true ; ty_lenient, ..., ty_fault(F) )`
+for a test, a plain disjunction where both roads must be searched (an
+order, a noun's number) -- or `typology_repair/5` cannot get past it. **The
+faults are kept inside f/1** (`'$ty_faults'`): cocolog 3.72.0's b_getval/2
+of a global whose value is atomic (`[]`) hands back the global's own cell,
+and `b_setval(K, [F|Fs])` over it wrote a cycle (`b_setval(k, []),
+b_getval(k, A), b_setval(k, [x|A])` is `@(S_1,[S_1=[x|S_1]])`, SWI-Prolog
+9.0.4's `[x]`; a compound value is right).
 
 **Every reader has two modes, static and live** (1.16.0; reason.pl's header,
 STATIC AND LIVE, and live.pl's). What a session must keep:

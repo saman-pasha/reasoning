@@ -123,12 +123,15 @@ ty_adverb(italian, here, qui).
 
 %% Questions: a yes or no question in the statement's order; a question
 %% word at the front, the verb before the subject after it (`Cosa vede il
-%% ragazzo?'), `dove è' written `dov'è'.
+%% ragazzo?'), `dove è' written `dov'è'. `Chi vide la ragazza?' is who saw
+%% the girl, so whom the girl saw has the subject first: `La ragazza chi
+%% vide?'.
 ty_question(italian, yes_no, clause, unchanged).
 ty_question(italian, yes_no, copula, unchanged).
 ty_question(italian, wh, clause, front(all)).
 ty_question(italian, wh, copula, front(all)).
 ty_wh(italian, front).
+ty_wh(italian, after(s)).
 ty_wh_word(italian, who, [chi]).
 ty_wh_word(italian, what, [cosa]).
 ty_wh_word(italian, where, [dove]).
