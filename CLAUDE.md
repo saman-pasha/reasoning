@@ -147,7 +147,17 @@ in the object's place). **A verb's own polarity is `ty_verb_polarity/3`'s**
 (1.27.0): where `ty_negation_place/3` gives the negation a part of the
 order, `n(Words)`, the verb takes its positive form whatever the clause's
 polarity is, and the clause is negative by the parts' presence; a new
-lookup of a verb form by the clause's polarity asks it first.
+lookup of a verb form by the clause's polarity asks it first. **A question
+word is one of three shapes** (1.28.0): `wh(M)`, a noun phrase whose
+article is `which`, and an adposition phrase of one; `ty_is_asked/1` and
+`ty_is_asked_j/1` tell them, and `ty_wh_in/1` counts them for every
+question and statement. A new shape goes into both, and into `ty_asked/1`
+(the part that moves). Reading, a question word in place is bound before it
+is read (`ty_maybe_wh/1`), and `ty_wh_first/2` refuses a reading whose
+moved word is not the first of the subject, the object and the adjunct.
+**`which` is a definiteness** (`ty_values(definiteness, ...)`): it needs
+its article row (no noun phrase of `which` without its word), and its
+features say `def` to the marks and the relative markers.
 
 **Every reader has two modes, static and live** (1.16.0; reason.pl's header,
 STATIC AND LIVE, and live.pl's). What a session must keep:

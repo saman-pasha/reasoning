@@ -53,6 +53,9 @@ ty_article(italian, def, m, pl, i).
 ty_article(italian, def, f, pl, le).
 ty_article(italian, indef, m, sg, un).
 ty_article(italian, indef, f, sg, una).
+%% The article of a question (`Quale cane vede il ragazzo?').
+ty_article(italian, which, any, sg, quale).
+ty_article(italian, which, any, pl, quali).
 
 %% The articles by the sound of the next word: `lo', `gli' and `uno' before
 %% s and a consonant, z, gn, ps, pn, x and y; `l'' and `un'' before a vowel,
@@ -149,3 +152,7 @@ ty_relative(italian, any, [che], [[]]).
 ty_complement(italian, think, [a]).
 ty_complement(italian, depend, [da]).
 ty_complement_wh(italian, moves).
+
+%% The answer to a yes or no question (`Sì, il ragazzo vede il cane.').
+ty_answer(italian, yes, ['sì']).
+ty_answer(italian, no, [no]).

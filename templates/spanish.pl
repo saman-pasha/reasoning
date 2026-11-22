@@ -50,6 +50,8 @@ ty_article(spanish, def, m, pl, los).
 ty_article(spanish, def, f, pl, las).
 ty_article(spanish, indef, m, sg, un).
 ty_article(spanish, indef, f, sg, una).
+%% The article of a question (`¿Qué perro ve el niño?').
+ty_article(spanish, which, any, any, 'qué').
 
 %% The personal `a': before an animate object that is definite or
 %% singular (`ve al perro', `ve a una niña'; `ve perros', `ve un libro').
@@ -120,6 +122,7 @@ ty_sense(spanish, a, mark(o), [class(verb)], [opt(class(article)), class(noun, a
 ty_sense(spanish, a, mark(o), [class(noun), opt(class(article)), class(verb)],
          [opt(class(article)), class(noun, animate)]).
 ty_sense(spanish, a, mark(o), [], ['quién']).
+ty_sense(spanish, a, mark(o), [], ['qué', class(noun, animate)]).
 ty_sense(spanish, a, adposition(to), [], []).
 
 %% Questions: `¿' and `?'; a yes or no question in the statement's order,
@@ -150,3 +153,7 @@ ty_complement(spanish, think, [en]).
 ty_complement(spanish, depend, [de]).
 ty_complement(spanish, dream, [con]).
 ty_complement_wh(spanish, moves).
+
+%% The answer to a yes or no question (`Sí, el niño ve al perro.').
+ty_answer(spanish, yes, ['sí']).
+ty_answer(spanish, no, [no]).

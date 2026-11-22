@@ -59,6 +59,9 @@ ty_verb(persian, look, past, pl, neg, ['نگاه', 'نکردند']).
 
 %% No definite article; `یک' before a singular indefinite noun.
 ty_article(persian, indef, any, sg, 'یک').
+%% The article of a question (`پسر کدام سگ را می‌بیند؟'): a noun phrase
+%% of کدام is definite to را.
+ty_article(persian, which, any, any, 'کدام').
 
 %% `را' after a definite object.
 ty_mark(persian, o, after, 'را', [[def]]).
@@ -137,3 +140,11 @@ ty_linked(persian, a, r, 'و', 'ویی').
 ty_complement(persian, think, ['به']).
 ty_complement(persian, look, ['به']).
 ty_complement_wh(persian, moves).
+
+%% The answer to a yes or no question, with the Persian comma (`بله، پسر سگ
+%% را می‌بیند.'); a positive answer to a negative question is چرا, as
+%% French `si' and German `doch'.
+ty_answer(persian, yes, ['بله']).
+ty_answer(persian, no, ['نه']).
+ty_answer(persian, contradict, ['چرا']).
+ty_answer_mark(persian, '،').

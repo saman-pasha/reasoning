@@ -106,6 +106,7 @@ main :-
     relatives,
     complements,
     negation_place,
+    asking_and_answering,
     format("~ndone~n", []).
 
 %% 10. A WORD WITH SEVERAL MEANINGS IN ONE PLACE. First the words around it
@@ -232,6 +233,23 @@ negation_place :-
     must('no ve, with the negation at the end', T1, 'The boy sees the dog not.'),
     once(typology_read(nicht, 'The boys saw the dog not.', IR2)),
     must('and read back', IR2, clause(see, past, neg, np(boy, pl, def, []), np(dog, sg, def, []))).
+
+%% 16. ASKING AND ANSWERING. Several question words: the subject's moves,
+%% else the object's, else the adjunct's, and the others stay in place. A
+%% question word inside a noun phrase is its article `which' (np(dog, sg,
+%% which, [])), definite to the marks. The answer to a yes or no question
+%% is answer(Polarity, Asked): ty_answer/3 gives its words by the
+%% language's system, and Persian contradicts a negative question with چرا.
+asking_and_answering :-
+    IR1 = question(clause(see, present, pos, wh(who), wh(what))),
+    findall(L-T, ( member(L, [english, spanish, persian]), typology_write(L, IR1, T) ), Ts1),
+    must('who sees what: one question word moves', Ts1,
+         [english-'Who sees what?', spanish-'¿Quién ve qué?', persian-'چه کسی چه چیزی می‌بیند؟']),
+    typology_translate(spanish, english, '¿A qué perro ve el niño?', E2),
+    must('which dog, from Spanish', E2, 'Which dog does the boy see?'),
+    Q = question(clause(see, present, neg, np(boy, sg, def, []), np(dog, sg, def, []))),
+    findall(L-A, ( member(L, [english, persian]), typology_answer(L, Q, pos, A) ), As3),
+    must('yes, he does, to a negative question', As3, [english-'Yes.', persian-'چرا.']).
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
 %% anywhere and run is worth six repeated lines, and one that needs a support

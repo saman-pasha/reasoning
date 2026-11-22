@@ -15,6 +15,7 @@ main :-
     forall(member(L, [english, spanish, italian, persian]), typology_load(L)),
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, complements, negation_places,
+                      question_words, answers,
                       word_tables, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -613,6 +614,85 @@ negation_places :-
           'The boy sees the dog not.'),
     maplist([L, M]>>typology_check(L, M), [nicht, nepas], Ms),
     check('both templates are complete', Ms, [[], []]).
+
+%% ---- several question words, and `which' ----------------------------------------------
+
+question_words :-
+    section('several question words, and a question word inside a noun phrase'),
+    B = np(boy, sg, def, []), D = np(dog, sg, def, []),
+    written_each(question_words, [
+        question(clause(see, present, pos, wh(who), wh(what)))-
+            [english-'Who sees what?', spanish-'¿Quién ve qué?',
+             italian-'Chi vede cosa?', persian-'چه کسی چه چیزی می‌بیند؟'],
+        question(clause(see, present, pos, wh(who), wh(who)))-
+            [english-'Who sees who?', spanish-'¿Quién ve a quién?',
+             italian-'Chi vede chi?', persian-'چه کسی چه کسی را می‌بیند؟'],
+        question(clause(sleep, present, pos, wh(who), none, [wh(where)]))-
+            [english-'Who sleeps where?', spanish-'¿Quién duerme dónde?',
+             italian-'Chi dorme dove?', persian-'چه کسی کجا می‌خوابد؟'],
+        question(clause(see, present, pos, B, np(dog, sg, which, [])))-
+            [english-'Which dog does the boy see?', spanish-'¿A qué perro ve el niño?',
+             italian-'Il ragazzo quale cane vede?', persian-'پسر کدام سگ را می‌بیند؟'],
+        question(clause(see, past, pos, np(girl, pl, which, [small]), D))-
+            [english-'Which small girls saw the dog?', spanish-'¿Qué niñas pequeñas vieron al perro?',
+             italian-'Quali ragazze piccole videro il cane?', persian-'کدام دخترهای کوچک سگ را دیدند؟'],
+        question(clause(sleep, present, pos, D, none, [pp(in, np(house, sg, which, []))]))-
+            [english-'In which house does the dog sleep?', spanish-'¿En qué casa duerme el perro?',
+             italian-'In quale casa dorme il cane?', persian-'سگ در کدام خانه می‌خوابد؟'],
+        question(copula(present, pos, np(dog, sg, which, []), adj([big])))-
+            [english-'Which dog is big?', spanish-'¿Qué perro es grande?',
+             italian-'Quale cane è grande?', persian-'کدام سگ بزرگ است؟'],
+        question(clause(see, present, pos, np(boy, sg, which, []), wh(what)))-
+            [english-'Which boy sees what?', spanish-'¿Qué niño ve qué?',
+             italian-'Quale ragazzo vede cosa?', persian-'کدام پسر چه چیزی می‌بیند؟'] ]),
+    %% Refused: the object's question word moved over the subject's, a
+    %% question word in a statement.
+    forall(member(L-T, [ english-'What does who see?', english-'The boy sees which dog.',
+                         spanish-'¿Qué ve quién?', spanish-'El niño ve qué perro.' ]),
+           ( ( typology_read(L, T, _) -> R = read ; R = refused ),
+             atomic_list_concat([L, ': ', T], Label),
+             check(Label, R, refused) )),
+    typology_translate(english, persian, 'Which dog does the boy see?', P1),
+    check('English into Persian: the noun phrase of which stays in place, with را', P1,
+          'پسر کدام سگ را می‌بیند؟').
+
+%% ---- the yes or no answer -----------------------------------------------------------
+
+answers :-
+    section('the answer to a yes or no question'),
+    B = np(boy, sg, def, []), D = np(dog, sg, def, []),
+    written_each(answers, [
+        answer(pos, pos)-[english-'Yes.', spanish-'Sí.', italian-'Sì.', persian-'بله.'],
+        answer(neg, pos)-[english-'No.', spanish-'No.', italian-'No.', persian-'نه.'],
+        answer(pos, neg)-[persian-'چرا.'],
+        answer(pos, pos, clause(see, present, pos, B, D))-
+            [english-'Yes, the boy sees the dog.', spanish-'Sí, el niño ve al perro.',
+             italian-'Sì, il ragazzo vede il cane.', persian-'بله، پسر سگ را می‌بیند.'],
+        answer(neg, pos, clause(see, present, neg, B, D))-
+            [english-'No, the boy does not see the dog.', spanish-'No, el niño no ve al perro.',
+             italian-'No, il ragazzo non vede il cane.', persian-'نه، پسر سگ را نمی‌بیند.'],
+        answer(pos, neg, copula(present, pos, D, adj([big])))-
+            [english-'Yes, the dog is big.', persian-'چرا، سگ بزرگ است.'] ]),
+    Q = question(clause(see, present, neg, B, D)),
+    findall(L-A1-A2, ( member(L, [english, spanish, italian, persian]),
+                       typology_answer(L, Q, pos, A1), typology_answer(L, Q, neg, A2) ), As),
+    check('the answers to a negative question: Persian contradicts with چرا', As,
+          [english-'Yes.'-'No.', spanish-'Sí.'-'No.', italian-'Sì.'-'No.', persian-'چرا.'-'نه.']),
+    findall(R1, typology_read(english, 'Yes.', R1), R1s),
+    check('English yes answers a positive or a negative question', R1s,
+          [answer(pos, pos), answer(pos, neg)]),
+    ( typology_read(english, 'Yes, the boy does not see the dog.', _) -> R2 = read ; R2 = refused ),
+    check('a yes and a negative clause are refused', R2, refused),
+    %% An agreement system (as Japanese): yes agrees with the question.
+    english_rows_as(agree),
+    assertz(ty_answer(agree, yes, [yes])),
+    assertz(ty_answer(agree, no, [no])),
+    assertz(ty_answer_system(agree, agreement)),
+    findall(A3-A4, ( typology_answer(agree, Q, pos, A3), typology_answer(agree, Q, neg, A4) ), A34),
+    check('in an agreement system, to a negative question, he does is no and he does not yes', A34,
+          ['No.'-'Yes.']),
+    typology_check(agree, M5),
+    check('the agreement template is complete', M5, []).
 
 %% The English rows a test language is made of, under another name.
 english_rows_as(L) :-

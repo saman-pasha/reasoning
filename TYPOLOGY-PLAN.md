@@ -105,7 +105,7 @@ Spanish and Italian apocope (`gran`). Then `cat` goes into Persian, and
 Italian nouns that start with `s` and a consonant, `z` or a vowel are
 right.
 
-## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.27.0)
+## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.28.0)
 
 Done:
 
@@ -218,6 +218,23 @@ Done:
    four templates have no row: their negation stays a part of the verb's
    form, and they read and write as before. The test makes the two
    languages of the English rows; a repair moves a negation to its place.
+10. **Asking and answering** (1.28.0). Several question words in one
+   question: the subject's moves, else the object's, else the adjunct's,
+   and the others stay in place (`Who sees what?`, `¿Quién ve a quién?`,
+   `چه کسی چه چیزی می‌بیند؟`); `What does who see?` is refused. A question
+   word inside a noun phrase is its article, `which`, a third
+   definiteness (np(dog, sg, which, []), `ty_article(L, which, ...)`:
+   `which`, `qué`, `quale`/`quali`, `کدام`), definite to the marks
+   (`¿A qué perro ve el niño?`, `کدام سگ را`), and an adposition phrase
+   of one moves whole (`In which house does the dog sleep?`). The answer
+   to a yes or no question is `answer(Polarity, Asked)`, or
+   `answer(Polarity, Asked, Clause)` with its clause (`No, el niño no ve
+   al perro.`, the clause of the answer's polarity); `ty_answer/3` gives
+   the words, and `ty_answer_system/2` how they are chosen -- polarity
+   (yes for a positive answer; Persian contradicts a negative question
+   with `چرا`, as French `si`, German `doch`) or agreement (yes where the
+   answer agrees with the question, as Japanese `hai`). `typology_answer/4`
+   writes the short answer to a question.
 
 Not yet:
 
@@ -226,8 +243,10 @@ Not yet:
    می‌کند`), which 1.26.0 does not write. A German or a French template:
    the place of the negation is there for them, and German's `nicht`
    before a predicate (`ist nicht groß`) and its verb second are not.
-4. Questions of more than one question word, a question word inside a
-   noun phrase (`which dog`, `whose`), and the yes or no answer.
+4. `whose`, which waits for a possessor in the noun phrase (Phase 5);
+   every question word at the front (Bulgarian, Russian), a slot of its
+   own; an answer that repeats the verb (Portuguese `Vejo.`, Irish) and
+   English `Yes, he does.`, which wait for pronouns.
 5. A relative clause moved after its verb, which Persian does where the
    head is the predicate or the object (`سگ حیوانی است که می‌خوابد`, where
    1.25.0 writes `سگ یک حیوانی که می‌خوابد است.`); a gap in an adjunct

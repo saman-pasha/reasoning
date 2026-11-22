@@ -48,6 +48,8 @@ ty_verb(english, sleep, past, pl, pos, [slept]).
 %% The articles. A plural indefinite has none: `dogs'.
 ty_article(english, def, any, any, the).
 ty_article(english, indef, any, sg, a).
+%% The article of a question (`Which dog does the boy see?').
+ty_article(english, which, any, any, which).
 
 %% The negative: `does not', `do not', `did not' before the base, which is
 %% the present plural.
@@ -146,3 +148,8 @@ ty_complement(english, listen, [to]).
 ty_complement(english, depend, [on]).
 ty_complement(english, dream, [of]).
 ty_complement_wh(english, stays).
+
+%% The answer to a yes or no question (`Yes.', `No, the boy does not see
+%% the dog.'): `yes' for a positive answer, after a negative question too.
+ty_answer(english, yes, [yes]).
+ty_answer(english, no, [no]).
