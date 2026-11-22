@@ -278,3 +278,7 @@ ty_pronoun(french, j, [vous], [[2, pl]]).
 ty_pronoun(french, j, [eux], [[3, pl, m], [3, pl, n]]).
 ty_pronoun(french, j, [elles], [[3, pl, f]]).
 ty_clitic(french, o).
+
+%% A pronoun of the text takes the gender of the noun it stands for (a
+%% house is `la', a book `lo').
+ty_pronoun_gender(french, grammatical).

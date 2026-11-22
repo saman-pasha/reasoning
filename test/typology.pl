@@ -15,7 +15,7 @@ main :-
     forall(member(L, [english, spanish, italian, persian, french]), typology_load(L)),
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
-                      question_words, answers, pronouns, echoes, french,
+                      question_words, answers, pronouns, echoes, french, references,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -1162,6 +1162,46 @@ french :-
              check(Label, F, Want) )),
     typology_translate(french, spanish, 'La fille à qui le garçon pense dort.', S2),
     check('French into Spanish: à qui is en la que', S2, 'La niña en la que el niño piensa duerme.').
+
+%% ---- the pronoun of the text ---------------------------------------------------
+
+%% 1.37.0: a pronoun that refers back to a noun of the text,
+%% pron(3, Number, ref(Meaning)), and each language's kind for it.
+references :-
+    section('a pronoun that refers back to a noun of the text'),
+    typology_read_text(spanish, ['El niño ve la casa.', 'La ve.'], IRs1),
+    ( IRs1 =@= [clause(see, present, pos, np(boy, sg, def, []), np(house, sg, def, [])),
+                clause(see, present, pos, pron(3, sg, ref(boy)), pron(3, sg, ref(house)))] -> X1 = told ; X1 = IRs1 ),
+    check('Spanish: the subject no word says is the boy, la the house', X1, told),
+    forall(member(F-To-Ts-Want,
+                  [ spanish-english-['El niño ve la casa.', 'La ve.']-['The boy sees the house.', 'He sees it.'],
+                    english-spanish-['The girl sees the house.', 'She sees it.']-['La niña ve la casa.', 'La ve.'],
+                    english-italian-['The boy sees the book.', 'He sees it.']-['Il ragazzo vede il libro.', 'Lo vede.'],
+                    english-french-['The girl sees the house.', 'She sees it.']-['La fille voit la maison.', 'Elle la voit.'],
+                    spanish-english-['La niña ve al perro.', 'Lo ve.']-['The girl sees the dog.', 'She sees it.'],
+                    english-spanish-['The boy sees the girl.', 'She sleeps.', 'He sees her.']-
+                        ['El niño ve a la niña.', 'Duerme.', 'La ve.'],
+                    english-french-['The houses are big.', 'The boy sees them.']-
+                        ['Les maisons sont grandes.', 'Le garçon les voit.'],
+                    persian-english-['پسر سگ را می‌بیند.', 'آن را می‌بیند.']-['The boy sees the dog.', 'He sees it.'],
+                    persian-english-['دختر می‌خوابد.', 'او سگ را می‌بیند.']-['The girl sleeps.', 'She sees the dog.'],
+                    spanish-english-['El niño ve a su perro.']-['The boy sees his dog.'],
+                    english-spanish-['He sleeps.']-['Él duerme.'] ]),
+           ( typology_translate_text(F, To, Ts, Out),
+             atomic_list_concat(Ts, ' ', Tx),
+             atomic_list_concat([F, ' into ', To, ': ', Tx], Label),
+             check(Label, Out, Want) )),
+    IR2 = clause(see, present, pos, pron(3, sg, ref(girl)), pron(3, sg, ref(house))),
+    findall(L-T, ( member(L, [english, spanish, italian, french, persian]), typology_write(L, IR2, T) ), Ts2),
+    check('each language''s kind for the girl and the house', Ts2,
+          [english-'She sees it.', spanish-'La ve.', italian-'La vede.', french-'Elle la voit.',
+           persian-'آن را می‌بیند.']),
+    typology_write(spanish, clause(see, present, pos, np(boy, sg, def, []), of(pron(3, sg, m), np(dog, sg, def, []))), S3),
+    check('Spanish: a before a possessive pronoun and an animate noun is the mark', S3, 'El niño ve a su perro.'),
+    assertz(ty_pronoun_gender(tiny, both)),
+    findall(M, ( typology_check(tiny, Ms), member(M, Ms), M = bad(ty_pronoun_gender(_, _)) ), M4),
+    retractall(ty_pronoun_gender(tiny, _)),
+    check('typology_check/2: a pronoun''s gender system', M4, [bad(ty_pronoun_gender(tiny, both))]).
 
 %% A reading of a verb's other sense (`view' for `see', `little' for
 %% `small'): the checks above want the first sense's.

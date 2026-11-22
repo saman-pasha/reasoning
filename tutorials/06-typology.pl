@@ -114,6 +114,7 @@ main :-
     pronouns,
     echoes,
     french,
+    references,
     format("~ndone~n", []).
 
 
@@ -408,6 +409,24 @@ french :-
     must('dont', F4, 'La fille voit le garçon dont le chien dort.'),
     typology_translate(french, english, 'Est-ce que l\'homme dort?', E5),
     must('est-ce que, and l\'homme, into English', E5, 'Does the man sleep?').
+
+
+%% 24. A PRONOUN THAT REFERS BACK. typology_read_text/3 gives each pronoun of
+%% the third person the noun before it that it stands for, its kind
+%% ref(Meaning): the noun of its own role in the latest sentence first,
+%% one whose number and kind fit. Each language then takes its own kind
+%% for that noun: Spanish, Italian and French the noun's gender
+%% (ty_pronoun_gender/2: a house is `la'), English and Persian the
+%% meaning's (`it'); and a language that drops a subject drops one whose
+%% noun was said.
+references :-
+    typology_translate_text(spanish, english, ['El niño ve la casa.', 'La ve.'], E1),
+    must('la is the house, and the subject no word says the boy', E1,
+         ['The boy sees the house.', 'He sees it.']),
+    typology_translate_text(english, french, ['The girl sees the house.', 'She sees it.'], F2),
+    must('it is the house, so la', F2, ['La fille voit la maison.', 'Elle la voit.']),
+    typology_translate_text(english, italian, ['The boy sees the book.', 'He sees it.'], I3),
+    must('he is said, so no word; it is the book, so lo', I3, ['Il ragazzo vede il libro.', 'Lo vede.']).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

@@ -115,12 +115,13 @@ ty_adverb(spanish, here, aquí).
 
 %% A word with several meanings in one place: `a' after a verb and before an
 %% animate noun is the object's mark (`ve al perro'); anywhere else it is
-%% `to' (`ve a un libro': sees, to a book). The lookback may pass over the
+%% `to' (`ve a un libro': sees, to a book). A possessive pronoun may stand
+%% between (`ve a su perro'). The lookback may pass over the
 %% subject of a question (`¿Ve el niño al perro?'), and before `quién' it is
 %% the mark with no verb before it (`¿A quién ve el niño?').
-ty_sense(spanish, a, mark(o), [class(verb)], [opt(class(article)), class(noun, animate)]).
+ty_sense(spanish, a, mark(o), [class(verb)], [opt(class(article)), opt(class(possessive)), class(noun, animate)]).
 ty_sense(spanish, a, mark(o), [class(noun), opt(class(article)), class(verb)],
-         [opt(class(article)), class(noun, animate)]).
+         [opt(class(article)), opt(class(possessive)), class(noun, animate)]).
 ty_sense(spanish, a, mark(o), [], ['quién']).
 ty_sense(spanish, a, mark(o), [], ['qué', class(noun, animate)]).
 %% Before `cuyo' and an animate noun it is the mark too (`el niño a cuyo
@@ -284,3 +285,7 @@ ty_copula(spanish, pp, past, sg(1), pos, [estaba]).
 ty_copula(spanish, pp, past, sg(2), pos, [estabas]).
 ty_copula(spanish, pp, past, pl(1), pos, [estábamos]).
 ty_copula(spanish, pp, past, pl(2), pos, [estabais]).
+
+%% A pronoun of the text takes the gender of the noun it stands for (a
+%% house is `la', a book `lo').
+ty_pronoun_gender(spanish, grammatical).

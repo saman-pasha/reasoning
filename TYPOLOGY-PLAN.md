@@ -105,7 +105,7 @@ Spanish and Italian apocope (`gran`). Then `cat` goes into Persian, and
 Italian nouns that start with `s` and a consonant, `z` or a vowel are
 right.
 
-## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.36.0)
+## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.37.0)
 
 Done:
 
@@ -440,13 +440,30 @@ Done:
    (`À quoi pense le garçon?`), inversion with a pronoun (`Le garçon
    voit-il le chien?`), the passé composé, `qu'est-ce que`.
 
+19. **A pronoun that refers back** (1.37.0). `typology_read_text/3` gives
+   each pronoun of the third person the noun before it that it stands
+   for: its kind becomes `ref(Meaning)`, `pron(3, sg, ref(house))`. Of a
+   sentence's first eight readings it keeps the one whose pronouns find
+   the most nouns (Persian `او` is he and she: the reading the text's girl
+   fits). A pronoun looks in the sentences before it, the latest first,
+   the noun of its own role first; a possessive pronoun looks first in its
+   own sentence, outside its own phrase (`El niño ve a su perro.`, his
+   dog); a noun fits where its number and its kind are the pronoun's, the
+   kind the language's pronouns give it. `ty_pronoun_gender(L,
+   grammatical)` (Spanish, Italian, French): a pronoun takes the noun's
+   gender (a house is `la`); else the meaning's kind (`ty_meaning_kind/2`:
+   English `it`, Persian `آن`). A language that drops a subject drops one
+   whose noun was said (`She sleeps.` is `Duerme.`). A pronoun with no noun
+   before it is as it was read. Spanish `a` before a possessive pronoun
+   and an animate noun is the object's mark (`ve a su perro`: the sense
+   rules know the class `possessive`; through 1.36.0 the writer could not
+   write it).
+
 Not yet:
 
 3. A German template: the place of the negation is there for it, and
    German's `nicht` before a predicate (`ist nicht groß`), its verb second
    and its cases on the article are not.
-5. A pronoun that refers back to a noun of the text (which `his` is the
-   boy's), which the IR does not hold.
 6. The topics the class lines do not give: the hand table's thirty rows,
    and every other meaning, are Phase 8's (a model fills a slot in live
    mode, with the reference sentences as its check). A meaning of its

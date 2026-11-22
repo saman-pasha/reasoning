@@ -232,6 +232,11 @@
 %%                                     Persian ند made م: `می‌بینم')
 %%     ty_capital(L, Word, Written)    a word always written with its
 %%                                     capital (English `I')
+%%     ty_pronoun_gender(L, System)    a third person's pronoun of the text
+%%                                     takes the noun's gender (grammatical:
+%%                                     Spanish `la' for `la casa') or the
+%%                                     meaning's kind (natural, the default:
+%%                                     English `it')
 %%     ty_relative_possessive(L, Words, Conditions)
 %%                                     the pronoun of a moved possessor gap
 %%                                     (`whose', `cuyo', `il cui'), its
@@ -321,7 +326,9 @@
 %%                                     phrase stands: Person 1, 2, 3, Number
 %%                                     sg, pl, Kind m, f, n (a thing); a
 %%                                     reading leaves unbound what its words
-%%                                     do not tell (`you' is pron(2, _, _))
+%%                                     do not tell (`you' is pron(2, _, _));
+%%                                     Kind ref(Meaning) in a text's IR, the
+%%                                     noun the pronoun stands for
 %%
 %% WHAT IS PUBLIC:
 %%
@@ -356,6 +363,9 @@
 %%     typology_read_text(+Name, +Texts, -IRs)
 %%                                     sentences in order, each read with
 %%                                     the topics of the sentences before it
+%%                                     and each pronoun of the third person
+%%                                     given the noun before it that it
+%%                                     stands for, pron(3, N, ref(Meaning))
 %%     typology_translate_text(+From, +To, +Texts, -Texts2)
 %%     typology_repair(+Name, +Text, -IR, -Faults, -Fixed)
 %%                                     a sentence the template does not
@@ -446,7 +456,7 @@
            ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
            ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
            ty_pro_drop/2, ty_clitic/2, ty_verb_person/6, ty_capital/3,
-           ty_answer_echo/3, ty_kind/2, ty_adjective_before/2.
+           ty_answer_echo/3, ty_kind/2, ty_adjective_before/2, ty_pronoun_gender/2.
 :- discontiguous ty_order/3, ty_noun/6, ty_adjective/5, ty_verb/6,
                  ty_article/5, ty_mark/5, ty_contraction/3, ty_negation/5,
                  ty_ending/4, ty_letters/3, ty_before/5, ty_linked/5, ty_copula/6,
@@ -459,7 +469,7 @@
                  ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
                  ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
                  ty_pro_drop/2, ty_clitic/2, ty_verb_person/6, ty_capital/3,
-                 ty_answer_echo/3, ty_adjective_before/2.
+                 ty_answer_echo/3, ty_adjective_before/2, ty_pronoun_gender/2.
 
 %% ---- the levels and the values a slot takes -----------------------------------
 
@@ -603,6 +613,7 @@ ty_row_shape('ty_verb_person(L, Tense, Person, Base, From, To).').
 ty_row_shape('ty_capital(L, Word, Written).').
 ty_row_shape('ty_answer_echo(L, Rule, Word).').
 ty_row_shape('ty_adjective_before(L, Meaning).').
+ty_row_shape('ty_pronoun_gender(L, System).').
 
 %% ---- the check ----------------------------------------------------------------------
 
@@ -758,6 +769,9 @@ ty_missing(L, bad(ty_answer_echo(L, R, W))) :-
 ty_missing(L, bad(ty_adjective_before(L, A))) :-
     ty_adjective_before(L, A),
     \+ ty_adjective(L, A, _, _, _).
+ty_missing(L, bad(ty_pronoun_gender(L, S))) :-
+    ty_pronoun_gender(L, S),
+    \+ memberchk(S, [grammatical, natural]).
 ty_missing(L, clitic_pronoun) :-
     ty_clitic(L, o),
     \+ ty_pronoun(L, o, _, _).
@@ -939,13 +953,110 @@ typology_translate(From, To, Text, Text2) :-
 %% sentences before it.
 typology_read_text(L, Texts, IRs) :-
     must_be(list, Texts),
-    ty_read_text(Texts, L, [], IRs).
+    ty_read_text(Texts, L, [], [], IRs).
 
-ty_read_text([], _, _, []).
-ty_read_text([T|Ts], L, Topics0, [IR|IRs]) :-
-    once(typology_read(L, T, IR, Topics0)),
+ty_read_text([], _, _, _, []).
+ty_read_text([T|Ts], L, Topics0, Prev, [IR|IRs]) :-
+    once(findnsols(8, IR0, typology_read(L, T, IR0, Topics0), IRs0)),
+    IRs0 = [_|_],
+    ty_refer_best(IRs0, L, Prev, IR),
     ty_add_topics(IR, Topics0, Topics),
-    ty_read_text(Ts, L, Topics, IRs).
+    ty_read_text(Ts, L, Topics, [IR|Prev], IRs).
+
+%% THE NOUN A PRONOUN STANDS FOR. Of a sentence's first eight readings,
+%% the one whose pronouns of the third person find the most nouns before
+%% them (Persian `او' is he and she, two readings: the one the text's
+%% girl fits), the first of a tie; each pronoun found takes the kind
+%% ref(Meaning). A noun fits where its number is the pronoun's and the
+%% kind the language's pronouns give it (ty_ref_kind/3) the pronoun's:
+%% Spanish `la' is a feminine noun's, a house's too; English `it' a
+%% thing's or an animal's. A pronoun looks in the sentences before it, the
+%% latest first, the noun of its own role first (the subject's for a
+%% subject); a possessive pronoun in its own sentence first (`El niño ve
+%% a su perro.', his dog). A pronoun of the text stands for its noun to
+%% the pronouns after it.
+ty_refer_best(IRs0, L, Prev, IR) :-
+    findall(C-I-R, ( nth1(I, IRs0, R0), ty_refer(L, R0, Prev, R, C) ), Scored),
+    findall(K-R, ( member(C-I-R, Scored), K is -C * 100 + I ), Keyed),
+    keysort(Keyed, [_-IR|_]).
+
+ty_refer(L, IR0, Prev, IR, Count) :-
+    nb_setval('$ty_refs', 0),
+    ty_rf(IR0, x, L, IR0, Prev, IR),
+    nb_getval('$ty_refs', Count).
+
+ty_rf(X, _, _, _, _, X) :- var(X), !.
+ty_rf(pron(3, N, K), Role, L, Whole, Prev, Out) :- !,
+    (   \+ ( nonvar(K), K = ref(_) ),
+        ty_antecedent(L, Role, N, K, Whole, Prev, M, N1)
+    ->  Out = pron(3, N1, ref(M)),
+        nb_getval('$ty_refs', C0), C1 is C0 + 1, nb_setval('$ty_refs', C1)
+    ;   Out = pron(3, N, K)
+    ).
+ty_rf(clause(V, T, P, S, O), _, L, W, Pv, clause(V, T, P, S1, O1)) :- !,
+    ty_rf(S, s, L, W, Pv, S1), ty_rf(O, o, L, W, Pv, O1).
+ty_rf(clause(V, T, P, S, O, Js), _, L, W, Pv, clause(V, T, P, S1, O1, Js1)) :- !,
+    ty_rf(S, s, L, W, Pv, S1), ty_rf(O, o, L, W, Pv, O1),
+    maplist([J, J1]>>ty_rf(J, x, L, W, Pv, J1), Js, Js1).
+ty_rf(copula(T, P, S, Pr), _, L, W, Pv, copula(T, P, S1, Pr1)) :- !,
+    ty_rf(S, s, L, W, Pv, S1), ty_rf(Pr, x, L, W, Pv, Pr1).
+ty_rf(of(G, NP), Role, L, W, Pv, of(G1, NP1)) :- !,
+    ty_rf(G, poss(Role), L, W, Pv, G1), ty_rf(NP, Role, L, W, Pv, NP1).
+ty_rf(X, _, L, W, Pv, X1) :-
+    compound(X), !,
+    X =.. [F|As],
+    maplist([A, A1]>>ty_rf(A, x, L, W, Pv, A1), As, As1),
+    X1 =.. [F|As1].
+ty_rf(X, _, _, _, _, X).
+
+ty_antecedent(L, Role, N, K, Whole, Prev, M, N1) :-
+    ty_candidates(Role, Whole, Prev, Lists),
+    member(Ms, Lists),
+    member(_-M-N1, Ms),
+    ( var(N) -> true ; N == N1 ),
+    ( var(K) -> true ; ty_ref_kind(L, M, K0), K0 == K ), !.
+
+%% The nouns a pronoun may stand for, a list a sentence: a possessive
+%% pronoun's own sentence first, but for the phrase it stands in (`its
+%% house' is no house's), the subject's first; then the sentences before,
+%% the latest first, each with the noun of the pronoun's role first.
+ty_candidates(poss(R0), Whole, Prev, [Here|Before]) :- !,
+    findall(R-M-N, ( ty_mention(Whole, R, M, N), R \== R0 ), Here0),
+    ty_role_first(Here0, s, Here),
+    ty_candidates(s, Whole, Prev, Before).
+ty_candidates(Role, _, Prev, Lists) :-
+    findall(Ms, ( member(S, Prev),
+                  findall(R-M-N, ty_mention(S, R, M, N), Ms0),
+                  ty_role_first(Ms0, Role, Ms) ), Lists).
+
+%% The nouns a sentence says, with their roles: the subject's, the
+%% object's, then the others (x); a phrase's head before the nouns inside
+%% it, and a pronoun of the text its noun.
+ty_mention(clause(V, T, P, S, O), R, M, N) :- !, ty_mention(clause(V, T, P, S, O, []), R, M, N).
+ty_mention(clause(_, _, _, S, O, Js), R, M, N) :- !,
+    (   R = s, ty_np_mention(S, M, N)
+    ;   R = o, ty_np_mention(O, M, N)
+    ;   R = x, nonvar(Js), member(J, Js), ty_np_mention(J, M, N)
+    ).
+ty_mention(copula(_, _, S, Pr), R, M, N) :- !,
+    (   R = s, ty_np_mention(S, M, N)
+    ;   R = x, ty_np_mention(Pr, M, N)
+    ).
+ty_mention(question(C), R, M, N) :- !, ty_mention(C, R, M, N).
+ty_mention(answer(_, _, C), R, M, N) :- !, ty_mention(C, R, M, N).
+
+ty_np_mention(X, _, _) :- var(X), !, fail.
+ty_np_mention(np(M, N, _, _), M, N).
+ty_np_mention(pron(3, N, K), M, N) :- nonvar(K), K = ref(M).
+ty_np_mention(rel(NP, C), M, N) :- ( ty_np_mention(NP, M, N) ; ty_mention(C, _, M, N) ).
+ty_np_mention(of(G, NP), M, N) :- ( ty_np_mention(NP, M, N) ; ty_np_mention(G, M, N) ).
+ty_np_mention(pp(_, NP), M, N) :- ty_np_mention(NP, M, N).
+
+%% The mentions of Role first, the others after, each in its order.
+ty_role_first(Ms, Role, Ordered) :-
+    findall(X, ( member(X, Ms), X = Role-_-_ ), Same),
+    findall(X, ( member(X, Ms), X \= Role-_-_ ), Others),
+    append(Same, Others, Ordered).
 
 typology_translate_text(From, To, Texts, Texts2) :-
     typology_read_text(From, Texts, IRs),
@@ -1245,6 +1356,7 @@ ty_word_class(L, adposition, W) :- ty_class_meaning(L, adposition, W, _), !.
 ty_word_class(L, adverb, W) :- ty_adverb(L, _, W), !.
 ty_word_class(L, copula, W) :- ty_copula(L, _, _, _, _, Ws), memberchk(W, Ws), !.
 ty_word_class(L, relative, W) :- ty_relative(L, _, Ws, _), memberchk(W, Ws), !.
+ty_word_class(L, possessive, W) :- ty_possessive_pronoun(L, Ws, _, _), memberchk(W, Ws), !.
 
 %% Of the word's meanings in class C, the ones whose topics the context
 %% has the most of; all when the context has none of any.
@@ -1302,7 +1414,7 @@ ty_pattern_item(I) :- atom(I), !.
 ty_pattern_item(opt(I)) :- !, ty_pattern_item(I).
 ty_pattern_item(class(C)) :- !,
     memberchk(C, [noun, adjective, verb, article, mark, adposition, adverb, copula,
-                  relative]).
+                  relative, possessive]).
 ty_pattern_item(class(noun, F)) :- atom(F).
 
 %% ---- the grammar ---------------------------------------------------------------------
@@ -2092,6 +2204,9 @@ ty_np_animacy(_, wh(M), A) :-
 ty_np_animacy(L, rel(NP, _), A) :- NP = np(_, _, _, _), ty_np_animacy(L, NP, A).
 ty_np_animacy(L, gap(NP, _, _), A) :- ty_np_animacy(L, NP, A).
 ty_np_animacy(L, of(_, NP), A) :- NP = np(_, _, _, _), ty_np_animacy(L, NP, A).
+ty_np_animacy(L, pron(_, _, K), A) :-
+    nonvar(K), K = ref(M), !,
+    ty_np_animacy(L, np(M, _, _, _), A).
 ty_np_animacy(_, pron(P, _, K), A) :-
     ty_pron_animacy(P, K, A1),
     ( var(A1) -> true ; ty_animacy_fits(A, A1) ).
@@ -2288,7 +2403,7 @@ ty_np_phrase(L, Pr, F) -->
     { ty_ppron_slot(Pr) },
     ty_flag_allows('$ty_ppron'),
     ty_words(1, 2, Ws, ty_pron_words(L, j, Pr, Ws)),
-    { ty_pron_np_features(Pr, F) }.
+    { ty_pron_np_features(L, Pr, F) }.
 
 
 %% ---- the possessor ------------------------------------------------------------------
@@ -2385,7 +2500,8 @@ ty_poss_pronoun(L, Pr, NP, F, Next) -->
     ty_np(L, NP, F, bare(Next)),
     { ty_possessive_pronoun(L, Ws, PrC, PdC),
       Pr = pron(_, _, _),
-      member(N1, PrC), ty_pron_fits(N1, Pr),
+      ty_pron_here(L, Pr, Pr1),
+      member(N1, PrC), ty_pron_fits(N1, Pr1),
       once(( member(N2, PdC), ty_features_have(N2, F) )) }.
 ty_poss_pronoun(L, Pr, NP, F, none) -->
     { ty_possessive_clitic(L),
@@ -2428,25 +2544,26 @@ ty_ppron_slot(Pr) :- var(Pr), !, Pr = pron(_, _, _).
 ty_ppron_slot(pron(_, _, _)).
 
 ty_ppron_role(L, s, Pr, F) -->
-    { ty_dropped_first(L, Pr), ty_pron_np_features(Pr, F) }.
+    { ty_dropped_first(L, Pr), ty_pron_np_features(L, Pr, F) }.
 ty_ppron_role(L, Role, Pr, F) -->
     { \+ ( Role == o, ty_clitic(L, o) ) },
     ty_flag_allows('$ty_ppron'),
     ty_mark_slot(L, Role, before, Before),
     ty_words(1, 2, Ws, ty_pron_words(L, Role, Pr, Ws)),
     ty_mark_slot(L, Role, after, After),
-    { ty_pron_np_features(Pr, F),
+    { ty_pron_np_features(L, Pr, F),
       ty_marks_ok(L, Role, before, F, Before),
       ty_marks_ok(L, Role, after, F, After) }.
 ty_ppron_role(L, s, Pr, F) -->
-    { ty_pro_drop(L, _), \+ ty_dropped_first(L, Pr), ty_pron_np_features(Pr, F) }.
+    { ty_pro_drop(L, _), \+ ty_dropped_first(L, Pr), ty_pron_np_features(L, Pr, F) }.
 
 %% Writing, a subject of a person the language drops, or of the third
 %% person whose kind the IR does not say (Spanish `Duerme.' is Italian
-%% `Dorme.', not `Lui dorme.').
+%% `Dorme.', not `Lui dorme.'). A pronoun of the text (its kind ref(Meaning)) is dropped
+%% so too: its noun was said.
 ty_dropped_first(L, pron(P, _, K)) :-
     nonvar(P), ty_pro_drop(L, Persons),
-    ( memberchk(P, Persons) -> true ; P == 3, var(K) ).
+    ( memberchk(P, Persons) -> true ; P == 3, ( var(K) -> true ; K = ref(_) ) ).
 
 ty_flag_allows(Flag, S0, S0) :- ( var(S0) -> true ; \+ nb_current(Flag, f(no)) ).
 
@@ -2455,9 +2572,10 @@ ty_flag_allows(Flag, S0, S0) :- ( var(S0) -> true ; \+ nb_current(Flag, f(no)) )
 ty_pron_words(L, Role, Pr, Ws) :-
     ty_pron_rows(L, Role, R),
     Pr = pron(_, _, _),
+    ty_pron_here(L, Pr, Pr1),
     ty_pronoun(L, R, Ws, Conditions),
     member(C, Conditions),
-    ty_pron_fits(C, Pr).
+    ty_pron_fits(C, Pr1).
 
 ty_pron_rows(L, Role, R) :-
     (   once(ty_pronoun(L, Role, _, _)) -> R = Role
@@ -2473,15 +2591,35 @@ ty_pron_feature(X, pron(P, _, _)) :- integer(X), !, P = X.
 ty_pron_feature(X, pron(_, N, _)) :- ( X == sg ; X == pl ), !, N = X.
 ty_pron_feature(X, pron(_, _, X)).
 
-ty_pron_np_features(pron(P, N, K), [def, N, A, G]) :-
+ty_pron_np_features(L, Pr0, [def, N, A, G]) :-
+    ty_pron_here(L, Pr0, pron(P, N, K)),
     ( K == n -> true ; G = K ),
-    ty_pron_animacy(P, K, A).
+    (   Pr0 = pron(_, _, K0), nonvar(K0), K0 = ref(M), once(ty_noun(_, M, _, A0, _, _))
+    ->  A = A0
+    ;   ty_pron_animacy(P, K, A)
+    ).
 
 ty_pron_animacy(P, K, A) :-
     (   var(P) -> true
     ;   P \== 3 -> A = person
     ;   ( K == m ; K == f ) -> A = person
     ;   A = unknown
+    ).
+
+%% A PRONOUN OF THE TEXT, pron(3, Number, ref(Meaning)), stands for a noun
+%% of Meaning said before it (typology_read_text/3 finds it). Each language
+%% takes the kind its own pronouns give that noun: the noun's gender where
+%% the pronouns follow it (ty_pronoun_gender(L, grammatical): Spanish `la'
+%% for `la casa'), else the meaning's kind (ty_meaning_kind/2: English
+%% `it' for the house, `she' for the girl).
+ty_pron_here(L, pron(P, N, K), pron(P, N, K1)) :-
+    (   nonvar(K), K = ref(M) -> ty_ref_kind(L, M, K1) ; K1 = K ).
+
+ty_ref_kind(L, M, K) :-
+    (   ty_pronoun_gender(L, grammatical),
+        once(ty_noun(L, M, G, _, _, _)), memberchk(G, [m, f])
+    ->  K = G
+    ;   ty_meaning_kind(M, K)
     ).
 
 %% Whether a construction can stand where the words are: its word among
@@ -2889,7 +3027,7 @@ ty_role(L, Role, NP, Features) -->
 %% A personal pronoun in its role; an object clitic's words stood in the
 %% verb's (ty_verb_group//7), which bound it before the object's place.
 ty_role(L, o, Pr, F) -->
-    { nonvar(Pr), Pr = pron(_, _, _), ty_clitic(L, o), ty_pron_np_features(Pr, F) }.
+    { nonvar(Pr), Pr = pron(_, _, _), ty_clitic(L, o), ty_pron_np_features(L, Pr, F) }.
 ty_role(L, Role, Pr, F) --> { ty_ppron_slot(Pr) }, ty_ppron_role(L, Role, Pr, F).
 
 %% A relative clause's gap: its head's, with no words, or a pronoun

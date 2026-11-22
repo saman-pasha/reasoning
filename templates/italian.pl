@@ -268,3 +268,7 @@ ty_copula(italian, any, past, sg(1), pos, [ero]).
 ty_copula(italian, any, past, sg(2), pos, [eri]).
 ty_copula(italian, any, past, pl(1), pos, [eravamo]).
 ty_copula(italian, any, past, pl(2), pos, [eravate]).
+
+%% A pronoun of the text takes the gender of the noun it stands for (a
+%% house is `la', a book `lo').
+ty_pronoun_gender(italian, grammatical).
