@@ -14,7 +14,8 @@
 main :-
     forall(member(L, [english, spanish, italian, persian]), typology_load(L)),
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
-                      copulas, adjuncts, meanings, questions, repairs, relatives, complements, word_tables, reproduced, free_order,
+                      copulas, adjuncts, meanings, questions, repairs, relatives, complements, negation_places,
+                      word_tables, reproduced, free_order,
                       incomplete,
                       blank_template]),
            once(S)),
@@ -571,6 +572,58 @@ complements :-
     ( typology_write(spanish, clause(sleep, present, pos, rel(G, clause(think, present, pos, B, gap)), none), _)
     -> R3 = written ; R3 = not_yet ),
     check('Spanish: a complement''s gap where the adposition moves is not written yet', R3, not_yet).
+
+%% ---- the place of the negation ---------------------------------------------------------
+
+negation_places :-
+    section('the place of the negation: a part of the order'),
+    %% Two languages of the English rows: `not' at the end (as German
+    %% `nicht'), and `ne' and `pas' around the verb (as French).
+    english_rows_as(nicht),
+    assertz(ty_negation_place(nicht, [not], end)),
+    retractall(ty_question(nicht, _, _, _)),
+    assertz(ty_question(nicht, yes_no, clause, front(all))),
+    assertz(ty_question(nicht, wh, clause, front(all))),
+    english_rows_as(nepas),
+    assertz(ty_negation_place(nepas, [ne], before(v))),
+    assertz(ty_negation_place(nepas, [pas], after(v))),
+    B = np(boy, sg, def, []), D = np(dog, sg, def, []),
+    written_each(negation_places, [
+        clause(see, present, neg, B, D)-
+            [english-'The boy does not see the dog.', nicht-'The boy sees the dog not.',
+             nepas-'The boy ne sees pas the dog.'],
+        clause(see, past, neg, np(boy, pl, def, []), D)-
+            [nicht-'The boys saw the dog not.', nepas-'The boys ne saw pas the dog.'],
+        clause(sleep, present, neg, B, none, [pp(in, np(house, sg, def, []))])-
+            [nicht-'The boy sleeps in the house not.', nepas-'The boy ne sleeps pas in the house.'],
+        clause(see, present, pos, B, D)-
+            [nicht-'The boy sees the dog.', nepas-'The boy sees the dog.'],
+        question(clause(see, present, neg, B, D))-
+            [nicht-'Sees the boy the dog not?', nepas-'Ne sees pas the boy the dog?'] ]),
+    forall(member(L-T, [ nicht-'The boy does not see the dog.', nicht-'The boy sees not the dog.',
+                         nepas-'The boy ne sees the dog.', nepas-'The boy does not see the dog.' ]),
+           ( ( typology_read(L, T, _) -> R = read ; R = refused ),
+             atomic_list_concat([L, ': ', T], Label),
+             check(Label, R, refused) )),
+    once(typology_repair(nicht, 'The boy sees not the dog.', _, Fs1, F1)),
+    check('a negation in another place, repaired', F1-Fs1,
+          'The boy sees the dog not.'-[negation_place([[not]-after(v)])]),
+    typology_translate(spanish, nicht, 'El niño no ve al perro.', N2),
+    check('Spanish into the language of the place: the verb positive, not at the end', N2,
+          'The boy sees the dog not.'),
+    maplist([L, M]>>typology_check(L, M), [nicht, nepas], Ms),
+    check('both templates are complete', Ms, [[], []]).
+
+%% The English rows a test language is made of, under another name.
+english_rows_as(L) :-
+    forall(( member(F, [ty_order(english, clause, _), ty_order(english, np, _), ty_order(english, pp, _),
+                        ty_noun(english, _, _, _, _, _), ty_adjective(english, _, _, _, _),
+                        ty_verb(english, _, _, _, _, _), ty_article(english, _, _, _, _),
+                        ty_negation(english, _, _, _, _), ty_adposition(english, _, _),
+                        ty_adjunct(english, _), ty_question(english, _, _, _), ty_wh(english, _),
+                        ty_wh_word(english, _, _)]),
+             call(F) ),
+           ( F =.. [P, english|Args], G =.. [P, L|Args], assertz(G) )).
 
 %% The object and the adjuncts of every reading of a Spanish sentence.
 object_parts(T, Ps) :-

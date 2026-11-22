@@ -136,7 +136,11 @@ object (Persian) is not known where the object is read, so the verb's
 complement row is asked at the end; a new check of the object goes there
 too, never into `ty_object//4` alone. A question's stranded complement is
 two parts, `ow` (the question word, moved) and `op` (the adposition, left
-in the object's place).
+in the object's place). **A verb's own polarity is `ty_verb_polarity/3`'s**
+(1.27.0): where `ty_negation_place/3` gives the negation a part of the
+order, `n(Words)`, the verb takes its positive form whatever the clause's
+polarity is, and the clause is negative by the parts' presence; a new
+lookup of a verb form by the clause's polarity asks it first.
 
 **Every reader has two modes, static and live** (1.16.0; reason.pl's header,
 STATIC AND LIVE, and live.pl's). What a session must keep:

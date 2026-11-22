@@ -105,6 +105,7 @@ main :-
     repairs,
     relatives,
     complements,
+    negation_place,
     format("~ndone~n", []).
 
 %% 10. A WORD WITH SEVERAL MEANINGS IN ONE PLACE. First the words around it
@@ -213,6 +214,24 @@ complements :-
     must('look at is mirar, with a plain object', S2, 'El niño mira al perro.'),
     once(typology_repair(english, 'The boy looks the dog.', _, Fs3, T3)),
     must('a complement missing, repaired', T3-Fs3, 'The boy looks at the dog.'-[complement(missing, [at])]).
+
+%% 15. THE PLACE OF THE NEGATION. A language with ty_negation_place/3 rows
+%% puts its negation's words as a part of the order -- at the end (German
+%% `Der Junge sieht den Hund nicht'), or in parts around the verb (French
+%% `ne ... pas') -- and the verb takes its positive form. The four
+%% templates have none: their negation is a part of the verb's form. Here
+%% a language made of the English rows puts `not' at the end.
+negation_place :-
+    forall(( member(F, [ty_order(english, clause, _), ty_order(english, np, _),
+                        ty_noun(english, _, _, _, _, _), ty_verb(english, _, _, _, _, _),
+                        ty_article(english, _, _, _, _), ty_negation(english, _, _, _, _)]),
+             call(F) ),
+           ( F =.. [P, english|Args], G =.. [P, nicht|Args], assertz(G) )),
+    assertz(ty_negation_place(nicht, [not], end)),
+    typology_translate(spanish, nicht, 'El niño no ve al perro.', T1),
+    must('no ve, with the negation at the end', T1, 'The boy sees the dog not.'),
+    once(typology_read(nicht, 'The boys saw the dog not.', IR2)),
+    must('and read back', IR2, clause(see, past, neg, np(boy, pl, def, []), np(dog, sg, def, []))).
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
 %% anywhere and run is worth six repeated lines, and one that needs a support

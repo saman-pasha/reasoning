@@ -105,7 +105,7 @@ Spanish and Italian apocope (`gran`). Then `cat` goes into Persian, and
 Italian nouns that start with `s` and a consonant, `z` or a vowel are
 right.
 
-## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.26.0)
+## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.27.0)
 
 Done:
 
@@ -206,13 +206,26 @@ Done:
    an adjunct (`El niño piensa en la casa.` is about the house). A repair
    puts a missing complement in (`The boy looks the dog.`) and moves a
    stranded one back (`About what does the boy think?`).
+9. **The place of the negation** (1.27.0): `ty_negation_place(L, Words,
+   Place)` puts a negative verb clause's negation as a part of its order,
+   `n(Words)`, at Place -- start, end, before(X) or after(X), X one of s,
+   v, o -- and the verb takes its positive form; several rows are a
+   negation of several parts. One row at the end is German `nicht` (`The
+   boy sees the dog not.`, `Sees the boy the dog not?`), two around the
+   verb French `ne ... pas` (`The boy ne sees pas the dog.`), and a
+   question that moves the verb's first word puts them around that word
+   (`Ne sees pas the boy the dog?`, as `Ne voit-il pas le chien ?`). The
+   four templates have no row: their negation stays a part of the verb's
+   form, and they read and write as before. The test makes the two
+   languages of the English rows; a repair moves a negation to its place.
 
 Not yet:
 
-3. The place of the negation as a part of the order, not only a form.
-   A complement's gap where the adposition moves (Spanish `la niña en la
+3. A complement's gap where the adposition moves (Spanish `la niña en la
    que piensa el niño`, Italian `a cui`, Persian `که پسر به او فکر
-   می‌کند`), which 1.26.0 does not write.
+   می‌کند`), which 1.26.0 does not write. A German or a French template:
+   the place of the negation is there for them, and German's `nicht`
+   before a predicate (`ist nicht groß`) and its verb second are not.
 4. Questions of more than one question word, a question word inside a
    noun phrase (`which dog`, `whose`), and the yes or no answer.
 5. A relative clause moved after its verb, which Persian does where the

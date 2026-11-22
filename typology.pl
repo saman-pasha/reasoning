@@ -160,6 +160,14 @@
 %%                                     word (`¿En qué piensa el niño?') or
 %%                                     stays (`What does the boy think
 %%                                     about?'); moves where no row says
+%%     ty_negation_place(L, Words, Place)
+%%                                     a negative verb clause has Words as a
+%%                                     part of its order at Place (start,
+%%                                     end, before(X), after(X), X one of s,
+%%                                     v, o), the verb positive: German
+%%                                     `nicht' at the end, French `ne' and
+%%                                     `pas' around the verb; with no row the
+%%                                     negation is the verb's form
 %%
 %% THE WORD TABLES. templates/<name>-words.pl holds the rows
 %% typology_import/1 writes from corpus/vocabulary/<name>.txt (and, for
@@ -290,14 +298,14 @@
            ty_letters/3, ty_before/5, ty_linked/5, ty_copula/6, ty_adposition/3,
            ty_adverb/3, ty_adjunct/2, ty_sense/5, ty_topic/2, ty_question/4,
            ty_question_form/5, ty_wh/2, ty_wh_word/3, ty_question_mark/3,
-           ty_role_animacy/3, ty_relative/4, ty_complement/3, ty_complement_wh/2.
+           ty_role_animacy/3, ty_relative/4, ty_complement/3, ty_complement_wh/2, ty_negation_place/3.
 :- discontiguous ty_order/3, ty_noun/6, ty_adjective/5, ty_verb/6,
                  ty_article/5, ty_mark/5, ty_contraction/3, ty_negation/5,
                  ty_ending/4, ty_letters/3, ty_before/5, ty_linked/5, ty_copula/6,
                  ty_adposition/3, ty_adverb/3, ty_adjunct/2, ty_sense/5,
                  ty_question/4, ty_question_form/5, ty_wh/2, ty_wh_word/3,
                  ty_question_mark/3, ty_relative/4, ty_complement/3,
-                 ty_complement_wh/2.
+                 ty_complement_wh/2, ty_negation_place/3.
 
 %% ---- the levels and the values a slot takes -----------------------------------
 
@@ -322,6 +330,8 @@ ty_values(wh_place, [front, in_place, after(s)]).
 ty_values(wh, [who, what, where, when]).
 ty_values(relative_role, [s, o, any]).
 ty_values(complement_wh, [moves, stays]).
+ty_values(negation_place, [start, end, before(s), after(s), before(v), after(v),
+                          before(o), after(o)]).
 
 %% ---- loading --------------------------------------------------------------------
 
@@ -401,6 +411,7 @@ ty_row_shape('ty_wh_word(L, Meaning, Words).').
 ty_row_shape('ty_question_mark(L, Open, Close).').
 ty_row_shape('ty_relative(L, Role, Words, Conditions).').
 ty_row_shape('ty_complement(L, Verb, Words).').
+ty_row_shape('ty_negation_place(L, Words, Place).').
 
 %% ---- the check ----------------------------------------------------------------------
 
@@ -482,6 +493,9 @@ ty_missing(L, bad(ty_sense(L, W, S, B, A))) :-
 ty_missing(L, bad(ty_complement(L, V, Ws))) :-
     ty_complement(L, V, Ws),
     \+ ( is_list(Ws), Ws \== [], ty_verb_meaning(L, V) ).
+ty_missing(L, bad(ty_negation_place(L, Ws, Pl))) :-
+    ty_negation_place(L, Ws, Pl),
+    \+ ( is_list(Ws), Ws \== [], ty_values(negation_place, Ps), memberchk(Pl, Ps) ).
 ty_missing(L, bad(ty_complement_wh(L, R))) :-
     ty_complement_wh(L, R),
     \+ ( ty_values(complement_wh, Rs), memberchk(R, Rs) ).
@@ -1094,6 +1108,7 @@ ty_known_base(L, B) :-
     ;   ty_question(L, _, _, particle(B, _))
     ;   ty_relative(L, _, Ws, _), memberchk(B, Ws)
     ;   ty_complement(L, _, Ws), memberchk(B, Ws)
+    ;   ty_negation_place(L, Ws, _), memberchk(B, Ws)
     ;   ty_verb(L, _, _, _, _, Ws), memberchk(B, Ws)
     ), !.
 
@@ -1180,8 +1195,10 @@ ty_ask_clause(L, C, Cost) -->
       ty_ask_kind(C, Kind, Part),
       Q = q(_, _, _, _, _),
       ty_ask_order(L, Kind, Part, clause, Order2, Order, Q),
-      ty_order_cost(Order, Order2, Cost) },
-    ty_ask_parts(Order, L, C, Q, How),
+      ty_order_cost(Order, Order2, Cost),
+      C = clause(_, _, P, _, _, _),
+      ty_negation_order(L, P, Order, Order3) },
+    ty_ask_parts(Order3, L, C, Q, How),
     { ty_wh_count(C, Kind),
       ty_roles_ok(L, C),
       ty_object_ok(L, C, How),
@@ -1335,6 +1352,7 @@ ty_ask_part(v, L, C, Q, _) --> ty_ask_verb(L, C, Q).
 ty_ask_part(c, L, C, Q, _) --> ty_ask_verb(L, C, Q).
 ty_ask_part(f, L, C, Q, _) --> ty_ask_first(L, C, Q).
 ty_ask_part(q, _, _, q(particle(W, _), _, _, _, _), _) --> [W].
+ty_ask_part(n(Ws), _, _, _, _) --> ty_tokens(Ws).
 
 %% The verb (or the copula). Under front(first) part f, before the
 %% subject, is its first word and this part the rest: writing, f looks the
@@ -1369,7 +1387,8 @@ ty_ask_meant(_, _, _, _).
 
 ty_ask_words(L, clause(V, T, P, Subj, _, _), Moved, Ws) :-
     ty_subject_number(Subj, N),
-    ty_ask_verb_form(L, V, T, N, P, Moved, Ws).
+    ty_verb_polarity(L, P, VP),
+    ty_ask_verb_form(L, V, T, N, VP, Moved, Ws).
 ty_ask_words(L, copula(T, P, Subj, Pred), _, Ws) :-
     ty_subject_number(Subj, N),
     ty_predicate_kind(Pred, K),
@@ -1429,13 +1448,70 @@ ty_sentence(L, IR) --> ty_copula_clause(L, IR), { ty_wh_count(IR, yes_no) }.
 %% A verb clause: its order of s, v and o, with the adjuncts (j) put where
 %% the template says (ty_adjunct/2); a language with no such row has none.
 ty_clause(L, C) -->
-    { C = clause(_, _, _, _, O, Js),
+    { C = clause(_, _, P, _, O, Js),
       ty_order_at(L, clause, Order0),
       ty_valency(Order0, O, Order1),
-      ty_adjunct_order(L, Order1, Js, Order) },
+      ty_adjunct_order(L, Order1, Js, Order2),
+      ty_negation_order(L, P, Order2, Order) },
     ty_clause_parts(Order, L, C, How),
     { ty_roles_ok(L, C),
       ty_object_ok(L, C, How) }.
+
+%% ---- the place of the negation ------------------------------------------------------
+%%
+%% ty_negation_place(L, Words, Place): in a negative verb clause the
+%% negation's Words stand as a part of the order, n(Words), at Place --
+%% start, end, before(X) or after(X), X one of s, v, o (end where X is not
+%% in the clause) -- and the verb takes its positive form. Several rows are
+%% a negation of several parts (French `ne ... pas': [ne] before(v), [pas]
+%% after(v)); one at the end is German `Der Junge sieht den Hund nicht'. A
+%% language with no row keeps the negation in the verb's form
+%% (ty_negation/5, or a negative ty_verb/6 row): English, Spanish, Italian
+%% and Persian. Reading, a clause with the parts is negative and one
+%% without positive. In a repair, a negation whose parts stand elsewhere
+%% is a fault.
+%% A question that moves the verb's first word (f) puts the parts placed
+%% by the verb around that word: `Ne sees pas the boy the dog?', as French
+%% `Ne voit-il pas le chien ?'.
+ty_negation_order(L, P, Order0, Order) :-
+    (   ty_neg_placed(L)
+    ->  ( memberchk(f, Order0) -> VA = f ; VA = v ),
+        findall(Ws-Pl, ( ty_negation_place(L, Ws, Pl0), ty_verb_anchor(Pl0, VA, Pl) ), Rows),
+        (   P = pos, Order = Order0
+        ;   P = neg, foldl(ty_place_n, Rows, Order0, Order)
+        ;   P = neg, ty_lenient,
+            ty_values(negation_place, Places),
+            ty_other_places(Rows, Places, Rows2),
+            ty_fault(negation_place(Rows2)),
+            foldl(ty_place_n, Rows2, Order0, Order)
+        )
+    ;   Order = Order0
+    ).
+
+%% The rows with their places chosen again, one place at least another.
+ty_other_places(Rows, Places, Rows2) :-
+    maplist([Ws-_, Ws-Pl]>>member(Pl, Places), Rows, Rows2),
+    Rows2 \== Rows.
+
+ty_verb_anchor(before(v), VA, before(VA)) :- !.
+ty_verb_anchor(after(v), VA, after(VA)) :- !.
+ty_verb_anchor(Pl, _, Pl).
+
+ty_place_n(Ws-Place, O0, O) :- ty_place_part(Place, n(Ws), O0, O).
+
+ty_place_part(start, X, O, [X|O]).
+ty_place_part(end, X, O, Os) :- append(O, [X], Os).
+ty_place_part(before(P), X, O, Os) :-
+    (   append(A, [P|B], O) -> append(A, [X, P|B], Os) ; append(O, [X], Os) ).
+ty_place_part(after(P), X, O, Os) :-
+    (   append(A, [P|B], O) -> append(A, [P, X|B], Os) ; append(O, [X], Os) ).
+
+ty_neg_placed(L) :- once(ty_negation_place(L, _, _)).
+
+%% The polarity of the verb's own form: positive where the negation has a
+%% place of its own.
+ty_verb_polarity(L, P, VP) :-
+    (   ty_neg_placed(L) -> VP = pos ; VP = P ).
 
 %% The subject is what its verb takes (templates/roles.pl: the subject of
 %% `see' is animate), asked of the IR once the clause is read.
@@ -1480,10 +1556,12 @@ ty_clause_parts([P|Ps], L, C, How) --> ty_clause_part(P, L, C, How), ty_clause_p
 ty_clause_part(s, L, clause(_, _, _, S, _, _), _) --> ty_role(L, s, S).
 ty_clause_part(o, L, clause(V, _, _, _, O, _), How) --> ty_object(L, V, O, How).
 ty_clause_part(v, L, clause(V, T, P, S, _, _), _) -->
-    { ty_subject_number(S, N) },
-    ty_verb_words(L, V, T, N, P, Ws),
+    { ty_subject_number(S, N),
+      ty_verb_polarity(L, P, VP) },
+    ty_verb_words(L, V, T, N, VP, Ws),
     ty_meant(L, verb(V), Ws).
 ty_clause_part(j, L, clause(_, _, _, _, _, Js), _) --> ty_adjuncts(L, Js).
+ty_clause_part(n(Ws), _, _, _) --> ty_tokens(Ws).
 
 %% ---- a verb's complement --------------------------------------------------------
 %%
