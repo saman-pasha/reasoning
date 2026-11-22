@@ -167,9 +167,18 @@ ty_answer(english, no, [no]).
 %% article; the possessor's last word takes `'s', or `'' after s (`the
 %% boys' dog'). `whose' moves with the possessed into the marker (`the boy
 %% whose dog sleeps').
-ty_order(english, poss, [g, p, h]).
-ty_possessive(english, [], drop).
+ty_possessive(english, [g, p, h], [], drop).
+%% `of' where the 's cannot stand: a possessor with a relative clause (`the
+%% dog of the boy that sleeps').
+ty_possessive(english, [h, p, g], [of], keep).
 ty_linked(english, n, h, '', '\'s').
 ty_linked(english, n, h, 's', 's\'').
 ty_gap(english, poss, moves).
 ty_relative_possessive(english, [whose], [[]]).
+
+%% A possessive pronoun (`his dog'), by the possessor: `his' a man's, `her'
+%% a woman's, `its' a thing's, `their' several's.
+ty_possessive_pronoun(english, [his], [[sg, m]], [[]]).
+ty_possessive_pronoun(english, [her], [[sg, f]], [[]]).
+ty_possessive_pronoun(english, [its], [[sg, n]], [[]]).
+ty_possessive_pronoun(english, [their], [[pl]], [[]]).

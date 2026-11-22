@@ -204,6 +204,15 @@ possessor** (`'$ty_poss'` and `'$ty_whose'`, set by `ty_poss_flag/2` where
 a parse starts, in `ty_read_bases/6` and `ty_reads_as/5`): a new place
 where a parse starts sets them, or a reading tries every possessor or
 none. Writing never asks them (the slot is bound).
+**A clause that ends early is a clause of `,/2`, and no check names it**
+(1.33.0): a full stop where a comma stood in `ty_poss_flag/2` made its last
+two goals a clause of their own, `'$ty_pron'` was never set, and Persian's
+round trips took twice the inferences, every noun phrase trying a pronoun;
+cocolint passed it. A slower count with the tests green is a reason to read
+the last edit's clause ends. **The sentence's possessor counts are kept for
+the same words** (`'$ty_poss_memo'`, `nb_setval`): the writer reads each
+sentence it writes back, and the counts asked twice cost Persian's writes
+28 %.
 
 **Every reader has two modes, static and live** (1.16.0; reason.pl's header,
 STATIC AND LIVE, and live.pl's). What a session must keep:

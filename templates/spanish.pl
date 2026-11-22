@@ -178,10 +178,14 @@ ty_answer(spanish, no, [no]).
 %% A possessor (`el perro del niño'): the possessed, `de', the possessor.
 %% `cuyo' moves with the possessed into the marker and agrees with it (`el
 %% niño cuyo perro duerme', `el niño cuyas niñas duermen').
-ty_order(spanish, poss, [h, p, g]).
-ty_possessive(spanish, [de], keep).
+ty_possessive(spanish, [h, p, g], [de], keep).
 ty_gap(spanish, poss, moves).
 ty_relative_possessive(spanish, [cuyo], [[m, sg]]).
 ty_relative_possessive(spanish, [cuya], [[f, sg]]).
 ty_relative_possessive(spanish, [cuyos], [[m, pl]]).
 ty_relative_possessive(spanish, [cuyas], [[f, pl]]).
+
+%% A possessive pronoun (`su perro', `sus perros'): by the possessed's
+%% number, whoever the possessor is.
+ty_possessive_pronoun(spanish, [su], [[]], [[sg]]).
+ty_possessive_pronoun(spanish, [sus], [[]], [[pl]]).

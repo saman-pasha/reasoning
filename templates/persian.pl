@@ -174,8 +174,7 @@ ty_answer_mark(persian, '،').
 %% taking the ezafe as before an adjective (`خانه‌ی پسر'), then the
 %% possessor. `whose' is a clitic on the possessed, which stays: ش for one
 %% possessor, شان for several (`پسری که سگش می‌خوابد', `خانه‌اش').
-ty_order(persian, poss, [h, p, g]).
-ty_possessive(persian, [], keep).
+ty_possessive(persian, [h, p, g], [], keep).
 ty_linked(persian, n, g, 'ه', 'ه‌ی').
 ty_linked(persian, n, g, 'ا', 'ای').
 ty_linked(persian, n, g, 'و', 'وی').
@@ -197,3 +196,7 @@ ty_linked(persian, n, clitic(pl), 'ا', 'ایشان').
 ty_linked(persian, a, clitic(pl), '', 'شان').
 ty_linked(persian, a, clitic(pl), 'ه', 'ه‌شان').
 ty_linked(persian, a, clitic(pl), 'سیاه', 'سیاهشان').
+
+%% A possessive pronoun is the clitic on the possessed (`سگش', his, her or
+%% its dog; `سگشان', their dog), the clitic(N) rows above.
+ty_possessive_clitic(persian).

@@ -167,8 +167,7 @@ ty_answer(italian, no, [no]).
 %% possessor's article, the possessor. `il cui' moves with the possessed
 %% into the marker, its article the possessed's (`il ragazzo il cui cane
 %% dorme', `la ragazza la cui casa').
-ty_order(italian, poss, [h, p, g]).
-ty_possessive(italian, [di], keep).
+ty_possessive(italian, [h, p, g], [di], keep).
 ty_contraction(italian, [di, il], del).
 ty_contraction(italian, [di, lo], dello).
 ty_contraction(italian, [di, 'l\''], 'dell\'').
@@ -181,3 +180,15 @@ ty_relative_possessive(italian, [il, cui], [[m, sg]]).
 ty_relative_possessive(italian, [la, cui], [[f, sg]]).
 ty_relative_possessive(italian, [i, cui], [[m, pl]]).
 ty_relative_possessive(italian, [le, cui], [[f, pl]]).
+
+%% A possessive pronoun with the possessed's article (`il suo cane', `la sua
+%% casa', `i loro cani'): `suo' of one possessor, agreeing with the
+%% possessed; `loro' of several.
+ty_possessive_pronoun(italian, [il, suo], [[sg]], [[m, sg]]).
+ty_possessive_pronoun(italian, [la, sua], [[sg]], [[f, sg]]).
+ty_possessive_pronoun(italian, [i, suoi], [[sg]], [[m, pl]]).
+ty_possessive_pronoun(italian, [le, sue], [[sg]], [[f, pl]]).
+ty_possessive_pronoun(italian, [il, loro], [[pl]], [[m, sg]]).
+ty_possessive_pronoun(italian, [la, loro], [[pl]], [[f, sg]]).
+ty_possessive_pronoun(italian, [i, loro], [[pl]], [[m, pl]]).
+ty_possessive_pronoun(italian, [le, loro], [[pl]], [[f, pl]]).

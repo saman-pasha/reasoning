@@ -110,6 +110,7 @@ main :-
     class_topics,
     gaps,
     possessors,
+    more_possessors,
     format("~ndone~n", []).
 
 
@@ -312,6 +313,27 @@ possessors :-
     must('the boy whose dog sleeps, four times', Ts2,
          [ english-'The boy whose dog sleeps sleeps.', spanish-'El niño cuyo perro duerme duerme.',
            italian-'Il ragazzo il cui cane dorme dorme.', persian-'پسری که سگش می‌خوابد می‌خوابد.' ]).
+
+
+%% 20. MORE OF THE POSSESSOR. ty_possessive(L, Order, Words, Article) is a
+%% construction, and a language may have several, the first written:
+%% English writes `of' where the 's cannot stand. A possessor may be a
+%% possessor's phrase, or have a relative clause; a possessor's gap may be
+%% in an adjunct (`in whose house'). A possessive pronoun is
+%% of(pron(sg, Kind), NP) or of(pron(pl), NP) (ty_possessive_pronoun/4,
+%% Persian's clitic).
+more_possessors :-
+    IR1 = clause(see, present, pos, np(girl, sg, def, []),
+                 of(of(np(boy, sg, def, []), np(dog, sg, def, [])), np(house, sg, def, []))),
+    typology_write(english, IR1, E1),
+    must('a possessor''s possessor', E1, 'The girl sees the boy\'s dog\'s house.'),
+    typology_translate(english, spanish, 'The girl sees the boy in whose house the dog sleeps.', S2),
+    must('in whose house, into Spanish', S2, 'La niña ve al niño en cuya casa el perro duerme.'),
+    findall(L-T, ( member(L, [english, spanish, italian, persian]),
+                   typology_write(L, clause(sleep, present, pos, of(pron(sg, f), np(dog, sg, def, [])), none), T) ), Ts3),
+    must('her dog, four times', Ts3,
+         [ english-'Her dog sleeps.', spanish-'Su perro duerme.',
+           italian-'Il suo cane dorme.', persian-'سگش می‌خوابد.' ]).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

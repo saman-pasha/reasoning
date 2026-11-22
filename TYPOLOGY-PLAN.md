@@ -105,7 +105,7 @@ Spanish and Italian apocope (`gran`). Then `cat` goes into Persian, and
 Italian nouns that start with `s` and a consonant, `z` or a vowel are
 right.
 
-## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.32.0)
+## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.33.0)
 
 Done:
 
@@ -323,6 +323,34 @@ Done:
    written after a consonant and any two nouns side by side may be a
    possessor (`پسر سگ می‌بیند` is the dog's boy who sees).
 
+15. **More of the possessor** (1.33.0). A construction is a row,
+   `ty_possessive(L, Order, Words, Article)` (the order moved out of
+   `ty_order/3`), and a language may have several, the first written:
+   English `the boy's dog` and `the dog of the boy`, written where the
+   `'s` cannot stand. A possessor may be a possessor's phrase (`the boy's
+   dog's house`, `la casa del perro del niño`, `خانه‌ی سگ پسر`): each part
+   of the phrase links its last word to what follows it, the phrase's
+   last part to the phrase's own Next; reading, to the depth of the
+   sentence's possessive marks (Persian, with none written, its nouns
+   less one), or English's possessor first would start one at its own
+   place for ever. A possessor may have a relative clause where nothing
+   links to its last word (`the dog of the boy that sleeps`, `el perro
+   del niño que duerme`, `سگ پسری که می‌خوابد`). A possessor's gap may be
+   in an adjunct, the adposition moving into the marker with the
+   pronoun and the possessed (`the boy in whose house the dog sleeps`,
+   `en cuya casa`, `nella cui casa`; Persian `در خانه‌اش`, the clitic in
+   place). A possessive pronoun of the third person is `of(pron(sg,
+   Kind), NP)` (Kind m, f, n) or `of(pron(pl), NP)`:
+   `ty_possessive_pronoun(L, Words, Possessor, Possessed)` (English
+   `his`, `her`, `its`, `their` by the possessor; Spanish `su`, `sus` and
+   Italian `il suo`, `la sua`, `i loro` by the possessed too), or
+   `ty_possessive_clitic(L)` (Persian `سگش`, `سگشان`); reading gives every
+   pronoun its words allow (`su perro` is four). The sentence's counts are
+   asked once a parse and kept for the same words (`'$ty_poss_memo'`).
+   The round trips cost what 1.32.0's did in English, Spanish and Italian
+   (-0.3 to +0.6 % inferences), and Persian 24 % more inferences, the
+   clock the same.
+
 Not yet:
 
 3. A German or a French template:
@@ -331,10 +359,9 @@ Not yet:
 4. Every question word at the front (Bulgarian, Russian), a slot of its
    own; an answer that repeats the verb (Portuguese `Vejo.`, Irish) and
    English `Yes, he does.`, which wait for pronouns.
-5. A possessor's possessor (`the boy's dog's house`), a possessor with a
-   relative clause, a possessor's gap in an adposition phrase (`the boy in
-   whose house the dog sleeps`), and a possessive pronoun (`his dog`,
-   Phase 5's pronouns).
+5. The possessive pronouns of the first and second persons (`my`, `your`),
+   with Phase 5's pronouns; a pronoun that refers back to a noun of the
+   text (which `his` is the boy's), which the IR does not hold.
 6. The topics the class lines do not give: the hand table's thirty rows,
    and every other meaning, are Phase 8's (a model fills a slot in live
    mode, with the reference sentences as its check). A meaning of its

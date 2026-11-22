@@ -694,12 +694,61 @@ possessors :-
     typology_translate(english, persian, 'The girl sees the boy whose dog sleeps.', P3),
     check('English into Persian: whose is a clitic on the possessed', P3, 'دختر پسری را می‌بیند که سگش می‌خوابد.'),
     assertz(ty_gap(tiny, poss, moves)),
-    assertz(ty_possessive(tiny, [x], maybe)),
+    assertz(ty_possessive(tiny, [h, g], [x], maybe)),
     findall(M, ( typology_check(tiny, Ms), member(M, Ms),
-                 memberchk(M, [relative_possessive, bad(ty_possessive(tiny, [x], maybe))]) ), M4),
-    retractall(ty_gap(tiny, _, _)), retractall(ty_possessive(tiny, _, _)),
-    check('typology_check/2: a moved possessor needs its pronoun, and an article is keep or drop', M4,
-          [relative_possessive, bad(ty_possessive(tiny, [x], maybe))]).
+                 memberchk(M, [relative_possessive, bad(ty_possessive(tiny, [h, g], [x], maybe))]) ), M4),
+    retractall(ty_gap(tiny, _, _)), retractall(ty_possessive(tiny, _, _, _)),
+    check('typology_check/2: a moved possessor needs its pronoun, and a construction its three parts and keep or drop', M4,
+          [relative_possessive, bad(ty_possessive(tiny, [h, g], [x], maybe))]),
+    more_possessors.
+
+%% 1.33.0: a possessor's possessor, a possessor with a relative clause,
+%% `in whose house', and the possessive pronouns.
+more_possessors :-
+    B = np(boy, sg, def, []), D = np(dog, sg, def, []), G = np(girl, sg, def, []),
+    House = np(house, sg, def, []),
+    written_each(more_possessors, [
+        clause(see, present, pos, G, of(of(B, D), House))-
+            [english-'The girl sees the boy\'s dog\'s house.', spanish-'La niña ve la casa del perro del niño.',
+             italian-'La ragazza vede la casa del cane del ragazzo.',
+             persian-'دختر خانه‌ی سگ پسر را می‌بیند.'],
+        clause(sleep, present, pos, of(rel(B, clause(sleep, present, pos, gap, none)), D), none)-
+            [english-'The dog of the boy that sleeps sleeps.', spanish-'El perro del niño que duerme duerme.',
+             italian-'Il cane del ragazzo che dorme dorme.', persian-'سگ پسری که می‌خوابد می‌خوابد.'],
+        clause(see, present, pos, G, rel(B, clause(sleep, present, pos, D, none, [pp(in, of(gap, House))])))-
+            [english-'The girl sees the boy in whose house the dog sleeps.',
+             spanish-'La niña ve al niño en cuya casa el perro duerme.',
+             italian-'La ragazza vede il ragazzo nella cui casa il cane dorme.',
+             persian-'دختر پسری را می‌بیند که سگ در خانه‌اش می‌خوابد.'],
+        clause(sleep, present, pos, of(pron(sg, m), D), none)-
+            [english-'His dog sleeps.', spanish-'Su perro duerme.',
+             italian-'Il suo cane dorme.', persian-'سگش می‌خوابد.'],
+        clause(see, present, pos, G, of(pron(pl), np(house, pl, def, [black])))-
+            [english-'The girl sees their black houses.', spanish-'La niña ve sus casas negras.',
+             italian-'La ragazza vede le loro case nere.', persian-'دختر خانه‌های سیاهشان را می‌بیند.'],
+        clause(sleep, present, pos, D, none, [pp(in, of(pron(sg, f), House))])-
+            [english-'The dog sleeps in her house.', spanish-'El perro duerme en su casa.',
+             italian-'Il cane dorme nella sua casa.', persian-'سگ در خانه‌اش می‌خوابد.'] ]),
+    ( typology_read(english, 'The dog of the boy sleeps.', clause(sleep, present, pos, of(B, D), none))
+    -> R1 = read ; R1 = not_read ),
+    check('English: the dog of the boy, the second construction, is read', R1, read),
+    %% A pronoun's words give every pronoun they allow.
+    forall(member(L-T-Want, [ spanish-'Su perro duerme.'-[pron(pl), pron(sg, f), pron(sg, m), pron(sg, n)],
+                              english-'Its dog sleeps.'-[pron(sg, n)],
+                              italian-'Il loro cane dorme.'-[pron(pl)],
+                              persian-'سگش می‌خوابد.'-[pron(sg, f), pron(sg, m), pron(sg, n)] ]),
+           ( findall(Pr, typology_read(L, T, clause(sleep, present, pos, of(Pr, D), none)), Prs0),
+             sort(Prs0, Prs),
+             atomic_list_concat([L, ': ', T, ' is the pronouns its words allow'], Label),
+             check(Label, Prs, Want) )),
+    forall(member(L-T, [ english-'The his dog sleeps.', italian-'Il sua cane dorme.',
+                         english-'The boy\'s that sleeps dog sleeps.' ]),
+           ( ( typology_read(L, T, _) -> R = read ; R = refused ),
+             atomic_list_concat([L, ': ', T], Label),
+             check(Label, R, refused) )),
+    typology_translate(spanish, english, 'La niña ve al niño en cuya casa el perro duerme.', E2),
+    check('Spanish into English: en cuya casa is in whose house', E2,
+          'The girl sees the boy in whose house the dog sleeps.').
 
 %% ---- a verb's complement ---------------------------------------------------------------
 
@@ -1029,4 +1078,7 @@ blank_template :-
     split_string(S, "\n", "", Lines),
     include([Line]>>sub_string(Line, 0, _, _, 'ty_order(klingon'), Lines, Orders),
     length(Orders, N),
-    check('every order of every level is offered: 6 + 6 + 6 + 2 + 6 + 6', N, 32).
+    check('every order of every level is offered: 6 + 6 + 6 + 2 + 6', N, 26),
+    include([Line]>>sub_string(Line, 0, _, _, '%% ty_possessive(klingon'), Lines, Constructions),
+    length(Constructions, N2),
+    check('and the six orders of a possessor, each a construction''s row', N2, 6).
