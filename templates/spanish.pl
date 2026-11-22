@@ -113,6 +113,27 @@ ty_adverb(spanish, here, aquí).
 
 %% A word with several meanings in one place: `a' after a verb and before an
 %% animate noun is the object's mark (`ve al perro'); anywhere else it is
-%% `to' (`ve a un libro': sees, to a book).
+%% `to' (`ve a un libro': sees, to a book). The lookback may pass over the
+%% subject of a question (`¿Ve el niño al perro?'), and before `quién' it is
+%% the mark with no verb before it (`¿A quién ve el niño?').
 ty_sense(spanish, a, mark(o), [class(verb)], [opt(class(article)), class(noun, animate)]).
+ty_sense(spanish, a, mark(o), [class(noun), opt(class(article)), class(verb)],
+         [opt(class(article)), class(noun, animate)]).
+ty_sense(spanish, a, mark(o), [], ['quién']).
 ty_sense(spanish, a, adposition(to), [], []).
+
+%% Questions: `¿' and `?'; a yes or no question in the statement's order,
+%% or with the verb before the subject (`¿Ve el niño al perro?'); a
+%% question word at the front, the verb before the subject after it.
+ty_question_mark(spanish, '¿', '?').
+ty_question(spanish, yes_no, clause, unchanged).
+ty_question(spanish, yes_no, clause, front(all)).
+ty_question(spanish, yes_no, copula, unchanged).
+ty_question(spanish, yes_no, copula, front(all)).
+ty_question(spanish, wh, clause, front(all)).
+ty_question(spanish, wh, copula, front(all)).
+ty_wh(spanish, front).
+ty_wh_word(spanish, who, ['quién']).
+ty_wh_word(spanish, what, ['qué']).
+ty_wh_word(spanish, where, ['dónde']).
+ty_wh_word(spanish, when, ['cuándo']).

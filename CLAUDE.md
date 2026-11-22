@@ -91,7 +91,14 @@ excluded. **A cut in a `ty_missing/2` body cuts the clauses after it**:
 Phase 4's `adjunct_place` clause had one, and `typology_check/2` checked
 nothing after it for every language with an adposition or an adverb
 (1.22.0 found it; `once/1` now). The case takes some 170 s, 28 of them the
-check over the full tables.
+check over the full tables. **A question word stands only where
+`ty_ask_kind/3` put it** (1.23.0): each place that may take one -- a role
+(`ty_role/4`), an adjunct, a copula's predicate, `ty_predicate_kind/2` --
+asks `nonvar(W), W = wh(M)` first, so a statement, whose IR the reader
+leaves unbound, never reads one (`El niño ve qué.` is refused), and
+`ty_wh_count/2` holds a question to its kind at the end. A verb split by
+front(first) (`Does ... see`) asks no `ty_meant//3`: its first word is
+read before the lookup that names its meaning.
 
 **Every reader has two modes, static and live** (1.16.0; reason.pl's header,
 STATIC AND LIVE, and live.pl's). What a session must keep:

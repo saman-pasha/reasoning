@@ -108,6 +108,27 @@
 %%     ty_adverb(L, Meaning, Word)     an adverb, an adjunct of the clause
 %%     ty_adjunct(L, Place)            where a clause's adjuncts stand:
 %%                                     start, end, before(v), after(s)
+%%     ty_question(L, Kind, Level, Rule)
+%%                                     how a question of Kind (yes_no, or
+%%                                     wh: with a question word) changes a
+%%                                     Level's order (clause, copula): Rule
+%%                                     unchanged, particle(Word, start|end),
+%%                                     front(all) (the verb before the
+%%                                     subject: `¿Ve el niño al perro?') or
+%%                                     front(first) (its first word only:
+%%                                     `Is the dog not big?'); the first row
+%%                                     is written, every row read
+%%     ty_question_form(L, Tense, Number, Words, Form)
+%%                                     a verb a question's rule moves is, if
+%%                                     positive, Words before its form Form
+%%                                     (English `does' before the base:
+%%                                     `Does the boy see the dog?')
+%%     ty_wh(L, Place)                 a question word stands at the front
+%%                                     or in place (in_place: Persian)
+%%     ty_wh_word(L, Meaning, Words)   who, what, where, when
+%%     ty_question_mark(L, Open, Close)
+%%                                     the marks of a question (Spanish `¿'
+%%                                     and `?'); with no row, `' and `?'
 %%     ty_sense(L, Word, Sense, Back, Ahead)
 %%                                     Word has Sense where the words before
 %%                                     it fit the pattern Back and the words
@@ -130,6 +151,12 @@
 %%                                     and adv(Meaning)
 %%     copula(Tense, Polarity, Subject, Predicate)  Predicate adj(As),
 %%                                     an np/4 or a pp/2
+%%     question(Clause)                a question: Clause a clause or a
+%%                                     copula clause, with no wh(M) (yes or
+%%                                     no) or one, where a subject, an
+%%                                     object, the one adjunct or a copula's
+%%                                     predicate stands (wh(who), wh(what),
+%%                                     wh(where), wh(when))
 %%     np(Noun, Number, Definiteness, Adjectives)
 %%
 %% WHAT IS PUBLIC:
@@ -199,8 +226,8 @@
 %% (the IR given), and no order is written into them.
 %%
 %% TYPOLOGY-PLAN.md says what comes next. NOT YET (each is a slot to add,
-%% not a change to the grammar): questions, relative clauses, persons
-%% other than the third, more tenses; a language written without spaces.
+%% not a change to the grammar): relative clauses, persons other than the
+%% third, more tenses; a language written without spaces.
 
 :- module(typology, [ typology_load/1, typology_languages/1, typology_choices/2,
                       typology_template/1, typology_check/2, typology_read/3,
@@ -214,11 +241,14 @@
 :- dynamic ty_order/3, ty_noun/6, ty_adjective/5, ty_verb/6, ty_article/5,
            ty_mark/5, ty_contraction/3, ty_negation/5, ty_ending/4,
            ty_letters/3, ty_before/5, ty_linked/5, ty_copula/6, ty_adposition/3,
-           ty_adverb/3, ty_adjunct/2, ty_sense/5, ty_topic/2.
+           ty_adverb/3, ty_adjunct/2, ty_sense/5, ty_topic/2, ty_question/4,
+           ty_question_form/5, ty_wh/2, ty_wh_word/3, ty_question_mark/3.
 :- discontiguous ty_order/3, ty_noun/6, ty_adjective/5, ty_verb/6,
                  ty_article/5, ty_mark/5, ty_contraction/3, ty_negation/5,
                  ty_ending/4, ty_letters/3, ty_before/5, ty_linked/5, ty_copula/6,
-                 ty_adposition/3, ty_adverb/3, ty_adjunct/2, ty_sense/5.
+                 ty_adposition/3, ty_adverb/3, ty_adjunct/2, ty_sense/5,
+                 ty_question/4, ty_question_form/5, ty_wh/2, ty_wh_word/3,
+                 ty_question_mark/3.
 
 %% ---- the levels and the values a slot takes -----------------------------------
 
@@ -236,6 +266,10 @@ ty_values(place, [before, after]).
 ty_values(role, [s, o]).
 ty_values(adjunct_place, [start, end, before(v), after(s)]).
 ty_values(predicate, [adj, np, pp]).
+ty_values(question_kind, [yes_no, wh]).
+ty_values(question_level, [clause, copula]).
+ty_values(wh_place, [front, in_place]).
+ty_values(wh, [who, what, where, when]).
 
 %% ---- loading --------------------------------------------------------------------
 
@@ -280,6 +314,13 @@ typology_template(Name) :-
     ty_values(adjunct_place, Places),
     forall(member(Pl, Places), format("%% ty_adjunct(~q, ~q).~n", [Name, Pl])),
     nl,
+    format("%% how a question changes the order (one row or more a kind and level;~n", []),
+    format("%% Kind yes_no or wh, Level clause or copula):~n", []),
+    forall(member(R, [unchanged, particle('Word', start), particle('Word', end), front(all), front(first)]),
+           format("%% ty_question(~q, Kind, Level, ~q).~n", [Name, R])),
+    format("%% where a question word stands (keep one):~n", []),
+    forall(member(Pl, [front, in_place]), format("%% ty_wh(~q, ~q).~n", [Name, Pl])),
+    nl,
     forall(ty_row_shape(Shape), format("%% ~w~n", [Shape])).
 
 ty_row_shape('ty_noun(L, Meaning, Gender, Animacy, Singular, Plural).').
@@ -297,6 +338,9 @@ ty_row_shape('ty_copula(L, Kind, Tense, Number, Polarity, Words).').
 ty_row_shape('ty_adposition(L, Meaning, Words).').
 ty_row_shape('ty_adverb(L, Meaning, Word).').
 ty_row_shape('ty_sense(L, Word, Sense, Back, Ahead).').
+ty_row_shape('ty_question_form(L, Tense, Number, Words, Form).').
+ty_row_shape('ty_wh_word(L, Meaning, Words).').
+ty_row_shape('ty_question_mark(L, Open, Close).').
 
 %% ---- the check ----------------------------------------------------------------------
 
@@ -350,6 +394,27 @@ ty_missing(L, bad(ty_before(L, W, Ps, F, J))) :-
     \+ ( memberchk(J, [space, joined]), is_list(Ps),
          forall(( member(P, Ps), member(E, P) ),
                 ( E == end ; atom_length(E, 1) ; ty_letters(L, E, _) )) ).
+ty_missing(L, question(Kind, Level)) :-
+    once(ty_question(L, _, _, _)),
+    ty_values(question_kind, Ks), member(Kind, Ks),
+    ty_values(question_level, Ls), member(Level, Ls),
+    ( Level == copula -> ty_level_used(L, copula) ; true ),
+    \+ ty_question(L, Kind, Level, _).
+ty_missing(L, wh_place) :-
+    once(ty_question(L, wh, _, _)),
+    \+ ty_wh(L, _).
+ty_missing(L, wh_word(M)) :-
+    once(ty_question(L, wh, _, _)),
+    ty_values(wh, Ms), member(M, Ms),
+    \+ ty_wh_word(L, M, _).
+ty_missing(L, bad(ty_question(L, K, Lv, R))) :-
+    ty_question(L, K, Lv, R),
+    \+ ( ty_values(question_kind, Ks), memberchk(K, Ks),
+         ty_values(question_level, Ls), memberchk(Lv, Ls),
+         ty_question_rule(R) ).
+ty_missing(L, bad(ty_wh(L, P))) :-
+    ty_wh(L, P),
+    \+ ( ty_values(wh_place, Ps), memberchk(P, Ps) ).
 ty_missing(L, bad(ty_sense(L, W, S, B, A))) :-
     ty_sense(L, W, S, B, A),
     \+ ( ty_has_sense(L, W, S),
@@ -359,6 +424,9 @@ ty_missing(L, bad(ty_mark(L, R, Pl, W, Cs))) :-
     \+ ( ty_values(role, Rs), memberchk(R, Rs),
          ty_values(place, Ps), memberchk(Pl, Ps),
          is_list(Cs) ).
+
+ty_question_rule(R) :- memberchk(R, [unchanged, front(all), front(first)]), !.
+ty_question_rule(particle(W, P)) :- atom(W), memberchk(P, [start, end]).
 
 %% The clause and the noun phrase are every language's; the copula clause
 %% and the adposition phrase only a language that has their words.
@@ -385,7 +453,8 @@ typology_read(L, Text, IR) :-
 typology_read(L, Text, IR, Topics) :-
     must_be(atom, L),
     must_be(list, Topics),
-    ty_surface(Text, Surface),
+    ty_surface(Text, Mood, Open, Close, Surface),
+    ty_marks_fit(L, Mood, Open, Close),
     ty_unjoin(L, Surface, T1),
     ty_uncontract(L, T1, T2),
     ty_unsound(L, T2, Bases),
@@ -393,7 +462,8 @@ typology_read(L, Text, IR, Topics) :-
     Again == Surface,
     ty_new_context(Bases, Topics, Context),
     b_setval('$ty_context', Context),
-    phrase(ty_sentence(L, IR0), Bases),
+    ty_mood(Mood, L, IR0, Goal),
+    phrase(Goal, Bases),
     ty_ir_out(IR0, IR).
 
 typology_write(L, IR, Text) :-
@@ -405,16 +475,31 @@ typology_write(L, IR, Text, Topics) :-
     must_be(atom, L),
     must_be(list, Topics),
     ty_ir_in(IR, IR0),
+    ( IR0 = question(_) -> Mood = question ; Mood = statement ),
+    ty_mood(Mood, L, IR0, Goal),
     b_setval('$ty_context', none),
-    phrase(ty_sentence(L, IR0), Tokens0),
-    ty_reads_as(L, Tokens0, Topics, IR0), !,
+    phrase(Goal, Tokens0),
+    ty_reads_as(Goal, Tokens0, Topics), !,
     ty_write_tokens(L, Tokens0, Tokens),
-    ty_text(Tokens, Text).
+    ty_text(L, Mood, Tokens, Text).
 
-ty_reads_as(L, Tokens, Topics, IR0) :-
+ty_reads_as(Goal, Tokens, Topics) :-
     ty_new_context(Tokens, Topics, Context),
     \+ \+ ( b_setval('$ty_context', Context),
-           phrase(ty_sentence(L, IR0), Tokens) ).
+           phrase(Goal, Tokens) ).
+
+%% A statement is ty_sentence//2, a question ty_ask//2.
+ty_mood(statement, L, IR, ty_sentence(L, IR)).
+ty_mood(question, L, IR, ty_ask(L, IR)).
+
+%% A question's marks are the language's (ty_question_mark/3), a
+%% statement has none at its front.
+ty_marks_fit(L, question, Open, Close) :-
+    ty_question_marks(L, Open, Close).
+ty_marks_fit(_, statement, '', _).
+
+ty_question_marks(L, Open, Close) :-
+    (   ty_question_mark(L, O, C) -> Open = O, Close = C ; Open = '', Close = '?' ).
 
 %% The writer's steps after the grammar: the forms the next word chooses
 %% (a joined one marked j(Form)), the contractions (`in' and a joined `l''
@@ -427,9 +512,11 @@ ty_write_tokens(L, Tokens0, Tokens) :-
 
 %% clause/5 is a clause with no adjuncts: the grammar's clause/6 with [].
 ty_ir_in(clause(V, T, P, S, O), clause(V, T, P, S, O, [])) :- !.
+ty_ir_in(question(C), question(C1)) :- !, ty_ir_in(C, C1).
 ty_ir_in(IR, IR).
 
 ty_ir_out(clause(V, T, P, S, O, []), clause(V, T, P, S, O)) :- !.
+ty_ir_out(question(C), question(C1)) :- !, ty_ir_out(C, C1).
 ty_ir_out(IR, IR).
 
 typology_translate(From, To, Text, Text2) :-
@@ -469,6 +556,7 @@ typology_topics(IR, Topics) :-
     findall(T, ( ty_ir_meaning(IR, M), ty_meaning_topic(M, T) ), Ts),
     sort(Ts, Topics).
 
+ty_ir_meaning(question(C), M) :- ty_ir_meaning(C, M).
 ty_ir_meaning(clause(V, T, P, S, O), M) :-
     ty_ir_meaning(clause(V, T, P, S, O, []), M).
 ty_ir_meaning(clause(V, _, _, S, O, Js), M) :-
@@ -494,17 +582,30 @@ ty_meaning_topic(M, T) :- ty_topic(M, T).
 
 %% The words of a sentence as written: the full stop off, the first word
 %% lowered (a script with no capitals is unchanged).
-ty_surface(Text, Words) :-
+ty_surface(Text, Mood, Open, Close, Words) :-
     atom_string(A0, Text),
-    ty_unstop(A0, A),
+    ty_end_mark(A0, A1, Mood, Close),
+    ty_open_mark(A1, A, Open),
     split_string(A, " ", " ", Parts0),
     exclude(==(""), Parts0, [First0|Rest0]),
     maplist([P, W]>>atom_string(W, P), [First0|Rest0], [FirstA|Rest]),
     downcase_atom(FirstA, First),
     Words = [First|Rest].
 
-ty_unstop(A0, A) :-
-    (   sub_atom(A0, B, 1, 0, '.') -> sub_atom(A0, 0, B, _, A) ; A = A0 ).
+%% The mark at the end: a full stop (or none) a statement, `?' or `؟' a
+%% question; and the mark a question may open with (Spanish `¿').
+ty_end_mark(A0, A, Mood, Close) :-
+    (   sub_atom(A0, B, 1, 0, C), ty_end_mood(C, Mood0)
+    ->  sub_atom(A0, 0, B, _, A), Mood = Mood0, Close = C
+    ;   A = A0, Mood = statement, Close = ''
+    ).
+
+ty_end_mood('.', statement).
+ty_end_mood('?', question).
+ty_end_mood('؟', question).
+
+ty_open_mark(A0, A, Open) :-
+    (   sub_atom(A0, 0, 1, _, '¿') -> sub_atom(A0, 1, _, 0, A), Open = '¿' ; A = A0, Open = '' ).
 
 %% ---- forms chosen by the next word's sound -----------------------------------
 %%
@@ -600,12 +701,16 @@ ty_join([j(F)], [F]) :- !.
 ty_join([W|Ws], [W|Rest]) :-
     ty_join(Ws, Rest).
 
-ty_text(Tokens, Text) :-
+ty_text(L, Mood, Tokens, Text) :-
     atomic_list_concat(Tokens, ' ', Body),
     sub_atom(Body, 0, 1, _, F),
     sub_atom(Body, 1, _, 0, R),
     upcase_atom(F, U),
-    atomic_list_concat([U, R, '.'], Text).
+    (   Mood == question
+    ->  ty_question_marks(L, Open, Close)
+    ;   Open = '', Close = '.'
+    ),
+    atomic_list_concat([Open, U, R, Close], Text).
 
 %% ---- the meaning of a word with several -----------------------------------------
 %%
@@ -769,6 +874,180 @@ ty_pattern_item(class(noun, F)) :- atom(F).
 
 %% ---- the grammar ---------------------------------------------------------------------
 
+%% ---- questions ---------------------------------------------------------------------
+%%
+%% A question is a clause or a copula clause in an order its kind's rule
+%% makes from the statement's (ty_question/4): a yes or no question as the
+%% rule says; a question word moved to the front (ty_wh/2) and the rule on
+%% the rest, unless it is the subject (`Who sees the dog?'). The parts are
+%% the statement's, and f (front(first): the verb's first word) and q (a
+%% particle). The kind and the place of the question word are chosen
+%% first, and the IR is checked last: a yes or no question has no question
+%% word, a question with one has one.
+
+ty_ask(L, question(C)) --> ty_ask_clause(L, C).
+ty_ask(L, question(C)) --> ty_ask_copula(L, C).
+
+ty_ask_clause(L, C) -->
+    { C = clause(_, _, _, _, O, Js),
+      ty_order(L, clause, Order0),
+      ty_valency(Order0, O, Order1),
+      ty_adjunct_order(L, Order1, Js, Order2),
+      ty_ask_kind(C, Kind, Part),
+      Q = q(_, _, _, _, _),
+      ty_ask_order(L, Kind, Part, clause, Order2, Order, Q) },
+    ty_ask_parts(Order, L, C, Q),
+    { ty_wh_count(C, Kind) }.
+
+ty_ask_copula(L, C) -->
+    { C = copula(_, _, _, Pred),
+      ty_order(L, copula, Order0),
+      ty_ask_kind(C, Kind, Part),
+      Q = q(_, _, _, Features, Rows),
+      ty_ask_order(L, Kind, Part, copula, Order0, Order, Q) },
+    ty_ask_parts(Order, L, C, Q),
+    { Features = [_, N, _, G],
+      ty_predicate_ok(Pred, Rows, G, N),
+      ty_wh_count(C, Kind) }.
+
+%% The kind, and the part that holds the question word.
+ty_ask_kind(clause(_, _, _, S, O, Js), Kind, Part) :-
+    (   Kind = yes_no, Part = none
+    ;   Kind = wh, Part = s, S = wh(_)
+    ;   Kind = wh, Part = o, O = wh(_)
+    ;   Kind = wh, Part = j, Js = [wh(_)]
+    ).
+ty_ask_kind(copula(_, _, S, P), Kind, Part) :-
+    (   Kind = yes_no, Part = none
+    ;   Kind = wh, Part = s, S = wh(_)
+    ;   Kind = wh, Part = p, P = wh(_)
+    ).
+
+ty_wh_count(C, Kind) :-
+    findall(x, ty_wh_in(C), Xs),
+    length(Xs, N),
+    ( Kind == yes_no -> N =:= 0 ; N =:= 1 ).
+
+ty_wh_in(clause(_, _, _, S, O, Js)) :- ( S = wh(_) ; O = wh(_) ; member(wh(_), Js) ).
+ty_wh_in(copula(_, _, S, P)) :- ( S = wh(_) ; P = wh(_) ).
+
+%% The order of a question; Q = q(Rule, Moved, VerbWords, Features, Rows),
+%% Moved yes where the rule moved the verb.
+ty_ask_order(L, wh, s, _, Order0, Order, q(unchanged, no, _, _, _)) :- !,
+    (   ty_wh(L, front) -> ty_put_first(s, Order0, Order) ; Order = Order0 ).
+ty_ask_order(L, wh, Part, Level, Order0, Order, q(Rule, Moved, _, _, _)) :- !,
+    ty_question(L, wh, Level, Rule),
+    (   ty_wh(L, front)
+    ->  select(Part, Order0, Rest), !,
+        ty_ask_rule(Rule, Level, Rest, Rest1, Moved),
+        Order = [Part|Rest1]
+    ;   ty_ask_rule(Rule, Level, Order0, Order, Moved)
+    ).
+ty_ask_order(L, yes_no, _, Level, Order0, Order, q(Rule, Moved, _, _, _)) :-
+    ty_question(L, yes_no, Level, Rule),
+    ty_ask_rule(Rule, Level, Order0, Order, Moved).
+
+ty_put_first(P, Order0, [P|Rest]) :- select(P, Order0, Rest), !.
+
+ty_ask_rule(unchanged, _, O, O, no).
+ty_ask_rule(particle(_, start), _, O, [q|O], no).
+ty_ask_rule(particle(_, end), _, O, O1, no) :- append(O, [q], O1).
+ty_ask_rule(front(all), Level, O, O1, yes) :-
+    ty_head(Level, H),
+    select(H, O, O2), !,
+    ty_before_subject(H, O2, O1).
+ty_ask_rule(front(first), _, O, O1, yes) :-
+    ty_before_subject(f, O, O1).
+
+ty_head(clause, v).
+ty_head(copula, c).
+
+ty_before_subject(X, O, O1) :-
+    append(A, [s|B], O), !,
+    append(A, [X, s|B], O1).
+
+ty_ask_parts([], _, _, _) --> [].
+ty_ask_parts([P|Ps], L, C, Q) --> ty_ask_part(P, L, C, Q), ty_ask_parts(Ps, L, C, Q).
+
+ty_ask_part(s, L, clause(_, _, _, S, _, _), _) --> ty_role(L, s, S).
+ty_ask_part(s, L, copula(_, _, S, _), q(_, _, _, F, _)) --> ty_role(L, s, S, F).
+ty_ask_part(o, L, clause(_, _, _, _, O, _), _) --> ty_role(L, o, O).
+ty_ask_part(j, L, clause(_, _, _, _, _, Js), _) --> ty_adjuncts(L, Js).
+ty_ask_part(p, L, copula(_, _, _, Pred), q(_, _, _, _, R)) --> ty_predicate(L, Pred, R).
+ty_ask_part(v, L, C, Q) --> ty_ask_verb(L, C, Q).
+ty_ask_part(c, L, C, Q) --> ty_ask_verb(L, C, Q).
+ty_ask_part(f, L, C, Q) --> ty_ask_first(L, C, Q).
+ty_ask_part(q, _, _, q(particle(W, _), _, _, _, _)) --> [W].
+
+%% The verb (or the copula). Under front(first) part f, before the
+%% subject, is its first word and this part the rest: writing, f looks the
+%% words up; reading, this part does, once it has the rest.
+ty_ask_verb(L, C, q(Rule, Moved, VW, _, _), S0, S) :-
+    (   Rule == front(first)
+    ->  (   var(S0)
+        ->  VW = [_|Rest], append(Rest, S, S0)
+        ;   between(0, 3, K), length(Rest, K), append(Rest, S, S0),
+            VW = [_|Rest],
+            ty_ask_words(L, C, Moved, VW)
+        )
+    ;   (   var(S0)
+        ->  ty_ask_words(L, C, Moved, Ws), append(Ws, S, S0)
+        ;   ty_ask_min(C, Min), between(Min, 4, K), length(Ws, K), append(Ws, S, S0),
+            ty_ask_words(L, C, Moved, Ws)
+        ),
+        ty_ask_meant(L, C, Ws, S)
+    ).
+
+ty_ask_first(L, C, q(_, Moved, VW, _, _), S0, S) :-
+    (   var(S0)
+    ->  ty_ask_words(L, C, Moved, VW), VW = [W1|_], S0 = [W1|S]
+    ;   S0 = [W1|S], VW = [W1|_]
+    ).
+
+ty_ask_min(clause(_, _, _, _, _, _), 1).
+ty_ask_min(copula(_, _, _, _), 0).
+
+ty_ask_meant(L, clause(V, _, _, _, _, _), Ws, S) :- !, ty_meant(L, verb(V), Ws, S, S).
+ty_ask_meant(_, _, _, _).
+
+ty_ask_words(L, clause(V, T, P, Subj, _, _), Moved, Ws) :-
+    ty_subject_number(Subj, N),
+    ty_ask_verb_form(L, V, T, N, P, Moved, Ws).
+ty_ask_words(L, copula(T, P, Subj, Pred), _, Ws) :-
+    ty_subject_number(Subj, N),
+    ty_predicate_kind(Pred, K),
+    ty_copula(L, K1, T, N, P, Ws),
+    ty_fits(K1, K).
+
+ty_subject_number(np(_, N, _, _), N).
+ty_subject_number(W, sg) :- nonvar(W), W = wh(_).
+
+%% A verb the rule moved, in a language with question forms, is the
+%% question form if positive (`does see') and its negative if negative
+%% (`does not see', of which f takes `does').
+ty_ask_verb_form(L, V, T, N, P, Moved, Ws) :-
+    (   Moved == yes, once(ty_question_form(L, _, _, _, _))
+    ->  (   P = pos, ty_question_verb(L, V, T, N, Ws)
+        ;   P = neg, ty_verb_form(L, V, T, N, neg, Ws)
+        )
+    ;   ty_verb_form(L, V, T, N, P, Ws)
+    ).
+
+ty_question_verb(L, V, T, N, Words) :-
+    ty_question_form(L, T0, N0, Aux, form(T1, N1)),
+    append(Aux, Pos, Words),
+    ty_verb(L, V, T1, N1, pos, Pos),
+    ty_values(tense, Ts), member(T, Ts), ty_fits(T0, T),
+    ty_values(number, Ns), member(N, Ns), ty_fits(N0, N).
+
+%% A question word's words, and the features its marks ask for.
+ty_wh_words(L, M) --> ty_words(1, 3, Ws, ty_wh_word(L, M, Ws)).
+
+ty_wh_features(who, [def, sg, animate]).
+ty_wh_features(what, [indef, sg, inanimate]).
+
+%% ---- statements ---------------------------------------------------------------------
+
 ty_sentence(L, IR) --> ty_clause(L, IR).
 ty_sentence(L, IR) --> ty_copula_clause(L, IR).
 
@@ -811,6 +1090,11 @@ ty_adjuncts(_, []) --> [].
 ty_adjuncts(L, [J|Js]) --> ty_adjunct_item(L, J), ty_adjuncts(L, Js).
 
 ty_adjunct_item(L, pp(Prep, NP)) --> ty_pp(L, Prep, NP).
+ty_adjunct_item(L, W) --> { nonvar(W), W = wh(M), ty_wh_adjunct(M) }, ty_wh_words(L, M).
+
+%% The question words that stand as an adjunct.
+ty_wh_adjunct(where).
+ty_wh_adjunct(when).
 ty_adjunct_item(L, adv(M)) --> [W], { ty_adverb(L, M, W) }, ty_meant(L, adverb(M), [W]).
 
 %% An adposition phrase: the adposition (p) and its noun phrase (x) in the
@@ -859,6 +1143,13 @@ ty_copula_part(p, L, copula(_, _, _, Pred), _, Rows) --> ty_predicate(L, Pred, R
 ty_predicate_kind(adj(_), adj).
 ty_predicate_kind(np(_, _, _, _), np).
 ty_predicate_kind(pp(_, _), pp).
+ty_predicate_kind(W, K) :- nonvar(W), W = wh(M), ty_wh_kind(M, K).
+
+%% A question word as a copula's predicate stands for a noun phrase or a
+%% place (`Where is the dog?': Spanish `está').
+ty_wh_kind(who, np).
+ty_wh_kind(what, np).
+ty_wh_kind(where, pp).
 
 ty_copula_words(L, K, T, N, P) -->
     ty_words(0, 3, Ws, ( ty_copula(L, K1, T, N, P, Ws), ty_fits(K1, K) )),
@@ -867,6 +1158,7 @@ ty_copula_words(L, K, T, N, P) -->
 ty_predicate(L, adj(As), Rows) --> { As = [_|_] }, ty_adjs(L, As, Rows).
 ty_predicate(L, np(M, N, D, A), []) --> ty_np(L, np(M, N, D, A), _).
 ty_predicate(L, pp(Prep, NP), []) --> ty_pp(L, Prep, NP).
+ty_predicate(L, W, []) --> { nonvar(W), W = wh(M) }, ty_wh_words(L, M).
 
 ty_predicate_ok(adj(_), Rows, G, N) :- !,
     forall(member(adj(RG, RN), Rows), ( ty_fits(RG, G), ty_fits(RN, N) )).
@@ -898,6 +1190,17 @@ ty_verb_form(L, V, T, N, neg, Words) :-
 
 %% A role's phrase, with the marks the template puts before or after it.
 ty_role(L, Role, NP) --> ty_role(L, Role, NP, _).
+
+%% A question word in a role, with the marks its features ask for (Spanish
+%% `a quién', Persian `چه کسی را'). It stands only where ty_ask_kind/3 put
+%% it: a statement has none.
+ty_role(L, Role, W, [Def, N, Anim, _]) -->
+    { nonvar(W), W = wh(M), ty_wh_features(M, [Def, N, Anim]) },
+    ty_mark_slot(L, Role, before, Before),
+    ty_wh_words(L, M),
+    ty_mark_slot(L, Role, after, After),
+    { ty_marks_needed(L, Role, before, [Def, N, Anim], Before),
+      ty_marks_needed(L, Role, after, [Def, N, Anim], After) }.
 
 ty_role(L, Role, NP, Features) -->
     ty_mark_slot(L, Role, before, Before),

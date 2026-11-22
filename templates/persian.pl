@@ -82,3 +82,20 @@ ty_adverb(persian, quickly, 'تند').
 ty_adverb(persian, slowly, 'آهسته').
 ty_adverb(persian, today, 'امروز').
 ty_adverb(persian, here, 'اینجا').
+
+%% Questions: `؟'; a yes or no question in the statement's order, or with
+%% `آیا' first; a question word in place (`پسر چه چیزی می‌بیند؟'),
+%% `کجا است' written `کجاست'.
+ty_question_mark(persian, '', '؟').
+ty_question(persian, yes_no, clause, unchanged).
+ty_question(persian, yes_no, clause, particle('آیا', start)).
+ty_question(persian, yes_no, copula, unchanged).
+ty_question(persian, yes_no, copula, particle('آیا', start)).
+ty_question(persian, wh, clause, unchanged).
+ty_question(persian, wh, copula, unchanged).
+ty_wh(persian, in_place).
+ty_wh_word(persian, who, ['چه', 'کسی']).
+ty_wh_word(persian, what, ['چه', 'چیزی']).
+ty_wh_word(persian, where, ['کجا']).
+ty_wh_word(persian, when, ['کی']).
+ty_contraction(persian, ['کجا', 'است'], 'کجاست').

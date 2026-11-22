@@ -120,3 +120,17 @@ ty_adverb(italian, quickly, rapidamente).
 ty_adverb(italian, slowly, lentamente).
 ty_adverb(italian, today, oggi).
 ty_adverb(italian, here, qui).
+
+%% Questions: a yes or no question in the statement's order; a question
+%% word at the front, the verb before the subject after it (`Cosa vede il
+%% ragazzo?'), `dove è' written `dov'è'.
+ty_question(italian, yes_no, clause, unchanged).
+ty_question(italian, yes_no, copula, unchanged).
+ty_question(italian, wh, clause, front(all)).
+ty_question(italian, wh, copula, front(all)).
+ty_wh(italian, front).
+ty_wh_word(italian, who, [chi]).
+ty_wh_word(italian, what, [cosa]).
+ty_wh_word(italian, where, [dove]).
+ty_wh_word(italian, when, [quando]).
+ty_contraction(italian, [dove, 'è'], 'dov\'è').

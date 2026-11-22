@@ -101,6 +101,7 @@ main :-
     ( typology_read(italian, 'Il avvocato vede i studenti.', _) -> R9 = read ; R9 = refused ),
     must('what the writer would not write is not read', R9, refused),
     meanings,
+    questions,
     format("~ndone~n", []).
 
 %% 10. A WORD WITH SEVERAL MEANINGS IN ONE PLACE. First the words around it
@@ -134,6 +135,25 @@ new_language :-
     forall(( member(T-Tn, [present-'', past-'k']), member(N-Nn, [sg-'', pl-'i']),
              member(P-Pn, [pos-'', neg-'na']) ),
            ( atomic_list_concat([Pn, se, Tn, o, Nn], W), assertz(ty_verb(verbish, see, T, N, P, [W])) )).
+
+%% 11. QUESTIONS. ty_question/4 says how a question changes a level's
+%% order, a choice among five: unchanged, a particle at the start or the
+%% end, the verb before the subject (front(all)), or its first word only
+%% (front(first), with English `does' from ty_question_form/5). ty_wh/2
+%% puts a question word at the front or leaves it in place. The IR is
+%% question(Clause), a question word wh(M) where its role stands.
+questions :-
+    IR1 = question(clause(see, past, pos, np(girl, sg, def, []), wh(who))),
+    findall(L-T, ( member(L, [english, spanish, italian, persian]), typology_write(L, IR1, T) ), Ts1),
+    must('whom did the girl see, four times', Ts1,
+         [ english-'Who did the girl see?',
+           spanish-'¿A quién vio la niña?',
+           italian-'Chi vide la ragazza?',
+           persian-'دختر چه کسی را دید؟' ]),
+    typology_translate(english, spanish, 'Is the dog not big?', S2),
+    must('a yes or no question, into Spanish', S2, '¿El perro no es grande?'),
+    typology_translate(spanish, persian, '¿Dónde está el perro?', P3),
+    must('a question word at the front, into Persian, where it stays in place', P3, 'سگ کجاست؟').
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
 %% anywhere and run is worth six repeated lines, and one that needs a support

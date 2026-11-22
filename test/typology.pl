@@ -14,7 +14,8 @@
 main :-
     forall(member(L, [english, spanish, italian, persian]), typology_load(L)),
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
-                      copulas, adjuncts, meanings, word_tables, reproduced, free_order, incomplete,
+                      copulas, adjuncts, meanings, questions, word_tables, reproduced, free_order,
+                      incomplete,
                       blank_template]),
            once(S)),
     checks_done.
@@ -235,6 +236,77 @@ adjuncts :-
              atomic_list_concat([L, ': not read: ', Why], Label),
              check(Label, R, no) )).
 
+%% ---- questions ------------------------------------------------------------------------
+
+questions :-
+    section('questions: yes or no, and a question word at the front or in place'),
+    B = np(boy, sg, def, []), D = np(dog, sg, def, []), G = np(girl, sg, def, []),
+    written_each(questions, [
+        question(clause(see, present, pos, B, D))-
+            [english-'Does the boy see the dog?', spanish-'¿El niño ve al perro?',
+             italian-'Il ragazzo vede il cane?', persian-'پسر سگ را می‌بیند؟'],
+        question(clause(see, present, pos, B, wh(what)))-
+            [english-'What does the boy see?', spanish-'¿Qué ve el niño?',
+             italian-'Cosa vede il ragazzo?', persian-'پسر چه چیزی می‌بیند؟'],
+        question(clause(see, present, pos, wh(who), D))-
+            [english-'Who sees the dog?', spanish-'¿Quién ve al perro?',
+             italian-'Chi vede il cane?', persian-'چه کسی سگ را می‌بیند؟'],
+        question(clause(see, past, pos, G, wh(who)))-
+            [english-'Who did the girl see?', spanish-'¿A quién vio la niña?',
+             italian-'Chi vide la ragazza?', persian-'دختر چه کسی را دید؟'],
+        question(clause(sleep, present, pos, D, none, [wh(where)]))-
+            [english-'Where does the dog sleep?', spanish-'¿Dónde duerme el perro?',
+             italian-'Dove dorme il cane?', persian-'سگ کجا می‌خوابد؟'],
+        question(clause(sleep, past, neg, np(boy, pl, def, []), none))-
+            [english-'Did the boys not sleep?', spanish-'¿Los niños no durmieron?',
+             italian-'I ragazzi non dormirono?', persian-'پسرها نخوابیدند؟'],
+        question(clause(see, present, neg, B, wh(what)))-
+            [english-'What does the boy not see?', spanish-'¿Qué no ve el niño?',
+             italian-'Cosa non vede il ragazzo?', persian-'پسر چه چیزی نمی‌بیند؟'],
+        question(copula(present, pos, D, adj([big])))-
+            [english-'Is the dog big?', spanish-'¿El perro es grande?',
+             italian-'Il cane è grande?', persian-'سگ بزرگ است؟'],
+        question(copula(present, neg, D, adj([big])))-
+            [english-'Is the dog not big?', spanish-'¿El perro no es grande?',
+             italian-'Il cane non è grande?', persian-'سگ بزرگ نیست؟'],
+        question(copula(present, pos, D, wh(where)))-
+            [english-'Where is the dog?', spanish-'¿Dónde está el perro?',
+             italian-'Dov\'è il cane?', persian-'سگ کجاست؟'] ]),
+    %% The other orders a template keeps are read.
+    once(typology_read(spanish, '¿Ve el niño al perro?', R1)),
+    check('Spanish: the verb before the subject, the mark read past the subject', R1,
+          question(clause(see, present, pos, B, D))),
+    object_parts('¿Ve el niño al perro?', R1b),
+    check('Spanish: and never `to the dog''', R1b, [np(dog, sg, def, [])-[]]),
+    once(typology_read(persian, 'آیا پسر سگ را می‌بیند؟', R2)),
+    check('Persian: the particle آیا first', R2, question(clause(see, present, pos, B, D))),
+    findall(W3, ( typology_read(italian, 'Chi vede il ragazzo?', IR3),
+                  ( IR3 = question(clause(_, _, _, wh(_), _)) -> W3 = subject ; W3 = object ) ), W3s0),
+    sort(W3s0, W3s),
+    check('Italian: chi vede il ragazzo is who sees, and whom the boy sees', W3s, [object, subject]),
+    %% What the templates do not allow is not read.
+    forall(member(L-T-Why,
+                  [ english-'What the boy sees?'-'a question word at the front with no does',
+                    english-'Sees the boy the dog?'-'an English verb before its subject',
+                    spanish-'El niño ve al perro?'-'a Spanish question with no ¿',
+                    spanish-'¿Qué el niño ve?'-'a Spanish subject before its verb after a question word',
+                    spanish-'El niño ve qué.'-'a question word in a statement',
+                    english-'The boy sees what.'-'a question word in an English statement',
+                    english-'Does the boy see the dog.'-'a question with a full stop' ]),
+           ( yes_no(typology_read(L, T, _), R),
+             atomic_list_concat([L, ': ', Why], Label),
+             check(Label, R, no) )),
+    %% Across the languages, through the IR.
+    typology_translate(spanish, english, '¿A quién vio la niña?', E4),
+    check('Spanish into English: a quién, who did', E4, 'Who did the girl see?'),
+    typology_translate(english, persian, 'Where does the dog sleep?', P5),
+    check('English into Persian: the question word in place', P5, 'سگ کجا می‌خوابد؟'),
+    %% Every intransitive clause of the sample as a question.
+    aggregate_all(count, ( sample_ir(clause(sleep, T6, P6, S6, none)),
+                           member(L6, [english, spanish, italian, persian]),
+                           \+ round_trip(L6, question(clause(sleep, T6, P6, S6, none))) ), Bad6),
+    check('every intransitive clause of the sample as a question, four languages, reads back', Bad6, 0).
+
 %% ---- a word with several meanings ----------------------------------------------
 
 meanings :-
@@ -295,7 +367,8 @@ meanings :-
 
 %% The object and the adjuncts of every reading of a Spanish sentence.
 object_parts(T, Ps) :-
-    findall(O-Js, ( typology_read(spanish, T, IR),
+    findall(O-Js, ( typology_read(spanish, T, IR0),
+                    ( IR0 = question(IR) -> true ; IR = IR0 ),
                     ( IR = clause(_, _, _, _, O), Js = []
                     ; IR = clause(_, _, _, _, O, Js) ) ), Ps0),
     sort(Ps0, Ps).

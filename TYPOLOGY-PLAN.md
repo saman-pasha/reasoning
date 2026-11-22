@@ -105,7 +105,7 @@ Spanish and Italian apocope (`gran`). Then `cat` goes into Persian, and
 Italian nouns that start with `s` and a consonant, `z` or a vowel are
 right.
 
-## Phase 4: more levels (in part done, reasoning 1.22.0)
+## Phase 4: more levels (in part done, reasoning 1.22.0 and 1.23.0)
 
 Done:
 
@@ -135,13 +135,26 @@ Done:
      `árbol` a leaf, after a sentence about a knife a blade.
    The writer writes the first way whose words, read in their context,
    give the IR back: a blade beside a book is `cuchilla`, not `hoja`.
+4. **Questions** (1.23.0): `question(Clause)`, with no question word (yes
+   or no) or one, `wh(M)`, where a subject, an object, the one adjunct or
+   a copula's predicate stands. `ty_question(L, Kind, Level, Rule)` says
+   how the order changes, a choice among five: unchanged, a particle at
+   the start or the end (Persian `آیا`), the verb before the subject
+   (front(all): `¿Ve el niño al perro?`) or its first word only
+   (front(first), with `ty_question_form/5`'s `does`: `Does the boy see the
+   dog?`, `Is the dog not big?`). `ty_wh/2` puts a question word at the
+   front (the rule then on the rest, unless it is the subject: `Who sees
+   the dog?`) or in place (Persian); `ty_wh_word/3` and
+   `ty_question_mark/3` (`¿ ?`, `؟`) give the words and the marks. A
+   question word stands only where the kind put it, so a statement has
+   none.
 
 Not yet:
 
 3. The place of the negation as a part of the order, not only a form.
    The adposition phrase as a verb's complement (it is an adjunct now).
-4. Questions: yes or no (a particle, inversion, or the order unchanged),
-   and question words (in place or at the front).
+4. Questions of more than one question word, a question word inside a
+   noun phrase (`which dog`, `whose`), and the yes or no answer.
 5. Relative clauses: the marker, its place, and the gap.
 6. The topic table is written by hand (some thirty rows). The
    vocabularies' class lines (`is a time`, `is a country`, `is a

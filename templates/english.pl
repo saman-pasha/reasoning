@@ -107,3 +107,20 @@ ty_adverb(english, quickly, quickly).
 ty_adverb(english, slowly, slowly).
 ty_adverb(english, today, today).
 ty_adverb(english, here, here).
+
+%% Questions: the verb's first word before the subject, a positive verb in
+%% its question form (`does' before the base: `Does the boy see the dog?',
+%% `Is the dog not big?'); a question word at the front, the subject's
+%% with no change (`Who sees the dog?').
+ty_question(english, yes_no, clause, front(first)).
+ty_question(english, yes_no, copula, front(first)).
+ty_question(english, wh, clause, front(first)).
+ty_question(english, wh, copula, front(first)).
+ty_question_form(english, present, sg, [does], form(present, pl)).
+ty_question_form(english, present, pl, [do], form(present, pl)).
+ty_question_form(english, past, any, [did], form(present, pl)).
+ty_wh(english, front).
+ty_wh_word(english, who, [who]).
+ty_wh_word(english, what, [what]).
+ty_wh_word(english, where, [where]).
+ty_wh_word(english, when, [when]).
