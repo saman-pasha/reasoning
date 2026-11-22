@@ -103,6 +103,7 @@ main :-
     meanings,
     questions,
     repairs,
+    relatives,
     format("~ndone~n", []).
 
 %% 10. A WORD WITH SEVERAL MEANINGS IN ONE PLACE. First the words around it
@@ -171,6 +172,27 @@ repairs :-
          'What does the boy see?'-[question(wh, clause, unchanged)]),
     once(typology_repair(persian, 'پسر می‌بیند سگ را.', _, Fs3, T3)),
     must('a Persian verb before its object', T3-Fs3, 'پسر سگ را می‌بیند.'-[order(clause, [s, v, o])]).
+
+%% 13. RELATIVE CLAUSES. A noun phrase with a relative clause is a level of
+%% its own, rel: the head (h), the marker (m, ty_relative/4) and the clause
+%% (c), six orders like the others. The clause has a GAP where the head
+%% stands in it, and the gap is the head to every check: the verb agrees
+%% with it, and its role asks its animacy. Persian puts ی on the head's
+%% last word, and its object's mark stays with the head.
+relatives :-
+    IR1 = clause(see, present, pos, np(girl, sg, def, []),
+                 rel(np(dog, sg, def, [black]), clause(see, present, pos, np(boy, sg, def, []), gap))),
+    findall(L-T, ( member(L, [english, spanish, italian, persian]), typology_write(L, IR1, T) ), Ts1),
+    must('the black dog that the boy sees, four times', Ts1,
+         [ english-'The girl sees the black dog that the boy sees.',
+           spanish-'La niña ve al perro negro que el niño ve.',
+           italian-'La ragazza vede il cane nero che il ragazzo vede.',
+           persian-'دختر سگ سیاهی را که پسر می‌بیند می‌بیند.' ]),
+    once(typology_read(english, 'The boys who see the dog sleep.', IR2)),
+    must('the gap is the subject, and the verb agrees with the head', IR2,
+         clause(sleep, present, pos, rel(np(boy, pl, def, []), clause(see, present, pos, gap, np(dog, sg, def, []))), none)),
+    ( typology_read(english, 'The book that sees the dog sleeps.', _) -> R3 = read ; R3 = refused ),
+    must('a book does not see', R3, refused).
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
 %% anywhere and run is worth six repeated lines, and one that needs a support

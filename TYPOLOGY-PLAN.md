@@ -105,7 +105,7 @@ Spanish and Italian apocope (`gran`). Then `cat` goes into Persian, and
 Italian nouns that start with `s` and a consonant, `z` or a vowel are
 right.
 
-## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.24.0)
+## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.25.0)
 
 Done:
 
@@ -168,6 +168,28 @@ Done:
    al gato.` is `Los perros ven al gato.` (one fault, the noun), `What the
    boy sees?` is `What does the boy see?`, `El niño ve qué.` is `¿Qué ve
    el niño?`. A word no table has is not repaired.
+5. **Relative clauses** (1.25.0): `rel(NP, Clause)` where a noun phrase
+   stands -- a subject, an object, an adposition's noun phrase, a
+   copula's predicate. It is a level of its own, `rel`: the head (h, the
+   noun phrase between its role's marks), the marker (m, `ty_relative/4`)
+   and the clause (c), six orders like the others. The clause is a verb
+   clause or a copula clause in the language's own order, with `gap`
+   where the head stands in it (its subject or its object), and the gap
+   is the head to every check: the verb agrees with it (`Las niñas
+   pequeñas que vieron a un gato`), its role asks its animacy (`The book
+   that sees the dog sleeps.` is not read), a predicate adjective agrees
+   with it (`la niña que es pequeña`). The marker is the first row that
+   fits the gap's role and the head's features: English `that`, and
+   `who`, `which` and none (the object's gap: `the dog the boy sees`)
+   read; Spanish `que`, Italian `che`, Persian `که`, after which the
+   head's last word takes `ی` (`ty_linked(persian, n, r, ...)`: `سگی که`,
+   `خانه‌ای که`, `دخترهای کوچکی که`) and a mark stays with the head
+   (`سگ سیاهی را که می‌خوابد`). A clause nests in a clause, and an
+   adjunct after a relative clause is read as the main clause's and as
+   the relative clause's. A template whose clause stands before its head
+   (`c m h`, `c h`) reads too: no relative clause starts again where one
+   is open that has read no word yet, which in such an order would start
+   one there for ever.
 
 Not yet:
 
@@ -175,7 +197,11 @@ Not yet:
    The adposition phrase as a verb's complement (it is an adjunct now).
 4. Questions of more than one question word, a question word inside a
    noun phrase (`which dog`, `whose`), and the yes or no answer.
-5. Relative clauses: the marker, its place, and the gap.
+5. A relative clause moved after its verb, which Persian does where the
+   head is the predicate or the object (`سگ حیوانی است که می‌خوابد`, where
+   1.25.0 writes `سگ یک حیوانی که می‌خوابد است.`); a gap in an adjunct
+   (`the house in which the dog sleeps`) and a resumptive pronoun (Persian
+   `که پسر آن را می‌بیند`).
 6. The topic table is written by hand (some thirty rows). The
    vocabularies' class lines (`is a time`, `is a country`, `is a
    measure`, `is an institution`) can fill a part of it; the rest is

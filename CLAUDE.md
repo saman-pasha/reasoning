@@ -112,7 +112,23 @@ faults are kept inside f/1** (`'$ty_faults'`): cocolog 3.72.0's b_getval/2
 of a global whose value is atomic (`[]`) hands back the global's own cell,
 and `b_setval(K, [F|Fs])` over it wrote a cycle (`b_setval(k, []),
 b_getval(k, A), b_setval(k, [x|A])` is `@(S_1,[S_1=[x|S_1]])`, SWI-Prolog
-9.0.4's `[x]`; a compound value is right).
+9.0.4's `[x]`; a compound value is right). **A relative clause is a level,
+`rel` (h m c), and its gap is its head** (1.25.0): `ty_gap_place/5` puts
+`gap(NP, Features)` in the clause's subject or object before the clause is
+read, so every check that asks a subject -- the verb's number
+(`ty_subject_number/2`), its role's animacy (`ty_np_animacy/3`), a predicate
+adjective's agreement (the copula clause's Features) -- asks the head; a new
+check of a role asks a gap and a `rel/2` the same way. **A slot's
+alternatives make terms only where something bounds them**: a clause of
+`ty_subject_number/2` that recursed into an unbound `rel/2`'s head made
+`rel(rel(rel(...)))` for ever under a verb read before its subject (`¿Ve el
+niño al perro?`, ten minutes and no answer) -- a head is `np/4` by its
+pattern. **A relative clause does not start again where one is open that
+has read no word** (`ty_rel_open//0`, `'$ty_rel_open'` reset where a parse
+starts): an order with the clause first (`c h`) is a left recursion
+otherwise. **cocolog 3.72.0's retractall/1 of a qualified head removes
+nothing** (`retractall(user:q(1))` leaves `q(1)`, which SWI-Prolog 9.0.4
+removes; `retract(user:q(2))` removes it): a test retracts unqualified.
 
 **Every reader has two modes, static and live** (1.16.0; reason.pl's header,
 STATIC AND LIVE, and live.pl's). What a session must keep:

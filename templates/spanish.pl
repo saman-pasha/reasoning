@@ -137,3 +137,8 @@ ty_wh_word(spanish, who, ['quién']).
 ty_wh_word(spanish, what, ['qué']).
 ty_wh_word(spanish, where, ['dónde']).
 ty_wh_word(spanish, when, ['cuándo']).
+
+%% Relative clauses: the head, the marker, the clause (`el perro que el
+%% niño ve').
+ty_order(spanish, rel, [h, m, c]).
+ty_relative(spanish, any, [que], [[]]).

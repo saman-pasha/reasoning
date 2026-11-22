@@ -14,7 +14,7 @@
 main :-
     forall(member(L, [english, spanish, italian, persian]), typology_load(L)),
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
-                      copulas, adjuncts, meanings, questions, repairs, word_tables, reproduced, free_order,
+                      copulas, adjuncts, meanings, questions, repairs, relatives, word_tables, reproduced, free_order,
                       incomplete,
                       blank_template]),
            once(S)),
@@ -409,6 +409,109 @@ repairs :-
     ( typology_repair(spanish, 'El niño ve un zzz.', _, _, _) -> R6 = repaired ; R6 = not ),
     check('a word no table has is not repaired', R6, not).
 
+%% ---- relative clauses ---------------------------------------------------------------
+
+relatives :-
+    section('relative clauses: the head, the marker, and the clause with its gap'),
+    B = np(boy, sg, def, []), D = np(dog, sg, def, []),
+    Obj = rel(D, clause(see, present, pos, B, gap)),
+    Subj = rel(B, clause(see, present, pos, gap, D)),
+    written_each(relatives, [
+        clause(sleep, present, pos, Obj, none)-
+            [english-'The dog that the boy sees sleeps.', spanish-'El perro que el niño ve duerme.',
+             italian-'Il cane che il ragazzo vede dorme.', persian-'سگی که پسر می‌بیند می‌خوابد.'],
+        clause(sleep, present, pos, Subj, none)-
+            [english-'The boy that sees the dog sleeps.', spanish-'El niño que ve al perro duerme.',
+             italian-'Il ragazzo che vede il cane dorme.', persian-'پسری که سگ را می‌بیند می‌خوابد.'],
+        clause(see, present, pos, np(girl, sg, def, []),
+               rel(np(dog, sg, def, [black]), clause(sleep, present, pos, gap, none)))-
+            [english-'The girl sees the black dog that sleeps.', spanish-'La niña ve al perro negro que duerme.',
+             italian-'La ragazza vede il cane nero che dorme.', persian-'دختر سگ سیاهی را که می‌خوابد می‌بیند.'],
+        clause(sleep, past, pos, rel(np(girl, pl, def, [small]),
+                                     clause(see, past, pos, gap, np(cat, sg, indef, []))), none)-
+            [english-'The small girls that saw a cat slept.',
+             spanish-'Las niñas pequeñas que vieron a un gato durmieron.',
+             italian-'Le ragazze piccole che videro un gatto dormirono.',
+             persian-'دخترهای کوچکی که یک گربه دیدند خوابیدند.'],
+        clause(see, present, pos, B, rel(np(girl, sg, def, []), copula(present, pos, gap, adj([small]))))-
+            [english-'The boy sees the girl that is small.', spanish-'El niño ve a la niña que es pequeña.',
+             italian-'Il ragazzo vede la ragazza che è piccola.', persian-'پسر دختری را که کوچک است می‌بیند.'],
+        clause(sleep, present, pos, D, none, [pp(in, rel(np(house, sg, def, []), clause(see, present, pos, B, gap)))])-
+            [english-'The dog sleeps in the house that the boy sees.',
+             spanish-'El perro duerme en la casa que el niño ve.',
+             italian-'Il cane dorme nella casa che il ragazzo vede.',
+             persian-'سگ در خانه‌ای که پسر می‌بیند می‌خوابد.'],
+        clause(sleep, present, pos, rel(B, clause(see, present, pos, gap,
+                                                   rel(D, clause(see, present, pos, np(cat, sg, def, []), gap)))), none)-
+            [english-'The boy that sees the dog that the cat sees sleeps.',
+             spanish-'El niño que ve al perro que el gato ve duerme.',
+             italian-'Il ragazzo che vede il cane che il gatto vede dorme.',
+             persian-'پسری که سگی را که گربه می‌بیند می‌بیند می‌خوابد.'],
+        question(clause(see, present, pos, wh(who), rel(D, clause(sleep, present, pos, gap, none))))-
+            [english-'Who sees the dog that sleeps?', spanish-'¿Quién ve al perro que duerme?',
+             italian-'Chi vede il cane che dorme?', persian-'چه کسی سگی را که می‌خوابد می‌بیند؟'],
+        question(clause(see, present, pos, rel(B, clause(sleep, present, pos, gap, none)), D))-
+            [english-'Does the boy that sleeps see the dog?', spanish-'¿El niño que duerme ve al perro?',
+             italian-'Il ragazzo che dorme vede il cane?', persian-'پسری که می‌خوابد سگ را می‌بیند؟'] ]),
+    %% The other markers are read; no marker where the gap is the object.
+    forall(member(T-Want, [ 'The dog the boy sees sleeps.'-clause(sleep, present, pos, Obj, none),
+                            'The dog which the boy sees sleeps.'-clause(sleep, present, pos, Obj, none),
+                            'The boy who sees the dog sleeps.'-clause(sleep, present, pos, Subj, none) ]),
+           ( ( typology_read(english, T, Want) -> R = read ; R = not_read ),
+             atomic_list_concat(['English: ', T], Label),
+             check(Label, R, read) )),
+    %% Refused: a marker of no words where the gap is the subject, a verb
+    %% that does not agree with its head, a head the verb does not take, a
+    %% noun phrase that is no clause.
+    forall(member(L-T, [ english-'The boy sees the dog sleeps.',
+                         spanish-'Los niños que ve al perro duermen.',
+                         english-'The book that sees the dog sleeps.',
+                         english-'The boy who sleeps.' ]),
+           ( ( typology_read(L, T, _) -> R = read ; R = refused ),
+             atomic_list_concat([L, ': ', T], Label),
+             check(Label, R, refused) )),
+    %% An adjunct after a relative clause may be the main clause's or the
+    %% relative clause's: both are read.
+    findall(At, ( typology_read(spanish, 'El niño ve al perro que duerme en la casa.', IR),
+                  pp_owner(IR, At) ), At0),
+    sort(At0, Ats),
+    check('Spanish: en la casa, of the main clause or of the relative clause', Ats, [main, relative]),
+    typology_translate(spanish, persian, 'El niño ve al perro que duerme.', P1),
+    check('Spanish into Persian: the head takes ی, را stays with the head', P1,
+          'پسر سگی را که می‌خوابد می‌بیند.'),
+    typology_translate(persian, english, 'سگی که پسر می‌بیند می‌خوابد.', E1),
+    check('Persian into English: the gap is the object', E1, 'The dog that the boy sees sleeps.'),
+    once(typology_repair(spanish, 'Los niños que ve al perro duermen.', _, Fs2, F2)),
+    check('Spanish: a relative clause''s verb repaired to agree with its head', F2-Fs2,
+          'Los niños que ven al perro duermen.'-[agreement(verb, [ve])]),
+    %% A language whose relative clause stands before its head, its marker
+    %% after the clause (c m h), then with no marker (c h): the reader ends,
+    %% a clause first starting no relative clause again at its own place.
+    forall(( member(F, [ty_order(english, clause, _), ty_order(english, np, _),
+                        ty_noun(english, _, _, _, _, _), ty_adjective(english, _, _, _, _),
+                        ty_verb(english, _, _, _, _, _), ty_article(english, _, _, _, _),
+                        ty_negation(english, _, _, _, _)]),
+             call(F) ),
+           ( F =.. [P, english|Args], G =.. [P, before|Args], assertz(G) )),
+    assertz(ty_order(before, rel, [c, m, h])),
+    assertz(ty_relative(before, any, [de], [[]])),
+    IR3 = clause(sleep, present, pos, Obj, none),
+    typology_write(before, IR3, W3),
+    findall(R3, typology_read(before, W3, R3), R3s),
+    check('the clause before its head, its marker after it', W3-R3s,
+          'The boy sees de the dog sleeps.'-[IR3]),
+    %% (cocolog 3.72.0: retractall/1 of a qualified head removes nothing.)
+    retractall(ty_relative(before, _, _, _)),
+    assertz(ty_relative(before, any, [], [[]])),
+    typology_write(before, IR3, W4),
+    findall(R4, typology_read(before, W4, R4), R4s),
+    check('and with no marker', W4-R4s, 'The boy sees the dog sleeps.'-[IR3]).
+
+%% Where the adjunct of a reading stands: in the main clause or in the
+%% object's relative clause.
+pp_owner(clause(_, _, _, _, _, [pp(_, _)]), main).
+pp_owner(clause(_, _, _, _, rel(_, clause(_, _, _, _, _, [pp(_, _)]))), relative).
+
 %% The object and the adjuncts of every reading of a Spanish sentence.
 object_parts(T, Ps) :-
     findall(O-Js, ( typology_read(spanish, T, IR0),
@@ -520,4 +623,4 @@ blank_template :-
     split_string(S, "\n", "", Lines),
     include([Line]>>sub_string(Line, 0, _, _, 'ty_order(klingon'), Lines, Orders),
     length(Orders, N),
-    check('every order of every level is offered: 6 + 6 + 6 + 2', N, 20).
+    check('every order of every level is offered: 6 + 6 + 6 + 2 + 6', N, 26).

@@ -137,3 +137,8 @@ ty_wh_word(italian, what, [cosa]).
 ty_wh_word(italian, where, [dove]).
 ty_wh_word(italian, when, [quando]).
 ty_contraction(italian, [dove, 'è'], 'dov\'è').
+
+%% Relative clauses: the head, the marker, the clause (`il cane che il
+%% ragazzo vede').
+ty_order(italian, rel, [h, m, c]).
+ty_relative(italian, any, [che], [[]]).

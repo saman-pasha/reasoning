@@ -99,3 +99,19 @@ ty_wh_word(persian, what, ['چه', 'چیزی']).
 ty_wh_word(persian, where, ['کجا']).
 ty_wh_word(persian, when, ['کی']).
 ty_contraction(persian, ['کجا', 'است'], 'کجاست').
+
+%% Relative clauses: the head, the marker, the clause (`سگی که پسر
+%% می‌بیند', the dog that the boy sees). The head's last word takes ی
+%% (after ه ‌ای, after ا and و یی), and a mark stays with the head: `سگی را
+%% که پسر دید'.
+ty_order(persian, rel, [h, m, c]).
+ty_relative(persian, any, ['که'], [[]]).
+ty_linked(persian, n, r, '', 'ی').
+ty_linked(persian, n, r, 'ه', 'ه‌ای').
+ty_linked(persian, n, r, 'ا', 'ایی').
+ty_linked(persian, n, r, 'و', 'ویی').
+ty_linked(persian, a, r, '', 'ی').
+ty_linked(persian, a, r, 'ه', 'ه‌ای').
+ty_linked(persian, a, r, 'سیاه', 'سیاهی').
+ty_linked(persian, a, r, 'ا', 'ایی').
+ty_linked(persian, a, r, 'و', 'ویی').

@@ -124,3 +124,13 @@ ty_wh_word(english, who, [who]).
 ty_wh_word(english, what, [what]).
 ty_wh_word(english, where, [where]).
 ty_wh_word(english, when, [when]).
+
+%% Relative clauses: the head, the marker, the clause (`the dog that the
+%% boy sees'). The first marker that fits is written; `who' (a person or
+%% an animal) and `which' are read too, and no marker where the gap is the
+%% object (`the dog the boy sees').
+ty_order(english, rel, [h, m, c]).
+ty_relative(english, any, [that], [[]]).
+ty_relative(english, any, [who], [[animate]]).
+ty_relative(english, any, [which], [[]]).
+ty_relative(english, o, [], [[]]).
