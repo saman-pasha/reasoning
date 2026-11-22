@@ -15,7 +15,7 @@ main :-
     forall(member(L, [english, spanish, italian, persian, french]), typology_load(L)),
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
-                      question_words, answers, pronouns, echoes, french, references,
+                      question_words, answers, pronouns, echoes, french, references, live_topics,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -1202,6 +1202,58 @@ references :-
     findall(M, ( typology_check(tiny, Ms), member(M, Ms), M = bad(ty_pronoun_gender(_, _)) ), M4),
     retractall(ty_pronoun_gender(tiny, _)),
     check('typology_check/2: a pronoun''s gender system', M4, [bad(ty_pronoun_gender(tiny, both))]).
+
+%% ---- the topics a model gives ---------------------------------------------------
+
+%% 1.38.0: in live mode the model gives the meanings the tables give no
+%% topic their topics, once (reason_live_topics/2); a stub is the model.
+%% The mode, the stubs and what was saved are put back whatever happens.
+live_topics :-
+    section('the topics a model gives a meaning in live mode'),
+    setup_call_cleanup(true, live_topic_checks,
+                       ( reason_set_mode(static), retractall(reason_live_stub(_, _, _)),
+                         retractall(reason_live_topics(_, _)) )).
+
+live_topic_checks :-
+    use_module(library(reasoning/live)),
+    T = 'El niño ve la lima.',
+    lima_objects(T, O1),
+    check('static: lima is the file and the lime, as neither has a topic', O1, [file, lime]),
+    reason_set_mode(live),
+    assertz(reason_live_stub('la lima', topics,
+        '{"topics": [{"meaning": "lime", "topics": ["food", "plant"]}, {"meaning": "file", "topics": ["tool", "tool"]}, {"meaning": "see", "topics": ["nonsense"]}]}')),
+    reason_live_stats_reset,
+    lima_objects(T, O2),
+    check('live: the model makes the lime food, and the food given keeps it', O2, [lime]),
+    findall(M-Ts, reason_live_topics(M, Ts), Saved),
+    check('each meaning asked is kept: known topics once, [] for the rest', Saved,
+          [boy-[], child-[], file-[tool], infant-[], kid-[], lime-[food, plant], see-[], view-[]]),
+    lima_objects(T, _),
+    reason_live_stats(St3), memberchk(calls-C3, St3), memberchk(topics-N3, St3),
+    check('one call, two meanings given topics: a meaning asked is not asked again', C3-N3, 1-2),
+    typology_read(english, 'The dog sees the cat.', _),
+    reason_live_stats(St4), memberchk(calls-C4, St4),
+    check('a sentence with no word of several meanings asks nothing', C4, 1),
+    assertz(reason_live_stub('la cometa', topics, 'Not JSON.')),
+    findall(O, ( typology_read(spanish, 'El niño ve la cometa.', IR5), IR5 = clause(_, _, _, _, np(O, _, _, _)) ), O5a),
+    sort(O5a, O5),
+    reason_live_stats(St5), memberchk(calls-C5, St5),
+    ( reason_live_topics(comet, _) -> K5 = kept ; K5 = none ),
+    check('a reply that does not parse keeps nothing, and the reading is static''s', C5-K5-O5, 2-none-[comet, kite]),
+    reason_set_mode(static),
+    typology_read_text(spanish, ['El niño come la manzana.', T], [_, IR6]),
+    check('static, after: the apple before it makes lima the lime', IR6,
+          clause(see, present, pos, np(boy, sg, def, []), np(lime, sg, def, []))),
+    reason_live_stats(St7), memberchk(calls-C7, St7),
+    check('static mode asks nothing', C7, 2),
+    reason_live_forget,
+    findall(M, reason_live_topics(M, _), Left),
+    check('reason_live_forget/0 takes the topics back', Left, []).
+
+%% The meanings of the object in every reading of T, with food given.
+lima_objects(T, Os) :-
+    findall(O, ( typology_read(spanish, T, IR, [food]), IR = clause(_, _, _, _, np(O, _, _, _)) ), Os0),
+    sort(Os0, Os).
 
 %% A reading of a verb's other sense (`view' for `see', `little' for
 %% `small'): the checks above want the first sense's.

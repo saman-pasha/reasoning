@@ -3,7 +3,8 @@
 %%
 %% TIER 2: `use_module(library(reasoning/typology))', from typology.pl, and
 %% the templates in templates/ with their word tables. Clauses only: no
-%% model, no store. TYPOLOGY-PLAN.md says what comes next.
+%% model (section 25's is a stub), no store. TYPOLOGY-PLAN.md says what
+%% comes next.
 %%
 %%     cocolog -s tutorials/06-typology.pl
 %%
@@ -115,6 +116,7 @@ main :-
     echoes,
     french,
     references,
+    live_topics,
     format("~ndone~n", []).
 
 
@@ -427,6 +429,34 @@ references :-
     must('it is the house, so la', F2, ['La fille voit la maison.', 'Elle la voit.']),
     typology_translate_text(english, italian, ['The boy sees the book.', 'He sees it.'], I3),
     must('he is said, so no word; it is the book, so lo', I3, ['Il ragazzo vede il libro.', 'Lo vede.']).
+
+%% 25. TOPICS A MODEL GIVES. Of a word with several meanings the context
+%% keeps those whose topics it has (section 10), so a meaning the tables
+%% give no topic is never chosen that way. In LIVE mode (reason_set_mode/1)
+%% the reader asks a model, once, for the topics of such meanings, from the
+%% topics the tables know, and keeps the answer as
+%% reason_live_topics(Meaning, Topics), which static mode then uses too.
+%% Here a stub stands for the model (reason_live_stub/3): a prompt with
+%% `la lima' in it gets the stub's reply.
+live_topics :-
+    T = 'El niño ve la lima.',
+    lima_objects(T, O1),
+    must('static: with food given, lima is still the file and the lime', O1, [file, lime]),
+    reason_set_mode(live),
+    assertz(reason_live_stub('la lima', topics,
+        '{"topics": [{"meaning": "lime", "topics": ["food", "plant"]}, {"meaning": "file", "topics": ["tool"]}]}')),
+    lima_objects(T, O2),
+    reason_set_mode(static),
+    retractall(reason_live_stub(_, _, _)),
+    must('live: the model says a lime is food, so lima is the lime', O2, [lime]),
+    findall(M-Ts, ( member(M, [file, lime]), reason_live_topics(M, Ts) ), Saved),
+    must('what is kept', Saved, [file-[tool], lime-[food, plant]]),
+    reason_live_forget.
+
+%% The meanings of the object in every reading of T, with food given.
+lima_objects(T, Os) :-
+    findall(O, ( typology_read(spanish, T, IR, [food]), IR = clause(_, _, _, _, np(O, _, _, _)) ), Os0),
+    sort(Os0, Os).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

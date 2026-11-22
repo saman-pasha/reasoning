@@ -410,6 +410,8 @@
 %%      the class the grammar takes there, the ones whose topics the
 %%      context has the most of are kept; where the context has none of
 %%      any, every meaning is kept.
+%%      In live mode a model gives a meaning the tables give no topic its
+%%      topics, once (reason_live_topics/2; ty_live_topics/3 below).
 %%
 %% OF SEVERAL READINGS OF A QUESTION THE READER KEEPS THE LEAST COSTLY of
 %% the same meanings: a question's cost is the pairs of the statement's
@@ -826,6 +828,7 @@ typology_read(L, Text, IR, Topics) :-
     must_be(list, Topics),
     ty_surface(Text, Mood, Open, Close, Surface),
     ty_marks_fit(L, Mood, Open, Close),
+    ty_live_topics(L, Text, Surface),
     (   Mood == question
     ->  findall(C-IR0, ty_read_bases(L, Surface, Topics, Mood, IR0, C), All),
         ty_least(All, IRs),
@@ -1112,6 +1115,45 @@ ty_ir_meaning(adv(M), M).
 
 ty_meaning_topic(M, M).
 ty_meaning_topic(M, T) :- ty_topic(M, T).
+ty_meaning_topic(M, T) :- reason_live_topics(M, Ts), member(T, Ts).
+
+%% LIVE MODE GIVES A MEANING THE TABLES GIVE NO TOPIC ITS TOPICS (reason.pl's
+%% mode, library(reasoning/live)'s reason_live_topics/4): where a word of
+%% the sentence has several meanings in one class, each meaning of the
+%% sentence's words that has no topic and was never asked goes to the
+%% model in ONE call, and the answer is kept as reason_live_topics(Meaning,
+%% Topics), which a meaning's topics then include. Static mode, and live
+%% mode's own reads, ask nothing.
+ty_live_topics(L, Text, Surface) :-
+    (   rv_live([]),
+        ty_open_meanings(L, Surface, Ms),
+        Ms \== [],
+        setof(T, M^ty_topic(M, T), Known)
+    ->  use_module(library(reasoning/live)),
+        text_to_string(Text, S),
+        reason_live_topics(L, S, Ms, Known)
+    ;   true
+    ).
+
+%% Of the sentence's words, the meanings with no topic and never asked
+%% (forty at most), where one of the words has several in one class; else
+%% none.
+ty_open_meanings(L, Surface, Ms) :-
+    findall(W, ( ty_unjoin(L, Surface, T1), ty_uncontract(L, T1, T2),
+                 ty_unsound(L, T2, Bases), member(W, Bases) ),
+            Ws0),
+    sort(Ws0, Ws),
+    findall(Cs, ( member(W, Ws), member(C, [noun, adjective, verb, adverb]),
+                  setof(M, ty_class_meaning(L, C, W, M), Cs) ),
+            Groups),
+    (   memberchk([_, _|_], Groups)
+    ->  findall(M, ( member(Cs, Groups), member(M, Cs),
+                     \+ ty_topic(M, _), \+ reason_live_topics(M, _) ),
+                Ms0),
+        sort(Ms0, Ms1),
+        (   length(Ms1, N), N > 40 -> length(Ms, 40), append(Ms, _, Ms1) ; Ms = Ms1 )
+    ;   Ms = []
+    ).
 
 %% The words of a sentence as written: the full stop off, the first word
 %% lowered (a script with no capitals is unchanged).
@@ -1390,6 +1432,7 @@ ty_context_has(L, W, T, ctx(_, Words, _)) :-
 
 ty_topic_meaning(T, T).
 ty_topic_meaning(T, M) :- ty_topic(M, T).
+ty_topic_meaning(T, M) :- reason_live_topics(M, Ts), memberchk(T, Ts).
 
 ty_meaning_word(L, M, noun, W) :- ty_noun(L, M, _, _, S, P), ( W = S ; W = P ).
 ty_meaning_word(L, M, adjective, W) :- ty_adjective(L, M, _, _, W).

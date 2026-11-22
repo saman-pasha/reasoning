@@ -105,7 +105,7 @@ Spanish and Italian apocope (`gran`). Then `cat` goes into Persian, and
 Italian nouns that start with `s` and a consonant, `z` or a vowel are
 right.
 
-## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.37.0)
+## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.38.0)
 
 Done:
 
@@ -459,16 +459,29 @@ Done:
    rules know the class `possessive`; through 1.36.0 the writer could not
    write it).
 
+20. **Topics a model gives** (1.38.0). In live mode (`reason_set_mode(live)`)
+   `typology_read/3,4`, where a word of the sentence has several meanings
+   in one class, sends each meaning of the sentence's words that the
+   tables give no topic, and that was never asked, to the model in ONE
+   call (library(reasoning/live)'s `reason_live_topics/4`): 0 to 3 topics
+   for each, from the topics the tables know. A topic it does not know is
+   dropped, a meaning the reply does not name gets none, and the answer is
+   kept as `reason_live_topics(Meaning, Topics)`, which the topics of a
+   meaning include from then on, in static mode too: with `food` given,
+   `El niño ve la lima.` reads the lime, no longer the file as well. A
+   meaning is asked once; a reply that does not parse keeps nothing; live
+   mode's own reads, and static mode, ask nothing. `reason_live_forget/0`
+   takes the topics back.
+
 Not yet:
 
 3. A German template: the place of the negation is there for it, and
    German's `nicht` before a predicate (`ist nicht groß`), its verb second
    and its cases on the article are not.
-6. The topics the class lines do not give: the hand table's thirty rows,
-   and every other meaning, are Phase 8's (a model fills a slot in live
-   mode, with the reference sentences as its check). A meaning of its
-   own for each sense of an English word (`march`, the month and the
-   walk) waits for the bridge to translate.pl (Phase 6).
+6. The topics are the model's word (item 20): no reference sentence
+   checks them yet. A meaning of its own for each sense of an English
+   word (`march`, the month and the walk) waits for the bridge to
+   translate.pl (Phase 6).
 
 ## Phase 5: more features (in part done, reasoning 1.34.0)
 
@@ -496,5 +509,7 @@ Each one is a new file. The code changes only by the slots of phases 3 to 5.
 
 - `typology_template/1`'s blank template filled by choosing.
 - A model fills a slot in live mode, with the round trip and the
-  reference sentences as its check.
+  reference sentences as its check. In part: the topics of a meaning
+  (1.38.0, Phase 4's item 20), checked only against the topics the
+  tables know.
 - Controlled English rows as an alternative to facts.

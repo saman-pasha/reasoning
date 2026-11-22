@@ -26,16 +26,25 @@
 %%         Sentences) when any sentence of it reads; a save the store
 %%         refuses (a clause past its page) is said on stderr, and the
 %%         sentences are answered all the same.
+%%     reason_live_topics(+Lang, +Text, +Meanings, +Known)
+%%         The topics of library(reasoning/typology)'s meanings that its
+%%         tables give none: each meaning of Meanings not asked before
+%%         (the IR's meanings of the words of Text, a sentence in Lang),
+%%         in ONE call, given 0 to 3 topics of Known. Saved as
+%%         reason_live_topics(Meaning, Topics), Topics [] for a meaning
+%%         the reply gives none or does not name, so no meaning is asked
+%%         twice.
 %%     reason_live_ready
 %%         There is a model to ask (or a stub, below).
 %%     reason_live_stats(-Pairs)
 %%     reason_live_stats_reset
 %%         This process's counts: calls, prompt and completion tokens,
-%%         verdicts, lessons, rewrites, kinds and verb forms saved.
+%%         verdicts, lessons, rewrites, kinds, verb forms, restatements
+%%         and the meanings given topics saved.
 %%     reason_live_forget
 %%         Every saved fact taken back: the verdicts, the rewrites, the
-%%         kinds, the verb forms, and the lexicon facts and lesson lines
-%%         live mode taught.
+%%         kinds, the verb forms, the topics, and the lexicon facts and
+%%         lesson lines live mode taught.
 %%
 %% ---- ONE ROUND ----------------------------------------------------------
 %%
@@ -73,6 +82,8 @@
 %%   {"verdict": "right" | "wrong", "verbs": [{"base": B, "third": T}]}
 %%
 %%   {"sentences": ["One sentence.", "Another sentence."]}   (a restatement)
+%%
+%%   {"topics": [{"meaning": M, "topics": [T, ...]}]}       (the typology's)
 %%
 %% The JSON may come in a fence or after prose: the first `{' to the last
 %% `}' is parsed. A reply that will not parse is no answer, and the round
@@ -114,6 +125,7 @@
 reason_live_read(Kind, Text) :- ( rv_text(Text) -> lv_busy(lv_rounds(Kind, Text, 1)) ; true ).
 reason_live_kinds(Terms, Items) :- lv_busy(lv_kinds(Terms, Items)).
 reason_live_explanation(Text) :- lv_busy(lv_explanation(Text)).
+reason_live_topics(Lang, Text, Meanings, Known) :- lv_busy(lv_topics(Lang, Text, Meanings, Known)).
 reason_live_restate(Text, Sentences) :-
     lv_busy(lv_restate(Text, Sentences)),
     is_list(Sentences).
@@ -646,6 +658,56 @@ lv_third_save(Vj) :-
     ;   true
     ).
 
+%% ---- the typology's meanings: their topics ----------------------------------------
+%%
+%% A meaning library(reasoning/typology) reads is an English word for one
+%% sense (`lime', `file'). Where a word has several and the tables give a
+%% meaning no topic, the reader cannot choose by the context; the model
+%% gives such a meaning its topics, from the topics the tables know, and
+%% the reader then chooses as with a topic row.
+
+lv_topics(Lang, Text, Meanings0, Known) :-
+    exclude(lv_topics_asked, Meanings0, Meanings),
+    (   Meanings == [] -> true
+    ;   Known == [] -> true
+    ;   \+ reason_live_ready -> true
+    ;   lv_topic_prompt(Lang, Text, Meanings, Known, System, User),
+        lv_ask(topics, System, User, Reply),
+        lv_json(Reply, J),
+        lv_get(J, topics, Items), is_list(Items)
+    ->  forall(member(M, Meanings), lv_topic_save(M, Items, Known))
+    ;   true
+    ).
+
+lv_topics_asked(M) :- reason_live_topics(M, _).
+
+%% the topics the reply gives M, each one of Known, three at most; none
+%% where it does not name M
+lv_topic_save(M, Items, Known) :-
+    (   member(I, Items), lv_get(I, meaning, M0), atom(M0), downcase_atom(M0, M)
+    ->  (   lv_get(I, topics, Ts0), is_list(Ts0) -> true ; Ts0 = [] ),
+        findall(T, ( member(T0, Ts0), atom(T0), downcase_atom(T0, T), memberchk(T, Known) ), Ts1),
+        list_to_set(Ts1, Ts2),
+        lv_topics_first(3, Ts2, Ts)
+    ;   Ts = []
+    ),
+    retractall(reason_live_topics(M, _)),
+    assertz(reason_live_topics(M, Ts)),
+    (   Ts == [] -> true ; lv_count(topics) ).
+
+lv_topics_first(N, Xs, Ys) :-
+    (   length(Xs, L), L =< N -> Ys = Xs ; length(Ys, N), append(Ys, _, Xs) ).
+
+lv_topic_prompt(Lang, Text, Meanings, Known, System, User) :-
+    System = 'A reader of sentences chooses between the meanings of a word by the topics of the words around it. Each meaning is an English word for one sense of a word in the sentence. Give each meaning 0 to 3 topics, only from the topics listed, and only a topic the meaning is clearly about; give [] where none fits.
+
+Answer with one JSON object and nothing else, one entry a meaning:
+{"topics": [{"meaning": "apple", "topics": ["food", "plant"]}, {"meaning": "hammer", "topics": ["tool"]}, {"meaning": "idea", "topics": []}]}',
+    atomic_list_concat(Known, ', ', KnownText),
+    atomic_list_concat(Meanings, '\n', MeaningText),
+    format(atom(User), 'The language: ~w~nThe sentence: ~w~n~nThe topics: ~w~n~nThe meanings:~n~w',
+           [Lang, Text, KnownText, MeaningText]).
+
 %% ---- the model ---------------------------------------------------------------------
 
 reason_live_ready :-
@@ -828,14 +890,14 @@ lv_count(K, N) :-
 
 reason_live_stats(Pairs) :-
     findall(K-V, ( member(K, [calls, prompt_tokens, completion_tokens, verdicts,
-                              lessons, rewrites, kinds, thirds, restatements]),
+                              lessons, rewrites, kinds, thirds, restatements, topics]),
                    atom_concat('$reason_live_', K, G),
                    ( catch(nb_getval(G, V0), _, fail), integer(V0) -> V = V0 ; V = 0 ) ),
             Pairs).
 
 reason_live_stats_reset :-
     forall(member(K, [calls, prompt_tokens, completion_tokens, verdicts,
-                      lessons, rewrites, kinds, thirds, restatements]),
+                      lessons, rewrites, kinds, thirds, restatements, topics]),
            ( atom_concat('$reason_live_', K, G), nb_setval(G, 0) )).
 
 reason_live_forget :-
@@ -846,7 +908,8 @@ reason_live_forget :-
     retractall(reason_live_rewrite(_, _, _)),
     retractall(reason_live_kind(_, _)),
     retractall(reason_live_third(_, _)),
-    retractall(reason_live_restatement(_, _)).
+    retractall(reason_live_restatement(_, _)),
+    retractall(reason_live_topics(_, _)).
 
 lv_unteach(ir(From), Line) :- !,
     (   atom(Line), catch(reason_text(Line, Terms), _, fail)

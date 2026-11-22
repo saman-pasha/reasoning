@@ -297,6 +297,11 @@
 %%   restate      grammar's forms (reason_restate/2,3), the sentences the
 %%                grammar reads become reason_live_restatement(Text,
 %%                Sentences), and one it does not read is sent back once.
+%%   a typology   library(reasoning/typology)'s typology_read/3,4: the
+%%   sentence     meanings of its words that the tables give no topic,
+%%                where a word has several; the model gives each 0 to 3
+%%                of the topics the tables know, saved as
+%%                reason_live_topics(Meaning, Topics), once a meaning.
 %%
 %% Each verdict is saved as reason_live_verdict(Kind, Item, Reading,
 %% right | wrong(Minor)), so a reading the model judged is not sent again:
@@ -596,7 +601,7 @@
 %% made from it, and no code, test or lesson in the tree spells the number.
 %% Bump it in the commit that changes this repository, never afterwards.
 
-reason_version(1, 37, 0).
+reason_version(1, 38, 0).
 
 reason_version(Version) :-
     reason_version(Major, Minor, Patch),
@@ -614,6 +619,7 @@ reason_version(Version) :-
 :- dynamic reason_live_third/2.
 :- dynamic reason_live_lesson/2.
 :- dynamic reason_live_restatement/2.
+:- dynamic reason_live_topics/2.
 :- dynamic reason_live_stub/3.
 
 %% THE MODE IS A GLOBAL, NEVER A FACT: an assert under `--embed' would be
