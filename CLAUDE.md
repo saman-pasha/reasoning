@@ -54,9 +54,12 @@ test/typology.pl's `reproduced` section imports again into a scratch
 directory and holds the committed files to it byte for byte: edit a hand
 template, import again, commit both. **The import reads the hand template
 from its FILE** (`tyi_hand/1`, through library(stream)), never from the
-knowledge base: cocolog 3.65.0's consult of a file a second time, after a
-retractall/1 took its clauses, adds none of them back (the first cut
-retracted and consulted, and the test's import wrote a different file).
+knowledge base: cocolog's `consult(library(Spec))` a second time, after a
+retractall/1 took the file's clauses, adds none of them back (the first cut
+retracted and consulted, and the test's import wrote a different file). It
+is the library spec: the same file consulted by its path adds them back,
+in a module or not, and SWI-Prolog 9.0.4 adds them back both ways
+(3.65.0 and 3.72.0 alike, checked 2026-11-22).
 **A form line belongs to the class of the entry it follows** (1.21.0,
 `tyi_form/4`): `fría' is an adjective (plural `frías') and a form of
 `freír' (plural `frían'), and the first cut took any plural of the
@@ -78,7 +81,7 @@ without it a parse that backtracks over `niño` and `ve` took 412 ms, the
 same parse unchecked 10. A new place the grammar takes a word adds its
 `ty_meant//3`. **Topics are found from the topic, by meaning**
 (`ty_context_has/4`), never by looking each word of the sentence up by its
-form: cocolog 3.65.0 walks every row for a call keyed by a one-element
+form: cocolog 3.65.0 to 3.72.0 walks every row for a call keyed by a one-element
 list (`ty_verb(es, M, T, N, P, [W])`: 1.3 ms over 40 000 facts, with only
 the list bound too, where SWI-Prolog 9.0.4's deep index takes 1.5 µs and
 an atom key 14 µs), so a verb looked up by its word costs some 0.7 ms
