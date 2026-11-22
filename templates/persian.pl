@@ -200,3 +200,52 @@ ty_linked(persian, a, clitic(pl), 'سیاه', 'سیاهشان').
 %% A possessive pronoun is the clitic on the possessed (`سگش', his, her or
 %% its dog; `سگشان', their dog), the clitic(N) rows above.
 ty_possessive_clitic(persian).
+
+%% Personal pronouns, one form in every role (an object's takes را as a
+%% noun phrase does: `او را می‌بینم'); a subject of the first or the second
+%% person is no word, the verb's ending telling it (`سگ را می‌بینم', I see
+%% the dog), and one of the third may be none. The verb of the first and
+%% the second persons is the plural's with ند made م, ی, یم, ید
+%% (`می‌بینم', `می‌بینی', `می‌بینیم', `می‌بینید'; `دیدم'; `هستم', `نیستیم').
+ty_pronoun(persian, s, ['من'], [[1, sg]]).
+ty_pronoun(persian, s, ['تو'], [[2, sg]]).
+ty_pronoun(persian, s, ['او'], [[3, sg, m], [3, sg, f]]).
+ty_pronoun(persian, s, ['آن'], [[3, sg, n]]).
+ty_pronoun(persian, s, ['ما'], [[1, pl]]).
+ty_pronoun(persian, s, ['شما'], [[2, pl]]).
+ty_pronoun(persian, s, ['آنها'], [[3, pl]]).
+ty_pro_drop(persian, [1, 2]).
+ty_verb_person(persian, any, sg(1), pl, 'ند', 'م').
+ty_verb_person(persian, any, sg(2), pl, 'ند', 'ی').
+ty_verb_person(persian, any, pl(1), pl, 'ند', 'یم').
+ty_verb_person(persian, any, pl(2), pl, 'ند', 'ید').
+
+%% A possessive pronoun of the first and the second persons is a clitic as
+%% the third's is: م, ت, مان, تان (`سگم', my dog; `خانه‌ات', your house;
+%% `کتاب‌هایمان', our books).
+ty_linked(persian, n, clitic(sg(1)), '', 'م').
+ty_linked(persian, n, clitic(sg(1)), 'ه', 'ه‌ام').
+ty_linked(persian, n, clitic(sg(1)), 'ا', 'ایم').
+ty_linked(persian, n, clitic(sg(1)), 'و', 'ویم').
+ty_linked(persian, a, clitic(sg(1)), '', 'م').
+ty_linked(persian, a, clitic(sg(1)), 'ه', 'ه‌ام').
+ty_linked(persian, a, clitic(sg(1)), 'سیاه', 'سیاهم').
+ty_linked(persian, n, clitic(sg(2)), '', 'ت').
+ty_linked(persian, n, clitic(sg(2)), 'ه', 'ه‌ات').
+ty_linked(persian, n, clitic(sg(2)), 'ا', 'ایت').
+ty_linked(persian, n, clitic(sg(2)), 'و', 'ویت').
+ty_linked(persian, a, clitic(sg(2)), '', 'ت').
+ty_linked(persian, a, clitic(sg(2)), 'ه', 'ه‌ات').
+ty_linked(persian, a, clitic(sg(2)), 'سیاه', 'سیاهت').
+ty_linked(persian, n, clitic(pl(1)), '', 'مان').
+ty_linked(persian, n, clitic(pl(1)), 'ه', 'ه‌مان').
+ty_linked(persian, n, clitic(pl(1)), 'ا', 'ایمان').
+ty_linked(persian, a, clitic(pl(1)), '', 'مان').
+ty_linked(persian, a, clitic(pl(1)), 'ه', 'ه‌مان').
+ty_linked(persian, a, clitic(pl(1)), 'سیاه', 'سیاهمان').
+ty_linked(persian, n, clitic(pl(2)), '', 'تان').
+ty_linked(persian, n, clitic(pl(2)), 'ه', 'ه‌تان').
+ty_linked(persian, n, clitic(pl(2)), 'ا', 'ایتان').
+ty_linked(persian, a, clitic(pl(2)), '', 'تان').
+ty_linked(persian, a, clitic(pl(2)), 'ه', 'ه‌تان').
+ty_linked(persian, a, clitic(pl(2)), 'سیاه', 'سیاهتان').

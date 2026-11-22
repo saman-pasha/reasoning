@@ -181,14 +181,90 @@ ty_relative_possessive(italian, [la, cui], [[f, sg]]).
 ty_relative_possessive(italian, [i, cui], [[m, pl]]).
 ty_relative_possessive(italian, [le, cui], [[f, pl]]).
 
-%% A possessive pronoun with the possessed's article (`il suo cane', `la sua
-%% casa', `i loro cani'): `suo' of one possessor, agreeing with the
-%% possessed; `loro' of several.
-ty_possessive_pronoun(italian, [il, suo], [[sg]], [[m, sg]]).
-ty_possessive_pronoun(italian, [la, sua], [[sg]], [[f, sg]]).
-ty_possessive_pronoun(italian, [i, suoi], [[sg]], [[m, pl]]).
-ty_possessive_pronoun(italian, [le, sue], [[sg]], [[f, pl]]).
-ty_possessive_pronoun(italian, [il, loro], [[pl]], [[m, sg]]).
-ty_possessive_pronoun(italian, [la, loro], [[pl]], [[f, sg]]).
-ty_possessive_pronoun(italian, [i, loro], [[pl]], [[m, pl]]).
-ty_possessive_pronoun(italian, [le, loro], [[pl]], [[f, pl]]).
+%% A possessive pronoun with the possessed's article (`il mio cane', `la sua
+%% casa', `i loro cani'): `mio', `tuo', `suo' of one possessor and `nostro',
+%% `vostro' of several, agreeing with the possessed; `loro' of several of
+%% the third person.
+ty_possessive_pronoun(italian, [il, mio], [[1, sg]], [[m, sg]]).
+ty_possessive_pronoun(italian, [la, mia], [[1, sg]], [[f, sg]]).
+ty_possessive_pronoun(italian, [i, miei], [[1, sg]], [[m, pl]]).
+ty_possessive_pronoun(italian, [le, mie], [[1, sg]], [[f, pl]]).
+ty_possessive_pronoun(italian, [il, tuo], [[2, sg]], [[m, sg]]).
+ty_possessive_pronoun(italian, [la, tua], [[2, sg]], [[f, sg]]).
+ty_possessive_pronoun(italian, [i, tuoi], [[2, sg]], [[m, pl]]).
+ty_possessive_pronoun(italian, [le, tue], [[2, sg]], [[f, pl]]).
+ty_possessive_pronoun(italian, [il, suo], [[3, sg]], [[m, sg]]).
+ty_possessive_pronoun(italian, [la, sua], [[3, sg]], [[f, sg]]).
+ty_possessive_pronoun(italian, [i, suoi], [[3, sg]], [[m, pl]]).
+ty_possessive_pronoun(italian, [le, sue], [[3, sg]], [[f, pl]]).
+ty_possessive_pronoun(italian, [il, nostro], [[1, pl]], [[m, sg]]).
+ty_possessive_pronoun(italian, [la, nostra], [[1, pl]], [[f, sg]]).
+ty_possessive_pronoun(italian, [i, nostri], [[1, pl]], [[m, pl]]).
+ty_possessive_pronoun(italian, [le, nostre], [[1, pl]], [[f, pl]]).
+ty_possessive_pronoun(italian, [il, vostro], [[2, pl]], [[m, sg]]).
+ty_possessive_pronoun(italian, [la, vostra], [[2, pl]], [[f, sg]]).
+ty_possessive_pronoun(italian, [i, vostri], [[2, pl]], [[m, pl]]).
+ty_possessive_pronoun(italian, [le, vostre], [[2, pl]], [[f, pl]]).
+ty_possessive_pronoun(italian, [il, loro], [[3, pl]], [[m, sg]]).
+ty_possessive_pronoun(italian, [la, loro], [[3, pl]], [[f, sg]]).
+ty_possessive_pronoun(italian, [i, loro], [[3, pl]], [[m, pl]]).
+ty_possessive_pronoun(italian, [le, loro], [[3, pl]], [[f, pl]]).
+
+%% Personal pronouns: a subject's, which the verb's form makes no word for
+%% the first and the second persons (`Vedo il cane.'), and may make none
+%% for the third (`Dorme.'); an object's, a clitic in the verb's words (`La
+%% ragazza lo vede.', `Non la vedo.'; `lo' is `l'' before a vowel, as
+%% `il'); and an adposition's (`con lei', `a lui').
+ty_pronoun(italian, s, [io], [[1, sg]]).
+ty_pronoun(italian, s, [tu], [[2, sg]]).
+ty_pronoun(italian, s, [lui], [[3, sg, m]]).
+ty_pronoun(italian, s, [lei], [[3, sg, f]]).
+ty_pronoun(italian, s, [noi], [[1, pl]]).
+ty_pronoun(italian, s, [voi], [[2, pl]]).
+ty_pronoun(italian, s, [loro], [[3, pl]]).
+ty_pronoun(italian, o, [mi], [[1, sg]]).
+ty_pronoun(italian, o, [ti], [[2, sg]]).
+ty_pronoun(italian, o, [lo], [[3, sg, m], [3, sg, n]]).
+ty_pronoun(italian, o, [la], [[3, sg, f]]).
+ty_pronoun(italian, o, [ci], [[1, pl]]).
+ty_pronoun(italian, o, [vi], [[2, pl]]).
+ty_pronoun(italian, o, [li], [[3, pl, m], [3, pl, n]]).
+ty_pronoun(italian, o, [le], [[3, pl, f]]).
+ty_pronoun(italian, j, [me], [[1, sg]]).
+ty_pronoun(italian, j, [te], [[2, sg]]).
+ty_pronoun(italian, j, [lui], [[3, sg, m], [3, sg, n]]).
+ty_pronoun(italian, j, [lei], [[3, sg, f]]).
+ty_pronoun(italian, j, [noi], [[1, pl]]).
+ty_pronoun(italian, j, [voi], [[2, pl]]).
+ty_pronoun(italian, j, [loro], [[3, pl]]).
+ty_before(italian, lo, [[vowel], [h]], 'l\'', joined).
+ty_pro_drop(italian, [1, 2]).
+ty_clitic(italian, o).
+
+%% The first and the second persons of the verbs above (the import gives
+%% every other verb's from the vocabulary), and of the copula; a negative
+%% is `non' before the positive.
+ty_verb(italian, see, present, sg(1), pos, [vedo]).
+ty_verb(italian, see, present, sg(2), pos, [vedi]).
+ty_verb(italian, see, present, pl(1), pos, [vediamo]).
+ty_verb(italian, see, present, pl(2), pos, [vedete]).
+ty_verb(italian, see, past, sg(1), pos, [vidi]).
+ty_verb(italian, see, past, sg(2), pos, [vedesti]).
+ty_verb(italian, see, past, pl(1), pos, [vedemmo]).
+ty_verb(italian, see, past, pl(2), pos, [vedeste]).
+ty_verb(italian, sleep, present, sg(1), pos, [dormo]).
+ty_verb(italian, sleep, present, sg(2), pos, [dormi]).
+ty_verb(italian, sleep, present, pl(1), pos, [dormiamo]).
+ty_verb(italian, sleep, present, pl(2), pos, [dormite]).
+ty_verb(italian, sleep, past, sg(1), pos, [dormii]).
+ty_verb(italian, sleep, past, sg(2), pos, [dormisti]).
+ty_verb(italian, sleep, past, pl(1), pos, [dormimmo]).
+ty_verb(italian, sleep, past, pl(2), pos, [dormiste]).
+ty_copula(italian, any, present, sg(1), pos, [sono]).
+ty_copula(italian, any, present, sg(2), pos, [sei]).
+ty_copula(italian, any, present, pl(1), pos, [siamo]).
+ty_copula(italian, any, present, pl(2), pos, [siete]).
+ty_copula(italian, any, past, sg(1), pos, [ero]).
+ty_copula(italian, any, past, sg(2), pos, [eri]).
+ty_copula(italian, any, past, pl(1), pos, [eravamo]).
+ty_copula(italian, any, past, pl(2), pos, [eravate]).

@@ -176,9 +176,41 @@ ty_linked(english, n, h, 's', 's\'').
 ty_gap(english, poss, moves).
 ty_relative_possessive(english, [whose], [[]]).
 
-%% A possessive pronoun (`his dog'), by the possessor: `his' a man's, `her'
-%% a woman's, `its' a thing's, `their' several's.
-ty_possessive_pronoun(english, [his], [[sg, m]], [[]]).
-ty_possessive_pronoun(english, [her], [[sg, f]], [[]]).
-ty_possessive_pronoun(english, [its], [[sg, n]], [[]]).
-ty_possessive_pronoun(english, [their], [[pl]], [[]]).
+%% A possessive pronoun (`his dog'), by the possessor's person, number and
+%% kind: `my', `your' (one or several), `his' a man's, `her' a woman's,
+%% `its' a thing's, `our', `their'.
+ty_possessive_pronoun(english, [my], [[1, sg]], [[]]).
+ty_possessive_pronoun(english, [your], [[2]], [[]]).
+ty_possessive_pronoun(english, [his], [[3, sg, m]], [[]]).
+ty_possessive_pronoun(english, [her], [[3, sg, f]], [[]]).
+ty_possessive_pronoun(english, [its], [[3, sg, n]], [[]]).
+ty_possessive_pronoun(english, [our], [[1, pl]], [[]]).
+ty_possessive_pronoun(english, [their], [[3, pl]], [[]]).
+
+%% Personal pronouns (`he sees her'): a subject's, and an object's, which an
+%% adposition takes too (`with him'); `I' is written with its capital. The
+%% verb of every person but the third singular is the plural's (`I see',
+%% `you do not see', `do we see'); the copula of `I' is `am' and `was'.
+ty_pronoun(english, s, [i], [[1, sg]]).
+ty_pronoun(english, s, [you], [[2]]).
+ty_pronoun(english, s, [he], [[3, sg, m]]).
+ty_pronoun(english, s, [she], [[3, sg, f]]).
+ty_pronoun(english, s, [it], [[3, sg, n]]).
+ty_pronoun(english, s, [we], [[1, pl]]).
+ty_pronoun(english, s, [they], [[3, pl]]).
+ty_pronoun(english, o, [me], [[1, sg]]).
+ty_pronoun(english, o, [you], [[2]]).
+ty_pronoun(english, o, [him], [[3, sg, m]]).
+ty_pronoun(english, o, [her], [[3, sg, f]]).
+ty_pronoun(english, o, [it], [[3, sg, n]]).
+ty_pronoun(english, o, [us], [[1, pl]]).
+ty_pronoun(english, o, [them], [[3, pl]]).
+ty_capital(english, i, 'I').
+ty_verb_person(english, any, sg(1), pl, '', '').
+ty_verb_person(english, any, sg(2), pl, '', '').
+ty_verb_person(english, any, pl(1), pl, '', '').
+ty_verb_person(english, any, pl(2), pl, '', '').
+ty_copula(english, any, present, sg(1), pos, [am]).
+ty_copula(english, any, present, sg(1), neg, [am, not]).
+ty_copula(english, any, past, sg(1), pos, [was]).
+ty_copula(english, any, past, sg(1), neg, [was, not]).

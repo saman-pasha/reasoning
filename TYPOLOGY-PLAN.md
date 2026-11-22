@@ -105,7 +105,7 @@ Spanish and Italian apocope (`gran`). Then `cat` goes into Persian, and
 Italian nouns that start with `s` and a consonant, `z` or a vowel are
 right.
 
-## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.33.0)
+## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.34.0)
 
 Done:
 
@@ -351,6 +351,49 @@ Done:
    (-0.3 to +0.6 % inferences), and Persian 24 % more inferences, the
    clock the same.
 
+16. **The personal pronoun and the person** (1.34.0). A pronoun is
+   `pron(Person, Number, Kind)` where a noun phrase stands (a subject, an
+   object, an adposition's noun phrase, a possessor; 1.33.0's `pron(sg,
+   Kind)` and `pron(pl)` are `pron(3, sg, Kind)` and `pron(3, pl, Kind)`
+   now). A reading binds what its words tell and leaves the rest unbound
+   (`I` is `pron(1, sg, _)`, `you` `pron(2, _, _)`, `su perro` `pron(3,
+   _, _)`), and the writer writes the first form that fits.
+   `ty_pronoun(L, Role, Words, Conditions)` gives the words of a subject
+   (s), an object (o) and an adposition's noun phrase (j), a role with no
+   row taking o's or s's (English `with him`, Persian `او را`). The verb
+   agrees with a key, `sg` and `pl` the third person and `sg(1)`, `sg(2)`,
+   `pl(1)`, `pl(2)` the first and the second, in the Number column of
+   `ty_verb/6`, `ty_copula/6`, `ty_negation/5` and `ty_question_form/5`; a
+   key no row gives is the language's rule, `ty_verb_person(L, Tense,
+   Key, Base, From, To)` (English: every key but `sg` is `pl`'s, so `I do
+   not see` and `do you see` come from the plural's rows; Persian: the
+   plural's `ند` made `م`, `ی`, `یم`, `ید`, for the verbs and the copula).
+   The import gives Spanish and Italian the persons the vocabulary states
+   (`"veo" is the first person of "ve"`: 5 242 and 4 032 rows).
+   `ty_pro_drop(L, Persons)`: a subject pronoun may be no word, written so
+   for the persons listed and read so of every person (`Veo al perro.`,
+   `Duerme.`); a third person whose kind the IR does not say is dropped
+   too (Spanish `Duerme.` is Italian `Dorme.`). `ty_clitic(L, o)`: an
+   object pronoun stands in the verb's words, after the negation's and
+   before the form (`La niña lo ve.`, `No lo veo.`, `Non lo vedo.`), but a
+   verb with a complement keeps its adposition (`piensa en ella`).
+   Possessive pronouns of every person: English `my`, `your`, `our`;
+   Spanish `mi`, `tu`, `nuestro`; Italian `il mio`, `il nostro`; Persian
+   the clitics `م`, `ت`, `مان`, `تان` (`سگم`, `خانه‌مان`). English `I` is
+   written with its capital (`ty_capital/3`). A predicate adjective gives
+   a pronoun its gender (`Soy pequeña.` is a woman), and `sleep` takes no
+   object (`ty_role_animacy(sleep, o, none)`), so `¿Duerme el perro?` is
+   not his sleeping of a dog.
+   The dropped subject showed a cost the inference count does not: a
+   lookup of a verb by its words where no form is those words walked the
+   table's rows (two milliseconds with four languages loaded; 1.33.0 had
+   it too, less often). A reading now asks the verb table only where the
+   words are a form (`'$ty_vform'/2`, made as `typology_load/1` loads).
+   Against 1.33.0 the round trips take more inferences (English 10 %,
+   Spanish 26 %, Italian 27 %, Persian 36 %) and less time but in Persian
+   (English 5.5 s against 9.7, Spanish 34 against 50, Italian 14 against
+   19, Persian 1.9 against 1.6).
+
 Not yet:
 
 3. A German or a French template:
@@ -358,19 +401,19 @@ Not yet:
    before a predicate (`ist nicht groß`) and its verb second are not.
 4. Every question word at the front (Bulgarian, Russian), a slot of its
    own; an answer that repeats the verb (Portuguese `Vejo.`, Irish) and
-   English `Yes, he does.`, which wait for pronouns.
-5. The possessive pronouns of the first and second persons (`my`, `your`),
-   with Phase 5's pronouns; a pronoun that refers back to a noun of the
-   text (which `his` is the boy's), which the IR does not hold.
+   English `Yes, he does.`, which the pronouns of 1.34.0 make possible.
+5. A pronoun that refers back to a noun of the text (which `his` is the
+   boy's), which the IR does not hold.
 6. The topics the class lines do not give: the hand table's thirty rows,
    and every other meaning, are Phase 8's (a model fills a slot in live
    mode, with the reference sentences as its check). A meaning of its
    own for each sense of an English word (`march`, the month and the
    walk) waits for the bridge to translate.pl (Phase 6).
 
-## Phase 5: more features
+## Phase 5: more features (in part done, reasoning 1.34.0)
 
-Persons 1 and 2 and the pronouns, with a subject that may be dropped; more
+Persons 1 and 2 and the pronouns, with a subject that may be dropped, are
+done (Phase 4's item 16). Not yet: more
 tenses and aspects (the future; the perfect, and the passato prossimo with
 its participle agreement); the polite and the plural `you`.
 

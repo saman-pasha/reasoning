@@ -111,6 +111,7 @@ main :-
     gaps,
     possessors,
     more_possessors,
+    pronouns,
     format("~ndone~n", []).
 
 
@@ -320,8 +321,8 @@ possessors :-
 %% English writes `of' where the 's cannot stand. A possessor may be a
 %% possessor's phrase, or have a relative clause; a possessor's gap may be
 %% in an adjunct (`in whose house'). A possessive pronoun is
-%% of(pron(sg, Kind), NP) or of(pron(pl), NP) (ty_possessive_pronoun/4,
-%% Persian's clitic).
+%% of(pron(Person, Number, Kind), NP) (ty_possessive_pronoun/4, Persian's
+%% clitic; section 21 has the personal pronoun).
 more_possessors :-
     IR1 = clause(see, present, pos, np(girl, sg, def, []),
                  of(of(np(boy, sg, def, []), np(dog, sg, def, [])), np(house, sg, def, []))),
@@ -330,10 +331,35 @@ more_possessors :-
     typology_translate(english, spanish, 'The girl sees the boy in whose house the dog sleeps.', S2),
     must('in whose house, into Spanish', S2, 'La niña ve al niño en cuya casa el perro duerme.'),
     findall(L-T, ( member(L, [english, spanish, italian, persian]),
-                   typology_write(L, clause(sleep, present, pos, of(pron(sg, f), np(dog, sg, def, [])), none), T) ), Ts3),
+                   typology_write(L, clause(sleep, present, pos, of(pron(3, sg, f), np(dog, sg, def, [])), none), T) ), Ts3),
     must('her dog, four times', Ts3,
          [ english-'Her dog sleeps.', spanish-'Su perro duerme.',
            italian-'Il suo cane dorme.', persian-'سگش می‌خوابد.' ]).
+
+
+
+%% 21. THE PERSONAL PRONOUN AND THE PERSON. pron(Person, Number, Kind) stands
+%% where a noun phrase stands: Person 1, 2, 3, Number sg, pl, Kind m, f, n.
+%% A reading binds what its words tell and leaves the rest unbound (`you'
+%% is pron(2, _, _)). The verb agrees with a person and a number, a key
+%% (sg(1) for `I'), its form a row of the template or the template's rule
+%% (ty_verb_person/6: English `I see', Persian `می‌بینم'). Spanish, Italian
+%% and Persian write no subject pronoun of the first and the second person
+%% (ty_pro_drop/2: `Veo al perro.'), and Spanish and Italian an object
+%% pronoun as a clitic in the verb's words (ty_clitic/2: `no lo veo').
+pronouns :-
+    IR1 = clause(see, present, neg, pron(1, sg, _), pron(3, sg, m)),
+    findall(L-T, ( member(L, [english, spanish, italian, persian]), typology_write(L, IR1, T) ), Ts1),
+    must('I do not see him, four times', Ts1,
+         [ english-'I do not see him.', spanish-'No lo veo.',
+           italian-'Non lo vedo.', persian-'او را نمی‌بینم.' ]),
+    typology_translate(spanish, english, 'Ves nuestra casa.', E2),
+    must('the verb tells the subject: you see our house', E2, 'You see our house.'),
+    findall(IR, typology_read(english, 'You sleep.', IR), IRs3),
+    length(IRs3, N3),
+    must('you is one or several: two readings', N3, 2),
+    typology_translate(persian, italian, 'کوچک هستیم.', I4),
+    must('we are small, the Persian ending into Italian', I4, 'Siamo piccoli.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

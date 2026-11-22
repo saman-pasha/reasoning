@@ -15,7 +15,7 @@ main :-
     forall(member(L, [english, spanish, italian, persian]), typology_load(L)),
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
-                      question_words, answers,
+                      question_words, answers, pronouns,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -720,27 +720,28 @@ more_possessors :-
              spanish-'La niña ve al niño en cuya casa el perro duerme.',
              italian-'La ragazza vede il ragazzo nella cui casa il cane dorme.',
              persian-'دختر پسری را می‌بیند که سگ در خانه‌اش می‌خوابد.'],
-        clause(sleep, present, pos, of(pron(sg, m), D), none)-
+        clause(sleep, present, pos, of(pron(3, sg, m), D), none)-
             [english-'His dog sleeps.', spanish-'Su perro duerme.',
              italian-'Il suo cane dorme.', persian-'سگش می‌خوابد.'],
-        clause(see, present, pos, G, of(pron(pl), np(house, pl, def, [black])))-
+        clause(see, present, pos, G, of(pron(3, pl, _), np(house, pl, def, [black])))-
             [english-'The girl sees their black houses.', spanish-'La niña ve sus casas negras.',
              italian-'La ragazza vede le loro case nere.', persian-'دختر خانه‌های سیاهشان را می‌بیند.'],
-        clause(sleep, present, pos, D, none, [pp(in, of(pron(sg, f), House))])-
+        clause(sleep, present, pos, D, none, [pp(in, of(pron(3, sg, f), House))])-
             [english-'The dog sleeps in her house.', spanish-'El perro duerme en su casa.',
              italian-'Il cane dorme nella sua casa.', persian-'سگ در خانه‌اش می‌خوابد.'] ]),
     ( typology_read(english, 'The dog of the boy sleeps.', clause(sleep, present, pos, of(B, D), none))
     -> R1 = read ; R1 = not_read ),
     check('English: the dog of the boy, the second construction, is read', R1, read),
-    %% A pronoun's words give every pronoun they allow.
-    forall(member(L-T-Want, [ spanish-'Su perro duerme.'-[pron(pl), pron(sg, f), pron(sg, m), pron(sg, n)],
-                              english-'Its dog sleeps.'-[pron(sg, n)],
-                              italian-'Il loro cane dorme.'-[pron(pl)],
-                              persian-'سگش می‌خوابد.'-[pron(sg, f), pron(sg, m), pron(sg, n)] ]),
+    %% A pronoun's words tell what they tell, and leave the rest unbound.
+    forall(member(L-T-Want, [ spanish-'Su perro duerme.'-[pron(3, _, _)],
+                              english-'Its dog sleeps.'-[pron(3, sg, n)],
+                              italian-'Il loro cane dorme.'-[pron(3, pl, _)],
+                              persian-'سگش می‌خوابد.'-[pron(3, sg, _)] ]),
            ( findall(Pr, typology_read(L, T, clause(sleep, present, pos, of(Pr, D), none)), Prs0),
              sort(Prs0, Prs),
-             atomic_list_concat([L, ': ', T, ' is the pronouns its words allow'], Label),
-             check(Label, Prs, Want) )),
+             atomic_list_concat([L, ': ', T, ' is the pronoun its words tell'], Label),
+             ( Prs =@= Want -> R = told ; R = Prs ),
+             check(Label, R, told) )),
     forall(member(L-T, [ english-'The his dog sleeps.', italian-'Il sua cane dorme.',
                          english-'The boy\'s that sleeps dog sleeps.' ]),
            ( ( typology_read(L, T, _) -> R = read ; R = refused ),
@@ -930,6 +931,115 @@ answers :-
           ['No.'-'Yes.']),
     typology_check(agree, M5),
     check('the agreement template is complete', M5, []).
+
+%% ---- the personal pronoun -------------------------------------------------------
+
+%% 1.34.0: a personal pronoun of every person as a subject, an object, an
+%% adposition's and a possessor; the verb's person; a subject no word
+%% says; an object clitic.
+pronouns :-
+    section('personal pronouns, the verb''s person, a subject the verb''s form tells, an object clitic'),
+    D = np(dog, sg, def, []), G = np(girl, sg, def, []),
+    written_each(pronouns, [
+        clause(see, present, pos, pron(1, sg, _), D)-
+            [english-'I see the dog.', spanish-'Veo al perro.', italian-'Vedo il cane.',
+             persian-'سگ را می‌بینم.'],
+        clause(see, present, neg, pron(2, sg, _), D)-
+            [english-'You do not see the dog.', spanish-'No ves al perro.', italian-'Non vedi il cane.',
+             persian-'سگ را نمی‌بینی.'],
+        clause(sleep, past, pos, pron(3, sg, f), none)-
+            [english-'She slept.', spanish-'Ella durmió.', italian-'Lei dormì.', persian-'او خوابید.'],
+        clause(see, present, pos, G, pron(3, sg, m))-
+            [english-'The girl sees him.', spanish-'La niña lo ve.', italian-'La ragazza lo vede.',
+             persian-'دختر او را می‌بیند.'],
+        clause(see, present, neg, pron(1, pl, _), pron(3, pl, f))-
+            [english-'We do not see them.', spanish-'No las vemos.', italian-'Non le vediamo.',
+             persian-'آنها را نمی‌بینیم.'],
+        clause(see, past, pos, pron(2, pl, _), D)-
+            [english-'You saw the dog.', spanish-'Visteis al perro.', italian-'Vedeste il cane.',
+             persian-'سگ را دیدید.'],
+        clause(sleep, present, pos, of(pron(1, sg, _), D), none)-
+            [english-'My dog sleeps.', spanish-'Mi perro duerme.', italian-'Il mio cane dorme.',
+             persian-'سگم می‌خوابد.'],
+        clause(see, present, pos, pron(2, pl, _), of(pron(1, pl, _), np(house, sg, def, [])))-
+            [english-'You see our house.', spanish-'Veis nuestra casa.', italian-'Vedete la nostra casa.',
+             persian-'خانه‌مان را می‌بینید.'],
+        copula(present, pos, pron(1, sg, _), adj([small]))-
+            [english-'I am small.', spanish-'Soy pequeño.', italian-'Sono piccolo.', persian-'کوچک هستم.'],
+        copula(past, neg, pron(2, pl, f), adj([small]))-
+            [english-'You were not small.', spanish-'No erais pequeñas.', italian-'Non eravate piccole.',
+             persian-'کوچک نبودید.'],
+        clause(sleep, present, pos, D, none, [pp(with, pron(1, sg, _))])-
+            [english-'The dog sleeps with me.', spanish-'El perro duerme conmigo.',
+             italian-'Il cane dorme con me.', persian-'سگ با من می‌خوابد.'],
+        clause(think, present, pos, pron(3, sg, m), pron(3, sg, f))-
+            [english-'He thinks about her.', spanish-'Él piensa en ella.', italian-'Lui pensa a lei.',
+             persian-'او به او فکر می‌کند.'],
+        clause(sleep, present, pos, pron(3, sg, _), none)-
+            [english-'He sleeps.', spanish-'Duerme.', italian-'Dorme.', persian-'می‌خوابد.'],
+        question(clause(see, present, pos, pron(2, sg, _), D))-
+            [english-'Do you see the dog?', spanish-'¿Ves al perro?', italian-'Vedi il cane?',
+             persian-'سگ را می‌بینی؟'],
+        question(clause(see, present, pos, G, pron(3, sg, m)))-
+            [english-'Does the girl see him?', spanish-'¿La niña lo ve?', italian-'La ragazza lo vede?',
+             persian-'دختر او را می‌بیند؟'] ]),
+    %% A reading binds what its words tell.
+    forall(member(L-T-Want, [ english-'I see the dog.'-[clause(see, present, pos, pron(1, sg, _), D)],
+                              english-'Do you see the dog?'-[question(clause(see, present, pos, pron(2, sg, _), D)),
+                                                             question(clause(see, present, pos, pron(2, pl, _), D))],
+                              spanish-'Duerme.'-[clause(sleep, present, pos, pron(3, sg, _), none)],
+                              spanish-'Soy pequeña.'-[copula(present, pos, pron(1, sg, f), adj([small]))],
+                              spanish-'No las vemos.'-[clause(see, present, neg, pron(1, pl, _), pron(3, pl, f))],
+                              persian-'کوچک نیستید.'-[copula(present, neg, pron(2, pl, _), adj([small]))],
+                              italian-'Lo vedi.'-[clause(see, present, pos, pron(2, sg, _), pron(3, sg, m)),
+                                                  clause(see, present, pos, pron(2, sg, _), pron(3, sg, n))] ]),
+           ( findall(IR, ( typology_read(L, T, IR), \+ ty_meanings_other(IR) ), IRs),
+             atomic_list_concat([L, ': ', T, ' is what its words tell'], Label),
+             ( IRs =@= Want -> R = told ; R = IRs ),
+             check(Label, R, told) )),
+    typology_translate(spanish, english, 'La niña la ve.', E1),
+    check('Spanish into English: the clitic la is her', E1, 'The girl sees her.'),
+    typology_translate(english, spanish, 'She does not see me.', S1),
+    check('English into Spanish: ella and the clitic after no', S1, 'Ella no me ve.'),
+    typology_translate(persian, italian, 'کتاب‌هایمان را دیدی.', I1),
+    check('Persian into Italian: two clitics, our and the verb''s you', I1, 'Vedesti i nostri libri.'),
+    typology_translate(italian, persian, 'Non sei piccolo.', P1),
+    check('Italian into Persian: the copula of you', P1, 'کوچک نیستی.'),
+    %% `sleep' takes no object, so a subject no word says is no reading of
+    %% a question in the verb's order.
+    findall(Q, typology_read(spanish, '¿Duerme el perro?', Q), Qs),
+    check('Spanish: ¿Duerme el perro? is the dog sleeping, not his sleeping of a dog', Qs,
+          [question(clause(sleep, present, pos, D, none))]),
+    %% Refused: a verb of another person, an object pronoun as a subject, a
+    %% clitic before the negation.
+    forall(member(L-T, [ english-'I sees the dog.', english-'Me see the dog.', english-'Him sleeps.',
+                         spanish-'Yo ve al perro.', spanish-'Lo no veo.', italian-'Io dorme.',
+                         persian-'من می‌خوابد.' ]),
+           ( ( typology_read(L, T, _) -> R = read ; R = refused ),
+             atomic_list_concat([L, ': ', T], Label),
+             check(Label, R, refused) )),
+    %% The import gives the persons of a verb the hand template has not.
+    ( ty_verb(spanish, think, present, sg(1), pos, [pienso]) -> R2 = imported ; R2 = missing ),
+    check('Spanish: pienso, the first person of think, is imported', R2, imported),
+    assertz(ty_pronoun(tiny, x, [w], [[4]])),
+    assertz(ty_pro_drop(tiny, [3, 5])),
+    assertz(ty_clitic(tiny, o)),
+    assertz(ty_verb_person(tiny, any, sg(7), pl, '', '')),
+    findall(M, ( typology_check(tiny, Ms), member(M, Ms),
+                 memberchk(M, [bad(ty_pronoun(tiny, x, [w], [[4]])), bad(ty_pro_drop(tiny, [3, 5])),
+                               clitic_pronoun, bad(ty_verb_person(tiny, any, sg(7), pl, '', ''))]) ), M3),
+    retractall(ty_pronoun(tiny, _, _, _)), retractall(ty_pro_drop(tiny, _)),
+    retractall(ty_clitic(tiny, _)), retractall(ty_verb_person(tiny, _, _, _, _, _)),
+    check('typology_check/2: a pronoun''s role and condition, the persons, a clitic''s rows, a rule''s key', M3,
+          [clitic_pronoun, bad(ty_pro_drop(tiny, [3, 5])), bad(ty_pronoun(tiny, x, [w], [[4]])),
+           bad(ty_verb_person(tiny, any, sg(7), pl, '', ''))]).
+
+%% A reading of a verb's other sense (`view' for `see', `little' for
+%% `small'): the checks above want the first sense's.
+ty_meanings_other(IR) :-
+    ( IR = question(C) -> true ; C = IR ),
+    ( C = clause(V, _, _, _, _) ; C = clause(V, _, _, _, _, _) ; C = copula(_, _, _, adj([V])) ),
+    memberchk(V, [view, little]), !.
 
 %% The English rows a test language is made of, under another name.
 english_rows_as(L) :-

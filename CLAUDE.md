@@ -213,6 +213,22 @@ the last edit's clause ends. **The sentence's possessor counts are kept for
 the same words** (`'$ty_poss_memo'`, `nb_setval`): the writer reads each
 sentence it writes back, and the counts asked twice cost Persian's writes
 28 %.
+**A lookup by a list of words that no row is walks the rows** (1.34.0):
+cocolog's index inside a list finds a hit at once, but a miss -- or a
+list whose first word begins a form and the rest does not, `[ve, a]` --
+walks the table, two milliseconds a lookup of `ty_verb/6` with four
+languages loaded, one call in the inference count. The first cut of the
+dropped subject cost Spanish round trips 2.8 times the time for 17 % more
+inferences (1.33.0 had the walk too, less often). A reading asks the verb
+table through `ty_verb_row/6`, only where its words are a form
+(`'$ty_vform'/2`, the words joined, made by `typology_load/1`); a new
+reader of a table keyed by a list guards it so, and the clock, not the
+count, says whether it walks. `predicate_property(_, number_of_clauses(_))`
+walks too (3.6 ms). **A reading leaves unbound what its words do not
+tell** (`pron(2, _, _)` for `you`): a check compares such readings with
+`=@=`, and the writer binds the first form that fits. **A person's rule
+takes its mode from the last word** (`ty_last_given/1`): a question's
+verb is a list whose first word is not read yet.
 
 **Every reader has two modes, static and live** (1.16.0; reason.pl's header,
 STATIC AND LIVE, and live.pl's). What a session must keep:

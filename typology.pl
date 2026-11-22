@@ -52,10 +52,13 @@
 %%                                     a form for a gender and a number;
 %%                                     any for a form that does not change
 %%     ty_verb(L, Meaning, Tense, Number, Polarity, Words)
-%%                                     Tense present or past, Number sg or
-%%                                     pl (the subject's), Polarity pos or
-%%                                     neg; Words a LIST, so `does not see',
-%%                                     `no ve' and `نمی‌بیند' are all forms
+%%                                     Tense present or past, Number the
+%%                                     subject's person and number (sg and
+%%                                     pl the third person; sg(1), sg(2),
+%%                                     pl(1), pl(2) the first and second),
+%%                                     Polarity pos or neg; Words a LIST, so
+%%                                     `does not see', `no ve' and
+%%                                     `نمی‌بیند' are all forms
 %%     ty_article(L, Definiteness, Gender, Number, Word)
 %%                                     def or indef, or which (the article
 %%                                     of a question: `which dog'); a
@@ -112,7 +115,8 @@
 %%     ty_copula(L, Kind, Tense, Number, Polarity, Words)
 %%                                     the copula for a predicate of Kind
 %%                                     (adj, np, pp, or any: Spanish `es'
-%%                                     and `está'); Words [] drops it
+%%                                     and `está'); Words [] drops it;
+%%                                     Number a person's key, as ty_verb/6's
 %%     ty_adposition(L, Meaning, Words)
 %%                                     a preposition or a postposition, by
 %%                                     the pp level's order
@@ -197,6 +201,29 @@
 %%                                     `sus', `la sua')
 %%     ty_possessive_clitic(L)         the pronoun is a clitic on the
 %%                                     possessed (Persian `سگش')
+%%     ty_pronoun(L, Role, Words, Conditions)
+%%                                     a personal pronoun's words in Role s
+%%                                     (a subject), o (an object) or j
+%%                                     (after an adposition), where the
+%%                                     pronoun fits one of the Conditions,
+%%                                     each its person, number and kind
+%%                                     (`he' [[3, sg, m]]); a role with no
+%%                                     row takes o's (j) or s's rows
+%%     ty_pro_drop(L, Persons)         a subject pronoun may be no word (the
+%%                                     verb's form tells it): written so of
+%%                                     the Persons listed, read so of every
+%%                                     person (Spanish `Veo al perro.')
+%%     ty_clitic(L, o)                 an object pronoun is a clitic in the
+%%                                     verb's words, after the negation's
+%%                                     (Spanish `no lo ve')
+%%     ty_verb_person(L, Tense, Key, Base, From, To)
+%%                                     a verb or copula of the person and
+%%                                     number Key no row gives is Base's,
+%%                                     its last word's ending From made To
+%%                                     (English: every key but sg is pl's;
+%%                                     Persian ند made م: `می‌بینم')
+%%     ty_capital(L, Word, Written)    a word always written with its
+%%                                     capital (English `I')
 %%     ty_relative_possessive(L, Words, Conditions)
 %%                                     the pronoun of a moved possessor gap
 %%                                     (`whose', `cuyo', `il cui'), its
@@ -268,10 +295,14 @@
 %%     of(Possessor, NP)               a noun phrase of a possessor, where a
 %%                                     noun phrase stands (`the boy's dog'):
 %%                                     NP an np/4, Possessor an np/4, an
-%%                                     of/2, a rel/2, a pronoun pron(sg,
-%%                                     Kind) (Kind m, f, n) or pron(pl), or
+%%                                     of/2, a rel/2, a pronoun pron/3, or
 %%                                     in a relative clause `gap' (`whose
 %%                                     dog')
+%%     pron(Person, Number, Kind)      a personal pronoun where a noun
+%%                                     phrase stands: Person 1, 2, 3, Number
+%%                                     sg, pl, Kind m, f, n (a thing); a
+%%                                     reading leaves unbound what its words
+%%                                     do not tell (`you' is pron(2, _, _))
 %%
 %% WHAT IS PUBLIC:
 %%
@@ -388,7 +419,8 @@
            ty_answer/3, ty_answer_system/2, ty_answer_mark/2, ty_gap/3,
            ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
            ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
-           ty_possessive_pronoun/4, ty_possessive_clitic/1.
+           ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
+           ty_pro_drop/2, ty_clitic/2, ty_verb_person/6, ty_capital/3.
 :- discontiguous ty_order/3, ty_noun/6, ty_adjective/5, ty_verb/6,
                  ty_article/5, ty_mark/5, ty_contraction/3, ty_negation/5,
                  ty_ending/4, ty_letters/3, ty_before/5, ty_linked/5, ty_copula/6,
@@ -399,7 +431,8 @@
                  ty_answer_system/2, ty_answer_mark/2, ty_gap/3,
                  ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
                  ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
-                 ty_possessive_pronoun/4, ty_possessive_clitic/1.
+                 ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
+                 ty_pro_drop/2, ty_clitic/2, ty_verb_person/6, ty_capital/3.
 
 %% ---- the levels and the values a slot takes -----------------------------------
 
@@ -412,6 +445,9 @@ ty_level(poss, [h, p, g]).
 
 ty_values(tense, [present, past]).
 ty_values(number, [sg, pl]).
+ty_values(agreement, [sg, pl, sg(1), sg(2), pl(1), pl(2)]).
+ty_values(pronoun_role, [s, o, j]).
+ty_values(person, [1, 2, 3]).
 ty_values(polarity, [pos, neg]).
 ty_values(definiteness, [def, indef, which]).
 ty_values(animacy, [person, animate, inanimate, unknown]).
@@ -451,7 +487,8 @@ typology_load(Name) :-
     (   \+ ty_role_animacy(_, _, _), ty_file(roles, Roles)
     ->  consult(Roles)
     ;   true
-    ).
+    ),
+    ty_vfirst_make(Name).
 
 %% templates/Base.pl, found on the library path.
 ty_file(Base, File) :-
@@ -532,6 +569,11 @@ ty_row_shape('ty_possessive(L, Order, Words, Article).').
 ty_row_shape('ty_relative_possessive(L, Words, Conditions).').
 ty_row_shape('ty_possessive_pronoun(L, Words, Possessor, Possessed).').
 ty_row_shape('ty_possessive_clitic(L).').
+ty_row_shape('ty_pronoun(L, Role, Words, Conditions).').
+ty_row_shape('ty_pro_drop(L, Persons).').
+ty_row_shape('ty_clitic(L, Role).').
+ty_row_shape('ty_verb_person(L, Tense, Person, Base, From, To).').
+ty_row_shape('ty_capital(L, Word, Written).').
 
 %% ---- the check ----------------------------------------------------------------------
 
@@ -574,7 +616,7 @@ ty_missing(L, adjective_form(A, G, N)) :-
 ty_missing(L, bad(ty_verb(L, V, T, N, P, Ws))) :-
     ty_verb(L, V, T, N, P, Ws),
     \+ ( ty_values(tense, Ts), memberchk(T, Ts),
-         ty_values(number, Ns), memberchk(N, Ns),
+         ty_values(agreement, Ns), memberchk(N, Ns),
          ty_values(polarity, Ps), memberchk(P, Ps),
          is_list(Ws), Ws \== [] ).
 ty_missing(L, bad(ty_noun(L, M, G, A, S, P))) :-
@@ -659,6 +701,30 @@ ty_missing(L, bad(ty_relative_possessive(L, Ws, Cs))) :-
 ty_missing(L, bad(ty_possessive_pronoun(L, Ws, A, B))) :-
     ty_possessive_pronoun(L, Ws, A, B),
     \+ ( is_list(Ws), Ws \== [], is_list(A), is_list(B) ).
+ty_missing(L, bad(ty_pronoun(L, R, Ws, Cs))) :-
+    ty_pronoun(L, R, Ws, Cs),
+    \+ ( ty_values(pronoun_role, Rs), memberchk(R, Rs), is_list(Ws), Ws \== [],
+         is_list(Cs), forall(member(C, Cs), ty_pron_condition(C)) ).
+ty_missing(L, bad(ty_possessive_pronoun(L, Ws, A, B))) :-
+    ty_possessive_pronoun(L, Ws, A, B),
+    is_list(A), \+ forall(member(C, A), ty_pron_condition(C)).
+ty_missing(L, bad(ty_pro_drop(L, Ps))) :-
+    ty_pro_drop(L, Ps),
+    \+ ( is_list(Ps), ty_values(person, Ks), forall(member(P, Ps), memberchk(P, Ks)) ).
+ty_missing(L, bad(ty_clitic(L, R))) :-
+    ty_clitic(L, R),
+    R \== o.
+ty_missing(L, bad(ty_verb_person(L, T, K, B, F, To))) :-
+    ty_verb_person(L, T, K, B, F, To),
+    \+ ( ( T == any ; ty_values(tense, Ts), memberchk(T, Ts) ),
+         ty_values(agreement, As), memberchk(K, As), memberchk(B, As),
+         atom(F), atom(To) ).
+ty_missing(L, bad(ty_capital(L, W, C))) :-
+    ty_capital(L, W, C),
+    \+ ( atom(W), atom(C), downcase_atom(C, W) ).
+ty_missing(L, clitic_pronoun) :-
+    ty_clitic(L, o),
+    \+ ty_pronoun(L, o, _, _).
 ty_missing(L, relative_possessive) :-
     ty_gap(L, poss, moves),
     \+ ty_relative_possessive(L, _, _).
@@ -673,6 +739,11 @@ ty_missing(L, bad(ty_mark(L, R, Pl, W, Cs))) :-
     \+ ( ty_values(role, Rs), memberchk(R, Rs),
          ty_values(place, Ps), memberchk(Pl, Ps),
          is_list(Cs) ).
+
+%% A pronoun's condition: a list of its person, number and kind.
+ty_pron_condition(C) :-
+    is_list(C),
+    forall(member(X, C), memberchk(X, [1, 2, 3, sg, pl, m, f, n])).
 
 ty_question_rule(R) :- memberchk(R, [unchanged, front(all), front(first)]), !.
 ty_question_rule(particle(W, P)) :- atom(W), memberchk(P, [start, end]).
@@ -901,9 +972,16 @@ ty_surface(Text, Mood, Open, Close, Words) :-
     ty_open_mark(A1, A, Open),
     split_string(A, " ", " ", Parts0),
     exclude(==(""), Parts0, [First0|Rest0]),
-    maplist([P, W]>>atom_string(W, P), [First0|Rest0], [FirstA|Rest]),
+    maplist([P, W]>>atom_string(W, P), [First0|Rest0], [FirstA|Rest1]),
     downcase_atom(FirstA, First),
+    maplist(ty_lower_capital, Rest1, Rest),
     Words = [First|Rest].
+
+%% A word a template always writes with its capital (ty_capital/3: English
+%% `I') is its table's word, read and written.
+ty_lower_capital(W, W0) :- ( ty_capital(_, W1, W) -> W0 = W1 ; W0 = W ).
+
+ty_capital_word(L, W, C) :- ( atom(W), ty_capital(L, W, C0) -> C = C0 ; C = W ).
 
 %% The mark at the end: a full stop (or none) a statement, `?' or `؟' a
 %% question; and the mark a question may open with (Spanish `¿').
@@ -1015,7 +1093,8 @@ ty_join([W|Ws], [W|Rest]) :-
     ty_join(Ws, Rest).
 
 ty_text(L, Mood, Tokens, Text) :-
-    atomic_list_concat(Tokens, ' ', Body),
+    maplist(ty_capital_word(L), Tokens, Tokens1),
+    atomic_list_concat(Tokens1, ' ', Body),
     sub_atom(Body, 0, 1, _, F),
     sub_atom(Body, 1, _, 0, R),
     upcase_atom(F, U),
@@ -1057,7 +1136,7 @@ ty_class_meaning(L, noun, W, M) :-
 ty_class_meaning(L, adjective, W, M) :-
     ty_base_word(L, a, W, W0),
     ty_adjective(L, M, _, _, W0).
-ty_class_meaning(L, verb, W, M) :- ty_verb(L, M, _, _, _, [W|_]).
+ty_class_meaning(L, verb, W, M) :- ty_verb_begins(L, W), ty_verb(L, M, _, _, _, [W|_]).
 ty_class_meaning(L, adverb, W, M) :- ty_adverb(L, M, W).
 ty_class_meaning(L, adposition, W, M) :- ty_adposition(L, M, Ws), memberchk(W, Ws).
 
@@ -1119,7 +1198,7 @@ ty_item_fits(L, class(noun, F), W) :-
 ty_word_class(L, noun, W) :- ty_class_meaning(L, noun, W, _), !.
 ty_word_class(L, adjective, W) :- ty_class_meaning(L, adjective, W, _), !.
 ty_word_class(L, verb, W) :-
-    (   ty_verb(L, _, _, _, _, [W|_])
+    (   ty_verb_begins(L, W), ty_verb(L, _, _, _, _, [W|_])
     ;   ty_negation(L, _, _, Ws, _), memberchk(W, Ws)
     ), !.
 ty_word_class(L, article, W) :- ty_article(L, _, _, _, W), !.
@@ -1283,6 +1362,7 @@ ty_known_base(L, B) :-
     ;   ty_possessive(L, _, Ws, _), memberchk(B, Ws)
     ;   ty_relative_possessive(L, Ws, _), memberchk(B, Ws)
     ;   ty_possessive_pronoun(L, Ws, _, _), memberchk(B, Ws)
+    ;   ty_pronoun(L, _, Ws, _), memberchk(B, Ws)
     ;   ty_complement(L, _, Ws), memberchk(B, Ws)
     ;   ty_negation_place(L, Ws, _), memberchk(B, Ws)
     ;   ty_answer(L, _, Ws), ( memberchk(B, Ws) ; last(Ws, W), ty_answer_comma(L, M), atom_concat(W, M, B) )
@@ -1610,23 +1690,29 @@ ty_ask_min(copula(_, _, _, _), 0).
 ty_ask_meant(L, clause(V, _, _, _, _, _), Ws, S) :- !, ty_meant(L, verb(V), Ws, S, S).
 ty_ask_meant(_, _, _, _).
 
-ty_ask_words(L, clause(V, T, P, Subj, _, _), Moved, Ws) :-
+ty_ask_words(L, clause(V, T, P, Subj, O, _), Moved, Ws) :-
     ty_subject_number(Subj, N),
     ty_verb_polarity(L, P, VP),
-    ty_ask_verb_form(L, V, T, N, VP, Moved, Ws).
+    (   \+ ty_clitic_pron(L, V, O),
+        ty_ask_verb_form(L, V, T, N, VP, Moved, Ws)
+    ;   ty_clitic_slot(L, O),
+        ty_clitic_verb(L, V, T, N, VP, O, _, Ws, [])
+    ).
 ty_ask_words(L, copula(T, P, Subj, Pred), _, Ws) :-
     ty_subject_number(Subj, N),
     ty_predicate_kind(Pred, K),
     ty_copula_lookup(L, K, _, T, N, P, Ws).
 
-%% The number a verb agrees with: a noun phrase's, a question word's (sg),
-%% a relative clause's head's, a gap's head's. A gap and a question word
-%% are only where something put them.
+%% The key a verb agrees with: a noun phrase's number, a question word's
+%% (sg), a relative clause's head's, a gap's head's, a pronoun's person and
+%% number (ty_agreement/3). A gap and a question word are only where
+%% something put them.
 ty_subject_number(np(_, N, _, _), N).
 ty_subject_number(W, sg) :- nonvar(W), W = wh(_).
 ty_subject_number(G, N) :- nonvar(G), G = gap(H, _, _), ty_subject_number(H, N).
 ty_subject_number(rel(np(_, N, _, _), _), N).
 ty_subject_number(of(_, np(_, N, _, _)), N).
+ty_subject_number(pron(P, N0, _), N) :- ty_agreement(P, N0, N).
 
 %% A verb the rule moved, in a language with question forms, is the
 %% question form if positive (`does see') and its negative if negative
@@ -1653,11 +1739,14 @@ ty_ask_verb_strict(L, V, T, N, P, Moved, Ws) :-
     ).
 
 ty_question_verb(L, V, T, N, Words) :-
+    ty_person_form(L, T, N, ty_question_verb_n(L, V, T), Words).
+
+ty_question_verb_n(L, V, T, N, Words) :-
     ty_question_form(L, T0, N0, Aux, form(T1, N1)),
     append(Aux, Pos, Words),
-    ty_verb(L, V, T1, N1, pos, Pos),
+    ty_verb_row(L, V, T1, N1, pos, Pos),
     ty_values(tense, Ts), member(T, Ts), ty_fits(T0, T),
-    ty_values(number, Ns), member(N, Ns), ty_fits(N0, N).
+    ty_values(agreement, Ns), member(N, Ns), ty_fits(N0, N).
 
 %% A question word's words, and the features its marks ask for.
 ty_wh_words(L, M) --> ty_words(1, 3, Ws, ty_wh_word(L, M, Ws)).
@@ -1801,9 +1890,12 @@ ty_verb_polarity(L, P, VP) :-
     (   ty_neg_placed(L) -> VP = pos ; VP = P ).
 
 %% The subject is what its verb takes (templates/roles.pl: the subject of
-%% `see' is animate), asked of the IR once the clause is read.
-ty_roles_ok(L, clause(V, _, _, S, _, _)) :-
-    (   ty_role_animacy(V, s, A) -> ty_np_animacy(L, S, A) ; true ).
+%% `see' is animate), and a verb whose object is none takes none (`sleep':
+%% Spanish `Duerme el perro.' is no sleeping of a dog), asked of the IR
+%% once the clause is read.
+ty_roles_ok(L, clause(V, _, _, S, O, _)) :-
+    (   ty_role_animacy(V, s, A) -> ty_np_animacy(L, S, A) ; true ),
+    (   ty_role_animacy(V, o, none) -> O == none ; true ).
 
 ty_np_animacy(L, np(M, _, _, _), A) :-
     once(( ty_noun(L, M, _, A1, _, _), ty_animacy_fits(A, A1) )).
@@ -1813,6 +1905,9 @@ ty_np_animacy(_, wh(M), A) :-
 ty_np_animacy(L, rel(NP, _), A) :- NP = np(_, _, _, _), ty_np_animacy(L, NP, A).
 ty_np_animacy(L, gap(NP, _, _), A) :- ty_np_animacy(L, NP, A).
 ty_np_animacy(L, of(_, NP), A) :- NP = np(_, _, _, _), ty_np_animacy(L, NP, A).
+ty_np_animacy(_, pron(P, _, K), A) :-
+    ty_pron_animacy(P, K, A1),
+    ( var(A1) -> true ; ty_animacy_fits(A, A1) ).
 
 %% A role asks an animacy, and a noun of it fits, or one the vocabulary
 %% says nothing of; a person is animate.
@@ -1846,10 +1941,10 @@ ty_clause_parts([P|Ps], L, C, How) --> ty_clause_part(P, L, C, How), ty_clause_p
 
 ty_clause_part(s, L, clause(_, _, _, S, _, _), _) --> ty_role(L, s, S).
 ty_clause_part(o, L, clause(V, _, _, _, O, _), How) --> ty_object(L, V, O, How).
-ty_clause_part(v, L, clause(V, T, P, S, _, _), _) -->
+ty_clause_part(v, L, clause(V, T, P, S, O, _), _) -->
     { ty_subject_number(S, N),
       ty_verb_polarity(L, P, VP) },
-    ty_verb_words(L, V, T, N, VP, Ws),
+    ty_verb_group(L, V, T, N, VP, O, Ws),
     ty_meant(L, verb(V), Ws).
 ty_clause_part(j, L, clause(_, _, _, _, _, Js), _) --> ty_adjuncts(L, Js).
 ty_clause_part(n(Ws), _, _, _) --> ty_tokens(Ws).
@@ -2002,6 +2097,11 @@ ty_pp_part(x, L, _, NP) --> ty_np_phrase(L, NP, _).
 ty_np_phrase(L, NP, F) --> { ty_np_slot(NP) }, ty_np(L, NP, F).
 ty_np_phrase(L, R, F) --> { ty_rel_slot(R) }, ty_rel(L, none, R, F).
 ty_np_phrase(L, P, F) --> { ty_poss_slot(P) }, ty_poss(L, P, F).
+ty_np_phrase(L, Pr, F) -->
+    { ty_ppron_slot(Pr) },
+    ty_flag_allows('$ty_ppron'),
+    ty_words(1, 2, Ws, ty_pron_words(L, j, Pr, Ws)),
+    { ty_pron_np_features(Pr, F) }.
 
 
 %% ---- the possessor ------------------------------------------------------------------
@@ -2079,51 +2179,122 @@ ty_poss_depth_ok(Ahead, Depth) :-
     ;   true
     ).
 
-%% A POSSESSIVE PRONOUN is a possessor of the third person: of(pron(sg,
-%% Kind), NP), Kind m, f or n (a thing), or of(pron(pl), NP).
+%% A POSSESSIVE PRONOUN is a pronoun as a possessor: of(pron(Person,
+%% Number, Kind), NP) (the pronoun's section below).
 %% ty_possessive_pronoun(L, Words, Possessor, Possessed) gives its words
 %% before the possessed, which takes no article of its own, where the
-%% pronoun fits one of the Possessor conditions and the possessed one of
-%% the Possessed ones: English `his', `her', `its', `their'; Spanish `su',
-%% `sus' (the possessed's number); Italian `il suo', `la sua', `i loro'.
-%% ty_possessive_clitic(L) puts it on the possessed's last word as a clitic
-%% for the possessor's number (Persian `سگش', `سگشان'). Reading, every
-%% pronoun its words allow is a reading (Spanish `su perro' is his, her,
-%% its and their dog).
+%% pronoun fits one of the Possessor conditions (a pronoun's, as
+%% ty_pronoun/4's) and the possessed one of the Possessed ones (a noun
+%% phrase's features): English `my', `your', `his', `their'; Spanish `mi',
+%% `su', `sus' (the possessed's number), `nuestra'; Italian `il mio', `la
+%% sua', `i loro'. ty_possessive_clitic(L) puts it on the possessed's last
+%% word as the clitic of its person and number, clitic(Key) (Persian
+%% `سگم', `سگش', `سگشان'). Reading, the pronoun is what its words tell, the
+%% rest unbound (Spanish `su perro' is pron(3, _, _): his, her, its or
+%% their dog).
 ty_poss_pronoun(L, Pr, NP, F, Next) -->
     { \+ ty_possessive_clitic(L) },
     ty_words(1, 2, Ws, ty_possessive_pronoun(L, Ws, _, _)),
     ty_np(L, NP, F, bare(Next)),
     { ty_possessive_pronoun(L, Ws, PrC, PdC),
-      ty_pron_value(Pr),
-      ty_pron_features(Pr, PrF),
-      once(( member(N1, PrC), ty_features_have(N1, PrF) )),
+      Pr = pron(_, _, _),
+      member(N1, PrC), ty_pron_fits(N1, Pr),
       once(( member(N2, PdC), ty_features_have(N2, F) )) }.
 ty_poss_pronoun(L, Pr, NP, F, none) -->
     { ty_possessive_clitic(L),
-      ty_pron_number(Pr, N) },
-    ty_np(L, NP, F, clitic(N)),
-    { ty_pron_value(Pr), ty_pron_features(Pr, [N|_]) }.
+      Pr = pron(P, N, _),
+      ( nonvar(P) -> ty_agreement(P, N, Key) ; true ) },
+    ty_np(L, NP, F, clitic(Key)),
+    { ty_agreement(P, N, Key) }.
 
-%% The number first, so the possessed is read once a number, not once a
-%% kind.
-ty_pron_number(Pr, N) :-
-    (   nonvar(Pr) -> ty_pron_features(Pr, [N|_]) ; member(N, [sg, pl]) ).
-
-ty_pron_value(pron(sg, m)).
-ty_pron_value(pron(sg, f)).
-ty_pron_value(pron(sg, n)).
-ty_pron_value(pron(pl)).
-
-ty_pron_features(pron(sg, K), [sg, K]).
-ty_pron_features(pron(pl), [pl]).
-
-%% A slot that may hold a possessive pronoun: writing, a pron/1,2; reading,
+%% A slot that may hold a possessive pronoun: writing, a pron/3; reading,
 %% one is tried where the sentence has a pronoun's word or a clitic form
 %% (`$ty_pron').
 ty_pron_slot(Pr) :-
     (   var(Pr) -> \+ nb_current('$ty_pron', f(no))
-    ;   ty_pron_value(Pr)
+    ;   Pr = pron(_, _, _)
+    ).
+
+%% ---- the personal pronoun -----------------------------------------------------------
+%%
+%% A PERSONAL PRONOUN is pron(Person, Number, Kind) where a noun phrase
+%% stands (a subject, an object, an adposition's noun phrase, a possessor):
+%% Person 1, 2 or 3, Number sg or pl, Kind m, f or n (a thing, or a living
+%% thing whose sex is not said). A reading binds what its words tell and
+%% leaves the rest unbound (`I' is pron(1, sg, _), `you' pron(2, _, _),
+%% Spanish `su' pron(3, _, _)); the writer writes the first form that fits.
+%% ty_pronoun(L, Role, Words, Conditions) gives its words in Role s (a
+%% subject), o (an object) or j (after an adposition), where the pronoun
+%% fits one of the Conditions, each a list of a person, a number and a
+%% kind (`he' [[3, sg, m]], `you' [[2]]); a role with no row takes o's
+%% rows (j, where an object is no clitic) or s's (Persian `او', `او را').
+%% To a mark or an agreement a pronoun is a definite noun phrase of its
+%% number, a person (the first and the second persons, he and she) or not
+%% known (it), its kind its gender (a thing agrees as the language's first
+%% gender does: Spanish `Es pequeño.').
+%% ty_pro_drop(L, Persons): a subject pronoun may be no word, the verb's
+%% form telling its person (Spanish `Veo al perro.', I see the dog), written
+%% so for the Persons listed and read so of every person (`Duerme.', he or
+%% she sleeps). Reading, a pronoun's words are tried where the sentence
+%% has one (`$ty_ppron').
+ty_ppron_slot(Pr) :- var(Pr), !, Pr = pron(_, _, _).
+ty_ppron_slot(pron(_, _, _)).
+
+ty_ppron_role(L, s, Pr, F) -->
+    { ty_dropped_first(L, Pr), ty_pron_np_features(Pr, F) }.
+ty_ppron_role(L, Role, Pr, F) -->
+    { \+ ( Role == o, ty_clitic(L, o) ) },
+    ty_flag_allows('$ty_ppron'),
+    ty_mark_slot(L, Role, before, Before),
+    ty_words(1, 2, Ws, ty_pron_words(L, Role, Pr, Ws)),
+    ty_mark_slot(L, Role, after, After),
+    { ty_pron_np_features(Pr, F),
+      ty_marks_ok(L, Role, before, F, Before),
+      ty_marks_ok(L, Role, after, F, After) }.
+ty_ppron_role(L, s, Pr, F) -->
+    { ty_pro_drop(L, _), \+ ty_dropped_first(L, Pr), ty_pron_np_features(Pr, F) }.
+
+%% Writing, a subject of a person the language drops, or of the third
+%% person whose kind the IR does not say (Spanish `Duerme.' is Italian
+%% `Dorme.', not `Lui dorme.').
+ty_dropped_first(L, pron(P, _, K)) :-
+    nonvar(P), ty_pro_drop(L, Persons),
+    ( memberchk(P, Persons) -> true ; P == 3, var(K) ).
+
+ty_flag_allows(Flag, S0, S0) :- ( var(S0) -> true ; \+ nb_current(Flag, f(no)) ).
+
+%% The words of a pronoun in a role, by the role's rows or the rows it
+%% takes.
+ty_pron_words(L, Role, Pr, Ws) :-
+    ty_pron_rows(L, Role, R),
+    Pr = pron(_, _, _),
+    ty_pronoun(L, R, Ws, Conditions),
+    member(C, Conditions),
+    ty_pron_fits(C, Pr).
+
+ty_pron_rows(L, Role, R) :-
+    (   once(ty_pronoun(L, Role, _, _)) -> R = Role
+    ;   Role == j, \+ ty_clitic(L, o), once(ty_pronoun(L, o, _, _)) -> R = o
+    ;   R = s
+    ).
+
+%% A condition's person, number and kind, each the pronoun's.
+ty_pron_fits([], _).
+ty_pron_fits([X|Xs], Pr) :- ty_pron_feature(X, Pr), ty_pron_fits(Xs, Pr).
+
+ty_pron_feature(X, pron(P, _, _)) :- integer(X), !, P = X.
+ty_pron_feature(X, pron(_, N, _)) :- ( X == sg ; X == pl ), !, N = X.
+ty_pron_feature(X, pron(_, _, X)).
+
+ty_pron_np_features(pron(P, N, K), [def, N, A, G]) :-
+    ( K == n -> true ; G = K ),
+    ty_pron_animacy(P, K, A).
+
+ty_pron_animacy(P, K, A) :-
+    (   var(P) -> true
+    ;   P \== 3 -> A = person
+    ;   ( K == m ; K == f ) -> A = person
+    ;   A = unknown
     ).
 
 %% Whether a construction can stand where the words are: its word among
@@ -2145,16 +2316,22 @@ ty_poss_words_in(L, PWs, Words) :-
 %% each construction's words, or the words in a linked form a possessed
 %% asks; a construction with neither (Persian, whose ezafe is not written
 %% after a consonant) counts the nouns less one, two nouns to a possessor. And whether a possessor's gap may
-%% stand (`$ty_whose').
+%% stand (`$ty_whose'), and whether a personal pronoun's word is among the
+%% words (`$ty_ppron').
 ty_poss_flag(L, Words) :-
-    (   nb_current('$ty_poss_memo', memo(L0, Words0, Count, W, P)), L0 == L, Words0 == Words
+    (   nb_current('$ty_poss_memo', memo(L0, Words0, Count, W, P, PP)), L0 == L, Words0 == Words
     ->  true
     ;   ty_poss_counts(L, Words, Count, W, P),
-        nb_setval('$ty_poss_memo', memo(L, Words, Count, W, P))
+        ( ty_ppron_in(L, Words) -> PP = yes ; PP = no ),
+        nb_setval('$ty_poss_memo', memo(L, Words, Count, W, P, PP))
     ),
     b_setval('$ty_poss', f(Count)),
     b_setval('$ty_whose', f(W)),
-    b_setval('$ty_pron', f(P)).
+    b_setval('$ty_pron', f(P)),
+    b_setval('$ty_ppron', f(PP)).
+
+ty_ppron_in(L, Words) :-
+    once(( ty_pronoun(L, _, Ws, _), ty_all_ahead(Ws, Words) )).
 
 %% The last sentence's counts are kept (`$ty_poss_memo'): the writer reads
 %% each sentence it writes back, the same words again.
@@ -2268,16 +2445,29 @@ ty_copula_words(L, K, T, N, P) -->
 %% repair, the other number's or another kind's (Spanish `es' for a place)
 %% is a fault.
 ty_copula_lookup(L, K, K1, T, N, P, Ws) :-
-    (   ty_copula(L, K1, T, N, P, Ws), ty_fits(K1, K)
+    (   ty_copula_form(L, K1, T, N, P, Ws), ty_fits(K1, K)
     *-> true
     ;   ty_lenient,
         (   nonvar(N), ty_other_number(N, N1),
-            ty_copula(L, K1, T, N1, P, Ws), ty_fits(K1, K),
+            ty_copula_form(L, K1, T, N1, P, Ws), ty_fits(K1, K),
             ty_fault(agreement(copula, Ws))
-        ;   ty_copula(L, K1, T, N, P, Ws), \+ ty_fits(K1, K),
+        ;   ty_copula_form(L, K1, T, N, P, Ws), \+ ty_fits(K1, K),
             ty_fault(copula(Ws))
         )
     ).
+
+%% A copula the template lists, or of a person by the person's rule; a
+%% negative no row lists is the positive after the negation's words, where
+%% the negation leaves the form as it is (Spanish `no soy').
+ty_copula_form(L, K1, T, N, P, Ws) :-
+    ty_person_form(L, T, N, ty_copula_n(L, K1, T, P), Ws).
+
+ty_copula_n(L, K1, T, P, N, Ws) :- ty_copula(L, K1, T, N, P, Ws).
+ty_copula_n(L, K1, T, neg, N, Ws) :-
+    ty_negation(L, _, _, Neg, same),
+    append(Neg, Pos, Ws),
+    ty_copula(L, K1, T, N, pos, Pos),
+    \+ ty_copula(L, K1, T, N, neg, _).
 
 ty_predicate(L, adj(As), Rows) --> { As = [_|_] }, ty_adjs(L, As, Rows).
 ty_predicate(L, np(M, N, D, A), []) --> ty_np(L, np(M, N, D, A), _).
@@ -2287,12 +2477,72 @@ ty_predicate(L, pp(Prep, NP), []) --> ty_pp(L, Prep, NP).
 ty_predicate(L, W, []) --> { nonvar(W), W = wh(M) }, ty_wh_words(L, M).
 
 ty_predicate_ok(adj(_), Rows, G, N) :- !,
-    (   forall(member(adj(RG, RN), Rows), ( ty_fits(RG, G), ty_fits(RN, N) ))
+    (   ty_rows_fit(Rows, G, N)
     ->  true
     ;   ty_lenient,
         ty_fault(agreement(adjective))
     ).
 ty_predicate_ok(_, _, _, _).
+
+%% Each adjective's gender and number the subject's; a subject whose
+%% gender is not known yet (a pronoun: `Soy pequeña.') takes the
+%% adjective's.
+ty_rows_fit([], _, _).
+ty_rows_fit([adj(RG, RN)|Rows], G, N) :-
+    ty_fits(RG, G), ty_fits(RN, N),
+    ty_rows_fit(Rows, G, N).
+
+%% ---- the clitic ---------------------------------------------------------------------
+%%
+%% ty_clitic(L, o): an object pronoun is a CLITIC, written in the verb's
+%% words, after the negation's words and before the verb's form (Spanish
+%% `la niña lo ve', `no lo ve'; Italian `lo vede'), and nothing where the
+%% object stands; its words are the ty_pronoun(L, o, ...) rows. A verb with
+%% a complement keeps its adposition, and the pronoun stands after it
+%% (`piensa en él'). Ws, for the verb's meaning, are the form's own words
+%% (the last ones before the rest of the sentence).
+ty_verb_group(L, V, T, N, P, O, Ws) -->
+    { \+ ty_clitic_pron(L, V, O) },
+    ty_verb_words(L, V, T, N, P, Ws).
+ty_verb_group(L, V, T, N, P, O, Ws) -->
+    { ty_clitic_slot(L, O) },
+    ty_clitic_verb(L, V, T, N, P, O, Ws).
+
+%% Writing, an object pronoun of a verb with no complement, in a clitic
+%% language.
+ty_clitic_pron(L, V, O) :-
+    nonvar(O), O = pron(_, _, _),
+    ty_clitic(L, o),
+    \+ ( nonvar(V), ty_complement(L, V, _) ).
+
+%% Reading, a clitic is tried where the sentence has a pronoun's word
+%% (`$ty_ppron').
+ty_clitic_slot(L, O) :-
+    ty_clitic(L, o),
+    (   var(O) -> \+ nb_current('$ty_ppron', f(no)) ; O = pron(_, _, _) ).
+
+ty_clitic_verb(L, V, T, N, P, O, Pos, S0, S) :-
+    (   var(S0)
+    ->  ty_verb_form(L, V, T, N, P, VWs),
+        ty_neg_split(L, VWs, Neg, Pos),
+        ty_pron_words(L, o, O, Cl),
+        append([Neg, Cl, Pos, S], S0)
+    ;   ty_neg_split(L, S0, Neg, S1),
+        between(1, 2, KC), length(Cl, KC), append(Cl, S2, S1),
+        ty_pron_words(L, o, O, Cl),
+        between(1, 4, KV), length(Pos, KV), append(Pos, S, S2),
+        append(Neg, Pos, VWs),
+        ty_neg_split(L, VWs, Neg1, _), Neg1 == Neg,
+        ty_verb_agree(L, V, T, N, P, VWs)
+    ),
+    \+ ty_complement(L, V, _).
+
+%% The negation's words at the start of a verb's words, and the rest.
+ty_neg_split(L, Ws, Neg, Rest) :-
+    (   ty_negation(L, _, _, Neg, _), Neg = [_|_], append(Neg, Rest, Ws)
+    ->  true
+    ;   Neg = [], Rest = Ws
+    ).
 
 %% Reading, the words are taken first and looked up (one to four of them),
 %% so a table of thousands of verbs is asked by the words read; writing,
@@ -2320,17 +2570,115 @@ ty_other_number(sg, pl).
 ty_other_number(pl, sg).
 
 %% A form the template lists, or a negative its negation rule makes from a
-%% positive form it lists.
+%% positive form it lists; of a person, by the person's rule where no row
+%% gives it (ty_person_form/5).
 ty_verb_form(L, V, T, N, P, Words) :-
-    ty_verb(L, V, T, N, P, Words).
-ty_verb_form(L, V, T, N, neg, Words) :-
+    ty_person_form(L, T, N, ty_verb_form_n(L, V, T, P), Words).
+
+ty_verb_form_n(L, V, T, P, N, Words) :-
+    ty_verb_row(L, V, T, N, P, Words).
+ty_verb_form_n(L, V, T, neg, N, Words) :-
     ty_negation(L, T0, N0, Neg, Form),
     append(Neg, Pos, Words),
     ( Form == same -> T1 = T, N1 = N ; Form = form(T1, N1) ),
-    ty_verb(L, V, T1, N1, pos, Pos),
+    ty_verb_row(L, V, T1, N1, pos, Pos),
     ty_values(tense, Ts), member(T, Ts), ty_fits(T0, T),
-    ty_values(number, Ns), member(N, Ns), ty_fits(N0, N),
+    ty_values(agreement, Ns), member(N, Ns), ty_fits(N0, N),
     \+ ty_verb(L, V, T, N, neg, _).
+
+%% A verb's row. Reading (its last word given), the table is asked by the
+%% words alone, and only where they are a form (`$ty_vform'/2, the words
+%% joined): the index on the words finds a form at once, but where none is
+%% so it walks the rows (two milliseconds a lookup with four languages
+%% loaded: Spanish `el' after a subject no word says, `ve a'), and a key
+%% bound beside them did so too.
+ty_verb_row(L, V, T, N, P, Words) :-
+    (   ty_last_given(Words)
+    ->  ty_verb_is_form(L, Words),
+        ty_verb(L, V, T1, N1, P1, Words), T1 = T, N1 = N, P1 = P
+    ;   ty_verb(L, V, T, N, P, Words)
+    ).
+
+%% Every verb's form (`$ty_vform'/2, its words joined) and every form's
+%% first word (`$ty_vfirst'/2) of a language typology_load/1 loaded, made
+%% as it loads (`$ty_vfirst_made'/1); a language whose rows were asserted
+%% (a test's) has none, and its table is asked as it is.
+:- dynamic('$ty_vfirst'/2).
+:- dynamic('$ty_vform'/2).
+:- dynamic('$ty_vfirst_made'/1).
+
+%% Whether Words are a verb's form.
+ty_verb_is_form(L, Words) :-
+    (   ground(Words), '$ty_vfirst_made'(L)
+    ->  atomic_list_concat(Words, ' ', Key), '$ty_vform'(Key, L)
+    ;   true
+    ).
+
+%% Whether a verb's form may begin with W (the words around a word with
+%% several meanings).
+ty_verb_begins(L, W) :-
+    (   atom(W), '$ty_vfirst_made'(L) -> '$ty_vfirst'(W, L) ; true ).
+
+ty_vfirst_make(L) :-
+    retractall('$ty_vfirst'(_, L)),
+    retractall('$ty_vform'(_, L)),
+    retractall('$ty_vfirst_made'(L)),
+    findall(W, ty_verb(L, _, _, _, _, [W|_]), Ws0),
+    sort(Ws0, Ws),
+    forall(member(W, Ws), assertz('$ty_vfirst'(W, L))),
+    findall(K, ( ty_verb(L, _, _, _, _, Fs), atomic_list_concat(Fs, ' ', K) ), Ks0),
+    sort(Ks0, Ks),
+    forall(member(K, Ks), assertz('$ty_vform'(K, L))),
+    assertz('$ty_vfirst_made'(L)).
+
+%% ---- the person -------------------------------------------------------------------
+%%
+%% A verb agrees with its subject's PERSON AND NUMBER, a key: sg and pl are
+%% the third person (every row written before 1.34.0), sg(1), sg(2), pl(1)
+%% and pl(2) the first and the second (ty_agreement/3). The Number of a
+%% ty_verb/6, ty_copula/6, ty_negation/5 and ty_question_form/5 row is a
+%% key. A key no row gives is made by the language's rule,
+%% ty_verb_person(L, Tense, Key, Base, From, To): the form of the key Base,
+%% its last word's ending From made To. English: every key but sg is pl's
+%% form (`I see', `you do not see', `do we see'); Persian: the plural's
+%% ending ند made م, ی, یم, ید (`می‌بینم', `دیدی', `نیستیم').
+ty_agreement(3, sg, sg).
+ty_agreement(3, pl, pl).
+ty_agreement(1, sg, sg(1)).
+ty_agreement(2, sg, sg(2)).
+ty_agreement(1, pl, pl(1)).
+ty_agreement(2, pl, pl(2)).
+
+%% The form of key N, Form called with a key and the words: the rows' own,
+%% else the rule's over its base's form. Reading, the rule takes the
+%% ending back first, so the table is asked by the base's words.
+ty_person_form(L, T, N, Form, Words) :-
+    (   nonvar(N), N \== sg, N \== pl
+    ->  (   call(Form, N, Words)
+        *-> true
+        ;   ty_verb_person(L, T0, N, Base, From, To),
+            ty_fits(T0, T),
+            (   ty_last_given(Words)
+            ->  ty_person_ending(Ws0, From, To, Words), call(Form, Base, Ws0)
+            ;   call(Form, Base, Ws0), ty_person_ending(Ws0, From, To, Words)
+            )
+        )
+    ;   call(Form, N, Words)
+    ).
+
+%% Reading, the last word is given: the rule's ending is taken back from
+%% it.
+ty_last_given(Ws) :- is_list(Ws), last(Ws, W), atom(W).
+
+ty_person_ending(Ws0, From, To, Ws) :-
+    (   ty_last_given(Ws)
+    ->  append(Front, [W], Ws),
+        atom_concat(Stem, To, W), atom_concat(Stem, From, W0),
+        append(Front, [W0], Ws0)
+    ;   append(Front, [W0], Ws0),
+        atom_concat(Stem, From, W0), atom_concat(Stem, To, W),
+        append(Front, [W], Ws)
+    ).
 
 %% A role's phrase, with the marks the template puts before or after it.
 ty_role(L, Role, NP) --> ty_role(L, Role, NP, _).
@@ -2349,6 +2697,12 @@ ty_role(L, Role, W, [Def, N, Anim, _]) -->
 ty_role(L, Role, NP, Features) -->
     { ty_np_slot(NP) },
     ty_marked_np(L, Role, NP, Features, none).
+
+%% A personal pronoun in its role; an object clitic's words stood in the
+%% verb's (ty_verb_group//7), which bound it before the object's place.
+ty_role(L, o, Pr, F) -->
+    { nonvar(Pr), Pr = pron(_, _, _), ty_clitic(L, o), ty_pron_np_features(Pr, F) }.
+ty_role(L, Role, Pr, F) --> { ty_ppron_slot(Pr) }, ty_ppron_role(L, Role, Pr, F).
 
 %% A relative clause's gap: its head's, with no words, or a pronoun
 %% between the role's marks (Persian `سگی که پسر آن را می‌بیند').
@@ -3082,6 +3436,8 @@ ty_entry_head('The verb ', verb, none).
 
 ty_form_relation(' is the plural of ', plural).
 ty_form_relation(' is the past of ', past).
+ty_form_relation(' is the first person of ', first).
+ty_form_relation(' is the second person of ', second).
 
 ty_says(' is animate.', tyi_animate(W), W).
 ty_says(' is a person.', tyi_person(W), W).
@@ -3190,8 +3546,17 @@ ty_import_row(L, ty_verb(L, B, T, N, pos, [W])) :-
     reason_base(M3, B),
     (   tyi_hand(ty_verb(L, B, present, sg, pos, [W3])) -> ty_count(verb_in_the_hand_template), fail ; true ),
     (   ty_copula_word(L, W3) -> ty_count(verb_that_is_a_copula_word), fail ; true ),
-    member(T-N-W, [present-sg-W3, present-pl-W3p, past-sg-Wp, past-pl-Wpp]).
+    member(T-N0-W0, [present-sg-W3, present-pl-W3p, past-sg-Wp, past-pl-Wpp]),
+    ty_person_rows(N0, W0, N, W).
 
+%% A third person's form and the first and second persons the vocabulary
+%% gives of it (`"veo" is the first person of "ve"'): sg(1) and sg(2) of a
+%% singular, pl(1) and pl(2) of a plural.
+ty_person_rows(N, W, N, W).
+ty_person_rows(N0, W0, N, W) :-
+    member(Kind-P, [first-1, second-2]),
+    ty_once_form(Kind, verb, W0, W),
+    N =.. [N0, P].
 %% A copula's word is the copula, never a verb: the vocabularies list `es'
 %% (`is'), `está' and `è' as verbs, and as verbs they read `el perro es en
 %% la casa', where the copula's own rows choose `está'.

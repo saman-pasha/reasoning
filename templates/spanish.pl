@@ -185,7 +185,102 @@ ty_relative_possessive(spanish, [cuya], [[f, sg]]).
 ty_relative_possessive(spanish, [cuyos], [[m, pl]]).
 ty_relative_possessive(spanish, [cuyas], [[f, pl]]).
 
-%% A possessive pronoun (`su perro', `sus perros'): by the possessed's
-%% number, whoever the possessor is.
-ty_possessive_pronoun(spanish, [su], [[]], [[sg]]).
-ty_possessive_pronoun(spanish, [sus], [[]], [[pl]]).
+%% A possessive pronoun (`mi perro', `su perro', `sus perros'): by the
+%% possessor's person and number (`su' is any third person's) and the
+%% possessed's number, `nuestro' and `vuestro' by its gender too.
+ty_possessive_pronoun(spanish, [mi], [[1, sg]], [[sg]]).
+ty_possessive_pronoun(spanish, [mis], [[1, sg]], [[pl]]).
+ty_possessive_pronoun(spanish, [tu], [[2, sg]], [[sg]]).
+ty_possessive_pronoun(spanish, [tus], [[2, sg]], [[pl]]).
+ty_possessive_pronoun(spanish, [su], [[3]], [[sg]]).
+ty_possessive_pronoun(spanish, [sus], [[3]], [[pl]]).
+ty_possessive_pronoun(spanish, [nuestro], [[1, pl]], [[m, sg]]).
+ty_possessive_pronoun(spanish, [nuestra], [[1, pl]], [[f, sg]]).
+ty_possessive_pronoun(spanish, [nuestros], [[1, pl]], [[m, pl]]).
+ty_possessive_pronoun(spanish, [nuestras], [[1, pl]], [[f, pl]]).
+ty_possessive_pronoun(spanish, [vuestro], [[2, pl]], [[m, sg]]).
+ty_possessive_pronoun(spanish, [vuestra], [[2, pl]], [[f, sg]]).
+ty_possessive_pronoun(spanish, [vuestros], [[2, pl]], [[m, pl]]).
+ty_possessive_pronoun(spanish, [vuestras], [[2, pl]], [[f, pl]]).
+
+%% Personal pronouns: a subject's, which the verb's form makes no word for
+%% the first and the second persons (`Veo al perro.', I see the dog), and
+%% may make none for the third (`Duerme.'); an object's, a clitic in the
+%% verb's words (`La niña lo ve.', `No la veo.'); and an adposition's (`con
+%% ella', `en él'; `conmigo', `contigo').
+ty_pronoun(spanish, s, [yo], [[1, sg]]).
+ty_pronoun(spanish, s, [tú], [[2, sg]]).
+ty_pronoun(spanish, s, [él], [[3, sg, m]]).
+ty_pronoun(spanish, s, [ella], [[3, sg, f]]).
+ty_pronoun(spanish, s, [nosotros], [[1, pl, m]]).
+ty_pronoun(spanish, s, [nosotras], [[1, pl, f]]).
+ty_pronoun(spanish, s, [vosotros], [[2, pl, m]]).
+ty_pronoun(spanish, s, [vosotras], [[2, pl, f]]).
+ty_pronoun(spanish, s, [ellos], [[3, pl, m], [3, pl, n]]).
+ty_pronoun(spanish, s, [ellas], [[3, pl, f]]).
+ty_pronoun(spanish, o, [me], [[1, sg]]).
+ty_pronoun(spanish, o, [te], [[2, sg]]).
+ty_pronoun(spanish, o, [lo], [[3, sg, m], [3, sg, n]]).
+ty_pronoun(spanish, o, [la], [[3, sg, f]]).
+ty_pronoun(spanish, o, [nos], [[1, pl]]).
+ty_pronoun(spanish, o, [os], [[2, pl]]).
+ty_pronoun(spanish, o, [los], [[3, pl, m], [3, pl, n]]).
+ty_pronoun(spanish, o, [las], [[3, pl, f]]).
+ty_pronoun(spanish, j, [mí], [[1, sg]]).
+ty_pronoun(spanish, j, [ti], [[2, sg]]).
+ty_pronoun(spanish, j, [él], [[3, sg, m], [3, sg, n]]).
+ty_pronoun(spanish, j, [ella], [[3, sg, f]]).
+ty_pronoun(spanish, j, [nosotros], [[1, pl, m]]).
+ty_pronoun(spanish, j, [nosotras], [[1, pl, f]]).
+ty_pronoun(spanish, j, [vosotros], [[2, pl, m]]).
+ty_pronoun(spanish, j, [vosotras], [[2, pl, f]]).
+ty_pronoun(spanish, j, [ellos], [[3, pl, m], [3, pl, n]]).
+ty_pronoun(spanish, j, [ellas], [[3, pl, f]]).
+ty_contraction(spanish, [con, mí], conmigo).
+ty_contraction(spanish, [con, ti], contigo).
+ty_pro_drop(spanish, [1, 2]).
+ty_clitic(spanish, o).
+
+%% The first and the second persons of the verbs above (the import gives
+%% every other verb's from the vocabulary), and of the copula; a negative
+%% is `no' before the positive.
+ty_verb(spanish, see, present, sg(1), pos, [veo]).
+ty_verb(spanish, see, present, sg(2), pos, [ves]).
+ty_verb(spanish, see, present, pl(1), pos, [vemos]).
+ty_verb(spanish, see, present, pl(2), pos, [veis]).
+ty_verb(spanish, see, past, sg(1), pos, [vi]).
+ty_verb(spanish, see, past, sg(2), pos, [viste]).
+ty_verb(spanish, see, past, pl(1), pos, [vimos]).
+ty_verb(spanish, see, past, pl(2), pos, [visteis]).
+ty_verb(spanish, sleep, present, sg(1), pos, [duermo]).
+ty_verb(spanish, sleep, present, sg(2), pos, [duermes]).
+ty_verb(spanish, sleep, present, pl(1), pos, [dormimos]).
+ty_verb(spanish, sleep, present, pl(2), pos, [dormís]).
+ty_verb(spanish, sleep, past, sg(1), pos, [dormí]).
+ty_verb(spanish, sleep, past, sg(2), pos, [dormiste]).
+ty_verb(spanish, sleep, past, pl(1), pos, [dormimos]).
+ty_verb(spanish, sleep, past, pl(2), pos, [dormisteis]).
+ty_copula(spanish, adj, present, sg(1), pos, [soy]).
+ty_copula(spanish, adj, present, sg(2), pos, [eres]).
+ty_copula(spanish, adj, present, pl(1), pos, [somos]).
+ty_copula(spanish, adj, present, pl(2), pos, [sois]).
+ty_copula(spanish, adj, past, sg(1), pos, [era]).
+ty_copula(spanish, adj, past, sg(2), pos, [eras]).
+ty_copula(spanish, adj, past, pl(1), pos, [éramos]).
+ty_copula(spanish, adj, past, pl(2), pos, [erais]).
+ty_copula(spanish, np, present, sg(1), pos, [soy]).
+ty_copula(spanish, np, present, sg(2), pos, [eres]).
+ty_copula(spanish, np, present, pl(1), pos, [somos]).
+ty_copula(spanish, np, present, pl(2), pos, [sois]).
+ty_copula(spanish, np, past, sg(1), pos, [era]).
+ty_copula(spanish, np, past, sg(2), pos, [eras]).
+ty_copula(spanish, np, past, pl(1), pos, [éramos]).
+ty_copula(spanish, np, past, pl(2), pos, [erais]).
+ty_copula(spanish, pp, present, sg(1), pos, [estoy]).
+ty_copula(spanish, pp, present, sg(2), pos, [estás]).
+ty_copula(spanish, pp, present, pl(1), pos, [estamos]).
+ty_copula(spanish, pp, present, pl(2), pos, [estáis]).
+ty_copula(spanish, pp, past, sg(1), pos, [estaba]).
+ty_copula(spanish, pp, past, sg(2), pos, [estabas]).
+ty_copula(spanish, pp, past, pl(1), pos, [estábamos]).
+ty_copula(spanish, pp, past, pl(2), pos, [estabais]).
