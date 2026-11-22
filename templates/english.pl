@@ -149,6 +149,15 @@ ty_complement(english, depend, [on]).
 ty_complement(english, dream, [of]).
 ty_complement_wh(english, stays).
 
+%% A relative clause's gap in an adposition phrase: the adposition stays
+%% (`the house that the dog sleeps in', `the girl that the boy thinks
+%% about'), written; or it moves into the marker with `whom' or `which'
+%% (`the house in which the dog sleeps'), read.
+ty_gap(english, pp, stays).
+ty_gap(english, pp, moves).
+ty_relative_pronoun(english, [whom], [[animate]]).
+ty_relative_pronoun(english, [which], [[]]).
+
 %% The answer to a yes or no question (`Yes.', `No, the boy does not see
 %% the dog.'): `yes' for a positive answer, after a negative question too.
 ty_answer(english, yes, [yes]).

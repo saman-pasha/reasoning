@@ -151,6 +151,29 @@
 %%                                     the first that fits is written, and
 %%                                     Words [] is no marker (English `the
 %%                                     dog the boy sees')
+%%     ty_gap(L, Place, Rule)          how a relative clause's gap is
+%%                                     written at Place o (an object: gap,
+%%                                     the default, or resumptive) or pp (in
+%%                                     an adposition phrase: stays, moves or
+%%                                     resumptive); the first row written,
+%%                                     every row read (below: the gap)
+%%     ty_relative_pronoun(L, Words, Conditions)
+%%                                     the pronoun after a moved adposition
+%%                                     in the marker (Spanish `en la que',
+%%                                     Italian `in cui'), as a marker's
+%%                                     Conditions
+%%     ty_resumptive(L, Words, Conditions)
+%%                                     the pronoun where a resumptive gap
+%%                                     stands (Persian `آن', `او')
+%%     ty_relative_after(L, Part)      the relative clause of an object (o)
+%%                                     or a copula's predicate (p) stands
+%%                                     after the verb, at the clause's end
+%%                                     (Persian), and in place is read too
+%%     ty_relative_bare(L, Definiteness)
+%%                                     a head of this definiteness takes no
+%%                                     article before its relative clause
+%%                                     (Persian `حیوانی که', not `یک حیوانی
+%%                                     که')
 %%     ty_complement(L, Verb, Words)   the object of Verb is an adposition
 %%                                     phrase with the adposition Words, in
 %%                                     the pp level's order and with no role
@@ -212,7 +235,9 @@
 %%                                     where a noun phrase stands: Clause a
 %%                                     clause or a copula clause with `gap'
 %%                                     where the head stands in it (its
-%%                                     subject or object)
+%%                                     subject or object, or the noun
+%%                                     phrase of an adposition phrase:
+%%                                     pp(in, gap))
 %%
 %% WHAT IS PUBLIC:
 %%
@@ -326,7 +351,9 @@
            ty_adverb/3, ty_adjunct/2, ty_sense/5, ty_topic/2, ty_question/4,
            ty_question_form/5, ty_wh/2, ty_wh_word/3, ty_question_mark/3,
            ty_role_animacy/3, ty_relative/4, ty_complement/3, ty_complement_wh/2, ty_negation_place/3,
-           ty_answer/3, ty_answer_system/2, ty_answer_mark/2.
+           ty_answer/3, ty_answer_system/2, ty_answer_mark/2, ty_gap/3,
+           ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/2,
+           ty_relative_bare/2.
 :- discontiguous ty_order/3, ty_noun/6, ty_adjective/5, ty_verb/6,
                  ty_article/5, ty_mark/5, ty_contraction/3, ty_negation/5,
                  ty_ending/4, ty_letters/3, ty_before/5, ty_linked/5, ty_copula/6,
@@ -334,7 +361,9 @@
                  ty_question/4, ty_question_form/5, ty_wh/2, ty_wh_word/3,
                  ty_question_mark/3, ty_relative/4, ty_complement/3,
                  ty_complement_wh/2, ty_negation_place/3, ty_answer/3,
-                 ty_answer_system/2, ty_answer_mark/2.
+                 ty_answer_system/2, ty_answer_mark/2, ty_gap/3,
+                 ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/2,
+                 ty_relative_bare/2.
 
 %% ---- the levels and the values a slot takes -----------------------------------
 
@@ -359,6 +388,9 @@ ty_values(wh_place, [front, in_place, after(s)]).
 ty_values(wh, [who, what, where, when]).
 ty_values(relative_role, [s, o, any]).
 ty_values(complement_wh, [moves, stays]).
+ty_values(gap_place, [o, pp]).
+ty_values(gap, [gap, stays, moves, resumptive]).
+ty_values(relative_after, [o, p]).
 ty_values(answer, [yes, no, contradict]).
 ty_values(answer_system, [polarity, agreement]).
 ty_values(negation_place, [start, end, before(s), after(s), before(v), after(v),
@@ -448,6 +480,11 @@ ty_row_shape('ty_complement(L, Verb, Words).').
 ty_row_shape('ty_negation_place(L, Words, Place).').
 ty_row_shape('ty_answer(L, Kind, Words).').
 ty_row_shape('ty_answer_mark(L, Mark).').
+ty_row_shape('ty_gap(L, Place, Rule).').
+ty_row_shape('ty_relative_pronoun(L, Words, Conditions).').
+ty_row_shape('ty_resumptive(L, Words, Conditions).').
+ty_row_shape('ty_relative_after(L, Part).').
+ty_row_shape('ty_relative_bare(L, Definiteness).').
 
 %% ---- the check ----------------------------------------------------------------------
 
@@ -552,6 +589,26 @@ ty_missing(L, bad(ty_relative(L, R, Ws, Cs))) :-
     ty_relative(L, R, Ws, Cs),
     \+ ( ty_values(relative_role, Rs), memberchk(R, Rs),
          is_list(Ws), is_list(Cs) ).
+ty_missing(L, bad(ty_gap(L, Pl, R))) :-
+    ty_gap(L, Pl, R),
+    \+ ( ty_values(gap_place, Ps), memberchk(Pl, Ps),
+         ty_values(gap, Rs), memberchk(R, Rs),
+         ( Pl == o -> memberchk(R, [gap, resumptive]) ; R \== gap ) ).
+ty_missing(L, bad(ty_relative_pronoun(L, Ws, Cs))) :-
+    ty_relative_pronoun(L, Ws, Cs),
+    \+ ( is_list(Ws), Ws \== [], is_list(Cs) ).
+ty_missing(L, bad(ty_resumptive(L, Ws, Cs))) :-
+    ty_resumptive(L, Ws, Cs),
+    \+ ( is_list(Ws), Ws \== [], is_list(Cs) ).
+ty_missing(L, bad(ty_relative_after(L, P))) :-
+    ty_relative_after(L, P),
+    \+ ( ty_values(relative_after, Ps), memberchk(P, Ps) ).
+ty_missing(L, relative_pronoun) :-
+    ty_gap(L, pp, moves),
+    \+ ty_relative_pronoun(L, _, _).
+ty_missing(L, resumptive_pronoun) :-
+    ty_gap(L, _, resumptive),
+    \+ ty_resumptive(L, _, _).
 ty_missing(L, bad(ty_mark(L, R, Pl, W, Cs))) :-
     ty_mark(L, R, Pl, W, Cs),
     \+ ( ty_values(role, Rs), memberchk(R, Rs),
@@ -1155,6 +1212,8 @@ ty_known_base(L, B) :-
     ;   ty_question_form(L, _, _, Ws, _), memberchk(B, Ws)
     ;   ty_question(L, _, _, particle(B, _))
     ;   ty_relative(L, _, Ws, _), memberchk(B, Ws)
+    ;   ty_relative_pronoun(L, Ws, _), memberchk(B, Ws)
+    ;   ty_resumptive(L, Ws, _), memberchk(B, Ws)
     ;   ty_complement(L, _, Ws), memberchk(B, Ws)
     ;   ty_negation_place(L, Ws, _), memberchk(B, Ws)
     ;   ty_answer(L, _, Ws), ( memberchk(B, Ws) ; last(Ws, W), ty_answer_comma(L, M), atom_concat(W, M, B) )
@@ -1247,7 +1306,8 @@ ty_ask_clause(L, C, Cost) -->
       ty_order_cost(Order, Order2, Cost),
       C = clause(_, _, P, _, _, _),
       ty_negation_order(L, P, Order, Order3) },
-    ty_ask_parts(Order3, L, C, Q, How),
+    ty_extraposed(L, o, O, Order3, Order4),
+    ty_ask_parts(Order4, L, C, Q, How),
     { ty_wh_count(C, Kind),
       ty_wh_first(C, Part),
       ty_roles_ok(L, C),
@@ -1261,7 +1321,8 @@ ty_ask_copula(L, C, Cost) -->
       Q = q(_, _, _, Features, Rows),
       ty_ask_order(L, Kind, Part, copula, Order0, Order, Q),
       ty_order_cost(Order, Order0, Cost) },
-    ty_ask_parts(Order, L, C, Q, _),
+    ty_extraposed(L, p, Pred, Order, Order1),
+    ty_ask_parts(Order1, L, C, Q, _),
     { Features = [_, N, _, G],
       ty_predicate_ok(Pred, Rows, G, N),
       ty_wh_count(C, Kind),
@@ -1436,6 +1497,10 @@ ty_ask_part(c, L, C, Q, _) --> ty_ask_verb(L, C, Q).
 ty_ask_part(f, L, C, Q, _) --> ty_ask_first(L, C, Q).
 ty_ask_part(q, _, _, q(particle(W, _), _, _, _, _), _) --> [W].
 ty_ask_part(n(Ws), _, _, _, _) --> ty_tokens(Ws).
+ty_ask_part(oh(X), L, clause(V, _, _, _, O, _), _, How) --> ty_object_head(L, V, O, How, X).
+ty_ask_part(ot(X), L, _, _, _) --> ty_rel_tail(L, X).
+ty_ask_part(ph(X), L, copula(_, _, _, Pred), q(_, _, _, _, []), _) --> ty_predicate_head(L, Pred, X).
+ty_ask_part(pt(X), L, _, _, _) --> ty_rel_tail(L, X).
 
 %% The verb (or the copula). Under front(first) part f, before the
 %% subject, is its first word and this part the rest: writing, f looks the
@@ -1482,7 +1547,7 @@ ty_ask_words(L, copula(T, P, Subj, Pred), _, Ws) :-
 %% are only where something put them.
 ty_subject_number(np(_, N, _, _), N).
 ty_subject_number(W, sg) :- nonvar(W), W = wh(_).
-ty_subject_number(G, N) :- nonvar(G), G = gap(H, _), ty_subject_number(H, N).
+ty_subject_number(G, N) :- nonvar(G), G = gap(H, _, _), ty_subject_number(H, N).
 ty_subject_number(rel(np(_, N, _, _), _), N).
 
 %% A verb the rule moved, in a language with question forms, is the
@@ -1594,7 +1659,8 @@ ty_clause(L, C) -->
       ty_order_at(L, clause, Order0),
       ty_valency(Order0, O, Order1),
       ty_adjunct_order(L, Order1, Js, Order2),
-      ty_negation_order(L, P, Order2, Order) },
+      ty_negation_order(L, P, Order2, Order3) },
+    ty_extraposed(L, o, O, Order3, Order),
     ty_clause_parts(Order, L, C, How),
     { ty_roles_ok(L, C),
       ty_object_ok(L, C, How) }.
@@ -1666,7 +1732,7 @@ ty_np_animacy(_, wh(M), A) :-
     ty_wh_features(M, [_, _, A1]),
     ty_animacy_fits(A, A1).
 ty_np_animacy(L, rel(NP, _), A) :- NP = np(_, _, _, _), ty_np_animacy(L, NP, A).
-ty_np_animacy(L, gap(NP, _), A) :- ty_np_animacy(L, NP, A).
+ty_np_animacy(L, gap(NP, _, _), A) :- ty_np_animacy(L, NP, A).
 
 ty_animacy_fits(A, A).
 ty_animacy_fits(_, unknown).
@@ -1704,6 +1770,8 @@ ty_clause_part(v, L, clause(V, T, P, S, _, _), _) -->
     ty_meant(L, verb(V), Ws).
 ty_clause_part(j, L, clause(_, _, _, _, _, Js), _) --> ty_adjuncts(L, Js).
 ty_clause_part(n(Ws), _, _, _) --> ty_tokens(Ws).
+ty_clause_part(oh(X), L, clause(V, _, _, _, O, _), How) --> ty_object_head(L, V, O, How, X).
+ty_clause_part(ot(X), L, _, _) --> ty_rel_tail(L, X).
 
 %% ---- a verb's complement --------------------------------------------------------
 %%
@@ -1727,6 +1795,17 @@ ty_object(L, V, O, comp(Ws)) -->
     { ty_complement_words(L, V, Ws) },
     ty_comp_phrase(L, Ws, O).
 
+%% The head of an object whose relative clause stands after the verb
+%% (ty_extraposed//5): its noun phrase in the linked form a relative clause
+%% asks for, with its marks or in its complement. X carries the head and
+%% its features to the clause's tail.
+ty_object_head(L, V, rel(NP, Cl), plain, x(NP, F, Cl)) -->
+    { \+ ( nonvar(V), ty_complement(L, V, _), \+ ty_lenient ) },
+    ty_marked_np(L, o, NP, F, r).
+ty_object_head(L, V, rel(NP, Cl), comp(Ws), x(NP, F, Cl)) -->
+    { ty_complement_words(L, V, Ws) },
+    ty_comp_phrase(L, Ws, head(NP, F)).
+
 ty_complement_words(L, V, Ws) :-
     (   nonvar(V)
     ->  ty_complement(L, V, Ws)
@@ -1736,8 +1815,10 @@ ty_complement_words(L, V, Ws) :-
 
 %% The complement: its adposition and its noun phrase in the pp level's
 %% order. A question word stands for the noun phrase; so does a relative
-%% clause's gap, where the adposition stays behind (ty_complement_wh/2:
-%% English `the girl that the boy thinks about').
+%% clause's gap, as ty_gap/3 says (ty_gap_words//3): the adposition stays
+%% behind (English `the girl that the boy thinks about'), moves into the
+%% marker (Spanish `la niña en la que el niño piensa'), or stays with a
+%% pronoun (Persian `دختری که پسر به او فکر می‌کند').
 ty_comp_phrase(L, Ws, O) -->
     { ty_order_at(L, pp, Order) },
     ty_comp_parts(Order, L, Ws, O).
@@ -1745,11 +1826,16 @@ ty_comp_phrase(L, Ws, O) -->
 ty_comp_parts([], _, _, _) --> [].
 ty_comp_parts([P|Ps], L, Ws, O) --> ty_comp_part(P, L, Ws, O), ty_comp_parts(Ps, L, Ws, O).
 
-ty_comp_part(p, _, Ws, _) --> ty_tokens(Ws).
+ty_comp_part(p, _, Ws, O) -->
+    (   { ty_gap_moved_from(O, AWs) }
+    ->  { AWs = Ws }
+    ;   ty_tokens(Ws)
+    ).
 ty_comp_part(x, L, _, O) --> ty_comp_np(L, O).
 
 ty_comp_np(L, W) --> { nonvar(W), W = wh(M) }, ty_wh_words(L, M).
-ty_comp_np(L, G) --> { nonvar(G), G = gap(_, _), ty_comp_rule(L, stays) }.
+ty_comp_np(L, G) --> { nonvar(G), G = gap(_, F, R), R = r(c(_), _) }, ty_gap_words(L, F, R).
+ty_comp_np(L, H) --> { nonvar(H), H = head(NP, F) }, ty_np(L, NP, F, r).
 ty_comp_np(L, NP) --> ty_np_phrase(L, NP, _).
 
 ty_tokens([]) --> [].
@@ -1798,9 +1884,13 @@ ty_pp(L, Prep, NP) -->
 ty_pp_parts([], _, _, _) --> [].
 ty_pp_parts([P|Ps], L, Prep, NP) --> ty_pp_part(P, L, Prep, NP), ty_pp_parts(Ps, L, Prep, NP).
 
-ty_pp_part(p, L, Prep, _) -->
-    ty_words(1, 3, Ws, ty_adposition(L, Prep, Ws)),
-    ty_meant(L, adposition(Prep), Ws).
+ty_pp_part(p, L, Prep, NP) -->
+    (   { ty_gap_moved_from(NP, AWs) }
+    ->  { ty_adposition(L, Prep, AWs) }
+    ;   ty_words(1, 3, Ws, ty_adposition(L, Prep, Ws)),
+        ty_meant(L, adposition(Prep), Ws)
+    ).
+ty_pp_part(x, L, _, G) --> { nonvar(G), G = gap(_, F, R), R = r(j(_), _) }, ty_gap_words(L, F, R).
 ty_pp_part(x, L, _, NP) --> ty_np_phrase(L, NP, _).
 
 %% A noun phrase where no role's marks stand (an adposition's, a copula's
@@ -1823,7 +1913,8 @@ ty_words(Min, Max, Ws, Lookup, S0, S) :-
 %% of no words is dropped. A predicate adjective agrees with the subject.
 ty_copula_clause(L, C) -->
     { C = copula(_, _, _, Pred),
-      ty_order_at(L, copula, Order) },
+      ty_order_at(L, copula, Order0) },
+    ty_extraposed(L, p, Pred, Order0, Order),
     ty_copula_parts(Order, L, C, Features, Rows),
     { Features = [_, N, _, G],
       ty_predicate_ok(Pred, Rows, G, N) }.
@@ -1837,6 +1928,11 @@ ty_copula_part(c, L, copula(T, P, S, Pred), _, _) -->
       ty_predicate_kind(Pred, K) },
     ty_copula_words(L, K, T, N, P).
 ty_copula_part(p, L, copula(_, _, _, Pred), _, Rows) --> ty_predicate(L, Pred, Rows).
+ty_copula_part(ph(X), L, copula(_, _, _, Pred), _, []) --> ty_predicate_head(L, Pred, X).
+ty_copula_part(pt(X), L, _, _, _) --> ty_rel_tail(L, X).
+
+%% The head of a predicate whose relative clause stands after the copula.
+ty_predicate_head(L, rel(NP, Cl), x(NP, F, Cl)) --> ty_np(L, NP, F, r).
 
 ty_predicate_kind(adj(_), adj).
 ty_predicate_kind(np(_, _, _, _), np).
@@ -1939,8 +2035,17 @@ ty_role(L, Role, NP, Features) -->
     { ty_np_slot(NP) },
     ty_marked_np(L, Role, NP, Features, none).
 
-%% A relative clause's gap: its head's, with no words.
-ty_role(_, _, G, Features) --> { nonvar(G), G = gap(_, Features) }.
+%% A relative clause's gap: its head's, with no words, or a pronoun
+%% between the role's marks (Persian `سگی که پسر آن را می‌بیند').
+ty_role(_, _, G, Features) --> { nonvar(G), G = gap(_, Features, r(Pl, gap)), ty_role_gap(Pl) }.
+ty_role(L, Role, G, [_, N, A, Gen]) -->
+    { nonvar(G), G = gap(_, [_, N, A, Gen], r(Pl, resumptive)), ty_role_gap(Pl),
+      F = [def, N, A, Gen] },
+    ty_mark_slot(L, Role, before, Before),
+    ty_resumptive_words(L, F),
+    ty_mark_slot(L, Role, after, After),
+    { ty_marks_ok(L, Role, before, F, Before),
+      ty_marks_ok(L, Role, after, F, After) }.
 
 %% A noun phrase with a relative clause.
 ty_role(L, Role, R, Features) --> { ty_rel_slot(R) }, ty_rel(L, Role, R, Features).
@@ -1973,7 +2078,8 @@ ty_rel_slot(rel(_, _)).
 %%     rel(np(dog, sg, def, []),
 %%         clause(see, present, pos, np(boy, sg, def, []), gap))
 %%
-%% A gap has no words, and it is its head to every check: the verb agrees
+%% A gap (most often no words: the section on the gap below) is its head
+%% to every check: the verb agrees
 %% with it (`the boys that see the dog'), its role asks its animacy (`the
 %% book that sees' is not read), a predicate adjective agrees with it (`la
 %% niña que es pequeña'). The marker is the first ty_relative/4 row that
@@ -1981,13 +2087,56 @@ ty_rel_slot(rel(_, _)).
 %% written nothing (English `the dog the boy sees'). In Persian the head's
 %% last word takes a linked form before the clause (ty_linked(persian, n,
 %% r, From, To): `سگی که پسر می‌بیند', the dog that the boy sees).
+%% The relative clause of an object or a predicate may stand after the
+%% verb (ty_relative_after/2, below).
 
 ty_rel(L, Role, rel(NP, C), Features) -->
     ty_rel_open(L),
+    ty_ahead(Ahead),
     { ty_order_at(L, rel, Order),
-      ty_gap_place(GapRole, NP, Features, C, C1) },
-    ty_rel_parts(Order, L, Role, NP, Features, C1, m(Ws, GapRole)),
-    { ty_rel_marker_ok(L, GapRole, Features, Ws) }.
+      ty_gap_place(L, NP, Features, R, C, C1),
+      ty_gap_possible(L, R, Ahead) },
+    ty_rel_parts(Order, L, Role, NP, Features, C1, m(Ws, R)),
+    { ty_rel_marker_ok(L, R, Features, Ws) }.
+
+%% A relative clause after its verb (ty_extraposed//5): the marker and the
+%% clause, in the rel level's order less the head, which was read where
+%% its role stands. X is x(Head, Features, Clause).
+ty_rel_tail(L, x(NP, Features, C)) -->
+    ty_ahead(Ahead),
+    { ty_order_at(L, rel, [h|Order]),
+      ty_gap_place(L, NP, Features, R, C, C1),
+      ty_gap_possible(L, R, Ahead) },
+    ty_rel_parts(Order, L, none, NP, Features, C1, m(Ws, R)),
+    { ty_rel_marker_ok(L, R, Features, Ws) }.
+
+%% THE RELATIVE CLAUSE OF AN OBJECT OR A PREDICATE AFTER THE VERB:
+%% ty_relative_after(L, Part), Part o (a verb clause's object) or p (a
+%% copula clause's predicate), moves the clause to the end of its clause,
+%% the head staying where its part stands (Persian `دختر سگ سیاهی را
+%% می‌بیند که می‌خوابد', `سگ حیوانی است که می‌خوابد'). The part becomes the
+%% head (oh(X), ph(X)), and the tail (ot(X), pt(X)) goes last. It is
+%% written first, and the clause in place is read too. Reading, it is
+%% tried only where a marker word is among the words left; the rel order
+%% must begin with the head.
+ty_extraposed(L, Part, X, Order0, Order, S0, S0) :-
+    (   ty_relative_after(L, Part),
+        ty_order_at(L, rel, [h|_]),
+        (   nonvar(X) -> X = rel(_, _)
+        ;   nonvar(S0) -> ty_marker_ahead(L, S0)
+        ;   true
+        ),
+        ty_head_tail(Part, Head, Tail),
+        append(Before, [Part|After], Order0)
+    ->  (   append(Before, [Head|After], Order1),
+            append(Order1, [Tail], Order)
+        ;   Order = Order0
+        )
+    ;   Order = Order0
+    ).
+
+ty_head_tail(o, oh(X), ot(X)).
+ty_head_tail(p, ph(X), pt(X)).
 
 %% Reading, a relative clause starts only where it may:
 %%   - not where one is open that has read no word yet: in an order with
@@ -1996,8 +2145,8 @@ ty_rel(L, Role, rel(NP, C), Features) -->
 %%     the words left (`$ty_rel_open', set to f([]) where a parse starts;
 %%     inside f/1 for the reason ty_fault/1 gives);
 %%   - in a language whose every marker is a word, only where a marker
-%%     is among the words left: every noun phrase read would else try a
-%%     relative clause after it.
+%%     word (a relative pronoun's too) is among the words left: every noun
+%%     phrase read would else try a relative clause after it.
 ty_rel_open(L, S0, S0) :-
     (   var(S0)
     ->  true
@@ -2006,39 +2155,167 @@ ty_rel_open(L, S0, S0) :-
         \+ memberchk(N, Open),
         (   ty_relative(L, _, [], _)
         ->  true
-        ;   ty_relative(L, _, [W|_], _), memberchk(W, S0)
+        ;   ty_marker_ahead(L, S0)
         ->  true
         ),
         b_setval('$ty_rel_open', f([N|Open]))
     ).
 
-%% The gap: the subject or the object of a verb clause, the subject of a
-%% copula clause. Writing, the IR says which; reading, each is tried.
-ty_gap_place(s, NP, F, clause(V, T, P, gap, O, Js), clause(V, T, P, gap(NP, F), O, Js)).
-ty_gap_place(o, NP, F, clause(V, T, P, S, gap, Js), clause(V, T, P, S, gap(NP, F), Js)).
-ty_gap_place(s, NP, F, copula(T, P, gap, Pred), copula(T, P, gap(NP, F), Pred)).
+ty_marker_ahead(L, S0) :-
+    (   ty_relative(L, _, [W|_], _), memberchk(W, S0)
+    ;   ty_relative_pronoun(L, Ws, _), ty_all_ahead(Ws, S0)
+    ), !.
+
+ty_all_ahead(Ws, S0) :- forall(member(W, Ws), memberchk(W, S0)).
+
+%% ---- the gap ------------------------------------------------------------------------
+%%
+%% THE GAP is where the head stands in its relative clause: the subject or
+%% the object of a verb clause, the noun phrase of an adposition phrase
+%% (an adjunct, `the house in which the dog sleeps', or a verb's
+%% complement, `the girl that the boy thinks about'), or the subject of a
+%% copula clause. Writing, the IR says which; reading, each is tried. Inside
+%% the clause the gap is gap(Head, Features, r(Place, Rule)): Place s, o,
+%% c(Verb) (a complement) or j(Adposition) (an adjunct), and Rule how it is
+%% written, as ty_gap(L, Place, Rule) says, the first row written and every
+%% row read:
+%%
+%%     gap          nothing (o: the default with no row)
+%%     resumptive   a pronoun of the head's features (ty_resumptive/3): an
+%%                  object with its marks (Persian `که پسر آن را
+%%                  می‌بیند'), after the adposition (`که سگ در آن
+%%                  می‌خوابد')
+%%     stays        (pp) the adposition alone (`the house that the dog
+%%                  sleeps in')
+%%     moves        (pp) nothing: the adposition moves into the marker, with
+%%                  a relative pronoun of the head's features
+%%                  (ty_relative_pronoun/3: `la casa en la que el perro
+%%                  duerme', `la casa in cui il cane dorme', `the house in
+%%                  which the dog sleeps')
+%%
+%% A gap in an adposition phrase needs a pp row: a language with none has
+%% no such relative clause. Reading, an adjunct's gap is the clause's only
+%% adjunct.
+ty_gap_place(_, NP, F, r(s, gap), clause(V, T, P, gap, O, Js),
+             clause(V, T, P, gap(NP, F, r(s, gap)), O, Js)).
+ty_gap_place(L, NP, F, R, clause(V, T, P, S, gap, Js), clause(V, T, P, S, gap(NP, F, R), Js)) :-
+    (   ty_gap_rule(L, o, Rule), R = r(o, Rule)
+    ;   ty_gap_rule(L, pp, Rule), R = r(c(V), Rule)
+    ).
+ty_gap_place(L, NP, F, R, clause(V, T, P, S, O, Js0), clause(V, T, P, S, O, Js)) :-
+    ty_gap_rule(L, pp, Rule),
+    R = r(j(Prep), Rule),
+    ty_gap_adjunct(Js0, Prep, gap(NP, F, R), Js).
+ty_gap_place(_, NP, F, r(s, gap), copula(T, P, gap, Pred), copula(T, P, gap(NP, F, r(s, gap)), Pred)).
+
+%% Reading, a gap is tried only where the words it needs are among the
+%% words left: a pronoun's, a moved adposition's pronoun, an adposition
+%% that stays (every noun phrase of English, whose object takes a marker
+%% of no words, would else try each). Writing, every gap is possible.
+ty_ahead(S0, S0, S0).
+
+ty_gap_possible(L, r(Pl, Rule), Ahead) :-
+    (   var(Ahead) -> true
+    ;   Rule == gap -> true
+    ;   Rule = moves(_) -> once(( ty_relative_pronoun(L, Ws, _), ty_all_ahead(Ws, Ahead) ))
+    ;   Rule == resumptive -> once(( ty_resumptive(L, Ws, _), ty_all_ahead(Ws, Ahead) ))
+    ;   Pl = c(_) -> once(( ty_complement(L, _, Ws), ty_all_ahead(Ws, Ahead) ))
+    ;   once(( ty_adposition(L, _, Ws), ty_all_ahead(Ws, Ahead) ))
+    ).
+
+%% How a gap is written at Place: the rows, the first written; an object
+%% with no row is a gap. A moved adposition is moves(Words).
+ty_gap_rule(L, o, Rule) :-
+    (   ty_gap(L, o, _) -> ty_gap(L, o, Rule) ; Rule = gap ).
+ty_gap_rule(L, pp, Rule) :-
+    ty_gap(L, pp, Rule0),
+    ( Rule0 == moves -> Rule = moves(_) ; Rule = Rule0 ).
+
+ty_gap_adjunct(Js0, Prep, G, Js) :-
+    (   var(Js0)
+    ->  Js0 = [pp(Prep, gap)], Js = [pp(Prep, G)]
+    ;   append(Before, [pp(Prep, gap)|After], Js0),
+        append(Before, [pp(Prep, G)|After], Js)
+    ).
+
+%% A role's gap is a subject's or a plain object's.
+ty_role_gap(s).
+ty_role_gap(o).
+
+%% A gap whose adposition moved into the marker: its words.
+ty_gap_moved_from(X, Ws) :- nonvar(X), X = gap(_, _, r(_, moves(Ws))).
+
+%% What a gap writes where no role's marks stand (in an adposition phrase).
+ty_gap_words(_, _, r(_, Rule)) --> { Rule \== resumptive }.
+ty_gap_words(L, [_, N, A, G], r(_, resumptive)) --> ty_resumptive_words(L, [def, N, A, G]).
+
+%% A pronoun that fits the head's features, the first ty_resumptive/3 row
+%% written (Persian `او' for a living thing, `آن' for a thing, `آنها' for
+%% several; `آن' is read of an animal too). Features not known yet (a head
+%% after its clause) fit none.
+ty_resumptive_words(L, F) -->
+    ty_words(1, 2, Ws, ty_fitting(ty_resumptive(L), F, Ws)).
+
+ty_fitting(Table, F, Ws) :-
+    call(Table, Ws, Alternatives),
+    once(( member(Need, Alternatives), ty_known_subset(Need, F) )).
+
+ty_known_subset(Need, F) :-
+    forall(member(X, Need), ( member(Y, F), Y == X )).
 
 ty_rel_parts([], _, _, _, _, _, _) --> [].
 ty_rel_parts([P|Ps], L, Role, NP, F, C, M) -->
     ty_rel_part(P, L, Role, NP, F, C, M),
     ty_rel_parts(Ps, L, Role, NP, F, C, M).
 
-%% M is m(Words, GapRole): the marker is looked up for the gap's role where
-%% it is read, so a clause after a marker no row gives that role is not
-%% read at all (English: no marker is no subject's).
+%% M is m(Words, r(Place, Rule)): the marker is looked up for the gap where
+%% it is read, so a clause after a marker no row gives that gap is not
+%% read at all (English: no marker is no subject's). A moved adposition's
+%% marker is its words and a relative pronoun (`en la que', `in cui').
 ty_rel_part(h, L, Role, NP, F, _, _) --> ty_marked_np(L, Role, NP, F, r).
-ty_rel_part(m, L, _, _, _, _, m(Ws, GapRole)) -->
-    ty_words(0, 2, Ws, ( ty_relative(L, R, Ws, _), ty_fits(R, GapRole) )).
+ty_rel_part(m, L, _, _, _, _, m(Ws, R)) -->
+    { ty_marker_span(R, Min, Max) },
+    ty_words(Min, Max, Ws, ty_marker_words(L, R, Ws)).
 ty_rel_part(c, L, _, _, _, C, _) --> ty_rel_clause(L, C).
+
+ty_marker_span(r(_, Rule), 2, 5) :- nonvar(Rule), Rule = moves(_), !.
+ty_marker_span(_, 0, 2).
+
+ty_marker_words(L, r(Pl, Rule), Ws) :-
+    (   Rule = moves(AWs)
+    ->  ty_moved_words(L, Pl, AWs),
+        ty_relative_pronoun(L, PWs, _),
+        append(AWs, PWs, Ws)
+    ;   ty_gap_marker_role(Pl, Role),
+        ty_relative(L, R, Ws, _),
+        ty_fits(R, Role)
+    ).
+
+%% The adposition that moved: a complement's, of its verb (any verb's, the
+%% verb not read yet), or an adjunct's.
+ty_moved_words(L, c(V), Ws) :- ty_complement_words(L, V, Ws).
+ty_moved_words(L, j(Prep), Ws) :- ty_adposition(L, Prep, Ws).
+
+%% A gap in an adposition phrase takes the object's markers.
+ty_gap_marker_role(s, s).
+ty_gap_marker_role(o, o).
+ty_gap_marker_role(c(_), o).
+ty_gap_marker_role(j(_), o).
 
 ty_rel_clause(L, C) --> { C = clause(_, _, _, _, _, _) }, ty_clause(L, C).
 ty_rel_clause(L, C) --> { C = copula(_, _, _, _) }, ty_copula_clause(L, C).
 
-%% The marker read is one a row gives for the gap's role and the head's
-%% features (English `who' for an animate head, `which' for a thing).
-ty_rel_marker_ok(L, GapRole, Features, Ws) :-
-    ty_relative(L, R, Ws, Alternatives),
-    ty_fits(R, GapRole),
+%% The marker read is one a row gives for the gap and the head's features
+%% (English `who' for an animate head, `which' for a thing; Spanish `en la
+%% que' for a feminine one).
+ty_rel_marker_ok(L, r(Pl, Rule), Features, Ws) :-
+    (   Rule = moves(AWs)
+    ->  append(AWs, PWs, Ws),
+        ty_relative_pronoun(L, PWs, Alternatives)
+    ;   ty_gap_marker_role(Pl, Role),
+        ty_relative(L, R, Ws, Alternatives),
+        ty_fits(R, Role)
+    ),
     member(Need, Alternatives),
     subset(Need, Features), !.
 
@@ -2076,7 +2353,7 @@ ty_np(L, NP, [FDef, N, Anim, G], Next) -->
       ty_order_at(L, np, Order) },
     ty_np_parts(Order, L, NP, got(Det, Noun, Adjs), Next),
     { Noun = noun(G, _),
-      ty_np_ok(L, NP, Det, Noun, Adjs, Anim),
+      ty_np_ok(L, NP, Det, Noun, Adjs, Anim, Next),
       ( Def == which -> FDef = def ; FDef = Def ) }.
 
 ty_np_parts([], _, _, _, _) --> [].
@@ -2088,7 +2365,14 @@ ty_np_parts([P|Ps], L, NP, Got, Next) -->
 %% takes its linked form (the Persian ezafe), and so does each adjective
 %% before another; the phrase's last word takes the form a relative
 %% clause after it asks for (Next r).
-ty_np_part(d, _, L, _, got(Det, _, _), _) --> ty_det(L, Det).
+%% Before a relative clause a head of a definiteness ty_relative_bare/2
+%% names takes no article (Persian `حیوانی که', not `یک حیوانی که'): written
+%% so, and read with the article too.
+ty_np_part(d, _, L, np(_, _, Def, _), got(Det, _, _), Next) -->
+    (   { Next == r, nonvar(Def), ty_relative_bare(L, Def) }
+    ->  { Det = none }
+    ;   ty_det(L, Det)
+    ).
 ty_np_part(n, Ps, L, np(M, N, _, As), got(_, noun(G, A), _), Next) -->
     [W],
     { ty_linked_here(Ps, As, Next, C2, Linked),
@@ -2179,26 +2463,29 @@ ty_base_word(L, C1, W, W0) :-
     ty_unlinked(L, C1, C2, W, W0),
     W0 \== W.
 
-ty_np_ok(L, NP, Det, Noun, Rows, Anim) :-
-    (   ty_np_agrees(L, NP, Det, Noun, Rows, Anim)
+ty_np_ok(L, NP, Det, Noun, Rows, Anim, Next) :-
+    (   ty_np_agrees(L, NP, Det, Noun, Rows, Anim, Next)
     *-> true
     ;   ty_lenient,
-        ty_np_faults(L, NP, Det, Noun, Rows, Anim)
+        ty_np_faults(L, NP, Det, Noun, Rows, Anim, Next)
     ).
 
-ty_np_agrees(L, np(_, N, Def, _), Det, noun(G, Anim), Rows, Anim) :-
+ty_np_agrees(L, np(_, N, Def, _), Det, noun(G, Anim), Rows, Anim, Next) :-
     ty_values(definiteness, Defs), member(Def, Defs),
     forall(member(adj(RG, RN), Rows), ( ty_fits(RG, G), ty_fits(RN, N) )),
     (   Det = art(W)
     ->  ty_article(L, Def, AG, AN, W), ty_fits(AG, G), ty_fits(AN, N)
     ;   Def \== which,
-        \+ ( ty_article(L, Def, AG, AN, _), ty_fits(AG, G), ty_fits(AN, N) )
+        (   Next == r, ty_relative_bare(L, Def)
+        ->  true
+        ;   \+ ( ty_article(L, Def, AG, AN, _), ty_fits(AG, G), ty_fits(AN, N) )
+        )
     ).
 
 %% In a repair: an adjective or an article that does not agree, and a noun
 %% phrase with no article where it needs one, are each a fault; the
 %% article keeps its own definiteness.
-ty_np_faults(L, np(_, N, Def, _), Det, noun(G, Anim), Rows, Anim) :-
+ty_np_faults(L, np(_, N, Def, _), Det, noun(G, Anim), Rows, Anim, Next) :-
     ty_values(definiteness, Defs), member(Def, Defs),
     (   forall(member(adj(RG, RN), Rows), ( ty_fits(RG, G), ty_fits(RN, N) ))
     ->  true
@@ -2211,7 +2498,9 @@ ty_np_faults(L, np(_, N, Def, _), Det, noun(G, Anim), Rows, Anim) :-
         ;   ty_fault(agreement(article, W))
         )
     ;   Def \== which,
-        (   \+ ( ty_article(L, Def, AG, AN, _), ty_fits(AG, G), ty_fits(AN, N) )
+        (   (   Next == r, ty_relative_bare(L, Def)
+            ;   \+ ( ty_article(L, Def, AG, AN, _), ty_fits(AG, G), ty_fits(AN, N) )
+            )
         ->  true
         ;   ty_fault(article(missing))
         )

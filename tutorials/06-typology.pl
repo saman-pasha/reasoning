@@ -108,6 +108,7 @@ main :-
     negation_place,
     asking_and_answering,
     class_topics,
+    gaps,
     format("~ndone~n", []).
 
 
@@ -192,7 +193,7 @@ relatives :-
          [ english-'The girl sees the black dog that the boy sees.',
            spanish-'La niña ve al perro negro que el niño ve.',
            italian-'La ragazza vede il cane nero che il ragazzo vede.',
-           persian-'دختر سگ سیاهی را که پسر می‌بیند می‌بیند.' ]),
+           persian-'دختر سگ سیاهی را می‌بیند که پسر می‌بیند.' ]),
     once(typology_read(english, 'The boys who see the dog sleep.', IR2)),
     must('the gap is the subject, and the verb agrees with the head', IR2,
          clause(sleep, present, pos, rel(np(boy, pl, def, []), clause(see, present, pos, gap, np(dog, sg, def, []))), none)),
@@ -265,6 +266,27 @@ class_topics :-
     must('madrugada alone', E2, ['The man sees the dawn.']),
     typology_translate_text(spanish, english, ['El hombre ve la hora.', 'El hombre ve la madrugada.'], E3),
     must('madrugada after an hour', E3, ['The man sees the hour.', 'The man sees the morning.']).
+
+%% 18. A GAP IN AN ADPOSITION PHRASE, A PRONOUN, A CLAUSE AFTER ITS VERB.
+%% ty_gap/3 says how a gap is written: in an adposition phrase the
+%% adposition stays (English `sleeps in'), moves into the marker with a
+%% relative pronoun of the head (ty_relative_pronoun/3: Spanish `en la
+%% que', Italian `in cui'), or stays with a pronoun (ty_resumptive/3:
+%% Persian `در آن'). ty_relative_after/2 puts the relative clause of an
+%% object or a predicate after the verb, as Persian does, and
+%% ty_relative_bare/2 drops Persian یک before it.
+gaps :-
+    IR1 = clause(see, present, pos, np(boy, sg, def, []),
+                 rel(np(house, sg, def, []),
+                     clause(sleep, present, pos, np(dog, sg, def, []), none, [pp(in, gap)]))),
+    findall(L-T, ( member(L, [english, spanish, italian, persian]), typology_write(L, IR1, T) ), Ts1),
+    must('the house the dog sleeps in, four times', Ts1,
+         [ english-'The boy sees the house that the dog sleeps in.',
+           spanish-'El niño ve la casa en la que el perro duerme.',
+           italian-'Il ragazzo vede la casa in cui il cane dorme.',
+           persian-'پسر خانه‌ای را می‌بیند که سگ در آن می‌خوابد.' ]),
+    typology_translate(spanish, persian, 'El perro es un animal que duerme.', P2),
+    must('a predicate''s relative clause after the copula', P2, 'سگ حیوانی است که می‌خوابد.').
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
 %% anywhere and run is worth six repeated lines, and one that needs a support

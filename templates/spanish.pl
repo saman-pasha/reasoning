@@ -154,6 +154,17 @@ ty_complement(spanish, depend, [de]).
 ty_complement(spanish, dream, [con]).
 ty_complement_wh(spanish, moves).
 
+%% A relative clause's gap in an adposition phrase: the adposition moves
+%% into the marker with the article of the head and `que' (`la casa en la
+%% que el perro duerme', `la niña en la que el niño piensa'); `en que' is
+%% read.
+ty_gap(spanish, pp, moves).
+ty_relative_pronoun(spanish, [el, que], [[m, sg]]).
+ty_relative_pronoun(spanish, [la, que], [[f, sg]]).
+ty_relative_pronoun(spanish, [los, que], [[m, pl]]).
+ty_relative_pronoun(spanish, [las, que], [[f, pl]]).
+ty_relative_pronoun(spanish, [que], [[]]).
+
 %% The answer to a yes or no question (`Sí, el niño ve al perro.').
 ty_answer(spanish, yes, ['sí']).
 ty_answer(spanish, no, [no]).

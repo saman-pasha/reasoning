@@ -105,7 +105,7 @@ Spanish and Italian apocope (`gran`). Then `cat` goes into Persian, and
 Italian nouns that start with `s` and a consonant, `z` or a vowel are
 right.
 
-## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.29.0)
+## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.30.0)
 
 Done:
 
@@ -253,22 +253,48 @@ Done:
    and one word is several things: `march` (the month) is about time in
    `marcha` too.
 
+12. **The gap in an adposition phrase, the pronoun, the clause after the
+   verb** (1.30.0). A relative clause's gap may be the noun phrase of an
+   adposition phrase, an adjunct (`clause(sleep, present, pos, np(dog,
+   ...), none, [pp(in, gap)])`) or a verb's complement, and
+   `ty_gap(L, Place, Rule)` says how it is written: the adposition stays
+   (English `the house that the dog sleeps in`, written; `in which` read),
+   moves into the marker with a relative pronoun of the head's features
+   (`ty_relative_pronoun/3`: Spanish `la casa en la que el perro duerme`,
+   `las casas en las que`; Italian `la casa in cui il cane dorme`, `la
+   ragazza a cui il ragazzo pensa`), or stays with a pronoun
+   (`ty_resumptive/3`: Persian `خانه‌ای که سگ در آن می‌خوابد`, `دختری که
+   پسر به او فکر می‌کند`); an object's gap is no word, or read as a
+   pronoun with its mark (`سگی که پسر آن را می‌بیند`). Inside the clause
+   the gap is `gap(Head, Features, r(Place, Rule))`, so each part writes
+   what its rule says, and the marker reads the moved adposition before
+   the clause. `ty_relative_after(L, Part)` puts the relative clause of
+   an object or a copula's predicate at its clause's end, the head
+   staying in place (Persian `دختر سگ سیاهی را می‌بیند که می‌خوابد`, `سگ
+   حیوانی است که می‌خوابد`, `پسر به دختری فکر می‌کند که می‌خوابد`), and
+   the clause in place is read too; `ty_relative_bare(persian, indef)`
+   drops `یک` before it, read with `یک` too, so a Persian head with `ی`
+   reads definite and indefinite. Reading, a gap is tried only where its
+   words are among the words left: the round trips cost 1 to 3 % more
+   inferences in Spanish, Italian and Persian and 11 % more in English
+   (whose object's marker of no words tries a relative clause after each
+   noun phrase), the clock the same in all four.
+
 Not yet:
 
-3. A complement's gap where the adposition moves (Spanish `la niña en la
-   que piensa el niño`, Italian `a cui`, Persian `که پسر به او فکر
-   می‌کند`), which 1.26.0 does not write. A German or a French template:
+3. A German or a French template:
    the place of the negation is there for them, and German's `nicht`
    before a predicate (`ist nicht groß`) and its verb second are not.
 4. `whose`, which waits for a possessor in the noun phrase (Phase 5);
    every question word at the front (Bulgarian, Russian), a slot of its
    own; an answer that repeats the verb (Portuguese `Vejo.`, Irish) and
    English `Yes, he does.`, which wait for pronouns.
-5. A relative clause moved after its verb, which Persian does where the
-   head is the predicate or the object (`سگ حیوانی است که می‌خوابد`, where
-   1.25.0 writes `سگ یک حیوانی که می‌خوابد است.`); a gap in an adjunct
-   (`the house in which the dog sleeps`) and a resumptive pronoun (Persian
-   `که پسر آن را می‌بیند`).
+5. What the gap does not have yet: an adjunct's gap beside other
+   adjuncts, read (a reading takes the gap's adjunct as its clause's only
+   one); a gap inside a noun phrase of the clause (`whose`, Phase 5); a
+   subject's relative clause after the verb; a pronoun for a person apart
+   from an animal's (Persian `او` and `آن`: the features have animate
+   alone), which waits for a feature of its own.
 6. The topics the class lines do not give: the hand table's thirty rows,
    and every other meaning, are Phase 8's (a model fills a slot in live
    mode, with the reference sentences as its check). A meaning of its

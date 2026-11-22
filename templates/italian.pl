@@ -153,6 +153,12 @@ ty_complement(italian, think, [a]).
 ty_complement(italian, depend, [da]).
 ty_complement_wh(italian, moves).
 
+%% A relative clause's gap in an adposition phrase: the adposition moves
+%% into the marker with `cui' (`la casa in cui il cane dorme', `la ragazza
+%% a cui il ragazzo pensa').
+ty_gap(italian, pp, moves).
+ty_relative_pronoun(italian, [cui], [[]]).
+
 %% The answer to a yes or no question (`Sì, il ragazzo vede il cane.').
 ty_answer(italian, yes, ['sì']).
 ty_answer(italian, no, [no]).

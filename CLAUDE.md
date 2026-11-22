@@ -167,6 +167,25 @@ moved word is not the first of the subject, the object and the adjunct.
 **`which` is a definiteness** (`ty_values(definiteness, ...)`): it needs
 its article row (no noun phrase of `which` without its word), and its
 features say `def` to the marks and the relative markers.
+**The gap carries how it is written** (1.30.0): `gap(Head, Features,
+r(Place, Rule))`, Place `s`, `o`, `c(Verb)` (a complement) or `j(Prep)` (an
+adjunct) and Rule `ty_gap/3`'s; a part that may hold a gap takes only its
+own place's (`ty_role_gap/1` for a role, `r(c(_), _)` in a complement,
+`r(j(_), _)` in an adjunct) -- the first cut took an object's gap in a
+complement, and wrote `la niña que el niño piensa en`. A moved
+adposition's words are `moves(Words)`, bound by the marker, which is read
+before the clause. **Reading, a gap place is tried only where its words
+are among the words left** (`ty_gap_possible/3` over `ty_ahead//1`):
+without it English, whose object's marker of no words tries a relative
+clause after every noun phrase, read its round trips with 1.85 times the
+inferences, and Spanish too, because a pronoun's article (`el que`) was
+taken as a marker word; with it +11 % and +1.8 %, the clock the same. A
+new rule asks its words there. **An extraposed relative is a part split
+in two** (`oh(X)` and `ot(X)`, `ph(X)` and `pt(X)`, X = `x(Head, Features,
+Clause)`, by `ty_extraposed//5` in the verb clause, the copula clause and
+both questions): a new clause shape that has an object or a predicate
+calls it too. **A Persian head with `ی` reads definite and indefinite**
+(`ty_relative_bare/2`: `سگی که` is `the dog that` and `a dog that`).
 
 **Every reader has two modes, static and live** (1.16.0; reason.pl's header,
 STATIC AND LIVE, and live.pl's). What a session must keep:

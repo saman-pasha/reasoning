@@ -135,6 +135,23 @@ ty_linked(persian, a, r, 'سیاه', 'سیاهی').
 ty_linked(persian, a, r, 'ا', 'ایی').
 ty_linked(persian, a, r, 'و', 'ویی').
 
+%% The relative clause of an object or a predicate stands after the verb
+%% (`دختر سگ سیاهی را می‌بیند که می‌خوابد', `سگ حیوانی است که می‌خوابد'),
+%% and is read in place too; an indefinite head takes no یک before it
+%% (`حیوانی که'). The gap of an object is no word, or read as a pronoun
+%% with its mark (`سگی که پسر آن را می‌بیند'); in an adposition phrase it
+%% is a pronoun (`خانه‌ای که سگ در آن می‌خوابد', `دختری که پسر به او فکر
+%% می‌کند'): `او' for a living thing, `آن' for a thing, `آنها' for several.
+ty_relative_after(persian, o).
+ty_relative_after(persian, p).
+ty_relative_bare(persian, indef).
+ty_gap(persian, o, gap).
+ty_gap(persian, o, resumptive).
+ty_gap(persian, pp, resumptive).
+ty_resumptive(persian, ['او'], [[animate, sg]]).
+ty_resumptive(persian, ['آنها'], [[pl]]).
+ty_resumptive(persian, ['آن'], [[sg]]).
+
 %% The complement of two verbs of two words (above) with به (`پسر به دختر فکر
 %% می‌کند.'): the object takes no را then.
 ty_complement(persian, think, ['به']).

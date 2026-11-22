@@ -14,7 +14,7 @@
 main :-
     forall(member(L, [english, spanish, italian, persian]), typology_load(L)),
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
-                      copulas, adjuncts, meanings, questions, repairs, relatives, complements, negation_places,
+                      copulas, adjuncts, meanings, questions, repairs, relatives, gaps, complements, negation_places,
                       question_words, answers,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
@@ -428,7 +428,7 @@ relatives :-
         clause(see, present, pos, np(girl, sg, def, []),
                rel(np(dog, sg, def, [black]), clause(sleep, present, pos, gap, none)))-
             [english-'The girl sees the black dog that sleeps.', spanish-'La niña ve al perro negro que duerme.',
-             italian-'La ragazza vede il cane nero che dorme.', persian-'دختر سگ سیاهی را که می‌خوابد می‌بیند.'],
+             italian-'La ragazza vede il cane nero che dorme.', persian-'دختر سگ سیاهی را می‌بیند که می‌خوابد.'],
         clause(sleep, past, pos, rel(np(girl, pl, def, [small]),
                                      clause(see, past, pos, gap, np(cat, sg, indef, []))), none)-
             [english-'The small girls that saw a cat slept.',
@@ -437,7 +437,7 @@ relatives :-
              persian-'دخترهای کوچکی که یک گربه دیدند خوابیدند.'],
         clause(see, present, pos, B, rel(np(girl, sg, def, []), copula(present, pos, gap, adj([small]))))-
             [english-'The boy sees the girl that is small.', spanish-'El niño ve a la niña que es pequeña.',
-             italian-'Il ragazzo vede la ragazza che è piccola.', persian-'پسر دختری را که کوچک است می‌بیند.'],
+             italian-'Il ragazzo vede la ragazza che è piccola.', persian-'پسر دختری را می‌بیند که کوچک است.'],
         clause(sleep, present, pos, D, none, [pp(in, rel(np(house, sg, def, []), clause(see, present, pos, B, gap)))])-
             [english-'The dog sleeps in the house that the boy sees.',
              spanish-'El perro duerme en la casa que el niño ve.',
@@ -448,10 +448,10 @@ relatives :-
             [english-'The boy that sees the dog that the cat sees sleeps.',
              spanish-'El niño que ve al perro que el gato ve duerme.',
              italian-'Il ragazzo che vede il cane che il gatto vede dorme.',
-             persian-'پسری که سگی را که گربه می‌بیند می‌بیند می‌خوابد.'],
+             persian-'پسری که سگی را می‌بیند که گربه می‌بیند می‌خوابد.'],
         question(clause(see, present, pos, wh(who), rel(D, clause(sleep, present, pos, gap, none))))-
             [english-'Who sees the dog that sleeps?', spanish-'¿Quién ve al perro que duerme?',
-             italian-'Chi vede il cane che dorme?', persian-'چه کسی سگی را که می‌خوابد می‌بیند؟'],
+             italian-'Chi vede il cane che dorme?', persian-'چه کسی سگی را می‌بیند که می‌خوابد؟'],
         question(clause(see, present, pos, rel(B, clause(sleep, present, pos, gap, none)), D))-
             [english-'Does the boy that sleeps see the dog?', spanish-'¿El niño que duerme ve al perro?',
              italian-'Il ragazzo che dorme vede il cane?', persian-'پسری که می‌خوابد سگ را می‌بیند؟'] ]),
@@ -480,7 +480,7 @@ relatives :-
     check('Spanish: en la casa, of the main clause or of the relative clause', Ats, [main, relative]),
     typology_translate(spanish, persian, 'El niño ve al perro que duerme.', P1),
     check('Spanish into Persian: the head takes ی, را stays with the head', P1,
-          'پسر سگی را که می‌خوابد می‌بیند.'),
+          'پسر سگی را می‌بیند که می‌خوابد.'),
     typology_translate(persian, english, 'سگی که پسر می‌بیند می‌خوابد.', E1),
     check('Persian into English: the gap is the object', E1, 'The dog that the boy sees sleeps.'),
     once(typology_repair(spanish, 'Los niños que ve al perro duermen.', _, Fs2, F2)),
@@ -514,6 +514,78 @@ relatives :-
 pp_owner(clause(_, _, _, _, _, [pp(_, _)]), main).
 pp_owner(clause(_, _, _, _, rel(_, clause(_, _, _, _, _, [pp(_, _)]))), relative).
 
+%% ---- the gap in an adposition phrase, the pronoun, the clause after the verb ----
+
+gaps :-
+    section('a gap in an adposition phrase, a resumptive pronoun, a relative clause after its verb'),
+    B = np(boy, sg, def, []), D = np(dog, sg, def, []), G = np(girl, sg, def, []),
+    House = rel(np(house, sg, def, []), clause(sleep, present, pos, D, none, [pp(in, gap)])),
+    written_each(gaps, [
+        clause(see, present, pos, B, House)-
+            [english-'The boy sees the house that the dog sleeps in.',
+             spanish-'El niño ve la casa en la que el perro duerme.',
+             italian-'Il ragazzo vede la casa in cui il cane dorme.',
+             persian-'پسر خانه‌ای را می‌بیند که سگ در آن می‌خوابد.'],
+        clause(see, present, pos, B, rel(np(house, pl, def, []),
+                                         clause(sleep, present, pos, D, none, [pp(in, gap)])))-
+            [spanish-'El niño ve las casas en las que el perro duerme.',
+             persian-'پسر خانه‌هایی را می‌بیند که سگ در آنها می‌خوابد.'],
+        clause(see, present, pos, D, rel(G, clause(think, present, pos, B, gap)))-
+            [english-'The dog sees the girl that the boy thinks about.',
+             spanish-'El perro ve a la niña en la que el niño piensa.',
+             italian-'Il cane vede la ragazza a cui il ragazzo pensa.',
+             persian-'سگ دختری را می‌بیند که پسر به او فکر می‌کند.'],
+        copula(present, pos, D, rel(np(animal, sg, indef, []), clause(sleep, present, pos, gap, none)))-
+            [english-'The dog is an animal that sleeps.', spanish-'El perro es un animal que duerme.',
+             italian-'Il cane è un animale che dorme.', persian-'سگ حیوانی است که می‌خوابد.'],
+        clause(think, present, pos, B, rel(G, clause(sleep, present, pos, gap, none)))-
+            [english-'The boy thinks about the girl that sleeps.',
+             spanish-'El niño piensa en la niña que duerme.',
+             italian-'Il ragazzo pensa alla ragazza che dorme.',
+             persian-'پسر به دختری فکر می‌کند که می‌خوابد.'],
+        clause(sleep, present, pos, rel(np(dog, sg, indef, []), clause(see, present, pos, B, gap)), none)-
+            [persian-'سگی که پسر می‌بیند می‌خوابد.'] ]),
+    %% Read as well: the other way of each language, the clause in place,
+    %% the article before a relative clause, the pronoun of an object.
+    Comp = clause(see, present, pos, D, rel(G, clause(think, present, pos, B, gap))),
+    Obj = clause(see, present, pos, G, rel(np(dog, sg, def, [black]), clause(sleep, present, pos, gap, none))),
+    Pred = copula(present, pos, D, rel(np(animal, sg, indef, []), clause(sleep, present, pos, gap, none))),
+    forall(member(L-T-Want, [ english-'The boy sees the house in which the dog sleeps.'-clause(see, present, pos, B, House),
+                              english-'The boy sees the house the dog sleeps in.'-clause(see, present, pos, B, House),
+                              english-'The dog sees the girl about whom the boy thinks.'-Comp,
+                              spanish-'El niño ve la casa en que el perro duerme.'-clause(see, present, pos, B, House),
+                              persian-'دختر سگ سیاهی را که می‌خوابد می‌بیند.'-Obj,
+                              persian-'سگ یک حیوانی که می‌خوابد است.'-Pred,
+                              persian-'سگی که پسر آن را می‌بیند می‌خوابد.'-
+                                  clause(sleep, present, pos, rel(D, clause(see, present, pos, B, gap)), none) ]),
+           ( ( typology_read(L, T, Want) -> R = read ; R = not_read ),
+             atomic_list_concat([L, ': ', T], Label),
+             check(Label, R, read) )),
+    %% Refused: `whom' of a thing, the article of another gender, an
+    %% adposition with no pronoun where Persian needs one, a moved adposition
+    %% in English where its own place still has it.
+    forall(member(L-T, [ english-'The boy sees the house in whom the dog sleeps.',
+                         spanish-'El niño ve la casa en el que el perro duerme.',
+                         persian-'پسر خانه‌ای را می‌بیند که سگ در می‌خوابد.',
+                         english-'The boy sees the house in which the dog sleeps in.' ]),
+           ( ( typology_read(L, T, _) -> R = read ; R = refused ),
+             atomic_list_concat([L, ': ', T], Label),
+             check(Label, R, refused) )),
+    typology_translate(spanish, persian, 'El niño ve la casa en la que el perro duerme.', P1),
+    check('Spanish into Persian: en la que is a pronoun after در', P1,
+          'پسر خانه‌ای را می‌بیند که سگ در آن می‌خوابد.'),
+    typology_translate(persian, italian, 'سگ دختری را می‌بیند که پسر به او فکر می‌کند.', I2),
+    check('Persian into Italian: the pronoun is cui after a', I2,
+          'Il cane vede la ragazza a cui il ragazzo pensa.'),
+    %% A template's gap rows are checked.
+    assertz(ty_gap(tiny, o, moves)),
+    assertz(ty_gap(tiny, pp, resumptive)),
+    findall(M, ( typology_check(tiny, Ms), member(M, Ms),
+                 memberchk(M, [bad(ty_gap(tiny, o, moves)), resumptive_pronoun]) ), M3),
+    retractall(ty_gap(tiny, _, _)),
+    check('typology_check/2: moves is no object''s rule, and a resumptive gap needs a pronoun', M3,
+          [resumptive_pronoun, bad(ty_gap(tiny, o, moves))]).
+
 %% ---- a verb's complement ---------------------------------------------------------------
 
 complements :-
@@ -539,7 +611,10 @@ complements :-
             [english-'Does the boy think about the girl?', spanish-'¿El niño piensa en la niña?',
              italian-'Il ragazzo pensa alla ragazza?', persian-'پسر به دختر فکر می‌کند؟'],
         clause(sleep, present, pos, rel(G, clause(think, present, pos, B, gap)), none)-
-            [english-'The girl that the boy thinks about sleeps.'] ]),
+            [english-'The girl that the boy thinks about sleeps.',
+             spanish-'La niña en la que el niño piensa duerme.',
+             italian-'La ragazza a cui il ragazzo pensa dorme.',
+             persian-'دختری که پسر به او فکر می‌کند می‌خوابد.'] ]),
     %% The IR is the plain object, so a complement in one language is a
     %% plain object in another.
     typology_translate(english, spanish, 'The boy looks at the dog.', S1),
@@ -568,11 +643,9 @@ complements :-
            ( ( once(typology_repair(L, T, _, Fs, F)) -> true ; F = none, Fs = none ),
              atomic_list_concat([L, ': ', T, ' is repaired to ', Want], Label),
              check(Label, F-Fs, Want-WantFs) )),
-    %% Not yet: a relative clause whose gap is a complement where the
-    %% adposition moves (Spanish `la niña en la que piensa el niño').
-    ( typology_write(spanish, clause(sleep, present, pos, rel(G, clause(think, present, pos, B, gap)), none), _)
-    -> R3 = written ; R3 = not_yet ),
-    check('Spanish: a complement''s gap where the adposition moves is not written yet', R3, not_yet).
+    %% A complement's gap where the adposition moves (above, Spanish and
+    %% Italian) is written since 1.30.0; the section on gaps has the rest.
+    true.
 
 %% ---- the place of the negation ---------------------------------------------------------
 
