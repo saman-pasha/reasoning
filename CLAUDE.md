@@ -54,12 +54,14 @@ test/typology.pl's `reproduced` section imports again into a scratch
 directory and holds the committed files to it byte for byte: edit a hand
 template, import again, commit both. **The import reads the hand template
 from its FILE** (`tyi_hand/1`, through library(stream)), never from the
-knowledge base: cocolog's `consult(library(Spec))` a second time, after a
-retractall/1 took the file's clauses, adds none of them back (the first cut
-retracted and consulted, and the test's import wrote a different file). It
-is the library spec: the same file consulted by its path adds them back,
-in a module or not, and SWI-Prolog 9.0.4 adds them back both ways
-(3.65.0 and 3.72.0 alike, checked 2026-11-22).
+knowledge base, so what is loaded (a words file, an earlier import) changes
+nothing in what is written. Through cocolog 3.73.1 there was a second
+reason: `consult(library(Spec))` a second time, after a retractall/1 took
+the file's clauses, added none of them back (the first cut retracted and
+consulted, and the test's import wrote a different file), where the file
+named by its path, and SWI-Prolog 9.0.4 both ways, added them back.
+cocolog 3.73.2 reads the file again (checked 2026-11-22: the 7 nouns of
+templates/spanish.pl come back, 0 on 3.65.0).
 **A form line belongs to the class of the entry it follows** (1.21.0,
 `tyi_form/4`): `fría' is an adjective (plural `frías') and a form of
 `freír' (plural `frían'), and the first cut took any plural of the
@@ -81,11 +83,14 @@ without it a parse that backtracks over `niño` and `ve` took 412 ms, the
 same parse unchecked 10. A new place the grammar takes a word adds its
 `ty_meant//3`. **Topics are found from the topic, by meaning**
 (`ty_context_has/4`), never by looking each word of the sentence up by its
-form: cocolog 3.65.0 to 3.72.0 walks every row for a call keyed by a one-element
-list (`ty_verb(es, M, T, N, P, [W])`: 1.3 ms over 40 000 facts, with only
-the list bound too, where SWI-Prolog 9.0.4's deep index takes 1.5 µs and
-an atom key 14 µs), so a verb looked up by its word costs some 0.7 ms
-here. **The word checked is no context of itself**: English `saw` (the
+form: only the topic's own words are asked. The reason first written here
+was a cost that the templates do not have: a verb looked up by its word in
+their shape (`ty_verb(spanish, _, _, _, _, [ve])` over 27 732 rows, four
+languages loaded) is 4 to 6 µs a call on cocolog 3.65.0 and on 3.73.2
+alike, measured 2026-11-22. The 1.3 ms was a probe's, 40 000 asserted facts
+`f(es, M, ..., [W])`, which takes 303 µs a call on 3.65.0, 198 on 3.73.2
+(whose deep index goes into a later argument's list) and 105 on SWI-Prolog
+9.0.4. **The word checked is no context of itself**: English `saw` (the
 noun, a tool) chose the verb `to saw` over `see` until the word was
 excluded. **A cut in a `ty_missing/2` body cuts the clauses after it**:
 Phase 4's `adjunct_place` clause had one, and `typology_check/2` checked
@@ -112,7 +117,8 @@ faults are kept inside f/1** (`'$ty_faults'`): cocolog 3.72.0's b_getval/2
 of a global whose value is atomic (`[]`) hands back the global's own cell,
 and `b_setval(K, [F|Fs])` over it wrote a cycle (`b_setval(k, []),
 b_getval(k, A), b_setval(k, [x|A])` is `@(S_1,[S_1=[x|S_1]])`, SWI-Prolog
-9.0.4's `[x]`; a compound value is right). **A relative clause is a level,
+9.0.4's `[x]`; a compound value is right). cocolog 3.73.2 gives `[x]`
+(checked 2026-11-22); f/1 stays, and costs nothing. **A relative clause is a level,
 `rel` (h m c), and its gap is its head** (1.25.0): `ty_gap_place/5` puts
 `gap(NP, Features)` in the clause's subject or object before the clause is
 read, so every check that asks a subject -- the verb's number
@@ -124,11 +130,12 @@ alternatives make terms only where something bounds them**: a clause of
 `rel(rel(rel(...)))` for ever under a verb read before its subject (`¿Ve el
 niño al perro?`, ten minutes and no answer) -- a head is `np/4` by its
 pattern. **A relative clause does not start again where one is open that
-has read no word** (`ty_rel_open//0`, `'$ty_rel_open'` reset where a parse
+has read no word** (`ty_rel_open//1`, `'$ty_rel_open'` reset where a parse
 starts): an order with the clause first (`c h`) is a left recursion
 otherwise. **cocolog 3.72.0's retractall/1 of a qualified head removes
 nothing** (`retractall(user:q(1))` leaves `q(1)`, which SWI-Prolog 9.0.4
 removes; `retract(user:q(2))` removes it): a test retracts unqualified.
+cocolog 3.73.2 removes it (checked 2026-11-22).
 **How an object was read travels with the clause's parts** (1.26.0,
 `How` in `ty_clause_parts//4` and `ty_ask_parts//5`: `plain` or
 `comp(Words)`, `ty_object_ok/3` at the clause's end): a verb read after its
