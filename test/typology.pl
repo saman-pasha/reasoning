@@ -16,7 +16,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, complements, negation_places,
                       question_words, answers,
-                      word_tables, reproduced, free_order,
+                      word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
            once(S)),
@@ -759,10 +759,35 @@ word_tables :-
     check('every reading over the full tables costs under 20 000 inferences', Cheap, cheap).
 
 %% The import run again reproduces the committed files byte for byte.
+class_topics :-
+    section('the topics the vocabularies'' class lines give'),
+    typology_topics(np(january, sg, def, []), T1),
+    check('a month is about the month and the time', T1, [january, month, time]),
+    typology_topics(np(avenue, sg, def, []), T2),
+    check('an avenue is about a street and a place', T2, [avenue, place, street]),
+    findall(T3, ty_topic(fly, T3), Ts3),
+    check('a class word that is also a name gives nothing (mosca, Moscow and a fly)', Ts3, []),
+    findall(M4-T4, ( member(M4, [metre, subway]), ty_topic(M4, T4) ), Ts4),
+    check('a word of two meanings no other word of its class gives gives none (metro)', Ts4, []),
+    findall(T5, ty_topic(time, T5), Ts5),
+    check('a meaning is no row of its own topic', Ts5, []),
+    typology_translate_text(spanish, english, ['El hombre ve la madrugada.'], E6),
+    check('Spanish into English: madrugada alone is the dawn, its first meaning', E6,
+          ['The man sees the dawn.']),
+    typology_translate_text(spanish, english, ['El hombre ve la hora.', 'El hombre ve la madrugada.'], E7),
+    check('Spanish into English: madrugada after an hour is the morning', E7,
+          ['The man sees the hour.', 'The man sees the morning.']),
+    typology_translate_text(italian, english, ['Il ragazzo vede la piazza.', 'Il ragazzo vede la via.'], E8),
+    check('Italian into English: via after a square is the road', E8,
+          ['The boy sees the square.', 'The boy sees the road.']),
+    typology_translate_text(spanish, english, ['El hombre ve la madrugada en la semana.'], E9),
+    check('Spanish into English: madrugada in a week is the morning', E9,
+          ['The man sees the morning in the week.']).
+
 reproduced :-
     section('the word tables are what the import writes'),
     scratch(Dir),
-    forall(member(L, [spanish, italian, english]),
+    forall(member(L, [spanish, italian, english, topics]),
            ( atomic_list_concat([Dir, '/', L, '-words.pl'], Fresh),
              with_output_to(string(_), typology_import(L, Fresh)),
              read_file_to_codes(Fresh, New),

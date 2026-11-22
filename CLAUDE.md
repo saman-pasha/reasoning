@@ -49,7 +49,7 @@ outputs to sentences written out. It shares nothing with translate.pl's
 IR yet. TYPOLOGY-PLAN.md is the plan, phase by phase. **The word tables
 are generated** (1.20.0): `templates/<name>-words.pl` is what
 `typology_import/1` writes from corpus/vocabulary (`cocolog -s
-tools/typology/import.pl`, some 18 s for the three), committed, and
+tools/typology/import.pl`, some 23 s for the four, the topics too), committed, and
 test/typology.pl's `reproduced` section imports again into a scratch
 directory and holds the committed files to it byte for byte: edit a hand
 template, import again, commit both. **The import reads the hand template
@@ -62,6 +62,15 @@ consulted, and the test's import wrote a different file), where the file
 named by its path, and SWI-Prolog 9.0.4 both ways, added them back.
 cocolog 3.73.2 reads the file again (checked 2026-11-22: the 7 nouns of
 templates/spanish.pl come back, 0 on 3.65.0).
+**The topic rows are generated too** (1.29.0, `typology_import(topics)`,
+`templates/topics-words.pl`): the import reads each vocabulary in turn
+and keeps only its class words between them (`tyi_class_word/4`), so a
+word's meanings are its own language's -- both vocabularies spell
+`momento`, and merged it had three meanings no other time word gave. **A
+name's line starts no block**: an English past stands alone after it
+(`"broadcast" is the past of "broadcasts"' after `copenaghen'), and a
+block of its own took `broadcast' from the English verbs (the
+`reproduced` section found it, English's table one verb different).
 **A form line belongs to the class of the entry it follows** (1.21.0,
 `tyi_form/4`): `fría' is an adjective (plural `frías') and a form of
 `freír' (plural `frían'), and the first cut took any plural of the

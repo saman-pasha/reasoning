@@ -107,7 +107,9 @@ main :-
     complements,
     negation_place,
     asking_and_answering,
+    class_topics,
     format("~ndone~n", []).
+
 
 %% 10. A WORD WITH SEVERAL MEANINGS IN ONE PLACE. First the words around it
 %% choose, a lookback and a lookahead: ty_sense/5 makes Spanish `a' the
@@ -250,6 +252,19 @@ asking_and_answering :-
     Q = question(clause(see, present, neg, np(boy, sg, def, []), np(dog, sg, def, []))),
     findall(L-A, ( member(L, [english, persian]), typology_answer(L, Q, pos, A) ), As3),
     must('yes, he does, to a negative question', As3, [english-'Yes.', persian-'چرا.']).
+
+%% 17. THE TOPICS THE VOCABULARIES GIVE. typology_import(topics) writes
+%% templates/topics-words.pl from their class lines (`"sábado" is a
+%% time.'), so a word with a time's meaning and another takes the time
+%% after a sentence about one: `madrugada' alone is the dawn, its first
+%% meaning, and after an hour the morning.
+class_topics :-
+    typology_topics(np(january, sg, def, []), T1),
+    must('january is about the month and the time', T1, [january, month, time]),
+    typology_translate_text(spanish, english, ['El hombre ve la madrugada.'], E2),
+    must('madrugada alone', E2, ['The man sees the dawn.']),
+    typology_translate_text(spanish, english, ['El hombre ve la hora.', 'El hombre ve la madrugada.'], E3),
+    must('madrugada after an hour', E3, ['The man sees the hour.', 'The man sees the morning.']).
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
 %% anywhere and run is worth six repeated lines, and one that needs a support

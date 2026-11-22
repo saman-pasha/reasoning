@@ -5,10 +5,11 @@
 %%         ../cocolog/cocolog -s tools/typology/import.pl
 %%
 %% Spanish and Italian first, then English, whose rows are the meanings of
-%% both vocabularies. Writes templates/spanish-words.pl,
-%% templates/italian-words.pl and templates/english-words.pl.
+%% both vocabularies, then the topics their class lines give. Writes
+%% templates/spanish-words.pl, templates/italian-words.pl,
+%% templates/english-words.pl and templates/topics-words.pl.
 
 :- use_module(library(reasoning/typology)).
 
 main :-
-    forall(member(L, [spanish, italian, english]), typology_import(L)).
+    forall(member(L, [spanish, italian, english, topics]), typology_import(L)).

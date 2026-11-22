@@ -218,9 +218,11 @@
 %%
 %%     typology_load(+Name)            consult templates/Name.pl, then
 %%                                     templates/Name-words.pl if it exists,
-%%                                     and templates/topics.pl and
+%%                                     and templates/topics.pl (with
+%%                                     topics-words.pl) and
 %%                                     templates/roles.pl once
-%%     typology_import(+Name)          write templates/Name-words.pl
+%%     typology_import(+Name)          write templates/Name-words.pl;
+%%                                     topics writes topics-words.pl
 %%     typology_import(+Name, +File)   or File, and report the counts
 %%     typology_languages(-Names)      the languages loaded
 %%     typology_choices(+Level, -Orders)  every order of a level's parts
@@ -273,7 +275,11 @@
 %%      [] fits anything.
 %%   2. THE TOPICS OF THE CONTEXT: ty_topic(Meaning, Topic) in
 %%      templates/topics.pl, one table for every language (a meaning is
-%%      the IR's), and a meaning is its own topic too. The context's
+%%      the IR's), and a meaning is its own topic too. The vocabularies'
+%%      class lines give more (templates/topics-words.pl, written by
+%%      typology_import(topics)): `"sábado" is a time.' makes saturday
+%%      about time, a month about the month and the time, a street's
+%%      word about the street and a place. The context's
 %%      topics are those given (the sentences before) and those of the
 %%      sentence's words that have one meaning. Of a word's meanings in
 %%      the class the grammar takes there, the ones whose topics the
@@ -369,7 +375,8 @@ typology_load(Name) :-
     ;   true
     ),
     (   \+ ty_topic(_, _), ty_file(topics, Topics)
-    ->  consult(Topics)
+    ->  consult(Topics),
+        (   ty_file('topics-words', TopicWords) -> consult(TopicWords) ; true )
     ;   true
     ),
     (   \+ ty_role_animacy(_, _, _), ty_file(roles, Roles)
@@ -2233,10 +2240,13 @@ ty_fits(X, X).
 %% `fría' is an adjective whose plural is `frías', and a form of `freír'
 %% whose plural is `frían'. So a form line is kept with the class of the
 %% last entry line (tyi_form(Kind, Form, Of, Class)), and a noun's plural is
-%% asked of the nouns' blocks alone.
+%% asked of the nouns' blocks alone. A name's line starts no block: the English
+%% pasts stand alone, some after a name (`"broadcast" is the past of
+%% "broadcasts"' after `copenaghen'), and the block they fall in is
+%% the verbs' one the English import asks.
 
 :- dynamic tyi_entry/4, tyi_form/4, tyi_animate/1, tyi_gender/2, tyi_count/2,
-           tyi_hand/1.
+           tyi_hand/1, tyi_class/2, tyi_name/1, tyi_class_word/4.
 
 typology_import(Name) :-
     must_be(atom, Name),
@@ -2257,6 +2267,12 @@ typology_import(Name, File) :-
         Vs \== [],
         forall(member(V, Vs), ty_read_vocabulary(V)),
         findall(R, ty_english_row(R), Rows0)
+    ;   Name == topics
+    ->  findall(Src-V, ( member(Src, [spanish, italian]), ty_vocabulary_file(Src, V) ), Vs),
+        Vs \== [],
+        forall(member(Src-V, Vs),
+               ( ty_read_vocabulary(V), ty_keep_class_words(Src), ty_import_reset_words )),
+        findall(R, ty_topic_row(R), Rows0)
     ;   ty_vocabulary_file(Name, V),
         ty_read_vocabulary(V),
         findall(R, ty_import_row(Name, R), Rows0)
@@ -2305,9 +2321,16 @@ ty_read_terms(S, Ts) :-
     (   T == end_of_file -> Ts = [] ; Ts = [T|Ts1], ty_read_terms(S, Ts1) ).
 
 ty_import_reset :-
+    ty_import_reset_words,
+    retractall(tyi_class_word(_, _, _, _)),
+    retractall(tyi_count(_, _)), retractall(tyi_hand(_)).
+
+%% What one vocabulary's lines say: the topic import reads each vocabulary
+%% in turn and keeps only its class words between them.
+ty_import_reset_words :-
     retractall(tyi_entry(_, _, _, _)), retractall(tyi_form(_, _, _, _)),
     retractall(tyi_animate(_)), retractall(tyi_gender(_, _)),
-    retractall(tyi_count(_, _)), retractall(tyi_hand(_)).
+    retractall(tyi_class(_, _)), retractall(tyi_name(_)).
 
 ty_count(What) :-
     (   retract(tyi_count(What, N0)) -> N is N0 + 1 ; N = 1 ),
@@ -2327,8 +2350,12 @@ ty_vocabulary_line(Line) :-
     ;   Parts = ['', A, Rel, B, '.'], ty_form_relation(Rel, Kind)
     ->  nb_getval('$ty_block', Class),
         assertz(tyi_form(Kind, A, B, Class))
+    ;   Parts = ['The name ', W, ' means ', _, '.']
+    ->  assertz(tyi_name(W))
     ;   Parts = ['', W, Says], ty_says(Says, Fact, W)
     ->  assertz(Fact)
+    ;   Parts = ['', W, Says], ty_class_says(Says, C)
+    ->  assertz(tyi_class(W, C))
     ;   true
     ).
 
@@ -2347,6 +2374,66 @@ ty_says(' is animate.', tyi_animate(W), W).
 ty_says(' is a person.', tyi_animate(W), W).
 ty_says(' is feminine.', tyi_gender(W, f), W).
 ty_says(' is not feminine.', tyi_gender(W, m), W).
+
+%% `"sábado" is a time.': the word's class.
+ty_class_says(Says, C) :-
+    (   atom_concat(' is a ', Rest, Says) -> true ; atom_concat(' is an ', Rest, Says) ),
+    atom_concat(C, '.', Rest),
+    ty_single(C).
+
+%% THE TOPICS A CLASS GIVES its words' meanings: the class, and a wider
+%% topic. A class not here (person, group, name) says how a word is used,
+%% not what it is about.
+ty_class_topics(time, [time]).
+ty_class_topics(month, [month, time]).
+ty_class_topics(measure, [measure]).
+ty_class_topics(institution, [institution]).
+ty_class_topics(street, [street, place]).
+ty_class_topics(city, [city, place]).
+ty_class_topics(country, [country, place]).
+ty_class_topics(region, [region, place]).
+ty_class_topics(continent, [continent, place]).
+
+%% A class word of one vocabulary, with its noun meanings in the
+%% vocabulary's order (tyi_class_word(Vocabulary, Word, Class, Meanings)).
+%% A word that is also a name is the name's (`mosca' is a city as Moscow,
+%% and its noun is a fly), and a name is no meaning of the IR.
+ty_keep_class_words(Src) :-
+    forall(( tyi_class(W, C), ty_class_topics(C, _) ),
+           (   tyi_name(W) -> ty_count(class_word_that_is_a_name)
+           ;   findall(M, ( tyi_entry(noun, _, W, M), ty_single(M) ), Ms0),
+               ty_first_each(Ms0, Ms),
+               (   Ms == [] -> ty_count(class_word_with_no_noun)
+               ;   assertz(tyi_class_word(Src, W, C, Ms))
+               )
+           )).
+
+ty_first_each([], []).
+ty_first_each([X|Xs], [X|Ys]) :-
+    exclude(==(X), Xs, Xs1),
+    ty_first_each(Xs1, Ys).
+
+%% A word of one noun meaning gives the meaning its class's topics. A word
+%% of several gives the first that another word of the class gives too, in
+%% either vocabulary (`volta', a time and a vault, gives the time `vez'
+%% gives), and none where no other word gives one (`metro', a metre and a
+%% subway). A meaning is its own topic already, so `month' is no
+%% row of the month's.
+ty_topic_row(ty_topic(M, T)) :-
+    tyi_class_word(Src, W, C, Ms),
+    (   Ms = [M] -> true
+    ;   member(M, Ms), ty_class_shared(Src-W, C, M) -> true
+    ;   ty_count(class_word_of_several_meanings), fail
+    ),
+    ty_class_topics(C, Ts),
+    member(T, Ts),
+    T \== M,
+    (   tyi_hand(ty_topic(M, T)) -> ty_count(topic_in_the_hand_table), fail ; true ).
+
+ty_class_shared(Src-W, C, M) :-
+    tyi_class_word(Src1, W1, C, Ms1),
+    Src1-W1 \== Src-W,
+    memberchk(M, Ms1), !.
 
 ty_single(W) :- \+ sub_atom(W, _, _, _, ' ').
 

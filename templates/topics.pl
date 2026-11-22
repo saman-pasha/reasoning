@@ -1,6 +1,9 @@
 %% templates/topics.pl -- the topics of meanings, for
 %% library(reasoning/typology). One table for every language: a meaning is
-%% the IR's, an English word. typology_load/1 reads it once.
+%% the IR's, an English word. typology_load/1 reads it once, and
+%% templates/topics-words.pl after it: the rows typology_import(topics)
+%% writes from the vocabularies' class lines (`"sábado" is a time.'), a
+%% row here never written there again.
 %%
 %% ty_topic(Meaning, Topic). A meaning is its own topic too, so `knife'
 %% needs no row to be about knives. A word with several meanings takes the

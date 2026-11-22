@@ -105,7 +105,7 @@ Spanish and Italian apocope (`gran`). Then `cat` goes into Persian, and
 Italian nouns that start with `s` and a consonant, `z` or a vowel are
 right.
 
-## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.28.0)
+## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.29.0)
 
 Done:
 
@@ -236,6 +236,23 @@ Done:
    answer agrees with the question, as Japanese `hai`). `typology_answer/4`
    writes the short answer to a question.
 
+11. **The topics the vocabularies give** (1.29.0). `typology_import(topics)`
+   writes `templates/topics-words.pl` from the class lines of both
+   vocabularies (`"sábado" is a time.`), which `typology_load/1` reads
+   after the hand table: 62 rows, a class's topics by
+   `ty_class_topics/2` (a month is about the month and the time, a
+   street's word about the street and a place; person, group and name
+   say how a word is used, and give none). A word that is also a name
+   gives nothing (`mosca`, Moscow, whose noun is a fly; every city,
+   country, region and continent of the vocabularies is a name now); a
+   word of several noun meanings gives the first that another word of its
+   class gives too (`volta`, a time and a vault, the time `vez` gives),
+   and none where no other word does (`metro`, a metre and a subway).
+   So `madrugada` after an hour is the morning, alone the dawn, and
+   Italian `via` after a square the road. A meaning is an English word,
+   and one word is several things: `march` (the month) is about time in
+   `marcha` too.
+
 Not yet:
 
 3. A complement's gap where the adposition moves (Spanish `la niña en la
@@ -252,11 +269,11 @@ Not yet:
    1.25.0 writes `سگ یک حیوانی که می‌خوابد است.`); a gap in an adjunct
    (`the house in which the dog sleeps`) and a resumptive pronoun (Persian
    `که پسر آن را می‌بیند`).
-6. The topic table is written by hand (some thirty rows). The
-   vocabularies' class lines (`is a time`, `is a country`, `is a
-   measure`, `is an institution`) can fill a part of it; the rest is
-   Phase 8's (a model fills a slot in live mode, with the reference
-   sentences as its check).
+6. The topics the class lines do not give: the hand table's thirty rows,
+   and every other meaning, are Phase 8's (a model fills a slot in live
+   mode, with the reference sentences as its check). A meaning of its
+   own for each sense of an English word (`march`, the month and the
+   walk) waits for the bridge to translate.pl (Phase 6).
 
 ## Phase 5: more features
 
