@@ -117,6 +117,7 @@ main :-
     french,
     references,
     live_topics,
+    french_questions,
     format("~ndone~n", []).
 
 
@@ -457,6 +458,24 @@ live_topics :-
 lima_objects(T, Os) :-
     findall(O, ( typology_read(spanish, T, IR, [food]), IR = clause(_, _, _, _, np(O, _, _, _)) ), Os0),
     sort(Os0, Os).
+
+%% 26. FRENCH QUESTIONS. A yes or no question may put a pronoun of the
+%% subject after the verb, joined to it (ty_inversion/3, the rule
+%% invert(pronoun)): `voit-il', and `-t-' between two vowels, `pense-t-il';
+%% a noun subject keeps its place, a pronoun subject has no other. A
+%% question word may take `est-ce que' after it, and `what' is `quoi'
+%% after a preposition and in place (ty_wh_tonic/3), where `que' opens
+%% the question.
+french_questions :-
+    typology_load(french),
+    typology_translate(french, english, 'Le garçon voit-il le chien?', E1),
+    must('the inversion is a yes or no question', E1, 'Does the boy see the dog?'),
+    typology_translate(french, english, 'Pense-t-il à la fille?', E2),
+    must('-t- between two vowels, and the pronoun the subject', E2, 'Does he think about the girl?'),
+    typology_translate(french, english, 'Qu\'est-ce que le garçon voit?', E3),
+    must('qu\'est-ce que', E3, 'What does the boy see?'),
+    typology_translate(english, french, 'What does the boy think about?', F4),
+    must('after a preposition, quoi', F4, 'À quoi pense le garçon?').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

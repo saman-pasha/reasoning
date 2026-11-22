@@ -136,8 +136,19 @@
 %%                                     front(all) (the verb before the
 %%                                     subject: `¿Ve el niño al perro?') or
 %%                                     front(first) (its first word only:
-%%                                     `Is the dog not big?'); the first row
-%%                                     is written, every row read
+%%                                     `Is the dog not big?') or
+%%                                     invert(pronoun) (a pronoun of the
+%%                                     subject after the verb, joined to it,
+%%                                     the subject in its place: French `Le
+%%                                     garçon voit-il le chien?'; a pronoun
+%%                                     subject itself: `Voit-il le
+%%                                     chien?'); the first row is written,
+%%                                     every row read
+%%     ty_inversion(L, Join, VowelJoin)
+%%                                     a subject pronoun right after the
+%%                                     verb is written joined to it by Join,
+%%                                     by VowelJoin between two vowels
+%%                                     (French `voit-il', `pense-t-il')
 %%     ty_question_form(L, Tense, Number, Words, Form)
 %%                                     a verb a question's rule moves is, if
 %%                                     positive, Words before its form Form
@@ -150,6 +161,10 @@
 %%                                     every one at the front (all_front:
 %%                                     Bulgarian `Кой какво вижда?')
 %%     ty_wh_word(L, Meaning, Words)   who, what, where, when
+%%     ty_wh_tonic(L, Meaning, Words)  a question word's form where it does
+%%                                     not open the clause: after an
+%%                                     adposition, and in place (French
+%%                                     `quoi', where `que' opens it)
 %%     ty_question_mark(L, Open, Close)
 %%                                     the marks of a question (Spanish `¿'
 %%                                     and `?'); with no row, `' and `?'
@@ -458,7 +473,8 @@
            ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
            ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
            ty_pro_drop/2, ty_clitic/2, ty_verb_person/6, ty_capital/3,
-           ty_answer_echo/3, ty_kind/2, ty_adjective_before/2, ty_pronoun_gender/2.
+           ty_answer_echo/3, ty_kind/2, ty_adjective_before/2, ty_pronoun_gender/2,
+           ty_inversion/3, ty_wh_tonic/3.
 :- discontiguous ty_order/3, ty_noun/6, ty_adjective/5, ty_verb/6,
                  ty_article/5, ty_mark/5, ty_contraction/3, ty_negation/5,
                  ty_ending/4, ty_letters/3, ty_before/5, ty_linked/5, ty_copula/6,
@@ -471,7 +487,8 @@
                  ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
                  ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
                  ty_pro_drop/2, ty_clitic/2, ty_verb_person/6, ty_capital/3,
-                 ty_answer_echo/3, ty_adjective_before/2, ty_pronoun_gender/2.
+                 ty_answer_echo/3, ty_adjective_before/2, ty_pronoun_gender/2,
+                 ty_inversion/3, ty_wh_tonic/3.
 
 %% ---- the levels and the values a slot takes -----------------------------------
 
@@ -565,7 +582,7 @@ typology_template(Name) :-
     nl,
     format("%% how a question changes the order (one row or more a kind and level;~n", []),
     format("%% Kind yes_no or wh, Level clause or copula):~n", []),
-    forall(member(R, [unchanged, particle('Word', start), particle('Word', end), front(all), front(first)]),
+    forall(member(R, [unchanged, particle('Word', start), particle('Word', end), front(all), front(first), invert(pronoun)]),
            format("%% ty_question(~q, Kind, Level, ~q).~n", [Name, R])),
     format("%% where a question word stands (keep one):~n", []),
     forall(member(Pl, [front, in_place, after(s)]), format("%% ty_wh(~q, ~q).~n", [Name, Pl])),
@@ -616,6 +633,8 @@ ty_row_shape('ty_capital(L, Word, Written).').
 ty_row_shape('ty_answer_echo(L, Rule, Word).').
 ty_row_shape('ty_adjective_before(L, Meaning).').
 ty_row_shape('ty_pronoun_gender(L, System).').
+ty_row_shape('ty_inversion(L, Join, VowelJoin).').
+ty_row_shape('ty_wh_tonic(L, Meaning, Words).').
 
 %% ---- the check ----------------------------------------------------------------------
 
@@ -774,6 +793,15 @@ ty_missing(L, bad(ty_adjective_before(L, A))) :-
 ty_missing(L, bad(ty_pronoun_gender(L, S))) :-
     ty_pronoun_gender(L, S),
     \+ memberchk(S, [grammatical, natural]).
+ty_missing(L, bad(ty_inversion(L, J, JV))) :-
+    ty_inversion(L, J, JV),
+    \+ ( atom(J), atom(JV) ).
+ty_missing(L, inversion) :-
+    ty_question(L, _, _, invert(pronoun)),
+    \+ ty_inversion(L, _, _).
+ty_missing(L, bad(ty_wh_tonic(L, M, Ws))) :-
+    ty_wh_tonic(L, M, Ws),
+    \+ ( is_list(Ws), Ws \== [], ty_wh_word(L, M, _) ).
 ty_missing(L, clitic_pronoun) :-
     ty_clitic(L, o),
     \+ ty_pronoun(L, o, _, _).
@@ -797,7 +825,7 @@ ty_pron_condition(C) :-
     is_list(C),
     forall(member(X, C), memberchk(X, [1, 2, 3, sg, pl, m, f, n])).
 
-ty_question_rule(R) :- memberchk(R, [unchanged, front(all), front(first)]), !.
+ty_question_rule(R) :- memberchk(R, [unchanged, front(all), front(first), invert(pronoun)]), !.
 ty_question_rule(particle(W, P)) :- ( atom(W) ; is_list(W), W \== [] ), memberchk(P, [start, end]).
 
 %% The clause and the noun phrase are every language's; the copula clause
@@ -921,7 +949,8 @@ ty_question_marks(L, Open, Close) :-
 ty_write_tokens(L, Tokens0, Tokens) :-
     ty_sound(L, Tokens0, T1),
     ty_contract(L, T1, T2),
-    ty_join(T2, Tokens).
+    ty_join(T2, T3),
+    (   ty_inversion(L, _, _) -> ty_join_inverted(T3, Tokens) ; Tokens = T3 ).
 
 %% clause/5 is a clause with no adjuncts: the grammar's clause/6 with [],
 %% at every depth (a relative clause is a clause inside a noun phrase).
@@ -1242,8 +1271,21 @@ ty_unjoin(L, [T|Ts], Out) :-
     (   Out = [T|Rest]
     ;   ty_joinable(L, F), atom_concat(F, W, T), W \== '',
         Out = [F, W|Rest]
+    ;   ty_inverted_split(L, T, V, P),
+        Out = [V, P|Rest]
     ),
     ty_unjoin(L, Ts, Rest).
+
+%% A verb and the subject pronoun joined to it (`voit-il': `voit' and
+%% `-il'; `pense-t-il': `pense' and `-t-il'), in a language with
+%% ty_inversion/3.
+ty_inverted_split(L, T, V, P) :-
+    ty_inversion(L, J, JV),
+    sub_atom(T, B, 1, _, '-'), B > 0,
+    sub_atom(T, 0, B, _, V),
+    sub_atom(T, B, _, 0, P),
+    ( atom_concat(J, W, P) ; atom_concat(JV, W, P) ),
+    ty_pronoun(L, s, [W], _).
 
 ty_joinable(L, F) :-
     setof(F0, ty_joinable0(L, F0), Fs),
@@ -1282,6 +1324,19 @@ ty_join([j(F), N|Ws], [FN|Rest]) :- !,
 ty_join([j(F)], [F]) :- !.
 ty_join([W|Ws], [W|Rest]) :-
     ty_join(Ws, Rest).
+
+%% A token that begins with a hyphen (a subject pronoun after the verb,
+%% `-il') is written joined to the word before it.
+ty_join_inverted([], []).
+ty_join_inverted([W, H|Ws], Out) :-
+    ty_inverted_token(H), !,
+    atom_concat(W, H, WH),
+    ty_join_inverted([WH|Ws], Out).
+ty_join_inverted([W|Ws], [W|Out]) :-
+    ty_join_inverted(Ws, Out).
+
+ty_inverted_token(H) :-
+    atom(H), sub_atom(H, 0, 1, _, '-'), atom_length(H, N), N > 1.
 
 ty_text(L, Mood, Tokens, Text) :-
     maplist(ty_capital_word(L), Tokens, Tokens1),
@@ -1549,6 +1604,10 @@ ty_known_base(L, B) :-
     ;   ty_wh_word(L, _, Ws), memberchk(B, Ws)
     ;   ty_question_form(L, _, _, Ws, _), memberchk(B, Ws)
     ;   ty_question(L, _, _, particle(B, _))
+    ;   ty_question(L, _, _, particle(Ws, _)), is_list(Ws), memberchk(B, Ws)
+    ;   ty_wh_tonic(L, _, Ws), memberchk(B, Ws)
+    ;   ty_inversion(L, J, JV), ( atom_concat(J, W, B) ; atom_concat(JV, W, B) ),
+        ty_pronoun(L, s, [W], _)
     ;   ty_relative(L, _, Ws, _), memberchk(B, Ws)
     ;   ty_relative_pronoun(L, Ws, _), memberchk(B, Ws)
     ;   ty_resumptive(L, Ws, _), memberchk(B, Ws)
@@ -1653,6 +1712,7 @@ ty_ask_clause(L, C, Cost) -->
     ty_extraposed(L, o, O, Order3, Order4),
     { C = clause(_, _, _, S, _, _) },
     ty_extraposed(L, s, S, Order4, Order5),
+    { ty_lead(Order5) },
     ty_ask_parts(Order5, L, C, Q, How),
     { ty_wh_count(C, Kind),
       ty_wh_first(C, Part),
@@ -1672,6 +1732,7 @@ ty_ask_copula(L, C, Cost) -->
     ty_extraposed(L, p, Pred, Order, Order1),
     { C = copula(_, _, S, _) },
     ty_extraposed(L, s, S, Order1, Order2),
+    { ty_lead(Order2) },
     ty_ask_parts(Order2, L, C, Q, _),
     { Features = [_, N, _, G],
       ty_predicate_ok(Pred, Rows, G, N),
@@ -1869,6 +1930,7 @@ ty_ask_rule(front(all), Level, O, O1, yes) :-
     ty_before_subject(H, O2, O1).
 ty_ask_rule(front(first), _, O, O1, yes) :-
     ty_before_subject(f, O, O1).
+ty_ask_rule(invert(pronoun), _, O, O, no).
 
 ty_head(clause, v).
 ty_head(copula, c).
@@ -1880,20 +1942,26 @@ ty_before_subject(X, O, O1) :-
 ty_ask_parts([], _, _, _, _) --> [].
 ty_ask_parts([P|Ps], L, C, Q, How) --> ty_ask_part(P, L, C, Q, How), ty_ask_parts(Ps, L, C, Q, How).
 
+ty_ask_part(s, L, clause(_, _, _, S, _, _), q(R, _, _, _, _), _) -->
+    { ty_inv_on(L, R) }, !,
+    ty_inv_subject(R, L, S, _).
+ty_ask_part(s, L, copula(_, _, S, _), q(R, _, _, F, _), _) -->
+    { ty_inv_on(L, R) }, !,
+    ty_inv_subject(R, L, S, F).
 ty_ask_part(s, L, clause(_, _, _, S, _, _), _, _) --> ty_role(L, s, S).
 ty_ask_part(s, L, copula(_, _, S, _), q(_, _, _, F, _), _) --> ty_role(L, s, S, F).
 ty_ask_part(o, L, clause(V, _, _, _, O, _), _, How) --> ty_object(L, V, O, How).
 %% A question word moved without its complement's adposition (ow), and the
 %% adposition left in the object's place (op): `What does the boy think
 %% about?'.
-ty_ask_part(ow, L, clause(_, _, _, _, O, _), _, _) --> { nonvar(O), O = wh(M) }, ty_wh_words(L, M).
+ty_ask_part(ow, L, clause(_, _, _, _, O, _), _, _) --> { nonvar(O), O = wh(M) }, ty_wh_words(L, M, clitic).
 ty_ask_part(op, L, clause(V, _, _, _, _, _), _, comp(Ws)) -->
     { ty_complement_words(L, V, Ws) },
     ty_tokens(Ws).
 ty_ask_part(j, L, clause(_, _, _, _, _, Js), _, _) --> ty_adjuncts(L, Js).
 ty_ask_part(p, L, copula(_, _, _, Pred), q(_, _, _, _, R), _) --> ty_predicate(L, Pred, R).
-ty_ask_part(v, L, C, Q, _) --> ty_ask_verb(L, C, Q).
-ty_ask_part(c, L, C, Q, _) --> ty_ask_verb(L, C, Q).
+ty_ask_part(v, L, C, Q, _) --> ty_ask_verb(L, C, Q), ty_ask_inv(L, C, Q).
+ty_ask_part(c, L, C, Q, _) --> ty_ask_verb(L, C, Q), ty_ask_inv(L, C, Q).
 ty_ask_part(f, L, C, Q, _) --> ty_ask_first(L, C, Q).
 ty_ask_part(q, _, _, q(particle(W, _), _, _, _, _), _) --> { atom(W) -> Ws = [W] ; Ws = W }, ty_tokens(Ws).
 ty_ask_part(n(Ws), _, _, _, _) --> ty_tokens(Ws).
@@ -1922,6 +1990,7 @@ ty_ask_verb(L, C, q(Rule, Moved, VW, _, _), S0, S) :-
         ;   ty_ask_min(C, Min), between(Min, 4, K), length(Ws, K), append(Ws, S, S0),
             ty_ask_words(L, C, Moved, Ws)
         ),
+        VW = Ws,
         ty_ask_meant(L, C, Ws, S)
     ).
 
@@ -1936,6 +2005,89 @@ ty_ask_min(copula(_, _, _, _), 0).
 
 ty_ask_meant(L, clause(V, _, _, _, _, _), Ws, S) :- !, ty_meant(L, verb(V), Ws, S, S).
 ty_ask_meant(_, _, _, _).
+
+%% INVERSION (ty_inversion/3: French). Under the rule invert(pronoun) a
+%% pronoun of the subject follows the verb, joined to it: a copy of a noun
+%% phrase subject, which keeps its place (`Le garçon voit-il le chien?'),
+%% or a pronoun subject itself, which then stands nowhere else (`Voit-il
+%% le chien?'). Under front(all), the verb before the subject, a pronoun
+%% subject is so joined (`Que voit-il?'), a noun phrase is not (`Que voit
+%% le garçon?'). The pronoun is part of the verb's part, so the negation
+%% stands round both (`Ne voit-il pas le chien?') and an object clitic
+%% before them (`Le garçon le voit-il?').
+ty_inv_on(L, R) :- ( R == invert(pronoun) ; R == front(all) ), ty_inversion(L, _, _), !.
+
+%% The subject's part: nothing for a pronoun the verb took; else a noun
+%% phrase. Reading under invert(pronoun) the part may be empty, and the
+%% pronoun after the verb is then the subject.
+ty_inv_subject(_, _, S, _) --> { ty_is_pron(S) }, !.
+ty_inv_subject(R, _, S, _) --> { R == invert(pronoun), var(S), S = pron(_, _, _) }.
+ty_inv_subject(_, L, S, F) --> ty_role(L, s, S, F), { \+ ty_is_pron(S) }.
+
+ty_is_pron(S) :- nonvar(S), S = pron(_, _, _).
+
+%% After the verb's words, the joined pronoun the rule asks for; a copula
+%% whose subject is that pronoun takes the pronoun's features.
+ty_ask_inv(L, C, q(R, _, VW, F, _)) -->
+    (   { ty_inv_on(L, R) }
+    ->  { ty_ask_subject(C, S) },
+        ty_inv_tail(R, L, S, VW),
+        { (   C = copula(_, _, _, _), ty_is_pron(S)
+          ->  ty_pron_np_features(L, S, F)
+          ;   true
+          ) }
+    ;   []
+    ).
+
+ty_ask_subject(clause(_, _, _, S, _, _), S).
+ty_ask_subject(copula(_, _, S, _), S).
+
+ty_inv_tail(invert(pronoun), L, S, VW) --> ty_inv_token(L, S, VW).
+ty_inv_tail(front(all), L, S, VW) -->
+    (   { var(S) } -> ( ty_inv_token(L, S, VW) ; [] )
+    ;   { ty_is_pron(S) } -> ty_inv_token(L, S, VW)
+    ;   []
+    ).
+
+ty_inv_token(L, S, VW) --> [T], { ty_inv_word(L, S, VW, T) }.
+
+%% The token: the join (ty_inv_join/6) and the subject pronoun's word, for
+%% a pronoun subject its own, for a noun phrase the one of its number and
+%% the kind the language's pronouns give its noun (`la maison' is `elle').
+ty_inv_word(L, S, VW, T) :-
+    ty_inversion(L, J, JV),
+    (   atom(T)
+    ->  atom_concat(J0, W, T), memberchk(J0, [J, JV]),
+        ty_inv_pron(L, S, W),
+        ty_inv_join(L, J, JV, VW, W, J1), J1 == J0
+    ;   ty_inv_pron(L, S, W),
+        ty_inv_join(L, J, JV, VW, W, J0),
+        atom_concat(J0, W, T)
+    ).
+
+ty_inv_pron(L, S, W) :-
+    (   var(S) -> S = pron(_, _, _) ; true ),
+    (   S = pron(_, _, _)
+    ->  ty_pron_words(L, s, S, [W])
+    ;   ty_head_np(S, np(M, N, _, _)),
+        ty_ref_kind(L, M, K),
+        ty_pron_words(L, s, pron(3, N, K), [W])
+    ).
+
+ty_head_np(NP, NP) :- NP = np(_, _, _, _).
+ty_head_np(rel(NP, _), H) :- ty_head_np(NP, H).
+ty_head_np(of(_, NP), H) :- ty_head_np(NP, H).
+
+%% VowelJoin where the verb's last word ends in a vowel and the pronoun
+%% begins with one (`pense-t-il'), else Join (`voit-il', `pense-je').
+ty_inv_join(L, J, JV, VW, W, J0) :-
+    (   is_list(VW), last(VW, V), atom(V),
+        ty_letters(L, vowel, Vs),
+        sub_atom(V, _, 1, 0, E), memberchk(E, Vs),
+        sub_atom(W, 0, 1, _, B), memberchk(B, Vs)
+    ->  J0 = JV
+    ;   J0 = J
+    ).
 
 ty_ask_words(L, clause(V, T, P, Subj, O, _), Moved, Ws) :-
     ty_subject_number(Subj, N),
@@ -1996,7 +2148,26 @@ ty_question_verb_n(L, V, T, N, Words) :-
     ty_values(agreement, Ns), member(N, Ns), ty_fits(N0, N).
 
 %% A question word's words, and the features its marks ask for.
-ty_wh_words(L, M) --> ty_words(1, 3, Ws, ty_wh_word(L, M, Ws)).
+ty_wh_words(L, M) --> ty_wh_words(L, M, clitic).
+
+%% Form clitic: the question word as it opens the clause (French `que');
+%% tonic: after an adposition and in place, the language's ty_wh_tonic/3
+%% form where it has one (`quoi').
+ty_wh_words(L, M, Form) --> ty_words(1, 3, Ws, ty_wh_form(L, M, Form, Ws)).
+
+ty_wh_form(L, M, clitic, Ws) :- ty_wh_word(L, M, Ws).
+ty_wh_form(L, M, tonic, Ws) :-
+    (   ty_wh_tonic(L, M, Ws)
+    ;   ty_wh_word(L, M, Ws), \+ ty_wh_tonic(L, M, _)
+    ).
+
+%% The part a question opens with (`$ty_lead'): a question word in the
+%% role that opens it takes the clitic form, elsewhere the tonic.
+ty_lead(Order) :- ( Order = [P|_] -> b_setval('$ty_lead', P) ; b_setval('$ty_lead', none) ).
+
+ty_wh_role_form(Role, Form) :-
+    (   nb_current('$ty_lead', P), P == Role -> Form = clitic ; Form = tonic ).
+
 
 ty_wh_features(who, [def, sg, person]).
 ty_wh_features(what, [indef, sg, inanimate]).
@@ -2190,7 +2361,7 @@ ty_clause(L, C) -->
 %% is a fault.
 %% A question that moves the verb's first word (f) puts the parts placed
 %% by the verb around that word: `Ne sees pas the boy the dog?', as French
-%% `Ne voit-il pas le chien ?'.
+%% `Ne voit-il pas le chien?'.
 ty_negation_order(L, P, Order0, Order) :-
     (   ty_neg_placed(L)
     ->  ( memberchk(f, Order0) -> VA = f ; VA = v ),
@@ -2358,7 +2529,7 @@ ty_comp_part(p, _, Ws, O) -->
     ).
 ty_comp_part(x, L, _, O) --> ty_comp_np(L, O).
 
-ty_comp_np(L, W) --> { nonvar(W), W = wh(M) }, ty_wh_words(L, M).
+ty_comp_np(L, W) --> { nonvar(W), W = wh(M) }, ty_wh_words(L, M, tonic).
 ty_comp_np(L, G) --> { nonvar(G), G = gap(_, F, R), R = r(c(_), _) }, ty_gap_words(L, F, R).
 ty_comp_np(L, H) --> { nonvar(H), H = head(NP, F) }, ty_np(L, NP, F, r).
 ty_comp_np(L, NP) --> ty_np_phrase(L, NP, _).
@@ -3058,7 +3229,8 @@ ty_role(L, Role, NP) --> ty_role(L, Role, NP, _).
 ty_role(L, Role, W, [Def, N, Anim, _]) -->
     { nonvar(W), W = wh(M), ty_wh_features(M, [Def, N, Anim]) },
     ty_mark_slot(L, Role, before, Before),
-    ty_wh_words(L, M),
+    { ty_wh_role_form(Role, Form) },
+    ty_wh_words(L, M, Form),
     ty_mark_slot(L, Role, after, After),
     { ty_marks_ok(L, Role, before, [Def, N, Anim], Before),
       ty_marks_ok(L, Role, after, [Def, N, Anim], After) }.

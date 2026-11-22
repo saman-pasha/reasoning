@@ -176,17 +176,28 @@ ty_adverb(french, here, ici).
 %% statement's order; a question word at the front, the verb before a
 %% subject after it (`Que voit le garçon ?'), or in place (`La fille vit
 %% qui ?', whom the girl saw, where `Qui vit la fille ?' is who saw her).
+%% A yes or no question may also take the inversion, a pronoun of the
+%% subject joined to the verb (`Le garçon voit-il le chien?', `Voit-il le
+%% chien?', `Pense-t-il à la fille?'), and a question word `est-ce que'
+%% after it (`Qu'est-ce que le garçon voit?'). After a preposition and in
+%% place `what' is `quoi' (`À quoi pense le garçon?', `La fille voit
+%% quoi?').
 %% The written question mark is `?' with no space before it.
 ty_question(french, yes_no, clause, particle(['est-ce', que], start)).
 ty_question(french, yes_no, clause, unchanged).
 ty_question(french, yes_no, copula, particle(['est-ce', que], start)).
 ty_question(french, yes_no, copula, unchanged).
+ty_question(french, yes_no, clause, invert(pronoun)).
+ty_question(french, yes_no, copula, invert(pronoun)).
 ty_question(french, wh, clause, front(all)).
 ty_question(french, wh, copula, front(all)).
+ty_question(french, wh, clause, particle(['est-ce', que], start)).
+ty_inversion(french, '-', '-t-').
 ty_wh(french, front).
 ty_wh(french, in_place).
 ty_wh_word(french, who, [qui]).
 ty_wh_word(french, what, [que]).
+ty_wh_tonic(french, what, [quoi]).
 ty_wh_word(french, where, ['où']).
 ty_wh_word(french, when, [quand]).
 

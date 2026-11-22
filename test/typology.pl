@@ -16,6 +16,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
+                      french_questions,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -1134,7 +1135,7 @@ french :-
                  'La fille à qui le garçon pense dort.',
              question(clause(see, present, pos, B, D))-'Est-ce que le garçon voit le chien?',
              question(clause(see, present, pos, B, wh(what)))-'Que voit le garçon?',
-             question(clause(see, past, pos, G, wh(who)))-'La fille vit qui?',
+             question(clause(see, past, pos, G, wh(who)))-'Qui est-ce que la fille vit?',
              question(copula(present, pos, D, wh(where)))-'Où est le chien?',
              answer(pos, neg)-'Si.' ],
     forall(member(IR-Want, Rows),
@@ -1156,7 +1157,7 @@ french :-
                                  english-'The girl sees the boy whose dog sleeps.'-'La fille voit le garçon dont le chien dort.',
                                  italian-'Il ragazzo pensa al cane.'-'Le garçon pense au chien.',
                                  persian-'دختر خانه‌مان را می‌بیند.'-'La fille voit notre maison.',
-                                 english-'Who did the girl see?'-'La fille vit qui?' ]),
+                                 english-'Who did the girl see?'-'Qui est-ce que la fille vit?' ]),
            ( typology_translate(From, french, T, F),
              atomic_list_concat([From, ' into French: ', Want], Label),
              check(Label, F, Want) )),
@@ -1254,6 +1255,60 @@ live_topic_checks :-
 lima_objects(T, Os) :-
     findall(O, ( typology_read(spanish, T, IR, [food]), IR = clause(_, _, _, _, np(O, _, _, _)) ), Os0),
     sort(Os0, Os).
+
+%% ---- French questions ------------------------------------------------------------
+
+%% 1.39.0: the inversion (ty_inversion/3, invert(pronoun)), `est-ce que'
+%% after a question word, and `quoi' after a preposition and in place
+%% (ty_wh_tonic/3).
+french_questions :-
+    section('French questions: the inversion, qu''est-ce que, quoi'),
+    B = np(boy, sg, def, []), D = np(dog, sg, def, []), G = np(girl, sg, def, []),
+    Rows = [ 'Le garçon voit-il le chien?'-question(clause(see, present, pos, B, D)),
+             'La fille dort-elle?'-question(clause(sleep, present, pos, G, none)),
+             'Les filles voient-elles le chien?'-question(clause(see, present, pos, np(girl, pl, def, []), D)),
+             'Le garçon ne voit-il pas le chien?'-question(clause(see, present, neg, B, D)),
+             'Le garçon le voit-il?'-question(clause(see, present, pos, B, pron(3, sg, m))),
+             'Vois-tu le chien?'-question(clause(see, present, pos, pron(2, sg, _), D)),
+             'Pense-t-il à la fille?'-question(clause(think, present, pos, pron(3, sg, m), G)),
+             'La maison est-elle grande?'-question(copula(present, pos, np(house, sg, def, []), adj([big]))),
+             'Est-elle grande?'-question(copula(present, pos, pron(3, sg, f), adj([big]))),
+             'Qu\'est-ce que le garçon voit?'-question(clause(see, present, pos, B, wh(what))),
+             'Qui est-ce que la fille voit?'-question(clause(see, present, pos, G, wh(who))),
+             'Que voit-il?'-question(clause(see, present, pos, pron(3, sg, m), wh(what))),
+             'À quoi pense le garçon?'-question(clause(think, present, pos, B, wh(what))),
+             'La fille voit quoi?'-question(clause(see, present, pos, G, wh(what))) ],
+    forall(member(T-Want, Rows),
+           ( findall(IR, typology_read(french, T, IR), IRs),
+             ( member(IR1, IRs), IR1 =@= Want -> X = read ; X = IRs ),
+             atomic_list_concat(['French: read ', T], Label),
+             check(Label, X, read) )),
+    forall(member(T-Why, [ 'Le garçon voit il le chien?'-'a pronoun after the verb is joined to it',
+                           'Pense-il à la fille?'-'between two vowels the join is -t-',
+                           'Voit-t-il le chien?'-'-t- only between two vowels',
+                           'Le garçon voit-elle le chien?'-'the pronoun agrees with the subject',
+                           'Il voit-il le chien?'-'a pronoun subject has one place',
+                           'À que pense le garçon?'-'after a preposition what is quoi',
+                           'Quoi voit le garçon?'-'what that opens the question is que' ]),
+           ( ( typology_read(french, T, _) -> X = read ; X = refused ),
+             atomic_list_concat(['French: not read: ', T, ' (', Why, ')'], Label),
+             check(Label, X, refused) )),
+    forall(member(IR-Want, [ question(clause(see, present, pos, pron(3, sg, m), D))-'Est-ce qu\'il voit le chien?',
+                             question(clause(think, present, pos, B, wh(what)))-'À quoi pense le garçon?',
+                             question(clause(see, present, pos, pron(3, sg, f), wh(what)))-'Que voit-elle?' ]),
+           ( typology_write(french, IR, T),
+             atomic_list_concat(['French: write ', Want], Label),
+             check(Label, T, Want) )),
+    typology_translate(english, french, 'What does the boy think about?', F1),
+    check('English into French: quoi after the preposition', F1, 'À quoi pense le garçon?'),
+    typology_translate(french, english, 'Le garçon voit-il le chien?', E2),
+    check('French into English: the inversion is a yes or no question', E2, 'Does the boy see the dog?'),
+    findall(M, ( typology_check(french, Ms), member(M, Ms) ), M3),
+    check('typology_check/2: the French template lacks nothing', M3, []),
+    assertz(ty_question(tiny, yes_no, clause, invert(pronoun))),
+    findall(M, ( typology_check(tiny, Ms4), member(M, Ms4), M == inversion ), M4),
+    retractall(ty_question(tiny, _, _, _)),
+    check('typology_check/2: invert(pronoun) wants ty_inversion/3', M4, [inversion]).
 
 %% A reading of a verb's other sense (`view' for `see', `little' for
 %% `small'): the checks above want the first sense's.

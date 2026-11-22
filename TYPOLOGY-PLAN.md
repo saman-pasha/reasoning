@@ -105,7 +105,7 @@ Spanish and Italian apocope (`gran`). Then `cat` goes into Persian, and
 Italian nouns that start with `s` and a consonant, `z` or a vowel are
 right.
 
-## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.38.0)
+## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.39.0)
 
 Done:
 
@@ -436,9 +436,8 @@ Done:
    saw her); through 1.35.0 the question's rule moved the verb there too,
    which only French's rows showed (Persian's rule is unchanged anyway). A
    template whose negation has a place needs no negative verb form
-   (`typology_check/2`). Not yet in French: `quoi` after an adposition
-   (`À quoi pense le garçon?`), inversion with a pronoun (`Le garçon
-   voit-il le chien?`), the passé composé, `qu'est-ce que`.
+   (`typology_check/2`). `quoi`, the inversion and `qu'est-ce que` came in
+   1.39.0 (item 21); not yet in French: the passé composé.
 
 19. **A pronoun that refers back** (1.37.0). `typology_read_text/3` gives
    each pronoun of the third person the noun before it that it stands
@@ -472,6 +471,24 @@ Done:
    meaning is asked once; a reply that does not parse keeps nothing; live
    mode's own reads, and static mode, ask nothing. `reason_live_forget/0`
    takes the topics back.
+
+21. **French questions** (1.39.0). The rule `invert(pronoun)` puts a
+   pronoun of the subject after the verb, joined to it by
+   `ty_inversion(L, Join, VowelJoin)` (French `-` and, between two vowels,
+   `-t-`): a noun subject keeps its place and its pronoun copy agrees with
+   it (`Le garçon voit-il le chien?`, `La maison est-elle grande?`), a
+   pronoun subject has no other place (`Voit-il le chien?`, `Pense-t-il à
+   la fille?`). The pronoun is in the verb's part, so the negation goes
+   round both (`Le garçon ne voit-il pas le chien?`) and an object clitic
+   before them (`Le garçon le voit-il?`); under `front(all)` a pronoun
+   subject after the verb is joined too (`Que voit-il?`). A question word
+   may take `est-ce que` after it (`particle(['est-ce', que], start)` as a
+   `wh` rule: `Qu'est-ce que le garçon voit?`), and `ty_wh_tonic(L,
+   Meaning, Words)` is a question word's form after an adposition and in
+   place (`À quoi pense le garçon?`, `La fille voit quoi?`), where `que`
+   opens the question. The French writer now writes a question about an
+   object person `Qui est-ce que la fille vit?` (through 1.38.0 `La fille
+   vit qui?`, which it still reads).
 
 Not yet:
 
