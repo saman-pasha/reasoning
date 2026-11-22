@@ -14,7 +14,7 @@
 main :-
     forall(member(L, [english, spanish, italian, persian]), typology_load(L)),
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
-                      copulas, adjuncts, meanings, questions, repairs, relatives, word_tables, reproduced, free_order,
+                      copulas, adjuncts, meanings, questions, repairs, relatives, complements, word_tables, reproduced, free_order,
                       incomplete,
                       blank_template]),
            once(S)),
@@ -511,6 +511,66 @@ relatives :-
 %% object's relative clause.
 pp_owner(clause(_, _, _, _, _, [pp(_, _)]), main).
 pp_owner(clause(_, _, _, _, rel(_, clause(_, _, _, _, _, [pp(_, _)]))), relative).
+
+%% ---- a verb's complement ---------------------------------------------------------------
+
+complements :-
+    section('a verb''s complement: an adposition phrase the verb chooses'),
+    B = np(boy, sg, def, []), G = np(girl, sg, def, []), D = np(dog, sg, def, []),
+    written_each(complements, [
+        clause(think, present, pos, B, G)-
+            [english-'The boy thinks about the girl.', spanish-'El niño piensa en la niña.',
+             italian-'Il ragazzo pensa alla ragazza.', persian-'پسر به دختر فکر می‌کند.'],
+        clause(look, past, pos, B, D)-
+            [english-'The boy looked at the dog.', spanish-'El niño miró al perro.',
+             italian-'Il ragazzo guardò il cane.', persian-'پسر به سگ نگاه کرد.'],
+        clause(depend, present, neg, B, np(house, sg, def, []))-
+            [english-'The boy does not depend on the house.', spanish-'El niño no depende de la casa.',
+             italian-'Il ragazzo non dipende dalla casa.'],
+        question(clause(think, present, pos, B, wh(what)))-
+            [english-'What does the boy think about?', spanish-'¿En qué piensa el niño?',
+             italian-'A cosa pensa il ragazzo?', persian-'پسر به چه چیزی فکر می‌کند؟'],
+        question(clause(think, present, pos, B, wh(who)))-
+            [english-'Who does the boy think about?', spanish-'¿En quién piensa el niño?',
+             italian-'A chi pensa il ragazzo?', persian-'پسر به چه کسی فکر می‌کند؟'],
+        question(clause(think, present, pos, B, G))-
+            [english-'Does the boy think about the girl?', spanish-'¿El niño piensa en la niña?',
+             italian-'Il ragazzo pensa alla ragazza?', persian-'پسر به دختر فکر می‌کند؟'],
+        clause(sleep, present, pos, rel(G, clause(think, present, pos, B, gap)), none)-
+            [english-'The girl that the boy thinks about sleeps.'] ]),
+    %% The IR is the plain object, so a complement in one language is a
+    %% plain object in another.
+    typology_translate(english, spanish, 'The boy looks at the dog.', S1),
+    check('English into Spanish: look at is mirar, and its object takes a', S1, 'El niño mira al perro.'),
+    typology_translate(spanish, english, 'El niño mira al perro.', E1),
+    check('and back', E1, 'The boy looks at the dog.'),
+    %% With no object, the verb's own adposition is its complement, never
+    %% an adjunct.
+    findall(O2, typology_read(spanish, 'El niño piensa en la casa.', clause(think, _, _, _, O2)), O2s0),
+    sort(O2s0, O2s),
+    check('Spanish: piensa en la casa is about the house, never thinking in it', O2s,
+          [np(home, sg, def, []), np(house, sg, def, []), np(household, sg, def, [])]),
+    %% Refused: a plain object where the verb takes a complement, the
+    %% adposition moved where it stays, a mark on a complement.
+    forall(member(L-T, [ english-'The boy looks the dog.',
+                         english-'About what does the boy think?',
+                         spanish-'El niño piensa a la niña.',
+                         persian-'پسر به دختر را فکر می‌کند.' ]),
+           ( ( typology_read(L, T, _) -> R = read ; R = refused ),
+             atomic_list_concat([L, ': ', T], Label),
+             check(Label, R, refused) )),
+    forall(member(L-T-Want-WantFs,
+                  [ english-'The boy looks the dog.'-'The boy looks at the dog.'-[complement(missing, [at])],
+                    english-'About what does the boy think?'-'What does the boy think about?'-[complement_wh(moves)],
+                    spanish-'El niño piensa a la niña.'-'El niño piensa en la niña.'-[complement(missing, [en])] ]),
+           ( ( once(typology_repair(L, T, _, Fs, F)) -> true ; F = none, Fs = none ),
+             atomic_list_concat([L, ': ', T, ' is repaired to ', Want], Label),
+             check(Label, F-Fs, Want-WantFs) )),
+    %% Not yet: a relative clause whose gap is a complement where the
+    %% adposition moves (Spanish `la niña en la que piensa el niño').
+    ( typology_write(spanish, clause(sleep, present, pos, rel(G, clause(think, present, pos, B, gap)), none), _)
+    -> R3 = written ; R3 = not_yet ),
+    check('Spanish: a complement''s gap where the adposition moves is not written yet', R3, not_yet).
 
 %% The object and the adjuncts of every reading of a Spanish sentence.
 object_parts(T, Ps) :-

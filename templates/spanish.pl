@@ -142,3 +142,11 @@ ty_wh_word(spanish, when, ['cuándo']).
 %% niño ve').
 ty_order(spanish, rel, [h, m, c]).
 ty_relative(spanish, any, [que], [[]]).
+
+%% A verb's complement (`El niño piensa en la niña.'); the adposition moves
+%% with its question word (`¿En qué piensa el niño?'). `mirar', `esperar'
+%% and `escuchar' take a plain object (`El niño mira al perro.').
+ty_complement(spanish, think, [en]).
+ty_complement(spanish, depend, [de]).
+ty_complement(spanish, dream, [con]).
+ty_complement_wh(spanish, moves).

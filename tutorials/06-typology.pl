@@ -104,6 +104,7 @@ main :-
     questions,
     repairs,
     relatives,
+    complements,
     format("~ndone~n", []).
 
 %% 10. A WORD WITH SEVERAL MEANINGS IN ONE PLACE. First the words around it
@@ -193,6 +194,25 @@ relatives :-
          clause(sleep, present, pos, rel(np(boy, pl, def, []), clause(see, present, pos, gap, np(dog, sg, def, []))), none)),
     ( typology_read(english, 'The book that sees the dog sleeps.', _) -> R3 = read ; R3 = refused ),
     must('a book does not see', R3, refused).
+
+%% 14. A VERB'S COMPLEMENT. ty_complement/3 says that a verb's object is an
+%% adposition phrase the verb chooses: English `think about', `look at';
+%% Spanish `pensar en'; Italian `pensare a'; Persian `به ... فکر کردن'. The
+%% IR keeps the plain object, so a complement in one language is a plain
+%% object in another. ty_complement_wh/2 says whether the adposition moves
+%% with a question word or stays.
+complements :-
+    IR1 = question(clause(think, present, pos, np(boy, sg, def, []), wh(what))),
+    findall(L-T, ( member(L, [english, spanish, italian, persian]), typology_write(L, IR1, T) ), Ts1),
+    must('what does the boy think about, four times', Ts1,
+         [ english-'What does the boy think about?',
+           spanish-'¿En qué piensa el niño?',
+           italian-'A cosa pensa il ragazzo?',
+           persian-'پسر به چه چیزی فکر می‌کند؟' ]),
+    typology_translate(english, spanish, 'The boy looks at the dog.', S2),
+    must('look at is mirar, with a plain object', S2, 'El niño mira al perro.'),
+    once(typology_repair(english, 'The boy looks the dog.', _, Fs3, T3)),
+    must('a complement missing, repaired', T3-Fs3, 'The boy looks at the dog.'-[complement(missing, [at])]).
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
 %% anywhere and run is worth six repeated lines, and one that needs a support

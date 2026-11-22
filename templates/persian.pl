@@ -40,6 +40,22 @@ ty_verb(persian, sleep, past, sg, pos, ['خوابید']).
 ty_verb(persian, sleep, past, pl, pos, ['خوابیدند']).
 ty_verb(persian, sleep, past, sg, neg, ['نخوابید']).
 ty_verb(persian, sleep, past, pl, neg, ['نخوابیدند']).
+ty_verb(persian, think, present, sg, pos, ['فکر', 'می‌کند']).
+ty_verb(persian, think, present, pl, pos, ['فکر', 'می‌کنند']).
+ty_verb(persian, think, present, sg, neg, ['فکر', 'نمی‌کند']).
+ty_verb(persian, think, present, pl, neg, ['فکر', 'نمی‌کنند']).
+ty_verb(persian, think, past, sg, pos, ['فکر', 'کرد']).
+ty_verb(persian, think, past, pl, pos, ['فکر', 'کردند']).
+ty_verb(persian, think, past, sg, neg, ['فکر', 'نکرد']).
+ty_verb(persian, think, past, pl, neg, ['فکر', 'نکردند']).
+ty_verb(persian, look, present, sg, pos, ['نگاه', 'می‌کند']).
+ty_verb(persian, look, present, pl, pos, ['نگاه', 'می‌کنند']).
+ty_verb(persian, look, present, sg, neg, ['نگاه', 'نمی‌کند']).
+ty_verb(persian, look, present, pl, neg, ['نگاه', 'نمی‌کنند']).
+ty_verb(persian, look, past, sg, pos, ['نگاه', 'کرد']).
+ty_verb(persian, look, past, pl, pos, ['نگاه', 'کردند']).
+ty_verb(persian, look, past, sg, neg, ['نگاه', 'نکرد']).
+ty_verb(persian, look, past, pl, neg, ['نگاه', 'نکردند']).
 
 %% No definite article; `یک' before a singular indefinite noun.
 ty_article(persian, indef, any, sg, 'یک').
@@ -115,3 +131,9 @@ ty_linked(persian, a, r, 'ه', 'ه‌ای').
 ty_linked(persian, a, r, 'سیاه', 'سیاهی').
 ty_linked(persian, a, r, 'ا', 'ایی').
 ty_linked(persian, a, r, 'و', 'ویی').
+
+%% The complement of two verbs of two words (above) with به (`پسر به دختر فکر
+%% می‌کند.'): the object takes no را then.
+ty_complement(persian, think, ['به']).
+ty_complement(persian, look, ['به']).
+ty_complement_wh(persian, moves).

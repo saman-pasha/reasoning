@@ -134,3 +134,15 @@ ty_relative(english, any, [that], [[]]).
 ty_relative(english, any, [who], [[animate]]).
 ty_relative(english, any, [which], [[]]).
 ty_relative(english, o, [], [[]]).
+
+%% A verb's complement: its object is an adposition phrase (`The boy
+%% thinks about the girl.'), and the adposition stays where its question
+%% word or a relative clause's gap moves (`What does the boy think
+%% about?', `the girl that the boy thinks about').
+ty_complement(english, think, [about]).
+ty_complement(english, look, [at]).
+ty_complement(english, wait, [for]).
+ty_complement(english, listen, [to]).
+ty_complement(english, depend, [on]).
+ty_complement(english, dream, [of]).
+ty_complement_wh(english, stays).

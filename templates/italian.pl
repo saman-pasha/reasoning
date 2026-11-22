@@ -142,3 +142,10 @@ ty_contraction(italian, [dove, 'è'], 'dov\'è').
 %% ragazzo vede').
 ty_order(italian, rel, [h, m, c]).
 ty_relative(italian, any, [che], [[]]).
+
+%% A verb's complement (`Il ragazzo pensa alla ragazza.'); the adposition
+%% moves with its question word (`A cosa pensa il ragazzo?'). `guardare',
+%% `aspettare' and `ascoltare' take a plain object.
+ty_complement(italian, think, [a]).
+ty_complement(italian, depend, [da]).
+ty_complement_wh(italian, moves).

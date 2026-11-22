@@ -129,6 +129,14 @@ starts): an order with the clause first (`c h`) is a left recursion
 otherwise. **cocolog 3.72.0's retractall/1 of a qualified head removes
 nothing** (`retractall(user:q(1))` leaves `q(1)`, which SWI-Prolog 9.0.4
 removes; `retract(user:q(2))` removes it): a test retracts unqualified.
+**How an object was read travels with the clause's parts** (1.26.0,
+`How` in `ty_clause_parts//4` and `ty_ask_parts//5`: `plain` or
+`comp(Words)`, `ty_object_ok/3` at the clause's end): a verb read after its
+object (Persian) is not known where the object is read, so the verb's
+complement row is asked at the end; a new check of the object goes there
+too, never into `ty_object//4` alone. A question's stranded complement is
+two parts, `ow` (the question word, moved) and `op` (the adposition, left
+in the object's place).
 
 **Every reader has two modes, static and live** (1.16.0; reason.pl's header,
 STATIC AND LIVE, and live.pl's). What a session must keep:

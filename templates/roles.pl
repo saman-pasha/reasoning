@@ -11,3 +11,8 @@ ty_role_animacy(see, s, animate).
 ty_role_animacy(sleep, s, animate).
 ty_role_animacy(eat, s, animate).
 ty_role_animacy(view, s, animate).
+ty_role_animacy(think, s, animate).
+ty_role_animacy(look, s, animate).
+ty_role_animacy(wait, s, animate).
+ty_role_animacy(listen, s, animate).
+ty_role_animacy(dream, s, animate).

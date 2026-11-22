@@ -149,6 +149,17 @@
 %%                                     the first that fits is written, and
 %%                                     Words [] is no marker (English `the
 %%                                     dog the boy sees')
+%%     ty_complement(L, Verb, Words)   the object of Verb is an adposition
+%%                                     phrase with the adposition Words, in
+%%                                     the pp level's order and with no role
+%%                                     marks (English `think about', Spanish
+%%                                     `pensar en'); the IR keeps the plain
+%%                                     object
+%%     ty_complement_wh(L, Rule)       whether a complement's adposition
+%%                                     moves to the front with its question
+%%                                     word (`¿En qué piensa el niño?') or
+%%                                     stays (`What does the boy think
+%%                                     about?'); moves where no row says
 %%
 %% THE WORD TABLES. templates/<name>-words.pl holds the rows
 %% typology_import/1 writes from corpus/vocabulary/<name>.txt (and, for
@@ -279,13 +290,14 @@
            ty_letters/3, ty_before/5, ty_linked/5, ty_copula/6, ty_adposition/3,
            ty_adverb/3, ty_adjunct/2, ty_sense/5, ty_topic/2, ty_question/4,
            ty_question_form/5, ty_wh/2, ty_wh_word/3, ty_question_mark/3,
-           ty_role_animacy/3, ty_relative/4.
+           ty_role_animacy/3, ty_relative/4, ty_complement/3, ty_complement_wh/2.
 :- discontiguous ty_order/3, ty_noun/6, ty_adjective/5, ty_verb/6,
                  ty_article/5, ty_mark/5, ty_contraction/3, ty_negation/5,
                  ty_ending/4, ty_letters/3, ty_before/5, ty_linked/5, ty_copula/6,
                  ty_adposition/3, ty_adverb/3, ty_adjunct/2, ty_sense/5,
                  ty_question/4, ty_question_form/5, ty_wh/2, ty_wh_word/3,
-                 ty_question_mark/3, ty_relative/4.
+                 ty_question_mark/3, ty_relative/4, ty_complement/3,
+                 ty_complement_wh/2.
 
 %% ---- the levels and the values a slot takes -----------------------------------
 
@@ -309,6 +321,7 @@ ty_values(question_level, [clause, copula]).
 ty_values(wh_place, [front, in_place, after(s)]).
 ty_values(wh, [who, what, where, when]).
 ty_values(relative_role, [s, o, any]).
+ty_values(complement_wh, [moves, stays]).
 
 %% ---- loading --------------------------------------------------------------------
 
@@ -363,6 +376,8 @@ typology_template(Name) :-
            format("%% ty_question(~q, Kind, Level, ~q).~n", [Name, R])),
     format("%% where a question word stands (keep one):~n", []),
     forall(member(Pl, [front, in_place, after(s)]), format("%% ty_wh(~q, ~q).~n", [Name, Pl])),
+    format("%% whether a complement's adposition moves with a question word (keep one):~n", []),
+    forall(member(R, [moves, stays]), format("%% ty_complement_wh(~q, ~q).~n", [Name, R])),
     nl,
     forall(ty_row_shape(Shape), format("%% ~w~n", [Shape])).
 
@@ -385,6 +400,7 @@ ty_row_shape('ty_question_form(L, Tense, Number, Words, Form).').
 ty_row_shape('ty_wh_word(L, Meaning, Words).').
 ty_row_shape('ty_question_mark(L, Open, Close).').
 ty_row_shape('ty_relative(L, Role, Words, Conditions).').
+ty_row_shape('ty_complement(L, Verb, Words).').
 
 %% ---- the check ----------------------------------------------------------------------
 
@@ -463,6 +479,12 @@ ty_missing(L, bad(ty_sense(L, W, S, B, A))) :-
     ty_sense(L, W, S, B, A),
     \+ ( ty_has_sense(L, W, S),
          ty_pattern_items(B), ty_pattern_items(A) ).
+ty_missing(L, bad(ty_complement(L, V, Ws))) :-
+    ty_complement(L, V, Ws),
+    \+ ( is_list(Ws), Ws \== [], ty_verb_meaning(L, V) ).
+ty_missing(L, bad(ty_complement_wh(L, R))) :-
+    ty_complement_wh(L, R),
+    \+ ( ty_values(complement_wh, Rs), memberchk(R, Rs) ).
 ty_missing(L, relative_marker) :-
     once(ty_order(L, rel, _)),
     \+ ty_relative(L, _, _, _).
@@ -1071,6 +1093,7 @@ ty_known_base(L, B) :-
     ;   ty_question_form(L, _, _, Ws, _), memberchk(B, Ws)
     ;   ty_question(L, _, _, particle(B, _))
     ;   ty_relative(L, _, Ws, _), memberchk(B, Ws)
+    ;   ty_complement(L, _, Ws), memberchk(B, Ws)
     ;   ty_verb(L, _, _, _, _, Ws), memberchk(B, Ws)
     ), !.
 
@@ -1158,9 +1181,11 @@ ty_ask_clause(L, C, Cost) -->
       Q = q(_, _, _, _, _),
       ty_ask_order(L, Kind, Part, clause, Order2, Order, Q),
       ty_order_cost(Order, Order2, Cost) },
-    ty_ask_parts(Order, L, C, Q),
+    ty_ask_parts(Order, L, C, Q, How),
     { ty_wh_count(C, Kind),
-      ty_roles_ok(L, C) }.
+      ty_roles_ok(L, C),
+      ty_object_ok(L, C, How),
+      ty_comp_wh_ok(L, Order, C, How) }.
 
 ty_ask_copula(L, C, Cost) -->
     { C = copula(_, _, _, Pred),
@@ -1169,7 +1194,7 @@ ty_ask_copula(L, C, Cost) -->
       Q = q(_, _, _, Features, Rows),
       ty_ask_order(L, Kind, Part, copula, Order0, Order, Q),
       ty_order_cost(Order, Order0, Cost) },
-    ty_ask_parts(Order, L, C, Q),
+    ty_ask_parts(Order, L, C, Q, _),
     { Features = [_, N, _, G],
       ty_predicate_ok(Pred, Rows, G, N),
       ty_wh_count(C, Kind) }.
@@ -1220,12 +1245,41 @@ ty_wh_in(copula(_, _, S, P)) :- ( S = wh(_) ; P = wh(_) ).
 %% Moved yes where the rule moved the verb.
 ty_ask_order(L, wh, s, _, Order0, Order, q(unchanged, no, _, _, _)) :- !,
     (   ty_wh(L, front) -> ty_put_first(s, Order0, Order) ; Order = Order0 ).
+%% A question word that is a complement's noun phrase goes to the front
+%% without its adposition where the adposition stays (ty_complement_wh/2):
+%% the front takes ow, the object's place keeps op (`What does the boy
+%% think about?'). It is tried first, and op reads only a complement.
+ty_ask_order(L, wh, o, clause, Order0, Order, q(Rule, Moved, _, _, _)) :-
+    ty_strand_at(L),
+    ty_wh_at(L, front),
+    once(append(A, [o|B], Order0)),
+    append(A, [ow, op|B], Order1),
+    ty_wh_order(front, L, ow, clause, Order1, Order, Rule, Moved).
 ty_ask_order(L, wh, Part, Level, Order0, Order, q(Rule, Moved, _, _, _)) :- !,
     ty_wh_at(L, Place),
     ty_wh_order(Place, L, Part, Level, Order0, Order, Rule, Moved).
 ty_ask_order(L, yes_no, _, Level, Order0, Order, q(Rule, Moved, _, _, _)) :-
     ty_question_at(L, yes_no, Level, Rule),
     ty_ask_rule(Rule, Level, Order0, Order, Moved).
+
+%% The adposition stays where the template says so; in a repair, where it
+%% says it moves, a fault.
+ty_strand_at(L) :-
+    (   ty_comp_rule(L, stays)
+    ->  true
+    ;   ty_lenient, ty_fault(complement_wh(stays))
+    ).
+
+%% A complement moved to the front with its question word (`¿En qué piensa
+%% el niño?') is the template's only where its adposition moves; in a
+%% repair, a fault (`About what does the boy think?' is `What does the boy
+%% think about?').
+ty_comp_wh_ok(L, Order, clause(_, _, _, _, O, _), How) :-
+    (   nonvar(How), How = comp(_), nonvar(O), O = wh(_), Order = [o|_],
+        \+ ty_comp_rule(L, moves)
+    ->  ty_lenient, ty_fault(complement_wh(moves))
+    ;   true
+    ).
 
 %% Where a question word stands: at the front, the rule on the rest; in
 %% place; or right after the subject, nothing else moved (Italian `La
@@ -1262,18 +1316,25 @@ ty_before_subject(X, O, O1) :-
     append(A, [s|B], O), !,
     append(A, [X, s|B], O1).
 
-ty_ask_parts([], _, _, _) --> [].
-ty_ask_parts([P|Ps], L, C, Q) --> ty_ask_part(P, L, C, Q), ty_ask_parts(Ps, L, C, Q).
+ty_ask_parts([], _, _, _, _) --> [].
+ty_ask_parts([P|Ps], L, C, Q, How) --> ty_ask_part(P, L, C, Q, How), ty_ask_parts(Ps, L, C, Q, How).
 
-ty_ask_part(s, L, clause(_, _, _, S, _, _), _) --> ty_role(L, s, S).
-ty_ask_part(s, L, copula(_, _, S, _), q(_, _, _, F, _)) --> ty_role(L, s, S, F).
-ty_ask_part(o, L, clause(_, _, _, _, O, _), _) --> ty_role(L, o, O).
-ty_ask_part(j, L, clause(_, _, _, _, _, Js), _) --> ty_adjuncts(L, Js).
-ty_ask_part(p, L, copula(_, _, _, Pred), q(_, _, _, _, R)) --> ty_predicate(L, Pred, R).
-ty_ask_part(v, L, C, Q) --> ty_ask_verb(L, C, Q).
-ty_ask_part(c, L, C, Q) --> ty_ask_verb(L, C, Q).
-ty_ask_part(f, L, C, Q) --> ty_ask_first(L, C, Q).
-ty_ask_part(q, _, _, q(particle(W, _), _, _, _, _)) --> [W].
+ty_ask_part(s, L, clause(_, _, _, S, _, _), _, _) --> ty_role(L, s, S).
+ty_ask_part(s, L, copula(_, _, S, _), q(_, _, _, F, _), _) --> ty_role(L, s, S, F).
+ty_ask_part(o, L, clause(V, _, _, _, O, _), _, How) --> ty_object(L, V, O, How).
+%% A question word moved without its complement's adposition (ow), and the
+%% adposition left in the object's place (op): `What does the boy think
+%% about?'.
+ty_ask_part(ow, L, clause(_, _, _, _, O, _), _, _) --> { nonvar(O), O = wh(M) }, ty_wh_words(L, M).
+ty_ask_part(op, L, clause(V, _, _, _, _, _), _, comp(Ws)) -->
+    { ty_complement_words(L, V, Ws) },
+    ty_tokens(Ws).
+ty_ask_part(j, L, clause(_, _, _, _, _, Js), _, _) --> ty_adjuncts(L, Js).
+ty_ask_part(p, L, copula(_, _, _, Pred), q(_, _, _, _, R), _) --> ty_predicate(L, Pred, R).
+ty_ask_part(v, L, C, Q, _) --> ty_ask_verb(L, C, Q).
+ty_ask_part(c, L, C, Q, _) --> ty_ask_verb(L, C, Q).
+ty_ask_part(f, L, C, Q, _) --> ty_ask_first(L, C, Q).
+ty_ask_part(q, _, _, q(particle(W, _), _, _, _, _), _) --> [W].
 
 %% The verb (or the copula). Under front(first) part f, before the
 %% subject, is its first word and this part the rest: writing, f looks the
@@ -1372,8 +1433,9 @@ ty_clause(L, C) -->
       ty_order_at(L, clause, Order0),
       ty_valency(Order0, O, Order1),
       ty_adjunct_order(L, Order1, Js, Order) },
-    ty_clause_parts(Order, L, C),
-    { ty_roles_ok(L, C) }.
+    ty_clause_parts(Order, L, C, How),
+    { ty_roles_ok(L, C),
+      ty_object_ok(L, C, How) }.
 
 %% The subject is what its verb takes (templates/roles.pl: the subject of
 %% `see' is animate), asked of the IR once the clause is read.
@@ -1411,16 +1473,89 @@ ty_place_j(after(P), O, Os) :- append(A, [P|B], O), !, append(A, [P, j|B], Os).
 ty_valency(Order0, none, Order) :- exclude(==(o), Order0, Order).
 ty_valency(Order, O, Order) :- O \== none.
 
-ty_clause_parts([], _, _) --> [].
-ty_clause_parts([P|Ps], L, C) --> ty_clause_part(P, L, C), ty_clause_parts(Ps, L, C).
+%% How: how the object was read (ty_object//4).
+ty_clause_parts([], _, _, _) --> [].
+ty_clause_parts([P|Ps], L, C, How) --> ty_clause_part(P, L, C, How), ty_clause_parts(Ps, L, C, How).
 
-ty_clause_part(s, L, clause(_, _, _, S, _, _)) --> ty_role(L, s, S).
-ty_clause_part(o, L, clause(_, _, _, _, O, _)) --> ty_role(L, o, O).
-ty_clause_part(v, L, clause(V, T, P, S, _, _)) -->
+ty_clause_part(s, L, clause(_, _, _, S, _, _), _) --> ty_role(L, s, S).
+ty_clause_part(o, L, clause(V, _, _, _, O, _), How) --> ty_object(L, V, O, How).
+ty_clause_part(v, L, clause(V, T, P, S, _, _), _) -->
     { ty_subject_number(S, N) },
     ty_verb_words(L, V, T, N, P, Ws),
     ty_meant(L, verb(V), Ws).
-ty_clause_part(j, L, clause(_, _, _, _, _, Js)) --> ty_adjuncts(L, Js).
+ty_clause_part(j, L, clause(_, _, _, _, _, Js), _) --> ty_adjuncts(L, Js).
+
+%% ---- a verb's complement --------------------------------------------------------
+%%
+%% ty_complement(L, Verb, Words): the object of Verb is an adposition
+%% phrase whose adposition is Words, in the pp level's order (English
+%% `think about', `look at'; Spanish `pensar en'; Italian `pensare a';
+%% Persian `به ... فکر کردن'), and it takes no role marks (Spanish `piensa
+%% en la niña', not `a la niña'; Persian `به دختر', no `را'). The IR is the
+%% plain object, clause(think, present, pos, np(boy, ...), np(girl, ...)),
+%% so `The boy looks at the dog.' is `El niño mira al perro.'.
+%%
+%% How the object was read is How: plain (a role with its marks) or
+%% comp(Words), checked against the verb once the clause is read
+%% (ty_object_ok/3): a verb with a complement row takes no plain object,
+%% and one with none no complement. Reading, a verb read before its object
+%% decides at once; after it (Persian), at the clause's end.
+ty_object(L, V, O, plain) -->
+    { \+ ( nonvar(V), ty_complement(L, V, _), \+ ty_lenient ) },
+    ty_role(L, o, O).
+ty_object(L, V, O, comp(Ws)) -->
+    { ty_complement_words(L, V, Ws) },
+    ty_comp_phrase(L, Ws, O).
+
+ty_complement_words(L, V, Ws) :-
+    (   nonvar(V)
+    ->  ty_complement(L, V, Ws)
+    ;   setof(Ws0, V0^ty_complement(L, V0, Ws0), Wss),
+        member(Ws, Wss)
+    ).
+
+%% The complement: its adposition and its noun phrase in the pp level's
+%% order. A question word stands for the noun phrase; so does a relative
+%% clause's gap, where the adposition stays behind (ty_complement_wh/2:
+%% English `the girl that the boy thinks about').
+ty_comp_phrase(L, Ws, O) -->
+    { ty_order_at(L, pp, Order) },
+    ty_comp_parts(Order, L, Ws, O).
+
+ty_comp_parts([], _, _, _) --> [].
+ty_comp_parts([P|Ps], L, Ws, O) --> ty_comp_part(P, L, Ws, O), ty_comp_parts(Ps, L, Ws, O).
+
+ty_comp_part(p, _, Ws, _) --> ty_tokens(Ws).
+ty_comp_part(x, L, _, O) --> ty_comp_np(L, O).
+
+ty_comp_np(L, W) --> { nonvar(W), W = wh(M) }, ty_wh_words(L, M).
+ty_comp_np(L, G) --> { nonvar(G), G = gap(_, _), ty_comp_rule(L, stays) }.
+ty_comp_np(L, NP) --> ty_np_phrase(L, NP, _).
+
+ty_tokens([]) --> [].
+ty_tokens([W|Ws]) --> [W], ty_tokens(Ws).
+
+%% Whether a complement's adposition moves with a question word to the
+%% front (`¿En qué piensa el niño?') or stays (`What does the boy think
+%% about?'); moves where the template says nothing.
+ty_comp_rule(L, Rule) :-
+    (   ty_complement_wh(L, R) -> Rule = R ; Rule = moves ).
+
+%% The object as read, against the verb; in a repair, a plain object
+%% where the verb takes a complement is a fault (`The boy looks the dog.'
+%% is `The boy looks at the dog.'). With no object, an adjunct with the
+%% verb's own adposition is the complement and not an adjunct: `El niño
+%% piensa en la casa.' is about the house.
+ty_object_ok(L, clause(V, _, _, _, O, Js), How) :-
+    (   var(How)
+    ->  \+ ( O == none, ty_complement(L, V, Ws),
+             member(pp(M, _), Js), ty_adposition(L, M, Ws) )
+    ;   How = comp(Ws)
+    ->  ty_complement(L, V, Ws)
+    ;   ty_complement(L, V, Ws)
+    ->  ty_lenient, ty_fault(complement(missing, Ws))
+    ;   true
+    ).
 
 %% The adjuncts: adposition phrases and adverbs, in the IR's order.
 ty_adjuncts(_, []) --> [].

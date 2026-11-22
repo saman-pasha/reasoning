@@ -105,7 +105,7 @@ Spanish and Italian apocope (`gran`). Then `cat` goes into Persian, and
 Italian nouns that start with `s` and a consonant, `z` or a vowel are
 right.
 
-## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.25.0)
+## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.26.0)
 
 Done:
 
@@ -190,11 +190,29 @@ Done:
    (`c m h`, `c h`) reads too: no relative clause starts again where one
    is open that has read no word yet, which in such an order would start
    one there for ever.
+8. **A verb's complement** (1.26.0): `ty_complement(L, Verb, Words)` makes
+   the verb's object an adposition phrase with the adposition Words, in
+   the pp level's order and with no role marks -- English `think about`,
+   `look at`, `wait for`, `listen to`, `depend on`, `dream of`; Spanish
+   `pensar en`, `depender de`, `soñar con`; Italian `pensare a`, `dipendere
+   da`; Persian `به ... فکر کردن`, `به ... نگاه کردن` (two verbs of two
+   words, new). The IR keeps the plain object, so `The boy looks at the
+   dog.` is `El niño mira al perro.` and back. `ty_complement_wh(L, Rule)`,
+   a new choice, says whether the adposition moves with its question word
+   (`¿En qué piensa el niño?`, `A cosa pensa il ragazzo?`) or stays (`What
+   does the boy think about?`); where it stays, a relative clause's gap
+   leaves it behind too (`The girl that the boy thinks about sleeps.`).
+   With no object, the verb's own adposition is its complement and never
+   an adjunct (`El niño piensa en la casa.` is about the house). A repair
+   puts a missing complement in (`The boy looks the dog.`) and moves a
+   stranded one back (`About what does the boy think?`).
 
 Not yet:
 
 3. The place of the negation as a part of the order, not only a form.
-   The adposition phrase as a verb's complement (it is an adjunct now).
+   A complement's gap where the adposition moves (Spanish `la niña en la
+   que piensa el niño`, Italian `a cui`, Persian `که پسر به او فکر
+   می‌کند`), which 1.26.0 does not write.
 4. Questions of more than one question word, a question word inside a
    noun phrase (`which dog`, `whose`), and the yes or no answer.
 5. A relative clause moved after its verb, which Persian does where the
