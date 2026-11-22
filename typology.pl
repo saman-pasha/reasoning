@@ -141,7 +141,9 @@
 %%     ty_wh(L, Place)                 a question word stands at the front,
 %%                                     in place (in_place: Persian), or
 %%                                     right after the subject (after(s):
-%%                                     Italian `La ragazza chi vide?')
+%%                                     Italian `La ragazza chi vide?'), or
+%%                                     every one at the front (all_front:
+%%                                     Bulgarian `Кой какво вижда?')
 %%     ty_wh_word(L, Meaning, Words)   who, what, where, when
 %%     ty_question_mark(L, Open, Close)
 %%                                     the marks of a question (Spanish `¿'
@@ -256,6 +258,12 @@
 %%                                     question, as Japanese)
 %%     ty_answer_mark(L, Mark)         the comma after an answer's word
 %%                                     before its clause (`,' with no row)
+%%     ty_answer_echo(L, Rule, Word)   the answer that repeats its clause
+%%                                     short: Rule aux (the subject and the
+%%                                     auxiliary: `Yes, he does.') or verb
+%%                                     (the clause with no object: Persian
+%%                                     `بله، می‌بینم.'), Word keep or drop
+%%                                     the yes or no word before it
 %%
 %% THE WORD TABLES. templates/<name>-words.pl holds the rows
 %% typology_import/1 writes from corpus/vocabulary/<name>.txt (and, for
@@ -284,6 +292,11 @@
 %%     answer(Polarity, Asked)         the answer to a yes or no question of
 %%                                     the polarity Asked (pos, neg)
 %%     answer(Polarity, Asked, Clause) with its clause, of that polarity
+%%     answer(Polarity, Asked, echo(Clause))
+%%                                     the answer that repeats its clause
+%%                                     short: Clause with no object (none)
+%%                                     and no adjuncts, its verb unbound
+%%                                     where the words say none
 %%     np(Noun, Number, Definiteness, Adjectives)
 %%     rel(NP, Clause)                 a noun phrase with a relative clause,
 %%                                     where a noun phrase stands: Clause a
@@ -349,6 +362,12 @@
 %%                                     the short answer to a yes or no
 %%                                     question, its word chosen by the
 %%                                     question's polarity
+%%     typology_answer(+Name, +Question, +Polarity, +Form, -Text)
+%%                                     the answer in Form word, clause or
+%%                                     echo (`Yes, he does.': the subject
+%%                                     as the one who answers says it, a
+%%                                     noun its pronoun by templates/
+%%                                     roles.pl's ty_kind/2)
 %%
 %% A WORD WITH SEVERAL MEANINGS IN ONE PLACE of the grammar -- Spanish `a',
 %% the object's mark and `to', both after a verb and before a noun phrase;
@@ -405,7 +424,7 @@
                       typology_read/4, typology_write/3, typology_write/4,
                       typology_translate/4, typology_topics/2,
                       typology_read_text/3, typology_translate_text/4, typology_repair/5,
-                      typology_answer/4,
+                      typology_answer/4, typology_answer/5,
                       typology_import/1, typology_import/2 ]).
 
 :- use_module(library(reasoning/reason), [ reason_base/2 ]).
@@ -420,7 +439,8 @@
            ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
            ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
            ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-           ty_pro_drop/2, ty_clitic/2, ty_verb_person/6, ty_capital/3.
+           ty_pro_drop/2, ty_clitic/2, ty_verb_person/6, ty_capital/3,
+           ty_answer_echo/3, ty_kind/2.
 :- discontiguous ty_order/3, ty_noun/6, ty_adjective/5, ty_verb/6,
                  ty_article/5, ty_mark/5, ty_contraction/3, ty_negation/5,
                  ty_ending/4, ty_letters/3, ty_before/5, ty_linked/5, ty_copula/6,
@@ -432,7 +452,8 @@
                  ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
                  ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
                  ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-                 ty_pro_drop/2, ty_clitic/2, ty_verb_person/6, ty_capital/3.
+                 ty_pro_drop/2, ty_clitic/2, ty_verb_person/6, ty_capital/3,
+                 ty_answer_echo/3.
 
 %% ---- the levels and the values a slot takes -----------------------------------
 
@@ -457,7 +478,7 @@ ty_values(adjunct_place, [start, end, before(v), after(s)]).
 ty_values(predicate, [adj, np, pp]).
 ty_values(question_kind, [yes_no, wh]).
 ty_values(question_level, [clause, copula]).
-ty_values(wh_place, [front, in_place, after(s)]).
+ty_values(wh_place, [front, in_place, after(s), all_front]).
 ty_values(wh, [who, what, where, when]).
 ty_values(relative_role, [s, o, any]).
 ty_values(complement_wh, [moves, stays]).
@@ -574,6 +595,7 @@ ty_row_shape('ty_pro_drop(L, Persons).').
 ty_row_shape('ty_clitic(L, Role).').
 ty_row_shape('ty_verb_person(L, Tense, Person, Base, From, To).').
 ty_row_shape('ty_capital(L, Word, Written).').
+ty_row_shape('ty_answer_echo(L, Rule, Word).').
 
 %% ---- the check ----------------------------------------------------------------------
 
@@ -722,6 +744,9 @@ ty_missing(L, bad(ty_verb_person(L, T, K, B, F, To))) :-
 ty_missing(L, bad(ty_capital(L, W, C))) :-
     ty_capital(L, W, C),
     \+ ( atom(W), atom(C), downcase_atom(C, W) ).
+ty_missing(L, bad(ty_answer_echo(L, R, W))) :-
+    ty_answer_echo(L, R, W),
+    \+ ( memberchk(R, [aux, verb]), memberchk(W, [keep, drop]) ).
 ty_missing(L, clitic_pronoun) :-
     ty_clitic(L, o),
     \+ ty_pronoun(L, o, _, _).
@@ -892,6 +917,7 @@ ty_ir_map(D, rel(NP, C), rel(NP1, C1)) :- !,
 ty_ir_map(D, of(G, NP), of(G1, NP1)) :- !, ty_ir_map(D, G, G1), ty_ir_map(D, NP, NP1).
 ty_ir_map(D, pp(M, NP), pp(M, NP1)) :- !, ty_ir_map(D, NP, NP1).
 ty_ir_map(D, answer(P, A, C), answer(P, A, C1)) :- !, ty_ir_map(D, C, C1).
+ty_ir_map(D, echo(C), echo(C1)) :- !, ty_ir_map(D, C, C1).
 ty_ir_map(_, X, X).
 
 typology_translate(From, To, Text, Text2) :-
@@ -933,10 +959,11 @@ typology_topics(IR, Topics) :-
 
 ty_ir_meaning(question(C), M) :- ty_ir_meaning(C, M).
 ty_ir_meaning(answer(_, _, C), M) :- ty_ir_meaning(C, M).
+ty_ir_meaning(echo(C), M) :- ty_ir_meaning(C, M).
 ty_ir_meaning(clause(V, T, P, S, O), M) :-
     ty_ir_meaning(clause(V, T, P, S, O, []), M).
 ty_ir_meaning(clause(V, _, _, S, O, Js), M) :-
-    (   M = V
+    (   atom(V), M = V
     ;   ty_ir_meaning(S, M)
     ;   ty_ir_meaning(O, M)
     ;   member(J, Js), ty_ir_meaning(J, M)
@@ -1426,6 +1453,7 @@ ty_wh_at(L, Place) :-
     (   ty_wh(L, Place)
     ;   ty_lenient,
         ty_values(wh_place, Ps), member(Place, Ps),
+        Place \== all_front,
         \+ ty_wh(L, Place),
         ty_fault(wh_place(Place))
     ).
@@ -1446,6 +1474,7 @@ ty_ask(L, question(C), Cost) --> ty_ask_copula(L, C, Cost).
 
 ty_ask_clause(L, C, Cost) -->
     { C = clause(_, _, _, _, O, Js),
+      b_setval('$ty_front', f(none)),
       ty_order_at(L, clause, Order0),
       ty_valency(Order0, O, Order1),
       ty_adjunct_order(L, Order1, Js, Order2),
@@ -1463,10 +1492,12 @@ ty_ask_clause(L, C, Cost) -->
       ty_wh_first(C, Part),
       ty_roles_ok(L, C),
       ty_object_ok(L, C, How),
-      ty_comp_wh_ok(L, Order, C, How) }.
+      ty_comp_wh_ok(L, Order, C, How),
+      ty_front_ok(C) }.
 
 ty_ask_copula(L, C, Cost) -->
     { C = copula(_, _, _, Pred),
+      b_setval('$ty_front', f(none)),
       ty_order_at(L, copula, Order0),
       ty_ask_kind(C, Kind, Part),
       Q = q(_, _, _, Features, Rows),
@@ -1479,7 +1510,8 @@ ty_ask_copula(L, C, Cost) -->
     { Features = [_, N, _, G],
       ty_predicate_ok(Pred, Rows, G, N),
       ty_wh_count(C, Kind),
-      ty_wh_first(C, Part) }.
+      ty_wh_first(C, Part),
+      ty_front_ok(C) }.
 
 %% A question's cost: the pairs of the statement's parts it puts the other
 %% way round. Of several readings the reader keeps the least costly, so
@@ -1557,6 +1589,25 @@ ty_wh_first(copula(_, _, S, _), Part) :-
 
 %% The order of a question; Q = q(Rule, Moved, VerbWords, Features, Rows),
 %% Moved yes where the rule moved the verb.
+%% EVERY QUESTION WORD AT THE FRONT (ty_wh(L, all_front): Bulgarian `Кой
+%% какво вижда?', who what sees): the first part holding one, then each
+%% part after it in the order s, o, j (s, p of a copula) that holds one, and
+%% the rule on the rest (none where the subject is asked). Reading, any of
+%% the later parts may stand there; the parts at the front are kept
+%% (`$ty_front') and held to the IR at the end (ty_front_ok/1).
+ty_ask_order(L, wh, Part, Level, Order0, Order, q(Rule, Moved, _, _, _)) :-
+    ty_wh(L, all_front), !,
+    ty_later_parts(Part, Level, Order0, Later),
+    ty_some(Later, More),
+    Front = [Part|More],
+    b_setval('$ty_front', f(Front)),
+    subtract(Order0, Front, Rest),
+    (   Part == s
+    ->  Rule = unchanged, Moved = no, Rest1 = Rest
+    ;   ty_question_at(L, wh, Level, Rule),
+        ty_ask_rule(Rule, Level, Rest, Rest1, Moved)
+    ),
+    append(Front, Rest1, Order).
 ty_ask_order(L, wh, s, _, Order0, Order, q(unchanged, no, _, _, _)) :- !,
     (   ty_wh(L, front) -> ty_put_first(s, Order0, Order) ; Order = Order0 ).
 %% A question word that is a complement's noun phrase goes to the front
@@ -1612,6 +1663,37 @@ ty_wh_order(after(s), _, Part, _, Order0, Order, unchanged, no) :-
     append(A, [s, Part|B], Order).
 
 ty_put_first(P, Order0, [P|Rest]) :- select(P, Order0, Rest), !.
+
+%% The parts after Part that a question word may stand in, of those the
+%% order has.
+ty_later_parts(Part, Level, Order0, Later) :-
+    ( Level == clause -> All = [s, o, j] ; All = [s, p] ),
+    append(_, [Part|After], All), !,
+    include([P]>>memberchk(P, Order0), After, Later).
+
+ty_some([], []).
+ty_some([X|Xs], [X|Ys]) :- ty_some(Xs, Ys).
+ty_some([_|Xs], Ys) :- ty_some(Xs, Ys).
+
+%% The parts at the front are the parts that hold a question word.
+ty_front_ok(C) :-
+    b_getval('$ty_front', f(Front)),
+    (   Front == none
+    ->  true
+    ;   forall(ty_wh_part(C, P, Asked), ( memberchk(P, Front) -> Asked == yes ; Asked == no ))
+    ).
+
+ty_wh_part(clause(_, _, _, S, O, Js), P, A) :-
+    (   P = s, ty_yes(ty_is_asked(S), A)
+    ;   P = o, ty_yes(ty_is_asked(O), A)
+    ;   P = j, ty_yes(( nonvar(Js), member(J, Js), ty_is_asked_j(J) ), A)
+    ).
+ty_wh_part(copula(_, _, S, Pr), P, A) :-
+    (   P = s, ty_yes(ty_is_asked(S), A)
+    ;   P = p, ty_yes(ty_is_asked(Pr), A)
+    ).
+
+ty_yes(G, A) :- ( call(G) -> A = yes ; A = no ).
 
 ty_ask_rule(unchanged, _, O, O, no).
 ty_ask_rule(particle(_, start), _, O, [q|O], no).
@@ -1787,6 +1869,56 @@ ty_answer(L, answer(Pol, Asked, C)) -->
     ty_tokens(Ws),
     ty_answer_clause(L, Pol, C).
 
+%% THE ECHO: answer(Polarity, Asked, echo(Clause)) repeats the question's
+%% clause short, as ty_answer_echo(L, Rule, Word) says: Rule aux, the
+%% subject and the auxiliary of the clause's tense and person or the
+%% copula (English `Yes, he does.', `No, I am not.'), or verb, the clause
+%% with no object and no adjunct (Persian `بله، می‌بینم.', Portuguese
+%% `Vejo.'); Word keep, the yes or no word before it, or drop. A copula
+%% clause's echo is its subject and its copula by either rule (`Yes, she
+%% is.', `بله، هستم.'). The echo's
+%% object is none and its adjuncts []; reading an aux echo leaves its verb
+%% unbound (`Yes, he does.' says no verb).
+ty_answer(L, answer(Pol, Asked, echo(C))) -->
+    { ty_answer_echo(L, Rule, Word),
+      ty_answer_words(L, Pol, Asked, Ws0) },
+    ty_echo_word(Word, L, Ws0),
+    ty_echo(Rule, L, Pol, C).
+
+ty_echo_word(drop, _, _) --> [].
+ty_echo_word(keep, L, Ws0) -->
+    { append(Ws1, [W], Ws0),
+      ty_answer_comma(L, M), atom_concat(W, M, WM),
+      append(Ws1, [WM], Ws) },
+    ty_tokens(Ws).
+
+ty_echo(aux, L, Pol, clause(_, T, Pol, S, none, [])) -->
+    ty_role(L, s, S),
+    { ty_subject_number(S, N) },
+    ty_words(1, 3, Ws, ty_echo_aux(L, T, N, Pol, Ws)).
+ty_echo(_, L, Pol, copula(T, Pol, S, Pred)) -->
+    ty_role(L, s, S, _),
+    { ty_subject_number(S, N),
+      ( nonvar(Pred) -> ty_predicate_kind(Pred, K) ; true ) },
+    ty_copula_words(L, K, T, N, Pol).
+ty_echo(verb, L, Pol, C) -->
+    { C = clause(_, _, Pol, _, none, []) },
+    ty_clause(L, C).
+
+%% The auxiliary of a tense and a person: the question form's words if
+%% positive (`does'), the negation's if negative (`does not').
+ty_echo_aux(L, T, N, P, Ws) :-
+    ty_person_form(L, T, N, ty_echo_aux_n(L, T, P), Ws).
+
+ty_echo_aux_n(L, T, pos, N, Ws) :-
+    ty_question_form(L, T0, N0, Ws, _),
+    ty_values(tense, Ts), member(T, Ts), ty_fits(T0, T),
+    ty_values(agreement, Ns), member(N, Ns), ty_fits(N0, N).
+ty_echo_aux_n(L, T, neg, N, Ws) :-
+    ty_negation(L, T0, N0, Ws, form(_, _)),
+    ty_values(tense, Ts), member(T, Ts), ty_fits(T0, T),
+    ty_values(agreement, Ns), member(N, Ns), ty_fits(N0, N).
+
 ty_answer_clause(L, Pol, C) -->
     { C = clause(_, _, Pol, _, _, _) }, ty_clause(L, C), { ty_wh_count(C, yes_no) }.
 ty_answer_clause(L, Pol, C) -->
@@ -1818,6 +1950,51 @@ typology_answer(L, Question, Pol, Text) :-
     ( C = clause(_, _, Asked, _, _, _) -> true ; C = copula(_, Asked, _, _) ),
     ty_wh_count(C, yes_no),
     typology_write(L, answer(Pol, Asked), Text).
+
+%% The answer in a Form: word (`Yes.'), clause (`Yes, the boy sees the
+%% dog.') or echo (`Yes, he does.': the clause short, its subject as the
+%% one who answers says it).
+typology_answer(L, Question, Pol, Form, Text) :-
+    must_be(atom, L),
+    ty_ir_in(Question, question(C)),
+    ( C = clause(_, _, Asked, _, _, _) -> true ; C = copula(_, Asked, _, _) ),
+    ty_wh_count(C, yes_no),
+    ty_values(polarity, Ps), memberchk(Pol, Ps),
+    ty_answer_ir(Form, Pol, Asked, C, IR),
+    typology_write(L, IR, Text).
+
+ty_answer_ir(word, Pol, Asked, _, answer(Pol, Asked)).
+ty_answer_ir(clause, Pol, Asked, C, answer(Pol, Asked, C1)) :- ty_with_polarity(C, Pol, C1).
+ty_answer_ir(echo, Pol, Asked, C, answer(Pol, Asked, echo(E))) :- ty_echo_of(C, Pol, E).
+
+ty_with_polarity(clause(V, T, _, S, O, Js), P, clause(V, T, P, S, O, Js)).
+ty_with_polarity(copula(T, _, S, Pr), P, copula(T, P, S, Pr)).
+
+ty_echo_of(clause(V, T, _, S, _, _), P, clause(V, T, P, S1, none, [])) :- ty_answerer(S, S1).
+ty_echo_of(copula(T, _, S, Pr), P, copula(T, P, S1, Pr)) :- ty_answerer(S, S1).
+
+%% The subject as the one who answers says it: you is I, I is you, a noun
+%% phrase its pronoun, of the kind its meaning has (ty_meaning_kind/2).
+ty_answerer(pron(1, N, K), pron(2, N, K)) :- !.
+ty_answerer(pron(2, N, K), pron(1, N, K)) :- !.
+ty_answerer(pron(3, N, K), pron(3, N, K)) :- !.
+ty_answerer(X, pron(3, N, K)) :-
+    ty_np_head(X, M, N),
+    ty_meaning_kind(M, K).
+
+%% The noun phrase that heads a phrase: itself, a relative clause's head,
+%% the possessed.
+ty_np_head(np(M, N, _, _), M, N).
+ty_np_head(rel(NP, _), M, N) :- ty_np_head(NP, M, N).
+ty_np_head(of(_, NP), M, N) :- ty_np_head(NP, M, N).
+
+%% THE KIND OF A MEANING, a pronoun's that stands for it: templates/roles.pl's
+%% ty_kind/2 (`girl' f, `boy' m); a person of no row m, any other n (`it').
+ty_meaning_kind(M, K) :-
+    (   ty_kind(M, K0) -> K = K0
+    ;   once(ty_noun(_, M, _, person, _, _)) -> K = m
+    ;   K = n
+    ).
 
 %% A verb clause: its order of s, v and o, with the adjuncts (j) put where
 %% the template says (ty_adjunct/2); a language with no such row has none.

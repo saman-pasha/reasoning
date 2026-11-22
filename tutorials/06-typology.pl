@@ -112,6 +112,7 @@ main :-
     possessors,
     more_possessors,
     pronouns,
+    echoes,
     format("~ndone~n", []).
 
 
@@ -360,6 +361,31 @@ pronouns :-
     must('you is one or several: two readings', N3, 2),
     typology_translate(persian, italian, 'کوچک هستیم.', I4),
     must('we are small, the Persian ending into Italian', I4, 'Siamo piccoli.').
+
+
+%% 22. THE ECHO, AND EVERY QUESTION WORD AT THE FRONT. typology_answer/5's
+%% echo repeats the question's clause short, as ty_answer_echo/3 says:
+%% English the subject and its auxiliary, Persian the verb; the subject is
+%% as the one who answers says it (you is I). ty_wh(L, all_front) puts
+%% every question word at the front, as Bulgarian and Russian do (`Кой
+%% какво вижда?', who what sees), here on English's words.
+echoes :-
+    Q1 = question(clause(see, present, pos, pron(2, sg, _), np(dog, sg, def, []))),
+    findall(L-T, ( member(L, [english, persian]), typology_answer(L, Q1, pos, echo, T) ), Ts1),
+    must('do you see the dog? yes, I do', Ts1, [english-'Yes, I do.', persian-'بله، می‌بینم.']),
+    Q2 = question(clause(see, present, neg, np(girl, sg, def, []), np(dog, sg, def, []))),
+    typology_answer(english, Q2, neg, echo, E2),
+    must('the girl is she', E2, 'No, she does not.'),
+    forall(( member(F, [ty_order(english, _, _), ty_noun(english, _, _, _, _, _),
+                        ty_verb(english, _, _, _, _, _), ty_article(english, _, _, _, _),
+                        ty_question(english, _, _, _), ty_question_form(english, _, _, _, _),
+                        ty_wh_word(english, _, _), ty_adjunct(english, _)]),
+             call(F) ),
+           ( F =.. [P, english|As], F2 =.. [P, front_all|As], assertz(F2) )),
+    assertz(ty_wh(front_all, all_front)),
+    IR3 = question(clause(see, past, pos, np(boy, sg, def, []), wh(what), [wh(where)])),
+    typology_write(front_all, IR3, F3),
+    must('every question word at the front', F3, 'What where did the boy see?').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

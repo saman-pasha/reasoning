@@ -249,3 +249,8 @@ ty_linked(persian, n, clitic(pl(2)), 'ا', 'ایتان').
 ty_linked(persian, a, clitic(pl(2)), '', 'تان').
 ty_linked(persian, a, clitic(pl(2)), 'ه', 'ه‌تان').
 ty_linked(persian, a, clitic(pl(2)), 'سیاه', 'سیاهتان').
+
+%% The short answer that repeats the clause: the yes or no word and the
+%% verb with no object (`بله، می‌بینم.', yes, I see; `چرا، می‌بینم.' to a
+%% negative question).
+ty_answer_echo(persian, verb, keep).

@@ -18,3 +18,20 @@ ty_role_animacy(look, s, animate).
 ty_role_animacy(wait, s, animate).
 ty_role_animacy(listen, s, animate).
 ty_role_animacy(dream, s, animate).
+
+%% ty_kind(Meaning, Kind): the kind of a pronoun that stands for a noun of
+%% Meaning, m or f, where the meaning says the sex (an answer's `he' for
+%% the boy, `she' for the girl); a person of no row is m, and anything else
+%% n (`it').
+ty_kind(boy, m).
+ty_kind(man, m).
+ty_kind(husband, m).
+ty_kind(father, m).
+ty_kind(son, m).
+ty_kind(brother, m).
+ty_kind(girl, f).
+ty_kind(woman, f).
+ty_kind(wife, f).
+ty_kind(mother, f).
+ty_kind(daughter, f).
+ty_kind(sister, f).

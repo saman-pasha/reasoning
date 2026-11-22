@@ -105,7 +105,7 @@ Spanish and Italian apocope (`gran`). Then `cat` goes into Persian, and
 Italian nouns that start with `s` and a consonant, `z` or a vowel are
 right.
 
-## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.34.0)
+## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.35.0)
 
 Done:
 
@@ -394,14 +394,32 @@ Done:
    (English 5.5 s against 9.7, Spanish 34 against 50, Italian 14 against
    19, Persian 1.9 against 1.6).
 
+17. **The echo, and every question word at the front** (1.35.0).
+   `answer(Polarity, Asked, echo(Clause))` repeats the question's clause
+   short, as `ty_answer_echo(L, Rule, Word)` says: Rule `aux`, the
+   subject and the auxiliary of the clause's tense and person (English
+   `Yes, he does.`, `No, I am not.`: the question form's words, the
+   negation's, or the copula), or `verb`, the clause with no object and no
+   adjunct (Persian `بله، می‌بینم.`, `چرا، می‌بینم.` to a negative
+   question); Word `keep` or `drop` the yes or no word (Portuguese
+   `Vejo.`). A copula clause's echo is its subject and its copula by
+   either rule (`Yes, she is.`, `بله، هستم.`). `typology_answer/5` writes
+   an answer in a form, `word`, `clause` or `echo`, the subject as the one
+   who answers says it: `you` is `I`, and a noun phrase its pronoun, of
+   the kind `templates/roles.pl`'s `ty_kind/2` gives its meaning (`boy` m,
+   `girl` f; a person of no row m, anything else `it`). Reading an aux
+   echo leaves the verb unbound. `ty_wh(L, all_front)` puts every
+   question word at the front, the first part holding one and each part
+   after it in the order s, o, j that holds one, and the rule on the
+   rest (Bulgarian `Кой какво вижда?`, who what sees; on English's words
+   `What where did the boy see?`); the parts at the front are held to the
+   IR at the end, so `Who sees what?` is no reading there.
+
 Not yet:
 
 3. A German or a French template:
    the place of the negation is there for them, and German's `nicht`
    before a predicate (`ist nicht groß`) and its verb second are not.
-4. Every question word at the front (Bulgarian, Russian), a slot of its
-   own; an answer that repeats the verb (Portuguese `Vejo.`, Irish) and
-   English `Yes, he does.`, which the pronouns of 1.34.0 make possible.
 5. A pronoun that refers back to a noun of the text (which `his` is the
    boy's), which the IR does not hold.
 6. The topics the class lines do not give: the hand table's thirty rows,

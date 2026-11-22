@@ -214,3 +214,8 @@ ty_copula(english, any, present, sg(1), pos, [am]).
 ty_copula(english, any, present, sg(1), neg, [am, not]).
 ty_copula(english, any, past, sg(1), pos, [was]).
 ty_copula(english, any, past, sg(1), neg, [was, not]).
+
+%% The short answer that repeats the clause (`Yes, he does.', `No, I am
+%% not.'): the yes or no word, the subject and the auxiliary of its tense
+%% and person, or the copula.
+ty_answer_echo(english, aux, keep).
