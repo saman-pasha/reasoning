@@ -18,6 +18,8 @@
 %%
 %%     clause   s the subject, v the verb, o the object     6 orders
 %%     np       d the article, a the adjectives, n the noun  6 orders
+%%     copula   s the subject, c the copula, p the predicate  6 orders
+%%     pp       p the adposition, x its noun phrase          2 orders
 %%
 %% A language keeps the orders it uses (typology_choices/2 lists all of
 %% them; typology_template/1 prints a blank template with every order in
@@ -96,6 +98,21 @@
 %%                                     (English plural: `y' to `ies', `ay' to
 %%                                     `ays', `' to `s'); the import uses it
 %%                                     where the vocabulary states no form
+%%     ty_copula(L, Kind, Tense, Number, Polarity, Words)
+%%                                     the copula for a predicate of Kind
+%%                                     (adj, np, pp, or any: Spanish `es'
+%%                                     and `está'); Words [] drops it
+%%     ty_adposition(L, Meaning, Words)
+%%                                     a preposition or a postposition, by
+%%                                     the pp level's order
+%%     ty_adverb(L, Meaning, Word)     an adverb, an adjunct of the clause
+%%     ty_adjunct(L, Place)            where a clause's adjuncts stand:
+%%                                     start, end, before(v), after(s)
+%%     ty_sense(L, Word, Sense, Back, Ahead)
+%%                                     Word has Sense where the words before
+%%                                     it fit the pattern Back and the words
+%%                                     after it fit Ahead (below: a word
+%%                                     with several meanings)
 %%
 %% THE WORD TABLES. templates/<name>-words.pl holds the rows
 %% typology_import/1 writes from corpus/vocabulary/<name>.txt (and, for
@@ -108,12 +125,18 @@
 %%
 %%     clause(Predicate, Tense, Polarity, Subject, Object)  Object none
 %%                                     for a clause with no object
+%%     clause(Predicate, Tense, Polarity, Subject, Object, Adjuncts)
+%%                                     Adjuncts a list of pp(Meaning, NP)
+%%                                     and adv(Meaning)
+%%     copula(Tense, Polarity, Subject, Predicate)  Predicate adj(As),
+%%                                     an np/4 or a pp/2
 %%     np(Noun, Number, Definiteness, Adjectives)
 %%
 %% WHAT IS PUBLIC:
 %%
 %%     typology_load(+Name)            consult templates/Name.pl, then
-%%                                     templates/Name-words.pl if it exists
+%%                                     templates/Name-words.pl if it exists,
+%%                                     and templates/topics.pl once
 %%     typology_import(+Name)          write templates/Name-words.pl
 %%     typology_import(+Name, +File)   or File, and report the counts
 %%     typology_languages(-Names)      the languages loaded
@@ -129,8 +152,44 @@
 %%                                     takes. [] is a complete template
 %%     typology_read(+Name, +Text, -IR)   a sentence into the IR; each
 %%                                     reading on backtracking
+%%     typology_read(+Name, +Text, -IR, +Topics)
+%%                                     and Topics the context's topics
+%%                                     (the sentences before)
 %%     typology_write(+Name, +IR, -Text)  the IR into a sentence
+%%     typology_write(+Name, +IR, -Text, +Topics)
 %%     typology_translate(+From, +To, +Text, -Text2)
+%%     typology_topics(+IR, -Topics)   the topics of an IR's meanings
+%%     typology_read_text(+Name, +Texts, -IRs)
+%%                                     sentences in order, each read with
+%%                                     the topics of the sentences before it
+%%     typology_translate_text(+From, +To, +Texts, -Texts2)
+%%
+%% A WORD WITH SEVERAL MEANINGS IN ONE PLACE of the grammar -- Spanish `a',
+%% the object's mark and `to', both after a verb and before a noun phrase;
+%% `hoja', a leaf, a sheet and a blade -- takes the meaning two things
+%% give, the first that decides:
+%%
+%%   1. THE WORDS AROUND IT, a lookback and a lookahead: the first
+%%      ty_sense/5 row of the word whose Back fits the words before it
+%%      (read backwards, the nearest first) and whose Ahead fits the words
+%%      after it gives the meaning. A pattern is a list of items: a word;
+%%      class(C), a word of class C (noun, adjective, verb, article, mark,
+%%      adposition, adverb, copula); class(noun, F), a noun of gender or
+%%      animacy F; opt(Item), the item or no word; a variable, any word.
+%%      [] fits anything.
+%%   2. THE TOPICS OF THE CONTEXT: ty_topic(Meaning, Topic) in
+%%      templates/topics.pl, one table for every language (a meaning is
+%%      the IR's), and a meaning is its own topic too. The context's
+%%      topics are those given (the sentences before) and those of the
+%%      sentence's words that have one meaning. Of a word's meanings in
+%%      the class the grammar takes there, the ones whose topics the
+%%      context has the most of are kept; where the context has none of
+%%      any, every meaning is kept.
+%%
+%% A Sense is noun(M), adjective(M), verb(M), adverb(M), adposition(M),
+%% mark(Role) or copula(Kind). The writer writes the first way whose
+%% words, read in their context, give the IR back: `blade' in a sentence
+%% about a book is `cuchilla', not `hoja' (the book makes it a sheet).
 %%
 %% THE GRAMMAR IS ONE DCG THAT RUNS BOTH WAYS. Each slot offers what may
 %% stand there, and a check at the end of its level keeps what the
@@ -140,28 +199,33 @@
 %% (the IR given), and no order is written into them.
 %%
 %% TYPOLOGY-PLAN.md says what comes next. NOT YET (each is a slot to add,
-%% not a change to the grammar): prepositions, adverbs, questions,
-%% relative clauses, persons other than the third, more tenses; a
-%% language written without spaces.
+%% not a change to the grammar): questions, relative clauses, persons
+%% other than the third, more tenses; a language written without spaces.
 
 :- module(typology, [ typology_load/1, typology_languages/1, typology_choices/2,
                       typology_template/1, typology_check/2, typology_read/3,
-                      typology_write/3, typology_translate/4,
+                      typology_read/4, typology_write/3, typology_write/4,
+                      typology_translate/4, typology_topics/2,
+                      typology_read_text/3, typology_translate_text/4,
                       typology_import/1, typology_import/2 ]).
 
 :- use_module(library(reasoning/reason), [ reason_base/2 ]).
 
 :- dynamic ty_order/3, ty_noun/6, ty_adjective/5, ty_verb/6, ty_article/5,
            ty_mark/5, ty_contraction/3, ty_negation/5, ty_ending/4,
-           ty_letters/3, ty_before/5, ty_linked/5.
+           ty_letters/3, ty_before/5, ty_linked/5, ty_copula/6, ty_adposition/3,
+           ty_adverb/3, ty_adjunct/2, ty_sense/5, ty_topic/2.
 :- discontiguous ty_order/3, ty_noun/6, ty_adjective/5, ty_verb/6,
                  ty_article/5, ty_mark/5, ty_contraction/3, ty_negation/5,
-                 ty_ending/4, ty_letters/3, ty_before/5, ty_linked/5.
+                 ty_ending/4, ty_letters/3, ty_before/5, ty_linked/5, ty_copula/6,
+                 ty_adposition/3, ty_adverb/3, ty_adjunct/2, ty_sense/5.
 
 %% ---- the levels and the values a slot takes -----------------------------------
 
 ty_level(clause, [s, v, o]).
 ty_level(np, [d, a, n]).
+ty_level(copula, [s, c, p]).
+ty_level(pp, [p, x]).
 
 ty_values(tense, [present, past]).
 ty_values(number, [sg, pl]).
@@ -170,6 +234,8 @@ ty_values(definiteness, [def, indef]).
 ty_values(animacy, [animate, inanimate, unknown]).
 ty_values(place, [before, after]).
 ty_values(role, [s, o]).
+ty_values(adjunct_place, [start, end, before(v), after(s)]).
+ty_values(predicate, [adj, np, pp]).
 
 %% ---- loading --------------------------------------------------------------------
 
@@ -179,6 +245,10 @@ typology_load(Name) :-
     atom_concat(Name, '-words', Words),
     (   ty_file(Words, File)
     ->  consult(File)
+    ;   true
+    ),
+    (   \+ ty_topic(_, _), ty_file(topics, Topics)
+    ->  consult(Topics)
     ;   true
     ).
 
@@ -206,6 +276,10 @@ typology_template(Name) :-
              forall(member(O, Orders),
                     format("ty_order(~q, ~q, ~q).~n", [Name, Level, O])),
              nl )),
+    format("%% where the adjuncts stand (keep one):~n", []),
+    ty_values(adjunct_place, Places),
+    forall(member(Pl, Places), format("%% ty_adjunct(~q, ~q).~n", [Name, Pl])),
+    nl,
     forall(ty_row_shape(Shape), format("%% ~w~n", [Shape])).
 
 ty_row_shape('ty_noun(L, Meaning, Gender, Animacy, Singular, Plural).').
@@ -219,6 +293,10 @@ ty_row_shape('ty_ending(L, Feature, From, To).').
 ty_row_shape('ty_letters(L, Class, Letters).').
 ty_row_shape('ty_before(L, Word, Patterns, Form, Join).').
 ty_row_shape('ty_linked(L, Class, NextClass, From, To).').
+ty_row_shape('ty_copula(L, Kind, Tense, Number, Polarity, Words).').
+ty_row_shape('ty_adposition(L, Meaning, Words).').
+ty_row_shape('ty_adverb(L, Meaning, Word).').
+ty_row_shape('ty_sense(L, Word, Sense, Back, Ahead).').
 
 %% ---- the check ----------------------------------------------------------------------
 
@@ -229,7 +307,21 @@ typology_check(L, Missing) :-
 
 ty_missing(L, order(Level)) :-
     ty_level(Level, _),
+    ty_level_used(L, Level),
     \+ ty_order(L, Level, _).
+ty_missing(L, copula_form(K, T, N, P)) :-
+    ty_copula(L, _, _, _, _, _),
+    ty_values(predicate, Ks), member(K, Ks),
+    ty_values(tense, Ts), member(T, Ts),
+    ty_values(number, Ns), member(N, Ns),
+    ty_values(polarity, Ps), member(P, Ps),
+    \+ ( ty_copula(L, K1, T, N, P, _), ty_fits(K1, K) ).
+ty_missing(L, adjunct_place) :-
+    once(( ty_adposition(L, _, _) ; ty_adverb(L, _, _) )),
+    \+ ty_adjunct(L, _).
+ty_missing(L, bad(ty_adjunct(L, P))) :-
+    ty_adjunct(L, P),
+    \+ ( ty_values(adjunct_place, Ps), memberchk(P, Ps) ).
 ty_missing(L, not_an_order(Level, Order)) :-
     ty_order(L, Level, Order),
     \+ ( ty_level(Level, Parts), permutation(Parts, Order) ).
@@ -258,11 +350,22 @@ ty_missing(L, bad(ty_before(L, W, Ps, F, J))) :-
     \+ ( memberchk(J, [space, joined]), is_list(Ps),
          forall(( member(P, Ps), member(E, P) ),
                 ( E == end ; atom_length(E, 1) ; ty_letters(L, E, _) )) ).
+ty_missing(L, bad(ty_sense(L, W, S, B, A))) :-
+    ty_sense(L, W, S, B, A),
+    \+ ( ty_has_sense(L, W, S),
+         ty_pattern_items(B), ty_pattern_items(A) ).
 ty_missing(L, bad(ty_mark(L, R, Pl, W, Cs))) :-
     ty_mark(L, R, Pl, W, Cs),
     \+ ( ty_values(role, Rs), memberchk(R, Rs),
          ty_values(place, Ps), memberchk(Pl, Ps),
          is_list(Cs) ).
+
+%% The clause and the noun phrase are every language's; the copula clause
+%% and the adposition phrase only a language that has their words.
+ty_level_used(_, clause).
+ty_level_used(_, np).
+ty_level_used(L, copula) :- once(ty_copula(L, _, _, _, _, _)).
+ty_level_used(L, pp) :- once(ty_adposition(L, _, _)).
 
 ty_verb_meaning(L, V) :- setof(V0, T^N^P^W^ty_verb(L, V0, T, N, P, W), Vs), member(V, Vs).
 ty_adjective_meaning(L, A) :- setof(A0, G^N^W^ty_adjective(L, A0, G, N, W), As), member(A, As).
@@ -270,41 +373,136 @@ ty_gender(L, G) :- setof(G0, M^A^S^P^ty_noun(L, M, G0, A, S, P), Gs), member(G, 
 
 %% ---- reading and writing -------------------------------------------------------------
 
-%% Reading takes each word back to the word of the table it may stand for
-%% (`an' to `a', `l'avvocato' to `il avvocato' or `la avvocato'), parses
-%% those, and keeps a reading only where the writer would write the very
-%% words read: `il avvocato' and `a apple' are not read.
+%% Reading undoes the writer's steps, each word back to the words it may
+%% stand for -- a joined word split (`nell'acqua'), a contraction opened
+%% (`nell'' is `in l''), a form taken back to its word (`l'' is `il' or
+%% `la') -- parses those, and keeps a reading only where the writer writes
+%% the very words read: `il avvocato', `a apple' and `in la casa' are not
+%% read.
 typology_read(L, Text, IR) :-
+    typology_read(L, Text, IR, []).
+
+typology_read(L, Text, IR, Topics) :-
     must_be(atom, L),
-    ty_tokens(L, Text, Tokens),
-    ty_unsound(L, Tokens, Bases),
-    phrase(ty_clause(L, IR), Bases),
-    ty_sound(L, Bases, Again),
-    Again == Tokens.
+    must_be(list, Topics),
+    ty_surface(Text, Surface),
+    ty_unjoin(L, Surface, T1),
+    ty_uncontract(L, T1, T2),
+    ty_unsound(L, T2, Bases),
+    ty_write_tokens(L, Bases, Again),
+    Again == Surface,
+    ty_new_context(Bases, Topics, Context),
+    b_setval('$ty_context', Context),
+    phrase(ty_sentence(L, IR0), Bases),
+    ty_ir_out(IR0, IR).
 
 typology_write(L, IR, Text) :-
+    typology_write(L, IR, Text, []).
+
+%% The first way to write the IR whose words, read in their context, give
+%% the IR back.
+typology_write(L, IR, Text, Topics) :-
     must_be(atom, L),
-    once(phrase(ty_clause(L, IR), Tokens0)),
-    ty_sound(L, Tokens0, Tokens1),
-    ty_contract(L, Tokens1, Tokens),
+    must_be(list, Topics),
+    ty_ir_in(IR, IR0),
+    b_setval('$ty_context', none),
+    phrase(ty_sentence(L, IR0), Tokens0),
+    ty_reads_as(L, Tokens0, Topics, IR0), !,
+    ty_write_tokens(L, Tokens0, Tokens),
     ty_text(Tokens, Text).
+
+ty_reads_as(L, Tokens, Topics, IR0) :-
+    ty_new_context(Tokens, Topics, Context),
+    \+ \+ ( b_setval('$ty_context', Context),
+           phrase(ty_sentence(L, IR0), Tokens) ).
+
+%% The writer's steps after the grammar: the forms the next word chooses
+%% (a joined one marked j(Form)), the contractions (`in' and a joined `l''
+%% are a joined `nell''), then each joined form written as one word with
+%% the word after it.
+ty_write_tokens(L, Tokens0, Tokens) :-
+    ty_sound(L, Tokens0, T1),
+    ty_contract(L, T1, T2),
+    ty_join(T2, Tokens).
+
+%% clause/5 is a clause with no adjuncts: the grammar's clause/6 with [].
+ty_ir_in(clause(V, T, P, S, O), clause(V, T, P, S, O, [])) :- !.
+ty_ir_in(IR, IR).
+
+ty_ir_out(clause(V, T, P, S, O, []), clause(V, T, P, S, O)) :- !.
+ty_ir_out(IR, IR).
 
 typology_translate(From, To, Text, Text2) :-
     once(typology_read(From, Text, IR)),
     typology_write(To, IR, Text2).
 
-%% The words of a sentence: the full stop off, the first word lowered (a
-%% script with no capitals is unchanged), each contraction opened.
-ty_tokens(L, Text, Tokens) :-
+%% A text: each sentence read, and written, with the topics of the
+%% sentences before it.
+typology_read_text(L, Texts, IRs) :-
+    must_be(list, Texts),
+    ty_read_text(Texts, L, [], IRs).
+
+ty_read_text([], _, _, []).
+ty_read_text([T|Ts], L, Topics0, [IR|IRs]) :-
+    once(typology_read(L, T, IR, Topics0)),
+    ty_add_topics(IR, Topics0, Topics),
+    ty_read_text(Ts, L, Topics, IRs).
+
+typology_translate_text(From, To, Texts, Texts2) :-
+    typology_read_text(From, Texts, IRs),
+    ty_write_text(IRs, To, [], Texts2).
+
+ty_write_text([], _, _, []).
+ty_write_text([IR|IRs], L, Topics0, [T|Ts]) :-
+    typology_write(L, IR, T, Topics0),
+    ty_add_topics(IR, Topics0, Topics),
+    ty_write_text(IRs, L, Topics, Ts).
+
+ty_add_topics(IR, Topics0, Topics) :-
+    typology_topics(IR, Ts),
+    append(Topics0, Ts, Topics1),
+    sort(Topics1, Topics).
+
+%% The topics of the meanings in an IR: each noun, adjective, verb and
+%% adverb, and the topics ty_topic/2 gives each.
+typology_topics(IR, Topics) :-
+    findall(T, ( ty_ir_meaning(IR, M), ty_meaning_topic(M, T) ), Ts),
+    sort(Ts, Topics).
+
+ty_ir_meaning(clause(V, T, P, S, O), M) :-
+    ty_ir_meaning(clause(V, T, P, S, O, []), M).
+ty_ir_meaning(clause(V, _, _, S, O, Js), M) :-
+    (   M = V
+    ;   ty_ir_meaning(S, M)
+    ;   ty_ir_meaning(O, M)
+    ;   member(J, Js), ty_ir_meaning(J, M)
+    ).
+ty_ir_meaning(copula(_, _, S, Pred), M) :-
+    (   ty_ir_meaning(S, M)
+    ;   ty_ir_meaning(Pred, M)
+    ).
+ty_ir_meaning(np(N, _, _, As), M) :-
+    (   M = N
+    ;   member(M, As)
+    ).
+ty_ir_meaning(adj(As), M) :- member(M, As).
+ty_ir_meaning(pp(_, NP), M) :- ty_ir_meaning(NP, M).
+ty_ir_meaning(adv(M), M).
+
+ty_meaning_topic(M, M).
+ty_meaning_topic(M, T) :- ty_topic(M, T).
+
+%% The words of a sentence as written: the full stop off, the first word
+%% lowered (a script with no capitals is unchanged).
+ty_surface(Text, Words) :-
     atom_string(A0, Text),
     ty_unstop(A0, A),
     split_string(A, " ", " ", Parts0),
     exclude(==(""), Parts0, [First0|Rest0]),
     maplist([P, W]>>atom_string(W, P), [First0|Rest0], [FirstA|Rest]),
     downcase_atom(FirstA, First),
-    ty_open(L, [First|Rest], Tokens).
+    Words = [First|Rest].
 
-%% The text without its full stop.
 ty_unstop(A0, A) :-
     (   sub_atom(A0, B, 1, 0, '.') -> sub_atom(A0, 0, B, _, A) ; A = A0 ).
 
@@ -318,12 +516,11 @@ ty_unstop(A0, A) :-
 %% the form and the next word as one (`l'avvocato').
 
 ty_sound(_, [], []).
-ty_sound(L, [W, N|Ws], Out) :-
+ty_sound(L, [W, N|Ws], [Out|Rest]) :-
+    atom(W), atom(N),
     ty_sound_form(L, W, N, F, J), !,
-    (   J == joined
-    ->  atom_concat(F, N, WN), Out = [WN|Rest], ty_sound(L, Ws, Rest)
-    ;   Out = [F|Rest], ty_sound(L, [N|Ws], Rest)
-    ).
+    ( J == joined -> Out = j(F) ; Out = F ),
+    ty_sound(L, [N|Ws], Rest).
 ty_sound(L, [W|Ws], [W|Rest]) :-
     ty_sound(L, Ws, Rest).
 
@@ -345,34 +542,63 @@ ty_pattern(L, [E|Es], [C|Cs]) :-
     (   atom_length(E, 1) -> E == C ; ty_letters(L, E, Ls), memberchk(C, Ls) ),
     ty_pattern(L, Es, Cs).
 
-%% Each word as the word of the table it may stand for: itself, the word
-%% whose form it is, or a joined form and the word after it.
+%% Each word as the word of the table it may stand for: itself, or the
+%% word whose form it is.
 ty_unsound(_, [], []).
-ty_unsound(L, [T|Ts], Bases) :-
-    (   Bases = [T|Bs]
-    ;   setof(B, P^ty_before(L, B, P, T, space), Bs0),
-        member(B, Bs0), B \== T,
-        Bases = [B|Bs]
-    ;   setof(B-F, P^ty_before(L, B, P, F, joined), Pairs),
-        member(B-F, Pairs), atom_concat(F, Rest, T), Rest \== '',
-        Bases = [B, Rest|Bs]
+ty_unsound(L, [T|Ts], [B|Bs]) :-
+    (   B = T
+    ;   setof(B0, P^J^ty_before(L, B0, P, T, J), B0s),
+        member(B, B0s), B \== T
     ),
     ty_unsound(L, Ts, Bs).
 
-ty_open(_, [], []).
-ty_open(L, [W|Ws], Out) :-
-    (   ty_contraction(L, Parts, W)
-    ->  append(Parts, Rest, Out)
-    ;   Out = [W|Rest]
+%% A written word split where it begins with a joined form, or a contraction
+%% of one (`nell'acqua': `nell'' and `acqua').
+ty_unjoin(_, [], []).
+ty_unjoin(L, [T|Ts], Out) :-
+    (   Out = [T|Rest]
+    ;   ty_joinable(L, F), atom_concat(F, W, T), W \== '',
+        Out = [F, W|Rest]
     ),
-    ty_open(L, Ws, Rest).
+    ty_unjoin(L, Ts, Rest).
 
+ty_joinable(L, F) :-
+    setof(F0, ty_joinable0(L, F0), Fs),
+    member(F, Fs).
+
+ty_joinable0(L, F) :- ty_before(L, _, _, F, joined).
+ty_joinable0(L, C) :-
+    ty_contraction(L, Parts, C),
+    last(Parts, P),
+    ty_before(L, _, _, P, joined).
+
+%% A contraction opened, or the word as it is.
+ty_uncontract(_, [], []).
+ty_uncontract(L, [T|Ts], Out) :-
+    (   Out = [T|Rest]
+    ;   ty_contraction(L, Parts, T), append(Parts, Rest, Out)
+    ),
+    ty_uncontract(L, Ts, Rest).
+
+%% Two words written as one; a joined second word makes a joined one.
 ty_contract(_, [], []).
 ty_contract(L, [A, B|Ws], [C|Rest]) :-
-    ty_contraction(L, [A, B], C), !,
+    atom(A),
+    ( B = j(B0) -> Joined = yes ; B0 = B, Joined = no ),
+    atom(B0),
+    ty_contraction(L, [A, B0], C0), !,
+    ( Joined == yes -> C = j(C0) ; C = C0 ),
     ty_contract(L, Ws, Rest).
 ty_contract(L, [W|Ws], [W|Rest]) :-
     ty_contract(L, Ws, Rest).
+
+ty_join([], []).
+ty_join([j(F), N|Ws], [FN|Rest]) :- !,
+    atom_concat(F, N, FN),
+    ty_join(Ws, Rest).
+ty_join([j(F)], [F]) :- !.
+ty_join([W|Ws], [W|Rest]) :-
+    ty_join(Ws, Rest).
 
 ty_text(Tokens, Text) :-
     atomic_list_concat(Tokens, ' ', Body),
@@ -381,13 +607,190 @@ ty_text(Tokens, Text) :-
     upcase_atom(F, U),
     atomic_list_concat([U, R, '.'], Text).
 
+%% ---- the meaning of a word with several -----------------------------------------
+%%
+%% The context of a read, ctx(Id, Words, Given): the words read and the
+%% topics given. A writer's first parse has none, and its check the words
+%% it wrote; ty_meant//3 asks it after each word the grammar takes. What a
+%% check works out for a word is kept under the context's Id (ty_memo/4,
+%% in a global, not the knowledge base), so a parse that takes the same
+%% word many times as it backtracks works it out once.
+
+ty_new_context(Words, Given, ctx(Id, Words, Given)) :-
+    (   nb_current('$ty_context_n', N0) -> true ; N0 = 0 ),
+    Id is N0 + 1,
+    nb_setval('$ty_context_n', Id).
+
+ty_memo(ctx(Id, _, _), Key, Value, Goal) :-
+    (   nb_current('$ty_memo', memo(Id, A0)) -> true ; empty_assoc(A0) ),
+    (   get_assoc(Key, A0, V0)
+    ->  Value = V0
+    ;   once(Goal),
+        put_assoc(Key, A0, Value, A1),
+        nb_setval('$ty_memo', memo(Id, A1))
+    ).
+
+%% The meanings of a word in one class, looked up by the word (a linked
+%% Persian form by the word it is a form of).
+ty_class_meaning(L, noun, W, M) :-
+    ty_unlinked(L, n, a, W, W0),
+    ( ty_noun(L, M, _, _, W0, _) ; ty_noun(L, M, _, _, _, W0) ).
+ty_class_meaning(L, adjective, W, M) :-
+    ty_unlinked(L, a, a, W, W0),
+    ty_adjective(L, M, _, _, W0).
+ty_class_meaning(L, verb, W, M) :- ty_verb(L, M, _, _, _, [W|_]).
+ty_class_meaning(L, adverb, W, M) :- ty_adverb(L, M, W).
+ty_class_meaning(L, adposition, W, M) :- ty_adposition(L, M, Ws), memberchk(W, Ws).
+
+%% Ws, just taken (the words S follow), in the meaning Sense.
+ty_meant(L, Sense, Ws, S, S) :-
+    (   nb_current('$ty_context', Ctx), Ctx = ctx(_, Full, _)
+    ->  length(Full, NF), length(Ws, NW), length(S, NS),
+        NP is NF - NW - NS,
+        length(Prefix, NP), append(Prefix, _, Full),
+        reverse(Prefix, Back),
+        ty_meant_each(Ws, Back, S, L, Sense, Ctx)
+    ;   true
+    ).
+
+ty_meant_each([], _, _, _, _, _).
+ty_meant_each([W|Ws], Back, S, L, Sense, Ctx) :-
+    append(Ws, S, Ahead),
+    ty_meaning_here(L, W, Sense, Back, Ahead, Ctx),
+    ty_meant_each(Ws, [W|Back], S, L, Sense, Ctx).
+
+%% The first row of the word that fits the words around it decides; with
+%% none, the topics.
+ty_meaning_here(L, W, Sense, Back, Ahead, Ctx) :-
+    length(Back, Pos),
+    ty_memo(Ctx, p(Pos, W), Fit, ty_sense_fit(L, W, Back, Ahead, Fit)),
+    (   Fit = sense(Sense1)
+    ->  Sense1 = Sense
+    ;   Sense =.. [C, M],
+        ty_memo(Ctx, t(W, C), Best, ty_topic_best(L, W, C, Ctx, Best)),
+        ( Best == all -> true ; memberchk(M, Best) )
+    ).
+
+ty_sense_fit(L, W, Back, Ahead, Fit) :-
+    (   ty_sense(L, W, Sense, B, A),
+        ty_pattern_fits(L, B, Back),
+        ty_pattern_fits(L, A, Ahead)
+    ->  Fit = sense(Sense)
+    ;   Fit = none
+    ).
+
+ty_pattern_fits(_, [], _).
+ty_pattern_fits(L, [I|Is], Ws) :-
+    (   nonvar(I), I = opt(I1)
+    ->  (   Ws = [W|Ws1], ty_item_fits(L, I1, W), ty_pattern_fits(L, Is, Ws1)
+        ;   ty_pattern_fits(L, Is, Ws)
+        )
+    ;   Ws = [W|Ws1],
+        ty_item_fits(L, I, W),
+        ty_pattern_fits(L, Is, Ws1)
+    ).
+
+ty_item_fits(_, I, _) :- var(I), !.
+ty_item_fits(_, I, W) :- atom(I), !, I == W.
+ty_item_fits(L, class(C), W) :- !, ty_word_class(L, C, W).
+ty_item_fits(L, class(noun, F), W) :-
+    ( ty_noun(L, _, G, A, W, _) ; ty_noun(L, _, G, A, _, W) ),
+    ( F == G ; F == A ), !.
+
+ty_word_class(L, noun, W) :- ty_class_meaning(L, noun, W, _), !.
+ty_word_class(L, adjective, W) :- ty_class_meaning(L, adjective, W, _), !.
+ty_word_class(L, verb, W) :-
+    (   ty_verb(L, _, _, _, _, [W|_])
+    ;   ty_negation(L, _, _, Ws, _), memberchk(W, Ws)
+    ), !.
+ty_word_class(L, article, W) :- ty_article(L, _, _, _, W), !.
+ty_word_class(L, mark, W) :- ty_mark(L, _, _, W, _), !.
+ty_word_class(L, adposition, W) :- ty_class_meaning(L, adposition, W, _), !.
+ty_word_class(L, adverb, W) :- ty_adverb(L, _, W), !.
+ty_word_class(L, copula, W) :- ty_copula(L, _, _, _, _, Ws), memberchk(W, Ws), !.
+
+%% Of the word's meanings in class C, the ones whose topics the context
+%% has the most of; all when the context has none of any.
+ty_topic_best(L, W, C, Ctx, Best) :-
+    (   setof(M1, ty_class_meaning(L, C, W, M1), Ms),
+        Ms = [_, _|_],
+        findall(N-M1, ( member(M1, Ms), ty_topic_count(L, W, M1, Ctx, N) ), Pairs),
+        max_member(Max-_, Pairs),
+        Max > 0
+    ->  findall(M1, member(Max-M1, Pairs), Best)
+    ;   Best = all
+    ).
+
+ty_topic_count(L, W, M, Ctx, N) :-
+    findall(T, ( ty_meaning_topic(M, T), ty_context_has(L, W, T, Ctx) ), Ts),
+    length(Ts, N).
+
+%% The context has a topic when it was given, or when another word of the
+%% sentence, with one meaning in its class, has it (`saw' is no context of
+%% its own: the noun, a tool, would choose the verb `to saw'). The words
+%% are found from the topic, by meaning, and not each word of the sentence
+%% by its form: a table of thousands of verbs is not walked for every word
+%% read.
+ty_context_has(_, _, T, ctx(_, _, Given)) :- memberchk(T, Given), !.
+ty_context_has(L, W, T, ctx(_, Words, _)) :-
+    ty_topic_meaning(T, M),
+    ty_meaning_word(L, M, C, W1),
+    W1 \== W,
+    memberchk(W1, Words),
+    setof(M1, ty_class_meaning(L, C, W1, M1), [M]), !.
+
+ty_topic_meaning(T, T).
+ty_topic_meaning(T, M) :- ty_topic(M, T).
+
+ty_meaning_word(L, M, noun, W) :- ty_noun(L, M, _, _, S, P), ( W = S ; W = P ).
+ty_meaning_word(L, M, adjective, W) :- ty_adjective(L, M, _, _, W).
+ty_meaning_word(L, M, verb, W) :- ty_verb(L, M, _, _, _, [W|_]).
+ty_meaning_word(L, M, adverb, W) :- ty_adverb(L, M, W).
+
+%% The check's view of a ty_sense/5 row: the word has the sense, and each
+%% pattern is a list of items.
+ty_has_sense(L, W, mark(R)) :- !, ty_mark(L, R, _, W, _), !.
+ty_has_sense(L, W, copula(K)) :- !, ty_copula(L, K, _, _, _, Ws), memberchk(W, Ws), !.
+ty_has_sense(L, W, S) :-
+    compound(S), S =.. [C, M],
+    memberchk(C, [noun, adjective, verb, adverb, adposition]),
+    ty_class_meaning(L, C, W, M), !.
+
+ty_pattern_items(P) :-
+    is_list(P),
+    forall(member(I, P), ty_pattern_item(I)).
+
+ty_pattern_item(I) :- var(I), !.
+ty_pattern_item(I) :- atom(I), !.
+ty_pattern_item(opt(I)) :- !, ty_pattern_item(I).
+ty_pattern_item(class(C)) :- !,
+    memberchk(C, [noun, adjective, verb, article, mark, adposition, adverb, copula]).
+ty_pattern_item(class(noun, F)) :- atom(F).
+
 %% ---- the grammar ---------------------------------------------------------------------
 
+ty_sentence(L, IR) --> ty_clause(L, IR).
+ty_sentence(L, IR) --> ty_copula_clause(L, IR).
+
+%% A verb clause: its order of s, v and o, with the adjuncts (j) put where
+%% the template says (ty_adjunct/2); a language with no such row has none.
 ty_clause(L, C) -->
-    { C = clause(_, _, _, _, O),
+    { C = clause(_, _, _, _, O, Js),
       ty_order(L, clause, Order0),
-      ty_valency(Order0, O, Order) },
+      ty_valency(Order0, O, Order1),
+      ty_adjunct_order(L, Order1, Js, Order) },
     ty_clause_parts(Order, L, C).
+
+ty_adjunct_order(L, Order0, Js, Order) :-
+    (   ty_adjunct(L, Place)
+    ->  ty_place_j(Place, Order0, Order)
+    ;   Js = [], Order = Order0
+    ).
+
+ty_place_j(start, O, [j|O]).
+ty_place_j(end, O, Os) :- append(O, [j], Os).
+ty_place_j(before(P), O, Os) :- append(A, [P|B], O), !, append(A, [j, P|B], Os).
+ty_place_j(after(P), O, Os) :- append(A, [P|B], O), !, append(A, [P, j|B], Os).
 
 %% A clause with no object leaves o out of the order; it is tried first.
 ty_valency(Order0, none, Order) :- exclude(==(o), Order0, Order).
@@ -396,15 +799,83 @@ ty_valency(Order, O, Order) :- O \== none.
 ty_clause_parts([], _, _) --> [].
 ty_clause_parts([P|Ps], L, C) --> ty_clause_part(P, L, C), ty_clause_parts(Ps, L, C).
 
-ty_clause_part(s, L, clause(_, _, _, S, _)) --> ty_role(L, s, S).
-ty_clause_part(o, L, clause(_, _, _, _, O)) --> ty_role(L, o, O).
-ty_clause_part(v, L, clause(V, T, P, np(_, N, _, _), _)) -->
-    ty_verb_words(L, V, T, N, P).
+ty_clause_part(s, L, clause(_, _, _, S, _, _)) --> ty_role(L, s, S).
+ty_clause_part(o, L, clause(_, _, _, _, O, _)) --> ty_role(L, o, O).
+ty_clause_part(v, L, clause(V, T, P, np(_, N, _, _), _, _)) -->
+    ty_verb_words(L, V, T, N, P, Ws),
+    ty_meant(L, verb(V), Ws).
+ty_clause_part(j, L, clause(_, _, _, _, _, Js)) --> ty_adjuncts(L, Js).
+
+%% The adjuncts: adposition phrases and adverbs, in the IR's order.
+ty_adjuncts(_, []) --> [].
+ty_adjuncts(L, [J|Js]) --> ty_adjunct_item(L, J), ty_adjuncts(L, Js).
+
+ty_adjunct_item(L, pp(Prep, NP)) --> ty_pp(L, Prep, NP).
+ty_adjunct_item(L, adv(M)) --> [W], { ty_adverb(L, M, W) }, ty_meant(L, adverb(M), [W]).
+
+%% An adposition phrase: the adposition (p) and its noun phrase (x) in the
+%% order the template keeps, a preposition or a postposition.
+ty_pp(L, Prep, NP) -->
+    { ty_order(L, pp, Order) },
+    ty_pp_parts(Order, L, Prep, NP).
+
+ty_pp_parts([], _, _, _) --> [].
+ty_pp_parts([P|Ps], L, Prep, NP) --> ty_pp_part(P, L, Prep, NP), ty_pp_parts(Ps, L, Prep, NP).
+
+ty_pp_part(p, L, Prep, _) -->
+    ty_words(1, 3, Ws, ty_adposition(L, Prep, Ws)),
+    ty_meant(L, adposition(Prep), Ws).
+ty_pp_part(x, L, _, NP) --> ty_np(L, NP, _).
+
+%% Words a table gives: reading, Min to Max words are taken and then
+%% looked up (Lookup names Ws), so a table is asked by the words read;
+%% writing, the lookup makes them.
+ty_words(Min, Max, Ws, Lookup, S0, S) :-
+    (   nonvar(S0)
+    ->  between(Min, Max, K), length(Ws, K), append(Ws, S, S0), call(Lookup)
+    ;   call(Lookup), append(Ws, S, S0)
+    ).
+
+%% A copula clause: s, the copula (c) and the predicate (p) in the order
+%% the template keeps. The copula agrees with the subject's number and is
+%% chosen by the predicate's kind (Spanish `estar' for a place); a copula
+%% of no words is dropped. A predicate adjective agrees with the subject.
+ty_copula_clause(L, C) -->
+    { C = copula(_, _, np(_, N, _, _), Pred),
+      ty_order(L, copula, Order) },
+    ty_copula_parts(Order, L, C, Features, Rows),
+    { Features = [_, _, _, G],
+      ty_predicate_ok(Pred, Rows, G, N) }.
+
+ty_copula_parts([], _, _, _, _) --> [].
+ty_copula_parts([P|Ps], L, C, F, R) --> ty_copula_part(P, L, C, F, R), ty_copula_parts(Ps, L, C, F, R).
+
+ty_copula_part(s, L, copula(_, _, S, _), Features, _) --> ty_role(L, s, S, Features).
+ty_copula_part(c, L, copula(T, P, np(_, N, _, _), Pred), _, _) -->
+    { ty_predicate_kind(Pred, K) },
+    ty_copula_words(L, K, T, N, P).
+ty_copula_part(p, L, copula(_, _, _, Pred), _, Rows) --> ty_predicate(L, Pred, Rows).
+
+ty_predicate_kind(adj(_), adj).
+ty_predicate_kind(np(_, _, _, _), np).
+ty_predicate_kind(pp(_, _), pp).
+
+ty_copula_words(L, K, T, N, P) -->
+    ty_words(0, 3, Ws, ( ty_copula(L, K1, T, N, P, Ws), ty_fits(K1, K) )),
+    ty_meant(L, copula(K1), Ws).
+
+ty_predicate(L, adj(As), Rows) --> { As = [_|_] }, ty_adjs(L, As, Rows).
+ty_predicate(L, np(M, N, D, A), []) --> ty_np(L, np(M, N, D, A), _).
+ty_predicate(L, pp(Prep, NP), []) --> ty_pp(L, Prep, NP).
+
+ty_predicate_ok(adj(_), Rows, G, N) :- !,
+    forall(member(adj(RG, RN), Rows), ( ty_fits(RG, G), ty_fits(RN, N) )).
+ty_predicate_ok(_, _, _, _).
 
 %% Reading, the words are taken first and looked up (one to four of them),
 %% so a table of thousands of verbs is asked by the words read; writing,
 %% the form is looked up by its meaning and its words written.
-ty_verb_words(L, V, T, N, P, S0, S) :-
+ty_verb_words(L, V, T, N, P, Words, S0, S) :-
     (   nonvar(S0)
     ->  between(1, 4, K), length(Words, K), append(Words, S, S0),
         ty_verb_form(L, V, T, N, P, Words)
@@ -426,14 +897,18 @@ ty_verb_form(L, V, T, N, neg, Words) :-
     \+ ty_verb(L, V, T, N, neg, _).
 
 %% A role's phrase, with the marks the template puts before or after it.
-ty_role(L, Role, NP) -->
+ty_role(L, Role, NP) --> ty_role(L, Role, NP, _).
+
+ty_role(L, Role, NP, Features) -->
     ty_mark_slot(L, Role, before, Before),
     ty_np(L, NP, Features),
     ty_mark_slot(L, Role, after, After),
     { ty_marks_needed(L, Role, before, Features, Before),
       ty_marks_needed(L, Role, after, Features, After) }.
 
-ty_mark_slot(L, Role, Place, [W]) --> [W], { ty_mark(L, Role, Place, W, _) }.
+ty_mark_slot(L, Role, Place, [W]) -->
+    [W], { ty_mark(L, Role, Place, W, _) },
+    ty_meant(L, mark(Role), [W]).
 ty_mark_slot(_, _, _, []) --> [].
 
 ty_marks_needed(L, Role, Place, Features, Marks) :-
@@ -444,11 +919,14 @@ ty_marks_needed(L, Role, Place, Features, Marks) :-
 
 %% A noun phrase: its parts in an order the template keeps, then the check
 %% that the article and the adjectives agree with the noun.
-ty_np(L, NP, [Def, N, Anim]) -->
+%% Its features: definiteness, number, animacy (which the marks ask) and
+%% gender (which a predicate adjective agrees with).
+ty_np(L, NP, [Def, N, Anim, G]) -->
     { NP = np(_, N, Def, _),
       ty_order(L, np, Order) },
     ty_np_parts(Order, L, NP, got(Det, Noun, Adjs)),
-    { ty_np_ok(L, NP, Det, Noun, Adjs, Anim) }.
+    { Noun = noun(G, _),
+      ty_np_ok(L, NP, Det, Noun, Adjs, Anim) }.
 
 ty_np_parts([], _, _, _) --> [].
 ty_np_parts([P|Ps], L, NP, Got) --> ty_np_part(P, Ps, L, NP, Got), ty_np_parts(Ps, L, NP, Got).
@@ -460,7 +938,8 @@ ty_np_part(d, _, L, _, got(Det, _, _)) --> ty_det(L, Det).
 ty_np_part(n, Ps, L, np(M, N, _, As), got(_, noun(G, A), _)) -->
     [W],
     { ty_linked_here(Ps, As, Linked),
-      ty_linked_word(L, n, a, Linked, W0, W, ty_noun_form(L, M, G, A, N, W0)) }.
+      ty_linked_word(L, n, a, Linked, W0, W, ty_noun_form(L, M, G, A, N, W0)) },
+    ty_meant(L, noun(M), [W]).
 ty_np_part(a, _, L, np(_, _, _, As), got(_, _, Rows)) --> ty_adjs(L, As, Rows).
 
 ty_linked_here([a|_], As, Linked) :- !, ( As = [_|_], Linked = yes ; As = [], Linked = no ).
@@ -479,6 +958,7 @@ ty_adjs(L, [A|As], [adj(G, N)|Rows]) -->
     [W],
     { ( As = [_|_], Linked = yes ; As = [], Linked = no ),
       ty_linked_word(L, a, a, Linked, W0, W, ty_adjective(L, A, G, N, W0)) },
+    ty_meant(L, adjective(A), [W]),
     ty_adjs(L, As, Rows).
 
 %% The word W0 of the table, written W: itself, or its linked form when a
@@ -690,7 +1170,15 @@ ty_import_row(L, ty_verb(L, B, T, N, pos, [W])) :-
     ),
     reason_base(M3, B),
     (   tyi_hand(ty_verb(L, B, present, sg, pos, [W3])) -> ty_count(verb_in_the_hand_template), fail ; true ),
+    (   ty_copula_word(L, W3) -> ty_count(verb_that_is_a_copula_word), fail ; true ),
     member(T-N-W, [present-sg-W3, present-pl-W3p, past-sg-Wp, past-pl-Wpp]).
+
+%% A copula's word is the copula, never a verb: the vocabularies list `es'
+%% (`is'), `está' and `è' as verbs, and as verbs they read `el perro es en
+%% la casa', where the copula's own rows choose `está'.
+ty_copula_word(L, W) :-
+    tyi_hand(ty_copula(L, _, _, _, _, Ws)),
+    memberchk(W, Ws), !.
 
 %% An adjective's forms: a word with no gender stands for both, and each
 %% word needs its plural.
@@ -727,6 +1215,7 @@ ty_english_row(ty_verb(english, B, T, N, pos, [W])) :-
     ty_single(M3),
     reason_base(M3, B),
     \+ tyi_hand(ty_verb(english, B, _, _, _, _)),
+    \+ ty_copula_word(english, M3),
     (   tyi_form(past, P0, M3, verb), \+ tyi_entry(verb, _, M3, _), ty_single(P0)
     ->  P = P0
     ;   ty_apply_ending(english, past, B, P)

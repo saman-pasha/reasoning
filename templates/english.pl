@@ -82,3 +82,28 @@ ty_letters(english, vowel, [a, e, i, o, u]).
 ty_before(english, a, [[vowel]], an, space).
 ty_before(english, a, [[u, n, i], [u, s, e], [u, s, u], [e, u], [o, n, e]], a, space).
 ty_before(english, a, [[h, o, u, r], [h, o, n, e, s, t], [h, o, n, o, u, r], [h, e, i, r]], an, space).
+
+%% The copula clause: subject, copula, predicate; the copula agrees with the
+%% subject's number, for every kind of predicate.
+ty_order(english, copula, [s, c, p]).
+ty_copula(english, any, present, sg, pos, [is]).
+ty_copula(english, any, present, pl, pos, [are]).
+ty_copula(english, any, present, sg, neg, [is, not]).
+ty_copula(english, any, present, pl, neg, [are, not]).
+ty_copula(english, any, past, sg, pos, [was]).
+ty_copula(english, any, past, pl, pos, [were]).
+ty_copula(english, any, past, sg, neg, [was, not]).
+ty_copula(english, any, past, pl, neg, [were, not]).
+
+%% Prepositions before their noun phrase; the adjuncts at the clause's end.
+ty_order(english, pp, [p, x]).
+ty_adjunct(english, end).
+ty_adposition(english, in, [in]).
+ty_adposition(english, on, [on]).
+ty_adposition(english, with, [with]).
+ty_adposition(english, to, [to]).
+ty_adposition(english, from, [from]).
+ty_adverb(english, quickly, quickly).
+ty_adverb(english, slowly, slowly).
+ty_adverb(english, today, today).
+ty_adverb(english, here, here).

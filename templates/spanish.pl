@@ -12,6 +12,7 @@ ty_noun(spanish, boy, m, animate, niño, niños).
 ty_noun(spanish, girl, f, animate, niña, niñas).
 ty_noun(spanish, book, m, inanimate, libro, libros).
 ty_noun(spanish, mouse, m, animate, ratón, ratones).
+ty_noun(spanish, house, f, inanimate, casa, casas).
 
 %% The adjectives agree with the noun in gender and number.
 ty_adjective(spanish, big, any, sg, grande).
@@ -66,3 +67,52 @@ ty_before(spanish, la, [[a, g, u, a, end], [á, g, u, i, l, a, end], [h, a, m, b
 ty_before(spanish, una, [[a, g, u, a, end], [á, g, u, i, l, a, end], [h, a, m, b, r, e, end],
                          [a, l, m, a, end], [a, r, m, a, end], [a, u, l, a, end],
                          [h, a, c, h, a, end], [á, r, e, a, end], [h, a, b, l, a, end]], un, space).
+
+%% The copula clause: subject, copula, predicate. `ser' for a quality and
+%% a noun (`el perro es grande'), `estar' for a place (`el perro está en la
+%% casa'); the past is the imperfect, the past of a state.
+ty_order(spanish, copula, [s, c, p]).
+ty_copula(spanish, adj, present, sg, pos, [es]).
+ty_copula(spanish, adj, present, pl, pos, [son]).
+ty_copula(spanish, adj, past, sg, pos, [era]).
+ty_copula(spanish, adj, past, pl, pos, [eran]).
+ty_copula(spanish, np, present, sg, pos, [es]).
+ty_copula(spanish, np, present, pl, pos, [son]).
+ty_copula(spanish, np, past, sg, pos, [era]).
+ty_copula(spanish, np, past, pl, pos, [eran]).
+ty_copula(spanish, pp, present, sg, pos, [está]).
+ty_copula(spanish, pp, present, pl, pos, [están]).
+ty_copula(spanish, pp, past, sg, pos, [estaba]).
+ty_copula(spanish, pp, past, pl, pos, [estaban]).
+ty_copula(spanish, adj, present, sg, neg, [no, es]).
+ty_copula(spanish, adj, present, pl, neg, [no, son]).
+ty_copula(spanish, adj, past, sg, neg, [no, era]).
+ty_copula(spanish, adj, past, pl, neg, [no, eran]).
+ty_copula(spanish, np, present, sg, neg, [no, es]).
+ty_copula(spanish, np, present, pl, neg, [no, son]).
+ty_copula(spanish, np, past, sg, neg, [no, era]).
+ty_copula(spanish, np, past, pl, neg, [no, eran]).
+ty_copula(spanish, pp, present, sg, neg, [no, está]).
+ty_copula(spanish, pp, present, pl, neg, [no, están]).
+ty_copula(spanish, pp, past, sg, neg, [no, estaba]).
+ty_copula(spanish, pp, past, pl, neg, [no, estaban]).
+
+%% Prepositions; the adjuncts at the clause's end; `de el' is `del'.
+ty_order(spanish, pp, [p, x]).
+ty_adjunct(spanish, end).
+ty_adposition(spanish, in, [en]).
+ty_adposition(spanish, on, [sobre]).
+ty_adposition(spanish, with, [con]).
+ty_adposition(spanish, to, [a]).
+ty_adposition(spanish, from, [de]).
+ty_contraction(spanish, [de, el], del).
+ty_adverb(spanish, quickly, rápidamente).
+ty_adverb(spanish, slowly, lentamente).
+ty_adverb(spanish, today, hoy).
+ty_adverb(spanish, here, aquí).
+
+%% A word with several meanings in one place: `a' after a verb and before an
+%% animate noun is the object's mark (`ve al perro'); anywhere else it is
+%% `to' (`ve a un libro': sees, to a book).
+ty_sense(spanish, a, mark(o), [class(verb)], [opt(class(article)), class(noun, animate)]).
+ty_sense(spanish, a, adposition(to), [], []).

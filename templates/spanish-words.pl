@@ -2317,7 +2317,6 @@ ty_noun(spanish, hospitalisation, f, unknown, hospitalización, hospitalizacione
 ty_noun(spanish, hostility, f, unknown, hostilidad, hostilidades).
 ty_noun(spanish, hotel, m, unknown, hotel, hoteles).
 ty_noun(spanish, hour, f, unknown, hora, horas).
-ty_noun(spanish, house, f, unknown, casa, casas).
 ty_noun(spanish, humanism, m, unknown, humanismo, humanismos).
 ty_noun(spanish, humanist, m, animate, humanista, humanistas).
 ty_noun(spanish, humidity, f, unknown, humedad, humedades).
@@ -27172,10 +27171,6 @@ ty_verb(spanish, grieve, present, sg, pos, [apena]).
 ty_verb(spanish, grieve, present, pl, pos, [apenan]).
 ty_verb(spanish, grieve, past, sg, pos, [apenó]).
 ty_verb(spanish, grieve, past, pl, pos, [apenaron]).
-ty_verb(spanish, be, present, sg, pos, [es]).
-ty_verb(spanish, be, present, pl, pos, [son]).
-ty_verb(spanish, be, past, sg, pos, [fue]).
-ty_verb(spanish, be, past, pl, pos, [fueron]).
 ty_verb(spanish, orient, present, sg, pos, [orienta]).
 ty_verb(spanish, orient, present, pl, pos, [orientan]).
 ty_verb(spanish, orient, past, sg, pos, [orientó]).
@@ -34940,10 +34935,6 @@ ty_verb(spanish, call, present, sg, pos, [apellida]).
 ty_verb(spanish, call, present, pl, pos, [apellidan]).
 ty_verb(spanish, call, past, sg, pos, [apellidó]).
 ty_verb(spanish, call, past, pl, pos, [apellidaron]).
-ty_verb(spanish, be, present, sg, pos, [está]).
-ty_verb(spanish, be, present, pl, pos, [están]).
-ty_verb(spanish, be, past, sg, pos, [estuvo]).
-ty_verb(spanish, be, past, pl, pos, [estuvieron]).
 ty_verb(spanish, add, present, sg, pos, [suma]).
 ty_verb(spanish, add, present, pl, pos, [suman]).
 ty_verb(spanish, add, past, sg, pos, [sumó]).
@@ -36500,10 +36491,6 @@ ty_verb(spanish, stand, present, sg, pos, [aguanta]).
 ty_verb(spanish, stand, present, pl, pos, [aguantan]).
 ty_verb(spanish, stand, past, sg, pos, [aguantó]).
 ty_verb(spanish, stand, past, pl, pos, [aguantaron]).
-ty_verb(spanish, stand, present, sg, pos, [está]).
-ty_verb(spanish, stand, present, pl, pos, [están]).
-ty_verb(spanish, stand, past, sg, pos, [estuvo]).
-ty_verb(spanish, stand, past, pl, pos, [estuvieron]).
 ty_verb(spanish, strain, present, sg, pos, [estira]).
 ty_verb(spanish, strain, present, pl, pos, [estiran]).
 ty_verb(spanish, strain, past, sg, pos, [estiró]).

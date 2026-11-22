@@ -12,6 +12,7 @@ ty_noun(italian, boy, m, animate, ragazzo, ragazzi).
 ty_noun(italian, girl, f, animate, ragazza, ragazze).
 ty_noun(italian, book, m, inanimate, libro, libri).
 ty_noun(italian, mouse, m, animate, topo, topi).
+ty_noun(italian, house, f, inanimate, casa, case).
 
 %% The adjectives agree with the noun in gender and number.
 ty_adjective(italian, big, any, sg, grande).
@@ -64,3 +65,58 @@ ty_before(italian, la, [[vowel], [h]], 'l\'', joined).
 ty_before(italian, i, [[vowel], [h], [s, consonant], [z], [g, n], [p, s], [p, n], [x], [y]], gli, space).
 ty_before(italian, un, [[s, consonant], [z], [g, n], [p, s], [p, n], [x], [y]], uno, space).
 ty_before(italian, una, [[vowel]], 'un\'', joined).
+
+%% The copula clause: subject, copula, predicate; `essere' for every kind
+%% of predicate, the past the imperfetto.
+ty_order(italian, copula, [s, c, p]).
+ty_copula(italian, any, present, sg, pos, [è]).
+ty_copula(italian, any, present, pl, pos, [sono]).
+ty_copula(italian, any, present, sg, neg, [non, è]).
+ty_copula(italian, any, present, pl, neg, [non, sono]).
+ty_copula(italian, any, past, sg, pos, [era]).
+ty_copula(italian, any, past, pl, pos, [erano]).
+ty_copula(italian, any, past, sg, neg, [non, era]).
+ty_copula(italian, any, past, pl, neg, [non, erano]).
+
+%% Prepositions; the adjuncts at the clause's end. A preposition and the
+%% article after it are one word: `nel', `nello', `nell'' joined to its
+%% noun, `negli'; the same for `su', `a' and `da'.
+ty_order(italian, pp, [p, x]).
+ty_adjunct(italian, end).
+ty_adposition(italian, in, [in]).
+ty_adposition(italian, on, [su]).
+ty_adposition(italian, with, [con]).
+ty_adposition(italian, to, [a]).
+ty_adposition(italian, from, [da]).
+ty_contraction(italian, [in, il], nel).
+ty_contraction(italian, [in, lo], nello).
+ty_contraction(italian, [in, 'l\''], 'nell\'').
+ty_contraction(italian, [in, la], nella).
+ty_contraction(italian, [in, i], nei).
+ty_contraction(italian, [in, gli], negli).
+ty_contraction(italian, [in, le], nelle).
+ty_contraction(italian, [su, il], sul).
+ty_contraction(italian, [su, lo], sullo).
+ty_contraction(italian, [su, 'l\''], 'sull\'').
+ty_contraction(italian, [su, la], sulla).
+ty_contraction(italian, [su, i], sui).
+ty_contraction(italian, [su, gli], sugli).
+ty_contraction(italian, [su, le], sulle).
+ty_contraction(italian, [a, il], al).
+ty_contraction(italian, [a, lo], allo).
+ty_contraction(italian, [a, 'l\''], 'all\'').
+ty_contraction(italian, [a, la], alla).
+ty_contraction(italian, [a, i], ai).
+ty_contraction(italian, [a, gli], agli).
+ty_contraction(italian, [a, le], alle).
+ty_contraction(italian, [da, il], dal).
+ty_contraction(italian, [da, lo], dallo).
+ty_contraction(italian, [da, 'l\''], 'dall\'').
+ty_contraction(italian, [da, la], dalla).
+ty_contraction(italian, [da, i], dai).
+ty_contraction(italian, [da, gli], dagli).
+ty_contraction(italian, [da, le], dalle).
+ty_adverb(italian, quickly, rapidamente).
+ty_adverb(italian, slowly, lentamente).
+ty_adverb(italian, today, oggi).
+ty_adverb(italian, here, qui).

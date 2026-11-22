@@ -21218,10 +21218,6 @@ ty_verb(english, irritate, present, sg, pos, [irritates]).
 ty_verb(english, irritate, present, pl, pos, [irritate]).
 ty_verb(english, irritate, past, sg, pos, [irritated]).
 ty_verb(english, irritate, past, pl, pos, [irritated]).
-ty_verb(english, be, present, sg, pos, [is]).
-ty_verb(english, be, present, pl, pos, [be]).
-ty_verb(english, be, past, sg, pos, [were]).
-ty_verb(english, be, past, pl, pos, [were]).
 ty_verb(english, isolate, present, sg, pos, [isolates]).
 ty_verb(english, isolate, present, pl, pos, [isolate]).
 ty_verb(english, isolate, past, sg, pos, [isolated]).

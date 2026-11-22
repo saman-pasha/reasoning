@@ -67,7 +67,28 @@ form rule is a ty_before/5 or ty_linked/5 row, never a reader of its own.
 **test/typology.pl runs each section ONCE** (`forall(..., once(S))`): as
 one conjunction, a red check made main backtrack into the sections and
 run the later ones again over a changed state, a loop and a wrong reading
-that looked like the engine's and were the test's.
+that looked like the engine's and were the test's. **A word with several
+meanings** (1.22.0): each word the grammar takes asks `ty_meant//3` after
+its lookup, with the Sense it was taken in (`noun(M)`, `mark(Role)`, ...);
+the read's context is a backtrackable global (`'$ty_context'`,
+`ctx(Id, Words, Given)`, b_setval/2), `none` in the writer's first parse,
+and what a check works out is kept under the context's Id in a
+non-backtrackable global (`ty_memo/4`), never in the knowledge base --
+without it a parse that backtracks over `niño` and `ve` took 412 ms, the
+same parse unchecked 10. A new place the grammar takes a word adds its
+`ty_meant//3`. **Topics are found from the topic, by meaning**
+(`ty_context_has/4`), never by looking each word of the sentence up by its
+form: cocolog 3.65.0 walks every row for a call keyed by a one-element
+list (`ty_verb(es, M, T, N, P, [W])`: 1.3 ms over 40 000 facts, with only
+the list bound too, where SWI-Prolog 9.0.4's deep index takes 1.5 µs and
+an atom key 14 µs), so a verb looked up by its word costs some 0.7 ms
+here. **The word checked is no context of itself**: English `saw` (the
+noun, a tool) chose the verb `to saw` over `see` until the word was
+excluded. **A cut in a `ty_missing/2` body cuts the clauses after it**:
+Phase 4's `adjunct_place` clause had one, and `typology_check/2` checked
+nothing after it for every language with an adposition or an adverb
+(1.22.0 found it; `once/1` now). The case takes some 170 s, 28 of them the
+check over the full tables.
 
 **Every reader has two modes, static and live** (1.16.0; reason.pl's header,
 STATIC AND LIVE, and live.pl's). What a session must keep:

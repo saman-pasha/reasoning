@@ -3390,7 +3390,6 @@ ty_noun(italian, horseshoe, f, unknown, ferratura, ferrature).
 ty_noun(italian, hospital, m, unknown, ospedale, ospedali).
 ty_noun(italian, hostel, m, unknown, ostello, ostelli).
 ty_noun(italian, hour, f, unknown, ora, ore).
-ty_noun(italian, house, f, unknown, casa, case).
 ty_noun(italian, howitzer, m, unknown, obice, obici).
 ty_noun(italian, humiliation, f, unknown, umiliazione, umiliazioni).
 ty_noun(italian, humorist, m, animate, umorista, umoristi).
@@ -24802,10 +24801,6 @@ ty_verb(italian, yoke, present, sg, pos, [aggioga]).
 ty_verb(italian, yoke, present, pl, pos, [aggiogano]).
 ty_verb(italian, yoke, past, sg, pos, [aggiogò]).
 ty_verb(italian, yoke, past, pl, pos, [aggiogarono]).
-ty_verb(italian, be, present, sg, pos, [è]).
-ty_verb(italian, be, present, pl, pos, [sono]).
-ty_verb(italian, be, past, sg, pos, [fu]).
-ty_verb(italian, be, past, pl, pos, [furono]).
 ty_verb(italian, disappear, present, sg, pos, [spare]).
 ty_verb(italian, disappear, present, pl, pos, [spaiono]).
 ty_verb(italian, disappear, past, sg, pos, [sparve]).

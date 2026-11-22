@@ -100,7 +100,29 @@ main :-
            'پسر گربه‌ی سیاه را می‌بیند.' ]),
     ( typology_read(italian, 'Il avvocato vede i studenti.', _) -> R9 = read ; R9 = refused ),
     must('what the writer would not write is not read', R9, refused),
+    meanings,
     format("~ndone~n", []).
+
+%% 10. A WORD WITH SEVERAL MEANINGS IN ONE PLACE. First the words around it
+%% choose, a lookback and a lookahead: ty_sense/5 makes Spanish `a' the
+%% object's mark after a verb and before an animate noun, and `to'
+%% anywhere else. Then the topics of the context (templates/topics.pl, one
+%% table for every language): `hoja' is a leaf, a sheet and a blade; beside
+%% `árbol' it is a leaf, and after a sentence about a knife a blade. The
+%% writer writes a word only where its context gives it the meaning meant.
+meanings :-
+    once(typology_read(spanish, 'El niño ve a un libro.', IR1)),
+    must('a before a thing is to', IR1,
+         clause(see, present, pos, np(boy, sg, def, []), none, [pp(to, np(book, sg, indef, []))])),
+    once(typology_read(spanish, 'El niño ve la hoja en el árbol.', IR2)),
+    must('hoja beside a tree is a leaf', IR2,
+         clause(see, present, pos, np(boy, sg, def, []), np(leaf, sg, def, []), [pp(in, np(tree, sg, def, []))])),
+    typology_translate_text(spanish, english, ['El hombre ve el cuchillo.', 'El hombre ve la hoja.'], E3),
+    must('after a sentence about a knife, a blade', E3, ['The man sees the knife.', 'The man sees the blade.']),
+    typology_write(spanish, clause(see, present, pos, np(boy, sg, def, []), np(blade, sg, def, []),
+                                   [pp(in, np(book, sg, def, []))]), S4),
+    must('a blade beside a book is cuchilla: hoja there would be a sheet', S4,
+         'El niño ve la cuchilla en el libro.').
 
 new_language :-
     assertz(ty_order(verbish, clause, [v, s, o])),

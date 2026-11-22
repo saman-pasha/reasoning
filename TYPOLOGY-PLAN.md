@@ -105,17 +105,49 @@ Spanish and Italian apocope (`gran`). Then `cat` goes into Persian, and
 Italian nouns that start with `s` and a consonant, `z` or a vowel are
 right.
 
-## Phase 4: more levels
+## Phase 4: more levels (in part done, reasoning 1.22.0)
 
-1. The copula clause: `the dog is big`, `the dog is a cat` (`s cop p`); a
-   copula that may be dropped.
-2. The adposition phrase (`p np`, a preposition or a postposition) as a
-   verb's complement, with its contractions (`del`, `al`, `nel`).
-3. Adverbs, and the place of the negation as a part of the order, not
-   only a form.
+Done:
+
+1. **The copula clause** (`s c p`, six orders): `copula(T, P, S, Pred)`,
+   the predicate an adjective that agrees with the subject, a noun phrase
+   or an adposition phrase. `ty_copula/6` chooses the copula by the
+   predicate's kind (Spanish `es` for a quality, `está` for a place); a
+   copula of no words is dropped, though no template drops one yet.
+2. **The adposition phrase** (`p x`, two orders: a preposition or a
+   postposition) as an adjunct of the clause, where `ty_adjunct/2` puts
+   the adjuncts (start, end, before or after a part), with its
+   contractions (`del`, `al`, `nel`, `nell'acqua`, `sull'albero`).
+3. **Adverbs** as adjuncts (`ty_adverb/3`).
+6. **A word with several meanings in one place** (not in the first plan;
+   the owner's, 2026-11-22). Spanish `a` became both the object's mark and
+   `to`, and `ve al perro` read as `sees, to the dog` too. Two things now
+   choose the meaning, the first that decides:
+   - the words around the word, a lookback and a lookahead:
+     `ty_sense(L, Word, Sense, Back, Ahead)`, its patterns words, classes
+     (`class(verb)`, `class(noun, animate)`), `opt(Item)` and any word;
+   - the topics of the context: `templates/topics.pl`, one table of
+     `ty_topic(Meaning, Topic)` for every language, a meaning its own
+     topic too; the context is the topics given (the sentences before:
+     `typology_read/4`, `typology_read_text/3`,
+     `typology_translate_text/4`) and the other words of the sentence with
+     one meaning in their class. `hoja` beside `libro` is a sheet, beside
+     `árbol` a leaf, after a sentence about a knife a blade.
+   The writer writes the first way whose words, read in their context,
+   give the IR back: a blade beside a book is `cuchilla`, not `hoja`.
+
+Not yet:
+
+3. The place of the negation as a part of the order, not only a form.
+   The adposition phrase as a verb's complement (it is an adjunct now).
 4. Questions: yes or no (a particle, inversion, or the order unchanged),
    and question words (in place or at the front).
 5. Relative clauses: the marker, its place, and the gap.
+6. The topic table is written by hand (some thirty rows). The
+   vocabularies' class lines (`is a time`, `is a country`, `is a
+   measure`, `is an institution`) can fill a part of it; the rest is
+   Phase 8's (a model fills a slot in live mode, with the reference
+   sentences as its check).
 
 ## Phase 5: more features
 

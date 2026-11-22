@@ -11,6 +11,7 @@ ty_noun(persian, dog, none, animate, 'سگ', 'سگ‌ها').
 ty_noun(persian, mouse, none, animate, 'موش', 'موش‌ها').
 ty_noun(persian, cat, none, animate, 'گربه', 'گربه‌ها').
 ty_noun(persian, house, none, inanimate, 'خانه', 'خانه‌ها').
+ty_noun(persian, animal, none, animate, 'حیوان', 'حیوان‌ها').
 ty_noun(persian, boy, none, animate, 'پسر', 'پسرها').
 ty_noun(persian, girl, none, animate, 'دختر', 'دخترها').
 ty_noun(persian, book, none, inanimate, 'کتاب', 'کتاب‌ها').
@@ -57,3 +58,27 @@ ty_linked(persian, a, a, 'ه', 'ه‌ی').
 ty_linked(persian, a, a, 'سیاه', 'سیاه').
 ty_linked(persian, a, a, 'ا', 'ای').
 ty_linked(persian, a, a, 'و', 'وی').
+
+%% The copula clause: subject, predicate, copula, the copula last.
+ty_order(persian, copula, [s, p, c]).
+ty_copula(persian, any, present, sg, pos, ['است']).
+ty_copula(persian, any, present, pl, pos, ['هستند']).
+ty_copula(persian, any, present, sg, neg, ['نیست']).
+ty_copula(persian, any, present, pl, neg, ['نیستند']).
+ty_copula(persian, any, past, sg, pos, ['بود']).
+ty_copula(persian, any, past, pl, pos, ['بودند']).
+ty_copula(persian, any, past, sg, neg, ['نبود']).
+ty_copula(persian, any, past, pl, neg, ['نبودند']).
+
+%% Prepositions before their noun phrase; the adjuncts before the verb.
+ty_order(persian, pp, [p, x]).
+ty_adjunct(persian, before(v)).
+ty_adposition(persian, in, ['در']).
+ty_adposition(persian, on, ['روی']).
+ty_adposition(persian, with, ['با']).
+ty_adposition(persian, to, ['به']).
+ty_adposition(persian, from, ['از']).
+ty_adverb(persian, quickly, 'تند').
+ty_adverb(persian, slowly, 'آهسته').
+ty_adverb(persian, today, 'امروز').
+ty_adverb(persian, here, 'اینجا').

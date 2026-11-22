@@ -14,7 +14,8 @@
 main :-
     forall(member(L, [english, spanish, italian, persian]), typology_load(L)),
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
-                      word_tables, reproduced, free_order, incomplete, blank_template]),
+                      copulas, adjuncts, meanings, word_tables, reproduced, free_order, incomplete,
+                      blank_template]),
            once(S)),
     checks_done.
 
@@ -96,7 +97,6 @@ refused :-
                     spanish-'La niña pequeño duerme.'-'an adjective that does not agree',
                     spanish-'Los niños ve al gato.'-'a verb that does not agree',
                     spanish-'El niño ve el perro.'-'an animate object with no personal a',
-                    spanish-'El niño ve a un libro.'-'a personal a before a thing',
                     english-'The dog black sleeps.'-'an English adjective after its noun',
                     english-'Dog the sleeps.'-'an English article after its noun',
                     persian-'پسر سگ می‌بیند.'-'a Persian object that is neither definite nor indefinite',
@@ -153,6 +153,161 @@ sounds :-
              atomic_list_concat([L, ': not read: ', Why], Label),
              check(Label, R, no) )).
 
+%% ---- the copula clause and the adjuncts (Phase 4) -------------------------------
+
+%% Each IR written in each language, and read back: the IR is one of its
+%% readings. A word of several meanings has a reading each, and with no
+%% valency yet a verb's object can also read as an adjunct (`ve al perro':
+%% sees the dog, or sees, to the dog), so the IR need not be the first.
+written_each(Section, Rows) :-
+    forall(member(IR-Wants, Rows),
+           forall(member(L-Want, Wants),
+                  ( typology_write(L, IR, T),
+                    atomic_list_concat([L, ': ', Want], Label),
+                    check(Label, T, Want),
+                    ( typology_read(L, T, IR) -> R = read ; R = not_read ),
+                    atomic_list_concat([L, ': read back, the IR among its readings: ', Want], Label2),
+                    check(Label2, R, read) ))),
+    format("   (~w)~n", [Section]).
+
+copulas :-
+    section('the copula clause: subject, copula and predicate in the template''s order'),
+    written_each(copula, [
+        copula(present, pos, np(dog, sg, def, []), adj([big]))-
+            [english-'The dog is big.', spanish-'El perro es grande.',
+             italian-'Il cane è grande.', persian-'سگ بزرگ است.'],
+        copula(past, neg, np(dog, pl, def, []), adj([black]))-
+            [english-'The dogs were not black.', spanish-'Los perros no eran negros.',
+             italian-'I cani non erano neri.', persian-'سگ‌ها سیاه نبودند.'],
+        copula(present, pos, np(girl, sg, def, []), adj([small]))-
+            [spanish-'La niña es pequeña.', italian-'La ragazza è piccola.'],
+        copula(present, pos, np(dog, sg, def, []), np(animal, sg, indef, []))-
+            [english-'The dog is an animal.', spanish-'El perro es un animal.',
+             italian-'Il cane è un animale.', persian-'سگ یک حیوان است.'],
+        copula(present, pos, np(dog, sg, def, []), pp(in, np(house, sg, def, [])))-
+            [english-'The dog is in the house.', spanish-'El perro está en la casa.',
+             italian-'Il cane è nella casa.', persian-'سگ در خانه است.'] ]),
+    forall(member(L-T-Why,
+                  [ spanish-'El perro es en la casa.'-'ser before a place (estar is the template''s)',
+                    english-'The dog are big.'-'a copula that does not agree',
+                    spanish-'La niña es pequeño.'-'a predicate adjective that does not agree',
+                    persian-'سگ است بزرگ.'-'a Persian copula before its predicate' ]),
+           ( yes_no(typology_read(L, T, _), R),
+             atomic_list_concat([L, ': not read: ', Why], Label),
+             check(Label, R, no) )),
+    aggregate_all(count, copula_sample(_), N),
+    forall(member(L, [english, spanish, italian, persian]),
+           ( aggregate_all(count, ( copula_sample(IR), \+ round_trip(L, IR) ), Bad),
+             atomic_list_concat([L, ': each of ', N, ' copula clauses reads back as its own IR'], Label),
+             check(Label, Bad, 0) )).
+
+copula_sample(copula(T, P, S, Pred)) :-
+    member(T, [present, past]), member(P, [pos, neg]),
+    sample_np([boy, girl], [[], [small]], S),
+    member(Pred, [adj([red]), np(animal, sg, indef, []), pp(in, np(house, sg, def, []))]).
+
+adjuncts :-
+    section('adjuncts: adposition phrases and adverbs, where the template puts them'),
+    written_each(adjuncts, [
+        clause(see, present, pos, np(boy, sg, def, []), np(dog, sg, def, []), [pp(in, np(house, sg, def, []))])-
+            [english-'The boy sees the dog in the house.', spanish-'El niño ve al perro en la casa.',
+             italian-'Il ragazzo vede il cane nella casa.', persian-'پسر سگ را در خانه می‌بیند.'],
+        clause(sleep, present, pos, np(boy, sg, def, []), none, [adv(today)])-
+            [english-'The boy sleeps today.', spanish-'El niño duerme hoy.',
+             italian-'Il ragazzo dorme oggi.', persian-'پسر امروز می‌خوابد.'],
+        clause(sleep, past, pos, np(boy, pl, def, []), none, [pp(with, np(dog, sg, def, [black])), adv(here)])-
+            [english-'The boys slept with the black dog here.', spanish-'Los niños durmieron con el perro negro aquí.',
+             italian-'I ragazzi dormirono con il cane nero qui.', persian-'پسرها با سگ سیاه اینجا خوابیدند.'],
+        clause(sleep, present, pos, np(boy, sg, def, []), none, [pp(in, np(water, sg, def, []))])-
+            [italian-'Il ragazzo dorme nell\'acqua.'],
+        clause(sleep, present, pos, np(boy, sg, def, []), none, [pp(in, np(student, sg, def, []))])-
+            [italian-'Il ragazzo dorme nello studente.'],
+        clause(sleep, present, pos, np(boy, sg, def, []), none, [pp(in, np(student, pl, def, []))])-
+            [italian-'Il ragazzo dorme negli studenti.'],
+        clause(sleep, present, pos, np(boy, sg, def, []), none, [pp(from, np(book, sg, def, []))])-
+            [spanish-'El niño duerme del libro.'] ]),
+    forall(member(L-T-Why,
+                  [ italian-'Il cane dorme in la casa.'-'in la, which is nella',
+                    spanish-'El niño duerme de el libro.'-'de el, which is del',
+                    persian-'پسر سگ را می‌بیند در خانه.'-'a Persian adjunct after the verb',
+                    english-'The boy in the house sees the dog.'-'an English adjunct after the subject' ]),
+           ( yes_no(typology_read(L, T, _), R),
+             atomic_list_concat([L, ': not read: ', Why], Label),
+             check(Label, R, no) )).
+
+%% ---- a word with several meanings ----------------------------------------------
+
+meanings :-
+    section('a word with several meanings: the words around it, the topics'),
+    %% The lookback and the lookahead: Spanish `a' after a verb and before
+    %% an animate noun is the mark; before a thing it is `to'.
+    %% (niño and ve have several meanings of their own; only the object's
+    %% part of each reading is compared.)
+    object_parts('El niño ve al perro.', R1),
+    check('Spanish: a before an animate noun after a verb is the mark', R1,
+          [np(dog, sg, def, [])-[]]),
+    object_parts('El niño ve a un libro.', R2),
+    check('Spanish: a before a thing is to', R2,
+          [none-[pp(to, np(book, sg, indef, []))]]),
+    ( typology_write(spanish, clause(see, present, pos, np(boy, sg, def, []), none,
+                                     [pp(to, np(dog, sg, def, []))]), _) -> R3 = yes ; R3 = no ),
+    check('Spanish: `to the dog'' after a verb is not written (it reads as the mark)', R3, no),
+    %% The topics of the sentence's other words.
+    hoja_meanings('El niño ve la hoja.', M4),
+    check('Spanish: hoja alone is a leaf, a sheet and a blade', M4, [blade, leaf, sheet]),
+    hoja_meanings('El niño ve la hoja en el libro.', M5),
+    check('Spanish: hoja beside a book is a sheet', M5, [sheet]),
+    hoja_meanings('El niño ve la hoja en el árbol.', M6),
+    check('Spanish: hoja beside a tree is a leaf', M6, [leaf]),
+    once(typology_read(spanish, 'El hombre ve la carta en el restaurante.', IR7)),
+    check('Spanish: carta in a restaurant is the menu', IR7,
+          clause(see, present, pos, np(man, sg, def, []), np(menu, sg, def, []),
+                 [pp(in, np(restaurant, sg, def, []))])),
+    %% The topics of the sentences before.
+    typology_translate_text(spanish, english, ['El hombre ve el cuchillo.', 'El hombre ve la hoja.'], T8),
+    check('Spanish into English: hoja after a knife is a blade', T8,
+          ['The man sees the knife.', 'The man sees the blade.']),
+    typology_translate_text(spanish, english, ['El hombre ve el libro.', 'El hombre ve la hoja.'], T9),
+    check('Spanish into English: hoja after a book is a sheet', T9,
+          ['The man sees the book.', 'The man sees the sheet.']),
+    typology_topics(clause(see, present, pos, np(man, sg, def, []), np(knife, sg, def, [])), T10),
+    check('the topics of an IR: its meanings and their topics', T10, [knife, man, see, tool]),
+    %% The writer writes a word only where its context gives the meaning.
+    typology_write(spanish, clause(see, present, pos, np(boy, sg, def, []), np(blade, sg, def, []),
+                                   [pp(in, np(book, sg, def, []))]), T11),
+    check('Spanish: a blade beside a book is written cuchilla, not hoja', T11,
+          'El niño ve la cuchilla en el libro.'),
+    typology_write(spanish, clause(see, present, pos, np(boy, sg, def, []), np(sheet, sg, def, []),
+                                   [pp(in, np(book, sg, def, []))]), T12),
+    check('Spanish: a sheet beside a book is hoja', T12, 'El niño ve la hoja en el libro.'),
+    %% A row the check refuses, in a small language of its own.
+    assertz(ty_adposition(tiny, to, [ta])),
+    assertz(ty_sense(tiny, ta, noun(dog), [], [])),
+    assertz(ty_sense(tiny, ta, adposition(to), [klass(verb)], [])),
+    assertz(ty_sense(tiny, ta, adposition(to), [class(verb)], [opt(class(noun, animate))])),
+    typology_check(tiny, M13),
+    retractall(ty_sense(tiny, _, _, _, _)),
+    retractall(ty_adposition(tiny, _, _)),
+    findall(B, ( member(B, M13), B = bad(ty_sense(_, _, _, _, _)) ), Bad13),
+    check('typology_check/2 names a sense the word lacks and an item that is none', Bad13,
+          [bad(ty_sense(tiny, ta, adposition(to), [klass(verb)], [])),
+           bad(ty_sense(tiny, ta, noun(dog), [], []))]).
+
+%% The object and the adjuncts of every reading of a Spanish sentence.
+object_parts(T, Ps) :-
+    findall(O-Js, ( typology_read(spanish, T, IR),
+                    ( IR = clause(_, _, _, _, O), Js = []
+                    ; IR = clause(_, _, _, _, O, Js) ) ), Ps0),
+    sort(Ps0, Ps).
+
+%% The meanings of hoja, the object, in every reading of a sentence.
+hoja_meanings(T, Ms) :-
+    findall(M, ( typology_read(spanish, T, IR), ir_object_noun(IR, M) ), Ms0),
+    sort(Ms0, Ms).
+
+ir_object_noun(clause(_, _, _, _, np(M, _, _, _)), M).
+ir_object_noun(clause(_, _, _, _, np(M, _, _, _), _), M).
+
 %% ---- the word tables from corpus/vocabulary --------------------------------------
 
 word_tables :-
@@ -166,8 +321,8 @@ word_tables :-
              atomic_list_concat([L, ' has its word tables: ', Want, ' rows or more'], Label),
              check(Label, R, enough) )),
     typology_translate(spanish, english, 'El abogado vio una casa roja.', E1),
-    check('Spanish into English with the vocabulary: a word''s first meaning there is read first', E1,
-          'The lawyer saw a red home.'),
+    check('Spanish into English with the vocabulary: the hand template''s casa (house) before the vocabulary''s first meaning (home)', E1,
+          'The lawyer saw a red house.'),
     typology_translate(spanish, italian, 'Los médicos no comieron las manzanas verdes.', I2),
     check('Spanish into Italian: the plural, the past, the negation rule, agreement', I2,
           'I medici non mangiarono le mele verdi.'),
@@ -248,4 +403,4 @@ blank_template :-
     split_string(S, "\n", "", Lines),
     include([Line]>>sub_string(Line, 0, _, _, 'ty_order(klingon'), Lines, Orders),
     length(Orders, N),
-    check('every order of every level is offered', N, 12).
+    check('every order of every level is offered: 6 + 6 + 6 + 2', N, 20).
