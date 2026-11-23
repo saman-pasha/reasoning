@@ -135,6 +135,7 @@ main :-
     blank_template,
     english_noun_classes,
     english_verb_classes,
+    english_modifiers,
     format("~ndone~n", []).
 
 
@@ -758,6 +759,20 @@ english_verb_classes :-
     must('and its class''s present', W4, writes),
     typology_read(english, 'The girl has studied the book.', IR5),
     must('read', IR5, clause(study, perfect, pos, np(girl, sg, def, []), np(book, sg, def, []))).
+
+%% 44. THE ENGLISH ADJECTIVES AND ADVERBS: one fact each. An English
+%% adjective has one form, so it is one ty_adjective/5 fact, its word its
+%% meaning (templates/english-adjectives.pl, some 17 700), and an adverb one
+%% ty_adverb/3 fact (-adverbs.pl, some 1 080), both from lexicon/ and the
+%% vocabularies; ty_closed/2's words of grammar are neither. Every English
+%% row now has a file of its kind, so there is no English words file.
+english_modifiers :-
+    typology_read(english, 'The team played poorly.', IR1),
+    must('an imported adverb', IR1, clause(play, past, pos, np(team, sg, def, []), none, [adv(poorly)])),
+    typology_read(english, 'The wine was unclouded.', IR2),
+    must('an imported adjective', IR2, copula(past, pos, np(wine, sg, def, []), adj([unclouded]))),
+    ( ty_adverb(english, very, _) -> W3 = adverb ; W3 = grammar ),
+    must('very waits for its grammar', W3, grammar).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -1884,6 +1884,29 @@ english_verbs :-
     findall(IR6, typology_read(english, 'The girl has studied the book.', IR6), IRs6),
     check('read', IRs6, [clause(study, perfect, pos, np(girl, sg, def, []), np(book, sg, def, []))]).
 
+%% 1.58.0: the English adjectives and adverbs, one fact each in a file of
+%% its kind (templates/english-adjectives.pl, -adverbs.pl), from the
+%% vocabularies and lexicon/.
+english_modifiers :-
+    section('the English adjectives and adverbs: one fact each'),
+    aggregate_all(count, ty_adjective(english, _, _, _, _), NA),
+    ( NA >= 17000 -> R1 = enough ; R1 = NA ),
+    check('17 000 English adjectives or more', R1, enough),
+    aggregate_all(count, ty_adverb(english, _, _), NV),
+    ( NV >= 1000 -> R2 = enough ; R2 = NV ),
+    check('1 000 English adverbs or more', R2, enough),
+    findall(M3, ( member(M3, [unclouded, gravel, poorly, eagerly, the, very, not]),
+                  once(( ty_adjective(english, M3, _, _, _) ; ty_adverb(english, M3, _) )) ), Ms3),
+    check('an imported adjective and adverb, and no word of grammar', Ms3, [unclouded, gravel, poorly, eagerly]),
+    findall(IR4, typology_read(english, 'The team played poorly.', IR4), IRs4),
+    check('an imported adverb is an adjunct', IRs4,
+          [clause(play, past, pos, np(team, sg, def, []), none, [adv(poorly)])]),
+    findall(IR5, typology_read(english, 'The wine was unclouded.', IR5), IRs5),
+    check('an imported adjective is a predicate', IRs5,
+          [copula(past, pos, np(wine, sg, def, []), adj([unclouded]))]),
+    typology_write(english, clause(play, past, pos, np(team, sg, def, [unclouded]), none, [adv(eagerly)]), W6),
+    check('and both are written', W6, 'The unclouded team played eagerly.').
+
 %% 1.56.0: the English nouns in the class design. A class of the plural is
 %% one fact (ty_noun_class/3), a noun of a class one fact (ty_noun_in/6,
 %% templates/english-nouns.pl, from the vocabularies and lexicon/), an
@@ -1925,8 +1948,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 278 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 278 sentences read at 1.57.0 are read', R1, yes),
+    ( K >= 428 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 428 sentences read at 1.58.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 
@@ -2199,19 +2222,24 @@ class_topics :-
 reproduced :-
     section('the word tables are what the import writes'),
     scratch(Dir),
-    forall(member(L-Base-Also, [spanish-'spanish-words'-[], italian-'italian-words'-[],
-                                english-'english-words'-['english-nouns', 'english-verbs'],
-                                topics-'topics-words'-[], template-template-[]]),
+    forall(member(L-Base-Files, [spanish-'spanish-words'-['spanish-words'], italian-'italian-words'-['italian-words'],
+                                 english-'english-words'-['english-nouns', 'english-verbs', 'english-adjectives',
+                                                          'english-adverbs'],
+                                 topics-'topics-words'-['topics-words'], template-template-[template]]),
            ( atomic_list_concat([Dir, '/', Base, '.pl'], Fresh),
              with_output_to(string(_), typology_import(L, Fresh)),
-             forall(member(B, [Base|Also]),
+             forall(member(B, Files),
                     ( atomic_list_concat([Dir, '/', B, '.pl'], FreshB),
                       read_file_to_codes(FreshB, New),
                       atomic_list_concat(['templates/', B, '.pl'], Committed),
                       read_file_to_codes(Committed, Old),
                       ( New == Old -> R = same ; R = differs ),
                       atomic_list_concat(['templates/', B, '.pl is what typology_import(', L, ') writes'], Label),
-                      check(Label, R, same) )) )).
+                      check(Label, R, same) )) )),
+    atomic_list_concat([Dir, '/english-words.pl'], NoWords),
+    ( exists_file(NoWords) -> R2 = written ; R2 = none ),
+    ( exists_file('templates/english-words.pl') -> R3 = there ; R3 = none ),
+    check('every English row has a file of its kind, so no English words file is written', R2-R3, none-none).
 
 %% ---- a language with two orders ---------------------------------------------------
 

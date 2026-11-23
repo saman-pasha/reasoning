@@ -24,12 +24,17 @@ the count to the last one below.
 | 1.55.0 | 215 | 2.7 % | the start: 5 285 sentences have a word no table has, and 2 500 have no unknown word but a structure the grammar has not |
 | 1.56.0 | 250 | 3.1 % | the English nouns in the class design: 20 078 nouns, from the vocabularies and `lexicon/` |
 | 1.57.0 | 278 | 3.5 % | the English verbs in the class design: 3 835 regular verbs, 217 irregular ones (`do` stays a word of grammar) |
+| 1.58.0 | 428 | 5.4 % | the English adjectives and adverbs, one fact each: 17 703 adjectives, 1 081 adverbs, from `lexicon/` and the vocabularies |
 
 At 1.55.0 the commonest words no table has are words of grammar, not
 nouns: `and` 451 times, `by` 154, `as` 126, `out` 95, `this` 95, `all` 92,
 `into` 79, `there` 69, `up` 68, `but` 67, `than` 53, `some` 50, `could` 48,
 `more` 47, `very` 46, `one` 45, `two` 44, `many` 43, `every` 36, `or` 36,
 `must` 29.
+
+At 1.58.0, with the four kinds of words in, 2 255 words no table has, and
+the commonest are still words of grammar (`and` 451, `by` 154, `as` 126):
+step 3 is next.
 
 **The design of a template: the classes first, then the items** (the
 owner, 2026-11-23). In each part of a language the template defines the
@@ -58,7 +63,7 @@ English a word's meaning is the word: no translation table.
 2. The English words in the class design, from `lexicon/` (8 915 nouns,
    3 616 verbs, 16 706 adjectives, 1 149 adverbs) and the vocabularies'
    English meanings: the nouns, then the verbs, then the adjectives and
-   the adverbs, one version each.
+   the adverbs, one version each (done: 1.56.0 to 1.58.0).
 3. The words of grammar, each with its grammar and its IR shape, the
    commonest first by the measure: coordination (`and`, `or`, `but`), the
    other adpositions, the determiners and quantifiers, the numbers, the

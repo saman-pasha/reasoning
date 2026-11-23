@@ -5,10 +5,13 @@
 %%         ../cocolog/cocolog -s tools/typology/import.pl
 %%
 %% Spanish and Italian first, then English, whose rows are the meanings of
-%% both vocabularies, then the topics their class lines give, then the
-%% blank template (since 1.54.0). Writes templates/spanish-words.pl,
-%% templates/italian-words.pl, templates/english-words.pl,
-%% templates/topics-words.pl and templates/template.pl.
+%% both vocabularies and lexicon/'s words, then the topics their class lines
+%% give, then the blank template (since 1.54.0). Writes
+%% templates/spanish-words.pl, templates/italian-words.pl, English's
+%% files of a kind (templates/english-nouns.pl, -verbs.pl, -adjectives.pl
+%% and -adverbs.pl: since 1.58.0 every English row has one, and no
+%% english-words.pl is written), templates/topics-words.pl and
+%% templates/template.pl.
 
 :- use_module(library(reasoning/typology)).
 

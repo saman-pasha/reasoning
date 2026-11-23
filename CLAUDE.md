@@ -89,7 +89,17 @@ language go by a walk of retract/1, never by retractall/1 with its first
 argument unbound** (`ty_vfirst_make/1`): cocolog 3.73.2's retractall/1
 took 70 s for 20 000 rows that stand after 100 000 others, and a third
 load of English 180 s; the walk takes 0.01 s. With the first argument
-bound, retractall/1 is the faster (9 s against 55 s for 20 000 keys).**The blank template is generated too** (1.54.0): `templates/template.pl`
+bound, retractall/1 is the faster (9 s against 55 s for 20 000 keys).
+The adjectives and the adverbs since 1.58.0: one fact each, the word its
+meaning (`ty_adjective/5` in `-adjectives.pl`, `ty_adverb/3` in
+`-adverbs.pl`), from `lexicon/`'s known_adj, adj, known_adverb and adverb
+and the vocabularies' adjectives, less `ty_closed/2`. Every English row
+has a file of its kind now, so the import writes no `english-words.pl`
+and deletes an old one (a words file with no rows is not written);
+`typology_load/1` reads the files that are there. **`typology_check/2` asks
+`ty_gender/2` once** (it walks every noun): asked for each of the 17 703
+adjectives, the adjective check made 358 million inferences, and each
+section that checks a template paid it (1.58.0's first full case, 680 s).**The blank template is generated too** (1.54.0): `templates/template.pl`
 is what `typology_import(template)` writes, `typology_template(xx)`: every
 slot of typology.pl's header list (THE TEMPLATE) with the header's own
 description, in the groups of `ty_template_group/2`, each closed choice

@@ -717,7 +717,7 @@ typology_load(Name) :-
     must_be(atom, Name),
     ty_unexpand(Name),
     consult(library(reasoning/templates/Name)),
-    forall(( member(Kind, ['-words', '-nouns', '-verbs']), atom_concat(Name, Kind, Base), ty_file(Base, File) ),
+    forall(( member(Kind, ['-words', '-nouns', '-verbs', '-adjectives', '-adverbs']), atom_concat(Name, Kind, Base), ty_file(Base, File) ),
            consult(File)),
     ty_expand(Name),
     (   \+ ty_topic(_, _), ty_file(topics, Topics)
@@ -1279,9 +1279,13 @@ ty_missing(L, verb_form(V, T, N, P)) :-
     ty_values(polarity, Ps), member(P, Ps),
     \+ ( P == neg, ty_neg_placed(L) ),
     \+ ty_verb_form(L, V, T, N, P, _).
+%% The genders once (ty_gender/2 walks every noun): asked for each
+%% adjective, the check of English's 17 703 made 358 million inferences
+%% (1.58.0's first cut).
 ty_missing(L, adjective_form(A, G, N)) :-
+    findall(G0, ty_gender(L, G0), Gs),
     ty_adjective_meaning(L, A),
-    ty_gender(L, G),
+    member(G, Gs),
     ty_values(number, Ns), member(N, Ns),
     \+ ( ty_adjective(L, A, RG, RN, _), ty_fits(RG, G), ty_fits(RN, N) ).
 ty_missing(L, bad(ty_verb(L, V, T, N, P, Ws))) :-
@@ -5738,10 +5742,14 @@ typology_import(Name, File) :-
     ),
     ty_dedupe(Rows0, Rows1),
     ty_kind_split(Rows1, Kinds, Rows),
-    length(Rows, NRows),
-    with_output_to(codes(Codes), ty_write_rows(Name, Rows)),
-    write_file_from_codes(File, Codes),
-    format("~w: ~w rows into ~w~n", [Name, NRows, File]),
+    (   Rows == []
+    ->  ( exists_file(File) -> delete_file(File) ; true ),
+        format("~w: no rows left for ~w, which is not written~n", [Name, File])
+    ;   length(Rows, NRows),
+        with_output_to(codes(Codes), ty_write_rows(Name, Rows)),
+        write_file_from_codes(File, Codes),
+        format("~w: ~w rows into ~w~n", [Name, NRows, File])
+    ),
     forall(member(Kind-KRows, Kinds),
            ( ty_kind_file(File, Kind, KFile),
              with_output_to(codes(KCodes), ty_write_kind_rows(Name, Kind, KRows)),
@@ -6119,11 +6127,22 @@ ty_english_row(ty_noun_in(english, M, none, Anim, M, C)) :-
     \+ tyi_hand(ty_noun_in(english, M, _, _, _, _)),
     ty_english_animacy(M, Anim),
     ty_class_pick(english, noun, M, C).
+%% An English adjective is one fact, its word its meaning (an English
+%% adjective has one form): the vocabularies' meanings and lexicon/'s
+%% (since 1.58.0), unless the hand template has it.
 ty_english_row(ty_adjective(english, M, any, any, M)) :-
-    setof(M0, G^W^tyi_entry(adjective, G, W, M0), Ms),
+    setof(M0, G^W^A^( tyi_entry(adjective, G, W, M0) ; tyi_lex(adjective, M0, A) ), Ms),
     member(M, Ms),
     ty_single(M),
     \+ tyi_hand(ty_adjective(english, M, _, _, _)).
+%% An English adverb is one fact, its word its meaning: lexicon/'s (the
+%% vocabularies state none), unless the hand template has it (since 1.58.0).
+ty_english_row(ty_adverb(english, M, M)) :-
+    setof(M0, A^tyi_lex(adverb, M0, A), Ms),
+    member(M, Ms),
+    ty_single(M),
+    \+ tyi_hand(ty_adverb(english, M, _)),
+    \+ tyi_hand(ty_adverb(english, _, M)).
 %% An English verb is put in its class (ty_class_pick/4), unless the hand
 %% template has it; a past a vocabulary states that its class does not make
 %% is counted (an irregular verb the hand template lacks).
@@ -6149,12 +6168,15 @@ ty_english_row(ty_verb_in(english, B, B, C)) :-
 %% kind reads, of letters a to z alone, as tyi_lex(Kind, Word, Animacy),
 %% once, the first file's; a word of grammar the template names
 %% (ty_closed/2) is none. class.txt is the persons; the verbs are known_verb,
-%% vt, vi and vpp.
+%% vt, vi and vpp; the adjectives known_adj and adj, the adverbs
+%% known_adverb and adverb (since 1.58.0).
 ty_read_lexicon(L) :-
     ( tyi_hand(ty_closed(L, Closed)) -> true ; Closed = [] ),
     forall(member(Kind-Base-Anim, [noun-class-person, noun-known_noun-unknown, noun-noun-unknown,
                                    noun-unit-unknown, verb-known_verb-unknown,
-                                   verb-vt-unknown, verb-vi-unknown, verb-vpp-unknown]),
+                                   verb-vt-unknown, verb-vi-unknown, verb-vpp-unknown,
+                                   adjective-known_adj-unknown, adjective-adj-unknown,
+                                   adverb-known_adverb-unknown, adverb-adverb-unknown]),
            ( ty_lexicon_file(Base, File)
            ->  read_file_to_codes(File, Codes), atom_codes(Text, Codes),
                atomic_list_concat(Lines, '\n', Text),
@@ -6242,11 +6264,16 @@ ty_apply_ending(L, Feature, Word, Form) :-
     atom_concat(Stem, To, Form).
 
 %% The rows of a kind with a file of its own: a noun of a class
-%% (templates/<name>-nouns.pl), a verb of a class (-verbs.pl); the rest stay in the words file.
+%% (templates/<name>-nouns.pl), a verb of a class (-verbs.pl), and since
+%% 1.58.0 an English adjective (-adjectives.pl) and adverb (-adverbs.pl);
+%% the rest stay in the words file.
 ty_kind_split(Rows, Kinds, Rest) :-
     partition([R]>>( R = ty_noun_in(_, _, _, _, _, _) ), Rows, Nouns, Rest1),
-    partition([R]>>( R = ty_verb_in(_, _, _, _) ), Rest1, Verbs, Rest),
-    findall(K-Rs, ( member(K-Rs, [nouns-Nouns, verbs-Verbs]), Rs \== [] ), Kinds).
+    partition([R]>>( R = ty_verb_in(_, _, _, _) ), Rest1, Verbs, Rest2),
+    partition([R]>>( R = ty_adjective(english, _, _, _, _) ), Rest2, Adjectives, Rest3),
+    partition([R]>>( R = ty_adverb(english, _, _) ), Rest3, Adverbs, Rest),
+    findall(K-Rs, ( member(K-Rs, [nouns-Nouns, verbs-Verbs, adjectives-Adjectives, adverbs-Adverbs]),
+                    Rs \== [] ), Kinds).
 
 ty_kind_file(File, Kind, KFile) :-
     atom_concat(Base, '-words.pl', File),
@@ -6254,7 +6281,7 @@ ty_kind_file(File, Kind, KFile) :-
 
 ty_write_kind_rows(L, Kind, Rows) :-
     format("%% templates/~w-~w.pl -- GENERATED by typology_import(~w) from~n", [L, Kind, L]),
-    format("%% corpus/vocabulary/ and lexicon/: each regular item in its class. Do not~n", []),
+    format("%% corpus/vocabulary/ and lexicon/: one fact a regular item. Do not~n", []),
     format("%% edit: a class and an irregular item are templates/~w.pl's; import again.~n~n", [L]),
     forall(member(R, Rows), portray_clause(R)).
 
