@@ -128,6 +128,7 @@ main :-
     predicate_and,
     months,
     german_possessives,
+    german_v2,
     format("~ndone~n", []).
 
 
@@ -642,6 +643,18 @@ german_possessives :-
     must('the dative after mit', G2, 'Der Junge schläft mit meinem kleinen Hund.'),
     typology_translate(german, spanish, 'Unser Haus ist groß.', S3),
     must('unser, read', S3, 'Nuestra casa es grande.').
+
+%% 37. GERMAN: AN ADJUNCT FIRST, THE VERB SECOND. ty_adjunct_front(L, v2)
+%% reads a statement with an adjunct first and the verb before the subject
+%% (`Heute schläft der Hund.'), in a main clause; the writer keeps the
+%% template's own place, at the end.
+german_v2 :-
+    typology_translate(german, english, 'Heute schläft der Hund.', E1),
+    must('read with the verb second', E1, 'The dog sleeps today.'),
+    typology_translate(english, german, 'The dog sleeps today.', G2),
+    must('written at the end', G2, 'Der Hund schläft heute.'),
+    ( typology_read(german, 'Heute der Hund schläft.', _) -> R3 = read ; R3 = refused ),
+    must('the verb third is no German', R3, refused).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

@@ -513,3 +513,8 @@ ty_possessive_pronoun(german, ['Ihrem'], [[polite]], [[m, sg, dat], [n, sg, dat]
 ty_possessive_pronoun(german, ['Ihrer'], [[polite]], [[f, sg, dat], [f, sg, gen], [pl, gen]]).
 ty_possessive_pronoun(german, ['Ihres'], [[polite]], [[m, sg, gen], [n, sg, gen]]).
 ty_contraction(german, [an, das], ans).
+
+%% A statement is read with an adjunct first and the verb before the
+%% subject too (`Heute schläft der Hund.'); the adjunct is written at the
+%% end (`Der Hund schläft heute.').
+ty_adjunct_front(german, v2).

@@ -16,7 +16,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -1750,6 +1750,31 @@ german_possessives :-
            ( ( typology_translate(F, To, S, X) -> true ; X = none ),
              atomic_list_concat([F, ' into ', To, ': ', S], Label),
              check(Label, X, Want) )).
+
+%% ---- German: an adjunct first, the verb second ---------------------------------
+
+%% 1.50.0: ty_adjunct_front(german, v2).
+german_v2 :-
+    section('German: an adjunct first, the verb second'),
+    Rows = [ 'Heute schläft der Hund.'-clause(sleep, present, pos, np(dog, sg, def, []), none, [adv(today)])-'Der Hund schläft heute.',
+             'Im Haus schläft der Hund.'-clause(sleep, present, pos, np(dog, sg, def, []), none, [pp(in, np(house, sg, def, []))])-'Der Hund schläft im Haus.',
+             'Heute hat der Junge den Hund gesehen.'-clause(see, perfect, pos, np(boy, sg, def, []), np(dog, sg, def, []), [adv(today)])-'Der Junge hat den Hund heute gesehen.',
+             'Heute sieht der Junge den Hund nicht.'-clause(see, present, neg, np(boy, sg, def, []), np(dog, sg, def, []), [adv(today)])-'Der Junge sieht den Hund heute nicht.',
+             'Heute schläft kein Hund.'-clause(sleep, present, neg, np(dog, sg, indef, []), none, [adv(today)])-'Kein Hund schläft heute.' ],
+    forall(member(S-IR-Want, Rows),
+           ( findall(I, typology_read(german, S, I), Is),
+             atomic_list_concat(['German: read: ', S], Label),
+             check(Label, Is, [IR]),
+             ( typology_write(german, IR, T) -> true ; T = none ),
+             atomic_list_concat(['German: written at the end: ', Want], Label2),
+             check(Label2, T, Want) )),
+    ( typology_read(german, 'Heute der Hund schläft.', _) -> R1 = read ; R1 = refused ),
+    check('German: an adjunct first takes the verb second', R1, refused),
+    ( typology_read(german, 'Der Hund, der heute schläft, ist klein.', R2) -> true ; R2 = none ),
+    check('German: a relative clause keeps its verb last', R2,
+          copula(present, pos, rel(np(dog, sg, def, []), clause(sleep, present, pos, gap, none, [adv(today)])), adj([small]))),
+    typology_translate(german, english, 'Heute schläft der Hund.', E),
+    check('German into English', E, 'The dog sleeps today.').
 
 %% ---- the reference sentences and the senses -------------------------------------------
 

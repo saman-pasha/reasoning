@@ -589,11 +589,19 @@ mixed declension, as after `ein` (`Mein kleiner Hund schläft.`, `Deine
 kleinen Mädchen sehen den Jungen.`). `an das` is `ans` (`Der Junge denkt
 ans Mädchen.`).
 
+**German: an adjunct first, the verb second** (1.50.0).
+`ty_adjunct_front(L, v2)`: a statement is read with an adjunct first and
+the verb before the subject, beside the template's own place of the
+adjuncts (`Heute schläft der Hund.`, `Im Haus schläft der Hund.`, `Heute
+hat der Junge den Hund gesehen.`, `Heute schläft kein Hund.`), in a main
+clause only; the writer keeps the template's place (`Der Hund schläft
+heute.`), and the verb third is refused (`Heute der Hund schläft.`).
+
 Not yet:
 
-3. German: the possessive relative (`dessen`), an adjunct or an object
-   first with the verb second after it (`Heute schläft der Hund.`), and
-   `am` (a dative `an`, `at`, an adposition the other templates do not
+3. German: the possessive relative (`dessen`), an object first with the
+   verb second after it (`Den Hund sieht der Junge.`: a feminine, neuter or
+   plural subject and object would read both ways), and `am` (a dative `an`, `at`, an adposition the other templates do not
    have).
 6. A sense of its own is a hand row: the import gives one only where a
    template names it, as the vocabularies cannot tell a second sense
