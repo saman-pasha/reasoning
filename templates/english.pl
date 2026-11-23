@@ -8,6 +8,8 @@ ty_order(english, np, [d, a, n]).
 %% The nouns: Meaning, Gender (English has none), Animacy (person, animate, inanimate; a person is animate too), Singular, Plural.
 ty_noun(english, dog, none, animate, dog, dogs).
 ty_noun(english, cat, none, animate, cat, cats).
+%% March, the month: a meaning of its own (templates/topics.pl).
+ty_noun(english, march_month, none, unknown, 'March', 'Marches').
 ty_noun(english, boy, none, person, boy, boys).
 ty_noun(english, girl, none, person, girl, girls).
 ty_noun(english, book, none, inanimate, book, books).

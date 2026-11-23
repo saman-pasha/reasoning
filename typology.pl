@@ -540,7 +540,8 @@
                       typology_translate/4, typology_topics/2,
                       typology_read_text/3, typology_translate_text/4, typology_repair/5,
                       typology_answer/4, typology_answer/5,
-                      typology_import/1, typology_import/2 ]).
+                      typology_import/1, typology_import/2,
+                      typology_references/2 ]).
 
 :- use_module(library(reasoning/reason), [ reason_base/2 ]).
 
@@ -563,7 +564,8 @@
            ty_case/3, ty_case_after/3, ty_article_case/6, ty_noun_case/5,
            ty_declension/3, ty_adjective_ending/6, ty_wh_case/4,
            ty_verb_last/2, ty_split_place/2, ty_copula_negation/3,
-           ty_relative_comma/1, ty_negative_article/5, ty_capital_nouns/1.
+           ty_relative_comma/1, ty_negative_article/5, ty_capital_nouns/1,
+           ty_reference/4, ty_meaning_sense/2.
 :- discontiguous ty_order/3, ty_noun/6, ty_adjective/5, ty_verb/6,
                  ty_article/5, ty_mark/5, ty_contraction/3, ty_negation/5,
                  ty_ending/4, ty_letters/3, ty_before/5, ty_linked/5, ty_copula/6,
@@ -642,6 +644,10 @@ typology_load(Name) :-
     ),
     (   \+ ty_role_animacy(_, _, _), ty_file(roles, Roles)
     ->  consult(Roles)
+    ;   true
+    ),
+    (   \+ ty_reference(_, _, _, _), ty_file(references, Refs)
+    ->  consult(Refs)
     ;   true
     ),
     ty_vfirst_make(Name),
@@ -764,6 +770,17 @@ typology_check(L, Missing) :-
     must_be(atom, L),
     findall(M, ty_missing(L, M), Missing0),
     sort(Missing0, Missing).
+
+%% THE REFERENCE SENTENCES (templates/references.pl): the rows of L whose
+%% text, read with their topics, has not their IR among its readings, as
+%% Text-Topics. Live mode holds a model's topics to them.
+typology_references(L, Failed) :-
+    must_be(atom, L),
+    findall(Text-Topics, ( ty_reference(L, Text, Topics, IR),
+                           \+ ty_reference_holds(L, Text, Topics, IR) ), Failed).
+
+ty_reference_holds(L, Text, Topics, IR) :-
+    \+ \+ ( typology_read(L, Text, R, Topics), R =@= IR ).
 
 ty_missing(L, order(Level)) :-
     ty_level(Level, _),
@@ -987,6 +1004,10 @@ ty_case_known(L, C) :- ( ty_case(L, _, C) ; ty_case_after(L, _, C) ), !.
 
 ty_adposition_words(L, Ws) :- ( ty_adposition(L, _, Ws) ; ty_complement(L, _, Ws) ), !.
 
+%% A sense of its own (ty_meaning_sense/2) English has a row to write.
+ty_missing(english, sense_word(S)) :-
+    ty_meaning_sense(S, _),
+    \+ ty_noun(english, S, _, _, _, _).
 ty_missing(L, polite(N)) :-
     once(( ty_pronoun(L, _, _, Cs), member(C, Cs), memberchk(polite, C) )),
     member(N, [sg, pl]),
@@ -4796,7 +4817,8 @@ ty_fits(X, X).
 %% the verbs' one the English import asks.
 
 :- dynamic tyi_entry/4, tyi_form/4, tyi_animate/1, tyi_gender/2, tyi_count/2,
-           tyi_hand/1, tyi_class/2, tyi_name/1, tyi_class_word/4, tyi_person/1.
+           tyi_hand/1, tyi_class/2, tyi_name/1, tyi_class_word/4, tyi_person/1,
+           tyi_sense/2, tyi_sense_word/4.
 
 typology_import(Name) :-
     must_be(atom, Name),
@@ -4812,6 +4834,7 @@ typology_import(Name, File) :-
     ty_import_reset,
     ty_hand_rows(Name, Hand),
     forall(member(H, Hand), assertz(tyi_hand(H))),
+    ty_import_senses,
     (   Name == english
     ->  findall(V, ( member(Src, [spanish, italian]), ty_vocabulary_file(Src, V) ), Vs),
         Vs \== [],
@@ -4821,7 +4844,8 @@ typology_import(Name, File) :-
     ->  findall(Src-V, ( member(Src, [spanish, italian]), ty_vocabulary_file(Src, V) ), Vs),
         Vs \== [],
         forall(member(Src-V, Vs),
-               ( ty_read_vocabulary(V), ty_keep_class_words(Src), ty_import_reset_words )),
+               ( ty_sense_words(Src), ty_read_vocabulary(V), ty_keep_class_words(Src),
+                 ty_import_reset_words )),
         findall(R, ty_topic_row(R), Rows0)
     ;   ty_vocabulary_file(Name, V),
         ty_read_vocabulary(V),
@@ -4873,7 +4897,8 @@ ty_read_terms(S, Ts) :-
 ty_import_reset :-
     ty_import_reset_words,
     retractall(tyi_class_word(_, _, _, _)),
-    retractall(tyi_count(_, _)), retractall(tyi_hand(_)).
+    retractall(tyi_count(_, _)), retractall(tyi_hand(_)),
+    retractall(tyi_sense(_, _)), retractall(tyi_sense_word(_, _, _, _)).
 
 %% What one vocabulary's lines say: the topic import reads each vocabulary
 %% in turn and keeps only its class words between them.
@@ -4936,6 +4961,22 @@ ty_class_says(Says, C) :-
     atom_concat(C, '.', Rest),
     ty_single(C).
 
+%% The senses of their own (templates/topics.pl's ty_meaning_sense/2,
+%% read from the file as the hand rows are), and the words of a
+%% vocabulary's hand template that have one.
+ty_import_senses :-
+    (   catch(ty_hand_rows(topics, Rows), _, Rows = [])
+    ->  forall(member(ty_meaning_sense(S, M), Rows), assertz(tyi_sense(S, M)))
+    ;   true
+    ).
+
+ty_sense_words(Src) :-
+    (   catch(ty_hand_rows(Src, Rows), _, Rows = [])
+    ->  forall(( member(ty_noun(Src, S, _, _, W, _), Rows), tyi_sense(S, M) ),
+               assertz(tyi_sense_word(Src, W, M, S)))
+    ;   true
+    ).
+
 %% THE TOPICS A CLASS GIVES its words' meanings: the class, and a wider
 %% topic. A class not here (person, group, name) says how a word is used,
 %% not what it is about.
@@ -4951,12 +4992,15 @@ ty_class_topics(continent, [continent, place]).
 
 %% A class word of one vocabulary, with its noun meanings in the
 %% vocabulary's order (tyi_class_word(Vocabulary, Word, Class, Meanings)).
+%% A meaning a hand template gives the word a sense of its own for is that
+%% sense (tyi_sense_word/4: `marzo' is march_month).
 %% A word that is also a name is the name's (`mosca' is a city as Moscow,
 %% and its noun is a fly), and a name is no meaning of the IR.
 ty_keep_class_words(Src) :-
     forall(( tyi_class(W, C), ty_class_topics(C, _) ),
            (   tyi_name(W) -> ty_count(class_word_that_is_a_name)
-           ;   findall(M, ( tyi_entry(noun, _, W, M), ty_single(M) ), Ms0),
+           ;   findall(M, ( tyi_entry(noun, _, W, M0), ty_single(M0),
+                            ( tyi_sense_word(Src, W, M0, S) -> M = S ; M = M0 ) ), Ms0),
                ty_first_each(Ms0, Ms),
                (   Ms == [] -> ty_count(class_word_with_no_noun)
                ;   assertz(tyi_class_word(Src, W, C, Ms))
@@ -5006,6 +5050,10 @@ ty_once_form(Kind, Class, Of, Form) :- once(( tyi_form(Kind, Form, Of, Class), t
 ty_import_row(L, ty_noun(L, M, G, Anim, W, P)) :-
     tyi_entry(noun, G0, W, M),
     (   ty_single(W), ty_single(M) -> true ; ty_count(noun_not_a_single_word), fail ),
+    (   tyi_hand(ty_noun(L, S, _, _, W, _)), tyi_sense(S, M)
+    ->  ty_count(noun_with_a_sense_of_its_own), fail
+    ;   true
+    ),
     (   G0 \== none -> G = G0
     ;   once(tyi_gender(W, G)) -> true
     ;   ty_count(noun_with_no_gender), fail

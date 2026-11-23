@@ -62,6 +62,13 @@ consulted, and the test's import wrote a different file), where the file
 named by its path, and SWI-Prolog 9.0.4 both ways, added them back.
 cocolog 3.73.2 reads the file again (checked 2026-11-22: the 7 nouns of
 templates/spanish.pl come back, 0 on 3.65.0).
+**A sense of its own is a hand row** (1.43.0): `ty_meaning_sense(Sense,
+Meaning)` in templates/topics.pl and a hand template's noun row of the
+word with Sense (`marzo`, `march_month`); the import (`tyi_sense/2`,
+`tyi_sense_word/4`, read from the files as the hand rows are) writes no row
+of the word with Meaning, and the topic import gives its class line's
+topics to Sense. The vocabularies cannot tell a second sense from a
+synonym, so no rule makes one.
 **The topic rows are generated too** (1.29.0, `typology_import(topics)`,
 `templates/topics-words.pl`): the import reads each vocabulary in turn
 and keeps only its class words between them (`tyi_class_word/4`), so a

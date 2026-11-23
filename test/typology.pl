@@ -16,7 +16,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german,
+                      french_questions, tenses, polite, german, reference_sentences,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -1481,6 +1481,59 @@ hoja_meanings(T, Ms) :-
 
 ir_object_noun(clause(_, _, _, _, np(M, _, _, _)), M).
 ir_object_noun(clause(_, _, _, _, np(M, _, _, _), _), M).
+
+%% ---- the reference sentences and the senses -------------------------------------------
+
+%% 1.43.0: templates/references.pl's sentences hold a model's topics, and a
+%% hand row gives one sense of an English word a meaning of its own
+%% (march_month, ty_meaning_sense/2).
+reference_sentences :-
+    section('the reference sentences hold the topics a model gives, and a sense of its own'),
+    forall(member(L, [spanish, italian]),
+           ( typology_references(L, F),
+             atomic_list_concat([L, ': every reference sentence holds'], Label),
+             check(Label, F, []) )),
+    setup_call_cleanup(true, reference_checks,
+                       ( reason_set_mode(static), retractall(reason_live_stub(_, _, _)),
+                         retractall(reason_live_topics(_, _)) )),
+    forall(member(F-To-S-Want, [ spanish-italian-'El niño ve el marzo.'-'Il ragazzo vede il marzo.',
+                                 spanish-italian-'El niño ve la marcha.'-'Il ragazzo vede la marcia.',
+                                 spanish-english-'El niño ve el marzo.'-'The boy sees the March.',
+                                 english-spanish-'The boy sees the march.'-'El niño ve la marcha.',
+                                 italian-spanish-'Il ragazzo vede il marzo.'-'El niño ve el marzo.' ]),
+           ( ( typology_translate(F, To, S, Out) -> true ; Out = none ),
+             atomic_list_concat([F, ' into ', To, ': ', S], Label),
+             check(Label, Out, Want) )),
+    findall(M-Ts, ( member(M, [march, march_month]), findall(T, ty_topic(M, T), Ts) ), Topics),
+    check('marzo\'s class line gives its topics to march_month, not to march', Topics,
+          [march-[], march_month-[month, time]]),
+    assertz(ty_meaning_sense(nail_finger, nail)),
+    findall(X, ( typology_check(english, Ms), member(X, Ms), X = sense_word(_) ), Ws),
+    retractall(ty_meaning_sense(nail_finger, nail)),
+    check('a sense of its own with no English row is missing', Ws, [sense_word(nail_finger)]).
+
+reference_checks :-
+    use_module(library(reasoning/live)),
+    reason_live_forget,
+    reason_set_mode(live),
+    assertz(reason_live_stub('la lima', topics,
+        '{"topics": [{"meaning": "lime", "topics": ["tool"]}, {"meaning": "file", "topics": ["food"]}]}')),
+    reason_live_stats_reset,
+    lima_objects('El niño ve la lima.', O1),
+    check('topics the wrong way round take nothing away', O1, [file, lime]),
+    findall(M-Ts, ( member(M, [lime, file]), reason_live_topics(M, Ts) ), Saved),
+    check('each is refused: a reference sentence would lose its reading', Saved, [lime-[], file-[]]),
+    reason_live_stats(St), memberchk(topics-N1, St), memberchk(topics_refused-N2, St),
+    check('none kept, two refused', N1-N2, 0-2),
+    reason_live_forget,
+    retractall(reason_live_stub(_, _, _)),
+    assertz(reason_live_stub('la lima', topics,
+        '{"topics": [{"meaning": "lime", "topics": ["food"]}, {"meaning": "file", "topics": ["tool"]}]}')),
+    reason_live_stats_reset,
+    lima_objects('El niño ve la lima.', O2),
+    check('the right topics are kept, and food makes it the lime', O2, [lime]),
+    reason_live_stats(St2), memberchk(topics-N3, St2), memberchk(topics_refused-N4, St2),
+    check('two kept, none refused', N3-N4, 2-0).
 
 %% ---- German -------------------------------------------------------------------------
 

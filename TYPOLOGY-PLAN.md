@@ -105,7 +105,7 @@ Spanish and Italian apocope (`gran`). Then `cat` goes into Persian, and
 Italian nouns that start with `s` and a consonant, `z` or a vowel are
 right.
 
-## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.42.0)
+## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.43.0)
 
 Done:
 
@@ -522,6 +522,25 @@ first word of a sentence is read as written too where the tables hold it
 so (`Hunde schlafen.`, `Sie sehen den Hund.`: you or they). The polite
 `Sie` takes the third plural.
 
+**Reference sentences and a sense of its own** (1.43.0, item 6).
+templates/references.pl's `ty_reference(Lang, Text, Topics, IR)`: Text,
+read with the topics Topics given, has the reading IR among its readings
+(Spanish `El niño ve la lima.` about food is the lime, about tools the
+file). `typology_references/2` names the rows that do not hold, and in
+live mode the topics a model gives are held to them: each meaning's
+topics, one meaning at a time, are kept only where no reference sentence
+of the language stops holding; a meaning whose topics take a reading
+away gets none and is not asked again (`topics_refused` in
+`reason_live_stats/1`: the lime about tools and the file about food are
+refused). A hand row gives one sense of an English word a meaning of its
+own, `ty_meaning_sense(Sense, Meaning)` in templates/topics.pl: Spanish
+and Italian `marzo`, the month, are `march_month` (`El niño ve el
+marzo.` is `Il ragazzo vede il marzo.`, `The boy sees the March.`), where
+`marcha` and `marcia`, the walk, are `march`. The import writes no row
+of the word with the plain meaning, and its class line gives the sense
+its topics: `march` is no longer about months. `typology_check(english,
+M)` names a sense English has no row for.
+
 Not yet:
 
 3. German: `kein` for a subject (`Kein Hund schläft.` is written `Ein Hund
@@ -529,10 +548,12 @@ Not yet:
    possessive relative (`dessen`), an adjunct or an object first with the
    verb second after it (`Heute schläft der Hund.`), `ans` and `am`, and
    two predicate adjectives with `und` (no template has them).
-6. The topics are the model's word (item 20): no reference sentence
-   checks them yet. A meaning of its own for each sense of an English
-   word (`march`, the month and the walk) waits for the bridge to
-   translate.pl (Phase 6).
+6. A sense of its own is a hand row: the import gives one only where a
+   template names it, as the vocabularies cannot tell a second sense
+   (`marcha`, the walk) from a synonym (`jornada`, a day like `día`). A
+   sense inventory waits for the bridge to translate.pl (Phase 6). The
+   months take no article in Spanish, Italian and English (`en marzo`, `in
+   March`), and the IR has no such noun phrase yet.
 
 ## Phase 5: more features (in part done, reasoning 1.34.0, 1.40.0 and 1.41.0)
 
@@ -604,6 +625,6 @@ Each one is a new file. The code changes only by the slots of phases 3 to 5.
 - `typology_template/1`'s blank template filled by choosing.
 - A model fills a slot in live mode, with the round trip and the
   reference sentences as its check. In part: the topics of a meaning
-  (1.38.0, Phase 4's item 20), checked only against the topics the
-  tables know.
+  (1.38.0, Phase 4's item 20), checked against the topics the tables
+  know and, since 1.43.0, the reference sentences (templates/references.pl).
 - Controlled English rows as an alternative to facts.

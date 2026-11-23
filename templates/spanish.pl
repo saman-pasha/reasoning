@@ -8,6 +8,8 @@ ty_order(spanish, np, [d, n, a]).
 %% The nouns: Meaning, Gender, Animacy (person, animate, inanimate; a person is animate too), Singular, Plural.
 ty_noun(spanish, dog, m, animate, perro, perros).
 ty_noun(spanish, cat, m, animate, gato, gatos).
+%% `marzo', the month: a meaning of its own (templates/topics.pl).
+ty_noun(spanish, march_month, m, unknown, marzo, marzos).
 ty_noun(spanish, boy, m, person, niño, niños).
 ty_noun(spanish, girl, f, person, niña, niñas).
 ty_noun(spanish, book, m, inanimate, libro, libros).

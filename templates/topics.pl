@@ -47,3 +47,13 @@ ty_topic(rain, weather).
 ty_topic(sun, sky).
 ty_topic(cloud, sky).
 ty_topic(cloud, weather).
+
+%% A MEANING OF ITS OWN FOR ONE SENSE of an English word: ty_meaning_sense(
+%% Sense, Meaning) says Sense is a meaning of the IR for one sense of the
+%% English word Meaning, given to a word by a hand template's row (Spanish
+%% and Italian `marzo', the month, are march_month; `marcha' and `marcia',
+%% the walk, are march). The import writes no row of that word with
+%% Meaning, and a class line of the word gives its topics to Sense
+%% (`"marzo" is a month.': march_month is about months, march is not).
+%% English writes Sense by its own row.
+ty_meaning_sense(march_month, march).

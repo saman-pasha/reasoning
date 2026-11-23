@@ -33,14 +33,17 @@
 %%         in ONE call, given 0 to 3 topics of Known. Saved as
 %%         reason_live_topics(Meaning, Topics), Topics [] for a meaning
 %%         the reply gives none or does not name, so no meaning is asked
-%%         twice.
+%%         twice. A meaning's topics are kept only where the reference
+%%         sentences of Lang (typology_references/2) still hold with
+%%         them; else it is saved with [] (`topics_refused' in the stats).
 %%     reason_live_ready
 %%         There is a model to ask (or a stub, below).
 %%     reason_live_stats(-Pairs)
 %%     reason_live_stats_reset
 %%         This process's counts: calls, prompt and completion tokens,
 %%         verdicts, lessons, rewrites, kinds, verb forms, restatements
-%%         and the meanings given topics saved.
+%%         the meanings given topics saved, and the meanings whose topics
+%%         a reference sentence refused (topics_refused).
 %%     reason_live_forget
 %%         Every saved fact taken back: the verdicts, the rewrites, the
 %%         kinds, the verb forms, the topics, and the lexicon facts and
@@ -675,7 +678,8 @@ lv_topics(Lang, Text, Meanings0, Known) :-
         lv_ask(topics, System, User, Reply),
         lv_json(Reply, J),
         lv_get(J, topics, Items), is_list(Items)
-    ->  forall(member(M, Meanings), lv_topic_save(M, Items, Known))
+    ->  forall(member(M, Meanings), lv_topic_save(M, Items, Known)),
+        lv_topics_held(Lang, Meanings)
     ;   true
     ).
 
@@ -692,8 +696,38 @@ lv_topic_save(M, Items, Known) :-
     ;   Ts = []
     ),
     retractall(reason_live_topics(M, _)),
-    assertz(reason_live_topics(M, Ts)),
-    (   Ts == [] -> true ; lv_count(topics) ).
+    assertz(reason_live_topics(M, Ts)).
+
+%% THE REFERENCE SENTENCES HOLD THE TOPICS (templates/references.pl,
+%% typology_references/2): each meaning's topics, one meaning at a time in
+%% the reply's order, are kept only where no reference sentence of the
+%% language stops holding for them; a meaning whose topics take a reading
+%% away gets none (`topics_refused'), and is not asked again. The readings
+%% are static ones: this runs while live mode works. The meanings are saved
+%% again in the order asked.
+lv_topics_held(Lang, Meanings) :-
+    findall(M-Ts, ( member(M, Meanings), reason_live_topics(M, Ts) ), All),
+    forall(member(M-_, All), lv_topics_set(M, [])),
+    lv_refs_failed(Lang, F0),
+    forall(( member(M-Ts, All), Ts \== [] ),
+           (   lv_topics_set(M, Ts),
+               lv_refs_failed(Lang, F),
+               (   subtract(F, F0, [])
+               ->  lv_count(topics)
+               ;   lv_topics_set(M, []),
+                   lv_count(topics_refused)
+               )
+           )),
+    findall(M-Ts, ( member(M-_, All), reason_live_topics(M, Ts) ), Final),
+    forall(member(M-_, All), retractall(reason_live_topics(M, _))),
+    forall(member(M-Ts, Final), assertz(reason_live_topics(M, Ts))).
+
+lv_topics_set(M, Ts) :-
+    retractall(reason_live_topics(M, _)),
+    assertz(reason_live_topics(M, Ts)).
+
+lv_refs_failed(Lang, F) :-
+    catch(typology_references(Lang, F), _, F = []).
 
 lv_topics_first(N, Xs, Ys) :-
     (   length(Xs, L), L =< N -> Ys = Xs ; length(Ys, N), append(Ys, _, Xs) ).
@@ -890,14 +924,16 @@ lv_count(K, N) :-
 
 reason_live_stats(Pairs) :-
     findall(K-V, ( member(K, [calls, prompt_tokens, completion_tokens, verdicts,
-                              lessons, rewrites, kinds, thirds, restatements, topics]),
+                              lessons, rewrites, kinds, thirds, restatements, topics,
+                              topics_refused]),
                    atom_concat('$reason_live_', K, G),
                    ( catch(nb_getval(G, V0), _, fail), integer(V0) -> V = V0 ; V = 0 ) ),
             Pairs).
 
 reason_live_stats_reset :-
     forall(member(K, [calls, prompt_tokens, completion_tokens, verdicts,
-                      lessons, rewrites, kinds, thirds, restatements, topics]),
+                      lessons, rewrites, kinds, thirds, restatements, topics,
+                      topics_refused]),
            ( atom_concat('$reason_live_', K, G), nb_setval(G, 0) )).
 
 reason_live_forget :-

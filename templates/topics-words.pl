@@ -21,8 +21,8 @@ ty_topic(january, month).
 ty_topic(january, time).
 ty_topic(february, month).
 ty_topic(february, time).
-ty_topic(march, month).
-ty_topic(march, time).
+ty_topic(march_month, month).
+ty_topic(march_month, time).
 ty_topic(april, month).
 ty_topic(april, time).
 ty_topic(may, month).

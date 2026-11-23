@@ -121,6 +121,7 @@ main :-
     tenses,
     polite,
     german,
+    senses,
     format("~ndone~n", []).
 
 
@@ -533,6 +534,21 @@ german :-
     must('kein for an indefinite object', G3, 'Der Junge sieht keinen Hund.'),
     typology_translate(german, spanish, 'Wen hat das Mädchen gesehen?', S4),
     must('a question word in its case', S4, '¿A quién ha visto la niña?').
+
+%% 30. A SENSE OF ITS OWN, AND THE REFERENCE SENTENCES. A hand row gives one
+%% sense of an English word a meaning of its own (ty_meaning_sense/2):
+%% Spanish and Italian `marzo', the month, is march_month, so it no longer
+%% becomes `marcha' or `marcia', the walk, and its class line gives the
+%% month's topics to it alone. templates/references.pl's sentences keep
+%% their readings: typology_references/2 names any that does not, and in
+%% live mode the topics a model gives that would take one away are refused.
+senses :-
+    typology_translate(spanish, italian, 'El niño ve el marzo.', I1),
+    must('marzo is the month', I1, 'Il ragazzo vede il marzo.'),
+    typology_translate(spanish, italian, 'El niño ve la marcha.', I2),
+    must('marcha is the walk', I2, 'Il ragazzo vede la marcia.'),
+    typology_references(spanish, F),
+    must('every Spanish reference sentence holds', F, []).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
