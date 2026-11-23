@@ -5,6 +5,7 @@
 
 :- use_module('test/prelude.pl').
 :- use_module(library(reasoning/typology)).
+:- use_module(library(reasoning/translate)).
 
 %% Each section runs ONCE: a red check makes checks_done/0 fail, and a
 %% main written as one conjunction then backtracked into the sections'
@@ -16,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -1846,6 +1847,64 @@ german_object_first :-
              check(Label4, R4, refused) )),
     typology_translate(german, english, 'Den Hund sieht der Junge.', E),
     check('German into English', E, 'The boy sees the dog.').
+
+%% 1.53.0: Phase 6, the bridge to translate.pl. typology_reason_ir/2 maps
+%% the typology IR to translate.pl's ir(S, Stop) and back, for the shapes
+%% both have. Over a shared set of English sentences: translate.pl's
+%% reading, brought back over the bridge, is the typology's own reading;
+%% translate.pl writes the typology's reading, brought over, back as the
+%% same English; and the two translators write the same Spanish (a lesson
+%% gives translate.pl the words the Spanish template has).
+bridge :-
+    section('Phase 6: the bridge to translate.pl, and a shared set of sentences'),
+    reason_learn('Spanish is a language. The noun "perro" means "dog". The noun "niño" means "boy". The noun "casa" means "house". The noun "gato" means "cat". The verb "ve" means "sees". The verb "duerme" means "sleeps". The adjective "pequeño" means "small". The adjective "grande" means "big". The adjective "negro" means "black". The verb "es" means "is". The masculine article "el" means "the". The feminine article "la" means "the". The masculine article "un" means "a". The feminine article "una" means "a". Every noun that ends in "a" is feminine. Every noun that does not end in "a" is masculine. Every adjective follows the noun. Every noun that ends in a vowel takes "s" in the plural. Every adjective that ends in a vowel takes "s" in the plural. "los" is the plural of "el". "las" is the plural of "la". "son" is the plural of "es". "ven" is the plural of "ve". "duermen" is the plural of "duerme". "vio" is the past of "ve". "durmió" is the past of "duerme". "era" is the past of "es". The word "no" means "not". The preposition "en" means "in". The adverb "hoy" means "today". The word "quién" means "who". The word "qué" means "what". The mark "¿" begins the question. The word "a" precedes the person. "niño" is a person. "al" is the contraction of "a el". "verá" is the future of "ve". "dormirá" is the future of "duerme". "visto" is the participle of "ve". The auxiliary "ha" means "has". "han" is the plural of "ha". "seen" is the participle of "sees". "vieron" is the past of "ven". "dormido" is the participle of "duerme". "slept" is the participle of "sleeps". "vería" is the conditional of "ve". "dormiría" is the conditional of "duerme". The conjunction "que" means "that". "que" is a relative. "había" is the past of "ha". "sido" is the participle of "es".', spanish, _),
+    Shared = [ 'The dog sees the boy.', 'The dog does not see the boy.', 'The dog sleeps.',
+               'The dog will see the boy.', 'The dog would see the boy.', 'The dog had seen the boy.',
+               'The small dog sleeps.', 'The dog is small.', 'The dog was not big.', 'The dog is not a cat.',
+               'The dog has been small.', 'The dog sleeps in the house.', 'The dogs sleep in the houses.',
+               'The dog sleeps today.', 'The dog sees a boy.', 'Does the dog see the boy?', 'Is the dog small?',
+               'Who sleeps?', 'What does the boy see?', 'The dog that the boy sees sleeps.',
+               'The dog that sleeps sees the boy.', 'The dog that is small sleeps.' ],
+    forall(member(S, Shared),
+           ( ( typology_read(english, S, IR) -> true ; IR = none ),
+             ( reason_ir(S, english, [R2]), typology_reason_ir(IR2, R2) -> true ; IR2 = none ),
+             atomic_list_concat(['the two readers agree: ', S], Label1),
+             check(Label1, IR2, IR),
+             ( typology_reason_ir(IR, R), reason_ir_text([R], english, E) -> true ; E = none ),
+             atomic_list_concat(['translate.pl writes the bridged reading back: ', S], Label2),
+             check(Label2, E, S),
+             ( reason_ir_text([R], spanish, Sp1) -> true ; Sp1 = none ),
+             ( typology_write(spanish, IR, Sp2) -> true ; Sp2 = none ),
+             atomic_list_concat(['the same Spanish: ', S], Label3),
+             check(Label3, Sp1, Sp2) )),
+    %% The shared set's two differences, each the description's and not the
+    %% bridge's: translate.pl writes two adjectives the other way round, in
+    %% English too; and its lesson puts `a' before a person, where the
+    %% Spanish template puts it before every animate object.
+    typology_read(english, 'The small black dogs sleep.', IR3),
+    typology_reason_ir(IR3, R3),
+    reason_ir_text([R3], english, E3), reason_ir_text([R3], spanish, S3),
+    typology_write(spanish, IR3, T3),
+    check('two adjectives: translate.pl writes them the other way round', E3-S3-T3,
+          'The black small dogs sleep.'-'Los perros negros pequeños duermen.'-'Los perros pequeños negros duermen.'),
+    typology_read(english, 'Who sees the dog?', IR4),
+    typology_reason_ir(IR4, R4),
+    reason_ir_text([R4], spanish, S4), typology_write(spanish, IR4, T4),
+    check('a: before a person in the lesson, before an animate object in the template', S4-T4,
+          '¿Quién ve el perro?'-'¿Quién ve al perro?'),
+    %% The shape itself, and what has no shape on the other side.
+    typology_reason_ir(clause(see, past, neg, np(dog, pl, def, [small]), np(boy, sg, indef, [])), R5),
+    check('the typology IR over the bridge', R5,
+          ir(s(none, np(det(article, the, w(the, lower)), none, [w(small, lower)], w(dog, lower), plural),
+               g(sees, past, simple, yes),
+               [obj(np(det(article, a, w(a, lower)), none, [], w(boy, lower), singular))]), 46)),
+    forall(member(X, [ clause(see, present, pos, pron(1, sg, _), np(dog, sg, def, [])),
+                       clause(sleep, present, pos, of(np(boy, sg, def, []), np(dog, sg, def, [])), none),
+                       clause(see, imperfect, pos, np(dog, sg, def, []), np(boy, sg, def, [])) ]),
+           ( ( typology_reason_ir(X, _) -> R6 = bridged ; R6 = no_shape ),
+             format(atom(Label6), 'no shape on the other side: ~q', [X]),
+             check(Label6, R6, no_shape) )),
+    reason_unlearn(spanish).
 
 %% ---- the reference sentences and the senses -------------------------------------------
 

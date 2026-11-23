@@ -131,6 +131,7 @@ main :-
     german_v2,
     german_dessen,
     german_object_first,
+    bridge,
     format("~ndone~n", []).
 
 
@@ -683,6 +684,27 @@ german_object_first :-
     must('written with the subject first', G2, 'Der Junge sieht den Hund.'),
     typology_translate(german, english, 'Die Katze sieht das Mädchen.', E3),
     must('die may begin a subject', E3, 'The cat sees the girl.').
+
+%% 40. THE BRIDGE TO TRANSLATE.PL (Phase 6). typology_reason_ir/2 maps the
+%% typology IR to the term translate.pl reads and writes, ir(S, Stop), and
+%% back, for the shapes the two have alike, in the English template's
+%% words; test/typology.pl holds the two translators to the same Spanish
+%% over a shared set of sentences. A shape the other has not fails.
+bridge :-
+    typology_read(english, 'The dog does not see the boy.', IR),
+    typology_reason_ir(IR, R),
+    must('over the bridge', R,
+         ir(s(none, np(det(article, the, w(the, lower)), none, [], w(dog, lower), singular),
+              g(sees, present, simple, yes),
+              [obj(np(det(article, the, w(the, lower)), none, [], w(boy, lower), singular))]), 46)),
+    typology_reason_ir(IR2, ir(s(none, np(det(article, the, w(the, lower)), none, [], w(dogs, lower), plural),
+                                 g(sleeps, past, simple, no), [adv(w(today, lower))]), 46)),
+    must('and back, a noun read in its plural', IR2,
+         clause(sleep, past, pos, np(dog, pl, def, []), none, [adv(today)])),
+    typology_write(spanish, IR2, S),
+    must('written by the template', S, 'Los perros durmieron hoy.'),
+    ( typology_reason_ir(clause(see, present, pos, pron(1, sg, _), np(dog, sg, def, [])), _) -> R3 = bridged ; R3 = no_shape ),
+    must('a pronoun has no shape on the other side yet', R3, no_shape).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

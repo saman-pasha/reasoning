@@ -625,7 +625,9 @@ Not yet:
 6. A sense of its own is a hand row: the import gives one only where a
    template names it, as the vocabularies cannot tell a second sense
    (`marcha`, the walk) from a synonym (`jornada`, a day like `día`). A
-   sense inventory waits for the bridge to translate.pl (Phase 6).
+   sense inventory waits for the bridge to translate.pl (Phase 6); the
+   bridge (1.53.0) brings none, as `translate.pl`'s IR has the English word
+   and no sense either.
 
 ## Phase 5: more features (in part done, reasoning 1.34.0, 1.40.0 and 1.41.0)
 
@@ -712,11 +714,36 @@ saw the dog.` is the past. 107 569 Spanish rows and 79 185 Italian.
 
 Not yet: the subjunctive; the future perfect and the conditional perfect.
 
-## Phase 6: the bridge to translate.pl
+## Phase 6: the bridge to translate.pl (in part done, reasoning 1.53.0)
 
 A mapping between the typology IR and `translate.pl`'s `ir(s(...))` for the
 shapes both have. A shared set of sentences then holds the two translators
 to the same outputs.
+
+**Done** (1.53.0). `typology_reason_ir(?IR, ?Sentence)` maps the one to the
+other, either side given, in the English template's words (a verb is its
+present third person, `sees`; a noun read in its plural, `dogs`, is its
+meaning): a clause with its subject, its object or none and its adjuncts
+(an adposition phrase, an adverb), in the present, the past, the future,
+the conditional, the perfect or the pluperfect, denied or not
+(`g(sees, past, perfect, yes)`); a copula clause with its adjectives or a
+noun phrase; a yes or no question and one whose subject or object is
+`who` or `what`; a noun phrase with `the` or `a`; a relative clause whose
+gap is its subject or its object (`rc(NP, subject, s(none, gap(third,
+singular), ...))`). test/typology.pl's section `bridge` learns a Spanish
+lesson with the words the Spanish template has and, over 22 English
+sentences, holds three things: `translate.pl`'s reading over the bridge is
+the typology's own; `translate.pl` writes the typology's reading back as
+the same English; and the two write the same Spanish. The set shows two
+differences, each a description's: `translate.pl` writes two adjectives
+the other way round, in its own English round trip too (`The small black
+dogs sleep.` is `The black small dogs sleep.`, `Los perros negros
+pequeños duermen.` where the template writes `pequeños negros`); and its
+lesson puts `a` before a person where the Spanish template puts it before
+any animate object (`¿Quién ve el perro?`, `¿Quién ve al perro?`).
+
+Not yet: a pronoun, a possessor, the imperfect and the polite `you` on the
+bridge; a question word in an adjunct; the other languages' sentence sets.
 
 ## Phase 7: languages far from these
 

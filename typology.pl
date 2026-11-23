@@ -577,7 +577,7 @@
                       typology_read_text/3, typology_translate_text/4, typology_repair/5,
                       typology_answer/4, typology_answer/5,
                       typology_import/1, typology_import/2,
-                      typology_references/2 ]).
+                      typology_references/2, typology_reason_ir/2 ]).
 
 :- use_module(library(reasoning/reason), [ reason_base/2 ]).
 
@@ -833,6 +833,123 @@ typology_references(L, Failed) :-
 
 ty_reference_holds(L, Text, Topics, IR) :-
     \+ \+ ( typology_read(L, Text, R, Topics), R =@= IR ).
+
+%% ---- the bridge to translate.pl (Phase 6) -----------------------------------------
+%%
+%% typology_reason_ir(?IR, ?Sentence): IR, the typology's term, and
+%% Sentence, translate.pl's ir(S, Stop) (reason_ir/3 reads it,
+%% reason_ir_text/3 writes it), for the shapes the two have alike: a
+%% clause with its subject, its object or none and its adjuncts (an
+%% adposition phrase, an adverb), in the present, the past, the future,
+%% the conditional, the perfect or the pluperfect, denied or not; a copula
+%% clause with its adjectives or a noun phrase; a yes or no question, and
+%% a question whose subject or object is `who' or `what'; a noun phrase
+%% with `the' or `a', its adjectives and its number; and a relative clause
+%% whose gap is its subject or its object. Either side may be given, and
+%% the answer is the first. The words are the English template's
+%% (typology_load(english) first): a meaning is its English word, a verb
+%% its present third person (`sees'), the copula `is', and a noun's word
+%% may be its plural, as translate.pl's English reader leaves it (`dogs').
+%% Any other shape fails: a pronoun, a possessor, the imperfect, a
+%% question word in an adjunct.
+typology_reason_ir(IR, ir(S, Stop)) :-
+    once(ty_br_top(IR, S, Stop)).
+
+ty_br_top(question(C), S, 63) :- ty_br_ask(C, S).
+ty_br_top(C, S, 46) :- ty_br_s(C, S).
+
+ty_br_s(copula(T, P, S, Pred), s(none, RS, G, [C])) :-
+    ty_br_np(S, RS), ty_br_copula(T, P, G), ty_br_pred(Pred, C).
+ty_br_s(clause(V, T, P, S, O), s(none, RS, G, Cs)) :-
+    ty_br_np(S, RS), ty_br_group(V, T, P, G), ty_br_object(O, Cs, []).
+ty_br_s(clause(V, T, P, S, O, Js), s(none, RS, G, Cs)) :-
+    ty_br_np(S, RS), ty_br_group(V, T, P, G), ty_br_object(O, Cs, Cs1),
+    ty_br_adjuncts(Js, Cs1), Js \== [].
+
+%% A question word: the subject's (s(subject(Q), asked(Q), ...)) or the
+%% object's (s(object(Q), Subject, ...)); else a yes or no question, its
+%% statement.
+ty_br_ask(clause(V, T, P, wh(Q), O), s(subject(w(Q, lower)), asked(w(Q, lower)), G, Cs)) :-
+    ty_br_wh(Q), ty_br_group(V, T, P, G), ty_br_object(O, Cs, []).
+ty_br_ask(copula(T, P, wh(Q), Pred), s(subject(w(Q, lower)), asked(w(Q, lower)), G, [C])) :-
+    ty_br_wh(Q), ty_br_copula(T, P, G), ty_br_pred(Pred, C).
+ty_br_ask(clause(V, T, P, S, wh(Q)), s(object(w(Q, lower)), RS, G, [])) :-
+    ty_br_wh(Q), ty_br_np(S, RS), ty_br_group(V, T, P, G).
+ty_br_ask(C, S) :- ty_br_s(C, S).
+
+ty_br_wh(who).
+ty_br_wh(what).
+
+%% The verb group: the verb's present third person, the tense as a tense
+%% and an aspect, and the denial.
+ty_br_group(V, T, P, g(Lex, Tn, Asp, Den)) :-
+    ty_br_tense(T, Tn, Asp), ty_br_polarity(P, Den),
+    ty_verb(english, V, present, sg, pos, [Lex]).
+ty_br_copula(T, P, g(is, Tn, Asp, Den)) :-
+    ty_br_tense(T, Tn, Asp), ty_br_polarity(P, Den).
+
+ty_br_tense(present, present, simple).
+ty_br_tense(past, past, simple).
+ty_br_tense(future, future, simple).
+ty_br_tense(conditional, conditional, simple).
+ty_br_tense(perfect, present, perfect).
+ty_br_tense(pluperfect, past, perfect).
+
+ty_br_polarity(pos, no).
+ty_br_polarity(neg, yes).
+
+ty_br_object(none, Cs, Cs).
+ty_br_object(NP, [obj(R)|Cs], Cs) :- NP \== none, ty_br_np(NP, R).
+
+ty_br_pred(adj(As), adj(Ws)) :- ty_br_adjs(As, Ws).
+ty_br_pred(NP, obj(R)) :- NP = np(_, _, _, _), ty_br_np(NP, R).
+
+ty_br_adjuncts([], []).
+ty_br_adjuncts([J|Js], [C|Cs]) :- ty_br_adjunct(J, C), ty_br_adjuncts(Js, Cs).
+
+ty_br_adjunct(pp(M, NP), pp(w(W, lower), R)) :-
+    ty_adposition(english, M, [W]), ty_br_np(NP, R).
+ty_br_adjunct(adv(M), adv(w(W, lower))) :- ty_adverb(english, M, W).
+
+%% A noun phrase: the article, the adjectives, the noun and its number; a
+%% relative clause, its gap the subject (gap(third, Number), the head's
+%% number) or the object (no object among the complements).
+ty_br_np(np(M, N, Def, As), np(Det, none, Ws, w(W, lower), RN)) :-
+    ty_br_det(Def, Det), ty_br_number(N, RN),
+    ty_br_noun(M, W), ty_br_adjs(As, Ws).
+ty_br_np(rel(NP, C), rc(R, Role, S)) :- ty_br_rel(NP, C, R, Role, S).
+
+ty_br_rel(NP, clause(V, T, P, gap, O), R, subject, s(none, gap(third, RN), G, Cs)) :-
+    ty_br_np(NP, R), NP = np(_, N, _, _), ty_br_number(N, RN),
+    ty_br_group(V, T, P, G), ty_br_object(O, Cs, []).
+ty_br_rel(NP, copula(T, P, gap, Pred), R, subject, s(none, gap(third, RN), G, [C])) :-
+    ty_br_np(NP, R), NP = np(_, N, _, _), ty_br_number(N, RN),
+    ty_br_copula(T, P, G), ty_br_pred(Pred, C).
+ty_br_rel(NP, clause(V, T, P, S, gap), R, object, s(none, RS, G, [])) :-
+    ty_br_np(NP, R), ty_br_np(S, RS), ty_br_group(V, T, P, G).
+
+%% `the' and `a' (read, translate.pl's word may be `an').
+ty_br_det(Def, det(article, A, W)) :-
+    ty_br_def(Def, A),
+    ( var(W) -> W = w(A, lower) ; true ).
+
+ty_br_def(def, the).
+ty_br_def(indef, a).
+
+ty_br_number(sg, singular).
+ty_br_number(pl, plural).
+
+%% A noun's meaning and its English word, the singular written and either
+%% form read.
+ty_br_noun(M, W) :-
+    (   atom(W)
+    ->  ( ty_noun(english, M, _, _, W, _) ; ty_noun(english, M, _, _, _, W) )
+    ;   ty_noun(english, M, _, _, W, _)
+    ).
+
+ty_br_adjs([], []).
+ty_br_adjs([A|As], [w(W, lower)|Ws]) :-
+    ty_adjective(english, A, _, _, W), ty_br_adjs(As, Ws).
 
 ty_missing(L, order(Level)) :-
     ty_level(Level, _),
