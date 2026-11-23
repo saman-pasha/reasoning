@@ -119,6 +119,7 @@ main :-
     live_topics,
     french_questions,
     tenses,
+    polite,
     format("~ndone~n", []).
 
 
@@ -364,7 +365,7 @@ pronouns :-
     must('the verb tells the subject: you see our house', E2, 'You see our house.'),
     findall(IR, typology_read(english, 'You sleep.', IR), IRs3),
     length(IRs3, N3),
-    must('you is one or several: two readings', N3, 2),
+    must('you is one or several, familiar or polite: four readings', N3, 4),
     typology_translate(persian, italian, 'کوچک هستیم.', I4),
     must('we are small, the Persian ending into Italian', I4, 'Siamo piccoli.').
 
@@ -498,6 +499,21 @@ tenses :-
     must('the future', F3, 'Le garçon ne verra pas le chien.'),
     typology_translate(french, english, 'N\'a-t-il pas vu le chien?', E4),
     must('the negation and the pronoun after the auxiliary', E4, 'Has he not seen the dog?').
+
+%% 28. THE POLITE YOU. pron(polite, Number, Kind) is the polite `you': its
+%% verb takes the form ty_polite/3 maps it to (Spanish and Italian one
+%% person the third person's, `usted ve', `Lei vede'; French and Persian
+%% the second plural's, `vous voyez', `شما می‌بینید'), and it is never a
+%% dropped subject. English `you' is both, the familiar reading first.
+polite :-
+    IR1 = clause(see, present, pos, pron(polite, sg, _), np(dog, sg, def, [])),
+    findall(L-T, ( member(L, [spanish, italian, french]), typology_write(L, IR1, T) ), Ts1),
+    must('the polite you sees the dog', Ts1,
+         [spanish-'Usted ve al perro.', italian-'Lei vede il cane.', french-'Vous voyez le chien.']),
+    typology_translate(spanish, french, 'Ustedes no vieron al perro.', F2),
+    must('ustedes is vous', F2, 'Vous ne vîtes pas le chien.'),
+    typology_translate(english, spanish, 'You see the dog.', S3),
+    must('English you is the familiar first', S3, 'Ves al perro.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

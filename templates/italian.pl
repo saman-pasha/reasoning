@@ -255,18 +255,18 @@ ty_possessive_pronoun(italian, [il, tuo], [[2, sg]], [[m, sg]]).
 ty_possessive_pronoun(italian, [la, tua], [[2, sg]], [[f, sg]]).
 ty_possessive_pronoun(italian, [i, tuoi], [[2, sg]], [[m, pl]]).
 ty_possessive_pronoun(italian, [le, tue], [[2, sg]], [[f, pl]]).
-ty_possessive_pronoun(italian, [il, suo], [[3, sg]], [[m, sg]]).
-ty_possessive_pronoun(italian, [la, sua], [[3, sg]], [[f, sg]]).
-ty_possessive_pronoun(italian, [i, suoi], [[3, sg]], [[m, pl]]).
-ty_possessive_pronoun(italian, [le, sue], [[3, sg]], [[f, pl]]).
+ty_possessive_pronoun(italian, [il, suo], [[3, sg], [polite, sg]], [[m, sg]]).
+ty_possessive_pronoun(italian, [la, sua], [[3, sg], [polite, sg]], [[f, sg]]).
+ty_possessive_pronoun(italian, [i, suoi], [[3, sg], [polite, sg]], [[m, pl]]).
+ty_possessive_pronoun(italian, [le, sue], [[3, sg], [polite, sg]], [[f, pl]]).
 ty_possessive_pronoun(italian, [il, nostro], [[1, pl]], [[m, sg]]).
 ty_possessive_pronoun(italian, [la, nostra], [[1, pl]], [[f, sg]]).
 ty_possessive_pronoun(italian, [i, nostri], [[1, pl]], [[m, pl]]).
 ty_possessive_pronoun(italian, [le, nostre], [[1, pl]], [[f, pl]]).
-ty_possessive_pronoun(italian, [il, vostro], [[2, pl]], [[m, sg]]).
-ty_possessive_pronoun(italian, [la, vostra], [[2, pl]], [[f, sg]]).
-ty_possessive_pronoun(italian, [i, vostri], [[2, pl]], [[m, pl]]).
-ty_possessive_pronoun(italian, [le, vostre], [[2, pl]], [[f, pl]]).
+ty_possessive_pronoun(italian, [il, vostro], [[2, pl], [polite, pl]], [[m, sg]]).
+ty_possessive_pronoun(italian, [la, vostra], [[2, pl], [polite, pl]], [[f, sg]]).
+ty_possessive_pronoun(italian, [i, vostri], [[2, pl], [polite, pl]], [[m, pl]]).
+ty_possessive_pronoun(italian, [le, vostre], [[2, pl], [polite, pl]], [[f, pl]]).
 ty_possessive_pronoun(italian, [il, loro], [[3, pl]], [[m, sg]]).
 ty_possessive_pronoun(italian, [la, loro], [[3, pl]], [[f, sg]]).
 ty_possessive_pronoun(italian, [i, loro], [[3, pl]], [[m, pl]]).
@@ -280,27 +280,32 @@ ty_possessive_pronoun(italian, [le, loro], [[3, pl]], [[f, pl]]).
 ty_pronoun(italian, s, [io], [[1, sg]]).
 ty_pronoun(italian, s, [tu], [[2, sg]]).
 ty_pronoun(italian, s, [lui], [[3, sg, m]]).
-ty_pronoun(italian, s, [lei], [[3, sg, f]]).
+ty_pronoun(italian, s, [lei], [[3, sg, f], [polite, sg]]).
 ty_pronoun(italian, s, [noi], [[1, pl]]).
-ty_pronoun(italian, s, [voi], [[2, pl]]).
+ty_pronoun(italian, s, [voi], [[2, pl], [polite, pl]]).
 ty_pronoun(italian, s, [loro], [[3, pl]]).
 ty_pronoun(italian, o, [mi], [[1, sg]]).
 ty_pronoun(italian, o, [ti], [[2, sg]]).
 ty_pronoun(italian, o, [lo], [[3, sg, m], [3, sg, n]]).
-ty_pronoun(italian, o, [la], [[3, sg, f]]).
+ty_pronoun(italian, o, [la], [[3, sg, f], [polite, sg]]).
 ty_pronoun(italian, o, [ci], [[1, pl]]).
-ty_pronoun(italian, o, [vi], [[2, pl]]).
+ty_pronoun(italian, o, [vi], [[2, pl], [polite, pl]]).
 ty_pronoun(italian, o, [li], [[3, pl, m], [3, pl, n]]).
 ty_pronoun(italian, o, [le], [[3, pl, f]]).
 ty_pronoun(italian, j, [me], [[1, sg]]).
 ty_pronoun(italian, j, [te], [[2, sg]]).
 ty_pronoun(italian, j, [lui], [[3, sg, m], [3, sg, n]]).
-ty_pronoun(italian, j, [lei], [[3, sg, f]]).
+ty_pronoun(italian, j, [lei], [[3, sg, f], [polite, sg]]).
 ty_pronoun(italian, j, [noi], [[1, pl]]).
-ty_pronoun(italian, j, [voi], [[2, pl]]).
+ty_pronoun(italian, j, [voi], [[2, pl], [polite, pl]]).
 ty_pronoun(italian, j, [loro], [[3, pl]]).
 ty_before(italian, lo, [[vowel], [h]], 'l\'', joined).
 ty_pro_drop(italian, [1, 2]).
+%% The polite `you': one person is `Lei' with the third person's form and
+%% clitic (`Lei vede il cane.', `La vedo.', `il suo cane'), several `voi' with
+%% the second plural's; it is never dropped.
+ty_polite(italian, sg, sg).
+ty_polite(italian, pl, pl(2)).
 ty_clitic(italian, o).
 
 %% The first and the second persons of the verbs above (the import gives

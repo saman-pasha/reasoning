@@ -16,7 +16,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses,
+                      french_questions, tenses, polite,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -736,7 +736,7 @@ more_possessors :-
     -> R1 = read ; R1 = not_read ),
     check('English: the dog of the boy, the second construction, is read', R1, read),
     %% A pronoun's words tell what they tell, and leave the rest unbound.
-    forall(member(L-T-Want, [ spanish-'Su perro duerme.'-[pron(3, _, _)],
+    forall(member(L-T-Want, [ spanish-'Su perro duerme.'-[pron(3, _, _), pron(polite, _, _)],
                               english-'Its dog sleeps.'-[pron(3, sg, n)],
                               italian-'Il loro cane dorme.'-[pron(3, pl, _)],
                               persian-'سگش می‌خوابد.'-[pron(3, sg, _)] ]),
@@ -989,10 +989,13 @@ pronouns :-
     %% A reading binds what its words tell.
     forall(member(L-T-Want, [ english-'I see the dog.'-[clause(see, present, pos, pron(1, sg, _), D)],
                               english-'Do you see the dog?'-[question(clause(see, present, pos, pron(2, sg, _), D)),
-                                                             question(clause(see, present, pos, pron(2, pl, _), D))],
+                                                             question(clause(see, present, pos, pron(2, pl, _), D)),
+                                                             question(clause(see, present, pos, pron(polite, sg, _), D)),
+                                                             question(clause(see, present, pos, pron(polite, pl, _), D))],
                               spanish-'Duerme.'-[clause(sleep, present, pos, pron(3, sg, _), none)],
                               spanish-'Soy pequeña.'-[copula(present, pos, pron(1, sg, f), adj([small]))],
-                              spanish-'No las vemos.'-[clause(see, present, neg, pron(1, pl, _), pron(3, pl, f))],
+                              spanish-'No las vemos.'-[clause(see, present, neg, pron(1, pl, _), pron(3, pl, f)),
+                                                       clause(see, present, neg, pron(1, pl, _), pron(polite, pl, f))],
                               persian-'کوچک نیستید.'-[copula(present, neg, pron(2, pl, _), adj([small]))],
                               italian-'Lo vedi.'-[clause(see, present, pos, pron(2, sg, _), pron(3, sg, m)),
                                                   clause(see, present, pos, pron(2, sg, _), pron(3, sg, n))] ]),
@@ -1394,6 +1397,56 @@ tenses :-
     findall(M, ( typology_check(tiny, Ms), member(M, Ms), M = verb_class(_, _) ), M4),
     retractall(ty_verb_class(tiny, _, _)),
     check('typology_check/2: a verb class with no pattern', M4, [verb_class(see, odd)]).
+
+%% ---- the polite you -------------------------------------------------------------
+
+%% 1.41.0: the polite `you', pron(polite, Number, Kind): its own agreement
+%% key, polite(Number), which ty_polite/3 maps to the form it takes (Spanish
+%% and Italian one person the third person's, French and Persian the
+%% second plural's), its own pronouns, never a dropped subject.
+polite :-
+    section('the polite you'),
+    D = np(dog, sg, def, []),
+    IR1 = clause(see, present, pos, pron(polite, sg, _), D),
+    findall(L-T, ( member(L, [english, spanish, italian, persian, french]), typology_write(L, IR1, T) ), Ts1),
+    check('the polite you sees the dog, five times', Ts1,
+          [english-'You see the dog.', spanish-'Usted ve al perro.', italian-'Lei vede il cane.',
+           persian-'شما سگ را می\x200C\بینید.', french-'Vous voyez le chien.']),
+    Rows = [ spanish-clause(see, present, pos, pron(polite, pl, _), D)-'Ustedes ven al perro.',
+             spanish-copula(present, pos, pron(polite, sg, m), adj([small]))-'Usted es pequeño.',
+             spanish-clause(see, present, pos, pron(1, sg, _), pron(polite, sg, f))-'La veo.',
+             spanish-clause(sleep, present, pos, of(pron(polite, sg, _), D), none)-'Su perro duerme.',
+             italian-clause(see, present, pos, pron(polite, pl, _), D)-'Voi vedete il cane.',
+             italian-clause(see, present, pos, pron(1, sg, _), pron(polite, sg, _))-'La vedo.',
+             french-copula(present, pos, pron(polite, sg, m), adj([small]))-'Vous êtes petit.',
+             french-clause(sleep, present, pos, of(pron(polite, sg, _), D), none)-'Votre chien dort.',
+             french-question(clause(see, present, pos, pron(polite, sg, _), D))-'Est-ce que vous voyez le chien?',
+             persian-clause(sleep, present, pos, of(pron(polite, sg, _), D), none)-'سگتان می\x200C\خوابد.' ],
+    forall(member(L-IR-Want, Rows),
+           ( typology_write(L, IR, T),
+             atomic_list_concat([L, ': ', Want], Label),
+             check(Label, T, Want),
+             ( findall(I, typology_read(L, T, I), Is), member(I1, Is), subsumes_term(I1, IR) -> R = read ; R = not_read ),
+             atomic_list_concat([L, ': read back: ', Want], Label2),
+             check(Label2, R, read) )),
+    forall(member(L-T-IR, [ spanish-'Duerme.'-clause(sleep, present, pos, pron(polite, _, _), none),
+                            persian-'کوچک نیستید.'-copula(present, neg, pron(polite, _, _), adj([small])) ]),
+           ( ( typology_read(L, T, IR) -> X = read ; X = refused ),
+             atomic_list_concat([L, ': ', T, ' has no polite subject: it is never dropped'], Label),
+             check(Label, X, refused) )),
+    forall(member(F-To-S-Want, [ spanish-english-'Usted ve al perro.'-'You see the dog.',
+                                 spanish-french-'Usted ve al perro.'-'Vous voyez le chien.',
+                                 spanish-italian-'Ustedes ven al perro.'-'Voi vedete il cane.',
+                                 english-spanish-'You see the dog.'-'Ves al perro.' ]),
+           ( typology_translate(F, To, S, Out),
+             atomic_list_concat([F, ' into ', To, ': ', S], Label),
+             check(Label, Out, Want) )),
+    typology_answer(english, question(IR1), pos, echo, A1),
+    check('English: the polite you answers I', A1, 'Yes, I do.'),
+    assertz(ty_pronoun(tiny, s, [thou], [[polite, sg]])),
+    findall(M, ( typology_check(tiny, Ms), member(M, Ms), M = polite(_) ), M2),
+    retractall(ty_pronoun(tiny, _, _, _)),
+    check('typology_check/2: a polite pronoun wants ty_polite/3', M2, [polite(pl), polite(sg)]).
 
 %% A reading of a verb's other sense (`view' for `see', `little' for
 %% `small'): the checks above want the first sense's.

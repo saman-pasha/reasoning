@@ -238,8 +238,8 @@ ty_possessive_pronoun(spanish, [mi], [[1, sg]], [[sg]]).
 ty_possessive_pronoun(spanish, [mis], [[1, sg]], [[pl]]).
 ty_possessive_pronoun(spanish, [tu], [[2, sg]], [[sg]]).
 ty_possessive_pronoun(spanish, [tus], [[2, sg]], [[pl]]).
-ty_possessive_pronoun(spanish, [su], [[3]], [[sg]]).
-ty_possessive_pronoun(spanish, [sus], [[3]], [[pl]]).
+ty_possessive_pronoun(spanish, [su], [[3], [polite]], [[sg]]).
+ty_possessive_pronoun(spanish, [sus], [[3], [polite]], [[pl]]).
 ty_possessive_pronoun(spanish, [nuestro], [[1, pl]], [[m, sg]]).
 ty_possessive_pronoun(spanish, [nuestra], [[1, pl]], [[f, sg]]).
 ty_possessive_pronoun(spanish, [nuestros], [[1, pl]], [[m, pl]]).
@@ -262,16 +262,18 @@ ty_pronoun(spanish, s, [nosotros], [[1, pl, m]]).
 ty_pronoun(spanish, s, [nosotras], [[1, pl, f]]).
 ty_pronoun(spanish, s, [vosotros], [[2, pl, m]]).
 ty_pronoun(spanish, s, [vosotras], [[2, pl, f]]).
+ty_pronoun(spanish, s, [usted], [[polite, sg]]).
+ty_pronoun(spanish, s, [ustedes], [[polite, pl]]).
 ty_pronoun(spanish, s, [ellos], [[3, pl, m], [3, pl, n]]).
 ty_pronoun(spanish, s, [ellas], [[3, pl, f]]).
 ty_pronoun(spanish, o, [me], [[1, sg]]).
 ty_pronoun(spanish, o, [te], [[2, sg]]).
-ty_pronoun(spanish, o, [lo], [[3, sg, m], [3, sg, n]]).
-ty_pronoun(spanish, o, [la], [[3, sg, f]]).
+ty_pronoun(spanish, o, [lo], [[3, sg, m], [3, sg, n], [polite, sg, m]]).
+ty_pronoun(spanish, o, [la], [[3, sg, f], [polite, sg, f]]).
 ty_pronoun(spanish, o, [nos], [[1, pl]]).
 ty_pronoun(spanish, o, [os], [[2, pl]]).
-ty_pronoun(spanish, o, [los], [[3, pl, m], [3, pl, n]]).
-ty_pronoun(spanish, o, [las], [[3, pl, f]]).
+ty_pronoun(spanish, o, [los], [[3, pl, m], [3, pl, n], [polite, pl, m]]).
+ty_pronoun(spanish, o, [las], [[3, pl, f], [polite, pl, f]]).
 ty_pronoun(spanish, j, [mí], [[1, sg]]).
 ty_pronoun(spanish, j, [ti], [[2, sg]]).
 ty_pronoun(spanish, j, [él], [[3, sg, m], [3, sg, n]]).
@@ -280,11 +282,18 @@ ty_pronoun(spanish, j, [nosotros], [[1, pl, m]]).
 ty_pronoun(spanish, j, [nosotras], [[1, pl, f]]).
 ty_pronoun(spanish, j, [vosotros], [[2, pl, m]]).
 ty_pronoun(spanish, j, [vosotras], [[2, pl, f]]).
+ty_pronoun(spanish, j, [usted], [[polite, sg]]).
+ty_pronoun(spanish, j, [ustedes], [[polite, pl]]).
 ty_pronoun(spanish, j, [ellos], [[3, pl, m], [3, pl, n]]).
 ty_pronoun(spanish, j, [ellas], [[3, pl, f]]).
 ty_contraction(spanish, [con, mí], conmigo).
 ty_contraction(spanish, [con, ti], contigo).
 ty_pro_drop(spanish, [1, 2]).
+%% The polite `you', `usted' and `ustedes', takes the third person's form
+%% (`Usted ve al perro.'), its object clitic and its possessive the third
+%% person's too (`Lo veo.', `su perro'); it is never dropped.
+ty_polite(spanish, sg, sg).
+ty_polite(spanish, pl, pl).
 ty_clitic(spanish, o).
 
 %% The first and the second persons of the verbs above (the import gives

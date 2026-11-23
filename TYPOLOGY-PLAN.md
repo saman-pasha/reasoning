@@ -500,7 +500,7 @@ Not yet:
    word (`march`, the month and the walk) waits for the bridge to
    translate.pl (Phase 6).
 
-## Phase 5: more features (in part done, reasoning 1.34.0 and 1.40.0)
+## Phase 5: more features (in part done, reasoning 1.34.0, 1.40.0 and 1.41.0)
 
 Persons 1 and 2 and the pronouns, with a subject that may be dropped, are
 done (Phase 4's item 16).
@@ -532,8 +532,23 @@ template's `future_stem` endings: `tener` `tendrá`): 76 063 Spanish rows
 and 54 789 Italian (57 682 and 40 558 through 1.39.0). The English
 template lists the participles that are not the past (`spoken`, `gone`).
 
+**The polite `you`** (1.41.0). `pron(polite, Number, Kind)`, a person of
+its own, with its own agreement key `polite(Number)`, which
+`ty_polite(L, Number, Key)` maps to the form the language gives it:
+Spanish and Italian one person the third person's (`Usted ve al perro.`,
+`Lei vede il cane.`, its clitic and possessive the third person's too:
+`La veo.`, `su perro`, `il suo cane`), Spanish several the third plural
+(`Ustedes ven al perro.`) and Italian the second plural (`Voi vedete il
+cane.`), French and Persian the second plural (`Vous voyez le chien.`,
+`Vous êtes petit.`, one person's adjective singular; `شما سگ را
+می‌بینید.`, `سگتان`); English `you`. The pronoun rows take the condition
+`[polite, Number]`, and a polite subject is never dropped (`Duerme.` is he
+or she sleeps). A reading of `you`, `vous`, Spanish `su` and `las` and
+Italian `lei` has the polite reading beside the others; English `you`
+translates as the familiar first.
+
 Not yet: the copula's future and perfect; other tenses (the imperfect,
-the conditional, the pluperfect); the polite and the plural `you`.
+the conditional, the pluperfect).
 
 ## Phase 6: the bridge to translate.pl
 

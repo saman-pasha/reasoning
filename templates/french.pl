@@ -328,8 +328,8 @@ ty_possessive_pronoun(french, [sa], [[3, sg]], [[f, sg]]).
 ty_possessive_pronoun(french, [ses], [[3, sg]], [[pl]]).
 ty_possessive_pronoun(french, [notre], [[1, pl]], [[sg]]).
 ty_possessive_pronoun(french, [nos], [[1, pl]], [[pl]]).
-ty_possessive_pronoun(french, [votre], [[2, pl]], [[sg]]).
-ty_possessive_pronoun(french, [vos], [[2, pl]], [[pl]]).
+ty_possessive_pronoun(french, [votre], [[2, pl], [polite]], [[sg]]).
+ty_possessive_pronoun(french, [vos], [[2, pl], [polite]], [[pl]]).
 ty_possessive_pronoun(french, [leur], [[3, pl]], [[sg]]).
 ty_possessive_pronoun(french, [leurs], [[3, pl]], [[pl]]).
 
@@ -342,7 +342,7 @@ ty_pronoun(french, s, [tu], [[2, sg]]).
 ty_pronoun(french, s, [il], [[3, sg, m], [3, sg, n]]).
 ty_pronoun(french, s, [elle], [[3, sg, f]]).
 ty_pronoun(french, s, [nous], [[1, pl]]).
-ty_pronoun(french, s, [vous], [[2, pl]]).
+ty_pronoun(french, s, [vous], [[2, pl], [polite]]).
 ty_pronoun(french, s, [ils], [[3, pl, m], [3, pl, n]]).
 ty_pronoun(french, s, [elles], [[3, pl, f]]).
 ty_pronoun(french, o, [me], [[1, sg]]).
@@ -350,17 +350,21 @@ ty_pronoun(french, o, [te], [[2, sg]]).
 ty_pronoun(french, o, [le], [[3, sg, m], [3, sg, n]]).
 ty_pronoun(french, o, [la], [[3, sg, f]]).
 ty_pronoun(french, o, [nous], [[1, pl]]).
-ty_pronoun(french, o, [vous], [[2, pl]]).
+ty_pronoun(french, o, [vous], [[2, pl], [polite]]).
 ty_pronoun(french, o, [les], [[3, pl]]).
 ty_pronoun(french, j, [moi], [[1, sg]]).
 ty_pronoun(french, j, [toi], [[2, sg]]).
 ty_pronoun(french, j, [lui], [[3, sg, m], [3, sg, n]]).
 ty_pronoun(french, j, [elle], [[3, sg, f]]).
 ty_pronoun(french, j, [nous], [[1, pl]]).
-ty_pronoun(french, j, [vous], [[2, pl]]).
+ty_pronoun(french, j, [vous], [[2, pl], [polite]]).
 ty_pronoun(french, j, [eux], [[3, pl, m], [3, pl, n]]).
 ty_pronoun(french, j, [elles], [[3, pl, f]]).
 ty_clitic(french, o).
+%% The polite `you' is `vous' with the second plural's form (`Vous voyez le
+%% chien.'), one person's adjectives singular (`Vous êtes petit.').
+ty_polite(french, sg, pl(2)).
+ty_polite(french, pl, pl(2)).
 
 %% A pronoun of the text takes the gender of the noun it stands for (a
 %% house is `la', a book `lo').

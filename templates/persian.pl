@@ -270,9 +270,13 @@ ty_pronoun(persian, s, ['تو'], [[2, sg]]).
 ty_pronoun(persian, s, ['او'], [[3, sg, m], [3, sg, f]]).
 ty_pronoun(persian, s, ['آن'], [[3, sg, n]]).
 ty_pronoun(persian, s, ['ما'], [[1, pl]]).
-ty_pronoun(persian, s, ['شما'], [[2, pl]]).
+ty_pronoun(persian, s, ['شما'], [[2, pl], [polite]]).
 ty_pronoun(persian, s, ['آنها'], [[3, pl]]).
 ty_pro_drop(persian, [1, 2]).
+%% The polite `you' is `شما' with the second plural's form and clitic
+%% (`شما سگ را می‌بینید', `سگتان'); it is never dropped.
+ty_polite(persian, sg, pl(2)).
+ty_polite(persian, pl, pl(2)).
 ty_verb_person(persian, any, sg(1), pl, 'ند', 'م').
 ty_verb_person(persian, any, sg(2), pl, 'ند', 'ی').
 ty_verb_person(persian, any, pl(1), pl, 'ند', 'یم').

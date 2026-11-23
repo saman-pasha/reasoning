@@ -260,6 +260,9 @@
 %%                                     each its person, number and kind
 %%                                     (`he' [[3, sg, m]]); a role with no
 %%                                     row takes o's (j) or s's rows
+%%     ty_polite(L, Number, Key)       the agreement key a polite `you' of
+%%                                     Number takes (Spanish sg, sg: `usted
+%%                                     ve'; French sg, pl(2): `vous voyez')
 %%     ty_pro_drop(L, Persons)         a subject pronoun may be no word (the
 %%                                     verb's form tells it): written so of
 %%                                     the Persons listed, read so of every
@@ -366,7 +369,8 @@
 %%                                     in a relative clause `gap' (`whose
 %%                                     dog')
 %%     pron(Person, Number, Kind)      a personal pronoun where a noun
-%%                                     phrase stands: Person 1, 2, 3, Number
+%%                                     phrase stands: Person 1, 2, 3 or
+%%                                     polite (the polite `you'), Number
 %%                                     sg, pl, Kind m, f, n (a thing); a
 %%                                     reading leaves unbound what its words
 %%                                     do not tell (`you' is pron(2, _, _));
@@ -505,7 +509,7 @@
            ty_inversion/3, ty_wh_tonic/3,
            ty_tense_form/5, ty_participle/3, ty_participle_like/3,
            ty_participle_ending/5, ty_participle_agrees/2,
-           ty_verb_class/3, ty_class_tense_form/6.
+           ty_verb_class/3, ty_class_tense_form/6, ty_polite/3.
 :- discontiguous ty_order/3, ty_noun/6, ty_adjective/5, ty_verb/6,
                  ty_article/5, ty_mark/5, ty_contraction/3, ty_negation/5,
                  ty_ending/4, ty_letters/3, ty_before/5, ty_linked/5, ty_copula/6,
@@ -522,7 +526,7 @@
                  ty_inversion/3, ty_wh_tonic/3,
                  ty_tense_form/5, ty_participle/3, ty_participle_like/3,
                  ty_participle_ending/5, ty_participle_agrees/2,
-                 ty_verb_class/3, ty_class_tense_form/6.
+                 ty_verb_class/3, ty_class_tense_form/6, ty_polite/3.
 
 %% ---- the levels and the values a slot takes -----------------------------------
 
@@ -680,6 +684,7 @@ ty_row_shape('ty_participle_ending(L, Gender, Number, From, To).').
 ty_row_shape('ty_participle_agrees(L, With).').
 ty_row_shape('ty_verb_class(L, Meaning, Class).').
 ty_row_shape('ty_class_tense_form(L, Class, Tense, Number, Polarity, Pattern).').
+ty_row_shape('ty_polite(L, Number, Key).').
 
 %% ---- the check ----------------------------------------------------------------------
 
@@ -865,6 +870,14 @@ ty_missing(L, bad(ty_class_tense_form(L, C, T, N, P, Ws))) :-
     \+ ( atom(C), ty_values(tense, Ts), memberchk(T, Ts),
          ( N == any ; ty_values(agreement, As), memberchk(N, As) ),
          memberchk(P, [pos, neg]), is_list(Ws), Ws \== [] ).
+ty_missing(L, bad(ty_polite(L, N, K))) :-
+    ty_polite(L, N, K),
+    \+ ( memberchk(N, [sg, pl]),
+         memberchk(K, [sg, pl, sg(1), sg(2), pl(1), pl(2)]) ).
+ty_missing(L, polite(N)) :-
+    once(( ty_pronoun(L, _, _, Cs), member(C, Cs), memberchk(polite, C) )),
+    member(N, [sg, pl]),
+    \+ ty_polite(L, N, _).
 ty_missing(L, verb_class(V, C)) :-
     ty_verb_class(L, V, C),
     \+ ty_class_tense_form(L, C, _, _, _, _).
@@ -895,7 +908,7 @@ ty_tense_asked(L, V, T) :-
 %% A pronoun's condition: a list of its person, number and kind.
 ty_pron_condition(C) :-
     is_list(C),
-    forall(member(X, C), memberchk(X, [1, 2, 3, sg, pl, m, f, n])).
+    forall(member(X, C), memberchk(X, [1, 2, 3, polite, sg, pl, m, f, n])).
 
 ty_question_rule(R) :- memberchk(R, [unchanged, front(all), front(first), invert(pronoun)]), !.
 ty_question_rule(particle(W, P)) :- ( atom(W) ; is_list(W), W \== [] ), memberchk(P, [start, end]).
@@ -2405,6 +2418,7 @@ ty_echo_of(copula(T, _, S, Pr), P, copula(T, P, S1, Pr)) :- ty_answerer(S, S1).
 %% phrase its pronoun, of the kind its meaning has (ty_meaning_kind/2).
 ty_answerer(pron(1, N, K), pron(2, N, K)) :- !.
 ty_answerer(pron(2, N, K), pron(1, N, K)) :- !.
+ty_answerer(pron(polite, N, K), pron(1, N, K)) :- !.
 ty_answerer(pron(3, N, K), pron(3, N, K)) :- !.
 ty_answerer(X, pron(3, N, K)) :-
     ty_np_head(X, M, N),
@@ -2892,9 +2906,14 @@ ty_poss_pronoun(L, Pr, NP, F, Next) -->
 ty_poss_pronoun(L, Pr, NP, F, none) -->
     { ty_possessive_clitic(L),
       Pr = pron(P, N, _),
-      ( nonvar(P) -> ty_agreement(P, N, Key) ; true ) },
+      ( nonvar(P) -> ty_agreement(P, N, Key0), ty_key_here(L, Key0, Key) ; true ) },
     ty_np(L, NP, F, clitic(Key)),
-    { ty_agreement(P, N, Key) }.
+    { ty_agreement(P, N, Key0), ty_key_here(L, Key0, Key) }.
+
+%% An agreement key as the language's rows have it: a polite one the key
+%% ty_polite/3 maps it to.
+ty_key_here(L, Key0, Key) :-
+    (   nonvar(Key0), Key0 = polite(N0) -> ty_polite(L, N0, Key) ; Key = Key0 ).
 
 %% A slot that may hold a possessive pronoun: writing, a pron/3; reading,
 %% one is tried where the sentence has a pronoun's word or a clitic form
@@ -2908,7 +2927,8 @@ ty_pron_slot(Pr) :-
 %%
 %% A PERSONAL PRONOUN is pron(Person, Number, Kind) where a noun phrase
 %% stands (a subject, an object, an adposition's noun phrase, a possessor):
-%% Person 1, 2 or 3, Number sg or pl, Kind m, f or n (a thing, or a living
+%% Person 1, 2 or 3, or polite (the polite `you': usted, Lei, vous, شما,
+%% whose verb ty_polite/3 gives), Number sg or pl, Kind m, f or n (a thing, or a living
 %% thing whose sex is not said). A reading binds what its words tell and
 %% leaves the rest unbound (`I' is pron(1, sg, _), `you' pron(2, _, _),
 %% Spanish `su' pron(3, _, _)); the writer writes the first form that fits.
@@ -2924,7 +2944,8 @@ ty_pron_slot(Pr) :-
 %% ty_pro_drop(L, Persons): a subject pronoun may be no word, the verb's
 %% form telling its person (Spanish `Veo al perro.', I see the dog), written
 %% so for the Persons listed and read so of every person (`Duerme.', he or
-%% she sleeps). Reading, a pronoun's words are tried where the sentence
+%% she sleeps), never a polite one (usted, Lei, vous, شما are
+%% always said). Reading, a pronoun's words are tried where the sentence
 %% has one (`$ty_ppron').
 ty_ppron_slot(Pr) :- var(Pr), !, Pr = pron(_, _, _).
 ty_ppron_slot(pron(_, _, _)).
@@ -2941,7 +2962,9 @@ ty_ppron_role(L, Role, Pr, F) -->
       ty_marks_ok(L, Role, before, F, Before),
       ty_marks_ok(L, Role, after, F, After) }.
 ty_ppron_role(L, s, Pr, F) -->
-    { ty_pro_drop(L, _), \+ ty_dropped_first(L, Pr), ty_pron_np_features(L, Pr, F) }.
+    { ty_pro_drop(L, _), \+ ty_dropped_first(L, Pr),
+      Pr = pron(P, _, _), ( var(P) -> member(P, [1, 2, 3]) ; P \== polite ),
+      ty_pron_np_features(L, Pr, F) }.
 
 %% Writing, a subject of a person the language drops, or of the third
 %% person whose kind the IR does not say (Spanish `Duerme.' is Italian
@@ -2973,7 +2996,7 @@ ty_pron_rows(L, Role, R) :-
 ty_pron_fits([], _).
 ty_pron_fits([X|Xs], Pr) :- ty_pron_feature(X, Pr), ty_pron_fits(Xs, Pr).
 
-ty_pron_feature(X, pron(P, _, _)) :- integer(X), !, P = X.
+ty_pron_feature(X, pron(P, _, _)) :- ( integer(X) ; X == polite ), !, P = X.
 ty_pron_feature(X, pron(_, N, _)) :- ( X == sg ; X == pl ), !, N = X.
 ty_pron_feature(X, pron(_, _, X)).
 
@@ -3242,12 +3265,13 @@ ty_clitic_verb(L, V, T, N, P, O, Pos, S0, S) :-
         append([Neg, Cl, Pos, S], S0)
     ;   ty_neg_split(L, S0, Neg, S1),
         between(1, 2, KC), length(Cl, KC), append(Cl, S2, S1),
-        ty_pron_words(L, o, O, Cl),
+        once(ty_pron_words(L, o, _, Cl)),
         between(1, 4, KV), length(Pos, KV), append(Pos, S, S2),
         append(Neg, Pos, VWsA),
         ty_neg_split(L, VWsA, Neg1, _), Neg1 == Neg,
         ty_part_unagree(L, VWsA, VWs),
         ty_verb_agree(L, V, T, N, P, VWs),
+        ty_pron_words(L, o, O, Cl),
         ty_part_agree(L, T, O, VWs, VWsA1), VWsA1 == VWsA
     ),
     \+ ty_complement(L, V, _).
@@ -3510,12 +3534,20 @@ ty_agreement(1, sg, sg(1)).
 ty_agreement(2, sg, sg(2)).
 ty_agreement(1, pl, pl(1)).
 ty_agreement(2, pl, pl(2)).
+%% The polite `you' (pron(polite, N, K)): its own key, which a template maps
+%% to the form it takes (ty_polite/3: Spanish `usted ve', French `vous
+%% voyez').
+ty_agreement(polite, sg, polite(sg)).
+ty_agreement(polite, pl, polite(pl)).
 
 %% The form of key N, Form called with a key and the words: the rows' own,
 %% else the rule's over its base's form. Reading, the rule takes the
 %% ending back first, so the table is asked by the base's words.
 ty_person_form(L, T, N, Form, Words) :-
-    (   nonvar(N), N \== sg, N \== pl
+    (   nonvar(N), N = polite(N0)
+    ->  ty_polite(L, N0, Key),
+        ty_person_form(L, T, Key, Form, Words)
+    ;   nonvar(N), N \== sg, N \== pl
     ->  (   call(Form, N, Words)
         *-> true
         ;   ty_verb_person(L, T0, N, Base, From, To),
