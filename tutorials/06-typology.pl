@@ -120,6 +120,7 @@ main :-
     french_questions,
     tenses,
     polite,
+    german,
     format("~ndone~n", []).
 
 
@@ -514,6 +515,24 @@ polite :-
     must('ustedes is vous', F2, 'Vous ne vîtes pas le chien.'),
     typology_translate(english, spanish, 'You see the dog.', S3),
     must('English you is the familiar first', S3, 'Ves al perro.').
+
+%% 29. GERMAN. A template with cases: a role or an adposition gives its
+%% noun phrase a case (ty_case/3, ty_case_after/3), which the article, the
+%% noun and an adjective's ending take (`den kleinen Hund', `mit den
+%% Hunden'). The verb stands second, and the last part of a verb of two
+%% at the end (`hat ... gesehen'); a relative clause has its verb last and
+%% commas round it. `nicht' stands at the end, and an indefinite object
+%% takes `kein' in its place.
+german :-
+    typology_load(german),
+    typology_translate(english, german, 'The boy has not seen the small dog.', G1),
+    must('the verb second, nicht before the participle', G1, 'Der Junge hat den kleinen Hund nicht gesehen.'),
+    typology_translate(english, german, 'The dog that the girl saw sleeps in the house.', G2),
+    must('a relative clause, its verb last, between commas', G2, 'Der Hund, den das Mädchen sah, schläft im Haus.'),
+    typology_write(german, clause(see, present, neg, np(boy, sg, def, []), np(dog, sg, indef, [])), G3),
+    must('kein for an indefinite object', G3, 'Der Junge sieht keinen Hund.'),
+    typology_translate(german, spanish, 'Wen hat das Mädchen gesehen?', S4),
+    must('a question word in its case', S4, '¿A quién ha visto la niña?').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

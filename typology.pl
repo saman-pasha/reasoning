@@ -321,6 +321,56 @@
 %%                                     (the clause with no object: Persian
 %%                                     `بله، می‌بینم.'), Word keep or drop
 %%                                     the yes or no word before it
+%%     ty_case(L, Role, Case)          the case of a role's noun phrase (s,
+%%                                     o, p a copula's predicate, g a
+%%                                     possessor): German s nom, o acc;
+%%                                     a language with these rows has cases
+%%     ty_case_after(L, Words, Case)   the case of the noun phrase after the
+%%                                     adposition Words (German [mit] dat,
+%%                                     [an] acc)
+%%     ty_article_case(L, Definiteness, Gender, Number, Case, Word)
+%%                                     an article of a case (German `den':
+%%                                     def, m, sg, acc); each is a
+%%                                     ty_article/5 row too
+%%     ty_noun_case(L, Meaning, Case, Number, Word)
+%%                                     a noun's form in a case where it is
+%%                                     not the nominative's (`Hunden', dat,
+%%                                     pl)
+%%     ty_declension(L, Definiteness, Declension)
+%%                                     the declension of the adjectives
+%%                                     after an article of Definiteness
+%%                                     (none: no article)
+%%     ty_adjective_ending(L, Declension, Case, Gender, Number, Ending)
+%%                                     an adjective before a noun is its
+%%                                     row's word and Ending (German
+%%                                     `kleinen': weak, acc, m, sg, en)
+%%     ty_wh_case(L, Meaning, Case, Words)
+%%                                     a question word of a case (German
+%%                                     who acc [wen])
+%%     ty_negative_article(L, Gender, Number, Case, Word)
+%%                                     the article that says a negation
+%%                                     (German `kein'): a negative clause's
+%%                                     indefinite object, or a negative
+%%                                     copula's indefinite predicate, takes
+%%                                     it and the clause no other negation
+%%     ty_split_place(L, end)          the last part of a verb of two (an
+%%                                     auxiliary and a participle or an
+%%                                     infinitive) stands at the clause's
+%%                                     end (German `Der Junge hat den Hund
+%%                                     nicht gesehen.')
+%%     ty_verb_last(L, rel)            a relative clause's verb stands after
+%%                                     its other parts (German `der Hund,
+%%                                     den der Junge sieht')
+%%     ty_copula_negation(L, Words, Place)
+%%                                     ty_negation_place/3 for a copula
+%%                                     clause, X one of s, c, p (German
+%%                                     [nicht] before(p))
+%%     ty_relative_comma(L)            a comma before a relative clause's
+%%                                     marker and after the clause where
+%%                                     the sentence goes on (German)
+%%     ty_capital_nouns(L)             the nouns keep their capital, so a
+%%                                     sentence's first word is read as
+%%                                     written too (German `Hunde schlafen.')
 %%
 %% THE WORD TABLES. templates/<name>-words.pl holds the rows
 %% typology_import/1 writes from corpus/vocabulary/<name>.txt (and, for
@@ -509,7 +559,11 @@
            ty_inversion/3, ty_wh_tonic/3,
            ty_tense_form/5, ty_participle/3, ty_participle_like/3,
            ty_participle_ending/5, ty_participle_agrees/2,
-           ty_verb_class/3, ty_class_tense_form/6, ty_polite/3.
+           ty_verb_class/3, ty_class_tense_form/6, ty_polite/3,
+           ty_case/3, ty_case_after/3, ty_article_case/6, ty_noun_case/5,
+           ty_declension/3, ty_adjective_ending/6, ty_wh_case/4,
+           ty_verb_last/2, ty_split_place/2, ty_copula_negation/3,
+           ty_relative_comma/1, ty_negative_article/5, ty_capital_nouns/1.
 :- discontiguous ty_order/3, ty_noun/6, ty_adjective/5, ty_verb/6,
                  ty_article/5, ty_mark/5, ty_contraction/3, ty_negation/5,
                  ty_ending/4, ty_letters/3, ty_before/5, ty_linked/5, ty_copula/6,
@@ -526,7 +580,11 @@
                  ty_inversion/3, ty_wh_tonic/3,
                  ty_tense_form/5, ty_participle/3, ty_participle_like/3,
                  ty_participle_ending/5, ty_participle_agrees/2,
-                 ty_verb_class/3, ty_class_tense_form/6, ty_polite/3.
+                 ty_verb_class/3, ty_class_tense_form/6, ty_polite/3,
+                 ty_case/3, ty_case_after/3, ty_article_case/6, ty_noun_case/5,
+                 ty_declension/3, ty_adjective_ending/6, ty_wh_case/4,
+                 ty_verb_last/2, ty_split_place/2, ty_copula_negation/3,
+                 ty_relative_comma/1, ty_negative_article/5, ty_capital_nouns/1.
 
 %% ---- the levels and the values a slot takes -----------------------------------
 
@@ -586,7 +644,8 @@ typology_load(Name) :-
     ->  consult(Roles)
     ;   true
     ),
-    ty_vfirst_make(Name).
+    ty_vfirst_make(Name),
+    ty_feats_make(Name).
 
 %% templates/Base.pl, found on the library path.
 ty_file(Base, File) :-
@@ -685,6 +744,19 @@ ty_row_shape('ty_participle_agrees(L, With).').
 ty_row_shape('ty_verb_class(L, Meaning, Class).').
 ty_row_shape('ty_class_tense_form(L, Class, Tense, Number, Polarity, Pattern).').
 ty_row_shape('ty_polite(L, Number, Key).').
+ty_row_shape('ty_case(L, Role, Case).').
+ty_row_shape('ty_case_after(L, Words, Case).').
+ty_row_shape('ty_article_case(L, Definiteness, Gender, Number, Case, Word).').
+ty_row_shape('ty_noun_case(L, Meaning, Case, Number, Word).').
+ty_row_shape('ty_declension(L, Definiteness, Declension).').
+ty_row_shape('ty_adjective_ending(L, Declension, Case, Gender, Number, Ending).').
+ty_row_shape('ty_wh_case(L, Meaning, Case, Words).').
+ty_row_shape('ty_negative_article(L, Gender, Number, Case, Word).').
+ty_row_shape('ty_split_place(L, end).').
+ty_row_shape('ty_verb_last(L, rel).').
+ty_row_shape('ty_copula_negation(L, Words, Place).').
+ty_row_shape('ty_relative_comma(L).').
+ty_row_shape('ty_capital_nouns(L).').
 
 %% ---- the check ----------------------------------------------------------------------
 
@@ -704,6 +776,7 @@ ty_missing(L, copula_form(K, T, N, P)) :-
     ( ty_values(core_tense, Cs), memberchk(T, Cs) -> true ; once(ty_copula(L, _, T, _, _, _)) ),
     ty_values(number, Ns), member(N, Ns),
     ty_values(polarity, Ps), member(P, Ps),
+    \+ ( P == neg, once(ty_copula_negation(L, _, _)) ),
     \+ ( ty_copula(L, K1, T, N, P, _), ty_fits(K1, K) ).
 ty_missing(L, adjunct_place) :-
     once(( ty_adposition(L, _, _) ; ty_adverb(L, _, _) )),
@@ -874,6 +947,46 @@ ty_missing(L, bad(ty_polite(L, N, K))) :-
     ty_polite(L, N, K),
     \+ ( memberchk(N, [sg, pl]),
          memberchk(K, [sg, pl, sg(1), sg(2), pl(1), pl(2)]) ).
+ty_missing(L, bad(ty_split_place(L, P))) :-
+    ty_split_place(L, P), P \== end.
+ty_missing(L, bad(ty_verb_last(L, P))) :-
+    ty_verb_last(L, P), P \== rel.
+ty_missing(L, bad(ty_copula_negation(L, Ws, Pl))) :-
+    ty_copula_negation(L, Ws, Pl),
+    \+ ( is_list(Ws), Ws \== [],
+         ( memberchk(Pl, [start, end]) ; Pl = before(X), memberchk(X, [s, c, p])
+         ; Pl = after(X), memberchk(X, [s, c, p]) ) ).
+ty_missing(L, bad(ty_case_after(L, Ws, C))) :-
+    ty_case_after(L, Ws, C),
+    \+ ( is_list(Ws), Ws \== [], atom(C), ty_adposition_words(L, Ws) ).
+ty_missing(L, bad(ty_article_case(L, D, G, N, C, W))) :-
+    ty_article_case(L, D, G, N, C, W),
+    \+ ( ty_values(definiteness, Ds), memberchk(D, Ds), memberchk(N, [sg, pl, any]),
+         ty_case_known(L, C), atom(W) ).
+ty_missing(L, bad(ty_noun_case(L, M, C, N, W))) :-
+    ty_noun_case(L, M, C, N, W),
+    \+ ( ty_noun(L, M, _, _, _, _), memberchk(N, [sg, pl]), ty_case_known(L, C), atom(W) ).
+ty_missing(L, bad(ty_adjective_ending(L, D, C, G, N, E))) :-
+    ty_adjective_ending(L, D, C, G, N, E),
+    \+ ( ty_declension(L, _, D), ( C == any ; ty_case_known(L, C) ),
+         memberchk(N, [sg, pl, any]), atom(E) ).
+ty_missing(L, declension(Def)) :-
+    once(ty_adjective_ending(L, _, _, _, _, _)),
+    member(Def, [def, indef, which, none]),
+    ( Def == which -> once(ty_article(L, which, _, _, _)) ; true ),
+    \+ ty_declension(L, Def, _).
+ty_missing(L, case_article(Def, C)) :-
+    once(ty_case(L, _, _)),
+    member(Def, [def, indef]),
+    once(ty_article_case(L, Def, _, _, _, _)),
+    ty_case(L, _, C),
+    \+ ty_article_case(L, Def, _, _, C, _).
+
+%% A case some row of the language names.
+ty_case_known(L, C) :- ( ty_case(L, _, C) ; ty_case_after(L, _, C) ), !.
+
+ty_adposition_words(L, Ws) :- ( ty_adposition(L, _, Ws) ; ty_complement(L, _, Ws) ), !.
+
 ty_missing(L, polite(N)) :-
     once(( ty_pronoun(L, _, _, Cs), member(C, Cs), memberchk(polite, C) )),
     member(N, [sg, pl]),
@@ -939,7 +1052,8 @@ typology_read(L, Text, IR) :-
 typology_read(L, Text, IR, Topics) :-
     must_be(atom, L),
     must_be(list, Topics),
-    ty_surface(Text, Mood, Open, Close, Surface),
+    ty_surface(Text, Mood, Open, Close, Surface0),
+    ty_first_written(L, Text, Surface0, Surface),
     ty_marks_fit(L, Mood, Open, Close),
     ty_live_topics(L, Text, Surface),
     (   Mood == question
@@ -954,7 +1068,8 @@ typology_read(L, Text, IR, Topics) :-
 %% reading's cost, how far its order is from the statement's (0 for a
 %% statement).
 ty_read_bases(L, Surface, Topics, Mood, IR0, C) :-
-    ty_unjoin(L, Surface, T1),
+    ty_uncomma(L, Surface, T0),
+    ty_unjoin(L, T0, T1),
     ty_uncontract(L, T1, T2),
     ty_unsound(L, T2, Bases),
     ty_sound_ok(L, Bases, Surface),
@@ -962,6 +1077,7 @@ ty_read_bases(L, Surface, Topics, Mood, IR0, C) :-
     b_setval('$ty_context', Context),
     b_setval('$ty_rel_open', f([])),
     ty_poss_flag(L, Bases),
+    ty_parse_reset(L),
     ty_mood(Mood, L, IR0, C, Goal),
     phrase(Goal, Bases).
 
@@ -995,6 +1111,7 @@ typology_write(L, IR, Text, Topics) :-
     ( IR0 = question(_) -> Mood = question ; Mood = statement ),
     ty_mood(Mood, L, IR0, _, Goal),
     b_setval('$ty_context', none),
+    ty_parse_reset(L),
     phrase(Goal, Tokens0),
     ty_reads_as(Mood, L, IR0, Tokens0, Topics), !,
     ty_write_tokens(L, Tokens0, Tokens),
@@ -1006,6 +1123,7 @@ typology_write(L, IR, Text, Topics) :-
 ty_reads_as(Mood, L, IR0, Tokens, Topics) :-
     ty_new_context(Tokens, Topics, Context),
     \+ \+ ( b_setval('$ty_context', Context),
+           ty_parse_reset(L),
            b_setval('$ty_rel_open', f([])),
            ty_poss_flag(L, Tokens),
            aggregate_all(min(C), ( ty_mood(Mood, L, IR0, C, G), phrase(G, Tokens) ), C1),
@@ -1035,7 +1153,35 @@ ty_write_tokens(L, Tokens0, Tokens) :-
     ty_sound(L, Tokens0, T1),
     ty_contract(L, T1, T2),
     ty_join(T2, T3),
-    (   ty_inversion(L, _, _) -> ty_join_inverted(T3, Tokens) ; Tokens = T3 ).
+    (   ty_inversion(L, _, _) -> ty_join_inverted(T3, T4) ; T4 = T3 ),
+    (   ty_relative_comma(L) -> ty_comma_join(T4, Tokens) ; Tokens = T4 ).
+
+%% A comma is written joined to the word before it, once; one at the end
+%% is dropped (the full stop stands there).
+ty_comma_join([], []).
+ty_comma_join([','|Ws], Out) :- !, ty_comma_join(Ws, Out).
+ty_comma_join([W, ','|Ws], Out) :- !,
+    ty_commas_off(Ws, Ws1),
+    (   Ws1 == [] -> Out = [W] ; atom_concat(W, ',', WC), Out = [WC|Rest], ty_comma_join(Ws1, Rest) ).
+ty_comma_join([W|Ws], [W|Rest]) :- ty_comma_join(Ws, Rest).
+
+ty_commas_off([','|Ws], Rest) :- !, ty_commas_off(Ws, Rest).
+ty_commas_off(Ws, Ws).
+
+%% Reading, a comma after a word is a word of its own, where the language
+%% puts commas round a relative clause; an answer's word keeps its own
+%% (`Ja, der Hund schläft.').
+ty_uncomma(L, Ws, Out) :-
+    (   ty_relative_comma(L) -> ty_uncomma_words(L, Ws, Out) ; Out = Ws ).
+
+ty_uncomma_words(_, [], []).
+ty_uncomma_words(L, [W|Ws], Out) :-
+    (   atom(W), atom_concat(W0, ',', W), W0 \== '',
+        \+ ( ty_answer(L, _, AWs), last(AWs, W0) )
+    ->  Out = [W0, ','|Rest]
+    ;   Out = [W|Rest]
+    ),
+    ty_uncomma_words(L, Ws, Rest).
 
 %% clause/5 is a clause with no adjuncts: the grammar's clause/6 with [],
 %% at every depth (a relative clause is a clause inside a noun phrase).
@@ -1272,15 +1418,37 @@ ty_open_meanings(L, Surface, Ms) :-
 %% The words of a sentence as written: the full stop off, the first word
 %% lowered (a script with no capitals is unchanged).
 ty_surface(Text, Mood, Open, Close, Words) :-
+    ty_surface_written(Text, Mood, Open, Close, [FirstA|Rest1]),
+    downcase_atom(FirstA, First),
+    maplist(ty_lower_capital, Rest1, Rest),
+    Words = [First|Rest].
+
+%% The words as written, the marks off.
+ty_surface_written(Text, Mood, Open, Close, Words) :-
     atom_string(A0, Text),
     ty_end_mark(A0, A1, Mood, Close),
     ty_open_mark(A1, A, Open),
     split_string(A, " ", " ", Parts0),
-    exclude(==(""), Parts0, [First0|Rest0]),
-    maplist([P, W]>>atom_string(W, P), [First0|Rest0], [FirstA|Rest1]),
-    downcase_atom(FirstA, First),
-    maplist(ty_lower_capital, Rest1, Rest),
-    Words = [First|Rest].
+    exclude(==(""), Parts0, Parts),
+    maplist([P, W]>>atom_string(W, P), Parts, Words).
+
+%% THE FIRST WORD AS WRITTEN is read too, in a language whose nouns keep
+%% their capital (ty_capital_nouns/1), where its tables hold it so: a noun
+%% German writes with its capital (`Hunde schlafen.'), the
+%% polite `Sie' (`Sie sehen den Hund.' is you or they).
+ty_first_written(L, Text, [First|Rest], Words) :-
+    (   ty_capital_nouns(L),
+        ty_surface_written(Text, _, _, _, [FirstA|_]),
+        FirstA \== First,
+        ty_table_word(L, FirstA)
+    ->  ( Words = [FirstA|Rest] ; Words = [First|Rest] )
+    ;   Words = [First|Rest]
+    ).
+
+ty_table_word(L, W) :-
+    once(( ty_noun(L, _, _, _, W, _) ; ty_noun(L, _, _, _, _, W)
+         ; ty_noun_case(L, _, _, _, W)
+         ; ty_pronoun(L, _, Ws, _), memberchk(W, Ws) )).
 
 %% A word a template always writes with its capital (ty_capital/3: English
 %% `I') is its table's word, read and written.
@@ -1396,6 +1564,11 @@ ty_uncontract(L, [T|Ts], Out) :-
 
 %% Two words written as one; a joined second word makes a joined one.
 ty_contract(_, [], []).
+%% A comma that opens a relative clause stops a contraction after it
+%% (German `das Haus, in dem', where `in dem Haus' is `im Haus').
+ty_contract(L, [',', A|Ws], [',', A|Rest]) :-
+    ty_relative_comma(L), !,
+    ty_contract(L, Ws, Rest).
 ty_contract(L, [A, B|Ws], [C|Rest]) :-
     atom(A),
     ( B = j(B0) -> Joined = yes ; B0 = B, Joined = no ),
@@ -1467,9 +1640,13 @@ ty_memo(ctx(Id, _, _), Key, Value, Goal) :-
 %% the last word of a relative clause's head).
 ty_class_meaning(L, noun, W, M) :-
     ty_base_word(L, n, W, W0),
-    ( ty_noun(L, M, _, _, W0, _) ; ty_noun(L, M, _, _, _, W0) ).
+    ( ty_noun(L, M, _, _, W0, _) ; ty_noun(L, M, _, _, _, W0) ; ty_noun_case(L, M, _, _, W0) ).
 ty_class_meaning(L, adjective, W, M) :-
     ty_base_word(L, a, W, W0),
+    ty_adjective(L, M, _, _, W0).
+ty_class_meaning(L, adjective, W, M) :-
+    ty_adjective_ending(L, _, _, _, _, E), E \== '',
+    atom_concat(W0, E, W),
     ty_adjective(L, M, _, _, W0).
 ty_class_meaning(L, verb, W, M) :-
     (   atom(W), '$ty_vfirst_made'(L) -> '$ty_vfirst'(W, L, M) ; ty_verb(L, M, _, _, _, [W|_]) ).
@@ -1798,7 +1975,7 @@ ty_ask_clause(L, C, Cost) -->
       ty_ask_order(L, Kind, Part, clause, Order2, Order, Q),
       ty_order_cost(Order, Order2, Cost),
       C = clause(_, _, P, _, _, _),
-      ty_negation_order(L, P, Order, Order3a),
+      ty_neg_clause(L, C, Order, Order3a),
       Q = q(QRule, _, _, _, _),
       ty_verb_split(L, C, QRule, Order3a, Order3) },
     ty_extraposed(L, o, O, Order3, Order4),
@@ -1812,7 +1989,8 @@ ty_ask_clause(L, C, Cost) -->
       ty_object_ok(L, C, How),
       ty_comp_wh_ok(L, Order, C, How),
       ty_front_ok(C),
-      ty_split_kept(L, C, QRule, Order5) }.
+      ty_split_kept(L, C, QRule, Order5),
+      ty_kein_ok(L) }.
 
 ty_ask_copula(L, C, Cost) -->
     { C = copula(_, _, _, Pred),
@@ -1820,9 +1998,11 @@ ty_ask_copula(L, C, Cost) -->
       ty_order_at(L, copula, Order0),
       ty_ask_kind(C, Kind, Part),
       Q = q(_, _, _, Features, Rows),
-      ty_ask_order(L, Kind, Part, copula, Order0, Order, Q),
-      ty_order_cost(Order, Order0, Cost) },
-    ty_extraposed(L, p, Pred, Order, Order1),
+      ty_ask_order(L, Kind, Part, copula, Order0, OrderA, Q),
+      ty_order_cost(OrderA, Order0, Cost),
+      C = copula(_, P, _, _),
+      ty_copula_neg_order(L, P, Pred, OrderA, OrderB) },
+    ty_extraposed(L, p, Pred, OrderB, Order1),
     { C = copula(_, _, S, _) },
     ty_extraposed(L, s, S, Order1, Order2),
     { ty_lead(Order2) },
@@ -1831,7 +2011,8 @@ ty_ask_copula(L, C, Cost) -->
       ty_predicate_ok(Pred, Rows, G, N),
       ty_wh_count(C, Kind),
       ty_wh_first(C, Part),
-      ty_front_ok(C) }.
+      ty_front_ok(C),
+      ty_kein_ok(L) }.
 
 %% A question's cost: the pairs of the statement's parts it puts the other
 %% way round. Of several readings the reader keeps the least costly, so
@@ -2197,7 +2378,8 @@ ty_ask_words(L, clause(V, T, P, Subj, O, _), Moved, Ws) :-
 ty_ask_words(L, copula(T, P, Subj, Pred), _, Ws) :-
     ty_subject_number(Subj, N),
     ty_predicate_kind(Pred, K),
-    ty_copula_lookup(L, K, _, T, N, P, Ws).
+    ty_copula_polarity(L, P, CP),
+    ty_copula_lookup(L, K, _, T, N, CP, Ws).
 
 %% The key a verb agrees with: a noun phrase's number, a question word's
 %% (sg), a relative clause's head's, a gap's head's, a pronoun's person and
@@ -2254,8 +2436,19 @@ ty_wh_words(L, M) --> ty_wh_words(L, M, clitic).
 %% form where it has one (`quoi').
 ty_wh_words(L, M, Form) --> ty_words(1, 3, Ws, ty_wh_form(L, M, Form, Ws)).
 
-ty_wh_form(L, M, clitic, Ws) :- ty_wh_word(L, M, Ws).
-ty_wh_form(L, M, tonic, Ws) :-
+%% In a language with cases a question word of ty_wh_case/4 rows takes the
+%% phrase's case (German `wer', `wen', `wem').
+ty_wh_form(L, M, Form, Ws) :-
+    (   '$ty_cased'(L)
+    ->  ty_case_now(L, C),
+        (   ty_wh_case(L, M, C1, Ws), ty_case_fits(C1, C)
+        ;   \+ ty_wh_case(L, M, _, _), ty_wh_plain(L, M, Form, Ws)
+        )
+    ;   ty_wh_plain(L, M, Form, Ws)
+    ).
+
+ty_wh_plain(L, M, clitic, Ws) :- ty_wh_word(L, M, Ws).
+ty_wh_plain(L, M, tonic, Ws) :-
     (   ty_wh_tonic(L, M, Ws)
     ;   ty_wh_word(L, M, Ws), \+ ty_wh_tonic(L, M, _)
     ).
@@ -2445,14 +2638,16 @@ ty_clause(L, C) -->
       ty_order_at(L, clause, Order0),
       ty_valency(Order0, O, Order1),
       ty_adjunct_order(L, Order1, Js, Order2),
-      ty_negation_order(L, P, Order2, Order3a),
-      ty_verb_split(L, C, none, Order3a, Order3) },
+      ty_neg_clause(L, C, Order2, Order3a),
+      ty_verb_final(L, v, Order3a, Order3b),
+      ty_verb_split(L, C, none, Order3b, Order3) },
     ty_extraposed(L, o, O, Order3, Order4),
     ty_extraposed(L, s, S, Order4, Order),
     ty_clause_parts(Order, L, C, How),
     { ty_roles_ok(L, C),
       ty_object_ok(L, C, How),
-      ty_split_kept(L, C, none, Order) }.
+      ty_split_kept(L, C, none, Order),
+      ty_kein_ok(L) }.
 
 %% ---- the place of the negation ------------------------------------------------------
 %%
@@ -2505,6 +2700,42 @@ ty_place_part(after(P), X, O, Os) :-
 
 ty_neg_placed(L) :- once(ty_negation_place(L, _, _)).
 
+%% THE NEGATIVE ARTICLE (ty_negative_article(L, Gender, Number, Case, Word):
+%% German `kein'): a negative clause whose object, or a negative copula
+%% clause whose predicate, is an indefinite noun phrase says its negation
+%% in that phrase's article and nowhere else (`Der Junge sieht keinen
+%% Hund.', `Der Junge sieht keine Hunde.', `Der Hund ist kein Tier.');
+%% it is tried first. `$ty_kein' names the role whose phrase takes it,
+%% `$ty_kein_np' says the phrase being read is it, and ty_kein_ok holds a
+%% clause read so to a phrase that took one (`$ty_kein_used').
+ty_neg_clause(L, C, O0, O) :-
+    C = clause(_, _, P, _, Obj, _),
+    (   '$ty_kein_lang'(L)
+    ->  b_setval('$ty_kein', none),
+        (   P = neg, ty_kein_here(L, o, Obj), O = O0
+        ;   ty_negation_order(L, P, O0, O)
+        )
+    ;   ty_negation_order(L, P, O0, O)
+    ).
+
+ty_kein_here(L, Role, X) :-
+    '$ty_kein_lang'(L),
+    ty_kein_phrase(X),
+    b_setval('$ty_kein', Role),
+    b_setval('$ty_kein_used', no).
+
+ty_kein_phrase(X) :- var(X), !.
+ty_kein_phrase(np(_, _, D, _)) :- ( var(D) -> true ; D == indef ).
+ty_kein_phrase(rel(NP, _)) :- ty_kein_phrase(NP).
+
+ty_kein_ok(L) :-
+    (   '$ty_kein_lang'(L), nb_current('$ty_kein', K), K \== none
+    ->  nb_current('$ty_kein_used', yes)
+    ;   true
+    ).
+
+ty_kein_np :- nb_current('$ty_kein_np', yes).
+
 %% THE VERB SPLIT AT ITS AUXILIARY. Where a tense is an auxiliary and a
 %% participle (ty_tense_form/5) and the negation has places round the verb,
 %% or a pronoun is joined after it (the inversion), the verb's part is two:
@@ -2519,19 +2750,32 @@ ty_verb_split(L, C, Rule, O0, O) :-
         ty_split_wanted(L, P, Rule),
         once(append(A, [v|B], O0))
     ->  (   nonvar(T)
-        ->  ( ty_tense_participle(L, T) -> ty_split_at(A, B, O) ; O = O0 )
-        ;   ( O = O0 ; ty_split_at(A, B, O) )
+        ->  ( ty_tense_participle(L, T) -> ty_split_at(L, A, B, O) ; O = O0 )
+        ;   ( O = O0 ; ty_split_at(L, A, B, O) )
         )
     ;   O = O0
     ).
 
-ty_split_at(A, B, O) :-
-    ty_n_parts(B, Ns, B1),
-    append(Ns, [vr(R)|B1], B2),
-    append(A, [vf(R)|B2], O).
+%% Where the template puts the verb's last part at the end
+%% (ty_split_place(L, end): German `Der Junge hat den Hund nicht
+%% gesehen.'), it goes after every part, and before the first part where
+%% the verb is last (`der Hund, den der Junge gesehen hat').
+ty_split_at(L, A, B, O) :-
+    (   ty_split_place(L, end)
+    ->  (   B == []
+        ->  append(A, [vr(R), vf(R)], O)
+        ;   append(A, [vf(R)|B], O1), append(O1, [vr(R)], O)
+        )
+    ;   ty_n_parts(B, Ns, B1),
+        append(Ns, [vr(R)|B1], B2),
+        append(A, [vf(R)|B2], O)
+    ).
 
 ty_split_wanted(L, P, Rule) :-
-    (   P == neg, ty_neg_placed(L) -> true ; ty_inv_on(L, Rule) ),
+    (   ty_split_place(L, end) -> true
+    ;   P == neg, ty_neg_placed(L) -> true
+    ;   ty_inv_on(L, Rule)
+    ),
     once(ty_tense_participle(L, _)).
 
 ty_n_parts([N|Ps], [N|Ns], Rest) :- nonvar(N), N = n(_), !, ty_n_parts(Ps, Ns, Rest).
@@ -2558,15 +2802,24 @@ ty_split_take(First, Rest, L, C, Q, S0, S) :-
     ->  ty_split_verb(L, C, Q, Full),
         append(First, Rest, Full), Rest = [_],
         append(First, S, S0)
-    ;   between(1, 3, K), length(First, K), append(First, S, S0)
+    ;   between(1, 3, K), length(First, K), append(First, S, S0),
+        (   nonvar(Rest)
+        ->  append(First, Rest, Full), ty_split_verb(L, C, Q, Full)
+        ;   true
+        )
     ).
 
+%% The second part may come first (the verb last): reading, the part read
+%% second holds the two to a verb.
 ty_split_rest(sp(First, Rest), L, C, Q, S0, S) :-
     (   var(S0)
-    ->  append(Rest, S, S0)
+    ->  Rest = [_], append(Rest, S, S0)
     ;   S0 = [W|S], Rest = [W],
-        append(First, Rest, Full),
-        ty_split_verb(L, C, Q, Full)
+        (   var(First)
+        ->  true
+        ;   append(First, Rest, Full),
+            ty_split_verb(L, C, Q, Full)
+        )
     ).
 
 ty_split_verb(L, C, Q, Full) :-
@@ -2708,11 +2961,12 @@ ty_comp_phrase(L, Ws, O) -->
 ty_comp_parts([], _, _, _) --> [].
 ty_comp_parts([P|Ps], L, Ws, O) --> ty_comp_part(P, L, Ws, O), ty_comp_parts(Ps, L, Ws, O).
 
-ty_comp_part(p, _, Ws, O) -->
+ty_comp_part(p, L, Ws, O) -->
     (   { ty_gap_moved_from(O, AWs) }
     ->  { AWs = Ws }
     ;   ty_tokens(Ws)
-    ).
+    ),
+    { ty_case_after_words(L, Ws) }.
 ty_comp_part(x, L, _, O) --> ty_comp_np(L, O).
 
 ty_comp_np(L, W) --> { nonvar(W), W = wh(M) }, ty_wh_words(L, M, tonic).
@@ -2789,7 +3043,8 @@ ty_pp_part(p, L, Prep, NP) -->
     (   { ty_gap_moved_from(NP, AWs) }
     ->  { ty_adposition(L, Prep, AWs) }
     ;   ty_words(1, 3, Ws, ty_adposition(L, Prep, Ws)),
-        ty_meant(L, adposition(Prep), Ws)
+        ty_meant(L, adposition(Prep), Ws),
+        { ty_case_after_words(L, Ws) }
     ).
 ty_pp_part(x, L, _, G) --> { nonvar(G), G = gap(_, F, R), R = r(j(_), _) }, ty_gap_words(L, F, R).
 ty_pp_part(x, L, _, NP) --> ty_np_phrase(L, NP, _).
@@ -2802,8 +3057,13 @@ ty_np_phrase(L, P, F) --> { ty_poss_slot(P) }, ty_poss(L, P, F).
 ty_np_phrase(L, Pr, F) -->
     { ty_ppron_slot(Pr) },
     ty_flag_allows('$ty_ppron'),
-    ty_words(1, 2, Ws, ty_pron_words(L, j, Pr, Ws)),
+    { ty_pp_pron_role(L, R) },
+    ty_words(1, 2, Ws, ty_pron_words(L, R, Pr, Ws)),
     { ty_pron_np_features(L, Pr, F) }.
+
+%% A pronoun after an adposition takes the rows of j, or of o after an
+%% adposition of the accusative (German `mit ihm', `an ihn').
+ty_pp_pron_role(L, R) :- ( ty_case_now(L, acc) -> R = o ; R = j ).
 
 
 %% ---- the possessor ------------------------------------------------------------------
@@ -2844,21 +3104,23 @@ ty_poss(L, of(G, NP), F, Next, Depth) -->
     { ty_poss_depth_ok(Ahead, Depth),
       ty_possessive(L, Order0, PWs, Art),
       ty_poss_possible(L, PWs, Ahead),
-      ( PWs == [] -> exclude(==(p), Order0, Order) ; Order = Order0 ) },
-    ty_poss_parts(Order, L, G, NP, F, PWs, Art, Next, Depth).
+      ( PWs == [] -> exclude(==(p), Order0, Order) ; Order = Order0 ),
+      ( nb_current('$ty_case', C0) -> true ; C0 = any ) },
+    ty_poss_parts(Order, L, G, NP, F, PWs, art(Art, C0), Next, Depth).
 
 ty_poss_parts([], _, _, _, _, _, _, _, _) --> [].
 ty_poss_parts([P|Ps], L, G, NP, F, PWs, Art, Next, Depth) -->
     ty_poss_part(P, Ps, L, G, NP, F, PWs, Art, Next, Depth),
     ty_poss_parts(Ps, L, G, NP, F, PWs, Art, Next, Depth).
 
-ty_poss_part(h, Ps, L, _, NP, F, _, Art, Outer, _) -->
+ty_poss_part(h, Ps, L, _, NP, F, _, art(Art, C0), Outer, _) -->
     { ty_poss_next(Ps, g, Outer, N0),
-      ( Art == drop -> Next = bare(N0) ; Next = N0 ) },
+      ( Art == drop -> Next = bare(N0) ; Next = N0 ),
+      b_setval('$ty_case', C0) },
     ty_np(L, NP, F, Next).
 ty_poss_part(p, _, _, _, _, _, PWs, _, _, _) --> ty_tokens(PWs).
 ty_poss_part(g, Ps, L, G, _, _, _, _, Outer, Depth) -->
-    { ty_poss_next(Ps, h, Outer, Next) },
+    { ty_poss_next(Ps, h, Outer, Next), ty_role_case(L, g) },
     ty_possessor(L, G, Next, Depth).
 
 %% The class a part's last word links to: the next part's, where that part
@@ -3040,6 +3302,8 @@ ty_poss_possible(L, PWs, Ahead) :-
 
 ty_poss_words_in(L, PWs, Words) :-
     (   PWs \== [] -> ty_all_ahead(PWs, Words)
+    ;   '$ty_cased'(L), ty_case(L, g, Gen)
+    ->  once(( member(W, Words), atom(W), '$ty_art_words'(L, _, Gen, W) ))
     ;   ty_linked(L, _, h, _, _)
     ->  once(( ty_linked(L, _, h, _, To), To \== '', member(W, Words),
                atom(W), atom_concat(_, To, W) ))
@@ -3091,11 +3355,13 @@ ty_pron_in(L, Words) :-
 ty_poss_marks(L, PWs, Words, N) :-
     (   PWs = [W0|_]
     ->  aggregate_all(count, ( member(W, Words), W == W0 ), N)
+    ;   '$ty_cased'(L), ty_case(L, g, Gen)
+    ->  aggregate_all(count, ( member(W, Words), atom(W), once('$ty_art_words'(L, _, Gen, W)) ), N)
     ;   ty_linked(L, _, h, _, _)
     ->  aggregate_all(count, ( member(W, Words), atom(W),
                               once(( ty_linked(L, _, h, _, To), To \== '', atom_concat(_, To, W) )) ), N)
     ;   aggregate_all(count, ( member(W, Words), atom(W), ty_base_word(L, n, W, W0),
-                              once(ty_noun_form(L, _, _, _, _, W0)) ), Nouns),
+                              once(( ty_noun_form(L, _, _, _, _, W0) ; ty_noun_case(L, _, _, _, W0) )) ), Nouns),
         N is max(0, Nouns - 1)
     ).
 
@@ -3133,13 +3399,16 @@ ty_words(Min, Max, Ws, Lookup, S0, S) :-
 %% chosen by the predicate's kind (Spanish `estar' for a place); a copula
 %% of no words is dropped. A predicate adjective agrees with the subject.
 ty_copula_clause(L, C) -->
-    { C = copula(_, _, S, Pred),
-      ty_order_at(L, copula, Order0) },
+    { C = copula(_, P, S, Pred),
+      ty_order_at(L, copula, Order0a),
+      ty_copula_neg_order(L, P, Pred, Order0a, Order0b),
+      ty_verb_final(L, c, Order0b, Order0) },
     ty_extraposed(L, p, Pred, Order0, Order1),
     ty_extraposed(L, s, S, Order1, Order),
     ty_copula_parts(Order, L, C, Features, Rows),
     { Features = [_, N, _, G],
-      ty_predicate_ok(Pred, Rows, G, N) }.
+      ty_predicate_ok(Pred, Rows, G, N),
+      ty_kein_ok(L) }.
 
 ty_copula_parts([], _, _, _, _) --> [].
 ty_copula_parts([P|Ps], L, C, F, R) --> ty_copula_part(P, L, C, F, R), ty_copula_parts(Ps, L, C, F, R).
@@ -3147,14 +3416,35 @@ ty_copula_parts([P|Ps], L, C, F, R) --> ty_copula_part(P, L, C, F, R), ty_copula
 ty_copula_part(s, L, copula(_, _, S, _), Features, _) --> ty_role(L, s, S, Features).
 ty_copula_part(c, L, copula(T, P, S, Pred), _, _) -->
     { ty_subject_number(S, N),
-      ty_predicate_kind(Pred, K) },
-    ty_copula_words(L, K, T, N, P).
+      ty_predicate_kind(Pred, K),
+      ty_copula_polarity(L, P, CP) },
+    ty_copula_words(L, K, T, N, CP).
+ty_copula_part(n(Ws), _, _, _, _) --> ty_tokens(Ws).
 ty_copula_part(p, L, copula(_, _, _, Pred), _, Rows) --> ty_predicate(L, Pred, Rows).
 ty_copula_part(ph(X), L, copula(_, _, _, Pred), _, []) --> ty_predicate_head(L, Pred, X).
 ty_copula_part(pt(X), L, _, _, _) --> ty_rel_tail(L, X).
 ty_copula_part(sh(X), L, copula(_, _, S, _), Features, _) -->
     { X = x(_, Features, _) }, ty_subject_head(L, S, X).
 ty_copula_part(st(X), L, _, _, _) --> ty_rel_tail(L, X).
+
+%% THE COPULA'S NEGATION AT A PLACE: ty_copula_negation(L, Words, Place), as
+%% ty_negation_place/3 is for a verb clause, puts the negation's Words in
+%% a negative copula clause at Place (X one of s, c, p), and the copula
+%% takes its positive form (German `Der Hund ist nicht klein.', `der Hund,
+%% der nicht klein ist').
+ty_copula_neg_order(L, P, Pred, O0, O) :-
+    (   once(ty_copula_negation(L, _, _))
+    ->  b_setval('$ty_kein', none),
+        findall(Ws-Pl, ty_copula_negation(L, Ws, Pl), Rows),
+        (   P = pos, O = O0
+        ;   P = neg, ty_kein_here(L, p, Pred), O = O0
+        ;   P = neg, foldl(ty_place_n, Rows, O0, O)
+        )
+    ;   O = O0
+    ).
+
+ty_copula_polarity(L, P, CP) :-
+    (   once(ty_copula_negation(L, _, _)) -> CP = pos ; CP = P ).
 
 %% The head of a predicate whose relative clause stands after the copula.
 ty_predicate_head(L, rel(NP, Cl), x(NP, F, Cl)) --> ty_np(L, NP, F, r).
@@ -3204,12 +3494,15 @@ ty_copula_n(L, K1, T, neg, N, Ws) :-
     ty_copula(L, K1, T, N, pos, Pos),
     \+ ty_copula(L, K1, T, N, neg, _).
 
-ty_predicate(L, adj(As), Rows) --> { As = [_|_] }, ty_adjs(L, As, Rows).
-ty_predicate(L, np(M, N, D, A), []) --> ty_np(L, np(M, N, D, A), _).
-ty_predicate(L, R, []) --> { ty_rel_slot(R) }, ty_rel(L, none, R, _).
-ty_predicate(L, P, []) --> { ty_poss_slot(P) }, ty_poss(L, P, _).
-ty_predicate(L, pp(Prep, NP), []) --> ty_pp(L, Prep, NP).
-ty_predicate(L, W, []) --> { nonvar(W), W = wh(M) }, ty_wh_words(L, M).
+%% A predicate takes the case ty_case(L, p, Case) gives it.
+ty_predicate(L, P, Rows) --> { ty_role_case(L, p) }, ty_predicate_in(L, P, Rows).
+
+ty_predicate_in(L, adj(As), Rows) --> { As = [_|_] }, ty_adjs(L, As, Rows).
+ty_predicate_in(L, np(M, N, D, A), []) --> ty_np(L, np(M, N, D, A), _).
+ty_predicate_in(L, R, []) --> { ty_rel_slot(R) }, ty_rel(L, none, R, _).
+ty_predicate_in(L, P, []) --> { ty_poss_slot(P) }, ty_poss(L, P, _).
+ty_predicate_in(L, pp(Prep, NP), []) --> ty_pp(L, Prep, NP).
+ty_predicate_in(L, W, []) --> { nonvar(W), W = wh(M) }, ty_wh_words(L, M).
 
 ty_predicate_ok(adj(_), Rows, G, N) :- !,
     (   ty_rows_fit(Rows, G, N)
@@ -3425,7 +3718,9 @@ ty_participle_word(L, V, W) :-
 %% A tense made of words and a participle; one made so at all.
 ty_tense_participle(L, T) :-
     ty_tense_pattern(L, T, _, _, Pattern, _),
-    ( memberchk(participle, Pattern) ; memberchk(participle(_), Pattern) ), !.
+    (   memberchk(participle, Pattern) ; memberchk(participle(_), Pattern)
+    ;   ty_split_place(L, end), Pattern = [_, _|_]
+    ), !.
 
 ty_tense_made(L, T) :- ty_tense_pattern(L, T, _, _, _, _), !.
 
@@ -3581,7 +3876,8 @@ ty_role(L, Role, NP) --> ty_role(L, Role, NP, _).
 %% `a quién', Persian `چه کسی را'). It stands only where ty_ask_kind/3 put
 %% it: a statement has none.
 ty_role(L, Role, W, [Def, N, Anim, _]) -->
-    { nonvar(W), W = wh(M), ty_wh_features(M, [Def, N, Anim]) },
+    { nonvar(W), W = wh(M), ty_wh_features(M, [Def, N, Anim]),
+      ty_role_case(L, Role) },
     ty_mark_slot(L, Role, before, Before),
     { ty_wh_role_form(Role, Form) },
     ty_wh_words(L, M, Form),
@@ -3617,7 +3913,8 @@ ty_role(L, Role, R, Features) --> { ty_rel_slot(R) }, ty_rel(L, Role, R, Feature
 %% A noun phrase of a possessor between its role's marks; moved into a
 %% relative clause's marker (`whose dog'), nothing.
 ty_role(L, Role, P, Features) -->
-    { ty_poss_slot(P), \+ ty_poss_moved(P) },
+    { ty_poss_slot(P), \+ ty_poss_moved(P),
+      ty_role_case(L, Role) },
     ty_mark_slot(L, Role, before, Before),
     ty_poss(L, P, Features),
     ty_mark_slot(L, Role, after, After),
@@ -3629,6 +3926,7 @@ ty_role(_, _, P, Features) -->
 %% A noun phrase between the marks its role asks for. Next is r when a
 %% relative clause follows it (its last word may take a linked form).
 ty_marked_np(L, Role, NP, Features, Next) -->
+    { ty_role_case(L, Role) },
     ty_mark_slot(L, Role, before, Before),
     ty_np(L, NP, Features, Next),
     ty_mark_slot(L, Role, after, After),
@@ -3744,7 +4042,9 @@ ty_rel_open(L, S0, S0) :-
         b_setval('$ty_rel_open', f([N|Open]))
     ).
 
+%% A language that puts a comma before the marker has one ahead too.
 ty_marker_ahead(L, S0) :-
+    ( ty_relative_comma(L) -> memberchk(',', S0) ; true ),
     (   ty_relative(L, _, [W|_], _), memberchk(W, S0)
     ;   ty_relative_pronoun(L, Ws, _), ty_all_ahead(Ws, S0)
     ;   ty_relative_possessive(L, Ws, _), ty_all_ahead(Ws, S0)
@@ -3902,12 +4202,29 @@ ty_rel_parts([P|Ps], L, Role, NP, F, C, M) -->
 ty_rel_part(h, L, Role, NP, F, _, _) --> ty_marked_np(L, Role, NP, F, r).
 ty_rel_part(m, L, _, _, _, _, m(Ws, R)) -->
     { R = r(poss(Pl, NP2, F2), Rule), Rule == moves }, !,
+    ty_rel_comma(L),
     ty_poss_marker(Pl, L, NP2, F2, Ws).
 
 ty_rel_part(m, L, _, _, _, _, m(Ws, R)) -->
     { ty_marker_span(R, Min, Max) },
+    ty_rel_comma(L),
     ty_words(Min, Max, Ws, ty_marker_words(L, R, Ws)).
-ty_rel_part(c, L, _, _, _, C, _) --> ty_rel_clause(L, C).
+ty_rel_part(c, L, _, _, _, C, _) --> ty_rel_clause(L, C), ty_rel_close(L).
+
+%% THE COMMAS OF A RELATIVE CLAUSE (ty_relative_comma(L): German `Der Hund,
+%% der schläft, ist klein.'): a comma before the marker, and one after the
+%% clause, which the writer drops where the sentence ends (ty_comma_join/2);
+%% reading, the clause's comma is there, or the sentence ends.
+ty_rel_comma(L) --> ( { ty_relative_comma(L) } -> [','] ; [] ).
+
+ty_rel_close(L, S0, S) :-
+    (   ty_relative_comma(L)
+    ->  (   var(S0) -> S0 = [','|S]
+        ;   S0 = [','|S1] -> S = S1
+        ;   S0 == [], S = []
+        )
+    ;   S = S0
+    ).
 
 %% A moved possessor's marker: the possessive relative pronoun and the
 %% possessed, between a role's marks (`a cuyos perros'), or after the
@@ -3952,8 +4269,34 @@ ty_gap_marker_role(c(_), o).
 ty_gap_marker_role(j(_), o).
 ty_gap_marker_role(poss(_, _, _), o).
 
-ty_rel_clause(L, C) --> { C = clause(_, _, _, _, _, _) }, ty_clause(L, C).
-ty_rel_clause(L, C) --> { C = copula(_, _, _, _) }, ty_copula_clause(L, C).
+%% A relative clause is a subordinate one (`$ty_sub'), whose verb
+%% ty_verb_last/2 may put last.
+ty_rel_clause(L, C) -->
+    { C = clause(_, _, _, _, _, _) },
+    (   { '$ty_sub_used'(L) } -> ty_sub(ty_clause(L, C)) ; ty_clause(L, C) ).
+ty_rel_clause(L, C) -->
+    { C = copula(_, _, _, _) },
+    (   { '$ty_sub_used'(L) } -> ty_sub(ty_copula_clause(L, C)) ; ty_copula_clause(L, C) ).
+
+ty_sub(G, S0, S) :-
+    (   nb_current('$ty_sub', Old) -> true ; Old = no ),
+    (   nb_current('$ty_kein', K) -> true ; K = none ),
+    (   nb_current('$ty_kein_used', U) -> true ; U = no ),
+    b_setval('$ty_sub', yes),
+    phrase(G, S0, S),
+    b_setval('$ty_sub', Old),
+    b_setval('$ty_kein', K),
+    b_setval('$ty_kein_used', U).
+
+%% THE VERB LAST: ty_verb_last(L, rel) puts the verb (V, v or c) of a
+%% relative clause after its other parts, the negation's too (German `der
+%% Hund, den der Junge nicht sieht', `der Hund, der klein ist').
+ty_verb_final(L, V, O0, O) :-
+    (   nb_current('$ty_sub', yes), ty_verb_last(L, rel),
+        selectchk(V, O0, O1)
+    ->  append(O1, [V], O)
+    ;   O = O0
+    ).
 
 %% The marker read is one a row gives for the gap and the head's features
 %% (English `who' for an animate head, `which' for a thing; Spanish `en la
@@ -3963,16 +4306,20 @@ ty_rel_marker_ok(L, r(Pl, Rule), _, Ws) :-
     ty_relative_possessive(L, Ws, Alternatives),
     member(Need, Alternatives),
     ty_features_have(Need, F2), !.
+%% A moved adposition's relative pronoun takes the adposition's case,
+%% where the language has cases (German `in dem', `an das').
 ty_rel_marker_ok(L, r(Pl, Rule), Features, Ws) :-
     (   Rule = moves(AWs)
     ->  append(AWs, PWs, Ws),
-        ty_relative_pronoun(L, PWs, Alternatives)
+        ty_relative_pronoun(L, PWs, Alternatives),
+        ( ty_case_after(L, AWs, C) -> F1 = [C|Features] ; F1 = Features )
     ;   ty_gap_marker_role(Pl, Role),
         ty_relative(L, R, Ws, Alternatives),
-        ty_fits(R, Role)
+        ty_fits(R, Role),
+        F1 = Features
     ),
     member(Need, Alternatives),
-    ty_features_have(Need, Features), !.
+    ty_features_have(Need, F1), !.
 
 %% The marks read are the ones the features need; in a repair, a mark
 %% missing or too many is a fault.
@@ -3995,6 +4342,113 @@ ty_marks_needed(L, Role, Place, Features, Marks) :-
                  ty_features_have(Need, Features) ), Marks0),
     sort(Marks0, Marks).
 
+%% ---- the cases ------------------------------------------------------------------
+%%
+%% A LANGUAGE WITH CASES (one with ty_case/3 rows: German) writes a noun
+%% phrase in the case its place gives it: a role's (ty_case(L, Role,
+%% Case), Role s, o, p or g) or an adposition's (ty_case_after(L, Words,
+%% Case)). The case is kept for the phrase (`$ty_case') where the role or
+%% the adposition stands, and the article (ty_article_case/6), the noun
+%% (ty_noun_case/5, a form that is not the nominative's), an adjective's
+%% ending and a question word (ty_wh_case/4) take it; a phrase where
+%% nothing set one takes any.
+ty_cased(L) :- '$ty_cased'(L).
+
+%% Where a parse starts, the globals of a language with cases are set back.
+ty_parse_reset(L) :-
+    (   '$ty_cased'(L)
+    ->  b_setval('$ty_case', any), b_setval('$ty_sub', no),
+        b_setval('$ty_kein', none), b_setval('$ty_kein_np', no)
+    ;   true
+    ).
+
+%% THE LANGUAGE'S FEATURES the hot paths ask, as facts typology_load/1
+%% makes: a call of one is a step, where asking the rows was a once/1 that
+%% failed. And a language with cases has each article of a case as a
+%% ty_article/5 row of its definiteness, gender and number too.
+ty_feats_make(L) :-
+    retractall('$ty_cased'(L)), retractall('$ty_declines'(L)),
+    retractall('$ty_kein_lang'(L)), retractall('$ty_sub_used'(L)),
+    ( once(ty_case(L, _, _)) -> assertz('$ty_cased'(L)) ; true ),
+    ( once(ty_adjective_ending(L, _, _, _, _, _)) -> assertz('$ty_declines'(L)) ; true ),
+    ( once(ty_negative_article(L, _, _, _, _)) -> assertz('$ty_kein_lang'(L)) ; true ),
+    (   ( once(ty_verb_last(L, _)) ; '$ty_kein_lang'(L) )
+    ->  assertz('$ty_sub_used'(L))
+    ;   true
+    ),
+    retractall('$ty_art_words'(L, _, _, _)),
+    retractall('$ty_ending'(L, _, _, _, _, _)),
+    forall(ty_article_case(L, Def, G, N, _, W),
+           ( ty_article(L, Def, G, N, W) -> true ; assertz(ty_article(L, Def, G, N, W)) )),
+    forall(ty_article_case(L, Def, _, _, C, W),
+           ( '$ty_art_words'(L, Def, C, W) -> true ; assertz('$ty_art_words'(L, Def, C, W)) )),
+    forall(ty_negative_article(L, _, _, C, W),
+           ( '$ty_art_words'(L, kein, C, W) -> true ; assertz('$ty_art_words'(L, kein, C, W)) )),
+    findall(C, ( ty_case(L, _, C) ; ty_case_after(L, _, C) ), Cs0),
+    sort(Cs0, Cs),
+    forall(( ty_adjective_ending(L, D, AC, G, N, E),
+             ( AC == any -> member(C, Cs) ; C = AC ) ),
+           ( '$ty_ending'(L, D, C, G, N, E) -> true ; assertz('$ty_ending'(L, D, C, G, N, E)) )).
+
+:- dynamic('$ty_cased'/1).
+:- dynamic('$ty_declines'/1).
+:- dynamic('$ty_kein_lang'/1).
+:- dynamic('$ty_sub_used'/1).
+:- dynamic('$ty_art_words'/4).
+:- dynamic('$ty_ending'/6).
+
+ty_role_case(L, Role) :-
+    (   ty_case(L, Role, C)
+    ->  b_setval('$ty_case', C),
+        (   nb_current('$ty_kein', K), K == Role
+        ->  b_setval('$ty_kein_np', yes)
+        ;   b_setval('$ty_kein_np', no)
+        )
+    ;   true
+    ).
+
+ty_case_after_words(L, Ws) :-
+    (   ty_case_after(L, Ws, C)
+    ->  b_setval('$ty_case', C), b_setval('$ty_kein_np', no)
+    ;   true
+    ).
+
+ty_case_now(L, C) :-
+    (   '$ty_cased'(L), nb_current('$ty_case', C0) -> C = C0 ; C = any ).
+
+ty_case_fits(AC, C) :- ( AC == any -> true ; C == any -> true ; AC == C ).
+
+%% The article W fits the definiteness, the noun's gender and number, and
+%% the phrase's case where the language has cases.
+ty_article_fits(L, Def, G, N, W) :-
+    (   '$ty_cased'(L)
+    ->  ty_case_now(L, C),
+        (   ty_kein_np
+        ->  Def == indef,
+            ty_negative_article(L, AG, AN, AC, W),
+            ty_fits(AG, G), ty_fits(AN, N), ty_case_fits(AC, C),
+            b_setval('$ty_kein_used', yes)
+        ;   ty_article_case(L, Def, AG, AN, AC, W),
+            ty_fits(AG, G), ty_fits(AN, N), ty_case_fits(AC, C)
+        )
+    ;   ty_article(L, Def, AG, AN, W), ty_fits(AG, G), ty_fits(AN, N)
+    ).
+
+%% A noun's word in the phrase's case: its case form where it has one,
+%% else its form of the number.
+ty_noun_here(L, M, G, A, N, W) :-
+    (   '$ty_cased'(L)
+    ->  ty_case_now(L, C),
+        (   C == any
+        ->  (   ty_noun_form(L, M, G, A, N, W)
+            ;   ty_noun_case(L, M, _, N, W), ty_noun(L, M, G, A, _, _)
+            )
+        ;   ty_noun_case(L, M, C, N, W), ty_noun(L, M, G, A, _, _)
+        ;   ty_noun_form(L, M, G, A, N, W), \+ ty_noun_case(L, M, C, N, _)
+        )
+    ;   ty_noun_form(L, M, G, A, N, W)
+    ).
+
 %% A noun phrase: its parts in an order the template keeps, then the check
 %% that the article and the adjectives agree with the noun.
 %% Its features: definiteness, number, animacy (which the marks ask) and
@@ -4002,11 +4456,16 @@ ty_marks_needed(L, Role, Place, Features, Marks) :-
 ty_np(L, NP, Features) --> ty_np(L, NP, Features, none).
 
 %% A noun phrase of `which' is definite to its marks (Spanish `a qué
-%% perro', Persian `کدام سگ را').
+%% perro', Persian `کدام سگ را'). Writing in a language with cases, the noun's
+%% gender is known before its article and adjectives are chosen.
 ty_np(L, NP, [FDef, N, Anim, G], Next) -->
     { NP = np(M, N, Def, As),
       ty_order_at(L, np, Order0),
-      ty_np_split(L, Order0, Order, As, Bs, As2) },
+      ty_np_split(L, Order0, Order, As, Bs, As2),
+      (   nonvar(M), '$ty_cased'(L), once(ty_noun(L, M, G0, _, _, _))
+      ->  Noun = noun(G0, _)
+      ;   true
+      ) },
     ty_np_parts(Order, L, np(M, N, Def, As2), got(Det, Noun, ARows, b(Bs, BRows)), Next),
     { Noun = noun(G, _),
       ( var(As) -> append(Bs, As2, As) ; true ),
@@ -4044,10 +4503,10 @@ ty_np_parts([P|Ps], L, NP, Got, Next) -->
 %% so, and read with the article too.
 %% A noun phrase whose Next is bare(Next1) takes no article (English
 %% `the boy's dog': the possessor stands for it).
-ty_np_part(d, _, L, np(_, _, Def, _), got(Det, _, _, _), Next) -->
+ty_np_part(d, _, L, np(_, N, Def, _), got(Det, Noun, _, _), Next) -->
     (   { ty_no_article(Next, L, Def) }
     ->  { Det = none }
-    ;   ty_det(L, Det)
+    ;   ty_det(L, Def, Noun-N, Det)
     ).
 
 %% Indexed by Next, so a phrase with nothing after it (none) asks nothing.
@@ -4058,11 +4517,19 @@ ty_np_part(n, Ps, L, np(M, N, _, As), got(_, noun(G, A), _, _), Next) -->
     { ty_linked_here(Ps, As, Next, C2, Linked),
       ty_linked_word(L, n, C2, Linked, W0, W, ty_noun_lookup(L, M, G, A, N, W0)) },
     ty_meant(L, noun(M), [W]).
-ty_np_part(a, Ps, L, np(_, _, _, As), got(_, _, Rows, _), Next) -->
-    { ( Ps == [] -> End = Next ; End = none ) },
-    ty_adjs(L, As, Rows, End).
-ty_np_part(b, _, L, _, got(_, _, _, b(Bs, Rows)), _) -->
-    ty_adjs(L, Bs, Rows, none),
+ty_np_part(a, Ps, L, np(_, N, _, As), got(Det, Noun, Rows, _), Next) -->
+    { ( Ps == [] -> End = Next ; End = none ),
+      (   '$ty_declines'(L)
+      ->  ty_declined(L, Det, Next, D0), D = decl(D0, Noun-N)
+      ;   D = plain
+      ) },
+    ty_adjs(L, As, Rows, End, D).
+ty_np_part(b, _, L, np(_, N, _, _), got(Det, Noun, _, b(Bs, Rows)), Next) -->
+    {   '$ty_declines'(L)
+    ->  ty_declined(L, Det, Next, D0), D = decl(D0, Noun-N)
+    ;   D = plain
+    },
+    ty_adjs(L, Bs, Rows, none, D),
     { forall(member(A, Bs), ty_adjective_before(L, A)) }.
 
 %% Reading, the adjectives are not known yet when the noun is: each case is
@@ -4091,9 +4558,11 @@ ty_next_bare(Next) :- nonvar(Next), Next = bare(_).
 %% In a repair a noun may stand for its other number too, a fault: `Los
 %% perro ven' is `Los perros ven', one fault, not `El perro ve', two.
 ty_noun_lookup(L, M, G, A, N, W) :-
-    (   ty_noun_form(L, M, G, A, N, W)
+    (   '$ty_cased'(L)
+    ->  ty_noun_here(L, M, G, A, N, W)
+    ;   ty_noun_form(L, M, G, A, N, W)
     ;   ty_lenient,
-        ty_noun_form(L, M, G, A, N1, W),
+        ty_noun_here(L, M, G, A, N1, W),
         ty_other_number(N1, N),
         ty_fault(agreement(noun, W))
     ).
@@ -4101,22 +4570,113 @@ ty_noun_lookup(L, M, G, A, N, W) :-
 ty_noun_form(L, M, G, A, sg, W) :- ty_noun(L, M, G, A, W, _).
 ty_noun_form(L, M, G, A, pl, W) :- ty_noun(L, M, G, A, _, W).
 
-ty_det(L, art(W)) --> [W], { ty_article(L, _, _, _, W) }.
-ty_det(_, none) --> [].
+%% The article: reading, the word's own; writing, the words of the
+%% definiteness the IR asks, of the phrase's case where the language has
+%% cases, each word once.
+ty_det(L, Def, GN, art(W)) -->
+    [W],
+    {   '$ty_cased'(L) -> ty_det_word(L, Def, GN, W) ; ty_article(L, _, _, _, W) }.
+ty_det(_, _, _, none) --> [].
 
-ty_adjs(L, As, Rows) --> ty_adjs(L, As, Rows, none).
+ty_det_word(L, Def, GN, W) :-
+    (   nonvar(W)
+    ->  (   '$ty_cased'(L), ty_kein_np
+        ->  once(ty_negative_article(L, _, _, _, W))
+        ;   once(ty_article(L, _, _, _, W))
+        )
+    ;   '$ty_cased'(L), ty_kein_np
+    ->  Def == indef,
+        ty_case_now(L, C),
+        ty_case_words(L, kein, C, Ws),
+        member(W, Ws),
+        ty_det_fits(L, kein, GN, C, W)
+    ;   nonvar(Def), '$ty_cased'(L)
+    ->  ty_case_now(L, C),
+        ty_case_words(L, Def, C, Ws),
+        member(W, Ws),
+        ty_det_fits(L, Def, GN, C, W)
+    ;   ty_article(L, _, _, _, W)
+    ).
+
+%% Writing, an article word fits the noun the IR names.
+ty_det_fits(L, Def, GN, C, W) :-
+    (   nonvar(GN), GN = noun(G, _)-N, nonvar(G)
+    ->  (   Def == kein
+        ->  once(( ty_negative_article(L, AG, AN, AC, W), ty_fits(AG, G), ty_fits(AN, N), ty_case_fits(AC, C) ))
+        ;   once(( ty_article_case(L, Def, AG, AN, AC, W), ty_fits(AG, G), ty_fits(AN, N), ty_case_fits(AC, C) ))
+        )
+    ;   true
+    ).
+
+%% The article words of a definiteness (or kein) and a case, each once, as
+%% typology_load/1 keeps them (`$ty_art_words'/4); of every case where
+%% the case is not known.
+ty_case_words(L, Def, C, Ws) :-
+    (   C == any
+    ->  findall(W, '$ty_art_words'(L, Def, _, W), Ws0), list_to_set(Ws0, Ws)
+    ;   findall(W, '$ty_art_words'(L, Def, C, W), Ws)
+    ).
+
+ty_adjs(L, As, Rows) --> ty_adjs(L, As, Rows, none, plain).
 
 %% End r: the last adjective is the phrase's last word before a relative
-%% clause.
-ty_adjs(_, [], [], _) --> [].
-ty_adjs(L, [A|As], [adj(G, N)|Rows], End) -->
+%% clause. D is plain, or decl(Declension) where the language puts an
+%% ending on an adjective before a noun (ty_declined/4).
+ty_adjs(_, [], [], _, _) --> [].
+ty_adjs(L, [A|As], [adj(G, N)|Rows], End, plain) -->
     [W],
     { (   As = [_|_], C2 = a, Linked = yes
       ;   As = [], ty_linked_end([], End, C2, Linked)
       ),
       ty_linked_word(L, a, C2, Linked, W0, W, ty_adjective(L, A, G, N, W0)) },
     ty_meant(L, adjective(A), [W]),
-    ty_adjs(L, As, Rows, End).
+    ty_adjs(L, As, Rows, End, plain).
+ty_adjs(L, [A|As], [adj(G, N)|Rows], End, decl(D, GN)) -->
+    [W],
+    { (   As = [_|_], C2 = a, Linked = yes
+      ;   As = [], ty_linked_end([], End, C2, Linked)
+      ),
+      ty_linked_word(L, a, C2, Linked, W0, W, ty_adjective_in(decl(D, GN), L, A, G, N, W0)) },
+    ty_meant(L, adjective(A), [W]),
+    ty_adjs(L, As, Rows, End, decl(D, GN)).
+
+%% An adjective's word: its row's; or, declined, the row's word (the
+%% predicate's, `klein') and an ending of the declension and the phrase's
+%% case, the gender and the number the ending is for (`kleine', `kleinen').
+ty_adjective_in(plain, L, A, G, N, W) :- ty_adjective(L, A, G, N, W).
+%% The endings are asked of `$ty_ending'/6, the rows by case that
+%% typology_load/1 makes (a row of any case one a case).
+ty_adjective_in(decl(D, GN), L, A, G, N, W) :-
+    ty_case_now(L, C0),
+    ( C0 == any -> true ; C = C0 ),
+    (   nonvar(W)
+    ->  '$ty_ending'(L, D, C, G, N, E),
+        atom_concat(S, E, W), ty_adjective(L, A, _, _, S)
+    ;   ty_adjective(L, A, _, _, S),
+        '$ty_ending'(L, D, C, G, N, E),
+        ty_ending_fits(GN, G, N),
+        atom_concat(S, E, W)
+    ).
+
+%% Writing, an ending fits the noun the IR names.
+ty_ending_fits(GN, G, N) :-
+    (   nonvar(GN), GN = noun(G1, _)-N1, nonvar(G1) -> ty_fits(G, G1), ty_fits(N, N1) ; true ).
+
+%% THE DECLENSION of a noun phrase's adjectives, where the language puts
+%% endings on them (ty_adjective_ending/6 rows): ty_declension(L, Def, D)
+%% by the article's definiteness, `none' for a phrase with no article
+%% (German weak after `der', mixed after `ein', strong with none); an
+%% article read before them tells it; a language with no endings
+%% (no `$ty_declines' fact) has plain ones.
+ty_declined(L, Det, _, D0) :-
+    (   nonvar(Det), Det = art(W)
+    ->  (   ty_article_case(L, Def, _, _, _, W) -> true
+        ;   ty_negative_article(L, _, _, _, W) -> Def = indef
+        ;   Def = def
+        ),
+        ty_declension(L, Def, D0)
+    ;   ty_declension(L, none, D0)
+    ).
 
 %% The word W0 of the table, written W: itself, or its linked form when a
 %% word of class C2 follows it. Lookup finds W0; reading it runs after W0 is
@@ -4167,15 +4727,18 @@ ty_np_agrees(L, np(_, N, Def, _), Det, noun(G, Anim), Rows, Anim, Next) :-
     ty_values(definiteness, Defs), member(Def, Defs),
     forall(member(adj(RG, RN), Rows), ( ty_fits(RG, G), ty_fits(RN, N) )),
     (   Det = art(W)
-    ->  ty_article(L, Def, AG, AN, W), ty_fits(AG, G), ty_fits(AN, N)
+    ->  (   '$ty_cased'(L)
+        ->  once(ty_article_fits(L, Def, G, N, W))
+        ;   ty_article(L, Def, AG, AN, W), ty_fits(AG, G), ty_fits(AN, N)
+        )
     ;   Def \== which,
         (   Next == none
-        ->  \+ ( ty_article(L, Def, AG, AN, _), ty_fits(AG, G), ty_fits(AN, N) )
+        ->  \+ ty_article_fits(L, Def, G, N, _)
         ;   Next = bare(_)
         ->  Def == def
         ;   Next == r, ty_relative_bare(L, Def)
         ->  true
-        ;   \+ ( ty_article(L, Def, AG, AN, _), ty_fits(AG, G), ty_fits(AN, N) )
+        ;   \+ ty_article_fits(L, Def, G, N, _)
         )
     ).
 
@@ -4190,14 +4753,14 @@ ty_np_faults(L, np(_, N, Def, _), Det, noun(G, Anim), Rows, Anim, Next) :-
     ),
     (   Det = art(W)
     ->  once(ty_article(L, Def, _, _, W)),
-        (   ty_article(L, Def, AG, AN, W), ty_fits(AG, G), ty_fits(AN, N)
+        (   ty_article_fits(L, Def, G, N, W)
         ->  true
         ;   ty_fault(agreement(article, W))
         )
     ;   Def \== which,
         (   (   ty_next_bare(Next), Def == def
             ;   Next == r, ty_relative_bare(L, Def)
-            ;   \+ ( ty_article(L, Def, AG, AN, _), ty_fits(AG, G), ty_fits(AN, N) )
+            ;   \+ ty_article_fits(L, Def, G, N, _)
             )
         ->  true
         ;   ty_fault(article(missing))

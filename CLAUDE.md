@@ -237,6 +237,31 @@ tell** (`pron(2, _, _)` for `you`): a check compares such readings with
 takes its mode from the last word** (`ty_last_given/1`): a question's
 verb is a list whose first word is not read yet.
 
+**A case is a global of the phrase** (1.42.0, German): `$ty_case' is set
+where a role (`ty_role_case/2`, from `ty_role//4`, `ty_marked_np//5`,
+`ty_predicate//3`, a possessor's part) or an adposition's words
+(`ty_case_after_words/2`) stand, and the article, the noun, an
+adjective's ending and a question word read it (`ty_case_now/2`, `any`
+where none was set): **a new place a noun phrase stands sets it**, or
+the phrase takes the case of the phrase before it. `$ty_sub' (a
+relative clause, `ty_sub//1`) and `$ty_kein', `$ty_kein_np',
+`$ty_kein_used' (the negative article) are the same kind; every parse
+sets the five back where it starts (`ty_read_bases/6`, `typology_write/4`,
+`ty_reads_as/5`). A relative clause's commas are tokens of their own in
+the grammar, joined to the word before them by the writer
+(`ty_comma_join/2`) and split off by the reader (`ty_uncomma/3`).
+**What only German asks is a fact `typology_load/1` makes**
+(`ty_feats_make/1`: `$ty_cased'/1, `$ty_declines'/1, `$ty_kein_lang'/1,
+`$ty_sub_used'/1, the endings and article words by case,
+`$ty_ending'/6 and `$ty_art_words'/4, and German's articles as
+`ty_article/5` rows): asked as `once/1` of the rows, or as a rule, they made
+every other language 16 % dearer, and the endings walked by `ty_case_fits/2`
+made German 107 million inferences on the benchmark (24 million now). A
+relative clause and a possessor are tried only where a comma and a
+genitive article are ahead (`ty_marker_ahead/2`, `ty_poss_words_in/3`):
+the markers `der`, `den` are articles too, and German's possessor has no
+word of its own.
+
 **Every reader has two modes, static and live** (1.16.0; reason.pl's header,
 STATIC AND LIVE, and live.pl's). What a session must keep:
 

@@ -105,7 +105,7 @@ Spanish and Italian apocope (`gran`). Then `cat` goes into Persian, and
 Italian nouns that start with `s` and a consonant, `z` or a vowel are
 right.
 
-## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.39.0)
+## Phase 4: more levels (in part done, reasoning 1.22.0 to 1.42.0)
 
 Done:
 
@@ -490,11 +490,45 @@ Done:
    object person `Qui est-ce que la fille vit?` (through 1.38.0 `La fille
    vit qui?`, which it still reads).
 
+**German** (1.42.0, item 3). templates/german.pl is a language with
+CASES: `ty_case(L, Role, Case)` gives a role's noun phrase its case (s and
+p nominative, o accusative, g a possessor genitive) and
+`ty_case_after(L, Words, Case)` an adposition's (`mit` dative, `an`
+accusative). The case is kept for the phrase where its role or its
+adposition stands, and the article (`ty_article_case/6`, each row an
+article of `ty_article/5` too), the noun (`ty_noun_case/5`, a form that is
+not the nominative's: `Hunden`, `Hundes`, `Jungen`), an adjective's ending
+(`ty_adjective_ending/6` by the declension `ty_declension/3` gives the
+article: `der kleine Hund`, `ein kleiner Hund`, `kleine Hunde`, `mit dem
+kleinen Hund`; the predicate keeps the plain word, `ist klein`), a
+question word (`ty_wh_case/4`: `wer`, `wen`, `wem`) and a pronoun after an
+adposition of the accusative (`an ihn`) take it. The verb stands second;
+the last part of a verb of two stands at the end (`ty_split_place(L,
+end)`: `Der Junge hat den Hund nicht gesehen.`, `Wird der Junge den Hund
+sehen?`, `Wen hat der Junge gesehen?`), and before the first in a relative
+clause, whose verb is last (`ty_verb_last(L, rel)`: `der Hund, den der
+Junge nicht gesehen hat`). `nicht` stands at the end of a verb clause and
+before a copula's predicate (`ty_copula_negation/3`: `Der Hund ist nicht
+klein.`, `der Hund, der nicht klein ist`); an indefinite object or
+predicate of a negative clause takes the negative article and the clause
+no `nicht` (`ty_negative_article/5`: `Der Junge sieht keinen Hund.`, `Der
+Hund ist kein Tier.`). A relative clause stands between commas
+(`ty_relative_comma/1`: `Der Hund, der schläft, ist klein.`; the comma at
+a sentence's end is dropped), its marker in the gap's case (`den`, `in
+dem`, `an das`), and a comma before it stops a contraction (`im Haus`, but
+`das Haus, in dem`). A possessor is genitive (`die Katze des Mädchens`,
+`der Hund des Jungen des Mannes`). Nouns keep their capital, and the
+first word of a sentence is read as written too where the tables hold it
+so (`Hunde schlafen.`, `Sie sehen den Hund.`: you or they). The polite
+`Sie` takes the third plural.
+
 Not yet:
 
-3. A German template: the place of the negation is there for it, and
-   German's `nicht` before a predicate (`ist nicht groß`), its verb second
-   and its cases on the article are not.
+3. German: `kein` for a subject (`Kein Hund schläft.` is written `Ein Hund
+   schläft nicht.`), the possessive pronouns (`mein`, `dein`) and the
+   possessive relative (`dessen`), an adjunct or an object first with the
+   verb second after it (`Heute schläft der Hund.`), `ans` and `am`, and
+   two predicate adjectives with `und` (no template has them).
 6. The topics are the model's word (item 20): no reference sentence
    checks them yet. A meaning of its own for each sense of an English
    word (`march`, the month and the walk) waits for the bridge to
