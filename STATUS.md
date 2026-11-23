@@ -1,0 +1,149 @@
+# Status: parking translate.pl
+
+Written 2026-11-23, at reasoning 1.53.0.
+
+**The decision** (the owner, 2026-11-23): park `translate.pl`. Every use of it
+moves to the typology template system (`typology.pl` and `templates/`).
+
+This file gives the current state, the desired state, the gaps between
+them, and the steps. Change it as the work moves.
+
+## What "parked" means
+
+A parked file stays in the repository. Nothing else loads it, and
+`sh run-tests.sh` (all the cases) does not run its case. `sh run-tests.sh
+translate` still runs it by name, so it can come back. The files that
+are parked:
+
+- `translate.pl`
+- `test/translate.pl`
+- `tutorials/04-translate.pl`
+- `teach.pl`
+- `corpus/spanish.txt` and `corpus/italian.txt`, the lessons `teach.pl`
+  teaches
+
+`corpus/vocabulary/` and `lexicon/` are not parked: the typology import
+and the endpoint use them.
+
+## The current state (1.53.0)
+
+### The two translators
+
+| | `translate.pl` | `typology.pl` |
+|---|---|---|
+| code | 30 332 lines | 5 780 lines |
+| a language is | a lesson in controlled English (`reason_learn/3`) | a template, facts in `templates/<name>.pl`, and the word tables the import writes from `corpus/vocabulary/` |
+| languages | English (the pivot) and each lesson: Spanish and Italian | English, Spanish, Italian, Persian, French, German |
+| the IR | `ir(s(Asked, Subject, g(Lexeme, Tense, Aspect, Denied), Complements), Stop)`, its words English | `clause/5,6`, `copula/4`, `question/1`, `answer/2,3`, its words meanings |
+| one grammar for each direction | no: a reader and a writer for each side | yes: one DCG reads and writes every language |
+| the test | `test/translate.pl`, 19 313 lines, 3 678 checks, about 30 sections of newspaper text | `test/typology.pl`, 2 177 lines, 275 checks (many inside loops over sentences) |
+| the lesson | `tutorials/04-translate.pl`, 12 793 lines | `tutorials/06-typology.pl`, 721 lines |
+| load | a lesson is learned (`teach.pl` keeps one in a store, as it takes minutes) | `typology_load/1`, the six languages in 1.03 s of CPU |
+
+### Every use of translate.pl
+
+| file | what it calls | what for |
+|---|---|---|
+| `page.pl` | `reason_translate_page/2,4` | a page, each sentence its translation or `?` and the words no lesson knows |
+| `teach.pl` | `reason_learn/3` | `corpus/<language>.txt` and `corpus/vocabulary/<language>.txt` into a knowledge base |
+| `live.pl` | `reason_ir/3`, `reason_ir_text/3`, `reason_untranslated/2` | the live mode's `ir(From)` kind: the model judges a reading, and teaches a word the lesson lacks as a lesson line (`reason_live_lesson/2`) |
+| `coding/endpoint/english_lesson.pl` | asserts a lesson's facts (`mean/2`, `noun/1`, `verb/1`, ...) | some 47 000 English words of `lexicon/`, taught as a lesson, so the translator reads English |
+| `coding/endpoint/reasoning_core.pl` | `reason_ir/2` | `endpoint_ir/2`, the IR note of a request |
+| `coding/endpoint/ir_repair.pl` | `reason_ir/2`, `reason_ir_text/3`, `reason_untranslated/2`, `tr_pieces/2`, `tr_trim/2`, `tr_stop_text/3` | the model checks and repairs the reading of each sentence; the reading said back in English, and its logical form (`ep_ir_logical_form/2`) |
+| `coding/endpoint/httpd.pl`, `httpd_core.pl`, `live_ir.pl` | `ep_english_lesson/0`, `ep_ir_readings/2` | the server and the live run, through the two files above |
+| `corpus/build.pl` | `tr_english_ing/2` | the gerund rule that a vocabulary line must not repeat |
+| `test/live.pl` | `reason_ir/3`, `reason_learn/2` | section `translator` |
+| `coding/endpoint/test.pl` | `endpoint_ir/2`, `ep_ir_readings/2` | the endpoint's IR sections |
+| `test/typology.pl` | `reason_ir/3`, `reason_ir_text/3`, `reason_learn/3` | section `bridge` (1.53.0) |
+| `run-tests.sh` | the `translate` case | one of the eight cases of `all` |
+| `reason.pl` | nothing | comments only: `reason_learn/1,2` is `reason.pl`'s own |
+| `CLAUDE.md`, `README.md`, `tutorials/README.md`, `TYPOLOGY-PLAN.md` | | they describe it |
+
+### What typology reads of those uses today
+
+- **Spanish into Italian.** `test/translate.pl` translates 37 Spanish
+  sentences into Italian with `reason_translate/4`. Typology translates
+  12 of them. For one of the 12 it chooses another reading (`de sus
+  padres` as `from`). The newspaper sections were not tried.
+- **The endpoint's English.** Of 10 sentences of the endpoint's tests
+  and of a benchmark task, `translate.pl` (with the endpoint's lesson)
+  reads 6 and typology reads 3.
+- **The bridge** (`typology_reason_ir/2`, 1.53.0). Over 22 shared English
+  sentences, `translate.pl`'s reading is typology's own reading, and the
+  two write the same Spanish.
+
+## The desired state
+
+Nothing loads `translate.pl`. Each use calls typology:
+
+| use | desired |
+|---|---|
+| `page.pl` | a new `typology_translate_page/4`: the page split into sentences, each sentence its translation or `?` and its unknown words |
+| `teach.pl` | parked: `typology_load/1` reads the templates in about one second, so no store is needed |
+| `live.pl` | the kind `typology(L)`: the model judges a reading of `typology_read/3`, and gives a word the tables lack as a template row (`ty_noun/6`, `ty_verb/6`, ...), held to the round trip and the reference sentences (Phase 8 of TYPOLOGY-PLAN.md) |
+| `coding/endpoint/english_lesson.pl` | not needed: `typology_load(english)`, with the words of `lexicon/` in the English word tables |
+| `coding/endpoint/reasoning_core.pl` | `endpoint_ir/2` gives typology readings of the request |
+| `coding/endpoint/ir_repair.pl` | the reading said back by `typology_write(english, ...)`; the logical form made from the typology IR; the unknown words from typology |
+| `corpus/build.pl` | the gerund from the English template's ending rules (`ty_ending/4`), or a rule of its own |
+| `test/live.pl`, `coding/endpoint/test.pl` | their sections hold the typology readings |
+| `test/typology.pl` | section `bridge` stays while the work runs (it is the measure), and is parked with `translate.pl` at the end |
+| `tutorials/04-translate.pl` | parked; lesson 06 is the translator's lesson |
+| `run-tests.sh` | `all` runs seven cases, without `translate` |
+| the documentation | `CLAUDE.md`, `README.md`, `tutorials/README.md` and `TYPOLOGY-PLAN.md` name typology as the translator and `translate.pl` as parked |
+
+## The gaps
+
+Typology must read what the uses read. These are the gaps that the 25
+Spanish sentences and the endpoint's sentences show:
+
+1. **Clauses.** Coordination of phrases and of clauses (`el pan o el
+   caldo`, `pan, caldo y sopa`, two clauses with `y`); subordinate clauses
+   (`if`, `until`, a clause after `that`); the imperative, positive and
+   negative (`Write a complete C program.`, `No comas el pan.`); an
+   infinitive after a verb (`tiene que comer`, `al acusar`); the gerund
+   (`comiendo`); modal verbs; the passive (`ha sido arrojada`); the
+   reflexive and the impersonal `se`; `there is` (`hay`).
+2. **Noun phrases.** Quantifiers and determiners (`every`, `each`, `no`,
+   `this`, `these`); numbers; names and a name in apposition (`el
+   ministro, Jean-Pierre Chevènement,`); a phrase with no noun (`el más
+   débil`, `el de los chicos`); an adverb before an adjective (`tan
+   pacífica`); an adjective before the noun where the template puts it
+   after (`la sacrosanta institución`); a noun phrase of two nouns
+   (`standard input`, `C program`).
+3. **Sentences.** An adverb first (`Después, el perro come el pan.`);
+   text with no verb (`¡El pan del perro!`); a clause after a semicolon
+   that leaves out its verb (`el gato, la sopa`); quotes; `how`, `where`
+   and `when`; the first person with an adjective (`Estamos cansados.`).
+4. **Pages.** A text split into sentences, each with its stop; the words
+   no table knows, named.
+5. **Words.** `lexicon/` has 6 000 nouns, 2 500 transitive verbs and
+   3 000 adjectives; the endpoint's lesson teaches some 47 000 words. The
+   English word tables have 25 440 rows, from the vocabularies.
+6. **Learning.** `translate.pl` learns a language, or one word, from
+   controlled English, and the live mode teaches a word that way.
+   Typology has a template and an import, and its live mode gives topics
+   only.
+
+## The steps
+
+1. **The measure.** A script counts what typology reads and writes the
+   same way as `translate.pl`, section by section of `test/translate.pl`,
+   and over the endpoint's sentences. Each version records its count.
+2. **Typology grows,** the largest gaps first by the measure, one feature
+   a version, each with its tests, its lesson section and its benchmark.
+3. **The uses move,** the smallest first: `corpus/build.pl`, `live.pl`,
+   `page.pl`, then the endpoint.
+4. **The park.** No file loads `translate.pl`; `run-tests.sh`, the
+   section `bridge` and the documentation change as above.
+
+## Open questions for the owner
+
+1. Park in place (the paths stay the same), or move the parked files
+   into a directory of their own? Recommended: in place.
+2. Can a use move while typology reads fewer of its sentences than
+   `translate.pl` does? The endpoint would read fewer requests until the
+   gaps close. Recommended: no, for the endpoint; yes, for `page.pl` and
+   `live.pl`, whose tests are small.
+3. A language from controlled English: keep that, as template rows a
+   lesson gives (Phase 8), or give it up?
+4. The words of `lexicon/`: import them into the English word tables?
