@@ -23,6 +23,7 @@ the count to the last one below.
 |---|---|---|---|
 | 1.55.0 | 215 | 2.7 % | the start: 5 285 sentences have a word no table has, and 2 500 have no unknown word but a structure the grammar has not |
 | 1.56.0 | 250 | 3.1 % | the English nouns in the class design: 20 078 nouns, from the vocabularies and `lexicon/` |
+| 1.57.0 | 278 | 3.5 % | the English verbs in the class design: 3 835 regular verbs, 217 irregular ones (`do` stays a word of grammar) |
 
 At 1.55.0 the commonest words no table has are words of grammar, not
 nouns: `and` 451 times, `by` 154, `as` 126, `out` 95, `this` 95, `all` 92,
@@ -41,7 +42,7 @@ and takes the rest from its class.
     ty_noun_class(english, regular, [''-s, s-ses, x-xes, ch-ches, sh-shes, y-ies, ay-ays, ...]).
     ty_noun_in(english, house, none, inanimate, house, regular).        % a regular noun
     ty_noun(english, child, none, person, child, children).             % an irregular noun
-    ty_verb_class(english, regular, [present(sg)-[''-s, ...], past(sg)-[''-ed, e-ed, y-ied, ...], ...]).
+    ty_conjugation(english, regular, [present(sg)-[''-s, ...], past(sg)-[''-ed, e-ed, y-ied, ...], ...]).
     ty_verb_in(english, walk, walk, regular).                           % a regular verb
     ty_irregular_verb(english, see, see, regular, [past(sg)-saw, participle-seen]).
 
@@ -62,7 +63,10 @@ English a word's meaning is the word: no translation table.
    commonest first by the measure: coordination (`and`, `or`, `but`), the
    other adpositions, the determiners and quantifiers, the numbers, the
    modal verbs, `there is`, the particles (`out`, `up`), the adverbs of
-   degree (`very`), comparison (`than`, `more`).
+   degree (`very`), comparison (`than`, `more`), and the verbs' objects
+   (whether a verb takes one: `lexicon/`'s `vt` and `vi`), with `do` as a
+   main verb: until then `do` is a word of grammar only, or `Yes, he
+   does.` reads as the verb `do` with no object too.
 4. The structures: the subordinate clause (`that`, `if`, `when`,
    `because`), the infinitive, the gerund, the passive, the imperative.
 

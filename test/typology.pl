@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -1848,6 +1848,42 @@ german_object_first :-
     typology_translate(german, english, 'Den Hund sieht der Junge.', E),
     check('German into English', E, 'The boy sees the dog.').
 
+%% 1.57.0: the English verbs in the class design. A class of the
+%% conjugation is one fact (ty_conjugation/3), a verb of a class one fact
+%% (ty_verb_in/4, templates/english-verbs.pl), an irregular verb one fact
+%% with the parts its class does not make (ty_irregular_verb/5); the import
+%% picks a class by a pattern of letters (ty_class_when/4).
+english_verbs :-
+    section('the English verbs: the classes of the conjugation, then the verbs'),
+    findall(V-Ws-P, ( member(V, [walk, study, play, like, watch, fix, stop, admit, panic, go, buy, have, see]),
+                      findall(W, ( member(T-N, [present-sg, present-pl, past-sg]), ty_verb(english, V, T, N, pos, [W]) ), Ws),
+                      ( ty_participle(english, V, P) -> true ; P = none ) ), Fs),
+    check('the forms a class makes, and an irregular verb''s own', Fs,
+          [walk-[walks, walk, walked]-walked, study-[studies, study, studied]-studied,
+           play-[plays, play, played]-played, like-[likes, like, liked]-liked,
+           watch-[watches, watch, watched]-watched, fix-[fixes, fix, fixed]-fixed,
+           stop-[stops, stop, stopped]-stopped, admit-[admits, admit, admitted]-admitted,
+           panic-[panics, panic, panicked]-panicked, go-[goes, go, went]-gone,
+           buy-[buys, buy, bought]-bought, have-[has, have, had]-had, see-[sees, see, saw]-seen]),
+    findall(C2, ( member(V2, [stop, plan, visit, rain]), ty_verb_in(english, V2, _, C2) ), Cs2),
+    check('the import''s class: one vowel before a consonant that doubles, else the first', Cs2,
+          [double, double, regular, regular]),
+    aggregate_all(count, ty_verb_in(english, _, _, _), NI),
+    ( NI >= 3800 -> R3 = enough ; R3 = NI ),
+    check('3 800 English verbs or more, each in its class', R3, enough),
+    findall(N4, ( typology_load(english), aggregate_all(count, ty_verb(english, _, _, _, _, _), N4) ), [N4a]),
+    aggregate_all(count, ty_verb(english, _, _, _, _, _), N4b),
+    check('a reload makes each form once', N4a, N4b),
+    assertz(ty_conjugation(tiny, regular, [present(sg)-[x-xs], past(sg)-present(sg)])),
+    assertz(ty_verb_in(tiny, run, run, regular)),
+    assertz(ty_verb_in(tiny, hop, hop, odd)),
+    findall(X5, ( typology_check(tiny, M5), member(X5, M5), ( X5 = verb_part(_, _) ; X5 = conjugation(_) ) ), Xs5),
+    retractall(ty_conjugation(tiny, _, _)), retractall(ty_verb_in(tiny, _, _, _)),
+    check('a part its class makes no form of, and a class no row defines', Xs5,
+          [conjugation(odd), verb_part(run, past(sg)), verb_part(run, present(sg))]),
+    findall(IR6, typology_read(english, 'The girl has studied the book.', IR6), IRs6),
+    check('read', IRs6, [clause(study, perfect, pos, np(girl, sg, def, []), np(book, sg, def, []))]).
+
 %% 1.56.0: the English nouns in the class design. A class of the plural is
 %% one fact (ty_noun_class/3), a noun of a class one fact (ty_noun_in/6,
 %% templates/english-nouns.pl, from the vocabularies and lexicon/), an
@@ -1875,8 +1911,8 @@ english_nouns :-
     findall(X5, ( typology_check(tiny, M5), member(X5, M5), ( X5 = noun_form(_) ; X5 = noun_class(_) ) ), Xs5),
     retractall(ty_noun_class(tiny, _, _)), retractall(ty_noun_in(tiny, _, _, _, _, _)),
     check('a noun its class makes no form of, and a class no row defines', Xs5, [noun_class(odd), noun_form(cup)]),
-    typology_read(english, 'The farmers saw the crises.', IR6),
-    check('a plural of a class read', IR6, clause(see, past, pos, np(farmer, pl, def, []), np(crisis, pl, def, []))).
+    typology_read(english, 'The farmers watched the crises.', IR6),
+    check('a plural of a class read', IR6, clause(watch, past, pos, np(farmer, pl, def, []), np(crisis, pl, def, []))).
 
 %% 1.55.0: the measure. typology_coverage/4 over lexicon/prose.txt, WordNet's
 %% 8 000 example sentences: the count of the sentences read may grow and
@@ -1889,8 +1925,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 250 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 250 sentences read at 1.56.0 are read', R1, yes),
+    ( K >= 278 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 278 sentences read at 1.57.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 
@@ -2164,7 +2200,7 @@ reproduced :-
     section('the word tables are what the import writes'),
     scratch(Dir),
     forall(member(L-Base-Also, [spanish-'spanish-words'-[], italian-'italian-words'-[],
-                                english-'english-words'-['english-nouns'],
+                                english-'english-words'-['english-nouns', 'english-verbs'],
                                 topics-'topics-words'-[], template-template-[]]),
            ( atomic_list_concat([Dir, '/', Base, '.pl'], Fresh),
              with_output_to(string(_), typology_import(L, Fresh)),

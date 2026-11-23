@@ -134,6 +134,7 @@ main :-
     bridge,
     blank_template,
     english_noun_classes,
+    english_verb_classes,
     format("~ndone~n", []).
 
 
@@ -736,8 +737,27 @@ english_noun_classes :-
     must('a noun of the class is-es', P2, crises),
     ( ty_noun(english, child, _, _, _, P3) -> true ; P3 = none ),
     must('an irregular noun, its one fact', P3, children),
-    typology_read(english, 'The farmers saw the crises.', IR4),
-    must('read', IR4, clause(see, past, pos, np(farmer, pl, def, []), np(crisis, pl, def, []))).
+    typology_read(english, 'The farmers watched the crises.', IR4),
+    must('read', IR4, clause(watch, past, pos, np(farmer, pl, def, []), np(crisis, pl, def, []))).
+
+%% 43. THE ENGLISH VERBS: the classes of the conjugation, then the verbs.
+%% A class is one fact of parts and rules (ty_conjugation/3), a verb of a
+%% class one fact (ty_verb_in/4; templates/english-verbs.pl holds some
+%% 3 800), an irregular verb one fact with the parts its class does not
+%% make (ty_irregular_verb/5: see, [past(sg)-saw, participle-seen]); the
+%% import puts a verb of one vowel before a consonant that doubles in the
+%% class double (ty_class_when/4: stop, stopped).
+english_verb_classes :-
+    ( ty_verb(english, study, past, sg, pos, [W1]) -> true ; W1 = none ),
+    must('a regular verb: the class''s y-ied', W1, studied),
+    ( ty_verb(english, stop, past, sg, pos, [W2]) -> true ; W2 = none ),
+    must('the class double', W2, stopped),
+    ( ty_participle(english, write, W3) -> true ; W3 = none ),
+    must('an irregular verb''s own participle', W3, written),
+    ( ty_verb(english, write, present, sg, pos, [W4]) -> true ; W4 = none ),
+    must('and its class''s present', W4, writes),
+    typology_read(english, 'The girl has studied the book.', IR5),
+    must('read', IR5, clause(study, perfect, pos, np(girl, sg, def, []), np(book, sg, def, []))).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

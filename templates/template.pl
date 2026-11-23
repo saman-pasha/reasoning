@@ -68,6 +68,16 @@ ty_order(xx, rel, [c, m, h]).
 %% ty_noun_class(xx, Class, Endings).
 %%   e.g. ty_noun_class(english, regular, [''-s, s-ses, x-xes, z-zes, ch-ches, sh-shes, y-ies, ay-ays, ...]).
 
+%%     ty_class_when(L, Kind, Class, Pattern)
+%%                                     the import puts an item of Kind (noun
+%%                                     or verb) whose word fits Pattern, a
+%%                                     list of ty_letters/3 classes and
+%%                                     star(C), in Class (English verb
+%%                                     double: [star(consonant), vowel,
+%%                                     doubling], `stop')
+%% ty_class_when(xx, Kind, Class, Pattern).
+%%   e.g. ty_class_when(english, verb, double, [star(consonant), vowel, doubling]).
+
 %%     ty_noun_in(L, Meaning, Gender, Animacy, Singular, Class)
 %%                                     a noun of a class, its plural the
 %%                                     class's (typology_load/1 makes its
@@ -158,6 +168,30 @@ ty_capital_nouns(xx).
 
 %% ==== verbs and tenses ====
 
+%%     ty_conjugation(L, Class, Parts) a class of verbs and its forms: each
+%%                                     part (present(sg), past(sg), ...,
+%%                                     participle) and its rule: base, the
+%%                                     endings From-To on the base, or
+%%                                     another part (English regular
+%%                                     past(sg)-[''-ed, e-ed, y-ied, ...])
+%% ty_conjugation(xx, Class, Parts).
+%%   e.g. ty_conjugation(english, regular, [present(sg)-[''-s, s-ses, x-xes, z-zes, ch-ches, sh-shes, o-oes, y-ies, ...], present(pl)-base, past(sg)-[''-ed, e-ed, y-ied, ay-ayed, ey-eyed, oy-oyed, uy-uyed], past(pl)-past(sg), participle-past(sg)]).
+
+%%     ty_verb_in(L, Meaning, Base, Class)
+%%                                     a verb of a class (typology_load/1
+%%                                     makes its ty_verb/6 and its
+%%                                     ty_participle/3 rows)
+%% ty_verb_in(xx, Meaning, Base, Class).
+%%   e.g. ty_verb_in(english, admit, admit, double).
+
+%%     ty_irregular_verb(L, Meaning, Base, Class, Parts)
+%%                                     an irregular verb, one fact: the
+%%                                     parts its class does not make
+%%                                     (English see [past(sg)-saw,
+%%                                     participle-seen])
+%% ty_irregular_verb(xx, Meaning, Base, Class, Parts).
+%%   e.g. ty_irregular_verb(english, arise, arise, regular, [past(sg)-arose, participle-arisen]).
+
 %%     ty_verb(L, Meaning, Tense, Number, Polarity, Words)
 %%                                     Tense present, past, future or
 %%                                     perfect (every verb has the first
@@ -169,7 +203,7 @@ ty_capital_nouns(xx).
 %%                                     `does not see', `no ve' and
 %%                                     `نمی‌بیند' are all forms
 %% ty_verb(xx, Meaning, Tense, Number, Polarity, Words).
-%%   e.g. ty_verb(english, see, present, sg, pos, [sees]).
+%%   e.g. ty_verb(spanish, see, present, sg, pos, [ve]).
 
 %%     ty_tense_form(L, Tense, Number, Polarity, Pattern)
 %%                                     a verb in Tense with no row of its
@@ -193,7 +227,7 @@ ty_capital_nouns(xx).
 
 %%     ty_participle(L, Meaning, Word) a verb's participle (`seen', `visto')
 %% ty_participle(xx, Meaning, Word).
-%%   e.g. ty_participle(english, see, seen).
+%%   e.g. ty_participle(spanish, see, visto).
 
 %%     ty_participle_like(L, Tense, Number)
 %%                                     a verb with no participle row has
@@ -321,12 +355,12 @@ ty_verb_last(xx, rel).
 %%                                     `ays', `' to `s'); the import uses it
 %%                                     where the vocabulary states no form
 %% ty_ending(xx, Feature, From, To).
-%%   e.g. ty_ending(english, past, '', ed).
+%%   e.g. ty_ending(spanish, future_stem, '', '').
 
 %%     ty_letters(L, Class, Letters)   a class of letters a pattern names
 %%                                     (vowel, consonant)
 %% ty_letters(xx, Class, Letters).
-%%   e.g. ty_letters(english, vowel, [a, e, i, o, u]).
+%%   e.g. ty_letters(english, consonant, [b, c, d, f, g, h, j, k, ...]).
 
 %%     ty_before(L, Word, Patterns, Form, Join)
 %%                                     Word is written Form before a word

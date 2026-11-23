@@ -71,7 +71,25 @@ reload (`ty_unexpand/1`, by the rows that made them: a reconsult leaves an
 asserted row). The English import reads `lexicon/` too (`ty_read_lexicon/1`),
 less the template's `ty_closed/2`; the vocabularies' meanings are kept as
 they were, a word of grammar among them.
-**The blank template is generated too** (1.54.0): `templates/template.pl`
+The verbs since 1.57.0: `ty_conjugation/3` (a class's parts and their
+rules), `ty_verb_in/4` (`-verbs.pl`) and `ty_irregular_verb/5` (the hand
+template's, the parts its class does not make), the irregular verbs'
+rows made FIRST (`ty_class_verb/5`), so a form two verbs share reads as
+the irregular one's first (`found': find; `saw': see); the import picks a
+class by `ty_class_when/4` (letters, `star/1`) and counts a past a
+vocabulary states that its class does not make (39 at 1.57.0, British and
+old forms: the template's are American). `do` is no verb of the template
+yet (`ty_closed/2` has it): with no verb's object in the grammar, `Yes,
+he does.` read as the verb `do` too. The import makes each vocabulary
+verb's base ONCE (`tyi_vbase/2`, `reason_base/2` in the mode (+, -)
+alone: bound, it answers another base): asked of every meaning for each
+verb, 1.57.0's first cut made 2 450 million inferences and 7 minutes
+where the import makes ten million. **A big predicate's rows of one
+language go by a walk of retract/1, never by retractall/1 with its first
+argument unbound** (`ty_vfirst_make/1`): cocolog 3.73.2's retractall/1
+took 70 s for 20 000 rows that stand after 100 000 others, and a third
+load of English 180 s; the walk takes 0.01 s. With the first argument
+bound, retractall/1 is the faster (9 s against 55 s for 20 000 keys).**The blank template is generated too** (1.54.0): `templates/template.pl`
 is what `typology_import(template)` writes, `typology_template(xx)`: every
 slot of typology.pl's header list (THE TEMPLATE) with the header's own
 description, in the groups of `ty_template_group/2`, each closed choice

@@ -78,6 +78,28 @@
 %%                                     Polarity pos or neg; Words a LIST, so
 %%                                     `does not see', `no ve' and
 %%                                     `نمی‌بیند' are all forms
+%%     ty_conjugation(L, Class, Parts) a class of verbs and its forms: each
+%%                                     part (present(sg), past(sg), ...,
+%%                                     participle) and its rule: base, the
+%%                                     endings From-To on the base, or
+%%                                     another part (English regular
+%%                                     past(sg)-[''-ed, e-ed, y-ied, ...])
+%%     ty_class_when(L, Kind, Class, Pattern)
+%%                                     the import puts an item of Kind (noun
+%%                                     or verb) whose word fits Pattern, a
+%%                                     list of ty_letters/3 classes and
+%%                                     star(C), in Class (English verb
+%%                                     double: [star(consonant), vowel,
+%%                                     doubling], `stop')
+%%     ty_verb_in(L, Meaning, Base, Class)
+%%                                     a verb of a class (typology_load/1
+%%                                     makes its ty_verb/6 and its
+%%                                     ty_participle/3 rows)
+%%     ty_irregular_verb(L, Meaning, Base, Class, Parts)
+%%                                     an irregular verb, one fact: the
+%%                                     parts its class does not make
+%%                                     (English see [past(sg)-saw,
+%%                                     participle-seen])
 %%     ty_tense_form(L, Tense, Number, Polarity, Pattern)
 %%                                     a verb in Tense with no row of its
 %%                                     own is Pattern: words, and form(T, N)
@@ -597,6 +619,7 @@
 :- use_module(library(reasoning/reason), [ reason_base/2 ]).
 
 :- dynamic ty_order/3, ty_noun/6, ty_noun_class/3, ty_noun_in/6, ty_closed/2,
+           ty_conjugation/3, ty_class_when/4, ty_verb_in/4, ty_irregular_verb/5,
            ty_adjective/5, ty_verb/6, ty_article/5,
            ty_mark/5, ty_contraction/3, ty_negation/5, ty_ending/4,
            ty_letters/3, ty_before/5, ty_linked/5, ty_copula/6, ty_adposition/3,
@@ -620,6 +643,7 @@
            ty_negative_article_keeps/1, ty_and/2, ty_comma/2, ty_bare_topic/2, ty_adposition_topic/4, ty_adjunct_front/2, ty_object_front/2, ty_capital_nouns/1,
            ty_reference/4, ty_meaning_sense/2, ty_tense_like/4.
 :- discontiguous ty_order/3, ty_noun/6, ty_noun_class/3, ty_noun_in/6, ty_closed/2,
+                 ty_conjugation/3, ty_class_when/4, ty_verb_in/4, ty_irregular_verb/5,
                  ty_adjective/5, ty_verb/6,
                  ty_article/5, ty_mark/5, ty_contraction/3, ty_negation/5,
                  ty_ending/4, ty_letters/3, ty_before/5, ty_linked/5, ty_copula/6,
@@ -693,7 +717,7 @@ typology_load(Name) :-
     must_be(atom, Name),
     ty_unexpand(Name),
     consult(library(reasoning/templates/Name)),
-    forall(( member(Kind, ['-words', '-nouns']), atom_concat(Name, Kind, Base), ty_file(Base, File) ),
+    forall(( member(Kind, ['-words', '-nouns', '-verbs']), atom_concat(Name, Kind, Base), ty_file(Base, File) ),
            consult(File)),
     ty_expand(Name),
     (   \+ ty_topic(_, _), ty_file(topics, Topics)
@@ -724,10 +748,48 @@ ty_file(Base, File) :-
 %% typology_check/2's noun_form(Meaning).
 ty_expand(L) :-
     forall(( ty_noun_in(L, M, G, A, Sg, C), ty_noun_class(L, C, Es), ty_class_form(Es, Sg, Pl) ),
-           assertz(ty_noun(L, M, G, A, Sg, Pl))).
+           assertz(ty_noun(L, M, G, A, Sg, Pl))),
+    forall(ty_class_verb(L, M, B, C, Over), ty_expand_verb(L, M, B, C, Over)).
 
 ty_unexpand(L) :-
-    forall(ty_noun_in(L, M, G, A, Sg, _), retractall(ty_noun(L, M, G, A, Sg, _))).
+    forall(ty_noun_in(L, M, G, A, Sg, _), retractall(ty_noun(L, M, G, A, Sg, _))),
+    forall(ty_class_verb(L, M, _, _, _),
+           ( retractall(ty_verb(L, M, _, _, pos, _)), retractall(ty_participle(L, M, _)) )).
+
+
+%% A verb's forms (ty_expand/1): each part of its class, the form its rule
+%% makes from the base, or the irregular verb's own form of the part; a
+%% present or a past part is a ty_verb/6 row, the participle a
+%% ty_participle/3 row. A part's rule that names another part is followed
+%% at most five deep.
+ty_expand_verb(L, M, B, C, Over) :-
+    (   ty_conjugation(L, C, Parts)
+    ->  forall(( member(Part-_, Parts), ty_verb_part(Part, Parts, Over, B, F, 0) ),
+               ty_verb_row(L, M, Part, F))
+    ;   true
+    ).
+
+ty_verb_part(Part, Parts, Over, B, F, D) :-
+    D < 6,
+    (   memberchk(Part-F0, Over)
+    ->  F = F0
+    ;   memberchk(Part-Rule, Parts),
+        (   Rule == base -> F = B
+        ;   is_list(Rule) -> ty_class_form(Rule, B, F)
+        ;   D1 is D + 1, ty_verb_part(Rule, Parts, Over, B, F, D1)
+        )
+    ).
+
+ty_verb_row(L, M, participle, F) :- !, assertz(ty_participle(L, M, F)).
+ty_verb_row(L, M, Part, F) :-
+    Part =.. [T, N],
+    assertz(ty_verb(L, M, T, N, pos, [F])).
+
+%% An irregular verb, and a verb of a class: the irregular verbs' rows
+%% first, so a form two verbs share is read as the irregular verb's first
+%% (`found': find before found, `saw': see before saw).
+ty_class_verb(L, M, B, C, Over) :- ty_irregular_verb(L, M, B, C, Over).
+ty_class_verb(L, M, B, C, []) :- ty_verb_in(L, M, B, C).
 
 %% A class's form of Word: the longest From of its endings that ends Word,
 %% its To in From's place.
@@ -859,9 +921,9 @@ ty_tdoc_more(Ls, [], Ls).
 %% The groups of the blank template, every slot once (test/typology.pl's
 %% section blank_template holds them to the header's slots).
 ty_template_group('the orders of the levels', [ty_order]).
-ty_template_group('words', [ty_noun_class, ty_noun_in, ty_noun, ty_adjective, ty_adjective_before, ty_article, ty_adposition,
+ty_template_group('words', [ty_noun_class, ty_class_when, ty_noun_in, ty_noun, ty_adjective, ty_adjective_before, ty_article, ty_adposition,
                             ty_adverb, ty_capital, ty_capital_nouns, ty_and, ty_comma, ty_sense, ty_closed]).
-ty_template_group('verbs and tenses', [ty_verb, ty_tense_form, ty_tense_like, ty_participle,
+ty_template_group('verbs and tenses', [ty_conjugation, ty_verb_in, ty_irregular_verb, ty_verb, ty_tense_form, ty_tense_like, ty_participle,
                                        ty_participle_like, ty_participle_ending, ty_participle_agrees,
                                        ty_verb_class, ty_class_tense_form, ty_verb_person, ty_copula,
                                        ty_split_place, ty_verb_last]).
@@ -946,6 +1008,10 @@ ty_row_shape('ty_noun_in(L, Meaning, Gender, Animacy, Singular, Class).').
 ty_row_shape('ty_closed(L, Words).').
 ty_row_shape('ty_adjective(L, Meaning, Gender, Number, Word).').
 ty_row_shape('ty_verb(L, Meaning, Tense, Number, Polarity, Words).').
+ty_row_shape('ty_conjugation(L, Class, Parts).').
+ty_row_shape('ty_class_when(L, Kind, Class, Pattern).').
+ty_row_shape('ty_verb_in(L, Meaning, Base, Class).').
+ty_row_shape('ty_irregular_verb(L, Meaning, Base, Class, Parts).').
 ty_row_shape('ty_article(L, Definiteness, Gender, Number, Word).').
 ty_row_shape('ty_mark(L, Role, Place, Word, Conditions).').
 ty_row_shape('ty_contraction(L, Words, Word).').
@@ -1237,6 +1303,29 @@ ty_missing(L, bad(ty_noun_in(L, M, G, A, S, C))) :-
 ty_missing(L, bad(ty_closed(L, Ws))) :-
     ty_closed(L, Ws),
     \+ ( is_list(Ws), forall(member(W, Ws), atom(W)) ).
+ty_missing(L, bad(ty_conjugation(L, C, Ps))) :-
+    ty_conjugation(L, C, Ps),
+    \+ ( atom(C), is_list(Ps), Ps \== [],
+         forall(member(P, Ps), ( nonvar(P), P = Part-R, ty_part_ok(Part), ty_rule_ok(R, Ps) )) ).
+ty_missing(L, bad(ty_class_when(L, K, C, Pat))) :-
+    ty_class_when(L, K, C, Pat),
+    \+ ( memberchk(K, [noun, verb]), atom(C), is_list(Pat),
+         forall(member(I, Pat), ( atom(I) ; nonvar(I), I = star(A), atom(A) )) ).
+ty_missing(L, bad(ty_verb_in(L, M, B, C))) :-
+    ty_verb_in(L, M, B, C),
+    \+ ( atom(M), atom(B), atom(C) ).
+ty_missing(L, bad(ty_irregular_verb(L, M, B, C, Ps))) :-
+    ty_irregular_verb(L, M, B, C, Ps),
+    \+ ( atom(M), atom(B), atom(C), is_list(Ps),
+         forall(member(P, Ps), ( nonvar(P), P = Part-W, ty_part_ok(Part), atom(W) )) ).
+ty_missing(L, conjugation(C)) :-
+    ty_class_verb(L, _, _, C, _),
+    \+ ty_conjugation(L, C, _).
+ty_missing(L, verb_part(M, Part)) :-
+    ty_class_verb(L, M, B, C, Over),
+    ty_conjugation(L, C, Ps),
+    member(Part-_, Ps),
+    \+ ty_verb_part(Part, Ps, Over, B, _, 0).
 ty_missing(L, noun_class(C)) :-
     ty_noun_in(L, _, _, _, _, C),
     \+ ty_noun_class(L, C, _).
@@ -1244,6 +1333,18 @@ ty_missing(L, noun_form(M)) :-
     ty_noun_in(L, M, _, _, Sg, C),
     ty_noun_class(L, C, Es),
     \+ ty_class_form(Es, Sg, _).
+
+%% A part of a conjugation: participle, or Tense(Number); a rule: base, a
+%% list of endings, or a part the class has.
+ty_part_ok(participle) :- !.
+ty_part_ok(P) :-
+    compound(P), P =.. [T, N],
+    ty_values(tense, Ts), memberchk(T, Ts),
+    ty_values(agreement, As), memberchk(N, As).
+
+ty_rule_ok(base, _) :- !.
+ty_rule_ok(Es, _) :- is_list(Es), !, forall(member(E, Es), ( nonvar(E), E = F-T, atom(F), atom(T) )).
+ty_rule_ok(P, Ps) :- compound(P), memberchk(P-_, Ps).
 ty_missing(L, bad(ty_before(L, W, Ps, F, J))) :-
     ty_before(L, W, Ps, F, J),
     \+ ( memberchk(J, [space, joined]), is_list(Ps),
@@ -4495,9 +4596,14 @@ ty_verb_row(L, V, T, N, P, Words) :-
 ty_verb_begins(L, W) :-
     (   atom(W), '$ty_vfirst_made'(L) -> once('$ty_vfirst'(W, L, _)) ; true ).
 
+%% The rows of L go by a walk of retract/1, not by retractall/1: with the
+%% first argument unbound, cocolog 3.73.2's retractall/1 took 70 s to take
+%% 20 000 rows that stand after 100 000 others (4.7 s where they stand
+%% first), and English's rows, at the end after a reload, 180 s at a third
+%% load (1.57.0). The walk takes them in 0.01 s.
 ty_vfirst_make(L) :-
-    retractall('$ty_vfirst'(_, L, _)),
-    retractall('$ty_vrow'(_, L, _, _, _, _)),
+    forall(retract('$ty_vfirst'(_, L, _)), true),
+    forall(retract('$ty_vrow'(_, L, _, _, _, _)), true),
     retractall('$ty_tfirst'(_, L)),
     retractall('$ty_vfirst_made'(L)),
     forall(ty_verb(L, M, T, N, P, Fs),
@@ -5587,7 +5693,7 @@ ty_tense_fit(T0, T) :-
 
 :- dynamic tyi_entry/4, tyi_form/4, tyi_lex/3, tyi_animate/1, tyi_gender/2, tyi_count/2,
            tyi_hand/1, tyi_class/2, tyi_name/1, tyi_class_word/4, tyi_person/1,
-           tyi_sense/2, tyi_sense_word/4.
+           tyi_sense/2, tyi_sense_word/4, tyi_vbase/2.
 
 typology_import(Name) :-
     must_be(atom, Name),
@@ -5692,7 +5798,8 @@ ty_import_reset :-
 ty_import_reset_words :-
     retractall(tyi_entry(_, _, _, _)), retractall(tyi_form(_, _, _, _)),
     retractall(tyi_animate(_)), retractall(tyi_gender(_, _)),
-    retractall(tyi_class(_, _)), retractall(tyi_name(_)), retractall(tyi_person(_)).
+    retractall(tyi_class(_, _)), retractall(tyi_name(_)), retractall(tyi_person(_)),
+    retractall(tyi_vbase(_, _)).
 
 ty_count(What) :-
     (   retract(tyi_count(What, N0)) -> N is N0 + 1 ; N = 1 ),
@@ -6004,39 +6111,50 @@ ty_adjective_complete(Forms) :-
 %% An English noun is put in the template's first class (ty_noun_class/3),
 %% unless the hand template has it (a noun of a class, or an irregular one).
 ty_english_row(ty_noun_in(english, M, none, Anim, M, C)) :-
-    once(tyi_hand(ty_noun_class(english, C, _))),
+    once(tyi_hand(ty_noun_class(english, _, _))),
     ty_english_nouns(Ms),
     member(M, Ms),
     ty_single(M),
     \+ tyi_hand(ty_noun(english, M, _, _, _, _)),
     \+ tyi_hand(ty_noun_in(english, M, _, _, _, _)),
-    ty_english_animacy(M, Anim).
+    ty_english_animacy(M, Anim),
+    ty_class_pick(english, noun, M, C).
 ty_english_row(ty_adjective(english, M, any, any, M)) :-
     setof(M0, G^W^tyi_entry(adjective, G, W, M0), Ms),
     member(M, Ms),
     ty_single(M),
     \+ tyi_hand(ty_adjective(english, M, _, _, _)).
-ty_english_row(ty_verb(english, B, T, N, pos, [W])) :-
-    setof(M3, G^W3^tyi_entry(verb, G, W3, M3), M3s),
-    member(M3, M3s),
-    ty_single(M3),
-    reason_base(M3, B),
-    \+ tyi_hand(ty_verb(english, B, _, _, _, _)),
-    \+ ty_copula_word(english, M3),
-    (   tyi_form(past, P0, M3, verb), \+ tyi_entry(verb, _, M3, _), ty_single(P0)
-    ->  P = P0
-    ;   ty_apply_ending(english, past, B, P)
-    ),
-    member(T-N-W, [present-sg-M3, present-pl-B, past-sg-P, past-pl-P]).
+%% An English verb is put in its class (ty_class_pick/4), unless the hand
+%% template has it; a past a vocabulary states that its class does not make
+%% is counted (an irregular verb the hand template lacks).
+ty_english_row(ty_verb_in(english, B, B, C)) :-
+    once(tyi_hand(ty_conjugation(english, _, _))),
+    ty_verb_bases,
+    ty_english_verbs(Bs),
+    member(B, Bs),
+    ty_single(B),
+    B \== be,
+    \+ tyi_hand(ty_verb_in(english, B, _, _)),
+    \+ tyi_hand(ty_irregular_verb(english, B, _, _, _)),
+    \+ ( tyi_vbase(B, M3), ty_copula_word(english, M3) ),
+    ty_class_pick(english, verb, B, C),
+    (   tyi_vbase(B, M3), tyi_form(past, P0, M3, verb),
+        \+ tyi_entry(verb, _, M3, _),
+        tyi_hand(ty_conjugation(english, C, Ps)), ty_verb_part(past(sg), Ps, [], B, P, 0), P \== P0
+    ->  ty_count(english_past_unlike_its_class)
+    ;   true
+    ).
 
 %% THE WORDS OF lexicon/ (the English import): each word of the files a
 %% kind reads, of letters a to z alone, as tyi_lex(Kind, Word, Animacy),
 %% once, the first file's; a word of grammar the template names
-%% (ty_closed/2) is none. class.txt is the persons.
+%% (ty_closed/2) is none. class.txt is the persons; the verbs are known_verb,
+%% vt, vi and vpp.
 ty_read_lexicon(L) :-
     ( tyi_hand(ty_closed(L, Closed)) -> true ; Closed = [] ),
     forall(member(Kind-Base-Anim, [noun-class-person, noun-known_noun-unknown, noun-noun-unknown,
-                                   noun-unit-unknown]),
+                                   noun-unit-unknown, verb-known_verb-unknown,
+                                   verb-vt-unknown, verb-vi-unknown, verb-vpp-unknown]),
            ( ty_lexicon_file(Base, File)
            ->  read_file_to_codes(File, Codes), atom_codes(Text, Codes),
                atomic_list_concat(Lines, '\n', Text),
@@ -6053,6 +6171,51 @@ ty_lexicon_file(Base, File) :-
 ty_az_word(W) :-
     atom_codes(W, Cs),
     forall(member(C, Cs), ( C >= 0'a, C =< 0'z )).
+
+
+%% The class the import puts an item of Kind in: the first ty_class_when/4
+%% class whose pattern its word fits, else the kind's first class.
+ty_class_pick(L, Kind, Word, Class) :-
+    atom_chars(Word, Cs),
+    (   tyi_hand(ty_class_when(L, Kind, C, Pat)), ty_letters_fit(L, Pat, Cs)
+    ->  Class = C
+    ;   ty_kind_first_class(L, Kind, Class)
+    ).
+
+ty_kind_first_class(L, noun, C) :- once(tyi_hand(ty_noun_class(L, C, _))).
+ty_kind_first_class(L, verb, C) :- once(tyi_hand(ty_conjugation(L, C, _))).
+
+%% A pattern of letter classes (ty_letters/3) and star(Class), zero or more
+%% of the class, over the whole word.
+ty_letters_fit(_, [], []).
+ty_letters_fit(L, [star(K)|Ps], Cs) :- !,
+    (   ty_letters_fit(L, Ps, Cs)
+    ;   Cs = [C|Cs1], ty_letter_in(L, K, C), ty_letters_fit(L, [star(K)|Ps], Cs1)
+    ).
+ty_letters_fit(L, [K|Ps], [C|Cs]) :-
+    ty_letter_in(L, K, C),
+    ty_letters_fit(L, Ps, Cs).
+
+ty_letter_in(L, K, C) :- tyi_hand(ty_letters(L, K, Ls)), memberchk(C, Ls).
+
+%% The base of each verb meaning of the vocabularies, made once as
+%% tyi_vbase(Base, Meaning) (`sees' is `see'), so that a verb's row asks it
+%% by its base: asked of every meaning for each verb, the English import
+%% made 2 450 million inferences where it makes ten million.
+ty_verb_bases :-
+    (   tyi_vbase(_, _) -> true
+    ;   forall(( tyi_entry(verb, _, _, M), \+ tyi_vbase(_, M), once(reason_base(M, B)) ),
+               assertz(tyi_vbase(B, M)))
+    ).
+
+%% The English verbs: the vocabularies' (their base) and lexicon/'s, each
+%% once.
+ty_english_verbs(Bs) :-
+    (   setof(B, G^W3^M3^A^( ( tyi_entry(verb, G, W3, M3), ty_single(M3), reason_base(M3, B) )
+                           ; tyi_lex(verb, B, A) ), Bs0)
+    ->  Bs = Bs0
+    ;   Bs = []
+    ).
 
 %% The English nouns: the vocabularies' meanings and lexicon/'s, each once.
 ty_english_nouns(Ms) :-
@@ -6079,10 +6242,11 @@ ty_apply_ending(L, Feature, Word, Form) :-
     atom_concat(Stem, To, Form).
 
 %% The rows of a kind with a file of its own: a noun of a class
-%% (templates/<name>-nouns.pl); the rest stay in the words file.
+%% (templates/<name>-nouns.pl), a verb of a class (-verbs.pl); the rest stay in the words file.
 ty_kind_split(Rows, Kinds, Rest) :-
-    partition([R]>>( R = ty_noun_in(_, _, _, _, _, _) ), Rows, Nouns, Rest),
-    (   Nouns == [] -> Kinds = [] ; Kinds = [nouns-Nouns] ).
+    partition([R]>>( R = ty_noun_in(_, _, _, _, _, _) ), Rows, Nouns, Rest1),
+    partition([R]>>( R = ty_verb_in(_, _, _, _) ), Rest1, Verbs, Rest),
+    findall(K-Rs, ( member(K-Rs, [nouns-Nouns, verbs-Verbs]), Rs \== [] ), Kinds).
 
 ty_kind_file(File, Kind, KFile) :-
     atom_concat(Base, '-words.pl', File),

@@ -134,15 +134,322 @@ ty_adjective(english, small, any, any, small).
 ty_adjective(english, black, any, any, black).
 ty_adjective(english, red, any, any, red).
 
-%% The verbs: the positive forms; the negatives are the rule below.
-ty_verb(english, see, present, sg, pos, [sees]).
-ty_verb(english, see, present, pl, pos, [see]).
-ty_verb(english, see, past, sg, pos, [saw]).
-ty_verb(english, see, past, pl, pos, [saw]).
-ty_verb(english, sleep, present, sg, pos, [sleeps]).
-ty_verb(english, sleep, present, pl, pos, [sleep]).
-ty_verb(english, sleep, past, sg, pos, [slept]).
-ty_verb(english, sleep, past, pl, pos, [slept]).
+%% THE VERBS: the classes of the conjugation first, then the verbs. A class
+%% is one fact, ty_conjugation(english, Class, Parts): each part --
+%% present(sg), present(pl), past(sg), past(pl), participle -- and its rule:
+%% base (the base itself), endings From-To on the base (the longest From
+%% that ends it), or another part (its form). The negatives are the rule
+%% below. typology_import(english) puts a verb in the first class whose
+%% ty_class_when/4 pattern its base fits, else in the first class
+%% (templates/english-verbs.pl).
+ty_conjugation(english, regular, [present(sg)-[''-s, s-ses, x-xes, z-zes, ch-ches, sh-shes, o-oes,
+                                               y-ies, ay-ays, ey-eys, oy-oys, uy-uys],
+                                  present(pl)-base,
+                                  past(sg)-[''-ed, e-ed, y-ied, ay-ayed, ey-eyed, oy-oyed, uy-uyed],
+                                  past(pl)-past(sg),
+                                  participle-past(sg)]).
+ty_conjugation(english, double, [present(sg)-[''-s],
+                                 present(pl)-base,
+                                 past(sg)-[b-bbed, d-dded, g-gged, l-lled, m-mmed, n-nned, p-pped,
+                                           r-rred, t-tted],
+                                 past(pl)-past(sg),
+                                 participle-past(sg)]).
+ty_conjugation(english, ck, [present(sg)-[''-s],
+                             present(pl)-base,
+                             past(sg)-[c-cked],
+                             past(pl)-past(sg),
+                             participle-past(sg)]).
+%% A verb of one syllable, one vowel before a last consonant that doubles,
+%% is of the class double (`stop', `plan'); one of more syllables only by
+%% its row below (`admit').
+ty_letters(english, consonant, [b, c, d, f, g, h, j, k, l, m, n, p, q, r, s, t, v, w, x, y, z]).
+ty_letters(english, doubling, [b, d, g, l, m, n, p, r, t]).
+ty_class_when(english, verb, double, [star(consonant), vowel, doubling]).
+
+%% The verbs of a class the import cannot tell from the base.
+ty_verb_in(english, admit, admit, double).
+ty_verb_in(english, commit, commit, double).
+ty_verb_in(english, permit, permit, double).
+ty_verb_in(english, omit, omit, double).
+ty_verb_in(english, submit, submit, double).
+ty_verb_in(english, emit, emit, double).
+ty_verb_in(english, transmit, transmit, double).
+ty_verb_in(english, remit, remit, double).
+ty_verb_in(english, refer, refer, double).
+ty_verb_in(english, prefer, prefer, double).
+ty_verb_in(english, defer, defer, double).
+ty_verb_in(english, confer, confer, double).
+ty_verb_in(english, infer, infer, double).
+ty_verb_in(english, occur, occur, double).
+ty_verb_in(english, recur, recur, double).
+ty_verb_in(english, incur, incur, double).
+ty_verb_in(english, deter, deter, double).
+ty_verb_in(english, control, control, double).
+ty_verb_in(english, patrol, patrol, double).
+ty_verb_in(english, compel, compel, double).
+ty_verb_in(english, expel, expel, double).
+ty_verb_in(english, propel, propel, double).
+ty_verb_in(english, repel, repel, double).
+ty_verb_in(english, excel, excel, double).
+ty_verb_in(english, rebel, rebel, double).
+ty_verb_in(english, regret, regret, double).
+ty_verb_in(english, abhor, abhor, double).
+ty_verb_in(english, acquit, acquit, double).
+ty_verb_in(english, equip, equip, double).
+ty_verb_in(english, outwit, outwit, double).
+ty_verb_in(english, befit, befit, double).
+ty_verb_in(english, abet, abet, double).
+ty_verb_in(english, allot, allot, double).
+ty_verb_in(english, annul, annul, double).
+ty_verb_in(english, debug, debug, double).
+ty_verb_in(english, dispel, dispel, double).
+ty_verb_in(english, inter, inter, double).
+ty_verb_in(english, kidnap, kidnap, double).
+ty_verb_in(english, overlap, overlap, double).
+ty_verb_in(english, overstep, overstep, double).
+ty_verb_in(english, transfer, transfer, double).
+ty_verb_in(english, unplug, unplug, double).
+ty_verb_in(english, unfit, unfit, double).
+ty_verb_in(english, format, format, double).
+ty_verb_in(english, program, program, double).
+ty_verb_in(english, embed, embed, double).
+ty_verb_in(english, handicap, handicap, double).
+ty_verb_in(english, rebut, rebut, double).
+ty_verb_in(english, recap, recap, double).
+ty_verb_in(english, outfit, outfit, double).
+ty_verb_in(english, outstrip, outstrip, double).
+ty_verb_in(english, sidestep, sidestep, double).
+ty_verb_in(english, unzip, unzip, double).
+ty_verb_in(english, quip, quip, double).
+ty_verb_in(english, panic, panic, ck).
+ty_verb_in(english, picnic, picnic, ck).
+ty_verb_in(english, mimic, mimic, ck).
+ty_verb_in(english, traffic, traffic, ck).
+ty_verb_in(english, frolic, frolic, ck).
+
+%% The irregular verbs: one fact each, ty_irregular_verb(english, Meaning,
+%% Base, Class, Parts), the parts its class does not make (`saw', `seen');
+%% the class makes the rest (`sees'). `be' is the copula's, and `do' the
+%% auxiliary's: as a main verb it waits for the verbs' objects, without
+%% which `Yes, he does.' reads as `he does' with no object too. The forms
+%% are American: `traveled', `burned', `learned'.
+ty_irregular_verb(english, arise, arise, regular, [past(sg)-arose, participle-arisen]).
+ty_irregular_verb(english, awake, awake, regular, [past(sg)-awoke, participle-awoken]).
+ty_irregular_verb(english, bear, bear, regular, [past(sg)-bore, participle-borne]).
+ty_irregular_verb(english, beat, beat, regular, [past(sg)-beat, participle-beaten]).
+ty_irregular_verb(english, become, become, regular, [past(sg)-became, participle-become]).
+ty_irregular_verb(english, befall, befall, regular, [past(sg)-befell, participle-befallen]).
+ty_irregular_verb(english, beget, beget, regular, [past(sg)-begot, participle-begotten]).
+ty_irregular_verb(english, begin, begin, regular, [past(sg)-began, participle-begun]).
+ty_irregular_verb(english, behold, behold, regular, [past(sg)-beheld, participle-beheld]).
+ty_irregular_verb(english, bend, bend, regular, [past(sg)-bent, participle-bent]).
+ty_irregular_verb(english, beseech, beseech, regular, [past(sg)-besought, participle-besought]).
+ty_irregular_verb(english, bet, bet, regular, [past(sg)-bet, participle-bet]).
+ty_irregular_verb(english, bid, bid, regular, [past(sg)-bid, participle-bid]).
+ty_irregular_verb(english, bind, bind, regular, [past(sg)-bound, participle-bound]).
+ty_irregular_verb(english, bite, bite, regular, [past(sg)-bit, participle-bitten]).
+ty_irregular_verb(english, bleed, bleed, regular, [past(sg)-bled, participle-bled]).
+ty_irregular_verb(english, blow, blow, regular, [past(sg)-blew, participle-blown]).
+ty_irregular_verb(english, break, break, regular, [past(sg)-broke, participle-broken]).
+ty_irregular_verb(english, breed, breed, regular, [past(sg)-bred, participle-bred]).
+ty_irregular_verb(english, bring, bring, regular, [past(sg)-brought, participle-brought]).
+ty_irregular_verb(english, broadcast, broadcast, regular, [past(sg)-broadcast, participle-broadcast]).
+ty_irregular_verb(english, build, build, regular, [past(sg)-built, participle-built]).
+ty_irregular_verb(english, burst, burst, regular, [past(sg)-burst, participle-burst]).
+ty_irregular_verb(english, buy, buy, regular, [past(sg)-bought, participle-bought]).
+ty_irregular_verb(english, cast, cast, regular, [past(sg)-cast, participle-cast]).
+ty_irregular_verb(english, catch, catch, regular, [past(sg)-caught, participle-caught]).
+ty_irregular_verb(english, choose, choose, regular, [past(sg)-chose, participle-chosen]).
+ty_irregular_verb(english, cling, cling, regular, [past(sg)-clung, participle-clung]).
+ty_irregular_verb(english, come, come, regular, [past(sg)-came, participle-come]).
+ty_irregular_verb(english, cost, cost, regular, [past(sg)-cost, participle-cost]).
+ty_irregular_verb(english, creep, creep, regular, [past(sg)-crept, participle-crept]).
+ty_irregular_verb(english, cut, cut, regular, [past(sg)-cut, participle-cut]).
+ty_irregular_verb(english, deal, deal, regular, [past(sg)-dealt, participle-dealt]).
+ty_irregular_verb(english, dig, dig, regular, [past(sg)-dug, participle-dug]).
+ty_irregular_verb(english, draw, draw, regular, [past(sg)-drew, participle-drawn]).
+ty_irregular_verb(english, drink, drink, regular, [past(sg)-drank, participle-drunk]).
+ty_irregular_verb(english, drive, drive, regular, [past(sg)-drove, participle-driven]).
+ty_irregular_verb(english, dwell, dwell, regular, [past(sg)-dwelt, participle-dwelt]).
+ty_irregular_verb(english, eat, eat, regular, [past(sg)-ate, participle-eaten]).
+ty_irregular_verb(english, fall, fall, regular, [past(sg)-fell, participle-fallen]).
+ty_irregular_verb(english, feed, feed, regular, [past(sg)-fed, participle-fed]).
+ty_irregular_verb(english, feel, feel, regular, [past(sg)-felt, participle-felt]).
+ty_irregular_verb(english, fight, fight, regular, [past(sg)-fought, participle-fought]).
+ty_irregular_verb(english, find, find, regular, [past(sg)-found, participle-found]).
+ty_irregular_verb(english, flee, flee, regular, [past(sg)-fled, participle-fled]).
+ty_irregular_verb(english, fling, fling, regular, [past(sg)-flung, participle-flung]).
+ty_irregular_verb(english, fly, fly, regular, [past(sg)-flew, participle-flown]).
+ty_irregular_verb(english, forbid, forbid, regular, [past(sg)-forbade, participle-forbidden]).
+ty_irregular_verb(english, forecast, forecast, regular, [past(sg)-forecast, participle-forecast]).
+ty_irregular_verb(english, forego, forego, regular, [past(sg)-forewent, participle-foregone]).
+ty_irregular_verb(english, foresee, foresee, regular, [past(sg)-foresaw, participle-foreseen]).
+ty_irregular_verb(english, foretell, foretell, regular, [past(sg)-foretold, participle-foretold]).
+ty_irregular_verb(english, forget, forget, regular, [past(sg)-forgot, participle-forgotten]).
+ty_irregular_verb(english, forgive, forgive, regular, [past(sg)-forgave, participle-forgiven]).
+ty_irregular_verb(english, forgo, forgo, regular, [past(sg)-forwent, participle-forgone]).
+ty_irregular_verb(english, forsake, forsake, regular, [past(sg)-forsook, participle-forsaken]).
+ty_irregular_verb(english, freeze, freeze, regular, [past(sg)-froze, participle-frozen]).
+ty_irregular_verb(english, get, get, regular, [past(sg)-got, participle-gotten]).
+ty_irregular_verb(english, give, give, regular, [past(sg)-gave, participle-given]).
+ty_irregular_verb(english, go, go, regular, [past(sg)-went, participle-gone]).
+ty_irregular_verb(english, grind, grind, regular, [past(sg)-ground, participle-ground]).
+ty_irregular_verb(english, grow, grow, regular, [past(sg)-grew, participle-grown]).
+ty_irregular_verb(english, hang, hang, regular, [past(sg)-hung, participle-hung]).
+ty_irregular_verb(english, have, have, regular, [present(sg)-has, past(sg)-had, participle-had]).
+ty_irregular_verb(english, hear, hear, regular, [past(sg)-heard, participle-heard]).
+ty_irregular_verb(english, hew, hew, regular, [past(sg)-hewed, participle-hewn]).
+ty_irregular_verb(english, hide, hide, regular, [past(sg)-hid, participle-hidden]).
+ty_irregular_verb(english, hit, hit, regular, [past(sg)-hit, participle-hit]).
+ty_irregular_verb(english, hold, hold, regular, [past(sg)-held, participle-held]).
+ty_irregular_verb(english, hurt, hurt, regular, [past(sg)-hurt, participle-hurt]).
+ty_irregular_verb(english, input, input, regular, [past(sg)-input, participle-input]).
+ty_irregular_verb(english, interweave, interweave, regular, [past(sg)-interwove, participle-interwoven]).
+ty_irregular_verb(english, keep, keep, regular, [past(sg)-kept, participle-kept]).
+ty_irregular_verb(english, kneel, kneel, regular, [past(sg)-knelt, participle-knelt]).
+ty_irregular_verb(english, knit, knit, regular, [past(sg)-knit, participle-knit]).
+ty_irregular_verb(english, know, know, regular, [past(sg)-knew, participle-known]).
+ty_irregular_verb(english, lay, lay, regular, [past(sg)-laid, participle-laid]).
+ty_irregular_verb(english, lead, lead, regular, [past(sg)-led, participle-led]).
+ty_irregular_verb(english, leave, leave, regular, [past(sg)-left, participle-left]).
+ty_irregular_verb(english, lend, lend, regular, [past(sg)-lent, participle-lent]).
+ty_irregular_verb(english, let, let, regular, [past(sg)-let, participle-let]).
+ty_irregular_verb(english, lie, lie, regular, [past(sg)-lay, participle-lain]).
+ty_irregular_verb(english, light, light, regular, [past(sg)-lit, participle-lit]).
+ty_irregular_verb(english, lose, lose, regular, [past(sg)-lost, participle-lost]).
+ty_irregular_verb(english, make, make, regular, [past(sg)-made, participle-made]).
+ty_irregular_verb(english, mean, mean, regular, [past(sg)-meant, participle-meant]).
+ty_irregular_verb(english, meet, meet, regular, [past(sg)-met, participle-met]).
+ty_irregular_verb(english, mishear, mishear, regular, [past(sg)-misheard, participle-misheard]).
+ty_irregular_verb(english, mislay, mislay, regular, [past(sg)-mislaid, participle-mislaid]).
+ty_irregular_verb(english, mislead, mislead, regular, [past(sg)-misled, participle-misled]).
+ty_irregular_verb(english, misread, misread, regular, [past(sg)-misread, participle-misread]).
+ty_irregular_verb(english, mistake, mistake, regular, [past(sg)-mistook, participle-mistaken]).
+ty_irregular_verb(english, misunderstand, misunderstand, regular, [past(sg)-misunderstood, participle-misunderstood]).
+ty_irregular_verb(english, mow, mow, regular, [past(sg)-mowed, participle-mown]).
+ty_irregular_verb(english, offset, offset, regular, [past(sg)-offset, participle-offset]).
+ty_irregular_verb(english, outbid, outbid, regular, [past(sg)-outbid, participle-outbid]).
+ty_irregular_verb(english, outdo, outdo, regular, [past(sg)-outdid, participle-outdone]).
+ty_irregular_verb(english, outgrow, outgrow, regular, [past(sg)-outgrew, participle-outgrown]).
+ty_irregular_verb(english, output, output, regular, [past(sg)-output, participle-output]).
+ty_irregular_verb(english, outrun, outrun, regular, [past(sg)-outran, participle-outrun]).
+ty_irregular_verb(english, outsell, outsell, regular, [past(sg)-outsold, participle-outsold]).
+ty_irregular_verb(english, overcome, overcome, regular, [past(sg)-overcame, participle-overcome]).
+ty_irregular_verb(english, overdo, overdo, regular, [past(sg)-overdid, participle-overdone]).
+ty_irregular_verb(english, overeat, overeat, regular, [past(sg)-overate, participle-overeaten]).
+ty_irregular_verb(english, overhear, overhear, regular, [past(sg)-overheard, participle-overheard]).
+ty_irregular_verb(english, overpay, overpay, regular, [past(sg)-overpaid, participle-overpaid]).
+ty_irregular_verb(english, override, override, regular, [past(sg)-overrode, participle-overridden]).
+ty_irregular_verb(english, overrun, overrun, regular, [past(sg)-overran, participle-overrun]).
+ty_irregular_verb(english, oversee, oversee, regular, [past(sg)-oversaw, participle-overseen]).
+ty_irregular_verb(english, oversleep, oversleep, regular, [past(sg)-overslept, participle-overslept]).
+ty_irregular_verb(english, overtake, overtake, regular, [past(sg)-overtook, participle-overtaken]).
+ty_irregular_verb(english, overthrow, overthrow, regular, [past(sg)-overthrew, participle-overthrown]).
+ty_irregular_verb(english, partake, partake, regular, [past(sg)-partook, participle-partaken]).
+ty_irregular_verb(english, pay, pay, regular, [past(sg)-paid, participle-paid]).
+ty_irregular_verb(english, put, put, regular, [past(sg)-put, participle-put]).
+ty_irregular_verb(english, quit, quit, regular, [past(sg)-quit, participle-quit]).
+ty_irregular_verb(english, read, read, regular, [past(sg)-read, participle-read]).
+ty_irregular_verb(english, rebuild, rebuild, regular, [past(sg)-rebuilt, participle-rebuilt]).
+ty_irregular_verb(english, recast, recast, regular, [past(sg)-recast, participle-recast]).
+ty_irregular_verb(english, redo, redo, regular, [past(sg)-redid, participle-redone]).
+ty_irregular_verb(english, remake, remake, regular, [past(sg)-remade, participle-remade]).
+ty_irregular_verb(english, repay, repay, regular, [past(sg)-repaid, participle-repaid]).
+ty_irregular_verb(english, reread, reread, regular, [past(sg)-reread, participle-reread]).
+ty_irregular_verb(english, rerun, rerun, regular, [past(sg)-reran, participle-rerun]).
+ty_irregular_verb(english, resell, resell, regular, [past(sg)-resold, participle-resold]).
+ty_irregular_verb(english, reset, reset, regular, [past(sg)-reset, participle-reset]).
+ty_irregular_verb(english, retell, retell, regular, [past(sg)-retold, participle-retold]).
+ty_irregular_verb(english, rethink, rethink, regular, [past(sg)-rethought, participle-rethought]).
+ty_irregular_verb(english, rewind, rewind, regular, [past(sg)-rewound, participle-rewound]).
+ty_irregular_verb(english, rewrite, rewrite, regular, [past(sg)-rewrote, participle-rewritten]).
+ty_irregular_verb(english, rid, rid, regular, [past(sg)-rid, participle-rid]).
+ty_irregular_verb(english, ride, ride, regular, [past(sg)-rode, participle-ridden]).
+ty_irregular_verb(english, ring, ring, regular, [past(sg)-rang, participle-rung]).
+ty_irregular_verb(english, rise, rise, regular, [past(sg)-rose, participle-risen]).
+ty_irregular_verb(english, run, run, regular, [past(sg)-ran, participle-run]).
+ty_irregular_verb(english, say, say, regular, [past(sg)-said, participle-said]).
+ty_irregular_verb(english, see, see, regular, [past(sg)-saw, participle-seen]).
+ty_irregular_verb(english, seek, seek, regular, [past(sg)-sought, participle-sought]).
+ty_irregular_verb(english, sell, sell, regular, [past(sg)-sold, participle-sold]).
+ty_irregular_verb(english, send, send, regular, [past(sg)-sent, participle-sent]).
+ty_irregular_verb(english, set, set, regular, [past(sg)-set, participle-set]).
+ty_irregular_verb(english, sew, sew, regular, [past(sg)-sewed, participle-sewn]).
+ty_irregular_verb(english, shake, shake, regular, [past(sg)-shook, participle-shaken]).
+ty_irregular_verb(english, shear, shear, regular, [past(sg)-sheared, participle-shorn]).
+ty_irregular_verb(english, shed, shed, regular, [past(sg)-shed, participle-shed]).
+ty_irregular_verb(english, shine, shine, regular, [past(sg)-shone, participle-shone]).
+ty_irregular_verb(english, shoe, shoe, regular, [past(sg)-shod, participle-shod]).
+ty_irregular_verb(english, shoot, shoot, regular, [past(sg)-shot, participle-shot]).
+ty_irregular_verb(english, show, show, regular, [past(sg)-showed, participle-shown]).
+ty_irregular_verb(english, shrink, shrink, regular, [past(sg)-shrank, participle-shrunk]).
+ty_irregular_verb(english, shut, shut, regular, [past(sg)-shut, participle-shut]).
+ty_irregular_verb(english, sing, sing, regular, [past(sg)-sang, participle-sung]).
+ty_irregular_verb(english, sink, sink, regular, [past(sg)-sank, participle-sunk]).
+ty_irregular_verb(english, sit, sit, regular, [past(sg)-sat, participle-sat]).
+ty_irregular_verb(english, slay, slay, regular, [past(sg)-slew, participle-slain]).
+ty_irregular_verb(english, sleep, sleep, regular, [past(sg)-slept, participle-slept]).
+ty_irregular_verb(english, slide, slide, regular, [past(sg)-slid, participle-slid]).
+ty_irregular_verb(english, sling, sling, regular, [past(sg)-slung, participle-slung]).
+ty_irregular_verb(english, slink, slink, regular, [past(sg)-slunk, participle-slunk]).
+ty_irregular_verb(english, slit, slit, regular, [past(sg)-slit, participle-slit]).
+ty_irregular_verb(english, smite, smite, regular, [past(sg)-smote, participle-smitten]).
+ty_irregular_verb(english, sow, sow, regular, [past(sg)-sowed, participle-sown]).
+ty_irregular_verb(english, speak, speak, regular, [past(sg)-spoke, participle-spoken]).
+ty_irregular_verb(english, speed, speed, regular, [past(sg)-sped, participle-sped]).
+ty_irregular_verb(english, spend, spend, regular, [past(sg)-spent, participle-spent]).
+ty_irregular_verb(english, spin, spin, regular, [past(sg)-spun, participle-spun]).
+ty_irregular_verb(english, spit, spit, regular, [past(sg)-spat, participle-spat]).
+ty_irregular_verb(english, split, split, regular, [past(sg)-split, participle-split]).
+ty_irregular_verb(english, spread, spread, regular, [past(sg)-spread, participle-spread]).
+ty_irregular_verb(english, spring, spring, regular, [past(sg)-sprang, participle-sprung]).
+ty_irregular_verb(english, stand, stand, regular, [past(sg)-stood, participle-stood]).
+ty_irregular_verb(english, steal, steal, regular, [past(sg)-stole, participle-stolen]).
+ty_irregular_verb(english, stick, stick, regular, [past(sg)-stuck, participle-stuck]).
+ty_irregular_verb(english, sting, sting, regular, [past(sg)-stung, participle-stung]).
+ty_irregular_verb(english, stink, stink, regular, [past(sg)-stank, participle-stunk]).
+ty_irregular_verb(english, strew, strew, regular, [past(sg)-strewed, participle-strewn]).
+ty_irregular_verb(english, stride, stride, regular, [past(sg)-strode, participle-stridden]).
+ty_irregular_verb(english, strike, strike, regular, [past(sg)-struck, participle-struck]).
+ty_irregular_verb(english, string, string, regular, [past(sg)-strung, participle-strung]).
+ty_irregular_verb(english, strive, strive, regular, [past(sg)-strove, participle-striven]).
+ty_irregular_verb(english, swear, swear, regular, [past(sg)-swore, participle-sworn]).
+ty_irregular_verb(english, sweep, sweep, regular, [past(sg)-swept, participle-swept]).
+ty_irregular_verb(english, swell, swell, regular, [past(sg)-swelled, participle-swollen]).
+ty_irregular_verb(english, swim, swim, regular, [past(sg)-swam, participle-swum]).
+ty_irregular_verb(english, swing, swing, regular, [past(sg)-swung, participle-swung]).
+ty_irregular_verb(english, take, take, regular, [past(sg)-took, participle-taken]).
+ty_irregular_verb(english, teach, teach, regular, [past(sg)-taught, participle-taught]).
+ty_irregular_verb(english, tear, tear, regular, [past(sg)-tore, participle-torn]).
+ty_irregular_verb(english, tell, tell, regular, [past(sg)-told, participle-told]).
+ty_irregular_verb(english, think, think, regular, [past(sg)-thought, participle-thought]).
+ty_irregular_verb(english, throw, throw, regular, [past(sg)-threw, participle-thrown]).
+ty_irregular_verb(english, thrust, thrust, regular, [past(sg)-thrust, participle-thrust]).
+ty_irregular_verb(english, tread, tread, regular, [past(sg)-trod, participle-trodden]).
+ty_irregular_verb(english, undercut, undercut, regular, [past(sg)-undercut, participle-undercut]).
+ty_irregular_verb(english, undergo, undergo, regular, [past(sg)-underwent, participle-undergone]).
+ty_irregular_verb(english, underlie, underlie, regular, [past(sg)-underlay, participle-underlain]).
+ty_irregular_verb(english, underpay, underpay, regular, [past(sg)-underpaid, participle-underpaid]).
+ty_irregular_verb(english, understand, understand, regular, [past(sg)-understood, participle-understood]).
+ty_irregular_verb(english, undertake, undertake, regular, [past(sg)-undertook, participle-undertaken]).
+ty_irregular_verb(english, underwrite, underwrite, regular, [past(sg)-underwrote, participle-underwritten]).
+ty_irregular_verb(english, undo, undo, regular, [past(sg)-undid, participle-undone]).
+ty_irregular_verb(english, unwind, unwind, regular, [past(sg)-unwound, participle-unwound]).
+ty_irregular_verb(english, uphold, uphold, regular, [past(sg)-upheld, participle-upheld]).
+ty_irregular_verb(english, upset, upset, regular, [past(sg)-upset, participle-upset]).
+ty_irregular_verb(english, wake, wake, regular, [past(sg)-woke, participle-woken]).
+ty_irregular_verb(english, wear, wear, regular, [past(sg)-wore, participle-worn]).
+ty_irregular_verb(english, weave, weave, regular, [past(sg)-wove, participle-woven]).
+ty_irregular_verb(english, wed, wed, regular, [past(sg)-wed, participle-wed]).
+ty_irregular_verb(english, weep, weep, regular, [past(sg)-wept, participle-wept]).
+ty_irregular_verb(english, wet, wet, regular, [past(sg)-wet, participle-wet]).
+ty_irregular_verb(english, win, win, regular, [past(sg)-won, participle-won]).
+ty_irregular_verb(english, wind, wind, regular, [past(sg)-wound, participle-wound]).
+ty_irregular_verb(english, withdraw, withdraw, regular, [past(sg)-withdrew, participle-withdrawn]).
+ty_irregular_verb(english, withhold, withhold, regular, [past(sg)-withheld, participle-withheld]).
+ty_irregular_verb(english, withstand, withstand, regular, [past(sg)-withstood, participle-withstood]).
+ty_irregular_verb(english, wring, wring, regular, [past(sg)-wrung, participle-wrung]).
+ty_irregular_verb(english, write, write, regular, [past(sg)-wrote, participle-written]).
 
 %% The articles. A plural indefinite has none: `dogs'.
 ty_article(english, def, any, any, the).
@@ -166,66 +473,7 @@ ty_tense_form(english, perfect, sg, pos, [has, participle]).
 ty_tense_form(english, perfect, pl, pos, [have, participle]).
 ty_tense_form(english, perfect, sg, neg, [has, not, participle]).
 ty_tense_form(english, perfect, pl, neg, [have, not, participle]).
-ty_participle(english, see, seen).
-ty_participle(english, sleep, slept).
 ty_participle_like(english, past, sg).
-%% The participles that are not the past (`spoken', `gone', `written').
-ty_participle(english, begin, begun).
-ty_participle(english, break, broken).
-ty_participle(english, choose, chosen).
-ty_participle(english, come, come).
-ty_participle(english, do, done).
-ty_participle(english, draw, drawn).
-ty_participle(english, drink, drunk).
-ty_participle(english, drive, driven).
-ty_participle(english, eat, eaten).
-ty_participle(english, fall, fallen).
-ty_participle(english, fly, flown).
-ty_participle(english, forget, forgotten).
-ty_participle(english, forgive, forgiven).
-ty_participle(english, freeze, frozen).
-ty_participle(english, give, given).
-ty_participle(english, go, gone).
-ty_participle(english, grow, grown).
-ty_participle(english, hide, hidden).
-ty_participle(english, know, known).
-ty_participle(english, ride, ridden).
-ty_participle(english, ring, rung).
-ty_participle(english, rise, risen).
-ty_participle(english, run, run).
-ty_participle(english, shake, shaken).
-ty_participle(english, show, shown).
-ty_participle(english, sing, sung).
-ty_participle(english, sink, sunk).
-ty_participle(english, speak, spoken).
-ty_participle(english, steal, stolen).
-ty_participle(english, swim, swum).
-ty_participle(english, take, taken).
-ty_participle(english, tear, torn).
-ty_participle(english, throw, thrown).
-ty_participle(english, wake, woken).
-ty_participle(english, wear, worn).
-ty_participle(english, write, written).
-ty_participle(english, become, become).
-ty_participle(english, bite, bitten).
-ty_participle(english, blow, blown).
-ty_participle(english, beat, beaten).
-ty_participle(english, forbid, forbidden).
-ty_participle(english, mistake, mistaken).
-ty_participle(english, withdraw, withdrawn).
-ty_participle(english, undertake, undertaken).
-ty_participle(english, overcome, overcome).
-ty_participle(english, lie, lain).
-
-%% The endings typology_import(english) makes a verb's past with, where the
-%% vocabularies state none: the longest ending that fits wins.
-ty_ending(english, past, '', ed).
-ty_ending(english, past, e, ed).
-ty_ending(english, past, y, ied).
-ty_ending(english, past, ay, ayed).
-ty_ending(english, past, ey, eyed).
-ty_ending(english, past, oy, oyed).
-ty_ending(english, past, uy, uyed).
 
 %% `a' is `an' before a vowel sound: spelled with a vowel, but not `uni',
 %% `use', `eu', `one'; and before the silent h of `hour' and `honest'.
