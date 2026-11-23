@@ -219,11 +219,18 @@ list whose first word begins a form and the rest does not, `[ve, a]` --
 walks the table, two milliseconds a lookup of `ty_verb/6` with four
 languages loaded, one call in the inference count. The first cut of the
 dropped subject cost Spanish round trips 2.8 times the time for 17 % more
-inferences (1.33.0 had the walk too, less often). A reading asks the verb
-table through `ty_verb_row/6`, only where its words are a form
-(`'$ty_vform'/2`, the words joined, made by `typology_load/1`); a new
-reader of a table keyed by a list guards it so, and the clock, not the
-count, says whether it walks. `predicate_property(_, number_of_clauses(_))`
+inferences (1.33.0 had the walk too, less often). **And so does every
+answer after the first of a hit** (1.40.0): enumerating the rows of
+Spanish `[ve]` walked the whole table, 1.8 ms with 57 000 rows and 2.6 ms
+with 76 000, and the reader asked it of every verb it read -- 86 % of the
+benchmark's time; the future rows made Spanish 47 s where it had been
+32. A reading asks the verb table through `ty_verb_row/6`, by
+`'$ty_vrow'/6` (the words joined, an atom, first, then the row's meaning,
+tense, number and polarity), and a meaning by a form's first word through
+`'$ty_vfirst'/3`, both made by `typology_load/1` in the table's order, each
+row once: Spanish 3.8 s. A new reader of a table keyed by a list goes
+through such an atom-keyed table, and the clock, not the count, says
+whether it walks. `predicate_property(_, number_of_clauses(_))`
 walks too (3.6 ms). **A reading leaves unbound what its words do not
 tell** (`pron(2, _, _)` for `you`): a check compares such readings with
 `=@=`, and the writer binds the first form that fits. **A person's rule

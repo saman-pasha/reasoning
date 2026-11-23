@@ -43,6 +43,51 @@ ty_verb(spanish, sleep, past, pl, pos, [durmieron]).
 %% The negative: `no' before the verb.
 ty_negation(spanish, any, any, [no], same).
 
+%% The future, a word of its own; the perfect, `haber' and the participle
+%% (`ha visto', `no lo ha visto'). The import gives the vocabulary's verbs
+%% their participles and futures.
+ty_verb(spanish, see, future, sg, pos, ['verá']).
+ty_verb(spanish, see, future, pl, pos, ['verán']).
+ty_verb(spanish, see, future, sg(1), pos, ['veré']).
+ty_verb(spanish, see, future, sg(2), pos, ['verás']).
+ty_verb(spanish, see, future, pl(1), pos, [veremos]).
+ty_verb(spanish, see, future, pl(2), pos, ['veréis']).
+ty_verb(spanish, sleep, future, sg, pos, ['dormirá']).
+ty_verb(spanish, sleep, future, pl, pos, ['dormirán']).
+ty_verb(spanish, sleep, future, sg(1), pos, ['dormiré']).
+ty_verb(spanish, sleep, future, sg(2), pos, ['dormirás']).
+ty_verb(spanish, sleep, future, pl(1), pos, [dormiremos]).
+ty_verb(spanish, sleep, future, pl(2), pos, ['dormiréis']).
+ty_tense_form(spanish, perfect, sg, pos, [ha, participle]).
+ty_tense_form(spanish, perfect, pl, pos, [han, participle]).
+ty_tense_form(spanish, perfect, sg(1), pos, [he, participle]).
+ty_tense_form(spanish, perfect, sg(2), pos, [has, participle]).
+ty_tense_form(spanish, perfect, pl(1), pos, [hemos, participle]).
+ty_tense_form(spanish, perfect, pl(2), pos, ['habéis', participle]).
+ty_participle(spanish, see, visto).
+ty_participle(spanish, sleep, dormido).
+%% The future the import makes: a stated future's stem, else the
+%% infinitive's (`ver' `verá'; `tener' `tendrá'), and each person's ending.
+ty_ending(spanish, future_stem, '', '').
+ty_ending(spanish, future_stem, tener, tendr).
+ty_ending(spanish, future_stem, poner, pondr).
+ty_ending(spanish, future_stem, venir, vendr).
+ty_ending(spanish, future_stem, salir, saldr).
+ty_ending(spanish, future_stem, valer, valdr).
+ty_ending(spanish, future_stem, hacer, har).
+ty_ending(spanish, future_stem, decir, dir).
+ty_ending(spanish, future_stem, poder, podr).
+ty_ending(spanish, future_stem, querer, querr).
+ty_ending(spanish, future_stem, saber, sabr).
+ty_ending(spanish, future_stem, caber, cabr).
+ty_ending(spanish, future_stem, haber, habr).
+ty_ending(spanish, future(sg), '', 'á').
+ty_ending(spanish, future(pl), '', 'án').
+ty_ending(spanish, future(sg(1)), '', 'é').
+ty_ending(spanish, future(sg(2)), '', 'ás').
+ty_ending(spanish, future(pl(1)), '', emos).
+ty_ending(spanish, future(pl(2)), '', 'éis').
+
 %% The articles agree with the noun. A plural indefinite has none.
 ty_article(spanish, def, m, sg, el).
 ty_article(spanish, def, f, sg, la).

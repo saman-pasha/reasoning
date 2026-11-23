@@ -40560,3 +40560,14234 @@ ty_verb(italian, zone, past, sg(2), pos, [circondasti]).
 ty_verb(italian, zone, past, pl, pos, [circondarono]).
 ty_verb(italian, zone, past, pl(1), pos, [circondammo]).
 ty_verb(italian, zone, past, pl(2), pos, [circondaste]).
+ty_participle(italian, happen, avvenuto).
+ty_participle(italian, err, sbagliato).
+ty_participle(italian, impose, imposto).
+ty_participle(italian, orient, orientato).
+ty_participle(italian, take, preso).
+ty_participle(italian, trust, confidato).
+ty_participle(italian, explain, spiegato).
+ty_participle(italian, appear, apparso).
+ty_participle(italian, appear, figurato).
+ty_participle(italian, think, pensato).
+ty_participle(italian, enjoy, goduto).
+ty_participle(italian, increase, aumentato).
+ty_participle(italian, concentrate, concentrato).
+ty_participle(italian, ban, bandito).
+ty_participle(italian, forbid, proibito).
+ty_participle(italian, count, contato).
+ty_participle(italian, remember, ricordato).
+ty_participle(italian, change, cambiato).
+ty_participle(italian, descend, sceso).
+ty_participle(italian, remain, rimasto).
+ty_participle(italian, remain, restato).
+ty_participle(italian, exit, uscito).
+ty_participle(italian, repair, riparato).
+ty_participle(italian, fix, riparato).
+ty_participle(italian, back, appoggiato).
+ty_participle(italian, shout, gridato).
+ty_participle(italian, write, scritto).
+ty_participle(italian, withdraw, ritirato).
+ty_participle(italian, reject, rifiutato).
+ty_participle(italian, trap, intrappolato).
+ty_participle(italian, correct, corretto).
+ty_participle(italian, defend, difeso).
+ty_participle(italian, oblige, obbligato).
+ty_participle(italian, seem, sembrato).
+ty_participle(italian, seem, parso).
+ty_participle(italian, allow, permesso).
+ty_participle(italian, allow, consentito).
+ty_participle(italian, cease, cessato).
+ty_participle(italian, stop, cessato).
+ty_participle(italian, exceed, superato).
+ty_participle(italian, feel, sentito).
+ty_participle(italian, send, spedito).
+ty_participle(italian, send, mandato).
+ty_participle(italian, calculate, calcolato).
+ty_participle(italian, observe, osservato).
+ty_participle(italian, observe, rilevato).
+ty_participle(italian, announce, annunciato).
+ty_participle(italian, disorganiz, dissestato).
+ty_participle(italian, drive, guidato).
+ty_participle(italian, head, guidato).
+ty_participle(italian, find, trovato).
+ty_participle(italian, turn, girato).
+ty_participle(italian, believe, creduto).
+ty_participle(italian, believe, ritenuto).
+ty_participle(italian, find, ritrovato).
+ty_participle(italian, regret, lamentato).
+ty_participle(italian, complain, lamentato).
+ty_participle(italian, attain, riuscito).
+ty_participle(italian, approve, approvato).
+ty_participle(italian, warn, avvertito).
+ty_participle(italian, publish, pubblicato).
+ty_participle(italian, annoy, infastidito).
+ty_participle(italian, manacle, ammanettato).
+ty_participle(italian, hope, auspicato).
+ty_participle(italian, advocate, auspicato).
+ty_participle(italian, declare, dichiarato).
+ty_participle(italian, engage, ingaggiato).
+ty_participle(italian, engage, impegnato).
+ty_participle(italian, endure, sopportato).
+ty_participle(italian, inscribe, iscritto).
+ty_participle(italian, clarify, chiarito).
+ty_participle(italian, clarify, premesso).
+ty_participle(italian, aspire, aspirato).
+ty_participle(italian, issue, emesso).
+ty_participle(italian, fear, temuto).
+ty_participle(italian, return, ritornato).
+ty_participle(italian, administer, amministrato).
+ty_participle(italian, administer, gestito).
+ty_participle(italian, reflect, riflesso).
+ty_participle(italian, join, unito).
+ty_participle(italian, join, aggregato).
+ty_participle(italian, ask, chiesto).
+ty_participle(italian, demand, chiesto).
+ty_participle(italian, agree, concordato).
+ty_participle(italian, point, puntato).
+ty_participle(italian, bet, puntato).
+ty_participle(italian, distance, distanziato).
+ty_participle(italian, rebuke, bacchettato).
+ty_participle(italian, commit, commesso).
+ty_participle(italian, commit, compiuto).
+ty_participle(italian, take, assunto).
+ty_participle(italian, regain, riconquistato).
+ty_participle(italian, maintain, sostenuto).
+ty_participle(italian, accept, accettato).
+ty_participle(italian, accept, accolto).
+ty_participle(italian, appeal, ricorso).
+ty_participle(italian, release, liberato).
+ty_participle(italian, encourage, incoraggiato).
+ty_participle(italian, fight, combattuto).
+ty_participle(italian, curb, frenato).
+ty_participle(italian, depart, partito).
+ty_participle(italian, split, partito).
+ty_participle(italian, bring, portato).
+ty_participle(italian, influence, influenzato).
+ty_participle(italian, attempt, tentato).
+ty_participle(italian, try, tentato).
+ty_participle(italian, search, cercato).
+ty_participle(italian, choose, scelto).
+ty_participle(italian, elect, eletto).
+ty_participle(italian, keep, mantenuto).
+ty_participle(italian, prepare, preparato).
+ty_participle(italian, swim, nuotato).
+ty_participle(italian, set, fissato).
+ty_participle(italian, pose, sollevato).
+ty_participle(italian, relieve, sollevato).
+ty_participle(italian, resign, dimesso).
+ty_participle(italian, resign, rassegnato).
+ty_participle(italian, entail, comportato).
+ty_participle(italian, range, oscillato).
+ty_participle(italian, transit, transitato).
+ty_participle(italian, dedicate, dedicato).
+ty_participle(italian, give, dato).
+ty_participle(italian, appease, placato).
+ty_participle(italian, know, saputo).
+ty_participle(italian, stop, smesso).
+ty_participle(italian, visit, visitato).
+ty_participle(italian, throw, schiaffato).
+ty_participle(italian, worsen, peggiorato).
+ty_participle(italian, happen, passato).
+ty_participle(italian, pass, passato).
+ty_participle(italian, activate, attivato).
+ty_participle(italian, reveal, rivelato).
+ty_participle(italian, crush, schiacciato).
+ty_participle(italian, retort, replicato).
+ty_participle(italian, invest, investito).
+ty_participle(italian, happen, accaduto).
+ty_participle(italian, occur, accaduto).
+ty_participle(italian, die, morto).
+ty_participle(italian, renounce, rinunciato).
+ty_participle(italian, wreck, sfasciato).
+ty_participle(italian, amuse, divertito).
+ty_participle(italian, worry, preoccupato).
+ty_participle(italian, strip, spogliato).
+ty_participle(italian, bare, denudato).
+ty_participle(italian, exalt, esaltato).
+ty_participle(italian, broadcast, trasmesso).
+ty_participle(italian, censure, censurato).
+ty_participle(italian, rent, affittato).
+ty_participle(italian, expect, atteso).
+ty_participle(italian, couple, accoppiato).
+ty_participle(italian, entrust, affidato).
+ty_participle(italian, link, legato).
+ty_participle(italian, grasp, colto).
+ty_participle(italian, launch, lanciato).
+ty_participle(italian, put, messo).
+ty_participle(italian, transport, trasportato).
+ty_participle(italian, rescue, soccorso).
+ty_participle(italian, happen, successo).
+ty_participle(italian, begin, iniziato).
+ty_participle(italian, distance, allontanato).
+ty_participle(italian, reach, raggiunto).
+ty_participle(italian, proceed, proceduto).
+ty_participle(italian, disburse, versato).
+ty_participle(italian, render, reso).
+ty_participle(italian, highlight, evidenziato).
+ty_participle(italian, offer, offerto).
+ty_participle(italian, intone, intonato).
+ty_participle(italian, discredit, screditato).
+ty_participle(italian, mediate, mediato).
+ty_participle(italian, gladden, rallegrato).
+ty_participle(italian, gut, sbudellato).
+ty_participle(italian, wall, murato).
+ty_participle(italian, subscribe, sottoscritto).
+ty_participle(italian, restate, riaffermato).
+ty_participle(italian, mummify, mummificato).
+ty_participle(italian, captain, capitanato).
+ty_participle(italian, torment, tormentato).
+ty_participle(italian, promulgate, promulgato).
+ty_participle(italian, counterattack, contrattaccato).
+ty_participle(italian, brandish, brandito).
+ty_participle(italian, decapitate, decapitato).
+ty_participle(italian, unleash, scatenato).
+ty_participle(italian, institute, istituito).
+ty_participle(italian, hope, sperato).
+ty_participle(italian, taint, macchiato).
+ty_participle(italian, thrill, emozionato).
+ty_participle(italian, sink, affondato).
+ty_participle(italian, ridicule, ridicolizzato).
+ty_participle(italian, polemiciz, polemizzato).
+ty_participle(italian, distance, distato).
+ty_participle(italian, outrage, indignato).
+ty_participle(italian, trample, pestato).
+ty_participle(italian, burn, bruciato).
+ty_participle(italian, hush, taciuto).
+ty_participle(italian, offload, ribaltato).
+ty_participle(italian, manage, gestito).
+ty_participle(italian, preside, preseduto).
+ty_participle(italian, reside, riseduto).
+ty_participle(italian, fell, abbattuto).
+ty_participle(italian, impassion, appassionato).
+ty_participle(italian, budget, preventivato).
+ty_participle(italian, prevent, impedito).
+ty_participle(italian, retain, trattenuto).
+ty_participle(italian, distort, distorto).
+ty_participle(italian, remunerate, remunerato).
+ty_participle(italian, weave, tessuto).
+ty_participle(italian, boost, potenziato).
+ty_participle(italian, rig, truccato).
+ty_participle(italian, trace, tracciato).
+ty_participle(italian, oust, spodestato).
+ty_participle(italian, tie, pareggiato).
+ty_participle(italian, dethrone, detronizzato).
+ty_participle(italian, skimp, economizzato).
+ty_participle(italian, vie, rivaleggiato).
+ty_participle(italian, crown, incoronato).
+ty_participle(italian, improve, migliorato).
+ty_participle(italian, convulse, sconvolto).
+ty_participle(italian, endorse, avallato).
+ty_participle(italian, forge, forgiato).
+ty_participle(italian, pollute, inquinato).
+ty_participle(italian, cool, raffreddato).
+ty_participle(italian, shake, scosso).
+ty_participle(italian, rise, salito).
+ty_participle(italian, digest, digerito).
+ty_participle(italian, compile, compilato).
+ty_participle(italian, soar, impennato).
+ty_participle(italian, unbalance, squilibrato).
+ty_participle(italian, lynch, linciato).
+ty_participle(italian, mutiny, ammutinato).
+ty_participle(italian, reposition, ricollocato).
+ty_participle(italian, house, albergato).
+ty_participle(italian, quit, smesso).
+ty_participle(italian, originate, originato).
+ty_participle(italian, process, processato).
+ty_participle(italian, soak, infradiciato).
+ty_participle(italian, breach, infranso).
+ty_participle(italian, repel, repulso).
+ty_participle(italian, price, prezzato).
+ty_participle(italian, match, uguagliato).
+ty_participle(italian, remit, rimesso).
+ty_participle(italian, risk, rischiato).
+ty_participle(italian, roll, rotolato).
+ty_participle(italian, root, radicato).
+ty_participle(italian, round, arrotondato).
+ty_participle(italian, roar, ruggito).
+ty_participle(italian, square, quadrato).
+ty_participle(italian, shock, scioccato).
+ty_participle(italian, swallow, inghiottito).
+ty_participle(italian, reissue, ristampato).
+ty_participle(italian, ruin, rovinato).
+ty_participle(italian, stir, mescolato).
+ty_participle(italian, spare, risparmiato).
+ty_participle(italian, stall, fermato).
+ty_participle(italian, strengthen, fortificato).
+ty_participle(italian, substitute, sostituito).
+ty_participle(italian, title, intitolato).
+ty_participle(italian, abandon, abbandonato).
+ty_participle(italian, abash, sconcertato).
+ty_participle(italian, abbreviate, abbreviato).
+ty_participle(italian, abdicate, abdicato).
+ty_participle(italian, abet, favoreggiato).
+ty_participle(italian, abhor, aborrito).
+ty_participle(italian, abjure, abiurato).
+ty_participle(italian, abolish, abolito).
+ty_participle(italian, abort, abortito).
+ty_participle(italian, abound, abbondato).
+ty_participle(italian, absolve, assolto).
+ty_participle(italian, absorb, assorbito).
+ty_participle(italian, abuse, abusato).
+ty_participle(italian, accelerate, accelerato).
+ty_participle(italian, access, acceduto).
+ty_participle(italian, acclaim, acclamato).
+ty_participle(italian, acclimate, acclimatato).
+ty_participle(italian, acclimatise, ambientato).
+ty_participle(italian, accommodate, accolto).
+ty_participle(italian, accompany, accompagnato).
+ty_participle(italian, accomplish, compiuto).
+ty_participle(italian, accumulate, accumulato).
+ty_participle(italian, accuse, accusato).
+ty_participle(italian, accustom, abituato).
+ty_participle(italian, achieve, raggiunto).
+ty_participle(italian, achieve, conseguito).
+ty_participle(italian, acknowledge, riconosciuto).
+ty_participle(italian, acquire, acquistato).
+ty_participle(italian, act, agito).
+ty_participle(italian, actuate, attivato).
+ty_participle(italian, adapt, adattato).
+ty_participle(italian, add, aggiunto).
+ty_participle(italian, address, indirizzato).
+ty_participle(italian, adduce, addotto).
+ty_participle(italian, adjust, corretto).
+ty_participle(italian, admire, ammirato).
+ty_participle(italian, admit, ammesso).
+ty_participle(italian, admonish, ammonito).
+ty_participle(italian, adopt, adottato).
+ty_participle(italian, adore, adorato).
+ty_participle(italian, adorn, adornato).
+ty_participle(italian, adulate, adulato).
+ty_participle(italian, adulterate, adulterato).
+ty_participle(italian, advance, avanzato).
+ty_participle(italian, advertise, annunciato).
+ty_participle(italian, advise, consigliato).
+ty_participle(italian, advocate, difeso).
+ty_participle(italian, affect, influito).
+ty_participle(italian, affiliate, affiliato).
+ty_participle(italian, affirm, affermato).
+ty_participle(italian, afflict, afflitto).
+ty_participle(italian, afford, permesso).
+ty_participle(italian, age, invecchiato).
+ty_participle(italian, agglutinate, agglutinato).
+ty_participle(italian, aggravate, aggravato).
+ty_participle(italian, agree, accordato).
+ty_participle(italian, alarm, allarmato).
+ty_participle(italian, alert, allertato).
+ty_participle(italian, alienate, alienato).
+ty_participle(italian, align, allineato).
+ty_participle(italian, allege, dichiarato).
+ty_participle(italian, alleviate, alleviato).
+ty_participle(italian, allude, alluso).
+ty_participle(italian, alter, alterato).
+ty_participle(italian, alternate, alternato).
+ty_participle(italian, amortise, ammortizzato).
+ty_participle(italian, amplify, amplificato).
+ty_participle(italian, anaesthetise, anestetizzato).
+ty_participle(italian, analyse, analizzato).
+ty_participle(italian, anchor, ancorato).
+ty_participle(italian, anger, irritato).
+ty_participle(italian, annex, annesso).
+ty_participle(italian, annihilate, annientato).
+ty_participle(italian, annoy, molestato).
+ty_participle(italian, anticipate, anticipato).
+ty_participle(italian, applaud, applaudito).
+ty_participle(italian, apply, applicato).
+ty_participle(italian, appoint, nominato).
+ty_participle(italian, appreciate, apprezzato).
+ty_participle(italian, approach, avvicinato).
+ty_participle(italian, approve, vistato).
+ty_participle(italian, approximate, approssimato).
+ty_participle(italian, arbitrate, arbitrato).
+ty_participle(italian, arch, arcuato).
+ty_participle(italian, arise, sorto).
+ty_participle(italian, arm, armato).
+ty_participle(italian, armour, blindato).
+ty_participle(italian, arouse, suscitato).
+ty_participle(italian, arrange, concertato).
+ty_participle(italian, arrest, arrestato).
+ty_participle(italian, arrive, arrivato).
+ty_participle(italian, articulate, articolato).
+ty_participle(italian, ascertain, constatato).
+ty_participle(italian, asphalt, asfaltato).
+ty_participle(italian, assault, assaltato).
+ty_participle(italian, assemble, assemblato).
+ty_participle(italian, assess, valutato).
+ty_participle(italian, assign, assegnato).
+ty_participle(italian, assimilate, assimilato).
+ty_participle(italian, assist, assistito).
+ty_participle(italian, associate, associato).
+ty_participle(italian, assume, assunto).
+ty_participle(italian, assure, assicurato).
+ty_participle(italian, attach, attaccato).
+ty_participle(italian, attend, frequentato).
+ty_participle(italian, attest, testimoniato).
+ty_participle(italian, attract, attratto).
+ty_participle(italian, attribute, attribuito).
+ty_participle(italian, augment, aumentato).
+ty_participle(italian, authorise, autorizzato).
+ty_participle(italian, automate, automatizzato).
+ty_participle(italian, avenge, vendicato).
+ty_participle(italian, avoid, evitato).
+ty_participle(italian, await, aspettato).
+ty_participle(italian, awake, svegliato).
+ty_participle(italian, awaken, risvegliato).
+ty_participle(italian, sho, ferrato).
+ty_participle(italian, space, spaziato).
+ty_participle(italian, spell, compitato).
+ty_participle(italian, grease, unto).
+ty_participle(italian, sift, setacciato).
+ty_participle(italian, invade, invaso).
+ty_participle(italian, irrigate, irrigato).
+ty_participle(italian, juxtapose, giustapposto).
+ty_participle(italian, plunder, saccheggiato).
+ty_participle(italian, portray, ritratto).
+ty_participle(italian, scrape, raschiato).
+ty_participle(italian, secrete, secernuto).
+ty_participle(italian, shoot, sparato).
+ty_participle(italian, smile, sorriso).
+ty_participle(italian, snatch, strappato).
+ty_participle(italian, smell, puzzato).
+ty_participle(italian, stutter, balbettato).
+ty_participle(italian, suck, succhiato).
+ty_participle(italian, suggest, suggerito).
+ty_participle(italian, suppress, soppresso).
+ty_participle(italian, swing, oscillato).
+ty_participle(italian, shorten, accorciato).
+ty_participle(italian, slow, rallentato).
+ty_participle(italian, soften, ammorbidito).
+ty_participle(italian, survive, sopravvissuto).
+ty_participle(italian, structure, strutturato).
+ty_participle(italian, stroll, passeggiato).
+ty_participle(italian, time, cronometrato).
+ty_participle(italian, sharpen, affilato).
+ty_participle(italian, scratch, graffiato).
+ty_participle(italian, superimpose, sovrapposto).
+ty_participle(italian, tackle, affrontato).
+ty_participle(italian, tighten, stretto).
+ty_participle(italian, suspect, sospettato).
+ty_participle(italian, back, lanciato).
+ty_participle(italian, bake, cotto).
+ty_participle(italian, balance, equilibrato).
+ty_participle(italian, banish, bandito).
+ty_participle(italian, bank, accatastato).
+ty_participle(italian, baptise, battezzato).
+ty_participle(italian, bark, abbaiato).
+ty_participle(italian, base, basato).
+ty_participle(italian, bathe, bagnato).
+ty_participle(italian, bear, partorito).
+ty_participle(italian, beat, picchiato).
+ty_participle(italian, become, diventato).
+ty_participle(italian, beg, supplicato).
+ty_participle(italian, belong, appartenuto).
+ty_participle(italian, bend, inclinato).
+ty_participle(italian, sponsor, sponsorizzato).
+ty_participle(italian, spur, spronato).
+ty_participle(italian, benefit, avvantaggiato).
+ty_participle(italian, bequeath, legato).
+ty_participle(italian, besiege, assediato).
+ty_participle(italian, bestow, tributato).
+ty_participle(italian, bet, scommesso).
+ty_participle(italian, betray, tradito).
+ty_participle(italian, bid, offerto).
+ty_participle(italian, bill, fatturato).
+ty_participle(italian, billet, alloggiato).
+ty_participle(italian, bite, morso).
+ty_participle(italian, blackmail, ricattato).
+ty_participle(italian, blast, volato).
+ty_participle(italian, bleach, imbiancato).
+ty_participle(italian, bleat, belato).
+ty_participle(italian, bless, benedetto).
+ty_participle(italian, blind, accecato).
+ty_participle(italian, block, bloccato).
+ty_participle(italian, blog, bloggato).
+ty_participle(italian, blow, soffiato).
+ty_participle(italian, board, abbordato).
+ty_participle(italian, boast, vantato).
+ty_participle(italian, boil, bollito).
+ty_participle(italian, bomb, bombardato).
+ty_participle(italian, bore, annoiato).
+ty_participle(italian, bottle, imbottigliato).
+ty_participle(italian, boycott, boicottato).
+ty_participle(italian, brake, frenato).
+ty_participle(italian, break, rotto).
+ty_participle(italian, breathe, respirato).
+ty_participle(italian, bribe, corrotto).
+ty_participle(italian, brief, informato).
+ty_participle(italian, grind, macinato).
+ty_participle(italian, limp, zoppicato).
+ty_participle(italian, rot, marcito).
+ty_participle(italian, scare, spaventato).
+ty_participle(italian, seal, sigillato).
+ty_participle(italian, broaden, ampliato).
+ty_participle(italian, brush, spazzolato).
+ty_participle(italian, build, edificato).
+ty_participle(italian, burden, caricato).
+ty_participle(italian, burgeon, gemmato).
+ty_participle(italian, burn, arso).
+ty_participle(italian, burst, esploso).
+ty_participle(italian, buy, comprato).
+ty_participle(italian, calibrate, calibrato).
+ty_participle(italian, call, chiamato).
+ty_participle(italian, calm, calmato).
+ty_participle(italian, camp, accampato).
+ty_participle(italian, cancel, annullato).
+ty_participle(italian, capitalise, capitalizzato).
+ty_participle(italian, capitulate, capitolato).
+ty_participle(italian, capsiz, cambiato).
+ty_participle(italian, captivate, affascinato).
+ty_participle(italian, capture, catturato).
+ty_participle(italian, caricature, caricaturato).
+ty_participle(italian, castrate, castrato).
+ty_participle(italian, catalog, catalogato).
+ty_participle(italian, catapult, catapultato).
+ty_participle(italian, catch, afferrato).
+ty_participle(italian, cater, provveduto).
+ty_participle(italian, cause, causato).
+ty_participle(italian, caution, cautelato).
+ty_participle(italian, celebrate, celebrato).
+ty_participle(italian, censor, censurato).
+ty_participle(italian, centralise, centralizzato).
+ty_participle(italian, centre, centrato).
+ty_participle(italian, certify, certificato).
+ty_participle(italian, chain, incatenato).
+ty_participle(italian, chair, insediato).
+ty_participle(italian, challenge, sfidato).
+ty_participle(italian, characterise, caratterizzato).
+ty_participle(italian, charge, riscosso).
+ty_participle(italian, chase, perseguito).
+ty_participle(italian, chat, chiacchierato).
+ty_participle(italian, cheat, ingannato).
+ty_participle(italian, check, verificato).
+ty_participle(italian, chew, masticato).
+ty_participle(italian, chuck, chiocciato).
+ty_participle(italian, circulate, circolato).
+ty_participle(italian, circumscribe, circoscritto).
+ty_participle(italian, cite, citato).
+ty_participle(italian, civilise, civilizzato).
+ty_participle(italian, classify, classificato).
+ty_participle(italian, clean, pulito).
+ty_participle(italian, clear, liquidato).
+ty_participle(italian, climb, asceso).
+ty_participle(italian, clone, clonato).
+ty_participle(italian, close, chiuso).
+ty_participle(italian, coin, coniato).
+ty_participle(italian, coincide, coinciso).
+ty_participle(italian, collaborate, collaborato).
+ty_participle(italian, collapse, crollato).
+ty_participle(italian, collect, raccolto).
+ty_participle(italian, colonise, colonizzato).
+ty_participle(italian, colour, colorato).
+ty_participle(italian, comb, pettinato).
+ty_participle(italian, combat, combattuto).
+ty_participle(italian, combine, combinato).
+ty_participle(italian, come, venuto).
+ty_participle(italian, comfort, consolato).
+ty_participle(italian, command, comandato).
+ty_participle(italian, mandate, mandato).
+ty_participle(italian, commence, cominciato).
+ty_participle(italian, comment, commentato).
+ty_participle(italian, commercialise, commercializzato).
+ty_participle(italian, commission, commissionato).
+ty_participle(italian, communicate, comunicato).
+ty_participle(italian, commutate, commutato).
+ty_participle(italian, compact, compattato).
+ty_participle(italian, compare, confrontato).
+ty_participle(italian, compensate, compensato).
+ty_participle(italian, compete, competuto).
+ty_participle(italian, complement, complementato).
+ty_participle(italian, complete, completato).
+ty_participle(italian, complicate, complicato).
+ty_participle(italian, comport, comportato).
+ty_participle(italian, compose, composto).
+ty_participle(italian, comprise, compreso).
+ty_participle(italian, compute, computato).
+ty_participle(italian, computerise, informatizzato).
+ty_participle(italian, concatenate, concatenato).
+ty_participle(italian, conceal, nascosto).
+ty_participle(italian, concede, concesso).
+ty_participle(italian, concede, accordato).
+ty_participle(italian, conciliate, conciliato).
+ty_participle(italian, conclude, concluso).
+ty_participle(italian, concretise, concretato).
+ty_participle(italian, condemn, condannato).
+ty_participle(italian, condition, condizionato).
+ty_participle(italian, conduct, condotto).
+ty_participle(italian, conduct, diretto).
+ty_participle(italian, confer, conferito).
+ty_participle(italian, confess, confessato).
+ty_participle(italian, configure, configurato).
+ty_participle(italian, confine, confinato).
+ty_participle(italian, confirm, confermato).
+ty_participle(italian, confiscate, confiscato).
+ty_participle(italian, conform, conformato).
+ty_participle(italian, confuse, confuso).
+ty_participle(italian, connect, connesso).
+ty_participle(italian, conquer, conquistato).
+ty_participle(italian, consecrate, consacrato).
+ty_participle(italian, consent, consentito).
+ty_participle(italian, conserve, conservato).
+ty_participle(italian, consider, considerato).
+ty_participle(italian, consign, consenato).
+ty_participle(italian, consist, consistito).
+ty_participle(italian, consolidate, consolidato).
+ty_participle(italian, conspire, cospirato).
+ty_participle(italian, constitute, costituito).
+ty_participle(italian, construct, costruito).
+ty_participle(italian, consult, consultato).
+ty_participle(italian, consume, consumato).
+ty_participle(italian, contact, messo).
+ty_participle(italian, contain, contenuto).
+ty_participle(italian, contemplate, contemplato).
+ty_participle(italian, contend, conteso).
+ty_participle(italian, content, contentato).
+ty_participle(italian, contest, contestato).
+ty_participle(italian, dispute, disputato).
+ty_participle(italian, continue, continuato).
+ty_participle(italian, contract, contratto).
+ty_participle(italian, contradict, contraddetto).
+ty_participle(italian, contrast, contrastato).
+ty_participle(italian, contravene, contravvenuto).
+ty_participle(italian, contribute, contribuito).
+ty_participle(italian, contrive, ideato).
+ty_participle(italian, control, controllato).
+ty_participle(italian, converge, converso).
+ty_participle(italian, err, errato).
+ty_participle(italian, obligate, obbligato).
+ty_participle(italian, convert, convertito).
+ty_participle(italian, convey, trasmesso).
+ty_participle(italian, convince, convinto).
+ty_participle(italian, cook, cucinato).
+ty_participle(italian, cool, rinfrescato).
+ty_participle(italian, cooperate, cooperato).
+ty_participle(italian, coordinate, coordinato).
+ty_participle(italian, copy, copiato).
+ty_participle(italian, correspond, corrisposto).
+ty_participle(italian, cost, costato).
+ty_participle(italian, count, raccontato).
+ty_participle(italian, counter, opposto).
+ty_participle(italian, counterbalance, controbilanciato).
+ty_participle(italian, cover, coperto).
+ty_participle(italian, crack, cascato).
+ty_participle(italian, crap, cagato).
+ty_participle(italian, dent, ammaccato).
+ty_participle(italian, create, creato).
+ty_participle(italian, credit, accreditato).
+ty_participle(italian, crimp, arruolato).
+ty_participle(italian, criticise, criticato).
+ty_participle(italian, cross, attraversato).
+ty_participle(italian, crowd, ammassato).
+ty_participle(italian, cry, gridato).
+ty_participle(italian, crystallise, cristallizzato).
+ty_participle(italian, culminate, culminato).
+ty_participle(italian, cultivate, coltivato).
+ty_participle(italian, cure, curato).
+ty_participle(italian, curse, maledetto).
+ty_participle(italian, curve, torto).
+ty_participle(italian, cut, tagliato).
+ty_participle(italian, damage, danneggiato).
+ty_participle(italian, dampen, inumidito).
+ty_participle(italian, dance, ballato).
+ty_participle(italian, dare, osato).
+ty_participle(italian, date, datato).
+ty_participle(italian, dazzle, abbagliato).
+ty_participle(italian, deal, trattato).
+ty_participle(italian, debate, dibattuto).
+ty_participle(italian, debit, addebitato).
+ty_participle(italian, debug, depurato).
+ty_participle(italian, debut, debuttato).
+ty_participle(italian, decant, decantato).
+ty_participle(italian, decide, deciso).
+ty_participle(italian, decline, declinato).
+ty_participle(italian, decompile, decompilato).
+ty_participle(italian, decompose, decomposto).
+ty_participle(italian, decongest, decongestionato).
+ty_participle(italian, decorate, decorato).
+ty_participle(italian, decree, decretato).
+ty_participle(italian, deduce, dedotto).
+ty_participle(italian, deepen, approfondito).
+ty_participle(italian, defeat, sconfitto).
+ty_participle(italian, define, definito).
+ty_participle(italian, defraud, defraudato).
+ty_participle(italian, degrade, degradato).
+ty_participle(italian, delay, ritardato).
+ty_participle(italian, delegate, delegato).
+ty_participle(italian, delete, eliminato).
+ty_participle(italian, delimit, delimitato).
+ty_participle(italian, deliver, consegnato).
+ty_participle(italian, demolish, demolito).
+ty_participle(italian, demonstrate, dimostrato).
+ty_participle(italian, demoralise, demoralizzato).
+ty_participle(italian, denationalise, snazionalizzato).
+ty_participle(italian, denaturalise, snaturato).
+ty_participle(italian, denominate, denominato).
+ty_participle(italian, denote, denotato).
+ty_participle(italian, notice, notato).
+ty_participle(italian, denounce, denunciato).
+ty_participle(italian, deny, negato).
+ty_participle(italian, depend, dipeso).
+ty_participle(italian, deploy, schierato).
+ty_participle(italian, deport, deportato).
+ty_participle(italian, depose, deposto).
+ty_participle(italian, deposit, depositato).
+ty_participle(italian, depreciate, deprezzato).
+ty_participle(italian, depress, depresso).
+ty_participle(italian, deprive, privato).
+ty_participle(italian, derail, deragliato).
+ty_participle(italian, derive, derivato).
+ty_participle(italian, derogate, sminuito).
+ty_participle(italian, descend, disceso).
+ty_participle(italian, describe, descritto).
+ty_participle(italian, desecrate, sconsacrato).
+ty_participle(italian, desert, disertato).
+ty_participle(italian, deserve, meritato).
+ty_participle(italian, design, disegnato).
+ty_participle(italian, designate, designato).
+ty_participle(italian, desire, desiderato).
+ty_participle(italian, desist, desistito).
+ty_participle(italian, despise, disprezzato).
+ty_participle(italian, destroy, distrutto).
+ty_participle(italian, detail, dettagliato).
+ty_participle(italian, detain, detenuto).
+ty_participle(italian, determine, determinato).
+ty_participle(italian, detest, detestato).
+ty_participle(italian, detonate, detonato).
+ty_participle(italian, devastate, devastato).
+ty_participle(italian, develop, sviluppato).
+ty_participle(italian, devour, divorato).
+ty_participle(italian, diagnose, diagnosticato).
+ty_participle(italian, dictate, dettato).
+ty_participle(italian, die, deceduto).
+ty_participle(italian, differ, differito).
+ty_participle(italian, differentiate, differenziato).
+ty_participle(italian, dig, scavato).
+ty_participle(italian, dignify, nobilitato).
+ty_participle(italian, dilate, dilatato).
+ty_participle(italian, dilute, diluito).
+ty_participle(italian, diminish, diminuito).
+ty_participle(italian, dine, cenato).
+ty_participle(italian, direct, diretto).
+ty_participle(italian, disagree, discordato).
+ty_participle(italian, disappear, scomparso).
+ty_participle(italian, disappoint, deluso).
+ty_participle(italian, disapprove, disapprovato).
+ty_participle(italian, disarm, disarmato).
+ty_participle(italian, disassemble, smontato).
+ty_participle(italian, disburse, sborsato).
+ty_participle(italian, discharge, liberato).
+ty_participle(italian, discipline, disciplinato).
+ty_participle(italian, discontinue, interrotto).
+ty_participle(italian, discount, scontato).
+ty_participle(italian, discover, scoperto).
+ty_participle(italian, discriminate, discriminato).
+ty_participle(italian, dishonour, disonorato).
+ty_participle(italian, disillusion, disilluso).
+ty_participle(italian, disinfect, disinfettato).
+ty_participle(italian, disintegrate, disintegrato).
+ty_participle(italian, dislike, dispiaciuto).
+ty_participle(italian, dismay, disanimato).
+ty_participle(italian, dismiss, licenziato).
+ty_participle(italian, dispel, dissipato).
+ty_participle(italian, dispense, dispensato).
+ty_participle(italian, disperse, disperso).
+ty_participle(italian, displace, spostato).
+ty_participle(italian, display, mostrato).
+ty_participle(italian, dispose, collocato).
+ty_participle(italian, disregard, disatteso).
+ty_participle(italian, dissemble, dissimulato).
+ty_participle(italian, dissolve, dissolvuto).
+ty_participle(italian, distill, distillato).
+ty_participle(italian, distinguish, distinto).
+ty_participle(italian, distort, falsato).
+ty_participle(italian, distract, distratto).
+ty_participle(italian, distribute, distribuito).
+ty_participle(italian, disturb, disturbato).
+ty_participle(italian, divert, deviato).
+ty_participle(italian, divide, diviso).
+ty_participle(italian, divorce, divorziato).
+ty_participle(italian, divulge, divulgato).
+ty_participle(italian, document, documentato).
+ty_participle(italian, dominate, dominato).
+ty_participle(italian, donate, donato).
+ty_participle(italian, double, raddoppiato).
+ty_participle(italian, doubt, dubitato).
+ty_participle(italian, download, scaricato).
+ty_participle(italian, draft, abbozzato).
+ty_participle(italian, drag, trascinato).
+ty_participle(italian, dream, sognato).
+ty_participle(italian, dress, vestito).
+ty_participle(italian, drink, bevuto).
+ty_participle(italian, drop, calato).
+ty_participle(italian, drown, inondato).
+ty_participle(italian, drug, drogato).
+ty_participle(italian, dry, asciugato).
+ty_participle(italian, dub, doppiato).
+ty_participle(italian, dump, buttato).
+ty_participle(italian, duplicate, duplicato).
+ty_participle(italian, earn, guadagnato).
+ty_participle(italian, eat, mangiato).
+ty_participle(italian, educate, educato).
+ty_participle(italian, elaborate, elaborato).
+ty_participle(italian, elevate, elevato).
+ty_participle(italian, emanate, emanato).
+ty_participle(italian, embark, imbarcato).
+ty_participle(italian, embarrass, imbarazzato).
+ty_participle(italian, embezzle, malversato).
+ty_participle(italian, embody, incarnato).
+ty_participle(italian, embrace, abbracciato).
+ty_participle(italian, embroider, bordato).
+ty_participle(italian, emerge, emerso).
+ty_participle(italian, emigrate, emigrato).
+ty_participle(italian, employ, impiegato).
+ty_participle(italian, emulate, emulato).
+ty_participle(italian, enchant, incantato).
+ty_participle(italian, encircle, cinto).
+ty_participle(italian, encourage, animato).
+ty_participle(italian, end, terminato).
+ty_participle(italian, endow, dotato).
+ty_participle(italian, enforce, imposto).
+ty_participle(italian, enhance, migliorato).
+ty_participle(italian, entertain, intrattenuto).
+ty_participle(italian, enumerate, elencato).
+ty_participle(italian, envy, invidiato).
+ty_participle(italian, equate, equiparato).
+ty_participle(italian, equip, equipaggiato).
+ty_participle(italian, eradicate, eradicato).
+ty_participle(italian, erase, cancellato).
+ty_participle(italian, erect, alzato).
+ty_participle(italian, erode, eroso).
+ty_participle(italian, escape, fuggito).
+ty_participle(italian, establish, stabilito).
+ty_participle(italian, estimate, stimato).
+ty_participle(italian, evacuate, evacuato).
+ty_participle(italian, sin, peccato).
+ty_participle(italian, evaporate, evaporato).
+ty_participle(italian, evoke, evocato).
+ty_participle(italian, evolve, evolto).
+ty_participle(italian, exaggerate, esagerato).
+ty_participle(italian, examine, esaminato).
+ty_participle(italian, except, eccettuato).
+ty_participle(italian, exchange, scambiato).
+ty_participle(italian, excite, entusiasmato).
+ty_participle(italian, exclaim, esclamato).
+ty_participle(italian, exclude, escluso).
+ty_participle(italian, excuse, scusato).
+ty_participle(italian, execute, eseguito).
+ty_participle(italian, exercise, esercitato).
+ty_participle(italian, exhaust, esaurito).
+ty_participle(italian, exhibit, esibito).
+ty_participle(italian, exhort, esortato).
+ty_participle(italian, exile, esiliato).
+ty_participle(italian, exist, esistito).
+ty_participle(italian, expel, espulso).
+ty_participle(italian, experience, sperimentato).
+ty_participle(italian, explain, contato).
+ty_participle(italian, explode, sfruttato).
+ty_participle(italian, explore, esplorato).
+ty_participle(italian, export, esportato).
+ty_participle(italian, expose, esposto).
+ty_participle(italian, express, espresso).
+ty_participle(italian, extend, esteso).
+ty_participle(italian, exterminate, sterminato).
+ty_participle(italian, extinguish, estinto).
+ty_participle(italian, extract, estratto).
+ty_participle(italian, facilitate, facilitato).
+ty_participle(italian, fail, fallito).
+ty_participle(italian, fake, falsificato).
+ty_participle(italian, fall, caduto).
+ty_participle(italian, fatten, ingrassato).
+ty_participle(italian, favour, favorito).
+ty_participle(italian, feature, constato).
+ty_participle(italian, feed, alimentato).
+ty_participle(italian, ferment, fermentato).
+ty_participle(italian, fight, pugnato).
+ty_participle(italian, file, archiviato).
+ty_participle(italian, fill, riempiuto).
+ty_participle(italian, film, filmato).
+ty_participle(italian, filter, filtrato).
+ty_participle(italian, finance, finanziato).
+ty_participle(italian, find, incontrato).
+ty_participle(italian, fine, multato).
+ty_participle(italian, finish, finito).
+ty_participle(italian, fish, pescato).
+ty_participle(italian, float, fluttuato).
+ty_participle(italian, flow, fluito).
+ty_participle(italian, flower, fiorito).
+ty_participle(italian, foam, spumato).
+ty_participle(italian, fold, piegato).
+ty_participle(italian, follow, seguito).
+ty_participle(italian, force, forzato).
+ty_participle(italian, foresee, preveduto).
+ty_participle(italian, forget, dimenticato).
+ty_participle(italian, forgive, perdonato).
+ty_participle(italian, form, formato).
+ty_participle(italian, formalise, formalizzato).
+ty_participle(italian, formulate, formulato).
+ty_participle(italian, forward, inviato).
+ty_participle(italian, found, fondato).
+ty_participle(italian, fractionate, frazionato).
+ty_participle(italian, freez, congelato).
+ty_participle(italian, frustrate, frustrato).
+ty_participle(italian, fry, fritto).
+ty_participle(italian, fuck, scopato).
+ty_participle(italian, function, funzionato).
+ty_participle(italian, furnish, arredato).
+ty_participle(italian, gain, ottenuto).
+ty_participle(italian, gallop, galoppato).
+ty_participle(italian, generalise, generalizzato).
+ty_participle(italian, generate, generato).
+ty_participle(italian, germinate, germinato).
+ty_participle(italian, gild, dorato).
+ty_participle(italian, glimpse, intraveduto).
+ty_participle(italian, glorify, glorificato).
+ty_participle(italian, gloss, lucidato).
+ty_participle(italian, go, andato).
+ty_participle(italian, govern, governato).
+ty_participle(italian, graduate, laureato).
+ty_participle(italian, gratify, gratificato).
+ty_participle(italian, graz, pascolato).
+ty_participle(italian, greet, salutato).
+ty_participle(italian, grow, cresciuto).
+ty_participle(italian, guarantee, garantito).
+ty_participle(italian, guess, indovinato).
+ty_participle(italian, guide, guidato).
+ty_participle(italian, hammer, martellato).
+ty_participle(italian, hamper, impacciato).
+ty_participle(italian, handle, manipolato).
+ty_participle(italian, hang, peso).
+ty_participle(italian, harmonise, armonizzato).
+ty_participle(italian, hatch, covato).
+ty_participle(italian, hate, odiato).
+ty_participle(italian, have, avuto).
+ty_participle(italian, heal, sanato).
+ty_participle(italian, hear, udito).
+ty_participle(italian, heat, riscaldato).
+ty_participle(italian, help, aiutato).
+ty_participle(italian, hesitate, esitato).
+ty_participle(italian, highlight, distaccato).
+ty_participle(italian, hire, affittato).
+ty_participle(italian, hit, incollato).
+ty_participle(italian, hold, tenuto).
+ty_participle(italian, honour, onorato).
+ty_participle(italian, hover, sorvolato).
+ty_participle(italian, humanise, umanizzato).
+ty_participle(italian, humiliate, umiliato).
+ty_participle(italian, hunt, cacciato).
+ty_participle(italian, hurry, accorso).
+ty_participle(italian, hurt, doluto).
+ty_participle(italian, idealise, idealizzato).
+ty_participle(italian, identify, identificato).
+ty_participle(italian, idolise, idolatrato).
+ty_participle(italian, ignite, incendiato).
+ty_participle(italian, ignore, ignorato).
+ty_participle(italian, illustrate, illustrato).
+ty_participle(italian, imagine, immaginato).
+ty_participle(italian, imitate, imitato).
+ty_participle(italian, impart, impartito).
+ty_participle(italian, implant, inculcato).
+ty_participle(italian, implement, attuato).
+ty_participle(italian, imply, implicato).
+ty_participle(italian, impose, comminato).
+ty_participle(italian, impoverish, impoverito).
+ty_participle(italian, impregnate, impregnato).
+ty_participle(italian, impress, impressionato).
+ty_participle(italian, imprison, imprigionato).
+ty_participle(italian, improvise, improvvisato).
+ty_participle(italian, impugn, impugnato).
+ty_participle(italian, impute, imputato).
+ty_participle(italian, inaugurate, inaugurato).
+ty_participle(italian, incapacitate, inabilitato).
+ty_participle(italian, incite, incitato).
+ty_participle(italian, include, incluso).
+ty_participle(italian, incorporate, incorporato).
+ty_participle(italian, incriminate, incriminato).
+ty_participle(italian, incur, incorso).
+ty_participle(italian, indemnify, indennizzato).
+ty_participle(italian, indicate, indicato).
+ty_participle(italian, induce, indotto).
+ty_participle(italian, industrialise, industrializzato).
+ty_participle(italian, infect, contagiato).
+ty_participle(italian, infiltrate, infiltrato).
+ty_participle(italian, inflate, inflazionato).
+ty_participle(italian, inhale, inalato).
+ty_participle(italian, inherit, ereditato).
+ty_participle(italian, inhibit, inibito).
+ty_participle(italian, inhume, inumato).
+ty_participle(italian, initiate, avviato).
+ty_participle(italian, inject, iniettato).
+ty_participle(italian, injure, ferito).
+ty_participle(italian, inscribe, inscritto).
+ty_participle(italian, reforest, rimboscato).
+ty_participle(italian, insert, inserito).
+ty_participle(italian, insinuate, insinuato).
+ty_participle(italian, insist, insistito).
+ty_participle(italian, inspect, ispezionato).
+ty_participle(italian, inspire, inspirato).
+ty_participle(italian, install, installato).
+ty_participle(italian, institutionalise, istituzionalizzato).
+ty_participle(italian, instruct, istruito).
+ty_participle(italian, instrument, strumentato).
+ty_participle(italian, insult, insultato).
+ty_participle(italian, integrate, integrato).
+ty_participle(italian, intend, preteso).
+ty_participle(italian, intensify, intensificato).
+ty_participle(italian, intercept, intercettato).
+ty_participle(italian, interest, interessato).
+ty_participle(italian, interfere, interferito).
+ty_participle(italian, internalise, interiorizzato).
+ty_participle(italian, interpose, interposto).
+ty_participle(italian, interpret, interpretato).
+ty_participle(italian, interrogate, interrogato).
+ty_participle(italian, intervene, intervenuto).
+ty_participle(italian, intimidate, intimidito).
+ty_participle(italian, intoxicate, intossicato).
+ty_participle(italian, introduce, introdotto).
+ty_participle(italian, invalidate, invalidato).
+ty_participle(italian, invent, inventato).
+ty_participle(italian, inventory, inventariato).
+ty_participle(italian, investigate, investigato).
+ty_participle(italian, invite, invitato).
+ty_participle(italian, invoke, invocato).
+ty_participle(italian, iron, stirato).
+ty_participle(italian, isolate, isolato).
+ty_participle(italian, issue, pubblicato).
+ty_participle(italian, joint, raccordato).
+ty_participle(italian, judge, giudicato).
+ty_participle(italian, jump, saltato).
+ty_participle(italian, justify, giustificato).
+ty_participle(italian, kick, calciato).
+ty_participle(italian, kid, figliato).
+ty_participle(italian, kidnap, rapito).
+ty_participle(italian, kill, ucciso).
+ty_participle(italian, kiss, baciato).
+ty_participle(italian, label, etichettato).
+ty_participle(italian, lack, mancato).
+ty_participle(italian, land, atterrato).
+ty_participle(italian, last, durato).
+ty_participle(italian, laugh, riso).
+ty_participle(italian, learn, appreso).
+ty_participle(italian, leave, lasciato).
+ty_participle(italian, legalise, legalizzato).
+ty_participle(italian, legitimate, legittimato).
+ty_participle(italian, redo, rifatto).
+ty_participle(italian, reedit, riedito).
+ty_participle(italian, reelect, rieletto).
+ty_participle(italian, reform, riformato).
+ty_participle(italian, regenerate, rigenerato).
+ty_participle(italian, reinforce, rafforzato).
+ty_participle(italian, reiterate, reiterato).
+ty_participle(italian, rejuvenate, ringiovanito).
+ty_participle(italian, remedy, rimediato).
+ty_participle(italian, rename, rinominato).
+ty_participle(italian, replace, rimpiazzato).
+ty_participle(italian, reproach, rimproverato).
+ty_participle(italian, reproduce, riprodotto).
+ty_participle(italian, repurchase, riacquistato).
+ty_participle(italian, requisition, requisito).
+ty_participle(italian, reread, riletto).
+ty_participle(italian, resist, resistito).
+ty_participle(italian, respect, rispettato).
+ty_participle(italian, rest, riposato).
+ty_participle(italian, restart, ripartito).
+ty_participle(italian, resuscitate, risuscitato).
+ty_participle(italian, revoke, revocato).
+ty_participle(italian, rewrite, riscritto).
+ty_participle(italian, compel, costretto).
+ty_participle(italian, compress, compresso).
+ty_participle(italian, conceive, concepito).
+ty_participle(italian, dim, smorzato).
+ty_participle(italian, discuss, discusso).
+ty_participle(italian, deter, scoraggiato).
+ty_participle(italian, devise, escogitato).
+ty_participle(italian, disable, disabilitato).
+ty_participle(italian, disgust, disgustato).
+ty_participle(italian, dull, attenuato).
+ty_participle(italian, edit, edito).
+ty_participle(italian, encode, codificato).
+ty_participle(italian, encrypt, cifrato).
+ty_participle(italian, enrich, arricchito).
+ty_participle(italian, extort, estorto).
+ty_participle(italian, flatter, lusingato).
+ty_participle(italian, garnish, guarnito).
+ty_participle(italian, level, livellato).
+ty_participle(italian, liberalise, liberalizzato).
+ty_participle(italian, lick, leccato).
+ty_participle(italian, lie, mentito).
+ty_participle(italian, light, acceso).
+ty_participle(italian, lighten, illuminato).
+ty_participle(italian, border, marginato).
+ty_participle(italian, like, piaciuto).
+ty_participle(italian, limit, limitato).
+ty_participle(italian, link, allacciato).
+ty_participle(italian, list, listato).
+ty_participle(italian, listen, ascoltato).
+ty_participle(italian, litigate, litigato).
+ty_participle(italian, litter, sporcato).
+ty_participle(italian, live, abitato).
+ty_participle(italian, live, vissuto).
+ty_participle(italian, loan, prestato).
+ty_participle(italian, locate, localizzato).
+ty_participle(italian, look, guardato).
+ty_participle(italian, loom, tessuto).
+ty_participle(italian, lose, perso).
+ty_participle(italian, love, amato).
+ty_participle(italian, manifest, manifestato).
+ty_participle(italian, manoeuvre, manovrato).
+ty_participle(italian, manufacture, fabbricato).
+ty_participle(italian, mark, marcato).
+ty_participle(italian, marry, sposato).
+ty_participle(italian, mass, concentrato).
+ty_participle(italian, materialise, materializzato).
+ty_participle(italian, matter, importato).
+ty_participle(italian, mature, maturato).
+ty_participle(italian, mean, significato).
+ty_participle(italian, meander, serpeggiato).
+ty_participle(italian, measure, misurato).
+ty_participle(italian, mechanise, meccanizzato).
+ty_participle(italian, meet, compiuto).
+ty_participle(italian, melt, fuso).
+ty_participle(italian, memorise, memorizzato).
+ty_participle(italian, mention, menzionato).
+ty_participle(italian, merge, amalgamato).
+ty_participle(italian, milk, munto).
+ty_participle(italian, miss, perso).
+ty_participle(italian, miss, mancato).
+ty_participle(italian, misunderstand, equivocato).
+ty_participle(italian, mitigate, mitigato).
+ty_participle(italian, mix, miscelato).
+ty_participle(italian, moderate, moderato).
+ty_participle(italian, modernise, modernizzato).
+ty_participle(italian, modify, modificato).
+ty_participle(italian, monopolise, monopolizzato).
+ty_participle(italian, mortgage, ipotecato).
+ty_participle(italian, mortify, mortificato).
+ty_participle(italian, motivate, motivato).
+ty_participle(italian, motorise, motorizzato).
+ty_participle(italian, mount, montato).
+ty_participle(italian, multiply, moltiplicato).
+ty_participle(italian, murder, assassinato).
+ty_participle(italian, mutate, mutato).
+ty_participle(italian, mutter, mormorato).
+ty_participle(italian, narrate, narrato).
+ty_participle(italian, nationalise, nazionalizzato).
+ty_participle(italian, need, necessitato).
+ty_participle(italian, neutralise, neutralizzato).
+ty_participle(italian, normalise, normalizzato).
+ty_participle(italian, notarise, autenticato).
+ty_participle(italian, notch, intaccato).
+ty_participle(italian, note, annotato).
+ty_participle(italian, notify, notificato).
+ty_participle(italian, nourish, nutrito).
+ty_participle(italian, number, numerato).
+ty_participle(italian, obey, obbedito).
+ty_participle(italian, obstruct, ostruito).
+ty_participle(italian, occupy, occupato).
+ty_participle(italian, occur, occorso).
+ty_participle(italian, offend, offeso).
+ty_participle(italian, omit, omesso).
+ty_participle(italian, open, aperto).
+ty_participle(italian, operate, operato).
+ty_participle(italian, opt, optato).
+ty_participle(italian, optimise, ottimizzato).
+ty_participle(italian, orbit, orbitato).
+ty_participle(italian, order, ordinato).
+ty_participle(italian, organise, organizzato).
+ty_participle(italian, outline, delineato).
+ty_participle(italian, overwhelm, sopraffato).
+ty_participle(italian, owe, dovuto).
+ty_participle(italian, own, posseduto).
+ty_participle(italian, pack, impaccato).
+ty_participle(italian, paginate, compaginato).
+ty_participle(italian, paint, dipinto).
+ty_participle(italian, lacquer, laccato).
+ty_participle(italian, parade, sfoggiato).
+ty_participle(italian, paralyse, paralizzato).
+ty_participle(italian, park, parcheggiato).
+ty_participle(italian, part, separato).
+ty_participle(italian, patent, brevettato).
+ty_participle(italian, pause, sostato).
+ty_participle(italian, pay, pagato).
+ty_participle(italian, peel, pelato).
+ty_participle(italian, penetrate, penetrato).
+ty_participle(italian, perceive, percepito).
+ty_participle(italian, perfect, perfezionato).
+ty_participle(italian, perform, svolto).
+ty_participle(italian, perfume, profumato).
+ty_participle(italian, perpetrate, perpetrato).
+ty_participle(italian, perpetuate, perpetuato).
+ty_participle(italian, persist, persistito).
+ty_participle(italian, persuade, persuaso).
+ty_participle(italian, perturb, perturbato).
+ty_participle(italian, phone, telefonato).
+ty_participle(italian, photocopy, fotocopiato).
+ty_participle(italian, photograph, fotografato).
+ty_participle(italian, pilot, pilotato).
+ty_participle(italian, pin, appuntato).
+ty_participle(italian, place, disposto).
+ty_participle(italian, plagiarise, plagiato).
+ty_participle(italian, plan, pianificato).
+ty_participle(italian, plant, piantato).
+ty_participle(italian, plaster, intonacato).
+ty_participle(italian, play, giocato).
+ty_participle(italian, play, suonato).
+ty_participle(italian, play, toccato).
+ty_participle(italian, pledge, impegnato).
+ty_participle(italian, plough, arato).
+ty_participle(italian, point, segnalato).
+ty_participle(italian, poison, avvelenato).
+ty_participle(italian, polarise, polarizzato).
+ty_participle(italian, polish, lustrato).
+ty_participle(italian, pollute, contaminato).
+ty_participle(italian, ponder, ponderato).
+ty_participle(italian, populate, popolato).
+ty_participle(italian, posit, presupposto).
+ty_participle(italian, postpone, posposto).
+ty_participle(italian, pour, versato).
+ty_participle(italian, powder, impolverato).
+ty_participle(italian, practise, praticato).
+ty_participle(italian, praise, lodato).
+ty_participle(italian, pray, pregato).
+ty_participle(italian, preach, predicato).
+ty_participle(italian, precede, preceduto).
+ty_participle(italian, precipitate, precipitato).
+ty_participle(italian, preclude, precluso).
+ty_participle(italian, predetermine, predeterminato).
+ty_participle(italian, predict, predetto).
+ty_participle(italian, predominate, predominato).
+ty_participle(italian, prefabricate, prefabbricato).
+ty_participle(italian, prefer, preferito).
+ty_participle(italian, prefix, premesso).
+ty_participle(italian, prejudice, pregiudicato).
+ty_participle(italian, prescribe, prescritto).
+ty_participle(italian, present, presentato).
+ty_participle(italian, preserve, preservato).
+ty_participle(italian, press, pulsato).
+ty_participle(italian, prevail, prevalso).
+ty_participle(italian, prevent, prevenuto).
+ty_participle(italian, print, stampato).
+ty_participle(italian, privatise, privatizzato).
+ty_participle(italian, proceed, provenuto).
+ty_participle(italian, proclaim, proclamato).
+ty_participle(italian, procreate, procreato).
+ty_participle(italian, procure, procurato).
+ty_participle(italian, produce, prodotto).
+ty_participle(italian, program, programmato).
+ty_participle(italian, progress, progredito).
+ty_participle(italian, prohibit, proibito).
+ty_participle(italian, project, progettato).
+ty_participle(italian, proliferate, proliferato).
+ty_participle(italian, promise, promesso).
+ty_participle(italian, promote, promosso).
+ty_participle(italian, prompt, incitato).
+ty_participle(italian, pronounce, pronunciato).
+ty_participle(italian, propagate, propagato).
+ty_participle(italian, propose, proposto).
+ty_participle(italian, prosper, prosperato).
+ty_participle(italian, prostitute, prostituito).
+ty_participle(italian, protect, protetto).
+ty_participle(italian, protest, protestato).
+ty_participle(italian, prove, comprovato).
+ty_participle(italian, provide, fornito).
+ty_participle(italian, provoke, provocato).
+ty_participle(italian, pull, tirato).
+ty_participle(italian, pump, pompato).
+ty_participle(italian, puncture, punto).
+ty_participle(italian, punish, punito).
+ty_participle(italian, purchase, rilevato).
+ty_participle(italian, push, spinto).
+ty_participle(italian, push, premuto).
+ty_participle(italian, qualify, qualificato).
+ty_participle(italian, quantify, quantificato).
+ty_participle(italian, question, questionato).
+ty_participle(italian, race, corso).
+ty_participle(italian, range, variato).
+ty_participle(italian, range, allineato).
+ty_participle(italian, rape, violentato).
+ty_participle(italian, ratify, ratificato).
+ty_participle(italian, react, reagito).
+ty_participle(italian, reactivate, riattivato).
+ty_participle(italian, read, letto).
+ty_participle(italian, readjust, riadattato).
+ty_participle(italian, realise, realizzato).
+ty_participle(italian, reanimate, rianimato).
+ty_participle(italian, reappear, riapparso).
+ty_participle(italian, rearm, riarmato).
+ty_participle(italian, reason, ragionato).
+ty_participle(italian, reassure, rassicurato).
+ty_participle(italian, rebuild, ricostruito).
+ty_participle(italian, recite, recitato).
+ty_participle(italian, recommend, raccomandato).
+ty_participle(italian, recompensate, ricompensato).
+ty_participle(italian, reconcile, riconciliato).
+ty_participle(italian, reconsider, riconsiderato).
+ty_participle(italian, reconstitute, ricostituito).
+ty_participle(italian, reconvert, riconvertito).
+ty_participle(italian, record, registrato).
+ty_participle(italian, recover, recuperato).
+ty_participle(italian, recreate, ricreato).
+ty_participle(italian, recycle, riciclato).
+ty_participle(italian, redefine, ridefinito).
+ty_participle(italian, redimension, ridimensionato).
+ty_participle(italian, reduce, ridotto).
+ty_participle(italian, reestablish, ristabilito).
+ty_participle(italian, reexamine, riesaminato).
+ty_participle(italian, refer, riferito).
+ty_participle(italian, refuse, rifiutato).
+ty_participle(italian, regard, riguardato).
+ty_participle(italian, regulate, regolato).
+ty_participle(italian, reign, regnato).
+ty_participle(italian, reinvest, reinvestito).
+ty_participle(italian, relate, relazionato).
+ty_participle(italian, remove, tolto).
+ty_participle(italian, renegotiate, rinegoziato).
+ty_participle(italian, renew, rinnovato).
+ty_participle(italian, reopen, riaperto).
+ty_participle(italian, reorganise, riorganizzato).
+ty_participle(italian, reorganise, ridimensionato).
+ty_participle(italian, reorient, riorientato).
+ty_participle(italian, repatriate, rimpatriato).
+ty_participle(italian, repeat, ripetuto).
+ty_participle(italian, report, riportato).
+ty_participle(italian, report, denunciato).
+ty_participle(italian, represent, rappresentato).
+ty_participle(italian, repress, represso).
+ty_participle(italian, require, richiesto).
+ty_participle(italian, research, ricercato).
+ty_participle(italian, reserve, riservato).
+ty_participle(italian, resolve, risolto).
+ty_participle(italian, resort, ricorso).
+ty_participle(italian, restore, restaurato).
+ty_participle(italian, restructure, ristrutturato).
+ty_participle(italian, result, risultato).
+ty_participle(italian, resupply, rifornito).
+ty_participle(italian, resurrect, risorto).
+ty_participle(italian, retract, ritirato).
+ty_participle(italian, retreat, retrocesso).
+ty_participle(italian, retrieve, ritrovato).
+ty_participle(italian, reunite, riunito).
+ty_participle(italian, reverse, invertito).
+ty_participle(italian, review, revisionato).
+ty_participle(italian, revitalise, rivitalizzato).
+ty_participle(italian, revolutionise, rivoluzionato).
+ty_participle(italian, reward, premiato).
+ty_participle(italian, reward, ricompensato).
+ty_participle(italian, rule, imperato).
+ty_participle(italian, sacrifice, sacrificato).
+ty_participle(italian, safeguard, salvaguardato).
+ty_participle(italian, sail, navigato).
+ty_participle(italian, salivate, salivato).
+ty_participle(italian, sanctify, santificato).
+ty_participle(italian, sanction, sanzionato).
+ty_participle(italian, satisfy, colmato).
+ty_participle(italian, saturate, saturato).
+ty_participle(italian, save, salvato).
+ty_participle(italian, saw, serrato).
+ty_participle(italian, say, detto).
+ty_participle(italian, scandalise, scandalizzato).
+ty_participle(italian, seed, seminato).
+ty_participle(italian, satiate, saziato).
+ty_participle(italian, sell, venduto).
+ty_participle(italian, sense, sentito).
+ty_participle(italian, sensitise, sensibilizzato).
+ty_participle(italian, serve, servito).
+ty_participle(italian, sew, cucito).
+ty_participle(italian, shape, plasmato).
+ty_participle(italian, share, condiviso).
+ty_participle(italian, shine, brillato).
+ty_participle(italian, shit, cacato).
+ty_participle(italian, slacken, allentato).
+ty_participle(italian, show, mostrato).
+ty_participle(italian, sigh, sospirato).
+ty_participle(italian, sign, firmato).
+ty_participle(italian, weld, saldato).
+ty_participle(italian, retain, ritenuto).
+ty_participle(italian, simplify, semplificato).
+ty_participle(italian, simulate, simulato).
+ty_participle(italian, sing, cantato).
+ty_participle(italian, sit, seduto).
+ty_participle(italian, situate, situato).
+ty_participle(italian, slip, scivolato).
+ty_participle(italian, smoke, fumato).
+ty_participle(italian, solicit, sollecitato).
+ty_participle(italian, sound, suonato).
+ty_participle(italian, speak, parlato).
+ty_participle(italian, specialise, specializzato).
+ty_participle(italian, specify, specificato).
+ty_participle(italian, spend, passato).
+ty_participle(italian, spend, speso).
+ty_participle(italian, spin, girato).
+ty_participle(italian, spit, sputato).
+ty_participle(italian, spoil, viziato).
+ty_participle(italian, spread, diffuso).
+ty_participle(italian, spy, spiato).
+ty_participle(italian, squeez, sprento).
+ty_participle(italian, stew, stufato).
+ty_participle(italian, stabilise, stabilizzato).
+ty_participle(italian, stagnate, ristagnato).
+ty_participle(italian, stamp, impresso).
+ty_participle(italian, stand, stato).
+ty_participle(italian, standardise, standardizzato).
+ty_participle(italian, start, iniziato).
+ty_participle(italian, steal, rubato).
+ty_participle(italian, sterilise, sterilizzato).
+ty_participle(italian, stigmatise, stigmatizzato).
+ty_participle(italian, stimulate, incentivato).
+ty_participle(italian, stipulate, stipulato).
+ty_participle(italian, strike, colpito).
+ty_participle(italian, study, studiato).
+ty_participle(italian, sublimate, sublimato).
+ty_participle(italian, subsidise, sovvenzionato).
+ty_participle(italian, subtract, sottratto).
+ty_participle(italian, succeed, successo).
+ty_participle(italian, sue, querelato).
+ty_participle(italian, suffer, sofferto).
+ty_participle(italian, suffocate, asfissiato).
+ty_participle(italian, summarise, riassunto).
+ty_participle(italian, supervise, supervisionato).
+ty_participle(italian, support, sopportato).
+ty_participle(italian, suppose, supposto).
+ty_participle(italian, surprise, sorpreso).
+ty_participle(italian, surrender, arreso).
+ty_participle(italian, surround, circondato).
+ty_participle(italian, suspend, sospeso).
+ty_participle(italian, sustain, sostenuto).
+ty_participle(italian, swear, giurato).
+ty_participle(italian, sweat, sudato).
+ty_participle(italian, symbolise, simboleggiato).
+ty_participle(italian, synchronise, sincronizzato).
+ty_participle(italian, systematise, sistematizzato).
+ty_participle(italian, take, portato).
+ty_participle(italian, taste, degustato).
+ty_participle(italian, tax, tassato).
+ty_participle(italian, teach, insegnato).
+ty_participle(italian, televise, teletrasmesso).
+ty_participle(italian, temper, temperato).
+ty_participle(italian, tend, steso).
+ty_participle(italian, test, testato).
+ty_participle(italian, think, opinato).
+ty_participle(italian, threaten, minacciato).
+ty_participle(italian, throw, gettato).
+ty_participle(italian, throw, tirato).
+ty_participle(italian, thunder, tuonato).
+ty_participle(italian, toast, tostato).
+ty_participle(italian, tolerate, tollerato).
+ty_participle(italian, torture, torturato).
+ty_participle(italian, touch, toccato).
+ty_participle(italian, toughen, indurito).
+ty_participle(italian, tour, visitato).
+ty_participle(italian, tow, rimorchiato).
+ty_participle(italian, train, allenato).
+ty_participle(italian, transcribe, trascritto).
+ty_participle(italian, transfer, trasferito).
+ty_participle(italian, transform, trasformato).
+ty_participle(italian, transgress, trasgredito).
+ty_participle(italian, translate, tradotto).
+ty_participle(italian, transliterate, traslitterato).
+ty_participle(italian, transplant, trapiantato).
+ty_participle(italian, travel, viaggiato).
+ty_participle(italian, tread, calcato).
+ty_participle(italian, tremble, tremato).
+ty_participle(italian, triple, triplicato).
+ty_participle(italian, triumph, trionfato).
+ty_participle(italian, truncate, troncato).
+ty_participle(italian, trust, affidato).
+ty_participle(italian, retwist, ritorto).
+ty_participle(italian, type, scritto).
+ty_participle(italian, unblock, sbloccato).
+ty_participle(italian, underestimate, sottovalutato).
+ty_participle(italian, underline, sottolineato).
+ty_participle(italian, understand, capito).
+ty_participle(italian, undertake, intrapreso).
+ty_participle(italian, undo, disfato).
+ty_participle(italian, undress, svestito).
+ty_participle(italian, unify, unificato).
+ty_participle(italian, unmask, smascherato).
+ty_participle(italian, unscrew, svitato).
+ty_participle(italian, update, aggiornato).
+ty_participle(italian, upset, rovesciato).
+ty_participle(italian, urinate, orinato).
+ty_participle(italian, use, usato).
+ty_participle(italian, use, impiegato).
+ty_participle(italian, usurp, usurpato).
+ty_participle(italian, utilise, utilizzato).
+ty_participle(italian, validate, convalidato).
+ty_participle(italian, vaporise, vaporizzato).
+ty_participle(italian, venerate, venerato).
+ty_participle(italian, ventilate, ventilato).
+ty_participle(italian, vibrate, vibrato).
+ty_participle(italian, violate, violato).
+ty_participle(italian, visit, ricorso).
+ty_participle(italian, visualise, visualizzato).
+ty_participle(italian, vomit, vomitato).
+ty_participle(italian, vote, votato).
+ty_participle(italian, walk, camminato).
+ty_participle(italian, wander, vagato).
+ty_participle(italian, want, voluto).
+ty_participle(italian, warm, riscaldato).
+ty_participle(italian, wash, strofinato).
+ty_participle(italian, waste, sprecato).
+ty_participle(italian, watch, vigilato).
+ty_participle(italian, water, abbeverato).
+ty_participle(italian, weaken, debilitato).
+ty_participle(italian, weave, tramato).
+ty_participle(italian, whisper, bisbigliato).
+ty_participle(italian, whistle, fischiato).
+ty_participle(italian, widen, allargato).
+ty_participle(italian, win, vinto).
+ty_participle(italian, work, lavorato).
+ty_participle(italian, worry, infastidito).
+ty_participle(italian, wrap, avvolto).
+ty_participle(italian, fulminate, fulminato).
+ty_participle(italian, yawn, sbadigliato).
+ty_participle(italian, yield, ceduto).
+ty_participle(italian, abrogate, abrogato).
+ty_participle(italian, accede, aderito).
+ty_participle(italian, accessoriz, accessoriato).
+ty_participle(italian, accommodate, agevolato).
+ty_participle(italian, accomplish, adempiuto).
+ty_participle(italian, accost, adescato).
+ty_participle(italian, accrete, aggregato).
+ty_participle(italian, acidify, acidificato).
+ty_participle(italian, acquire, acquisito).
+ty_participle(italian, adorn, addobbato).
+ty_participle(italian, affix, affisso).
+ty_participle(italian, affix, apposto).
+ty_participle(italian, afflict, addolorato).
+ty_participle(italian, agree, acconsentito).
+ty_participle(italian, allocate, allocato).
+ty_participle(italian, ally, alleato).
+ty_participle(italian, altercate, altercato).
+ty_participle(italian, amass, abbarcato).
+ty_participle(italian, anger, adirato).
+ty_participle(italian, annihilate, annichilato).
+ty_participle(italian, appease, abbonito).
+ty_participle(italian, apply, adoperato).
+ty_participle(italian, approach, accostato).
+ty_participle(italian, arrange, allogato).
+ty_participle(italian, assent, assentito).
+ty_participle(italian, assign, affiancato).
+ty_participle(italian, attack, assalito).
+ty_participle(italian, award, aggiudicato).
+ty_participle(italian, barter, accambiato).
+ty_participle(italian, bite, abboccato).
+ty_participle(italian, blacken, affumicato).
+ty_participle(italian, blind, acciecato).
+ty_participle(italian, break, albeggiato).
+ty_participle(italian, breed, allevato).
+ty_participle(italian, bungle, abborracciato).
+ty_participle(italian, burn, affocato).
+ty_participle(italian, calculate, abbacato).
+ty_participle(italian, call, appellato).
+ty_participle(italian, calm, abbonacciato).
+ty_participle(italian, calm, acquietato).
+ty_participle(italian, centraliz, accentrato).
+ty_participle(italian, circumvent, aggirato).
+ty_participle(italian, climb, arrampicato).
+ty_participle(italian, collect, abbicato).
+ty_participle(italian, combine, assommato).
+ty_participle(italian, concoct, almanaccato).
+ty_participle(italian, contract, appaltato).
+ty_participle(italian, couple, agganciato).
+ty_participle(italian, covet, agognato).
+ty_participle(italian, cram, accalcato).
+ty_participle(italian, crowd, affollato).
+ty_participle(italian, crush, acciaccato).
+ty_participle(italian, curl, aggricciato).
+ty_participle(italian, curl, arricciato).
+ty_participle(italian, dampen, asperso).
+ty_participle(italian, deal, abbriccato).
+ty_participle(italian, deduct, abbonato).
+ty_participle(italian, dishearten, abbacchiato).
+ty_participle(italian, dismiss, accomiatato).
+ty_participle(italian, domesticate, addomesticato).
+ty_participle(italian, drown, affogato).
+ty_participle(italian, elongate, allungato).
+ty_participle(italian, embank, arginato).
+ty_participle(italian, embellish, abbellito).
+ty_participle(italian, embitter, amareggiato).
+ty_participle(italian, enclose, allegato).
+ty_participle(italian, enfranchise, affrancato).
+ty_participle(italian, exhaust, abbioccato).
+ty_participle(italian, exhaust, abbrutito).
+ty_participle(italian, flow, affluito).
+ty_participle(italian, freez, agghiacciato).
+ty_participle(italian, fresco, affrescato).
+ty_participle(italian, gather, adunato).
+ty_participle(italian, grasp, abbrancato).
+ty_participle(italian, grip, appassionato).
+ty_participle(italian, guide, ammaestrato).
+ty_participle(italian, hang, appeso).
+ty_participle(italian, happen, addivenuto).
+ty_participle(italian, increase, accresciuto).
+ty_participle(italian, infer, argomentato).
+ty_participle(italian, kill, acciduto).
+ty_participle(italian, kill, ammazzato).
+ty_participle(italian, lighten, alleggerito).
+ty_participle(italian, limp, arrancato).
+ty_participle(italian, marry, accasato).
+ty_participle(italian, match, abbinato).
+ty_participle(italian, mention, accennato).
+ty_participle(italian, moderniz, ammodernato).
+ty_participle(italian, mold, ammuffito).
+ty_participle(italian, nest, annidato).
+ty_participle(italian, nock, accoccato).
+ty_participle(italian, nurse, allattato).
+ty_participle(italian, overcome, accavalcato).
+ty_participle(italian, overlap, accavallato).
+ty_participle(italian, overshadow, aduggiato).
+ty_participle(italian, penetrate, addentrato).
+ty_participle(italian, philander, amoreggiato).
+ty_participle(italian, piece, aggiustato).
+ty_participle(italian, precede, antivenuto).
+ty_participle(italian, prepare, ammannito).
+ty_participle(italian, prepare, approntato).
+ty_participle(italian, prevent, anteposto).
+ty_participle(italian, qualify, abilitato).
+ty_participle(italian, rasp, abraso).
+ty_participle(italian, refine, affinato).
+ty_participle(italian, remove, allontanato).
+ty_participle(italian, resemble, assomigliato).
+ty_participle(italian, roast, arrostito).
+ty_participle(italian, satisfy, accontentato).
+ty_participle(italian, scheme, armeggiato).
+ty_participle(italian, share, accomunato).
+ty_participle(italian, sharpen, acuito).
+ty_participle(italian, sharpen, arrotato).
+ty_participle(italian, shelve, accantonato).
+ty_participle(italian, show, affacciato).
+ty_participle(italian, singe, abbruciacchiato).
+ty_participle(italian, slump, abbiosciato).
+ty_participle(italian, soften, ammollito).
+ty_participle(italian, subdue, assoggettato).
+ty_participle(italian, surround, accinto).
+ty_participle(italian, sweeten, addolcato).
+ty_participle(italian, tan, abbronzato).
+ty_participle(italian, taste, assaggiato).
+ty_participle(italian, thicken, addensato).
+ty_participle(italian, tire, affaticato).
+ty_participle(italian, train, addestrato).
+ty_participle(italian, transfer, apportato).
+ty_participle(italian, trouble, affannato).
+ty_participle(italian, turn, adibito).
+ty_participle(italian, ventilate, arieggiato).
+ty_participle(italian, verify, accertato).
+ty_participle(italian, waft, aleggiato).
+ty_participle(italian, water, annaffiato).
+ty_participle(italian, swing, altalenato).
+ty_participle(italian, wrinkle, aggrinzito).
+ty_participle(italian, yoke, aggiogato).
+ty_participle(italian, disappear, sparito).
+ty_participle(italian, locate, individuato).
+ty_participle(italian, deem, reputato).
+ty_participle(italian, ski, sciato).
+ty_participle(italian, extinguish, spento).
+ty_participle(italian, arouse, destato).
+ty_participle(italian, recover, ripreso).
+ty_participle(italian, joke, scherzato).
+ty_participle(italian, move, mosso).
+ty_participle(italian, need, bisognato).
+ty_participle(italian, enter, entrato).
+ty_participle(italian, pocket, intascato).
+ty_participle(italian, swindle, truffato).
+ty_participle(italian, inflate, gonfiato).
+ty_participle(italian, start, scattato).
+ty_participle(italian, spend, trascorso).
+ty_participle(italian, forbid, vietato).
+ty_participle(italian, prohibit, interdetto).
+ty_participle(italian, penalise, penalizzato).
+ty_participle(italian, ride, cavalcato).
+ty_participle(italian, fix, fissato).
+ty_participle(italian, pressure, pressato).
+ty_participle(italian, celebrate, festeggiato).
+ty_participle(italian, beat, battuto).
+ty_participle(italian, reject, bocciato).
+ty_participle(italian, subject, sottoposto).
+ty_participle(italian, rest, poggiato).
+ty_participle(italian, return, tornato).
+ty_participle(italian, benefit, profittato).
+ty_participle(italian, anger, arrabbiato).
+ty_participle(italian, drown, annegato).
+ty_participle(italian, break, spezzato).
+ty_participle(italian, wear, indossato).
+ty_participle(italian, realiz, accorto).
+ty_participle(italian, furrow, solcato).
+ty_participle(italian, enamour, innamorato).
+ty_participle(italian, bury, seppellito).
+ty_participle(italian, browse, sfogliato).
+ty_participle(italian, rummage, frugato).
+ty_participle(italian, return, rinviato).
+ty_participle(italian, cause, recato).
+ty_participle(italian, materialise, concretizzato).
+ty_participle(italian, occupy, ricoperto).
+ty_participle(italian, stimulate, stimolato).
+ty_participle(italian, extract, tratto).
+ty_participle(italian, clarify, puntualizzato).
+ty_participle(italian, benefit, beneficiato).
+ty_participle(italian, mark, segnato).
+ty_participle(italian, postpone, rimandato).
+ty_participle(italian, compete, gareggiato).
+ty_participle(italian, proliferate, dilagato).
+ty_participle(italian, submerge, immerso).
+ty_participle(italian, marginalise, emarginato).
+ty_participle(italian, choose, prescelto).
+ty_participle(italian, allocate, devolto).
+ty_participle(italian, overtake, colto).
+ty_participle(italian, burn, scottato).
+ty_participle(italian, summarise, sintetizzato).
+ty_participle(italian, promulgate, varato).
+ty_participle(italian, intend, inteso).
+ty_participle(italian, suspend, squalificato).
+ty_participle(italian, administer, somministrato).
+ty_participle(italian, dismember, smembrato).
+ty_participle(italian, recommence, ricominciato).
+ty_participle(italian, hoard, accaparrato).
+ty_participle(italian, upset, contrariato).
+ty_participle(italian, rest, giaciuto).
+ty_participle(italian, clean, ripulito).
+ty_participle(italian, ring, trillato).
+ty_participle(italian, suppose, presunto).
+ty_participle(italian, house, ospitato).
+ty_participle(italian, prove, provato).
+ty_participle(italian, nominate, candidato).
+ty_participle(italian, adapt, adeguato).
+ty_participle(italian, agree, ricordato).
+ty_participle(italian, annoy, importunato).
+ty_participle(italian, answer, risposto).
+ty_participle(italian, arrive, giunto).
+ty_participle(italian, ask, domandato).
+ty_participle(italian, assign, destinato).
+ty_participle(italian, attack, aggredito).
+ty_participle(italian, bend, flesso).
+ty_participle(italian, choose, eletto).
+ty_participle(italian, claim, reclamato).
+ty_participle(italian, claim, rivendicato).
+ty_participle(italian, clarify, precisato).
+ty_participle(italian, confine, internato).
+ty_participle(italian, congratulate, congratulato).
+ty_participle(italian, continue, proseguito).
+ty_participle(italian, converge, confluito).
+ty_participle(italian, converse, dialogato).
+ty_participle(italian, cost, valso).
+ty_participle(italian, cry, pianso).
+ty_participle(italian, decompose, scomposto).
+ty_participle(italian, deny, smentito).
+ty_participle(italian, direct, orientato).
+ty_participle(italian, dissolve, sciolto).
+ty_participle(italian, drop, sceso).
+ty_participle(italian, dry, seccato).
+ty_participle(italian, edit, redatto).
+ty_participle(italian, enjoy, usufruito).
+ty_participle(italian, enrol, iscritto).
+ty_participle(italian, erect, eretto).
+ty_participle(italian, escape, scappato).
+ty_participle(italian, establish, instaurato).
+ty_participle(italian, examine, visionato).
+ty_participle(italian, favour, privilegiato).
+ty_participle(italian, float, galleggiato).
+ty_participle(italian, freez, gelato).
+ty_participle(italian, gather, congregato).
+ty_participle(italian, get, ricevuto).
+ty_participle(italian, give, regalato).
+ty_participle(italian, happen, sopravvenuto).
+ty_participle(italian, increase, incrementato).
+ty_participle(italian, inhale, aspirato).
+ty_participle(italian, interview, intervistato).
+ty_participle(italian, investigate, indagato).
+ty_participle(italian, know, conosciuto).
+ty_participle(italian, leak, colato).
+ty_participle(italian, lean, addossato).
+ty_participle(italian, learn, imparato).
+ty_participle(italian, fork, inforcato).
+ty_participle(italian, level, uniformato).
+ty_participle(italian, like, gustato).
+ty_participle(italian, mix, mischiato).
+ty_participle(italian, neglect, trascurato).
+ty_participle(italian, offer, brindato).
+ty_participle(italian, pass, transitato).
+ty_participle(italian, peel, mondato).
+ty_participle(italian, pose, posato).
+ty_participle(italian, pretend, finto).
+ty_participle(italian, protect, tutelato).
+ty_participle(italian, punish, castigato).
+ty_participle(italian, put, posto).
+ty_participle(italian, regulate, regolamentato).
+ty_participle(italian, remain, permasto).
+ty_participle(italian, reserve, prenotato).
+ty_participle(italian, return, restituito).
+ty_participle(italian, satisfy, soddisfatto).
+ty_participle(italian, sign, siglato).
+ty_participle(italian, situate, ubicato).
+ty_participle(italian, take, tardato).
+ty_participle(italian, tend, teso).
+ty_participle(italian, turn, virato).
+ty_participle(italian, twist, storto).
+ty_participle(italian, validate, validato).
+ty_participle(italian, wash, lavato).
+ty_participle(italian, weaken, indebolito).
+ty_participle(italian, scratch, grattato).
+ty_participle(italian, stress, sottolineato).
+ty_participle(italian, sneak, intrufolato).
+ty_participle(italian, wobble, traballato).
+ty_participle(italian, scatter, sparso).
+ty_participle(italian, involve, coinvolto).
+ty_participle(italian, torpedo, sabotato).
+ty_participle(italian, emphasiz, sottolineato).
+ty_participle(italian, practice, praticato).
+ty_participle(italian, reinstate, ristabilito).
+ty_participle(italian, rip, strappato).
+ty_participle(italian, rub, strofinato).
+ty_participle(italian, schedule, pianificato).
+ty_participle(italian, shiver, tremato).
+ty_participle(italian, surface, emerso).
+ty_participle(italian, abide, sopportato).
+ty_participle(italian, accredit, accreditato).
+ty_participle(italian, aim, puntato).
+ty_participle(italian, amend, modificato).
+ty_participle(italian, appraise, valutato).
+ty_participle(italian, argue, litigato).
+ty_participle(italian, assert, affermato).
+ty_participle(italian, audit, verificato).
+ty_participle(italian, sieve, setacciato).
+ty_participle(italian, spill, versato).
+ty_participle(italian, stink, puzzato).
+ty_participle(italian, suffice, bastato).
+ty_participle(italian, stripe, sbarrato).
+ty_participle(italian, second, appoggiato).
+ty_participle(italian, baffle, sconcertato).
+ty_participle(italian, ban, proibito).
+ty_participle(italian, bang, colpito).
+ty_participle(italian, bed, alloggiato).
+ty_participle(italian, skew, inclinato).
+ty_participle(italian, bewitch, incantato).
+ty_participle(italian, biass, influenzato).
+ty_participle(italian, bind, legato).
+ty_participle(italian, book, riservato).
+ty_participle(italian, bother, molestato).
+ty_participle(italian, brave, affrontato).
+ty_participle(italian, bump, colpito).
+ty_participle(italian, care, importato).
+ty_participle(italian, carry, portato).
+ty_participle(italian, cast, lanciato).
+ty_participle(italian, cheer, acclamato).
+ty_participle(italian, concern, riguardato).
+ty_participle(italian, confront, affrontato).
+ty_participle(italian, congregate, congregato).
+ty_participle(italian, constrain, costretto).
+ty_participle(italian, consummate, consumato).
+ty_participle(italian, pipe, trasmesso).
+ty_participle(italian, convict, condannato).
+ty_participle(italian, cope, sopportato).
+ty_participle(italian, counsel, consigliato).
+ty_participle(italian, crease, danneggiato).
+ty_participle(italian, darken, oscurato).
+ty_participle(italian, deceive, ingannato).
+ty_participle(italian, defy, sfidato).
+ty_participle(italian, demand, reclamato).
+ty_participle(italian, depict, descritto).
+ty_participle(italian, detect, scoperto).
+ty_participle(italian, devote, dedicato).
+ty_participle(italian, discern, percepito).
+ty_participle(italian, disclose, rivelato).
+ty_participle(italian, dish, servito).
+ty_participle(italian, dismantle, smontato).
+ty_participle(italian, disseminate, diffuso).
+ty_participle(italian, dissipate, dissipato).
+ty_participle(italian, distress, afflitto).
+ty_participle(italian, dope, drogato).
+ty_participle(italian, drain, colato).
+ty_participle(italian, draw, disegnato).
+ty_participle(italian, drip, colato).
+ty_participle(italian, dupe, ingannato).
+ty_participle(italian, dye, colorato).
+ty_participle(italian, ease, alleviato).
+ty_participle(italian, echo, ripetuto).
+ty_participle(italian, effect, effettuato).
+ty_participle(italian, elect, scelto).
+ty_participle(italian, eliminate, eliminato).
+ty_participle(italian, empower, autorizzato).
+ty_participle(italian, enable, autorizzato).
+ty_participle(italian, encipher, cifrato).
+ty_participle(italian, encounter, trovato).
+ty_participle(italian, enlarge, ampliato).
+ty_participle(italian, ensure, assicurato).
+ty_participle(italian, entitle, autorizzato).
+ty_participle(italian, evade, evitato).
+ty_participle(italian, shun, evitato).
+ty_participle(italian, evaluate, valutato).
+ty_participle(italian, excavate, scavato).
+ty_participle(italian, exert, esercitato).
+ty_participle(italian, expand, ampliato).
+ty_participle(italian, exploit, sfruttato).
+ty_participle(italian, face, affrontato).
+ty_participle(italian, falsify, falsificato).
+ty_participle(italian, fancy, piaciuto).
+ty_participle(italian, farm, coltivato).
+ty_participle(italian, figure, rappresentato).
+ty_participle(italian, fire, sparato).
+ty_participle(italian, fit, adattato).
+ty_participle(italian, flee, fuggito).
+ty_participle(italian, flood, inondato).
+ty_participle(italian, fluctuate, fluttuato).
+ty_participle(italian, fly, volato).
+ty_participle(italian, focuss, centrato).
+ty_participle(italian, fortify, fortificato).
+ty_participle(italian, free, liberato).
+ty_participle(italian, freshen, rinfrescato).
+ty_participle(italian, frighten, spaventato).
+ty_participle(italian, fulfil, compiuto).
+ty_participle(italian, fund, finanziato).
+ty_participle(italian, glance, guardato).
+ty_participle(italian, glide, scivolato).
+ty_participle(italian, grant, concesso).
+ty_participle(italian, halt, arrestato).
+ty_participle(italian, hand, consegnato).
+ty_participle(italian, harm, danneggiato).
+ty_participle(italian, harvest, raccolto).
+ty_participle(italian, head, aperto).
+ty_participle(italian, heave, alzato).
+ty_participle(italian, hide, nascosto).
+ty_participle(italian, hinder, impacciato).
+ty_participle(italian, import, importato).
+ty_participle(italian, incline, inclinato).
+ty_participle(italian, inflict, causato).
+ty_participle(italian, inform, informato).
+ty_participle(italian, insure, assicurato).
+ty_participle(italian, inter, inumato).
+ty_participle(italian, interrupt, interrotto).
+ty_participle(italian, inundate, inondato).
+ty_participle(italian, invoice, fatturato).
+ty_participle(italian, involve, implicato).
+ty_participle(italian, irritate, irritato).
+ty_participle(italian, knock, colpito).
+ty_participle(italian, lay, messo).
+ty_participle(italian, lead, diretto).
+ty_participle(italian, leap, saltato).
+ty_participle(italian, lease, affittato).
+ty_participle(italian, remark, osservato).
+ty_participle(italian, remodel, ristrutturato).
+ty_participle(italian, retard, ritardato).
+ty_participle(italian, fuse, fuso).
+ty_participle(italian, lend, lasciato).
+ty_participle(italian, let, lasciato).
+ty_participle(italian, line, allineato).
+ty_participle(italian, load, caricato).
+ty_participle(italian, lock, chiuso).
+ty_participle(italian, lodge, albergato).
+ty_participle(italian, look, parso).
+ty_participle(italian, treasure, amato).
+ty_participle(italian, lower, sceso).
+ty_participle(italian, lunch, mangiato).
+ty_participle(italian, maintain, mantenuto).
+ty_participle(italian, make, fatto).
+ty_participle(italian, manipulate, manipolato).
+ty_participle(italian, merit, meritato).
+ty_participle(italian, migrate, emigrato).
+ty_participle(italian, mind, importato).
+ty_participle(italian, modulate, adattato).
+ty_participle(italian, monitor, controllato).
+ty_participle(italian, name, nominato).
+ty_participle(italian, negotiate, trattato).
+ty_participle(italian, obscure, oscurato).
+ty_participle(italian, obtain, ottenuto).
+ty_participle(italian, oscillate, oscillato).
+ty_participle(italian, participate, partecipato).
+ty_participle(italian, permit, permesso).
+ty_participle(italian, pick, scelto).
+ty_participle(italian, select, scelto).
+ty_participle(italian, pioneer, avviato).
+ty_participle(italian, please, piaciuto).
+ty_participle(italian, poll, ottenuto).
+ty_participle(italian, popularise, diffuso).
+ty_participle(italian, position, collocato).
+ty_participle(italian, possess, posseduto).
+ty_participle(italian, presuppose, presupposto).
+ty_participle(italian, prime, preparato).
+ty_participle(italian, supply, fornito).
+ty_participle(italian, pulsate, pulsato).
+ty_participle(italian, punch, attaccato).
+ty_participle(italian, pursue, perseguito).
+ty_participle(italian, quote, citato).
+ty_participle(italian, raise, alzato).
+ty_participle(italian, rate, stimato).
+ty_participle(italian, recall, ricordato).
+ty_participle(italian, receive, ricevuto).
+ty_participle(italian, reckon, considerato).
+ty_participle(italian, recognise, riconosciuto).
+ty_participle(italian, reconciliate, riconciliato).
+ty_participle(italian, reconstruct, ricostruito).
+ty_participle(italian, recuperate, recuperato).
+ty_participle(italian, register, registrato).
+ty_participle(italian, relieve, rilevato).
+ty_participle(italian, rely, affidato).
+ty_participle(italian, remind, ricordato).
+ty_participle(italian, reply, risposto).
+ty_participle(italian, request, chiesto).
+ty_participle(italian, respond, risposto).
+ty_participle(italian, restrict, limitato).
+ty_participle(italian, run, corso).
+ty_participle(italian, score, marcato).
+ty_participle(italian, scour, registrato).
+ty_participle(italian, seat, seduto).
+ty_participle(italian, secure, assicurato).
+ty_participle(italian, seek, cercato).
+ty_participle(italian, appear, parso).
+ty_participle(italian, seiz, confiscato).
+ty_participle(italian, separate, separato).
+ty_participle(italian, set, messo).
+ty_participle(italian, settle, risolto).
+ty_participle(italian, shell, pelato).
+ty_participle(italian, shift, cambiato).
+ty_participle(italian, ship, imbarcato).
+ty_participle(italian, scream, gridato).
+ty_participle(italian, shut, chiuso).
+ty_participle(italian, signal, segnalato).
+ty_participle(italian, sling, lanciato).
+ty_participle(italian, smash, rotto).
+ty_participle(italian, solve, risolto).
+ty_participle(italian, sort, ordinato).
+ty_participle(italian, speed, accelerato).
+ty_participle(italian, spring, saltato).
+ty_participle(italian, stammer, balbettato).
+ty_participle(italian, state, dichiarato).
+ty_participle(italian, stay, restato).
+ty_participle(italian, stop, detenuto).
+ty_participle(italian, stretch, esteso).
+ty_participle(italian, struggle, combattuto).
+ty_participle(italian, submit, consegnato).
+ty_participle(italian, suit, adattato).
+ty_participle(italian, summon, convocato).
+ty_participle(italian, surpass, superato).
+ty_participle(italian, switch, cambiato).
+ty_participle(italian, talk, parlato).
+ty_participle(italian, tap, toccato).
+ty_participle(italian, target, puntato).
+ty_participle(italian, telephone, telefonato).
+ty_participle(italian, tell, detto).
+ty_participle(italian, tempt, tentato).
+ty_participle(italian, terminate, terminato).
+ty_participle(italian, testify, testimoniato).
+ty_participle(italian, thrust, spinto).
+ty_participle(italian, track, seguito).
+ty_participle(italian, trade, scambiato).
+ty_participle(italian, transact, trattato).
+ty_participle(italian, transmit, trasmesso).
+ty_participle(italian, treat, trattato).
+ty_participle(italian, trick, ingannato).
+ty_participle(italian, trigger, provocato).
+ty_participle(italian, unchain, liberato).
+ty_participle(italian, undergo, subito).
+ty_participle(italian, undermine, scavato).
+ty_participle(italian, unite, unito).
+ty_participle(italian, unload, scaricato).
+ty_participle(italian, unveil, scoperto).
+ty_participle(italian, urge, spinto).
+ty_participle(italian, value, valutato).
+ty_participle(italian, vary, variato).
+ty_participle(italian, view, veduto).
+ty_participle(italian, vow, giurato).
+ty_participle(italian, wait, aspettato).
+ty_participle(italian, wake, svegliato).
+ty_participle(italian, waken, svegliato).
+ty_participle(italian, weep, pianso).
+ty_participle(italian, wet, bagnato).
+ty_participle(italian, wish, desiderato).
+ty_participle(italian, witness, testimoniato).
+ty_participle(italian, zone, circondato).
+ty_verb(italian, happen, future, sg, pos, [avverrà]).
+ty_verb(italian, happen, future, pl, pos, [avverranno]).
+ty_verb(italian, happen, future, sg(1), pos, [avverrò]).
+ty_verb(italian, happen, future, sg(2), pos, [avverrai]).
+ty_verb(italian, happen, future, pl(1), pos, [avverremo]).
+ty_verb(italian, happen, future, pl(2), pos, [avverrete]).
+ty_verb(italian, err, future, sg, pos, [sbaglierà]).
+ty_verb(italian, err, future, pl, pos, [sbaglieranno]).
+ty_verb(italian, err, future, sg(1), pos, [sbaglierò]).
+ty_verb(italian, err, future, sg(2), pos, [sbaglierai]).
+ty_verb(italian, err, future, pl(1), pos, [sbaglieremo]).
+ty_verb(italian, err, future, pl(2), pos, [sbaglierete]).
+ty_verb(italian, impose, future, sg, pos, [imporrà]).
+ty_verb(italian, impose, future, pl, pos, [imporranno]).
+ty_verb(italian, impose, future, sg(1), pos, [imporrò]).
+ty_verb(italian, impose, future, sg(2), pos, [imporrai]).
+ty_verb(italian, impose, future, pl(1), pos, [imporremo]).
+ty_verb(italian, impose, future, pl(2), pos, [imporrete]).
+ty_verb(italian, orient, future, sg, pos, [orienterà]).
+ty_verb(italian, orient, future, pl, pos, [orienteranno]).
+ty_verb(italian, orient, future, sg(1), pos, [orienterò]).
+ty_verb(italian, orient, future, sg(2), pos, [orienterai]).
+ty_verb(italian, orient, future, pl(1), pos, [orienteremo]).
+ty_verb(italian, orient, future, pl(2), pos, [orienterete]).
+ty_verb(italian, take, future, sg, pos, [prenderà]).
+ty_verb(italian, take, future, pl, pos, [prenderanno]).
+ty_verb(italian, take, future, sg(1), pos, [prenderò]).
+ty_verb(italian, take, future, sg(2), pos, [prenderai]).
+ty_verb(italian, take, future, pl(1), pos, [prenderemo]).
+ty_verb(italian, take, future, pl(2), pos, [prenderete]).
+ty_verb(italian, trust, future, sg, pos, [confiderà]).
+ty_verb(italian, trust, future, pl, pos, [confideranno]).
+ty_verb(italian, trust, future, sg(1), pos, [confiderò]).
+ty_verb(italian, trust, future, sg(2), pos, [confiderai]).
+ty_verb(italian, trust, future, pl(1), pos, [confideremo]).
+ty_verb(italian, trust, future, pl(2), pos, [confiderete]).
+ty_verb(italian, explain, future, sg, pos, [spiegherà]).
+ty_verb(italian, explain, future, pl, pos, [spiegheranno]).
+ty_verb(italian, explain, future, sg(1), pos, [spiegherò]).
+ty_verb(italian, explain, future, sg(2), pos, [spiegherai]).
+ty_verb(italian, explain, future, pl(1), pos, [spiegheremo]).
+ty_verb(italian, explain, future, pl(2), pos, [spiegherete]).
+ty_verb(italian, appear, future, sg, pos, [apparirà]).
+ty_verb(italian, appear, future, pl, pos, [appariranno]).
+ty_verb(italian, appear, future, sg(1), pos, [apparirò]).
+ty_verb(italian, appear, future, sg(2), pos, [apparirai]).
+ty_verb(italian, appear, future, pl(1), pos, [appariremo]).
+ty_verb(italian, appear, future, pl(2), pos, [apparirete]).
+ty_verb(italian, appear, future, sg, pos, [figurerà]).
+ty_verb(italian, appear, future, pl, pos, [figureranno]).
+ty_verb(italian, appear, future, sg(1), pos, [figurerò]).
+ty_verb(italian, appear, future, sg(2), pos, [figurerai]).
+ty_verb(italian, appear, future, pl(1), pos, [figureremo]).
+ty_verb(italian, appear, future, pl(2), pos, [figurerete]).
+ty_verb(italian, think, future, sg, pos, [penserà]).
+ty_verb(italian, think, future, pl, pos, [penseranno]).
+ty_verb(italian, think, future, sg(1), pos, [penserò]).
+ty_verb(italian, think, future, sg(2), pos, [penserai]).
+ty_verb(italian, think, future, pl(1), pos, [penseremo]).
+ty_verb(italian, think, future, pl(2), pos, [penserete]).
+ty_verb(italian, enjoy, future, sg, pos, [godrà]).
+ty_verb(italian, enjoy, future, pl, pos, [godranno]).
+ty_verb(italian, enjoy, future, sg(1), pos, [godrò]).
+ty_verb(italian, enjoy, future, sg(2), pos, [godrai]).
+ty_verb(italian, enjoy, future, pl(1), pos, [godremo]).
+ty_verb(italian, enjoy, future, pl(2), pos, [godrete]).
+ty_verb(italian, increase, future, sg, pos, [aumenterà]).
+ty_verb(italian, increase, future, pl, pos, [aumenteranno]).
+ty_verb(italian, increase, future, sg(1), pos, [aumenterò]).
+ty_verb(italian, increase, future, sg(2), pos, [aumenterai]).
+ty_verb(italian, increase, future, pl(1), pos, [aumenteremo]).
+ty_verb(italian, increase, future, pl(2), pos, [aumenterete]).
+ty_verb(italian, concentrate, future, sg, pos, [concentrerà]).
+ty_verb(italian, concentrate, future, pl, pos, [concentreranno]).
+ty_verb(italian, concentrate, future, sg(1), pos, [concentrerò]).
+ty_verb(italian, concentrate, future, sg(2), pos, [concentrerai]).
+ty_verb(italian, concentrate, future, pl(1), pos, [concentreremo]).
+ty_verb(italian, concentrate, future, pl(2), pos, [concentrerete]).
+ty_verb(italian, ban, future, sg, pos, [bandirà]).
+ty_verb(italian, ban, future, pl, pos, [bandiranno]).
+ty_verb(italian, ban, future, sg(1), pos, [bandirò]).
+ty_verb(italian, ban, future, sg(2), pos, [bandirai]).
+ty_verb(italian, ban, future, pl(1), pos, [bandiremo]).
+ty_verb(italian, ban, future, pl(2), pos, [bandirete]).
+ty_verb(italian, forbid, future, sg, pos, [proibirà]).
+ty_verb(italian, forbid, future, pl, pos, [proibiranno]).
+ty_verb(italian, forbid, future, sg(1), pos, [proibirò]).
+ty_verb(italian, forbid, future, sg(2), pos, [proibirai]).
+ty_verb(italian, forbid, future, pl(1), pos, [proibiremo]).
+ty_verb(italian, forbid, future, pl(2), pos, [proibirete]).
+ty_verb(italian, count, future, sg, pos, [conterà]).
+ty_verb(italian, count, future, pl, pos, [conteranno]).
+ty_verb(italian, count, future, sg(1), pos, [conterò]).
+ty_verb(italian, count, future, sg(2), pos, [conterai]).
+ty_verb(italian, count, future, pl(1), pos, [conteremo]).
+ty_verb(italian, count, future, pl(2), pos, [conterete]).
+ty_verb(italian, remember, future, sg, pos, [ricorderà]).
+ty_verb(italian, remember, future, pl, pos, [ricorderanno]).
+ty_verb(italian, remember, future, sg(1), pos, [ricorderò]).
+ty_verb(italian, remember, future, sg(2), pos, [ricorderai]).
+ty_verb(italian, remember, future, pl(1), pos, [ricorderemo]).
+ty_verb(italian, remember, future, pl(2), pos, [ricorderete]).
+ty_verb(italian, change, future, sg, pos, [cambierà]).
+ty_verb(italian, change, future, pl, pos, [cambieranno]).
+ty_verb(italian, change, future, sg(1), pos, [cambierò]).
+ty_verb(italian, change, future, sg(2), pos, [cambierai]).
+ty_verb(italian, change, future, pl(1), pos, [cambieremo]).
+ty_verb(italian, change, future, pl(2), pos, [cambierete]).
+ty_verb(italian, descend, future, sg, pos, [scenderà]).
+ty_verb(italian, descend, future, pl, pos, [scenderanno]).
+ty_verb(italian, descend, future, sg(1), pos, [scenderò]).
+ty_verb(italian, descend, future, sg(2), pos, [scenderai]).
+ty_verb(italian, descend, future, pl(1), pos, [scenderemo]).
+ty_verb(italian, descend, future, pl(2), pos, [scenderete]).
+ty_verb(italian, remain, future, sg, pos, [rimarrà]).
+ty_verb(italian, remain, future, pl, pos, [rimarranno]).
+ty_verb(italian, remain, future, sg(1), pos, [rimarrò]).
+ty_verb(italian, remain, future, sg(2), pos, [rimarrai]).
+ty_verb(italian, remain, future, pl(1), pos, [rimarremo]).
+ty_verb(italian, remain, future, pl(2), pos, [rimarrete]).
+ty_verb(italian, remain, future, sg, pos, [resterà]).
+ty_verb(italian, remain, future, pl, pos, [resteranno]).
+ty_verb(italian, remain, future, sg(1), pos, [resterò]).
+ty_verb(italian, remain, future, sg(2), pos, [resterai]).
+ty_verb(italian, remain, future, pl(1), pos, [resteremo]).
+ty_verb(italian, remain, future, pl(2), pos, [resterete]).
+ty_verb(italian, exit, future, sg, pos, [uscirà]).
+ty_verb(italian, exit, future, pl, pos, [usciranno]).
+ty_verb(italian, exit, future, sg(1), pos, [uscirò]).
+ty_verb(italian, exit, future, sg(2), pos, [uscirai]).
+ty_verb(italian, exit, future, pl(1), pos, [usciremo]).
+ty_verb(italian, exit, future, pl(2), pos, [uscirete]).
+ty_verb(italian, repair, future, sg, pos, [riparerà]).
+ty_verb(italian, repair, future, pl, pos, [ripareranno]).
+ty_verb(italian, repair, future, sg(1), pos, [riparerò]).
+ty_verb(italian, repair, future, sg(2), pos, [riparerai]).
+ty_verb(italian, repair, future, pl(1), pos, [ripareremo]).
+ty_verb(italian, repair, future, pl(2), pos, [riparerete]).
+ty_verb(italian, fix, future, sg, pos, [riparerà]).
+ty_verb(italian, fix, future, pl, pos, [ripareranno]).
+ty_verb(italian, fix, future, sg(1), pos, [riparerò]).
+ty_verb(italian, fix, future, sg(2), pos, [riparerai]).
+ty_verb(italian, fix, future, pl(1), pos, [ripareremo]).
+ty_verb(italian, fix, future, pl(2), pos, [riparerete]).
+ty_verb(italian, back, future, sg, pos, [appoggerà]).
+ty_verb(italian, back, future, pl, pos, [appoggeranno]).
+ty_verb(italian, back, future, sg(1), pos, [appoggerò]).
+ty_verb(italian, back, future, sg(2), pos, [appoggerai]).
+ty_verb(italian, back, future, pl(1), pos, [appoggeremo]).
+ty_verb(italian, back, future, pl(2), pos, [appoggerete]).
+ty_verb(italian, shout, future, sg, pos, [griderà]).
+ty_verb(italian, shout, future, pl, pos, [grideranno]).
+ty_verb(italian, shout, future, sg(1), pos, [griderò]).
+ty_verb(italian, shout, future, sg(2), pos, [griderai]).
+ty_verb(italian, shout, future, pl(1), pos, [grideremo]).
+ty_verb(italian, shout, future, pl(2), pos, [griderete]).
+ty_verb(italian, write, future, sg, pos, [scriverà]).
+ty_verb(italian, write, future, pl, pos, [scriveranno]).
+ty_verb(italian, write, future, sg(1), pos, [scriverò]).
+ty_verb(italian, write, future, sg(2), pos, [scriverai]).
+ty_verb(italian, write, future, pl(1), pos, [scriveremo]).
+ty_verb(italian, write, future, pl(2), pos, [scriverete]).
+ty_verb(italian, withdraw, future, sg, pos, [ritirerà]).
+ty_verb(italian, withdraw, future, pl, pos, [ritireranno]).
+ty_verb(italian, withdraw, future, sg(1), pos, [ritirerò]).
+ty_verb(italian, withdraw, future, sg(2), pos, [ritirerai]).
+ty_verb(italian, withdraw, future, pl(1), pos, [ritireremo]).
+ty_verb(italian, withdraw, future, pl(2), pos, [ritirerete]).
+ty_verb(italian, reject, future, sg, pos, [rifiuterà]).
+ty_verb(italian, reject, future, pl, pos, [rifiuteranno]).
+ty_verb(italian, reject, future, sg(1), pos, [rifiuterò]).
+ty_verb(italian, reject, future, sg(2), pos, [rifiuterai]).
+ty_verb(italian, reject, future, pl(1), pos, [rifiuteremo]).
+ty_verb(italian, reject, future, pl(2), pos, [rifiuterete]).
+ty_verb(italian, trap, future, sg, pos, [intrappolerà]).
+ty_verb(italian, trap, future, pl, pos, [intrappoleranno]).
+ty_verb(italian, trap, future, sg(1), pos, [intrappolerò]).
+ty_verb(italian, trap, future, sg(2), pos, [intrappolerai]).
+ty_verb(italian, trap, future, pl(1), pos, [intrappoleremo]).
+ty_verb(italian, trap, future, pl(2), pos, [intrappolerete]).
+ty_verb(italian, correct, future, sg, pos, [correggerà]).
+ty_verb(italian, correct, future, pl, pos, [correggeranno]).
+ty_verb(italian, correct, future, sg(1), pos, [correggerò]).
+ty_verb(italian, correct, future, sg(2), pos, [correggerai]).
+ty_verb(italian, correct, future, pl(1), pos, [correggeremo]).
+ty_verb(italian, correct, future, pl(2), pos, [correggerete]).
+ty_verb(italian, defend, future, sg, pos, [difenderà]).
+ty_verb(italian, defend, future, pl, pos, [difenderanno]).
+ty_verb(italian, defend, future, sg(1), pos, [difenderò]).
+ty_verb(italian, defend, future, sg(2), pos, [difenderai]).
+ty_verb(italian, defend, future, pl(1), pos, [difenderemo]).
+ty_verb(italian, defend, future, pl(2), pos, [difenderete]).
+ty_verb(italian, oblige, future, sg, pos, [obbligherà]).
+ty_verb(italian, oblige, future, pl, pos, [obbligheranno]).
+ty_verb(italian, oblige, future, sg(1), pos, [obbligherò]).
+ty_verb(italian, oblige, future, sg(2), pos, [obbligherai]).
+ty_verb(italian, oblige, future, pl(1), pos, [obbligheremo]).
+ty_verb(italian, oblige, future, pl(2), pos, [obbligherete]).
+ty_verb(italian, seem, future, sg, pos, [sembrerà]).
+ty_verb(italian, seem, future, pl, pos, [sembreranno]).
+ty_verb(italian, seem, future, sg(1), pos, [sembrerò]).
+ty_verb(italian, seem, future, sg(2), pos, [sembrerai]).
+ty_verb(italian, seem, future, pl(1), pos, [sembreremo]).
+ty_verb(italian, seem, future, pl(2), pos, [sembrerete]).
+ty_verb(italian, seem, future, sg, pos, [parrà]).
+ty_verb(italian, seem, future, pl, pos, [parranno]).
+ty_verb(italian, seem, future, sg(1), pos, [parrò]).
+ty_verb(italian, seem, future, sg(2), pos, [parrai]).
+ty_verb(italian, seem, future, pl(1), pos, [parremo]).
+ty_verb(italian, seem, future, pl(2), pos, [parrete]).
+ty_verb(italian, allow, future, sg, pos, [permetterà]).
+ty_verb(italian, allow, future, pl, pos, [permetteranno]).
+ty_verb(italian, allow, future, sg(1), pos, [permetterò]).
+ty_verb(italian, allow, future, sg(2), pos, [permetterai]).
+ty_verb(italian, allow, future, pl(1), pos, [permetteremo]).
+ty_verb(italian, allow, future, pl(2), pos, [permetterete]).
+ty_verb(italian, allow, future, sg, pos, [consentirà]).
+ty_verb(italian, allow, future, pl, pos, [consentiranno]).
+ty_verb(italian, allow, future, sg(1), pos, [consentirò]).
+ty_verb(italian, allow, future, sg(2), pos, [consentirai]).
+ty_verb(italian, allow, future, pl(1), pos, [consentiremo]).
+ty_verb(italian, allow, future, pl(2), pos, [consentirete]).
+ty_verb(italian, cease, future, sg, pos, [cesserà]).
+ty_verb(italian, cease, future, pl, pos, [cesseranno]).
+ty_verb(italian, cease, future, sg(1), pos, [cesserò]).
+ty_verb(italian, cease, future, sg(2), pos, [cesserai]).
+ty_verb(italian, cease, future, pl(1), pos, [cesseremo]).
+ty_verb(italian, cease, future, pl(2), pos, [cesserete]).
+ty_verb(italian, stop, future, sg, pos, [cesserà]).
+ty_verb(italian, stop, future, pl, pos, [cesseranno]).
+ty_verb(italian, stop, future, sg(1), pos, [cesserò]).
+ty_verb(italian, stop, future, sg(2), pos, [cesserai]).
+ty_verb(italian, stop, future, pl(1), pos, [cesseremo]).
+ty_verb(italian, stop, future, pl(2), pos, [cesserete]).
+ty_verb(italian, exceed, future, sg, pos, [supererà]).
+ty_verb(italian, exceed, future, pl, pos, [supereranno]).
+ty_verb(italian, exceed, future, sg(1), pos, [supererò]).
+ty_verb(italian, exceed, future, sg(2), pos, [supererai]).
+ty_verb(italian, exceed, future, pl(1), pos, [supereremo]).
+ty_verb(italian, exceed, future, pl(2), pos, [supererete]).
+ty_verb(italian, feel, future, sg, pos, [sentirà]).
+ty_verb(italian, feel, future, pl, pos, [sentiranno]).
+ty_verb(italian, feel, future, sg(1), pos, [sentirò]).
+ty_verb(italian, feel, future, sg(2), pos, [sentirai]).
+ty_verb(italian, feel, future, pl(1), pos, [sentiremo]).
+ty_verb(italian, feel, future, pl(2), pos, [sentirete]).
+ty_verb(italian, send, future, sg, pos, [spedirà]).
+ty_verb(italian, send, future, pl, pos, [spediranno]).
+ty_verb(italian, send, future, sg(1), pos, [spedirò]).
+ty_verb(italian, send, future, sg(2), pos, [spedirai]).
+ty_verb(italian, send, future, pl(1), pos, [spediremo]).
+ty_verb(italian, send, future, pl(2), pos, [spedirete]).
+ty_verb(italian, send, future, sg, pos, [manderà]).
+ty_verb(italian, send, future, pl, pos, [manderanno]).
+ty_verb(italian, send, future, sg(1), pos, [manderò]).
+ty_verb(italian, send, future, sg(2), pos, [manderai]).
+ty_verb(italian, send, future, pl(1), pos, [manderemo]).
+ty_verb(italian, send, future, pl(2), pos, [manderete]).
+ty_verb(italian, calculate, future, sg, pos, [calcolerà]).
+ty_verb(italian, calculate, future, pl, pos, [calcoleranno]).
+ty_verb(italian, calculate, future, sg(1), pos, [calcolerò]).
+ty_verb(italian, calculate, future, sg(2), pos, [calcolerai]).
+ty_verb(italian, calculate, future, pl(1), pos, [calcoleremo]).
+ty_verb(italian, calculate, future, pl(2), pos, [calcolerete]).
+ty_verb(italian, observe, future, sg, pos, [osserverà]).
+ty_verb(italian, observe, future, pl, pos, [osserveranno]).
+ty_verb(italian, observe, future, sg(1), pos, [osserverò]).
+ty_verb(italian, observe, future, sg(2), pos, [osserverai]).
+ty_verb(italian, observe, future, pl(1), pos, [osserveremo]).
+ty_verb(italian, observe, future, pl(2), pos, [osserverete]).
+ty_verb(italian, observe, future, sg, pos, [rileverà]).
+ty_verb(italian, observe, future, pl, pos, [rileveranno]).
+ty_verb(italian, observe, future, sg(1), pos, [rileverò]).
+ty_verb(italian, observe, future, sg(2), pos, [rileverai]).
+ty_verb(italian, observe, future, pl(1), pos, [rileveremo]).
+ty_verb(italian, observe, future, pl(2), pos, [rileverete]).
+ty_verb(italian, announce, future, sg, pos, [annuncerà]).
+ty_verb(italian, announce, future, pl, pos, [annunceranno]).
+ty_verb(italian, announce, future, sg(1), pos, [annuncerò]).
+ty_verb(italian, announce, future, sg(2), pos, [annuncerai]).
+ty_verb(italian, announce, future, pl(1), pos, [annunceremo]).
+ty_verb(italian, announce, future, pl(2), pos, [annuncerete]).
+ty_verb(italian, disorganiz, future, sg, pos, [dissesterà]).
+ty_verb(italian, disorganiz, future, pl, pos, [dissesteranno]).
+ty_verb(italian, disorganiz, future, sg(1), pos, [dissesterò]).
+ty_verb(italian, disorganiz, future, sg(2), pos, [dissesterai]).
+ty_verb(italian, disorganiz, future, pl(1), pos, [dissesteremo]).
+ty_verb(italian, disorganiz, future, pl(2), pos, [dissesterete]).
+ty_verb(italian, drive, future, sg, pos, [guiderà]).
+ty_verb(italian, drive, future, pl, pos, [guideranno]).
+ty_verb(italian, drive, future, sg(1), pos, [guiderò]).
+ty_verb(italian, drive, future, sg(2), pos, [guiderai]).
+ty_verb(italian, drive, future, pl(1), pos, [guideremo]).
+ty_verb(italian, drive, future, pl(2), pos, [guiderete]).
+ty_verb(italian, head, future, sg, pos, [guiderà]).
+ty_verb(italian, head, future, pl, pos, [guideranno]).
+ty_verb(italian, head, future, sg(1), pos, [guiderò]).
+ty_verb(italian, head, future, sg(2), pos, [guiderai]).
+ty_verb(italian, head, future, pl(1), pos, [guideremo]).
+ty_verb(italian, head, future, pl(2), pos, [guiderete]).
+ty_verb(italian, find, future, sg, pos, [troverà]).
+ty_verb(italian, find, future, pl, pos, [troveranno]).
+ty_verb(italian, find, future, sg(1), pos, [troverò]).
+ty_verb(italian, find, future, sg(2), pos, [troverai]).
+ty_verb(italian, find, future, pl(1), pos, [troveremo]).
+ty_verb(italian, find, future, pl(2), pos, [troverete]).
+ty_verb(italian, turn, future, sg, pos, [girerà]).
+ty_verb(italian, turn, future, pl, pos, [gireranno]).
+ty_verb(italian, turn, future, sg(1), pos, [girerò]).
+ty_verb(italian, turn, future, sg(2), pos, [girerai]).
+ty_verb(italian, turn, future, pl(1), pos, [gireremo]).
+ty_verb(italian, turn, future, pl(2), pos, [girerete]).
+ty_verb(italian, believe, future, sg, pos, [crederà]).
+ty_verb(italian, believe, future, pl, pos, [crederanno]).
+ty_verb(italian, believe, future, sg(1), pos, [crederò]).
+ty_verb(italian, believe, future, sg(2), pos, [crederai]).
+ty_verb(italian, believe, future, pl(1), pos, [crederemo]).
+ty_verb(italian, believe, future, pl(2), pos, [crederete]).
+ty_verb(italian, believe, future, sg, pos, [riterrà]).
+ty_verb(italian, believe, future, pl, pos, [riterranno]).
+ty_verb(italian, believe, future, sg(1), pos, [riterrò]).
+ty_verb(italian, believe, future, sg(2), pos, [riterrai]).
+ty_verb(italian, believe, future, pl(1), pos, [riterremo]).
+ty_verb(italian, believe, future, pl(2), pos, [riterrete]).
+ty_verb(italian, find, future, sg, pos, [ritroverà]).
+ty_verb(italian, find, future, pl, pos, [ritroveranno]).
+ty_verb(italian, find, future, sg(1), pos, [ritroverò]).
+ty_verb(italian, find, future, sg(2), pos, [ritroverai]).
+ty_verb(italian, find, future, pl(1), pos, [ritroveremo]).
+ty_verb(italian, find, future, pl(2), pos, [ritroverete]).
+ty_verb(italian, regret, future, sg, pos, [lamenterà]).
+ty_verb(italian, regret, future, pl, pos, [lamenteranno]).
+ty_verb(italian, regret, future, sg(1), pos, [lamenterò]).
+ty_verb(italian, regret, future, sg(2), pos, [lamenterai]).
+ty_verb(italian, regret, future, pl(1), pos, [lamenteremo]).
+ty_verb(italian, regret, future, pl(2), pos, [lamenterete]).
+ty_verb(italian, complain, future, sg, pos, [lamenterà]).
+ty_verb(italian, complain, future, pl, pos, [lamenteranno]).
+ty_verb(italian, complain, future, sg(1), pos, [lamenterò]).
+ty_verb(italian, complain, future, sg(2), pos, [lamenterai]).
+ty_verb(italian, complain, future, pl(1), pos, [lamenteremo]).
+ty_verb(italian, complain, future, pl(2), pos, [lamenterete]).
+ty_verb(italian, attain, future, sg, pos, [riuscirà]).
+ty_verb(italian, attain, future, pl, pos, [riusciranno]).
+ty_verb(italian, attain, future, sg(1), pos, [riuscirò]).
+ty_verb(italian, attain, future, sg(2), pos, [riuscirai]).
+ty_verb(italian, attain, future, pl(1), pos, [riusciremo]).
+ty_verb(italian, attain, future, pl(2), pos, [riuscirete]).
+ty_verb(italian, approve, future, sg, pos, [approverà]).
+ty_verb(italian, approve, future, pl, pos, [approveranno]).
+ty_verb(italian, approve, future, sg(1), pos, [approverò]).
+ty_verb(italian, approve, future, sg(2), pos, [approverai]).
+ty_verb(italian, approve, future, pl(1), pos, [approveremo]).
+ty_verb(italian, approve, future, pl(2), pos, [approverete]).
+ty_verb(italian, warn, future, sg, pos, [avvertirà]).
+ty_verb(italian, warn, future, pl, pos, [avvertiranno]).
+ty_verb(italian, warn, future, sg(1), pos, [avvertirò]).
+ty_verb(italian, warn, future, sg(2), pos, [avvertirai]).
+ty_verb(italian, warn, future, pl(1), pos, [avvertiremo]).
+ty_verb(italian, warn, future, pl(2), pos, [avvertirete]).
+ty_verb(italian, publish, future, sg, pos, [pubblicherà]).
+ty_verb(italian, publish, future, pl, pos, [pubblicheranno]).
+ty_verb(italian, publish, future, sg(1), pos, [pubblicherò]).
+ty_verb(italian, publish, future, sg(2), pos, [pubblicherai]).
+ty_verb(italian, publish, future, pl(1), pos, [pubblicheremo]).
+ty_verb(italian, publish, future, pl(2), pos, [pubblicherete]).
+ty_verb(italian, annoy, future, sg, pos, [infastidirà]).
+ty_verb(italian, annoy, future, pl, pos, [infastidiranno]).
+ty_verb(italian, annoy, future, sg(1), pos, [infastidirò]).
+ty_verb(italian, annoy, future, sg(2), pos, [infastidirai]).
+ty_verb(italian, annoy, future, pl(1), pos, [infastidiremo]).
+ty_verb(italian, annoy, future, pl(2), pos, [infastidirete]).
+ty_verb(italian, manacle, future, sg, pos, [ammanetterà]).
+ty_verb(italian, manacle, future, pl, pos, [ammanetteranno]).
+ty_verb(italian, manacle, future, sg(1), pos, [ammanetterò]).
+ty_verb(italian, manacle, future, sg(2), pos, [ammanetterai]).
+ty_verb(italian, manacle, future, pl(1), pos, [ammanetteremo]).
+ty_verb(italian, manacle, future, pl(2), pos, [ammanetterete]).
+ty_verb(italian, hope, future, sg, pos, [auspicherà]).
+ty_verb(italian, hope, future, pl, pos, [auspicheranno]).
+ty_verb(italian, hope, future, sg(1), pos, [auspicherò]).
+ty_verb(italian, hope, future, sg(2), pos, [auspicherai]).
+ty_verb(italian, hope, future, pl(1), pos, [auspicheremo]).
+ty_verb(italian, hope, future, pl(2), pos, [auspicherete]).
+ty_verb(italian, advocate, future, sg, pos, [auspicherà]).
+ty_verb(italian, advocate, future, pl, pos, [auspicheranno]).
+ty_verb(italian, advocate, future, sg(1), pos, [auspicherò]).
+ty_verb(italian, advocate, future, sg(2), pos, [auspicherai]).
+ty_verb(italian, advocate, future, pl(1), pos, [auspicheremo]).
+ty_verb(italian, advocate, future, pl(2), pos, [auspicherete]).
+ty_verb(italian, declare, future, sg, pos, [dichiarerà]).
+ty_verb(italian, declare, future, pl, pos, [dichiareranno]).
+ty_verb(italian, declare, future, sg(1), pos, [dichiarerò]).
+ty_verb(italian, declare, future, sg(2), pos, [dichiarerai]).
+ty_verb(italian, declare, future, pl(1), pos, [dichiareremo]).
+ty_verb(italian, declare, future, pl(2), pos, [dichiarerete]).
+ty_verb(italian, engage, future, sg, pos, [ingaggerà]).
+ty_verb(italian, engage, future, pl, pos, [ingaggeranno]).
+ty_verb(italian, engage, future, sg(1), pos, [ingaggerò]).
+ty_verb(italian, engage, future, sg(2), pos, [ingaggerai]).
+ty_verb(italian, engage, future, pl(1), pos, [ingaggeremo]).
+ty_verb(italian, engage, future, pl(2), pos, [ingaggerete]).
+ty_verb(italian, engage, future, sg, pos, [impegnerà]).
+ty_verb(italian, engage, future, pl, pos, [impegneranno]).
+ty_verb(italian, engage, future, sg(1), pos, [impegnerò]).
+ty_verb(italian, engage, future, sg(2), pos, [impegnerai]).
+ty_verb(italian, engage, future, pl(1), pos, [impegneremo]).
+ty_verb(italian, engage, future, pl(2), pos, [impegnerete]).
+ty_verb(italian, endure, future, sg, pos, [sopporterà]).
+ty_verb(italian, endure, future, pl, pos, [sopporteranno]).
+ty_verb(italian, endure, future, sg(1), pos, [sopporterò]).
+ty_verb(italian, endure, future, sg(2), pos, [sopporterai]).
+ty_verb(italian, endure, future, pl(1), pos, [sopporteremo]).
+ty_verb(italian, endure, future, pl(2), pos, [sopporterete]).
+ty_verb(italian, inscribe, future, sg, pos, [iscriverà]).
+ty_verb(italian, inscribe, future, pl, pos, [iscriveranno]).
+ty_verb(italian, inscribe, future, sg(1), pos, [iscriverò]).
+ty_verb(italian, inscribe, future, sg(2), pos, [iscriverai]).
+ty_verb(italian, inscribe, future, pl(1), pos, [iscriveremo]).
+ty_verb(italian, inscribe, future, pl(2), pos, [iscriverete]).
+ty_verb(italian, clarify, future, sg, pos, [chiarirà]).
+ty_verb(italian, clarify, future, pl, pos, [chiariranno]).
+ty_verb(italian, clarify, future, sg(1), pos, [chiarirò]).
+ty_verb(italian, clarify, future, sg(2), pos, [chiarirai]).
+ty_verb(italian, clarify, future, pl(1), pos, [chiariremo]).
+ty_verb(italian, clarify, future, pl(2), pos, [chiarirete]).
+ty_verb(italian, clarify, future, sg, pos, [premetterà]).
+ty_verb(italian, clarify, future, pl, pos, [premetteranno]).
+ty_verb(italian, clarify, future, sg(1), pos, [premetterò]).
+ty_verb(italian, clarify, future, sg(2), pos, [premetterai]).
+ty_verb(italian, clarify, future, pl(1), pos, [premetteremo]).
+ty_verb(italian, clarify, future, pl(2), pos, [premetterete]).
+ty_verb(italian, aspire, future, sg, pos, [aspirerà]).
+ty_verb(italian, aspire, future, pl, pos, [aspireranno]).
+ty_verb(italian, aspire, future, sg(1), pos, [aspirerò]).
+ty_verb(italian, aspire, future, sg(2), pos, [aspirerai]).
+ty_verb(italian, aspire, future, pl(1), pos, [aspireremo]).
+ty_verb(italian, aspire, future, pl(2), pos, [aspirerete]).
+ty_verb(italian, issue, future, sg, pos, [emetterà]).
+ty_verb(italian, issue, future, pl, pos, [emetteranno]).
+ty_verb(italian, issue, future, sg(1), pos, [emetterò]).
+ty_verb(italian, issue, future, sg(2), pos, [emetterai]).
+ty_verb(italian, issue, future, pl(1), pos, [emetteremo]).
+ty_verb(italian, issue, future, pl(2), pos, [emetterete]).
+ty_verb(italian, fear, future, sg, pos, [temerà]).
+ty_verb(italian, fear, future, pl, pos, [temeranno]).
+ty_verb(italian, fear, future, sg(1), pos, [temerò]).
+ty_verb(italian, fear, future, sg(2), pos, [temerai]).
+ty_verb(italian, fear, future, pl(1), pos, [temeremo]).
+ty_verb(italian, fear, future, pl(2), pos, [temerete]).
+ty_verb(italian, return, future, sg, pos, [ritornerà]).
+ty_verb(italian, return, future, pl, pos, [ritorneranno]).
+ty_verb(italian, return, future, sg(1), pos, [ritornerò]).
+ty_verb(italian, return, future, sg(2), pos, [ritornerai]).
+ty_verb(italian, return, future, pl(1), pos, [ritorneremo]).
+ty_verb(italian, return, future, pl(2), pos, [ritornerete]).
+ty_verb(italian, administer, future, sg, pos, [amministrerà]).
+ty_verb(italian, administer, future, pl, pos, [amministreranno]).
+ty_verb(italian, administer, future, sg(1), pos, [amministrerò]).
+ty_verb(italian, administer, future, sg(2), pos, [amministrerai]).
+ty_verb(italian, administer, future, pl(1), pos, [amministreremo]).
+ty_verb(italian, administer, future, pl(2), pos, [amministrerete]).
+ty_verb(italian, administer, future, sg, pos, [gestirà]).
+ty_verb(italian, administer, future, pl, pos, [gestiranno]).
+ty_verb(italian, administer, future, sg(1), pos, [gestirò]).
+ty_verb(italian, administer, future, sg(2), pos, [gestirai]).
+ty_verb(italian, administer, future, pl(1), pos, [gestiremo]).
+ty_verb(italian, administer, future, pl(2), pos, [gestirete]).
+ty_verb(italian, reflect, future, sg, pos, [rifletterà]).
+ty_verb(italian, reflect, future, pl, pos, [rifletteranno]).
+ty_verb(italian, reflect, future, sg(1), pos, [rifletterò]).
+ty_verb(italian, reflect, future, sg(2), pos, [rifletterai]).
+ty_verb(italian, reflect, future, pl(1), pos, [rifletteremo]).
+ty_verb(italian, reflect, future, pl(2), pos, [rifletterete]).
+ty_verb(italian, join, future, sg, pos, [unirà]).
+ty_verb(italian, join, future, pl, pos, [uniranno]).
+ty_verb(italian, join, future, sg(1), pos, [unirò]).
+ty_verb(italian, join, future, sg(2), pos, [unirai]).
+ty_verb(italian, join, future, pl(1), pos, [uniremo]).
+ty_verb(italian, join, future, pl(2), pos, [unirete]).
+ty_verb(italian, join, future, sg, pos, [aggregherà]).
+ty_verb(italian, join, future, pl, pos, [aggregheranno]).
+ty_verb(italian, join, future, sg(1), pos, [aggregherò]).
+ty_verb(italian, join, future, sg(2), pos, [aggregherai]).
+ty_verb(italian, join, future, pl(1), pos, [aggregheremo]).
+ty_verb(italian, join, future, pl(2), pos, [aggregherete]).
+ty_verb(italian, ask, future, sg, pos, [chiederà]).
+ty_verb(italian, ask, future, pl, pos, [chiederanno]).
+ty_verb(italian, ask, future, sg(1), pos, [chiederò]).
+ty_verb(italian, ask, future, sg(2), pos, [chiederai]).
+ty_verb(italian, ask, future, pl(1), pos, [chiederemo]).
+ty_verb(italian, ask, future, pl(2), pos, [chiederete]).
+ty_verb(italian, demand, future, sg, pos, [chiederà]).
+ty_verb(italian, demand, future, pl, pos, [chiederanno]).
+ty_verb(italian, demand, future, sg(1), pos, [chiederò]).
+ty_verb(italian, demand, future, sg(2), pos, [chiederai]).
+ty_verb(italian, demand, future, pl(1), pos, [chiederemo]).
+ty_verb(italian, demand, future, pl(2), pos, [chiederete]).
+ty_verb(italian, agree, future, sg, pos, [concorderà]).
+ty_verb(italian, agree, future, pl, pos, [concorderanno]).
+ty_verb(italian, agree, future, sg(1), pos, [concorderò]).
+ty_verb(italian, agree, future, sg(2), pos, [concorderai]).
+ty_verb(italian, agree, future, pl(1), pos, [concorderemo]).
+ty_verb(italian, agree, future, pl(2), pos, [concorderete]).
+ty_verb(italian, point, future, sg, pos, [punterà]).
+ty_verb(italian, point, future, pl, pos, [punteranno]).
+ty_verb(italian, point, future, sg(1), pos, [punterò]).
+ty_verb(italian, point, future, sg(2), pos, [punterai]).
+ty_verb(italian, point, future, pl(1), pos, [punteremo]).
+ty_verb(italian, point, future, pl(2), pos, [punterete]).
+ty_verb(italian, bet, future, sg, pos, [punterà]).
+ty_verb(italian, bet, future, pl, pos, [punteranno]).
+ty_verb(italian, bet, future, sg(1), pos, [punterò]).
+ty_verb(italian, bet, future, sg(2), pos, [punterai]).
+ty_verb(italian, bet, future, pl(1), pos, [punteremo]).
+ty_verb(italian, bet, future, pl(2), pos, [punterete]).
+ty_verb(italian, distance, future, sg, pos, [distanzierà]).
+ty_verb(italian, distance, future, pl, pos, [distanzieranno]).
+ty_verb(italian, distance, future, sg(1), pos, [distanzierò]).
+ty_verb(italian, distance, future, sg(2), pos, [distanzierai]).
+ty_verb(italian, distance, future, pl(1), pos, [distanzieremo]).
+ty_verb(italian, distance, future, pl(2), pos, [distanzierete]).
+ty_verb(italian, rebuke, future, sg, pos, [bacchetterà]).
+ty_verb(italian, rebuke, future, pl, pos, [bacchetteranno]).
+ty_verb(italian, rebuke, future, sg(1), pos, [bacchetterò]).
+ty_verb(italian, rebuke, future, sg(2), pos, [bacchetterai]).
+ty_verb(italian, rebuke, future, pl(1), pos, [bacchetteremo]).
+ty_verb(italian, rebuke, future, pl(2), pos, [bacchetterete]).
+ty_verb(italian, commit, future, sg, pos, [commetterà]).
+ty_verb(italian, commit, future, pl, pos, [commetteranno]).
+ty_verb(italian, commit, future, sg(1), pos, [commetterò]).
+ty_verb(italian, commit, future, sg(2), pos, [commetterai]).
+ty_verb(italian, commit, future, pl(1), pos, [commetteremo]).
+ty_verb(italian, commit, future, pl(2), pos, [commetterete]).
+ty_verb(italian, commit, future, sg, pos, [compirà]).
+ty_verb(italian, commit, future, pl, pos, [compiranno]).
+ty_verb(italian, commit, future, sg(1), pos, [compirò]).
+ty_verb(italian, commit, future, sg(2), pos, [compirai]).
+ty_verb(italian, commit, future, pl(1), pos, [compiremo]).
+ty_verb(italian, commit, future, pl(2), pos, [compirete]).
+ty_verb(italian, take, future, sg, pos, [assumerà]).
+ty_verb(italian, take, future, pl, pos, [assumeranno]).
+ty_verb(italian, take, future, sg(1), pos, [assumerò]).
+ty_verb(italian, take, future, sg(2), pos, [assumerai]).
+ty_verb(italian, take, future, pl(1), pos, [assumeremo]).
+ty_verb(italian, take, future, pl(2), pos, [assumerete]).
+ty_verb(italian, regain, future, sg, pos, [riconquisterà]).
+ty_verb(italian, regain, future, pl, pos, [riconquisteranno]).
+ty_verb(italian, regain, future, sg(1), pos, [riconquisterò]).
+ty_verb(italian, regain, future, sg(2), pos, [riconquisterai]).
+ty_verb(italian, regain, future, pl(1), pos, [riconquisteremo]).
+ty_verb(italian, regain, future, pl(2), pos, [riconquisterete]).
+ty_verb(italian, maintain, future, sg, pos, [sosterrà]).
+ty_verb(italian, maintain, future, pl, pos, [sosterranno]).
+ty_verb(italian, maintain, future, sg(1), pos, [sosterrò]).
+ty_verb(italian, maintain, future, sg(2), pos, [sosterrai]).
+ty_verb(italian, maintain, future, pl(1), pos, [sosterremo]).
+ty_verb(italian, maintain, future, pl(2), pos, [sosterrete]).
+ty_verb(italian, accept, future, sg, pos, [accetterà]).
+ty_verb(italian, accept, future, pl, pos, [accetteranno]).
+ty_verb(italian, accept, future, sg(1), pos, [accetterò]).
+ty_verb(italian, accept, future, sg(2), pos, [accetterai]).
+ty_verb(italian, accept, future, pl(1), pos, [accetteremo]).
+ty_verb(italian, accept, future, pl(2), pos, [accetterete]).
+ty_verb(italian, accept, future, sg, pos, [accoglierà]).
+ty_verb(italian, accept, future, pl, pos, [accoglieranno]).
+ty_verb(italian, accept, future, sg(1), pos, [accoglierò]).
+ty_verb(italian, accept, future, sg(2), pos, [accoglierai]).
+ty_verb(italian, accept, future, pl(1), pos, [accoglieremo]).
+ty_verb(italian, accept, future, pl(2), pos, [accoglierete]).
+ty_verb(italian, appeal, future, sg, pos, [ricorrerà]).
+ty_verb(italian, appeal, future, pl, pos, [ricorreranno]).
+ty_verb(italian, appeal, future, sg(1), pos, [ricorrerò]).
+ty_verb(italian, appeal, future, sg(2), pos, [ricorrerai]).
+ty_verb(italian, appeal, future, pl(1), pos, [ricorreremo]).
+ty_verb(italian, appeal, future, pl(2), pos, [ricorrerete]).
+ty_verb(italian, release, future, sg, pos, [libererà]).
+ty_verb(italian, release, future, pl, pos, [libereranno]).
+ty_verb(italian, release, future, sg(1), pos, [libererò]).
+ty_verb(italian, release, future, sg(2), pos, [libererai]).
+ty_verb(italian, release, future, pl(1), pos, [libereremo]).
+ty_verb(italian, release, future, pl(2), pos, [libererete]).
+ty_verb(italian, encourage, future, sg, pos, [incoraggerà]).
+ty_verb(italian, encourage, future, pl, pos, [incoraggeranno]).
+ty_verb(italian, encourage, future, sg(1), pos, [incoraggerò]).
+ty_verb(italian, encourage, future, sg(2), pos, [incoraggerai]).
+ty_verb(italian, encourage, future, pl(1), pos, [incoraggeremo]).
+ty_verb(italian, encourage, future, pl(2), pos, [incoraggerete]).
+ty_verb(italian, fight, future, sg, pos, [combatterà]).
+ty_verb(italian, fight, future, pl, pos, [combatteranno]).
+ty_verb(italian, fight, future, sg(1), pos, [combatterò]).
+ty_verb(italian, fight, future, sg(2), pos, [combatterai]).
+ty_verb(italian, fight, future, pl(1), pos, [combatteremo]).
+ty_verb(italian, fight, future, pl(2), pos, [combatterete]).
+ty_verb(italian, curb, future, sg, pos, [frenerà]).
+ty_verb(italian, curb, future, pl, pos, [freneranno]).
+ty_verb(italian, curb, future, sg(1), pos, [frenerò]).
+ty_verb(italian, curb, future, sg(2), pos, [frenerai]).
+ty_verb(italian, curb, future, pl(1), pos, [freneremo]).
+ty_verb(italian, curb, future, pl(2), pos, [frenerete]).
+ty_verb(italian, depart, future, sg, pos, [partirà]).
+ty_verb(italian, depart, future, pl, pos, [partiranno]).
+ty_verb(italian, depart, future, sg(1), pos, [partirò]).
+ty_verb(italian, depart, future, sg(2), pos, [partirai]).
+ty_verb(italian, depart, future, pl(1), pos, [partiremo]).
+ty_verb(italian, depart, future, pl(2), pos, [partirete]).
+ty_verb(italian, split, future, sg, pos, [partirà]).
+ty_verb(italian, split, future, pl, pos, [partiranno]).
+ty_verb(italian, split, future, sg(1), pos, [partirò]).
+ty_verb(italian, split, future, sg(2), pos, [partirai]).
+ty_verb(italian, split, future, pl(1), pos, [partiremo]).
+ty_verb(italian, split, future, pl(2), pos, [partirete]).
+ty_verb(italian, bring, future, sg, pos, [porterà]).
+ty_verb(italian, bring, future, pl, pos, [porteranno]).
+ty_verb(italian, bring, future, sg(1), pos, [porterò]).
+ty_verb(italian, bring, future, sg(2), pos, [porterai]).
+ty_verb(italian, bring, future, pl(1), pos, [porteremo]).
+ty_verb(italian, bring, future, pl(2), pos, [porterete]).
+ty_verb(italian, influence, future, sg, pos, [influenzerà]).
+ty_verb(italian, influence, future, pl, pos, [influenzeranno]).
+ty_verb(italian, influence, future, sg(1), pos, [influenzerò]).
+ty_verb(italian, influence, future, sg(2), pos, [influenzerai]).
+ty_verb(italian, influence, future, pl(1), pos, [influenzeremo]).
+ty_verb(italian, influence, future, pl(2), pos, [influenzerete]).
+ty_verb(italian, attempt, future, sg, pos, [tenterà]).
+ty_verb(italian, attempt, future, pl, pos, [tenteranno]).
+ty_verb(italian, attempt, future, sg(1), pos, [tenterò]).
+ty_verb(italian, attempt, future, sg(2), pos, [tenterai]).
+ty_verb(italian, attempt, future, pl(1), pos, [tenteremo]).
+ty_verb(italian, attempt, future, pl(2), pos, [tenterete]).
+ty_verb(italian, try, future, sg, pos, [tenterà]).
+ty_verb(italian, try, future, pl, pos, [tenteranno]).
+ty_verb(italian, try, future, sg(1), pos, [tenterò]).
+ty_verb(italian, try, future, sg(2), pos, [tenterai]).
+ty_verb(italian, try, future, pl(1), pos, [tenteremo]).
+ty_verb(italian, try, future, pl(2), pos, [tenterete]).
+ty_verb(italian, search, future, sg, pos, [cercherà]).
+ty_verb(italian, search, future, pl, pos, [cercheranno]).
+ty_verb(italian, search, future, sg(1), pos, [cercherò]).
+ty_verb(italian, search, future, sg(2), pos, [cercherai]).
+ty_verb(italian, search, future, pl(1), pos, [cercheremo]).
+ty_verb(italian, search, future, pl(2), pos, [cercherete]).
+ty_verb(italian, choose, future, sg, pos, [sceglierà]).
+ty_verb(italian, choose, future, pl, pos, [sceglieranno]).
+ty_verb(italian, choose, future, sg(1), pos, [sceglierò]).
+ty_verb(italian, choose, future, sg(2), pos, [sceglierai]).
+ty_verb(italian, choose, future, pl(1), pos, [sceglieremo]).
+ty_verb(italian, choose, future, pl(2), pos, [sceglierete]).
+ty_verb(italian, elect, future, sg, pos, [eleggerà]).
+ty_verb(italian, elect, future, pl, pos, [eleggeranno]).
+ty_verb(italian, elect, future, sg(1), pos, [eleggerò]).
+ty_verb(italian, elect, future, sg(2), pos, [eleggerai]).
+ty_verb(italian, elect, future, pl(1), pos, [eleggeremo]).
+ty_verb(italian, elect, future, pl(2), pos, [eleggerete]).
+ty_verb(italian, keep, future, sg, pos, [manterrà]).
+ty_verb(italian, keep, future, pl, pos, [manterranno]).
+ty_verb(italian, keep, future, sg(1), pos, [manterrò]).
+ty_verb(italian, keep, future, sg(2), pos, [manterrai]).
+ty_verb(italian, keep, future, pl(1), pos, [manterremo]).
+ty_verb(italian, keep, future, pl(2), pos, [manterrete]).
+ty_verb(italian, prepare, future, sg, pos, [preparerà]).
+ty_verb(italian, prepare, future, pl, pos, [prepareranno]).
+ty_verb(italian, prepare, future, sg(1), pos, [preparerò]).
+ty_verb(italian, prepare, future, sg(2), pos, [preparerai]).
+ty_verb(italian, prepare, future, pl(1), pos, [prepareremo]).
+ty_verb(italian, prepare, future, pl(2), pos, [preparerete]).
+ty_verb(italian, swim, future, sg, pos, [nuoterà]).
+ty_verb(italian, swim, future, pl, pos, [nuoteranno]).
+ty_verb(italian, swim, future, sg(1), pos, [nuoterò]).
+ty_verb(italian, swim, future, sg(2), pos, [nuoterai]).
+ty_verb(italian, swim, future, pl(1), pos, [nuoteremo]).
+ty_verb(italian, swim, future, pl(2), pos, [nuoterete]).
+ty_verb(italian, set, future, sg, pos, [fisserà]).
+ty_verb(italian, set, future, pl, pos, [fisseranno]).
+ty_verb(italian, set, future, sg(1), pos, [fisserò]).
+ty_verb(italian, set, future, sg(2), pos, [fisserai]).
+ty_verb(italian, set, future, pl(1), pos, [fisseremo]).
+ty_verb(italian, set, future, pl(2), pos, [fisserete]).
+ty_verb(italian, pose, future, sg, pos, [solleverà]).
+ty_verb(italian, pose, future, pl, pos, [solleveranno]).
+ty_verb(italian, pose, future, sg(1), pos, [solleverò]).
+ty_verb(italian, pose, future, sg(2), pos, [solleverai]).
+ty_verb(italian, pose, future, pl(1), pos, [solleveremo]).
+ty_verb(italian, pose, future, pl(2), pos, [solleverete]).
+ty_verb(italian, relieve, future, sg, pos, [solleverà]).
+ty_verb(italian, relieve, future, pl, pos, [solleveranno]).
+ty_verb(italian, relieve, future, sg(1), pos, [solleverò]).
+ty_verb(italian, relieve, future, sg(2), pos, [solleverai]).
+ty_verb(italian, relieve, future, pl(1), pos, [solleveremo]).
+ty_verb(italian, relieve, future, pl(2), pos, [solleverete]).
+ty_verb(italian, resign, future, sg, pos, [dimetterà]).
+ty_verb(italian, resign, future, pl, pos, [dimetteranno]).
+ty_verb(italian, resign, future, sg(1), pos, [dimetterò]).
+ty_verb(italian, resign, future, sg(2), pos, [dimetterai]).
+ty_verb(italian, resign, future, pl(1), pos, [dimetteremo]).
+ty_verb(italian, resign, future, pl(2), pos, [dimetterete]).
+ty_verb(italian, resign, future, sg, pos, [rassegnerà]).
+ty_verb(italian, resign, future, pl, pos, [rassegneranno]).
+ty_verb(italian, resign, future, sg(1), pos, [rassegnerò]).
+ty_verb(italian, resign, future, sg(2), pos, [rassegnerai]).
+ty_verb(italian, resign, future, pl(1), pos, [rassegneremo]).
+ty_verb(italian, resign, future, pl(2), pos, [rassegnerete]).
+ty_verb(italian, entail, future, sg, pos, [comporterà]).
+ty_verb(italian, entail, future, pl, pos, [comporteranno]).
+ty_verb(italian, entail, future, sg(1), pos, [comporterò]).
+ty_verb(italian, entail, future, sg(2), pos, [comporterai]).
+ty_verb(italian, entail, future, pl(1), pos, [comporteremo]).
+ty_verb(italian, entail, future, pl(2), pos, [comporterete]).
+ty_verb(italian, range, future, sg, pos, [oscillerà]).
+ty_verb(italian, range, future, pl, pos, [oscilleranno]).
+ty_verb(italian, range, future, sg(1), pos, [oscillerò]).
+ty_verb(italian, range, future, sg(2), pos, [oscillerai]).
+ty_verb(italian, range, future, pl(1), pos, [oscilleremo]).
+ty_verb(italian, range, future, pl(2), pos, [oscillerete]).
+ty_verb(italian, transit, future, sg, pos, [transiterà]).
+ty_verb(italian, transit, future, pl, pos, [transiteranno]).
+ty_verb(italian, transit, future, sg(1), pos, [transiterò]).
+ty_verb(italian, transit, future, sg(2), pos, [transiterai]).
+ty_verb(italian, transit, future, pl(1), pos, [transiteremo]).
+ty_verb(italian, transit, future, pl(2), pos, [transiterete]).
+ty_verb(italian, dedicate, future, sg, pos, [dedicherà]).
+ty_verb(italian, dedicate, future, pl, pos, [dedicheranno]).
+ty_verb(italian, dedicate, future, sg(1), pos, [dedicherò]).
+ty_verb(italian, dedicate, future, sg(2), pos, [dedicherai]).
+ty_verb(italian, dedicate, future, pl(1), pos, [dedicheremo]).
+ty_verb(italian, dedicate, future, pl(2), pos, [dedicherete]).
+ty_verb(italian, give, future, sg, pos, [darà]).
+ty_verb(italian, give, future, pl, pos, [daranno]).
+ty_verb(italian, give, future, sg(1), pos, [darò]).
+ty_verb(italian, give, future, sg(2), pos, [darai]).
+ty_verb(italian, give, future, pl(1), pos, [daremo]).
+ty_verb(italian, give, future, pl(2), pos, [darete]).
+ty_verb(italian, appease, future, sg, pos, [placherà]).
+ty_verb(italian, appease, future, pl, pos, [placheranno]).
+ty_verb(italian, appease, future, sg(1), pos, [placherò]).
+ty_verb(italian, appease, future, sg(2), pos, [placherai]).
+ty_verb(italian, appease, future, pl(1), pos, [placheremo]).
+ty_verb(italian, appease, future, pl(2), pos, [placherete]).
+ty_verb(italian, know, future, sg, pos, [saprà]).
+ty_verb(italian, know, future, pl, pos, [sapranno]).
+ty_verb(italian, know, future, sg(1), pos, [saprò]).
+ty_verb(italian, know, future, sg(2), pos, [saprai]).
+ty_verb(italian, know, future, pl(1), pos, [sapremo]).
+ty_verb(italian, know, future, pl(2), pos, [saprete]).
+ty_verb(italian, stop, future, sg, pos, [smetterà]).
+ty_verb(italian, stop, future, pl, pos, [smetteranno]).
+ty_verb(italian, stop, future, sg(1), pos, [smetterò]).
+ty_verb(italian, stop, future, sg(2), pos, [smetterai]).
+ty_verb(italian, stop, future, pl(1), pos, [smetteremo]).
+ty_verb(italian, stop, future, pl(2), pos, [smetterete]).
+ty_verb(italian, visit, future, sg, pos, [visiterà]).
+ty_verb(italian, visit, future, pl, pos, [visiteranno]).
+ty_verb(italian, visit, future, sg(1), pos, [visiterò]).
+ty_verb(italian, visit, future, sg(2), pos, [visiterai]).
+ty_verb(italian, visit, future, pl(1), pos, [visiteremo]).
+ty_verb(italian, visit, future, pl(2), pos, [visiterete]).
+ty_verb(italian, throw, future, sg, pos, [schiafferà]).
+ty_verb(italian, throw, future, pl, pos, [schiafferanno]).
+ty_verb(italian, throw, future, sg(1), pos, [schiafferò]).
+ty_verb(italian, throw, future, sg(2), pos, [schiafferai]).
+ty_verb(italian, throw, future, pl(1), pos, [schiafferemo]).
+ty_verb(italian, throw, future, pl(2), pos, [schiafferete]).
+ty_verb(italian, worsen, future, sg, pos, [peggiorerà]).
+ty_verb(italian, worsen, future, pl, pos, [peggioreranno]).
+ty_verb(italian, worsen, future, sg(1), pos, [peggiorerò]).
+ty_verb(italian, worsen, future, sg(2), pos, [peggiorerai]).
+ty_verb(italian, worsen, future, pl(1), pos, [peggioreremo]).
+ty_verb(italian, worsen, future, pl(2), pos, [peggiorerete]).
+ty_verb(italian, happen, future, sg, pos, [passerà]).
+ty_verb(italian, happen, future, pl, pos, [passeranno]).
+ty_verb(italian, happen, future, sg(1), pos, [passerò]).
+ty_verb(italian, happen, future, sg(2), pos, [passerai]).
+ty_verb(italian, happen, future, pl(1), pos, [passeremo]).
+ty_verb(italian, happen, future, pl(2), pos, [passerete]).
+ty_verb(italian, pass, future, sg, pos, [passerà]).
+ty_verb(italian, pass, future, pl, pos, [passeranno]).
+ty_verb(italian, pass, future, sg(1), pos, [passerò]).
+ty_verb(italian, pass, future, sg(2), pos, [passerai]).
+ty_verb(italian, pass, future, pl(1), pos, [passeremo]).
+ty_verb(italian, pass, future, pl(2), pos, [passerete]).
+ty_verb(italian, activate, future, sg, pos, [attiverà]).
+ty_verb(italian, activate, future, pl, pos, [attiveranno]).
+ty_verb(italian, activate, future, sg(1), pos, [attiverò]).
+ty_verb(italian, activate, future, sg(2), pos, [attiverai]).
+ty_verb(italian, activate, future, pl(1), pos, [attiveremo]).
+ty_verb(italian, activate, future, pl(2), pos, [attiverete]).
+ty_verb(italian, reveal, future, sg, pos, [rivelerà]).
+ty_verb(italian, reveal, future, pl, pos, [riveleranno]).
+ty_verb(italian, reveal, future, sg(1), pos, [rivelerò]).
+ty_verb(italian, reveal, future, sg(2), pos, [rivelerai]).
+ty_verb(italian, reveal, future, pl(1), pos, [riveleremo]).
+ty_verb(italian, reveal, future, pl(2), pos, [rivelerete]).
+ty_verb(italian, crush, future, sg, pos, [schiaccerà]).
+ty_verb(italian, crush, future, pl, pos, [schiacceranno]).
+ty_verb(italian, crush, future, sg(1), pos, [schiaccerò]).
+ty_verb(italian, crush, future, sg(2), pos, [schiaccerai]).
+ty_verb(italian, crush, future, pl(1), pos, [schiacceremo]).
+ty_verb(italian, crush, future, pl(2), pos, [schiaccerete]).
+ty_verb(italian, retort, future, sg, pos, [replicherà]).
+ty_verb(italian, retort, future, pl, pos, [replicheranno]).
+ty_verb(italian, retort, future, sg(1), pos, [replicherò]).
+ty_verb(italian, retort, future, sg(2), pos, [replicherai]).
+ty_verb(italian, retort, future, pl(1), pos, [replicheremo]).
+ty_verb(italian, retort, future, pl(2), pos, [replicherete]).
+ty_verb(italian, invest, future, sg, pos, [investirà]).
+ty_verb(italian, invest, future, pl, pos, [investiranno]).
+ty_verb(italian, invest, future, sg(1), pos, [investirò]).
+ty_verb(italian, invest, future, sg(2), pos, [investirai]).
+ty_verb(italian, invest, future, pl(1), pos, [investiremo]).
+ty_verb(italian, invest, future, pl(2), pos, [investirete]).
+ty_verb(italian, happen, future, sg, pos, [accadrà]).
+ty_verb(italian, happen, future, pl, pos, [accadranno]).
+ty_verb(italian, happen, future, sg(1), pos, [accadrò]).
+ty_verb(italian, happen, future, sg(2), pos, [accadrai]).
+ty_verb(italian, happen, future, pl(1), pos, [accadremo]).
+ty_verb(italian, happen, future, pl(2), pos, [accadrete]).
+ty_verb(italian, occur, future, sg, pos, [accadrà]).
+ty_verb(italian, occur, future, pl, pos, [accadranno]).
+ty_verb(italian, occur, future, sg(1), pos, [accadrò]).
+ty_verb(italian, occur, future, sg(2), pos, [accadrai]).
+ty_verb(italian, occur, future, pl(1), pos, [accadremo]).
+ty_verb(italian, occur, future, pl(2), pos, [accadrete]).
+ty_verb(italian, die, future, sg, pos, [morirà]).
+ty_verb(italian, die, future, pl, pos, [moriranno]).
+ty_verb(italian, die, future, sg(1), pos, [morirò]).
+ty_verb(italian, die, future, sg(2), pos, [morirai]).
+ty_verb(italian, die, future, pl(1), pos, [moriremo]).
+ty_verb(italian, die, future, pl(2), pos, [morirete]).
+ty_verb(italian, renounce, future, sg, pos, [rinuncerà]).
+ty_verb(italian, renounce, future, pl, pos, [rinunceranno]).
+ty_verb(italian, renounce, future, sg(1), pos, [rinuncerò]).
+ty_verb(italian, renounce, future, sg(2), pos, [rinuncerai]).
+ty_verb(italian, renounce, future, pl(1), pos, [rinunceremo]).
+ty_verb(italian, renounce, future, pl(2), pos, [rinuncerete]).
+ty_verb(italian, wreck, future, sg, pos, [sfascerà]).
+ty_verb(italian, wreck, future, pl, pos, [sfasceranno]).
+ty_verb(italian, wreck, future, sg(1), pos, [sfascerò]).
+ty_verb(italian, wreck, future, sg(2), pos, [sfascerai]).
+ty_verb(italian, wreck, future, pl(1), pos, [sfasceremo]).
+ty_verb(italian, wreck, future, pl(2), pos, [sfascerete]).
+ty_verb(italian, amuse, future, sg, pos, [divertirà]).
+ty_verb(italian, amuse, future, pl, pos, [divertiranno]).
+ty_verb(italian, amuse, future, sg(1), pos, [divertirò]).
+ty_verb(italian, amuse, future, sg(2), pos, [divertirai]).
+ty_verb(italian, amuse, future, pl(1), pos, [divertiremo]).
+ty_verb(italian, amuse, future, pl(2), pos, [divertirete]).
+ty_verb(italian, worry, future, sg, pos, [preoccuperà]).
+ty_verb(italian, worry, future, pl, pos, [preoccuperanno]).
+ty_verb(italian, worry, future, sg(1), pos, [preoccuperò]).
+ty_verb(italian, worry, future, sg(2), pos, [preoccuperai]).
+ty_verb(italian, worry, future, pl(1), pos, [preoccuperemo]).
+ty_verb(italian, worry, future, pl(2), pos, [preoccuperete]).
+ty_verb(italian, strip, future, sg, pos, [spoglierà]).
+ty_verb(italian, strip, future, pl, pos, [spoglieranno]).
+ty_verb(italian, strip, future, sg(1), pos, [spoglierò]).
+ty_verb(italian, strip, future, sg(2), pos, [spoglierai]).
+ty_verb(italian, strip, future, pl(1), pos, [spoglieremo]).
+ty_verb(italian, strip, future, pl(2), pos, [spoglierete]).
+ty_verb(italian, bare, future, sg, pos, [denuderà]).
+ty_verb(italian, bare, future, pl, pos, [denuderanno]).
+ty_verb(italian, bare, future, sg(1), pos, [denuderò]).
+ty_verb(italian, bare, future, sg(2), pos, [denuderai]).
+ty_verb(italian, bare, future, pl(1), pos, [denuderemo]).
+ty_verb(italian, bare, future, pl(2), pos, [denuderete]).
+ty_verb(italian, exalt, future, sg, pos, [esalterà]).
+ty_verb(italian, exalt, future, pl, pos, [esalteranno]).
+ty_verb(italian, exalt, future, sg(1), pos, [esalterò]).
+ty_verb(italian, exalt, future, sg(2), pos, [esalterai]).
+ty_verb(italian, exalt, future, pl(1), pos, [esalteremo]).
+ty_verb(italian, exalt, future, pl(2), pos, [esalterete]).
+ty_verb(italian, broadcast, future, sg, pos, [trasmetterà]).
+ty_verb(italian, broadcast, future, pl, pos, [trasmetteranno]).
+ty_verb(italian, broadcast, future, sg(1), pos, [trasmetterò]).
+ty_verb(italian, broadcast, future, sg(2), pos, [trasmetterai]).
+ty_verb(italian, broadcast, future, pl(1), pos, [trasmetteremo]).
+ty_verb(italian, broadcast, future, pl(2), pos, [trasmetterete]).
+ty_verb(italian, censure, future, sg, pos, [censurerà]).
+ty_verb(italian, censure, future, pl, pos, [censureranno]).
+ty_verb(italian, censure, future, sg(1), pos, [censurerò]).
+ty_verb(italian, censure, future, sg(2), pos, [censurerai]).
+ty_verb(italian, censure, future, pl(1), pos, [censureremo]).
+ty_verb(italian, censure, future, pl(2), pos, [censurerete]).
+ty_verb(italian, rent, future, sg, pos, [affitterà]).
+ty_verb(italian, rent, future, pl, pos, [affitteranno]).
+ty_verb(italian, rent, future, sg(1), pos, [affitterò]).
+ty_verb(italian, rent, future, sg(2), pos, [affitterai]).
+ty_verb(italian, rent, future, pl(1), pos, [affitteremo]).
+ty_verb(italian, rent, future, pl(2), pos, [affitterete]).
+ty_verb(italian, expect, future, sg, pos, [attenderà]).
+ty_verb(italian, expect, future, pl, pos, [attenderanno]).
+ty_verb(italian, expect, future, sg(1), pos, [attenderò]).
+ty_verb(italian, expect, future, sg(2), pos, [attenderai]).
+ty_verb(italian, expect, future, pl(1), pos, [attenderemo]).
+ty_verb(italian, expect, future, pl(2), pos, [attenderete]).
+ty_verb(italian, couple, future, sg, pos, [accoppierà]).
+ty_verb(italian, couple, future, pl, pos, [accoppieranno]).
+ty_verb(italian, couple, future, sg(1), pos, [accoppierò]).
+ty_verb(italian, couple, future, sg(2), pos, [accoppierai]).
+ty_verb(italian, couple, future, pl(1), pos, [accoppieremo]).
+ty_verb(italian, couple, future, pl(2), pos, [accoppierete]).
+ty_verb(italian, entrust, future, sg, pos, [affiderà]).
+ty_verb(italian, entrust, future, pl, pos, [affideranno]).
+ty_verb(italian, entrust, future, sg(1), pos, [affiderò]).
+ty_verb(italian, entrust, future, sg(2), pos, [affiderai]).
+ty_verb(italian, entrust, future, pl(1), pos, [affideremo]).
+ty_verb(italian, entrust, future, pl(2), pos, [affiderete]).
+ty_verb(italian, link, future, sg, pos, [legherà]).
+ty_verb(italian, link, future, pl, pos, [legheranno]).
+ty_verb(italian, link, future, sg(1), pos, [legherò]).
+ty_verb(italian, link, future, sg(2), pos, [legherai]).
+ty_verb(italian, link, future, pl(1), pos, [legheremo]).
+ty_verb(italian, link, future, pl(2), pos, [legherete]).
+ty_verb(italian, grasp, future, sg, pos, [coglierà]).
+ty_verb(italian, grasp, future, pl, pos, [coglieranno]).
+ty_verb(italian, grasp, future, sg(1), pos, [coglierò]).
+ty_verb(italian, grasp, future, sg(2), pos, [coglierai]).
+ty_verb(italian, grasp, future, pl(1), pos, [coglieremo]).
+ty_verb(italian, grasp, future, pl(2), pos, [coglierete]).
+ty_verb(italian, launch, future, sg, pos, [lancerà]).
+ty_verb(italian, launch, future, pl, pos, [lanceranno]).
+ty_verb(italian, launch, future, sg(1), pos, [lancerò]).
+ty_verb(italian, launch, future, sg(2), pos, [lancerai]).
+ty_verb(italian, launch, future, pl(1), pos, [lanceremo]).
+ty_verb(italian, launch, future, pl(2), pos, [lancerete]).
+ty_verb(italian, put, future, sg, pos, [metterà]).
+ty_verb(italian, put, future, pl, pos, [metteranno]).
+ty_verb(italian, put, future, sg(1), pos, [metterò]).
+ty_verb(italian, put, future, sg(2), pos, [metterai]).
+ty_verb(italian, put, future, pl(1), pos, [metteremo]).
+ty_verb(italian, put, future, pl(2), pos, [metterete]).
+ty_verb(italian, transport, future, sg, pos, [trasporterà]).
+ty_verb(italian, transport, future, pl, pos, [trasporteranno]).
+ty_verb(italian, transport, future, sg(1), pos, [trasporterò]).
+ty_verb(italian, transport, future, sg(2), pos, [trasporterai]).
+ty_verb(italian, transport, future, pl(1), pos, [trasporteremo]).
+ty_verb(italian, transport, future, pl(2), pos, [trasporterete]).
+ty_verb(italian, rescue, future, sg, pos, [soccorrerà]).
+ty_verb(italian, rescue, future, pl, pos, [soccorreranno]).
+ty_verb(italian, rescue, future, sg(1), pos, [soccorrerò]).
+ty_verb(italian, rescue, future, sg(2), pos, [soccorrerai]).
+ty_verb(italian, rescue, future, pl(1), pos, [soccorreremo]).
+ty_verb(italian, rescue, future, pl(2), pos, [soccorrerete]).
+ty_verb(italian, happen, future, sg, pos, [succederà]).
+ty_verb(italian, happen, future, pl, pos, [succederanno]).
+ty_verb(italian, happen, future, sg(1), pos, [succederò]).
+ty_verb(italian, happen, future, sg(2), pos, [succederai]).
+ty_verb(italian, happen, future, pl(1), pos, [succederemo]).
+ty_verb(italian, happen, future, pl(2), pos, [succederete]).
+ty_verb(italian, begin, future, sg, pos, [inizierà]).
+ty_verb(italian, begin, future, pl, pos, [inizieranno]).
+ty_verb(italian, begin, future, sg(1), pos, [inizierò]).
+ty_verb(italian, begin, future, sg(2), pos, [inizierai]).
+ty_verb(italian, begin, future, pl(1), pos, [inizieremo]).
+ty_verb(italian, begin, future, pl(2), pos, [inizierete]).
+ty_verb(italian, distance, future, sg, pos, [allontanerà]).
+ty_verb(italian, distance, future, pl, pos, [allontaneranno]).
+ty_verb(italian, distance, future, sg(1), pos, [allontanerò]).
+ty_verb(italian, distance, future, sg(2), pos, [allontanerai]).
+ty_verb(italian, distance, future, pl(1), pos, [allontaneremo]).
+ty_verb(italian, distance, future, pl(2), pos, [allontanerete]).
+ty_verb(italian, reach, future, sg, pos, [raggiungerà]).
+ty_verb(italian, reach, future, pl, pos, [raggiungeranno]).
+ty_verb(italian, reach, future, sg(1), pos, [raggiungerò]).
+ty_verb(italian, reach, future, sg(2), pos, [raggiungerai]).
+ty_verb(italian, reach, future, pl(1), pos, [raggiungeremo]).
+ty_verb(italian, reach, future, pl(2), pos, [raggiungerete]).
+ty_verb(italian, proceed, future, sg, pos, [procederà]).
+ty_verb(italian, proceed, future, pl, pos, [procederanno]).
+ty_verb(italian, proceed, future, sg(1), pos, [procederò]).
+ty_verb(italian, proceed, future, sg(2), pos, [procederai]).
+ty_verb(italian, proceed, future, pl(1), pos, [procederemo]).
+ty_verb(italian, proceed, future, pl(2), pos, [procederete]).
+ty_verb(italian, disburse, future, sg, pos, [verserà]).
+ty_verb(italian, disburse, future, pl, pos, [verseranno]).
+ty_verb(italian, disburse, future, sg(1), pos, [verserò]).
+ty_verb(italian, disburse, future, sg(2), pos, [verserai]).
+ty_verb(italian, disburse, future, pl(1), pos, [verseremo]).
+ty_verb(italian, disburse, future, pl(2), pos, [verserete]).
+ty_verb(italian, render, future, sg, pos, [renderà]).
+ty_verb(italian, render, future, pl, pos, [renderanno]).
+ty_verb(italian, render, future, sg(1), pos, [renderò]).
+ty_verb(italian, render, future, sg(2), pos, [renderai]).
+ty_verb(italian, render, future, pl(1), pos, [renderemo]).
+ty_verb(italian, render, future, pl(2), pos, [renderete]).
+ty_verb(italian, highlight, future, sg, pos, [evidenzierà]).
+ty_verb(italian, highlight, future, pl, pos, [evidenzieranno]).
+ty_verb(italian, highlight, future, sg(1), pos, [evidenzierò]).
+ty_verb(italian, highlight, future, sg(2), pos, [evidenzierai]).
+ty_verb(italian, highlight, future, pl(1), pos, [evidenzieremo]).
+ty_verb(italian, highlight, future, pl(2), pos, [evidenzierete]).
+ty_verb(italian, offer, future, sg, pos, [offrirà]).
+ty_verb(italian, offer, future, pl, pos, [offriranno]).
+ty_verb(italian, offer, future, sg(1), pos, [offrirò]).
+ty_verb(italian, offer, future, sg(2), pos, [offrirai]).
+ty_verb(italian, offer, future, pl(1), pos, [offriremo]).
+ty_verb(italian, offer, future, pl(2), pos, [offrirete]).
+ty_verb(italian, intone, future, sg, pos, [intonerà]).
+ty_verb(italian, intone, future, pl, pos, [intoneranno]).
+ty_verb(italian, intone, future, sg(1), pos, [intonerò]).
+ty_verb(italian, intone, future, sg(2), pos, [intonerai]).
+ty_verb(italian, intone, future, pl(1), pos, [intoneremo]).
+ty_verb(italian, intone, future, pl(2), pos, [intonerete]).
+ty_verb(italian, discredit, future, sg, pos, [screditerà]).
+ty_verb(italian, discredit, future, pl, pos, [screditeranno]).
+ty_verb(italian, discredit, future, sg(1), pos, [screditerò]).
+ty_verb(italian, discredit, future, sg(2), pos, [screditerai]).
+ty_verb(italian, discredit, future, pl(1), pos, [screditeremo]).
+ty_verb(italian, discredit, future, pl(2), pos, [screditerete]).
+ty_verb(italian, mediate, future, sg, pos, [medierà]).
+ty_verb(italian, mediate, future, pl, pos, [medieranno]).
+ty_verb(italian, mediate, future, sg(1), pos, [medierò]).
+ty_verb(italian, mediate, future, sg(2), pos, [medierai]).
+ty_verb(italian, mediate, future, pl(1), pos, [medieremo]).
+ty_verb(italian, mediate, future, pl(2), pos, [medierete]).
+ty_verb(italian, gladden, future, sg, pos, [rallegrerà]).
+ty_verb(italian, gladden, future, pl, pos, [rallegreranno]).
+ty_verb(italian, gladden, future, sg(1), pos, [rallegrerò]).
+ty_verb(italian, gladden, future, sg(2), pos, [rallegrerai]).
+ty_verb(italian, gladden, future, pl(1), pos, [rallegreremo]).
+ty_verb(italian, gladden, future, pl(2), pos, [rallegrerete]).
+ty_verb(italian, gut, future, sg, pos, [sbudellerà]).
+ty_verb(italian, gut, future, pl, pos, [sbudelleranno]).
+ty_verb(italian, gut, future, sg(1), pos, [sbudellerò]).
+ty_verb(italian, gut, future, sg(2), pos, [sbudellerai]).
+ty_verb(italian, gut, future, pl(1), pos, [sbudelleremo]).
+ty_verb(italian, gut, future, pl(2), pos, [sbudellerete]).
+ty_verb(italian, wall, future, sg, pos, [murerà]).
+ty_verb(italian, wall, future, pl, pos, [mureranno]).
+ty_verb(italian, wall, future, sg(1), pos, [murerò]).
+ty_verb(italian, wall, future, sg(2), pos, [murerai]).
+ty_verb(italian, wall, future, pl(1), pos, [mureremo]).
+ty_verb(italian, wall, future, pl(2), pos, [murerete]).
+ty_verb(italian, subscribe, future, sg, pos, [sottoscriverà]).
+ty_verb(italian, subscribe, future, pl, pos, [sottoscriveranno]).
+ty_verb(italian, subscribe, future, sg(1), pos, [sottoscriverò]).
+ty_verb(italian, subscribe, future, sg(2), pos, [sottoscriverai]).
+ty_verb(italian, subscribe, future, pl(1), pos, [sottoscriveremo]).
+ty_verb(italian, subscribe, future, pl(2), pos, [sottoscriverete]).
+ty_verb(italian, restate, future, sg, pos, [riaffermerà]).
+ty_verb(italian, restate, future, pl, pos, [riaffermeranno]).
+ty_verb(italian, restate, future, sg(1), pos, [riaffermerò]).
+ty_verb(italian, restate, future, sg(2), pos, [riaffermerai]).
+ty_verb(italian, restate, future, pl(1), pos, [riaffermeremo]).
+ty_verb(italian, restate, future, pl(2), pos, [riaffermerete]).
+ty_verb(italian, mummify, future, sg, pos, [mummificherà]).
+ty_verb(italian, mummify, future, pl, pos, [mummificheranno]).
+ty_verb(italian, mummify, future, sg(1), pos, [mummificherò]).
+ty_verb(italian, mummify, future, sg(2), pos, [mummificherai]).
+ty_verb(italian, mummify, future, pl(1), pos, [mummificheremo]).
+ty_verb(italian, mummify, future, pl(2), pos, [mummificherete]).
+ty_verb(italian, captain, future, sg, pos, [capitanerà]).
+ty_verb(italian, captain, future, pl, pos, [capitaneranno]).
+ty_verb(italian, captain, future, sg(1), pos, [capitanerò]).
+ty_verb(italian, captain, future, sg(2), pos, [capitanerai]).
+ty_verb(italian, captain, future, pl(1), pos, [capitaneremo]).
+ty_verb(italian, captain, future, pl(2), pos, [capitanerete]).
+ty_verb(italian, torment, future, sg, pos, [tormenterà]).
+ty_verb(italian, torment, future, pl, pos, [tormenteranno]).
+ty_verb(italian, torment, future, sg(1), pos, [tormenterò]).
+ty_verb(italian, torment, future, sg(2), pos, [tormenterai]).
+ty_verb(italian, torment, future, pl(1), pos, [tormenteremo]).
+ty_verb(italian, torment, future, pl(2), pos, [tormenterete]).
+ty_verb(italian, promulgate, future, sg, pos, [promulgherà]).
+ty_verb(italian, promulgate, future, pl, pos, [promulgheranno]).
+ty_verb(italian, promulgate, future, sg(1), pos, [promulgherò]).
+ty_verb(italian, promulgate, future, sg(2), pos, [promulgherai]).
+ty_verb(italian, promulgate, future, pl(1), pos, [promulgheremo]).
+ty_verb(italian, promulgate, future, pl(2), pos, [promulgherete]).
+ty_verb(italian, counterattack, future, sg, pos, [contrattaccherà]).
+ty_verb(italian, counterattack, future, pl, pos, [contrattaccheranno]).
+ty_verb(italian, counterattack, future, sg(1), pos, [contrattaccherò]).
+ty_verb(italian, counterattack, future, sg(2), pos, [contrattaccherai]).
+ty_verb(italian, counterattack, future, pl(1), pos, [contrattaccheremo]).
+ty_verb(italian, counterattack, future, pl(2), pos, [contrattaccherete]).
+ty_verb(italian, brandish, future, sg, pos, [brandirà]).
+ty_verb(italian, brandish, future, pl, pos, [brandiranno]).
+ty_verb(italian, brandish, future, sg(1), pos, [brandirò]).
+ty_verb(italian, brandish, future, sg(2), pos, [brandirai]).
+ty_verb(italian, brandish, future, pl(1), pos, [brandiremo]).
+ty_verb(italian, brandish, future, pl(2), pos, [brandirete]).
+ty_verb(italian, decapitate, future, sg, pos, [decapiterà]).
+ty_verb(italian, decapitate, future, pl, pos, [decapiteranno]).
+ty_verb(italian, decapitate, future, sg(1), pos, [decapiterò]).
+ty_verb(italian, decapitate, future, sg(2), pos, [decapiterai]).
+ty_verb(italian, decapitate, future, pl(1), pos, [decapiteremo]).
+ty_verb(italian, decapitate, future, pl(2), pos, [decapiterete]).
+ty_verb(italian, unleash, future, sg, pos, [scatenerà]).
+ty_verb(italian, unleash, future, pl, pos, [scateneranno]).
+ty_verb(italian, unleash, future, sg(1), pos, [scatenerò]).
+ty_verb(italian, unleash, future, sg(2), pos, [scatenerai]).
+ty_verb(italian, unleash, future, pl(1), pos, [scateneremo]).
+ty_verb(italian, unleash, future, pl(2), pos, [scatenerete]).
+ty_verb(italian, institute, future, sg, pos, [istituirà]).
+ty_verb(italian, institute, future, pl, pos, [istituiranno]).
+ty_verb(italian, institute, future, sg(1), pos, [istituirò]).
+ty_verb(italian, institute, future, sg(2), pos, [istituirai]).
+ty_verb(italian, institute, future, pl(1), pos, [istituiremo]).
+ty_verb(italian, institute, future, pl(2), pos, [istituirete]).
+ty_verb(italian, hope, future, sg, pos, [spererà]).
+ty_verb(italian, hope, future, pl, pos, [spereranno]).
+ty_verb(italian, hope, future, sg(1), pos, [spererò]).
+ty_verb(italian, hope, future, sg(2), pos, [spererai]).
+ty_verb(italian, hope, future, pl(1), pos, [spereremo]).
+ty_verb(italian, hope, future, pl(2), pos, [spererete]).
+ty_verb(italian, taint, future, sg, pos, [macchierà]).
+ty_verb(italian, taint, future, pl, pos, [macchieranno]).
+ty_verb(italian, taint, future, sg(1), pos, [macchierò]).
+ty_verb(italian, taint, future, sg(2), pos, [macchierai]).
+ty_verb(italian, taint, future, pl(1), pos, [macchieremo]).
+ty_verb(italian, taint, future, pl(2), pos, [macchierete]).
+ty_verb(italian, thrill, future, sg, pos, [emozionerà]).
+ty_verb(italian, thrill, future, pl, pos, [emozioneranno]).
+ty_verb(italian, thrill, future, sg(1), pos, [emozionerò]).
+ty_verb(italian, thrill, future, sg(2), pos, [emozionerai]).
+ty_verb(italian, thrill, future, pl(1), pos, [emozioneremo]).
+ty_verb(italian, thrill, future, pl(2), pos, [emozionerete]).
+ty_verb(italian, sink, future, sg, pos, [affonderà]).
+ty_verb(italian, sink, future, pl, pos, [affonderanno]).
+ty_verb(italian, sink, future, sg(1), pos, [affonderò]).
+ty_verb(italian, sink, future, sg(2), pos, [affonderai]).
+ty_verb(italian, sink, future, pl(1), pos, [affonderemo]).
+ty_verb(italian, sink, future, pl(2), pos, [affonderete]).
+ty_verb(italian, ridicule, future, sg, pos, [ridicolizzerà]).
+ty_verb(italian, ridicule, future, pl, pos, [ridicolizzeranno]).
+ty_verb(italian, ridicule, future, sg(1), pos, [ridicolizzerò]).
+ty_verb(italian, ridicule, future, sg(2), pos, [ridicolizzerai]).
+ty_verb(italian, ridicule, future, pl(1), pos, [ridicolizzeremo]).
+ty_verb(italian, ridicule, future, pl(2), pos, [ridicolizzerete]).
+ty_verb(italian, polemiciz, future, sg, pos, [polemizzerà]).
+ty_verb(italian, polemiciz, future, pl, pos, [polemizzeranno]).
+ty_verb(italian, polemiciz, future, sg(1), pos, [polemizzerò]).
+ty_verb(italian, polemiciz, future, sg(2), pos, [polemizzerai]).
+ty_verb(italian, polemiciz, future, pl(1), pos, [polemizzeremo]).
+ty_verb(italian, polemiciz, future, pl(2), pos, [polemizzerete]).
+ty_verb(italian, distance, future, sg, pos, [disterà]).
+ty_verb(italian, distance, future, pl, pos, [disteranno]).
+ty_verb(italian, distance, future, sg(1), pos, [disterò]).
+ty_verb(italian, distance, future, sg(2), pos, [disterai]).
+ty_verb(italian, distance, future, pl(1), pos, [disteremo]).
+ty_verb(italian, distance, future, pl(2), pos, [disterete]).
+ty_verb(italian, outrage, future, sg, pos, [indignerà]).
+ty_verb(italian, outrage, future, pl, pos, [indigneranno]).
+ty_verb(italian, outrage, future, sg(1), pos, [indignerò]).
+ty_verb(italian, outrage, future, sg(2), pos, [indignerai]).
+ty_verb(italian, outrage, future, pl(1), pos, [indigneremo]).
+ty_verb(italian, outrage, future, pl(2), pos, [indignerete]).
+ty_verb(italian, trample, future, sg, pos, [pesterà]).
+ty_verb(italian, trample, future, pl, pos, [pesteranno]).
+ty_verb(italian, trample, future, sg(1), pos, [pesterò]).
+ty_verb(italian, trample, future, sg(2), pos, [pesterai]).
+ty_verb(italian, trample, future, pl(1), pos, [pesteremo]).
+ty_verb(italian, trample, future, pl(2), pos, [pesterete]).
+ty_verb(italian, burn, future, sg, pos, [brucerà]).
+ty_verb(italian, burn, future, pl, pos, [bruceranno]).
+ty_verb(italian, burn, future, sg(1), pos, [brucerò]).
+ty_verb(italian, burn, future, sg(2), pos, [brucerai]).
+ty_verb(italian, burn, future, pl(1), pos, [bruceremo]).
+ty_verb(italian, burn, future, pl(2), pos, [brucerete]).
+ty_verb(italian, hush, future, sg, pos, [tacerà]).
+ty_verb(italian, hush, future, pl, pos, [taceranno]).
+ty_verb(italian, hush, future, sg(1), pos, [tacerò]).
+ty_verb(italian, hush, future, sg(2), pos, [tacerai]).
+ty_verb(italian, hush, future, pl(1), pos, [taceremo]).
+ty_verb(italian, hush, future, pl(2), pos, [tacerete]).
+ty_verb(italian, offload, future, sg, pos, [ribalterà]).
+ty_verb(italian, offload, future, pl, pos, [ribalteranno]).
+ty_verb(italian, offload, future, sg(1), pos, [ribalterò]).
+ty_verb(italian, offload, future, sg(2), pos, [ribalterai]).
+ty_verb(italian, offload, future, pl(1), pos, [ribalteremo]).
+ty_verb(italian, offload, future, pl(2), pos, [ribalterete]).
+ty_verb(italian, manage, future, sg, pos, [gestirà]).
+ty_verb(italian, manage, future, pl, pos, [gestiranno]).
+ty_verb(italian, manage, future, sg(1), pos, [gestirò]).
+ty_verb(italian, manage, future, sg(2), pos, [gestirai]).
+ty_verb(italian, manage, future, pl(1), pos, [gestiremo]).
+ty_verb(italian, manage, future, pl(2), pos, [gestirete]).
+ty_verb(italian, preside, future, sg, pos, [presederà]).
+ty_verb(italian, preside, future, pl, pos, [presederanno]).
+ty_verb(italian, preside, future, sg(1), pos, [presederò]).
+ty_verb(italian, preside, future, sg(2), pos, [presederai]).
+ty_verb(italian, preside, future, pl(1), pos, [presederemo]).
+ty_verb(italian, preside, future, pl(2), pos, [presederete]).
+ty_verb(italian, reside, future, sg, pos, [risederà]).
+ty_verb(italian, reside, future, pl, pos, [risederanno]).
+ty_verb(italian, reside, future, sg(1), pos, [risederò]).
+ty_verb(italian, reside, future, sg(2), pos, [risederai]).
+ty_verb(italian, reside, future, pl(1), pos, [risederemo]).
+ty_verb(italian, reside, future, pl(2), pos, [risederete]).
+ty_verb(italian, fell, future, sg, pos, [abbatterà]).
+ty_verb(italian, fell, future, pl, pos, [abbatteranno]).
+ty_verb(italian, fell, future, sg(1), pos, [abbatterò]).
+ty_verb(italian, fell, future, sg(2), pos, [abbatterai]).
+ty_verb(italian, fell, future, pl(1), pos, [abbatteremo]).
+ty_verb(italian, fell, future, pl(2), pos, [abbatterete]).
+ty_verb(italian, impassion, future, sg, pos, [appassionerà]).
+ty_verb(italian, impassion, future, pl, pos, [appassioneranno]).
+ty_verb(italian, impassion, future, sg(1), pos, [appassionerò]).
+ty_verb(italian, impassion, future, sg(2), pos, [appassionerai]).
+ty_verb(italian, impassion, future, pl(1), pos, [appassioneremo]).
+ty_verb(italian, impassion, future, pl(2), pos, [appassionerete]).
+ty_verb(italian, budget, future, sg, pos, [preventiverà]).
+ty_verb(italian, budget, future, pl, pos, [preventiveranno]).
+ty_verb(italian, budget, future, sg(1), pos, [preventiverò]).
+ty_verb(italian, budget, future, sg(2), pos, [preventiverai]).
+ty_verb(italian, budget, future, pl(1), pos, [preventiveremo]).
+ty_verb(italian, budget, future, pl(2), pos, [preventiverete]).
+ty_verb(italian, prevent, future, sg, pos, [impedirà]).
+ty_verb(italian, prevent, future, pl, pos, [impediranno]).
+ty_verb(italian, prevent, future, sg(1), pos, [impedirò]).
+ty_verb(italian, prevent, future, sg(2), pos, [impedirai]).
+ty_verb(italian, prevent, future, pl(1), pos, [impediremo]).
+ty_verb(italian, prevent, future, pl(2), pos, [impedirete]).
+ty_verb(italian, retain, future, sg, pos, [tratterrà]).
+ty_verb(italian, retain, future, pl, pos, [tratterranno]).
+ty_verb(italian, retain, future, sg(1), pos, [tratterrò]).
+ty_verb(italian, retain, future, sg(2), pos, [tratterrai]).
+ty_verb(italian, retain, future, pl(1), pos, [tratterremo]).
+ty_verb(italian, retain, future, pl(2), pos, [tratterrete]).
+ty_verb(italian, distort, future, sg, pos, [distorcerà]).
+ty_verb(italian, distort, future, pl, pos, [distorceranno]).
+ty_verb(italian, distort, future, sg(1), pos, [distorcerò]).
+ty_verb(italian, distort, future, sg(2), pos, [distorcerai]).
+ty_verb(italian, distort, future, pl(1), pos, [distorceremo]).
+ty_verb(italian, distort, future, pl(2), pos, [distorcerete]).
+ty_verb(italian, remunerate, future, sg, pos, [remunererà]).
+ty_verb(italian, remunerate, future, pl, pos, [remunereranno]).
+ty_verb(italian, remunerate, future, sg(1), pos, [remunererò]).
+ty_verb(italian, remunerate, future, sg(2), pos, [remunererai]).
+ty_verb(italian, remunerate, future, pl(1), pos, [remunereremo]).
+ty_verb(italian, remunerate, future, pl(2), pos, [remunererete]).
+ty_verb(italian, weave, future, sg, pos, [tesserà]).
+ty_verb(italian, weave, future, pl, pos, [tesseranno]).
+ty_verb(italian, weave, future, sg(1), pos, [tesserò]).
+ty_verb(italian, weave, future, sg(2), pos, [tesserai]).
+ty_verb(italian, weave, future, pl(1), pos, [tesseremo]).
+ty_verb(italian, weave, future, pl(2), pos, [tesserete]).
+ty_verb(italian, boost, future, sg, pos, [potenzierà]).
+ty_verb(italian, boost, future, pl, pos, [potenzieranno]).
+ty_verb(italian, boost, future, sg(1), pos, [potenzierò]).
+ty_verb(italian, boost, future, sg(2), pos, [potenzierai]).
+ty_verb(italian, boost, future, pl(1), pos, [potenzieremo]).
+ty_verb(italian, boost, future, pl(2), pos, [potenzierete]).
+ty_verb(italian, rig, future, sg, pos, [truccherà]).
+ty_verb(italian, rig, future, pl, pos, [truccheranno]).
+ty_verb(italian, rig, future, sg(1), pos, [truccherò]).
+ty_verb(italian, rig, future, sg(2), pos, [truccherai]).
+ty_verb(italian, rig, future, pl(1), pos, [truccheremo]).
+ty_verb(italian, rig, future, pl(2), pos, [truccherete]).
+ty_verb(italian, trace, future, sg, pos, [traccerà]).
+ty_verb(italian, trace, future, pl, pos, [tracceranno]).
+ty_verb(italian, trace, future, sg(1), pos, [traccerò]).
+ty_verb(italian, trace, future, sg(2), pos, [traccerai]).
+ty_verb(italian, trace, future, pl(1), pos, [tracceremo]).
+ty_verb(italian, trace, future, pl(2), pos, [traccerete]).
+ty_verb(italian, oust, future, sg, pos, [spodesterà]).
+ty_verb(italian, oust, future, pl, pos, [spodesteranno]).
+ty_verb(italian, oust, future, sg(1), pos, [spodesterò]).
+ty_verb(italian, oust, future, sg(2), pos, [spodesterai]).
+ty_verb(italian, oust, future, pl(1), pos, [spodesteremo]).
+ty_verb(italian, oust, future, pl(2), pos, [spodesterete]).
+ty_verb(italian, tie, future, sg, pos, [pareggerà]).
+ty_verb(italian, tie, future, pl, pos, [pareggeranno]).
+ty_verb(italian, tie, future, sg(1), pos, [pareggerò]).
+ty_verb(italian, tie, future, sg(2), pos, [pareggerai]).
+ty_verb(italian, tie, future, pl(1), pos, [pareggeremo]).
+ty_verb(italian, tie, future, pl(2), pos, [pareggerete]).
+ty_verb(italian, dethrone, future, sg, pos, [detronizzerà]).
+ty_verb(italian, dethrone, future, pl, pos, [detronizzeranno]).
+ty_verb(italian, dethrone, future, sg(1), pos, [detronizzerò]).
+ty_verb(italian, dethrone, future, sg(2), pos, [detronizzerai]).
+ty_verb(italian, dethrone, future, pl(1), pos, [detronizzeremo]).
+ty_verb(italian, dethrone, future, pl(2), pos, [detronizzerete]).
+ty_verb(italian, skimp, future, sg, pos, [economizzerà]).
+ty_verb(italian, skimp, future, pl, pos, [economizzeranno]).
+ty_verb(italian, skimp, future, sg(1), pos, [economizzerò]).
+ty_verb(italian, skimp, future, sg(2), pos, [economizzerai]).
+ty_verb(italian, skimp, future, pl(1), pos, [economizzeremo]).
+ty_verb(italian, skimp, future, pl(2), pos, [economizzerete]).
+ty_verb(italian, vie, future, sg, pos, [rivaleggerà]).
+ty_verb(italian, vie, future, pl, pos, [rivaleggeranno]).
+ty_verb(italian, vie, future, sg(1), pos, [rivaleggerò]).
+ty_verb(italian, vie, future, sg(2), pos, [rivaleggerai]).
+ty_verb(italian, vie, future, pl(1), pos, [rivaleggeremo]).
+ty_verb(italian, vie, future, pl(2), pos, [rivaleggerete]).
+ty_verb(italian, crown, future, sg, pos, [incoronerà]).
+ty_verb(italian, crown, future, pl, pos, [incoroneranno]).
+ty_verb(italian, crown, future, sg(1), pos, [incoronerò]).
+ty_verb(italian, crown, future, sg(2), pos, [incoronerai]).
+ty_verb(italian, crown, future, pl(1), pos, [incoroneremo]).
+ty_verb(italian, crown, future, pl(2), pos, [incoronerete]).
+ty_verb(italian, improve, future, sg, pos, [migliorerà]).
+ty_verb(italian, improve, future, pl, pos, [miglioreranno]).
+ty_verb(italian, improve, future, sg(1), pos, [migliorerò]).
+ty_verb(italian, improve, future, sg(2), pos, [migliorerai]).
+ty_verb(italian, improve, future, pl(1), pos, [miglioreremo]).
+ty_verb(italian, improve, future, pl(2), pos, [migliorerete]).
+ty_verb(italian, convulse, future, sg, pos, [sconvolgerà]).
+ty_verb(italian, convulse, future, pl, pos, [sconvolgeranno]).
+ty_verb(italian, convulse, future, sg(1), pos, [sconvolgerò]).
+ty_verb(italian, convulse, future, sg(2), pos, [sconvolgerai]).
+ty_verb(italian, convulse, future, pl(1), pos, [sconvolgeremo]).
+ty_verb(italian, convulse, future, pl(2), pos, [sconvolgerete]).
+ty_verb(italian, endorse, future, sg, pos, [avallerà]).
+ty_verb(italian, endorse, future, pl, pos, [avalleranno]).
+ty_verb(italian, endorse, future, sg(1), pos, [avallerò]).
+ty_verb(italian, endorse, future, sg(2), pos, [avallerai]).
+ty_verb(italian, endorse, future, pl(1), pos, [avalleremo]).
+ty_verb(italian, endorse, future, pl(2), pos, [avallerete]).
+ty_verb(italian, forge, future, sg, pos, [forgerà]).
+ty_verb(italian, forge, future, pl, pos, [forgeranno]).
+ty_verb(italian, forge, future, sg(1), pos, [forgerò]).
+ty_verb(italian, forge, future, sg(2), pos, [forgerai]).
+ty_verb(italian, forge, future, pl(1), pos, [forgeremo]).
+ty_verb(italian, forge, future, pl(2), pos, [forgerete]).
+ty_verb(italian, pollute, future, sg, pos, [inquinerà]).
+ty_verb(italian, pollute, future, pl, pos, [inquineranno]).
+ty_verb(italian, pollute, future, sg(1), pos, [inquinerò]).
+ty_verb(italian, pollute, future, sg(2), pos, [inquinerai]).
+ty_verb(italian, pollute, future, pl(1), pos, [inquineremo]).
+ty_verb(italian, pollute, future, pl(2), pos, [inquinerete]).
+ty_verb(italian, cool, future, sg, pos, [raffredderà]).
+ty_verb(italian, cool, future, pl, pos, [raffredderanno]).
+ty_verb(italian, cool, future, sg(1), pos, [raffredderò]).
+ty_verb(italian, cool, future, sg(2), pos, [raffredderai]).
+ty_verb(italian, cool, future, pl(1), pos, [raffredderemo]).
+ty_verb(italian, cool, future, pl(2), pos, [raffredderete]).
+ty_verb(italian, shake, future, sg, pos, [scuoterà]).
+ty_verb(italian, shake, future, pl, pos, [scuoteranno]).
+ty_verb(italian, shake, future, sg(1), pos, [scuoterò]).
+ty_verb(italian, shake, future, sg(2), pos, [scuoterai]).
+ty_verb(italian, shake, future, pl(1), pos, [scuoteremo]).
+ty_verb(italian, shake, future, pl(2), pos, [scuoterete]).
+ty_verb(italian, rise, future, sg, pos, [salirà]).
+ty_verb(italian, rise, future, pl, pos, [saliranno]).
+ty_verb(italian, rise, future, sg(1), pos, [salirò]).
+ty_verb(italian, rise, future, sg(2), pos, [salirai]).
+ty_verb(italian, rise, future, pl(1), pos, [saliremo]).
+ty_verb(italian, rise, future, pl(2), pos, [salirete]).
+ty_verb(italian, digest, future, sg, pos, [digerirà]).
+ty_verb(italian, digest, future, pl, pos, [digeriranno]).
+ty_verb(italian, digest, future, sg(1), pos, [digerirò]).
+ty_verb(italian, digest, future, sg(2), pos, [digerirai]).
+ty_verb(italian, digest, future, pl(1), pos, [digeriremo]).
+ty_verb(italian, digest, future, pl(2), pos, [digerirete]).
+ty_verb(italian, compile, future, sg, pos, [compilerà]).
+ty_verb(italian, compile, future, pl, pos, [compileranno]).
+ty_verb(italian, compile, future, sg(1), pos, [compilerò]).
+ty_verb(italian, compile, future, sg(2), pos, [compilerai]).
+ty_verb(italian, compile, future, pl(1), pos, [compileremo]).
+ty_verb(italian, compile, future, pl(2), pos, [compilerete]).
+ty_verb(italian, soar, future, sg, pos, [impennerà]).
+ty_verb(italian, soar, future, pl, pos, [impenneranno]).
+ty_verb(italian, soar, future, sg(1), pos, [impennerò]).
+ty_verb(italian, soar, future, sg(2), pos, [impennerai]).
+ty_verb(italian, soar, future, pl(1), pos, [impenneremo]).
+ty_verb(italian, soar, future, pl(2), pos, [impennerete]).
+ty_verb(italian, unbalance, future, sg, pos, [squilibrerà]).
+ty_verb(italian, unbalance, future, pl, pos, [squilibreranno]).
+ty_verb(italian, unbalance, future, sg(1), pos, [squilibrerò]).
+ty_verb(italian, unbalance, future, sg(2), pos, [squilibrerai]).
+ty_verb(italian, unbalance, future, pl(1), pos, [squilibreremo]).
+ty_verb(italian, unbalance, future, pl(2), pos, [squilibrerete]).
+ty_verb(italian, lynch, future, sg, pos, [lincerà]).
+ty_verb(italian, lynch, future, pl, pos, [linceranno]).
+ty_verb(italian, lynch, future, sg(1), pos, [lincerò]).
+ty_verb(italian, lynch, future, sg(2), pos, [lincerai]).
+ty_verb(italian, lynch, future, pl(1), pos, [linceremo]).
+ty_verb(italian, lynch, future, pl(2), pos, [lincerete]).
+ty_verb(italian, mutiny, future, sg, pos, [ammutinerà]).
+ty_verb(italian, mutiny, future, pl, pos, [ammutineranno]).
+ty_verb(italian, mutiny, future, sg(1), pos, [ammutinerò]).
+ty_verb(italian, mutiny, future, sg(2), pos, [ammutinerai]).
+ty_verb(italian, mutiny, future, pl(1), pos, [ammutineremo]).
+ty_verb(italian, mutiny, future, pl(2), pos, [ammutinerete]).
+ty_verb(italian, reposition, future, sg, pos, [ricollocherà]).
+ty_verb(italian, reposition, future, pl, pos, [ricollocheranno]).
+ty_verb(italian, reposition, future, sg(1), pos, [ricollocherò]).
+ty_verb(italian, reposition, future, sg(2), pos, [ricollocherai]).
+ty_verb(italian, reposition, future, pl(1), pos, [ricollocheremo]).
+ty_verb(italian, reposition, future, pl(2), pos, [ricollocherete]).
+ty_verb(italian, house, future, sg, pos, [albergherà]).
+ty_verb(italian, house, future, pl, pos, [albergheranno]).
+ty_verb(italian, house, future, sg(1), pos, [albergherò]).
+ty_verb(italian, house, future, sg(2), pos, [albergherai]).
+ty_verb(italian, house, future, pl(1), pos, [albergheremo]).
+ty_verb(italian, house, future, pl(2), pos, [albergherete]).
+ty_verb(italian, quit, future, sg, pos, [smetterà]).
+ty_verb(italian, quit, future, pl, pos, [smetteranno]).
+ty_verb(italian, quit, future, sg(1), pos, [smetterò]).
+ty_verb(italian, quit, future, sg(2), pos, [smetterai]).
+ty_verb(italian, quit, future, pl(1), pos, [smetteremo]).
+ty_verb(italian, quit, future, pl(2), pos, [smetterete]).
+ty_verb(italian, originate, future, sg, pos, [originerà]).
+ty_verb(italian, originate, future, pl, pos, [origineranno]).
+ty_verb(italian, originate, future, sg(1), pos, [originerò]).
+ty_verb(italian, originate, future, sg(2), pos, [originerai]).
+ty_verb(italian, originate, future, pl(1), pos, [origineremo]).
+ty_verb(italian, originate, future, pl(2), pos, [originerete]).
+ty_verb(italian, process, future, sg, pos, [processerà]).
+ty_verb(italian, process, future, pl, pos, [processeranno]).
+ty_verb(italian, process, future, sg(1), pos, [processerò]).
+ty_verb(italian, process, future, sg(2), pos, [processerai]).
+ty_verb(italian, process, future, pl(1), pos, [processeremo]).
+ty_verb(italian, process, future, pl(2), pos, [processerete]).
+ty_verb(italian, soak, future, sg, pos, [infradicerà]).
+ty_verb(italian, soak, future, pl, pos, [infradiceranno]).
+ty_verb(italian, soak, future, sg(1), pos, [infradicerò]).
+ty_verb(italian, soak, future, sg(2), pos, [infradicerai]).
+ty_verb(italian, soak, future, pl(1), pos, [infradiceremo]).
+ty_verb(italian, soak, future, pl(2), pos, [infradicerete]).
+ty_verb(italian, breach, future, sg, pos, [infrangerà]).
+ty_verb(italian, breach, future, pl, pos, [infrangeranno]).
+ty_verb(italian, breach, future, sg(1), pos, [infrangerò]).
+ty_verb(italian, breach, future, sg(2), pos, [infrangerai]).
+ty_verb(italian, breach, future, pl(1), pos, [infrangeremo]).
+ty_verb(italian, breach, future, pl(2), pos, [infrangerete]).
+ty_verb(italian, repel, future, sg, pos, [repellerà]).
+ty_verb(italian, repel, future, pl, pos, [repelleranno]).
+ty_verb(italian, repel, future, sg(1), pos, [repellerò]).
+ty_verb(italian, repel, future, sg(2), pos, [repellerai]).
+ty_verb(italian, repel, future, pl(1), pos, [repelleremo]).
+ty_verb(italian, repel, future, pl(2), pos, [repellerete]).
+ty_verb(italian, price, future, sg, pos, [prezzerà]).
+ty_verb(italian, price, future, pl, pos, [prezzeranno]).
+ty_verb(italian, price, future, sg(1), pos, [prezzerò]).
+ty_verb(italian, price, future, sg(2), pos, [prezzerai]).
+ty_verb(italian, price, future, pl(1), pos, [prezzeremo]).
+ty_verb(italian, price, future, pl(2), pos, [prezzerete]).
+ty_verb(italian, match, future, sg, pos, [uguaglierà]).
+ty_verb(italian, match, future, pl, pos, [uguaglieranno]).
+ty_verb(italian, match, future, sg(1), pos, [uguaglierò]).
+ty_verb(italian, match, future, sg(2), pos, [uguaglierai]).
+ty_verb(italian, match, future, pl(1), pos, [uguaglieremo]).
+ty_verb(italian, match, future, pl(2), pos, [uguaglierete]).
+ty_verb(italian, remit, future, sg, pos, [rimetterà]).
+ty_verb(italian, remit, future, pl, pos, [rimetteranno]).
+ty_verb(italian, remit, future, sg(1), pos, [rimetterò]).
+ty_verb(italian, remit, future, sg(2), pos, [rimetterai]).
+ty_verb(italian, remit, future, pl(1), pos, [rimetteremo]).
+ty_verb(italian, remit, future, pl(2), pos, [rimetterete]).
+ty_verb(italian, risk, future, sg, pos, [rischierà]).
+ty_verb(italian, risk, future, pl, pos, [rischieranno]).
+ty_verb(italian, risk, future, sg(1), pos, [rischierò]).
+ty_verb(italian, risk, future, sg(2), pos, [rischierai]).
+ty_verb(italian, risk, future, pl(1), pos, [rischieremo]).
+ty_verb(italian, risk, future, pl(2), pos, [rischierete]).
+ty_verb(italian, roll, future, sg, pos, [rotolerà]).
+ty_verb(italian, roll, future, pl, pos, [rotoleranno]).
+ty_verb(italian, roll, future, sg(1), pos, [rotolerò]).
+ty_verb(italian, roll, future, sg(2), pos, [rotolerai]).
+ty_verb(italian, roll, future, pl(1), pos, [rotoleremo]).
+ty_verb(italian, roll, future, pl(2), pos, [rotolerete]).
+ty_verb(italian, root, future, sg, pos, [radicherà]).
+ty_verb(italian, root, future, pl, pos, [radicheranno]).
+ty_verb(italian, root, future, sg(1), pos, [radicherò]).
+ty_verb(italian, root, future, sg(2), pos, [radicherai]).
+ty_verb(italian, root, future, pl(1), pos, [radicheremo]).
+ty_verb(italian, root, future, pl(2), pos, [radicherete]).
+ty_verb(italian, round, future, sg, pos, [arrotonderà]).
+ty_verb(italian, round, future, pl, pos, [arrotonderanno]).
+ty_verb(italian, round, future, sg(1), pos, [arrotonderò]).
+ty_verb(italian, round, future, sg(2), pos, [arrotonderai]).
+ty_verb(italian, round, future, pl(1), pos, [arrotonderemo]).
+ty_verb(italian, round, future, pl(2), pos, [arrotonderete]).
+ty_verb(italian, roar, future, sg, pos, [ruggirà]).
+ty_verb(italian, roar, future, pl, pos, [ruggiranno]).
+ty_verb(italian, roar, future, sg(1), pos, [ruggirò]).
+ty_verb(italian, roar, future, sg(2), pos, [ruggirai]).
+ty_verb(italian, roar, future, pl(1), pos, [ruggiremo]).
+ty_verb(italian, roar, future, pl(2), pos, [ruggirete]).
+ty_verb(italian, square, future, sg, pos, [quadrerà]).
+ty_verb(italian, square, future, pl, pos, [quadreranno]).
+ty_verb(italian, square, future, sg(1), pos, [quadrerò]).
+ty_verb(italian, square, future, sg(2), pos, [quadrerai]).
+ty_verb(italian, square, future, pl(1), pos, [quadreremo]).
+ty_verb(italian, square, future, pl(2), pos, [quadrerete]).
+ty_verb(italian, shock, future, sg, pos, [scioccherà]).
+ty_verb(italian, shock, future, pl, pos, [scioccheranno]).
+ty_verb(italian, shock, future, sg(1), pos, [scioccherò]).
+ty_verb(italian, shock, future, sg(2), pos, [scioccherai]).
+ty_verb(italian, shock, future, pl(1), pos, [scioccheremo]).
+ty_verb(italian, shock, future, pl(2), pos, [scioccherete]).
+ty_verb(italian, swallow, future, sg, pos, [inghiottirà]).
+ty_verb(italian, swallow, future, pl, pos, [inghiottiranno]).
+ty_verb(italian, swallow, future, sg(1), pos, [inghiottirò]).
+ty_verb(italian, swallow, future, sg(2), pos, [inghiottirai]).
+ty_verb(italian, swallow, future, pl(1), pos, [inghiottiremo]).
+ty_verb(italian, swallow, future, pl(2), pos, [inghiottirete]).
+ty_verb(italian, reissue, future, sg, pos, [ristamperà]).
+ty_verb(italian, reissue, future, pl, pos, [ristamperanno]).
+ty_verb(italian, reissue, future, sg(1), pos, [ristamperò]).
+ty_verb(italian, reissue, future, sg(2), pos, [ristamperai]).
+ty_verb(italian, reissue, future, pl(1), pos, [ristamperemo]).
+ty_verb(italian, reissue, future, pl(2), pos, [ristamperete]).
+ty_verb(italian, ruin, future, sg, pos, [rovinerà]).
+ty_verb(italian, ruin, future, pl, pos, [rovineranno]).
+ty_verb(italian, ruin, future, sg(1), pos, [rovinerò]).
+ty_verb(italian, ruin, future, sg(2), pos, [rovinerai]).
+ty_verb(italian, ruin, future, pl(1), pos, [rovineremo]).
+ty_verb(italian, ruin, future, pl(2), pos, [rovinerete]).
+ty_verb(italian, stir, future, sg, pos, [mescolerà]).
+ty_verb(italian, stir, future, pl, pos, [mescoleranno]).
+ty_verb(italian, stir, future, sg(1), pos, [mescolerò]).
+ty_verb(italian, stir, future, sg(2), pos, [mescolerai]).
+ty_verb(italian, stir, future, pl(1), pos, [mescoleremo]).
+ty_verb(italian, stir, future, pl(2), pos, [mescolerete]).
+ty_verb(italian, spare, future, sg, pos, [risparmierà]).
+ty_verb(italian, spare, future, pl, pos, [risparmieranno]).
+ty_verb(italian, spare, future, sg(1), pos, [risparmierò]).
+ty_verb(italian, spare, future, sg(2), pos, [risparmierai]).
+ty_verb(italian, spare, future, pl(1), pos, [risparmieremo]).
+ty_verb(italian, spare, future, pl(2), pos, [risparmierete]).
+ty_verb(italian, stall, future, sg, pos, [fermerà]).
+ty_verb(italian, stall, future, pl, pos, [fermeranno]).
+ty_verb(italian, stall, future, sg(1), pos, [fermerò]).
+ty_verb(italian, stall, future, sg(2), pos, [fermerai]).
+ty_verb(italian, stall, future, pl(1), pos, [fermeremo]).
+ty_verb(italian, stall, future, pl(2), pos, [fermerete]).
+ty_verb(italian, strengthen, future, sg, pos, [fortificherà]).
+ty_verb(italian, strengthen, future, pl, pos, [fortificheranno]).
+ty_verb(italian, strengthen, future, sg(1), pos, [fortificherò]).
+ty_verb(italian, strengthen, future, sg(2), pos, [fortificherai]).
+ty_verb(italian, strengthen, future, pl(1), pos, [fortificheremo]).
+ty_verb(italian, strengthen, future, pl(2), pos, [fortificherete]).
+ty_verb(italian, substitute, future, sg, pos, [sostituirà]).
+ty_verb(italian, substitute, future, pl, pos, [sostituiranno]).
+ty_verb(italian, substitute, future, sg(1), pos, [sostituirò]).
+ty_verb(italian, substitute, future, sg(2), pos, [sostituirai]).
+ty_verb(italian, substitute, future, pl(1), pos, [sostituiremo]).
+ty_verb(italian, substitute, future, pl(2), pos, [sostituirete]).
+ty_verb(italian, title, future, sg, pos, [intitolerà]).
+ty_verb(italian, title, future, pl, pos, [intitoleranno]).
+ty_verb(italian, title, future, sg(1), pos, [intitolerò]).
+ty_verb(italian, title, future, sg(2), pos, [intitolerai]).
+ty_verb(italian, title, future, pl(1), pos, [intitoleremo]).
+ty_verb(italian, title, future, pl(2), pos, [intitolerete]).
+ty_verb(italian, abandon, future, sg, pos, [abbandonerà]).
+ty_verb(italian, abandon, future, pl, pos, [abbandoneranno]).
+ty_verb(italian, abandon, future, sg(1), pos, [abbandonerò]).
+ty_verb(italian, abandon, future, sg(2), pos, [abbandonerai]).
+ty_verb(italian, abandon, future, pl(1), pos, [abbandoneremo]).
+ty_verb(italian, abandon, future, pl(2), pos, [abbandonerete]).
+ty_verb(italian, abash, future, sg, pos, [sconcerterà]).
+ty_verb(italian, abash, future, pl, pos, [sconcerteranno]).
+ty_verb(italian, abash, future, sg(1), pos, [sconcerterò]).
+ty_verb(italian, abash, future, sg(2), pos, [sconcerterai]).
+ty_verb(italian, abash, future, pl(1), pos, [sconcerteremo]).
+ty_verb(italian, abash, future, pl(2), pos, [sconcerterete]).
+ty_verb(italian, abbreviate, future, sg, pos, [abbrevierà]).
+ty_verb(italian, abbreviate, future, pl, pos, [abbrevieranno]).
+ty_verb(italian, abbreviate, future, sg(1), pos, [abbrevierò]).
+ty_verb(italian, abbreviate, future, sg(2), pos, [abbrevierai]).
+ty_verb(italian, abbreviate, future, pl(1), pos, [abbrevieremo]).
+ty_verb(italian, abbreviate, future, pl(2), pos, [abbrevierete]).
+ty_verb(italian, abdicate, future, sg, pos, [abdicherà]).
+ty_verb(italian, abdicate, future, pl, pos, [abdicheranno]).
+ty_verb(italian, abdicate, future, sg(1), pos, [abdicherò]).
+ty_verb(italian, abdicate, future, sg(2), pos, [abdicherai]).
+ty_verb(italian, abdicate, future, pl(1), pos, [abdicheremo]).
+ty_verb(italian, abdicate, future, pl(2), pos, [abdicherete]).
+ty_verb(italian, abet, future, sg, pos, [favoreggerà]).
+ty_verb(italian, abet, future, pl, pos, [favoreggeranno]).
+ty_verb(italian, abet, future, sg(1), pos, [favoreggerò]).
+ty_verb(italian, abet, future, sg(2), pos, [favoreggerai]).
+ty_verb(italian, abet, future, pl(1), pos, [favoreggeremo]).
+ty_verb(italian, abet, future, pl(2), pos, [favoreggerete]).
+ty_verb(italian, abhor, future, sg, pos, [aborrirà]).
+ty_verb(italian, abhor, future, pl, pos, [aborriranno]).
+ty_verb(italian, abhor, future, sg(1), pos, [aborrirò]).
+ty_verb(italian, abhor, future, sg(2), pos, [aborrirai]).
+ty_verb(italian, abhor, future, pl(1), pos, [aborriremo]).
+ty_verb(italian, abhor, future, pl(2), pos, [aborrirete]).
+ty_verb(italian, abjure, future, sg, pos, [abiurerà]).
+ty_verb(italian, abjure, future, pl, pos, [abiureranno]).
+ty_verb(italian, abjure, future, sg(1), pos, [abiurerò]).
+ty_verb(italian, abjure, future, sg(2), pos, [abiurerai]).
+ty_verb(italian, abjure, future, pl(1), pos, [abiureremo]).
+ty_verb(italian, abjure, future, pl(2), pos, [abiurerete]).
+ty_verb(italian, abolish, future, sg, pos, [abolirà]).
+ty_verb(italian, abolish, future, pl, pos, [aboliranno]).
+ty_verb(italian, abolish, future, sg(1), pos, [abolirò]).
+ty_verb(italian, abolish, future, sg(2), pos, [abolirai]).
+ty_verb(italian, abolish, future, pl(1), pos, [aboliremo]).
+ty_verb(italian, abolish, future, pl(2), pos, [abolirete]).
+ty_verb(italian, abort, future, sg, pos, [abortirà]).
+ty_verb(italian, abort, future, pl, pos, [abortiranno]).
+ty_verb(italian, abort, future, sg(1), pos, [abortirò]).
+ty_verb(italian, abort, future, sg(2), pos, [abortirai]).
+ty_verb(italian, abort, future, pl(1), pos, [abortiremo]).
+ty_verb(italian, abort, future, pl(2), pos, [abortirete]).
+ty_verb(italian, abound, future, sg, pos, [abbonderà]).
+ty_verb(italian, abound, future, pl, pos, [abbonderanno]).
+ty_verb(italian, abound, future, sg(1), pos, [abbonderò]).
+ty_verb(italian, abound, future, sg(2), pos, [abbonderai]).
+ty_verb(italian, abound, future, pl(1), pos, [abbonderemo]).
+ty_verb(italian, abound, future, pl(2), pos, [abbonderete]).
+ty_verb(italian, absolve, future, sg, pos, [assolverà]).
+ty_verb(italian, absolve, future, pl, pos, [assolveranno]).
+ty_verb(italian, absolve, future, sg(1), pos, [assolverò]).
+ty_verb(italian, absolve, future, sg(2), pos, [assolverai]).
+ty_verb(italian, absolve, future, pl(1), pos, [assolveremo]).
+ty_verb(italian, absolve, future, pl(2), pos, [assolverete]).
+ty_verb(italian, absorb, future, sg, pos, [assorbirà]).
+ty_verb(italian, absorb, future, pl, pos, [assorbiranno]).
+ty_verb(italian, absorb, future, sg(1), pos, [assorbirò]).
+ty_verb(italian, absorb, future, sg(2), pos, [assorbirai]).
+ty_verb(italian, absorb, future, pl(1), pos, [assorbiremo]).
+ty_verb(italian, absorb, future, pl(2), pos, [assorbirete]).
+ty_verb(italian, abuse, future, sg, pos, [abuserà]).
+ty_verb(italian, abuse, future, pl, pos, [abuseranno]).
+ty_verb(italian, abuse, future, sg(1), pos, [abuserò]).
+ty_verb(italian, abuse, future, sg(2), pos, [abuserai]).
+ty_verb(italian, abuse, future, pl(1), pos, [abuseremo]).
+ty_verb(italian, abuse, future, pl(2), pos, [abuserete]).
+ty_verb(italian, accelerate, future, sg, pos, [accelererà]).
+ty_verb(italian, accelerate, future, pl, pos, [accelereranno]).
+ty_verb(italian, accelerate, future, sg(1), pos, [accelererò]).
+ty_verb(italian, accelerate, future, sg(2), pos, [accelererai]).
+ty_verb(italian, accelerate, future, pl(1), pos, [accelereremo]).
+ty_verb(italian, accelerate, future, pl(2), pos, [accelererete]).
+ty_verb(italian, access, future, sg, pos, [accederà]).
+ty_verb(italian, access, future, pl, pos, [accederanno]).
+ty_verb(italian, access, future, sg(1), pos, [accederò]).
+ty_verb(italian, access, future, sg(2), pos, [accederai]).
+ty_verb(italian, access, future, pl(1), pos, [accederemo]).
+ty_verb(italian, access, future, pl(2), pos, [accederete]).
+ty_verb(italian, acclaim, future, sg, pos, [acclamerà]).
+ty_verb(italian, acclaim, future, pl, pos, [acclameranno]).
+ty_verb(italian, acclaim, future, sg(1), pos, [acclamerò]).
+ty_verb(italian, acclaim, future, sg(2), pos, [acclamerai]).
+ty_verb(italian, acclaim, future, pl(1), pos, [acclameremo]).
+ty_verb(italian, acclaim, future, pl(2), pos, [acclamerete]).
+ty_verb(italian, acclimate, future, sg, pos, [acclimaterà]).
+ty_verb(italian, acclimate, future, pl, pos, [acclimateranno]).
+ty_verb(italian, acclimate, future, sg(1), pos, [acclimaterò]).
+ty_verb(italian, acclimate, future, sg(2), pos, [acclimaterai]).
+ty_verb(italian, acclimate, future, pl(1), pos, [acclimateremo]).
+ty_verb(italian, acclimate, future, pl(2), pos, [acclimaterete]).
+ty_verb(italian, acclimatise, future, sg, pos, [ambienterà]).
+ty_verb(italian, acclimatise, future, pl, pos, [ambienteranno]).
+ty_verb(italian, acclimatise, future, sg(1), pos, [ambienterò]).
+ty_verb(italian, acclimatise, future, sg(2), pos, [ambienterai]).
+ty_verb(italian, acclimatise, future, pl(1), pos, [ambienteremo]).
+ty_verb(italian, acclimatise, future, pl(2), pos, [ambienterete]).
+ty_verb(italian, accommodate, future, sg, pos, [accoglierà]).
+ty_verb(italian, accommodate, future, pl, pos, [accoglieranno]).
+ty_verb(italian, accommodate, future, sg(1), pos, [accoglierò]).
+ty_verb(italian, accommodate, future, sg(2), pos, [accoglierai]).
+ty_verb(italian, accommodate, future, pl(1), pos, [accoglieremo]).
+ty_verb(italian, accommodate, future, pl(2), pos, [accoglierete]).
+ty_verb(italian, accompany, future, sg, pos, [accompagnerà]).
+ty_verb(italian, accompany, future, pl, pos, [accompagneranno]).
+ty_verb(italian, accompany, future, sg(1), pos, [accompagnerò]).
+ty_verb(italian, accompany, future, sg(2), pos, [accompagnerai]).
+ty_verb(italian, accompany, future, pl(1), pos, [accompagneremo]).
+ty_verb(italian, accompany, future, pl(2), pos, [accompagnerete]).
+ty_verb(italian, accomplish, future, sg, pos, [compirà]).
+ty_verb(italian, accomplish, future, pl, pos, [compiranno]).
+ty_verb(italian, accomplish, future, sg(1), pos, [compirò]).
+ty_verb(italian, accomplish, future, sg(2), pos, [compirai]).
+ty_verb(italian, accomplish, future, pl(1), pos, [compiremo]).
+ty_verb(italian, accomplish, future, pl(2), pos, [compirete]).
+ty_verb(italian, accumulate, future, sg, pos, [accumulerà]).
+ty_verb(italian, accumulate, future, pl, pos, [accumuleranno]).
+ty_verb(italian, accumulate, future, sg(1), pos, [accumulerò]).
+ty_verb(italian, accumulate, future, sg(2), pos, [accumulerai]).
+ty_verb(italian, accumulate, future, pl(1), pos, [accumuleremo]).
+ty_verb(italian, accumulate, future, pl(2), pos, [accumulerete]).
+ty_verb(italian, accuse, future, sg, pos, [accuserà]).
+ty_verb(italian, accuse, future, pl, pos, [accuseranno]).
+ty_verb(italian, accuse, future, sg(1), pos, [accuserò]).
+ty_verb(italian, accuse, future, sg(2), pos, [accuserai]).
+ty_verb(italian, accuse, future, pl(1), pos, [accuseremo]).
+ty_verb(italian, accuse, future, pl(2), pos, [accuserete]).
+ty_verb(italian, accustom, future, sg, pos, [abituerà]).
+ty_verb(italian, accustom, future, pl, pos, [abitueranno]).
+ty_verb(italian, accustom, future, sg(1), pos, [abituerò]).
+ty_verb(italian, accustom, future, sg(2), pos, [abituerai]).
+ty_verb(italian, accustom, future, pl(1), pos, [abitueremo]).
+ty_verb(italian, accustom, future, pl(2), pos, [abituerete]).
+ty_verb(italian, achieve, future, sg, pos, [raggiungerà]).
+ty_verb(italian, achieve, future, pl, pos, [raggiungeranno]).
+ty_verb(italian, achieve, future, sg(1), pos, [raggiungerò]).
+ty_verb(italian, achieve, future, sg(2), pos, [raggiungerai]).
+ty_verb(italian, achieve, future, pl(1), pos, [raggiungeremo]).
+ty_verb(italian, achieve, future, pl(2), pos, [raggiungerete]).
+ty_verb(italian, achieve, future, sg, pos, [conseguirà]).
+ty_verb(italian, achieve, future, pl, pos, [conseguiranno]).
+ty_verb(italian, achieve, future, sg(1), pos, [conseguirò]).
+ty_verb(italian, achieve, future, sg(2), pos, [conseguirai]).
+ty_verb(italian, achieve, future, pl(1), pos, [conseguiremo]).
+ty_verb(italian, achieve, future, pl(2), pos, [conseguirete]).
+ty_verb(italian, acknowledge, future, sg, pos, [riconoscerà]).
+ty_verb(italian, acknowledge, future, pl, pos, [riconosceranno]).
+ty_verb(italian, acknowledge, future, sg(1), pos, [riconoscerò]).
+ty_verb(italian, acknowledge, future, sg(2), pos, [riconoscerai]).
+ty_verb(italian, acknowledge, future, pl(1), pos, [riconosceremo]).
+ty_verb(italian, acknowledge, future, pl(2), pos, [riconoscerete]).
+ty_verb(italian, acquire, future, sg, pos, [acquisterà]).
+ty_verb(italian, acquire, future, pl, pos, [acquisteranno]).
+ty_verb(italian, acquire, future, sg(1), pos, [acquisterò]).
+ty_verb(italian, acquire, future, sg(2), pos, [acquisterai]).
+ty_verb(italian, acquire, future, pl(1), pos, [acquisteremo]).
+ty_verb(italian, acquire, future, pl(2), pos, [acquisterete]).
+ty_verb(italian, act, future, sg, pos, [agirà]).
+ty_verb(italian, act, future, pl, pos, [agiranno]).
+ty_verb(italian, act, future, sg(1), pos, [agirò]).
+ty_verb(italian, act, future, sg(2), pos, [agirai]).
+ty_verb(italian, act, future, pl(1), pos, [agiremo]).
+ty_verb(italian, act, future, pl(2), pos, [agirete]).
+ty_verb(italian, actuate, future, sg, pos, [attiverà]).
+ty_verb(italian, actuate, future, pl, pos, [attiveranno]).
+ty_verb(italian, actuate, future, sg(1), pos, [attiverò]).
+ty_verb(italian, actuate, future, sg(2), pos, [attiverai]).
+ty_verb(italian, actuate, future, pl(1), pos, [attiveremo]).
+ty_verb(italian, actuate, future, pl(2), pos, [attiverete]).
+ty_verb(italian, adapt, future, sg, pos, [adatterà]).
+ty_verb(italian, adapt, future, pl, pos, [adatteranno]).
+ty_verb(italian, adapt, future, sg(1), pos, [adatterò]).
+ty_verb(italian, adapt, future, sg(2), pos, [adatterai]).
+ty_verb(italian, adapt, future, pl(1), pos, [adatteremo]).
+ty_verb(italian, adapt, future, pl(2), pos, [adatterete]).
+ty_verb(italian, add, future, sg, pos, [aggiungerà]).
+ty_verb(italian, add, future, pl, pos, [aggiungeranno]).
+ty_verb(italian, add, future, sg(1), pos, [aggiungerò]).
+ty_verb(italian, add, future, sg(2), pos, [aggiungerai]).
+ty_verb(italian, add, future, pl(1), pos, [aggiungeremo]).
+ty_verb(italian, add, future, pl(2), pos, [aggiungerete]).
+ty_verb(italian, address, future, sg, pos, [indirizzerà]).
+ty_verb(italian, address, future, pl, pos, [indirizzeranno]).
+ty_verb(italian, address, future, sg(1), pos, [indirizzerò]).
+ty_verb(italian, address, future, sg(2), pos, [indirizzerai]).
+ty_verb(italian, address, future, pl(1), pos, [indirizzeremo]).
+ty_verb(italian, address, future, pl(2), pos, [indirizzerete]).
+ty_verb(italian, adduce, future, sg, pos, [addurrà]).
+ty_verb(italian, adduce, future, pl, pos, [addurranno]).
+ty_verb(italian, adduce, future, sg(1), pos, [addurrò]).
+ty_verb(italian, adduce, future, sg(2), pos, [addurrai]).
+ty_verb(italian, adduce, future, pl(1), pos, [addurremo]).
+ty_verb(italian, adduce, future, pl(2), pos, [addurrete]).
+ty_verb(italian, adjust, future, sg, pos, [correggerà]).
+ty_verb(italian, adjust, future, pl, pos, [correggeranno]).
+ty_verb(italian, adjust, future, sg(1), pos, [correggerò]).
+ty_verb(italian, adjust, future, sg(2), pos, [correggerai]).
+ty_verb(italian, adjust, future, pl(1), pos, [correggeremo]).
+ty_verb(italian, adjust, future, pl(2), pos, [correggerete]).
+ty_verb(italian, admire, future, sg, pos, [ammirerà]).
+ty_verb(italian, admire, future, pl, pos, [ammireranno]).
+ty_verb(italian, admire, future, sg(1), pos, [ammirerò]).
+ty_verb(italian, admire, future, sg(2), pos, [ammirerai]).
+ty_verb(italian, admire, future, pl(1), pos, [ammireremo]).
+ty_verb(italian, admire, future, pl(2), pos, [ammirerete]).
+ty_verb(italian, admit, future, sg, pos, [ammetterà]).
+ty_verb(italian, admit, future, pl, pos, [ammetteranno]).
+ty_verb(italian, admit, future, sg(1), pos, [ammetterò]).
+ty_verb(italian, admit, future, sg(2), pos, [ammetterai]).
+ty_verb(italian, admit, future, pl(1), pos, [ammetteremo]).
+ty_verb(italian, admit, future, pl(2), pos, [ammetterete]).
+ty_verb(italian, admonish, future, sg, pos, [ammonirà]).
+ty_verb(italian, admonish, future, pl, pos, [ammoniranno]).
+ty_verb(italian, admonish, future, sg(1), pos, [ammonirò]).
+ty_verb(italian, admonish, future, sg(2), pos, [ammonirai]).
+ty_verb(italian, admonish, future, pl(1), pos, [ammoniremo]).
+ty_verb(italian, admonish, future, pl(2), pos, [ammonirete]).
+ty_verb(italian, adopt, future, sg, pos, [adotterà]).
+ty_verb(italian, adopt, future, pl, pos, [adotteranno]).
+ty_verb(italian, adopt, future, sg(1), pos, [adotterò]).
+ty_verb(italian, adopt, future, sg(2), pos, [adotterai]).
+ty_verb(italian, adopt, future, pl(1), pos, [adotteremo]).
+ty_verb(italian, adopt, future, pl(2), pos, [adotterete]).
+ty_verb(italian, adore, future, sg, pos, [adorerà]).
+ty_verb(italian, adore, future, pl, pos, [adoreranno]).
+ty_verb(italian, adore, future, sg(1), pos, [adorerò]).
+ty_verb(italian, adore, future, sg(2), pos, [adorerai]).
+ty_verb(italian, adore, future, pl(1), pos, [adoreremo]).
+ty_verb(italian, adore, future, pl(2), pos, [adorerete]).
+ty_verb(italian, adorn, future, sg, pos, [adornerà]).
+ty_verb(italian, adorn, future, pl, pos, [adorneranno]).
+ty_verb(italian, adorn, future, sg(1), pos, [adornerò]).
+ty_verb(italian, adorn, future, sg(2), pos, [adornerai]).
+ty_verb(italian, adorn, future, pl(1), pos, [adorneremo]).
+ty_verb(italian, adorn, future, pl(2), pos, [adornerete]).
+ty_verb(italian, adulate, future, sg, pos, [adulerà]).
+ty_verb(italian, adulate, future, pl, pos, [aduleranno]).
+ty_verb(italian, adulate, future, sg(1), pos, [adulerò]).
+ty_verb(italian, adulate, future, sg(2), pos, [adulerai]).
+ty_verb(italian, adulate, future, pl(1), pos, [aduleremo]).
+ty_verb(italian, adulate, future, pl(2), pos, [adulerete]).
+ty_verb(italian, adulterate, future, sg, pos, [adultererà]).
+ty_verb(italian, adulterate, future, pl, pos, [adultereranno]).
+ty_verb(italian, adulterate, future, sg(1), pos, [adultererò]).
+ty_verb(italian, adulterate, future, sg(2), pos, [adultererai]).
+ty_verb(italian, adulterate, future, pl(1), pos, [adultereremo]).
+ty_verb(italian, adulterate, future, pl(2), pos, [adultererete]).
+ty_verb(italian, advance, future, sg, pos, [avanzerà]).
+ty_verb(italian, advance, future, pl, pos, [avanzeranno]).
+ty_verb(italian, advance, future, sg(1), pos, [avanzerò]).
+ty_verb(italian, advance, future, sg(2), pos, [avanzerai]).
+ty_verb(italian, advance, future, pl(1), pos, [avanzeremo]).
+ty_verb(italian, advance, future, pl(2), pos, [avanzerete]).
+ty_verb(italian, advertise, future, sg, pos, [annuncerà]).
+ty_verb(italian, advertise, future, pl, pos, [annunceranno]).
+ty_verb(italian, advertise, future, sg(1), pos, [annuncerò]).
+ty_verb(italian, advertise, future, sg(2), pos, [annuncerai]).
+ty_verb(italian, advertise, future, pl(1), pos, [annunceremo]).
+ty_verb(italian, advertise, future, pl(2), pos, [annuncerete]).
+ty_verb(italian, advise, future, sg, pos, [consiglierà]).
+ty_verb(italian, advise, future, pl, pos, [consiglieranno]).
+ty_verb(italian, advise, future, sg(1), pos, [consiglierò]).
+ty_verb(italian, advise, future, sg(2), pos, [consiglierai]).
+ty_verb(italian, advise, future, pl(1), pos, [consiglieremo]).
+ty_verb(italian, advise, future, pl(2), pos, [consiglierete]).
+ty_verb(italian, advocate, future, sg, pos, [difenderà]).
+ty_verb(italian, advocate, future, pl, pos, [difenderanno]).
+ty_verb(italian, advocate, future, sg(1), pos, [difenderò]).
+ty_verb(italian, advocate, future, sg(2), pos, [difenderai]).
+ty_verb(italian, advocate, future, pl(1), pos, [difenderemo]).
+ty_verb(italian, advocate, future, pl(2), pos, [difenderete]).
+ty_verb(italian, affect, future, sg, pos, [influirà]).
+ty_verb(italian, affect, future, pl, pos, [influiranno]).
+ty_verb(italian, affect, future, sg(1), pos, [influirò]).
+ty_verb(italian, affect, future, sg(2), pos, [influirai]).
+ty_verb(italian, affect, future, pl(1), pos, [influiremo]).
+ty_verb(italian, affect, future, pl(2), pos, [influirete]).
+ty_verb(italian, affiliate, future, sg, pos, [affilierà]).
+ty_verb(italian, affiliate, future, pl, pos, [affilieranno]).
+ty_verb(italian, affiliate, future, sg(1), pos, [affilierò]).
+ty_verb(italian, affiliate, future, sg(2), pos, [affilierai]).
+ty_verb(italian, affiliate, future, pl(1), pos, [affilieremo]).
+ty_verb(italian, affiliate, future, pl(2), pos, [affilierete]).
+ty_verb(italian, affirm, future, sg, pos, [affermerà]).
+ty_verb(italian, affirm, future, pl, pos, [affermeranno]).
+ty_verb(italian, affirm, future, sg(1), pos, [affermerò]).
+ty_verb(italian, affirm, future, sg(2), pos, [affermerai]).
+ty_verb(italian, affirm, future, pl(1), pos, [affermeremo]).
+ty_verb(italian, affirm, future, pl(2), pos, [affermerete]).
+ty_verb(italian, afflict, future, sg, pos, [affliggerà]).
+ty_verb(italian, afflict, future, pl, pos, [affliggeranno]).
+ty_verb(italian, afflict, future, sg(1), pos, [affliggerò]).
+ty_verb(italian, afflict, future, sg(2), pos, [affliggerai]).
+ty_verb(italian, afflict, future, pl(1), pos, [affliggeremo]).
+ty_verb(italian, afflict, future, pl(2), pos, [affliggerete]).
+ty_verb(italian, afford, future, sg, pos, [permetterà]).
+ty_verb(italian, afford, future, pl, pos, [permetteranno]).
+ty_verb(italian, afford, future, sg(1), pos, [permetterò]).
+ty_verb(italian, afford, future, sg(2), pos, [permetterai]).
+ty_verb(italian, afford, future, pl(1), pos, [permetteremo]).
+ty_verb(italian, afford, future, pl(2), pos, [permetterete]).
+ty_verb(italian, age, future, sg, pos, [invecchierà]).
+ty_verb(italian, age, future, pl, pos, [invecchieranno]).
+ty_verb(italian, age, future, sg(1), pos, [invecchierò]).
+ty_verb(italian, age, future, sg(2), pos, [invecchierai]).
+ty_verb(italian, age, future, pl(1), pos, [invecchieremo]).
+ty_verb(italian, age, future, pl(2), pos, [invecchierete]).
+ty_verb(italian, agglutinate, future, sg, pos, [agglutinerà]).
+ty_verb(italian, agglutinate, future, pl, pos, [agglutineranno]).
+ty_verb(italian, agglutinate, future, sg(1), pos, [agglutinerò]).
+ty_verb(italian, agglutinate, future, sg(2), pos, [agglutinerai]).
+ty_verb(italian, agglutinate, future, pl(1), pos, [agglutineremo]).
+ty_verb(italian, agglutinate, future, pl(2), pos, [agglutinerete]).
+ty_verb(italian, aggravate, future, sg, pos, [aggraverà]).
+ty_verb(italian, aggravate, future, pl, pos, [aggraveranno]).
+ty_verb(italian, aggravate, future, sg(1), pos, [aggraverò]).
+ty_verb(italian, aggravate, future, sg(2), pos, [aggraverai]).
+ty_verb(italian, aggravate, future, pl(1), pos, [aggraveremo]).
+ty_verb(italian, aggravate, future, pl(2), pos, [aggraverete]).
+ty_verb(italian, agree, future, sg, pos, [accorderà]).
+ty_verb(italian, agree, future, pl, pos, [accorderanno]).
+ty_verb(italian, agree, future, sg(1), pos, [accorderò]).
+ty_verb(italian, agree, future, sg(2), pos, [accorderai]).
+ty_verb(italian, agree, future, pl(1), pos, [accorderemo]).
+ty_verb(italian, agree, future, pl(2), pos, [accorderete]).
+ty_verb(italian, alarm, future, sg, pos, [allarmerà]).
+ty_verb(italian, alarm, future, pl, pos, [allarmeranno]).
+ty_verb(italian, alarm, future, sg(1), pos, [allarmerò]).
+ty_verb(italian, alarm, future, sg(2), pos, [allarmerai]).
+ty_verb(italian, alarm, future, pl(1), pos, [allarmeremo]).
+ty_verb(italian, alarm, future, pl(2), pos, [allarmerete]).
+ty_verb(italian, alert, future, sg, pos, [allerterà]).
+ty_verb(italian, alert, future, pl, pos, [allerteranno]).
+ty_verb(italian, alert, future, sg(1), pos, [allerterò]).
+ty_verb(italian, alert, future, sg(2), pos, [allerterai]).
+ty_verb(italian, alert, future, pl(1), pos, [allerteremo]).
+ty_verb(italian, alert, future, pl(2), pos, [allerterete]).
+ty_verb(italian, alienate, future, sg, pos, [alienerà]).
+ty_verb(italian, alienate, future, pl, pos, [alieneranno]).
+ty_verb(italian, alienate, future, sg(1), pos, [alienerò]).
+ty_verb(italian, alienate, future, sg(2), pos, [alienerai]).
+ty_verb(italian, alienate, future, pl(1), pos, [alieneremo]).
+ty_verb(italian, alienate, future, pl(2), pos, [alienerete]).
+ty_verb(italian, align, future, sg, pos, [allineerà]).
+ty_verb(italian, align, future, pl, pos, [allineeranno]).
+ty_verb(italian, align, future, sg(1), pos, [allineerò]).
+ty_verb(italian, align, future, sg(2), pos, [allineerai]).
+ty_verb(italian, align, future, pl(1), pos, [allineeremo]).
+ty_verb(italian, align, future, pl(2), pos, [allineerete]).
+ty_verb(italian, allege, future, sg, pos, [dichiarerà]).
+ty_verb(italian, allege, future, pl, pos, [dichiareranno]).
+ty_verb(italian, allege, future, sg(1), pos, [dichiarerò]).
+ty_verb(italian, allege, future, sg(2), pos, [dichiarerai]).
+ty_verb(italian, allege, future, pl(1), pos, [dichiareremo]).
+ty_verb(italian, allege, future, pl(2), pos, [dichiarerete]).
+ty_verb(italian, alleviate, future, sg, pos, [allevierà]).
+ty_verb(italian, alleviate, future, pl, pos, [allevieranno]).
+ty_verb(italian, alleviate, future, sg(1), pos, [allevierò]).
+ty_verb(italian, alleviate, future, sg(2), pos, [allevierai]).
+ty_verb(italian, alleviate, future, pl(1), pos, [allevieremo]).
+ty_verb(italian, alleviate, future, pl(2), pos, [allevierete]).
+ty_verb(italian, allude, future, sg, pos, [alluderà]).
+ty_verb(italian, allude, future, pl, pos, [alluderanno]).
+ty_verb(italian, allude, future, sg(1), pos, [alluderò]).
+ty_verb(italian, allude, future, sg(2), pos, [alluderai]).
+ty_verb(italian, allude, future, pl(1), pos, [alluderemo]).
+ty_verb(italian, allude, future, pl(2), pos, [alluderete]).
+ty_verb(italian, alter, future, sg, pos, [altererà]).
+ty_verb(italian, alter, future, pl, pos, [altereranno]).
+ty_verb(italian, alter, future, sg(1), pos, [altererò]).
+ty_verb(italian, alter, future, sg(2), pos, [altererai]).
+ty_verb(italian, alter, future, pl(1), pos, [altereremo]).
+ty_verb(italian, alter, future, pl(2), pos, [altererete]).
+ty_verb(italian, alternate, future, sg, pos, [alternerà]).
+ty_verb(italian, alternate, future, pl, pos, [alterneranno]).
+ty_verb(italian, alternate, future, sg(1), pos, [alternerò]).
+ty_verb(italian, alternate, future, sg(2), pos, [alternerai]).
+ty_verb(italian, alternate, future, pl(1), pos, [alterneremo]).
+ty_verb(italian, alternate, future, pl(2), pos, [alternerete]).
+ty_verb(italian, amortise, future, sg, pos, [ammortizzerà]).
+ty_verb(italian, amortise, future, pl, pos, [ammortizzeranno]).
+ty_verb(italian, amortise, future, sg(1), pos, [ammortizzerò]).
+ty_verb(italian, amortise, future, sg(2), pos, [ammortizzerai]).
+ty_verb(italian, amortise, future, pl(1), pos, [ammortizzeremo]).
+ty_verb(italian, amortise, future, pl(2), pos, [ammortizzerete]).
+ty_verb(italian, amplify, future, sg, pos, [amplificherà]).
+ty_verb(italian, amplify, future, pl, pos, [amplificheranno]).
+ty_verb(italian, amplify, future, sg(1), pos, [amplificherò]).
+ty_verb(italian, amplify, future, sg(2), pos, [amplificherai]).
+ty_verb(italian, amplify, future, pl(1), pos, [amplificheremo]).
+ty_verb(italian, amplify, future, pl(2), pos, [amplificherete]).
+ty_verb(italian, anaesthetise, future, sg, pos, [anestetizzerà]).
+ty_verb(italian, anaesthetise, future, pl, pos, [anestetizzeranno]).
+ty_verb(italian, anaesthetise, future, sg(1), pos, [anestetizzerò]).
+ty_verb(italian, anaesthetise, future, sg(2), pos, [anestetizzerai]).
+ty_verb(italian, anaesthetise, future, pl(1), pos, [anestetizzeremo]).
+ty_verb(italian, anaesthetise, future, pl(2), pos, [anestetizzerete]).
+ty_verb(italian, analyse, future, sg, pos, [analizzerà]).
+ty_verb(italian, analyse, future, pl, pos, [analizzeranno]).
+ty_verb(italian, analyse, future, sg(1), pos, [analizzerò]).
+ty_verb(italian, analyse, future, sg(2), pos, [analizzerai]).
+ty_verb(italian, analyse, future, pl(1), pos, [analizzeremo]).
+ty_verb(italian, analyse, future, pl(2), pos, [analizzerete]).
+ty_verb(italian, anchor, future, sg, pos, [ancorerà]).
+ty_verb(italian, anchor, future, pl, pos, [ancoreranno]).
+ty_verb(italian, anchor, future, sg(1), pos, [ancorerò]).
+ty_verb(italian, anchor, future, sg(2), pos, [ancorerai]).
+ty_verb(italian, anchor, future, pl(1), pos, [ancoreremo]).
+ty_verb(italian, anchor, future, pl(2), pos, [ancorerete]).
+ty_verb(italian, anger, future, sg, pos, [irriterà]).
+ty_verb(italian, anger, future, pl, pos, [irriteranno]).
+ty_verb(italian, anger, future, sg(1), pos, [irriterò]).
+ty_verb(italian, anger, future, sg(2), pos, [irriterai]).
+ty_verb(italian, anger, future, pl(1), pos, [irriteremo]).
+ty_verb(italian, anger, future, pl(2), pos, [irriterete]).
+ty_verb(italian, annex, future, sg, pos, [annetterà]).
+ty_verb(italian, annex, future, pl, pos, [annetteranno]).
+ty_verb(italian, annex, future, sg(1), pos, [annetterò]).
+ty_verb(italian, annex, future, sg(2), pos, [annetterai]).
+ty_verb(italian, annex, future, pl(1), pos, [annetteremo]).
+ty_verb(italian, annex, future, pl(2), pos, [annetterete]).
+ty_verb(italian, annihilate, future, sg, pos, [annienterà]).
+ty_verb(italian, annihilate, future, pl, pos, [annienteranno]).
+ty_verb(italian, annihilate, future, sg(1), pos, [annienterò]).
+ty_verb(italian, annihilate, future, sg(2), pos, [annienterai]).
+ty_verb(italian, annihilate, future, pl(1), pos, [annienteremo]).
+ty_verb(italian, annihilate, future, pl(2), pos, [annienterete]).
+ty_verb(italian, annoy, future, sg, pos, [molesterà]).
+ty_verb(italian, annoy, future, pl, pos, [molesteranno]).
+ty_verb(italian, annoy, future, sg(1), pos, [molesterò]).
+ty_verb(italian, annoy, future, sg(2), pos, [molesterai]).
+ty_verb(italian, annoy, future, pl(1), pos, [molesteremo]).
+ty_verb(italian, annoy, future, pl(2), pos, [molesterete]).
+ty_verb(italian, anticipate, future, sg, pos, [anticiperà]).
+ty_verb(italian, anticipate, future, pl, pos, [anticiperanno]).
+ty_verb(italian, anticipate, future, sg(1), pos, [anticiperò]).
+ty_verb(italian, anticipate, future, sg(2), pos, [anticiperai]).
+ty_verb(italian, anticipate, future, pl(1), pos, [anticiperemo]).
+ty_verb(italian, anticipate, future, pl(2), pos, [anticiperete]).
+ty_verb(italian, applaud, future, sg, pos, [applaudirà]).
+ty_verb(italian, applaud, future, pl, pos, [applaudiranno]).
+ty_verb(italian, applaud, future, sg(1), pos, [applaudirò]).
+ty_verb(italian, applaud, future, sg(2), pos, [applaudirai]).
+ty_verb(italian, applaud, future, pl(1), pos, [applaudiremo]).
+ty_verb(italian, applaud, future, pl(2), pos, [applaudirete]).
+ty_verb(italian, apply, future, sg, pos, [applicherà]).
+ty_verb(italian, apply, future, pl, pos, [applicheranno]).
+ty_verb(italian, apply, future, sg(1), pos, [applicherò]).
+ty_verb(italian, apply, future, sg(2), pos, [applicherai]).
+ty_verb(italian, apply, future, pl(1), pos, [applicheremo]).
+ty_verb(italian, apply, future, pl(2), pos, [applicherete]).
+ty_verb(italian, appoint, future, sg, pos, [nominerà]).
+ty_verb(italian, appoint, future, pl, pos, [nomineranno]).
+ty_verb(italian, appoint, future, sg(1), pos, [nominerò]).
+ty_verb(italian, appoint, future, sg(2), pos, [nominerai]).
+ty_verb(italian, appoint, future, pl(1), pos, [nomineremo]).
+ty_verb(italian, appoint, future, pl(2), pos, [nominerete]).
+ty_verb(italian, appreciate, future, sg, pos, [apprezzerà]).
+ty_verb(italian, appreciate, future, pl, pos, [apprezzeranno]).
+ty_verb(italian, appreciate, future, sg(1), pos, [apprezzerò]).
+ty_verb(italian, appreciate, future, sg(2), pos, [apprezzerai]).
+ty_verb(italian, appreciate, future, pl(1), pos, [apprezzeremo]).
+ty_verb(italian, appreciate, future, pl(2), pos, [apprezzerete]).
+ty_verb(italian, approach, future, sg, pos, [avvicinerà]).
+ty_verb(italian, approach, future, pl, pos, [avvicineranno]).
+ty_verb(italian, approach, future, sg(1), pos, [avvicinerò]).
+ty_verb(italian, approach, future, sg(2), pos, [avvicinerai]).
+ty_verb(italian, approach, future, pl(1), pos, [avvicineremo]).
+ty_verb(italian, approach, future, pl(2), pos, [avvicinerete]).
+ty_verb(italian, approve, future, sg, pos, [visterà]).
+ty_verb(italian, approve, future, pl, pos, [visteranno]).
+ty_verb(italian, approve, future, sg(1), pos, [visterò]).
+ty_verb(italian, approve, future, sg(2), pos, [visterai]).
+ty_verb(italian, approve, future, pl(1), pos, [visteremo]).
+ty_verb(italian, approve, future, pl(2), pos, [visterete]).
+ty_verb(italian, approximate, future, sg, pos, [approssimerà]).
+ty_verb(italian, approximate, future, pl, pos, [approssimeranno]).
+ty_verb(italian, approximate, future, sg(1), pos, [approssimerò]).
+ty_verb(italian, approximate, future, sg(2), pos, [approssimerai]).
+ty_verb(italian, approximate, future, pl(1), pos, [approssimeremo]).
+ty_verb(italian, approximate, future, pl(2), pos, [approssimerete]).
+ty_verb(italian, arbitrate, future, sg, pos, [arbitrerà]).
+ty_verb(italian, arbitrate, future, pl, pos, [arbitreranno]).
+ty_verb(italian, arbitrate, future, sg(1), pos, [arbitrerò]).
+ty_verb(italian, arbitrate, future, sg(2), pos, [arbitrerai]).
+ty_verb(italian, arbitrate, future, pl(1), pos, [arbitreremo]).
+ty_verb(italian, arbitrate, future, pl(2), pos, [arbitrerete]).
+ty_verb(italian, arch, future, sg, pos, [arcuerà]).
+ty_verb(italian, arch, future, pl, pos, [arcueranno]).
+ty_verb(italian, arch, future, sg(1), pos, [arcuerò]).
+ty_verb(italian, arch, future, sg(2), pos, [arcuerai]).
+ty_verb(italian, arch, future, pl(1), pos, [arcueremo]).
+ty_verb(italian, arch, future, pl(2), pos, [arcuerete]).
+ty_verb(italian, arise, future, sg, pos, [sorgerà]).
+ty_verb(italian, arise, future, pl, pos, [sorgeranno]).
+ty_verb(italian, arise, future, sg(1), pos, [sorgerò]).
+ty_verb(italian, arise, future, sg(2), pos, [sorgerai]).
+ty_verb(italian, arise, future, pl(1), pos, [sorgeremo]).
+ty_verb(italian, arise, future, pl(2), pos, [sorgerete]).
+ty_verb(italian, arm, future, sg, pos, [armerà]).
+ty_verb(italian, arm, future, pl, pos, [armeranno]).
+ty_verb(italian, arm, future, sg(1), pos, [armerò]).
+ty_verb(italian, arm, future, sg(2), pos, [armerai]).
+ty_verb(italian, arm, future, pl(1), pos, [armeremo]).
+ty_verb(italian, arm, future, pl(2), pos, [armerete]).
+ty_verb(italian, armour, future, sg, pos, [blinderà]).
+ty_verb(italian, armour, future, pl, pos, [blinderanno]).
+ty_verb(italian, armour, future, sg(1), pos, [blinderò]).
+ty_verb(italian, armour, future, sg(2), pos, [blinderai]).
+ty_verb(italian, armour, future, pl(1), pos, [blinderemo]).
+ty_verb(italian, armour, future, pl(2), pos, [blinderete]).
+ty_verb(italian, arouse, future, sg, pos, [susciterà]).
+ty_verb(italian, arouse, future, pl, pos, [susciteranno]).
+ty_verb(italian, arouse, future, sg(1), pos, [susciterò]).
+ty_verb(italian, arouse, future, sg(2), pos, [susciterai]).
+ty_verb(italian, arouse, future, pl(1), pos, [susciteremo]).
+ty_verb(italian, arouse, future, pl(2), pos, [susciterete]).
+ty_verb(italian, arrange, future, sg, pos, [concerterà]).
+ty_verb(italian, arrange, future, pl, pos, [concerteranno]).
+ty_verb(italian, arrange, future, sg(1), pos, [concerterò]).
+ty_verb(italian, arrange, future, sg(2), pos, [concerterai]).
+ty_verb(italian, arrange, future, pl(1), pos, [concerteremo]).
+ty_verb(italian, arrange, future, pl(2), pos, [concerterete]).
+ty_verb(italian, arrest, future, sg, pos, [arresterà]).
+ty_verb(italian, arrest, future, pl, pos, [arresteranno]).
+ty_verb(italian, arrest, future, sg(1), pos, [arresterò]).
+ty_verb(italian, arrest, future, sg(2), pos, [arresterai]).
+ty_verb(italian, arrest, future, pl(1), pos, [arresteremo]).
+ty_verb(italian, arrest, future, pl(2), pos, [arresterete]).
+ty_verb(italian, arrive, future, sg, pos, [arriverà]).
+ty_verb(italian, arrive, future, pl, pos, [arriveranno]).
+ty_verb(italian, arrive, future, sg(1), pos, [arriverò]).
+ty_verb(italian, arrive, future, sg(2), pos, [arriverai]).
+ty_verb(italian, arrive, future, pl(1), pos, [arriveremo]).
+ty_verb(italian, arrive, future, pl(2), pos, [arriverete]).
+ty_verb(italian, articulate, future, sg, pos, [articolerà]).
+ty_verb(italian, articulate, future, pl, pos, [articoleranno]).
+ty_verb(italian, articulate, future, sg(1), pos, [articolerò]).
+ty_verb(italian, articulate, future, sg(2), pos, [articolerai]).
+ty_verb(italian, articulate, future, pl(1), pos, [articoleremo]).
+ty_verb(italian, articulate, future, pl(2), pos, [articolerete]).
+ty_verb(italian, ascertain, future, sg, pos, [constaterà]).
+ty_verb(italian, ascertain, future, pl, pos, [constateranno]).
+ty_verb(italian, ascertain, future, sg(1), pos, [constaterò]).
+ty_verb(italian, ascertain, future, sg(2), pos, [constaterai]).
+ty_verb(italian, ascertain, future, pl(1), pos, [constateremo]).
+ty_verb(italian, ascertain, future, pl(2), pos, [constaterete]).
+ty_verb(italian, asphalt, future, sg, pos, [asfalterà]).
+ty_verb(italian, asphalt, future, pl, pos, [asfalteranno]).
+ty_verb(italian, asphalt, future, sg(1), pos, [asfalterò]).
+ty_verb(italian, asphalt, future, sg(2), pos, [asfalterai]).
+ty_verb(italian, asphalt, future, pl(1), pos, [asfalteremo]).
+ty_verb(italian, asphalt, future, pl(2), pos, [asfalterete]).
+ty_verb(italian, assault, future, sg, pos, [assalterà]).
+ty_verb(italian, assault, future, pl, pos, [assalteranno]).
+ty_verb(italian, assault, future, sg(1), pos, [assalterò]).
+ty_verb(italian, assault, future, sg(2), pos, [assalterai]).
+ty_verb(italian, assault, future, pl(1), pos, [assalteremo]).
+ty_verb(italian, assault, future, pl(2), pos, [assalterete]).
+ty_verb(italian, assemble, future, sg, pos, [assemblerà]).
+ty_verb(italian, assemble, future, pl, pos, [assembleranno]).
+ty_verb(italian, assemble, future, sg(1), pos, [assemblerò]).
+ty_verb(italian, assemble, future, sg(2), pos, [assemblerai]).
+ty_verb(italian, assemble, future, pl(1), pos, [assembleremo]).
+ty_verb(italian, assemble, future, pl(2), pos, [assemblerete]).
+ty_verb(italian, assess, future, sg, pos, [valuterà]).
+ty_verb(italian, assess, future, pl, pos, [valuteranno]).
+ty_verb(italian, assess, future, sg(1), pos, [valuterò]).
+ty_verb(italian, assess, future, sg(2), pos, [valuterai]).
+ty_verb(italian, assess, future, pl(1), pos, [valuteremo]).
+ty_verb(italian, assess, future, pl(2), pos, [valuterete]).
+ty_verb(italian, assign, future, sg, pos, [assegnerà]).
+ty_verb(italian, assign, future, pl, pos, [assegneranno]).
+ty_verb(italian, assign, future, sg(1), pos, [assegnerò]).
+ty_verb(italian, assign, future, sg(2), pos, [assegnerai]).
+ty_verb(italian, assign, future, pl(1), pos, [assegneremo]).
+ty_verb(italian, assign, future, pl(2), pos, [assegnerete]).
+ty_verb(italian, assimilate, future, sg, pos, [assimilerà]).
+ty_verb(italian, assimilate, future, pl, pos, [assimileranno]).
+ty_verb(italian, assimilate, future, sg(1), pos, [assimilerò]).
+ty_verb(italian, assimilate, future, sg(2), pos, [assimilerai]).
+ty_verb(italian, assimilate, future, pl(1), pos, [assimileremo]).
+ty_verb(italian, assimilate, future, pl(2), pos, [assimilerete]).
+ty_verb(italian, assist, future, sg, pos, [assisterà]).
+ty_verb(italian, assist, future, pl, pos, [assisteranno]).
+ty_verb(italian, assist, future, sg(1), pos, [assisterò]).
+ty_verb(italian, assist, future, sg(2), pos, [assisterai]).
+ty_verb(italian, assist, future, pl(1), pos, [assisteremo]).
+ty_verb(italian, assist, future, pl(2), pos, [assisterete]).
+ty_verb(italian, associate, future, sg, pos, [assocerà]).
+ty_verb(italian, associate, future, pl, pos, [assoceranno]).
+ty_verb(italian, associate, future, sg(1), pos, [assocerò]).
+ty_verb(italian, associate, future, sg(2), pos, [assocerai]).
+ty_verb(italian, associate, future, pl(1), pos, [assoceremo]).
+ty_verb(italian, associate, future, pl(2), pos, [assocerete]).
+ty_verb(italian, assume, future, sg, pos, [assumerà]).
+ty_verb(italian, assume, future, pl, pos, [assumeranno]).
+ty_verb(italian, assume, future, sg(1), pos, [assumerò]).
+ty_verb(italian, assume, future, sg(2), pos, [assumerai]).
+ty_verb(italian, assume, future, pl(1), pos, [assumeremo]).
+ty_verb(italian, assume, future, pl(2), pos, [assumerete]).
+ty_verb(italian, assure, future, sg, pos, [assicurerà]).
+ty_verb(italian, assure, future, pl, pos, [assicureranno]).
+ty_verb(italian, assure, future, sg(1), pos, [assicurerò]).
+ty_verb(italian, assure, future, sg(2), pos, [assicurerai]).
+ty_verb(italian, assure, future, pl(1), pos, [assicureremo]).
+ty_verb(italian, assure, future, pl(2), pos, [assicurerete]).
+ty_verb(italian, attach, future, sg, pos, [attaccherà]).
+ty_verb(italian, attach, future, pl, pos, [attaccheranno]).
+ty_verb(italian, attach, future, sg(1), pos, [attaccherò]).
+ty_verb(italian, attach, future, sg(2), pos, [attaccherai]).
+ty_verb(italian, attach, future, pl(1), pos, [attaccheremo]).
+ty_verb(italian, attach, future, pl(2), pos, [attaccherete]).
+ty_verb(italian, attend, future, sg, pos, [frequenterà]).
+ty_verb(italian, attend, future, pl, pos, [frequenteranno]).
+ty_verb(italian, attend, future, sg(1), pos, [frequenterò]).
+ty_verb(italian, attend, future, sg(2), pos, [frequenterai]).
+ty_verb(italian, attend, future, pl(1), pos, [frequenteremo]).
+ty_verb(italian, attend, future, pl(2), pos, [frequenterete]).
+ty_verb(italian, attest, future, sg, pos, [testimonierà]).
+ty_verb(italian, attest, future, pl, pos, [testimonieranno]).
+ty_verb(italian, attest, future, sg(1), pos, [testimonierò]).
+ty_verb(italian, attest, future, sg(2), pos, [testimonierai]).
+ty_verb(italian, attest, future, pl(1), pos, [testimonieremo]).
+ty_verb(italian, attest, future, pl(2), pos, [testimonierete]).
+ty_verb(italian, attract, future, sg, pos, [attrarrà]).
+ty_verb(italian, attract, future, pl, pos, [attrarranno]).
+ty_verb(italian, attract, future, sg(1), pos, [attrarrò]).
+ty_verb(italian, attract, future, sg(2), pos, [attrarrai]).
+ty_verb(italian, attract, future, pl(1), pos, [attrarremo]).
+ty_verb(italian, attract, future, pl(2), pos, [attrarrete]).
+ty_verb(italian, attribute, future, sg, pos, [attribuirà]).
+ty_verb(italian, attribute, future, pl, pos, [attribuiranno]).
+ty_verb(italian, attribute, future, sg(1), pos, [attribuirò]).
+ty_verb(italian, attribute, future, sg(2), pos, [attribuirai]).
+ty_verb(italian, attribute, future, pl(1), pos, [attribuiremo]).
+ty_verb(italian, attribute, future, pl(2), pos, [attribuirete]).
+ty_verb(italian, augment, future, sg, pos, [aumenterà]).
+ty_verb(italian, augment, future, pl, pos, [aumenteranno]).
+ty_verb(italian, augment, future, sg(1), pos, [aumenterò]).
+ty_verb(italian, augment, future, sg(2), pos, [aumenterai]).
+ty_verb(italian, augment, future, pl(1), pos, [aumenteremo]).
+ty_verb(italian, augment, future, pl(2), pos, [aumenterete]).
+ty_verb(italian, authorise, future, sg, pos, [autorizzerà]).
+ty_verb(italian, authorise, future, pl, pos, [autorizzeranno]).
+ty_verb(italian, authorise, future, sg(1), pos, [autorizzerò]).
+ty_verb(italian, authorise, future, sg(2), pos, [autorizzerai]).
+ty_verb(italian, authorise, future, pl(1), pos, [autorizzeremo]).
+ty_verb(italian, authorise, future, pl(2), pos, [autorizzerete]).
+ty_verb(italian, automate, future, sg, pos, [automatizzerà]).
+ty_verb(italian, automate, future, pl, pos, [automatizzeranno]).
+ty_verb(italian, automate, future, sg(1), pos, [automatizzerò]).
+ty_verb(italian, automate, future, sg(2), pos, [automatizzerai]).
+ty_verb(italian, automate, future, pl(1), pos, [automatizzeremo]).
+ty_verb(italian, automate, future, pl(2), pos, [automatizzerete]).
+ty_verb(italian, avenge, future, sg, pos, [vendicherà]).
+ty_verb(italian, avenge, future, pl, pos, [vendicheranno]).
+ty_verb(italian, avenge, future, sg(1), pos, [vendicherò]).
+ty_verb(italian, avenge, future, sg(2), pos, [vendicherai]).
+ty_verb(italian, avenge, future, pl(1), pos, [vendicheremo]).
+ty_verb(italian, avenge, future, pl(2), pos, [vendicherete]).
+ty_verb(italian, avoid, future, sg, pos, [eviterà]).
+ty_verb(italian, avoid, future, pl, pos, [eviteranno]).
+ty_verb(italian, avoid, future, sg(1), pos, [eviterò]).
+ty_verb(italian, avoid, future, sg(2), pos, [eviterai]).
+ty_verb(italian, avoid, future, pl(1), pos, [eviteremo]).
+ty_verb(italian, avoid, future, pl(2), pos, [eviterete]).
+ty_verb(italian, await, future, sg, pos, [aspetterà]).
+ty_verb(italian, await, future, pl, pos, [aspetteranno]).
+ty_verb(italian, await, future, sg(1), pos, [aspetterò]).
+ty_verb(italian, await, future, sg(2), pos, [aspetterai]).
+ty_verb(italian, await, future, pl(1), pos, [aspetteremo]).
+ty_verb(italian, await, future, pl(2), pos, [aspetterete]).
+ty_verb(italian, awake, future, sg, pos, [sveglierà]).
+ty_verb(italian, awake, future, pl, pos, [sveglieranno]).
+ty_verb(italian, awake, future, sg(1), pos, [sveglierò]).
+ty_verb(italian, awake, future, sg(2), pos, [sveglierai]).
+ty_verb(italian, awake, future, pl(1), pos, [sveglieremo]).
+ty_verb(italian, awake, future, pl(2), pos, [sveglierete]).
+ty_verb(italian, awaken, future, sg, pos, [risveglierà]).
+ty_verb(italian, awaken, future, pl, pos, [risveglieranno]).
+ty_verb(italian, awaken, future, sg(1), pos, [risveglierò]).
+ty_verb(italian, awaken, future, sg(2), pos, [risveglierai]).
+ty_verb(italian, awaken, future, pl(1), pos, [risveglieremo]).
+ty_verb(italian, awaken, future, pl(2), pos, [risveglierete]).
+ty_verb(italian, sho, future, sg, pos, [ferrerà]).
+ty_verb(italian, sho, future, pl, pos, [ferreranno]).
+ty_verb(italian, sho, future, sg(1), pos, [ferrerò]).
+ty_verb(italian, sho, future, sg(2), pos, [ferrerai]).
+ty_verb(italian, sho, future, pl(1), pos, [ferreremo]).
+ty_verb(italian, sho, future, pl(2), pos, [ferrerete]).
+ty_verb(italian, space, future, sg, pos, [spazierà]).
+ty_verb(italian, space, future, pl, pos, [spazieranno]).
+ty_verb(italian, space, future, sg(1), pos, [spazierò]).
+ty_verb(italian, space, future, sg(2), pos, [spazierai]).
+ty_verb(italian, space, future, pl(1), pos, [spazieremo]).
+ty_verb(italian, space, future, pl(2), pos, [spazierete]).
+ty_verb(italian, spell, future, sg, pos, [compiterà]).
+ty_verb(italian, spell, future, pl, pos, [compiteranno]).
+ty_verb(italian, spell, future, sg(1), pos, [compiterò]).
+ty_verb(italian, spell, future, sg(2), pos, [compiterai]).
+ty_verb(italian, spell, future, pl(1), pos, [compiteremo]).
+ty_verb(italian, spell, future, pl(2), pos, [compiterete]).
+ty_verb(italian, grease, future, sg, pos, [ungerà]).
+ty_verb(italian, grease, future, pl, pos, [ungeranno]).
+ty_verb(italian, grease, future, sg(1), pos, [ungerò]).
+ty_verb(italian, grease, future, sg(2), pos, [ungerai]).
+ty_verb(italian, grease, future, pl(1), pos, [ungeremo]).
+ty_verb(italian, grease, future, pl(2), pos, [ungerete]).
+ty_verb(italian, sift, future, sg, pos, [setaccerà]).
+ty_verb(italian, sift, future, pl, pos, [setacceranno]).
+ty_verb(italian, sift, future, sg(1), pos, [setaccerò]).
+ty_verb(italian, sift, future, sg(2), pos, [setaccerai]).
+ty_verb(italian, sift, future, pl(1), pos, [setacceremo]).
+ty_verb(italian, sift, future, pl(2), pos, [setaccerete]).
+ty_verb(italian, invade, future, sg, pos, [invaderà]).
+ty_verb(italian, invade, future, pl, pos, [invaderanno]).
+ty_verb(italian, invade, future, sg(1), pos, [invaderò]).
+ty_verb(italian, invade, future, sg(2), pos, [invaderai]).
+ty_verb(italian, invade, future, pl(1), pos, [invaderemo]).
+ty_verb(italian, invade, future, pl(2), pos, [invaderete]).
+ty_verb(italian, irrigate, future, sg, pos, [irrigerà]).
+ty_verb(italian, irrigate, future, pl, pos, [irrigeranno]).
+ty_verb(italian, irrigate, future, sg(1), pos, [irrigerò]).
+ty_verb(italian, irrigate, future, sg(2), pos, [irrigerai]).
+ty_verb(italian, irrigate, future, pl(1), pos, [irrigeremo]).
+ty_verb(italian, irrigate, future, pl(2), pos, [irrigerete]).
+ty_verb(italian, juxtapose, future, sg, pos, [giustapporrà]).
+ty_verb(italian, juxtapose, future, pl, pos, [giustapporranno]).
+ty_verb(italian, juxtapose, future, sg(1), pos, [giustapporrò]).
+ty_verb(italian, juxtapose, future, sg(2), pos, [giustapporrai]).
+ty_verb(italian, juxtapose, future, pl(1), pos, [giustapporremo]).
+ty_verb(italian, juxtapose, future, pl(2), pos, [giustapporrete]).
+ty_verb(italian, plunder, future, sg, pos, [saccheggerà]).
+ty_verb(italian, plunder, future, pl, pos, [saccheggeranno]).
+ty_verb(italian, plunder, future, sg(1), pos, [saccheggerò]).
+ty_verb(italian, plunder, future, sg(2), pos, [saccheggerai]).
+ty_verb(italian, plunder, future, pl(1), pos, [saccheggeremo]).
+ty_verb(italian, plunder, future, pl(2), pos, [saccheggerete]).
+ty_verb(italian, portray, future, sg, pos, [ritrarrà]).
+ty_verb(italian, portray, future, pl, pos, [ritrarranno]).
+ty_verb(italian, portray, future, sg(1), pos, [ritrarrò]).
+ty_verb(italian, portray, future, sg(2), pos, [ritrarrai]).
+ty_verb(italian, portray, future, pl(1), pos, [ritrarremo]).
+ty_verb(italian, portray, future, pl(2), pos, [ritrarrete]).
+ty_verb(italian, scrape, future, sg, pos, [raschierà]).
+ty_verb(italian, scrape, future, pl, pos, [raschieranno]).
+ty_verb(italian, scrape, future, sg(1), pos, [raschierò]).
+ty_verb(italian, scrape, future, sg(2), pos, [raschierai]).
+ty_verb(italian, scrape, future, pl(1), pos, [raschieremo]).
+ty_verb(italian, scrape, future, pl(2), pos, [raschierete]).
+ty_verb(italian, secrete, future, sg, pos, [secernerà]).
+ty_verb(italian, secrete, future, pl, pos, [secerneranno]).
+ty_verb(italian, secrete, future, sg(1), pos, [secernerò]).
+ty_verb(italian, secrete, future, sg(2), pos, [secernerai]).
+ty_verb(italian, secrete, future, pl(1), pos, [secerneremo]).
+ty_verb(italian, secrete, future, pl(2), pos, [secernerete]).
+ty_verb(italian, shoot, future, sg, pos, [sparerà]).
+ty_verb(italian, shoot, future, pl, pos, [spareranno]).
+ty_verb(italian, shoot, future, sg(1), pos, [sparerò]).
+ty_verb(italian, shoot, future, sg(2), pos, [sparerai]).
+ty_verb(italian, shoot, future, pl(1), pos, [spareremo]).
+ty_verb(italian, shoot, future, pl(2), pos, [sparerete]).
+ty_verb(italian, smile, future, sg, pos, [sorriderà]).
+ty_verb(italian, smile, future, pl, pos, [sorrideranno]).
+ty_verb(italian, smile, future, sg(1), pos, [sorriderò]).
+ty_verb(italian, smile, future, sg(2), pos, [sorriderai]).
+ty_verb(italian, smile, future, pl(1), pos, [sorrideremo]).
+ty_verb(italian, smile, future, pl(2), pos, [sorriderete]).
+ty_verb(italian, snatch, future, sg, pos, [strapperà]).
+ty_verb(italian, snatch, future, pl, pos, [strapperanno]).
+ty_verb(italian, snatch, future, sg(1), pos, [strapperò]).
+ty_verb(italian, snatch, future, sg(2), pos, [strapperai]).
+ty_verb(italian, snatch, future, pl(1), pos, [strapperemo]).
+ty_verb(italian, snatch, future, pl(2), pos, [strapperete]).
+ty_verb(italian, smell, future, sg, pos, [puzzerà]).
+ty_verb(italian, smell, future, pl, pos, [puzzeranno]).
+ty_verb(italian, smell, future, sg(1), pos, [puzzerò]).
+ty_verb(italian, smell, future, sg(2), pos, [puzzerai]).
+ty_verb(italian, smell, future, pl(1), pos, [puzzeremo]).
+ty_verb(italian, smell, future, pl(2), pos, [puzzerete]).
+ty_verb(italian, stutter, future, sg, pos, [balbetterà]).
+ty_verb(italian, stutter, future, pl, pos, [balbetteranno]).
+ty_verb(italian, stutter, future, sg(1), pos, [balbetterò]).
+ty_verb(italian, stutter, future, sg(2), pos, [balbetterai]).
+ty_verb(italian, stutter, future, pl(1), pos, [balbetteremo]).
+ty_verb(italian, stutter, future, pl(2), pos, [balbetterete]).
+ty_verb(italian, suck, future, sg, pos, [succhierà]).
+ty_verb(italian, suck, future, pl, pos, [succhieranno]).
+ty_verb(italian, suck, future, sg(1), pos, [succhierò]).
+ty_verb(italian, suck, future, sg(2), pos, [succhierai]).
+ty_verb(italian, suck, future, pl(1), pos, [succhieremo]).
+ty_verb(italian, suck, future, pl(2), pos, [succhierete]).
+ty_verb(italian, suggest, future, sg, pos, [suggerirà]).
+ty_verb(italian, suggest, future, pl, pos, [suggeriranno]).
+ty_verb(italian, suggest, future, sg(1), pos, [suggerirò]).
+ty_verb(italian, suggest, future, sg(2), pos, [suggerirai]).
+ty_verb(italian, suggest, future, pl(1), pos, [suggeriremo]).
+ty_verb(italian, suggest, future, pl(2), pos, [suggerirete]).
+ty_verb(italian, suppress, future, sg, pos, [sopprimerà]).
+ty_verb(italian, suppress, future, pl, pos, [sopprimeranno]).
+ty_verb(italian, suppress, future, sg(1), pos, [sopprimerò]).
+ty_verb(italian, suppress, future, sg(2), pos, [sopprimerai]).
+ty_verb(italian, suppress, future, pl(1), pos, [sopprimeremo]).
+ty_verb(italian, suppress, future, pl(2), pos, [sopprimerete]).
+ty_verb(italian, swing, future, sg, pos, [oscillerà]).
+ty_verb(italian, swing, future, pl, pos, [oscilleranno]).
+ty_verb(italian, swing, future, sg(1), pos, [oscillerò]).
+ty_verb(italian, swing, future, sg(2), pos, [oscillerai]).
+ty_verb(italian, swing, future, pl(1), pos, [oscilleremo]).
+ty_verb(italian, swing, future, pl(2), pos, [oscillerete]).
+ty_verb(italian, shorten, future, sg, pos, [accorcerà]).
+ty_verb(italian, shorten, future, pl, pos, [accorceranno]).
+ty_verb(italian, shorten, future, sg(1), pos, [accorcerò]).
+ty_verb(italian, shorten, future, sg(2), pos, [accorcerai]).
+ty_verb(italian, shorten, future, pl(1), pos, [accorceremo]).
+ty_verb(italian, shorten, future, pl(2), pos, [accorcerete]).
+ty_verb(italian, slow, future, sg, pos, [rallenterà]).
+ty_verb(italian, slow, future, pl, pos, [rallenteranno]).
+ty_verb(italian, slow, future, sg(1), pos, [rallenterò]).
+ty_verb(italian, slow, future, sg(2), pos, [rallenterai]).
+ty_verb(italian, slow, future, pl(1), pos, [rallenteremo]).
+ty_verb(italian, slow, future, pl(2), pos, [rallenterete]).
+ty_verb(italian, soften, future, sg, pos, [ammorbidirà]).
+ty_verb(italian, soften, future, pl, pos, [ammorbidiranno]).
+ty_verb(italian, soften, future, sg(1), pos, [ammorbidirò]).
+ty_verb(italian, soften, future, sg(2), pos, [ammorbidirai]).
+ty_verb(italian, soften, future, pl(1), pos, [ammorbidiremo]).
+ty_verb(italian, soften, future, pl(2), pos, [ammorbidirete]).
+ty_verb(italian, survive, future, sg, pos, [sopravvivrà]).
+ty_verb(italian, survive, future, pl, pos, [sopravvivranno]).
+ty_verb(italian, survive, future, sg(1), pos, [sopravvivrò]).
+ty_verb(italian, survive, future, sg(2), pos, [sopravvivrai]).
+ty_verb(italian, survive, future, pl(1), pos, [sopravvivremo]).
+ty_verb(italian, survive, future, pl(2), pos, [sopravvivrete]).
+ty_verb(italian, structure, future, sg, pos, [strutturerà]).
+ty_verb(italian, structure, future, pl, pos, [struttureranno]).
+ty_verb(italian, structure, future, sg(1), pos, [strutturerò]).
+ty_verb(italian, structure, future, sg(2), pos, [strutturerai]).
+ty_verb(italian, structure, future, pl(1), pos, [struttureremo]).
+ty_verb(italian, structure, future, pl(2), pos, [strutturerete]).
+ty_verb(italian, stroll, future, sg, pos, [passeggerà]).
+ty_verb(italian, stroll, future, pl, pos, [passeggeranno]).
+ty_verb(italian, stroll, future, sg(1), pos, [passeggerò]).
+ty_verb(italian, stroll, future, sg(2), pos, [passeggerai]).
+ty_verb(italian, stroll, future, pl(1), pos, [passeggeremo]).
+ty_verb(italian, stroll, future, pl(2), pos, [passeggerete]).
+ty_verb(italian, time, future, sg, pos, [cronometrerà]).
+ty_verb(italian, time, future, pl, pos, [cronometreranno]).
+ty_verb(italian, time, future, sg(1), pos, [cronometrerò]).
+ty_verb(italian, time, future, sg(2), pos, [cronometrerai]).
+ty_verb(italian, time, future, pl(1), pos, [cronometreremo]).
+ty_verb(italian, time, future, pl(2), pos, [cronometrerete]).
+ty_verb(italian, sharpen, future, sg, pos, [affilerà]).
+ty_verb(italian, sharpen, future, pl, pos, [affileranno]).
+ty_verb(italian, sharpen, future, sg(1), pos, [affilerò]).
+ty_verb(italian, sharpen, future, sg(2), pos, [affilerai]).
+ty_verb(italian, sharpen, future, pl(1), pos, [affileremo]).
+ty_verb(italian, sharpen, future, pl(2), pos, [affilerete]).
+ty_verb(italian, scratch, future, sg, pos, [graffierà]).
+ty_verb(italian, scratch, future, pl, pos, [graffieranno]).
+ty_verb(italian, scratch, future, sg(1), pos, [graffierò]).
+ty_verb(italian, scratch, future, sg(2), pos, [graffierai]).
+ty_verb(italian, scratch, future, pl(1), pos, [graffieremo]).
+ty_verb(italian, scratch, future, pl(2), pos, [graffierete]).
+ty_verb(italian, superimpose, future, sg, pos, [sovrapporrà]).
+ty_verb(italian, superimpose, future, pl, pos, [sovrapporranno]).
+ty_verb(italian, superimpose, future, sg(1), pos, [sovrapporrò]).
+ty_verb(italian, superimpose, future, sg(2), pos, [sovrapporrai]).
+ty_verb(italian, superimpose, future, pl(1), pos, [sovrapporremo]).
+ty_verb(italian, superimpose, future, pl(2), pos, [sovrapporrete]).
+ty_verb(italian, tackle, future, sg, pos, [affronterà]).
+ty_verb(italian, tackle, future, pl, pos, [affronteranno]).
+ty_verb(italian, tackle, future, sg(1), pos, [affronterò]).
+ty_verb(italian, tackle, future, sg(2), pos, [affronterai]).
+ty_verb(italian, tackle, future, pl(1), pos, [affronteremo]).
+ty_verb(italian, tackle, future, pl(2), pos, [affronterete]).
+ty_verb(italian, tighten, future, sg, pos, [stringerà]).
+ty_verb(italian, tighten, future, pl, pos, [stringeranno]).
+ty_verb(italian, tighten, future, sg(1), pos, [stringerò]).
+ty_verb(italian, tighten, future, sg(2), pos, [stringerai]).
+ty_verb(italian, tighten, future, pl(1), pos, [stringeremo]).
+ty_verb(italian, tighten, future, pl(2), pos, [stringerete]).
+ty_verb(italian, suspect, future, sg, pos, [sospetterà]).
+ty_verb(italian, suspect, future, pl, pos, [sospetteranno]).
+ty_verb(italian, suspect, future, sg(1), pos, [sospetterò]).
+ty_verb(italian, suspect, future, sg(2), pos, [sospetterai]).
+ty_verb(italian, suspect, future, pl(1), pos, [sospetteremo]).
+ty_verb(italian, suspect, future, pl(2), pos, [sospetterete]).
+ty_verb(italian, back, future, sg, pos, [lancerà]).
+ty_verb(italian, back, future, pl, pos, [lanceranno]).
+ty_verb(italian, back, future, sg(1), pos, [lancerò]).
+ty_verb(italian, back, future, sg(2), pos, [lancerai]).
+ty_verb(italian, back, future, pl(1), pos, [lanceremo]).
+ty_verb(italian, back, future, pl(2), pos, [lancerete]).
+ty_verb(italian, bake, future, sg, pos, [cocerà]).
+ty_verb(italian, bake, future, pl, pos, [coceranno]).
+ty_verb(italian, bake, future, sg(1), pos, [cocerò]).
+ty_verb(italian, bake, future, sg(2), pos, [cocerai]).
+ty_verb(italian, bake, future, pl(1), pos, [coceremo]).
+ty_verb(italian, bake, future, pl(2), pos, [cocerete]).
+ty_verb(italian, balance, future, sg, pos, [equilibrerà]).
+ty_verb(italian, balance, future, pl, pos, [equilibreranno]).
+ty_verb(italian, balance, future, sg(1), pos, [equilibrerò]).
+ty_verb(italian, balance, future, sg(2), pos, [equilibrerai]).
+ty_verb(italian, balance, future, pl(1), pos, [equilibreremo]).
+ty_verb(italian, balance, future, pl(2), pos, [equilibrerete]).
+ty_verb(italian, banish, future, sg, pos, [bandirà]).
+ty_verb(italian, banish, future, pl, pos, [bandiranno]).
+ty_verb(italian, banish, future, sg(1), pos, [bandirò]).
+ty_verb(italian, banish, future, sg(2), pos, [bandirai]).
+ty_verb(italian, banish, future, pl(1), pos, [bandiremo]).
+ty_verb(italian, banish, future, pl(2), pos, [bandirete]).
+ty_verb(italian, bank, future, sg, pos, [accatasterà]).
+ty_verb(italian, bank, future, pl, pos, [accatasteranno]).
+ty_verb(italian, bank, future, sg(1), pos, [accatasterò]).
+ty_verb(italian, bank, future, sg(2), pos, [accatasterai]).
+ty_verb(italian, bank, future, pl(1), pos, [accatasteremo]).
+ty_verb(italian, bank, future, pl(2), pos, [accatasterete]).
+ty_verb(italian, baptise, future, sg, pos, [battezzerà]).
+ty_verb(italian, baptise, future, pl, pos, [battezzeranno]).
+ty_verb(italian, baptise, future, sg(1), pos, [battezzerò]).
+ty_verb(italian, baptise, future, sg(2), pos, [battezzerai]).
+ty_verb(italian, baptise, future, pl(1), pos, [battezzeremo]).
+ty_verb(italian, baptise, future, pl(2), pos, [battezzerete]).
+ty_verb(italian, bark, future, sg, pos, [abbaierà]).
+ty_verb(italian, bark, future, pl, pos, [abbaieranno]).
+ty_verb(italian, bark, future, sg(1), pos, [abbaierò]).
+ty_verb(italian, bark, future, sg(2), pos, [abbaierai]).
+ty_verb(italian, bark, future, pl(1), pos, [abbaieremo]).
+ty_verb(italian, bark, future, pl(2), pos, [abbaierete]).
+ty_verb(italian, base, future, sg, pos, [baserà]).
+ty_verb(italian, base, future, pl, pos, [baseranno]).
+ty_verb(italian, base, future, sg(1), pos, [baserò]).
+ty_verb(italian, base, future, sg(2), pos, [baserai]).
+ty_verb(italian, base, future, pl(1), pos, [baseremo]).
+ty_verb(italian, base, future, pl(2), pos, [baserete]).
+ty_verb(italian, bathe, future, sg, pos, [bagnerà]).
+ty_verb(italian, bathe, future, pl, pos, [bagneranno]).
+ty_verb(italian, bathe, future, sg(1), pos, [bagnerò]).
+ty_verb(italian, bathe, future, sg(2), pos, [bagnerai]).
+ty_verb(italian, bathe, future, pl(1), pos, [bagneremo]).
+ty_verb(italian, bathe, future, pl(2), pos, [bagnerete]).
+ty_verb(italian, bear, future, sg, pos, [partorirà]).
+ty_verb(italian, bear, future, pl, pos, [partoriranno]).
+ty_verb(italian, bear, future, sg(1), pos, [partorirò]).
+ty_verb(italian, bear, future, sg(2), pos, [partorirai]).
+ty_verb(italian, bear, future, pl(1), pos, [partoriremo]).
+ty_verb(italian, bear, future, pl(2), pos, [partorirete]).
+ty_verb(italian, beat, future, sg, pos, [picchierà]).
+ty_verb(italian, beat, future, pl, pos, [picchieranno]).
+ty_verb(italian, beat, future, sg(1), pos, [picchierò]).
+ty_verb(italian, beat, future, sg(2), pos, [picchierai]).
+ty_verb(italian, beat, future, pl(1), pos, [picchieremo]).
+ty_verb(italian, beat, future, pl(2), pos, [picchierete]).
+ty_verb(italian, become, future, sg, pos, [diventerà]).
+ty_verb(italian, become, future, pl, pos, [diventeranno]).
+ty_verb(italian, become, future, sg(1), pos, [diventerò]).
+ty_verb(italian, become, future, sg(2), pos, [diventerai]).
+ty_verb(italian, become, future, pl(1), pos, [diventeremo]).
+ty_verb(italian, become, future, pl(2), pos, [diventerete]).
+ty_verb(italian, beg, future, sg, pos, [supplicherà]).
+ty_verb(italian, beg, future, pl, pos, [supplicheranno]).
+ty_verb(italian, beg, future, sg(1), pos, [supplicherò]).
+ty_verb(italian, beg, future, sg(2), pos, [supplicherai]).
+ty_verb(italian, beg, future, pl(1), pos, [supplicheremo]).
+ty_verb(italian, beg, future, pl(2), pos, [supplicherete]).
+ty_verb(italian, belong, future, sg, pos, [apparterrà]).
+ty_verb(italian, belong, future, pl, pos, [apparterranno]).
+ty_verb(italian, belong, future, sg(1), pos, [apparterrò]).
+ty_verb(italian, belong, future, sg(2), pos, [apparterrai]).
+ty_verb(italian, belong, future, pl(1), pos, [apparterremo]).
+ty_verb(italian, belong, future, pl(2), pos, [apparterrete]).
+ty_verb(italian, bend, future, sg, pos, [inclinerà]).
+ty_verb(italian, bend, future, pl, pos, [inclineranno]).
+ty_verb(italian, bend, future, sg(1), pos, [inclinerò]).
+ty_verb(italian, bend, future, sg(2), pos, [inclinerai]).
+ty_verb(italian, bend, future, pl(1), pos, [inclineremo]).
+ty_verb(italian, bend, future, pl(2), pos, [inclinerete]).
+ty_verb(italian, sponsor, future, sg, pos, [sponsorizzerà]).
+ty_verb(italian, sponsor, future, pl, pos, [sponsorizzeranno]).
+ty_verb(italian, sponsor, future, sg(1), pos, [sponsorizzerò]).
+ty_verb(italian, sponsor, future, sg(2), pos, [sponsorizzerai]).
+ty_verb(italian, sponsor, future, pl(1), pos, [sponsorizzeremo]).
+ty_verb(italian, sponsor, future, pl(2), pos, [sponsorizzerete]).
+ty_verb(italian, spur, future, sg, pos, [spronerà]).
+ty_verb(italian, spur, future, pl, pos, [sproneranno]).
+ty_verb(italian, spur, future, sg(1), pos, [spronerò]).
+ty_verb(italian, spur, future, sg(2), pos, [spronerai]).
+ty_verb(italian, spur, future, pl(1), pos, [sproneremo]).
+ty_verb(italian, spur, future, pl(2), pos, [spronerete]).
+ty_verb(italian, benefit, future, sg, pos, [avvantaggerà]).
+ty_verb(italian, benefit, future, pl, pos, [avvantaggeranno]).
+ty_verb(italian, benefit, future, sg(1), pos, [avvantaggerò]).
+ty_verb(italian, benefit, future, sg(2), pos, [avvantaggerai]).
+ty_verb(italian, benefit, future, pl(1), pos, [avvantaggeremo]).
+ty_verb(italian, benefit, future, pl(2), pos, [avvantaggerete]).
+ty_verb(italian, bequeath, future, sg, pos, [legherà]).
+ty_verb(italian, bequeath, future, pl, pos, [legheranno]).
+ty_verb(italian, bequeath, future, sg(1), pos, [legherò]).
+ty_verb(italian, bequeath, future, sg(2), pos, [legherai]).
+ty_verb(italian, bequeath, future, pl(1), pos, [legheremo]).
+ty_verb(italian, bequeath, future, pl(2), pos, [legherete]).
+ty_verb(italian, besiege, future, sg, pos, [assedierà]).
+ty_verb(italian, besiege, future, pl, pos, [assedieranno]).
+ty_verb(italian, besiege, future, sg(1), pos, [assedierò]).
+ty_verb(italian, besiege, future, sg(2), pos, [assedierai]).
+ty_verb(italian, besiege, future, pl(1), pos, [assedieremo]).
+ty_verb(italian, besiege, future, pl(2), pos, [assedierete]).
+ty_verb(italian, bestow, future, sg, pos, [tributerà]).
+ty_verb(italian, bestow, future, pl, pos, [tributeranno]).
+ty_verb(italian, bestow, future, sg(1), pos, [tributerò]).
+ty_verb(italian, bestow, future, sg(2), pos, [tributerai]).
+ty_verb(italian, bestow, future, pl(1), pos, [tributeremo]).
+ty_verb(italian, bestow, future, pl(2), pos, [tributerete]).
+ty_verb(italian, bet, future, sg, pos, [scommetterà]).
+ty_verb(italian, bet, future, pl, pos, [scommetteranno]).
+ty_verb(italian, bet, future, sg(1), pos, [scommetterò]).
+ty_verb(italian, bet, future, sg(2), pos, [scommetterai]).
+ty_verb(italian, bet, future, pl(1), pos, [scommetteremo]).
+ty_verb(italian, bet, future, pl(2), pos, [scommetterete]).
+ty_verb(italian, betray, future, sg, pos, [tradirà]).
+ty_verb(italian, betray, future, pl, pos, [tradiranno]).
+ty_verb(italian, betray, future, sg(1), pos, [tradirò]).
+ty_verb(italian, betray, future, sg(2), pos, [tradirai]).
+ty_verb(italian, betray, future, pl(1), pos, [tradiremo]).
+ty_verb(italian, betray, future, pl(2), pos, [tradirete]).
+ty_verb(italian, bid, future, sg, pos, [offrirà]).
+ty_verb(italian, bid, future, pl, pos, [offriranno]).
+ty_verb(italian, bid, future, sg(1), pos, [offrirò]).
+ty_verb(italian, bid, future, sg(2), pos, [offrirai]).
+ty_verb(italian, bid, future, pl(1), pos, [offriremo]).
+ty_verb(italian, bid, future, pl(2), pos, [offrirete]).
+ty_verb(italian, bill, future, sg, pos, [fatturerà]).
+ty_verb(italian, bill, future, pl, pos, [fattureranno]).
+ty_verb(italian, bill, future, sg(1), pos, [fatturerò]).
+ty_verb(italian, bill, future, sg(2), pos, [fatturerai]).
+ty_verb(italian, bill, future, pl(1), pos, [fattureremo]).
+ty_verb(italian, bill, future, pl(2), pos, [fatturerete]).
+ty_verb(italian, billet, future, sg, pos, [alloggerà]).
+ty_verb(italian, billet, future, pl, pos, [alloggeranno]).
+ty_verb(italian, billet, future, sg(1), pos, [alloggerò]).
+ty_verb(italian, billet, future, sg(2), pos, [alloggerai]).
+ty_verb(italian, billet, future, pl(1), pos, [alloggeremo]).
+ty_verb(italian, billet, future, pl(2), pos, [alloggerete]).
+ty_verb(italian, bite, future, sg, pos, [morderà]).
+ty_verb(italian, bite, future, pl, pos, [morderanno]).
+ty_verb(italian, bite, future, sg(1), pos, [morderò]).
+ty_verb(italian, bite, future, sg(2), pos, [morderai]).
+ty_verb(italian, bite, future, pl(1), pos, [morderemo]).
+ty_verb(italian, bite, future, pl(2), pos, [morderete]).
+ty_verb(italian, blackmail, future, sg, pos, [ricatterà]).
+ty_verb(italian, blackmail, future, pl, pos, [ricatteranno]).
+ty_verb(italian, blackmail, future, sg(1), pos, [ricatterò]).
+ty_verb(italian, blackmail, future, sg(2), pos, [ricatterai]).
+ty_verb(italian, blackmail, future, pl(1), pos, [ricatteremo]).
+ty_verb(italian, blackmail, future, pl(2), pos, [ricatterete]).
+ty_verb(italian, blast, future, sg, pos, [volerà]).
+ty_verb(italian, blast, future, pl, pos, [voleranno]).
+ty_verb(italian, blast, future, sg(1), pos, [volerò]).
+ty_verb(italian, blast, future, sg(2), pos, [volerai]).
+ty_verb(italian, blast, future, pl(1), pos, [voleremo]).
+ty_verb(italian, blast, future, pl(2), pos, [volerete]).
+ty_verb(italian, bleach, future, sg, pos, [imbiancherà]).
+ty_verb(italian, bleach, future, pl, pos, [imbiancheranno]).
+ty_verb(italian, bleach, future, sg(1), pos, [imbiancherò]).
+ty_verb(italian, bleach, future, sg(2), pos, [imbiancherai]).
+ty_verb(italian, bleach, future, pl(1), pos, [imbiancheremo]).
+ty_verb(italian, bleach, future, pl(2), pos, [imbiancherete]).
+ty_verb(italian, bleat, future, sg, pos, [belerà]).
+ty_verb(italian, bleat, future, pl, pos, [beleranno]).
+ty_verb(italian, bleat, future, sg(1), pos, [belerò]).
+ty_verb(italian, bleat, future, sg(2), pos, [belerai]).
+ty_verb(italian, bleat, future, pl(1), pos, [beleremo]).
+ty_verb(italian, bleat, future, pl(2), pos, [belerete]).
+ty_verb(italian, bless, future, sg, pos, [benedirà]).
+ty_verb(italian, bless, future, pl, pos, [benediranno]).
+ty_verb(italian, bless, future, sg(1), pos, [benedirò]).
+ty_verb(italian, bless, future, sg(2), pos, [benedirai]).
+ty_verb(italian, bless, future, pl(1), pos, [benediremo]).
+ty_verb(italian, bless, future, pl(2), pos, [benedirete]).
+ty_verb(italian, blind, future, sg, pos, [accecherà]).
+ty_verb(italian, blind, future, pl, pos, [accecheranno]).
+ty_verb(italian, blind, future, sg(1), pos, [accecherò]).
+ty_verb(italian, blind, future, sg(2), pos, [accecherai]).
+ty_verb(italian, blind, future, pl(1), pos, [accecheremo]).
+ty_verb(italian, blind, future, pl(2), pos, [accecherete]).
+ty_verb(italian, block, future, sg, pos, [bloccherà]).
+ty_verb(italian, block, future, pl, pos, [bloccheranno]).
+ty_verb(italian, block, future, sg(1), pos, [bloccherò]).
+ty_verb(italian, block, future, sg(2), pos, [bloccherai]).
+ty_verb(italian, block, future, pl(1), pos, [bloccheremo]).
+ty_verb(italian, block, future, pl(2), pos, [bloccherete]).
+ty_verb(italian, blog, future, sg, pos, [bloggherà]).
+ty_verb(italian, blog, future, pl, pos, [bloggheranno]).
+ty_verb(italian, blog, future, sg(1), pos, [bloggherò]).
+ty_verb(italian, blog, future, sg(2), pos, [bloggherai]).
+ty_verb(italian, blog, future, pl(1), pos, [bloggheremo]).
+ty_verb(italian, blog, future, pl(2), pos, [bloggherete]).
+ty_verb(italian, blow, future, sg, pos, [soffierà]).
+ty_verb(italian, blow, future, pl, pos, [soffieranno]).
+ty_verb(italian, blow, future, sg(1), pos, [soffierò]).
+ty_verb(italian, blow, future, sg(2), pos, [soffierai]).
+ty_verb(italian, blow, future, pl(1), pos, [soffieremo]).
+ty_verb(italian, blow, future, pl(2), pos, [soffierete]).
+ty_verb(italian, board, future, sg, pos, [abborderà]).
+ty_verb(italian, board, future, pl, pos, [abborderanno]).
+ty_verb(italian, board, future, sg(1), pos, [abborderò]).
+ty_verb(italian, board, future, sg(2), pos, [abborderai]).
+ty_verb(italian, board, future, pl(1), pos, [abborderemo]).
+ty_verb(italian, board, future, pl(2), pos, [abborderete]).
+ty_verb(italian, boast, future, sg, pos, [vanterà]).
+ty_verb(italian, boast, future, pl, pos, [vanteranno]).
+ty_verb(italian, boast, future, sg(1), pos, [vanterò]).
+ty_verb(italian, boast, future, sg(2), pos, [vanterai]).
+ty_verb(italian, boast, future, pl(1), pos, [vanteremo]).
+ty_verb(italian, boast, future, pl(2), pos, [vanterete]).
+ty_verb(italian, boil, future, sg, pos, [bollirà]).
+ty_verb(italian, boil, future, pl, pos, [bolliranno]).
+ty_verb(italian, boil, future, sg(1), pos, [bollirò]).
+ty_verb(italian, boil, future, sg(2), pos, [bollirai]).
+ty_verb(italian, boil, future, pl(1), pos, [bolliremo]).
+ty_verb(italian, boil, future, pl(2), pos, [bollirete]).
+ty_verb(italian, bomb, future, sg, pos, [bombarderà]).
+ty_verb(italian, bomb, future, pl, pos, [bombarderanno]).
+ty_verb(italian, bomb, future, sg(1), pos, [bombarderò]).
+ty_verb(italian, bomb, future, sg(2), pos, [bombarderai]).
+ty_verb(italian, bomb, future, pl(1), pos, [bombarderemo]).
+ty_verb(italian, bomb, future, pl(2), pos, [bombarderete]).
+ty_verb(italian, bore, future, sg, pos, [annoierà]).
+ty_verb(italian, bore, future, pl, pos, [annoieranno]).
+ty_verb(italian, bore, future, sg(1), pos, [annoierò]).
+ty_verb(italian, bore, future, sg(2), pos, [annoierai]).
+ty_verb(italian, bore, future, pl(1), pos, [annoieremo]).
+ty_verb(italian, bore, future, pl(2), pos, [annoierete]).
+ty_verb(italian, bottle, future, sg, pos, [imbottiglierà]).
+ty_verb(italian, bottle, future, pl, pos, [imbottiglieranno]).
+ty_verb(italian, bottle, future, sg(1), pos, [imbottiglierò]).
+ty_verb(italian, bottle, future, sg(2), pos, [imbottiglierai]).
+ty_verb(italian, bottle, future, pl(1), pos, [imbottiglieremo]).
+ty_verb(italian, bottle, future, pl(2), pos, [imbottiglierete]).
+ty_verb(italian, boycott, future, sg, pos, [boicotterà]).
+ty_verb(italian, boycott, future, pl, pos, [boicotteranno]).
+ty_verb(italian, boycott, future, sg(1), pos, [boicotterò]).
+ty_verb(italian, boycott, future, sg(2), pos, [boicotterai]).
+ty_verb(italian, boycott, future, pl(1), pos, [boicotteremo]).
+ty_verb(italian, boycott, future, pl(2), pos, [boicotterete]).
+ty_verb(italian, brake, future, sg, pos, [frenerà]).
+ty_verb(italian, brake, future, pl, pos, [freneranno]).
+ty_verb(italian, brake, future, sg(1), pos, [frenerò]).
+ty_verb(italian, brake, future, sg(2), pos, [frenerai]).
+ty_verb(italian, brake, future, pl(1), pos, [freneremo]).
+ty_verb(italian, brake, future, pl(2), pos, [frenerete]).
+ty_verb(italian, break, future, sg, pos, [romperà]).
+ty_verb(italian, break, future, pl, pos, [romperanno]).
+ty_verb(italian, break, future, sg(1), pos, [romperò]).
+ty_verb(italian, break, future, sg(2), pos, [romperai]).
+ty_verb(italian, break, future, pl(1), pos, [romperemo]).
+ty_verb(italian, break, future, pl(2), pos, [romperete]).
+ty_verb(italian, breathe, future, sg, pos, [respirerà]).
+ty_verb(italian, breathe, future, pl, pos, [respireranno]).
+ty_verb(italian, breathe, future, sg(1), pos, [respirerò]).
+ty_verb(italian, breathe, future, sg(2), pos, [respirerai]).
+ty_verb(italian, breathe, future, pl(1), pos, [respireremo]).
+ty_verb(italian, breathe, future, pl(2), pos, [respirerete]).
+ty_verb(italian, bribe, future, sg, pos, [corromperà]).
+ty_verb(italian, bribe, future, pl, pos, [corromperanno]).
+ty_verb(italian, bribe, future, sg(1), pos, [corromperò]).
+ty_verb(italian, bribe, future, sg(2), pos, [corromperai]).
+ty_verb(italian, bribe, future, pl(1), pos, [corromperemo]).
+ty_verb(italian, bribe, future, pl(2), pos, [corromperete]).
+ty_verb(italian, brief, future, sg, pos, [informerà]).
+ty_verb(italian, brief, future, pl, pos, [informeranno]).
+ty_verb(italian, brief, future, sg(1), pos, [informerò]).
+ty_verb(italian, brief, future, sg(2), pos, [informerai]).
+ty_verb(italian, brief, future, pl(1), pos, [informeremo]).
+ty_verb(italian, brief, future, pl(2), pos, [informerete]).
+ty_verb(italian, grind, future, sg, pos, [macinerà]).
+ty_verb(italian, grind, future, pl, pos, [macineranno]).
+ty_verb(italian, grind, future, sg(1), pos, [macinerò]).
+ty_verb(italian, grind, future, sg(2), pos, [macinerai]).
+ty_verb(italian, grind, future, pl(1), pos, [macineremo]).
+ty_verb(italian, grind, future, pl(2), pos, [macinerete]).
+ty_verb(italian, limp, future, sg, pos, [zoppicherà]).
+ty_verb(italian, limp, future, pl, pos, [zoppicheranno]).
+ty_verb(italian, limp, future, sg(1), pos, [zoppicherò]).
+ty_verb(italian, limp, future, sg(2), pos, [zoppicherai]).
+ty_verb(italian, limp, future, pl(1), pos, [zoppicheremo]).
+ty_verb(italian, limp, future, pl(2), pos, [zoppicherete]).
+ty_verb(italian, rot, future, sg, pos, [marcirà]).
+ty_verb(italian, rot, future, pl, pos, [marciranno]).
+ty_verb(italian, rot, future, sg(1), pos, [marcirò]).
+ty_verb(italian, rot, future, sg(2), pos, [marcirai]).
+ty_verb(italian, rot, future, pl(1), pos, [marciremo]).
+ty_verb(italian, rot, future, pl(2), pos, [marcirete]).
+ty_verb(italian, scare, future, sg, pos, [spaventerà]).
+ty_verb(italian, scare, future, pl, pos, [spaventeranno]).
+ty_verb(italian, scare, future, sg(1), pos, [spaventerò]).
+ty_verb(italian, scare, future, sg(2), pos, [spaventerai]).
+ty_verb(italian, scare, future, pl(1), pos, [spaventeremo]).
+ty_verb(italian, scare, future, pl(2), pos, [spaventerete]).
+ty_verb(italian, seal, future, sg, pos, [sigillerà]).
+ty_verb(italian, seal, future, pl, pos, [sigilleranno]).
+ty_verb(italian, seal, future, sg(1), pos, [sigillerò]).
+ty_verb(italian, seal, future, sg(2), pos, [sigillerai]).
+ty_verb(italian, seal, future, pl(1), pos, [sigilleremo]).
+ty_verb(italian, seal, future, pl(2), pos, [sigillerete]).
+ty_verb(italian, broaden, future, sg, pos, [amplierà]).
+ty_verb(italian, broaden, future, pl, pos, [amplieranno]).
+ty_verb(italian, broaden, future, sg(1), pos, [amplierò]).
+ty_verb(italian, broaden, future, sg(2), pos, [amplierai]).
+ty_verb(italian, broaden, future, pl(1), pos, [amplieremo]).
+ty_verb(italian, broaden, future, pl(2), pos, [amplierete]).
+ty_verb(italian, brush, future, sg, pos, [spazzolerà]).
+ty_verb(italian, brush, future, pl, pos, [spazzoleranno]).
+ty_verb(italian, brush, future, sg(1), pos, [spazzolerò]).
+ty_verb(italian, brush, future, sg(2), pos, [spazzolerai]).
+ty_verb(italian, brush, future, pl(1), pos, [spazzoleremo]).
+ty_verb(italian, brush, future, pl(2), pos, [spazzolerete]).
+ty_verb(italian, build, future, sg, pos, [edificherà]).
+ty_verb(italian, build, future, pl, pos, [edificheranno]).
+ty_verb(italian, build, future, sg(1), pos, [edificherò]).
+ty_verb(italian, build, future, sg(2), pos, [edificherai]).
+ty_verb(italian, build, future, pl(1), pos, [edificheremo]).
+ty_verb(italian, build, future, pl(2), pos, [edificherete]).
+ty_verb(italian, burden, future, sg, pos, [caricherà]).
+ty_verb(italian, burden, future, pl, pos, [caricheranno]).
+ty_verb(italian, burden, future, sg(1), pos, [caricherò]).
+ty_verb(italian, burden, future, sg(2), pos, [caricherai]).
+ty_verb(italian, burden, future, pl(1), pos, [caricheremo]).
+ty_verb(italian, burden, future, pl(2), pos, [caricherete]).
+ty_verb(italian, burgeon, future, sg, pos, [gemmerà]).
+ty_verb(italian, burgeon, future, pl, pos, [gemmeranno]).
+ty_verb(italian, burgeon, future, sg(1), pos, [gemmerò]).
+ty_verb(italian, burgeon, future, sg(2), pos, [gemmerai]).
+ty_verb(italian, burgeon, future, pl(1), pos, [gemmeremo]).
+ty_verb(italian, burgeon, future, pl(2), pos, [gemmerete]).
+ty_verb(italian, burn, future, sg, pos, [arderà]).
+ty_verb(italian, burn, future, pl, pos, [arderanno]).
+ty_verb(italian, burn, future, sg(1), pos, [arderò]).
+ty_verb(italian, burn, future, sg(2), pos, [arderai]).
+ty_verb(italian, burn, future, pl(1), pos, [arderemo]).
+ty_verb(italian, burn, future, pl(2), pos, [arderete]).
+ty_verb(italian, burst, future, sg, pos, [esploderà]).
+ty_verb(italian, burst, future, pl, pos, [esploderanno]).
+ty_verb(italian, burst, future, sg(1), pos, [esploderò]).
+ty_verb(italian, burst, future, sg(2), pos, [esploderai]).
+ty_verb(italian, burst, future, pl(1), pos, [esploderemo]).
+ty_verb(italian, burst, future, pl(2), pos, [esploderete]).
+ty_verb(italian, buy, future, sg, pos, [comprerà]).
+ty_verb(italian, buy, future, pl, pos, [compreranno]).
+ty_verb(italian, buy, future, sg(1), pos, [comprerò]).
+ty_verb(italian, buy, future, sg(2), pos, [comprerai]).
+ty_verb(italian, buy, future, pl(1), pos, [compreremo]).
+ty_verb(italian, buy, future, pl(2), pos, [comprerete]).
+ty_verb(italian, calibrate, future, sg, pos, [calibrerà]).
+ty_verb(italian, calibrate, future, pl, pos, [calibreranno]).
+ty_verb(italian, calibrate, future, sg(1), pos, [calibrerò]).
+ty_verb(italian, calibrate, future, sg(2), pos, [calibrerai]).
+ty_verb(italian, calibrate, future, pl(1), pos, [calibreremo]).
+ty_verb(italian, calibrate, future, pl(2), pos, [calibrerete]).
+ty_verb(italian, call, future, sg, pos, [chiamerà]).
+ty_verb(italian, call, future, pl, pos, [chiameranno]).
+ty_verb(italian, call, future, sg(1), pos, [chiamerò]).
+ty_verb(italian, call, future, sg(2), pos, [chiamerai]).
+ty_verb(italian, call, future, pl(1), pos, [chiameremo]).
+ty_verb(italian, call, future, pl(2), pos, [chiamerete]).
+ty_verb(italian, calm, future, sg, pos, [calmerà]).
+ty_verb(italian, calm, future, pl, pos, [calmeranno]).
+ty_verb(italian, calm, future, sg(1), pos, [calmerò]).
+ty_verb(italian, calm, future, sg(2), pos, [calmerai]).
+ty_verb(italian, calm, future, pl(1), pos, [calmeremo]).
+ty_verb(italian, calm, future, pl(2), pos, [calmerete]).
+ty_verb(italian, camp, future, sg, pos, [accamperà]).
+ty_verb(italian, camp, future, pl, pos, [accamperanno]).
+ty_verb(italian, camp, future, sg(1), pos, [accamperò]).
+ty_verb(italian, camp, future, sg(2), pos, [accamperai]).
+ty_verb(italian, camp, future, pl(1), pos, [accamperemo]).
+ty_verb(italian, camp, future, pl(2), pos, [accamperete]).
+ty_verb(italian, cancel, future, sg, pos, [annullerà]).
+ty_verb(italian, cancel, future, pl, pos, [annulleranno]).
+ty_verb(italian, cancel, future, sg(1), pos, [annullerò]).
+ty_verb(italian, cancel, future, sg(2), pos, [annullerai]).
+ty_verb(italian, cancel, future, pl(1), pos, [annulleremo]).
+ty_verb(italian, cancel, future, pl(2), pos, [annullerete]).
+ty_verb(italian, capitalise, future, sg, pos, [capitalizzerà]).
+ty_verb(italian, capitalise, future, pl, pos, [capitalizzeranno]).
+ty_verb(italian, capitalise, future, sg(1), pos, [capitalizzerò]).
+ty_verb(italian, capitalise, future, sg(2), pos, [capitalizzerai]).
+ty_verb(italian, capitalise, future, pl(1), pos, [capitalizzeremo]).
+ty_verb(italian, capitalise, future, pl(2), pos, [capitalizzerete]).
+ty_verb(italian, capitulate, future, sg, pos, [capitolerà]).
+ty_verb(italian, capitulate, future, pl, pos, [capitoleranno]).
+ty_verb(italian, capitulate, future, sg(1), pos, [capitolerò]).
+ty_verb(italian, capitulate, future, sg(2), pos, [capitolerai]).
+ty_verb(italian, capitulate, future, pl(1), pos, [capitoleremo]).
+ty_verb(italian, capitulate, future, pl(2), pos, [capitolerete]).
+ty_verb(italian, capsiz, future, sg, pos, [cambierà]).
+ty_verb(italian, capsiz, future, pl, pos, [cambieranno]).
+ty_verb(italian, capsiz, future, sg(1), pos, [cambierò]).
+ty_verb(italian, capsiz, future, sg(2), pos, [cambierai]).
+ty_verb(italian, capsiz, future, pl(1), pos, [cambieremo]).
+ty_verb(italian, capsiz, future, pl(2), pos, [cambierete]).
+ty_verb(italian, captivate, future, sg, pos, [affascinerà]).
+ty_verb(italian, captivate, future, pl, pos, [affascineranno]).
+ty_verb(italian, captivate, future, sg(1), pos, [affascinerò]).
+ty_verb(italian, captivate, future, sg(2), pos, [affascinerai]).
+ty_verb(italian, captivate, future, pl(1), pos, [affascineremo]).
+ty_verb(italian, captivate, future, pl(2), pos, [affascinerete]).
+ty_verb(italian, capture, future, sg, pos, [catturerà]).
+ty_verb(italian, capture, future, pl, pos, [cattureranno]).
+ty_verb(italian, capture, future, sg(1), pos, [catturerò]).
+ty_verb(italian, capture, future, sg(2), pos, [catturerai]).
+ty_verb(italian, capture, future, pl(1), pos, [cattureremo]).
+ty_verb(italian, capture, future, pl(2), pos, [catturerete]).
+ty_verb(italian, caricature, future, sg, pos, [caricaturerà]).
+ty_verb(italian, caricature, future, pl, pos, [caricatureranno]).
+ty_verb(italian, caricature, future, sg(1), pos, [caricaturerò]).
+ty_verb(italian, caricature, future, sg(2), pos, [caricaturerai]).
+ty_verb(italian, caricature, future, pl(1), pos, [caricatureremo]).
+ty_verb(italian, caricature, future, pl(2), pos, [caricaturerete]).
+ty_verb(italian, castrate, future, sg, pos, [castrerà]).
+ty_verb(italian, castrate, future, pl, pos, [castreranno]).
+ty_verb(italian, castrate, future, sg(1), pos, [castrerò]).
+ty_verb(italian, castrate, future, sg(2), pos, [castrerai]).
+ty_verb(italian, castrate, future, pl(1), pos, [castreremo]).
+ty_verb(italian, castrate, future, pl(2), pos, [castrerete]).
+ty_verb(italian, catalog, future, sg, pos, [catalogherà]).
+ty_verb(italian, catalog, future, pl, pos, [catalogheranno]).
+ty_verb(italian, catalog, future, sg(1), pos, [catalogherò]).
+ty_verb(italian, catalog, future, sg(2), pos, [catalogherai]).
+ty_verb(italian, catalog, future, pl(1), pos, [catalogheremo]).
+ty_verb(italian, catalog, future, pl(2), pos, [catalogherete]).
+ty_verb(italian, catapult, future, sg, pos, [catapulterà]).
+ty_verb(italian, catapult, future, pl, pos, [catapulteranno]).
+ty_verb(italian, catapult, future, sg(1), pos, [catapulterò]).
+ty_verb(italian, catapult, future, sg(2), pos, [catapulterai]).
+ty_verb(italian, catapult, future, pl(1), pos, [catapulteremo]).
+ty_verb(italian, catapult, future, pl(2), pos, [catapulterete]).
+ty_verb(italian, catch, future, sg, pos, [afferrerà]).
+ty_verb(italian, catch, future, pl, pos, [afferreranno]).
+ty_verb(italian, catch, future, sg(1), pos, [afferrerò]).
+ty_verb(italian, catch, future, sg(2), pos, [afferrerai]).
+ty_verb(italian, catch, future, pl(1), pos, [afferreremo]).
+ty_verb(italian, catch, future, pl(2), pos, [afferrerete]).
+ty_verb(italian, cater, future, sg, pos, [provvedrà]).
+ty_verb(italian, cater, future, pl, pos, [provvedranno]).
+ty_verb(italian, cater, future, sg(1), pos, [provvedrò]).
+ty_verb(italian, cater, future, sg(2), pos, [provvedrai]).
+ty_verb(italian, cater, future, pl(1), pos, [provvedremo]).
+ty_verb(italian, cater, future, pl(2), pos, [provvedrete]).
+ty_verb(italian, cause, future, sg, pos, [causerà]).
+ty_verb(italian, cause, future, pl, pos, [causeranno]).
+ty_verb(italian, cause, future, sg(1), pos, [causerò]).
+ty_verb(italian, cause, future, sg(2), pos, [causerai]).
+ty_verb(italian, cause, future, pl(1), pos, [causeremo]).
+ty_verb(italian, cause, future, pl(2), pos, [causerete]).
+ty_verb(italian, caution, future, sg, pos, [cautelherà]).
+ty_verb(italian, caution, future, pl, pos, [cautelheranno]).
+ty_verb(italian, caution, future, sg(1), pos, [cautelherò]).
+ty_verb(italian, caution, future, sg(2), pos, [cautelherai]).
+ty_verb(italian, caution, future, pl(1), pos, [cautelheremo]).
+ty_verb(italian, caution, future, pl(2), pos, [cautelherete]).
+ty_verb(italian, celebrate, future, sg, pos, [celebrerà]).
+ty_verb(italian, celebrate, future, pl, pos, [celebreranno]).
+ty_verb(italian, celebrate, future, sg(1), pos, [celebrerò]).
+ty_verb(italian, celebrate, future, sg(2), pos, [celebrerai]).
+ty_verb(italian, celebrate, future, pl(1), pos, [celebreremo]).
+ty_verb(italian, celebrate, future, pl(2), pos, [celebrerete]).
+ty_verb(italian, censor, future, sg, pos, [censurerà]).
+ty_verb(italian, censor, future, pl, pos, [censureranno]).
+ty_verb(italian, censor, future, sg(1), pos, [censurerò]).
+ty_verb(italian, censor, future, sg(2), pos, [censurerai]).
+ty_verb(italian, censor, future, pl(1), pos, [censureremo]).
+ty_verb(italian, censor, future, pl(2), pos, [censurerete]).
+ty_verb(italian, centralise, future, sg, pos, [centralizzerà]).
+ty_verb(italian, centralise, future, pl, pos, [centralizzeranno]).
+ty_verb(italian, centralise, future, sg(1), pos, [centralizzerò]).
+ty_verb(italian, centralise, future, sg(2), pos, [centralizzerai]).
+ty_verb(italian, centralise, future, pl(1), pos, [centralizzeremo]).
+ty_verb(italian, centralise, future, pl(2), pos, [centralizzerete]).
+ty_verb(italian, centre, future, sg, pos, [centrerà]).
+ty_verb(italian, centre, future, pl, pos, [centreranno]).
+ty_verb(italian, centre, future, sg(1), pos, [centrerò]).
+ty_verb(italian, centre, future, sg(2), pos, [centrerai]).
+ty_verb(italian, centre, future, pl(1), pos, [centreremo]).
+ty_verb(italian, centre, future, pl(2), pos, [centrerete]).
+ty_verb(italian, certify, future, sg, pos, [certificherà]).
+ty_verb(italian, certify, future, pl, pos, [certificheranno]).
+ty_verb(italian, certify, future, sg(1), pos, [certificherò]).
+ty_verb(italian, certify, future, sg(2), pos, [certificherai]).
+ty_verb(italian, certify, future, pl(1), pos, [certificheremo]).
+ty_verb(italian, certify, future, pl(2), pos, [certificherete]).
+ty_verb(italian, chain, future, sg, pos, [incatenerà]).
+ty_verb(italian, chain, future, pl, pos, [incateneranno]).
+ty_verb(italian, chain, future, sg(1), pos, [incatenerò]).
+ty_verb(italian, chain, future, sg(2), pos, [incatenerai]).
+ty_verb(italian, chain, future, pl(1), pos, [incateneremo]).
+ty_verb(italian, chain, future, pl(2), pos, [incatenerete]).
+ty_verb(italian, chair, future, sg, pos, [insedierà]).
+ty_verb(italian, chair, future, pl, pos, [insedieranno]).
+ty_verb(italian, chair, future, sg(1), pos, [insedierò]).
+ty_verb(italian, chair, future, sg(2), pos, [insedierai]).
+ty_verb(italian, chair, future, pl(1), pos, [insedieremo]).
+ty_verb(italian, chair, future, pl(2), pos, [insedierete]).
+ty_verb(italian, challenge, future, sg, pos, [sfiderà]).
+ty_verb(italian, challenge, future, pl, pos, [sfideranno]).
+ty_verb(italian, challenge, future, sg(1), pos, [sfiderò]).
+ty_verb(italian, challenge, future, sg(2), pos, [sfiderai]).
+ty_verb(italian, challenge, future, pl(1), pos, [sfideremo]).
+ty_verb(italian, challenge, future, pl(2), pos, [sfiderete]).
+ty_verb(italian, characterise, future, sg, pos, [caratterizzerà]).
+ty_verb(italian, characterise, future, pl, pos, [caratterizzeranno]).
+ty_verb(italian, characterise, future, sg(1), pos, [caratterizzerò]).
+ty_verb(italian, characterise, future, sg(2), pos, [caratterizzerai]).
+ty_verb(italian, characterise, future, pl(1), pos, [caratterizzeremo]).
+ty_verb(italian, characterise, future, pl(2), pos, [caratterizzerete]).
+ty_verb(italian, charge, future, sg, pos, [riscuoterà]).
+ty_verb(italian, charge, future, pl, pos, [riscuoteranno]).
+ty_verb(italian, charge, future, sg(1), pos, [riscuoterò]).
+ty_verb(italian, charge, future, sg(2), pos, [riscuoterai]).
+ty_verb(italian, charge, future, pl(1), pos, [riscuoteremo]).
+ty_verb(italian, charge, future, pl(2), pos, [riscuoterete]).
+ty_verb(italian, chase, future, sg, pos, [perseguirà]).
+ty_verb(italian, chase, future, pl, pos, [perseguiranno]).
+ty_verb(italian, chase, future, sg(1), pos, [perseguirò]).
+ty_verb(italian, chase, future, sg(2), pos, [perseguirai]).
+ty_verb(italian, chase, future, pl(1), pos, [perseguiremo]).
+ty_verb(italian, chase, future, pl(2), pos, [perseguirete]).
+ty_verb(italian, chat, future, sg, pos, [chiacchiererà]).
+ty_verb(italian, chat, future, pl, pos, [chiacchiereranno]).
+ty_verb(italian, chat, future, sg(1), pos, [chiacchiererò]).
+ty_verb(italian, chat, future, sg(2), pos, [chiacchiererai]).
+ty_verb(italian, chat, future, pl(1), pos, [chiacchiereremo]).
+ty_verb(italian, chat, future, pl(2), pos, [chiacchiererete]).
+ty_verb(italian, cheat, future, sg, pos, [ingannerà]).
+ty_verb(italian, cheat, future, pl, pos, [inganneranno]).
+ty_verb(italian, cheat, future, sg(1), pos, [ingannerò]).
+ty_verb(italian, cheat, future, sg(2), pos, [ingannerai]).
+ty_verb(italian, cheat, future, pl(1), pos, [inganneremo]).
+ty_verb(italian, cheat, future, pl(2), pos, [ingannerete]).
+ty_verb(italian, check, future, sg, pos, [verificherà]).
+ty_verb(italian, check, future, pl, pos, [verificheranno]).
+ty_verb(italian, check, future, sg(1), pos, [verificherò]).
+ty_verb(italian, check, future, sg(2), pos, [verificherai]).
+ty_verb(italian, check, future, pl(1), pos, [verificheremo]).
+ty_verb(italian, check, future, pl(2), pos, [verificherete]).
+ty_verb(italian, chew, future, sg, pos, [masticherà]).
+ty_verb(italian, chew, future, pl, pos, [masticheranno]).
+ty_verb(italian, chew, future, sg(1), pos, [masticherò]).
+ty_verb(italian, chew, future, sg(2), pos, [masticherai]).
+ty_verb(italian, chew, future, pl(1), pos, [masticheremo]).
+ty_verb(italian, chew, future, pl(2), pos, [masticherete]).
+ty_verb(italian, chuck, future, sg, pos, [chioccerà]).
+ty_verb(italian, chuck, future, pl, pos, [chiocceranno]).
+ty_verb(italian, chuck, future, sg(1), pos, [chioccerò]).
+ty_verb(italian, chuck, future, sg(2), pos, [chioccerai]).
+ty_verb(italian, chuck, future, pl(1), pos, [chiocceremo]).
+ty_verb(italian, chuck, future, pl(2), pos, [chioccerete]).
+ty_verb(italian, circulate, future, sg, pos, [circolerà]).
+ty_verb(italian, circulate, future, pl, pos, [circoleranno]).
+ty_verb(italian, circulate, future, sg(1), pos, [circolerò]).
+ty_verb(italian, circulate, future, sg(2), pos, [circolerai]).
+ty_verb(italian, circulate, future, pl(1), pos, [circoleremo]).
+ty_verb(italian, circulate, future, pl(2), pos, [circolerete]).
+ty_verb(italian, circumscribe, future, sg, pos, [circoscriverà]).
+ty_verb(italian, circumscribe, future, pl, pos, [circoscriveranno]).
+ty_verb(italian, circumscribe, future, sg(1), pos, [circoscriverò]).
+ty_verb(italian, circumscribe, future, sg(2), pos, [circoscriverai]).
+ty_verb(italian, circumscribe, future, pl(1), pos, [circoscriveremo]).
+ty_verb(italian, circumscribe, future, pl(2), pos, [circoscriverete]).
+ty_verb(italian, cite, future, sg, pos, [citerà]).
+ty_verb(italian, cite, future, pl, pos, [citeranno]).
+ty_verb(italian, cite, future, sg(1), pos, [citerò]).
+ty_verb(italian, cite, future, sg(2), pos, [citerai]).
+ty_verb(italian, cite, future, pl(1), pos, [citeremo]).
+ty_verb(italian, cite, future, pl(2), pos, [citerete]).
+ty_verb(italian, civilise, future, sg, pos, [civilizzerà]).
+ty_verb(italian, civilise, future, pl, pos, [civilizzeranno]).
+ty_verb(italian, civilise, future, sg(1), pos, [civilizzerò]).
+ty_verb(italian, civilise, future, sg(2), pos, [civilizzerai]).
+ty_verb(italian, civilise, future, pl(1), pos, [civilizzeremo]).
+ty_verb(italian, civilise, future, pl(2), pos, [civilizzerete]).
+ty_verb(italian, classify, future, sg, pos, [classificherà]).
+ty_verb(italian, classify, future, pl, pos, [classificheranno]).
+ty_verb(italian, classify, future, sg(1), pos, [classificherò]).
+ty_verb(italian, classify, future, sg(2), pos, [classificherai]).
+ty_verb(italian, classify, future, pl(1), pos, [classificheremo]).
+ty_verb(italian, classify, future, pl(2), pos, [classificherete]).
+ty_verb(italian, clean, future, sg, pos, [pulirà]).
+ty_verb(italian, clean, future, pl, pos, [puliranno]).
+ty_verb(italian, clean, future, sg(1), pos, [pulirò]).
+ty_verb(italian, clean, future, sg(2), pos, [pulirai]).
+ty_verb(italian, clean, future, pl(1), pos, [puliremo]).
+ty_verb(italian, clean, future, pl(2), pos, [pulirete]).
+ty_verb(italian, clear, future, sg, pos, [liquiderà]).
+ty_verb(italian, clear, future, pl, pos, [liquideranno]).
+ty_verb(italian, clear, future, sg(1), pos, [liquiderò]).
+ty_verb(italian, clear, future, sg(2), pos, [liquiderai]).
+ty_verb(italian, clear, future, pl(1), pos, [liquideremo]).
+ty_verb(italian, clear, future, pl(2), pos, [liquiderete]).
+ty_verb(italian, climb, future, sg, pos, [ascenderà]).
+ty_verb(italian, climb, future, pl, pos, [ascenderanno]).
+ty_verb(italian, climb, future, sg(1), pos, [ascenderò]).
+ty_verb(italian, climb, future, sg(2), pos, [ascenderai]).
+ty_verb(italian, climb, future, pl(1), pos, [ascenderemo]).
+ty_verb(italian, climb, future, pl(2), pos, [ascenderete]).
+ty_verb(italian, clone, future, sg, pos, [clonerà]).
+ty_verb(italian, clone, future, pl, pos, [cloneranno]).
+ty_verb(italian, clone, future, sg(1), pos, [clonerò]).
+ty_verb(italian, clone, future, sg(2), pos, [clonerai]).
+ty_verb(italian, clone, future, pl(1), pos, [cloneremo]).
+ty_verb(italian, clone, future, pl(2), pos, [clonerete]).
+ty_verb(italian, close, future, sg, pos, [chiuderà]).
+ty_verb(italian, close, future, pl, pos, [chiuderanno]).
+ty_verb(italian, close, future, sg(1), pos, [chiuderò]).
+ty_verb(italian, close, future, sg(2), pos, [chiuderai]).
+ty_verb(italian, close, future, pl(1), pos, [chiuderemo]).
+ty_verb(italian, close, future, pl(2), pos, [chiuderete]).
+ty_verb(italian, coin, future, sg, pos, [conierà]).
+ty_verb(italian, coin, future, pl, pos, [conieranno]).
+ty_verb(italian, coin, future, sg(1), pos, [conierò]).
+ty_verb(italian, coin, future, sg(2), pos, [conierai]).
+ty_verb(italian, coin, future, pl(1), pos, [conieremo]).
+ty_verb(italian, coin, future, pl(2), pos, [conierete]).
+ty_verb(italian, coincide, future, sg, pos, [coinciderà]).
+ty_verb(italian, coincide, future, pl, pos, [coincideranno]).
+ty_verb(italian, coincide, future, sg(1), pos, [coinciderò]).
+ty_verb(italian, coincide, future, sg(2), pos, [coinciderai]).
+ty_verb(italian, coincide, future, pl(1), pos, [coincideremo]).
+ty_verb(italian, coincide, future, pl(2), pos, [coinciderete]).
+ty_verb(italian, collaborate, future, sg, pos, [collaborerà]).
+ty_verb(italian, collaborate, future, pl, pos, [collaboreranno]).
+ty_verb(italian, collaborate, future, sg(1), pos, [collaborerò]).
+ty_verb(italian, collaborate, future, sg(2), pos, [collaborerai]).
+ty_verb(italian, collaborate, future, pl(1), pos, [collaboreremo]).
+ty_verb(italian, collaborate, future, pl(2), pos, [collaborerete]).
+ty_verb(italian, collapse, future, sg, pos, [crollerà]).
+ty_verb(italian, collapse, future, pl, pos, [crolleranno]).
+ty_verb(italian, collapse, future, sg(1), pos, [crollerò]).
+ty_verb(italian, collapse, future, sg(2), pos, [crollerai]).
+ty_verb(italian, collapse, future, pl(1), pos, [crolleremo]).
+ty_verb(italian, collapse, future, pl(2), pos, [crollerete]).
+ty_verb(italian, collect, future, sg, pos, [raccoglierà]).
+ty_verb(italian, collect, future, pl, pos, [raccoglieranno]).
+ty_verb(italian, collect, future, sg(1), pos, [raccoglierò]).
+ty_verb(italian, collect, future, sg(2), pos, [raccoglierai]).
+ty_verb(italian, collect, future, pl(1), pos, [raccoglieremo]).
+ty_verb(italian, collect, future, pl(2), pos, [raccoglierete]).
+ty_verb(italian, colonise, future, sg, pos, [colonizzerà]).
+ty_verb(italian, colonise, future, pl, pos, [colonizzeranno]).
+ty_verb(italian, colonise, future, sg(1), pos, [colonizzerò]).
+ty_verb(italian, colonise, future, sg(2), pos, [colonizzerai]).
+ty_verb(italian, colonise, future, pl(1), pos, [colonizzeremo]).
+ty_verb(italian, colonise, future, pl(2), pos, [colonizzerete]).
+ty_verb(italian, colour, future, sg, pos, [colorerà]).
+ty_verb(italian, colour, future, pl, pos, [coloreranno]).
+ty_verb(italian, colour, future, sg(1), pos, [colorerò]).
+ty_verb(italian, colour, future, sg(2), pos, [colorerai]).
+ty_verb(italian, colour, future, pl(1), pos, [coloreremo]).
+ty_verb(italian, colour, future, pl(2), pos, [colorerete]).
+ty_verb(italian, comb, future, sg, pos, [pettinerà]).
+ty_verb(italian, comb, future, pl, pos, [pettineranno]).
+ty_verb(italian, comb, future, sg(1), pos, [pettinerò]).
+ty_verb(italian, comb, future, sg(2), pos, [pettinerai]).
+ty_verb(italian, comb, future, pl(1), pos, [pettineremo]).
+ty_verb(italian, comb, future, pl(2), pos, [pettinerete]).
+ty_verb(italian, combat, future, sg, pos, [combatterà]).
+ty_verb(italian, combat, future, pl, pos, [combatteranno]).
+ty_verb(italian, combat, future, sg(1), pos, [combatterò]).
+ty_verb(italian, combat, future, sg(2), pos, [combatterai]).
+ty_verb(italian, combat, future, pl(1), pos, [combatteremo]).
+ty_verb(italian, combat, future, pl(2), pos, [combatterete]).
+ty_verb(italian, combine, future, sg, pos, [combinerà]).
+ty_verb(italian, combine, future, pl, pos, [combineranno]).
+ty_verb(italian, combine, future, sg(1), pos, [combinerò]).
+ty_verb(italian, combine, future, sg(2), pos, [combinerai]).
+ty_verb(italian, combine, future, pl(1), pos, [combineremo]).
+ty_verb(italian, combine, future, pl(2), pos, [combinerete]).
+ty_verb(italian, come, future, sg, pos, [verrà]).
+ty_verb(italian, come, future, pl, pos, [verranno]).
+ty_verb(italian, come, future, sg(1), pos, [verrò]).
+ty_verb(italian, come, future, sg(2), pos, [verrai]).
+ty_verb(italian, come, future, pl(1), pos, [verremo]).
+ty_verb(italian, come, future, pl(2), pos, [verrete]).
+ty_verb(italian, comfort, future, sg, pos, [consolerà]).
+ty_verb(italian, comfort, future, pl, pos, [consoleranno]).
+ty_verb(italian, comfort, future, sg(1), pos, [consolerò]).
+ty_verb(italian, comfort, future, sg(2), pos, [consolerai]).
+ty_verb(italian, comfort, future, pl(1), pos, [consoleremo]).
+ty_verb(italian, comfort, future, pl(2), pos, [consolerete]).
+ty_verb(italian, command, future, sg, pos, [comanderà]).
+ty_verb(italian, command, future, pl, pos, [comanderanno]).
+ty_verb(italian, command, future, sg(1), pos, [comanderò]).
+ty_verb(italian, command, future, sg(2), pos, [comanderai]).
+ty_verb(italian, command, future, pl(1), pos, [comanderemo]).
+ty_verb(italian, command, future, pl(2), pos, [comanderete]).
+ty_verb(italian, mandate, future, sg, pos, [manderà]).
+ty_verb(italian, mandate, future, pl, pos, [manderanno]).
+ty_verb(italian, mandate, future, sg(1), pos, [manderò]).
+ty_verb(italian, mandate, future, sg(2), pos, [manderai]).
+ty_verb(italian, mandate, future, pl(1), pos, [manderemo]).
+ty_verb(italian, mandate, future, pl(2), pos, [manderete]).
+ty_verb(italian, commence, future, sg, pos, [comincerà]).
+ty_verb(italian, commence, future, pl, pos, [cominceranno]).
+ty_verb(italian, commence, future, sg(1), pos, [comincerò]).
+ty_verb(italian, commence, future, sg(2), pos, [comincerai]).
+ty_verb(italian, commence, future, pl(1), pos, [cominceremo]).
+ty_verb(italian, commence, future, pl(2), pos, [comincerete]).
+ty_verb(italian, comment, future, sg, pos, [commenterà]).
+ty_verb(italian, comment, future, pl, pos, [commenteranno]).
+ty_verb(italian, comment, future, sg(1), pos, [commenterò]).
+ty_verb(italian, comment, future, sg(2), pos, [commenterai]).
+ty_verb(italian, comment, future, pl(1), pos, [commenteremo]).
+ty_verb(italian, comment, future, pl(2), pos, [commenterete]).
+ty_verb(italian, commercialise, future, sg, pos, [commercializzerà]).
+ty_verb(italian, commercialise, future, pl, pos, [commercializzeranno]).
+ty_verb(italian, commercialise, future, sg(1), pos, [commercializzerò]).
+ty_verb(italian, commercialise, future, sg(2), pos, [commercializzerai]).
+ty_verb(italian, commercialise, future, pl(1), pos, [commercializzeremo]).
+ty_verb(italian, commercialise, future, pl(2), pos, [commercializzerete]).
+ty_verb(italian, commission, future, sg, pos, [commissionerà]).
+ty_verb(italian, commission, future, pl, pos, [commissioneranno]).
+ty_verb(italian, commission, future, sg(1), pos, [commissionerò]).
+ty_verb(italian, commission, future, sg(2), pos, [commissionerai]).
+ty_verb(italian, commission, future, pl(1), pos, [commissioneremo]).
+ty_verb(italian, commission, future, pl(2), pos, [commissionerete]).
+ty_verb(italian, communicate, future, sg, pos, [comunicherà]).
+ty_verb(italian, communicate, future, pl, pos, [comunicheranno]).
+ty_verb(italian, communicate, future, sg(1), pos, [comunicherò]).
+ty_verb(italian, communicate, future, sg(2), pos, [comunicherai]).
+ty_verb(italian, communicate, future, pl(1), pos, [comunicheremo]).
+ty_verb(italian, communicate, future, pl(2), pos, [comunicherete]).
+ty_verb(italian, commutate, future, sg, pos, [commuterà]).
+ty_verb(italian, commutate, future, pl, pos, [commuteranno]).
+ty_verb(italian, commutate, future, sg(1), pos, [commuterò]).
+ty_verb(italian, commutate, future, sg(2), pos, [commuterai]).
+ty_verb(italian, commutate, future, pl(1), pos, [commuteremo]).
+ty_verb(italian, commutate, future, pl(2), pos, [commuterete]).
+ty_verb(italian, compact, future, sg, pos, [compatterà]).
+ty_verb(italian, compact, future, pl, pos, [compatteranno]).
+ty_verb(italian, compact, future, sg(1), pos, [compatterò]).
+ty_verb(italian, compact, future, sg(2), pos, [compatterai]).
+ty_verb(italian, compact, future, pl(1), pos, [compatteremo]).
+ty_verb(italian, compact, future, pl(2), pos, [compatterete]).
+ty_verb(italian, compare, future, sg, pos, [confronterà]).
+ty_verb(italian, compare, future, pl, pos, [confronteranno]).
+ty_verb(italian, compare, future, sg(1), pos, [confronterò]).
+ty_verb(italian, compare, future, sg(2), pos, [confronterai]).
+ty_verb(italian, compare, future, pl(1), pos, [confronteremo]).
+ty_verb(italian, compare, future, pl(2), pos, [confronterete]).
+ty_verb(italian, compensate, future, sg, pos, [compenserà]).
+ty_verb(italian, compensate, future, pl, pos, [compenseranno]).
+ty_verb(italian, compensate, future, sg(1), pos, [compenserò]).
+ty_verb(italian, compensate, future, sg(2), pos, [compenserai]).
+ty_verb(italian, compensate, future, pl(1), pos, [compenseremo]).
+ty_verb(italian, compensate, future, pl(2), pos, [compenserete]).
+ty_verb(italian, compete, future, sg, pos, [competerà]).
+ty_verb(italian, compete, future, pl, pos, [competeranno]).
+ty_verb(italian, compete, future, sg(1), pos, [competerò]).
+ty_verb(italian, compete, future, sg(2), pos, [competerai]).
+ty_verb(italian, compete, future, pl(1), pos, [competeremo]).
+ty_verb(italian, compete, future, pl(2), pos, [competerete]).
+ty_verb(italian, complement, future, sg, pos, [complementerà]).
+ty_verb(italian, complement, future, pl, pos, [complementeranno]).
+ty_verb(italian, complement, future, sg(1), pos, [complementerò]).
+ty_verb(italian, complement, future, sg(2), pos, [complementerai]).
+ty_verb(italian, complement, future, pl(1), pos, [complementeremo]).
+ty_verb(italian, complement, future, pl(2), pos, [complementerete]).
+ty_verb(italian, complete, future, sg, pos, [completerà]).
+ty_verb(italian, complete, future, pl, pos, [completeranno]).
+ty_verb(italian, complete, future, sg(1), pos, [completerò]).
+ty_verb(italian, complete, future, sg(2), pos, [completerai]).
+ty_verb(italian, complete, future, pl(1), pos, [completeremo]).
+ty_verb(italian, complete, future, pl(2), pos, [completerete]).
+ty_verb(italian, complicate, future, sg, pos, [complicherà]).
+ty_verb(italian, complicate, future, pl, pos, [complicheranno]).
+ty_verb(italian, complicate, future, sg(1), pos, [complicherò]).
+ty_verb(italian, complicate, future, sg(2), pos, [complicherai]).
+ty_verb(italian, complicate, future, pl(1), pos, [complicheremo]).
+ty_verb(italian, complicate, future, pl(2), pos, [complicherete]).
+ty_verb(italian, comport, future, sg, pos, [comporterà]).
+ty_verb(italian, comport, future, pl, pos, [comporteranno]).
+ty_verb(italian, comport, future, sg(1), pos, [comporterò]).
+ty_verb(italian, comport, future, sg(2), pos, [comporterai]).
+ty_verb(italian, comport, future, pl(1), pos, [comporteremo]).
+ty_verb(italian, comport, future, pl(2), pos, [comporterete]).
+ty_verb(italian, compose, future, sg, pos, [comporrà]).
+ty_verb(italian, compose, future, pl, pos, [comporranno]).
+ty_verb(italian, compose, future, sg(1), pos, [comporrò]).
+ty_verb(italian, compose, future, sg(2), pos, [comporrai]).
+ty_verb(italian, compose, future, pl(1), pos, [comporremo]).
+ty_verb(italian, compose, future, pl(2), pos, [comporrete]).
+ty_verb(italian, comprise, future, sg, pos, [comprenderà]).
+ty_verb(italian, comprise, future, pl, pos, [comprenderanno]).
+ty_verb(italian, comprise, future, sg(1), pos, [comprenderò]).
+ty_verb(italian, comprise, future, sg(2), pos, [comprenderai]).
+ty_verb(italian, comprise, future, pl(1), pos, [comprenderemo]).
+ty_verb(italian, comprise, future, pl(2), pos, [comprenderete]).
+ty_verb(italian, compute, future, sg, pos, [computerà]).
+ty_verb(italian, compute, future, pl, pos, [computeranno]).
+ty_verb(italian, compute, future, sg(1), pos, [computerò]).
+ty_verb(italian, compute, future, sg(2), pos, [computerai]).
+ty_verb(italian, compute, future, pl(1), pos, [computeremo]).
+ty_verb(italian, compute, future, pl(2), pos, [computerete]).
+ty_verb(italian, computerise, future, sg, pos, [informatizzerà]).
+ty_verb(italian, computerise, future, pl, pos, [informatizzeranno]).
+ty_verb(italian, computerise, future, sg(1), pos, [informatizzerò]).
+ty_verb(italian, computerise, future, sg(2), pos, [informatizzerai]).
+ty_verb(italian, computerise, future, pl(1), pos, [informatizzeremo]).
+ty_verb(italian, computerise, future, pl(2), pos, [informatizzerete]).
+ty_verb(italian, concatenate, future, sg, pos, [concatenerà]).
+ty_verb(italian, concatenate, future, pl, pos, [concateneranno]).
+ty_verb(italian, concatenate, future, sg(1), pos, [concatenerò]).
+ty_verb(italian, concatenate, future, sg(2), pos, [concatenerai]).
+ty_verb(italian, concatenate, future, pl(1), pos, [concateneremo]).
+ty_verb(italian, concatenate, future, pl(2), pos, [concatenerete]).
+ty_verb(italian, conceal, future, sg, pos, [nasconderà]).
+ty_verb(italian, conceal, future, pl, pos, [nasconderanno]).
+ty_verb(italian, conceal, future, sg(1), pos, [nasconderò]).
+ty_verb(italian, conceal, future, sg(2), pos, [nasconderai]).
+ty_verb(italian, conceal, future, pl(1), pos, [nasconderemo]).
+ty_verb(italian, conceal, future, pl(2), pos, [nasconderete]).
+ty_verb(italian, concede, future, sg, pos, [concederà]).
+ty_verb(italian, concede, future, pl, pos, [concederanno]).
+ty_verb(italian, concede, future, sg(1), pos, [concederò]).
+ty_verb(italian, concede, future, sg(2), pos, [concederai]).
+ty_verb(italian, concede, future, pl(1), pos, [concederemo]).
+ty_verb(italian, concede, future, pl(2), pos, [concederete]).
+ty_verb(italian, concede, future, sg, pos, [accorderà]).
+ty_verb(italian, concede, future, pl, pos, [accorderanno]).
+ty_verb(italian, concede, future, sg(1), pos, [accorderò]).
+ty_verb(italian, concede, future, sg(2), pos, [accorderai]).
+ty_verb(italian, concede, future, pl(1), pos, [accorderemo]).
+ty_verb(italian, concede, future, pl(2), pos, [accorderete]).
+ty_verb(italian, conciliate, future, sg, pos, [concilierà]).
+ty_verb(italian, conciliate, future, pl, pos, [concilieranno]).
+ty_verb(italian, conciliate, future, sg(1), pos, [concilierò]).
+ty_verb(italian, conciliate, future, sg(2), pos, [concilierai]).
+ty_verb(italian, conciliate, future, pl(1), pos, [concilieremo]).
+ty_verb(italian, conciliate, future, pl(2), pos, [concilierete]).
+ty_verb(italian, conclude, future, sg, pos, [concluderà]).
+ty_verb(italian, conclude, future, pl, pos, [concluderanno]).
+ty_verb(italian, conclude, future, sg(1), pos, [concluderò]).
+ty_verb(italian, conclude, future, sg(2), pos, [concluderai]).
+ty_verb(italian, conclude, future, pl(1), pos, [concluderemo]).
+ty_verb(italian, conclude, future, pl(2), pos, [concluderete]).
+ty_verb(italian, concretise, future, sg, pos, [concreterà]).
+ty_verb(italian, concretise, future, pl, pos, [concreteranno]).
+ty_verb(italian, concretise, future, sg(1), pos, [concreterò]).
+ty_verb(italian, concretise, future, sg(2), pos, [concreterai]).
+ty_verb(italian, concretise, future, pl(1), pos, [concreteremo]).
+ty_verb(italian, concretise, future, pl(2), pos, [concreterete]).
+ty_verb(italian, condemn, future, sg, pos, [condannerà]).
+ty_verb(italian, condemn, future, pl, pos, [condanneranno]).
+ty_verb(italian, condemn, future, sg(1), pos, [condannerò]).
+ty_verb(italian, condemn, future, sg(2), pos, [condannerai]).
+ty_verb(italian, condemn, future, pl(1), pos, [condanneremo]).
+ty_verb(italian, condemn, future, pl(2), pos, [condannerete]).
+ty_verb(italian, condition, future, sg, pos, [condizionerà]).
+ty_verb(italian, condition, future, pl, pos, [condizioneranno]).
+ty_verb(italian, condition, future, sg(1), pos, [condizionerò]).
+ty_verb(italian, condition, future, sg(2), pos, [condizionerai]).
+ty_verb(italian, condition, future, pl(1), pos, [condizioneremo]).
+ty_verb(italian, condition, future, pl(2), pos, [condizionerete]).
+ty_verb(italian, conduct, future, sg, pos, [condurrà]).
+ty_verb(italian, conduct, future, pl, pos, [condurranno]).
+ty_verb(italian, conduct, future, sg(1), pos, [condurrò]).
+ty_verb(italian, conduct, future, sg(2), pos, [condurrai]).
+ty_verb(italian, conduct, future, pl(1), pos, [condurremo]).
+ty_verb(italian, conduct, future, pl(2), pos, [condurrete]).
+ty_verb(italian, conduct, future, sg, pos, [dirigerà]).
+ty_verb(italian, conduct, future, pl, pos, [dirigeranno]).
+ty_verb(italian, conduct, future, sg(1), pos, [dirigerò]).
+ty_verb(italian, conduct, future, sg(2), pos, [dirigerai]).
+ty_verb(italian, conduct, future, pl(1), pos, [dirigeremo]).
+ty_verb(italian, conduct, future, pl(2), pos, [dirigerete]).
+ty_verb(italian, confer, future, sg, pos, [conferirà]).
+ty_verb(italian, confer, future, pl, pos, [conferiranno]).
+ty_verb(italian, confer, future, sg(1), pos, [conferirò]).
+ty_verb(italian, confer, future, sg(2), pos, [conferirai]).
+ty_verb(italian, confer, future, pl(1), pos, [conferiremo]).
+ty_verb(italian, confer, future, pl(2), pos, [conferirete]).
+ty_verb(italian, confess, future, sg, pos, [confesserà]).
+ty_verb(italian, confess, future, pl, pos, [confesseranno]).
+ty_verb(italian, confess, future, sg(1), pos, [confesserò]).
+ty_verb(italian, confess, future, sg(2), pos, [confesserai]).
+ty_verb(italian, confess, future, pl(1), pos, [confesseremo]).
+ty_verb(italian, confess, future, pl(2), pos, [confesserete]).
+ty_verb(italian, configure, future, sg, pos, [configurerà]).
+ty_verb(italian, configure, future, pl, pos, [configureranno]).
+ty_verb(italian, configure, future, sg(1), pos, [configurerò]).
+ty_verb(italian, configure, future, sg(2), pos, [configurerai]).
+ty_verb(italian, configure, future, pl(1), pos, [configureremo]).
+ty_verb(italian, configure, future, pl(2), pos, [configurerete]).
+ty_verb(italian, confine, future, sg, pos, [confinerà]).
+ty_verb(italian, confine, future, pl, pos, [confineranno]).
+ty_verb(italian, confine, future, sg(1), pos, [confinerò]).
+ty_verb(italian, confine, future, sg(2), pos, [confinerai]).
+ty_verb(italian, confine, future, pl(1), pos, [confineremo]).
+ty_verb(italian, confine, future, pl(2), pos, [confinerete]).
+ty_verb(italian, confirm, future, sg, pos, [confermerà]).
+ty_verb(italian, confirm, future, pl, pos, [confermeranno]).
+ty_verb(italian, confirm, future, sg(1), pos, [confermerò]).
+ty_verb(italian, confirm, future, sg(2), pos, [confermerai]).
+ty_verb(italian, confirm, future, pl(1), pos, [confermeremo]).
+ty_verb(italian, confirm, future, pl(2), pos, [confermerete]).
+ty_verb(italian, confiscate, future, sg, pos, [confischerà]).
+ty_verb(italian, confiscate, future, pl, pos, [confischeranno]).
+ty_verb(italian, confiscate, future, sg(1), pos, [confischerò]).
+ty_verb(italian, confiscate, future, sg(2), pos, [confischerai]).
+ty_verb(italian, confiscate, future, pl(1), pos, [confischeremo]).
+ty_verb(italian, confiscate, future, pl(2), pos, [confischerete]).
+ty_verb(italian, conform, future, sg, pos, [conformerà]).
+ty_verb(italian, conform, future, pl, pos, [conformeranno]).
+ty_verb(italian, conform, future, sg(1), pos, [conformerò]).
+ty_verb(italian, conform, future, sg(2), pos, [conformerai]).
+ty_verb(italian, conform, future, pl(1), pos, [conformeremo]).
+ty_verb(italian, conform, future, pl(2), pos, [conformerete]).
+ty_verb(italian, confuse, future, sg, pos, [confonderà]).
+ty_verb(italian, confuse, future, pl, pos, [confonderanno]).
+ty_verb(italian, confuse, future, sg(1), pos, [confonderò]).
+ty_verb(italian, confuse, future, sg(2), pos, [confonderai]).
+ty_verb(italian, confuse, future, pl(1), pos, [confonderemo]).
+ty_verb(italian, confuse, future, pl(2), pos, [confonderete]).
+ty_verb(italian, connect, future, sg, pos, [connetterà]).
+ty_verb(italian, connect, future, pl, pos, [connetteranno]).
+ty_verb(italian, connect, future, sg(1), pos, [connetterò]).
+ty_verb(italian, connect, future, sg(2), pos, [connetterai]).
+ty_verb(italian, connect, future, pl(1), pos, [connetteremo]).
+ty_verb(italian, connect, future, pl(2), pos, [connetterete]).
+ty_verb(italian, conquer, future, sg, pos, [conquisterà]).
+ty_verb(italian, conquer, future, pl, pos, [conquisteranno]).
+ty_verb(italian, conquer, future, sg(1), pos, [conquisterò]).
+ty_verb(italian, conquer, future, sg(2), pos, [conquisterai]).
+ty_verb(italian, conquer, future, pl(1), pos, [conquisteremo]).
+ty_verb(italian, conquer, future, pl(2), pos, [conquisterete]).
+ty_verb(italian, consecrate, future, sg, pos, [consacrerà]).
+ty_verb(italian, consecrate, future, pl, pos, [consacreranno]).
+ty_verb(italian, consecrate, future, sg(1), pos, [consacrerò]).
+ty_verb(italian, consecrate, future, sg(2), pos, [consacrerai]).
+ty_verb(italian, consecrate, future, pl(1), pos, [consacreremo]).
+ty_verb(italian, consecrate, future, pl(2), pos, [consacrerete]).
+ty_verb(italian, consent, future, sg, pos, [consentirà]).
+ty_verb(italian, consent, future, pl, pos, [consentiranno]).
+ty_verb(italian, consent, future, sg(1), pos, [consentirò]).
+ty_verb(italian, consent, future, sg(2), pos, [consentirai]).
+ty_verb(italian, consent, future, pl(1), pos, [consentiremo]).
+ty_verb(italian, consent, future, pl(2), pos, [consentirete]).
+ty_verb(italian, conserve, future, sg, pos, [conserverà]).
+ty_verb(italian, conserve, future, pl, pos, [conserveranno]).
+ty_verb(italian, conserve, future, sg(1), pos, [conserverò]).
+ty_verb(italian, conserve, future, sg(2), pos, [conserverai]).
+ty_verb(italian, conserve, future, pl(1), pos, [conserveremo]).
+ty_verb(italian, conserve, future, pl(2), pos, [conserverete]).
+ty_verb(italian, consider, future, sg, pos, [considererà]).
+ty_verb(italian, consider, future, pl, pos, [considereranno]).
+ty_verb(italian, consider, future, sg(1), pos, [considererò]).
+ty_verb(italian, consider, future, sg(2), pos, [considererai]).
+ty_verb(italian, consider, future, pl(1), pos, [considereremo]).
+ty_verb(italian, consider, future, pl(2), pos, [considererete]).
+ty_verb(italian, consign, future, sg, pos, [consenerà]).
+ty_verb(italian, consign, future, pl, pos, [conseneranno]).
+ty_verb(italian, consign, future, sg(1), pos, [consenerò]).
+ty_verb(italian, consign, future, sg(2), pos, [consenerai]).
+ty_verb(italian, consign, future, pl(1), pos, [conseneremo]).
+ty_verb(italian, consign, future, pl(2), pos, [consenerete]).
+ty_verb(italian, consist, future, sg, pos, [consisterà]).
+ty_verb(italian, consist, future, pl, pos, [consisteranno]).
+ty_verb(italian, consist, future, sg(1), pos, [consisterò]).
+ty_verb(italian, consist, future, sg(2), pos, [consisterai]).
+ty_verb(italian, consist, future, pl(1), pos, [consisteremo]).
+ty_verb(italian, consist, future, pl(2), pos, [consisterete]).
+ty_verb(italian, consolidate, future, sg, pos, [consoliderà]).
+ty_verb(italian, consolidate, future, pl, pos, [consolideranno]).
+ty_verb(italian, consolidate, future, sg(1), pos, [consoliderò]).
+ty_verb(italian, consolidate, future, sg(2), pos, [consoliderai]).
+ty_verb(italian, consolidate, future, pl(1), pos, [consolideremo]).
+ty_verb(italian, consolidate, future, pl(2), pos, [consoliderete]).
+ty_verb(italian, conspire, future, sg, pos, [cospirerà]).
+ty_verb(italian, conspire, future, pl, pos, [cospireranno]).
+ty_verb(italian, conspire, future, sg(1), pos, [cospirerò]).
+ty_verb(italian, conspire, future, sg(2), pos, [cospirerai]).
+ty_verb(italian, conspire, future, pl(1), pos, [cospireremo]).
+ty_verb(italian, conspire, future, pl(2), pos, [cospirerete]).
+ty_verb(italian, constitute, future, sg, pos, [costituirà]).
+ty_verb(italian, constitute, future, pl, pos, [costituiranno]).
+ty_verb(italian, constitute, future, sg(1), pos, [costituirò]).
+ty_verb(italian, constitute, future, sg(2), pos, [costituirai]).
+ty_verb(italian, constitute, future, pl(1), pos, [costituiremo]).
+ty_verb(italian, constitute, future, pl(2), pos, [costituirete]).
+ty_verb(italian, construct, future, sg, pos, [costruirà]).
+ty_verb(italian, construct, future, pl, pos, [costruiranno]).
+ty_verb(italian, construct, future, sg(1), pos, [costruirò]).
+ty_verb(italian, construct, future, sg(2), pos, [costruirai]).
+ty_verb(italian, construct, future, pl(1), pos, [costruiremo]).
+ty_verb(italian, construct, future, pl(2), pos, [costruirete]).
+ty_verb(italian, consult, future, sg, pos, [consulterà]).
+ty_verb(italian, consult, future, pl, pos, [consulteranno]).
+ty_verb(italian, consult, future, sg(1), pos, [consulterò]).
+ty_verb(italian, consult, future, sg(2), pos, [consulterai]).
+ty_verb(italian, consult, future, pl(1), pos, [consulteremo]).
+ty_verb(italian, consult, future, pl(2), pos, [consulterete]).
+ty_verb(italian, consume, future, sg, pos, [consumerà]).
+ty_verb(italian, consume, future, pl, pos, [consumeranno]).
+ty_verb(italian, consume, future, sg(1), pos, [consumerò]).
+ty_verb(italian, consume, future, sg(2), pos, [consumerai]).
+ty_verb(italian, consume, future, pl(1), pos, [consumeremo]).
+ty_verb(italian, consume, future, pl(2), pos, [consumerete]).
+ty_verb(italian, contact, future, sg, pos, [metterà]).
+ty_verb(italian, contact, future, pl, pos, [metteranno]).
+ty_verb(italian, contact, future, sg(1), pos, [metterò]).
+ty_verb(italian, contact, future, sg(2), pos, [metterai]).
+ty_verb(italian, contact, future, pl(1), pos, [metteremo]).
+ty_verb(italian, contact, future, pl(2), pos, [metterete]).
+ty_verb(italian, contain, future, sg, pos, [conterrà]).
+ty_verb(italian, contain, future, pl, pos, [conterranno]).
+ty_verb(italian, contain, future, sg(1), pos, [conterrò]).
+ty_verb(italian, contain, future, sg(2), pos, [conterrai]).
+ty_verb(italian, contain, future, pl(1), pos, [conterremo]).
+ty_verb(italian, contain, future, pl(2), pos, [conterrete]).
+ty_verb(italian, contemplate, future, sg, pos, [contemplerà]).
+ty_verb(italian, contemplate, future, pl, pos, [contempleranno]).
+ty_verb(italian, contemplate, future, sg(1), pos, [contemplerò]).
+ty_verb(italian, contemplate, future, sg(2), pos, [contemplerai]).
+ty_verb(italian, contemplate, future, pl(1), pos, [contempleremo]).
+ty_verb(italian, contemplate, future, pl(2), pos, [contemplerete]).
+ty_verb(italian, contend, future, sg, pos, [contenderà]).
+ty_verb(italian, contend, future, pl, pos, [contenderanno]).
+ty_verb(italian, contend, future, sg(1), pos, [contenderò]).
+ty_verb(italian, contend, future, sg(2), pos, [contenderai]).
+ty_verb(italian, contend, future, pl(1), pos, [contenderemo]).
+ty_verb(italian, contend, future, pl(2), pos, [contenderete]).
+ty_verb(italian, content, future, sg, pos, [contenterà]).
+ty_verb(italian, content, future, pl, pos, [contenteranno]).
+ty_verb(italian, content, future, sg(1), pos, [contenterò]).
+ty_verb(italian, content, future, sg(2), pos, [contenterai]).
+ty_verb(italian, content, future, pl(1), pos, [contenteremo]).
+ty_verb(italian, content, future, pl(2), pos, [contenterete]).
+ty_verb(italian, contest, future, sg, pos, [contesterà]).
+ty_verb(italian, contest, future, pl, pos, [contesteranno]).
+ty_verb(italian, contest, future, sg(1), pos, [contesterò]).
+ty_verb(italian, contest, future, sg(2), pos, [contesterai]).
+ty_verb(italian, contest, future, pl(1), pos, [contesteremo]).
+ty_verb(italian, contest, future, pl(2), pos, [contesterete]).
+ty_verb(italian, dispute, future, sg, pos, [disputerà]).
+ty_verb(italian, dispute, future, pl, pos, [disputeranno]).
+ty_verb(italian, dispute, future, sg(1), pos, [disputerò]).
+ty_verb(italian, dispute, future, sg(2), pos, [disputerai]).
+ty_verb(italian, dispute, future, pl(1), pos, [disputeremo]).
+ty_verb(italian, dispute, future, pl(2), pos, [disputerete]).
+ty_verb(italian, continue, future, sg, pos, [continuerà]).
+ty_verb(italian, continue, future, pl, pos, [continueranno]).
+ty_verb(italian, continue, future, sg(1), pos, [continuerò]).
+ty_verb(italian, continue, future, sg(2), pos, [continuerai]).
+ty_verb(italian, continue, future, pl(1), pos, [continueremo]).
+ty_verb(italian, continue, future, pl(2), pos, [continuerete]).
+ty_verb(italian, contract, future, sg, pos, [contrarrà]).
+ty_verb(italian, contract, future, pl, pos, [contrarranno]).
+ty_verb(italian, contract, future, sg(1), pos, [contrarrò]).
+ty_verb(italian, contract, future, sg(2), pos, [contrarrai]).
+ty_verb(italian, contract, future, pl(1), pos, [contrarremo]).
+ty_verb(italian, contract, future, pl(2), pos, [contrarrete]).
+ty_verb(italian, contradict, future, sg, pos, [contraddirà]).
+ty_verb(italian, contradict, future, pl, pos, [contraddiranno]).
+ty_verb(italian, contradict, future, sg(1), pos, [contraddirò]).
+ty_verb(italian, contradict, future, sg(2), pos, [contraddirai]).
+ty_verb(italian, contradict, future, pl(1), pos, [contraddiremo]).
+ty_verb(italian, contradict, future, pl(2), pos, [contraddirete]).
+ty_verb(italian, contrast, future, sg, pos, [contrasterà]).
+ty_verb(italian, contrast, future, pl, pos, [contrasteranno]).
+ty_verb(italian, contrast, future, sg(1), pos, [contrasterò]).
+ty_verb(italian, contrast, future, sg(2), pos, [contrasterai]).
+ty_verb(italian, contrast, future, pl(1), pos, [contrasteremo]).
+ty_verb(italian, contrast, future, pl(2), pos, [contrasterete]).
+ty_verb(italian, contravene, future, sg, pos, [contravverrà]).
+ty_verb(italian, contravene, future, pl, pos, [contravverranno]).
+ty_verb(italian, contravene, future, sg(1), pos, [contravverrò]).
+ty_verb(italian, contravene, future, sg(2), pos, [contravverrai]).
+ty_verb(italian, contravene, future, pl(1), pos, [contravverremo]).
+ty_verb(italian, contravene, future, pl(2), pos, [contravverrete]).
+ty_verb(italian, contribute, future, sg, pos, [contribuirà]).
+ty_verb(italian, contribute, future, pl, pos, [contribuiranno]).
+ty_verb(italian, contribute, future, sg(1), pos, [contribuirò]).
+ty_verb(italian, contribute, future, sg(2), pos, [contribuirai]).
+ty_verb(italian, contribute, future, pl(1), pos, [contribuiremo]).
+ty_verb(italian, contribute, future, pl(2), pos, [contribuirete]).
+ty_verb(italian, contrive, future, sg, pos, [ideerà]).
+ty_verb(italian, contrive, future, pl, pos, [ideeranno]).
+ty_verb(italian, contrive, future, sg(1), pos, [ideerò]).
+ty_verb(italian, contrive, future, sg(2), pos, [ideerai]).
+ty_verb(italian, contrive, future, pl(1), pos, [ideeremo]).
+ty_verb(italian, contrive, future, pl(2), pos, [ideerete]).
+ty_verb(italian, control, future, sg, pos, [controllerà]).
+ty_verb(italian, control, future, pl, pos, [controlleranno]).
+ty_verb(italian, control, future, sg(1), pos, [controllerò]).
+ty_verb(italian, control, future, sg(2), pos, [controllerai]).
+ty_verb(italian, control, future, pl(1), pos, [controlleremo]).
+ty_verb(italian, control, future, pl(2), pos, [controllerete]).
+ty_verb(italian, converge, future, sg, pos, [convergerà]).
+ty_verb(italian, converge, future, pl, pos, [convergeranno]).
+ty_verb(italian, converge, future, sg(1), pos, [convergerò]).
+ty_verb(italian, converge, future, sg(2), pos, [convergerai]).
+ty_verb(italian, converge, future, pl(1), pos, [convergeremo]).
+ty_verb(italian, converge, future, pl(2), pos, [convergerete]).
+ty_verb(italian, err, future, sg, pos, [errerà]).
+ty_verb(italian, err, future, pl, pos, [erreranno]).
+ty_verb(italian, err, future, sg(1), pos, [errerò]).
+ty_verb(italian, err, future, sg(2), pos, [errerai]).
+ty_verb(italian, err, future, pl(1), pos, [erreremo]).
+ty_verb(italian, err, future, pl(2), pos, [errerete]).
+ty_verb(italian, obligate, future, sg, pos, [obbligherà]).
+ty_verb(italian, obligate, future, pl, pos, [obbligheranno]).
+ty_verb(italian, obligate, future, sg(1), pos, [obbligherò]).
+ty_verb(italian, obligate, future, sg(2), pos, [obbligherai]).
+ty_verb(italian, obligate, future, pl(1), pos, [obbligheremo]).
+ty_verb(italian, obligate, future, pl(2), pos, [obbligherete]).
+ty_verb(italian, convert, future, sg, pos, [convertirà]).
+ty_verb(italian, convert, future, pl, pos, [convertiranno]).
+ty_verb(italian, convert, future, sg(1), pos, [convertirò]).
+ty_verb(italian, convert, future, sg(2), pos, [convertirai]).
+ty_verb(italian, convert, future, pl(1), pos, [convertiremo]).
+ty_verb(italian, convert, future, pl(2), pos, [convertirete]).
+ty_verb(italian, convey, future, sg, pos, [trasmetterà]).
+ty_verb(italian, convey, future, pl, pos, [trasmetteranno]).
+ty_verb(italian, convey, future, sg(1), pos, [trasmetterò]).
+ty_verb(italian, convey, future, sg(2), pos, [trasmetterai]).
+ty_verb(italian, convey, future, pl(1), pos, [trasmetteremo]).
+ty_verb(italian, convey, future, pl(2), pos, [trasmetterete]).
+ty_verb(italian, convince, future, sg, pos, [convincerà]).
+ty_verb(italian, convince, future, pl, pos, [convinceranno]).
+ty_verb(italian, convince, future, sg(1), pos, [convincerò]).
+ty_verb(italian, convince, future, sg(2), pos, [convincerai]).
+ty_verb(italian, convince, future, pl(1), pos, [convinceremo]).
+ty_verb(italian, convince, future, pl(2), pos, [convincerete]).
+ty_verb(italian, cook, future, sg, pos, [cucinerà]).
+ty_verb(italian, cook, future, pl, pos, [cucineranno]).
+ty_verb(italian, cook, future, sg(1), pos, [cucinerò]).
+ty_verb(italian, cook, future, sg(2), pos, [cucinerai]).
+ty_verb(italian, cook, future, pl(1), pos, [cucineremo]).
+ty_verb(italian, cook, future, pl(2), pos, [cucinerete]).
+ty_verb(italian, cool, future, sg, pos, [rinfrescherà]).
+ty_verb(italian, cool, future, pl, pos, [rinfrescheranno]).
+ty_verb(italian, cool, future, sg(1), pos, [rinfrescherò]).
+ty_verb(italian, cool, future, sg(2), pos, [rinfrescherai]).
+ty_verb(italian, cool, future, pl(1), pos, [rinfrescheremo]).
+ty_verb(italian, cool, future, pl(2), pos, [rinfrescherete]).
+ty_verb(italian, cooperate, future, sg, pos, [coopererà]).
+ty_verb(italian, cooperate, future, pl, pos, [coopereranno]).
+ty_verb(italian, cooperate, future, sg(1), pos, [coopererò]).
+ty_verb(italian, cooperate, future, sg(2), pos, [coopererai]).
+ty_verb(italian, cooperate, future, pl(1), pos, [coopereremo]).
+ty_verb(italian, cooperate, future, pl(2), pos, [coopererete]).
+ty_verb(italian, coordinate, future, sg, pos, [coordinerà]).
+ty_verb(italian, coordinate, future, pl, pos, [coordineranno]).
+ty_verb(italian, coordinate, future, sg(1), pos, [coordinerò]).
+ty_verb(italian, coordinate, future, sg(2), pos, [coordinerai]).
+ty_verb(italian, coordinate, future, pl(1), pos, [coordineremo]).
+ty_verb(italian, coordinate, future, pl(2), pos, [coordinerete]).
+ty_verb(italian, copy, future, sg, pos, [copierà]).
+ty_verb(italian, copy, future, pl, pos, [copieranno]).
+ty_verb(italian, copy, future, sg(1), pos, [copierò]).
+ty_verb(italian, copy, future, sg(2), pos, [copierai]).
+ty_verb(italian, copy, future, pl(1), pos, [copieremo]).
+ty_verb(italian, copy, future, pl(2), pos, [copierete]).
+ty_verb(italian, correspond, future, sg, pos, [corrisponderà]).
+ty_verb(italian, correspond, future, pl, pos, [corrisponderanno]).
+ty_verb(italian, correspond, future, sg(1), pos, [corrisponderò]).
+ty_verb(italian, correspond, future, sg(2), pos, [corrisponderai]).
+ty_verb(italian, correspond, future, pl(1), pos, [corrisponderemo]).
+ty_verb(italian, correspond, future, pl(2), pos, [corrisponderete]).
+ty_verb(italian, cost, future, sg, pos, [costerà]).
+ty_verb(italian, cost, future, pl, pos, [costeranno]).
+ty_verb(italian, cost, future, sg(1), pos, [costerò]).
+ty_verb(italian, cost, future, sg(2), pos, [costerai]).
+ty_verb(italian, cost, future, pl(1), pos, [costeremo]).
+ty_verb(italian, cost, future, pl(2), pos, [costerete]).
+ty_verb(italian, count, future, sg, pos, [racconterà]).
+ty_verb(italian, count, future, pl, pos, [racconteranno]).
+ty_verb(italian, count, future, sg(1), pos, [racconterò]).
+ty_verb(italian, count, future, sg(2), pos, [racconterai]).
+ty_verb(italian, count, future, pl(1), pos, [racconteremo]).
+ty_verb(italian, count, future, pl(2), pos, [racconterete]).
+ty_verb(italian, counter, future, sg, pos, [opporrà]).
+ty_verb(italian, counter, future, pl, pos, [opporranno]).
+ty_verb(italian, counter, future, sg(1), pos, [opporrò]).
+ty_verb(italian, counter, future, sg(2), pos, [opporrai]).
+ty_verb(italian, counter, future, pl(1), pos, [opporremo]).
+ty_verb(italian, counter, future, pl(2), pos, [opporrete]).
+ty_verb(italian, counterbalance, future, sg, pos, [controbilancerà]).
+ty_verb(italian, counterbalance, future, pl, pos, [controbilanceranno]).
+ty_verb(italian, counterbalance, future, sg(1), pos, [controbilancerò]).
+ty_verb(italian, counterbalance, future, sg(2), pos, [controbilancerai]).
+ty_verb(italian, counterbalance, future, pl(1), pos, [controbilanceremo]).
+ty_verb(italian, counterbalance, future, pl(2), pos, [controbilancerete]).
+ty_verb(italian, cover, future, sg, pos, [coprirà]).
+ty_verb(italian, cover, future, pl, pos, [copriranno]).
+ty_verb(italian, cover, future, sg(1), pos, [coprirò]).
+ty_verb(italian, cover, future, sg(2), pos, [coprirai]).
+ty_verb(italian, cover, future, pl(1), pos, [copriremo]).
+ty_verb(italian, cover, future, pl(2), pos, [coprirete]).
+ty_verb(italian, crack, future, sg, pos, [cascherà]).
+ty_verb(italian, crack, future, pl, pos, [cascheranno]).
+ty_verb(italian, crack, future, sg(1), pos, [cascherò]).
+ty_verb(italian, crack, future, sg(2), pos, [cascherai]).
+ty_verb(italian, crack, future, pl(1), pos, [cascheremo]).
+ty_verb(italian, crack, future, pl(2), pos, [cascherete]).
+ty_verb(italian, crap, future, sg, pos, [cagherà]).
+ty_verb(italian, crap, future, pl, pos, [cagheranno]).
+ty_verb(italian, crap, future, sg(1), pos, [cagherò]).
+ty_verb(italian, crap, future, sg(2), pos, [cagherai]).
+ty_verb(italian, crap, future, pl(1), pos, [cagheremo]).
+ty_verb(italian, crap, future, pl(2), pos, [cagherete]).
+ty_verb(italian, dent, future, sg, pos, [ammaccherà]).
+ty_verb(italian, dent, future, pl, pos, [ammaccheranno]).
+ty_verb(italian, dent, future, sg(1), pos, [ammaccherò]).
+ty_verb(italian, dent, future, sg(2), pos, [ammaccherai]).
+ty_verb(italian, dent, future, pl(1), pos, [ammaccheremo]).
+ty_verb(italian, dent, future, pl(2), pos, [ammaccherete]).
+ty_verb(italian, create, future, sg, pos, [creerà]).
+ty_verb(italian, create, future, pl, pos, [creeranno]).
+ty_verb(italian, create, future, sg(1), pos, [creerò]).
+ty_verb(italian, create, future, sg(2), pos, [creerai]).
+ty_verb(italian, create, future, pl(1), pos, [creeremo]).
+ty_verb(italian, create, future, pl(2), pos, [creerete]).
+ty_verb(italian, credit, future, sg, pos, [accrediterà]).
+ty_verb(italian, credit, future, pl, pos, [accrediteranno]).
+ty_verb(italian, credit, future, sg(1), pos, [accrediterò]).
+ty_verb(italian, credit, future, sg(2), pos, [accrediterai]).
+ty_verb(italian, credit, future, pl(1), pos, [accrediteremo]).
+ty_verb(italian, credit, future, pl(2), pos, [accrediterete]).
+ty_verb(italian, crimp, future, sg, pos, [arruolerà]).
+ty_verb(italian, crimp, future, pl, pos, [arruoleranno]).
+ty_verb(italian, crimp, future, sg(1), pos, [arruolerò]).
+ty_verb(italian, crimp, future, sg(2), pos, [arruolerai]).
+ty_verb(italian, crimp, future, pl(1), pos, [arruoleremo]).
+ty_verb(italian, crimp, future, pl(2), pos, [arruolerete]).
+ty_verb(italian, criticise, future, sg, pos, [criticherà]).
+ty_verb(italian, criticise, future, pl, pos, [criticheranno]).
+ty_verb(italian, criticise, future, sg(1), pos, [criticherò]).
+ty_verb(italian, criticise, future, sg(2), pos, [criticherai]).
+ty_verb(italian, criticise, future, pl(1), pos, [criticheremo]).
+ty_verb(italian, criticise, future, pl(2), pos, [criticherete]).
+ty_verb(italian, cross, future, sg, pos, [attraverserà]).
+ty_verb(italian, cross, future, pl, pos, [attraverseranno]).
+ty_verb(italian, cross, future, sg(1), pos, [attraverserò]).
+ty_verb(italian, cross, future, sg(2), pos, [attraverserai]).
+ty_verb(italian, cross, future, pl(1), pos, [attraverseremo]).
+ty_verb(italian, cross, future, pl(2), pos, [attraverserete]).
+ty_verb(italian, crowd, future, sg, pos, [ammasserà]).
+ty_verb(italian, crowd, future, pl, pos, [ammasseranno]).
+ty_verb(italian, crowd, future, sg(1), pos, [ammasserò]).
+ty_verb(italian, crowd, future, sg(2), pos, [ammasserai]).
+ty_verb(italian, crowd, future, pl(1), pos, [ammasseremo]).
+ty_verb(italian, crowd, future, pl(2), pos, [ammasserete]).
+ty_verb(italian, cry, future, sg, pos, [griderà]).
+ty_verb(italian, cry, future, pl, pos, [grideranno]).
+ty_verb(italian, cry, future, sg(1), pos, [griderò]).
+ty_verb(italian, cry, future, sg(2), pos, [griderai]).
+ty_verb(italian, cry, future, pl(1), pos, [grideremo]).
+ty_verb(italian, cry, future, pl(2), pos, [griderete]).
+ty_verb(italian, crystallise, future, sg, pos, [cristallizzerà]).
+ty_verb(italian, crystallise, future, pl, pos, [cristallizzeranno]).
+ty_verb(italian, crystallise, future, sg(1), pos, [cristallizzerò]).
+ty_verb(italian, crystallise, future, sg(2), pos, [cristallizzerai]).
+ty_verb(italian, crystallise, future, pl(1), pos, [cristallizzeremo]).
+ty_verb(italian, crystallise, future, pl(2), pos, [cristallizzerete]).
+ty_verb(italian, culminate, future, sg, pos, [culminerà]).
+ty_verb(italian, culminate, future, pl, pos, [culmineranno]).
+ty_verb(italian, culminate, future, sg(1), pos, [culminerò]).
+ty_verb(italian, culminate, future, sg(2), pos, [culminerai]).
+ty_verb(italian, culminate, future, pl(1), pos, [culmineremo]).
+ty_verb(italian, culminate, future, pl(2), pos, [culminerete]).
+ty_verb(italian, cultivate, future, sg, pos, [coltiverà]).
+ty_verb(italian, cultivate, future, pl, pos, [coltiveranno]).
+ty_verb(italian, cultivate, future, sg(1), pos, [coltiverò]).
+ty_verb(italian, cultivate, future, sg(2), pos, [coltiverai]).
+ty_verb(italian, cultivate, future, pl(1), pos, [coltiveremo]).
+ty_verb(italian, cultivate, future, pl(2), pos, [coltiverete]).
+ty_verb(italian, cure, future, sg, pos, [curerà]).
+ty_verb(italian, cure, future, pl, pos, [cureranno]).
+ty_verb(italian, cure, future, sg(1), pos, [curerò]).
+ty_verb(italian, cure, future, sg(2), pos, [curerai]).
+ty_verb(italian, cure, future, pl(1), pos, [cureremo]).
+ty_verb(italian, cure, future, pl(2), pos, [curerete]).
+ty_verb(italian, curse, future, sg, pos, [maledirà]).
+ty_verb(italian, curse, future, pl, pos, [malediranno]).
+ty_verb(italian, curse, future, sg(1), pos, [maledirò]).
+ty_verb(italian, curse, future, sg(2), pos, [maledirai]).
+ty_verb(italian, curse, future, pl(1), pos, [malediremo]).
+ty_verb(italian, curse, future, pl(2), pos, [maledirete]).
+ty_verb(italian, curve, future, sg, pos, [torcerà]).
+ty_verb(italian, curve, future, pl, pos, [torceranno]).
+ty_verb(italian, curve, future, sg(1), pos, [torcerò]).
+ty_verb(italian, curve, future, sg(2), pos, [torcerai]).
+ty_verb(italian, curve, future, pl(1), pos, [torceremo]).
+ty_verb(italian, curve, future, pl(2), pos, [torcerete]).
+ty_verb(italian, cut, future, sg, pos, [taglierà]).
+ty_verb(italian, cut, future, pl, pos, [taglieranno]).
+ty_verb(italian, cut, future, sg(1), pos, [taglierò]).
+ty_verb(italian, cut, future, sg(2), pos, [taglierai]).
+ty_verb(italian, cut, future, pl(1), pos, [taglieremo]).
+ty_verb(italian, cut, future, pl(2), pos, [taglierete]).
+ty_verb(italian, damage, future, sg, pos, [danneggerà]).
+ty_verb(italian, damage, future, pl, pos, [danneggeranno]).
+ty_verb(italian, damage, future, sg(1), pos, [danneggerò]).
+ty_verb(italian, damage, future, sg(2), pos, [danneggerai]).
+ty_verb(italian, damage, future, pl(1), pos, [danneggeremo]).
+ty_verb(italian, damage, future, pl(2), pos, [danneggerete]).
+ty_verb(italian, dampen, future, sg, pos, [inumidirà]).
+ty_verb(italian, dampen, future, pl, pos, [inumidiranno]).
+ty_verb(italian, dampen, future, sg(1), pos, [inumidirò]).
+ty_verb(italian, dampen, future, sg(2), pos, [inumidirai]).
+ty_verb(italian, dampen, future, pl(1), pos, [inumidiremo]).
+ty_verb(italian, dampen, future, pl(2), pos, [inumidirete]).
+ty_verb(italian, dance, future, sg, pos, [ballerà]).
+ty_verb(italian, dance, future, pl, pos, [balleranno]).
+ty_verb(italian, dance, future, sg(1), pos, [ballerò]).
+ty_verb(italian, dance, future, sg(2), pos, [ballerai]).
+ty_verb(italian, dance, future, pl(1), pos, [balleremo]).
+ty_verb(italian, dance, future, pl(2), pos, [ballerete]).
+ty_verb(italian, dare, future, sg, pos, [oserà]).
+ty_verb(italian, dare, future, pl, pos, [oseranno]).
+ty_verb(italian, dare, future, sg(1), pos, [oserò]).
+ty_verb(italian, dare, future, sg(2), pos, [oserai]).
+ty_verb(italian, dare, future, pl(1), pos, [oseremo]).
+ty_verb(italian, dare, future, pl(2), pos, [oserete]).
+ty_verb(italian, date, future, sg, pos, [daterà]).
+ty_verb(italian, date, future, pl, pos, [dateranno]).
+ty_verb(italian, date, future, sg(1), pos, [daterò]).
+ty_verb(italian, date, future, sg(2), pos, [daterai]).
+ty_verb(italian, date, future, pl(1), pos, [dateremo]).
+ty_verb(italian, date, future, pl(2), pos, [daterete]).
+ty_verb(italian, dazzle, future, sg, pos, [abbaglierà]).
+ty_verb(italian, dazzle, future, pl, pos, [abbaglieranno]).
+ty_verb(italian, dazzle, future, sg(1), pos, [abbaglierò]).
+ty_verb(italian, dazzle, future, sg(2), pos, [abbaglierai]).
+ty_verb(italian, dazzle, future, pl(1), pos, [abbaglieremo]).
+ty_verb(italian, dazzle, future, pl(2), pos, [abbaglierete]).
+ty_verb(italian, deal, future, sg, pos, [tratterà]).
+ty_verb(italian, deal, future, pl, pos, [tratteranno]).
+ty_verb(italian, deal, future, sg(1), pos, [tratterò]).
+ty_verb(italian, deal, future, sg(2), pos, [tratterai]).
+ty_verb(italian, deal, future, pl(1), pos, [tratteremo]).
+ty_verb(italian, deal, future, pl(2), pos, [tratterete]).
+ty_verb(italian, debate, future, sg, pos, [dibatterà]).
+ty_verb(italian, debate, future, pl, pos, [dibatteranno]).
+ty_verb(italian, debate, future, sg(1), pos, [dibatterò]).
+ty_verb(italian, debate, future, sg(2), pos, [dibatterai]).
+ty_verb(italian, debate, future, pl(1), pos, [dibatteremo]).
+ty_verb(italian, debate, future, pl(2), pos, [dibatterete]).
+ty_verb(italian, debit, future, sg, pos, [addebiterà]).
+ty_verb(italian, debit, future, pl, pos, [addebiteranno]).
+ty_verb(italian, debit, future, sg(1), pos, [addebiterò]).
+ty_verb(italian, debit, future, sg(2), pos, [addebiterai]).
+ty_verb(italian, debit, future, pl(1), pos, [addebiteremo]).
+ty_verb(italian, debit, future, pl(2), pos, [addebiterete]).
+ty_verb(italian, debug, future, sg, pos, [depurerà]).
+ty_verb(italian, debug, future, pl, pos, [depureranno]).
+ty_verb(italian, debug, future, sg(1), pos, [depurerò]).
+ty_verb(italian, debug, future, sg(2), pos, [depurerai]).
+ty_verb(italian, debug, future, pl(1), pos, [depureremo]).
+ty_verb(italian, debug, future, pl(2), pos, [depurerete]).
+ty_verb(italian, debut, future, sg, pos, [debutterà]).
+ty_verb(italian, debut, future, pl, pos, [debutteranno]).
+ty_verb(italian, debut, future, sg(1), pos, [debutterò]).
+ty_verb(italian, debut, future, sg(2), pos, [debutterai]).
+ty_verb(italian, debut, future, pl(1), pos, [debutteremo]).
+ty_verb(italian, debut, future, pl(2), pos, [debutterete]).
+ty_verb(italian, decant, future, sg, pos, [decanterà]).
+ty_verb(italian, decant, future, pl, pos, [decanteranno]).
+ty_verb(italian, decant, future, sg(1), pos, [decanterò]).
+ty_verb(italian, decant, future, sg(2), pos, [decanterai]).
+ty_verb(italian, decant, future, pl(1), pos, [decanteremo]).
+ty_verb(italian, decant, future, pl(2), pos, [decanterete]).
+ty_verb(italian, decide, future, sg, pos, [deciderà]).
+ty_verb(italian, decide, future, pl, pos, [decideranno]).
+ty_verb(italian, decide, future, sg(1), pos, [deciderò]).
+ty_verb(italian, decide, future, sg(2), pos, [deciderai]).
+ty_verb(italian, decide, future, pl(1), pos, [decideremo]).
+ty_verb(italian, decide, future, pl(2), pos, [deciderete]).
+ty_verb(italian, decline, future, sg, pos, [declinerà]).
+ty_verb(italian, decline, future, pl, pos, [declineranno]).
+ty_verb(italian, decline, future, sg(1), pos, [declinerò]).
+ty_verb(italian, decline, future, sg(2), pos, [declinerai]).
+ty_verb(italian, decline, future, pl(1), pos, [declineremo]).
+ty_verb(italian, decline, future, pl(2), pos, [declinerete]).
+ty_verb(italian, decompile, future, sg, pos, [decompilerà]).
+ty_verb(italian, decompile, future, pl, pos, [decompileranno]).
+ty_verb(italian, decompile, future, sg(1), pos, [decompilerò]).
+ty_verb(italian, decompile, future, sg(2), pos, [decompilerai]).
+ty_verb(italian, decompile, future, pl(1), pos, [decompileremo]).
+ty_verb(italian, decompile, future, pl(2), pos, [decompilerete]).
+ty_verb(italian, decompose, future, sg, pos, [decomporrà]).
+ty_verb(italian, decompose, future, pl, pos, [decomporranno]).
+ty_verb(italian, decompose, future, sg(1), pos, [decomporrò]).
+ty_verb(italian, decompose, future, sg(2), pos, [decomporrai]).
+ty_verb(italian, decompose, future, pl(1), pos, [decomporremo]).
+ty_verb(italian, decompose, future, pl(2), pos, [decomporrete]).
+ty_verb(italian, decongest, future, sg, pos, [decongestionerà]).
+ty_verb(italian, decongest, future, pl, pos, [decongestioneranno]).
+ty_verb(italian, decongest, future, sg(1), pos, [decongestionerò]).
+ty_verb(italian, decongest, future, sg(2), pos, [decongestionerai]).
+ty_verb(italian, decongest, future, pl(1), pos, [decongestioneremo]).
+ty_verb(italian, decongest, future, pl(2), pos, [decongestionerete]).
+ty_verb(italian, decorate, future, sg, pos, [decorerà]).
+ty_verb(italian, decorate, future, pl, pos, [decoreranno]).
+ty_verb(italian, decorate, future, sg(1), pos, [decorerò]).
+ty_verb(italian, decorate, future, sg(2), pos, [decorerai]).
+ty_verb(italian, decorate, future, pl(1), pos, [decoreremo]).
+ty_verb(italian, decorate, future, pl(2), pos, [decorerete]).
+ty_verb(italian, decree, future, sg, pos, [decreterà]).
+ty_verb(italian, decree, future, pl, pos, [decreteranno]).
+ty_verb(italian, decree, future, sg(1), pos, [decreterò]).
+ty_verb(italian, decree, future, sg(2), pos, [decreterai]).
+ty_verb(italian, decree, future, pl(1), pos, [decreteremo]).
+ty_verb(italian, decree, future, pl(2), pos, [decreterete]).
+ty_verb(italian, deduce, future, sg, pos, [dedurrà]).
+ty_verb(italian, deduce, future, pl, pos, [dedurranno]).
+ty_verb(italian, deduce, future, sg(1), pos, [dedurrò]).
+ty_verb(italian, deduce, future, sg(2), pos, [dedurrai]).
+ty_verb(italian, deduce, future, pl(1), pos, [dedurremo]).
+ty_verb(italian, deduce, future, pl(2), pos, [dedurrete]).
+ty_verb(italian, deepen, future, sg, pos, [approfondirà]).
+ty_verb(italian, deepen, future, pl, pos, [approfondiranno]).
+ty_verb(italian, deepen, future, sg(1), pos, [approfondirò]).
+ty_verb(italian, deepen, future, sg(2), pos, [approfondirai]).
+ty_verb(italian, deepen, future, pl(1), pos, [approfondiremo]).
+ty_verb(italian, deepen, future, pl(2), pos, [approfondirete]).
+ty_verb(italian, defeat, future, sg, pos, [sconfiggerà]).
+ty_verb(italian, defeat, future, pl, pos, [sconfiggeranno]).
+ty_verb(italian, defeat, future, sg(1), pos, [sconfiggerò]).
+ty_verb(italian, defeat, future, sg(2), pos, [sconfiggerai]).
+ty_verb(italian, defeat, future, pl(1), pos, [sconfiggeremo]).
+ty_verb(italian, defeat, future, pl(2), pos, [sconfiggerete]).
+ty_verb(italian, define, future, sg, pos, [definirà]).
+ty_verb(italian, define, future, pl, pos, [definiranno]).
+ty_verb(italian, define, future, sg(1), pos, [definirò]).
+ty_verb(italian, define, future, sg(2), pos, [definirai]).
+ty_verb(italian, define, future, pl(1), pos, [definiremo]).
+ty_verb(italian, define, future, pl(2), pos, [definirete]).
+ty_verb(italian, defraud, future, sg, pos, [defrauderà]).
+ty_verb(italian, defraud, future, pl, pos, [defrauderanno]).
+ty_verb(italian, defraud, future, sg(1), pos, [defrauderò]).
+ty_verb(italian, defraud, future, sg(2), pos, [defrauderai]).
+ty_verb(italian, defraud, future, pl(1), pos, [defrauderemo]).
+ty_verb(italian, defraud, future, pl(2), pos, [defrauderete]).
+ty_verb(italian, degrade, future, sg, pos, [degraderà]).
+ty_verb(italian, degrade, future, pl, pos, [degraderanno]).
+ty_verb(italian, degrade, future, sg(1), pos, [degraderò]).
+ty_verb(italian, degrade, future, sg(2), pos, [degraderai]).
+ty_verb(italian, degrade, future, pl(1), pos, [degraderemo]).
+ty_verb(italian, degrade, future, pl(2), pos, [degraderete]).
+ty_verb(italian, delay, future, sg, pos, [ritarderà]).
+ty_verb(italian, delay, future, pl, pos, [ritarderanno]).
+ty_verb(italian, delay, future, sg(1), pos, [ritarderò]).
+ty_verb(italian, delay, future, sg(2), pos, [ritarderai]).
+ty_verb(italian, delay, future, pl(1), pos, [ritarderemo]).
+ty_verb(italian, delay, future, pl(2), pos, [ritarderete]).
+ty_verb(italian, delegate, future, sg, pos, [delegherà]).
+ty_verb(italian, delegate, future, pl, pos, [delegheranno]).
+ty_verb(italian, delegate, future, sg(1), pos, [delegherò]).
+ty_verb(italian, delegate, future, sg(2), pos, [delegherai]).
+ty_verb(italian, delegate, future, pl(1), pos, [delegheremo]).
+ty_verb(italian, delegate, future, pl(2), pos, [delegherete]).
+ty_verb(italian, delete, future, sg, pos, [eliminerà]).
+ty_verb(italian, delete, future, pl, pos, [elimineranno]).
+ty_verb(italian, delete, future, sg(1), pos, [eliminerò]).
+ty_verb(italian, delete, future, sg(2), pos, [eliminerai]).
+ty_verb(italian, delete, future, pl(1), pos, [elimineremo]).
+ty_verb(italian, delete, future, pl(2), pos, [eliminerete]).
+ty_verb(italian, delimit, future, sg, pos, [delimiterà]).
+ty_verb(italian, delimit, future, pl, pos, [delimiteranno]).
+ty_verb(italian, delimit, future, sg(1), pos, [delimiterò]).
+ty_verb(italian, delimit, future, sg(2), pos, [delimiterai]).
+ty_verb(italian, delimit, future, pl(1), pos, [delimiteremo]).
+ty_verb(italian, delimit, future, pl(2), pos, [delimiterete]).
+ty_verb(italian, deliver, future, sg, pos, [consegnerà]).
+ty_verb(italian, deliver, future, pl, pos, [consegneranno]).
+ty_verb(italian, deliver, future, sg(1), pos, [consegnerò]).
+ty_verb(italian, deliver, future, sg(2), pos, [consegnerai]).
+ty_verb(italian, deliver, future, pl(1), pos, [consegneremo]).
+ty_verb(italian, deliver, future, pl(2), pos, [consegnerete]).
+ty_verb(italian, demolish, future, sg, pos, [demolirà]).
+ty_verb(italian, demolish, future, pl, pos, [demoliranno]).
+ty_verb(italian, demolish, future, sg(1), pos, [demolirò]).
+ty_verb(italian, demolish, future, sg(2), pos, [demolirai]).
+ty_verb(italian, demolish, future, pl(1), pos, [demoliremo]).
+ty_verb(italian, demolish, future, pl(2), pos, [demolirete]).
+ty_verb(italian, demonstrate, future, sg, pos, [dimostrerà]).
+ty_verb(italian, demonstrate, future, pl, pos, [dimostreranno]).
+ty_verb(italian, demonstrate, future, sg(1), pos, [dimostrerò]).
+ty_verb(italian, demonstrate, future, sg(2), pos, [dimostrerai]).
+ty_verb(italian, demonstrate, future, pl(1), pos, [dimostreremo]).
+ty_verb(italian, demonstrate, future, pl(2), pos, [dimostrerete]).
+ty_verb(italian, demoralise, future, sg, pos, [demoralizzerà]).
+ty_verb(italian, demoralise, future, pl, pos, [demoralizzeranno]).
+ty_verb(italian, demoralise, future, sg(1), pos, [demoralizzerò]).
+ty_verb(italian, demoralise, future, sg(2), pos, [demoralizzerai]).
+ty_verb(italian, demoralise, future, pl(1), pos, [demoralizzeremo]).
+ty_verb(italian, demoralise, future, pl(2), pos, [demoralizzerete]).
+ty_verb(italian, denationalise, future, sg, pos, [snazionalizzerà]).
+ty_verb(italian, denationalise, future, pl, pos, [snazionalizzeranno]).
+ty_verb(italian, denationalise, future, sg(1), pos, [snazionalizzerò]).
+ty_verb(italian, denationalise, future, sg(2), pos, [snazionalizzerai]).
+ty_verb(italian, denationalise, future, pl(1), pos, [snazionalizzeremo]).
+ty_verb(italian, denationalise, future, pl(2), pos, [snazionalizzerete]).
+ty_verb(italian, denaturalise, future, sg, pos, [snaturerà]).
+ty_verb(italian, denaturalise, future, pl, pos, [snatureranno]).
+ty_verb(italian, denaturalise, future, sg(1), pos, [snaturerò]).
+ty_verb(italian, denaturalise, future, sg(2), pos, [snaturerai]).
+ty_verb(italian, denaturalise, future, pl(1), pos, [snatureremo]).
+ty_verb(italian, denaturalise, future, pl(2), pos, [snaturerete]).
+ty_verb(italian, denominate, future, sg, pos, [denominerà]).
+ty_verb(italian, denominate, future, pl, pos, [denomineranno]).
+ty_verb(italian, denominate, future, sg(1), pos, [denominerò]).
+ty_verb(italian, denominate, future, sg(2), pos, [denominerai]).
+ty_verb(italian, denominate, future, pl(1), pos, [denomineremo]).
+ty_verb(italian, denominate, future, pl(2), pos, [denominerete]).
+ty_verb(italian, denote, future, sg, pos, [denoterà]).
+ty_verb(italian, denote, future, pl, pos, [denoteranno]).
+ty_verb(italian, denote, future, sg(1), pos, [denoterò]).
+ty_verb(italian, denote, future, sg(2), pos, [denoterai]).
+ty_verb(italian, denote, future, pl(1), pos, [denoteremo]).
+ty_verb(italian, denote, future, pl(2), pos, [denoterete]).
+ty_verb(italian, notice, future, sg, pos, [noterà]).
+ty_verb(italian, notice, future, pl, pos, [noteranno]).
+ty_verb(italian, notice, future, sg(1), pos, [noterò]).
+ty_verb(italian, notice, future, sg(2), pos, [noterai]).
+ty_verb(italian, notice, future, pl(1), pos, [noteremo]).
+ty_verb(italian, notice, future, pl(2), pos, [noterete]).
+ty_verb(italian, denounce, future, sg, pos, [denuncerà]).
+ty_verb(italian, denounce, future, pl, pos, [denunceranno]).
+ty_verb(italian, denounce, future, sg(1), pos, [denuncerò]).
+ty_verb(italian, denounce, future, sg(2), pos, [denuncerai]).
+ty_verb(italian, denounce, future, pl(1), pos, [denunceremo]).
+ty_verb(italian, denounce, future, pl(2), pos, [denuncerete]).
+ty_verb(italian, deny, future, sg, pos, [negherà]).
+ty_verb(italian, deny, future, pl, pos, [negheranno]).
+ty_verb(italian, deny, future, sg(1), pos, [negherò]).
+ty_verb(italian, deny, future, sg(2), pos, [negherai]).
+ty_verb(italian, deny, future, pl(1), pos, [negheremo]).
+ty_verb(italian, deny, future, pl(2), pos, [negherete]).
+ty_verb(italian, depend, future, sg, pos, [dipenderà]).
+ty_verb(italian, depend, future, pl, pos, [dipenderanno]).
+ty_verb(italian, depend, future, sg(1), pos, [dipenderò]).
+ty_verb(italian, depend, future, sg(2), pos, [dipenderai]).
+ty_verb(italian, depend, future, pl(1), pos, [dipenderemo]).
+ty_verb(italian, depend, future, pl(2), pos, [dipenderete]).
+ty_verb(italian, deploy, future, sg, pos, [schiererà]).
+ty_verb(italian, deploy, future, pl, pos, [schiereranno]).
+ty_verb(italian, deploy, future, sg(1), pos, [schiererò]).
+ty_verb(italian, deploy, future, sg(2), pos, [schiererai]).
+ty_verb(italian, deploy, future, pl(1), pos, [schiereremo]).
+ty_verb(italian, deploy, future, pl(2), pos, [schiererete]).
+ty_verb(italian, deport, future, sg, pos, [deporterà]).
+ty_verb(italian, deport, future, pl, pos, [deporteranno]).
+ty_verb(italian, deport, future, sg(1), pos, [deporterò]).
+ty_verb(italian, deport, future, sg(2), pos, [deporterai]).
+ty_verb(italian, deport, future, pl(1), pos, [deporteremo]).
+ty_verb(italian, deport, future, pl(2), pos, [deporterete]).
+ty_verb(italian, depose, future, sg, pos, [deporrà]).
+ty_verb(italian, depose, future, pl, pos, [deporranno]).
+ty_verb(italian, depose, future, sg(1), pos, [deporrò]).
+ty_verb(italian, depose, future, sg(2), pos, [deporrai]).
+ty_verb(italian, depose, future, pl(1), pos, [deporremo]).
+ty_verb(italian, depose, future, pl(2), pos, [deporrete]).
+ty_verb(italian, deposit, future, sg, pos, [depositerà]).
+ty_verb(italian, deposit, future, pl, pos, [depositeranno]).
+ty_verb(italian, deposit, future, sg(1), pos, [depositerò]).
+ty_verb(italian, deposit, future, sg(2), pos, [depositerai]).
+ty_verb(italian, deposit, future, pl(1), pos, [depositeremo]).
+ty_verb(italian, deposit, future, pl(2), pos, [depositerete]).
+ty_verb(italian, depreciate, future, sg, pos, [deprezzerà]).
+ty_verb(italian, depreciate, future, pl, pos, [deprezzeranno]).
+ty_verb(italian, depreciate, future, sg(1), pos, [deprezzerò]).
+ty_verb(italian, depreciate, future, sg(2), pos, [deprezzerai]).
+ty_verb(italian, depreciate, future, pl(1), pos, [deprezzeremo]).
+ty_verb(italian, depreciate, future, pl(2), pos, [deprezzerete]).
+ty_verb(italian, depress, future, sg, pos, [deprimerà]).
+ty_verb(italian, depress, future, pl, pos, [deprimeranno]).
+ty_verb(italian, depress, future, sg(1), pos, [deprimerò]).
+ty_verb(italian, depress, future, sg(2), pos, [deprimerai]).
+ty_verb(italian, depress, future, pl(1), pos, [deprimeremo]).
+ty_verb(italian, depress, future, pl(2), pos, [deprimerete]).
+ty_verb(italian, deprive, future, sg, pos, [priverà]).
+ty_verb(italian, deprive, future, pl, pos, [priveranno]).
+ty_verb(italian, deprive, future, sg(1), pos, [priverò]).
+ty_verb(italian, deprive, future, sg(2), pos, [priverai]).
+ty_verb(italian, deprive, future, pl(1), pos, [priveremo]).
+ty_verb(italian, deprive, future, pl(2), pos, [priverete]).
+ty_verb(italian, derail, future, sg, pos, [deraglierà]).
+ty_verb(italian, derail, future, pl, pos, [deraglieranno]).
+ty_verb(italian, derail, future, sg(1), pos, [deraglierò]).
+ty_verb(italian, derail, future, sg(2), pos, [deraglierai]).
+ty_verb(italian, derail, future, pl(1), pos, [deraglieremo]).
+ty_verb(italian, derail, future, pl(2), pos, [deraglierete]).
+ty_verb(italian, derive, future, sg, pos, [deriverà]).
+ty_verb(italian, derive, future, pl, pos, [deriveranno]).
+ty_verb(italian, derive, future, sg(1), pos, [deriverò]).
+ty_verb(italian, derive, future, sg(2), pos, [deriverai]).
+ty_verb(italian, derive, future, pl(1), pos, [deriveremo]).
+ty_verb(italian, derive, future, pl(2), pos, [deriverete]).
+ty_verb(italian, derogate, future, sg, pos, [sminuirà]).
+ty_verb(italian, derogate, future, pl, pos, [sminuiranno]).
+ty_verb(italian, derogate, future, sg(1), pos, [sminuirò]).
+ty_verb(italian, derogate, future, sg(2), pos, [sminuirai]).
+ty_verb(italian, derogate, future, pl(1), pos, [sminuiremo]).
+ty_verb(italian, derogate, future, pl(2), pos, [sminuirete]).
+ty_verb(italian, descend, future, sg, pos, [discenderà]).
+ty_verb(italian, descend, future, pl, pos, [discenderanno]).
+ty_verb(italian, descend, future, sg(1), pos, [discenderò]).
+ty_verb(italian, descend, future, sg(2), pos, [discenderai]).
+ty_verb(italian, descend, future, pl(1), pos, [discenderemo]).
+ty_verb(italian, descend, future, pl(2), pos, [discenderete]).
+ty_verb(italian, describe, future, sg, pos, [descriverà]).
+ty_verb(italian, describe, future, pl, pos, [descriveranno]).
+ty_verb(italian, describe, future, sg(1), pos, [descriverò]).
+ty_verb(italian, describe, future, sg(2), pos, [descriverai]).
+ty_verb(italian, describe, future, pl(1), pos, [descriveremo]).
+ty_verb(italian, describe, future, pl(2), pos, [descriverete]).
+ty_verb(italian, desecrate, future, sg, pos, [sconsacrerà]).
+ty_verb(italian, desecrate, future, pl, pos, [sconsacreranno]).
+ty_verb(italian, desecrate, future, sg(1), pos, [sconsacrerò]).
+ty_verb(italian, desecrate, future, sg(2), pos, [sconsacrerai]).
+ty_verb(italian, desecrate, future, pl(1), pos, [sconsacreremo]).
+ty_verb(italian, desecrate, future, pl(2), pos, [sconsacrerete]).
+ty_verb(italian, desert, future, sg, pos, [diserterà]).
+ty_verb(italian, desert, future, pl, pos, [diserteranno]).
+ty_verb(italian, desert, future, sg(1), pos, [diserterò]).
+ty_verb(italian, desert, future, sg(2), pos, [diserterai]).
+ty_verb(italian, desert, future, pl(1), pos, [diserteremo]).
+ty_verb(italian, desert, future, pl(2), pos, [diserterete]).
+ty_verb(italian, deserve, future, sg, pos, [meriterà]).
+ty_verb(italian, deserve, future, pl, pos, [meriteranno]).
+ty_verb(italian, deserve, future, sg(1), pos, [meriterò]).
+ty_verb(italian, deserve, future, sg(2), pos, [meriterai]).
+ty_verb(italian, deserve, future, pl(1), pos, [meriteremo]).
+ty_verb(italian, deserve, future, pl(2), pos, [meriterete]).
+ty_verb(italian, design, future, sg, pos, [disegnerà]).
+ty_verb(italian, design, future, pl, pos, [disegneranno]).
+ty_verb(italian, design, future, sg(1), pos, [disegnerò]).
+ty_verb(italian, design, future, sg(2), pos, [disegnerai]).
+ty_verb(italian, design, future, pl(1), pos, [disegneremo]).
+ty_verb(italian, design, future, pl(2), pos, [disegnerete]).
+ty_verb(italian, designate, future, sg, pos, [designerà]).
+ty_verb(italian, designate, future, pl, pos, [designeranno]).
+ty_verb(italian, designate, future, sg(1), pos, [designerò]).
+ty_verb(italian, designate, future, sg(2), pos, [designerai]).
+ty_verb(italian, designate, future, pl(1), pos, [designeremo]).
+ty_verb(italian, designate, future, pl(2), pos, [designerete]).
+ty_verb(italian, desire, future, sg, pos, [desidererà]).
+ty_verb(italian, desire, future, pl, pos, [desidereranno]).
+ty_verb(italian, desire, future, sg(1), pos, [desidererò]).
+ty_verb(italian, desire, future, sg(2), pos, [desidererai]).
+ty_verb(italian, desire, future, pl(1), pos, [desidereremo]).
+ty_verb(italian, desire, future, pl(2), pos, [desidererete]).
+ty_verb(italian, desist, future, sg, pos, [desisterà]).
+ty_verb(italian, desist, future, pl, pos, [desisteranno]).
+ty_verb(italian, desist, future, sg(1), pos, [desisterò]).
+ty_verb(italian, desist, future, sg(2), pos, [desisterai]).
+ty_verb(italian, desist, future, pl(1), pos, [desisteremo]).
+ty_verb(italian, desist, future, pl(2), pos, [desisterete]).
+ty_verb(italian, despise, future, sg, pos, [disprezzerà]).
+ty_verb(italian, despise, future, pl, pos, [disprezzeranno]).
+ty_verb(italian, despise, future, sg(1), pos, [disprezzerò]).
+ty_verb(italian, despise, future, sg(2), pos, [disprezzerai]).
+ty_verb(italian, despise, future, pl(1), pos, [disprezzeremo]).
+ty_verb(italian, despise, future, pl(2), pos, [disprezzerete]).
+ty_verb(italian, destroy, future, sg, pos, [distruggerà]).
+ty_verb(italian, destroy, future, pl, pos, [distruggeranno]).
+ty_verb(italian, destroy, future, sg(1), pos, [distruggerò]).
+ty_verb(italian, destroy, future, sg(2), pos, [distruggerai]).
+ty_verb(italian, destroy, future, pl(1), pos, [distruggeremo]).
+ty_verb(italian, destroy, future, pl(2), pos, [distruggerete]).
+ty_verb(italian, detail, future, sg, pos, [dettaglierà]).
+ty_verb(italian, detail, future, pl, pos, [dettaglieranno]).
+ty_verb(italian, detail, future, sg(1), pos, [dettaglierò]).
+ty_verb(italian, detail, future, sg(2), pos, [dettaglierai]).
+ty_verb(italian, detail, future, pl(1), pos, [dettaglieremo]).
+ty_verb(italian, detail, future, pl(2), pos, [dettaglierete]).
+ty_verb(italian, detain, future, sg, pos, [deterrà]).
+ty_verb(italian, detain, future, pl, pos, [deterranno]).
+ty_verb(italian, detain, future, sg(1), pos, [deterrò]).
+ty_verb(italian, detain, future, sg(2), pos, [deterrai]).
+ty_verb(italian, detain, future, pl(1), pos, [deterremo]).
+ty_verb(italian, detain, future, pl(2), pos, [deterrete]).
+ty_verb(italian, determine, future, sg, pos, [determinerà]).
+ty_verb(italian, determine, future, pl, pos, [determineranno]).
+ty_verb(italian, determine, future, sg(1), pos, [determinerò]).
+ty_verb(italian, determine, future, sg(2), pos, [determinerai]).
+ty_verb(italian, determine, future, pl(1), pos, [determineremo]).
+ty_verb(italian, determine, future, pl(2), pos, [determinerete]).
+ty_verb(italian, detest, future, sg, pos, [detesterà]).
+ty_verb(italian, detest, future, pl, pos, [detesteranno]).
+ty_verb(italian, detest, future, sg(1), pos, [detesterò]).
+ty_verb(italian, detest, future, sg(2), pos, [detesterai]).
+ty_verb(italian, detest, future, pl(1), pos, [detesteremo]).
+ty_verb(italian, detest, future, pl(2), pos, [detesterete]).
+ty_verb(italian, detonate, future, sg, pos, [detonerà]).
+ty_verb(italian, detonate, future, pl, pos, [detoneranno]).
+ty_verb(italian, detonate, future, sg(1), pos, [detonerò]).
+ty_verb(italian, detonate, future, sg(2), pos, [detonerai]).
+ty_verb(italian, detonate, future, pl(1), pos, [detoneremo]).
+ty_verb(italian, detonate, future, pl(2), pos, [detonerete]).
+ty_verb(italian, devastate, future, sg, pos, [devasterà]).
+ty_verb(italian, devastate, future, pl, pos, [devasteranno]).
+ty_verb(italian, devastate, future, sg(1), pos, [devasterò]).
+ty_verb(italian, devastate, future, sg(2), pos, [devasterai]).
+ty_verb(italian, devastate, future, pl(1), pos, [devasteremo]).
+ty_verb(italian, devastate, future, pl(2), pos, [devasterete]).
+ty_verb(italian, develop, future, sg, pos, [svilupperà]).
+ty_verb(italian, develop, future, pl, pos, [svilupperanno]).
+ty_verb(italian, develop, future, sg(1), pos, [svilupperò]).
+ty_verb(italian, develop, future, sg(2), pos, [svilupperai]).
+ty_verb(italian, develop, future, pl(1), pos, [svilupperemo]).
+ty_verb(italian, develop, future, pl(2), pos, [svilupperete]).
+ty_verb(italian, devour, future, sg, pos, [divorerà]).
+ty_verb(italian, devour, future, pl, pos, [divoreranno]).
+ty_verb(italian, devour, future, sg(1), pos, [divorerò]).
+ty_verb(italian, devour, future, sg(2), pos, [divorerai]).
+ty_verb(italian, devour, future, pl(1), pos, [divoreremo]).
+ty_verb(italian, devour, future, pl(2), pos, [divorerete]).
+ty_verb(italian, diagnose, future, sg, pos, [diagnosticherà]).
+ty_verb(italian, diagnose, future, pl, pos, [diagnosticheranno]).
+ty_verb(italian, diagnose, future, sg(1), pos, [diagnosticherò]).
+ty_verb(italian, diagnose, future, sg(2), pos, [diagnosticherai]).
+ty_verb(italian, diagnose, future, pl(1), pos, [diagnosticheremo]).
+ty_verb(italian, diagnose, future, pl(2), pos, [diagnosticherete]).
+ty_verb(italian, dictate, future, sg, pos, [detterà]).
+ty_verb(italian, dictate, future, pl, pos, [detteranno]).
+ty_verb(italian, dictate, future, sg(1), pos, [detterò]).
+ty_verb(italian, dictate, future, sg(2), pos, [detterai]).
+ty_verb(italian, dictate, future, pl(1), pos, [detteremo]).
+ty_verb(italian, dictate, future, pl(2), pos, [detterete]).
+ty_verb(italian, die, future, sg, pos, [decederà]).
+ty_verb(italian, die, future, pl, pos, [decederanno]).
+ty_verb(italian, die, future, sg(1), pos, [decederò]).
+ty_verb(italian, die, future, sg(2), pos, [decederai]).
+ty_verb(italian, die, future, pl(1), pos, [decederemo]).
+ty_verb(italian, die, future, pl(2), pos, [decederete]).
+ty_verb(italian, differ, future, sg, pos, [differirà]).
+ty_verb(italian, differ, future, pl, pos, [differiranno]).
+ty_verb(italian, differ, future, sg(1), pos, [differirò]).
+ty_verb(italian, differ, future, sg(2), pos, [differirai]).
+ty_verb(italian, differ, future, pl(1), pos, [differiremo]).
+ty_verb(italian, differ, future, pl(2), pos, [differirete]).
+ty_verb(italian, differentiate, future, sg, pos, [differenzierà]).
+ty_verb(italian, differentiate, future, pl, pos, [differenzieranno]).
+ty_verb(italian, differentiate, future, sg(1), pos, [differenzierò]).
+ty_verb(italian, differentiate, future, sg(2), pos, [differenzierai]).
+ty_verb(italian, differentiate, future, pl(1), pos, [differenzieremo]).
+ty_verb(italian, differentiate, future, pl(2), pos, [differenzierete]).
+ty_verb(italian, dig, future, sg, pos, [scaverà]).
+ty_verb(italian, dig, future, pl, pos, [scaveranno]).
+ty_verb(italian, dig, future, sg(1), pos, [scaverò]).
+ty_verb(italian, dig, future, sg(2), pos, [scaverai]).
+ty_verb(italian, dig, future, pl(1), pos, [scaveremo]).
+ty_verb(italian, dig, future, pl(2), pos, [scaverete]).
+ty_verb(italian, dignify, future, sg, pos, [nobiliterà]).
+ty_verb(italian, dignify, future, pl, pos, [nobiliteranno]).
+ty_verb(italian, dignify, future, sg(1), pos, [nobiliterò]).
+ty_verb(italian, dignify, future, sg(2), pos, [nobiliterai]).
+ty_verb(italian, dignify, future, pl(1), pos, [nobiliteremo]).
+ty_verb(italian, dignify, future, pl(2), pos, [nobiliterete]).
+ty_verb(italian, dilate, future, sg, pos, [dilaterà]).
+ty_verb(italian, dilate, future, pl, pos, [dilateranno]).
+ty_verb(italian, dilate, future, sg(1), pos, [dilaterò]).
+ty_verb(italian, dilate, future, sg(2), pos, [dilaterai]).
+ty_verb(italian, dilate, future, pl(1), pos, [dilateremo]).
+ty_verb(italian, dilate, future, pl(2), pos, [dilaterete]).
+ty_verb(italian, dilute, future, sg, pos, [diluirà]).
+ty_verb(italian, dilute, future, pl, pos, [diluiranno]).
+ty_verb(italian, dilute, future, sg(1), pos, [diluirò]).
+ty_verb(italian, dilute, future, sg(2), pos, [diluirai]).
+ty_verb(italian, dilute, future, pl(1), pos, [diluiremo]).
+ty_verb(italian, dilute, future, pl(2), pos, [diluirete]).
+ty_verb(italian, diminish, future, sg, pos, [diminuirà]).
+ty_verb(italian, diminish, future, pl, pos, [diminuiranno]).
+ty_verb(italian, diminish, future, sg(1), pos, [diminuirò]).
+ty_verb(italian, diminish, future, sg(2), pos, [diminuirai]).
+ty_verb(italian, diminish, future, pl(1), pos, [diminuiremo]).
+ty_verb(italian, diminish, future, pl(2), pos, [diminuirete]).
+ty_verb(italian, dine, future, sg, pos, [cenerà]).
+ty_verb(italian, dine, future, pl, pos, [ceneranno]).
+ty_verb(italian, dine, future, sg(1), pos, [cenerò]).
+ty_verb(italian, dine, future, sg(2), pos, [cenerai]).
+ty_verb(italian, dine, future, pl(1), pos, [ceneremo]).
+ty_verb(italian, dine, future, pl(2), pos, [cenerete]).
+ty_verb(italian, direct, future, sg, pos, [dirigerà]).
+ty_verb(italian, direct, future, pl, pos, [dirigeranno]).
+ty_verb(italian, direct, future, sg(1), pos, [dirigerò]).
+ty_verb(italian, direct, future, sg(2), pos, [dirigerai]).
+ty_verb(italian, direct, future, pl(1), pos, [dirigeremo]).
+ty_verb(italian, direct, future, pl(2), pos, [dirigerete]).
+ty_verb(italian, disagree, future, sg, pos, [discorderà]).
+ty_verb(italian, disagree, future, pl, pos, [discorderanno]).
+ty_verb(italian, disagree, future, sg(1), pos, [discorderò]).
+ty_verb(italian, disagree, future, sg(2), pos, [discorderai]).
+ty_verb(italian, disagree, future, pl(1), pos, [discorderemo]).
+ty_verb(italian, disagree, future, pl(2), pos, [discorderete]).
+ty_verb(italian, disappear, future, sg, pos, [scomparirà]).
+ty_verb(italian, disappear, future, pl, pos, [scompariranno]).
+ty_verb(italian, disappear, future, sg(1), pos, [scomparirò]).
+ty_verb(italian, disappear, future, sg(2), pos, [scomparirai]).
+ty_verb(italian, disappear, future, pl(1), pos, [scompariremo]).
+ty_verb(italian, disappear, future, pl(2), pos, [scomparirete]).
+ty_verb(italian, disappoint, future, sg, pos, [deluderà]).
+ty_verb(italian, disappoint, future, pl, pos, [deluderanno]).
+ty_verb(italian, disappoint, future, sg(1), pos, [deluderò]).
+ty_verb(italian, disappoint, future, sg(2), pos, [deluderai]).
+ty_verb(italian, disappoint, future, pl(1), pos, [deluderemo]).
+ty_verb(italian, disappoint, future, pl(2), pos, [deluderete]).
+ty_verb(italian, disapprove, future, sg, pos, [disapproverà]).
+ty_verb(italian, disapprove, future, pl, pos, [disapproveranno]).
+ty_verb(italian, disapprove, future, sg(1), pos, [disapproverò]).
+ty_verb(italian, disapprove, future, sg(2), pos, [disapproverai]).
+ty_verb(italian, disapprove, future, pl(1), pos, [disapproveremo]).
+ty_verb(italian, disapprove, future, pl(2), pos, [disapproverete]).
+ty_verb(italian, disarm, future, sg, pos, [disarmerà]).
+ty_verb(italian, disarm, future, pl, pos, [disarmeranno]).
+ty_verb(italian, disarm, future, sg(1), pos, [disarmerò]).
+ty_verb(italian, disarm, future, sg(2), pos, [disarmerai]).
+ty_verb(italian, disarm, future, pl(1), pos, [disarmeremo]).
+ty_verb(italian, disarm, future, pl(2), pos, [disarmerete]).
+ty_verb(italian, disassemble, future, sg, pos, [smonterà]).
+ty_verb(italian, disassemble, future, pl, pos, [smonteranno]).
+ty_verb(italian, disassemble, future, sg(1), pos, [smonterò]).
+ty_verb(italian, disassemble, future, sg(2), pos, [smonterai]).
+ty_verb(italian, disassemble, future, pl(1), pos, [smonteremo]).
+ty_verb(italian, disassemble, future, pl(2), pos, [smonterete]).
+ty_verb(italian, disburse, future, sg, pos, [sborserà]).
+ty_verb(italian, disburse, future, pl, pos, [sborseranno]).
+ty_verb(italian, disburse, future, sg(1), pos, [sborserò]).
+ty_verb(italian, disburse, future, sg(2), pos, [sborserai]).
+ty_verb(italian, disburse, future, pl(1), pos, [sborseremo]).
+ty_verb(italian, disburse, future, pl(2), pos, [sborserete]).
+ty_verb(italian, discharge, future, sg, pos, [libererà]).
+ty_verb(italian, discharge, future, pl, pos, [libereranno]).
+ty_verb(italian, discharge, future, sg(1), pos, [libererò]).
+ty_verb(italian, discharge, future, sg(2), pos, [libererai]).
+ty_verb(italian, discharge, future, pl(1), pos, [libereremo]).
+ty_verb(italian, discharge, future, pl(2), pos, [libererete]).
+ty_verb(italian, discipline, future, sg, pos, [disciplinerà]).
+ty_verb(italian, discipline, future, pl, pos, [disciplineranno]).
+ty_verb(italian, discipline, future, sg(1), pos, [disciplinerò]).
+ty_verb(italian, discipline, future, sg(2), pos, [disciplinerai]).
+ty_verb(italian, discipline, future, pl(1), pos, [disciplineremo]).
+ty_verb(italian, discipline, future, pl(2), pos, [disciplinerete]).
+ty_verb(italian, discontinue, future, sg, pos, [interromperà]).
+ty_verb(italian, discontinue, future, pl, pos, [interromperanno]).
+ty_verb(italian, discontinue, future, sg(1), pos, [interromperò]).
+ty_verb(italian, discontinue, future, sg(2), pos, [interromperai]).
+ty_verb(italian, discontinue, future, pl(1), pos, [interromperemo]).
+ty_verb(italian, discontinue, future, pl(2), pos, [interromperete]).
+ty_verb(italian, discount, future, sg, pos, [sconterà]).
+ty_verb(italian, discount, future, pl, pos, [sconteranno]).
+ty_verb(italian, discount, future, sg(1), pos, [sconterò]).
+ty_verb(italian, discount, future, sg(2), pos, [sconterai]).
+ty_verb(italian, discount, future, pl(1), pos, [sconteremo]).
+ty_verb(italian, discount, future, pl(2), pos, [sconterete]).
+ty_verb(italian, discover, future, sg, pos, [scoprirà]).
+ty_verb(italian, discover, future, pl, pos, [scopriranno]).
+ty_verb(italian, discover, future, sg(1), pos, [scoprirò]).
+ty_verb(italian, discover, future, sg(2), pos, [scoprirai]).
+ty_verb(italian, discover, future, pl(1), pos, [scopriremo]).
+ty_verb(italian, discover, future, pl(2), pos, [scoprirete]).
+ty_verb(italian, discriminate, future, sg, pos, [discriminerà]).
+ty_verb(italian, discriminate, future, pl, pos, [discrimineranno]).
+ty_verb(italian, discriminate, future, sg(1), pos, [discriminerò]).
+ty_verb(italian, discriminate, future, sg(2), pos, [discriminerai]).
+ty_verb(italian, discriminate, future, pl(1), pos, [discrimineremo]).
+ty_verb(italian, discriminate, future, pl(2), pos, [discriminerete]).
+ty_verb(italian, dishonour, future, sg, pos, [disonorerà]).
+ty_verb(italian, dishonour, future, pl, pos, [disonoreranno]).
+ty_verb(italian, dishonour, future, sg(1), pos, [disonorerò]).
+ty_verb(italian, dishonour, future, sg(2), pos, [disonorerai]).
+ty_verb(italian, dishonour, future, pl(1), pos, [disonoreremo]).
+ty_verb(italian, dishonour, future, pl(2), pos, [disonorerete]).
+ty_verb(italian, disillusion, future, sg, pos, [disilluderà]).
+ty_verb(italian, disillusion, future, pl, pos, [disilluderanno]).
+ty_verb(italian, disillusion, future, sg(1), pos, [disilluderò]).
+ty_verb(italian, disillusion, future, sg(2), pos, [disilluderai]).
+ty_verb(italian, disillusion, future, pl(1), pos, [disilluderemo]).
+ty_verb(italian, disillusion, future, pl(2), pos, [disilluderete]).
+ty_verb(italian, disinfect, future, sg, pos, [disinfetterà]).
+ty_verb(italian, disinfect, future, pl, pos, [disinfetteranno]).
+ty_verb(italian, disinfect, future, sg(1), pos, [disinfetterò]).
+ty_verb(italian, disinfect, future, sg(2), pos, [disinfetterai]).
+ty_verb(italian, disinfect, future, pl(1), pos, [disinfetteremo]).
+ty_verb(italian, disinfect, future, pl(2), pos, [disinfetterete]).
+ty_verb(italian, disintegrate, future, sg, pos, [disintegrerà]).
+ty_verb(italian, disintegrate, future, pl, pos, [disintegreranno]).
+ty_verb(italian, disintegrate, future, sg(1), pos, [disintegrerò]).
+ty_verb(italian, disintegrate, future, sg(2), pos, [disintegrerai]).
+ty_verb(italian, disintegrate, future, pl(1), pos, [disintegreremo]).
+ty_verb(italian, disintegrate, future, pl(2), pos, [disintegrerete]).
+ty_verb(italian, dislike, future, sg, pos, [dispiacerà]).
+ty_verb(italian, dislike, future, pl, pos, [dispiaceranno]).
+ty_verb(italian, dislike, future, sg(1), pos, [dispiacerò]).
+ty_verb(italian, dislike, future, sg(2), pos, [dispiacerai]).
+ty_verb(italian, dislike, future, pl(1), pos, [dispiaceremo]).
+ty_verb(italian, dislike, future, pl(2), pos, [dispiacerete]).
+ty_verb(italian, dismay, future, sg, pos, [disanimerà]).
+ty_verb(italian, dismay, future, pl, pos, [disanimeranno]).
+ty_verb(italian, dismay, future, sg(1), pos, [disanimerò]).
+ty_verb(italian, dismay, future, sg(2), pos, [disanimerai]).
+ty_verb(italian, dismay, future, pl(1), pos, [disanimeremo]).
+ty_verb(italian, dismay, future, pl(2), pos, [disanimerete]).
+ty_verb(italian, dismiss, future, sg, pos, [licenzierà]).
+ty_verb(italian, dismiss, future, pl, pos, [licenzieranno]).
+ty_verb(italian, dismiss, future, sg(1), pos, [licenzierò]).
+ty_verb(italian, dismiss, future, sg(2), pos, [licenzierai]).
+ty_verb(italian, dismiss, future, pl(1), pos, [licenzieremo]).
+ty_verb(italian, dismiss, future, pl(2), pos, [licenzierete]).
+ty_verb(italian, dispel, future, sg, pos, [dissiperà]).
+ty_verb(italian, dispel, future, pl, pos, [dissiperanno]).
+ty_verb(italian, dispel, future, sg(1), pos, [dissiperò]).
+ty_verb(italian, dispel, future, sg(2), pos, [dissiperai]).
+ty_verb(italian, dispel, future, pl(1), pos, [dissiperemo]).
+ty_verb(italian, dispel, future, pl(2), pos, [dissiperete]).
+ty_verb(italian, dispense, future, sg, pos, [dispenserà]).
+ty_verb(italian, dispense, future, pl, pos, [dispenseranno]).
+ty_verb(italian, dispense, future, sg(1), pos, [dispenserò]).
+ty_verb(italian, dispense, future, sg(2), pos, [dispenserai]).
+ty_verb(italian, dispense, future, pl(1), pos, [dispenseremo]).
+ty_verb(italian, dispense, future, pl(2), pos, [dispenserete]).
+ty_verb(italian, disperse, future, sg, pos, [disperderà]).
+ty_verb(italian, disperse, future, pl, pos, [disperderanno]).
+ty_verb(italian, disperse, future, sg(1), pos, [disperderò]).
+ty_verb(italian, disperse, future, sg(2), pos, [disperderai]).
+ty_verb(italian, disperse, future, pl(1), pos, [disperderemo]).
+ty_verb(italian, disperse, future, pl(2), pos, [disperderete]).
+ty_verb(italian, displace, future, sg, pos, [sposterà]).
+ty_verb(italian, displace, future, pl, pos, [sposteranno]).
+ty_verb(italian, displace, future, sg(1), pos, [sposterò]).
+ty_verb(italian, displace, future, sg(2), pos, [sposterai]).
+ty_verb(italian, displace, future, pl(1), pos, [sposteremo]).
+ty_verb(italian, displace, future, pl(2), pos, [sposterete]).
+ty_verb(italian, display, future, sg, pos, [mostrerà]).
+ty_verb(italian, display, future, pl, pos, [mostreranno]).
+ty_verb(italian, display, future, sg(1), pos, [mostrerò]).
+ty_verb(italian, display, future, sg(2), pos, [mostrerai]).
+ty_verb(italian, display, future, pl(1), pos, [mostreremo]).
+ty_verb(italian, display, future, pl(2), pos, [mostrerete]).
+ty_verb(italian, dispose, future, sg, pos, [collocherà]).
+ty_verb(italian, dispose, future, pl, pos, [collocheranno]).
+ty_verb(italian, dispose, future, sg(1), pos, [collocherò]).
+ty_verb(italian, dispose, future, sg(2), pos, [collocherai]).
+ty_verb(italian, dispose, future, pl(1), pos, [collocheremo]).
+ty_verb(italian, dispose, future, pl(2), pos, [collocherete]).
+ty_verb(italian, disregard, future, sg, pos, [disattenderà]).
+ty_verb(italian, disregard, future, pl, pos, [disattenderanno]).
+ty_verb(italian, disregard, future, sg(1), pos, [disattenderò]).
+ty_verb(italian, disregard, future, sg(2), pos, [disattenderai]).
+ty_verb(italian, disregard, future, pl(1), pos, [disattenderemo]).
+ty_verb(italian, disregard, future, pl(2), pos, [disattenderete]).
+ty_verb(italian, dissemble, future, sg, pos, [dissimulerà]).
+ty_verb(italian, dissemble, future, pl, pos, [dissimuleranno]).
+ty_verb(italian, dissemble, future, sg(1), pos, [dissimulerò]).
+ty_verb(italian, dissemble, future, sg(2), pos, [dissimulerai]).
+ty_verb(italian, dissemble, future, pl(1), pos, [dissimuleremo]).
+ty_verb(italian, dissemble, future, pl(2), pos, [dissimulerete]).
+ty_verb(italian, dissolve, future, sg, pos, [dissolverà]).
+ty_verb(italian, dissolve, future, pl, pos, [dissolveranno]).
+ty_verb(italian, dissolve, future, sg(1), pos, [dissolverò]).
+ty_verb(italian, dissolve, future, sg(2), pos, [dissolverai]).
+ty_verb(italian, dissolve, future, pl(1), pos, [dissolveremo]).
+ty_verb(italian, dissolve, future, pl(2), pos, [dissolverete]).
+ty_verb(italian, distill, future, sg, pos, [distillerà]).
+ty_verb(italian, distill, future, pl, pos, [distilleranno]).
+ty_verb(italian, distill, future, sg(1), pos, [distillerò]).
+ty_verb(italian, distill, future, sg(2), pos, [distillerai]).
+ty_verb(italian, distill, future, pl(1), pos, [distilleremo]).
+ty_verb(italian, distill, future, pl(2), pos, [distillerete]).
+ty_verb(italian, distinguish, future, sg, pos, [distinguerà]).
+ty_verb(italian, distinguish, future, pl, pos, [distingueranno]).
+ty_verb(italian, distinguish, future, sg(1), pos, [distinguerò]).
+ty_verb(italian, distinguish, future, sg(2), pos, [distinguerai]).
+ty_verb(italian, distinguish, future, pl(1), pos, [distingueremo]).
+ty_verb(italian, distinguish, future, pl(2), pos, [distinguerete]).
+ty_verb(italian, distort, future, sg, pos, [falserà]).
+ty_verb(italian, distort, future, pl, pos, [falseranno]).
+ty_verb(italian, distort, future, sg(1), pos, [falserò]).
+ty_verb(italian, distort, future, sg(2), pos, [falserai]).
+ty_verb(italian, distort, future, pl(1), pos, [falseremo]).
+ty_verb(italian, distort, future, pl(2), pos, [falserete]).
+ty_verb(italian, distract, future, sg, pos, [distrarrà]).
+ty_verb(italian, distract, future, pl, pos, [distrarranno]).
+ty_verb(italian, distract, future, sg(1), pos, [distrarrò]).
+ty_verb(italian, distract, future, sg(2), pos, [distrarrai]).
+ty_verb(italian, distract, future, pl(1), pos, [distrarremo]).
+ty_verb(italian, distract, future, pl(2), pos, [distrarrete]).
+ty_verb(italian, distribute, future, sg, pos, [distribuirà]).
+ty_verb(italian, distribute, future, pl, pos, [distribuiranno]).
+ty_verb(italian, distribute, future, sg(1), pos, [distribuirò]).
+ty_verb(italian, distribute, future, sg(2), pos, [distribuirai]).
+ty_verb(italian, distribute, future, pl(1), pos, [distribuiremo]).
+ty_verb(italian, distribute, future, pl(2), pos, [distribuirete]).
+ty_verb(italian, disturb, future, sg, pos, [disturberà]).
+ty_verb(italian, disturb, future, pl, pos, [disturberanno]).
+ty_verb(italian, disturb, future, sg(1), pos, [disturberò]).
+ty_verb(italian, disturb, future, sg(2), pos, [disturberai]).
+ty_verb(italian, disturb, future, pl(1), pos, [disturberemo]).
+ty_verb(italian, disturb, future, pl(2), pos, [disturberete]).
+ty_verb(italian, divert, future, sg, pos, [devierà]).
+ty_verb(italian, divert, future, pl, pos, [devieranno]).
+ty_verb(italian, divert, future, sg(1), pos, [devierò]).
+ty_verb(italian, divert, future, sg(2), pos, [devierai]).
+ty_verb(italian, divert, future, pl(1), pos, [devieremo]).
+ty_verb(italian, divert, future, pl(2), pos, [devierete]).
+ty_verb(italian, divide, future, sg, pos, [dividerà]).
+ty_verb(italian, divide, future, pl, pos, [divideranno]).
+ty_verb(italian, divide, future, sg(1), pos, [dividerò]).
+ty_verb(italian, divide, future, sg(2), pos, [dividerai]).
+ty_verb(italian, divide, future, pl(1), pos, [divideremo]).
+ty_verb(italian, divide, future, pl(2), pos, [dividerete]).
+ty_verb(italian, divorce, future, sg, pos, [divorzierà]).
+ty_verb(italian, divorce, future, pl, pos, [divorzieranno]).
+ty_verb(italian, divorce, future, sg(1), pos, [divorzierò]).
+ty_verb(italian, divorce, future, sg(2), pos, [divorzierai]).
+ty_verb(italian, divorce, future, pl(1), pos, [divorzieremo]).
+ty_verb(italian, divorce, future, pl(2), pos, [divorzierete]).
+ty_verb(italian, divulge, future, sg, pos, [divulgherà]).
+ty_verb(italian, divulge, future, pl, pos, [divulgheranno]).
+ty_verb(italian, divulge, future, sg(1), pos, [divulgherò]).
+ty_verb(italian, divulge, future, sg(2), pos, [divulgherai]).
+ty_verb(italian, divulge, future, pl(1), pos, [divulgheremo]).
+ty_verb(italian, divulge, future, pl(2), pos, [divulgherete]).
+ty_verb(italian, document, future, sg, pos, [documenterà]).
+ty_verb(italian, document, future, pl, pos, [documenteranno]).
+ty_verb(italian, document, future, sg(1), pos, [documenterò]).
+ty_verb(italian, document, future, sg(2), pos, [documenterai]).
+ty_verb(italian, document, future, pl(1), pos, [documenteremo]).
+ty_verb(italian, document, future, pl(2), pos, [documenterete]).
+ty_verb(italian, dominate, future, sg, pos, [dominerà]).
+ty_verb(italian, dominate, future, pl, pos, [domineranno]).
+ty_verb(italian, dominate, future, sg(1), pos, [dominerò]).
+ty_verb(italian, dominate, future, sg(2), pos, [dominerai]).
+ty_verb(italian, dominate, future, pl(1), pos, [domineremo]).
+ty_verb(italian, dominate, future, pl(2), pos, [dominerete]).
+ty_verb(italian, donate, future, sg, pos, [donerà]).
+ty_verb(italian, donate, future, pl, pos, [doneranno]).
+ty_verb(italian, donate, future, sg(1), pos, [donerò]).
+ty_verb(italian, donate, future, sg(2), pos, [donerai]).
+ty_verb(italian, donate, future, pl(1), pos, [doneremo]).
+ty_verb(italian, donate, future, pl(2), pos, [donerete]).
+ty_verb(italian, double, future, sg, pos, [raddoppierà]).
+ty_verb(italian, double, future, pl, pos, [raddoppieranno]).
+ty_verb(italian, double, future, sg(1), pos, [raddoppierò]).
+ty_verb(italian, double, future, sg(2), pos, [raddoppierai]).
+ty_verb(italian, double, future, pl(1), pos, [raddoppieremo]).
+ty_verb(italian, double, future, pl(2), pos, [raddoppierete]).
+ty_verb(italian, doubt, future, sg, pos, [dubiterà]).
+ty_verb(italian, doubt, future, pl, pos, [dubiteranno]).
+ty_verb(italian, doubt, future, sg(1), pos, [dubiterò]).
+ty_verb(italian, doubt, future, sg(2), pos, [dubiterai]).
+ty_verb(italian, doubt, future, pl(1), pos, [dubiteremo]).
+ty_verb(italian, doubt, future, pl(2), pos, [dubiterete]).
+ty_verb(italian, download, future, sg, pos, [scaricherà]).
+ty_verb(italian, download, future, pl, pos, [scaricheranno]).
+ty_verb(italian, download, future, sg(1), pos, [scaricherò]).
+ty_verb(italian, download, future, sg(2), pos, [scaricherai]).
+ty_verb(italian, download, future, pl(1), pos, [scaricheremo]).
+ty_verb(italian, download, future, pl(2), pos, [scaricherete]).
+ty_verb(italian, draft, future, sg, pos, [abbozzerà]).
+ty_verb(italian, draft, future, pl, pos, [abbozzeranno]).
+ty_verb(italian, draft, future, sg(1), pos, [abbozzerò]).
+ty_verb(italian, draft, future, sg(2), pos, [abbozzerai]).
+ty_verb(italian, draft, future, pl(1), pos, [abbozzeremo]).
+ty_verb(italian, draft, future, pl(2), pos, [abbozzerete]).
+ty_verb(italian, drag, future, sg, pos, [trascinerà]).
+ty_verb(italian, drag, future, pl, pos, [trascineranno]).
+ty_verb(italian, drag, future, sg(1), pos, [trascinerò]).
+ty_verb(italian, drag, future, sg(2), pos, [trascinerai]).
+ty_verb(italian, drag, future, pl(1), pos, [trascineremo]).
+ty_verb(italian, drag, future, pl(2), pos, [trascinerete]).
+ty_verb(italian, dream, future, sg, pos, [sognerà]).
+ty_verb(italian, dream, future, pl, pos, [sogneranno]).
+ty_verb(italian, dream, future, sg(1), pos, [sognerò]).
+ty_verb(italian, dream, future, sg(2), pos, [sognerai]).
+ty_verb(italian, dream, future, pl(1), pos, [sogneremo]).
+ty_verb(italian, dream, future, pl(2), pos, [sognerete]).
+ty_verb(italian, dress, future, sg, pos, [vestirà]).
+ty_verb(italian, dress, future, pl, pos, [vestiranno]).
+ty_verb(italian, dress, future, sg(1), pos, [vestirò]).
+ty_verb(italian, dress, future, sg(2), pos, [vestirai]).
+ty_verb(italian, dress, future, pl(1), pos, [vestiremo]).
+ty_verb(italian, dress, future, pl(2), pos, [vestirete]).
+ty_verb(italian, drink, future, sg, pos, [berrà]).
+ty_verb(italian, drink, future, pl, pos, [berranno]).
+ty_verb(italian, drink, future, sg(1), pos, [berrò]).
+ty_verb(italian, drink, future, sg(2), pos, [berrai]).
+ty_verb(italian, drink, future, pl(1), pos, [berremo]).
+ty_verb(italian, drink, future, pl(2), pos, [berrete]).
+ty_verb(italian, drop, future, sg, pos, [calerà]).
+ty_verb(italian, drop, future, pl, pos, [caleranno]).
+ty_verb(italian, drop, future, sg(1), pos, [calerò]).
+ty_verb(italian, drop, future, sg(2), pos, [calerai]).
+ty_verb(italian, drop, future, pl(1), pos, [caleremo]).
+ty_verb(italian, drop, future, pl(2), pos, [calerete]).
+ty_verb(italian, drown, future, sg, pos, [inonderà]).
+ty_verb(italian, drown, future, pl, pos, [inonderanno]).
+ty_verb(italian, drown, future, sg(1), pos, [inonderò]).
+ty_verb(italian, drown, future, sg(2), pos, [inonderai]).
+ty_verb(italian, drown, future, pl(1), pos, [inonderemo]).
+ty_verb(italian, drown, future, pl(2), pos, [inonderete]).
+ty_verb(italian, drug, future, sg, pos, [drogherà]).
+ty_verb(italian, drug, future, pl, pos, [drogheranno]).
+ty_verb(italian, drug, future, sg(1), pos, [drogherò]).
+ty_verb(italian, drug, future, sg(2), pos, [drogherai]).
+ty_verb(italian, drug, future, pl(1), pos, [drogheremo]).
+ty_verb(italian, drug, future, pl(2), pos, [drogherete]).
+ty_verb(italian, dry, future, sg, pos, [asciugherà]).
+ty_verb(italian, dry, future, pl, pos, [asciugheranno]).
+ty_verb(italian, dry, future, sg(1), pos, [asciugherò]).
+ty_verb(italian, dry, future, sg(2), pos, [asciugherai]).
+ty_verb(italian, dry, future, pl(1), pos, [asciugheremo]).
+ty_verb(italian, dry, future, pl(2), pos, [asciugherete]).
+ty_verb(italian, dub, future, sg, pos, [doppierà]).
+ty_verb(italian, dub, future, pl, pos, [doppieranno]).
+ty_verb(italian, dub, future, sg(1), pos, [doppierò]).
+ty_verb(italian, dub, future, sg(2), pos, [doppierai]).
+ty_verb(italian, dub, future, pl(1), pos, [doppieremo]).
+ty_verb(italian, dub, future, pl(2), pos, [doppierete]).
+ty_verb(italian, dump, future, sg, pos, [butterà]).
+ty_verb(italian, dump, future, pl, pos, [butteranno]).
+ty_verb(italian, dump, future, sg(1), pos, [butterò]).
+ty_verb(italian, dump, future, sg(2), pos, [butterai]).
+ty_verb(italian, dump, future, pl(1), pos, [butteremo]).
+ty_verb(italian, dump, future, pl(2), pos, [butterete]).
+ty_verb(italian, duplicate, future, sg, pos, [duplicherà]).
+ty_verb(italian, duplicate, future, pl, pos, [duplicheranno]).
+ty_verb(italian, duplicate, future, sg(1), pos, [duplicherò]).
+ty_verb(italian, duplicate, future, sg(2), pos, [duplicherai]).
+ty_verb(italian, duplicate, future, pl(1), pos, [duplicheremo]).
+ty_verb(italian, duplicate, future, pl(2), pos, [duplicherete]).
+ty_verb(italian, earn, future, sg, pos, [guadagnerà]).
+ty_verb(italian, earn, future, pl, pos, [guadagneranno]).
+ty_verb(italian, earn, future, sg(1), pos, [guadagnerò]).
+ty_verb(italian, earn, future, sg(2), pos, [guadagnerai]).
+ty_verb(italian, earn, future, pl(1), pos, [guadagneremo]).
+ty_verb(italian, earn, future, pl(2), pos, [guadagnerete]).
+ty_verb(italian, eat, future, sg, pos, [mangerà]).
+ty_verb(italian, eat, future, pl, pos, [mangeranno]).
+ty_verb(italian, eat, future, sg(1), pos, [mangerò]).
+ty_verb(italian, eat, future, sg(2), pos, [mangerai]).
+ty_verb(italian, eat, future, pl(1), pos, [mangeremo]).
+ty_verb(italian, eat, future, pl(2), pos, [mangerete]).
+ty_verb(italian, educate, future, sg, pos, [educherà]).
+ty_verb(italian, educate, future, pl, pos, [educheranno]).
+ty_verb(italian, educate, future, sg(1), pos, [educherò]).
+ty_verb(italian, educate, future, sg(2), pos, [educherai]).
+ty_verb(italian, educate, future, pl(1), pos, [educheremo]).
+ty_verb(italian, educate, future, pl(2), pos, [educherete]).
+ty_verb(italian, elaborate, future, sg, pos, [elaborerà]).
+ty_verb(italian, elaborate, future, pl, pos, [elaboreranno]).
+ty_verb(italian, elaborate, future, sg(1), pos, [elaborerò]).
+ty_verb(italian, elaborate, future, sg(2), pos, [elaborerai]).
+ty_verb(italian, elaborate, future, pl(1), pos, [elaboreremo]).
+ty_verb(italian, elaborate, future, pl(2), pos, [elaborerete]).
+ty_verb(italian, elevate, future, sg, pos, [eleverà]).
+ty_verb(italian, elevate, future, pl, pos, [eleveranno]).
+ty_verb(italian, elevate, future, sg(1), pos, [eleverò]).
+ty_verb(italian, elevate, future, sg(2), pos, [eleverai]).
+ty_verb(italian, elevate, future, pl(1), pos, [eleveremo]).
+ty_verb(italian, elevate, future, pl(2), pos, [eleverete]).
+ty_verb(italian, emanate, future, sg, pos, [emanerà]).
+ty_verb(italian, emanate, future, pl, pos, [emaneranno]).
+ty_verb(italian, emanate, future, sg(1), pos, [emanerò]).
+ty_verb(italian, emanate, future, sg(2), pos, [emanerai]).
+ty_verb(italian, emanate, future, pl(1), pos, [emaneremo]).
+ty_verb(italian, emanate, future, pl(2), pos, [emanerete]).
+ty_verb(italian, embark, future, sg, pos, [imbarcherà]).
+ty_verb(italian, embark, future, pl, pos, [imbarcheranno]).
+ty_verb(italian, embark, future, sg(1), pos, [imbarcherò]).
+ty_verb(italian, embark, future, sg(2), pos, [imbarcherai]).
+ty_verb(italian, embark, future, pl(1), pos, [imbarcheremo]).
+ty_verb(italian, embark, future, pl(2), pos, [imbarcherete]).
+ty_verb(italian, embarrass, future, sg, pos, [imbarazzerà]).
+ty_verb(italian, embarrass, future, pl, pos, [imbarazzeranno]).
+ty_verb(italian, embarrass, future, sg(1), pos, [imbarazzerò]).
+ty_verb(italian, embarrass, future, sg(2), pos, [imbarazzerai]).
+ty_verb(italian, embarrass, future, pl(1), pos, [imbarazzeremo]).
+ty_verb(italian, embarrass, future, pl(2), pos, [imbarazzerete]).
+ty_verb(italian, embezzle, future, sg, pos, [malverserà]).
+ty_verb(italian, embezzle, future, pl, pos, [malverseranno]).
+ty_verb(italian, embezzle, future, sg(1), pos, [malverserò]).
+ty_verb(italian, embezzle, future, sg(2), pos, [malverserai]).
+ty_verb(italian, embezzle, future, pl(1), pos, [malverseremo]).
+ty_verb(italian, embezzle, future, pl(2), pos, [malverserete]).
+ty_verb(italian, embody, future, sg, pos, [incarnerà]).
+ty_verb(italian, embody, future, pl, pos, [incarneranno]).
+ty_verb(italian, embody, future, sg(1), pos, [incarnerò]).
+ty_verb(italian, embody, future, sg(2), pos, [incarnerai]).
+ty_verb(italian, embody, future, pl(1), pos, [incarneremo]).
+ty_verb(italian, embody, future, pl(2), pos, [incarnerete]).
+ty_verb(italian, embrace, future, sg, pos, [abbraccerà]).
+ty_verb(italian, embrace, future, pl, pos, [abbracceranno]).
+ty_verb(italian, embrace, future, sg(1), pos, [abbraccerò]).
+ty_verb(italian, embrace, future, sg(2), pos, [abbraccerai]).
+ty_verb(italian, embrace, future, pl(1), pos, [abbracceremo]).
+ty_verb(italian, embrace, future, pl(2), pos, [abbraccerete]).
+ty_verb(italian, embroider, future, sg, pos, [borderà]).
+ty_verb(italian, embroider, future, pl, pos, [borderanno]).
+ty_verb(italian, embroider, future, sg(1), pos, [borderò]).
+ty_verb(italian, embroider, future, sg(2), pos, [borderai]).
+ty_verb(italian, embroider, future, pl(1), pos, [borderemo]).
+ty_verb(italian, embroider, future, pl(2), pos, [borderete]).
+ty_verb(italian, emerge, future, sg, pos, [emergerà]).
+ty_verb(italian, emerge, future, pl, pos, [emergeranno]).
+ty_verb(italian, emerge, future, sg(1), pos, [emergerò]).
+ty_verb(italian, emerge, future, sg(2), pos, [emergerai]).
+ty_verb(italian, emerge, future, pl(1), pos, [emergeremo]).
+ty_verb(italian, emerge, future, pl(2), pos, [emergerete]).
+ty_verb(italian, emigrate, future, sg, pos, [emigrerà]).
+ty_verb(italian, emigrate, future, pl, pos, [emigreranno]).
+ty_verb(italian, emigrate, future, sg(1), pos, [emigrerò]).
+ty_verb(italian, emigrate, future, sg(2), pos, [emigrerai]).
+ty_verb(italian, emigrate, future, pl(1), pos, [emigreremo]).
+ty_verb(italian, emigrate, future, pl(2), pos, [emigrerete]).
+ty_verb(italian, employ, future, sg, pos, [impiegherà]).
+ty_verb(italian, employ, future, pl, pos, [impiegheranno]).
+ty_verb(italian, employ, future, sg(1), pos, [impiegherò]).
+ty_verb(italian, employ, future, sg(2), pos, [impiegherai]).
+ty_verb(italian, employ, future, pl(1), pos, [impiegheremo]).
+ty_verb(italian, employ, future, pl(2), pos, [impiegherete]).
+ty_verb(italian, emulate, future, sg, pos, [emulerà]).
+ty_verb(italian, emulate, future, pl, pos, [emuleranno]).
+ty_verb(italian, emulate, future, sg(1), pos, [emulerò]).
+ty_verb(italian, emulate, future, sg(2), pos, [emulerai]).
+ty_verb(italian, emulate, future, pl(1), pos, [emuleremo]).
+ty_verb(italian, emulate, future, pl(2), pos, [emulerete]).
+ty_verb(italian, enchant, future, sg, pos, [incanterà]).
+ty_verb(italian, enchant, future, pl, pos, [incanteranno]).
+ty_verb(italian, enchant, future, sg(1), pos, [incanterò]).
+ty_verb(italian, enchant, future, sg(2), pos, [incanterai]).
+ty_verb(italian, enchant, future, pl(1), pos, [incanteremo]).
+ty_verb(italian, enchant, future, pl(2), pos, [incanterete]).
+ty_verb(italian, encircle, future, sg, pos, [cingerà]).
+ty_verb(italian, encircle, future, pl, pos, [cingeranno]).
+ty_verb(italian, encircle, future, sg(1), pos, [cingerò]).
+ty_verb(italian, encircle, future, sg(2), pos, [cingerai]).
+ty_verb(italian, encircle, future, pl(1), pos, [cingeremo]).
+ty_verb(italian, encircle, future, pl(2), pos, [cingerete]).
+ty_verb(italian, encourage, future, sg, pos, [animerà]).
+ty_verb(italian, encourage, future, pl, pos, [animeranno]).
+ty_verb(italian, encourage, future, sg(1), pos, [animerò]).
+ty_verb(italian, encourage, future, sg(2), pos, [animerai]).
+ty_verb(italian, encourage, future, pl(1), pos, [animeremo]).
+ty_verb(italian, encourage, future, pl(2), pos, [animerete]).
+ty_verb(italian, end, future, sg, pos, [terminerà]).
+ty_verb(italian, end, future, pl, pos, [termineranno]).
+ty_verb(italian, end, future, sg(1), pos, [terminerò]).
+ty_verb(italian, end, future, sg(2), pos, [terminerai]).
+ty_verb(italian, end, future, pl(1), pos, [termineremo]).
+ty_verb(italian, end, future, pl(2), pos, [terminerete]).
+ty_verb(italian, endow, future, sg, pos, [doterà]).
+ty_verb(italian, endow, future, pl, pos, [doteranno]).
+ty_verb(italian, endow, future, sg(1), pos, [doterò]).
+ty_verb(italian, endow, future, sg(2), pos, [doterai]).
+ty_verb(italian, endow, future, pl(1), pos, [doteremo]).
+ty_verb(italian, endow, future, pl(2), pos, [doterete]).
+ty_verb(italian, enforce, future, sg, pos, [imporrà]).
+ty_verb(italian, enforce, future, pl, pos, [imporranno]).
+ty_verb(italian, enforce, future, sg(1), pos, [imporrò]).
+ty_verb(italian, enforce, future, sg(2), pos, [imporrai]).
+ty_verb(italian, enforce, future, pl(1), pos, [imporremo]).
+ty_verb(italian, enforce, future, pl(2), pos, [imporrete]).
+ty_verb(italian, enhance, future, sg, pos, [migliorerà]).
+ty_verb(italian, enhance, future, pl, pos, [miglioreranno]).
+ty_verb(italian, enhance, future, sg(1), pos, [migliorerò]).
+ty_verb(italian, enhance, future, sg(2), pos, [migliorerai]).
+ty_verb(italian, enhance, future, pl(1), pos, [miglioreremo]).
+ty_verb(italian, enhance, future, pl(2), pos, [migliorerete]).
+ty_verb(italian, entertain, future, sg, pos, [intratterrà]).
+ty_verb(italian, entertain, future, pl, pos, [intratterranno]).
+ty_verb(italian, entertain, future, sg(1), pos, [intratterrò]).
+ty_verb(italian, entertain, future, sg(2), pos, [intratterrai]).
+ty_verb(italian, entertain, future, pl(1), pos, [intratterremo]).
+ty_verb(italian, entertain, future, pl(2), pos, [intratterrete]).
+ty_verb(italian, enumerate, future, sg, pos, [elencherà]).
+ty_verb(italian, enumerate, future, pl, pos, [elencheranno]).
+ty_verb(italian, enumerate, future, sg(1), pos, [elencherò]).
+ty_verb(italian, enumerate, future, sg(2), pos, [elencherai]).
+ty_verb(italian, enumerate, future, pl(1), pos, [elencheremo]).
+ty_verb(italian, enumerate, future, pl(2), pos, [elencherete]).
+ty_verb(italian, envy, future, sg, pos, [invidierà]).
+ty_verb(italian, envy, future, pl, pos, [invidieranno]).
+ty_verb(italian, envy, future, sg(1), pos, [invidierò]).
+ty_verb(italian, envy, future, sg(2), pos, [invidierai]).
+ty_verb(italian, envy, future, pl(1), pos, [invidieremo]).
+ty_verb(italian, envy, future, pl(2), pos, [invidierete]).
+ty_verb(italian, equate, future, sg, pos, [equiparerà]).
+ty_verb(italian, equate, future, pl, pos, [equipareranno]).
+ty_verb(italian, equate, future, sg(1), pos, [equiparerò]).
+ty_verb(italian, equate, future, sg(2), pos, [equiparerai]).
+ty_verb(italian, equate, future, pl(1), pos, [equipareremo]).
+ty_verb(italian, equate, future, pl(2), pos, [equiparerete]).
+ty_verb(italian, equip, future, sg, pos, [equipaggerà]).
+ty_verb(italian, equip, future, pl, pos, [equipaggeranno]).
+ty_verb(italian, equip, future, sg(1), pos, [equipaggerò]).
+ty_verb(italian, equip, future, sg(2), pos, [equipaggerai]).
+ty_verb(italian, equip, future, pl(1), pos, [equipaggeremo]).
+ty_verb(italian, equip, future, pl(2), pos, [equipaggerete]).
+ty_verb(italian, eradicate, future, sg, pos, [eradicherà]).
+ty_verb(italian, eradicate, future, pl, pos, [eradicheranno]).
+ty_verb(italian, eradicate, future, sg(1), pos, [eradicherò]).
+ty_verb(italian, eradicate, future, sg(2), pos, [eradicherai]).
+ty_verb(italian, eradicate, future, pl(1), pos, [eradicheremo]).
+ty_verb(italian, eradicate, future, pl(2), pos, [eradicherete]).
+ty_verb(italian, erase, future, sg, pos, [cancellerà]).
+ty_verb(italian, erase, future, pl, pos, [cancelleranno]).
+ty_verb(italian, erase, future, sg(1), pos, [cancellerò]).
+ty_verb(italian, erase, future, sg(2), pos, [cancellerai]).
+ty_verb(italian, erase, future, pl(1), pos, [cancelleremo]).
+ty_verb(italian, erase, future, pl(2), pos, [cancellerete]).
+ty_verb(italian, erect, future, sg, pos, [alzerà]).
+ty_verb(italian, erect, future, pl, pos, [alzeranno]).
+ty_verb(italian, erect, future, sg(1), pos, [alzerò]).
+ty_verb(italian, erect, future, sg(2), pos, [alzerai]).
+ty_verb(italian, erect, future, pl(1), pos, [alzeremo]).
+ty_verb(italian, erect, future, pl(2), pos, [alzerete]).
+ty_verb(italian, erode, future, sg, pos, [eroderà]).
+ty_verb(italian, erode, future, pl, pos, [eroderanno]).
+ty_verb(italian, erode, future, sg(1), pos, [eroderò]).
+ty_verb(italian, erode, future, sg(2), pos, [eroderai]).
+ty_verb(italian, erode, future, pl(1), pos, [eroderemo]).
+ty_verb(italian, erode, future, pl(2), pos, [eroderete]).
+ty_verb(italian, escape, future, sg, pos, [fuggirà]).
+ty_verb(italian, escape, future, pl, pos, [fuggiranno]).
+ty_verb(italian, escape, future, sg(1), pos, [fuggirò]).
+ty_verb(italian, escape, future, sg(2), pos, [fuggirai]).
+ty_verb(italian, escape, future, pl(1), pos, [fuggiremo]).
+ty_verb(italian, escape, future, pl(2), pos, [fuggirete]).
+ty_verb(italian, establish, future, sg, pos, [stabilirà]).
+ty_verb(italian, establish, future, pl, pos, [stabiliranno]).
+ty_verb(italian, establish, future, sg(1), pos, [stabilirò]).
+ty_verb(italian, establish, future, sg(2), pos, [stabilirai]).
+ty_verb(italian, establish, future, pl(1), pos, [stabiliremo]).
+ty_verb(italian, establish, future, pl(2), pos, [stabilirete]).
+ty_verb(italian, estimate, future, sg, pos, [stimerà]).
+ty_verb(italian, estimate, future, pl, pos, [stimeranno]).
+ty_verb(italian, estimate, future, sg(1), pos, [stimerò]).
+ty_verb(italian, estimate, future, sg(2), pos, [stimerai]).
+ty_verb(italian, estimate, future, pl(1), pos, [stimeremo]).
+ty_verb(italian, estimate, future, pl(2), pos, [stimerete]).
+ty_verb(italian, evacuate, future, sg, pos, [evacuerà]).
+ty_verb(italian, evacuate, future, pl, pos, [evacueranno]).
+ty_verb(italian, evacuate, future, sg(1), pos, [evacuerò]).
+ty_verb(italian, evacuate, future, sg(2), pos, [evacuerai]).
+ty_verb(italian, evacuate, future, pl(1), pos, [evacueremo]).
+ty_verb(italian, evacuate, future, pl(2), pos, [evacuerete]).
+ty_verb(italian, sin, future, sg, pos, [peccherà]).
+ty_verb(italian, sin, future, pl, pos, [peccheranno]).
+ty_verb(italian, sin, future, sg(1), pos, [peccherò]).
+ty_verb(italian, sin, future, sg(2), pos, [peccherai]).
+ty_verb(italian, sin, future, pl(1), pos, [peccheremo]).
+ty_verb(italian, sin, future, pl(2), pos, [peccherete]).
+ty_verb(italian, evaporate, future, sg, pos, [evaporerà]).
+ty_verb(italian, evaporate, future, pl, pos, [evaporeranno]).
+ty_verb(italian, evaporate, future, sg(1), pos, [evaporerò]).
+ty_verb(italian, evaporate, future, sg(2), pos, [evaporerai]).
+ty_verb(italian, evaporate, future, pl(1), pos, [evaporeremo]).
+ty_verb(italian, evaporate, future, pl(2), pos, [evaporerete]).
+ty_verb(italian, evoke, future, sg, pos, [evocherà]).
+ty_verb(italian, evoke, future, pl, pos, [evocheranno]).
+ty_verb(italian, evoke, future, sg(1), pos, [evocherò]).
+ty_verb(italian, evoke, future, sg(2), pos, [evocherai]).
+ty_verb(italian, evoke, future, pl(1), pos, [evocheremo]).
+ty_verb(italian, evoke, future, pl(2), pos, [evocherete]).
+ty_verb(italian, evolve, future, sg, pos, [evolverà]).
+ty_verb(italian, evolve, future, pl, pos, [evolveranno]).
+ty_verb(italian, evolve, future, sg(1), pos, [evolverò]).
+ty_verb(italian, evolve, future, sg(2), pos, [evolverai]).
+ty_verb(italian, evolve, future, pl(1), pos, [evolveremo]).
+ty_verb(italian, evolve, future, pl(2), pos, [evolverete]).
+ty_verb(italian, exaggerate, future, sg, pos, [esagererà]).
+ty_verb(italian, exaggerate, future, pl, pos, [esagereranno]).
+ty_verb(italian, exaggerate, future, sg(1), pos, [esagererò]).
+ty_verb(italian, exaggerate, future, sg(2), pos, [esagererai]).
+ty_verb(italian, exaggerate, future, pl(1), pos, [esagereremo]).
+ty_verb(italian, exaggerate, future, pl(2), pos, [esagererete]).
+ty_verb(italian, examine, future, sg, pos, [esaminerà]).
+ty_verb(italian, examine, future, pl, pos, [esamineranno]).
+ty_verb(italian, examine, future, sg(1), pos, [esaminerò]).
+ty_verb(italian, examine, future, sg(2), pos, [esaminerai]).
+ty_verb(italian, examine, future, pl(1), pos, [esamineremo]).
+ty_verb(italian, examine, future, pl(2), pos, [esaminerete]).
+ty_verb(italian, except, future, sg, pos, [eccettuerà]).
+ty_verb(italian, except, future, pl, pos, [eccettueranno]).
+ty_verb(italian, except, future, sg(1), pos, [eccettuerò]).
+ty_verb(italian, except, future, sg(2), pos, [eccettuerai]).
+ty_verb(italian, except, future, pl(1), pos, [eccettueremo]).
+ty_verb(italian, except, future, pl(2), pos, [eccettuerete]).
+ty_verb(italian, exchange, future, sg, pos, [scambierà]).
+ty_verb(italian, exchange, future, pl, pos, [scambieranno]).
+ty_verb(italian, exchange, future, sg(1), pos, [scambierò]).
+ty_verb(italian, exchange, future, sg(2), pos, [scambierai]).
+ty_verb(italian, exchange, future, pl(1), pos, [scambieremo]).
+ty_verb(italian, exchange, future, pl(2), pos, [scambierete]).
+ty_verb(italian, excite, future, sg, pos, [entusiasmerà]).
+ty_verb(italian, excite, future, pl, pos, [entusiasmeranno]).
+ty_verb(italian, excite, future, sg(1), pos, [entusiasmerò]).
+ty_verb(italian, excite, future, sg(2), pos, [entusiasmerai]).
+ty_verb(italian, excite, future, pl(1), pos, [entusiasmeremo]).
+ty_verb(italian, excite, future, pl(2), pos, [entusiasmerete]).
+ty_verb(italian, exclaim, future, sg, pos, [esclamerà]).
+ty_verb(italian, exclaim, future, pl, pos, [esclameranno]).
+ty_verb(italian, exclaim, future, sg(1), pos, [esclamerò]).
+ty_verb(italian, exclaim, future, sg(2), pos, [esclamerai]).
+ty_verb(italian, exclaim, future, pl(1), pos, [esclameremo]).
+ty_verb(italian, exclaim, future, pl(2), pos, [esclamerete]).
+ty_verb(italian, exclude, future, sg, pos, [escluderà]).
+ty_verb(italian, exclude, future, pl, pos, [escluderanno]).
+ty_verb(italian, exclude, future, sg(1), pos, [escluderò]).
+ty_verb(italian, exclude, future, sg(2), pos, [escluderai]).
+ty_verb(italian, exclude, future, pl(1), pos, [escluderemo]).
+ty_verb(italian, exclude, future, pl(2), pos, [escluderete]).
+ty_verb(italian, excuse, future, sg, pos, [scuserà]).
+ty_verb(italian, excuse, future, pl, pos, [scuseranno]).
+ty_verb(italian, excuse, future, sg(1), pos, [scuserò]).
+ty_verb(italian, excuse, future, sg(2), pos, [scuserai]).
+ty_verb(italian, excuse, future, pl(1), pos, [scuseremo]).
+ty_verb(italian, excuse, future, pl(2), pos, [scuserete]).
+ty_verb(italian, execute, future, sg, pos, [eseguirà]).
+ty_verb(italian, execute, future, pl, pos, [eseguiranno]).
+ty_verb(italian, execute, future, sg(1), pos, [eseguirò]).
+ty_verb(italian, execute, future, sg(2), pos, [eseguirai]).
+ty_verb(italian, execute, future, pl(1), pos, [eseguiremo]).
+ty_verb(italian, execute, future, pl(2), pos, [eseguirete]).
+ty_verb(italian, exercise, future, sg, pos, [eserciterà]).
+ty_verb(italian, exercise, future, pl, pos, [eserciteranno]).
+ty_verb(italian, exercise, future, sg(1), pos, [eserciterò]).
+ty_verb(italian, exercise, future, sg(2), pos, [eserciterai]).
+ty_verb(italian, exercise, future, pl(1), pos, [eserciteremo]).
+ty_verb(italian, exercise, future, pl(2), pos, [eserciterete]).
+ty_verb(italian, exhaust, future, sg, pos, [esaurirà]).
+ty_verb(italian, exhaust, future, pl, pos, [esauriranno]).
+ty_verb(italian, exhaust, future, sg(1), pos, [esaurirò]).
+ty_verb(italian, exhaust, future, sg(2), pos, [esaurirai]).
+ty_verb(italian, exhaust, future, pl(1), pos, [esauriremo]).
+ty_verb(italian, exhaust, future, pl(2), pos, [esaurirete]).
+ty_verb(italian, exhibit, future, sg, pos, [esibirà]).
+ty_verb(italian, exhibit, future, pl, pos, [esibiranno]).
+ty_verb(italian, exhibit, future, sg(1), pos, [esibirò]).
+ty_verb(italian, exhibit, future, sg(2), pos, [esibirai]).
+ty_verb(italian, exhibit, future, pl(1), pos, [esibiremo]).
+ty_verb(italian, exhibit, future, pl(2), pos, [esibirete]).
+ty_verb(italian, exhort, future, sg, pos, [esorterà]).
+ty_verb(italian, exhort, future, pl, pos, [esorteranno]).
+ty_verb(italian, exhort, future, sg(1), pos, [esorterò]).
+ty_verb(italian, exhort, future, sg(2), pos, [esorterai]).
+ty_verb(italian, exhort, future, pl(1), pos, [esorteremo]).
+ty_verb(italian, exhort, future, pl(2), pos, [esorterete]).
+ty_verb(italian, exile, future, sg, pos, [esilierà]).
+ty_verb(italian, exile, future, pl, pos, [esilieranno]).
+ty_verb(italian, exile, future, sg(1), pos, [esilierò]).
+ty_verb(italian, exile, future, sg(2), pos, [esilierai]).
+ty_verb(italian, exile, future, pl(1), pos, [esilieremo]).
+ty_verb(italian, exile, future, pl(2), pos, [esilierete]).
+ty_verb(italian, exist, future, sg, pos, [esisterà]).
+ty_verb(italian, exist, future, pl, pos, [esisteranno]).
+ty_verb(italian, exist, future, sg(1), pos, [esisterò]).
+ty_verb(italian, exist, future, sg(2), pos, [esisterai]).
+ty_verb(italian, exist, future, pl(1), pos, [esisteremo]).
+ty_verb(italian, exist, future, pl(2), pos, [esisterete]).
+ty_verb(italian, expel, future, sg, pos, [espellerà]).
+ty_verb(italian, expel, future, pl, pos, [espelleranno]).
+ty_verb(italian, expel, future, sg(1), pos, [espellerò]).
+ty_verb(italian, expel, future, sg(2), pos, [espellerai]).
+ty_verb(italian, expel, future, pl(1), pos, [espelleremo]).
+ty_verb(italian, expel, future, pl(2), pos, [espellerete]).
+ty_verb(italian, experience, future, sg, pos, [sperimenterà]).
+ty_verb(italian, experience, future, pl, pos, [sperimenteranno]).
+ty_verb(italian, experience, future, sg(1), pos, [sperimenterò]).
+ty_verb(italian, experience, future, sg(2), pos, [sperimenterai]).
+ty_verb(italian, experience, future, pl(1), pos, [sperimenteremo]).
+ty_verb(italian, experience, future, pl(2), pos, [sperimenterete]).
+ty_verb(italian, explain, future, sg, pos, [conterà]).
+ty_verb(italian, explain, future, pl, pos, [conteranno]).
+ty_verb(italian, explain, future, sg(1), pos, [conterò]).
+ty_verb(italian, explain, future, sg(2), pos, [conterai]).
+ty_verb(italian, explain, future, pl(1), pos, [conteremo]).
+ty_verb(italian, explain, future, pl(2), pos, [conterete]).
+ty_verb(italian, explode, future, sg, pos, [sfrutterà]).
+ty_verb(italian, explode, future, pl, pos, [sfrutteranno]).
+ty_verb(italian, explode, future, sg(1), pos, [sfrutterò]).
+ty_verb(italian, explode, future, sg(2), pos, [sfrutterai]).
+ty_verb(italian, explode, future, pl(1), pos, [sfrutteremo]).
+ty_verb(italian, explode, future, pl(2), pos, [sfrutterete]).
+ty_verb(italian, explore, future, sg, pos, [esplorerà]).
+ty_verb(italian, explore, future, pl, pos, [esploreranno]).
+ty_verb(italian, explore, future, sg(1), pos, [esplorerò]).
+ty_verb(italian, explore, future, sg(2), pos, [esplorerai]).
+ty_verb(italian, explore, future, pl(1), pos, [esploreremo]).
+ty_verb(italian, explore, future, pl(2), pos, [esplorerete]).
+ty_verb(italian, export, future, sg, pos, [esporterà]).
+ty_verb(italian, export, future, pl, pos, [esporteranno]).
+ty_verb(italian, export, future, sg(1), pos, [esporterò]).
+ty_verb(italian, export, future, sg(2), pos, [esporterai]).
+ty_verb(italian, export, future, pl(1), pos, [esporteremo]).
+ty_verb(italian, export, future, pl(2), pos, [esporterete]).
+ty_verb(italian, expose, future, sg, pos, [esporrà]).
+ty_verb(italian, expose, future, pl, pos, [esporranno]).
+ty_verb(italian, expose, future, sg(1), pos, [esporrò]).
+ty_verb(italian, expose, future, sg(2), pos, [esporrai]).
+ty_verb(italian, expose, future, pl(1), pos, [esporremo]).
+ty_verb(italian, expose, future, pl(2), pos, [esporrete]).
+ty_verb(italian, express, future, sg, pos, [esprimerà]).
+ty_verb(italian, express, future, pl, pos, [esprimeranno]).
+ty_verb(italian, express, future, sg(1), pos, [esprimerò]).
+ty_verb(italian, express, future, sg(2), pos, [esprimerai]).
+ty_verb(italian, express, future, pl(1), pos, [esprimeremo]).
+ty_verb(italian, express, future, pl(2), pos, [esprimerete]).
+ty_verb(italian, extend, future, sg, pos, [estenderà]).
+ty_verb(italian, extend, future, pl, pos, [estenderanno]).
+ty_verb(italian, extend, future, sg(1), pos, [estenderò]).
+ty_verb(italian, extend, future, sg(2), pos, [estenderai]).
+ty_verb(italian, extend, future, pl(1), pos, [estenderemo]).
+ty_verb(italian, extend, future, pl(2), pos, [estenderete]).
+ty_verb(italian, exterminate, future, sg, pos, [sterminerà]).
+ty_verb(italian, exterminate, future, pl, pos, [stermineranno]).
+ty_verb(italian, exterminate, future, sg(1), pos, [sterminerò]).
+ty_verb(italian, exterminate, future, sg(2), pos, [sterminerai]).
+ty_verb(italian, exterminate, future, pl(1), pos, [stermineremo]).
+ty_verb(italian, exterminate, future, pl(2), pos, [sterminerete]).
+ty_verb(italian, extinguish, future, sg, pos, [estinguerà]).
+ty_verb(italian, extinguish, future, pl, pos, [estingueranno]).
+ty_verb(italian, extinguish, future, sg(1), pos, [estinguerò]).
+ty_verb(italian, extinguish, future, sg(2), pos, [estinguerai]).
+ty_verb(italian, extinguish, future, pl(1), pos, [estingueremo]).
+ty_verb(italian, extinguish, future, pl(2), pos, [estinguerete]).
+ty_verb(italian, extract, future, sg, pos, [estrarrà]).
+ty_verb(italian, extract, future, pl, pos, [estrarranno]).
+ty_verb(italian, extract, future, sg(1), pos, [estrarrò]).
+ty_verb(italian, extract, future, sg(2), pos, [estrarrai]).
+ty_verb(italian, extract, future, pl(1), pos, [estrarremo]).
+ty_verb(italian, extract, future, pl(2), pos, [estrarrete]).
+ty_verb(italian, facilitate, future, sg, pos, [faciliterà]).
+ty_verb(italian, facilitate, future, pl, pos, [faciliteranno]).
+ty_verb(italian, facilitate, future, sg(1), pos, [faciliterò]).
+ty_verb(italian, facilitate, future, sg(2), pos, [faciliterai]).
+ty_verb(italian, facilitate, future, pl(1), pos, [faciliteremo]).
+ty_verb(italian, facilitate, future, pl(2), pos, [faciliterete]).
+ty_verb(italian, fail, future, sg, pos, [fallirà]).
+ty_verb(italian, fail, future, pl, pos, [falliranno]).
+ty_verb(italian, fail, future, sg(1), pos, [fallirò]).
+ty_verb(italian, fail, future, sg(2), pos, [fallirai]).
+ty_verb(italian, fail, future, pl(1), pos, [falliremo]).
+ty_verb(italian, fail, future, pl(2), pos, [fallirete]).
+ty_verb(italian, fake, future, sg, pos, [falsificherà]).
+ty_verb(italian, fake, future, pl, pos, [falsificheranno]).
+ty_verb(italian, fake, future, sg(1), pos, [falsificherò]).
+ty_verb(italian, fake, future, sg(2), pos, [falsificherai]).
+ty_verb(italian, fake, future, pl(1), pos, [falsificheremo]).
+ty_verb(italian, fake, future, pl(2), pos, [falsificherete]).
+ty_verb(italian, fall, future, sg, pos, [cadrà]).
+ty_verb(italian, fall, future, pl, pos, [cadranno]).
+ty_verb(italian, fall, future, sg(1), pos, [cadrò]).
+ty_verb(italian, fall, future, sg(2), pos, [cadrai]).
+ty_verb(italian, fall, future, pl(1), pos, [cadremo]).
+ty_verb(italian, fall, future, pl(2), pos, [cadrete]).
+ty_verb(italian, fatten, future, sg, pos, [ingrasserà]).
+ty_verb(italian, fatten, future, pl, pos, [ingrasseranno]).
+ty_verb(italian, fatten, future, sg(1), pos, [ingrasserò]).
+ty_verb(italian, fatten, future, sg(2), pos, [ingrasserai]).
+ty_verb(italian, fatten, future, pl(1), pos, [ingrasseremo]).
+ty_verb(italian, fatten, future, pl(2), pos, [ingrasserete]).
+ty_verb(italian, favour, future, sg, pos, [favorirà]).
+ty_verb(italian, favour, future, pl, pos, [favoriranno]).
+ty_verb(italian, favour, future, sg(1), pos, [favorirò]).
+ty_verb(italian, favour, future, sg(2), pos, [favorirai]).
+ty_verb(italian, favour, future, pl(1), pos, [favoriremo]).
+ty_verb(italian, favour, future, pl(2), pos, [favorirete]).
+ty_verb(italian, feature, future, sg, pos, [consterà]).
+ty_verb(italian, feature, future, pl, pos, [consteranno]).
+ty_verb(italian, feature, future, sg(1), pos, [consterò]).
+ty_verb(italian, feature, future, sg(2), pos, [consterai]).
+ty_verb(italian, feature, future, pl(1), pos, [consteremo]).
+ty_verb(italian, feature, future, pl(2), pos, [consterete]).
+ty_verb(italian, feed, future, sg, pos, [alimenterà]).
+ty_verb(italian, feed, future, pl, pos, [alimenteranno]).
+ty_verb(italian, feed, future, sg(1), pos, [alimenterò]).
+ty_verb(italian, feed, future, sg(2), pos, [alimenterai]).
+ty_verb(italian, feed, future, pl(1), pos, [alimenteremo]).
+ty_verb(italian, feed, future, pl(2), pos, [alimenterete]).
+ty_verb(italian, ferment, future, sg, pos, [fermenterà]).
+ty_verb(italian, ferment, future, pl, pos, [fermenteranno]).
+ty_verb(italian, ferment, future, sg(1), pos, [fermenterò]).
+ty_verb(italian, ferment, future, sg(2), pos, [fermenterai]).
+ty_verb(italian, ferment, future, pl(1), pos, [fermenteremo]).
+ty_verb(italian, ferment, future, pl(2), pos, [fermenterete]).
+ty_verb(italian, fight, future, sg, pos, [pugnerà]).
+ty_verb(italian, fight, future, pl, pos, [pugneranno]).
+ty_verb(italian, fight, future, sg(1), pos, [pugnerò]).
+ty_verb(italian, fight, future, sg(2), pos, [pugnerai]).
+ty_verb(italian, fight, future, pl(1), pos, [pugneremo]).
+ty_verb(italian, fight, future, pl(2), pos, [pugnerete]).
+ty_verb(italian, file, future, sg, pos, [archivierà]).
+ty_verb(italian, file, future, pl, pos, [archivieranno]).
+ty_verb(italian, file, future, sg(1), pos, [archivierò]).
+ty_verb(italian, file, future, sg(2), pos, [archivierai]).
+ty_verb(italian, file, future, pl(1), pos, [archivieremo]).
+ty_verb(italian, file, future, pl(2), pos, [archivierete]).
+ty_verb(italian, fill, future, sg, pos, [riempirà]).
+ty_verb(italian, fill, future, pl, pos, [riempiranno]).
+ty_verb(italian, fill, future, sg(1), pos, [riempirò]).
+ty_verb(italian, fill, future, sg(2), pos, [riempirai]).
+ty_verb(italian, fill, future, pl(1), pos, [riempiremo]).
+ty_verb(italian, fill, future, pl(2), pos, [riempirete]).
+ty_verb(italian, film, future, sg, pos, [filmerà]).
+ty_verb(italian, film, future, pl, pos, [filmeranno]).
+ty_verb(italian, film, future, sg(1), pos, [filmerò]).
+ty_verb(italian, film, future, sg(2), pos, [filmerai]).
+ty_verb(italian, film, future, pl(1), pos, [filmeremo]).
+ty_verb(italian, film, future, pl(2), pos, [filmerete]).
+ty_verb(italian, filter, future, sg, pos, [filtrerà]).
+ty_verb(italian, filter, future, pl, pos, [filtreranno]).
+ty_verb(italian, filter, future, sg(1), pos, [filtrerò]).
+ty_verb(italian, filter, future, sg(2), pos, [filtrerai]).
+ty_verb(italian, filter, future, pl(1), pos, [filtreremo]).
+ty_verb(italian, filter, future, pl(2), pos, [filtrerete]).
+ty_verb(italian, finance, future, sg, pos, [finanzierà]).
+ty_verb(italian, finance, future, pl, pos, [finanzieranno]).
+ty_verb(italian, finance, future, sg(1), pos, [finanzierò]).
+ty_verb(italian, finance, future, sg(2), pos, [finanzierai]).
+ty_verb(italian, finance, future, pl(1), pos, [finanzieremo]).
+ty_verb(italian, finance, future, pl(2), pos, [finanzierete]).
+ty_verb(italian, find, future, sg, pos, [incontrerà]).
+ty_verb(italian, find, future, pl, pos, [incontreranno]).
+ty_verb(italian, find, future, sg(1), pos, [incontrerò]).
+ty_verb(italian, find, future, sg(2), pos, [incontrerai]).
+ty_verb(italian, find, future, pl(1), pos, [incontreremo]).
+ty_verb(italian, find, future, pl(2), pos, [incontrerete]).
+ty_verb(italian, fine, future, sg, pos, [multerà]).
+ty_verb(italian, fine, future, pl, pos, [multeranno]).
+ty_verb(italian, fine, future, sg(1), pos, [multerò]).
+ty_verb(italian, fine, future, sg(2), pos, [multerai]).
+ty_verb(italian, fine, future, pl(1), pos, [multeremo]).
+ty_verb(italian, fine, future, pl(2), pos, [multerete]).
+ty_verb(italian, finish, future, sg, pos, [finirà]).
+ty_verb(italian, finish, future, pl, pos, [finiranno]).
+ty_verb(italian, finish, future, sg(1), pos, [finirò]).
+ty_verb(italian, finish, future, sg(2), pos, [finirai]).
+ty_verb(italian, finish, future, pl(1), pos, [finiremo]).
+ty_verb(italian, finish, future, pl(2), pos, [finirete]).
+ty_verb(italian, fish, future, sg, pos, [pescherà]).
+ty_verb(italian, fish, future, pl, pos, [pescheranno]).
+ty_verb(italian, fish, future, sg(1), pos, [pescherò]).
+ty_verb(italian, fish, future, sg(2), pos, [pescherai]).
+ty_verb(italian, fish, future, pl(1), pos, [pescheremo]).
+ty_verb(italian, fish, future, pl(2), pos, [pescherete]).
+ty_verb(italian, float, future, sg, pos, [fluttuerà]).
+ty_verb(italian, float, future, pl, pos, [fluttueranno]).
+ty_verb(italian, float, future, sg(1), pos, [fluttuerò]).
+ty_verb(italian, float, future, sg(2), pos, [fluttuerai]).
+ty_verb(italian, float, future, pl(1), pos, [fluttueremo]).
+ty_verb(italian, float, future, pl(2), pos, [fluttuerete]).
+ty_verb(italian, flow, future, sg, pos, [fluirà]).
+ty_verb(italian, flow, future, pl, pos, [fluiranno]).
+ty_verb(italian, flow, future, sg(1), pos, [fluirò]).
+ty_verb(italian, flow, future, sg(2), pos, [fluirai]).
+ty_verb(italian, flow, future, pl(1), pos, [fluiremo]).
+ty_verb(italian, flow, future, pl(2), pos, [fluirete]).
+ty_verb(italian, flower, future, sg, pos, [fiorirà]).
+ty_verb(italian, flower, future, pl, pos, [fioriranno]).
+ty_verb(italian, flower, future, sg(1), pos, [fiorirò]).
+ty_verb(italian, flower, future, sg(2), pos, [fiorirai]).
+ty_verb(italian, flower, future, pl(1), pos, [fioriremo]).
+ty_verb(italian, flower, future, pl(2), pos, [fiorirete]).
+ty_verb(italian, foam, future, sg, pos, [spumerà]).
+ty_verb(italian, foam, future, pl, pos, [spumeranno]).
+ty_verb(italian, foam, future, sg(1), pos, [spumerò]).
+ty_verb(italian, foam, future, sg(2), pos, [spumerai]).
+ty_verb(italian, foam, future, pl(1), pos, [spumeremo]).
+ty_verb(italian, foam, future, pl(2), pos, [spumerete]).
+ty_verb(italian, fold, future, sg, pos, [piegherà]).
+ty_verb(italian, fold, future, pl, pos, [piegheranno]).
+ty_verb(italian, fold, future, sg(1), pos, [piegherò]).
+ty_verb(italian, fold, future, sg(2), pos, [piegherai]).
+ty_verb(italian, fold, future, pl(1), pos, [piegheremo]).
+ty_verb(italian, fold, future, pl(2), pos, [piegherete]).
+ty_verb(italian, follow, future, sg, pos, [seguirà]).
+ty_verb(italian, follow, future, pl, pos, [seguiranno]).
+ty_verb(italian, follow, future, sg(1), pos, [seguirò]).
+ty_verb(italian, follow, future, sg(2), pos, [seguirai]).
+ty_verb(italian, follow, future, pl(1), pos, [seguiremo]).
+ty_verb(italian, follow, future, pl(2), pos, [seguirete]).
+ty_verb(italian, force, future, sg, pos, [forzerà]).
+ty_verb(italian, force, future, pl, pos, [forzeranno]).
+ty_verb(italian, force, future, sg(1), pos, [forzerò]).
+ty_verb(italian, force, future, sg(2), pos, [forzerai]).
+ty_verb(italian, force, future, pl(1), pos, [forzeremo]).
+ty_verb(italian, force, future, pl(2), pos, [forzerete]).
+ty_verb(italian, foresee, future, sg, pos, [prevedrà]).
+ty_verb(italian, foresee, future, pl, pos, [prevedranno]).
+ty_verb(italian, foresee, future, sg(1), pos, [prevedrò]).
+ty_verb(italian, foresee, future, sg(2), pos, [prevedrai]).
+ty_verb(italian, foresee, future, pl(1), pos, [prevedremo]).
+ty_verb(italian, foresee, future, pl(2), pos, [prevedrete]).
+ty_verb(italian, forget, future, sg, pos, [dimenticherà]).
+ty_verb(italian, forget, future, pl, pos, [dimenticheranno]).
+ty_verb(italian, forget, future, sg(1), pos, [dimenticherò]).
+ty_verb(italian, forget, future, sg(2), pos, [dimenticherai]).
+ty_verb(italian, forget, future, pl(1), pos, [dimenticheremo]).
+ty_verb(italian, forget, future, pl(2), pos, [dimenticherete]).
+ty_verb(italian, forgive, future, sg, pos, [perdonerà]).
+ty_verb(italian, forgive, future, pl, pos, [perdoneranno]).
+ty_verb(italian, forgive, future, sg(1), pos, [perdonerò]).
+ty_verb(italian, forgive, future, sg(2), pos, [perdonerai]).
+ty_verb(italian, forgive, future, pl(1), pos, [perdoneremo]).
+ty_verb(italian, forgive, future, pl(2), pos, [perdonerete]).
+ty_verb(italian, form, future, sg, pos, [formerà]).
+ty_verb(italian, form, future, pl, pos, [formeranno]).
+ty_verb(italian, form, future, sg(1), pos, [formerò]).
+ty_verb(italian, form, future, sg(2), pos, [formerai]).
+ty_verb(italian, form, future, pl(1), pos, [formeremo]).
+ty_verb(italian, form, future, pl(2), pos, [formerete]).
+ty_verb(italian, formalise, future, sg, pos, [formalizzerà]).
+ty_verb(italian, formalise, future, pl, pos, [formalizzeranno]).
+ty_verb(italian, formalise, future, sg(1), pos, [formalizzerò]).
+ty_verb(italian, formalise, future, sg(2), pos, [formalizzerai]).
+ty_verb(italian, formalise, future, pl(1), pos, [formalizzeremo]).
+ty_verb(italian, formalise, future, pl(2), pos, [formalizzerete]).
+ty_verb(italian, formulate, future, sg, pos, [formulerà]).
+ty_verb(italian, formulate, future, pl, pos, [formuleranno]).
+ty_verb(italian, formulate, future, sg(1), pos, [formulerò]).
+ty_verb(italian, formulate, future, sg(2), pos, [formulerai]).
+ty_verb(italian, formulate, future, pl(1), pos, [formuleremo]).
+ty_verb(italian, formulate, future, pl(2), pos, [formulerete]).
+ty_verb(italian, forward, future, sg, pos, [invierà]).
+ty_verb(italian, forward, future, pl, pos, [invieranno]).
+ty_verb(italian, forward, future, sg(1), pos, [invierò]).
+ty_verb(italian, forward, future, sg(2), pos, [invierai]).
+ty_verb(italian, forward, future, pl(1), pos, [invieremo]).
+ty_verb(italian, forward, future, pl(2), pos, [invierete]).
+ty_verb(italian, found, future, sg, pos, [fonderà]).
+ty_verb(italian, found, future, pl, pos, [fonderanno]).
+ty_verb(italian, found, future, sg(1), pos, [fonderò]).
+ty_verb(italian, found, future, sg(2), pos, [fonderai]).
+ty_verb(italian, found, future, pl(1), pos, [fonderemo]).
+ty_verb(italian, found, future, pl(2), pos, [fonderete]).
+ty_verb(italian, fractionate, future, sg, pos, [frazionerà]).
+ty_verb(italian, fractionate, future, pl, pos, [frazioneranno]).
+ty_verb(italian, fractionate, future, sg(1), pos, [frazionerò]).
+ty_verb(italian, fractionate, future, sg(2), pos, [frazionerai]).
+ty_verb(italian, fractionate, future, pl(1), pos, [frazioneremo]).
+ty_verb(italian, fractionate, future, pl(2), pos, [frazionerete]).
+ty_verb(italian, freez, future, sg, pos, [congelerà]).
+ty_verb(italian, freez, future, pl, pos, [congeleranno]).
+ty_verb(italian, freez, future, sg(1), pos, [congelerò]).
+ty_verb(italian, freez, future, sg(2), pos, [congelerai]).
+ty_verb(italian, freez, future, pl(1), pos, [congeleremo]).
+ty_verb(italian, freez, future, pl(2), pos, [congelerete]).
+ty_verb(italian, frustrate, future, sg, pos, [frustrerà]).
+ty_verb(italian, frustrate, future, pl, pos, [frustreranno]).
+ty_verb(italian, frustrate, future, sg(1), pos, [frustrerò]).
+ty_verb(italian, frustrate, future, sg(2), pos, [frustrerai]).
+ty_verb(italian, frustrate, future, pl(1), pos, [frustreremo]).
+ty_verb(italian, frustrate, future, pl(2), pos, [frustrerete]).
+ty_verb(italian, fry, future, sg, pos, [friggerà]).
+ty_verb(italian, fry, future, pl, pos, [friggeranno]).
+ty_verb(italian, fry, future, sg(1), pos, [friggerò]).
+ty_verb(italian, fry, future, sg(2), pos, [friggerai]).
+ty_verb(italian, fry, future, pl(1), pos, [friggeremo]).
+ty_verb(italian, fry, future, pl(2), pos, [friggerete]).
+ty_verb(italian, fuck, future, sg, pos, [scoperà]).
+ty_verb(italian, fuck, future, pl, pos, [scoperanno]).
+ty_verb(italian, fuck, future, sg(1), pos, [scoperò]).
+ty_verb(italian, fuck, future, sg(2), pos, [scoperai]).
+ty_verb(italian, fuck, future, pl(1), pos, [scoperemo]).
+ty_verb(italian, fuck, future, pl(2), pos, [scoperete]).
+ty_verb(italian, function, future, sg, pos, [funzionerà]).
+ty_verb(italian, function, future, pl, pos, [funzioneranno]).
+ty_verb(italian, function, future, sg(1), pos, [funzionerò]).
+ty_verb(italian, function, future, sg(2), pos, [funzionerai]).
+ty_verb(italian, function, future, pl(1), pos, [funzioneremo]).
+ty_verb(italian, function, future, pl(2), pos, [funzionerete]).
+ty_verb(italian, furnish, future, sg, pos, [arrederà]).
+ty_verb(italian, furnish, future, pl, pos, [arrederanno]).
+ty_verb(italian, furnish, future, sg(1), pos, [arrederò]).
+ty_verb(italian, furnish, future, sg(2), pos, [arrederai]).
+ty_verb(italian, furnish, future, pl(1), pos, [arrederemo]).
+ty_verb(italian, furnish, future, pl(2), pos, [arrederete]).
+ty_verb(italian, gain, future, sg, pos, [otterrà]).
+ty_verb(italian, gain, future, pl, pos, [otterranno]).
+ty_verb(italian, gain, future, sg(1), pos, [otterrò]).
+ty_verb(italian, gain, future, sg(2), pos, [otterrai]).
+ty_verb(italian, gain, future, pl(1), pos, [otterremo]).
+ty_verb(italian, gain, future, pl(2), pos, [otterrete]).
+ty_verb(italian, gallop, future, sg, pos, [galopperà]).
+ty_verb(italian, gallop, future, pl, pos, [galopperanno]).
+ty_verb(italian, gallop, future, sg(1), pos, [galopperò]).
+ty_verb(italian, gallop, future, sg(2), pos, [galopperai]).
+ty_verb(italian, gallop, future, pl(1), pos, [galopperemo]).
+ty_verb(italian, gallop, future, pl(2), pos, [galopperete]).
+ty_verb(italian, generalise, future, sg, pos, [generalizzerà]).
+ty_verb(italian, generalise, future, pl, pos, [generalizzeranno]).
+ty_verb(italian, generalise, future, sg(1), pos, [generalizzerò]).
+ty_verb(italian, generalise, future, sg(2), pos, [generalizzerai]).
+ty_verb(italian, generalise, future, pl(1), pos, [generalizzeremo]).
+ty_verb(italian, generalise, future, pl(2), pos, [generalizzerete]).
+ty_verb(italian, generate, future, sg, pos, [genererà]).
+ty_verb(italian, generate, future, pl, pos, [genereranno]).
+ty_verb(italian, generate, future, sg(1), pos, [genererò]).
+ty_verb(italian, generate, future, sg(2), pos, [genererai]).
+ty_verb(italian, generate, future, pl(1), pos, [genereremo]).
+ty_verb(italian, generate, future, pl(2), pos, [genererete]).
+ty_verb(italian, germinate, future, sg, pos, [germinerà]).
+ty_verb(italian, germinate, future, pl, pos, [germineranno]).
+ty_verb(italian, germinate, future, sg(1), pos, [germinerò]).
+ty_verb(italian, germinate, future, sg(2), pos, [germinerai]).
+ty_verb(italian, germinate, future, pl(1), pos, [germineremo]).
+ty_verb(italian, germinate, future, pl(2), pos, [germinerete]).
+ty_verb(italian, gild, future, sg, pos, [dorerà]).
+ty_verb(italian, gild, future, pl, pos, [doreranno]).
+ty_verb(italian, gild, future, sg(1), pos, [dorerò]).
+ty_verb(italian, gild, future, sg(2), pos, [dorerai]).
+ty_verb(italian, gild, future, pl(1), pos, [doreremo]).
+ty_verb(italian, gild, future, pl(2), pos, [dorerete]).
+ty_verb(italian, glimpse, future, sg, pos, [intravedrà]).
+ty_verb(italian, glimpse, future, pl, pos, [intravedranno]).
+ty_verb(italian, glimpse, future, sg(1), pos, [intravedrò]).
+ty_verb(italian, glimpse, future, sg(2), pos, [intravedrai]).
+ty_verb(italian, glimpse, future, pl(1), pos, [intravedremo]).
+ty_verb(italian, glimpse, future, pl(2), pos, [intravedrete]).
+ty_verb(italian, glorify, future, sg, pos, [glorificherà]).
+ty_verb(italian, glorify, future, pl, pos, [glorificheranno]).
+ty_verb(italian, glorify, future, sg(1), pos, [glorificherò]).
+ty_verb(italian, glorify, future, sg(2), pos, [glorificherai]).
+ty_verb(italian, glorify, future, pl(1), pos, [glorificheremo]).
+ty_verb(italian, glorify, future, pl(2), pos, [glorificherete]).
+ty_verb(italian, gloss, future, sg, pos, [luciderà]).
+ty_verb(italian, gloss, future, pl, pos, [lucideranno]).
+ty_verb(italian, gloss, future, sg(1), pos, [luciderò]).
+ty_verb(italian, gloss, future, sg(2), pos, [luciderai]).
+ty_verb(italian, gloss, future, pl(1), pos, [lucideremo]).
+ty_verb(italian, gloss, future, pl(2), pos, [luciderete]).
+ty_verb(italian, go, future, sg, pos, [andrà]).
+ty_verb(italian, go, future, pl, pos, [andranno]).
+ty_verb(italian, go, future, sg(1), pos, [andrò]).
+ty_verb(italian, go, future, sg(2), pos, [andrai]).
+ty_verb(italian, go, future, pl(1), pos, [andremo]).
+ty_verb(italian, go, future, pl(2), pos, [andrete]).
+ty_verb(italian, govern, future, sg, pos, [governerà]).
+ty_verb(italian, govern, future, pl, pos, [governeranno]).
+ty_verb(italian, govern, future, sg(1), pos, [governerò]).
+ty_verb(italian, govern, future, sg(2), pos, [governerai]).
+ty_verb(italian, govern, future, pl(1), pos, [governeremo]).
+ty_verb(italian, govern, future, pl(2), pos, [governerete]).
+ty_verb(italian, graduate, future, sg, pos, [laureerà]).
+ty_verb(italian, graduate, future, pl, pos, [laureeranno]).
+ty_verb(italian, graduate, future, sg(1), pos, [laureerò]).
+ty_verb(italian, graduate, future, sg(2), pos, [laureerai]).
+ty_verb(italian, graduate, future, pl(1), pos, [laureeremo]).
+ty_verb(italian, graduate, future, pl(2), pos, [laureerete]).
+ty_verb(italian, gratify, future, sg, pos, [gratificherà]).
+ty_verb(italian, gratify, future, pl, pos, [gratificheranno]).
+ty_verb(italian, gratify, future, sg(1), pos, [gratificherò]).
+ty_verb(italian, gratify, future, sg(2), pos, [gratificherai]).
+ty_verb(italian, gratify, future, pl(1), pos, [gratificheremo]).
+ty_verb(italian, gratify, future, pl(2), pos, [gratificherete]).
+ty_verb(italian, graz, future, sg, pos, [pascolerà]).
+ty_verb(italian, graz, future, pl, pos, [pascoleranno]).
+ty_verb(italian, graz, future, sg(1), pos, [pascolerò]).
+ty_verb(italian, graz, future, sg(2), pos, [pascolerai]).
+ty_verb(italian, graz, future, pl(1), pos, [pascoleremo]).
+ty_verb(italian, graz, future, pl(2), pos, [pascolerete]).
+ty_verb(italian, greet, future, sg, pos, [saluterà]).
+ty_verb(italian, greet, future, pl, pos, [saluteranno]).
+ty_verb(italian, greet, future, sg(1), pos, [saluterò]).
+ty_verb(italian, greet, future, sg(2), pos, [saluterai]).
+ty_verb(italian, greet, future, pl(1), pos, [saluteremo]).
+ty_verb(italian, greet, future, pl(2), pos, [saluterete]).
+ty_verb(italian, grow, future, sg, pos, [crescerà]).
+ty_verb(italian, grow, future, pl, pos, [cresceranno]).
+ty_verb(italian, grow, future, sg(1), pos, [crescerò]).
+ty_verb(italian, grow, future, sg(2), pos, [crescerai]).
+ty_verb(italian, grow, future, pl(1), pos, [cresceremo]).
+ty_verb(italian, grow, future, pl(2), pos, [crescerete]).
+ty_verb(italian, guarantee, future, sg, pos, [garantirà]).
+ty_verb(italian, guarantee, future, pl, pos, [garantiranno]).
+ty_verb(italian, guarantee, future, sg(1), pos, [garantirò]).
+ty_verb(italian, guarantee, future, sg(2), pos, [garantirai]).
+ty_verb(italian, guarantee, future, pl(1), pos, [garantiremo]).
+ty_verb(italian, guarantee, future, pl(2), pos, [garantirete]).
+ty_verb(italian, guess, future, sg, pos, [indovinerà]).
+ty_verb(italian, guess, future, pl, pos, [indovineranno]).
+ty_verb(italian, guess, future, sg(1), pos, [indovinerò]).
+ty_verb(italian, guess, future, sg(2), pos, [indovinerai]).
+ty_verb(italian, guess, future, pl(1), pos, [indovineremo]).
+ty_verb(italian, guess, future, pl(2), pos, [indovinerete]).
+ty_verb(italian, guide, future, sg, pos, [guiderà]).
+ty_verb(italian, guide, future, pl, pos, [guideranno]).
+ty_verb(italian, guide, future, sg(1), pos, [guiderò]).
+ty_verb(italian, guide, future, sg(2), pos, [guiderai]).
+ty_verb(italian, guide, future, pl(1), pos, [guideremo]).
+ty_verb(italian, guide, future, pl(2), pos, [guiderete]).
+ty_verb(italian, hammer, future, sg, pos, [martellerà]).
+ty_verb(italian, hammer, future, pl, pos, [martelleranno]).
+ty_verb(italian, hammer, future, sg(1), pos, [martellerò]).
+ty_verb(italian, hammer, future, sg(2), pos, [martellerai]).
+ty_verb(italian, hammer, future, pl(1), pos, [martelleremo]).
+ty_verb(italian, hammer, future, pl(2), pos, [martellerete]).
+ty_verb(italian, hamper, future, sg, pos, [impaccerà]).
+ty_verb(italian, hamper, future, pl, pos, [impacceranno]).
+ty_verb(italian, hamper, future, sg(1), pos, [impaccerò]).
+ty_verb(italian, hamper, future, sg(2), pos, [impaccerai]).
+ty_verb(italian, hamper, future, pl(1), pos, [impacceremo]).
+ty_verb(italian, hamper, future, pl(2), pos, [impaccerete]).
+ty_verb(italian, handle, future, sg, pos, [manipolerà]).
+ty_verb(italian, handle, future, pl, pos, [manipoleranno]).
+ty_verb(italian, handle, future, sg(1), pos, [manipolerò]).
+ty_verb(italian, handle, future, sg(2), pos, [manipolerai]).
+ty_verb(italian, handle, future, pl(1), pos, [manipoleremo]).
+ty_verb(italian, handle, future, pl(2), pos, [manipolerete]).
+ty_verb(italian, hang, future, sg, pos, [penderà]).
+ty_verb(italian, hang, future, pl, pos, [penderanno]).
+ty_verb(italian, hang, future, sg(1), pos, [penderò]).
+ty_verb(italian, hang, future, sg(2), pos, [penderai]).
+ty_verb(italian, hang, future, pl(1), pos, [penderemo]).
+ty_verb(italian, hang, future, pl(2), pos, [penderete]).
+ty_verb(italian, harmonise, future, sg, pos, [armonizzerà]).
+ty_verb(italian, harmonise, future, pl, pos, [armonizzeranno]).
+ty_verb(italian, harmonise, future, sg(1), pos, [armonizzerò]).
+ty_verb(italian, harmonise, future, sg(2), pos, [armonizzerai]).
+ty_verb(italian, harmonise, future, pl(1), pos, [armonizzeremo]).
+ty_verb(italian, harmonise, future, pl(2), pos, [armonizzerete]).
+ty_verb(italian, hatch, future, sg, pos, [coverà]).
+ty_verb(italian, hatch, future, pl, pos, [coveranno]).
+ty_verb(italian, hatch, future, sg(1), pos, [coverò]).
+ty_verb(italian, hatch, future, sg(2), pos, [coverai]).
+ty_verb(italian, hatch, future, pl(1), pos, [coveremo]).
+ty_verb(italian, hatch, future, pl(2), pos, [coverete]).
+ty_verb(italian, hate, future, sg, pos, [odierà]).
+ty_verb(italian, hate, future, pl, pos, [odieranno]).
+ty_verb(italian, hate, future, sg(1), pos, [odierò]).
+ty_verb(italian, hate, future, sg(2), pos, [odierai]).
+ty_verb(italian, hate, future, pl(1), pos, [odieremo]).
+ty_verb(italian, hate, future, pl(2), pos, [odierete]).
+ty_verb(italian, have, future, sg, pos, [avrà]).
+ty_verb(italian, have, future, pl, pos, [avranno]).
+ty_verb(italian, have, future, sg(1), pos, [avrò]).
+ty_verb(italian, have, future, sg(2), pos, [avrai]).
+ty_verb(italian, have, future, pl(1), pos, [avremo]).
+ty_verb(italian, have, future, pl(2), pos, [avrete]).
+ty_verb(italian, heal, future, sg, pos, [sanerà]).
+ty_verb(italian, heal, future, pl, pos, [saneranno]).
+ty_verb(italian, heal, future, sg(1), pos, [sanerò]).
+ty_verb(italian, heal, future, sg(2), pos, [sanerai]).
+ty_verb(italian, heal, future, pl(1), pos, [saneremo]).
+ty_verb(italian, heal, future, pl(2), pos, [sanerete]).
+ty_verb(italian, hear, future, sg, pos, [udirà]).
+ty_verb(italian, hear, future, pl, pos, [udiranno]).
+ty_verb(italian, hear, future, sg(1), pos, [udirò]).
+ty_verb(italian, hear, future, sg(2), pos, [udirai]).
+ty_verb(italian, hear, future, pl(1), pos, [udiremo]).
+ty_verb(italian, hear, future, pl(2), pos, [udirete]).
+ty_verb(italian, heat, future, sg, pos, [riscalderà]).
+ty_verb(italian, heat, future, pl, pos, [riscalderanno]).
+ty_verb(italian, heat, future, sg(1), pos, [riscalderò]).
+ty_verb(italian, heat, future, sg(2), pos, [riscalderai]).
+ty_verb(italian, heat, future, pl(1), pos, [riscalderemo]).
+ty_verb(italian, heat, future, pl(2), pos, [riscalderete]).
+ty_verb(italian, help, future, sg, pos, [aiuterà]).
+ty_verb(italian, help, future, pl, pos, [aiuteranno]).
+ty_verb(italian, help, future, sg(1), pos, [aiuterò]).
+ty_verb(italian, help, future, sg(2), pos, [aiuterai]).
+ty_verb(italian, help, future, pl(1), pos, [aiuteremo]).
+ty_verb(italian, help, future, pl(2), pos, [aiuterete]).
+ty_verb(italian, hesitate, future, sg, pos, [esiterà]).
+ty_verb(italian, hesitate, future, pl, pos, [esiteranno]).
+ty_verb(italian, hesitate, future, sg(1), pos, [esiterò]).
+ty_verb(italian, hesitate, future, sg(2), pos, [esiterai]).
+ty_verb(italian, hesitate, future, pl(1), pos, [esiteremo]).
+ty_verb(italian, hesitate, future, pl(2), pos, [esiterete]).
+ty_verb(italian, highlight, future, sg, pos, [distaccherà]).
+ty_verb(italian, highlight, future, pl, pos, [distaccheranno]).
+ty_verb(italian, highlight, future, sg(1), pos, [distaccherò]).
+ty_verb(italian, highlight, future, sg(2), pos, [distaccherai]).
+ty_verb(italian, highlight, future, pl(1), pos, [distaccheremo]).
+ty_verb(italian, highlight, future, pl(2), pos, [distaccherete]).
+ty_verb(italian, hire, future, sg, pos, [affitterà]).
+ty_verb(italian, hire, future, pl, pos, [affitteranno]).
+ty_verb(italian, hire, future, sg(1), pos, [affitterò]).
+ty_verb(italian, hire, future, sg(2), pos, [affitterai]).
+ty_verb(italian, hire, future, pl(1), pos, [affitteremo]).
+ty_verb(italian, hire, future, pl(2), pos, [affitterete]).
+ty_verb(italian, hit, future, sg, pos, [incollerà]).
+ty_verb(italian, hit, future, pl, pos, [incolleranno]).
+ty_verb(italian, hit, future, sg(1), pos, [incollerò]).
+ty_verb(italian, hit, future, sg(2), pos, [incollerai]).
+ty_verb(italian, hit, future, pl(1), pos, [incolleremo]).
+ty_verb(italian, hit, future, pl(2), pos, [incollerete]).
+ty_verb(italian, hold, future, sg, pos, [terrà]).
+ty_verb(italian, hold, future, pl, pos, [terranno]).
+ty_verb(italian, hold, future, sg(1), pos, [terrò]).
+ty_verb(italian, hold, future, sg(2), pos, [terrai]).
+ty_verb(italian, hold, future, pl(1), pos, [terremo]).
+ty_verb(italian, hold, future, pl(2), pos, [terrete]).
+ty_verb(italian, honour, future, sg, pos, [onorerà]).
+ty_verb(italian, honour, future, pl, pos, [onoreranno]).
+ty_verb(italian, honour, future, sg(1), pos, [onorerò]).
+ty_verb(italian, honour, future, sg(2), pos, [onorerai]).
+ty_verb(italian, honour, future, pl(1), pos, [onoreremo]).
+ty_verb(italian, honour, future, pl(2), pos, [onorerete]).
+ty_verb(italian, hover, future, sg, pos, [sorvolerà]).
+ty_verb(italian, hover, future, pl, pos, [sorvoleranno]).
+ty_verb(italian, hover, future, sg(1), pos, [sorvolerò]).
+ty_verb(italian, hover, future, sg(2), pos, [sorvolerai]).
+ty_verb(italian, hover, future, pl(1), pos, [sorvoleremo]).
+ty_verb(italian, hover, future, pl(2), pos, [sorvolerete]).
+ty_verb(italian, humanise, future, sg, pos, [umanizzerà]).
+ty_verb(italian, humanise, future, pl, pos, [umanizzeranno]).
+ty_verb(italian, humanise, future, sg(1), pos, [umanizzerò]).
+ty_verb(italian, humanise, future, sg(2), pos, [umanizzerai]).
+ty_verb(italian, humanise, future, pl(1), pos, [umanizzeremo]).
+ty_verb(italian, humanise, future, pl(2), pos, [umanizzerete]).
+ty_verb(italian, humiliate, future, sg, pos, [umilierà]).
+ty_verb(italian, humiliate, future, pl, pos, [umilieranno]).
+ty_verb(italian, humiliate, future, sg(1), pos, [umilierò]).
+ty_verb(italian, humiliate, future, sg(2), pos, [umilierai]).
+ty_verb(italian, humiliate, future, pl(1), pos, [umilieremo]).
+ty_verb(italian, humiliate, future, pl(2), pos, [umilierete]).
+ty_verb(italian, hunt, future, sg, pos, [caccerà]).
+ty_verb(italian, hunt, future, pl, pos, [cacceranno]).
+ty_verb(italian, hunt, future, sg(1), pos, [caccerò]).
+ty_verb(italian, hunt, future, sg(2), pos, [caccerai]).
+ty_verb(italian, hunt, future, pl(1), pos, [cacceremo]).
+ty_verb(italian, hunt, future, pl(2), pos, [caccerete]).
+ty_verb(italian, hurry, future, sg, pos, [accorrerà]).
+ty_verb(italian, hurry, future, pl, pos, [accorreranno]).
+ty_verb(italian, hurry, future, sg(1), pos, [accorrerò]).
+ty_verb(italian, hurry, future, sg(2), pos, [accorrerai]).
+ty_verb(italian, hurry, future, pl(1), pos, [accorreremo]).
+ty_verb(italian, hurry, future, pl(2), pos, [accorrerete]).
+ty_verb(italian, hurt, future, sg, pos, [dolerà]).
+ty_verb(italian, hurt, future, pl, pos, [doleranno]).
+ty_verb(italian, hurt, future, sg(1), pos, [dolerò]).
+ty_verb(italian, hurt, future, sg(2), pos, [dolerai]).
+ty_verb(italian, hurt, future, pl(1), pos, [doleremo]).
+ty_verb(italian, hurt, future, pl(2), pos, [dolerete]).
+ty_verb(italian, idealise, future, sg, pos, [idealizzerà]).
+ty_verb(italian, idealise, future, pl, pos, [idealizzeranno]).
+ty_verb(italian, idealise, future, sg(1), pos, [idealizzerò]).
+ty_verb(italian, idealise, future, sg(2), pos, [idealizzerai]).
+ty_verb(italian, idealise, future, pl(1), pos, [idealizzeremo]).
+ty_verb(italian, idealise, future, pl(2), pos, [idealizzerete]).
+ty_verb(italian, identify, future, sg, pos, [identificherà]).
+ty_verb(italian, identify, future, pl, pos, [identificheranno]).
+ty_verb(italian, identify, future, sg(1), pos, [identificherò]).
+ty_verb(italian, identify, future, sg(2), pos, [identificherai]).
+ty_verb(italian, identify, future, pl(1), pos, [identificheremo]).
+ty_verb(italian, identify, future, pl(2), pos, [identificherete]).
+ty_verb(italian, idolise, future, sg, pos, [idolatrerà]).
+ty_verb(italian, idolise, future, pl, pos, [idolatreranno]).
+ty_verb(italian, idolise, future, sg(1), pos, [idolatrerò]).
+ty_verb(italian, idolise, future, sg(2), pos, [idolatrerai]).
+ty_verb(italian, idolise, future, pl(1), pos, [idolatreremo]).
+ty_verb(italian, idolise, future, pl(2), pos, [idolatrerete]).
+ty_verb(italian, ignite, future, sg, pos, [incendierà]).
+ty_verb(italian, ignite, future, pl, pos, [incendieranno]).
+ty_verb(italian, ignite, future, sg(1), pos, [incendierò]).
+ty_verb(italian, ignite, future, sg(2), pos, [incendierai]).
+ty_verb(italian, ignite, future, pl(1), pos, [incendieremo]).
+ty_verb(italian, ignite, future, pl(2), pos, [incendierete]).
+ty_verb(italian, ignore, future, sg, pos, [ignorerà]).
+ty_verb(italian, ignore, future, pl, pos, [ignoreranno]).
+ty_verb(italian, ignore, future, sg(1), pos, [ignorerò]).
+ty_verb(italian, ignore, future, sg(2), pos, [ignorerai]).
+ty_verb(italian, ignore, future, pl(1), pos, [ignoreremo]).
+ty_verb(italian, ignore, future, pl(2), pos, [ignorerete]).
+ty_verb(italian, illustrate, future, sg, pos, [illustrerà]).
+ty_verb(italian, illustrate, future, pl, pos, [illustreranno]).
+ty_verb(italian, illustrate, future, sg(1), pos, [illustrerò]).
+ty_verb(italian, illustrate, future, sg(2), pos, [illustrerai]).
+ty_verb(italian, illustrate, future, pl(1), pos, [illustreremo]).
+ty_verb(italian, illustrate, future, pl(2), pos, [illustrerete]).
+ty_verb(italian, imagine, future, sg, pos, [immaginerà]).
+ty_verb(italian, imagine, future, pl, pos, [immagineranno]).
+ty_verb(italian, imagine, future, sg(1), pos, [immaginerò]).
+ty_verb(italian, imagine, future, sg(2), pos, [immaginerai]).
+ty_verb(italian, imagine, future, pl(1), pos, [immagineremo]).
+ty_verb(italian, imagine, future, pl(2), pos, [immaginerete]).
+ty_verb(italian, imitate, future, sg, pos, [imiterà]).
+ty_verb(italian, imitate, future, pl, pos, [imiteranno]).
+ty_verb(italian, imitate, future, sg(1), pos, [imiterò]).
+ty_verb(italian, imitate, future, sg(2), pos, [imiterai]).
+ty_verb(italian, imitate, future, pl(1), pos, [imiteremo]).
+ty_verb(italian, imitate, future, pl(2), pos, [imiterete]).
+ty_verb(italian, impart, future, sg, pos, [impartirà]).
+ty_verb(italian, impart, future, pl, pos, [impartiranno]).
+ty_verb(italian, impart, future, sg(1), pos, [impartirò]).
+ty_verb(italian, impart, future, sg(2), pos, [impartirai]).
+ty_verb(italian, impart, future, pl(1), pos, [impartiremo]).
+ty_verb(italian, impart, future, pl(2), pos, [impartirete]).
+ty_verb(italian, implant, future, sg, pos, [inculcherà]).
+ty_verb(italian, implant, future, pl, pos, [inculcheranno]).
+ty_verb(italian, implant, future, sg(1), pos, [inculcherò]).
+ty_verb(italian, implant, future, sg(2), pos, [inculcherai]).
+ty_verb(italian, implant, future, pl(1), pos, [inculcheremo]).
+ty_verb(italian, implant, future, pl(2), pos, [inculcherete]).
+ty_verb(italian, implement, future, sg, pos, [attuerà]).
+ty_verb(italian, implement, future, pl, pos, [attueranno]).
+ty_verb(italian, implement, future, sg(1), pos, [attuerò]).
+ty_verb(italian, implement, future, sg(2), pos, [attuerai]).
+ty_verb(italian, implement, future, pl(1), pos, [attueremo]).
+ty_verb(italian, implement, future, pl(2), pos, [attuerete]).
+ty_verb(italian, imply, future, sg, pos, [implicherà]).
+ty_verb(italian, imply, future, pl, pos, [implicheranno]).
+ty_verb(italian, imply, future, sg(1), pos, [implicherò]).
+ty_verb(italian, imply, future, sg(2), pos, [implicherai]).
+ty_verb(italian, imply, future, pl(1), pos, [implicheremo]).
+ty_verb(italian, imply, future, pl(2), pos, [implicherete]).
+ty_verb(italian, impose, future, sg, pos, [comminerà]).
+ty_verb(italian, impose, future, pl, pos, [commineranno]).
+ty_verb(italian, impose, future, sg(1), pos, [comminerò]).
+ty_verb(italian, impose, future, sg(2), pos, [comminerai]).
+ty_verb(italian, impose, future, pl(1), pos, [commineremo]).
+ty_verb(italian, impose, future, pl(2), pos, [comminerete]).
+ty_verb(italian, impoverish, future, sg, pos, [impoverirà]).
+ty_verb(italian, impoverish, future, pl, pos, [impoveriranno]).
+ty_verb(italian, impoverish, future, sg(1), pos, [impoverirò]).
+ty_verb(italian, impoverish, future, sg(2), pos, [impoverirai]).
+ty_verb(italian, impoverish, future, pl(1), pos, [impoveriremo]).
+ty_verb(italian, impoverish, future, pl(2), pos, [impoverirete]).
+ty_verb(italian, impregnate, future, sg, pos, [impregnerà]).
+ty_verb(italian, impregnate, future, pl, pos, [impregneranno]).
+ty_verb(italian, impregnate, future, sg(1), pos, [impregnerò]).
+ty_verb(italian, impregnate, future, sg(2), pos, [impregnerai]).
+ty_verb(italian, impregnate, future, pl(1), pos, [impregneremo]).
+ty_verb(italian, impregnate, future, pl(2), pos, [impregnerete]).
+ty_verb(italian, impress, future, sg, pos, [impressionerà]).
+ty_verb(italian, impress, future, pl, pos, [impressioneranno]).
+ty_verb(italian, impress, future, sg(1), pos, [impressionerò]).
+ty_verb(italian, impress, future, sg(2), pos, [impressionerai]).
+ty_verb(italian, impress, future, pl(1), pos, [impressioneremo]).
+ty_verb(italian, impress, future, pl(2), pos, [impressionerete]).
+ty_verb(italian, imprison, future, sg, pos, [imprigionerà]).
+ty_verb(italian, imprison, future, pl, pos, [imprigioneranno]).
+ty_verb(italian, imprison, future, sg(1), pos, [imprigionerò]).
+ty_verb(italian, imprison, future, sg(2), pos, [imprigionerai]).
+ty_verb(italian, imprison, future, pl(1), pos, [imprigioneremo]).
+ty_verb(italian, imprison, future, pl(2), pos, [imprigionerete]).
+ty_verb(italian, improvise, future, sg, pos, [improvviserà]).
+ty_verb(italian, improvise, future, pl, pos, [improvviseranno]).
+ty_verb(italian, improvise, future, sg(1), pos, [improvviserò]).
+ty_verb(italian, improvise, future, sg(2), pos, [improvviserai]).
+ty_verb(italian, improvise, future, pl(1), pos, [improvviseremo]).
+ty_verb(italian, improvise, future, pl(2), pos, [improvviserete]).
+ty_verb(italian, impugn, future, sg, pos, [impugnerà]).
+ty_verb(italian, impugn, future, pl, pos, [impugneranno]).
+ty_verb(italian, impugn, future, sg(1), pos, [impugnerò]).
+ty_verb(italian, impugn, future, sg(2), pos, [impugnerai]).
+ty_verb(italian, impugn, future, pl(1), pos, [impugneremo]).
+ty_verb(italian, impugn, future, pl(2), pos, [impugnerete]).
+ty_verb(italian, impute, future, sg, pos, [imputerà]).
+ty_verb(italian, impute, future, pl, pos, [imputeranno]).
+ty_verb(italian, impute, future, sg(1), pos, [imputerò]).
+ty_verb(italian, impute, future, sg(2), pos, [imputerai]).
+ty_verb(italian, impute, future, pl(1), pos, [imputeremo]).
+ty_verb(italian, impute, future, pl(2), pos, [imputerete]).
+ty_verb(italian, inaugurate, future, sg, pos, [inaugurerà]).
+ty_verb(italian, inaugurate, future, pl, pos, [inaugureranno]).
+ty_verb(italian, inaugurate, future, sg(1), pos, [inaugurerò]).
+ty_verb(italian, inaugurate, future, sg(2), pos, [inaugurerai]).
+ty_verb(italian, inaugurate, future, pl(1), pos, [inaugureremo]).
+ty_verb(italian, inaugurate, future, pl(2), pos, [inaugurerete]).
+ty_verb(italian, incapacitate, future, sg, pos, [inabiliterà]).
+ty_verb(italian, incapacitate, future, pl, pos, [inabiliteranno]).
+ty_verb(italian, incapacitate, future, sg(1), pos, [inabiliterò]).
+ty_verb(italian, incapacitate, future, sg(2), pos, [inabiliterai]).
+ty_verb(italian, incapacitate, future, pl(1), pos, [inabiliteremo]).
+ty_verb(italian, incapacitate, future, pl(2), pos, [inabiliterete]).
+ty_verb(italian, incite, future, sg, pos, [inciterà]).
+ty_verb(italian, incite, future, pl, pos, [inciteranno]).
+ty_verb(italian, incite, future, sg(1), pos, [inciterò]).
+ty_verb(italian, incite, future, sg(2), pos, [inciterai]).
+ty_verb(italian, incite, future, pl(1), pos, [inciteremo]).
+ty_verb(italian, incite, future, pl(2), pos, [inciterete]).
+ty_verb(italian, include, future, sg, pos, [includerà]).
+ty_verb(italian, include, future, pl, pos, [includeranno]).
+ty_verb(italian, include, future, sg(1), pos, [includerò]).
+ty_verb(italian, include, future, sg(2), pos, [includerai]).
+ty_verb(italian, include, future, pl(1), pos, [includeremo]).
+ty_verb(italian, include, future, pl(2), pos, [includerete]).
+ty_verb(italian, incorporate, future, sg, pos, [incorporerà]).
+ty_verb(italian, incorporate, future, pl, pos, [incorporeranno]).
+ty_verb(italian, incorporate, future, sg(1), pos, [incorporerò]).
+ty_verb(italian, incorporate, future, sg(2), pos, [incorporerai]).
+ty_verb(italian, incorporate, future, pl(1), pos, [incorporeremo]).
+ty_verb(italian, incorporate, future, pl(2), pos, [incorporerete]).
+ty_verb(italian, incriminate, future, sg, pos, [incriminerà]).
+ty_verb(italian, incriminate, future, pl, pos, [incrimineranno]).
+ty_verb(italian, incriminate, future, sg(1), pos, [incriminerò]).
+ty_verb(italian, incriminate, future, sg(2), pos, [incriminerai]).
+ty_verb(italian, incriminate, future, pl(1), pos, [incrimineremo]).
+ty_verb(italian, incriminate, future, pl(2), pos, [incriminerete]).
+ty_verb(italian, incur, future, sg, pos, [incorrerà]).
+ty_verb(italian, incur, future, pl, pos, [incorreranno]).
+ty_verb(italian, incur, future, sg(1), pos, [incorrerò]).
+ty_verb(italian, incur, future, sg(2), pos, [incorrerai]).
+ty_verb(italian, incur, future, pl(1), pos, [incorreremo]).
+ty_verb(italian, incur, future, pl(2), pos, [incorrerete]).
+ty_verb(italian, indemnify, future, sg, pos, [indennizzerà]).
+ty_verb(italian, indemnify, future, pl, pos, [indennizzeranno]).
+ty_verb(italian, indemnify, future, sg(1), pos, [indennizzerò]).
+ty_verb(italian, indemnify, future, sg(2), pos, [indennizzerai]).
+ty_verb(italian, indemnify, future, pl(1), pos, [indennizzeremo]).
+ty_verb(italian, indemnify, future, pl(2), pos, [indennizzerete]).
+ty_verb(italian, indicate, future, sg, pos, [indicherà]).
+ty_verb(italian, indicate, future, pl, pos, [indicheranno]).
+ty_verb(italian, indicate, future, sg(1), pos, [indicherò]).
+ty_verb(italian, indicate, future, sg(2), pos, [indicherai]).
+ty_verb(italian, indicate, future, pl(1), pos, [indicheremo]).
+ty_verb(italian, indicate, future, pl(2), pos, [indicherete]).
+ty_verb(italian, induce, future, sg, pos, [indurrà]).
+ty_verb(italian, induce, future, pl, pos, [indurranno]).
+ty_verb(italian, induce, future, sg(1), pos, [indurrò]).
+ty_verb(italian, induce, future, sg(2), pos, [indurrai]).
+ty_verb(italian, induce, future, pl(1), pos, [indurremo]).
+ty_verb(italian, induce, future, pl(2), pos, [indurrete]).
+ty_verb(italian, industrialise, future, sg, pos, [industrializzerà]).
+ty_verb(italian, industrialise, future, pl, pos, [industrializzeranno]).
+ty_verb(italian, industrialise, future, sg(1), pos, [industrializzerò]).
+ty_verb(italian, industrialise, future, sg(2), pos, [industrializzerai]).
+ty_verb(italian, industrialise, future, pl(1), pos, [industrializzeremo]).
+ty_verb(italian, industrialise, future, pl(2), pos, [industrializzerete]).
+ty_verb(italian, infect, future, sg, pos, [contagerà]).
+ty_verb(italian, infect, future, pl, pos, [contageranno]).
+ty_verb(italian, infect, future, sg(1), pos, [contagerò]).
+ty_verb(italian, infect, future, sg(2), pos, [contagerai]).
+ty_verb(italian, infect, future, pl(1), pos, [contageremo]).
+ty_verb(italian, infect, future, pl(2), pos, [contagerete]).
+ty_verb(italian, infiltrate, future, sg, pos, [infiltrerà]).
+ty_verb(italian, infiltrate, future, pl, pos, [infiltreranno]).
+ty_verb(italian, infiltrate, future, sg(1), pos, [infiltrerò]).
+ty_verb(italian, infiltrate, future, sg(2), pos, [infiltrerai]).
+ty_verb(italian, infiltrate, future, pl(1), pos, [infiltreremo]).
+ty_verb(italian, infiltrate, future, pl(2), pos, [infiltrerete]).
+ty_verb(italian, inflate, future, sg, pos, [inflazionerà]).
+ty_verb(italian, inflate, future, pl, pos, [inflazioneranno]).
+ty_verb(italian, inflate, future, sg(1), pos, [inflazionerò]).
+ty_verb(italian, inflate, future, sg(2), pos, [inflazionerai]).
+ty_verb(italian, inflate, future, pl(1), pos, [inflazioneremo]).
+ty_verb(italian, inflate, future, pl(2), pos, [inflazionerete]).
+ty_verb(italian, inhale, future, sg, pos, [inalerà]).
+ty_verb(italian, inhale, future, pl, pos, [inaleranno]).
+ty_verb(italian, inhale, future, sg(1), pos, [inalerò]).
+ty_verb(italian, inhale, future, sg(2), pos, [inalerai]).
+ty_verb(italian, inhale, future, pl(1), pos, [inaleremo]).
+ty_verb(italian, inhale, future, pl(2), pos, [inalerete]).
+ty_verb(italian, inherit, future, sg, pos, [erediterà]).
+ty_verb(italian, inherit, future, pl, pos, [erediteranno]).
+ty_verb(italian, inherit, future, sg(1), pos, [erediterò]).
+ty_verb(italian, inherit, future, sg(2), pos, [erediterai]).
+ty_verb(italian, inherit, future, pl(1), pos, [erediteremo]).
+ty_verb(italian, inherit, future, pl(2), pos, [erediterete]).
+ty_verb(italian, inhibit, future, sg, pos, [inibirà]).
+ty_verb(italian, inhibit, future, pl, pos, [inibiranno]).
+ty_verb(italian, inhibit, future, sg(1), pos, [inibirò]).
+ty_verb(italian, inhibit, future, sg(2), pos, [inibirai]).
+ty_verb(italian, inhibit, future, pl(1), pos, [inibiremo]).
+ty_verb(italian, inhibit, future, pl(2), pos, [inibirete]).
+ty_verb(italian, inhume, future, sg, pos, [inumerà]).
+ty_verb(italian, inhume, future, pl, pos, [inumeranno]).
+ty_verb(italian, inhume, future, sg(1), pos, [inumerò]).
+ty_verb(italian, inhume, future, sg(2), pos, [inumerai]).
+ty_verb(italian, inhume, future, pl(1), pos, [inumeremo]).
+ty_verb(italian, inhume, future, pl(2), pos, [inumerete]).
+ty_verb(italian, initiate, future, sg, pos, [avvierà]).
+ty_verb(italian, initiate, future, pl, pos, [avvieranno]).
+ty_verb(italian, initiate, future, sg(1), pos, [avvierò]).
+ty_verb(italian, initiate, future, sg(2), pos, [avvierai]).
+ty_verb(italian, initiate, future, pl(1), pos, [avvieremo]).
+ty_verb(italian, initiate, future, pl(2), pos, [avvierete]).
+ty_verb(italian, inject, future, sg, pos, [inietterà]).
+ty_verb(italian, inject, future, pl, pos, [inietteranno]).
+ty_verb(italian, inject, future, sg(1), pos, [inietterò]).
+ty_verb(italian, inject, future, sg(2), pos, [inietterai]).
+ty_verb(italian, inject, future, pl(1), pos, [inietteremo]).
+ty_verb(italian, inject, future, pl(2), pos, [inietterete]).
+ty_verb(italian, injure, future, sg, pos, [ferirà]).
+ty_verb(italian, injure, future, pl, pos, [feriranno]).
+ty_verb(italian, injure, future, sg(1), pos, [ferirò]).
+ty_verb(italian, injure, future, sg(2), pos, [ferirai]).
+ty_verb(italian, injure, future, pl(1), pos, [feriremo]).
+ty_verb(italian, injure, future, pl(2), pos, [ferirete]).
+ty_verb(italian, inscribe, future, sg, pos, [inscriverà]).
+ty_verb(italian, inscribe, future, pl, pos, [inscriveranno]).
+ty_verb(italian, inscribe, future, sg(1), pos, [inscriverò]).
+ty_verb(italian, inscribe, future, sg(2), pos, [inscriverai]).
+ty_verb(italian, inscribe, future, pl(1), pos, [inscriveremo]).
+ty_verb(italian, inscribe, future, pl(2), pos, [inscriverete]).
+ty_verb(italian, reforest, future, sg, pos, [rimboscherà]).
+ty_verb(italian, reforest, future, pl, pos, [rimboscheranno]).
+ty_verb(italian, reforest, future, sg(1), pos, [rimboscherò]).
+ty_verb(italian, reforest, future, sg(2), pos, [rimboscherai]).
+ty_verb(italian, reforest, future, pl(1), pos, [rimboscheremo]).
+ty_verb(italian, reforest, future, pl(2), pos, [rimboscherete]).
+ty_verb(italian, insert, future, sg, pos, [inserirà]).
+ty_verb(italian, insert, future, pl, pos, [inseriranno]).
+ty_verb(italian, insert, future, sg(1), pos, [inserirò]).
+ty_verb(italian, insert, future, sg(2), pos, [inserirai]).
+ty_verb(italian, insert, future, pl(1), pos, [inseriremo]).
+ty_verb(italian, insert, future, pl(2), pos, [inserirete]).
+ty_verb(italian, insinuate, future, sg, pos, [insinuerà]).
+ty_verb(italian, insinuate, future, pl, pos, [insinueranno]).
+ty_verb(italian, insinuate, future, sg(1), pos, [insinuerò]).
+ty_verb(italian, insinuate, future, sg(2), pos, [insinuerai]).
+ty_verb(italian, insinuate, future, pl(1), pos, [insinueremo]).
+ty_verb(italian, insinuate, future, pl(2), pos, [insinuerete]).
+ty_verb(italian, insist, future, sg, pos, [insisterà]).
+ty_verb(italian, insist, future, pl, pos, [insisteranno]).
+ty_verb(italian, insist, future, sg(1), pos, [insisterò]).
+ty_verb(italian, insist, future, sg(2), pos, [insisterai]).
+ty_verb(italian, insist, future, pl(1), pos, [insisteremo]).
+ty_verb(italian, insist, future, pl(2), pos, [insisterete]).
+ty_verb(italian, inspect, future, sg, pos, [ispezionerà]).
+ty_verb(italian, inspect, future, pl, pos, [ispezioneranno]).
+ty_verb(italian, inspect, future, sg(1), pos, [ispezionerò]).
+ty_verb(italian, inspect, future, sg(2), pos, [ispezionerai]).
+ty_verb(italian, inspect, future, pl(1), pos, [ispezioneremo]).
+ty_verb(italian, inspect, future, pl(2), pos, [ispezionerete]).
+ty_verb(italian, inspire, future, sg, pos, [inspirerà]).
+ty_verb(italian, inspire, future, pl, pos, [inspireranno]).
+ty_verb(italian, inspire, future, sg(1), pos, [inspirerò]).
+ty_verb(italian, inspire, future, sg(2), pos, [inspirerai]).
+ty_verb(italian, inspire, future, pl(1), pos, [inspireremo]).
+ty_verb(italian, inspire, future, pl(2), pos, [inspirerete]).
+ty_verb(italian, install, future, sg, pos, [installerà]).
+ty_verb(italian, install, future, pl, pos, [installeranno]).
+ty_verb(italian, install, future, sg(1), pos, [installerò]).
+ty_verb(italian, install, future, sg(2), pos, [installerai]).
+ty_verb(italian, install, future, pl(1), pos, [installeremo]).
+ty_verb(italian, install, future, pl(2), pos, [installerete]).
+ty_verb(italian, institutionalise, future, sg, pos, [istituzionalizzerà]).
+ty_verb(italian, institutionalise, future, pl, pos, [istituzionalizzeranno]).
+ty_verb(italian, institutionalise, future, sg(1), pos, [istituzionalizzerò]).
+ty_verb(italian, institutionalise, future, sg(2), pos, [istituzionalizzerai]).
+ty_verb(italian, institutionalise, future, pl(1), pos, [istituzionalizzeremo]).
+ty_verb(italian, institutionalise, future, pl(2), pos, [istituzionalizzerete]).
+ty_verb(italian, instruct, future, sg, pos, [istruirà]).
+ty_verb(italian, instruct, future, pl, pos, [istruiranno]).
+ty_verb(italian, instruct, future, sg(1), pos, [istruirò]).
+ty_verb(italian, instruct, future, sg(2), pos, [istruirai]).
+ty_verb(italian, instruct, future, pl(1), pos, [istruiremo]).
+ty_verb(italian, instruct, future, pl(2), pos, [istruirete]).
+ty_verb(italian, instrument, future, sg, pos, [strumenterà]).
+ty_verb(italian, instrument, future, pl, pos, [strumenteranno]).
+ty_verb(italian, instrument, future, sg(1), pos, [strumenterò]).
+ty_verb(italian, instrument, future, sg(2), pos, [strumenterai]).
+ty_verb(italian, instrument, future, pl(1), pos, [strumenteremo]).
+ty_verb(italian, instrument, future, pl(2), pos, [strumenterete]).
+ty_verb(italian, insult, future, sg, pos, [insulterà]).
+ty_verb(italian, insult, future, pl, pos, [insulteranno]).
+ty_verb(italian, insult, future, sg(1), pos, [insulterò]).
+ty_verb(italian, insult, future, sg(2), pos, [insulterai]).
+ty_verb(italian, insult, future, pl(1), pos, [insulteremo]).
+ty_verb(italian, insult, future, pl(2), pos, [insulterete]).
+ty_verb(italian, integrate, future, sg, pos, [integrerà]).
+ty_verb(italian, integrate, future, pl, pos, [integreranno]).
+ty_verb(italian, integrate, future, sg(1), pos, [integrerò]).
+ty_verb(italian, integrate, future, sg(2), pos, [integrerai]).
+ty_verb(italian, integrate, future, pl(1), pos, [integreremo]).
+ty_verb(italian, integrate, future, pl(2), pos, [integrerete]).
+ty_verb(italian, intend, future, sg, pos, [pretenderà]).
+ty_verb(italian, intend, future, pl, pos, [pretenderanno]).
+ty_verb(italian, intend, future, sg(1), pos, [pretenderò]).
+ty_verb(italian, intend, future, sg(2), pos, [pretenderai]).
+ty_verb(italian, intend, future, pl(1), pos, [pretenderemo]).
+ty_verb(italian, intend, future, pl(2), pos, [pretenderete]).
+ty_verb(italian, intensify, future, sg, pos, [intensificherà]).
+ty_verb(italian, intensify, future, pl, pos, [intensificheranno]).
+ty_verb(italian, intensify, future, sg(1), pos, [intensificherò]).
+ty_verb(italian, intensify, future, sg(2), pos, [intensificherai]).
+ty_verb(italian, intensify, future, pl(1), pos, [intensificheremo]).
+ty_verb(italian, intensify, future, pl(2), pos, [intensificherete]).
+ty_verb(italian, intercept, future, sg, pos, [intercetterà]).
+ty_verb(italian, intercept, future, pl, pos, [intercetteranno]).
+ty_verb(italian, intercept, future, sg(1), pos, [intercetterò]).
+ty_verb(italian, intercept, future, sg(2), pos, [intercetterai]).
+ty_verb(italian, intercept, future, pl(1), pos, [intercetteremo]).
+ty_verb(italian, intercept, future, pl(2), pos, [intercetterete]).
+ty_verb(italian, interest, future, sg, pos, [interesserà]).
+ty_verb(italian, interest, future, pl, pos, [interesseranno]).
+ty_verb(italian, interest, future, sg(1), pos, [interesserò]).
+ty_verb(italian, interest, future, sg(2), pos, [interesserai]).
+ty_verb(italian, interest, future, pl(1), pos, [interesseremo]).
+ty_verb(italian, interest, future, pl(2), pos, [interesserete]).
+ty_verb(italian, interfere, future, sg, pos, [interferirà]).
+ty_verb(italian, interfere, future, pl, pos, [interferiranno]).
+ty_verb(italian, interfere, future, sg(1), pos, [interferirò]).
+ty_verb(italian, interfere, future, sg(2), pos, [interferirai]).
+ty_verb(italian, interfere, future, pl(1), pos, [interferiremo]).
+ty_verb(italian, interfere, future, pl(2), pos, [interferirete]).
+ty_verb(italian, internalise, future, sg, pos, [interiorizzerà]).
+ty_verb(italian, internalise, future, pl, pos, [interiorizzeranno]).
+ty_verb(italian, internalise, future, sg(1), pos, [interiorizzerò]).
+ty_verb(italian, internalise, future, sg(2), pos, [interiorizzerai]).
+ty_verb(italian, internalise, future, pl(1), pos, [interiorizzeremo]).
+ty_verb(italian, internalise, future, pl(2), pos, [interiorizzerete]).
+ty_verb(italian, interpose, future, sg, pos, [interporrà]).
+ty_verb(italian, interpose, future, pl, pos, [interporranno]).
+ty_verb(italian, interpose, future, sg(1), pos, [interporrò]).
+ty_verb(italian, interpose, future, sg(2), pos, [interporrai]).
+ty_verb(italian, interpose, future, pl(1), pos, [interporremo]).
+ty_verb(italian, interpose, future, pl(2), pos, [interporrete]).
+ty_verb(italian, interpret, future, sg, pos, [interpreterà]).
+ty_verb(italian, interpret, future, pl, pos, [interpreteranno]).
+ty_verb(italian, interpret, future, sg(1), pos, [interpreterò]).
+ty_verb(italian, interpret, future, sg(2), pos, [interpreterai]).
+ty_verb(italian, interpret, future, pl(1), pos, [interpreteremo]).
+ty_verb(italian, interpret, future, pl(2), pos, [interpreterete]).
+ty_verb(italian, interrogate, future, sg, pos, [interrogherà]).
+ty_verb(italian, interrogate, future, pl, pos, [interrogheranno]).
+ty_verb(italian, interrogate, future, sg(1), pos, [interrogherò]).
+ty_verb(italian, interrogate, future, sg(2), pos, [interrogherai]).
+ty_verb(italian, interrogate, future, pl(1), pos, [interrogheremo]).
+ty_verb(italian, interrogate, future, pl(2), pos, [interrogherete]).
+ty_verb(italian, intervene, future, sg, pos, [interverrà]).
+ty_verb(italian, intervene, future, pl, pos, [interverranno]).
+ty_verb(italian, intervene, future, sg(1), pos, [interverrò]).
+ty_verb(italian, intervene, future, sg(2), pos, [interverrai]).
+ty_verb(italian, intervene, future, pl(1), pos, [interverremo]).
+ty_verb(italian, intervene, future, pl(2), pos, [interverrete]).
+ty_verb(italian, intimidate, future, sg, pos, [intimidirà]).
+ty_verb(italian, intimidate, future, pl, pos, [intimidiranno]).
+ty_verb(italian, intimidate, future, sg(1), pos, [intimidirò]).
+ty_verb(italian, intimidate, future, sg(2), pos, [intimidirai]).
+ty_verb(italian, intimidate, future, pl(1), pos, [intimidiremo]).
+ty_verb(italian, intimidate, future, pl(2), pos, [intimidirete]).
+ty_verb(italian, intoxicate, future, sg, pos, [intossicherà]).
+ty_verb(italian, intoxicate, future, pl, pos, [intossicheranno]).
+ty_verb(italian, intoxicate, future, sg(1), pos, [intossicherò]).
+ty_verb(italian, intoxicate, future, sg(2), pos, [intossicherai]).
+ty_verb(italian, intoxicate, future, pl(1), pos, [intossicheremo]).
+ty_verb(italian, intoxicate, future, pl(2), pos, [intossicherete]).
+ty_verb(italian, introduce, future, sg, pos, [introdurrà]).
+ty_verb(italian, introduce, future, pl, pos, [introdurranno]).
+ty_verb(italian, introduce, future, sg(1), pos, [introdurrò]).
+ty_verb(italian, introduce, future, sg(2), pos, [introdurrai]).
+ty_verb(italian, introduce, future, pl(1), pos, [introdurremo]).
+ty_verb(italian, introduce, future, pl(2), pos, [introdurrete]).
+ty_verb(italian, invalidate, future, sg, pos, [invaliderà]).
+ty_verb(italian, invalidate, future, pl, pos, [invalideranno]).
+ty_verb(italian, invalidate, future, sg(1), pos, [invaliderò]).
+ty_verb(italian, invalidate, future, sg(2), pos, [invaliderai]).
+ty_verb(italian, invalidate, future, pl(1), pos, [invalideremo]).
+ty_verb(italian, invalidate, future, pl(2), pos, [invaliderete]).
+ty_verb(italian, invent, future, sg, pos, [inventerà]).
+ty_verb(italian, invent, future, pl, pos, [inventeranno]).
+ty_verb(italian, invent, future, sg(1), pos, [inventerò]).
+ty_verb(italian, invent, future, sg(2), pos, [inventerai]).
+ty_verb(italian, invent, future, pl(1), pos, [inventeremo]).
+ty_verb(italian, invent, future, pl(2), pos, [inventerete]).
+ty_verb(italian, inventory, future, sg, pos, [inventarierà]).
+ty_verb(italian, inventory, future, pl, pos, [inventarieranno]).
+ty_verb(italian, inventory, future, sg(1), pos, [inventarierò]).
+ty_verb(italian, inventory, future, sg(2), pos, [inventarierai]).
+ty_verb(italian, inventory, future, pl(1), pos, [inventarieremo]).
+ty_verb(italian, inventory, future, pl(2), pos, [inventarierete]).
+ty_verb(italian, investigate, future, sg, pos, [investigherà]).
+ty_verb(italian, investigate, future, pl, pos, [investigheranno]).
+ty_verb(italian, investigate, future, sg(1), pos, [investigherò]).
+ty_verb(italian, investigate, future, sg(2), pos, [investigherai]).
+ty_verb(italian, investigate, future, pl(1), pos, [investigheremo]).
+ty_verb(italian, investigate, future, pl(2), pos, [investigherete]).
+ty_verb(italian, invite, future, sg, pos, [inviterà]).
+ty_verb(italian, invite, future, pl, pos, [inviteranno]).
+ty_verb(italian, invite, future, sg(1), pos, [inviterò]).
+ty_verb(italian, invite, future, sg(2), pos, [inviterai]).
+ty_verb(italian, invite, future, pl(1), pos, [inviteremo]).
+ty_verb(italian, invite, future, pl(2), pos, [inviterete]).
+ty_verb(italian, invoke, future, sg, pos, [invocherà]).
+ty_verb(italian, invoke, future, pl, pos, [invocheranno]).
+ty_verb(italian, invoke, future, sg(1), pos, [invocherò]).
+ty_verb(italian, invoke, future, sg(2), pos, [invocherai]).
+ty_verb(italian, invoke, future, pl(1), pos, [invocheremo]).
+ty_verb(italian, invoke, future, pl(2), pos, [invocherete]).
+ty_verb(italian, iron, future, sg, pos, [stirerà]).
+ty_verb(italian, iron, future, pl, pos, [stireranno]).
+ty_verb(italian, iron, future, sg(1), pos, [stirerò]).
+ty_verb(italian, iron, future, sg(2), pos, [stirerai]).
+ty_verb(italian, iron, future, pl(1), pos, [stireremo]).
+ty_verb(italian, iron, future, pl(2), pos, [stirerete]).
+ty_verb(italian, isolate, future, sg, pos, [isolerà]).
+ty_verb(italian, isolate, future, pl, pos, [isoleranno]).
+ty_verb(italian, isolate, future, sg(1), pos, [isolerò]).
+ty_verb(italian, isolate, future, sg(2), pos, [isolerai]).
+ty_verb(italian, isolate, future, pl(1), pos, [isoleremo]).
+ty_verb(italian, isolate, future, pl(2), pos, [isolerete]).
+ty_verb(italian, issue, future, sg, pos, [pubblicherà]).
+ty_verb(italian, issue, future, pl, pos, [pubblicheranno]).
+ty_verb(italian, issue, future, sg(1), pos, [pubblicherò]).
+ty_verb(italian, issue, future, sg(2), pos, [pubblicherai]).
+ty_verb(italian, issue, future, pl(1), pos, [pubblicheremo]).
+ty_verb(italian, issue, future, pl(2), pos, [pubblicherete]).
+ty_verb(italian, joint, future, sg, pos, [raccorderà]).
+ty_verb(italian, joint, future, pl, pos, [raccorderanno]).
+ty_verb(italian, joint, future, sg(1), pos, [raccorderò]).
+ty_verb(italian, joint, future, sg(2), pos, [raccorderai]).
+ty_verb(italian, joint, future, pl(1), pos, [raccorderemo]).
+ty_verb(italian, joint, future, pl(2), pos, [raccorderete]).
+ty_verb(italian, judge, future, sg, pos, [giudicherà]).
+ty_verb(italian, judge, future, pl, pos, [giudicheranno]).
+ty_verb(italian, judge, future, sg(1), pos, [giudicherò]).
+ty_verb(italian, judge, future, sg(2), pos, [giudicherai]).
+ty_verb(italian, judge, future, pl(1), pos, [giudicheremo]).
+ty_verb(italian, judge, future, pl(2), pos, [giudicherete]).
+ty_verb(italian, jump, future, sg, pos, [salterà]).
+ty_verb(italian, jump, future, pl, pos, [salteranno]).
+ty_verb(italian, jump, future, sg(1), pos, [salterò]).
+ty_verb(italian, jump, future, sg(2), pos, [salterai]).
+ty_verb(italian, jump, future, pl(1), pos, [salteremo]).
+ty_verb(italian, jump, future, pl(2), pos, [salterete]).
+ty_verb(italian, justify, future, sg, pos, [giustificherà]).
+ty_verb(italian, justify, future, pl, pos, [giustificheranno]).
+ty_verb(italian, justify, future, sg(1), pos, [giustificherò]).
+ty_verb(italian, justify, future, sg(2), pos, [giustificherai]).
+ty_verb(italian, justify, future, pl(1), pos, [giustificheremo]).
+ty_verb(italian, justify, future, pl(2), pos, [giustificherete]).
+ty_verb(italian, kick, future, sg, pos, [calcerà]).
+ty_verb(italian, kick, future, pl, pos, [calceranno]).
+ty_verb(italian, kick, future, sg(1), pos, [calcerò]).
+ty_verb(italian, kick, future, sg(2), pos, [calcerai]).
+ty_verb(italian, kick, future, pl(1), pos, [calceremo]).
+ty_verb(italian, kick, future, pl(2), pos, [calcerete]).
+ty_verb(italian, kid, future, sg, pos, [figlierà]).
+ty_verb(italian, kid, future, pl, pos, [figlieranno]).
+ty_verb(italian, kid, future, sg(1), pos, [figlierò]).
+ty_verb(italian, kid, future, sg(2), pos, [figlierai]).
+ty_verb(italian, kid, future, pl(1), pos, [figlieremo]).
+ty_verb(italian, kid, future, pl(2), pos, [figlierete]).
+ty_verb(italian, kidnap, future, sg, pos, [rapirà]).
+ty_verb(italian, kidnap, future, pl, pos, [rapiranno]).
+ty_verb(italian, kidnap, future, sg(1), pos, [rapirò]).
+ty_verb(italian, kidnap, future, sg(2), pos, [rapirai]).
+ty_verb(italian, kidnap, future, pl(1), pos, [rapiremo]).
+ty_verb(italian, kidnap, future, pl(2), pos, [rapirete]).
+ty_verb(italian, kill, future, sg, pos, [ucciderà]).
+ty_verb(italian, kill, future, pl, pos, [uccideranno]).
+ty_verb(italian, kill, future, sg(1), pos, [ucciderò]).
+ty_verb(italian, kill, future, sg(2), pos, [ucciderai]).
+ty_verb(italian, kill, future, pl(1), pos, [uccideremo]).
+ty_verb(italian, kill, future, pl(2), pos, [ucciderete]).
+ty_verb(italian, kiss, future, sg, pos, [bacerà]).
+ty_verb(italian, kiss, future, pl, pos, [baceranno]).
+ty_verb(italian, kiss, future, sg(1), pos, [bacerò]).
+ty_verb(italian, kiss, future, sg(2), pos, [bacerai]).
+ty_verb(italian, kiss, future, pl(1), pos, [baceremo]).
+ty_verb(italian, kiss, future, pl(2), pos, [bacerete]).
+ty_verb(italian, label, future, sg, pos, [etichetterà]).
+ty_verb(italian, label, future, pl, pos, [etichetteranno]).
+ty_verb(italian, label, future, sg(1), pos, [etichetterò]).
+ty_verb(italian, label, future, sg(2), pos, [etichetterai]).
+ty_verb(italian, label, future, pl(1), pos, [etichetteremo]).
+ty_verb(italian, label, future, pl(2), pos, [etichetterete]).
+ty_verb(italian, lack, future, sg, pos, [mancherà]).
+ty_verb(italian, lack, future, pl, pos, [mancheranno]).
+ty_verb(italian, lack, future, sg(1), pos, [mancherò]).
+ty_verb(italian, lack, future, sg(2), pos, [mancherai]).
+ty_verb(italian, lack, future, pl(1), pos, [mancheremo]).
+ty_verb(italian, lack, future, pl(2), pos, [mancherete]).
+ty_verb(italian, land, future, sg, pos, [atterrerà]).
+ty_verb(italian, land, future, pl, pos, [atterreranno]).
+ty_verb(italian, land, future, sg(1), pos, [atterrerò]).
+ty_verb(italian, land, future, sg(2), pos, [atterrerai]).
+ty_verb(italian, land, future, pl(1), pos, [atterreremo]).
+ty_verb(italian, land, future, pl(2), pos, [atterrerete]).
+ty_verb(italian, last, future, sg, pos, [durerà]).
+ty_verb(italian, last, future, pl, pos, [dureranno]).
+ty_verb(italian, last, future, sg(1), pos, [durerò]).
+ty_verb(italian, last, future, sg(2), pos, [durerai]).
+ty_verb(italian, last, future, pl(1), pos, [dureremo]).
+ty_verb(italian, last, future, pl(2), pos, [durerete]).
+ty_verb(italian, laugh, future, sg, pos, [riderà]).
+ty_verb(italian, laugh, future, pl, pos, [rideranno]).
+ty_verb(italian, laugh, future, sg(1), pos, [riderò]).
+ty_verb(italian, laugh, future, sg(2), pos, [riderai]).
+ty_verb(italian, laugh, future, pl(1), pos, [rideremo]).
+ty_verb(italian, laugh, future, pl(2), pos, [riderete]).
+ty_verb(italian, learn, future, sg, pos, [apprenderà]).
+ty_verb(italian, learn, future, pl, pos, [apprenderanno]).
+ty_verb(italian, learn, future, sg(1), pos, [apprenderò]).
+ty_verb(italian, learn, future, sg(2), pos, [apprenderai]).
+ty_verb(italian, learn, future, pl(1), pos, [apprenderemo]).
+ty_verb(italian, learn, future, pl(2), pos, [apprenderete]).
+ty_verb(italian, leave, future, sg, pos, [lascerà]).
+ty_verb(italian, leave, future, pl, pos, [lasceranno]).
+ty_verb(italian, leave, future, sg(1), pos, [lascerò]).
+ty_verb(italian, leave, future, sg(2), pos, [lascerai]).
+ty_verb(italian, leave, future, pl(1), pos, [lasceremo]).
+ty_verb(italian, leave, future, pl(2), pos, [lascerete]).
+ty_verb(italian, legalise, future, sg, pos, [legalizzerà]).
+ty_verb(italian, legalise, future, pl, pos, [legalizzeranno]).
+ty_verb(italian, legalise, future, sg(1), pos, [legalizzerò]).
+ty_verb(italian, legalise, future, sg(2), pos, [legalizzerai]).
+ty_verb(italian, legalise, future, pl(1), pos, [legalizzeremo]).
+ty_verb(italian, legalise, future, pl(2), pos, [legalizzerete]).
+ty_verb(italian, legitimate, future, sg, pos, [legittimerà]).
+ty_verb(italian, legitimate, future, pl, pos, [legittimeranno]).
+ty_verb(italian, legitimate, future, sg(1), pos, [legittimerò]).
+ty_verb(italian, legitimate, future, sg(2), pos, [legittimerai]).
+ty_verb(italian, legitimate, future, pl(1), pos, [legittimeremo]).
+ty_verb(italian, legitimate, future, pl(2), pos, [legittimerete]).
+ty_verb(italian, redo, future, sg, pos, [rifarà]).
+ty_verb(italian, redo, future, pl, pos, [rifaranno]).
+ty_verb(italian, redo, future, sg(1), pos, [rifarò]).
+ty_verb(italian, redo, future, sg(2), pos, [rifarai]).
+ty_verb(italian, redo, future, pl(1), pos, [rifaremo]).
+ty_verb(italian, redo, future, pl(2), pos, [rifarete]).
+ty_verb(italian, reedit, future, sg, pos, [riediterà]).
+ty_verb(italian, reedit, future, pl, pos, [riediteranno]).
+ty_verb(italian, reedit, future, sg(1), pos, [riediterò]).
+ty_verb(italian, reedit, future, sg(2), pos, [riediterai]).
+ty_verb(italian, reedit, future, pl(1), pos, [riediteremo]).
+ty_verb(italian, reedit, future, pl(2), pos, [riediterete]).
+ty_verb(italian, reelect, future, sg, pos, [rieleggerà]).
+ty_verb(italian, reelect, future, pl, pos, [rieleggeranno]).
+ty_verb(italian, reelect, future, sg(1), pos, [rieleggerò]).
+ty_verb(italian, reelect, future, sg(2), pos, [rieleggerai]).
+ty_verb(italian, reelect, future, pl(1), pos, [rieleggeremo]).
+ty_verb(italian, reelect, future, pl(2), pos, [rieleggerete]).
+ty_verb(italian, reform, future, sg, pos, [riformerà]).
+ty_verb(italian, reform, future, pl, pos, [riformeranno]).
+ty_verb(italian, reform, future, sg(1), pos, [riformerò]).
+ty_verb(italian, reform, future, sg(2), pos, [riformerai]).
+ty_verb(italian, reform, future, pl(1), pos, [riformeremo]).
+ty_verb(italian, reform, future, pl(2), pos, [riformerete]).
+ty_verb(italian, regenerate, future, sg, pos, [rigenererà]).
+ty_verb(italian, regenerate, future, pl, pos, [rigenereranno]).
+ty_verb(italian, regenerate, future, sg(1), pos, [rigenererò]).
+ty_verb(italian, regenerate, future, sg(2), pos, [rigenererai]).
+ty_verb(italian, regenerate, future, pl(1), pos, [rigenereremo]).
+ty_verb(italian, regenerate, future, pl(2), pos, [rigenererete]).
+ty_verb(italian, reinforce, future, sg, pos, [rafforzerà]).
+ty_verb(italian, reinforce, future, pl, pos, [rafforzeranno]).
+ty_verb(italian, reinforce, future, sg(1), pos, [rafforzerò]).
+ty_verb(italian, reinforce, future, sg(2), pos, [rafforzerai]).
+ty_verb(italian, reinforce, future, pl(1), pos, [rafforzeremo]).
+ty_verb(italian, reinforce, future, pl(2), pos, [rafforzerete]).
+ty_verb(italian, reiterate, future, sg, pos, [reitererà]).
+ty_verb(italian, reiterate, future, pl, pos, [reitereranno]).
+ty_verb(italian, reiterate, future, sg(1), pos, [reitererò]).
+ty_verb(italian, reiterate, future, sg(2), pos, [reitererai]).
+ty_verb(italian, reiterate, future, pl(1), pos, [reitereremo]).
+ty_verb(italian, reiterate, future, pl(2), pos, [reitererete]).
+ty_verb(italian, rejuvenate, future, sg, pos, [ringiovanirà]).
+ty_verb(italian, rejuvenate, future, pl, pos, [ringiovaniranno]).
+ty_verb(italian, rejuvenate, future, sg(1), pos, [ringiovanirò]).
+ty_verb(italian, rejuvenate, future, sg(2), pos, [ringiovanirai]).
+ty_verb(italian, rejuvenate, future, pl(1), pos, [ringiovaniremo]).
+ty_verb(italian, rejuvenate, future, pl(2), pos, [ringiovanirete]).
+ty_verb(italian, remedy, future, sg, pos, [rimedierà]).
+ty_verb(italian, remedy, future, pl, pos, [rimedieranno]).
+ty_verb(italian, remedy, future, sg(1), pos, [rimedierò]).
+ty_verb(italian, remedy, future, sg(2), pos, [rimedierai]).
+ty_verb(italian, remedy, future, pl(1), pos, [rimedieremo]).
+ty_verb(italian, remedy, future, pl(2), pos, [rimedierete]).
+ty_verb(italian, rename, future, sg, pos, [rinominerà]).
+ty_verb(italian, rename, future, pl, pos, [rinomineranno]).
+ty_verb(italian, rename, future, sg(1), pos, [rinominerò]).
+ty_verb(italian, rename, future, sg(2), pos, [rinominerai]).
+ty_verb(italian, rename, future, pl(1), pos, [rinomineremo]).
+ty_verb(italian, rename, future, pl(2), pos, [rinominerete]).
+ty_verb(italian, replace, future, sg, pos, [rimpiazzerà]).
+ty_verb(italian, replace, future, pl, pos, [rimpiazzeranno]).
+ty_verb(italian, replace, future, sg(1), pos, [rimpiazzerò]).
+ty_verb(italian, replace, future, sg(2), pos, [rimpiazzerai]).
+ty_verb(italian, replace, future, pl(1), pos, [rimpiazzeremo]).
+ty_verb(italian, replace, future, pl(2), pos, [rimpiazzerete]).
+ty_verb(italian, reproach, future, sg, pos, [rimprovererà]).
+ty_verb(italian, reproach, future, pl, pos, [rimprovereranno]).
+ty_verb(italian, reproach, future, sg(1), pos, [rimprovererò]).
+ty_verb(italian, reproach, future, sg(2), pos, [rimprovererai]).
+ty_verb(italian, reproach, future, pl(1), pos, [rimprovereremo]).
+ty_verb(italian, reproach, future, pl(2), pos, [rimprovererete]).
+ty_verb(italian, reproduce, future, sg, pos, [riprodurrà]).
+ty_verb(italian, reproduce, future, pl, pos, [riprodurranno]).
+ty_verb(italian, reproduce, future, sg(1), pos, [riprodurrò]).
+ty_verb(italian, reproduce, future, sg(2), pos, [riprodurrai]).
+ty_verb(italian, reproduce, future, pl(1), pos, [riprodurremo]).
+ty_verb(italian, reproduce, future, pl(2), pos, [riprodurrete]).
+ty_verb(italian, repurchase, future, sg, pos, [riacquisterà]).
+ty_verb(italian, repurchase, future, pl, pos, [riacquisteranno]).
+ty_verb(italian, repurchase, future, sg(1), pos, [riacquisterò]).
+ty_verb(italian, repurchase, future, sg(2), pos, [riacquisterai]).
+ty_verb(italian, repurchase, future, pl(1), pos, [riacquisteremo]).
+ty_verb(italian, repurchase, future, pl(2), pos, [riacquisterete]).
+ty_verb(italian, requisition, future, sg, pos, [requisirà]).
+ty_verb(italian, requisition, future, pl, pos, [requisiranno]).
+ty_verb(italian, requisition, future, sg(1), pos, [requisirò]).
+ty_verb(italian, requisition, future, sg(2), pos, [requisirai]).
+ty_verb(italian, requisition, future, pl(1), pos, [requisiremo]).
+ty_verb(italian, requisition, future, pl(2), pos, [requisirete]).
+ty_verb(italian, reread, future, sg, pos, [rileggerà]).
+ty_verb(italian, reread, future, pl, pos, [rileggeranno]).
+ty_verb(italian, reread, future, sg(1), pos, [rileggerò]).
+ty_verb(italian, reread, future, sg(2), pos, [rileggerai]).
+ty_verb(italian, reread, future, pl(1), pos, [rileggeremo]).
+ty_verb(italian, reread, future, pl(2), pos, [rileggerete]).
+ty_verb(italian, resist, future, sg, pos, [resisterà]).
+ty_verb(italian, resist, future, pl, pos, [resisteranno]).
+ty_verb(italian, resist, future, sg(1), pos, [resisterò]).
+ty_verb(italian, resist, future, sg(2), pos, [resisterai]).
+ty_verb(italian, resist, future, pl(1), pos, [resisteremo]).
+ty_verb(italian, resist, future, pl(2), pos, [resisterete]).
+ty_verb(italian, respect, future, sg, pos, [rispetterà]).
+ty_verb(italian, respect, future, pl, pos, [rispetteranno]).
+ty_verb(italian, respect, future, sg(1), pos, [rispetterò]).
+ty_verb(italian, respect, future, sg(2), pos, [rispetterai]).
+ty_verb(italian, respect, future, pl(1), pos, [rispetteremo]).
+ty_verb(italian, respect, future, pl(2), pos, [rispetterete]).
+ty_verb(italian, rest, future, sg, pos, [riposerà]).
+ty_verb(italian, rest, future, pl, pos, [riposeranno]).
+ty_verb(italian, rest, future, sg(1), pos, [riposerò]).
+ty_verb(italian, rest, future, sg(2), pos, [riposerai]).
+ty_verb(italian, rest, future, pl(1), pos, [riposeremo]).
+ty_verb(italian, rest, future, pl(2), pos, [riposerete]).
+ty_verb(italian, restart, future, sg, pos, [ripartirà]).
+ty_verb(italian, restart, future, pl, pos, [ripartiranno]).
+ty_verb(italian, restart, future, sg(1), pos, [ripartirò]).
+ty_verb(italian, restart, future, sg(2), pos, [ripartirai]).
+ty_verb(italian, restart, future, pl(1), pos, [ripartiremo]).
+ty_verb(italian, restart, future, pl(2), pos, [ripartirete]).
+ty_verb(italian, resuscitate, future, sg, pos, [risusciterà]).
+ty_verb(italian, resuscitate, future, pl, pos, [risusciteranno]).
+ty_verb(italian, resuscitate, future, sg(1), pos, [risusciterò]).
+ty_verb(italian, resuscitate, future, sg(2), pos, [risusciterai]).
+ty_verb(italian, resuscitate, future, pl(1), pos, [risusciteremo]).
+ty_verb(italian, resuscitate, future, pl(2), pos, [risusciterete]).
+ty_verb(italian, revoke, future, sg, pos, [revocherà]).
+ty_verb(italian, revoke, future, pl, pos, [revocheranno]).
+ty_verb(italian, revoke, future, sg(1), pos, [revocherò]).
+ty_verb(italian, revoke, future, sg(2), pos, [revocherai]).
+ty_verb(italian, revoke, future, pl(1), pos, [revocheremo]).
+ty_verb(italian, revoke, future, pl(2), pos, [revocherete]).
+ty_verb(italian, rewrite, future, sg, pos, [riscriverà]).
+ty_verb(italian, rewrite, future, pl, pos, [riscriveranno]).
+ty_verb(italian, rewrite, future, sg(1), pos, [riscriverò]).
+ty_verb(italian, rewrite, future, sg(2), pos, [riscriverai]).
+ty_verb(italian, rewrite, future, pl(1), pos, [riscriveremo]).
+ty_verb(italian, rewrite, future, pl(2), pos, [riscriverete]).
+ty_verb(italian, compel, future, sg, pos, [costringerà]).
+ty_verb(italian, compel, future, pl, pos, [costringeranno]).
+ty_verb(italian, compel, future, sg(1), pos, [costringerò]).
+ty_verb(italian, compel, future, sg(2), pos, [costringerai]).
+ty_verb(italian, compel, future, pl(1), pos, [costringeremo]).
+ty_verb(italian, compel, future, pl(2), pos, [costringerete]).
+ty_verb(italian, compress, future, sg, pos, [comprimerà]).
+ty_verb(italian, compress, future, pl, pos, [comprimeranno]).
+ty_verb(italian, compress, future, sg(1), pos, [comprimerò]).
+ty_verb(italian, compress, future, sg(2), pos, [comprimerai]).
+ty_verb(italian, compress, future, pl(1), pos, [comprimeremo]).
+ty_verb(italian, compress, future, pl(2), pos, [comprimerete]).
+ty_verb(italian, conceive, future, sg, pos, [concepirà]).
+ty_verb(italian, conceive, future, pl, pos, [concepiranno]).
+ty_verb(italian, conceive, future, sg(1), pos, [concepirò]).
+ty_verb(italian, conceive, future, sg(2), pos, [concepirai]).
+ty_verb(italian, conceive, future, pl(1), pos, [concepiremo]).
+ty_verb(italian, conceive, future, pl(2), pos, [concepirete]).
+ty_verb(italian, dim, future, sg, pos, [smorzerà]).
+ty_verb(italian, dim, future, pl, pos, [smorzeranno]).
+ty_verb(italian, dim, future, sg(1), pos, [smorzerò]).
+ty_verb(italian, dim, future, sg(2), pos, [smorzerai]).
+ty_verb(italian, dim, future, pl(1), pos, [smorzeremo]).
+ty_verb(italian, dim, future, pl(2), pos, [smorzerete]).
+ty_verb(italian, discuss, future, sg, pos, [discuterà]).
+ty_verb(italian, discuss, future, pl, pos, [discuteranno]).
+ty_verb(italian, discuss, future, sg(1), pos, [discuterò]).
+ty_verb(italian, discuss, future, sg(2), pos, [discuterai]).
+ty_verb(italian, discuss, future, pl(1), pos, [discuteremo]).
+ty_verb(italian, discuss, future, pl(2), pos, [discuterete]).
+ty_verb(italian, deter, future, sg, pos, [scoraggerà]).
+ty_verb(italian, deter, future, pl, pos, [scoraggeranno]).
+ty_verb(italian, deter, future, sg(1), pos, [scoraggerò]).
+ty_verb(italian, deter, future, sg(2), pos, [scoraggerai]).
+ty_verb(italian, deter, future, pl(1), pos, [scoraggeremo]).
+ty_verb(italian, deter, future, pl(2), pos, [scoraggerete]).
+ty_verb(italian, devise, future, sg, pos, [escogiterà]).
+ty_verb(italian, devise, future, pl, pos, [escogiteranno]).
+ty_verb(italian, devise, future, sg(1), pos, [escogiterò]).
+ty_verb(italian, devise, future, sg(2), pos, [escogiterai]).
+ty_verb(italian, devise, future, pl(1), pos, [escogiteremo]).
+ty_verb(italian, devise, future, pl(2), pos, [escogiterete]).
+ty_verb(italian, disable, future, sg, pos, [disabiliterà]).
+ty_verb(italian, disable, future, pl, pos, [disabiliteranno]).
+ty_verb(italian, disable, future, sg(1), pos, [disabiliterò]).
+ty_verb(italian, disable, future, sg(2), pos, [disabiliterai]).
+ty_verb(italian, disable, future, pl(1), pos, [disabiliteremo]).
+ty_verb(italian, disable, future, pl(2), pos, [disabiliterete]).
+ty_verb(italian, disgust, future, sg, pos, [disgusterà]).
+ty_verb(italian, disgust, future, pl, pos, [disgusteranno]).
+ty_verb(italian, disgust, future, sg(1), pos, [disgusterò]).
+ty_verb(italian, disgust, future, sg(2), pos, [disgusterai]).
+ty_verb(italian, disgust, future, pl(1), pos, [disgusteremo]).
+ty_verb(italian, disgust, future, pl(2), pos, [disgusterete]).
+ty_verb(italian, dull, future, sg, pos, [attenuerà]).
+ty_verb(italian, dull, future, pl, pos, [attenueranno]).
+ty_verb(italian, dull, future, sg(1), pos, [attenuerò]).
+ty_verb(italian, dull, future, sg(2), pos, [attenuerai]).
+ty_verb(italian, dull, future, pl(1), pos, [attenueremo]).
+ty_verb(italian, dull, future, pl(2), pos, [attenuerete]).
+ty_verb(italian, edit, future, sg, pos, [editerà]).
+ty_verb(italian, edit, future, pl, pos, [editeranno]).
+ty_verb(italian, edit, future, sg(1), pos, [editerò]).
+ty_verb(italian, edit, future, sg(2), pos, [editerai]).
+ty_verb(italian, edit, future, pl(1), pos, [editeremo]).
+ty_verb(italian, edit, future, pl(2), pos, [editerete]).
+ty_verb(italian, encode, future, sg, pos, [codificherà]).
+ty_verb(italian, encode, future, pl, pos, [codificheranno]).
+ty_verb(italian, encode, future, sg(1), pos, [codificherò]).
+ty_verb(italian, encode, future, sg(2), pos, [codificherai]).
+ty_verb(italian, encode, future, pl(1), pos, [codificheremo]).
+ty_verb(italian, encode, future, pl(2), pos, [codificherete]).
+ty_verb(italian, encrypt, future, sg, pos, [cifrerà]).
+ty_verb(italian, encrypt, future, pl, pos, [cifreranno]).
+ty_verb(italian, encrypt, future, sg(1), pos, [cifrerò]).
+ty_verb(italian, encrypt, future, sg(2), pos, [cifrerai]).
+ty_verb(italian, encrypt, future, pl(1), pos, [cifreremo]).
+ty_verb(italian, encrypt, future, pl(2), pos, [cifrerete]).
+ty_verb(italian, enrich, future, sg, pos, [arricchirà]).
+ty_verb(italian, enrich, future, pl, pos, [arricchiranno]).
+ty_verb(italian, enrich, future, sg(1), pos, [arricchirò]).
+ty_verb(italian, enrich, future, sg(2), pos, [arricchirai]).
+ty_verb(italian, enrich, future, pl(1), pos, [arricchiremo]).
+ty_verb(italian, enrich, future, pl(2), pos, [arricchirete]).
+ty_verb(italian, extort, future, sg, pos, [estorcerà]).
+ty_verb(italian, extort, future, pl, pos, [estorceranno]).
+ty_verb(italian, extort, future, sg(1), pos, [estorcerò]).
+ty_verb(italian, extort, future, sg(2), pos, [estorcerai]).
+ty_verb(italian, extort, future, pl(1), pos, [estorceremo]).
+ty_verb(italian, extort, future, pl(2), pos, [estorcerete]).
+ty_verb(italian, flatter, future, sg, pos, [lusingherà]).
+ty_verb(italian, flatter, future, pl, pos, [lusingheranno]).
+ty_verb(italian, flatter, future, sg(1), pos, [lusingherò]).
+ty_verb(italian, flatter, future, sg(2), pos, [lusingherai]).
+ty_verb(italian, flatter, future, pl(1), pos, [lusingheremo]).
+ty_verb(italian, flatter, future, pl(2), pos, [lusingherete]).
+ty_verb(italian, garnish, future, sg, pos, [guarnirà]).
+ty_verb(italian, garnish, future, pl, pos, [guarniranno]).
+ty_verb(italian, garnish, future, sg(1), pos, [guarnirò]).
+ty_verb(italian, garnish, future, sg(2), pos, [guarnirai]).
+ty_verb(italian, garnish, future, pl(1), pos, [guarniremo]).
+ty_verb(italian, garnish, future, pl(2), pos, [guarnirete]).
+ty_verb(italian, level, future, sg, pos, [livellerà]).
+ty_verb(italian, level, future, pl, pos, [livelleranno]).
+ty_verb(italian, level, future, sg(1), pos, [livellerò]).
+ty_verb(italian, level, future, sg(2), pos, [livellerai]).
+ty_verb(italian, level, future, pl(1), pos, [livelleremo]).
+ty_verb(italian, level, future, pl(2), pos, [livellerete]).
+ty_verb(italian, liberalise, future, sg, pos, [liberalizzerà]).
+ty_verb(italian, liberalise, future, pl, pos, [liberalizzeranno]).
+ty_verb(italian, liberalise, future, sg(1), pos, [liberalizzerò]).
+ty_verb(italian, liberalise, future, sg(2), pos, [liberalizzerai]).
+ty_verb(italian, liberalise, future, pl(1), pos, [liberalizzeremo]).
+ty_verb(italian, liberalise, future, pl(2), pos, [liberalizzerete]).
+ty_verb(italian, lick, future, sg, pos, [leccherà]).
+ty_verb(italian, lick, future, pl, pos, [leccheranno]).
+ty_verb(italian, lick, future, sg(1), pos, [leccherò]).
+ty_verb(italian, lick, future, sg(2), pos, [leccherai]).
+ty_verb(italian, lick, future, pl(1), pos, [leccheremo]).
+ty_verb(italian, lick, future, pl(2), pos, [leccherete]).
+ty_verb(italian, lie, future, sg, pos, [mentirà]).
+ty_verb(italian, lie, future, pl, pos, [mentiranno]).
+ty_verb(italian, lie, future, sg(1), pos, [mentirò]).
+ty_verb(italian, lie, future, sg(2), pos, [mentirai]).
+ty_verb(italian, lie, future, pl(1), pos, [mentiremo]).
+ty_verb(italian, lie, future, pl(2), pos, [mentirete]).
+ty_verb(italian, light, future, sg, pos, [accenderà]).
+ty_verb(italian, light, future, pl, pos, [accenderanno]).
+ty_verb(italian, light, future, sg(1), pos, [accenderò]).
+ty_verb(italian, light, future, sg(2), pos, [accenderai]).
+ty_verb(italian, light, future, pl(1), pos, [accenderemo]).
+ty_verb(italian, light, future, pl(2), pos, [accenderete]).
+ty_verb(italian, lighten, future, sg, pos, [illuminerà]).
+ty_verb(italian, lighten, future, pl, pos, [illumineranno]).
+ty_verb(italian, lighten, future, sg(1), pos, [illuminerò]).
+ty_verb(italian, lighten, future, sg(2), pos, [illuminerai]).
+ty_verb(italian, lighten, future, pl(1), pos, [illumineremo]).
+ty_verb(italian, lighten, future, pl(2), pos, [illuminerete]).
+ty_verb(italian, border, future, sg, pos, [marginerà]).
+ty_verb(italian, border, future, pl, pos, [margineranno]).
+ty_verb(italian, border, future, sg(1), pos, [marginerò]).
+ty_verb(italian, border, future, sg(2), pos, [marginerai]).
+ty_verb(italian, border, future, pl(1), pos, [margineremo]).
+ty_verb(italian, border, future, pl(2), pos, [marginerete]).
+ty_verb(italian, like, future, sg, pos, [piacerà]).
+ty_verb(italian, like, future, pl, pos, [piaceranno]).
+ty_verb(italian, like, future, sg(1), pos, [piacerò]).
+ty_verb(italian, like, future, sg(2), pos, [piacerai]).
+ty_verb(italian, like, future, pl(1), pos, [piaceremo]).
+ty_verb(italian, like, future, pl(2), pos, [piacerete]).
+ty_verb(italian, limit, future, sg, pos, [limiterà]).
+ty_verb(italian, limit, future, pl, pos, [limiteranno]).
+ty_verb(italian, limit, future, sg(1), pos, [limiterò]).
+ty_verb(italian, limit, future, sg(2), pos, [limiterai]).
+ty_verb(italian, limit, future, pl(1), pos, [limiteremo]).
+ty_verb(italian, limit, future, pl(2), pos, [limiterete]).
+ty_verb(italian, link, future, sg, pos, [allaccerà]).
+ty_verb(italian, link, future, pl, pos, [allacceranno]).
+ty_verb(italian, link, future, sg(1), pos, [allaccerò]).
+ty_verb(italian, link, future, sg(2), pos, [allaccerai]).
+ty_verb(italian, link, future, pl(1), pos, [allacceremo]).
+ty_verb(italian, link, future, pl(2), pos, [allaccerete]).
+ty_verb(italian, list, future, sg, pos, [listerà]).
+ty_verb(italian, list, future, pl, pos, [listeranno]).
+ty_verb(italian, list, future, sg(1), pos, [listerò]).
+ty_verb(italian, list, future, sg(2), pos, [listerai]).
+ty_verb(italian, list, future, pl(1), pos, [listeremo]).
+ty_verb(italian, list, future, pl(2), pos, [listerete]).
+ty_verb(italian, listen, future, sg, pos, [ascolterà]).
+ty_verb(italian, listen, future, pl, pos, [ascolteranno]).
+ty_verb(italian, listen, future, sg(1), pos, [ascolterò]).
+ty_verb(italian, listen, future, sg(2), pos, [ascolterai]).
+ty_verb(italian, listen, future, pl(1), pos, [ascolteremo]).
+ty_verb(italian, listen, future, pl(2), pos, [ascolterete]).
+ty_verb(italian, litigate, future, sg, pos, [litigherà]).
+ty_verb(italian, litigate, future, pl, pos, [litigheranno]).
+ty_verb(italian, litigate, future, sg(1), pos, [litigherò]).
+ty_verb(italian, litigate, future, sg(2), pos, [litigherai]).
+ty_verb(italian, litigate, future, pl(1), pos, [litigheremo]).
+ty_verb(italian, litigate, future, pl(2), pos, [litigherete]).
+ty_verb(italian, litter, future, sg, pos, [sporcherà]).
+ty_verb(italian, litter, future, pl, pos, [sporcheranno]).
+ty_verb(italian, litter, future, sg(1), pos, [sporcherò]).
+ty_verb(italian, litter, future, sg(2), pos, [sporcherai]).
+ty_verb(italian, litter, future, pl(1), pos, [sporcheremo]).
+ty_verb(italian, litter, future, pl(2), pos, [sporcherete]).
+ty_verb(italian, live, future, sg, pos, [abiterà]).
+ty_verb(italian, live, future, pl, pos, [abiteranno]).
+ty_verb(italian, live, future, sg(1), pos, [abiterò]).
+ty_verb(italian, live, future, sg(2), pos, [abiterai]).
+ty_verb(italian, live, future, pl(1), pos, [abiteremo]).
+ty_verb(italian, live, future, pl(2), pos, [abiterete]).
+ty_verb(italian, live, future, sg, pos, [vivrà]).
+ty_verb(italian, live, future, pl, pos, [vivranno]).
+ty_verb(italian, live, future, sg(1), pos, [vivrò]).
+ty_verb(italian, live, future, sg(2), pos, [vivrai]).
+ty_verb(italian, live, future, pl(1), pos, [vivremo]).
+ty_verb(italian, live, future, pl(2), pos, [vivrete]).
+ty_verb(italian, loan, future, sg, pos, [presterà]).
+ty_verb(italian, loan, future, pl, pos, [presteranno]).
+ty_verb(italian, loan, future, sg(1), pos, [presterò]).
+ty_verb(italian, loan, future, sg(2), pos, [presterai]).
+ty_verb(italian, loan, future, pl(1), pos, [presteremo]).
+ty_verb(italian, loan, future, pl(2), pos, [presterete]).
+ty_verb(italian, locate, future, sg, pos, [localizzerà]).
+ty_verb(italian, locate, future, pl, pos, [localizzeranno]).
+ty_verb(italian, locate, future, sg(1), pos, [localizzerò]).
+ty_verb(italian, locate, future, sg(2), pos, [localizzerai]).
+ty_verb(italian, locate, future, pl(1), pos, [localizzeremo]).
+ty_verb(italian, locate, future, pl(2), pos, [localizzerete]).
+ty_verb(italian, look, future, sg, pos, [guarderà]).
+ty_verb(italian, look, future, pl, pos, [guarderanno]).
+ty_verb(italian, look, future, sg(1), pos, [guarderò]).
+ty_verb(italian, look, future, sg(2), pos, [guarderai]).
+ty_verb(italian, look, future, pl(1), pos, [guarderemo]).
+ty_verb(italian, look, future, pl(2), pos, [guarderete]).
+ty_verb(italian, loom, future, sg, pos, [tesserà]).
+ty_verb(italian, loom, future, pl, pos, [tesseranno]).
+ty_verb(italian, loom, future, sg(1), pos, [tesserò]).
+ty_verb(italian, loom, future, sg(2), pos, [tesserai]).
+ty_verb(italian, loom, future, pl(1), pos, [tesseremo]).
+ty_verb(italian, loom, future, pl(2), pos, [tesserete]).
+ty_verb(italian, lose, future, sg, pos, [perderà]).
+ty_verb(italian, lose, future, pl, pos, [perderanno]).
+ty_verb(italian, lose, future, sg(1), pos, [perderò]).
+ty_verb(italian, lose, future, sg(2), pos, [perderai]).
+ty_verb(italian, lose, future, pl(1), pos, [perderemo]).
+ty_verb(italian, lose, future, pl(2), pos, [perderete]).
+ty_verb(italian, love, future, sg, pos, [amerà]).
+ty_verb(italian, love, future, pl, pos, [ameranno]).
+ty_verb(italian, love, future, sg(1), pos, [amerò]).
+ty_verb(italian, love, future, sg(2), pos, [amerai]).
+ty_verb(italian, love, future, pl(1), pos, [ameremo]).
+ty_verb(italian, love, future, pl(2), pos, [amerete]).
+ty_verb(italian, manifest, future, sg, pos, [manifesterà]).
+ty_verb(italian, manifest, future, pl, pos, [manifesteranno]).
+ty_verb(italian, manifest, future, sg(1), pos, [manifesterò]).
+ty_verb(italian, manifest, future, sg(2), pos, [manifesterai]).
+ty_verb(italian, manifest, future, pl(1), pos, [manifesteremo]).
+ty_verb(italian, manifest, future, pl(2), pos, [manifesterete]).
+ty_verb(italian, manoeuvre, future, sg, pos, [manovrerà]).
+ty_verb(italian, manoeuvre, future, pl, pos, [manovreranno]).
+ty_verb(italian, manoeuvre, future, sg(1), pos, [manovrerò]).
+ty_verb(italian, manoeuvre, future, sg(2), pos, [manovrerai]).
+ty_verb(italian, manoeuvre, future, pl(1), pos, [manovreremo]).
+ty_verb(italian, manoeuvre, future, pl(2), pos, [manovrerete]).
+ty_verb(italian, manufacture, future, sg, pos, [fabbricherà]).
+ty_verb(italian, manufacture, future, pl, pos, [fabbricheranno]).
+ty_verb(italian, manufacture, future, sg(1), pos, [fabbricherò]).
+ty_verb(italian, manufacture, future, sg(2), pos, [fabbricherai]).
+ty_verb(italian, manufacture, future, pl(1), pos, [fabbricheremo]).
+ty_verb(italian, manufacture, future, pl(2), pos, [fabbricherete]).
+ty_verb(italian, mark, future, sg, pos, [marcherà]).
+ty_verb(italian, mark, future, pl, pos, [marcheranno]).
+ty_verb(italian, mark, future, sg(1), pos, [marcherò]).
+ty_verb(italian, mark, future, sg(2), pos, [marcherai]).
+ty_verb(italian, mark, future, pl(1), pos, [marcheremo]).
+ty_verb(italian, mark, future, pl(2), pos, [marcherete]).
+ty_verb(italian, marry, future, sg, pos, [sposerà]).
+ty_verb(italian, marry, future, pl, pos, [sposeranno]).
+ty_verb(italian, marry, future, sg(1), pos, [sposerò]).
+ty_verb(italian, marry, future, sg(2), pos, [sposerai]).
+ty_verb(italian, marry, future, pl(1), pos, [sposeremo]).
+ty_verb(italian, marry, future, pl(2), pos, [sposerete]).
+ty_verb(italian, mass, future, sg, pos, [concentrerà]).
+ty_verb(italian, mass, future, pl, pos, [concentreranno]).
+ty_verb(italian, mass, future, sg(1), pos, [concentrerò]).
+ty_verb(italian, mass, future, sg(2), pos, [concentrerai]).
+ty_verb(italian, mass, future, pl(1), pos, [concentreremo]).
+ty_verb(italian, mass, future, pl(2), pos, [concentrerete]).
+ty_verb(italian, materialise, future, sg, pos, [materializzerà]).
+ty_verb(italian, materialise, future, pl, pos, [materializzeranno]).
+ty_verb(italian, materialise, future, sg(1), pos, [materializzerò]).
+ty_verb(italian, materialise, future, sg(2), pos, [materializzerai]).
+ty_verb(italian, materialise, future, pl(1), pos, [materializzeremo]).
+ty_verb(italian, materialise, future, pl(2), pos, [materializzerete]).
+ty_verb(italian, matter, future, sg, pos, [importerà]).
+ty_verb(italian, matter, future, pl, pos, [importeranno]).
+ty_verb(italian, matter, future, sg(1), pos, [importerò]).
+ty_verb(italian, matter, future, sg(2), pos, [importerai]).
+ty_verb(italian, matter, future, pl(1), pos, [importeremo]).
+ty_verb(italian, matter, future, pl(2), pos, [importerete]).
+ty_verb(italian, mature, future, sg, pos, [maturerà]).
+ty_verb(italian, mature, future, pl, pos, [matureranno]).
+ty_verb(italian, mature, future, sg(1), pos, [maturerò]).
+ty_verb(italian, mature, future, sg(2), pos, [maturerai]).
+ty_verb(italian, mature, future, pl(1), pos, [matureremo]).
+ty_verb(italian, mature, future, pl(2), pos, [maturerete]).
+ty_verb(italian, mean, future, sg, pos, [significherà]).
+ty_verb(italian, mean, future, pl, pos, [significheranno]).
+ty_verb(italian, mean, future, sg(1), pos, [significherò]).
+ty_verb(italian, mean, future, sg(2), pos, [significherai]).
+ty_verb(italian, mean, future, pl(1), pos, [significheremo]).
+ty_verb(italian, mean, future, pl(2), pos, [significherete]).
+ty_verb(italian, meander, future, sg, pos, [serpeggerà]).
+ty_verb(italian, meander, future, pl, pos, [serpeggeranno]).
+ty_verb(italian, meander, future, sg(1), pos, [serpeggerò]).
+ty_verb(italian, meander, future, sg(2), pos, [serpeggerai]).
+ty_verb(italian, meander, future, pl(1), pos, [serpeggeremo]).
+ty_verb(italian, meander, future, pl(2), pos, [serpeggerete]).
+ty_verb(italian, measure, future, sg, pos, [misurerà]).
+ty_verb(italian, measure, future, pl, pos, [misureranno]).
+ty_verb(italian, measure, future, sg(1), pos, [misurerò]).
+ty_verb(italian, measure, future, sg(2), pos, [misurerai]).
+ty_verb(italian, measure, future, pl(1), pos, [misureremo]).
+ty_verb(italian, measure, future, pl(2), pos, [misurerete]).
+ty_verb(italian, mechanise, future, sg, pos, [meccanizzerà]).
+ty_verb(italian, mechanise, future, pl, pos, [meccanizzeranno]).
+ty_verb(italian, mechanise, future, sg(1), pos, [meccanizzerò]).
+ty_verb(italian, mechanise, future, sg(2), pos, [meccanizzerai]).
+ty_verb(italian, mechanise, future, pl(1), pos, [meccanizzeremo]).
+ty_verb(italian, mechanise, future, pl(2), pos, [meccanizzerete]).
+ty_verb(italian, meet, future, sg, pos, [compirà]).
+ty_verb(italian, meet, future, pl, pos, [compiranno]).
+ty_verb(italian, meet, future, sg(1), pos, [compirò]).
+ty_verb(italian, meet, future, sg(2), pos, [compirai]).
+ty_verb(italian, meet, future, pl(1), pos, [compiremo]).
+ty_verb(italian, meet, future, pl(2), pos, [compirete]).
+ty_verb(italian, melt, future, sg, pos, [fonderà]).
+ty_verb(italian, melt, future, pl, pos, [fonderanno]).
+ty_verb(italian, melt, future, sg(1), pos, [fonderò]).
+ty_verb(italian, melt, future, sg(2), pos, [fonderai]).
+ty_verb(italian, melt, future, pl(1), pos, [fonderemo]).
+ty_verb(italian, melt, future, pl(2), pos, [fonderete]).
+ty_verb(italian, memorise, future, sg, pos, [memorizzerà]).
+ty_verb(italian, memorise, future, pl, pos, [memorizzeranno]).
+ty_verb(italian, memorise, future, sg(1), pos, [memorizzerò]).
+ty_verb(italian, memorise, future, sg(2), pos, [memorizzerai]).
+ty_verb(italian, memorise, future, pl(1), pos, [memorizzeremo]).
+ty_verb(italian, memorise, future, pl(2), pos, [memorizzerete]).
+ty_verb(italian, mention, future, sg, pos, [menzionerà]).
+ty_verb(italian, mention, future, pl, pos, [menzioneranno]).
+ty_verb(italian, mention, future, sg(1), pos, [menzionerò]).
+ty_verb(italian, mention, future, sg(2), pos, [menzionerai]).
+ty_verb(italian, mention, future, pl(1), pos, [menzioneremo]).
+ty_verb(italian, mention, future, pl(2), pos, [menzionerete]).
+ty_verb(italian, merge, future, sg, pos, [amalgamerà]).
+ty_verb(italian, merge, future, pl, pos, [amalgameranno]).
+ty_verb(italian, merge, future, sg(1), pos, [amalgamerò]).
+ty_verb(italian, merge, future, sg(2), pos, [amalgamerai]).
+ty_verb(italian, merge, future, pl(1), pos, [amalgameremo]).
+ty_verb(italian, merge, future, pl(2), pos, [amalgamerete]).
+ty_verb(italian, milk, future, sg, pos, [mungerà]).
+ty_verb(italian, milk, future, pl, pos, [mungeranno]).
+ty_verb(italian, milk, future, sg(1), pos, [mungerò]).
+ty_verb(italian, milk, future, sg(2), pos, [mungerai]).
+ty_verb(italian, milk, future, pl(1), pos, [mungeremo]).
+ty_verb(italian, milk, future, pl(2), pos, [mungerete]).
+ty_verb(italian, miss, future, sg, pos, [perderà]).
+ty_verb(italian, miss, future, pl, pos, [perderanno]).
+ty_verb(italian, miss, future, sg(1), pos, [perderò]).
+ty_verb(italian, miss, future, sg(2), pos, [perderai]).
+ty_verb(italian, miss, future, pl(1), pos, [perderemo]).
+ty_verb(italian, miss, future, pl(2), pos, [perderete]).
+ty_verb(italian, miss, future, sg, pos, [mancherà]).
+ty_verb(italian, miss, future, pl, pos, [mancheranno]).
+ty_verb(italian, miss, future, sg(1), pos, [mancherò]).
+ty_verb(italian, miss, future, sg(2), pos, [mancherai]).
+ty_verb(italian, miss, future, pl(1), pos, [mancheremo]).
+ty_verb(italian, miss, future, pl(2), pos, [mancherete]).
+ty_verb(italian, misunderstand, future, sg, pos, [equivocherà]).
+ty_verb(italian, misunderstand, future, pl, pos, [equivocheranno]).
+ty_verb(italian, misunderstand, future, sg(1), pos, [equivocherò]).
+ty_verb(italian, misunderstand, future, sg(2), pos, [equivocherai]).
+ty_verb(italian, misunderstand, future, pl(1), pos, [equivocheremo]).
+ty_verb(italian, misunderstand, future, pl(2), pos, [equivocherete]).
+ty_verb(italian, mitigate, future, sg, pos, [mitigherà]).
+ty_verb(italian, mitigate, future, pl, pos, [mitigheranno]).
+ty_verb(italian, mitigate, future, sg(1), pos, [mitigherò]).
+ty_verb(italian, mitigate, future, sg(2), pos, [mitigherai]).
+ty_verb(italian, mitigate, future, pl(1), pos, [mitigheremo]).
+ty_verb(italian, mitigate, future, pl(2), pos, [mitigherete]).
+ty_verb(italian, mix, future, sg, pos, [miscelerà]).
+ty_verb(italian, mix, future, pl, pos, [misceleranno]).
+ty_verb(italian, mix, future, sg(1), pos, [miscelerò]).
+ty_verb(italian, mix, future, sg(2), pos, [miscelerai]).
+ty_verb(italian, mix, future, pl(1), pos, [misceleremo]).
+ty_verb(italian, mix, future, pl(2), pos, [miscelerete]).
+ty_verb(italian, moderate, future, sg, pos, [modererà]).
+ty_verb(italian, moderate, future, pl, pos, [modereranno]).
+ty_verb(italian, moderate, future, sg(1), pos, [modererò]).
+ty_verb(italian, moderate, future, sg(2), pos, [modererai]).
+ty_verb(italian, moderate, future, pl(1), pos, [modereremo]).
+ty_verb(italian, moderate, future, pl(2), pos, [modererete]).
+ty_verb(italian, modernise, future, sg, pos, [modernizzerà]).
+ty_verb(italian, modernise, future, pl, pos, [modernizzeranno]).
+ty_verb(italian, modernise, future, sg(1), pos, [modernizzerò]).
+ty_verb(italian, modernise, future, sg(2), pos, [modernizzerai]).
+ty_verb(italian, modernise, future, pl(1), pos, [modernizzeremo]).
+ty_verb(italian, modernise, future, pl(2), pos, [modernizzerete]).
+ty_verb(italian, modify, future, sg, pos, [modificherà]).
+ty_verb(italian, modify, future, pl, pos, [modificheranno]).
+ty_verb(italian, modify, future, sg(1), pos, [modificherò]).
+ty_verb(italian, modify, future, sg(2), pos, [modificherai]).
+ty_verb(italian, modify, future, pl(1), pos, [modificheremo]).
+ty_verb(italian, modify, future, pl(2), pos, [modificherete]).
+ty_verb(italian, monopolise, future, sg, pos, [monopolizzerà]).
+ty_verb(italian, monopolise, future, pl, pos, [monopolizzeranno]).
+ty_verb(italian, monopolise, future, sg(1), pos, [monopolizzerò]).
+ty_verb(italian, monopolise, future, sg(2), pos, [monopolizzerai]).
+ty_verb(italian, monopolise, future, pl(1), pos, [monopolizzeremo]).
+ty_verb(italian, monopolise, future, pl(2), pos, [monopolizzerete]).
+ty_verb(italian, mortgage, future, sg, pos, [ipotecherà]).
+ty_verb(italian, mortgage, future, pl, pos, [ipotecheranno]).
+ty_verb(italian, mortgage, future, sg(1), pos, [ipotecherò]).
+ty_verb(italian, mortgage, future, sg(2), pos, [ipotecherai]).
+ty_verb(italian, mortgage, future, pl(1), pos, [ipotecheremo]).
+ty_verb(italian, mortgage, future, pl(2), pos, [ipotecherete]).
+ty_verb(italian, mortify, future, sg, pos, [mortificherà]).
+ty_verb(italian, mortify, future, pl, pos, [mortificheranno]).
+ty_verb(italian, mortify, future, sg(1), pos, [mortificherò]).
+ty_verb(italian, mortify, future, sg(2), pos, [mortificherai]).
+ty_verb(italian, mortify, future, pl(1), pos, [mortificheremo]).
+ty_verb(italian, mortify, future, pl(2), pos, [mortificherete]).
+ty_verb(italian, motivate, future, sg, pos, [motiverà]).
+ty_verb(italian, motivate, future, pl, pos, [motiveranno]).
+ty_verb(italian, motivate, future, sg(1), pos, [motiverò]).
+ty_verb(italian, motivate, future, sg(2), pos, [motiverai]).
+ty_verb(italian, motivate, future, pl(1), pos, [motiveremo]).
+ty_verb(italian, motivate, future, pl(2), pos, [motiverete]).
+ty_verb(italian, motorise, future, sg, pos, [motorizzerà]).
+ty_verb(italian, motorise, future, pl, pos, [motorizzeranno]).
+ty_verb(italian, motorise, future, sg(1), pos, [motorizzerò]).
+ty_verb(italian, motorise, future, sg(2), pos, [motorizzerai]).
+ty_verb(italian, motorise, future, pl(1), pos, [motorizzeremo]).
+ty_verb(italian, motorise, future, pl(2), pos, [motorizzerete]).
+ty_verb(italian, mount, future, sg, pos, [monterà]).
+ty_verb(italian, mount, future, pl, pos, [monteranno]).
+ty_verb(italian, mount, future, sg(1), pos, [monterò]).
+ty_verb(italian, mount, future, sg(2), pos, [monterai]).
+ty_verb(italian, mount, future, pl(1), pos, [monteremo]).
+ty_verb(italian, mount, future, pl(2), pos, [monterete]).
+ty_verb(italian, multiply, future, sg, pos, [moltiplicherà]).
+ty_verb(italian, multiply, future, pl, pos, [moltiplicheranno]).
+ty_verb(italian, multiply, future, sg(1), pos, [moltiplicherò]).
+ty_verb(italian, multiply, future, sg(2), pos, [moltiplicherai]).
+ty_verb(italian, multiply, future, pl(1), pos, [moltiplicheremo]).
+ty_verb(italian, multiply, future, pl(2), pos, [moltiplicherete]).
+ty_verb(italian, murder, future, sg, pos, [assassinerà]).
+ty_verb(italian, murder, future, pl, pos, [assassineranno]).
+ty_verb(italian, murder, future, sg(1), pos, [assassinerò]).
+ty_verb(italian, murder, future, sg(2), pos, [assassinerai]).
+ty_verb(italian, murder, future, pl(1), pos, [assassineremo]).
+ty_verb(italian, murder, future, pl(2), pos, [assassinerete]).
+ty_verb(italian, mutate, future, sg, pos, [muterà]).
+ty_verb(italian, mutate, future, pl, pos, [muteranno]).
+ty_verb(italian, mutate, future, sg(1), pos, [muterò]).
+ty_verb(italian, mutate, future, sg(2), pos, [muterai]).
+ty_verb(italian, mutate, future, pl(1), pos, [muteremo]).
+ty_verb(italian, mutate, future, pl(2), pos, [muterete]).
+ty_verb(italian, mutter, future, sg, pos, [mormorerà]).
+ty_verb(italian, mutter, future, pl, pos, [mormoreranno]).
+ty_verb(italian, mutter, future, sg(1), pos, [mormorerò]).
+ty_verb(italian, mutter, future, sg(2), pos, [mormorerai]).
+ty_verb(italian, mutter, future, pl(1), pos, [mormoreremo]).
+ty_verb(italian, mutter, future, pl(2), pos, [mormorerete]).
+ty_verb(italian, narrate, future, sg, pos, [narrerà]).
+ty_verb(italian, narrate, future, pl, pos, [narreranno]).
+ty_verb(italian, narrate, future, sg(1), pos, [narrerò]).
+ty_verb(italian, narrate, future, sg(2), pos, [narrerai]).
+ty_verb(italian, narrate, future, pl(1), pos, [narreremo]).
+ty_verb(italian, narrate, future, pl(2), pos, [narrerete]).
+ty_verb(italian, nationalise, future, sg, pos, [nazionalizzerà]).
+ty_verb(italian, nationalise, future, pl, pos, [nazionalizzeranno]).
+ty_verb(italian, nationalise, future, sg(1), pos, [nazionalizzerò]).
+ty_verb(italian, nationalise, future, sg(2), pos, [nazionalizzerai]).
+ty_verb(italian, nationalise, future, pl(1), pos, [nazionalizzeremo]).
+ty_verb(italian, nationalise, future, pl(2), pos, [nazionalizzerete]).
+ty_verb(italian, need, future, sg, pos, [necessiterà]).
+ty_verb(italian, need, future, pl, pos, [necessiteranno]).
+ty_verb(italian, need, future, sg(1), pos, [necessiterò]).
+ty_verb(italian, need, future, sg(2), pos, [necessiterai]).
+ty_verb(italian, need, future, pl(1), pos, [necessiteremo]).
+ty_verb(italian, need, future, pl(2), pos, [necessiterete]).
+ty_verb(italian, neutralise, future, sg, pos, [neutralizzerà]).
+ty_verb(italian, neutralise, future, pl, pos, [neutralizzeranno]).
+ty_verb(italian, neutralise, future, sg(1), pos, [neutralizzerò]).
+ty_verb(italian, neutralise, future, sg(2), pos, [neutralizzerai]).
+ty_verb(italian, neutralise, future, pl(1), pos, [neutralizzeremo]).
+ty_verb(italian, neutralise, future, pl(2), pos, [neutralizzerete]).
+ty_verb(italian, normalise, future, sg, pos, [normalizzerà]).
+ty_verb(italian, normalise, future, pl, pos, [normalizzeranno]).
+ty_verb(italian, normalise, future, sg(1), pos, [normalizzerò]).
+ty_verb(italian, normalise, future, sg(2), pos, [normalizzerai]).
+ty_verb(italian, normalise, future, pl(1), pos, [normalizzeremo]).
+ty_verb(italian, normalise, future, pl(2), pos, [normalizzerete]).
+ty_verb(italian, notarise, future, sg, pos, [autenticherà]).
+ty_verb(italian, notarise, future, pl, pos, [autenticheranno]).
+ty_verb(italian, notarise, future, sg(1), pos, [autenticherò]).
+ty_verb(italian, notarise, future, sg(2), pos, [autenticherai]).
+ty_verb(italian, notarise, future, pl(1), pos, [autenticheremo]).
+ty_verb(italian, notarise, future, pl(2), pos, [autenticherete]).
+ty_verb(italian, notch, future, sg, pos, [intaccherà]).
+ty_verb(italian, notch, future, pl, pos, [intaccheranno]).
+ty_verb(italian, notch, future, sg(1), pos, [intaccherò]).
+ty_verb(italian, notch, future, sg(2), pos, [intaccherai]).
+ty_verb(italian, notch, future, pl(1), pos, [intaccheremo]).
+ty_verb(italian, notch, future, pl(2), pos, [intaccherete]).
+ty_verb(italian, note, future, sg, pos, [annoterà]).
+ty_verb(italian, note, future, pl, pos, [annoteranno]).
+ty_verb(italian, note, future, sg(1), pos, [annoterò]).
+ty_verb(italian, note, future, sg(2), pos, [annoterai]).
+ty_verb(italian, note, future, pl(1), pos, [annoteremo]).
+ty_verb(italian, note, future, pl(2), pos, [annoterete]).
+ty_verb(italian, notify, future, sg, pos, [notificherà]).
+ty_verb(italian, notify, future, pl, pos, [notificheranno]).
+ty_verb(italian, notify, future, sg(1), pos, [notificherò]).
+ty_verb(italian, notify, future, sg(2), pos, [notificherai]).
+ty_verb(italian, notify, future, pl(1), pos, [notificheremo]).
+ty_verb(italian, notify, future, pl(2), pos, [notificherete]).
+ty_verb(italian, nourish, future, sg, pos, [nutrirà]).
+ty_verb(italian, nourish, future, pl, pos, [nutriranno]).
+ty_verb(italian, nourish, future, sg(1), pos, [nutrirò]).
+ty_verb(italian, nourish, future, sg(2), pos, [nutrirai]).
+ty_verb(italian, nourish, future, pl(1), pos, [nutriremo]).
+ty_verb(italian, nourish, future, pl(2), pos, [nutrirete]).
+ty_verb(italian, number, future, sg, pos, [numererà]).
+ty_verb(italian, number, future, pl, pos, [numereranno]).
+ty_verb(italian, number, future, sg(1), pos, [numererò]).
+ty_verb(italian, number, future, sg(2), pos, [numererai]).
+ty_verb(italian, number, future, pl(1), pos, [numereremo]).
+ty_verb(italian, number, future, pl(2), pos, [numererete]).
+ty_verb(italian, obey, future, sg, pos, [obbedirà]).
+ty_verb(italian, obey, future, pl, pos, [obbediranno]).
+ty_verb(italian, obey, future, sg(1), pos, [obbedirò]).
+ty_verb(italian, obey, future, sg(2), pos, [obbedirai]).
+ty_verb(italian, obey, future, pl(1), pos, [obbediremo]).
+ty_verb(italian, obey, future, pl(2), pos, [obbedirete]).
+ty_verb(italian, obstruct, future, sg, pos, [ostruirà]).
+ty_verb(italian, obstruct, future, pl, pos, [ostruiranno]).
+ty_verb(italian, obstruct, future, sg(1), pos, [ostruirò]).
+ty_verb(italian, obstruct, future, sg(2), pos, [ostruirai]).
+ty_verb(italian, obstruct, future, pl(1), pos, [ostruiremo]).
+ty_verb(italian, obstruct, future, pl(2), pos, [ostruirete]).
+ty_verb(italian, occupy, future, sg, pos, [occuperà]).
+ty_verb(italian, occupy, future, pl, pos, [occuperanno]).
+ty_verb(italian, occupy, future, sg(1), pos, [occuperò]).
+ty_verb(italian, occupy, future, sg(2), pos, [occuperai]).
+ty_verb(italian, occupy, future, pl(1), pos, [occuperemo]).
+ty_verb(italian, occupy, future, pl(2), pos, [occuperete]).
+ty_verb(italian, occur, future, sg, pos, [occorrerà]).
+ty_verb(italian, occur, future, pl, pos, [occorreranno]).
+ty_verb(italian, occur, future, sg(1), pos, [occorrerò]).
+ty_verb(italian, occur, future, sg(2), pos, [occorrerai]).
+ty_verb(italian, occur, future, pl(1), pos, [occorreremo]).
+ty_verb(italian, occur, future, pl(2), pos, [occorrerete]).
+ty_verb(italian, offend, future, sg, pos, [offenderà]).
+ty_verb(italian, offend, future, pl, pos, [offenderanno]).
+ty_verb(italian, offend, future, sg(1), pos, [offenderò]).
+ty_verb(italian, offend, future, sg(2), pos, [offenderai]).
+ty_verb(italian, offend, future, pl(1), pos, [offenderemo]).
+ty_verb(italian, offend, future, pl(2), pos, [offenderete]).
+ty_verb(italian, omit, future, sg, pos, [ometterà]).
+ty_verb(italian, omit, future, pl, pos, [ometteranno]).
+ty_verb(italian, omit, future, sg(1), pos, [ometterò]).
+ty_verb(italian, omit, future, sg(2), pos, [ometterai]).
+ty_verb(italian, omit, future, pl(1), pos, [ometteremo]).
+ty_verb(italian, omit, future, pl(2), pos, [ometterete]).
+ty_verb(italian, open, future, sg, pos, [aprirà]).
+ty_verb(italian, open, future, pl, pos, [apriranno]).
+ty_verb(italian, open, future, sg(1), pos, [aprirò]).
+ty_verb(italian, open, future, sg(2), pos, [aprirai]).
+ty_verb(italian, open, future, pl(1), pos, [apriremo]).
+ty_verb(italian, open, future, pl(2), pos, [aprirete]).
+ty_verb(italian, operate, future, sg, pos, [opererà]).
+ty_verb(italian, operate, future, pl, pos, [opereranno]).
+ty_verb(italian, operate, future, sg(1), pos, [opererò]).
+ty_verb(italian, operate, future, sg(2), pos, [opererai]).
+ty_verb(italian, operate, future, pl(1), pos, [opereremo]).
+ty_verb(italian, operate, future, pl(2), pos, [opererete]).
+ty_verb(italian, opt, future, sg, pos, [opterà]).
+ty_verb(italian, opt, future, pl, pos, [opteranno]).
+ty_verb(italian, opt, future, sg(1), pos, [opterò]).
+ty_verb(italian, opt, future, sg(2), pos, [opterai]).
+ty_verb(italian, opt, future, pl(1), pos, [opteremo]).
+ty_verb(italian, opt, future, pl(2), pos, [opterete]).
+ty_verb(italian, optimise, future, sg, pos, [ottimizzerà]).
+ty_verb(italian, optimise, future, pl, pos, [ottimizzeranno]).
+ty_verb(italian, optimise, future, sg(1), pos, [ottimizzerò]).
+ty_verb(italian, optimise, future, sg(2), pos, [ottimizzerai]).
+ty_verb(italian, optimise, future, pl(1), pos, [ottimizzeremo]).
+ty_verb(italian, optimise, future, pl(2), pos, [ottimizzerete]).
+ty_verb(italian, orbit, future, sg, pos, [orbiterà]).
+ty_verb(italian, orbit, future, pl, pos, [orbiteranno]).
+ty_verb(italian, orbit, future, sg(1), pos, [orbiterò]).
+ty_verb(italian, orbit, future, sg(2), pos, [orbiterai]).
+ty_verb(italian, orbit, future, pl(1), pos, [orbiteremo]).
+ty_verb(italian, orbit, future, pl(2), pos, [orbiterete]).
+ty_verb(italian, order, future, sg, pos, [ordinerà]).
+ty_verb(italian, order, future, pl, pos, [ordineranno]).
+ty_verb(italian, order, future, sg(1), pos, [ordinerò]).
+ty_verb(italian, order, future, sg(2), pos, [ordinerai]).
+ty_verb(italian, order, future, pl(1), pos, [ordineremo]).
+ty_verb(italian, order, future, pl(2), pos, [ordinerete]).
+ty_verb(italian, organise, future, sg, pos, [organizzerà]).
+ty_verb(italian, organise, future, pl, pos, [organizzeranno]).
+ty_verb(italian, organise, future, sg(1), pos, [organizzerò]).
+ty_verb(italian, organise, future, sg(2), pos, [organizzerai]).
+ty_verb(italian, organise, future, pl(1), pos, [organizzeremo]).
+ty_verb(italian, organise, future, pl(2), pos, [organizzerete]).
+ty_verb(italian, outline, future, sg, pos, [delineerà]).
+ty_verb(italian, outline, future, pl, pos, [delineeranno]).
+ty_verb(italian, outline, future, sg(1), pos, [delineerò]).
+ty_verb(italian, outline, future, sg(2), pos, [delineerai]).
+ty_verb(italian, outline, future, pl(1), pos, [delineeremo]).
+ty_verb(italian, outline, future, pl(2), pos, [delineerete]).
+ty_verb(italian, overwhelm, future, sg, pos, [soprafferà]).
+ty_verb(italian, overwhelm, future, pl, pos, [soprafferanno]).
+ty_verb(italian, overwhelm, future, sg(1), pos, [soprafferò]).
+ty_verb(italian, overwhelm, future, sg(2), pos, [soprafferai]).
+ty_verb(italian, overwhelm, future, pl(1), pos, [soprafferemo]).
+ty_verb(italian, overwhelm, future, pl(2), pos, [soprafferete]).
+ty_verb(italian, owe, future, sg, pos, [dovrà]).
+ty_verb(italian, owe, future, pl, pos, [dovranno]).
+ty_verb(italian, owe, future, sg(1), pos, [dovrò]).
+ty_verb(italian, owe, future, sg(2), pos, [dovrai]).
+ty_verb(italian, owe, future, pl(1), pos, [dovremo]).
+ty_verb(italian, owe, future, pl(2), pos, [dovrete]).
+ty_verb(italian, own, future, sg, pos, [possiederà]).
+ty_verb(italian, own, future, pl, pos, [possiederanno]).
+ty_verb(italian, own, future, sg(1), pos, [possiederò]).
+ty_verb(italian, own, future, sg(2), pos, [possiederai]).
+ty_verb(italian, own, future, pl(1), pos, [possiederemo]).
+ty_verb(italian, own, future, pl(2), pos, [possiederete]).
+ty_verb(italian, pack, future, sg, pos, [impaccherà]).
+ty_verb(italian, pack, future, pl, pos, [impaccheranno]).
+ty_verb(italian, pack, future, sg(1), pos, [impaccherò]).
+ty_verb(italian, pack, future, sg(2), pos, [impaccherai]).
+ty_verb(italian, pack, future, pl(1), pos, [impaccheremo]).
+ty_verb(italian, pack, future, pl(2), pos, [impaccherete]).
+ty_verb(italian, paginate, future, sg, pos, [compaginerà]).
+ty_verb(italian, paginate, future, pl, pos, [compagineranno]).
+ty_verb(italian, paginate, future, sg(1), pos, [compaginerò]).
+ty_verb(italian, paginate, future, sg(2), pos, [compaginerai]).
+ty_verb(italian, paginate, future, pl(1), pos, [compagineremo]).
+ty_verb(italian, paginate, future, pl(2), pos, [compaginerete]).
+ty_verb(italian, paint, future, sg, pos, [dipingerà]).
+ty_verb(italian, paint, future, pl, pos, [dipingeranno]).
+ty_verb(italian, paint, future, sg(1), pos, [dipingerò]).
+ty_verb(italian, paint, future, sg(2), pos, [dipingerai]).
+ty_verb(italian, paint, future, pl(1), pos, [dipingeremo]).
+ty_verb(italian, paint, future, pl(2), pos, [dipingerete]).
+ty_verb(italian, lacquer, future, sg, pos, [laccherà]).
+ty_verb(italian, lacquer, future, pl, pos, [laccheranno]).
+ty_verb(italian, lacquer, future, sg(1), pos, [laccherò]).
+ty_verb(italian, lacquer, future, sg(2), pos, [laccherai]).
+ty_verb(italian, lacquer, future, pl(1), pos, [laccheremo]).
+ty_verb(italian, lacquer, future, pl(2), pos, [laccherete]).
+ty_verb(italian, parade, future, sg, pos, [sfoggerà]).
+ty_verb(italian, parade, future, pl, pos, [sfoggeranno]).
+ty_verb(italian, parade, future, sg(1), pos, [sfoggerò]).
+ty_verb(italian, parade, future, sg(2), pos, [sfoggerai]).
+ty_verb(italian, parade, future, pl(1), pos, [sfoggeremo]).
+ty_verb(italian, parade, future, pl(2), pos, [sfoggerete]).
+ty_verb(italian, paralyse, future, sg, pos, [paralizzerà]).
+ty_verb(italian, paralyse, future, pl, pos, [paralizzeranno]).
+ty_verb(italian, paralyse, future, sg(1), pos, [paralizzerò]).
+ty_verb(italian, paralyse, future, sg(2), pos, [paralizzerai]).
+ty_verb(italian, paralyse, future, pl(1), pos, [paralizzeremo]).
+ty_verb(italian, paralyse, future, pl(2), pos, [paralizzerete]).
+ty_verb(italian, park, future, sg, pos, [parcheggerà]).
+ty_verb(italian, park, future, pl, pos, [parcheggeranno]).
+ty_verb(italian, park, future, sg(1), pos, [parcheggerò]).
+ty_verb(italian, park, future, sg(2), pos, [parcheggerai]).
+ty_verb(italian, park, future, pl(1), pos, [parcheggeremo]).
+ty_verb(italian, park, future, pl(2), pos, [parcheggerete]).
+ty_verb(italian, part, future, sg, pos, [separerà]).
+ty_verb(italian, part, future, pl, pos, [separeranno]).
+ty_verb(italian, part, future, sg(1), pos, [separerò]).
+ty_verb(italian, part, future, sg(2), pos, [separerai]).
+ty_verb(italian, part, future, pl(1), pos, [separeremo]).
+ty_verb(italian, part, future, pl(2), pos, [separerete]).
+ty_verb(italian, patent, future, sg, pos, [brevetterà]).
+ty_verb(italian, patent, future, pl, pos, [brevetteranno]).
+ty_verb(italian, patent, future, sg(1), pos, [brevetterò]).
+ty_verb(italian, patent, future, sg(2), pos, [brevetterai]).
+ty_verb(italian, patent, future, pl(1), pos, [brevetteremo]).
+ty_verb(italian, patent, future, pl(2), pos, [brevetterete]).
+ty_verb(italian, pause, future, sg, pos, [sosterà]).
+ty_verb(italian, pause, future, pl, pos, [sosteranno]).
+ty_verb(italian, pause, future, sg(1), pos, [sosterò]).
+ty_verb(italian, pause, future, sg(2), pos, [sosterai]).
+ty_verb(italian, pause, future, pl(1), pos, [sosteremo]).
+ty_verb(italian, pause, future, pl(2), pos, [sosterete]).
+ty_verb(italian, pay, future, sg, pos, [pagherà]).
+ty_verb(italian, pay, future, pl, pos, [pagheranno]).
+ty_verb(italian, pay, future, sg(1), pos, [pagherò]).
+ty_verb(italian, pay, future, sg(2), pos, [pagherai]).
+ty_verb(italian, pay, future, pl(1), pos, [pagheremo]).
+ty_verb(italian, pay, future, pl(2), pos, [pagherete]).
+ty_verb(italian, peel, future, sg, pos, [pelerà]).
+ty_verb(italian, peel, future, pl, pos, [peleranno]).
+ty_verb(italian, peel, future, sg(1), pos, [pelerò]).
+ty_verb(italian, peel, future, sg(2), pos, [pelerai]).
+ty_verb(italian, peel, future, pl(1), pos, [peleremo]).
+ty_verb(italian, peel, future, pl(2), pos, [pelerete]).
+ty_verb(italian, penetrate, future, sg, pos, [penetrerà]).
+ty_verb(italian, penetrate, future, pl, pos, [penetreranno]).
+ty_verb(italian, penetrate, future, sg(1), pos, [penetrerò]).
+ty_verb(italian, penetrate, future, sg(2), pos, [penetrerai]).
+ty_verb(italian, penetrate, future, pl(1), pos, [penetreremo]).
+ty_verb(italian, penetrate, future, pl(2), pos, [penetrerete]).
+ty_verb(italian, perceive, future, sg, pos, [percepirà]).
+ty_verb(italian, perceive, future, pl, pos, [percepiranno]).
+ty_verb(italian, perceive, future, sg(1), pos, [percepirò]).
+ty_verb(italian, perceive, future, sg(2), pos, [percepirai]).
+ty_verb(italian, perceive, future, pl(1), pos, [percepiremo]).
+ty_verb(italian, perceive, future, pl(2), pos, [percepirete]).
+ty_verb(italian, perfect, future, sg, pos, [perfezionerà]).
+ty_verb(italian, perfect, future, pl, pos, [perfezioneranno]).
+ty_verb(italian, perfect, future, sg(1), pos, [perfezionerò]).
+ty_verb(italian, perfect, future, sg(2), pos, [perfezionerai]).
+ty_verb(italian, perfect, future, pl(1), pos, [perfezioneremo]).
+ty_verb(italian, perfect, future, pl(2), pos, [perfezionerete]).
+ty_verb(italian, perform, future, sg, pos, [svolgerà]).
+ty_verb(italian, perform, future, pl, pos, [svolgeranno]).
+ty_verb(italian, perform, future, sg(1), pos, [svolgerò]).
+ty_verb(italian, perform, future, sg(2), pos, [svolgerai]).
+ty_verb(italian, perform, future, pl(1), pos, [svolgeremo]).
+ty_verb(italian, perform, future, pl(2), pos, [svolgerete]).
+ty_verb(italian, perfume, future, sg, pos, [profumerà]).
+ty_verb(italian, perfume, future, pl, pos, [profumeranno]).
+ty_verb(italian, perfume, future, sg(1), pos, [profumerò]).
+ty_verb(italian, perfume, future, sg(2), pos, [profumerai]).
+ty_verb(italian, perfume, future, pl(1), pos, [profumeremo]).
+ty_verb(italian, perfume, future, pl(2), pos, [profumerete]).
+ty_verb(italian, perpetrate, future, sg, pos, [perpetrerà]).
+ty_verb(italian, perpetrate, future, pl, pos, [perpetreranno]).
+ty_verb(italian, perpetrate, future, sg(1), pos, [perpetrerò]).
+ty_verb(italian, perpetrate, future, sg(2), pos, [perpetrerai]).
+ty_verb(italian, perpetrate, future, pl(1), pos, [perpetreremo]).
+ty_verb(italian, perpetrate, future, pl(2), pos, [perpetrerete]).
+ty_verb(italian, perpetuate, future, sg, pos, [perpetuerà]).
+ty_verb(italian, perpetuate, future, pl, pos, [perpetueranno]).
+ty_verb(italian, perpetuate, future, sg(1), pos, [perpetuerò]).
+ty_verb(italian, perpetuate, future, sg(2), pos, [perpetuerai]).
+ty_verb(italian, perpetuate, future, pl(1), pos, [perpetueremo]).
+ty_verb(italian, perpetuate, future, pl(2), pos, [perpetuerete]).
+ty_verb(italian, persist, future, sg, pos, [persisterà]).
+ty_verb(italian, persist, future, pl, pos, [persisteranno]).
+ty_verb(italian, persist, future, sg(1), pos, [persisterò]).
+ty_verb(italian, persist, future, sg(2), pos, [persisterai]).
+ty_verb(italian, persist, future, pl(1), pos, [persisteremo]).
+ty_verb(italian, persist, future, pl(2), pos, [persisterete]).
+ty_verb(italian, persuade, future, sg, pos, [persuaderà]).
+ty_verb(italian, persuade, future, pl, pos, [persuaderanno]).
+ty_verb(italian, persuade, future, sg(1), pos, [persuaderò]).
+ty_verb(italian, persuade, future, sg(2), pos, [persuaderai]).
+ty_verb(italian, persuade, future, pl(1), pos, [persuaderemo]).
+ty_verb(italian, persuade, future, pl(2), pos, [persuaderete]).
+ty_verb(italian, perturb, future, sg, pos, [perturberà]).
+ty_verb(italian, perturb, future, pl, pos, [perturberanno]).
+ty_verb(italian, perturb, future, sg(1), pos, [perturberò]).
+ty_verb(italian, perturb, future, sg(2), pos, [perturberai]).
+ty_verb(italian, perturb, future, pl(1), pos, [perturberemo]).
+ty_verb(italian, perturb, future, pl(2), pos, [perturberete]).
+ty_verb(italian, phone, future, sg, pos, [telefonerà]).
+ty_verb(italian, phone, future, pl, pos, [telefoneranno]).
+ty_verb(italian, phone, future, sg(1), pos, [telefonerò]).
+ty_verb(italian, phone, future, sg(2), pos, [telefonerai]).
+ty_verb(italian, phone, future, pl(1), pos, [telefoneremo]).
+ty_verb(italian, phone, future, pl(2), pos, [telefonerete]).
+ty_verb(italian, photocopy, future, sg, pos, [fotocopierà]).
+ty_verb(italian, photocopy, future, pl, pos, [fotocopieranno]).
+ty_verb(italian, photocopy, future, sg(1), pos, [fotocopierò]).
+ty_verb(italian, photocopy, future, sg(2), pos, [fotocopierai]).
+ty_verb(italian, photocopy, future, pl(1), pos, [fotocopieremo]).
+ty_verb(italian, photocopy, future, pl(2), pos, [fotocopierete]).
+ty_verb(italian, photograph, future, sg, pos, [fotograferà]).
+ty_verb(italian, photograph, future, pl, pos, [fotograferanno]).
+ty_verb(italian, photograph, future, sg(1), pos, [fotograferò]).
+ty_verb(italian, photograph, future, sg(2), pos, [fotograferai]).
+ty_verb(italian, photograph, future, pl(1), pos, [fotograferemo]).
+ty_verb(italian, photograph, future, pl(2), pos, [fotograferete]).
+ty_verb(italian, pilot, future, sg, pos, [piloterà]).
+ty_verb(italian, pilot, future, pl, pos, [piloteranno]).
+ty_verb(italian, pilot, future, sg(1), pos, [piloterò]).
+ty_verb(italian, pilot, future, sg(2), pos, [piloterai]).
+ty_verb(italian, pilot, future, pl(1), pos, [piloteremo]).
+ty_verb(italian, pilot, future, pl(2), pos, [piloterete]).
+ty_verb(italian, pin, future, sg, pos, [appunterà]).
+ty_verb(italian, pin, future, pl, pos, [appunteranno]).
+ty_verb(italian, pin, future, sg(1), pos, [appunterò]).
+ty_verb(italian, pin, future, sg(2), pos, [appunterai]).
+ty_verb(italian, pin, future, pl(1), pos, [appunteremo]).
+ty_verb(italian, pin, future, pl(2), pos, [appunterete]).
+ty_verb(italian, place, future, sg, pos, [disporrà]).
+ty_verb(italian, place, future, pl, pos, [disporranno]).
+ty_verb(italian, place, future, sg(1), pos, [disporrò]).
+ty_verb(italian, place, future, sg(2), pos, [disporrai]).
+ty_verb(italian, place, future, pl(1), pos, [disporremo]).
+ty_verb(italian, place, future, pl(2), pos, [disporrete]).
+ty_verb(italian, plagiarise, future, sg, pos, [plagerà]).
+ty_verb(italian, plagiarise, future, pl, pos, [plageranno]).
+ty_verb(italian, plagiarise, future, sg(1), pos, [plagerò]).
+ty_verb(italian, plagiarise, future, sg(2), pos, [plagerai]).
+ty_verb(italian, plagiarise, future, pl(1), pos, [plageremo]).
+ty_verb(italian, plagiarise, future, pl(2), pos, [plagerete]).
+ty_verb(italian, plan, future, sg, pos, [pianificherà]).
+ty_verb(italian, plan, future, pl, pos, [pianificheranno]).
+ty_verb(italian, plan, future, sg(1), pos, [pianificherò]).
+ty_verb(italian, plan, future, sg(2), pos, [pianificherai]).
+ty_verb(italian, plan, future, pl(1), pos, [pianificheremo]).
+ty_verb(italian, plan, future, pl(2), pos, [pianificherete]).
+ty_verb(italian, plant, future, sg, pos, [piantherà]).
+ty_verb(italian, plant, future, pl, pos, [piantheranno]).
+ty_verb(italian, plant, future, sg(1), pos, [piantherò]).
+ty_verb(italian, plant, future, sg(2), pos, [piantherai]).
+ty_verb(italian, plant, future, pl(1), pos, [piantheremo]).
+ty_verb(italian, plant, future, pl(2), pos, [piantherete]).
+ty_verb(italian, plaster, future, sg, pos, [intonacherà]).
+ty_verb(italian, plaster, future, pl, pos, [intonacheranno]).
+ty_verb(italian, plaster, future, sg(1), pos, [intonacherò]).
+ty_verb(italian, plaster, future, sg(2), pos, [intonacherai]).
+ty_verb(italian, plaster, future, pl(1), pos, [intonacheremo]).
+ty_verb(italian, plaster, future, pl(2), pos, [intonacherete]).
+ty_verb(italian, play, future, sg, pos, [giocherà]).
+ty_verb(italian, play, future, pl, pos, [giocheranno]).
+ty_verb(italian, play, future, sg(1), pos, [giocherò]).
+ty_verb(italian, play, future, sg(2), pos, [giocherai]).
+ty_verb(italian, play, future, pl(1), pos, [giocheremo]).
+ty_verb(italian, play, future, pl(2), pos, [giocherete]).
+ty_verb(italian, play, future, sg, pos, [suonerà]).
+ty_verb(italian, play, future, pl, pos, [suoneranno]).
+ty_verb(italian, play, future, sg(1), pos, [suonerò]).
+ty_verb(italian, play, future, sg(2), pos, [suonerai]).
+ty_verb(italian, play, future, pl(1), pos, [suoneremo]).
+ty_verb(italian, play, future, pl(2), pos, [suonerete]).
+ty_verb(italian, play, future, sg, pos, [toccherà]).
+ty_verb(italian, play, future, pl, pos, [toccheranno]).
+ty_verb(italian, play, future, sg(1), pos, [toccherò]).
+ty_verb(italian, play, future, sg(2), pos, [toccherai]).
+ty_verb(italian, play, future, pl(1), pos, [toccheremo]).
+ty_verb(italian, play, future, pl(2), pos, [toccherete]).
+ty_verb(italian, pledge, future, sg, pos, [impegnerà]).
+ty_verb(italian, pledge, future, pl, pos, [impegneranno]).
+ty_verb(italian, pledge, future, sg(1), pos, [impegnerò]).
+ty_verb(italian, pledge, future, sg(2), pos, [impegnerai]).
+ty_verb(italian, pledge, future, pl(1), pos, [impegneremo]).
+ty_verb(italian, pledge, future, pl(2), pos, [impegnerete]).
+ty_verb(italian, plough, future, sg, pos, [arerà]).
+ty_verb(italian, plough, future, pl, pos, [areranno]).
+ty_verb(italian, plough, future, sg(1), pos, [arerò]).
+ty_verb(italian, plough, future, sg(2), pos, [arerai]).
+ty_verb(italian, plough, future, pl(1), pos, [areremo]).
+ty_verb(italian, plough, future, pl(2), pos, [arerete]).
+ty_verb(italian, point, future, sg, pos, [segnalerà]).
+ty_verb(italian, point, future, pl, pos, [segnaleranno]).
+ty_verb(italian, point, future, sg(1), pos, [segnalerò]).
+ty_verb(italian, point, future, sg(2), pos, [segnalerai]).
+ty_verb(italian, point, future, pl(1), pos, [segnaleremo]).
+ty_verb(italian, point, future, pl(2), pos, [segnalerete]).
+ty_verb(italian, poison, future, sg, pos, [avvelenerà]).
+ty_verb(italian, poison, future, pl, pos, [avveleneranno]).
+ty_verb(italian, poison, future, sg(1), pos, [avvelenerò]).
+ty_verb(italian, poison, future, sg(2), pos, [avvelenerai]).
+ty_verb(italian, poison, future, pl(1), pos, [avveleneremo]).
+ty_verb(italian, poison, future, pl(2), pos, [avvelenerete]).
+ty_verb(italian, polarise, future, sg, pos, [polarizzerà]).
+ty_verb(italian, polarise, future, pl, pos, [polarizzeranno]).
+ty_verb(italian, polarise, future, sg(1), pos, [polarizzerò]).
+ty_verb(italian, polarise, future, sg(2), pos, [polarizzerai]).
+ty_verb(italian, polarise, future, pl(1), pos, [polarizzeremo]).
+ty_verb(italian, polarise, future, pl(2), pos, [polarizzerete]).
+ty_verb(italian, polish, future, sg, pos, [lustrerà]).
+ty_verb(italian, polish, future, pl, pos, [lustreranno]).
+ty_verb(italian, polish, future, sg(1), pos, [lustrerò]).
+ty_verb(italian, polish, future, sg(2), pos, [lustrerai]).
+ty_verb(italian, polish, future, pl(1), pos, [lustreremo]).
+ty_verb(italian, polish, future, pl(2), pos, [lustrerete]).
+ty_verb(italian, pollute, future, sg, pos, [contaminerà]).
+ty_verb(italian, pollute, future, pl, pos, [contamineranno]).
+ty_verb(italian, pollute, future, sg(1), pos, [contaminerò]).
+ty_verb(italian, pollute, future, sg(2), pos, [contaminerai]).
+ty_verb(italian, pollute, future, pl(1), pos, [contamineremo]).
+ty_verb(italian, pollute, future, pl(2), pos, [contaminerete]).
+ty_verb(italian, ponder, future, sg, pos, [pondererà]).
+ty_verb(italian, ponder, future, pl, pos, [pondereranno]).
+ty_verb(italian, ponder, future, sg(1), pos, [pondererò]).
+ty_verb(italian, ponder, future, sg(2), pos, [pondererai]).
+ty_verb(italian, ponder, future, pl(1), pos, [pondereremo]).
+ty_verb(italian, ponder, future, pl(2), pos, [pondererete]).
+ty_verb(italian, populate, future, sg, pos, [popolerà]).
+ty_verb(italian, populate, future, pl, pos, [popoleranno]).
+ty_verb(italian, populate, future, sg(1), pos, [popolerò]).
+ty_verb(italian, populate, future, sg(2), pos, [popolerai]).
+ty_verb(italian, populate, future, pl(1), pos, [popoleremo]).
+ty_verb(italian, populate, future, pl(2), pos, [popolerete]).
+ty_verb(italian, posit, future, sg, pos, [presupporrà]).
+ty_verb(italian, posit, future, pl, pos, [presupporranno]).
+ty_verb(italian, posit, future, sg(1), pos, [presupporrò]).
+ty_verb(italian, posit, future, sg(2), pos, [presupporrai]).
+ty_verb(italian, posit, future, pl(1), pos, [presupporremo]).
+ty_verb(italian, posit, future, pl(2), pos, [presupporrete]).
+ty_verb(italian, postpone, future, sg, pos, [posporrà]).
+ty_verb(italian, postpone, future, pl, pos, [posporranno]).
+ty_verb(italian, postpone, future, sg(1), pos, [posporrò]).
+ty_verb(italian, postpone, future, sg(2), pos, [posporrai]).
+ty_verb(italian, postpone, future, pl(1), pos, [posporremo]).
+ty_verb(italian, postpone, future, pl(2), pos, [posporrete]).
+ty_verb(italian, pour, future, sg, pos, [verserà]).
+ty_verb(italian, pour, future, pl, pos, [verseranno]).
+ty_verb(italian, pour, future, sg(1), pos, [verserò]).
+ty_verb(italian, pour, future, sg(2), pos, [verserai]).
+ty_verb(italian, pour, future, pl(1), pos, [verseremo]).
+ty_verb(italian, pour, future, pl(2), pos, [verserete]).
+ty_verb(italian, powder, future, sg, pos, [impolvererà]).
+ty_verb(italian, powder, future, pl, pos, [impolvereranno]).
+ty_verb(italian, powder, future, sg(1), pos, [impolvererò]).
+ty_verb(italian, powder, future, sg(2), pos, [impolvererai]).
+ty_verb(italian, powder, future, pl(1), pos, [impolvereremo]).
+ty_verb(italian, powder, future, pl(2), pos, [impolvererete]).
+ty_verb(italian, practise, future, sg, pos, [praticherà]).
+ty_verb(italian, practise, future, pl, pos, [praticheranno]).
+ty_verb(italian, practise, future, sg(1), pos, [praticherò]).
+ty_verb(italian, practise, future, sg(2), pos, [praticherai]).
+ty_verb(italian, practise, future, pl(1), pos, [praticheremo]).
+ty_verb(italian, practise, future, pl(2), pos, [praticherete]).
+ty_verb(italian, praise, future, sg, pos, [loderà]).
+ty_verb(italian, praise, future, pl, pos, [loderanno]).
+ty_verb(italian, praise, future, sg(1), pos, [loderò]).
+ty_verb(italian, praise, future, sg(2), pos, [loderai]).
+ty_verb(italian, praise, future, pl(1), pos, [loderemo]).
+ty_verb(italian, praise, future, pl(2), pos, [loderete]).
+ty_verb(italian, pray, future, sg, pos, [pregherà]).
+ty_verb(italian, pray, future, pl, pos, [pregheranno]).
+ty_verb(italian, pray, future, sg(1), pos, [pregherò]).
+ty_verb(italian, pray, future, sg(2), pos, [pregherai]).
+ty_verb(italian, pray, future, pl(1), pos, [pregheremo]).
+ty_verb(italian, pray, future, pl(2), pos, [pregherete]).
+ty_verb(italian, preach, future, sg, pos, [predicherà]).
+ty_verb(italian, preach, future, pl, pos, [predicheranno]).
+ty_verb(italian, preach, future, sg(1), pos, [predicherò]).
+ty_verb(italian, preach, future, sg(2), pos, [predicherai]).
+ty_verb(italian, preach, future, pl(1), pos, [predicheremo]).
+ty_verb(italian, preach, future, pl(2), pos, [predicherete]).
+ty_verb(italian, precede, future, sg, pos, [precederà]).
+ty_verb(italian, precede, future, pl, pos, [precederanno]).
+ty_verb(italian, precede, future, sg(1), pos, [precederò]).
+ty_verb(italian, precede, future, sg(2), pos, [precederai]).
+ty_verb(italian, precede, future, pl(1), pos, [precederemo]).
+ty_verb(italian, precede, future, pl(2), pos, [precederete]).
+ty_verb(italian, precipitate, future, sg, pos, [precipiterà]).
+ty_verb(italian, precipitate, future, pl, pos, [precipiteranno]).
+ty_verb(italian, precipitate, future, sg(1), pos, [precipiterò]).
+ty_verb(italian, precipitate, future, sg(2), pos, [precipiterai]).
+ty_verb(italian, precipitate, future, pl(1), pos, [precipiteremo]).
+ty_verb(italian, precipitate, future, pl(2), pos, [precipiterete]).
+ty_verb(italian, preclude, future, sg, pos, [precluderà]).
+ty_verb(italian, preclude, future, pl, pos, [precluderanno]).
+ty_verb(italian, preclude, future, sg(1), pos, [precluderò]).
+ty_verb(italian, preclude, future, sg(2), pos, [precluderai]).
+ty_verb(italian, preclude, future, pl(1), pos, [precluderemo]).
+ty_verb(italian, preclude, future, pl(2), pos, [precluderete]).
+ty_verb(italian, predetermine, future, sg, pos, [predeterminerà]).
+ty_verb(italian, predetermine, future, pl, pos, [predetermineranno]).
+ty_verb(italian, predetermine, future, sg(1), pos, [predeterminerò]).
+ty_verb(italian, predetermine, future, sg(2), pos, [predeterminerai]).
+ty_verb(italian, predetermine, future, pl(1), pos, [predetermineremo]).
+ty_verb(italian, predetermine, future, pl(2), pos, [predeterminerete]).
+ty_verb(italian, predict, future, sg, pos, [predirà]).
+ty_verb(italian, predict, future, pl, pos, [prediranno]).
+ty_verb(italian, predict, future, sg(1), pos, [predirò]).
+ty_verb(italian, predict, future, sg(2), pos, [predirai]).
+ty_verb(italian, predict, future, pl(1), pos, [prediremo]).
+ty_verb(italian, predict, future, pl(2), pos, [predirete]).
+ty_verb(italian, predominate, future, sg, pos, [predominerà]).
+ty_verb(italian, predominate, future, pl, pos, [predomineranno]).
+ty_verb(italian, predominate, future, sg(1), pos, [predominerò]).
+ty_verb(italian, predominate, future, sg(2), pos, [predominerai]).
+ty_verb(italian, predominate, future, pl(1), pos, [predomineremo]).
+ty_verb(italian, predominate, future, pl(2), pos, [predominerete]).
+ty_verb(italian, prefabricate, future, sg, pos, [prefabbricherà]).
+ty_verb(italian, prefabricate, future, pl, pos, [prefabbricheranno]).
+ty_verb(italian, prefabricate, future, sg(1), pos, [prefabbricherò]).
+ty_verb(italian, prefabricate, future, sg(2), pos, [prefabbricherai]).
+ty_verb(italian, prefabricate, future, pl(1), pos, [prefabbricheremo]).
+ty_verb(italian, prefabricate, future, pl(2), pos, [prefabbricherete]).
+ty_verb(italian, prefer, future, sg, pos, [preferirà]).
+ty_verb(italian, prefer, future, pl, pos, [preferiranno]).
+ty_verb(italian, prefer, future, sg(1), pos, [preferirò]).
+ty_verb(italian, prefer, future, sg(2), pos, [preferirai]).
+ty_verb(italian, prefer, future, pl(1), pos, [preferiremo]).
+ty_verb(italian, prefer, future, pl(2), pos, [preferirete]).
+ty_verb(italian, prefix, future, sg, pos, [premetterà]).
+ty_verb(italian, prefix, future, pl, pos, [premetteranno]).
+ty_verb(italian, prefix, future, sg(1), pos, [premetterò]).
+ty_verb(italian, prefix, future, sg(2), pos, [premetterai]).
+ty_verb(italian, prefix, future, pl(1), pos, [premetteremo]).
+ty_verb(italian, prefix, future, pl(2), pos, [premetterete]).
+ty_verb(italian, prejudice, future, sg, pos, [pregiudicherà]).
+ty_verb(italian, prejudice, future, pl, pos, [pregiudicheranno]).
+ty_verb(italian, prejudice, future, sg(1), pos, [pregiudicherò]).
+ty_verb(italian, prejudice, future, sg(2), pos, [pregiudicherai]).
+ty_verb(italian, prejudice, future, pl(1), pos, [pregiudicheremo]).
+ty_verb(italian, prejudice, future, pl(2), pos, [pregiudicherete]).
+ty_verb(italian, prescribe, future, sg, pos, [prescriverà]).
+ty_verb(italian, prescribe, future, pl, pos, [prescriveranno]).
+ty_verb(italian, prescribe, future, sg(1), pos, [prescriverò]).
+ty_verb(italian, prescribe, future, sg(2), pos, [prescriverai]).
+ty_verb(italian, prescribe, future, pl(1), pos, [prescriveremo]).
+ty_verb(italian, prescribe, future, pl(2), pos, [prescriverete]).
+ty_verb(italian, present, future, sg, pos, [presenterà]).
+ty_verb(italian, present, future, pl, pos, [presenteranno]).
+ty_verb(italian, present, future, sg(1), pos, [presenterò]).
+ty_verb(italian, present, future, sg(2), pos, [presenterai]).
+ty_verb(italian, present, future, pl(1), pos, [presenteremo]).
+ty_verb(italian, present, future, pl(2), pos, [presenterete]).
+ty_verb(italian, preserve, future, sg, pos, [preserverà]).
+ty_verb(italian, preserve, future, pl, pos, [preserveranno]).
+ty_verb(italian, preserve, future, sg(1), pos, [preserverò]).
+ty_verb(italian, preserve, future, sg(2), pos, [preserverai]).
+ty_verb(italian, preserve, future, pl(1), pos, [preserveremo]).
+ty_verb(italian, preserve, future, pl(2), pos, [preserverete]).
+ty_verb(italian, press, future, sg, pos, [pulserà]).
+ty_verb(italian, press, future, pl, pos, [pulseranno]).
+ty_verb(italian, press, future, sg(1), pos, [pulserò]).
+ty_verb(italian, press, future, sg(2), pos, [pulserai]).
+ty_verb(italian, press, future, pl(1), pos, [pulseremo]).
+ty_verb(italian, press, future, pl(2), pos, [pulserete]).
+ty_verb(italian, prevail, future, sg, pos, [prevarrà]).
+ty_verb(italian, prevail, future, pl, pos, [prevarranno]).
+ty_verb(italian, prevail, future, sg(1), pos, [prevarrò]).
+ty_verb(italian, prevail, future, sg(2), pos, [prevarrai]).
+ty_verb(italian, prevail, future, pl(1), pos, [prevarremo]).
+ty_verb(italian, prevail, future, pl(2), pos, [prevarrete]).
+ty_verb(italian, prevent, future, sg, pos, [preverrà]).
+ty_verb(italian, prevent, future, pl, pos, [preverranno]).
+ty_verb(italian, prevent, future, sg(1), pos, [preverrò]).
+ty_verb(italian, prevent, future, sg(2), pos, [preverrai]).
+ty_verb(italian, prevent, future, pl(1), pos, [preverremo]).
+ty_verb(italian, prevent, future, pl(2), pos, [preverrete]).
+ty_verb(italian, print, future, sg, pos, [stamperà]).
+ty_verb(italian, print, future, pl, pos, [stamperanno]).
+ty_verb(italian, print, future, sg(1), pos, [stamperò]).
+ty_verb(italian, print, future, sg(2), pos, [stamperai]).
+ty_verb(italian, print, future, pl(1), pos, [stamperemo]).
+ty_verb(italian, print, future, pl(2), pos, [stamperete]).
+ty_verb(italian, privatise, future, sg, pos, [privatizzerà]).
+ty_verb(italian, privatise, future, pl, pos, [privatizzeranno]).
+ty_verb(italian, privatise, future, sg(1), pos, [privatizzerò]).
+ty_verb(italian, privatise, future, sg(2), pos, [privatizzerai]).
+ty_verb(italian, privatise, future, pl(1), pos, [privatizzeremo]).
+ty_verb(italian, privatise, future, pl(2), pos, [privatizzerete]).
+ty_verb(italian, proceed, future, sg, pos, [proverrà]).
+ty_verb(italian, proceed, future, pl, pos, [proverranno]).
+ty_verb(italian, proceed, future, sg(1), pos, [proverrò]).
+ty_verb(italian, proceed, future, sg(2), pos, [proverrai]).
+ty_verb(italian, proceed, future, pl(1), pos, [proverremo]).
+ty_verb(italian, proceed, future, pl(2), pos, [proverrete]).
+ty_verb(italian, proclaim, future, sg, pos, [proclamerà]).
+ty_verb(italian, proclaim, future, pl, pos, [proclameranno]).
+ty_verb(italian, proclaim, future, sg(1), pos, [proclamerò]).
+ty_verb(italian, proclaim, future, sg(2), pos, [proclamerai]).
+ty_verb(italian, proclaim, future, pl(1), pos, [proclameremo]).
+ty_verb(italian, proclaim, future, pl(2), pos, [proclamerete]).
+ty_verb(italian, procreate, future, sg, pos, [procreerà]).
+ty_verb(italian, procreate, future, pl, pos, [procreeranno]).
+ty_verb(italian, procreate, future, sg(1), pos, [procreerò]).
+ty_verb(italian, procreate, future, sg(2), pos, [procreerai]).
+ty_verb(italian, procreate, future, pl(1), pos, [procreeremo]).
+ty_verb(italian, procreate, future, pl(2), pos, [procreerete]).
+ty_verb(italian, procure, future, sg, pos, [procurerà]).
+ty_verb(italian, procure, future, pl, pos, [procureranno]).
+ty_verb(italian, procure, future, sg(1), pos, [procurerò]).
+ty_verb(italian, procure, future, sg(2), pos, [procurerai]).
+ty_verb(italian, procure, future, pl(1), pos, [procureremo]).
+ty_verb(italian, procure, future, pl(2), pos, [procurerete]).
+ty_verb(italian, produce, future, sg, pos, [produrrà]).
+ty_verb(italian, produce, future, pl, pos, [produrranno]).
+ty_verb(italian, produce, future, sg(1), pos, [produrrò]).
+ty_verb(italian, produce, future, sg(2), pos, [produrrai]).
+ty_verb(italian, produce, future, pl(1), pos, [produrremo]).
+ty_verb(italian, produce, future, pl(2), pos, [produrrete]).
+ty_verb(italian, program, future, sg, pos, [programmerà]).
+ty_verb(italian, program, future, pl, pos, [programmeranno]).
+ty_verb(italian, program, future, sg(1), pos, [programmerò]).
+ty_verb(italian, program, future, sg(2), pos, [programmerai]).
+ty_verb(italian, program, future, pl(1), pos, [programmeremo]).
+ty_verb(italian, program, future, pl(2), pos, [programmerete]).
+ty_verb(italian, progress, future, sg, pos, [progredirà]).
+ty_verb(italian, progress, future, pl, pos, [progrediranno]).
+ty_verb(italian, progress, future, sg(1), pos, [progredirò]).
+ty_verb(italian, progress, future, sg(2), pos, [progredirai]).
+ty_verb(italian, progress, future, pl(1), pos, [progrediremo]).
+ty_verb(italian, progress, future, pl(2), pos, [progredirete]).
+ty_verb(italian, prohibit, future, sg, pos, [proibirà]).
+ty_verb(italian, prohibit, future, pl, pos, [proibiranno]).
+ty_verb(italian, prohibit, future, sg(1), pos, [proibirò]).
+ty_verb(italian, prohibit, future, sg(2), pos, [proibirai]).
+ty_verb(italian, prohibit, future, pl(1), pos, [proibiremo]).
+ty_verb(italian, prohibit, future, pl(2), pos, [proibirete]).
+ty_verb(italian, project, future, sg, pos, [progetterà]).
+ty_verb(italian, project, future, pl, pos, [progetteranno]).
+ty_verb(italian, project, future, sg(1), pos, [progetterò]).
+ty_verb(italian, project, future, sg(2), pos, [progetterai]).
+ty_verb(italian, project, future, pl(1), pos, [progetteremo]).
+ty_verb(italian, project, future, pl(2), pos, [progetterete]).
+ty_verb(italian, proliferate, future, sg, pos, [prolifererà]).
+ty_verb(italian, proliferate, future, pl, pos, [prolifereranno]).
+ty_verb(italian, proliferate, future, sg(1), pos, [prolifererò]).
+ty_verb(italian, proliferate, future, sg(2), pos, [prolifererai]).
+ty_verb(italian, proliferate, future, pl(1), pos, [prolifereremo]).
+ty_verb(italian, proliferate, future, pl(2), pos, [prolifererete]).
+ty_verb(italian, promise, future, sg, pos, [prometterà]).
+ty_verb(italian, promise, future, pl, pos, [prometteranno]).
+ty_verb(italian, promise, future, sg(1), pos, [prometterò]).
+ty_verb(italian, promise, future, sg(2), pos, [prometterai]).
+ty_verb(italian, promise, future, pl(1), pos, [prometteremo]).
+ty_verb(italian, promise, future, pl(2), pos, [prometterete]).
+ty_verb(italian, promote, future, sg, pos, [promuoverà]).
+ty_verb(italian, promote, future, pl, pos, [promuoveranno]).
+ty_verb(italian, promote, future, sg(1), pos, [promuoverò]).
+ty_verb(italian, promote, future, sg(2), pos, [promuoverai]).
+ty_verb(italian, promote, future, pl(1), pos, [promuoveremo]).
+ty_verb(italian, promote, future, pl(2), pos, [promuoverete]).
+ty_verb(italian, prompt, future, sg, pos, [inciterà]).
+ty_verb(italian, prompt, future, pl, pos, [inciteranno]).
+ty_verb(italian, prompt, future, sg(1), pos, [inciterò]).
+ty_verb(italian, prompt, future, sg(2), pos, [inciterai]).
+ty_verb(italian, prompt, future, pl(1), pos, [inciteremo]).
+ty_verb(italian, prompt, future, pl(2), pos, [inciterete]).
+ty_verb(italian, pronounce, future, sg, pos, [pronuncerà]).
+ty_verb(italian, pronounce, future, pl, pos, [pronunceranno]).
+ty_verb(italian, pronounce, future, sg(1), pos, [pronuncerò]).
+ty_verb(italian, pronounce, future, sg(2), pos, [pronuncerai]).
+ty_verb(italian, pronounce, future, pl(1), pos, [pronunceremo]).
+ty_verb(italian, pronounce, future, pl(2), pos, [pronuncerete]).
+ty_verb(italian, propagate, future, sg, pos, [propagherà]).
+ty_verb(italian, propagate, future, pl, pos, [propagheranno]).
+ty_verb(italian, propagate, future, sg(1), pos, [propagherò]).
+ty_verb(italian, propagate, future, sg(2), pos, [propagherai]).
+ty_verb(italian, propagate, future, pl(1), pos, [propagheremo]).
+ty_verb(italian, propagate, future, pl(2), pos, [propagherete]).
+ty_verb(italian, propose, future, sg, pos, [proporrà]).
+ty_verb(italian, propose, future, pl, pos, [proporranno]).
+ty_verb(italian, propose, future, sg(1), pos, [proporrò]).
+ty_verb(italian, propose, future, sg(2), pos, [proporrai]).
+ty_verb(italian, propose, future, pl(1), pos, [proporremo]).
+ty_verb(italian, propose, future, pl(2), pos, [proporrete]).
+ty_verb(italian, prosper, future, sg, pos, [prospererà]).
+ty_verb(italian, prosper, future, pl, pos, [prospereranno]).
+ty_verb(italian, prosper, future, sg(1), pos, [prospererò]).
+ty_verb(italian, prosper, future, sg(2), pos, [prospererai]).
+ty_verb(italian, prosper, future, pl(1), pos, [prospereremo]).
+ty_verb(italian, prosper, future, pl(2), pos, [prospererete]).
+ty_verb(italian, prostitute, future, sg, pos, [prostituirà]).
+ty_verb(italian, prostitute, future, pl, pos, [prostituiranno]).
+ty_verb(italian, prostitute, future, sg(1), pos, [prostituirò]).
+ty_verb(italian, prostitute, future, sg(2), pos, [prostituirai]).
+ty_verb(italian, prostitute, future, pl(1), pos, [prostituiremo]).
+ty_verb(italian, prostitute, future, pl(2), pos, [prostituirete]).
+ty_verb(italian, protect, future, sg, pos, [proteggerà]).
+ty_verb(italian, protect, future, pl, pos, [proteggeranno]).
+ty_verb(italian, protect, future, sg(1), pos, [proteggerò]).
+ty_verb(italian, protect, future, sg(2), pos, [proteggerai]).
+ty_verb(italian, protect, future, pl(1), pos, [proteggeremo]).
+ty_verb(italian, protect, future, pl(2), pos, [proteggerete]).
+ty_verb(italian, protest, future, sg, pos, [protesterà]).
+ty_verb(italian, protest, future, pl, pos, [protesteranno]).
+ty_verb(italian, protest, future, sg(1), pos, [protesterò]).
+ty_verb(italian, protest, future, sg(2), pos, [protesterai]).
+ty_verb(italian, protest, future, pl(1), pos, [protesteremo]).
+ty_verb(italian, protest, future, pl(2), pos, [protesterete]).
+ty_verb(italian, prove, future, sg, pos, [comproverà]).
+ty_verb(italian, prove, future, pl, pos, [comproveranno]).
+ty_verb(italian, prove, future, sg(1), pos, [comproverò]).
+ty_verb(italian, prove, future, sg(2), pos, [comproverai]).
+ty_verb(italian, prove, future, pl(1), pos, [comproveremo]).
+ty_verb(italian, prove, future, pl(2), pos, [comproverete]).
+ty_verb(italian, provide, future, sg, pos, [fornirà]).
+ty_verb(italian, provide, future, pl, pos, [forniranno]).
+ty_verb(italian, provide, future, sg(1), pos, [fornirò]).
+ty_verb(italian, provide, future, sg(2), pos, [fornirai]).
+ty_verb(italian, provide, future, pl(1), pos, [forniremo]).
+ty_verb(italian, provide, future, pl(2), pos, [fornirete]).
+ty_verb(italian, provoke, future, sg, pos, [provocherà]).
+ty_verb(italian, provoke, future, pl, pos, [provocheranno]).
+ty_verb(italian, provoke, future, sg(1), pos, [provocherò]).
+ty_verb(italian, provoke, future, sg(2), pos, [provocherai]).
+ty_verb(italian, provoke, future, pl(1), pos, [provocheremo]).
+ty_verb(italian, provoke, future, pl(2), pos, [provocherete]).
+ty_verb(italian, pull, future, sg, pos, [tirerà]).
+ty_verb(italian, pull, future, pl, pos, [tireranno]).
+ty_verb(italian, pull, future, sg(1), pos, [tirerò]).
+ty_verb(italian, pull, future, sg(2), pos, [tirerai]).
+ty_verb(italian, pull, future, pl(1), pos, [tireremo]).
+ty_verb(italian, pull, future, pl(2), pos, [tirerete]).
+ty_verb(italian, pump, future, sg, pos, [pomperà]).
+ty_verb(italian, pump, future, pl, pos, [pomperanno]).
+ty_verb(italian, pump, future, sg(1), pos, [pomperò]).
+ty_verb(italian, pump, future, sg(2), pos, [pomperai]).
+ty_verb(italian, pump, future, pl(1), pos, [pomperemo]).
+ty_verb(italian, pump, future, pl(2), pos, [pomperete]).
+ty_verb(italian, puncture, future, sg, pos, [pungerà]).
+ty_verb(italian, puncture, future, pl, pos, [pungeranno]).
+ty_verb(italian, puncture, future, sg(1), pos, [pungerò]).
+ty_verb(italian, puncture, future, sg(2), pos, [pungerai]).
+ty_verb(italian, puncture, future, pl(1), pos, [pungeremo]).
+ty_verb(italian, puncture, future, pl(2), pos, [pungerete]).
+ty_verb(italian, punish, future, sg, pos, [punirà]).
+ty_verb(italian, punish, future, pl, pos, [puniranno]).
+ty_verb(italian, punish, future, sg(1), pos, [punirò]).
+ty_verb(italian, punish, future, sg(2), pos, [punirai]).
+ty_verb(italian, punish, future, pl(1), pos, [puniremo]).
+ty_verb(italian, punish, future, pl(2), pos, [punirete]).
+ty_verb(italian, purchase, future, sg, pos, [rileverà]).
+ty_verb(italian, purchase, future, pl, pos, [rileveranno]).
+ty_verb(italian, purchase, future, sg(1), pos, [rileverò]).
+ty_verb(italian, purchase, future, sg(2), pos, [rileverai]).
+ty_verb(italian, purchase, future, pl(1), pos, [rileveremo]).
+ty_verb(italian, purchase, future, pl(2), pos, [rileverete]).
+ty_verb(italian, push, future, sg, pos, [spingerà]).
+ty_verb(italian, push, future, pl, pos, [spingeranno]).
+ty_verb(italian, push, future, sg(1), pos, [spingerò]).
+ty_verb(italian, push, future, sg(2), pos, [spingerai]).
+ty_verb(italian, push, future, pl(1), pos, [spingeremo]).
+ty_verb(italian, push, future, pl(2), pos, [spingerete]).
+ty_verb(italian, push, future, sg, pos, [premerà]).
+ty_verb(italian, push, future, pl, pos, [premeranno]).
+ty_verb(italian, push, future, sg(1), pos, [premerò]).
+ty_verb(italian, push, future, sg(2), pos, [premerai]).
+ty_verb(italian, push, future, pl(1), pos, [premeremo]).
+ty_verb(italian, push, future, pl(2), pos, [premerete]).
+ty_verb(italian, qualify, future, sg, pos, [qualificherà]).
+ty_verb(italian, qualify, future, pl, pos, [qualificheranno]).
+ty_verb(italian, qualify, future, sg(1), pos, [qualificherò]).
+ty_verb(italian, qualify, future, sg(2), pos, [qualificherai]).
+ty_verb(italian, qualify, future, pl(1), pos, [qualificheremo]).
+ty_verb(italian, qualify, future, pl(2), pos, [qualificherete]).
+ty_verb(italian, quantify, future, sg, pos, [quantificherà]).
+ty_verb(italian, quantify, future, pl, pos, [quantificheranno]).
+ty_verb(italian, quantify, future, sg(1), pos, [quantificherò]).
+ty_verb(italian, quantify, future, sg(2), pos, [quantificherai]).
+ty_verb(italian, quantify, future, pl(1), pos, [quantificheremo]).
+ty_verb(italian, quantify, future, pl(2), pos, [quantificherete]).
+ty_verb(italian, question, future, sg, pos, [questionerà]).
+ty_verb(italian, question, future, pl, pos, [questioneranno]).
+ty_verb(italian, question, future, sg(1), pos, [questionerò]).
+ty_verb(italian, question, future, sg(2), pos, [questionerai]).
+ty_verb(italian, question, future, pl(1), pos, [questioneremo]).
+ty_verb(italian, question, future, pl(2), pos, [questionerete]).
+ty_verb(italian, race, future, sg, pos, [correrà]).
+ty_verb(italian, race, future, pl, pos, [correranno]).
+ty_verb(italian, race, future, sg(1), pos, [correrò]).
+ty_verb(italian, race, future, sg(2), pos, [correrai]).
+ty_verb(italian, race, future, pl(1), pos, [correremo]).
+ty_verb(italian, race, future, pl(2), pos, [correrete]).
+ty_verb(italian, range, future, sg, pos, [varierà]).
+ty_verb(italian, range, future, pl, pos, [varieranno]).
+ty_verb(italian, range, future, sg(1), pos, [varierò]).
+ty_verb(italian, range, future, sg(2), pos, [varierai]).
+ty_verb(italian, range, future, pl(1), pos, [varieremo]).
+ty_verb(italian, range, future, pl(2), pos, [varierete]).
+ty_verb(italian, range, future, sg, pos, [allineerà]).
+ty_verb(italian, range, future, pl, pos, [allineeranno]).
+ty_verb(italian, range, future, sg(1), pos, [allineerò]).
+ty_verb(italian, range, future, sg(2), pos, [allineerai]).
+ty_verb(italian, range, future, pl(1), pos, [allineeremo]).
+ty_verb(italian, range, future, pl(2), pos, [allineerete]).
+ty_verb(italian, rape, future, sg, pos, [violenterà]).
+ty_verb(italian, rape, future, pl, pos, [violenteranno]).
+ty_verb(italian, rape, future, sg(1), pos, [violenterò]).
+ty_verb(italian, rape, future, sg(2), pos, [violenterai]).
+ty_verb(italian, rape, future, pl(1), pos, [violenteremo]).
+ty_verb(italian, rape, future, pl(2), pos, [violenterete]).
+ty_verb(italian, ratify, future, sg, pos, [ratificherà]).
+ty_verb(italian, ratify, future, pl, pos, [ratificheranno]).
+ty_verb(italian, ratify, future, sg(1), pos, [ratificherò]).
+ty_verb(italian, ratify, future, sg(2), pos, [ratificherai]).
+ty_verb(italian, ratify, future, pl(1), pos, [ratificheremo]).
+ty_verb(italian, ratify, future, pl(2), pos, [ratificherete]).
+ty_verb(italian, react, future, sg, pos, [reagirà]).
+ty_verb(italian, react, future, pl, pos, [reagiranno]).
+ty_verb(italian, react, future, sg(1), pos, [reagirò]).
+ty_verb(italian, react, future, sg(2), pos, [reagirai]).
+ty_verb(italian, react, future, pl(1), pos, [reagiremo]).
+ty_verb(italian, react, future, pl(2), pos, [reagirete]).
+ty_verb(italian, reactivate, future, sg, pos, [riattiverà]).
+ty_verb(italian, reactivate, future, pl, pos, [riattiveranno]).
+ty_verb(italian, reactivate, future, sg(1), pos, [riattiverò]).
+ty_verb(italian, reactivate, future, sg(2), pos, [riattiverai]).
+ty_verb(italian, reactivate, future, pl(1), pos, [riattiveremo]).
+ty_verb(italian, reactivate, future, pl(2), pos, [riattiverete]).
+ty_verb(italian, read, future, sg, pos, [leggerà]).
+ty_verb(italian, read, future, pl, pos, [leggeranno]).
+ty_verb(italian, read, future, sg(1), pos, [leggerò]).
+ty_verb(italian, read, future, sg(2), pos, [leggerai]).
+ty_verb(italian, read, future, pl(1), pos, [leggeremo]).
+ty_verb(italian, read, future, pl(2), pos, [leggerete]).
+ty_verb(italian, readjust, future, sg, pos, [riadatterà]).
+ty_verb(italian, readjust, future, pl, pos, [riadatteranno]).
+ty_verb(italian, readjust, future, sg(1), pos, [riadatterò]).
+ty_verb(italian, readjust, future, sg(2), pos, [riadatterai]).
+ty_verb(italian, readjust, future, pl(1), pos, [riadatteremo]).
+ty_verb(italian, readjust, future, pl(2), pos, [riadatterete]).
+ty_verb(italian, realise, future, sg, pos, [realizzerà]).
+ty_verb(italian, realise, future, pl, pos, [realizzeranno]).
+ty_verb(italian, realise, future, sg(1), pos, [realizzerò]).
+ty_verb(italian, realise, future, sg(2), pos, [realizzerai]).
+ty_verb(italian, realise, future, pl(1), pos, [realizzeremo]).
+ty_verb(italian, realise, future, pl(2), pos, [realizzerete]).
+ty_verb(italian, reanimate, future, sg, pos, [rianimerà]).
+ty_verb(italian, reanimate, future, pl, pos, [rianimeranno]).
+ty_verb(italian, reanimate, future, sg(1), pos, [rianimerò]).
+ty_verb(italian, reanimate, future, sg(2), pos, [rianimerai]).
+ty_verb(italian, reanimate, future, pl(1), pos, [rianimeremo]).
+ty_verb(italian, reanimate, future, pl(2), pos, [rianimerete]).
+ty_verb(italian, reappear, future, sg, pos, [riapparirà]).
+ty_verb(italian, reappear, future, pl, pos, [riappariranno]).
+ty_verb(italian, reappear, future, sg(1), pos, [riapparirò]).
+ty_verb(italian, reappear, future, sg(2), pos, [riapparirai]).
+ty_verb(italian, reappear, future, pl(1), pos, [riappariremo]).
+ty_verb(italian, reappear, future, pl(2), pos, [riapparirete]).
+ty_verb(italian, rearm, future, sg, pos, [riarmerà]).
+ty_verb(italian, rearm, future, pl, pos, [riarmeranno]).
+ty_verb(italian, rearm, future, sg(1), pos, [riarmerò]).
+ty_verb(italian, rearm, future, sg(2), pos, [riarmerai]).
+ty_verb(italian, rearm, future, pl(1), pos, [riarmeremo]).
+ty_verb(italian, rearm, future, pl(2), pos, [riarmerete]).
+ty_verb(italian, reason, future, sg, pos, [ragionerà]).
+ty_verb(italian, reason, future, pl, pos, [ragioneranno]).
+ty_verb(italian, reason, future, sg(1), pos, [ragionerò]).
+ty_verb(italian, reason, future, sg(2), pos, [ragionerai]).
+ty_verb(italian, reason, future, pl(1), pos, [ragioneremo]).
+ty_verb(italian, reason, future, pl(2), pos, [ragionerete]).
+ty_verb(italian, reassure, future, sg, pos, [rassicurerà]).
+ty_verb(italian, reassure, future, pl, pos, [rassicureranno]).
+ty_verb(italian, reassure, future, sg(1), pos, [rassicurerò]).
+ty_verb(italian, reassure, future, sg(2), pos, [rassicurerai]).
+ty_verb(italian, reassure, future, pl(1), pos, [rassicureremo]).
+ty_verb(italian, reassure, future, pl(2), pos, [rassicurerete]).
+ty_verb(italian, rebuild, future, sg, pos, [ricostruirà]).
+ty_verb(italian, rebuild, future, pl, pos, [ricostruiranno]).
+ty_verb(italian, rebuild, future, sg(1), pos, [ricostruirò]).
+ty_verb(italian, rebuild, future, sg(2), pos, [ricostruirai]).
+ty_verb(italian, rebuild, future, pl(1), pos, [ricostruiremo]).
+ty_verb(italian, rebuild, future, pl(2), pos, [ricostruirete]).
+ty_verb(italian, recite, future, sg, pos, [reciterà]).
+ty_verb(italian, recite, future, pl, pos, [reciteranno]).
+ty_verb(italian, recite, future, sg(1), pos, [reciterò]).
+ty_verb(italian, recite, future, sg(2), pos, [reciterai]).
+ty_verb(italian, recite, future, pl(1), pos, [reciteremo]).
+ty_verb(italian, recite, future, pl(2), pos, [reciterete]).
+ty_verb(italian, recommend, future, sg, pos, [raccomanderà]).
+ty_verb(italian, recommend, future, pl, pos, [raccomanderanno]).
+ty_verb(italian, recommend, future, sg(1), pos, [raccomanderò]).
+ty_verb(italian, recommend, future, sg(2), pos, [raccomanderai]).
+ty_verb(italian, recommend, future, pl(1), pos, [raccomanderemo]).
+ty_verb(italian, recommend, future, pl(2), pos, [raccomanderete]).
+ty_verb(italian, recompensate, future, sg, pos, [ricompenserà]).
+ty_verb(italian, recompensate, future, pl, pos, [ricompenseranno]).
+ty_verb(italian, recompensate, future, sg(1), pos, [ricompenserò]).
+ty_verb(italian, recompensate, future, sg(2), pos, [ricompenserai]).
+ty_verb(italian, recompensate, future, pl(1), pos, [ricompenseremo]).
+ty_verb(italian, recompensate, future, pl(2), pos, [ricompenserete]).
+ty_verb(italian, reconcile, future, sg, pos, [riconcilierà]).
+ty_verb(italian, reconcile, future, pl, pos, [riconcilieranno]).
+ty_verb(italian, reconcile, future, sg(1), pos, [riconcilierò]).
+ty_verb(italian, reconcile, future, sg(2), pos, [riconcilierai]).
+ty_verb(italian, reconcile, future, pl(1), pos, [riconcilieremo]).
+ty_verb(italian, reconcile, future, pl(2), pos, [riconcilierete]).
+ty_verb(italian, reconsider, future, sg, pos, [riconsidererà]).
+ty_verb(italian, reconsider, future, pl, pos, [riconsidereranno]).
+ty_verb(italian, reconsider, future, sg(1), pos, [riconsidererò]).
+ty_verb(italian, reconsider, future, sg(2), pos, [riconsidererai]).
+ty_verb(italian, reconsider, future, pl(1), pos, [riconsidereremo]).
+ty_verb(italian, reconsider, future, pl(2), pos, [riconsidererete]).
+ty_verb(italian, reconstitute, future, sg, pos, [ricostituirà]).
+ty_verb(italian, reconstitute, future, pl, pos, [ricostituiranno]).
+ty_verb(italian, reconstitute, future, sg(1), pos, [ricostituirò]).
+ty_verb(italian, reconstitute, future, sg(2), pos, [ricostituirai]).
+ty_verb(italian, reconstitute, future, pl(1), pos, [ricostituiremo]).
+ty_verb(italian, reconstitute, future, pl(2), pos, [ricostituirete]).
+ty_verb(italian, reconvert, future, sg, pos, [riconvertirà]).
+ty_verb(italian, reconvert, future, pl, pos, [riconvertiranno]).
+ty_verb(italian, reconvert, future, sg(1), pos, [riconvertirò]).
+ty_verb(italian, reconvert, future, sg(2), pos, [riconvertirai]).
+ty_verb(italian, reconvert, future, pl(1), pos, [riconvertiremo]).
+ty_verb(italian, reconvert, future, pl(2), pos, [riconvertirete]).
+ty_verb(italian, record, future, sg, pos, [registrerà]).
+ty_verb(italian, record, future, pl, pos, [registreranno]).
+ty_verb(italian, record, future, sg(1), pos, [registrerò]).
+ty_verb(italian, record, future, sg(2), pos, [registrerai]).
+ty_verb(italian, record, future, pl(1), pos, [registreremo]).
+ty_verb(italian, record, future, pl(2), pos, [registrerete]).
+ty_verb(italian, recover, future, sg, pos, [recupererà]).
+ty_verb(italian, recover, future, pl, pos, [recupereranno]).
+ty_verb(italian, recover, future, sg(1), pos, [recupererò]).
+ty_verb(italian, recover, future, sg(2), pos, [recupererai]).
+ty_verb(italian, recover, future, pl(1), pos, [recupereremo]).
+ty_verb(italian, recover, future, pl(2), pos, [recupererete]).
+ty_verb(italian, recreate, future, sg, pos, [ricreerà]).
+ty_verb(italian, recreate, future, pl, pos, [ricreeranno]).
+ty_verb(italian, recreate, future, sg(1), pos, [ricreerò]).
+ty_verb(italian, recreate, future, sg(2), pos, [ricreerai]).
+ty_verb(italian, recreate, future, pl(1), pos, [ricreeremo]).
+ty_verb(italian, recreate, future, pl(2), pos, [ricreerete]).
+ty_verb(italian, recycle, future, sg, pos, [riciclerà]).
+ty_verb(italian, recycle, future, pl, pos, [ricicleranno]).
+ty_verb(italian, recycle, future, sg(1), pos, [riciclerò]).
+ty_verb(italian, recycle, future, sg(2), pos, [riciclerai]).
+ty_verb(italian, recycle, future, pl(1), pos, [ricicleremo]).
+ty_verb(italian, recycle, future, pl(2), pos, [riciclerete]).
+ty_verb(italian, redefine, future, sg, pos, [ridefinirà]).
+ty_verb(italian, redefine, future, pl, pos, [ridefiniranno]).
+ty_verb(italian, redefine, future, sg(1), pos, [ridefinirò]).
+ty_verb(italian, redefine, future, sg(2), pos, [ridefinirai]).
+ty_verb(italian, redefine, future, pl(1), pos, [ridefiniremo]).
+ty_verb(italian, redefine, future, pl(2), pos, [ridefinirete]).
+ty_verb(italian, redimension, future, sg, pos, [ridimensionerà]).
+ty_verb(italian, redimension, future, pl, pos, [ridimensioneranno]).
+ty_verb(italian, redimension, future, sg(1), pos, [ridimensionerò]).
+ty_verb(italian, redimension, future, sg(2), pos, [ridimensionerai]).
+ty_verb(italian, redimension, future, pl(1), pos, [ridimensioneremo]).
+ty_verb(italian, redimension, future, pl(2), pos, [ridimensionerete]).
+ty_verb(italian, reduce, future, sg, pos, [ridurrà]).
+ty_verb(italian, reduce, future, pl, pos, [ridurranno]).
+ty_verb(italian, reduce, future, sg(1), pos, [ridurrò]).
+ty_verb(italian, reduce, future, sg(2), pos, [ridurrai]).
+ty_verb(italian, reduce, future, pl(1), pos, [ridurremo]).
+ty_verb(italian, reduce, future, pl(2), pos, [ridurrete]).
+ty_verb(italian, reestablish, future, sg, pos, [ristabilirà]).
+ty_verb(italian, reestablish, future, pl, pos, [ristabiliranno]).
+ty_verb(italian, reestablish, future, sg(1), pos, [ristabilirò]).
+ty_verb(italian, reestablish, future, sg(2), pos, [ristabilirai]).
+ty_verb(italian, reestablish, future, pl(1), pos, [ristabiliremo]).
+ty_verb(italian, reestablish, future, pl(2), pos, [ristabilirete]).
+ty_verb(italian, reexamine, future, sg, pos, [riesaminerà]).
+ty_verb(italian, reexamine, future, pl, pos, [riesamineranno]).
+ty_verb(italian, reexamine, future, sg(1), pos, [riesaminerò]).
+ty_verb(italian, reexamine, future, sg(2), pos, [riesaminerai]).
+ty_verb(italian, reexamine, future, pl(1), pos, [riesamineremo]).
+ty_verb(italian, reexamine, future, pl(2), pos, [riesaminerete]).
+ty_verb(italian, refer, future, sg, pos, [riferirà]).
+ty_verb(italian, refer, future, pl, pos, [riferiranno]).
+ty_verb(italian, refer, future, sg(1), pos, [riferirò]).
+ty_verb(italian, refer, future, sg(2), pos, [riferirai]).
+ty_verb(italian, refer, future, pl(1), pos, [riferiremo]).
+ty_verb(italian, refer, future, pl(2), pos, [riferirete]).
+ty_verb(italian, refuse, future, sg, pos, [rifiuterà]).
+ty_verb(italian, refuse, future, pl, pos, [rifiuteranno]).
+ty_verb(italian, refuse, future, sg(1), pos, [rifiuterò]).
+ty_verb(italian, refuse, future, sg(2), pos, [rifiuterai]).
+ty_verb(italian, refuse, future, pl(1), pos, [rifiuteremo]).
+ty_verb(italian, refuse, future, pl(2), pos, [rifiuterete]).
+ty_verb(italian, regard, future, sg, pos, [riguarderà]).
+ty_verb(italian, regard, future, pl, pos, [riguarderanno]).
+ty_verb(italian, regard, future, sg(1), pos, [riguarderò]).
+ty_verb(italian, regard, future, sg(2), pos, [riguarderai]).
+ty_verb(italian, regard, future, pl(1), pos, [riguarderemo]).
+ty_verb(italian, regard, future, pl(2), pos, [riguarderete]).
+ty_verb(italian, regulate, future, sg, pos, [regolerà]).
+ty_verb(italian, regulate, future, pl, pos, [regoleranno]).
+ty_verb(italian, regulate, future, sg(1), pos, [regolerò]).
+ty_verb(italian, regulate, future, sg(2), pos, [regolerai]).
+ty_verb(italian, regulate, future, pl(1), pos, [regoleremo]).
+ty_verb(italian, regulate, future, pl(2), pos, [regolerete]).
+ty_verb(italian, reign, future, sg, pos, [regnerà]).
+ty_verb(italian, reign, future, pl, pos, [regneranno]).
+ty_verb(italian, reign, future, sg(1), pos, [regnerò]).
+ty_verb(italian, reign, future, sg(2), pos, [regnerai]).
+ty_verb(italian, reign, future, pl(1), pos, [regneremo]).
+ty_verb(italian, reign, future, pl(2), pos, [regnerete]).
+ty_verb(italian, reinvest, future, sg, pos, [reinvestirà]).
+ty_verb(italian, reinvest, future, pl, pos, [reinvestiranno]).
+ty_verb(italian, reinvest, future, sg(1), pos, [reinvestirò]).
+ty_verb(italian, reinvest, future, sg(2), pos, [reinvestirai]).
+ty_verb(italian, reinvest, future, pl(1), pos, [reinvestiremo]).
+ty_verb(italian, reinvest, future, pl(2), pos, [reinvestirete]).
+ty_verb(italian, relate, future, sg, pos, [relazionerà]).
+ty_verb(italian, relate, future, pl, pos, [relazioneranno]).
+ty_verb(italian, relate, future, sg(1), pos, [relazionerò]).
+ty_verb(italian, relate, future, sg(2), pos, [relazionerai]).
+ty_verb(italian, relate, future, pl(1), pos, [relazioneremo]).
+ty_verb(italian, relate, future, pl(2), pos, [relazionerete]).
+ty_verb(italian, remove, future, sg, pos, [toglierà]).
+ty_verb(italian, remove, future, pl, pos, [toglieranno]).
+ty_verb(italian, remove, future, sg(1), pos, [toglierò]).
+ty_verb(italian, remove, future, sg(2), pos, [toglierai]).
+ty_verb(italian, remove, future, pl(1), pos, [toglieremo]).
+ty_verb(italian, remove, future, pl(2), pos, [toglierete]).
+ty_verb(italian, renegotiate, future, sg, pos, [rinegozierà]).
+ty_verb(italian, renegotiate, future, pl, pos, [rinegozieranno]).
+ty_verb(italian, renegotiate, future, sg(1), pos, [rinegozierò]).
+ty_verb(italian, renegotiate, future, sg(2), pos, [rinegozierai]).
+ty_verb(italian, renegotiate, future, pl(1), pos, [rinegozieremo]).
+ty_verb(italian, renegotiate, future, pl(2), pos, [rinegozierete]).
+ty_verb(italian, renew, future, sg, pos, [rinnoverà]).
+ty_verb(italian, renew, future, pl, pos, [rinnoveranno]).
+ty_verb(italian, renew, future, sg(1), pos, [rinnoverò]).
+ty_verb(italian, renew, future, sg(2), pos, [rinnoverai]).
+ty_verb(italian, renew, future, pl(1), pos, [rinnoveremo]).
+ty_verb(italian, renew, future, pl(2), pos, [rinnoverete]).
+ty_verb(italian, reopen, future, sg, pos, [riaprirà]).
+ty_verb(italian, reopen, future, pl, pos, [riapriranno]).
+ty_verb(italian, reopen, future, sg(1), pos, [riaprirò]).
+ty_verb(italian, reopen, future, sg(2), pos, [riaprirai]).
+ty_verb(italian, reopen, future, pl(1), pos, [riapriremo]).
+ty_verb(italian, reopen, future, pl(2), pos, [riaprirete]).
+ty_verb(italian, reorganise, future, sg, pos, [riorganizzerà]).
+ty_verb(italian, reorganise, future, pl, pos, [riorganizzeranno]).
+ty_verb(italian, reorganise, future, sg(1), pos, [riorganizzerò]).
+ty_verb(italian, reorganise, future, sg(2), pos, [riorganizzerai]).
+ty_verb(italian, reorganise, future, pl(1), pos, [riorganizzeremo]).
+ty_verb(italian, reorganise, future, pl(2), pos, [riorganizzerete]).
+ty_verb(italian, reorganise, future, sg, pos, [ridimensionerà]).
+ty_verb(italian, reorganise, future, pl, pos, [ridimensioneranno]).
+ty_verb(italian, reorganise, future, sg(1), pos, [ridimensionerò]).
+ty_verb(italian, reorganise, future, sg(2), pos, [ridimensionerai]).
+ty_verb(italian, reorganise, future, pl(1), pos, [ridimensioneremo]).
+ty_verb(italian, reorganise, future, pl(2), pos, [ridimensionerete]).
+ty_verb(italian, reorient, future, sg, pos, [riorienterà]).
+ty_verb(italian, reorient, future, pl, pos, [riorienteranno]).
+ty_verb(italian, reorient, future, sg(1), pos, [riorienterò]).
+ty_verb(italian, reorient, future, sg(2), pos, [riorienterai]).
+ty_verb(italian, reorient, future, pl(1), pos, [riorienteremo]).
+ty_verb(italian, reorient, future, pl(2), pos, [riorienterete]).
+ty_verb(italian, repatriate, future, sg, pos, [rimpatrierà]).
+ty_verb(italian, repatriate, future, pl, pos, [rimpatrieranno]).
+ty_verb(italian, repatriate, future, sg(1), pos, [rimpatrierò]).
+ty_verb(italian, repatriate, future, sg(2), pos, [rimpatrierai]).
+ty_verb(italian, repatriate, future, pl(1), pos, [rimpatrieremo]).
+ty_verb(italian, repatriate, future, pl(2), pos, [rimpatrierete]).
+ty_verb(italian, repeat, future, sg, pos, [ripeterà]).
+ty_verb(italian, repeat, future, pl, pos, [ripeteranno]).
+ty_verb(italian, repeat, future, sg(1), pos, [ripeterò]).
+ty_verb(italian, repeat, future, sg(2), pos, [ripeterai]).
+ty_verb(italian, repeat, future, pl(1), pos, [ripeteremo]).
+ty_verb(italian, repeat, future, pl(2), pos, [ripeterete]).
+ty_verb(italian, report, future, sg, pos, [riporterà]).
+ty_verb(italian, report, future, pl, pos, [riporteranno]).
+ty_verb(italian, report, future, sg(1), pos, [riporterò]).
+ty_verb(italian, report, future, sg(2), pos, [riporterai]).
+ty_verb(italian, report, future, pl(1), pos, [riporteremo]).
+ty_verb(italian, report, future, pl(2), pos, [riporterete]).
+ty_verb(italian, report, future, sg, pos, [denuncerà]).
+ty_verb(italian, report, future, pl, pos, [denunceranno]).
+ty_verb(italian, report, future, sg(1), pos, [denuncerò]).
+ty_verb(italian, report, future, sg(2), pos, [denuncerai]).
+ty_verb(italian, report, future, pl(1), pos, [denunceremo]).
+ty_verb(italian, report, future, pl(2), pos, [denuncerete]).
+ty_verb(italian, represent, future, sg, pos, [rappresenterà]).
+ty_verb(italian, represent, future, pl, pos, [rappresenteranno]).
+ty_verb(italian, represent, future, sg(1), pos, [rappresenterò]).
+ty_verb(italian, represent, future, sg(2), pos, [rappresenterai]).
+ty_verb(italian, represent, future, pl(1), pos, [rappresenteremo]).
+ty_verb(italian, represent, future, pl(2), pos, [rappresenterete]).
+ty_verb(italian, repress, future, sg, pos, [reprimerà]).
+ty_verb(italian, repress, future, pl, pos, [reprimeranno]).
+ty_verb(italian, repress, future, sg(1), pos, [reprimerò]).
+ty_verb(italian, repress, future, sg(2), pos, [reprimerai]).
+ty_verb(italian, repress, future, pl(1), pos, [reprimeremo]).
+ty_verb(italian, repress, future, pl(2), pos, [reprimerete]).
+ty_verb(italian, require, future, sg, pos, [richiederà]).
+ty_verb(italian, require, future, pl, pos, [richiederanno]).
+ty_verb(italian, require, future, sg(1), pos, [richiederò]).
+ty_verb(italian, require, future, sg(2), pos, [richiederai]).
+ty_verb(italian, require, future, pl(1), pos, [richiederemo]).
+ty_verb(italian, require, future, pl(2), pos, [richiederete]).
+ty_verb(italian, research, future, sg, pos, [ricercherà]).
+ty_verb(italian, research, future, pl, pos, [ricercheranno]).
+ty_verb(italian, research, future, sg(1), pos, [ricercherò]).
+ty_verb(italian, research, future, sg(2), pos, [ricercherai]).
+ty_verb(italian, research, future, pl(1), pos, [ricercheremo]).
+ty_verb(italian, research, future, pl(2), pos, [ricercherete]).
+ty_verb(italian, reserve, future, sg, pos, [riserverà]).
+ty_verb(italian, reserve, future, pl, pos, [riserveranno]).
+ty_verb(italian, reserve, future, sg(1), pos, [riserverò]).
+ty_verb(italian, reserve, future, sg(2), pos, [riserverai]).
+ty_verb(italian, reserve, future, pl(1), pos, [riserveremo]).
+ty_verb(italian, reserve, future, pl(2), pos, [riserverete]).
+ty_verb(italian, resolve, future, sg, pos, [risolverà]).
+ty_verb(italian, resolve, future, pl, pos, [risolveranno]).
+ty_verb(italian, resolve, future, sg(1), pos, [risolverò]).
+ty_verb(italian, resolve, future, sg(2), pos, [risolverai]).
+ty_verb(italian, resolve, future, pl(1), pos, [risolveremo]).
+ty_verb(italian, resolve, future, pl(2), pos, [risolverete]).
+ty_verb(italian, resort, future, sg, pos, [ricorrerà]).
+ty_verb(italian, resort, future, pl, pos, [ricorreranno]).
+ty_verb(italian, resort, future, sg(1), pos, [ricorrerò]).
+ty_verb(italian, resort, future, sg(2), pos, [ricorrerai]).
+ty_verb(italian, resort, future, pl(1), pos, [ricorreremo]).
+ty_verb(italian, resort, future, pl(2), pos, [ricorrerete]).
+ty_verb(italian, restore, future, sg, pos, [restaurerà]).
+ty_verb(italian, restore, future, pl, pos, [restaureranno]).
+ty_verb(italian, restore, future, sg(1), pos, [restaurerò]).
+ty_verb(italian, restore, future, sg(2), pos, [restaurerai]).
+ty_verb(italian, restore, future, pl(1), pos, [restaureremo]).
+ty_verb(italian, restore, future, pl(2), pos, [restaurerete]).
+ty_verb(italian, restructure, future, sg, pos, [ristrutturerà]).
+ty_verb(italian, restructure, future, pl, pos, [ristruttureranno]).
+ty_verb(italian, restructure, future, sg(1), pos, [ristrutturerò]).
+ty_verb(italian, restructure, future, sg(2), pos, [ristrutturerai]).
+ty_verb(italian, restructure, future, pl(1), pos, [ristruttureremo]).
+ty_verb(italian, restructure, future, pl(2), pos, [ristrutturerete]).
+ty_verb(italian, result, future, sg, pos, [risulterà]).
+ty_verb(italian, result, future, pl, pos, [risulteranno]).
+ty_verb(italian, result, future, sg(1), pos, [risulterò]).
+ty_verb(italian, result, future, sg(2), pos, [risulterai]).
+ty_verb(italian, result, future, pl(1), pos, [risulteremo]).
+ty_verb(italian, result, future, pl(2), pos, [risulterete]).
+ty_verb(italian, resupply, future, sg, pos, [rifornirà]).
+ty_verb(italian, resupply, future, pl, pos, [riforniranno]).
+ty_verb(italian, resupply, future, sg(1), pos, [rifornirò]).
+ty_verb(italian, resupply, future, sg(2), pos, [rifornirai]).
+ty_verb(italian, resupply, future, pl(1), pos, [riforniremo]).
+ty_verb(italian, resupply, future, pl(2), pos, [rifornirete]).
+ty_verb(italian, resurrect, future, sg, pos, [risorgerà]).
+ty_verb(italian, resurrect, future, pl, pos, [risorgeranno]).
+ty_verb(italian, resurrect, future, sg(1), pos, [risorgerò]).
+ty_verb(italian, resurrect, future, sg(2), pos, [risorgerai]).
+ty_verb(italian, resurrect, future, pl(1), pos, [risorgeremo]).
+ty_verb(italian, resurrect, future, pl(2), pos, [risorgerete]).
+ty_verb(italian, retract, future, sg, pos, [ritirerà]).
+ty_verb(italian, retract, future, pl, pos, [ritireranno]).
+ty_verb(italian, retract, future, sg(1), pos, [ritirerò]).
+ty_verb(italian, retract, future, sg(2), pos, [ritirerai]).
+ty_verb(italian, retract, future, pl(1), pos, [ritireremo]).
+ty_verb(italian, retract, future, pl(2), pos, [ritirerete]).
+ty_verb(italian, retreat, future, sg, pos, [retrocederà]).
+ty_verb(italian, retreat, future, pl, pos, [retrocederanno]).
+ty_verb(italian, retreat, future, sg(1), pos, [retrocederò]).
+ty_verb(italian, retreat, future, sg(2), pos, [retrocederai]).
+ty_verb(italian, retreat, future, pl(1), pos, [retrocederemo]).
+ty_verb(italian, retreat, future, pl(2), pos, [retrocederete]).
+ty_verb(italian, retrieve, future, sg, pos, [ritroverà]).
+ty_verb(italian, retrieve, future, pl, pos, [ritroveranno]).
+ty_verb(italian, retrieve, future, sg(1), pos, [ritroverò]).
+ty_verb(italian, retrieve, future, sg(2), pos, [ritroverai]).
+ty_verb(italian, retrieve, future, pl(1), pos, [ritroveremo]).
+ty_verb(italian, retrieve, future, pl(2), pos, [ritroverete]).
+ty_verb(italian, reunite, future, sg, pos, [riunirà]).
+ty_verb(italian, reunite, future, pl, pos, [riuniranno]).
+ty_verb(italian, reunite, future, sg(1), pos, [riunirò]).
+ty_verb(italian, reunite, future, sg(2), pos, [riunirai]).
+ty_verb(italian, reunite, future, pl(1), pos, [riuniremo]).
+ty_verb(italian, reunite, future, pl(2), pos, [riunirete]).
+ty_verb(italian, reverse, future, sg, pos, [invertirà]).
+ty_verb(italian, reverse, future, pl, pos, [invertiranno]).
+ty_verb(italian, reverse, future, sg(1), pos, [invertirò]).
+ty_verb(italian, reverse, future, sg(2), pos, [invertirai]).
+ty_verb(italian, reverse, future, pl(1), pos, [invertiremo]).
+ty_verb(italian, reverse, future, pl(2), pos, [invertirete]).
+ty_verb(italian, review, future, sg, pos, [revisionerà]).
+ty_verb(italian, review, future, pl, pos, [revisioneranno]).
+ty_verb(italian, review, future, sg(1), pos, [revisionerò]).
+ty_verb(italian, review, future, sg(2), pos, [revisionerai]).
+ty_verb(italian, review, future, pl(1), pos, [revisioneremo]).
+ty_verb(italian, review, future, pl(2), pos, [revisionerete]).
+ty_verb(italian, revitalise, future, sg, pos, [rivitalizzerà]).
+ty_verb(italian, revitalise, future, pl, pos, [rivitalizzeranno]).
+ty_verb(italian, revitalise, future, sg(1), pos, [rivitalizzerò]).
+ty_verb(italian, revitalise, future, sg(2), pos, [rivitalizzerai]).
+ty_verb(italian, revitalise, future, pl(1), pos, [rivitalizzeremo]).
+ty_verb(italian, revitalise, future, pl(2), pos, [rivitalizzerete]).
+ty_verb(italian, revolutionise, future, sg, pos, [rivoluzionerà]).
+ty_verb(italian, revolutionise, future, pl, pos, [rivoluzioneranno]).
+ty_verb(italian, revolutionise, future, sg(1), pos, [rivoluzionerò]).
+ty_verb(italian, revolutionise, future, sg(2), pos, [rivoluzionerai]).
+ty_verb(italian, revolutionise, future, pl(1), pos, [rivoluzioneremo]).
+ty_verb(italian, revolutionise, future, pl(2), pos, [rivoluzionerete]).
+ty_verb(italian, reward, future, sg, pos, [premierà]).
+ty_verb(italian, reward, future, pl, pos, [premieranno]).
+ty_verb(italian, reward, future, sg(1), pos, [premierò]).
+ty_verb(italian, reward, future, sg(2), pos, [premierai]).
+ty_verb(italian, reward, future, pl(1), pos, [premieremo]).
+ty_verb(italian, reward, future, pl(2), pos, [premierete]).
+ty_verb(italian, reward, future, sg, pos, [ricompenserà]).
+ty_verb(italian, reward, future, pl, pos, [ricompenseranno]).
+ty_verb(italian, reward, future, sg(1), pos, [ricompenserò]).
+ty_verb(italian, reward, future, sg(2), pos, [ricompenserai]).
+ty_verb(italian, reward, future, pl(1), pos, [ricompenseremo]).
+ty_verb(italian, reward, future, pl(2), pos, [ricompenserete]).
+ty_verb(italian, rule, future, sg, pos, [impererà]).
+ty_verb(italian, rule, future, pl, pos, [impereranno]).
+ty_verb(italian, rule, future, sg(1), pos, [impererò]).
+ty_verb(italian, rule, future, sg(2), pos, [impererai]).
+ty_verb(italian, rule, future, pl(1), pos, [impereremo]).
+ty_verb(italian, rule, future, pl(2), pos, [impererete]).
+ty_verb(italian, sacrifice, future, sg, pos, [sacrificherà]).
+ty_verb(italian, sacrifice, future, pl, pos, [sacrificheranno]).
+ty_verb(italian, sacrifice, future, sg(1), pos, [sacrificherò]).
+ty_verb(italian, sacrifice, future, sg(2), pos, [sacrificherai]).
+ty_verb(italian, sacrifice, future, pl(1), pos, [sacrificheremo]).
+ty_verb(italian, sacrifice, future, pl(2), pos, [sacrificherete]).
+ty_verb(italian, safeguard, future, sg, pos, [salvaguarderà]).
+ty_verb(italian, safeguard, future, pl, pos, [salvaguarderanno]).
+ty_verb(italian, safeguard, future, sg(1), pos, [salvaguarderò]).
+ty_verb(italian, safeguard, future, sg(2), pos, [salvaguarderai]).
+ty_verb(italian, safeguard, future, pl(1), pos, [salvaguarderemo]).
+ty_verb(italian, safeguard, future, pl(2), pos, [salvaguarderete]).
+ty_verb(italian, sail, future, sg, pos, [navigherà]).
+ty_verb(italian, sail, future, pl, pos, [navigheranno]).
+ty_verb(italian, sail, future, sg(1), pos, [navigherò]).
+ty_verb(italian, sail, future, sg(2), pos, [navigherai]).
+ty_verb(italian, sail, future, pl(1), pos, [navigheremo]).
+ty_verb(italian, sail, future, pl(2), pos, [navigherete]).
+ty_verb(italian, salivate, future, sg, pos, [saliverà]).
+ty_verb(italian, salivate, future, pl, pos, [saliveranno]).
+ty_verb(italian, salivate, future, sg(1), pos, [saliverò]).
+ty_verb(italian, salivate, future, sg(2), pos, [saliverai]).
+ty_verb(italian, salivate, future, pl(1), pos, [saliveremo]).
+ty_verb(italian, salivate, future, pl(2), pos, [saliverete]).
+ty_verb(italian, sanctify, future, sg, pos, [santificherà]).
+ty_verb(italian, sanctify, future, pl, pos, [santificheranno]).
+ty_verb(italian, sanctify, future, sg(1), pos, [santificherò]).
+ty_verb(italian, sanctify, future, sg(2), pos, [santificherai]).
+ty_verb(italian, sanctify, future, pl(1), pos, [santificheremo]).
+ty_verb(italian, sanctify, future, pl(2), pos, [santificherete]).
+ty_verb(italian, sanction, future, sg, pos, [sanzionerà]).
+ty_verb(italian, sanction, future, pl, pos, [sanzioneranno]).
+ty_verb(italian, sanction, future, sg(1), pos, [sanzionerò]).
+ty_verb(italian, sanction, future, sg(2), pos, [sanzionerai]).
+ty_verb(italian, sanction, future, pl(1), pos, [sanzioneremo]).
+ty_verb(italian, sanction, future, pl(2), pos, [sanzionerete]).
+ty_verb(italian, satisfy, future, sg, pos, [colmerà]).
+ty_verb(italian, satisfy, future, pl, pos, [colmeranno]).
+ty_verb(italian, satisfy, future, sg(1), pos, [colmerò]).
+ty_verb(italian, satisfy, future, sg(2), pos, [colmerai]).
+ty_verb(italian, satisfy, future, pl(1), pos, [colmeremo]).
+ty_verb(italian, satisfy, future, pl(2), pos, [colmerete]).
+ty_verb(italian, saturate, future, sg, pos, [saturerà]).
+ty_verb(italian, saturate, future, pl, pos, [satureranno]).
+ty_verb(italian, saturate, future, sg(1), pos, [saturerò]).
+ty_verb(italian, saturate, future, sg(2), pos, [saturerai]).
+ty_verb(italian, saturate, future, pl(1), pos, [satureremo]).
+ty_verb(italian, saturate, future, pl(2), pos, [saturerete]).
+ty_verb(italian, save, future, sg, pos, [salverà]).
+ty_verb(italian, save, future, pl, pos, [salveranno]).
+ty_verb(italian, save, future, sg(1), pos, [salverò]).
+ty_verb(italian, save, future, sg(2), pos, [salverai]).
+ty_verb(italian, save, future, pl(1), pos, [salveremo]).
+ty_verb(italian, save, future, pl(2), pos, [salverete]).
+ty_verb(italian, saw, future, sg, pos, [serrerà]).
+ty_verb(italian, saw, future, pl, pos, [serreranno]).
+ty_verb(italian, saw, future, sg(1), pos, [serrerò]).
+ty_verb(italian, saw, future, sg(2), pos, [serrerai]).
+ty_verb(italian, saw, future, pl(1), pos, [serreremo]).
+ty_verb(italian, saw, future, pl(2), pos, [serrerete]).
+ty_verb(italian, say, future, sg, pos, [dirà]).
+ty_verb(italian, say, future, pl, pos, [diranno]).
+ty_verb(italian, say, future, sg(1), pos, [dirò]).
+ty_verb(italian, say, future, sg(2), pos, [dirai]).
+ty_verb(italian, say, future, pl(1), pos, [diremo]).
+ty_verb(italian, say, future, pl(2), pos, [direte]).
+ty_verb(italian, scandalise, future, sg, pos, [scandalizzerà]).
+ty_verb(italian, scandalise, future, pl, pos, [scandalizzeranno]).
+ty_verb(italian, scandalise, future, sg(1), pos, [scandalizzerò]).
+ty_verb(italian, scandalise, future, sg(2), pos, [scandalizzerai]).
+ty_verb(italian, scandalise, future, pl(1), pos, [scandalizzeremo]).
+ty_verb(italian, scandalise, future, pl(2), pos, [scandalizzerete]).
+ty_verb(italian, seed, future, sg, pos, [seminerà]).
+ty_verb(italian, seed, future, pl, pos, [semineranno]).
+ty_verb(italian, seed, future, sg(1), pos, [seminerò]).
+ty_verb(italian, seed, future, sg(2), pos, [seminerai]).
+ty_verb(italian, seed, future, pl(1), pos, [semineremo]).
+ty_verb(italian, seed, future, pl(2), pos, [seminerete]).
+ty_verb(italian, satiate, future, sg, pos, [sazierà]).
+ty_verb(italian, satiate, future, pl, pos, [sazieranno]).
+ty_verb(italian, satiate, future, sg(1), pos, [sazierò]).
+ty_verb(italian, satiate, future, sg(2), pos, [sazierai]).
+ty_verb(italian, satiate, future, pl(1), pos, [sazieremo]).
+ty_verb(italian, satiate, future, pl(2), pos, [sazierete]).
+ty_verb(italian, sell, future, sg, pos, [venderà]).
+ty_verb(italian, sell, future, pl, pos, [venderanno]).
+ty_verb(italian, sell, future, sg(1), pos, [venderò]).
+ty_verb(italian, sell, future, sg(2), pos, [venderai]).
+ty_verb(italian, sell, future, pl(1), pos, [venderemo]).
+ty_verb(italian, sell, future, pl(2), pos, [venderete]).
+ty_verb(italian, sense, future, sg, pos, [sentirà]).
+ty_verb(italian, sense, future, pl, pos, [sentiranno]).
+ty_verb(italian, sense, future, sg(1), pos, [sentirò]).
+ty_verb(italian, sense, future, sg(2), pos, [sentirai]).
+ty_verb(italian, sense, future, pl(1), pos, [sentiremo]).
+ty_verb(italian, sense, future, pl(2), pos, [sentirete]).
+ty_verb(italian, sensitise, future, sg, pos, [sensibilizzerà]).
+ty_verb(italian, sensitise, future, pl, pos, [sensibilizzeranno]).
+ty_verb(italian, sensitise, future, sg(1), pos, [sensibilizzerò]).
+ty_verb(italian, sensitise, future, sg(2), pos, [sensibilizzerai]).
+ty_verb(italian, sensitise, future, pl(1), pos, [sensibilizzeremo]).
+ty_verb(italian, sensitise, future, pl(2), pos, [sensibilizzerete]).
+ty_verb(italian, serve, future, sg, pos, [servirà]).
+ty_verb(italian, serve, future, pl, pos, [serviranno]).
+ty_verb(italian, serve, future, sg(1), pos, [servirò]).
+ty_verb(italian, serve, future, sg(2), pos, [servirai]).
+ty_verb(italian, serve, future, pl(1), pos, [serviremo]).
+ty_verb(italian, serve, future, pl(2), pos, [servirete]).
+ty_verb(italian, sew, future, sg, pos, [cucirà]).
+ty_verb(italian, sew, future, pl, pos, [cuciranno]).
+ty_verb(italian, sew, future, sg(1), pos, [cucirò]).
+ty_verb(italian, sew, future, sg(2), pos, [cucirai]).
+ty_verb(italian, sew, future, pl(1), pos, [cuciremo]).
+ty_verb(italian, sew, future, pl(2), pos, [cucirete]).
+ty_verb(italian, shape, future, sg, pos, [plasmerà]).
+ty_verb(italian, shape, future, pl, pos, [plasmeranno]).
+ty_verb(italian, shape, future, sg(1), pos, [plasmerò]).
+ty_verb(italian, shape, future, sg(2), pos, [plasmerai]).
+ty_verb(italian, shape, future, pl(1), pos, [plasmeremo]).
+ty_verb(italian, shape, future, pl(2), pos, [plasmerete]).
+ty_verb(italian, share, future, sg, pos, [condividerà]).
+ty_verb(italian, share, future, pl, pos, [condivideranno]).
+ty_verb(italian, share, future, sg(1), pos, [condividerò]).
+ty_verb(italian, share, future, sg(2), pos, [condividerai]).
+ty_verb(italian, share, future, pl(1), pos, [condivideremo]).
+ty_verb(italian, share, future, pl(2), pos, [condividerete]).
+ty_verb(italian, shine, future, sg, pos, [brillerà]).
+ty_verb(italian, shine, future, pl, pos, [brilleranno]).
+ty_verb(italian, shine, future, sg(1), pos, [brillerò]).
+ty_verb(italian, shine, future, sg(2), pos, [brillerai]).
+ty_verb(italian, shine, future, pl(1), pos, [brilleremo]).
+ty_verb(italian, shine, future, pl(2), pos, [brillerete]).
+ty_verb(italian, shit, future, sg, pos, [cacherà]).
+ty_verb(italian, shit, future, pl, pos, [cacheranno]).
+ty_verb(italian, shit, future, sg(1), pos, [cacherò]).
+ty_verb(italian, shit, future, sg(2), pos, [cacherai]).
+ty_verb(italian, shit, future, pl(1), pos, [cacheremo]).
+ty_verb(italian, shit, future, pl(2), pos, [cacherete]).
+ty_verb(italian, slacken, future, sg, pos, [allenterà]).
+ty_verb(italian, slacken, future, pl, pos, [allenteranno]).
+ty_verb(italian, slacken, future, sg(1), pos, [allenterò]).
+ty_verb(italian, slacken, future, sg(2), pos, [allenterai]).
+ty_verb(italian, slacken, future, pl(1), pos, [allenteremo]).
+ty_verb(italian, slacken, future, pl(2), pos, [allenterete]).
+ty_verb(italian, show, future, sg, pos, [mostrerà]).
+ty_verb(italian, show, future, pl, pos, [mostreranno]).
+ty_verb(italian, show, future, sg(1), pos, [mostrerò]).
+ty_verb(italian, show, future, sg(2), pos, [mostrerai]).
+ty_verb(italian, show, future, pl(1), pos, [mostreremo]).
+ty_verb(italian, show, future, pl(2), pos, [mostrerete]).
+ty_verb(italian, sigh, future, sg, pos, [sospirerà]).
+ty_verb(italian, sigh, future, pl, pos, [sospireranno]).
+ty_verb(italian, sigh, future, sg(1), pos, [sospirerò]).
+ty_verb(italian, sigh, future, sg(2), pos, [sospirerai]).
+ty_verb(italian, sigh, future, pl(1), pos, [sospireremo]).
+ty_verb(italian, sigh, future, pl(2), pos, [sospirerete]).
+ty_verb(italian, sign, future, sg, pos, [firmerà]).
+ty_verb(italian, sign, future, pl, pos, [firmeranno]).
+ty_verb(italian, sign, future, sg(1), pos, [firmerò]).
+ty_verb(italian, sign, future, sg(2), pos, [firmerai]).
+ty_verb(italian, sign, future, pl(1), pos, [firmeremo]).
+ty_verb(italian, sign, future, pl(2), pos, [firmerete]).
+ty_verb(italian, weld, future, sg, pos, [salderà]).
+ty_verb(italian, weld, future, pl, pos, [salderanno]).
+ty_verb(italian, weld, future, sg(1), pos, [salderò]).
+ty_verb(italian, weld, future, sg(2), pos, [salderai]).
+ty_verb(italian, weld, future, pl(1), pos, [salderemo]).
+ty_verb(italian, weld, future, pl(2), pos, [salderete]).
+ty_verb(italian, retain, future, sg, pos, [riterrà]).
+ty_verb(italian, retain, future, pl, pos, [riterranno]).
+ty_verb(italian, retain, future, sg(1), pos, [riterrò]).
+ty_verb(italian, retain, future, sg(2), pos, [riterrai]).
+ty_verb(italian, retain, future, pl(1), pos, [riterremo]).
+ty_verb(italian, retain, future, pl(2), pos, [riterrete]).
+ty_verb(italian, simplify, future, sg, pos, [semplificherà]).
+ty_verb(italian, simplify, future, pl, pos, [semplificheranno]).
+ty_verb(italian, simplify, future, sg(1), pos, [semplificherò]).
+ty_verb(italian, simplify, future, sg(2), pos, [semplificherai]).
+ty_verb(italian, simplify, future, pl(1), pos, [semplificheremo]).
+ty_verb(italian, simplify, future, pl(2), pos, [semplificherete]).
+ty_verb(italian, simulate, future, sg, pos, [simulerà]).
+ty_verb(italian, simulate, future, pl, pos, [simuleranno]).
+ty_verb(italian, simulate, future, sg(1), pos, [simulerò]).
+ty_verb(italian, simulate, future, sg(2), pos, [simulerai]).
+ty_verb(italian, simulate, future, pl(1), pos, [simuleremo]).
+ty_verb(italian, simulate, future, pl(2), pos, [simulerete]).
+ty_verb(italian, sing, future, sg, pos, [canterà]).
+ty_verb(italian, sing, future, pl, pos, [canteranno]).
+ty_verb(italian, sing, future, sg(1), pos, [canterò]).
+ty_verb(italian, sing, future, sg(2), pos, [canterai]).
+ty_verb(italian, sing, future, pl(1), pos, [canteremo]).
+ty_verb(italian, sing, future, pl(2), pos, [canterete]).
+ty_verb(italian, sit, future, sg, pos, [sederà]).
+ty_verb(italian, sit, future, pl, pos, [sederanno]).
+ty_verb(italian, sit, future, sg(1), pos, [sederò]).
+ty_verb(italian, sit, future, sg(2), pos, [sederai]).
+ty_verb(italian, sit, future, pl(1), pos, [sederemo]).
+ty_verb(italian, sit, future, pl(2), pos, [sederete]).
+ty_verb(italian, situate, future, sg, pos, [situerà]).
+ty_verb(italian, situate, future, pl, pos, [situeranno]).
+ty_verb(italian, situate, future, sg(1), pos, [situerò]).
+ty_verb(italian, situate, future, sg(2), pos, [situerai]).
+ty_verb(italian, situate, future, pl(1), pos, [situeremo]).
+ty_verb(italian, situate, future, pl(2), pos, [situerete]).
+ty_verb(italian, slip, future, sg, pos, [scivolerà]).
+ty_verb(italian, slip, future, pl, pos, [scivoleranno]).
+ty_verb(italian, slip, future, sg(1), pos, [scivolerò]).
+ty_verb(italian, slip, future, sg(2), pos, [scivolerai]).
+ty_verb(italian, slip, future, pl(1), pos, [scivoleremo]).
+ty_verb(italian, slip, future, pl(2), pos, [scivolerete]).
+ty_verb(italian, smoke, future, sg, pos, [fumerà]).
+ty_verb(italian, smoke, future, pl, pos, [fumeranno]).
+ty_verb(italian, smoke, future, sg(1), pos, [fumerò]).
+ty_verb(italian, smoke, future, sg(2), pos, [fumerai]).
+ty_verb(italian, smoke, future, pl(1), pos, [fumeremo]).
+ty_verb(italian, smoke, future, pl(2), pos, [fumerete]).
+ty_verb(italian, solicit, future, sg, pos, [solleciterà]).
+ty_verb(italian, solicit, future, pl, pos, [solleciteranno]).
+ty_verb(italian, solicit, future, sg(1), pos, [solleciterò]).
+ty_verb(italian, solicit, future, sg(2), pos, [solleciterai]).
+ty_verb(italian, solicit, future, pl(1), pos, [solleciteremo]).
+ty_verb(italian, solicit, future, pl(2), pos, [solleciterete]).
+ty_verb(italian, sound, future, sg, pos, [suonerà]).
+ty_verb(italian, sound, future, pl, pos, [suoneranno]).
+ty_verb(italian, sound, future, sg(1), pos, [suonerò]).
+ty_verb(italian, sound, future, sg(2), pos, [suonerai]).
+ty_verb(italian, sound, future, pl(1), pos, [suoneremo]).
+ty_verb(italian, sound, future, pl(2), pos, [suonerete]).
+ty_verb(italian, speak, future, sg, pos, [parlerà]).
+ty_verb(italian, speak, future, pl, pos, [parleranno]).
+ty_verb(italian, speak, future, sg(1), pos, [parlerò]).
+ty_verb(italian, speak, future, sg(2), pos, [parlerai]).
+ty_verb(italian, speak, future, pl(1), pos, [parleremo]).
+ty_verb(italian, speak, future, pl(2), pos, [parlerete]).
+ty_verb(italian, specialise, future, sg, pos, [specializzerà]).
+ty_verb(italian, specialise, future, pl, pos, [specializzeranno]).
+ty_verb(italian, specialise, future, sg(1), pos, [specializzerò]).
+ty_verb(italian, specialise, future, sg(2), pos, [specializzerai]).
+ty_verb(italian, specialise, future, pl(1), pos, [specializzeremo]).
+ty_verb(italian, specialise, future, pl(2), pos, [specializzerete]).
+ty_verb(italian, specify, future, sg, pos, [specificherà]).
+ty_verb(italian, specify, future, pl, pos, [specificheranno]).
+ty_verb(italian, specify, future, sg(1), pos, [specificherò]).
+ty_verb(italian, specify, future, sg(2), pos, [specificherai]).
+ty_verb(italian, specify, future, pl(1), pos, [specificheremo]).
+ty_verb(italian, specify, future, pl(2), pos, [specificherete]).
+ty_verb(italian, spend, future, sg, pos, [passerà]).
+ty_verb(italian, spend, future, pl, pos, [passeranno]).
+ty_verb(italian, spend, future, sg(1), pos, [passerò]).
+ty_verb(italian, spend, future, sg(2), pos, [passerai]).
+ty_verb(italian, spend, future, pl(1), pos, [passeremo]).
+ty_verb(italian, spend, future, pl(2), pos, [passerete]).
+ty_verb(italian, spend, future, sg, pos, [spenderà]).
+ty_verb(italian, spend, future, pl, pos, [spenderanno]).
+ty_verb(italian, spend, future, sg(1), pos, [spenderò]).
+ty_verb(italian, spend, future, sg(2), pos, [spenderai]).
+ty_verb(italian, spend, future, pl(1), pos, [spenderemo]).
+ty_verb(italian, spend, future, pl(2), pos, [spenderete]).
+ty_verb(italian, spin, future, sg, pos, [girerà]).
+ty_verb(italian, spin, future, pl, pos, [gireranno]).
+ty_verb(italian, spin, future, sg(1), pos, [girerò]).
+ty_verb(italian, spin, future, sg(2), pos, [girerai]).
+ty_verb(italian, spin, future, pl(1), pos, [gireremo]).
+ty_verb(italian, spin, future, pl(2), pos, [girerete]).
+ty_verb(italian, spit, future, sg, pos, [sputerà]).
+ty_verb(italian, spit, future, pl, pos, [sputeranno]).
+ty_verb(italian, spit, future, sg(1), pos, [sputerò]).
+ty_verb(italian, spit, future, sg(2), pos, [sputerai]).
+ty_verb(italian, spit, future, pl(1), pos, [sputeremo]).
+ty_verb(italian, spit, future, pl(2), pos, [sputerete]).
+ty_verb(italian, spoil, future, sg, pos, [vizierà]).
+ty_verb(italian, spoil, future, pl, pos, [vizieranno]).
+ty_verb(italian, spoil, future, sg(1), pos, [vizierò]).
+ty_verb(italian, spoil, future, sg(2), pos, [vizierai]).
+ty_verb(italian, spoil, future, pl(1), pos, [vizieremo]).
+ty_verb(italian, spoil, future, pl(2), pos, [vizierete]).
+ty_verb(italian, spread, future, sg, pos, [diffonderà]).
+ty_verb(italian, spread, future, pl, pos, [diffonderanno]).
+ty_verb(italian, spread, future, sg(1), pos, [diffonderò]).
+ty_verb(italian, spread, future, sg(2), pos, [diffonderai]).
+ty_verb(italian, spread, future, pl(1), pos, [diffonderemo]).
+ty_verb(italian, spread, future, pl(2), pos, [diffonderete]).
+ty_verb(italian, spy, future, sg, pos, [spierà]).
+ty_verb(italian, spy, future, pl, pos, [spieranno]).
+ty_verb(italian, spy, future, sg(1), pos, [spierò]).
+ty_verb(italian, spy, future, sg(2), pos, [spierai]).
+ty_verb(italian, spy, future, pl(1), pos, [spieremo]).
+ty_verb(italian, spy, future, pl(2), pos, [spierete]).
+ty_verb(italian, squeez, future, sg, pos, [spremerà]).
+ty_verb(italian, squeez, future, pl, pos, [spremeranno]).
+ty_verb(italian, squeez, future, sg(1), pos, [spremerò]).
+ty_verb(italian, squeez, future, sg(2), pos, [spremerai]).
+ty_verb(italian, squeez, future, pl(1), pos, [spremeremo]).
+ty_verb(italian, squeez, future, pl(2), pos, [spremerete]).
+ty_verb(italian, stew, future, sg, pos, [stuferà]).
+ty_verb(italian, stew, future, pl, pos, [stuferanno]).
+ty_verb(italian, stew, future, sg(1), pos, [stuferò]).
+ty_verb(italian, stew, future, sg(2), pos, [stuferai]).
+ty_verb(italian, stew, future, pl(1), pos, [stuferemo]).
+ty_verb(italian, stew, future, pl(2), pos, [stuferete]).
+ty_verb(italian, stabilise, future, sg, pos, [stabilizzerà]).
+ty_verb(italian, stabilise, future, pl, pos, [stabilizzeranno]).
+ty_verb(italian, stabilise, future, sg(1), pos, [stabilizzerò]).
+ty_verb(italian, stabilise, future, sg(2), pos, [stabilizzerai]).
+ty_verb(italian, stabilise, future, pl(1), pos, [stabilizzeremo]).
+ty_verb(italian, stabilise, future, pl(2), pos, [stabilizzerete]).
+ty_verb(italian, stagnate, future, sg, pos, [ristagnerà]).
+ty_verb(italian, stagnate, future, pl, pos, [ristagneranno]).
+ty_verb(italian, stagnate, future, sg(1), pos, [ristagnerò]).
+ty_verb(italian, stagnate, future, sg(2), pos, [ristagnerai]).
+ty_verb(italian, stagnate, future, pl(1), pos, [ristagneremo]).
+ty_verb(italian, stagnate, future, pl(2), pos, [ristagnerete]).
+ty_verb(italian, stamp, future, sg, pos, [imprimerà]).
+ty_verb(italian, stamp, future, pl, pos, [imprimeranno]).
+ty_verb(italian, stamp, future, sg(1), pos, [imprimerò]).
+ty_verb(italian, stamp, future, sg(2), pos, [imprimerai]).
+ty_verb(italian, stamp, future, pl(1), pos, [imprimeremo]).
+ty_verb(italian, stamp, future, pl(2), pos, [imprimerete]).
+ty_verb(italian, stand, future, sg, pos, [starà]).
+ty_verb(italian, stand, future, pl, pos, [staranno]).
+ty_verb(italian, stand, future, sg(1), pos, [starò]).
+ty_verb(italian, stand, future, sg(2), pos, [starai]).
+ty_verb(italian, stand, future, pl(1), pos, [staremo]).
+ty_verb(italian, stand, future, pl(2), pos, [starete]).
+ty_verb(italian, standardise, future, sg, pos, [standardizzerà]).
+ty_verb(italian, standardise, future, pl, pos, [standardizzeranno]).
+ty_verb(italian, standardise, future, sg(1), pos, [standardizzerò]).
+ty_verb(italian, standardise, future, sg(2), pos, [standardizzerai]).
+ty_verb(italian, standardise, future, pl(1), pos, [standardizzeremo]).
+ty_verb(italian, standardise, future, pl(2), pos, [standardizzerete]).
+ty_verb(italian, start, future, sg, pos, [inizierà]).
+ty_verb(italian, start, future, pl, pos, [inizieranno]).
+ty_verb(italian, start, future, sg(1), pos, [inizierò]).
+ty_verb(italian, start, future, sg(2), pos, [inizierai]).
+ty_verb(italian, start, future, pl(1), pos, [inizieremo]).
+ty_verb(italian, start, future, pl(2), pos, [inizierete]).
+ty_verb(italian, steal, future, sg, pos, [ruberà]).
+ty_verb(italian, steal, future, pl, pos, [ruberanno]).
+ty_verb(italian, steal, future, sg(1), pos, [ruberò]).
+ty_verb(italian, steal, future, sg(2), pos, [ruberai]).
+ty_verb(italian, steal, future, pl(1), pos, [ruberemo]).
+ty_verb(italian, steal, future, pl(2), pos, [ruberete]).
+ty_verb(italian, sterilise, future, sg, pos, [sterilizzerà]).
+ty_verb(italian, sterilise, future, pl, pos, [sterilizzeranno]).
+ty_verb(italian, sterilise, future, sg(1), pos, [sterilizzerò]).
+ty_verb(italian, sterilise, future, sg(2), pos, [sterilizzerai]).
+ty_verb(italian, sterilise, future, pl(1), pos, [sterilizzeremo]).
+ty_verb(italian, sterilise, future, pl(2), pos, [sterilizzerete]).
+ty_verb(italian, stigmatise, future, sg, pos, [stigmatizzerà]).
+ty_verb(italian, stigmatise, future, pl, pos, [stigmatizzeranno]).
+ty_verb(italian, stigmatise, future, sg(1), pos, [stigmatizzerò]).
+ty_verb(italian, stigmatise, future, sg(2), pos, [stigmatizzerai]).
+ty_verb(italian, stigmatise, future, pl(1), pos, [stigmatizzeremo]).
+ty_verb(italian, stigmatise, future, pl(2), pos, [stigmatizzerete]).
+ty_verb(italian, stimulate, future, sg, pos, [incentiverà]).
+ty_verb(italian, stimulate, future, pl, pos, [incentiveranno]).
+ty_verb(italian, stimulate, future, sg(1), pos, [incentiverò]).
+ty_verb(italian, stimulate, future, sg(2), pos, [incentiverai]).
+ty_verb(italian, stimulate, future, pl(1), pos, [incentiveremo]).
+ty_verb(italian, stimulate, future, pl(2), pos, [incentiverete]).
+ty_verb(italian, stipulate, future, sg, pos, [stipulerà]).
+ty_verb(italian, stipulate, future, pl, pos, [stipuleranno]).
+ty_verb(italian, stipulate, future, sg(1), pos, [stipulerò]).
+ty_verb(italian, stipulate, future, sg(2), pos, [stipulerai]).
+ty_verb(italian, stipulate, future, pl(1), pos, [stipuleremo]).
+ty_verb(italian, stipulate, future, pl(2), pos, [stipulerete]).
+ty_verb(italian, strike, future, sg, pos, [colpirà]).
+ty_verb(italian, strike, future, pl, pos, [colpiranno]).
+ty_verb(italian, strike, future, sg(1), pos, [colpirò]).
+ty_verb(italian, strike, future, sg(2), pos, [colpirai]).
+ty_verb(italian, strike, future, pl(1), pos, [colpiremo]).
+ty_verb(italian, strike, future, pl(2), pos, [colpirete]).
+ty_verb(italian, study, future, sg, pos, [studierà]).
+ty_verb(italian, study, future, pl, pos, [studieranno]).
+ty_verb(italian, study, future, sg(1), pos, [studierò]).
+ty_verb(italian, study, future, sg(2), pos, [studierai]).
+ty_verb(italian, study, future, pl(1), pos, [studieremo]).
+ty_verb(italian, study, future, pl(2), pos, [studierete]).
+ty_verb(italian, sublimate, future, sg, pos, [sublimerà]).
+ty_verb(italian, sublimate, future, pl, pos, [sublimeranno]).
+ty_verb(italian, sublimate, future, sg(1), pos, [sublimerò]).
+ty_verb(italian, sublimate, future, sg(2), pos, [sublimerai]).
+ty_verb(italian, sublimate, future, pl(1), pos, [sublimeremo]).
+ty_verb(italian, sublimate, future, pl(2), pos, [sublimerete]).
+ty_verb(italian, subsidise, future, sg, pos, [sovvenzionerà]).
+ty_verb(italian, subsidise, future, pl, pos, [sovvenzioneranno]).
+ty_verb(italian, subsidise, future, sg(1), pos, [sovvenzionerò]).
+ty_verb(italian, subsidise, future, sg(2), pos, [sovvenzionerai]).
+ty_verb(italian, subsidise, future, pl(1), pos, [sovvenzioneremo]).
+ty_verb(italian, subsidise, future, pl(2), pos, [sovvenzionerete]).
+ty_verb(italian, subtract, future, sg, pos, [sottrarrà]).
+ty_verb(italian, subtract, future, pl, pos, [sottrarranno]).
+ty_verb(italian, subtract, future, sg(1), pos, [sottrarrò]).
+ty_verb(italian, subtract, future, sg(2), pos, [sottrarrai]).
+ty_verb(italian, subtract, future, pl(1), pos, [sottrarremo]).
+ty_verb(italian, subtract, future, pl(2), pos, [sottrarrete]).
+ty_verb(italian, succeed, future, sg, pos, [succederà]).
+ty_verb(italian, succeed, future, pl, pos, [succederanno]).
+ty_verb(italian, succeed, future, sg(1), pos, [succederò]).
+ty_verb(italian, succeed, future, sg(2), pos, [succederai]).
+ty_verb(italian, succeed, future, pl(1), pos, [succederemo]).
+ty_verb(italian, succeed, future, pl(2), pos, [succederete]).
+ty_verb(italian, sue, future, sg, pos, [querelerà]).
+ty_verb(italian, sue, future, pl, pos, [quereleranno]).
+ty_verb(italian, sue, future, sg(1), pos, [querelerò]).
+ty_verb(italian, sue, future, sg(2), pos, [querelerai]).
+ty_verb(italian, sue, future, pl(1), pos, [quereleremo]).
+ty_verb(italian, sue, future, pl(2), pos, [querelerete]).
+ty_verb(italian, suffer, future, sg, pos, [soffrirà]).
+ty_verb(italian, suffer, future, pl, pos, [soffriranno]).
+ty_verb(italian, suffer, future, sg(1), pos, [soffrirò]).
+ty_verb(italian, suffer, future, sg(2), pos, [soffrirai]).
+ty_verb(italian, suffer, future, pl(1), pos, [soffriremo]).
+ty_verb(italian, suffer, future, pl(2), pos, [soffrirete]).
+ty_verb(italian, suffocate, future, sg, pos, [asfissierà]).
+ty_verb(italian, suffocate, future, pl, pos, [asfissieranno]).
+ty_verb(italian, suffocate, future, sg(1), pos, [asfissierò]).
+ty_verb(italian, suffocate, future, sg(2), pos, [asfissierai]).
+ty_verb(italian, suffocate, future, pl(1), pos, [asfissieremo]).
+ty_verb(italian, suffocate, future, pl(2), pos, [asfissierete]).
+ty_verb(italian, summarise, future, sg, pos, [riassumerà]).
+ty_verb(italian, summarise, future, pl, pos, [riassumeranno]).
+ty_verb(italian, summarise, future, sg(1), pos, [riassumerò]).
+ty_verb(italian, summarise, future, sg(2), pos, [riassumerai]).
+ty_verb(italian, summarise, future, pl(1), pos, [riassumeremo]).
+ty_verb(italian, summarise, future, pl(2), pos, [riassumerete]).
+ty_verb(italian, supervise, future, sg, pos, [supervisionerà]).
+ty_verb(italian, supervise, future, pl, pos, [supervisioneranno]).
+ty_verb(italian, supervise, future, sg(1), pos, [supervisionerò]).
+ty_verb(italian, supervise, future, sg(2), pos, [supervisionerai]).
+ty_verb(italian, supervise, future, pl(1), pos, [supervisioneremo]).
+ty_verb(italian, supervise, future, pl(2), pos, [supervisionerete]).
+ty_verb(italian, support, future, sg, pos, [sopporterà]).
+ty_verb(italian, support, future, pl, pos, [sopporteranno]).
+ty_verb(italian, support, future, sg(1), pos, [sopporterò]).
+ty_verb(italian, support, future, sg(2), pos, [sopporterai]).
+ty_verb(italian, support, future, pl(1), pos, [sopporteremo]).
+ty_verb(italian, support, future, pl(2), pos, [sopporterete]).
+ty_verb(italian, suppose, future, sg, pos, [supporrà]).
+ty_verb(italian, suppose, future, pl, pos, [supporranno]).
+ty_verb(italian, suppose, future, sg(1), pos, [supporrò]).
+ty_verb(italian, suppose, future, sg(2), pos, [supporrai]).
+ty_verb(italian, suppose, future, pl(1), pos, [supporremo]).
+ty_verb(italian, suppose, future, pl(2), pos, [supporrete]).
+ty_verb(italian, surprise, future, sg, pos, [sorprenderà]).
+ty_verb(italian, surprise, future, pl, pos, [sorprenderanno]).
+ty_verb(italian, surprise, future, sg(1), pos, [sorprenderò]).
+ty_verb(italian, surprise, future, sg(2), pos, [sorprenderai]).
+ty_verb(italian, surprise, future, pl(1), pos, [sorprenderemo]).
+ty_verb(italian, surprise, future, pl(2), pos, [sorprenderete]).
+ty_verb(italian, surrender, future, sg, pos, [arrenderà]).
+ty_verb(italian, surrender, future, pl, pos, [arrenderanno]).
+ty_verb(italian, surrender, future, sg(1), pos, [arrenderò]).
+ty_verb(italian, surrender, future, sg(2), pos, [arrenderai]).
+ty_verb(italian, surrender, future, pl(1), pos, [arrenderemo]).
+ty_verb(italian, surrender, future, pl(2), pos, [arrenderete]).
+ty_verb(italian, surround, future, sg, pos, [circonderà]).
+ty_verb(italian, surround, future, pl, pos, [circonderanno]).
+ty_verb(italian, surround, future, sg(1), pos, [circonderò]).
+ty_verb(italian, surround, future, sg(2), pos, [circonderai]).
+ty_verb(italian, surround, future, pl(1), pos, [circonderemo]).
+ty_verb(italian, surround, future, pl(2), pos, [circonderete]).
+ty_verb(italian, suspend, future, sg, pos, [sospenderà]).
+ty_verb(italian, suspend, future, pl, pos, [sospenderanno]).
+ty_verb(italian, suspend, future, sg(1), pos, [sospenderò]).
+ty_verb(italian, suspend, future, sg(2), pos, [sospenderai]).
+ty_verb(italian, suspend, future, pl(1), pos, [sospenderemo]).
+ty_verb(italian, suspend, future, pl(2), pos, [sospenderete]).
+ty_verb(italian, sustain, future, sg, pos, [sosterrà]).
+ty_verb(italian, sustain, future, pl, pos, [sosterranno]).
+ty_verb(italian, sustain, future, sg(1), pos, [sosterrò]).
+ty_verb(italian, sustain, future, sg(2), pos, [sosterrai]).
+ty_verb(italian, sustain, future, pl(1), pos, [sosterremo]).
+ty_verb(italian, sustain, future, pl(2), pos, [sosterrete]).
+ty_verb(italian, swear, future, sg, pos, [giurerà]).
+ty_verb(italian, swear, future, pl, pos, [giureranno]).
+ty_verb(italian, swear, future, sg(1), pos, [giurerò]).
+ty_verb(italian, swear, future, sg(2), pos, [giurerai]).
+ty_verb(italian, swear, future, pl(1), pos, [giureremo]).
+ty_verb(italian, swear, future, pl(2), pos, [giurerete]).
+ty_verb(italian, sweat, future, sg, pos, [suderà]).
+ty_verb(italian, sweat, future, pl, pos, [suderanno]).
+ty_verb(italian, sweat, future, sg(1), pos, [suderò]).
+ty_verb(italian, sweat, future, sg(2), pos, [suderai]).
+ty_verb(italian, sweat, future, pl(1), pos, [suderemo]).
+ty_verb(italian, sweat, future, pl(2), pos, [suderete]).
+ty_verb(italian, symbolise, future, sg, pos, [simboleggerà]).
+ty_verb(italian, symbolise, future, pl, pos, [simboleggeranno]).
+ty_verb(italian, symbolise, future, sg(1), pos, [simboleggerò]).
+ty_verb(italian, symbolise, future, sg(2), pos, [simboleggerai]).
+ty_verb(italian, symbolise, future, pl(1), pos, [simboleggeremo]).
+ty_verb(italian, symbolise, future, pl(2), pos, [simboleggerete]).
+ty_verb(italian, synchronise, future, sg, pos, [sincronizzerà]).
+ty_verb(italian, synchronise, future, pl, pos, [sincronizzeranno]).
+ty_verb(italian, synchronise, future, sg(1), pos, [sincronizzerò]).
+ty_verb(italian, synchronise, future, sg(2), pos, [sincronizzerai]).
+ty_verb(italian, synchronise, future, pl(1), pos, [sincronizzeremo]).
+ty_verb(italian, synchronise, future, pl(2), pos, [sincronizzerete]).
+ty_verb(italian, systematise, future, sg, pos, [sistematizzerà]).
+ty_verb(italian, systematise, future, pl, pos, [sistematizzeranno]).
+ty_verb(italian, systematise, future, sg(1), pos, [sistematizzerò]).
+ty_verb(italian, systematise, future, sg(2), pos, [sistematizzerai]).
+ty_verb(italian, systematise, future, pl(1), pos, [sistematizzeremo]).
+ty_verb(italian, systematise, future, pl(2), pos, [sistematizzerete]).
+ty_verb(italian, take, future, sg, pos, [porterà]).
+ty_verb(italian, take, future, pl, pos, [porteranno]).
+ty_verb(italian, take, future, sg(1), pos, [porterò]).
+ty_verb(italian, take, future, sg(2), pos, [porterai]).
+ty_verb(italian, take, future, pl(1), pos, [porteremo]).
+ty_verb(italian, take, future, pl(2), pos, [porterete]).
+ty_verb(italian, taste, future, sg, pos, [degusterà]).
+ty_verb(italian, taste, future, pl, pos, [degusteranno]).
+ty_verb(italian, taste, future, sg(1), pos, [degusterò]).
+ty_verb(italian, taste, future, sg(2), pos, [degusterai]).
+ty_verb(italian, taste, future, pl(1), pos, [degusteremo]).
+ty_verb(italian, taste, future, pl(2), pos, [degusterete]).
+ty_verb(italian, tax, future, sg, pos, [tasserà]).
+ty_verb(italian, tax, future, pl, pos, [tasseranno]).
+ty_verb(italian, tax, future, sg(1), pos, [tasserò]).
+ty_verb(italian, tax, future, sg(2), pos, [tasserai]).
+ty_verb(italian, tax, future, pl(1), pos, [tasseremo]).
+ty_verb(italian, tax, future, pl(2), pos, [tasserete]).
+ty_verb(italian, teach, future, sg, pos, [insegnerà]).
+ty_verb(italian, teach, future, pl, pos, [insegneranno]).
+ty_verb(italian, teach, future, sg(1), pos, [insegnerò]).
+ty_verb(italian, teach, future, sg(2), pos, [insegnerai]).
+ty_verb(italian, teach, future, pl(1), pos, [insegneremo]).
+ty_verb(italian, teach, future, pl(2), pos, [insegnerete]).
+ty_verb(italian, televise, future, sg, pos, [teletrasmetterà]).
+ty_verb(italian, televise, future, pl, pos, [teletrasmetteranno]).
+ty_verb(italian, televise, future, sg(1), pos, [teletrasmetterò]).
+ty_verb(italian, televise, future, sg(2), pos, [teletrasmetterai]).
+ty_verb(italian, televise, future, pl(1), pos, [teletrasmetteremo]).
+ty_verb(italian, televise, future, pl(2), pos, [teletrasmetterete]).
+ty_verb(italian, temper, future, sg, pos, [tempererà]).
+ty_verb(italian, temper, future, pl, pos, [tempereranno]).
+ty_verb(italian, temper, future, sg(1), pos, [tempererò]).
+ty_verb(italian, temper, future, sg(2), pos, [tempererai]).
+ty_verb(italian, temper, future, pl(1), pos, [tempereremo]).
+ty_verb(italian, temper, future, pl(2), pos, [tempererete]).
+ty_verb(italian, tend, future, sg, pos, [stenderà]).
+ty_verb(italian, tend, future, pl, pos, [stenderanno]).
+ty_verb(italian, tend, future, sg(1), pos, [stenderò]).
+ty_verb(italian, tend, future, sg(2), pos, [stenderai]).
+ty_verb(italian, tend, future, pl(1), pos, [stenderemo]).
+ty_verb(italian, tend, future, pl(2), pos, [stenderete]).
+ty_verb(italian, test, future, sg, pos, [testerà]).
+ty_verb(italian, test, future, pl, pos, [testeranno]).
+ty_verb(italian, test, future, sg(1), pos, [testerò]).
+ty_verb(italian, test, future, sg(2), pos, [testerai]).
+ty_verb(italian, test, future, pl(1), pos, [testeremo]).
+ty_verb(italian, test, future, pl(2), pos, [testerete]).
+ty_verb(italian, think, future, sg, pos, [opinerà]).
+ty_verb(italian, think, future, pl, pos, [opineranno]).
+ty_verb(italian, think, future, sg(1), pos, [opinerò]).
+ty_verb(italian, think, future, sg(2), pos, [opinerai]).
+ty_verb(italian, think, future, pl(1), pos, [opineremo]).
+ty_verb(italian, think, future, pl(2), pos, [opinerete]).
+ty_verb(italian, threaten, future, sg, pos, [minaccerà]).
+ty_verb(italian, threaten, future, pl, pos, [minacceranno]).
+ty_verb(italian, threaten, future, sg(1), pos, [minaccerò]).
+ty_verb(italian, threaten, future, sg(2), pos, [minaccerai]).
+ty_verb(italian, threaten, future, pl(1), pos, [minacceremo]).
+ty_verb(italian, threaten, future, pl(2), pos, [minaccerete]).
+ty_verb(italian, throw, future, sg, pos, [getterà]).
+ty_verb(italian, throw, future, pl, pos, [getteranno]).
+ty_verb(italian, throw, future, sg(1), pos, [getterò]).
+ty_verb(italian, throw, future, sg(2), pos, [getterai]).
+ty_verb(italian, throw, future, pl(1), pos, [getteremo]).
+ty_verb(italian, throw, future, pl(2), pos, [getterete]).
+ty_verb(italian, throw, future, sg, pos, [tirerà]).
+ty_verb(italian, throw, future, pl, pos, [tireranno]).
+ty_verb(italian, throw, future, sg(1), pos, [tirerò]).
+ty_verb(italian, throw, future, sg(2), pos, [tirerai]).
+ty_verb(italian, throw, future, pl(1), pos, [tireremo]).
+ty_verb(italian, throw, future, pl(2), pos, [tirerete]).
+ty_verb(italian, thunder, future, sg, pos, [tuonerà]).
+ty_verb(italian, thunder, future, pl, pos, [tuoneranno]).
+ty_verb(italian, thunder, future, sg(1), pos, [tuonerò]).
+ty_verb(italian, thunder, future, sg(2), pos, [tuonerai]).
+ty_verb(italian, thunder, future, pl(1), pos, [tuoneremo]).
+ty_verb(italian, thunder, future, pl(2), pos, [tuonerete]).
+ty_verb(italian, toast, future, sg, pos, [tosterà]).
+ty_verb(italian, toast, future, pl, pos, [tosteranno]).
+ty_verb(italian, toast, future, sg(1), pos, [tosterò]).
+ty_verb(italian, toast, future, sg(2), pos, [tosterai]).
+ty_verb(italian, toast, future, pl(1), pos, [tosteremo]).
+ty_verb(italian, toast, future, pl(2), pos, [tosterete]).
+ty_verb(italian, tolerate, future, sg, pos, [tollererà]).
+ty_verb(italian, tolerate, future, pl, pos, [tollereranno]).
+ty_verb(italian, tolerate, future, sg(1), pos, [tollererò]).
+ty_verb(italian, tolerate, future, sg(2), pos, [tollererai]).
+ty_verb(italian, tolerate, future, pl(1), pos, [tollereremo]).
+ty_verb(italian, tolerate, future, pl(2), pos, [tollererete]).
+ty_verb(italian, torture, future, sg, pos, [torturerà]).
+ty_verb(italian, torture, future, pl, pos, [tortureranno]).
+ty_verb(italian, torture, future, sg(1), pos, [torturerò]).
+ty_verb(italian, torture, future, sg(2), pos, [torturerai]).
+ty_verb(italian, torture, future, pl(1), pos, [tortureremo]).
+ty_verb(italian, torture, future, pl(2), pos, [torturerete]).
+ty_verb(italian, touch, future, sg, pos, [toccherà]).
+ty_verb(italian, touch, future, pl, pos, [toccheranno]).
+ty_verb(italian, touch, future, sg(1), pos, [toccherò]).
+ty_verb(italian, touch, future, sg(2), pos, [toccherai]).
+ty_verb(italian, touch, future, pl(1), pos, [toccheremo]).
+ty_verb(italian, touch, future, pl(2), pos, [toccherete]).
+ty_verb(italian, toughen, future, sg, pos, [indurirà]).
+ty_verb(italian, toughen, future, pl, pos, [induriranno]).
+ty_verb(italian, toughen, future, sg(1), pos, [indurirò]).
+ty_verb(italian, toughen, future, sg(2), pos, [indurirai]).
+ty_verb(italian, toughen, future, pl(1), pos, [induriremo]).
+ty_verb(italian, toughen, future, pl(2), pos, [indurirete]).
+ty_verb(italian, tour, future, sg, pos, [visiterà]).
+ty_verb(italian, tour, future, pl, pos, [visiteranno]).
+ty_verb(italian, tour, future, sg(1), pos, [visiterò]).
+ty_verb(italian, tour, future, sg(2), pos, [visiterai]).
+ty_verb(italian, tour, future, pl(1), pos, [visiteremo]).
+ty_verb(italian, tour, future, pl(2), pos, [visiterete]).
+ty_verb(italian, tow, future, sg, pos, [rimorchierà]).
+ty_verb(italian, tow, future, pl, pos, [rimorchieranno]).
+ty_verb(italian, tow, future, sg(1), pos, [rimorchierò]).
+ty_verb(italian, tow, future, sg(2), pos, [rimorchierai]).
+ty_verb(italian, tow, future, pl(1), pos, [rimorchieremo]).
+ty_verb(italian, tow, future, pl(2), pos, [rimorchierete]).
+ty_verb(italian, train, future, sg, pos, [allenerà]).
+ty_verb(italian, train, future, pl, pos, [alleneranno]).
+ty_verb(italian, train, future, sg(1), pos, [allenerò]).
+ty_verb(italian, train, future, sg(2), pos, [allenerai]).
+ty_verb(italian, train, future, pl(1), pos, [alleneremo]).
+ty_verb(italian, train, future, pl(2), pos, [allenerete]).
+ty_verb(italian, transcribe, future, sg, pos, [trascriverà]).
+ty_verb(italian, transcribe, future, pl, pos, [trascriveranno]).
+ty_verb(italian, transcribe, future, sg(1), pos, [trascriverò]).
+ty_verb(italian, transcribe, future, sg(2), pos, [trascriverai]).
+ty_verb(italian, transcribe, future, pl(1), pos, [trascriveremo]).
+ty_verb(italian, transcribe, future, pl(2), pos, [trascriverete]).
+ty_verb(italian, transfer, future, sg, pos, [trasferirà]).
+ty_verb(italian, transfer, future, pl, pos, [trasferiranno]).
+ty_verb(italian, transfer, future, sg(1), pos, [trasferirò]).
+ty_verb(italian, transfer, future, sg(2), pos, [trasferirai]).
+ty_verb(italian, transfer, future, pl(1), pos, [trasferiremo]).
+ty_verb(italian, transfer, future, pl(2), pos, [trasferirete]).
+ty_verb(italian, transform, future, sg, pos, [trasformerà]).
+ty_verb(italian, transform, future, pl, pos, [trasformeranno]).
+ty_verb(italian, transform, future, sg(1), pos, [trasformerò]).
+ty_verb(italian, transform, future, sg(2), pos, [trasformerai]).
+ty_verb(italian, transform, future, pl(1), pos, [trasformeremo]).
+ty_verb(italian, transform, future, pl(2), pos, [trasformerete]).
+ty_verb(italian, transgress, future, sg, pos, [trasgredirà]).
+ty_verb(italian, transgress, future, pl, pos, [trasgrediranno]).
+ty_verb(italian, transgress, future, sg(1), pos, [trasgredirò]).
+ty_verb(italian, transgress, future, sg(2), pos, [trasgredirai]).
+ty_verb(italian, transgress, future, pl(1), pos, [trasgrediremo]).
+ty_verb(italian, transgress, future, pl(2), pos, [trasgredirete]).
+ty_verb(italian, translate, future, sg, pos, [tradurrà]).
+ty_verb(italian, translate, future, pl, pos, [tradurranno]).
+ty_verb(italian, translate, future, sg(1), pos, [tradurrò]).
+ty_verb(italian, translate, future, sg(2), pos, [tradurrai]).
+ty_verb(italian, translate, future, pl(1), pos, [tradurremo]).
+ty_verb(italian, translate, future, pl(2), pos, [tradurrete]).
+ty_verb(italian, transliterate, future, sg, pos, [traslittererà]).
+ty_verb(italian, transliterate, future, pl, pos, [traslittereranno]).
+ty_verb(italian, transliterate, future, sg(1), pos, [traslittererò]).
+ty_verb(italian, transliterate, future, sg(2), pos, [traslittererai]).
+ty_verb(italian, transliterate, future, pl(1), pos, [traslittereremo]).
+ty_verb(italian, transliterate, future, pl(2), pos, [traslittererete]).
+ty_verb(italian, transplant, future, sg, pos, [trapianterà]).
+ty_verb(italian, transplant, future, pl, pos, [trapianteranno]).
+ty_verb(italian, transplant, future, sg(1), pos, [trapianterò]).
+ty_verb(italian, transplant, future, sg(2), pos, [trapianterai]).
+ty_verb(italian, transplant, future, pl(1), pos, [trapianteremo]).
+ty_verb(italian, transplant, future, pl(2), pos, [trapianterete]).
+ty_verb(italian, travel, future, sg, pos, [viaggerà]).
+ty_verb(italian, travel, future, pl, pos, [viaggeranno]).
+ty_verb(italian, travel, future, sg(1), pos, [viaggerò]).
+ty_verb(italian, travel, future, sg(2), pos, [viaggerai]).
+ty_verb(italian, travel, future, pl(1), pos, [viaggeremo]).
+ty_verb(italian, travel, future, pl(2), pos, [viaggerete]).
+ty_verb(italian, tread, future, sg, pos, [calcherà]).
+ty_verb(italian, tread, future, pl, pos, [calcheranno]).
+ty_verb(italian, tread, future, sg(1), pos, [calcherò]).
+ty_verb(italian, tread, future, sg(2), pos, [calcherai]).
+ty_verb(italian, tread, future, pl(1), pos, [calcheremo]).
+ty_verb(italian, tread, future, pl(2), pos, [calcherete]).
+ty_verb(italian, tremble, future, sg, pos, [tremerà]).
+ty_verb(italian, tremble, future, pl, pos, [tremeranno]).
+ty_verb(italian, tremble, future, sg(1), pos, [tremerò]).
+ty_verb(italian, tremble, future, sg(2), pos, [tremerai]).
+ty_verb(italian, tremble, future, pl(1), pos, [tremeremo]).
+ty_verb(italian, tremble, future, pl(2), pos, [tremerete]).
+ty_verb(italian, triple, future, sg, pos, [triplicherà]).
+ty_verb(italian, triple, future, pl, pos, [triplicheranno]).
+ty_verb(italian, triple, future, sg(1), pos, [triplicherò]).
+ty_verb(italian, triple, future, sg(2), pos, [triplicherai]).
+ty_verb(italian, triple, future, pl(1), pos, [triplicheremo]).
+ty_verb(italian, triple, future, pl(2), pos, [triplicherete]).
+ty_verb(italian, triumph, future, sg, pos, [trionferà]).
+ty_verb(italian, triumph, future, pl, pos, [trionferanno]).
+ty_verb(italian, triumph, future, sg(1), pos, [trionferò]).
+ty_verb(italian, triumph, future, sg(2), pos, [trionferai]).
+ty_verb(italian, triumph, future, pl(1), pos, [trionferemo]).
+ty_verb(italian, triumph, future, pl(2), pos, [trionferete]).
+ty_verb(italian, truncate, future, sg, pos, [troncherà]).
+ty_verb(italian, truncate, future, pl, pos, [troncheranno]).
+ty_verb(italian, truncate, future, sg(1), pos, [troncherò]).
+ty_verb(italian, truncate, future, sg(2), pos, [troncherai]).
+ty_verb(italian, truncate, future, pl(1), pos, [troncheremo]).
+ty_verb(italian, truncate, future, pl(2), pos, [troncherete]).
+ty_verb(italian, trust, future, sg, pos, [affiderà]).
+ty_verb(italian, trust, future, pl, pos, [affideranno]).
+ty_verb(italian, trust, future, sg(1), pos, [affiderò]).
+ty_verb(italian, trust, future, sg(2), pos, [affiderai]).
+ty_verb(italian, trust, future, pl(1), pos, [affideremo]).
+ty_verb(italian, trust, future, pl(2), pos, [affiderete]).
+ty_verb(italian, retwist, future, sg, pos, [ritorcerà]).
+ty_verb(italian, retwist, future, pl, pos, [ritorceranno]).
+ty_verb(italian, retwist, future, sg(1), pos, [ritorcerò]).
+ty_verb(italian, retwist, future, sg(2), pos, [ritorcerai]).
+ty_verb(italian, retwist, future, pl(1), pos, [ritorceremo]).
+ty_verb(italian, retwist, future, pl(2), pos, [ritorcerete]).
+ty_verb(italian, type, future, sg, pos, [scriverà]).
+ty_verb(italian, type, future, pl, pos, [scriveranno]).
+ty_verb(italian, type, future, sg(1), pos, [scriverò]).
+ty_verb(italian, type, future, sg(2), pos, [scriverai]).
+ty_verb(italian, type, future, pl(1), pos, [scriveremo]).
+ty_verb(italian, type, future, pl(2), pos, [scriverete]).
+ty_verb(italian, unblock, future, sg, pos, [sbloccherà]).
+ty_verb(italian, unblock, future, pl, pos, [sbloccheranno]).
+ty_verb(italian, unblock, future, sg(1), pos, [sbloccherò]).
+ty_verb(italian, unblock, future, sg(2), pos, [sbloccherai]).
+ty_verb(italian, unblock, future, pl(1), pos, [sbloccheremo]).
+ty_verb(italian, unblock, future, pl(2), pos, [sbloccherete]).
+ty_verb(italian, underestimate, future, sg, pos, [sottovaluterà]).
+ty_verb(italian, underestimate, future, pl, pos, [sottovaluteranno]).
+ty_verb(italian, underestimate, future, sg(1), pos, [sottovaluterò]).
+ty_verb(italian, underestimate, future, sg(2), pos, [sottovaluterai]).
+ty_verb(italian, underestimate, future, pl(1), pos, [sottovaluteremo]).
+ty_verb(italian, underestimate, future, pl(2), pos, [sottovaluterete]).
+ty_verb(italian, underline, future, sg, pos, [sottolineerà]).
+ty_verb(italian, underline, future, pl, pos, [sottolineeranno]).
+ty_verb(italian, underline, future, sg(1), pos, [sottolineerò]).
+ty_verb(italian, underline, future, sg(2), pos, [sottolineerai]).
+ty_verb(italian, underline, future, pl(1), pos, [sottolineeremo]).
+ty_verb(italian, underline, future, pl(2), pos, [sottolineerete]).
+ty_verb(italian, understand, future, sg, pos, [capirà]).
+ty_verb(italian, understand, future, pl, pos, [capiranno]).
+ty_verb(italian, understand, future, sg(1), pos, [capirò]).
+ty_verb(italian, understand, future, sg(2), pos, [capirai]).
+ty_verb(italian, understand, future, pl(1), pos, [capiremo]).
+ty_verb(italian, understand, future, pl(2), pos, [capirete]).
+ty_verb(italian, undertake, future, sg, pos, [intraprenderà]).
+ty_verb(italian, undertake, future, pl, pos, [intraprenderanno]).
+ty_verb(italian, undertake, future, sg(1), pos, [intraprenderò]).
+ty_verb(italian, undertake, future, sg(2), pos, [intraprenderai]).
+ty_verb(italian, undertake, future, pl(1), pos, [intraprenderemo]).
+ty_verb(italian, undertake, future, pl(2), pos, [intraprenderete]).
+ty_verb(italian, undo, future, sg, pos, [disferà]).
+ty_verb(italian, undo, future, pl, pos, [disferanno]).
+ty_verb(italian, undo, future, sg(1), pos, [disferò]).
+ty_verb(italian, undo, future, sg(2), pos, [disferai]).
+ty_verb(italian, undo, future, pl(1), pos, [disferemo]).
+ty_verb(italian, undo, future, pl(2), pos, [disferete]).
+ty_verb(italian, undress, future, sg, pos, [svestirà]).
+ty_verb(italian, undress, future, pl, pos, [svestiranno]).
+ty_verb(italian, undress, future, sg(1), pos, [svestirò]).
+ty_verb(italian, undress, future, sg(2), pos, [svestirai]).
+ty_verb(italian, undress, future, pl(1), pos, [svestiremo]).
+ty_verb(italian, undress, future, pl(2), pos, [svestirete]).
+ty_verb(italian, unify, future, sg, pos, [unificherà]).
+ty_verb(italian, unify, future, pl, pos, [unificheranno]).
+ty_verb(italian, unify, future, sg(1), pos, [unificherò]).
+ty_verb(italian, unify, future, sg(2), pos, [unificherai]).
+ty_verb(italian, unify, future, pl(1), pos, [unificheremo]).
+ty_verb(italian, unify, future, pl(2), pos, [unificherete]).
+ty_verb(italian, unmask, future, sg, pos, [smaschererà]).
+ty_verb(italian, unmask, future, pl, pos, [smaschereranno]).
+ty_verb(italian, unmask, future, sg(1), pos, [smaschererò]).
+ty_verb(italian, unmask, future, sg(2), pos, [smaschererai]).
+ty_verb(italian, unmask, future, pl(1), pos, [smaschereremo]).
+ty_verb(italian, unmask, future, pl(2), pos, [smaschererete]).
+ty_verb(italian, unscrew, future, sg, pos, [sviterà]).
+ty_verb(italian, unscrew, future, pl, pos, [sviteranno]).
+ty_verb(italian, unscrew, future, sg(1), pos, [sviterò]).
+ty_verb(italian, unscrew, future, sg(2), pos, [sviterai]).
+ty_verb(italian, unscrew, future, pl(1), pos, [sviteremo]).
+ty_verb(italian, unscrew, future, pl(2), pos, [sviterete]).
+ty_verb(italian, update, future, sg, pos, [aggiornerà]).
+ty_verb(italian, update, future, pl, pos, [aggiorneranno]).
+ty_verb(italian, update, future, sg(1), pos, [aggiornerò]).
+ty_verb(italian, update, future, sg(2), pos, [aggiornerai]).
+ty_verb(italian, update, future, pl(1), pos, [aggiorneremo]).
+ty_verb(italian, update, future, pl(2), pos, [aggiornerete]).
+ty_verb(italian, upset, future, sg, pos, [rovescerà]).
+ty_verb(italian, upset, future, pl, pos, [rovesceranno]).
+ty_verb(italian, upset, future, sg(1), pos, [rovescerò]).
+ty_verb(italian, upset, future, sg(2), pos, [rovescerai]).
+ty_verb(italian, upset, future, pl(1), pos, [rovesceremo]).
+ty_verb(italian, upset, future, pl(2), pos, [rovescerete]).
+ty_verb(italian, urinate, future, sg, pos, [orinerà]).
+ty_verb(italian, urinate, future, pl, pos, [orineranno]).
+ty_verb(italian, urinate, future, sg(1), pos, [orinerò]).
+ty_verb(italian, urinate, future, sg(2), pos, [orinerai]).
+ty_verb(italian, urinate, future, pl(1), pos, [orineremo]).
+ty_verb(italian, urinate, future, pl(2), pos, [orinerete]).
+ty_verb(italian, use, future, sg, pos, [userà]).
+ty_verb(italian, use, future, pl, pos, [useranno]).
+ty_verb(italian, use, future, sg(1), pos, [userò]).
+ty_verb(italian, use, future, sg(2), pos, [userai]).
+ty_verb(italian, use, future, pl(1), pos, [useremo]).
+ty_verb(italian, use, future, pl(2), pos, [userete]).
+ty_verb(italian, use, future, sg, pos, [impiegherà]).
+ty_verb(italian, use, future, pl, pos, [impiegheranno]).
+ty_verb(italian, use, future, sg(1), pos, [impiegherò]).
+ty_verb(italian, use, future, sg(2), pos, [impiegherai]).
+ty_verb(italian, use, future, pl(1), pos, [impiegheremo]).
+ty_verb(italian, use, future, pl(2), pos, [impiegherete]).
+ty_verb(italian, usurp, future, sg, pos, [usurperà]).
+ty_verb(italian, usurp, future, pl, pos, [usurperanno]).
+ty_verb(italian, usurp, future, sg(1), pos, [usurperò]).
+ty_verb(italian, usurp, future, sg(2), pos, [usurperai]).
+ty_verb(italian, usurp, future, pl(1), pos, [usurperemo]).
+ty_verb(italian, usurp, future, pl(2), pos, [usurperete]).
+ty_verb(italian, utilise, future, sg, pos, [utilizzerà]).
+ty_verb(italian, utilise, future, pl, pos, [utilizzeranno]).
+ty_verb(italian, utilise, future, sg(1), pos, [utilizzerò]).
+ty_verb(italian, utilise, future, sg(2), pos, [utilizzerai]).
+ty_verb(italian, utilise, future, pl(1), pos, [utilizzeremo]).
+ty_verb(italian, utilise, future, pl(2), pos, [utilizzerete]).
+ty_verb(italian, validate, future, sg, pos, [convaliderà]).
+ty_verb(italian, validate, future, pl, pos, [convalideranno]).
+ty_verb(italian, validate, future, sg(1), pos, [convaliderò]).
+ty_verb(italian, validate, future, sg(2), pos, [convaliderai]).
+ty_verb(italian, validate, future, pl(1), pos, [convalideremo]).
+ty_verb(italian, validate, future, pl(2), pos, [convaliderete]).
+ty_verb(italian, vaporise, future, sg, pos, [vaporizzerà]).
+ty_verb(italian, vaporise, future, pl, pos, [vaporizzeranno]).
+ty_verb(italian, vaporise, future, sg(1), pos, [vaporizzerò]).
+ty_verb(italian, vaporise, future, sg(2), pos, [vaporizzerai]).
+ty_verb(italian, vaporise, future, pl(1), pos, [vaporizzeremo]).
+ty_verb(italian, vaporise, future, pl(2), pos, [vaporizzerete]).
+ty_verb(italian, venerate, future, sg, pos, [venererà]).
+ty_verb(italian, venerate, future, pl, pos, [venereranno]).
+ty_verb(italian, venerate, future, sg(1), pos, [venererò]).
+ty_verb(italian, venerate, future, sg(2), pos, [venererai]).
+ty_verb(italian, venerate, future, pl(1), pos, [venereremo]).
+ty_verb(italian, venerate, future, pl(2), pos, [venererete]).
+ty_verb(italian, ventilate, future, sg, pos, [ventilerà]).
+ty_verb(italian, ventilate, future, pl, pos, [ventileranno]).
+ty_verb(italian, ventilate, future, sg(1), pos, [ventilerò]).
+ty_verb(italian, ventilate, future, sg(2), pos, [ventilerai]).
+ty_verb(italian, ventilate, future, pl(1), pos, [ventileremo]).
+ty_verb(italian, ventilate, future, pl(2), pos, [ventilerete]).
+ty_verb(italian, vibrate, future, sg, pos, [vibrerà]).
+ty_verb(italian, vibrate, future, pl, pos, [vibreranno]).
+ty_verb(italian, vibrate, future, sg(1), pos, [vibrerò]).
+ty_verb(italian, vibrate, future, sg(2), pos, [vibrerai]).
+ty_verb(italian, vibrate, future, pl(1), pos, [vibreremo]).
+ty_verb(italian, vibrate, future, pl(2), pos, [vibrerete]).
+ty_verb(italian, violate, future, sg, pos, [violerà]).
+ty_verb(italian, violate, future, pl, pos, [violeranno]).
+ty_verb(italian, violate, future, sg(1), pos, [violerò]).
+ty_verb(italian, violate, future, sg(2), pos, [violerai]).
+ty_verb(italian, violate, future, pl(1), pos, [violeremo]).
+ty_verb(italian, violate, future, pl(2), pos, [violerete]).
+ty_verb(italian, visit, future, sg, pos, [ricorrerà]).
+ty_verb(italian, visit, future, pl, pos, [ricorreranno]).
+ty_verb(italian, visit, future, sg(1), pos, [ricorrerò]).
+ty_verb(italian, visit, future, sg(2), pos, [ricorrerai]).
+ty_verb(italian, visit, future, pl(1), pos, [ricorreremo]).
+ty_verb(italian, visit, future, pl(2), pos, [ricorrerete]).
+ty_verb(italian, visualise, future, sg, pos, [visualizzerà]).
+ty_verb(italian, visualise, future, pl, pos, [visualizzeranno]).
+ty_verb(italian, visualise, future, sg(1), pos, [visualizzerò]).
+ty_verb(italian, visualise, future, sg(2), pos, [visualizzerai]).
+ty_verb(italian, visualise, future, pl(1), pos, [visualizzeremo]).
+ty_verb(italian, visualise, future, pl(2), pos, [visualizzerete]).
+ty_verb(italian, vomit, future, sg, pos, [vomiterà]).
+ty_verb(italian, vomit, future, pl, pos, [vomiteranno]).
+ty_verb(italian, vomit, future, sg(1), pos, [vomiterò]).
+ty_verb(italian, vomit, future, sg(2), pos, [vomiterai]).
+ty_verb(italian, vomit, future, pl(1), pos, [vomiteremo]).
+ty_verb(italian, vomit, future, pl(2), pos, [vomiterete]).
+ty_verb(italian, vote, future, sg, pos, [voterà]).
+ty_verb(italian, vote, future, pl, pos, [voteranno]).
+ty_verb(italian, vote, future, sg(1), pos, [voterò]).
+ty_verb(italian, vote, future, sg(2), pos, [voterai]).
+ty_verb(italian, vote, future, pl(1), pos, [voteremo]).
+ty_verb(italian, vote, future, pl(2), pos, [voterete]).
+ty_verb(italian, walk, future, sg, pos, [camminerà]).
+ty_verb(italian, walk, future, pl, pos, [cammineranno]).
+ty_verb(italian, walk, future, sg(1), pos, [camminerò]).
+ty_verb(italian, walk, future, sg(2), pos, [camminerai]).
+ty_verb(italian, walk, future, pl(1), pos, [cammineremo]).
+ty_verb(italian, walk, future, pl(2), pos, [camminerete]).
+ty_verb(italian, wander, future, sg, pos, [vagherà]).
+ty_verb(italian, wander, future, pl, pos, [vagheranno]).
+ty_verb(italian, wander, future, sg(1), pos, [vagherò]).
+ty_verb(italian, wander, future, sg(2), pos, [vagherai]).
+ty_verb(italian, wander, future, pl(1), pos, [vagheremo]).
+ty_verb(italian, wander, future, pl(2), pos, [vagherete]).
+ty_verb(italian, want, future, sg, pos, [vorrà]).
+ty_verb(italian, want, future, pl, pos, [vorranno]).
+ty_verb(italian, want, future, sg(1), pos, [vorrò]).
+ty_verb(italian, want, future, sg(2), pos, [vorrai]).
+ty_verb(italian, want, future, pl(1), pos, [vorremo]).
+ty_verb(italian, want, future, pl(2), pos, [vorrete]).
+ty_verb(italian, warm, future, sg, pos, [riscalderà]).
+ty_verb(italian, warm, future, pl, pos, [riscalderanno]).
+ty_verb(italian, warm, future, sg(1), pos, [riscalderò]).
+ty_verb(italian, warm, future, sg(2), pos, [riscalderai]).
+ty_verb(italian, warm, future, pl(1), pos, [riscalderemo]).
+ty_verb(italian, warm, future, pl(2), pos, [riscalderete]).
+ty_verb(italian, wash, future, sg, pos, [strofinherà]).
+ty_verb(italian, wash, future, pl, pos, [strofinheranno]).
+ty_verb(italian, wash, future, sg(1), pos, [strofinherò]).
+ty_verb(italian, wash, future, sg(2), pos, [strofinherai]).
+ty_verb(italian, wash, future, pl(1), pos, [strofinheremo]).
+ty_verb(italian, wash, future, pl(2), pos, [strofinherete]).
+ty_verb(italian, waste, future, sg, pos, [sprecherà]).
+ty_verb(italian, waste, future, pl, pos, [sprecheranno]).
+ty_verb(italian, waste, future, sg(1), pos, [sprecherò]).
+ty_verb(italian, waste, future, sg(2), pos, [sprecherai]).
+ty_verb(italian, waste, future, pl(1), pos, [sprecheremo]).
+ty_verb(italian, waste, future, pl(2), pos, [sprecherete]).
+ty_verb(italian, watch, future, sg, pos, [vigilerà]).
+ty_verb(italian, watch, future, pl, pos, [vigileranno]).
+ty_verb(italian, watch, future, sg(1), pos, [vigilerò]).
+ty_verb(italian, watch, future, sg(2), pos, [vigilerai]).
+ty_verb(italian, watch, future, pl(1), pos, [vigileremo]).
+ty_verb(italian, watch, future, pl(2), pos, [vigilerete]).
+ty_verb(italian, water, future, sg, pos, [abbevererà]).
+ty_verb(italian, water, future, pl, pos, [abbevereranno]).
+ty_verb(italian, water, future, sg(1), pos, [abbevererò]).
+ty_verb(italian, water, future, sg(2), pos, [abbevererai]).
+ty_verb(italian, water, future, pl(1), pos, [abbevereremo]).
+ty_verb(italian, water, future, pl(2), pos, [abbevererete]).
+ty_verb(italian, weaken, future, sg, pos, [debiliterà]).
+ty_verb(italian, weaken, future, pl, pos, [debiliteranno]).
+ty_verb(italian, weaken, future, sg(1), pos, [debiliterò]).
+ty_verb(italian, weaken, future, sg(2), pos, [debiliterai]).
+ty_verb(italian, weaken, future, pl(1), pos, [debiliteremo]).
+ty_verb(italian, weaken, future, pl(2), pos, [debiliterete]).
+ty_verb(italian, weave, future, sg, pos, [tramerà]).
+ty_verb(italian, weave, future, pl, pos, [trameranno]).
+ty_verb(italian, weave, future, sg(1), pos, [tramerò]).
+ty_verb(italian, weave, future, sg(2), pos, [tramerai]).
+ty_verb(italian, weave, future, pl(1), pos, [trameremo]).
+ty_verb(italian, weave, future, pl(2), pos, [tramerete]).
+ty_verb(italian, whisper, future, sg, pos, [bisbiglierà]).
+ty_verb(italian, whisper, future, pl, pos, [bisbiglieranno]).
+ty_verb(italian, whisper, future, sg(1), pos, [bisbiglierò]).
+ty_verb(italian, whisper, future, sg(2), pos, [bisbiglierai]).
+ty_verb(italian, whisper, future, pl(1), pos, [bisbiglieremo]).
+ty_verb(italian, whisper, future, pl(2), pos, [bisbiglierete]).
+ty_verb(italian, whistle, future, sg, pos, [fischierà]).
+ty_verb(italian, whistle, future, pl, pos, [fischieranno]).
+ty_verb(italian, whistle, future, sg(1), pos, [fischierò]).
+ty_verb(italian, whistle, future, sg(2), pos, [fischierai]).
+ty_verb(italian, whistle, future, pl(1), pos, [fischieremo]).
+ty_verb(italian, whistle, future, pl(2), pos, [fischierete]).
+ty_verb(italian, widen, future, sg, pos, [allargherà]).
+ty_verb(italian, widen, future, pl, pos, [allargheranno]).
+ty_verb(italian, widen, future, sg(1), pos, [allargherò]).
+ty_verb(italian, widen, future, sg(2), pos, [allargherai]).
+ty_verb(italian, widen, future, pl(1), pos, [allargheremo]).
+ty_verb(italian, widen, future, pl(2), pos, [allargherete]).
+ty_verb(italian, win, future, sg, pos, [vincerà]).
+ty_verb(italian, win, future, pl, pos, [vinceranno]).
+ty_verb(italian, win, future, sg(1), pos, [vincerò]).
+ty_verb(italian, win, future, sg(2), pos, [vincerai]).
+ty_verb(italian, win, future, pl(1), pos, [vinceremo]).
+ty_verb(italian, win, future, pl(2), pos, [vincerete]).
+ty_verb(italian, work, future, sg, pos, [lavorerà]).
+ty_verb(italian, work, future, pl, pos, [lavoreranno]).
+ty_verb(italian, work, future, sg(1), pos, [lavorerò]).
+ty_verb(italian, work, future, sg(2), pos, [lavorerai]).
+ty_verb(italian, work, future, pl(1), pos, [lavoreremo]).
+ty_verb(italian, work, future, pl(2), pos, [lavorerete]).
+ty_verb(italian, worry, future, sg, pos, [infastidirà]).
+ty_verb(italian, worry, future, pl, pos, [infastidiranno]).
+ty_verb(italian, worry, future, sg(1), pos, [infastidirò]).
+ty_verb(italian, worry, future, sg(2), pos, [infastidirai]).
+ty_verb(italian, worry, future, pl(1), pos, [infastidiremo]).
+ty_verb(italian, worry, future, pl(2), pos, [infastidirete]).
+ty_verb(italian, wrap, future, sg, pos, [avvolgerà]).
+ty_verb(italian, wrap, future, pl, pos, [avvolgeranno]).
+ty_verb(italian, wrap, future, sg(1), pos, [avvolgerò]).
+ty_verb(italian, wrap, future, sg(2), pos, [avvolgerai]).
+ty_verb(italian, wrap, future, pl(1), pos, [avvolgeremo]).
+ty_verb(italian, wrap, future, pl(2), pos, [avvolgerete]).
+ty_verb(italian, fulminate, future, sg, pos, [fulminerà]).
+ty_verb(italian, fulminate, future, pl, pos, [fulmineranno]).
+ty_verb(italian, fulminate, future, sg(1), pos, [fulminerò]).
+ty_verb(italian, fulminate, future, sg(2), pos, [fulminerai]).
+ty_verb(italian, fulminate, future, pl(1), pos, [fulmineremo]).
+ty_verb(italian, fulminate, future, pl(2), pos, [fulminerete]).
+ty_verb(italian, yawn, future, sg, pos, [sbadiglierà]).
+ty_verb(italian, yawn, future, pl, pos, [sbadiglieranno]).
+ty_verb(italian, yawn, future, sg(1), pos, [sbadiglierò]).
+ty_verb(italian, yawn, future, sg(2), pos, [sbadiglierai]).
+ty_verb(italian, yawn, future, pl(1), pos, [sbadiglieremo]).
+ty_verb(italian, yawn, future, pl(2), pos, [sbadiglierete]).
+ty_verb(italian, yield, future, sg, pos, [cederà]).
+ty_verb(italian, yield, future, pl, pos, [cederanno]).
+ty_verb(italian, yield, future, sg(1), pos, [cederò]).
+ty_verb(italian, yield, future, sg(2), pos, [cederai]).
+ty_verb(italian, yield, future, pl(1), pos, [cederemo]).
+ty_verb(italian, yield, future, pl(2), pos, [cederete]).
+ty_verb(italian, abrogate, future, sg, pos, [abrogherà]).
+ty_verb(italian, abrogate, future, pl, pos, [abrogheranno]).
+ty_verb(italian, abrogate, future, sg(1), pos, [abrogherò]).
+ty_verb(italian, abrogate, future, sg(2), pos, [abrogherai]).
+ty_verb(italian, abrogate, future, pl(1), pos, [abrogheremo]).
+ty_verb(italian, abrogate, future, pl(2), pos, [abrogherete]).
+ty_verb(italian, accede, future, sg, pos, [aderirà]).
+ty_verb(italian, accede, future, pl, pos, [aderiranno]).
+ty_verb(italian, accede, future, sg(1), pos, [aderirò]).
+ty_verb(italian, accede, future, sg(2), pos, [aderirai]).
+ty_verb(italian, accede, future, pl(1), pos, [aderiremo]).
+ty_verb(italian, accede, future, pl(2), pos, [aderirete]).
+ty_verb(italian, accessoriz, future, sg, pos, [accessorierà]).
+ty_verb(italian, accessoriz, future, pl, pos, [accessorieranno]).
+ty_verb(italian, accessoriz, future, sg(1), pos, [accessorierò]).
+ty_verb(italian, accessoriz, future, sg(2), pos, [accessorierai]).
+ty_verb(italian, accessoriz, future, pl(1), pos, [accessorieremo]).
+ty_verb(italian, accessoriz, future, pl(2), pos, [accessorierete]).
+ty_verb(italian, accommodate, future, sg, pos, [agevolerà]).
+ty_verb(italian, accommodate, future, pl, pos, [agevoleranno]).
+ty_verb(italian, accommodate, future, sg(1), pos, [agevolerò]).
+ty_verb(italian, accommodate, future, sg(2), pos, [agevolerai]).
+ty_verb(italian, accommodate, future, pl(1), pos, [agevoleremo]).
+ty_verb(italian, accommodate, future, pl(2), pos, [agevolerete]).
+ty_verb(italian, accomplish, future, sg, pos, [adempirà]).
+ty_verb(italian, accomplish, future, pl, pos, [adempiranno]).
+ty_verb(italian, accomplish, future, sg(1), pos, [adempirò]).
+ty_verb(italian, accomplish, future, sg(2), pos, [adempirai]).
+ty_verb(italian, accomplish, future, pl(1), pos, [adempiremo]).
+ty_verb(italian, accomplish, future, pl(2), pos, [adempirete]).
+ty_verb(italian, accost, future, sg, pos, [adescherà]).
+ty_verb(italian, accost, future, pl, pos, [adescheranno]).
+ty_verb(italian, accost, future, sg(1), pos, [adescherò]).
+ty_verb(italian, accost, future, sg(2), pos, [adescherai]).
+ty_verb(italian, accost, future, pl(1), pos, [adescheremo]).
+ty_verb(italian, accost, future, pl(2), pos, [adescherete]).
+ty_verb(italian, accrete, future, sg, pos, [aggregherà]).
+ty_verb(italian, accrete, future, pl, pos, [aggregheranno]).
+ty_verb(italian, accrete, future, sg(1), pos, [aggregherò]).
+ty_verb(italian, accrete, future, sg(2), pos, [aggregherai]).
+ty_verb(italian, accrete, future, pl(1), pos, [aggregheremo]).
+ty_verb(italian, accrete, future, pl(2), pos, [aggregherete]).
+ty_verb(italian, acidify, future, sg, pos, [acidificherà]).
+ty_verb(italian, acidify, future, pl, pos, [acidificheranno]).
+ty_verb(italian, acidify, future, sg(1), pos, [acidificherò]).
+ty_verb(italian, acidify, future, sg(2), pos, [acidificherai]).
+ty_verb(italian, acidify, future, pl(1), pos, [acidificheremo]).
+ty_verb(italian, acidify, future, pl(2), pos, [acidificherete]).
+ty_verb(italian, acquire, future, sg, pos, [acquisirà]).
+ty_verb(italian, acquire, future, pl, pos, [acquisiranno]).
+ty_verb(italian, acquire, future, sg(1), pos, [acquisirò]).
+ty_verb(italian, acquire, future, sg(2), pos, [acquisirai]).
+ty_verb(italian, acquire, future, pl(1), pos, [acquisiremo]).
+ty_verb(italian, acquire, future, pl(2), pos, [acquisirete]).
+ty_verb(italian, adorn, future, sg, pos, [addobberà]).
+ty_verb(italian, adorn, future, pl, pos, [addobberanno]).
+ty_verb(italian, adorn, future, sg(1), pos, [addobberò]).
+ty_verb(italian, adorn, future, sg(2), pos, [addobberai]).
+ty_verb(italian, adorn, future, pl(1), pos, [addobberemo]).
+ty_verb(italian, adorn, future, pl(2), pos, [addobberete]).
+ty_verb(italian, affix, future, sg, pos, [affiggerà]).
+ty_verb(italian, affix, future, pl, pos, [affiggeranno]).
+ty_verb(italian, affix, future, sg(1), pos, [affiggerò]).
+ty_verb(italian, affix, future, sg(2), pos, [affiggerai]).
+ty_verb(italian, affix, future, pl(1), pos, [affiggeremo]).
+ty_verb(italian, affix, future, pl(2), pos, [affiggerete]).
+ty_verb(italian, affix, future, sg, pos, [apporrà]).
+ty_verb(italian, affix, future, pl, pos, [apporranno]).
+ty_verb(italian, affix, future, sg(1), pos, [apporrò]).
+ty_verb(italian, affix, future, sg(2), pos, [apporrai]).
+ty_verb(italian, affix, future, pl(1), pos, [apporremo]).
+ty_verb(italian, affix, future, pl(2), pos, [apporrete]).
+ty_verb(italian, afflict, future, sg, pos, [addolorerà]).
+ty_verb(italian, afflict, future, pl, pos, [addoloreranno]).
+ty_verb(italian, afflict, future, sg(1), pos, [addolorerò]).
+ty_verb(italian, afflict, future, sg(2), pos, [addolorerai]).
+ty_verb(italian, afflict, future, pl(1), pos, [addoloreremo]).
+ty_verb(italian, afflict, future, pl(2), pos, [addolorerete]).
+ty_verb(italian, agree, future, sg, pos, [acconsentirà]).
+ty_verb(italian, agree, future, pl, pos, [acconsentiranno]).
+ty_verb(italian, agree, future, sg(1), pos, [acconsentirò]).
+ty_verb(italian, agree, future, sg(2), pos, [acconsentirai]).
+ty_verb(italian, agree, future, pl(1), pos, [acconsentiremo]).
+ty_verb(italian, agree, future, pl(2), pos, [acconsentirete]).
+ty_verb(italian, allocate, future, sg, pos, [allocherà]).
+ty_verb(italian, allocate, future, pl, pos, [allocheranno]).
+ty_verb(italian, allocate, future, sg(1), pos, [allocherò]).
+ty_verb(italian, allocate, future, sg(2), pos, [allocherai]).
+ty_verb(italian, allocate, future, pl(1), pos, [allocheremo]).
+ty_verb(italian, allocate, future, pl(2), pos, [allocherete]).
+ty_verb(italian, ally, future, sg, pos, [alleerà]).
+ty_verb(italian, ally, future, pl, pos, [alleeranno]).
+ty_verb(italian, ally, future, sg(1), pos, [alleerò]).
+ty_verb(italian, ally, future, sg(2), pos, [alleerai]).
+ty_verb(italian, ally, future, pl(1), pos, [alleeremo]).
+ty_verb(italian, ally, future, pl(2), pos, [alleerete]).
+ty_verb(italian, altercate, future, sg, pos, [altercherà]).
+ty_verb(italian, altercate, future, pl, pos, [altercheranno]).
+ty_verb(italian, altercate, future, sg(1), pos, [altercherò]).
+ty_verb(italian, altercate, future, sg(2), pos, [altercherai]).
+ty_verb(italian, altercate, future, pl(1), pos, [altercheremo]).
+ty_verb(italian, altercate, future, pl(2), pos, [altercherete]).
+ty_verb(italian, amass, future, sg, pos, [abbarcherà]).
+ty_verb(italian, amass, future, pl, pos, [abbarcheranno]).
+ty_verb(italian, amass, future, sg(1), pos, [abbarcherò]).
+ty_verb(italian, amass, future, sg(2), pos, [abbarcherai]).
+ty_verb(italian, amass, future, pl(1), pos, [abbarcheremo]).
+ty_verb(italian, amass, future, pl(2), pos, [abbarcherete]).
+ty_verb(italian, anger, future, sg, pos, [adirerà]).
+ty_verb(italian, anger, future, pl, pos, [adireranno]).
+ty_verb(italian, anger, future, sg(1), pos, [adirerò]).
+ty_verb(italian, anger, future, sg(2), pos, [adirerai]).
+ty_verb(italian, anger, future, pl(1), pos, [adireremo]).
+ty_verb(italian, anger, future, pl(2), pos, [adirerete]).
+ty_verb(italian, annihilate, future, sg, pos, [annichilerà]).
+ty_verb(italian, annihilate, future, pl, pos, [annichileranno]).
+ty_verb(italian, annihilate, future, sg(1), pos, [annichilerò]).
+ty_verb(italian, annihilate, future, sg(2), pos, [annichilerai]).
+ty_verb(italian, annihilate, future, pl(1), pos, [annichileremo]).
+ty_verb(italian, annihilate, future, pl(2), pos, [annichilerete]).
+ty_verb(italian, appease, future, sg, pos, [abbonirà]).
+ty_verb(italian, appease, future, pl, pos, [abboniranno]).
+ty_verb(italian, appease, future, sg(1), pos, [abbonirò]).
+ty_verb(italian, appease, future, sg(2), pos, [abbonirai]).
+ty_verb(italian, appease, future, pl(1), pos, [abboniremo]).
+ty_verb(italian, appease, future, pl(2), pos, [abbonirete]).
+ty_verb(italian, apply, future, sg, pos, [adopererà]).
+ty_verb(italian, apply, future, pl, pos, [adopereranno]).
+ty_verb(italian, apply, future, sg(1), pos, [adopererò]).
+ty_verb(italian, apply, future, sg(2), pos, [adopererai]).
+ty_verb(italian, apply, future, pl(1), pos, [adopereremo]).
+ty_verb(italian, apply, future, pl(2), pos, [adopererete]).
+ty_verb(italian, approach, future, sg, pos, [accosterà]).
+ty_verb(italian, approach, future, pl, pos, [accosteranno]).
+ty_verb(italian, approach, future, sg(1), pos, [accosterò]).
+ty_verb(italian, approach, future, sg(2), pos, [accosterai]).
+ty_verb(italian, approach, future, pl(1), pos, [accosteremo]).
+ty_verb(italian, approach, future, pl(2), pos, [accosterete]).
+ty_verb(italian, arrange, future, sg, pos, [allogherà]).
+ty_verb(italian, arrange, future, pl, pos, [allogheranno]).
+ty_verb(italian, arrange, future, sg(1), pos, [allogherò]).
+ty_verb(italian, arrange, future, sg(2), pos, [allogherai]).
+ty_verb(italian, arrange, future, pl(1), pos, [allogheremo]).
+ty_verb(italian, arrange, future, pl(2), pos, [allogherete]).
+ty_verb(italian, assent, future, sg, pos, [assentirà]).
+ty_verb(italian, assent, future, pl, pos, [assentiranno]).
+ty_verb(italian, assent, future, sg(1), pos, [assentirò]).
+ty_verb(italian, assent, future, sg(2), pos, [assentirai]).
+ty_verb(italian, assent, future, pl(1), pos, [assentiremo]).
+ty_verb(italian, assent, future, pl(2), pos, [assentirete]).
+ty_verb(italian, assign, future, sg, pos, [affiancherà]).
+ty_verb(italian, assign, future, pl, pos, [affiancheranno]).
+ty_verb(italian, assign, future, sg(1), pos, [affiancherò]).
+ty_verb(italian, assign, future, sg(2), pos, [affiancherai]).
+ty_verb(italian, assign, future, pl(1), pos, [affiancheremo]).
+ty_verb(italian, assign, future, pl(2), pos, [affiancherete]).
+ty_verb(italian, attack, future, sg, pos, [assalirà]).
+ty_verb(italian, attack, future, pl, pos, [assaliranno]).
+ty_verb(italian, attack, future, sg(1), pos, [assalirò]).
+ty_verb(italian, attack, future, sg(2), pos, [assalirai]).
+ty_verb(italian, attack, future, pl(1), pos, [assaliremo]).
+ty_verb(italian, attack, future, pl(2), pos, [assalirete]).
+ty_verb(italian, award, future, sg, pos, [aggiudicherà]).
+ty_verb(italian, award, future, pl, pos, [aggiudicheranno]).
+ty_verb(italian, award, future, sg(1), pos, [aggiudicherò]).
+ty_verb(italian, award, future, sg(2), pos, [aggiudicherai]).
+ty_verb(italian, award, future, pl(1), pos, [aggiudicheremo]).
+ty_verb(italian, award, future, pl(2), pos, [aggiudicherete]).
+ty_verb(italian, barter, future, sg, pos, [accambierà]).
+ty_verb(italian, barter, future, pl, pos, [accambieranno]).
+ty_verb(italian, barter, future, sg(1), pos, [accambierò]).
+ty_verb(italian, barter, future, sg(2), pos, [accambierai]).
+ty_verb(italian, barter, future, pl(1), pos, [accambieremo]).
+ty_verb(italian, barter, future, pl(2), pos, [accambierete]).
+ty_verb(italian, bite, future, sg, pos, [abboccherà]).
+ty_verb(italian, bite, future, pl, pos, [abboccheranno]).
+ty_verb(italian, bite, future, sg(1), pos, [abboccherò]).
+ty_verb(italian, bite, future, sg(2), pos, [abboccherai]).
+ty_verb(italian, bite, future, pl(1), pos, [abboccheremo]).
+ty_verb(italian, bite, future, pl(2), pos, [abboccherete]).
+ty_verb(italian, blacken, future, sg, pos, [affumicherà]).
+ty_verb(italian, blacken, future, pl, pos, [affumicheranno]).
+ty_verb(italian, blacken, future, sg(1), pos, [affumicherò]).
+ty_verb(italian, blacken, future, sg(2), pos, [affumicherai]).
+ty_verb(italian, blacken, future, pl(1), pos, [affumicheremo]).
+ty_verb(italian, blacken, future, pl(2), pos, [affumicherete]).
+ty_verb(italian, blind, future, sg, pos, [acciecherà]).
+ty_verb(italian, blind, future, pl, pos, [acciecheranno]).
+ty_verb(italian, blind, future, sg(1), pos, [acciecherò]).
+ty_verb(italian, blind, future, sg(2), pos, [acciecherai]).
+ty_verb(italian, blind, future, pl(1), pos, [acciecheremo]).
+ty_verb(italian, blind, future, pl(2), pos, [acciecherete]).
+ty_verb(italian, break, future, sg, pos, [albeggerà]).
+ty_verb(italian, break, future, pl, pos, [albeggeranno]).
+ty_verb(italian, break, future, sg(1), pos, [albeggerò]).
+ty_verb(italian, break, future, sg(2), pos, [albeggerai]).
+ty_verb(italian, break, future, pl(1), pos, [albeggeremo]).
+ty_verb(italian, break, future, pl(2), pos, [albeggerete]).
+ty_verb(italian, breed, future, sg, pos, [alleverà]).
+ty_verb(italian, breed, future, pl, pos, [alleveranno]).
+ty_verb(italian, breed, future, sg(1), pos, [alleverò]).
+ty_verb(italian, breed, future, sg(2), pos, [alleverai]).
+ty_verb(italian, breed, future, pl(1), pos, [alleveremo]).
+ty_verb(italian, breed, future, pl(2), pos, [alleverete]).
+ty_verb(italian, bungle, future, sg, pos, [abborraccerà]).
+ty_verb(italian, bungle, future, pl, pos, [abborracceranno]).
+ty_verb(italian, bungle, future, sg(1), pos, [abborraccerò]).
+ty_verb(italian, bungle, future, sg(2), pos, [abborraccerai]).
+ty_verb(italian, bungle, future, pl(1), pos, [abborracceremo]).
+ty_verb(italian, bungle, future, pl(2), pos, [abborraccerete]).
+ty_verb(italian, burn, future, sg, pos, [affocherà]).
+ty_verb(italian, burn, future, pl, pos, [affocheranno]).
+ty_verb(italian, burn, future, sg(1), pos, [affocherò]).
+ty_verb(italian, burn, future, sg(2), pos, [affocherai]).
+ty_verb(italian, burn, future, pl(1), pos, [affocheremo]).
+ty_verb(italian, burn, future, pl(2), pos, [affocherete]).
+ty_verb(italian, calculate, future, sg, pos, [abbacherà]).
+ty_verb(italian, calculate, future, pl, pos, [abbacheranno]).
+ty_verb(italian, calculate, future, sg(1), pos, [abbacherò]).
+ty_verb(italian, calculate, future, sg(2), pos, [abbacherai]).
+ty_verb(italian, calculate, future, pl(1), pos, [abbacheremo]).
+ty_verb(italian, calculate, future, pl(2), pos, [abbacherete]).
+ty_verb(italian, call, future, sg, pos, [appellerà]).
+ty_verb(italian, call, future, pl, pos, [appelleranno]).
+ty_verb(italian, call, future, sg(1), pos, [appellerò]).
+ty_verb(italian, call, future, sg(2), pos, [appellerai]).
+ty_verb(italian, call, future, pl(1), pos, [appelleremo]).
+ty_verb(italian, call, future, pl(2), pos, [appellerete]).
+ty_verb(italian, calm, future, sg, pos, [abbonaccerà]).
+ty_verb(italian, calm, future, pl, pos, [abbonacceranno]).
+ty_verb(italian, calm, future, sg(1), pos, [abbonaccerò]).
+ty_verb(italian, calm, future, sg(2), pos, [abbonaccerai]).
+ty_verb(italian, calm, future, pl(1), pos, [abbonacceremo]).
+ty_verb(italian, calm, future, pl(2), pos, [abbonaccerete]).
+ty_verb(italian, calm, future, sg, pos, [acquieterà]).
+ty_verb(italian, calm, future, pl, pos, [acquieteranno]).
+ty_verb(italian, calm, future, sg(1), pos, [acquieterò]).
+ty_verb(italian, calm, future, sg(2), pos, [acquieterai]).
+ty_verb(italian, calm, future, pl(1), pos, [acquieteremo]).
+ty_verb(italian, calm, future, pl(2), pos, [acquieterete]).
+ty_verb(italian, centraliz, future, sg, pos, [accentrerà]).
+ty_verb(italian, centraliz, future, pl, pos, [accentreranno]).
+ty_verb(italian, centraliz, future, sg(1), pos, [accentrerò]).
+ty_verb(italian, centraliz, future, sg(2), pos, [accentrerai]).
+ty_verb(italian, centraliz, future, pl(1), pos, [accentreremo]).
+ty_verb(italian, centraliz, future, pl(2), pos, [accentrerete]).
+ty_verb(italian, circumvent, future, sg, pos, [aggirerà]).
+ty_verb(italian, circumvent, future, pl, pos, [aggireranno]).
+ty_verb(italian, circumvent, future, sg(1), pos, [aggirerò]).
+ty_verb(italian, circumvent, future, sg(2), pos, [aggirerai]).
+ty_verb(italian, circumvent, future, pl(1), pos, [aggireremo]).
+ty_verb(italian, circumvent, future, pl(2), pos, [aggirerete]).
+ty_verb(italian, climb, future, sg, pos, [arrampicherà]).
+ty_verb(italian, climb, future, pl, pos, [arrampicheranno]).
+ty_verb(italian, climb, future, sg(1), pos, [arrampicherò]).
+ty_verb(italian, climb, future, sg(2), pos, [arrampicherai]).
+ty_verb(italian, climb, future, pl(1), pos, [arrampicheremo]).
+ty_verb(italian, climb, future, pl(2), pos, [arrampicherete]).
+ty_verb(italian, collect, future, sg, pos, [abbicherà]).
+ty_verb(italian, collect, future, pl, pos, [abbicheranno]).
+ty_verb(italian, collect, future, sg(1), pos, [abbicherò]).
+ty_verb(italian, collect, future, sg(2), pos, [abbicherai]).
+ty_verb(italian, collect, future, pl(1), pos, [abbicheremo]).
+ty_verb(italian, collect, future, pl(2), pos, [abbicherete]).
+ty_verb(italian, combine, future, sg, pos, [assommerà]).
+ty_verb(italian, combine, future, pl, pos, [assommeranno]).
+ty_verb(italian, combine, future, sg(1), pos, [assommerò]).
+ty_verb(italian, combine, future, sg(2), pos, [assommerai]).
+ty_verb(italian, combine, future, pl(1), pos, [assommeremo]).
+ty_verb(italian, combine, future, pl(2), pos, [assommerete]).
+ty_verb(italian, concoct, future, sg, pos, [almanaccherà]).
+ty_verb(italian, concoct, future, pl, pos, [almanaccheranno]).
+ty_verb(italian, concoct, future, sg(1), pos, [almanaccherò]).
+ty_verb(italian, concoct, future, sg(2), pos, [almanaccherai]).
+ty_verb(italian, concoct, future, pl(1), pos, [almanaccheremo]).
+ty_verb(italian, concoct, future, pl(2), pos, [almanaccherete]).
+ty_verb(italian, contract, future, sg, pos, [appalterà]).
+ty_verb(italian, contract, future, pl, pos, [appalteranno]).
+ty_verb(italian, contract, future, sg(1), pos, [appalterò]).
+ty_verb(italian, contract, future, sg(2), pos, [appalterai]).
+ty_verb(italian, contract, future, pl(1), pos, [appalteremo]).
+ty_verb(italian, contract, future, pl(2), pos, [appalterete]).
+ty_verb(italian, couple, future, sg, pos, [aggancierà]).
+ty_verb(italian, couple, future, pl, pos, [aggancieranno]).
+ty_verb(italian, couple, future, sg(1), pos, [aggancierò]).
+ty_verb(italian, couple, future, sg(2), pos, [aggancierai]).
+ty_verb(italian, couple, future, pl(1), pos, [aggancieremo]).
+ty_verb(italian, couple, future, pl(2), pos, [aggancierete]).
+ty_verb(italian, covet, future, sg, pos, [agognerà]).
+ty_verb(italian, covet, future, pl, pos, [agogneranno]).
+ty_verb(italian, covet, future, sg(1), pos, [agognerò]).
+ty_verb(italian, covet, future, sg(2), pos, [agognerai]).
+ty_verb(italian, covet, future, pl(1), pos, [agogneremo]).
+ty_verb(italian, covet, future, pl(2), pos, [agognerete]).
+ty_verb(italian, cram, future, sg, pos, [accalcherà]).
+ty_verb(italian, cram, future, pl, pos, [accalcheranno]).
+ty_verb(italian, cram, future, sg(1), pos, [accalcherò]).
+ty_verb(italian, cram, future, sg(2), pos, [accalcherai]).
+ty_verb(italian, cram, future, pl(1), pos, [accalcheremo]).
+ty_verb(italian, cram, future, pl(2), pos, [accalcherete]).
+ty_verb(italian, crowd, future, sg, pos, [affollerà]).
+ty_verb(italian, crowd, future, pl, pos, [affolleranno]).
+ty_verb(italian, crowd, future, sg(1), pos, [affollerò]).
+ty_verb(italian, crowd, future, sg(2), pos, [affollerai]).
+ty_verb(italian, crowd, future, pl(1), pos, [affolleremo]).
+ty_verb(italian, crowd, future, pl(2), pos, [affollerete]).
+ty_verb(italian, crush, future, sg, pos, [acciaccherà]).
+ty_verb(italian, crush, future, pl, pos, [acciaccheranno]).
+ty_verb(italian, crush, future, sg(1), pos, [acciaccherò]).
+ty_verb(italian, crush, future, sg(2), pos, [acciaccherai]).
+ty_verb(italian, crush, future, pl(1), pos, [acciaccheremo]).
+ty_verb(italian, crush, future, pl(2), pos, [acciaccherete]).
+ty_verb(italian, curl, future, sg, pos, [aggriccerà]).
+ty_verb(italian, curl, future, pl, pos, [aggricceranno]).
+ty_verb(italian, curl, future, sg(1), pos, [aggriccerò]).
+ty_verb(italian, curl, future, sg(2), pos, [aggriccerai]).
+ty_verb(italian, curl, future, pl(1), pos, [aggricceremo]).
+ty_verb(italian, curl, future, pl(2), pos, [aggriccerete]).
+ty_verb(italian, curl, future, sg, pos, [arriccerà]).
+ty_verb(italian, curl, future, pl, pos, [arricceranno]).
+ty_verb(italian, curl, future, sg(1), pos, [arriccerò]).
+ty_verb(italian, curl, future, sg(2), pos, [arriccerai]).
+ty_verb(italian, curl, future, pl(1), pos, [arricceremo]).
+ty_verb(italian, curl, future, pl(2), pos, [arriccerete]).
+ty_verb(italian, dampen, future, sg, pos, [aspergerà]).
+ty_verb(italian, dampen, future, pl, pos, [aspergeranno]).
+ty_verb(italian, dampen, future, sg(1), pos, [aspergerò]).
+ty_verb(italian, dampen, future, sg(2), pos, [aspergerai]).
+ty_verb(italian, dampen, future, pl(1), pos, [aspergeremo]).
+ty_verb(italian, dampen, future, pl(2), pos, [aspergerete]).
+ty_verb(italian, deal, future, sg, pos, [abbriccherà]).
+ty_verb(italian, deal, future, pl, pos, [abbriccheranno]).
+ty_verb(italian, deal, future, sg(1), pos, [abbriccherò]).
+ty_verb(italian, deal, future, sg(2), pos, [abbriccherai]).
+ty_verb(italian, deal, future, pl(1), pos, [abbriccheremo]).
+ty_verb(italian, deal, future, pl(2), pos, [abbriccherete]).
+ty_verb(italian, deduct, future, sg, pos, [abbonerà]).
+ty_verb(italian, deduct, future, pl, pos, [abboneranno]).
+ty_verb(italian, deduct, future, sg(1), pos, [abbonerò]).
+ty_verb(italian, deduct, future, sg(2), pos, [abbonerai]).
+ty_verb(italian, deduct, future, pl(1), pos, [abboneremo]).
+ty_verb(italian, deduct, future, pl(2), pos, [abbonerete]).
+ty_verb(italian, dishearten, future, sg, pos, [abbacchierà]).
+ty_verb(italian, dishearten, future, pl, pos, [abbacchieranno]).
+ty_verb(italian, dishearten, future, sg(1), pos, [abbacchierò]).
+ty_verb(italian, dishearten, future, sg(2), pos, [abbacchierai]).
+ty_verb(italian, dishearten, future, pl(1), pos, [abbacchieremo]).
+ty_verb(italian, dishearten, future, pl(2), pos, [abbacchierete]).
+ty_verb(italian, dismiss, future, sg, pos, [accomiaterà]).
+ty_verb(italian, dismiss, future, pl, pos, [accomiateranno]).
+ty_verb(italian, dismiss, future, sg(1), pos, [accomiaterò]).
+ty_verb(italian, dismiss, future, sg(2), pos, [accomiaterai]).
+ty_verb(italian, dismiss, future, pl(1), pos, [accomiateremo]).
+ty_verb(italian, dismiss, future, pl(2), pos, [accomiaterete]).
+ty_verb(italian, domesticate, future, sg, pos, [addomesticherà]).
+ty_verb(italian, domesticate, future, pl, pos, [addomesticheranno]).
+ty_verb(italian, domesticate, future, sg(1), pos, [addomesticherò]).
+ty_verb(italian, domesticate, future, sg(2), pos, [addomesticherai]).
+ty_verb(italian, domesticate, future, pl(1), pos, [addomesticheremo]).
+ty_verb(italian, domesticate, future, pl(2), pos, [addomesticherete]).
+ty_verb(italian, drown, future, sg, pos, [affogherà]).
+ty_verb(italian, drown, future, pl, pos, [affogheranno]).
+ty_verb(italian, drown, future, sg(1), pos, [affogherò]).
+ty_verb(italian, drown, future, sg(2), pos, [affogherai]).
+ty_verb(italian, drown, future, pl(1), pos, [affogheremo]).
+ty_verb(italian, drown, future, pl(2), pos, [affogherete]).
+ty_verb(italian, elongate, future, sg, pos, [allungherà]).
+ty_verb(italian, elongate, future, pl, pos, [allungheranno]).
+ty_verb(italian, elongate, future, sg(1), pos, [allungherò]).
+ty_verb(italian, elongate, future, sg(2), pos, [allungherai]).
+ty_verb(italian, elongate, future, pl(1), pos, [allungheremo]).
+ty_verb(italian, elongate, future, pl(2), pos, [allungherete]).
+ty_verb(italian, embank, future, sg, pos, [arginerà]).
+ty_verb(italian, embank, future, pl, pos, [argineranno]).
+ty_verb(italian, embank, future, sg(1), pos, [arginerò]).
+ty_verb(italian, embank, future, sg(2), pos, [arginerai]).
+ty_verb(italian, embank, future, pl(1), pos, [argineremo]).
+ty_verb(italian, embank, future, pl(2), pos, [arginerete]).
+ty_verb(italian, embellish, future, sg, pos, [abbellirà]).
+ty_verb(italian, embellish, future, pl, pos, [abbelliranno]).
+ty_verb(italian, embellish, future, sg(1), pos, [abbellirò]).
+ty_verb(italian, embellish, future, sg(2), pos, [abbellirai]).
+ty_verb(italian, embellish, future, pl(1), pos, [abbelliremo]).
+ty_verb(italian, embellish, future, pl(2), pos, [abbellirete]).
+ty_verb(italian, embitter, future, sg, pos, [amareggerà]).
+ty_verb(italian, embitter, future, pl, pos, [amareggeranno]).
+ty_verb(italian, embitter, future, sg(1), pos, [amareggerò]).
+ty_verb(italian, embitter, future, sg(2), pos, [amareggerai]).
+ty_verb(italian, embitter, future, pl(1), pos, [amareggeremo]).
+ty_verb(italian, embitter, future, pl(2), pos, [amareggerete]).
+ty_verb(italian, enclose, future, sg, pos, [allegherà]).
+ty_verb(italian, enclose, future, pl, pos, [allegheranno]).
+ty_verb(italian, enclose, future, sg(1), pos, [allegherò]).
+ty_verb(italian, enclose, future, sg(2), pos, [allegherai]).
+ty_verb(italian, enclose, future, pl(1), pos, [allegheremo]).
+ty_verb(italian, enclose, future, pl(2), pos, [allegherete]).
+ty_verb(italian, enfranchise, future, sg, pos, [affrancherà]).
+ty_verb(italian, enfranchise, future, pl, pos, [affrancheranno]).
+ty_verb(italian, enfranchise, future, sg(1), pos, [affrancherò]).
+ty_verb(italian, enfranchise, future, sg(2), pos, [affrancherai]).
+ty_verb(italian, enfranchise, future, pl(1), pos, [affrancheremo]).
+ty_verb(italian, enfranchise, future, pl(2), pos, [affrancherete]).
+ty_verb(italian, exhaust, future, sg, pos, [abbioccherà]).
+ty_verb(italian, exhaust, future, pl, pos, [abbioccheranno]).
+ty_verb(italian, exhaust, future, sg(1), pos, [abbioccherò]).
+ty_verb(italian, exhaust, future, sg(2), pos, [abbioccherai]).
+ty_verb(italian, exhaust, future, pl(1), pos, [abbioccheremo]).
+ty_verb(italian, exhaust, future, pl(2), pos, [abbioccherete]).
+ty_verb(italian, exhaust, future, sg, pos, [abbrutirà]).
+ty_verb(italian, exhaust, future, pl, pos, [abbrutiranno]).
+ty_verb(italian, exhaust, future, sg(1), pos, [abbrutirò]).
+ty_verb(italian, exhaust, future, sg(2), pos, [abbrutirai]).
+ty_verb(italian, exhaust, future, pl(1), pos, [abbrutiremo]).
+ty_verb(italian, exhaust, future, pl(2), pos, [abbrutirete]).
+ty_verb(italian, flow, future, sg, pos, [affluirà]).
+ty_verb(italian, flow, future, pl, pos, [affluiranno]).
+ty_verb(italian, flow, future, sg(1), pos, [affluirò]).
+ty_verb(italian, flow, future, sg(2), pos, [affluirai]).
+ty_verb(italian, flow, future, pl(1), pos, [affluiremo]).
+ty_verb(italian, flow, future, pl(2), pos, [affluirete]).
+ty_verb(italian, freez, future, sg, pos, [agghiaccerà]).
+ty_verb(italian, freez, future, pl, pos, [agghiacceranno]).
+ty_verb(italian, freez, future, sg(1), pos, [agghiaccerò]).
+ty_verb(italian, freez, future, sg(2), pos, [agghiaccerai]).
+ty_verb(italian, freez, future, pl(1), pos, [agghiacceremo]).
+ty_verb(italian, freez, future, pl(2), pos, [agghiaccerete]).
+ty_verb(italian, fresco, future, sg, pos, [affrescherà]).
+ty_verb(italian, fresco, future, pl, pos, [affrescheranno]).
+ty_verb(italian, fresco, future, sg(1), pos, [affrescherò]).
+ty_verb(italian, fresco, future, sg(2), pos, [affrescherai]).
+ty_verb(italian, fresco, future, pl(1), pos, [affrescheremo]).
+ty_verb(italian, fresco, future, pl(2), pos, [affrescherete]).
+ty_verb(italian, gather, future, sg, pos, [adunerà]).
+ty_verb(italian, gather, future, pl, pos, [aduneranno]).
+ty_verb(italian, gather, future, sg(1), pos, [adunerò]).
+ty_verb(italian, gather, future, sg(2), pos, [adunerai]).
+ty_verb(italian, gather, future, pl(1), pos, [aduneremo]).
+ty_verb(italian, gather, future, pl(2), pos, [adunerete]).
+ty_verb(italian, grasp, future, sg, pos, [abbrancherà]).
+ty_verb(italian, grasp, future, pl, pos, [abbrancheranno]).
+ty_verb(italian, grasp, future, sg(1), pos, [abbrancherò]).
+ty_verb(italian, grasp, future, sg(2), pos, [abbrancherai]).
+ty_verb(italian, grasp, future, pl(1), pos, [abbrancheremo]).
+ty_verb(italian, grasp, future, pl(2), pos, [abbrancherete]).
+ty_verb(italian, grip, future, sg, pos, [appassionerà]).
+ty_verb(italian, grip, future, pl, pos, [appassioneranno]).
+ty_verb(italian, grip, future, sg(1), pos, [appassionerò]).
+ty_verb(italian, grip, future, sg(2), pos, [appassionerai]).
+ty_verb(italian, grip, future, pl(1), pos, [appassioneremo]).
+ty_verb(italian, grip, future, pl(2), pos, [appassionerete]).
+ty_verb(italian, guide, future, sg, pos, [ammaestrerà]).
+ty_verb(italian, guide, future, pl, pos, [ammaestreranno]).
+ty_verb(italian, guide, future, sg(1), pos, [ammaestrerò]).
+ty_verb(italian, guide, future, sg(2), pos, [ammaestrerai]).
+ty_verb(italian, guide, future, pl(1), pos, [ammaestreremo]).
+ty_verb(italian, guide, future, pl(2), pos, [ammaestrerete]).
+ty_verb(italian, hang, future, sg, pos, [appenderà]).
+ty_verb(italian, hang, future, pl, pos, [appenderanno]).
+ty_verb(italian, hang, future, sg(1), pos, [appenderò]).
+ty_verb(italian, hang, future, sg(2), pos, [appenderai]).
+ty_verb(italian, hang, future, pl(1), pos, [appenderemo]).
+ty_verb(italian, hang, future, pl(2), pos, [appenderete]).
+ty_verb(italian, happen, future, sg, pos, [addiverrà]).
+ty_verb(italian, happen, future, pl, pos, [addiverranno]).
+ty_verb(italian, happen, future, sg(1), pos, [addiverrò]).
+ty_verb(italian, happen, future, sg(2), pos, [addiverrai]).
+ty_verb(italian, happen, future, pl(1), pos, [addiverremo]).
+ty_verb(italian, happen, future, pl(2), pos, [addiverrete]).
+ty_verb(italian, increase, future, sg, pos, [accrescerà]).
+ty_verb(italian, increase, future, pl, pos, [accresceranno]).
+ty_verb(italian, increase, future, sg(1), pos, [accrescerò]).
+ty_verb(italian, increase, future, sg(2), pos, [accrescerai]).
+ty_verb(italian, increase, future, pl(1), pos, [accresceremo]).
+ty_verb(italian, increase, future, pl(2), pos, [accrescerete]).
+ty_verb(italian, infer, future, sg, pos, [argomenterà]).
+ty_verb(italian, infer, future, pl, pos, [argomenteranno]).
+ty_verb(italian, infer, future, sg(1), pos, [argomenterò]).
+ty_verb(italian, infer, future, sg(2), pos, [argomenterai]).
+ty_verb(italian, infer, future, pl(1), pos, [argomenteremo]).
+ty_verb(italian, infer, future, pl(2), pos, [argomenterete]).
+ty_verb(italian, kill, future, sg, pos, [accidrà]).
+ty_verb(italian, kill, future, pl, pos, [accidranno]).
+ty_verb(italian, kill, future, sg(1), pos, [accidrò]).
+ty_verb(italian, kill, future, sg(2), pos, [accidrai]).
+ty_verb(italian, kill, future, pl(1), pos, [accidremo]).
+ty_verb(italian, kill, future, pl(2), pos, [accidrete]).
+ty_verb(italian, kill, future, sg, pos, [ammazzerà]).
+ty_verb(italian, kill, future, pl, pos, [ammazzeranno]).
+ty_verb(italian, kill, future, sg(1), pos, [ammazzerò]).
+ty_verb(italian, kill, future, sg(2), pos, [ammazzerai]).
+ty_verb(italian, kill, future, pl(1), pos, [ammazzeremo]).
+ty_verb(italian, kill, future, pl(2), pos, [ammazzerete]).
+ty_verb(italian, lighten, future, sg, pos, [alleggerirà]).
+ty_verb(italian, lighten, future, pl, pos, [alleggeriranno]).
+ty_verb(italian, lighten, future, sg(1), pos, [alleggerirò]).
+ty_verb(italian, lighten, future, sg(2), pos, [alleggerirai]).
+ty_verb(italian, lighten, future, pl(1), pos, [alleggeriremo]).
+ty_verb(italian, lighten, future, pl(2), pos, [alleggerirete]).
+ty_verb(italian, limp, future, sg, pos, [arrancherà]).
+ty_verb(italian, limp, future, pl, pos, [arrancheranno]).
+ty_verb(italian, limp, future, sg(1), pos, [arrancherò]).
+ty_verb(italian, limp, future, sg(2), pos, [arrancherai]).
+ty_verb(italian, limp, future, pl(1), pos, [arrancheremo]).
+ty_verb(italian, limp, future, pl(2), pos, [arrancherete]).
+ty_verb(italian, marry, future, sg, pos, [accaserà]).
+ty_verb(italian, marry, future, pl, pos, [accaseranno]).
+ty_verb(italian, marry, future, sg(1), pos, [accaserò]).
+ty_verb(italian, marry, future, sg(2), pos, [accaserai]).
+ty_verb(italian, marry, future, pl(1), pos, [accaseremo]).
+ty_verb(italian, marry, future, pl(2), pos, [accaserete]).
+ty_verb(italian, match, future, sg, pos, [abbinerà]).
+ty_verb(italian, match, future, pl, pos, [abbineranno]).
+ty_verb(italian, match, future, sg(1), pos, [abbinerò]).
+ty_verb(italian, match, future, sg(2), pos, [abbinerai]).
+ty_verb(italian, match, future, pl(1), pos, [abbineremo]).
+ty_verb(italian, match, future, pl(2), pos, [abbinerete]).
+ty_verb(italian, mention, future, sg, pos, [accennerà]).
+ty_verb(italian, mention, future, pl, pos, [accenneranno]).
+ty_verb(italian, mention, future, sg(1), pos, [accennerò]).
+ty_verb(italian, mention, future, sg(2), pos, [accennerai]).
+ty_verb(italian, mention, future, pl(1), pos, [accenneremo]).
+ty_verb(italian, mention, future, pl(2), pos, [accennerete]).
+ty_verb(italian, moderniz, future, sg, pos, [ammodernerà]).
+ty_verb(italian, moderniz, future, pl, pos, [ammoderneranno]).
+ty_verb(italian, moderniz, future, sg(1), pos, [ammodernerò]).
+ty_verb(italian, moderniz, future, sg(2), pos, [ammodernerai]).
+ty_verb(italian, moderniz, future, pl(1), pos, [ammoderneremo]).
+ty_verb(italian, moderniz, future, pl(2), pos, [ammodernerete]).
+ty_verb(italian, mold, future, sg, pos, [ammuffirà]).
+ty_verb(italian, mold, future, pl, pos, [ammuffiranno]).
+ty_verb(italian, mold, future, sg(1), pos, [ammuffirò]).
+ty_verb(italian, mold, future, sg(2), pos, [ammuffirai]).
+ty_verb(italian, mold, future, pl(1), pos, [ammuffiremo]).
+ty_verb(italian, mold, future, pl(2), pos, [ammuffirete]).
+ty_verb(italian, nest, future, sg, pos, [anniderà]).
+ty_verb(italian, nest, future, pl, pos, [annideranno]).
+ty_verb(italian, nest, future, sg(1), pos, [anniderò]).
+ty_verb(italian, nest, future, sg(2), pos, [anniderai]).
+ty_verb(italian, nest, future, pl(1), pos, [annideremo]).
+ty_verb(italian, nest, future, pl(2), pos, [anniderete]).
+ty_verb(italian, nock, future, sg, pos, [accoccherà]).
+ty_verb(italian, nock, future, pl, pos, [accoccheranno]).
+ty_verb(italian, nock, future, sg(1), pos, [accoccherò]).
+ty_verb(italian, nock, future, sg(2), pos, [accoccherai]).
+ty_verb(italian, nock, future, pl(1), pos, [accoccheremo]).
+ty_verb(italian, nock, future, pl(2), pos, [accoccherete]).
+ty_verb(italian, nurse, future, sg, pos, [allatterà]).
+ty_verb(italian, nurse, future, pl, pos, [allatteranno]).
+ty_verb(italian, nurse, future, sg(1), pos, [allatterò]).
+ty_verb(italian, nurse, future, sg(2), pos, [allatterai]).
+ty_verb(italian, nurse, future, pl(1), pos, [allatteremo]).
+ty_verb(italian, nurse, future, pl(2), pos, [allatterete]).
+ty_verb(italian, overcome, future, sg, pos, [accavalcherà]).
+ty_verb(italian, overcome, future, pl, pos, [accavalcheranno]).
+ty_verb(italian, overcome, future, sg(1), pos, [accavalcherò]).
+ty_verb(italian, overcome, future, sg(2), pos, [accavalcherai]).
+ty_verb(italian, overcome, future, pl(1), pos, [accavalcheremo]).
+ty_verb(italian, overcome, future, pl(2), pos, [accavalcherete]).
+ty_verb(italian, overlap, future, sg, pos, [accavallerà]).
+ty_verb(italian, overlap, future, pl, pos, [accavalleranno]).
+ty_verb(italian, overlap, future, sg(1), pos, [accavallerò]).
+ty_verb(italian, overlap, future, sg(2), pos, [accavallerai]).
+ty_verb(italian, overlap, future, pl(1), pos, [accavalleremo]).
+ty_verb(italian, overlap, future, pl(2), pos, [accavallerete]).
+ty_verb(italian, overshadow, future, sg, pos, [aduggerà]).
+ty_verb(italian, overshadow, future, pl, pos, [aduggeranno]).
+ty_verb(italian, overshadow, future, sg(1), pos, [aduggerò]).
+ty_verb(italian, overshadow, future, sg(2), pos, [aduggerai]).
+ty_verb(italian, overshadow, future, pl(1), pos, [aduggeremo]).
+ty_verb(italian, overshadow, future, pl(2), pos, [aduggerete]).
+ty_verb(italian, penetrate, future, sg, pos, [addentrerà]).
+ty_verb(italian, penetrate, future, pl, pos, [addentreranno]).
+ty_verb(italian, penetrate, future, sg(1), pos, [addentrerò]).
+ty_verb(italian, penetrate, future, sg(2), pos, [addentrerai]).
+ty_verb(italian, penetrate, future, pl(1), pos, [addentreremo]).
+ty_verb(italian, penetrate, future, pl(2), pos, [addentrerete]).
+ty_verb(italian, philander, future, sg, pos, [amoreggerà]).
+ty_verb(italian, philander, future, pl, pos, [amoreggeranno]).
+ty_verb(italian, philander, future, sg(1), pos, [amoreggerò]).
+ty_verb(italian, philander, future, sg(2), pos, [amoreggerai]).
+ty_verb(italian, philander, future, pl(1), pos, [amoreggeremo]).
+ty_verb(italian, philander, future, pl(2), pos, [amoreggerete]).
+ty_verb(italian, piece, future, sg, pos, [aggiusterà]).
+ty_verb(italian, piece, future, pl, pos, [aggiusteranno]).
+ty_verb(italian, piece, future, sg(1), pos, [aggiusterò]).
+ty_verb(italian, piece, future, sg(2), pos, [aggiusterai]).
+ty_verb(italian, piece, future, pl(1), pos, [aggiusteremo]).
+ty_verb(italian, piece, future, pl(2), pos, [aggiusterete]).
+ty_verb(italian, precede, future, sg, pos, [antiverrà]).
+ty_verb(italian, precede, future, pl, pos, [antiverranno]).
+ty_verb(italian, precede, future, sg(1), pos, [antiverrò]).
+ty_verb(italian, precede, future, sg(2), pos, [antiverrai]).
+ty_verb(italian, precede, future, pl(1), pos, [antiverremo]).
+ty_verb(italian, precede, future, pl(2), pos, [antiverrete]).
+ty_verb(italian, prepare, future, sg, pos, [ammannirà]).
+ty_verb(italian, prepare, future, pl, pos, [ammanniranno]).
+ty_verb(italian, prepare, future, sg(1), pos, [ammannirò]).
+ty_verb(italian, prepare, future, sg(2), pos, [ammannirai]).
+ty_verb(italian, prepare, future, pl(1), pos, [ammanniremo]).
+ty_verb(italian, prepare, future, pl(2), pos, [ammannirete]).
+ty_verb(italian, prepare, future, sg, pos, [appronterà]).
+ty_verb(italian, prepare, future, pl, pos, [appronteranno]).
+ty_verb(italian, prepare, future, sg(1), pos, [appronterò]).
+ty_verb(italian, prepare, future, sg(2), pos, [appronterai]).
+ty_verb(italian, prepare, future, pl(1), pos, [appronteremo]).
+ty_verb(italian, prepare, future, pl(2), pos, [appronterete]).
+ty_verb(italian, prevent, future, sg, pos, [anteporrà]).
+ty_verb(italian, prevent, future, pl, pos, [anteporranno]).
+ty_verb(italian, prevent, future, sg(1), pos, [anteporrò]).
+ty_verb(italian, prevent, future, sg(2), pos, [anteporrai]).
+ty_verb(italian, prevent, future, pl(1), pos, [anteporremo]).
+ty_verb(italian, prevent, future, pl(2), pos, [anteporrete]).
+ty_verb(italian, qualify, future, sg, pos, [abiliterà]).
+ty_verb(italian, qualify, future, pl, pos, [abiliteranno]).
+ty_verb(italian, qualify, future, sg(1), pos, [abiliterò]).
+ty_verb(italian, qualify, future, sg(2), pos, [abiliterai]).
+ty_verb(italian, qualify, future, pl(1), pos, [abiliteremo]).
+ty_verb(italian, qualify, future, pl(2), pos, [abiliterete]).
+ty_verb(italian, rasp, future, sg, pos, [abraderà]).
+ty_verb(italian, rasp, future, pl, pos, [abraderanno]).
+ty_verb(italian, rasp, future, sg(1), pos, [abraderò]).
+ty_verb(italian, rasp, future, sg(2), pos, [abraderai]).
+ty_verb(italian, rasp, future, pl(1), pos, [abraderemo]).
+ty_verb(italian, rasp, future, pl(2), pos, [abraderete]).
+ty_verb(italian, refine, future, sg, pos, [affinerà]).
+ty_verb(italian, refine, future, pl, pos, [affineranno]).
+ty_verb(italian, refine, future, sg(1), pos, [affinerò]).
+ty_verb(italian, refine, future, sg(2), pos, [affinerai]).
+ty_verb(italian, refine, future, pl(1), pos, [affineremo]).
+ty_verb(italian, refine, future, pl(2), pos, [affinerete]).
+ty_verb(italian, remove, future, sg, pos, [allontanerà]).
+ty_verb(italian, remove, future, pl, pos, [allontaneranno]).
+ty_verb(italian, remove, future, sg(1), pos, [allontanerò]).
+ty_verb(italian, remove, future, sg(2), pos, [allontanerai]).
+ty_verb(italian, remove, future, pl(1), pos, [allontaneremo]).
+ty_verb(italian, remove, future, pl(2), pos, [allontanerete]).
+ty_verb(italian, resemble, future, sg, pos, [assomiglierà]).
+ty_verb(italian, resemble, future, pl, pos, [assomiglieranno]).
+ty_verb(italian, resemble, future, sg(1), pos, [assomiglierò]).
+ty_verb(italian, resemble, future, sg(2), pos, [assomiglierai]).
+ty_verb(italian, resemble, future, pl(1), pos, [assomiglieremo]).
+ty_verb(italian, resemble, future, pl(2), pos, [assomiglierete]).
+ty_verb(italian, roast, future, sg, pos, [arrostirà]).
+ty_verb(italian, roast, future, pl, pos, [arrostiranno]).
+ty_verb(italian, roast, future, sg(1), pos, [arrostirò]).
+ty_verb(italian, roast, future, sg(2), pos, [arrostirai]).
+ty_verb(italian, roast, future, pl(1), pos, [arrostiremo]).
+ty_verb(italian, roast, future, pl(2), pos, [arrostirete]).
+ty_verb(italian, satisfy, future, sg, pos, [accontenterà]).
+ty_verb(italian, satisfy, future, pl, pos, [accontenteranno]).
+ty_verb(italian, satisfy, future, sg(1), pos, [accontenterò]).
+ty_verb(italian, satisfy, future, sg(2), pos, [accontenterai]).
+ty_verb(italian, satisfy, future, pl(1), pos, [accontenteremo]).
+ty_verb(italian, satisfy, future, pl(2), pos, [accontenterete]).
+ty_verb(italian, scheme, future, sg, pos, [armeggerà]).
+ty_verb(italian, scheme, future, pl, pos, [armeggeranno]).
+ty_verb(italian, scheme, future, sg(1), pos, [armeggerò]).
+ty_verb(italian, scheme, future, sg(2), pos, [armeggerai]).
+ty_verb(italian, scheme, future, pl(1), pos, [armeggeremo]).
+ty_verb(italian, scheme, future, pl(2), pos, [armeggerete]).
+ty_verb(italian, share, future, sg, pos, [accomunerà]).
+ty_verb(italian, share, future, pl, pos, [accomuneranno]).
+ty_verb(italian, share, future, sg(1), pos, [accomunerò]).
+ty_verb(italian, share, future, sg(2), pos, [accomunerai]).
+ty_verb(italian, share, future, pl(1), pos, [accomuneremo]).
+ty_verb(italian, share, future, pl(2), pos, [accomunerete]).
+ty_verb(italian, sharpen, future, sg, pos, [acuirà]).
+ty_verb(italian, sharpen, future, pl, pos, [acuiranno]).
+ty_verb(italian, sharpen, future, sg(1), pos, [acuirò]).
+ty_verb(italian, sharpen, future, sg(2), pos, [acuirai]).
+ty_verb(italian, sharpen, future, pl(1), pos, [acuiremo]).
+ty_verb(italian, sharpen, future, pl(2), pos, [acuirete]).
+ty_verb(italian, sharpen, future, sg, pos, [arroterà]).
+ty_verb(italian, sharpen, future, pl, pos, [arroteranno]).
+ty_verb(italian, sharpen, future, sg(1), pos, [arroterò]).
+ty_verb(italian, sharpen, future, sg(2), pos, [arroterai]).
+ty_verb(italian, sharpen, future, pl(1), pos, [arroteremo]).
+ty_verb(italian, sharpen, future, pl(2), pos, [arroterete]).
+ty_verb(italian, shelve, future, sg, pos, [accantonerà]).
+ty_verb(italian, shelve, future, pl, pos, [accantoneranno]).
+ty_verb(italian, shelve, future, sg(1), pos, [accantonerò]).
+ty_verb(italian, shelve, future, sg(2), pos, [accantonerai]).
+ty_verb(italian, shelve, future, pl(1), pos, [accantoneremo]).
+ty_verb(italian, shelve, future, pl(2), pos, [accantonerete]).
+ty_verb(italian, show, future, sg, pos, [affaccerà]).
+ty_verb(italian, show, future, pl, pos, [affacceranno]).
+ty_verb(italian, show, future, sg(1), pos, [affaccerò]).
+ty_verb(italian, show, future, sg(2), pos, [affaccerai]).
+ty_verb(italian, show, future, pl(1), pos, [affacceremo]).
+ty_verb(italian, show, future, pl(2), pos, [affaccerete]).
+ty_verb(italian, singe, future, sg, pos, [abbruciacchierà]).
+ty_verb(italian, singe, future, pl, pos, [abbruciacchieranno]).
+ty_verb(italian, singe, future, sg(1), pos, [abbruciacchierò]).
+ty_verb(italian, singe, future, sg(2), pos, [abbruciacchierai]).
+ty_verb(italian, singe, future, pl(1), pos, [abbruciacchieremo]).
+ty_verb(italian, singe, future, pl(2), pos, [abbruciacchierete]).
+ty_verb(italian, slump, future, sg, pos, [abbioscerà]).
+ty_verb(italian, slump, future, pl, pos, [abbiosceranno]).
+ty_verb(italian, slump, future, sg(1), pos, [abbioscerò]).
+ty_verb(italian, slump, future, sg(2), pos, [abbioscerai]).
+ty_verb(italian, slump, future, pl(1), pos, [abbiosceremo]).
+ty_verb(italian, slump, future, pl(2), pos, [abbioscerete]).
+ty_verb(italian, soften, future, sg, pos, [ammollirà]).
+ty_verb(italian, soften, future, pl, pos, [ammolliranno]).
+ty_verb(italian, soften, future, sg(1), pos, [ammollirò]).
+ty_verb(italian, soften, future, sg(2), pos, [ammollirai]).
+ty_verb(italian, soften, future, pl(1), pos, [ammolliremo]).
+ty_verb(italian, soften, future, pl(2), pos, [ammollirete]).
+ty_verb(italian, subdue, future, sg, pos, [assoggetterà]).
+ty_verb(italian, subdue, future, pl, pos, [assoggetteranno]).
+ty_verb(italian, subdue, future, sg(1), pos, [assoggetterò]).
+ty_verb(italian, subdue, future, sg(2), pos, [assoggetterai]).
+ty_verb(italian, subdue, future, pl(1), pos, [assoggetteremo]).
+ty_verb(italian, subdue, future, pl(2), pos, [assoggetterete]).
+ty_verb(italian, surround, future, sg, pos, [accingerà]).
+ty_verb(italian, surround, future, pl, pos, [accingeranno]).
+ty_verb(italian, surround, future, sg(1), pos, [accingerò]).
+ty_verb(italian, surround, future, sg(2), pos, [accingerai]).
+ty_verb(italian, surround, future, pl(1), pos, [accingeremo]).
+ty_verb(italian, surround, future, pl(2), pos, [accingerete]).
+ty_verb(italian, sweeten, future, sg, pos, [addolcherà]).
+ty_verb(italian, sweeten, future, pl, pos, [addolcheranno]).
+ty_verb(italian, sweeten, future, sg(1), pos, [addolcherò]).
+ty_verb(italian, sweeten, future, sg(2), pos, [addolcherai]).
+ty_verb(italian, sweeten, future, pl(1), pos, [addolcheremo]).
+ty_verb(italian, sweeten, future, pl(2), pos, [addolcherete]).
+ty_verb(italian, tan, future, sg, pos, [abbronzerà]).
+ty_verb(italian, tan, future, pl, pos, [abbronzeranno]).
+ty_verb(italian, tan, future, sg(1), pos, [abbronzerò]).
+ty_verb(italian, tan, future, sg(2), pos, [abbronzerai]).
+ty_verb(italian, tan, future, pl(1), pos, [abbronzeremo]).
+ty_verb(italian, tan, future, pl(2), pos, [abbronzerete]).
+ty_verb(italian, taste, future, sg, pos, [assaggerà]).
+ty_verb(italian, taste, future, pl, pos, [assaggeranno]).
+ty_verb(italian, taste, future, sg(1), pos, [assaggerò]).
+ty_verb(italian, taste, future, sg(2), pos, [assaggerai]).
+ty_verb(italian, taste, future, pl(1), pos, [assaggeremo]).
+ty_verb(italian, taste, future, pl(2), pos, [assaggerete]).
+ty_verb(italian, thicken, future, sg, pos, [addenserà]).
+ty_verb(italian, thicken, future, pl, pos, [addenseranno]).
+ty_verb(italian, thicken, future, sg(1), pos, [addenserò]).
+ty_verb(italian, thicken, future, sg(2), pos, [addenserai]).
+ty_verb(italian, thicken, future, pl(1), pos, [addenseremo]).
+ty_verb(italian, thicken, future, pl(2), pos, [addenserete]).
+ty_verb(italian, tire, future, sg, pos, [affaticherà]).
+ty_verb(italian, tire, future, pl, pos, [affaticheranno]).
+ty_verb(italian, tire, future, sg(1), pos, [affaticherò]).
+ty_verb(italian, tire, future, sg(2), pos, [affaticherai]).
+ty_verb(italian, tire, future, pl(1), pos, [affaticheremo]).
+ty_verb(italian, tire, future, pl(2), pos, [affaticherete]).
+ty_verb(italian, train, future, sg, pos, [addestrerà]).
+ty_verb(italian, train, future, pl, pos, [addestreranno]).
+ty_verb(italian, train, future, sg(1), pos, [addestrerò]).
+ty_verb(italian, train, future, sg(2), pos, [addestrerai]).
+ty_verb(italian, train, future, pl(1), pos, [addestreremo]).
+ty_verb(italian, train, future, pl(2), pos, [addestrerete]).
+ty_verb(italian, transfer, future, sg, pos, [apporterà]).
+ty_verb(italian, transfer, future, pl, pos, [apporteranno]).
+ty_verb(italian, transfer, future, sg(1), pos, [apporterò]).
+ty_verb(italian, transfer, future, sg(2), pos, [apporterai]).
+ty_verb(italian, transfer, future, pl(1), pos, [apporteremo]).
+ty_verb(italian, transfer, future, pl(2), pos, [apporterete]).
+ty_verb(italian, trouble, future, sg, pos, [affannerà]).
+ty_verb(italian, trouble, future, pl, pos, [affanneranno]).
+ty_verb(italian, trouble, future, sg(1), pos, [affannerò]).
+ty_verb(italian, trouble, future, sg(2), pos, [affannerai]).
+ty_verb(italian, trouble, future, pl(1), pos, [affanneremo]).
+ty_verb(italian, trouble, future, pl(2), pos, [affannerete]).
+ty_verb(italian, turn, future, sg, pos, [adibirà]).
+ty_verb(italian, turn, future, pl, pos, [adibiranno]).
+ty_verb(italian, turn, future, sg(1), pos, [adibirò]).
+ty_verb(italian, turn, future, sg(2), pos, [adibirai]).
+ty_verb(italian, turn, future, pl(1), pos, [adibiremo]).
+ty_verb(italian, turn, future, pl(2), pos, [adibirete]).
+ty_verb(italian, ventilate, future, sg, pos, [arieggerà]).
+ty_verb(italian, ventilate, future, pl, pos, [arieggeranno]).
+ty_verb(italian, ventilate, future, sg(1), pos, [arieggerò]).
+ty_verb(italian, ventilate, future, sg(2), pos, [arieggerai]).
+ty_verb(italian, ventilate, future, pl(1), pos, [arieggeremo]).
+ty_verb(italian, ventilate, future, pl(2), pos, [arieggerete]).
+ty_verb(italian, verify, future, sg, pos, [accerterà]).
+ty_verb(italian, verify, future, pl, pos, [accerteranno]).
+ty_verb(italian, verify, future, sg(1), pos, [accerterò]).
+ty_verb(italian, verify, future, sg(2), pos, [accerterai]).
+ty_verb(italian, verify, future, pl(1), pos, [accerteremo]).
+ty_verb(italian, verify, future, pl(2), pos, [accerterete]).
+ty_verb(italian, waft, future, sg, pos, [aleggerà]).
+ty_verb(italian, waft, future, pl, pos, [aleggeranno]).
+ty_verb(italian, waft, future, sg(1), pos, [aleggerò]).
+ty_verb(italian, waft, future, sg(2), pos, [aleggerai]).
+ty_verb(italian, waft, future, pl(1), pos, [aleggeremo]).
+ty_verb(italian, waft, future, pl(2), pos, [aleggerete]).
+ty_verb(italian, water, future, sg, pos, [annaffierà]).
+ty_verb(italian, water, future, pl, pos, [annaffieranno]).
+ty_verb(italian, water, future, sg(1), pos, [annaffierò]).
+ty_verb(italian, water, future, sg(2), pos, [annaffierai]).
+ty_verb(italian, water, future, pl(1), pos, [annaffieremo]).
+ty_verb(italian, water, future, pl(2), pos, [annaffierete]).
+ty_verb(italian, swing, future, sg, pos, [altalenerà]).
+ty_verb(italian, swing, future, pl, pos, [altaleneranno]).
+ty_verb(italian, swing, future, sg(1), pos, [altalenerò]).
+ty_verb(italian, swing, future, sg(2), pos, [altalenerai]).
+ty_verb(italian, swing, future, pl(1), pos, [altaleneremo]).
+ty_verb(italian, swing, future, pl(2), pos, [altalenerete]).
+ty_verb(italian, wrinkle, future, sg, pos, [aggrinzirà]).
+ty_verb(italian, wrinkle, future, pl, pos, [aggrinziranno]).
+ty_verb(italian, wrinkle, future, sg(1), pos, [aggrinzirò]).
+ty_verb(italian, wrinkle, future, sg(2), pos, [aggrinzirai]).
+ty_verb(italian, wrinkle, future, pl(1), pos, [aggrinziremo]).
+ty_verb(italian, wrinkle, future, pl(2), pos, [aggrinzirete]).
+ty_verb(italian, yoke, future, sg, pos, [aggiogherà]).
+ty_verb(italian, yoke, future, pl, pos, [aggiogheranno]).
+ty_verb(italian, yoke, future, sg(1), pos, [aggiogherò]).
+ty_verb(italian, yoke, future, sg(2), pos, [aggiogherai]).
+ty_verb(italian, yoke, future, pl(1), pos, [aggiogheremo]).
+ty_verb(italian, yoke, future, pl(2), pos, [aggiogherete]).
+ty_verb(italian, disappear, future, sg, pos, [sparirà]).
+ty_verb(italian, disappear, future, pl, pos, [spariranno]).
+ty_verb(italian, disappear, future, sg(1), pos, [sparirò]).
+ty_verb(italian, disappear, future, sg(2), pos, [sparirai]).
+ty_verb(italian, disappear, future, pl(1), pos, [spariremo]).
+ty_verb(italian, disappear, future, pl(2), pos, [sparirete]).
+ty_verb(italian, locate, future, sg, pos, [individuerà]).
+ty_verb(italian, locate, future, pl, pos, [individueranno]).
+ty_verb(italian, locate, future, sg(1), pos, [individuerò]).
+ty_verb(italian, locate, future, sg(2), pos, [individuerai]).
+ty_verb(italian, locate, future, pl(1), pos, [individueremo]).
+ty_verb(italian, locate, future, pl(2), pos, [individuerete]).
+ty_verb(italian, deem, future, sg, pos, [reputerà]).
+ty_verb(italian, deem, future, pl, pos, [reputeranno]).
+ty_verb(italian, deem, future, sg(1), pos, [reputerò]).
+ty_verb(italian, deem, future, sg(2), pos, [reputerai]).
+ty_verb(italian, deem, future, pl(1), pos, [reputeremo]).
+ty_verb(italian, deem, future, pl(2), pos, [reputerete]).
+ty_verb(italian, ski, future, sg, pos, [scerà]).
+ty_verb(italian, ski, future, pl, pos, [sceranno]).
+ty_verb(italian, ski, future, sg(1), pos, [scerò]).
+ty_verb(italian, ski, future, sg(2), pos, [scerai]).
+ty_verb(italian, ski, future, pl(1), pos, [sceremo]).
+ty_verb(italian, ski, future, pl(2), pos, [scerete]).
+ty_verb(italian, extinguish, future, sg, pos, [spegnerà]).
+ty_verb(italian, extinguish, future, pl, pos, [spegneranno]).
+ty_verb(italian, extinguish, future, sg(1), pos, [spegnerò]).
+ty_verb(italian, extinguish, future, sg(2), pos, [spegnerai]).
+ty_verb(italian, extinguish, future, pl(1), pos, [spegneremo]).
+ty_verb(italian, extinguish, future, pl(2), pos, [spegnerete]).
+ty_verb(italian, arouse, future, sg, pos, [desterà]).
+ty_verb(italian, arouse, future, pl, pos, [desteranno]).
+ty_verb(italian, arouse, future, sg(1), pos, [desterò]).
+ty_verb(italian, arouse, future, sg(2), pos, [desterai]).
+ty_verb(italian, arouse, future, pl(1), pos, [desteremo]).
+ty_verb(italian, arouse, future, pl(2), pos, [desterete]).
+ty_verb(italian, recover, future, sg, pos, [riprenderà]).
+ty_verb(italian, recover, future, pl, pos, [riprenderanno]).
+ty_verb(italian, recover, future, sg(1), pos, [riprenderò]).
+ty_verb(italian, recover, future, sg(2), pos, [riprenderai]).
+ty_verb(italian, recover, future, pl(1), pos, [riprenderemo]).
+ty_verb(italian, recover, future, pl(2), pos, [riprenderete]).
+ty_verb(italian, joke, future, sg, pos, [scherzerà]).
+ty_verb(italian, joke, future, pl, pos, [scherzeranno]).
+ty_verb(italian, joke, future, sg(1), pos, [scherzerò]).
+ty_verb(italian, joke, future, sg(2), pos, [scherzerai]).
+ty_verb(italian, joke, future, pl(1), pos, [scherzeremo]).
+ty_verb(italian, joke, future, pl(2), pos, [scherzerete]).
+ty_verb(italian, move, future, sg, pos, [muoverà]).
+ty_verb(italian, move, future, pl, pos, [muoveranno]).
+ty_verb(italian, move, future, sg(1), pos, [muoverò]).
+ty_verb(italian, move, future, sg(2), pos, [muoverai]).
+ty_verb(italian, move, future, pl(1), pos, [muoveremo]).
+ty_verb(italian, move, future, pl(2), pos, [muoverete]).
+ty_verb(italian, need, future, sg, pos, [bisognerà]).
+ty_verb(italian, need, future, pl, pos, [bisogneranno]).
+ty_verb(italian, need, future, sg(1), pos, [bisognerò]).
+ty_verb(italian, need, future, sg(2), pos, [bisognerai]).
+ty_verb(italian, need, future, pl(1), pos, [bisogneremo]).
+ty_verb(italian, need, future, pl(2), pos, [bisognerete]).
+ty_verb(italian, enter, future, sg, pos, [entrerà]).
+ty_verb(italian, enter, future, pl, pos, [entreranno]).
+ty_verb(italian, enter, future, sg(1), pos, [entrerò]).
+ty_verb(italian, enter, future, sg(2), pos, [entrerai]).
+ty_verb(italian, enter, future, pl(1), pos, [entreremo]).
+ty_verb(italian, enter, future, pl(2), pos, [entrerete]).
+ty_verb(italian, pocket, future, sg, pos, [intascherà]).
+ty_verb(italian, pocket, future, pl, pos, [intascheranno]).
+ty_verb(italian, pocket, future, sg(1), pos, [intascherò]).
+ty_verb(italian, pocket, future, sg(2), pos, [intascherai]).
+ty_verb(italian, pocket, future, pl(1), pos, [intascheremo]).
+ty_verb(italian, pocket, future, pl(2), pos, [intascherete]).
+ty_verb(italian, swindle, future, sg, pos, [trufferà]).
+ty_verb(italian, swindle, future, pl, pos, [trufferanno]).
+ty_verb(italian, swindle, future, sg(1), pos, [trufferò]).
+ty_verb(italian, swindle, future, sg(2), pos, [trufferai]).
+ty_verb(italian, swindle, future, pl(1), pos, [trufferemo]).
+ty_verb(italian, swindle, future, pl(2), pos, [trufferete]).
+ty_verb(italian, inflate, future, sg, pos, [gonfierà]).
+ty_verb(italian, inflate, future, pl, pos, [gonfieranno]).
+ty_verb(italian, inflate, future, sg(1), pos, [gonfierò]).
+ty_verb(italian, inflate, future, sg(2), pos, [gonfierai]).
+ty_verb(italian, inflate, future, pl(1), pos, [gonfieremo]).
+ty_verb(italian, inflate, future, pl(2), pos, [gonfierete]).
+ty_verb(italian, start, future, sg, pos, [scatterà]).
+ty_verb(italian, start, future, pl, pos, [scatteranno]).
+ty_verb(italian, start, future, sg(1), pos, [scatterò]).
+ty_verb(italian, start, future, sg(2), pos, [scatterai]).
+ty_verb(italian, start, future, pl(1), pos, [scatteremo]).
+ty_verb(italian, start, future, pl(2), pos, [scatterete]).
+ty_verb(italian, spend, future, sg, pos, [trascorrerà]).
+ty_verb(italian, spend, future, pl, pos, [trascorreranno]).
+ty_verb(italian, spend, future, sg(1), pos, [trascorrerò]).
+ty_verb(italian, spend, future, sg(2), pos, [trascorrerai]).
+ty_verb(italian, spend, future, pl(1), pos, [trascorreremo]).
+ty_verb(italian, spend, future, pl(2), pos, [trascorrerete]).
+ty_verb(italian, forbid, future, sg, pos, [vieterà]).
+ty_verb(italian, forbid, future, pl, pos, [vieteranno]).
+ty_verb(italian, forbid, future, sg(1), pos, [vieterò]).
+ty_verb(italian, forbid, future, sg(2), pos, [vieterai]).
+ty_verb(italian, forbid, future, pl(1), pos, [vieteremo]).
+ty_verb(italian, forbid, future, pl(2), pos, [vieterete]).
+ty_verb(italian, prohibit, future, sg, pos, [interdirà]).
+ty_verb(italian, prohibit, future, pl, pos, [interdiranno]).
+ty_verb(italian, prohibit, future, sg(1), pos, [interdirò]).
+ty_verb(italian, prohibit, future, sg(2), pos, [interdirai]).
+ty_verb(italian, prohibit, future, pl(1), pos, [interdiremo]).
+ty_verb(italian, prohibit, future, pl(2), pos, [interdirete]).
+ty_verb(italian, penalise, future, sg, pos, [penalizzerà]).
+ty_verb(italian, penalise, future, pl, pos, [penalizzeranno]).
+ty_verb(italian, penalise, future, sg(1), pos, [penalizzerò]).
+ty_verb(italian, penalise, future, sg(2), pos, [penalizzerai]).
+ty_verb(italian, penalise, future, pl(1), pos, [penalizzeremo]).
+ty_verb(italian, penalise, future, pl(2), pos, [penalizzerete]).
+ty_verb(italian, ride, future, sg, pos, [cavalcherà]).
+ty_verb(italian, ride, future, pl, pos, [cavalcheranno]).
+ty_verb(italian, ride, future, sg(1), pos, [cavalcherò]).
+ty_verb(italian, ride, future, sg(2), pos, [cavalcherai]).
+ty_verb(italian, ride, future, pl(1), pos, [cavalcheremo]).
+ty_verb(italian, ride, future, pl(2), pos, [cavalcherete]).
+ty_verb(italian, fix, future, sg, pos, [fisserà]).
+ty_verb(italian, fix, future, pl, pos, [fisseranno]).
+ty_verb(italian, fix, future, sg(1), pos, [fisserò]).
+ty_verb(italian, fix, future, sg(2), pos, [fisserai]).
+ty_verb(italian, fix, future, pl(1), pos, [fisseremo]).
+ty_verb(italian, fix, future, pl(2), pos, [fisserete]).
+ty_verb(italian, pressure, future, sg, pos, [presserà]).
+ty_verb(italian, pressure, future, pl, pos, [presseranno]).
+ty_verb(italian, pressure, future, sg(1), pos, [presserò]).
+ty_verb(italian, pressure, future, sg(2), pos, [presserai]).
+ty_verb(italian, pressure, future, pl(1), pos, [presseremo]).
+ty_verb(italian, pressure, future, pl(2), pos, [presserete]).
+ty_verb(italian, celebrate, future, sg, pos, [festeggerà]).
+ty_verb(italian, celebrate, future, pl, pos, [festeggeranno]).
+ty_verb(italian, celebrate, future, sg(1), pos, [festeggerò]).
+ty_verb(italian, celebrate, future, sg(2), pos, [festeggerai]).
+ty_verb(italian, celebrate, future, pl(1), pos, [festeggeremo]).
+ty_verb(italian, celebrate, future, pl(2), pos, [festeggerete]).
+ty_verb(italian, beat, future, sg, pos, [batterà]).
+ty_verb(italian, beat, future, pl, pos, [batteranno]).
+ty_verb(italian, beat, future, sg(1), pos, [batterò]).
+ty_verb(italian, beat, future, sg(2), pos, [batterai]).
+ty_verb(italian, beat, future, pl(1), pos, [batteremo]).
+ty_verb(italian, beat, future, pl(2), pos, [batterete]).
+ty_verb(italian, reject, future, sg, pos, [boccerà]).
+ty_verb(italian, reject, future, pl, pos, [bocceranno]).
+ty_verb(italian, reject, future, sg(1), pos, [boccerò]).
+ty_verb(italian, reject, future, sg(2), pos, [boccerai]).
+ty_verb(italian, reject, future, pl(1), pos, [bocceremo]).
+ty_verb(italian, reject, future, pl(2), pos, [boccerete]).
+ty_verb(italian, subject, future, sg, pos, [sottoporrà]).
+ty_verb(italian, subject, future, pl, pos, [sottoporranno]).
+ty_verb(italian, subject, future, sg(1), pos, [sottoporrò]).
+ty_verb(italian, subject, future, sg(2), pos, [sottoporrai]).
+ty_verb(italian, subject, future, pl(1), pos, [sottoporremo]).
+ty_verb(italian, subject, future, pl(2), pos, [sottoporrete]).
+ty_verb(italian, rest, future, sg, pos, [poggerà]).
+ty_verb(italian, rest, future, pl, pos, [poggeranno]).
+ty_verb(italian, rest, future, sg(1), pos, [poggerò]).
+ty_verb(italian, rest, future, sg(2), pos, [poggerai]).
+ty_verb(italian, rest, future, pl(1), pos, [poggeremo]).
+ty_verb(italian, rest, future, pl(2), pos, [poggerete]).
+ty_verb(italian, return, future, sg, pos, [tornerà]).
+ty_verb(italian, return, future, pl, pos, [torneranno]).
+ty_verb(italian, return, future, sg(1), pos, [tornerò]).
+ty_verb(italian, return, future, sg(2), pos, [tornerai]).
+ty_verb(italian, return, future, pl(1), pos, [torneremo]).
+ty_verb(italian, return, future, pl(2), pos, [tornerete]).
+ty_verb(italian, benefit, future, sg, pos, [profitterà]).
+ty_verb(italian, benefit, future, pl, pos, [profitteranno]).
+ty_verb(italian, benefit, future, sg(1), pos, [profitterò]).
+ty_verb(italian, benefit, future, sg(2), pos, [profitterai]).
+ty_verb(italian, benefit, future, pl(1), pos, [profitteremo]).
+ty_verb(italian, benefit, future, pl(2), pos, [profitterete]).
+ty_verb(italian, anger, future, sg, pos, [arrabbierà]).
+ty_verb(italian, anger, future, pl, pos, [arrabbieranno]).
+ty_verb(italian, anger, future, sg(1), pos, [arrabbierò]).
+ty_verb(italian, anger, future, sg(2), pos, [arrabbierai]).
+ty_verb(italian, anger, future, pl(1), pos, [arrabbieremo]).
+ty_verb(italian, anger, future, pl(2), pos, [arrabbierete]).
+ty_verb(italian, drown, future, sg, pos, [annegherà]).
+ty_verb(italian, drown, future, pl, pos, [annegheranno]).
+ty_verb(italian, drown, future, sg(1), pos, [annegherò]).
+ty_verb(italian, drown, future, sg(2), pos, [annegherai]).
+ty_verb(italian, drown, future, pl(1), pos, [annegheremo]).
+ty_verb(italian, drown, future, pl(2), pos, [annegherete]).
+ty_verb(italian, break, future, sg, pos, [spezzerà]).
+ty_verb(italian, break, future, pl, pos, [spezzeranno]).
+ty_verb(italian, break, future, sg(1), pos, [spezzerò]).
+ty_verb(italian, break, future, sg(2), pos, [spezzerai]).
+ty_verb(italian, break, future, pl(1), pos, [spezzeremo]).
+ty_verb(italian, break, future, pl(2), pos, [spezzerete]).
+ty_verb(italian, wear, future, sg, pos, [indosserà]).
+ty_verb(italian, wear, future, pl, pos, [indosseranno]).
+ty_verb(italian, wear, future, sg(1), pos, [indosserò]).
+ty_verb(italian, wear, future, sg(2), pos, [indosserai]).
+ty_verb(italian, wear, future, pl(1), pos, [indosseremo]).
+ty_verb(italian, wear, future, pl(2), pos, [indosserete]).
+ty_verb(italian, realiz, future, sg, pos, [accorgerà]).
+ty_verb(italian, realiz, future, pl, pos, [accorgeranno]).
+ty_verb(italian, realiz, future, sg(1), pos, [accorgerò]).
+ty_verb(italian, realiz, future, sg(2), pos, [accorgerai]).
+ty_verb(italian, realiz, future, pl(1), pos, [accorgeremo]).
+ty_verb(italian, realiz, future, pl(2), pos, [accorgerete]).
+ty_verb(italian, furrow, future, sg, pos, [solcherà]).
+ty_verb(italian, furrow, future, pl, pos, [solcheranno]).
+ty_verb(italian, furrow, future, sg(1), pos, [solcherò]).
+ty_verb(italian, furrow, future, sg(2), pos, [solcherai]).
+ty_verb(italian, furrow, future, pl(1), pos, [solcheremo]).
+ty_verb(italian, furrow, future, pl(2), pos, [solcherete]).
+ty_verb(italian, enamour, future, sg, pos, [innamorerà]).
+ty_verb(italian, enamour, future, pl, pos, [innamoreranno]).
+ty_verb(italian, enamour, future, sg(1), pos, [innamorerò]).
+ty_verb(italian, enamour, future, sg(2), pos, [innamorerai]).
+ty_verb(italian, enamour, future, pl(1), pos, [innamoreremo]).
+ty_verb(italian, enamour, future, pl(2), pos, [innamorerete]).
+ty_verb(italian, bury, future, sg, pos, [seppellirà]).
+ty_verb(italian, bury, future, pl, pos, [seppelliranno]).
+ty_verb(italian, bury, future, sg(1), pos, [seppellirò]).
+ty_verb(italian, bury, future, sg(2), pos, [seppellirai]).
+ty_verb(italian, bury, future, pl(1), pos, [seppelliremo]).
+ty_verb(italian, bury, future, pl(2), pos, [seppellirete]).
+ty_verb(italian, browse, future, sg, pos, [sfoglierà]).
+ty_verb(italian, browse, future, pl, pos, [sfoglieranno]).
+ty_verb(italian, browse, future, sg(1), pos, [sfoglierò]).
+ty_verb(italian, browse, future, sg(2), pos, [sfoglierai]).
+ty_verb(italian, browse, future, pl(1), pos, [sfoglieremo]).
+ty_verb(italian, browse, future, pl(2), pos, [sfoglierete]).
+ty_verb(italian, rummage, future, sg, pos, [frugherà]).
+ty_verb(italian, rummage, future, pl, pos, [frugheranno]).
+ty_verb(italian, rummage, future, sg(1), pos, [frugherò]).
+ty_verb(italian, rummage, future, sg(2), pos, [frugherai]).
+ty_verb(italian, rummage, future, pl(1), pos, [frugheremo]).
+ty_verb(italian, rummage, future, pl(2), pos, [frugherete]).
+ty_verb(italian, return, future, sg, pos, [rinvierà]).
+ty_verb(italian, return, future, pl, pos, [rinvieranno]).
+ty_verb(italian, return, future, sg(1), pos, [rinvierò]).
+ty_verb(italian, return, future, sg(2), pos, [rinvierai]).
+ty_verb(italian, return, future, pl(1), pos, [rinvieremo]).
+ty_verb(italian, return, future, pl(2), pos, [rinvierete]).
+ty_verb(italian, cause, future, sg, pos, [recherà]).
+ty_verb(italian, cause, future, pl, pos, [recheranno]).
+ty_verb(italian, cause, future, sg(1), pos, [recherò]).
+ty_verb(italian, cause, future, sg(2), pos, [recherai]).
+ty_verb(italian, cause, future, pl(1), pos, [recheremo]).
+ty_verb(italian, cause, future, pl(2), pos, [recherete]).
+ty_verb(italian, materialise, future, sg, pos, [concretizzerà]).
+ty_verb(italian, materialise, future, pl, pos, [concretizzeranno]).
+ty_verb(italian, materialise, future, sg(1), pos, [concretizzerò]).
+ty_verb(italian, materialise, future, sg(2), pos, [concretizzerai]).
+ty_verb(italian, materialise, future, pl(1), pos, [concretizzeremo]).
+ty_verb(italian, materialise, future, pl(2), pos, [concretizzerete]).
+ty_verb(italian, occupy, future, sg, pos, [ricoprirà]).
+ty_verb(italian, occupy, future, pl, pos, [ricopriranno]).
+ty_verb(italian, occupy, future, sg(1), pos, [ricoprirò]).
+ty_verb(italian, occupy, future, sg(2), pos, [ricoprirai]).
+ty_verb(italian, occupy, future, pl(1), pos, [ricopriremo]).
+ty_verb(italian, occupy, future, pl(2), pos, [ricoprirete]).
+ty_verb(italian, stimulate, future, sg, pos, [stimolerà]).
+ty_verb(italian, stimulate, future, pl, pos, [stimoleranno]).
+ty_verb(italian, stimulate, future, sg(1), pos, [stimolerò]).
+ty_verb(italian, stimulate, future, sg(2), pos, [stimolerai]).
+ty_verb(italian, stimulate, future, pl(1), pos, [stimoleremo]).
+ty_verb(italian, stimulate, future, pl(2), pos, [stimolerete]).
+ty_verb(italian, extract, future, sg, pos, [trarrà]).
+ty_verb(italian, extract, future, pl, pos, [trarranno]).
+ty_verb(italian, extract, future, sg(1), pos, [trarrò]).
+ty_verb(italian, extract, future, sg(2), pos, [trarrai]).
+ty_verb(italian, extract, future, pl(1), pos, [trarremo]).
+ty_verb(italian, extract, future, pl(2), pos, [trarrete]).
+ty_verb(italian, clarify, future, sg, pos, [puntualizzerà]).
+ty_verb(italian, clarify, future, pl, pos, [puntualizzeranno]).
+ty_verb(italian, clarify, future, sg(1), pos, [puntualizzerò]).
+ty_verb(italian, clarify, future, sg(2), pos, [puntualizzerai]).
+ty_verb(italian, clarify, future, pl(1), pos, [puntualizzeremo]).
+ty_verb(italian, clarify, future, pl(2), pos, [puntualizzerete]).
+ty_verb(italian, benefit, future, sg, pos, [beneficerà]).
+ty_verb(italian, benefit, future, pl, pos, [beneficeranno]).
+ty_verb(italian, benefit, future, sg(1), pos, [beneficerò]).
+ty_verb(italian, benefit, future, sg(2), pos, [beneficerai]).
+ty_verb(italian, benefit, future, pl(1), pos, [beneficeremo]).
+ty_verb(italian, benefit, future, pl(2), pos, [beneficerete]).
+ty_verb(italian, mark, future, sg, pos, [segnerà]).
+ty_verb(italian, mark, future, pl, pos, [segneranno]).
+ty_verb(italian, mark, future, sg(1), pos, [segnerò]).
+ty_verb(italian, mark, future, sg(2), pos, [segnerai]).
+ty_verb(italian, mark, future, pl(1), pos, [segneremo]).
+ty_verb(italian, mark, future, pl(2), pos, [segnerete]).
+ty_verb(italian, postpone, future, sg, pos, [rimanderà]).
+ty_verb(italian, postpone, future, pl, pos, [rimanderanno]).
+ty_verb(italian, postpone, future, sg(1), pos, [rimanderò]).
+ty_verb(italian, postpone, future, sg(2), pos, [rimanderai]).
+ty_verb(italian, postpone, future, pl(1), pos, [rimanderemo]).
+ty_verb(italian, postpone, future, pl(2), pos, [rimanderete]).
+ty_verb(italian, compete, future, sg, pos, [gareggerà]).
+ty_verb(italian, compete, future, pl, pos, [gareggeranno]).
+ty_verb(italian, compete, future, sg(1), pos, [gareggerò]).
+ty_verb(italian, compete, future, sg(2), pos, [gareggerai]).
+ty_verb(italian, compete, future, pl(1), pos, [gareggeremo]).
+ty_verb(italian, compete, future, pl(2), pos, [gareggerete]).
+ty_verb(italian, proliferate, future, sg, pos, [dilagherà]).
+ty_verb(italian, proliferate, future, pl, pos, [dilagheranno]).
+ty_verb(italian, proliferate, future, sg(1), pos, [dilagherò]).
+ty_verb(italian, proliferate, future, sg(2), pos, [dilagherai]).
+ty_verb(italian, proliferate, future, pl(1), pos, [dilagheremo]).
+ty_verb(italian, proliferate, future, pl(2), pos, [dilagherete]).
+ty_verb(italian, submerge, future, sg, pos, [immergerà]).
+ty_verb(italian, submerge, future, pl, pos, [immergeranno]).
+ty_verb(italian, submerge, future, sg(1), pos, [immergerò]).
+ty_verb(italian, submerge, future, sg(2), pos, [immergerai]).
+ty_verb(italian, submerge, future, pl(1), pos, [immergeremo]).
+ty_verb(italian, submerge, future, pl(2), pos, [immergerete]).
+ty_verb(italian, marginalise, future, sg, pos, [emarginerà]).
+ty_verb(italian, marginalise, future, pl, pos, [emargineranno]).
+ty_verb(italian, marginalise, future, sg(1), pos, [emarginerò]).
+ty_verb(italian, marginalise, future, sg(2), pos, [emarginerai]).
+ty_verb(italian, marginalise, future, pl(1), pos, [emargineremo]).
+ty_verb(italian, marginalise, future, pl(2), pos, [emarginerete]).
+ty_verb(italian, choose, future, sg, pos, [presceglierà]).
+ty_verb(italian, choose, future, pl, pos, [presceglieranno]).
+ty_verb(italian, choose, future, sg(1), pos, [presceglierò]).
+ty_verb(italian, choose, future, sg(2), pos, [presceglierai]).
+ty_verb(italian, choose, future, pl(1), pos, [presceglieremo]).
+ty_verb(italian, choose, future, pl(2), pos, [presceglierete]).
+ty_verb(italian, allocate, future, sg, pos, [devolverà]).
+ty_verb(italian, allocate, future, pl, pos, [devolveranno]).
+ty_verb(italian, allocate, future, sg(1), pos, [devolverò]).
+ty_verb(italian, allocate, future, sg(2), pos, [devolverai]).
+ty_verb(italian, allocate, future, pl(1), pos, [devolveremo]).
+ty_verb(italian, allocate, future, pl(2), pos, [devolverete]).
+ty_verb(italian, overtake, future, sg, pos, [coglierà]).
+ty_verb(italian, overtake, future, pl, pos, [coglieranno]).
+ty_verb(italian, overtake, future, sg(1), pos, [coglierò]).
+ty_verb(italian, overtake, future, sg(2), pos, [coglierai]).
+ty_verb(italian, overtake, future, pl(1), pos, [coglieremo]).
+ty_verb(italian, overtake, future, pl(2), pos, [coglierete]).
+ty_verb(italian, burn, future, sg, pos, [scotterà]).
+ty_verb(italian, burn, future, pl, pos, [scotteranno]).
+ty_verb(italian, burn, future, sg(1), pos, [scotterò]).
+ty_verb(italian, burn, future, sg(2), pos, [scotterai]).
+ty_verb(italian, burn, future, pl(1), pos, [scotteremo]).
+ty_verb(italian, burn, future, pl(2), pos, [scotterete]).
+ty_verb(italian, summarise, future, sg, pos, [sintetizzerà]).
+ty_verb(italian, summarise, future, pl, pos, [sintetizzeranno]).
+ty_verb(italian, summarise, future, sg(1), pos, [sintetizzerò]).
+ty_verb(italian, summarise, future, sg(2), pos, [sintetizzerai]).
+ty_verb(italian, summarise, future, pl(1), pos, [sintetizzeremo]).
+ty_verb(italian, summarise, future, pl(2), pos, [sintetizzerete]).
+ty_verb(italian, promulgate, future, sg, pos, [varerà]).
+ty_verb(italian, promulgate, future, pl, pos, [vareranno]).
+ty_verb(italian, promulgate, future, sg(1), pos, [varerò]).
+ty_verb(italian, promulgate, future, sg(2), pos, [varerai]).
+ty_verb(italian, promulgate, future, pl(1), pos, [vareremo]).
+ty_verb(italian, promulgate, future, pl(2), pos, [varerete]).
+ty_verb(italian, intend, future, sg, pos, [intenderà]).
+ty_verb(italian, intend, future, pl, pos, [intenderanno]).
+ty_verb(italian, intend, future, sg(1), pos, [intenderò]).
+ty_verb(italian, intend, future, sg(2), pos, [intenderai]).
+ty_verb(italian, intend, future, pl(1), pos, [intenderemo]).
+ty_verb(italian, intend, future, pl(2), pos, [intenderete]).
+ty_verb(italian, suspend, future, sg, pos, [squalificherà]).
+ty_verb(italian, suspend, future, pl, pos, [squalificheranno]).
+ty_verb(italian, suspend, future, sg(1), pos, [squalificherò]).
+ty_verb(italian, suspend, future, sg(2), pos, [squalificherai]).
+ty_verb(italian, suspend, future, pl(1), pos, [squalificheremo]).
+ty_verb(italian, suspend, future, pl(2), pos, [squalificherete]).
+ty_verb(italian, administer, future, sg, pos, [somministrerà]).
+ty_verb(italian, administer, future, pl, pos, [somministreranno]).
+ty_verb(italian, administer, future, sg(1), pos, [somministrerò]).
+ty_verb(italian, administer, future, sg(2), pos, [somministrerai]).
+ty_verb(italian, administer, future, pl(1), pos, [somministreremo]).
+ty_verb(italian, administer, future, pl(2), pos, [somministrerete]).
+ty_verb(italian, dismember, future, sg, pos, [smembrerà]).
+ty_verb(italian, dismember, future, pl, pos, [smembreranno]).
+ty_verb(italian, dismember, future, sg(1), pos, [smembrerò]).
+ty_verb(italian, dismember, future, sg(2), pos, [smembrerai]).
+ty_verb(italian, dismember, future, pl(1), pos, [smembreremo]).
+ty_verb(italian, dismember, future, pl(2), pos, [smembrerete]).
+ty_verb(italian, recommence, future, sg, pos, [ricomincerà]).
+ty_verb(italian, recommence, future, pl, pos, [ricominceranno]).
+ty_verb(italian, recommence, future, sg(1), pos, [ricomincerò]).
+ty_verb(italian, recommence, future, sg(2), pos, [ricomincerai]).
+ty_verb(italian, recommence, future, pl(1), pos, [ricominceremo]).
+ty_verb(italian, recommence, future, pl(2), pos, [ricomincerete]).
+ty_verb(italian, hoard, future, sg, pos, [accaparrerà]).
+ty_verb(italian, hoard, future, pl, pos, [accaparreranno]).
+ty_verb(italian, hoard, future, sg(1), pos, [accaparrerò]).
+ty_verb(italian, hoard, future, sg(2), pos, [accaparrerai]).
+ty_verb(italian, hoard, future, pl(1), pos, [accaparreremo]).
+ty_verb(italian, hoard, future, pl(2), pos, [accaparrerete]).
+ty_verb(italian, upset, future, sg, pos, [contrarierà]).
+ty_verb(italian, upset, future, pl, pos, [contrarieranno]).
+ty_verb(italian, upset, future, sg(1), pos, [contrarierò]).
+ty_verb(italian, upset, future, sg(2), pos, [contrarierai]).
+ty_verb(italian, upset, future, pl(1), pos, [contrarieremo]).
+ty_verb(italian, upset, future, pl(2), pos, [contrarierete]).
+ty_verb(italian, rest, future, sg, pos, [giacerà]).
+ty_verb(italian, rest, future, pl, pos, [giaceranno]).
+ty_verb(italian, rest, future, sg(1), pos, [giacerò]).
+ty_verb(italian, rest, future, sg(2), pos, [giacerai]).
+ty_verb(italian, rest, future, pl(1), pos, [giaceremo]).
+ty_verb(italian, rest, future, pl(2), pos, [giacerete]).
+ty_verb(italian, clean, future, sg, pos, [ripulirà]).
+ty_verb(italian, clean, future, pl, pos, [ripuliranno]).
+ty_verb(italian, clean, future, sg(1), pos, [ripulirò]).
+ty_verb(italian, clean, future, sg(2), pos, [ripulirai]).
+ty_verb(italian, clean, future, pl(1), pos, [ripuliremo]).
+ty_verb(italian, clean, future, pl(2), pos, [ripulirete]).
+ty_verb(italian, ring, future, sg, pos, [trillerà]).
+ty_verb(italian, ring, future, pl, pos, [trilleranno]).
+ty_verb(italian, ring, future, sg(1), pos, [trillerò]).
+ty_verb(italian, ring, future, sg(2), pos, [trillerai]).
+ty_verb(italian, ring, future, pl(1), pos, [trilleremo]).
+ty_verb(italian, ring, future, pl(2), pos, [trillerete]).
+ty_verb(italian, suppose, future, sg, pos, [presumerà]).
+ty_verb(italian, suppose, future, pl, pos, [presumeranno]).
+ty_verb(italian, suppose, future, sg(1), pos, [presumerò]).
+ty_verb(italian, suppose, future, sg(2), pos, [presumerai]).
+ty_verb(italian, suppose, future, pl(1), pos, [presumeremo]).
+ty_verb(italian, suppose, future, pl(2), pos, [presumerete]).
+ty_verb(italian, house, future, sg, pos, [ospiterà]).
+ty_verb(italian, house, future, pl, pos, [ospiteranno]).
+ty_verb(italian, house, future, sg(1), pos, [ospiterò]).
+ty_verb(italian, house, future, sg(2), pos, [ospiterai]).
+ty_verb(italian, house, future, pl(1), pos, [ospiteremo]).
+ty_verb(italian, house, future, pl(2), pos, [ospiterete]).
+ty_verb(italian, prove, future, sg, pos, [proverà]).
+ty_verb(italian, prove, future, pl, pos, [proveranno]).
+ty_verb(italian, prove, future, sg(1), pos, [proverò]).
+ty_verb(italian, prove, future, sg(2), pos, [proverai]).
+ty_verb(italian, prove, future, pl(1), pos, [proveremo]).
+ty_verb(italian, prove, future, pl(2), pos, [proverete]).
+ty_verb(italian, nominate, future, sg, pos, [candiderà]).
+ty_verb(italian, nominate, future, pl, pos, [candideranno]).
+ty_verb(italian, nominate, future, sg(1), pos, [candiderò]).
+ty_verb(italian, nominate, future, sg(2), pos, [candiderai]).
+ty_verb(italian, nominate, future, pl(1), pos, [candideremo]).
+ty_verb(italian, nominate, future, pl(2), pos, [candiderete]).
+ty_verb(italian, adapt, future, sg, pos, [adeguerà]).
+ty_verb(italian, adapt, future, pl, pos, [adegueranno]).
+ty_verb(italian, adapt, future, sg(1), pos, [adeguerò]).
+ty_verb(italian, adapt, future, sg(2), pos, [adeguerai]).
+ty_verb(italian, adapt, future, pl(1), pos, [adegueremo]).
+ty_verb(italian, adapt, future, pl(2), pos, [adeguerete]).
+ty_verb(italian, agree, future, sg, pos, [ricorderà]).
+ty_verb(italian, agree, future, pl, pos, [ricorderanno]).
+ty_verb(italian, agree, future, sg(1), pos, [ricorderò]).
+ty_verb(italian, agree, future, sg(2), pos, [ricorderai]).
+ty_verb(italian, agree, future, pl(1), pos, [ricorderemo]).
+ty_verb(italian, agree, future, pl(2), pos, [ricorderete]).
+ty_verb(italian, annoy, future, sg, pos, [importunerà]).
+ty_verb(italian, annoy, future, pl, pos, [importuneranno]).
+ty_verb(italian, annoy, future, sg(1), pos, [importunerò]).
+ty_verb(italian, annoy, future, sg(2), pos, [importunerai]).
+ty_verb(italian, annoy, future, pl(1), pos, [importuneremo]).
+ty_verb(italian, annoy, future, pl(2), pos, [importunerete]).
+ty_verb(italian, answer, future, sg, pos, [risponderà]).
+ty_verb(italian, answer, future, pl, pos, [risponderanno]).
+ty_verb(italian, answer, future, sg(1), pos, [risponderò]).
+ty_verb(italian, answer, future, sg(2), pos, [risponderai]).
+ty_verb(italian, answer, future, pl(1), pos, [risponderemo]).
+ty_verb(italian, answer, future, pl(2), pos, [risponderete]).
+ty_verb(italian, arrive, future, sg, pos, [giungerà]).
+ty_verb(italian, arrive, future, pl, pos, [giungeranno]).
+ty_verb(italian, arrive, future, sg(1), pos, [giungerò]).
+ty_verb(italian, arrive, future, sg(2), pos, [giungerai]).
+ty_verb(italian, arrive, future, pl(1), pos, [giungeremo]).
+ty_verb(italian, arrive, future, pl(2), pos, [giungerete]).
+ty_verb(italian, ask, future, sg, pos, [domandherà]).
+ty_verb(italian, ask, future, pl, pos, [domandheranno]).
+ty_verb(italian, ask, future, sg(1), pos, [domandherò]).
+ty_verb(italian, ask, future, sg(2), pos, [domandherai]).
+ty_verb(italian, ask, future, pl(1), pos, [domandheremo]).
+ty_verb(italian, ask, future, pl(2), pos, [domandherete]).
+ty_verb(italian, assign, future, sg, pos, [destinerà]).
+ty_verb(italian, assign, future, pl, pos, [destineranno]).
+ty_verb(italian, assign, future, sg(1), pos, [destinerò]).
+ty_verb(italian, assign, future, sg(2), pos, [destinerai]).
+ty_verb(italian, assign, future, pl(1), pos, [destineremo]).
+ty_verb(italian, assign, future, pl(2), pos, [destinerete]).
+ty_verb(italian, attack, future, sg, pos, [aggredirà]).
+ty_verb(italian, attack, future, pl, pos, [aggrediranno]).
+ty_verb(italian, attack, future, sg(1), pos, [aggredirò]).
+ty_verb(italian, attack, future, sg(2), pos, [aggredirai]).
+ty_verb(italian, attack, future, pl(1), pos, [aggrediremo]).
+ty_verb(italian, attack, future, pl(2), pos, [aggredirete]).
+ty_verb(italian, bend, future, sg, pos, [fletterà]).
+ty_verb(italian, bend, future, pl, pos, [fletteranno]).
+ty_verb(italian, bend, future, sg(1), pos, [fletterò]).
+ty_verb(italian, bend, future, sg(2), pos, [fletterai]).
+ty_verb(italian, bend, future, pl(1), pos, [fletteremo]).
+ty_verb(italian, bend, future, pl(2), pos, [fletterete]).
+ty_verb(italian, choose, future, sg, pos, [eleggerà]).
+ty_verb(italian, choose, future, pl, pos, [eleggeranno]).
+ty_verb(italian, choose, future, sg(1), pos, [eleggerò]).
+ty_verb(italian, choose, future, sg(2), pos, [eleggerai]).
+ty_verb(italian, choose, future, pl(1), pos, [eleggeremo]).
+ty_verb(italian, choose, future, pl(2), pos, [eleggerete]).
+ty_verb(italian, claim, future, sg, pos, [reclamerà]).
+ty_verb(italian, claim, future, pl, pos, [reclameranno]).
+ty_verb(italian, claim, future, sg(1), pos, [reclamerò]).
+ty_verb(italian, claim, future, sg(2), pos, [reclamerai]).
+ty_verb(italian, claim, future, pl(1), pos, [reclameremo]).
+ty_verb(italian, claim, future, pl(2), pos, [reclamerete]).
+ty_verb(italian, claim, future, sg, pos, [rivendicherà]).
+ty_verb(italian, claim, future, pl, pos, [rivendicheranno]).
+ty_verb(italian, claim, future, sg(1), pos, [rivendicherò]).
+ty_verb(italian, claim, future, sg(2), pos, [rivendicherai]).
+ty_verb(italian, claim, future, pl(1), pos, [rivendicheremo]).
+ty_verb(italian, claim, future, pl(2), pos, [rivendicherete]).
+ty_verb(italian, clarify, future, sg, pos, [preciserà]).
+ty_verb(italian, clarify, future, pl, pos, [preciseranno]).
+ty_verb(italian, clarify, future, sg(1), pos, [preciserò]).
+ty_verb(italian, clarify, future, sg(2), pos, [preciserai]).
+ty_verb(italian, clarify, future, pl(1), pos, [preciseremo]).
+ty_verb(italian, clarify, future, pl(2), pos, [preciserete]).
+ty_verb(italian, confine, future, sg, pos, [internerà]).
+ty_verb(italian, confine, future, pl, pos, [interneranno]).
+ty_verb(italian, confine, future, sg(1), pos, [internerò]).
+ty_verb(italian, confine, future, sg(2), pos, [internerai]).
+ty_verb(italian, confine, future, pl(1), pos, [interneremo]).
+ty_verb(italian, confine, future, pl(2), pos, [internerete]).
+ty_verb(italian, congratulate, future, sg, pos, [congratulerà]).
+ty_verb(italian, congratulate, future, pl, pos, [congratuleranno]).
+ty_verb(italian, congratulate, future, sg(1), pos, [congratulerò]).
+ty_verb(italian, congratulate, future, sg(2), pos, [congratulerai]).
+ty_verb(italian, congratulate, future, pl(1), pos, [congratuleremo]).
+ty_verb(italian, congratulate, future, pl(2), pos, [congratulerete]).
+ty_verb(italian, continue, future, sg, pos, [proseguirà]).
+ty_verb(italian, continue, future, pl, pos, [proseguiranno]).
+ty_verb(italian, continue, future, sg(1), pos, [proseguirò]).
+ty_verb(italian, continue, future, sg(2), pos, [proseguirai]).
+ty_verb(italian, continue, future, pl(1), pos, [proseguiremo]).
+ty_verb(italian, continue, future, pl(2), pos, [proseguirete]).
+ty_verb(italian, converge, future, sg, pos, [confluirà]).
+ty_verb(italian, converge, future, pl, pos, [confluiranno]).
+ty_verb(italian, converge, future, sg(1), pos, [confluirò]).
+ty_verb(italian, converge, future, sg(2), pos, [confluirai]).
+ty_verb(italian, converge, future, pl(1), pos, [confluiremo]).
+ty_verb(italian, converge, future, pl(2), pos, [confluirete]).
+ty_verb(italian, converse, future, sg, pos, [dialogherà]).
+ty_verb(italian, converse, future, pl, pos, [dialogheranno]).
+ty_verb(italian, converse, future, sg(1), pos, [dialogherò]).
+ty_verb(italian, converse, future, sg(2), pos, [dialogherai]).
+ty_verb(italian, converse, future, pl(1), pos, [dialogheremo]).
+ty_verb(italian, converse, future, pl(2), pos, [dialogherete]).
+ty_verb(italian, cost, future, sg, pos, [varrà]).
+ty_verb(italian, cost, future, pl, pos, [varranno]).
+ty_verb(italian, cost, future, sg(1), pos, [varrò]).
+ty_verb(italian, cost, future, sg(2), pos, [varrai]).
+ty_verb(italian, cost, future, pl(1), pos, [varremo]).
+ty_verb(italian, cost, future, pl(2), pos, [varrete]).
+ty_verb(italian, cry, future, sg, pos, [piangerà]).
+ty_verb(italian, cry, future, pl, pos, [piangeranno]).
+ty_verb(italian, cry, future, sg(1), pos, [piangerò]).
+ty_verb(italian, cry, future, sg(2), pos, [piangerai]).
+ty_verb(italian, cry, future, pl(1), pos, [piangeremo]).
+ty_verb(italian, cry, future, pl(2), pos, [piangerete]).
+ty_verb(italian, decompose, future, sg, pos, [scomporrà]).
+ty_verb(italian, decompose, future, pl, pos, [scomporranno]).
+ty_verb(italian, decompose, future, sg(1), pos, [scomporrò]).
+ty_verb(italian, decompose, future, sg(2), pos, [scomporrai]).
+ty_verb(italian, decompose, future, pl(1), pos, [scomporremo]).
+ty_verb(italian, decompose, future, pl(2), pos, [scomporrete]).
+ty_verb(italian, deny, future, sg, pos, [smentirà]).
+ty_verb(italian, deny, future, pl, pos, [smentiranno]).
+ty_verb(italian, deny, future, sg(1), pos, [smentirò]).
+ty_verb(italian, deny, future, sg(2), pos, [smentirai]).
+ty_verb(italian, deny, future, pl(1), pos, [smentiremo]).
+ty_verb(italian, deny, future, pl(2), pos, [smentirete]).
+ty_verb(italian, direct, future, sg, pos, [orienterà]).
+ty_verb(italian, direct, future, pl, pos, [orienteranno]).
+ty_verb(italian, direct, future, sg(1), pos, [orienterò]).
+ty_verb(italian, direct, future, sg(2), pos, [orienterai]).
+ty_verb(italian, direct, future, pl(1), pos, [orienteremo]).
+ty_verb(italian, direct, future, pl(2), pos, [orienterete]).
+ty_verb(italian, dissolve, future, sg, pos, [scioglierà]).
+ty_verb(italian, dissolve, future, pl, pos, [scioglieranno]).
+ty_verb(italian, dissolve, future, sg(1), pos, [scioglierò]).
+ty_verb(italian, dissolve, future, sg(2), pos, [scioglierai]).
+ty_verb(italian, dissolve, future, pl(1), pos, [scioglieremo]).
+ty_verb(italian, dissolve, future, pl(2), pos, [scioglierete]).
+ty_verb(italian, drop, future, sg, pos, [scenderà]).
+ty_verb(italian, drop, future, pl, pos, [scenderanno]).
+ty_verb(italian, drop, future, sg(1), pos, [scenderò]).
+ty_verb(italian, drop, future, sg(2), pos, [scenderai]).
+ty_verb(italian, drop, future, pl(1), pos, [scenderemo]).
+ty_verb(italian, drop, future, pl(2), pos, [scenderete]).
+ty_verb(italian, dry, future, sg, pos, [seccherà]).
+ty_verb(italian, dry, future, pl, pos, [seccheranno]).
+ty_verb(italian, dry, future, sg(1), pos, [seccherò]).
+ty_verb(italian, dry, future, sg(2), pos, [seccherai]).
+ty_verb(italian, dry, future, pl(1), pos, [seccheremo]).
+ty_verb(italian, dry, future, pl(2), pos, [seccherete]).
+ty_verb(italian, edit, future, sg, pos, [redigerà]).
+ty_verb(italian, edit, future, pl, pos, [redigeranno]).
+ty_verb(italian, edit, future, sg(1), pos, [redigerò]).
+ty_verb(italian, edit, future, sg(2), pos, [redigerai]).
+ty_verb(italian, edit, future, pl(1), pos, [redigeremo]).
+ty_verb(italian, edit, future, pl(2), pos, [redigerete]).
+ty_verb(italian, enjoy, future, sg, pos, [usufruirà]).
+ty_verb(italian, enjoy, future, pl, pos, [usufruiranno]).
+ty_verb(italian, enjoy, future, sg(1), pos, [usufruirò]).
+ty_verb(italian, enjoy, future, sg(2), pos, [usufruirai]).
+ty_verb(italian, enjoy, future, pl(1), pos, [usufruiremo]).
+ty_verb(italian, enjoy, future, pl(2), pos, [usufruirete]).
+ty_verb(italian, enrol, future, sg, pos, [iscriverà]).
+ty_verb(italian, enrol, future, pl, pos, [iscriveranno]).
+ty_verb(italian, enrol, future, sg(1), pos, [iscriverò]).
+ty_verb(italian, enrol, future, sg(2), pos, [iscriverai]).
+ty_verb(italian, enrol, future, pl(1), pos, [iscriveremo]).
+ty_verb(italian, enrol, future, pl(2), pos, [iscriverete]).
+ty_verb(italian, erect, future, sg, pos, [erigerà]).
+ty_verb(italian, erect, future, pl, pos, [erigeranno]).
+ty_verb(italian, erect, future, sg(1), pos, [erigerò]).
+ty_verb(italian, erect, future, sg(2), pos, [erigerai]).
+ty_verb(italian, erect, future, pl(1), pos, [erigeremo]).
+ty_verb(italian, erect, future, pl(2), pos, [erigerete]).
+ty_verb(italian, escape, future, sg, pos, [scapperà]).
+ty_verb(italian, escape, future, pl, pos, [scapperanno]).
+ty_verb(italian, escape, future, sg(1), pos, [scapperò]).
+ty_verb(italian, escape, future, sg(2), pos, [scapperai]).
+ty_verb(italian, escape, future, pl(1), pos, [scapperemo]).
+ty_verb(italian, escape, future, pl(2), pos, [scapperete]).
+ty_verb(italian, establish, future, sg, pos, [instaurerà]).
+ty_verb(italian, establish, future, pl, pos, [instaureranno]).
+ty_verb(italian, establish, future, sg(1), pos, [instaurerò]).
+ty_verb(italian, establish, future, sg(2), pos, [instaurerai]).
+ty_verb(italian, establish, future, pl(1), pos, [instaureremo]).
+ty_verb(italian, establish, future, pl(2), pos, [instaurerete]).
+ty_verb(italian, examine, future, sg, pos, [visionerà]).
+ty_verb(italian, examine, future, pl, pos, [visioneranno]).
+ty_verb(italian, examine, future, sg(1), pos, [visionerò]).
+ty_verb(italian, examine, future, sg(2), pos, [visionerai]).
+ty_verb(italian, examine, future, pl(1), pos, [visioneremo]).
+ty_verb(italian, examine, future, pl(2), pos, [visionerete]).
+ty_verb(italian, favour, future, sg, pos, [privilegerà]).
+ty_verb(italian, favour, future, pl, pos, [privilegeranno]).
+ty_verb(italian, favour, future, sg(1), pos, [privilegerò]).
+ty_verb(italian, favour, future, sg(2), pos, [privilegerai]).
+ty_verb(italian, favour, future, pl(1), pos, [privilegeremo]).
+ty_verb(italian, favour, future, pl(2), pos, [privilegerete]).
+ty_verb(italian, float, future, sg, pos, [galleggerà]).
+ty_verb(italian, float, future, pl, pos, [galleggeranno]).
+ty_verb(italian, float, future, sg(1), pos, [galleggerò]).
+ty_verb(italian, float, future, sg(2), pos, [galleggerai]).
+ty_verb(italian, float, future, pl(1), pos, [galleggeremo]).
+ty_verb(italian, float, future, pl(2), pos, [galleggerete]).
+ty_verb(italian, freez, future, sg, pos, [gelerà]).
+ty_verb(italian, freez, future, pl, pos, [geleranno]).
+ty_verb(italian, freez, future, sg(1), pos, [gelerò]).
+ty_verb(italian, freez, future, sg(2), pos, [gelerai]).
+ty_verb(italian, freez, future, pl(1), pos, [geleremo]).
+ty_verb(italian, freez, future, pl(2), pos, [gelerete]).
+ty_verb(italian, gather, future, sg, pos, [congregherà]).
+ty_verb(italian, gather, future, pl, pos, [congregheranno]).
+ty_verb(italian, gather, future, sg(1), pos, [congregherò]).
+ty_verb(italian, gather, future, sg(2), pos, [congregherai]).
+ty_verb(italian, gather, future, pl(1), pos, [congregheremo]).
+ty_verb(italian, gather, future, pl(2), pos, [congregherete]).
+ty_verb(italian, get, future, sg, pos, [riceverà]).
+ty_verb(italian, get, future, pl, pos, [riceveranno]).
+ty_verb(italian, get, future, sg(1), pos, [riceverò]).
+ty_verb(italian, get, future, sg(2), pos, [riceverai]).
+ty_verb(italian, get, future, pl(1), pos, [riceveremo]).
+ty_verb(italian, get, future, pl(2), pos, [riceverete]).
+ty_verb(italian, give, future, sg, pos, [regalerà]).
+ty_verb(italian, give, future, pl, pos, [regaleranno]).
+ty_verb(italian, give, future, sg(1), pos, [regalerò]).
+ty_verb(italian, give, future, sg(2), pos, [regalerai]).
+ty_verb(italian, give, future, pl(1), pos, [regaleremo]).
+ty_verb(italian, give, future, pl(2), pos, [regalerete]).
+ty_verb(italian, happen, future, sg, pos, [sopravverrà]).
+ty_verb(italian, happen, future, pl, pos, [sopravverranno]).
+ty_verb(italian, happen, future, sg(1), pos, [sopravverrò]).
+ty_verb(italian, happen, future, sg(2), pos, [sopravverrai]).
+ty_verb(italian, happen, future, pl(1), pos, [sopravverremo]).
+ty_verb(italian, happen, future, pl(2), pos, [sopravverrete]).
+ty_verb(italian, increase, future, sg, pos, [incrementerà]).
+ty_verb(italian, increase, future, pl, pos, [incrementeranno]).
+ty_verb(italian, increase, future, sg(1), pos, [incrementerò]).
+ty_verb(italian, increase, future, sg(2), pos, [incrementerai]).
+ty_verb(italian, increase, future, pl(1), pos, [incrementeremo]).
+ty_verb(italian, increase, future, pl(2), pos, [incrementerete]).
+ty_verb(italian, inhale, future, sg, pos, [aspirerà]).
+ty_verb(italian, inhale, future, pl, pos, [aspireranno]).
+ty_verb(italian, inhale, future, sg(1), pos, [aspirerò]).
+ty_verb(italian, inhale, future, sg(2), pos, [aspirerai]).
+ty_verb(italian, inhale, future, pl(1), pos, [aspireremo]).
+ty_verb(italian, inhale, future, pl(2), pos, [aspirerete]).
+ty_verb(italian, interview, future, sg, pos, [intervisterà]).
+ty_verb(italian, interview, future, pl, pos, [intervisteranno]).
+ty_verb(italian, interview, future, sg(1), pos, [intervisterò]).
+ty_verb(italian, interview, future, sg(2), pos, [intervisterai]).
+ty_verb(italian, interview, future, pl(1), pos, [intervisteremo]).
+ty_verb(italian, interview, future, pl(2), pos, [intervisterete]).
+ty_verb(italian, investigate, future, sg, pos, [indagherà]).
+ty_verb(italian, investigate, future, pl, pos, [indagheranno]).
+ty_verb(italian, investigate, future, sg(1), pos, [indagherò]).
+ty_verb(italian, investigate, future, sg(2), pos, [indagherai]).
+ty_verb(italian, investigate, future, pl(1), pos, [indagheremo]).
+ty_verb(italian, investigate, future, pl(2), pos, [indagherete]).
+ty_verb(italian, know, future, sg, pos, [conoscerà]).
+ty_verb(italian, know, future, pl, pos, [conosceranno]).
+ty_verb(italian, know, future, sg(1), pos, [conoscerò]).
+ty_verb(italian, know, future, sg(2), pos, [conoscerai]).
+ty_verb(italian, know, future, pl(1), pos, [conosceremo]).
+ty_verb(italian, know, future, pl(2), pos, [conoscerete]).
+ty_verb(italian, leak, future, sg, pos, [colerà]).
+ty_verb(italian, leak, future, pl, pos, [coleranno]).
+ty_verb(italian, leak, future, sg(1), pos, [colerò]).
+ty_verb(italian, leak, future, sg(2), pos, [colerai]).
+ty_verb(italian, leak, future, pl(1), pos, [coleremo]).
+ty_verb(italian, leak, future, pl(2), pos, [colerete]).
+ty_verb(italian, lean, future, sg, pos, [addosserà]).
+ty_verb(italian, lean, future, pl, pos, [addosseranno]).
+ty_verb(italian, lean, future, sg(1), pos, [addosserò]).
+ty_verb(italian, lean, future, sg(2), pos, [addosserai]).
+ty_verb(italian, lean, future, pl(1), pos, [addosseremo]).
+ty_verb(italian, lean, future, pl(2), pos, [addosserete]).
+ty_verb(italian, learn, future, sg, pos, [imparerà]).
+ty_verb(italian, learn, future, pl, pos, [impareranno]).
+ty_verb(italian, learn, future, sg(1), pos, [imparerò]).
+ty_verb(italian, learn, future, sg(2), pos, [imparerai]).
+ty_verb(italian, learn, future, pl(1), pos, [impareremo]).
+ty_verb(italian, learn, future, pl(2), pos, [imparerete]).
+ty_verb(italian, fork, future, sg, pos, [inforcherà]).
+ty_verb(italian, fork, future, pl, pos, [inforcheranno]).
+ty_verb(italian, fork, future, sg(1), pos, [inforcherò]).
+ty_verb(italian, fork, future, sg(2), pos, [inforcherai]).
+ty_verb(italian, fork, future, pl(1), pos, [inforcheremo]).
+ty_verb(italian, fork, future, pl(2), pos, [inforcherete]).
+ty_verb(italian, level, future, sg, pos, [uniformerà]).
+ty_verb(italian, level, future, pl, pos, [uniformeranno]).
+ty_verb(italian, level, future, sg(1), pos, [uniformerò]).
+ty_verb(italian, level, future, sg(2), pos, [uniformerai]).
+ty_verb(italian, level, future, pl(1), pos, [uniformeremo]).
+ty_verb(italian, level, future, pl(2), pos, [uniformerete]).
+ty_verb(italian, like, future, sg, pos, [gusterà]).
+ty_verb(italian, like, future, pl, pos, [gusteranno]).
+ty_verb(italian, like, future, sg(1), pos, [gusterò]).
+ty_verb(italian, like, future, sg(2), pos, [gusterai]).
+ty_verb(italian, like, future, pl(1), pos, [gusteremo]).
+ty_verb(italian, like, future, pl(2), pos, [gusterete]).
+ty_verb(italian, mix, future, sg, pos, [mischierà]).
+ty_verb(italian, mix, future, pl, pos, [mischieranno]).
+ty_verb(italian, mix, future, sg(1), pos, [mischierò]).
+ty_verb(italian, mix, future, sg(2), pos, [mischierai]).
+ty_verb(italian, mix, future, pl(1), pos, [mischieremo]).
+ty_verb(italian, mix, future, pl(2), pos, [mischierete]).
+ty_verb(italian, neglect, future, sg, pos, [trascurerà]).
+ty_verb(italian, neglect, future, pl, pos, [trascureranno]).
+ty_verb(italian, neglect, future, sg(1), pos, [trascurerò]).
+ty_verb(italian, neglect, future, sg(2), pos, [trascurerai]).
+ty_verb(italian, neglect, future, pl(1), pos, [trascureremo]).
+ty_verb(italian, neglect, future, pl(2), pos, [trascurerete]).
+ty_verb(italian, offer, future, sg, pos, [brinderà]).
+ty_verb(italian, offer, future, pl, pos, [brinderanno]).
+ty_verb(italian, offer, future, sg(1), pos, [brinderò]).
+ty_verb(italian, offer, future, sg(2), pos, [brinderai]).
+ty_verb(italian, offer, future, pl(1), pos, [brinderemo]).
+ty_verb(italian, offer, future, pl(2), pos, [brinderete]).
+ty_verb(italian, pass, future, sg, pos, [transiterà]).
+ty_verb(italian, pass, future, pl, pos, [transiteranno]).
+ty_verb(italian, pass, future, sg(1), pos, [transiterò]).
+ty_verb(italian, pass, future, sg(2), pos, [transiterai]).
+ty_verb(italian, pass, future, pl(1), pos, [transiteremo]).
+ty_verb(italian, pass, future, pl(2), pos, [transiterete]).
+ty_verb(italian, peel, future, sg, pos, [monderà]).
+ty_verb(italian, peel, future, pl, pos, [monderanno]).
+ty_verb(italian, peel, future, sg(1), pos, [monderò]).
+ty_verb(italian, peel, future, sg(2), pos, [monderai]).
+ty_verb(italian, peel, future, pl(1), pos, [monderemo]).
+ty_verb(italian, peel, future, pl(2), pos, [monderete]).
+ty_verb(italian, pose, future, sg, pos, [poserà]).
+ty_verb(italian, pose, future, pl, pos, [poseranno]).
+ty_verb(italian, pose, future, sg(1), pos, [poserò]).
+ty_verb(italian, pose, future, sg(2), pos, [poserai]).
+ty_verb(italian, pose, future, pl(1), pos, [poseremo]).
+ty_verb(italian, pose, future, pl(2), pos, [poserete]).
+ty_verb(italian, pretend, future, sg, pos, [fingerà]).
+ty_verb(italian, pretend, future, pl, pos, [fingeranno]).
+ty_verb(italian, pretend, future, sg(1), pos, [fingerò]).
+ty_verb(italian, pretend, future, sg(2), pos, [fingerai]).
+ty_verb(italian, pretend, future, pl(1), pos, [fingeremo]).
+ty_verb(italian, pretend, future, pl(2), pos, [fingerete]).
+ty_verb(italian, protect, future, sg, pos, [tutelerà]).
+ty_verb(italian, protect, future, pl, pos, [tuteleranno]).
+ty_verb(italian, protect, future, sg(1), pos, [tutelerò]).
+ty_verb(italian, protect, future, sg(2), pos, [tutelerai]).
+ty_verb(italian, protect, future, pl(1), pos, [tuteleremo]).
+ty_verb(italian, protect, future, pl(2), pos, [tutelerete]).
+ty_verb(italian, punish, future, sg, pos, [castigherà]).
+ty_verb(italian, punish, future, pl, pos, [castigheranno]).
+ty_verb(italian, punish, future, sg(1), pos, [castigherò]).
+ty_verb(italian, punish, future, sg(2), pos, [castigherai]).
+ty_verb(italian, punish, future, pl(1), pos, [castigheremo]).
+ty_verb(italian, punish, future, pl(2), pos, [castigherete]).
+ty_verb(italian, put, future, sg, pos, [porrà]).
+ty_verb(italian, put, future, pl, pos, [porranno]).
+ty_verb(italian, put, future, sg(1), pos, [porrò]).
+ty_verb(italian, put, future, sg(2), pos, [porrai]).
+ty_verb(italian, put, future, pl(1), pos, [porremo]).
+ty_verb(italian, put, future, pl(2), pos, [porrete]).
+ty_verb(italian, regulate, future, sg, pos, [regolamenterà]).
+ty_verb(italian, regulate, future, pl, pos, [regolamenteranno]).
+ty_verb(italian, regulate, future, sg(1), pos, [regolamenterò]).
+ty_verb(italian, regulate, future, sg(2), pos, [regolamenterai]).
+ty_verb(italian, regulate, future, pl(1), pos, [regolamenteremo]).
+ty_verb(italian, regulate, future, pl(2), pos, [regolamenterete]).
+ty_verb(italian, remain, future, sg, pos, [permarrà]).
+ty_verb(italian, remain, future, pl, pos, [permarranno]).
+ty_verb(italian, remain, future, sg(1), pos, [permarrò]).
+ty_verb(italian, remain, future, sg(2), pos, [permarrai]).
+ty_verb(italian, remain, future, pl(1), pos, [permarremo]).
+ty_verb(italian, remain, future, pl(2), pos, [permarrete]).
+ty_verb(italian, reserve, future, sg, pos, [prenotherà]).
+ty_verb(italian, reserve, future, pl, pos, [prenotheranno]).
+ty_verb(italian, reserve, future, sg(1), pos, [prenotherò]).
+ty_verb(italian, reserve, future, sg(2), pos, [prenotherai]).
+ty_verb(italian, reserve, future, pl(1), pos, [prenotheremo]).
+ty_verb(italian, reserve, future, pl(2), pos, [prenotherete]).
+ty_verb(italian, return, future, sg, pos, [restituirà]).
+ty_verb(italian, return, future, pl, pos, [restituiranno]).
+ty_verb(italian, return, future, sg(1), pos, [restituirò]).
+ty_verb(italian, return, future, sg(2), pos, [restituirai]).
+ty_verb(italian, return, future, pl(1), pos, [restituiremo]).
+ty_verb(italian, return, future, pl(2), pos, [restituirete]).
+ty_verb(italian, satisfy, future, sg, pos, [soddisferà]).
+ty_verb(italian, satisfy, future, pl, pos, [soddisferanno]).
+ty_verb(italian, satisfy, future, sg(1), pos, [soddisferò]).
+ty_verb(italian, satisfy, future, sg(2), pos, [soddisferai]).
+ty_verb(italian, satisfy, future, pl(1), pos, [soddisferemo]).
+ty_verb(italian, satisfy, future, pl(2), pos, [soddisferete]).
+ty_verb(italian, sign, future, sg, pos, [siglerà]).
+ty_verb(italian, sign, future, pl, pos, [sigleranno]).
+ty_verb(italian, sign, future, sg(1), pos, [siglerò]).
+ty_verb(italian, sign, future, sg(2), pos, [siglerai]).
+ty_verb(italian, sign, future, pl(1), pos, [sigleremo]).
+ty_verb(italian, sign, future, pl(2), pos, [siglerete]).
+ty_verb(italian, situate, future, sg, pos, [ubicherà]).
+ty_verb(italian, situate, future, pl, pos, [ubicheranno]).
+ty_verb(italian, situate, future, sg(1), pos, [ubicherò]).
+ty_verb(italian, situate, future, sg(2), pos, [ubicherai]).
+ty_verb(italian, situate, future, pl(1), pos, [ubicheremo]).
+ty_verb(italian, situate, future, pl(2), pos, [ubicherete]).
+ty_verb(italian, take, future, sg, pos, [tarderà]).
+ty_verb(italian, take, future, pl, pos, [tarderanno]).
+ty_verb(italian, take, future, sg(1), pos, [tarderò]).
+ty_verb(italian, take, future, sg(2), pos, [tarderai]).
+ty_verb(italian, take, future, pl(1), pos, [tarderemo]).
+ty_verb(italian, take, future, pl(2), pos, [tarderete]).
+ty_verb(italian, tend, future, sg, pos, [tenderà]).
+ty_verb(italian, tend, future, pl, pos, [tenderanno]).
+ty_verb(italian, tend, future, sg(1), pos, [tenderò]).
+ty_verb(italian, tend, future, sg(2), pos, [tenderai]).
+ty_verb(italian, tend, future, pl(1), pos, [tenderemo]).
+ty_verb(italian, tend, future, pl(2), pos, [tenderete]).
+ty_verb(italian, turn, future, sg, pos, [virerà]).
+ty_verb(italian, turn, future, pl, pos, [vireranno]).
+ty_verb(italian, turn, future, sg(1), pos, [virerò]).
+ty_verb(italian, turn, future, sg(2), pos, [virerai]).
+ty_verb(italian, turn, future, pl(1), pos, [vireremo]).
+ty_verb(italian, turn, future, pl(2), pos, [virerete]).
+ty_verb(italian, twist, future, sg, pos, [storcerà]).
+ty_verb(italian, twist, future, pl, pos, [storceranno]).
+ty_verb(italian, twist, future, sg(1), pos, [storcerò]).
+ty_verb(italian, twist, future, sg(2), pos, [storcerai]).
+ty_verb(italian, twist, future, pl(1), pos, [storceremo]).
+ty_verb(italian, twist, future, pl(2), pos, [storcerete]).
+ty_verb(italian, validate, future, sg, pos, [validerà]).
+ty_verb(italian, validate, future, pl, pos, [valideranno]).
+ty_verb(italian, validate, future, sg(1), pos, [validerò]).
+ty_verb(italian, validate, future, sg(2), pos, [validerai]).
+ty_verb(italian, validate, future, pl(1), pos, [valideremo]).
+ty_verb(italian, validate, future, pl(2), pos, [validerete]).
+ty_verb(italian, wash, future, sg, pos, [laverà]).
+ty_verb(italian, wash, future, pl, pos, [laveranno]).
+ty_verb(italian, wash, future, sg(1), pos, [laverò]).
+ty_verb(italian, wash, future, sg(2), pos, [laverai]).
+ty_verb(italian, wash, future, pl(1), pos, [laveremo]).
+ty_verb(italian, wash, future, pl(2), pos, [laverete]).
+ty_verb(italian, weaken, future, sg, pos, [indebolirà]).
+ty_verb(italian, weaken, future, pl, pos, [indeboliranno]).
+ty_verb(italian, weaken, future, sg(1), pos, [indebolirò]).
+ty_verb(italian, weaken, future, sg(2), pos, [indebolirai]).
+ty_verb(italian, weaken, future, pl(1), pos, [indeboliremo]).
+ty_verb(italian, weaken, future, pl(2), pos, [indebolirete]).
+ty_verb(italian, scratch, future, sg, pos, [gratterà]).
+ty_verb(italian, scratch, future, pl, pos, [gratteranno]).
+ty_verb(italian, scratch, future, sg(1), pos, [gratterò]).
+ty_verb(italian, scratch, future, sg(2), pos, [gratterai]).
+ty_verb(italian, scratch, future, pl(1), pos, [gratteremo]).
+ty_verb(italian, scratch, future, pl(2), pos, [gratterete]).
+ty_verb(italian, stress, future, sg, pos, [sottolineerà]).
+ty_verb(italian, stress, future, pl, pos, [sottolineeranno]).
+ty_verb(italian, stress, future, sg(1), pos, [sottolineerò]).
+ty_verb(italian, stress, future, sg(2), pos, [sottolineerai]).
+ty_verb(italian, stress, future, pl(1), pos, [sottolineeremo]).
+ty_verb(italian, stress, future, pl(2), pos, [sottolineerete]).
+ty_verb(italian, sneak, future, sg, pos, [intrufolerà]).
+ty_verb(italian, sneak, future, pl, pos, [intrufoleranno]).
+ty_verb(italian, sneak, future, sg(1), pos, [intrufolerò]).
+ty_verb(italian, sneak, future, sg(2), pos, [intrufolerai]).
+ty_verb(italian, sneak, future, pl(1), pos, [intrufoleremo]).
+ty_verb(italian, sneak, future, pl(2), pos, [intrufolerete]).
+ty_verb(italian, wobble, future, sg, pos, [traballerà]).
+ty_verb(italian, wobble, future, pl, pos, [traballeranno]).
+ty_verb(italian, wobble, future, sg(1), pos, [traballerò]).
+ty_verb(italian, wobble, future, sg(2), pos, [traballerai]).
+ty_verb(italian, wobble, future, pl(1), pos, [traballeremo]).
+ty_verb(italian, wobble, future, pl(2), pos, [traballerete]).
+ty_verb(italian, scatter, future, sg, pos, [spargerà]).
+ty_verb(italian, scatter, future, pl, pos, [spargeranno]).
+ty_verb(italian, scatter, future, sg(1), pos, [spargerò]).
+ty_verb(italian, scatter, future, sg(2), pos, [spargerai]).
+ty_verb(italian, scatter, future, pl(1), pos, [spargeremo]).
+ty_verb(italian, scatter, future, pl(2), pos, [spargerete]).
+ty_verb(italian, involve, future, sg, pos, [coinvolgerà]).
+ty_verb(italian, involve, future, pl, pos, [coinvolgeranno]).
+ty_verb(italian, involve, future, sg(1), pos, [coinvolgerò]).
+ty_verb(italian, involve, future, sg(2), pos, [coinvolgerai]).
+ty_verb(italian, involve, future, pl(1), pos, [coinvolgeremo]).
+ty_verb(italian, involve, future, pl(2), pos, [coinvolgerete]).
+ty_verb(italian, torpedo, future, sg, pos, [saboterà]).
+ty_verb(italian, torpedo, future, pl, pos, [saboteranno]).
+ty_verb(italian, torpedo, future, sg(1), pos, [saboterò]).
+ty_verb(italian, torpedo, future, sg(2), pos, [saboterai]).
+ty_verb(italian, torpedo, future, pl(1), pos, [saboteremo]).
+ty_verb(italian, torpedo, future, pl(2), pos, [saboterete]).
+ty_verb(italian, emphasiz, future, sg, pos, [sottolineerà]).
+ty_verb(italian, emphasiz, future, pl, pos, [sottolineeranno]).
+ty_verb(italian, emphasiz, future, sg(1), pos, [sottolineerò]).
+ty_verb(italian, emphasiz, future, sg(2), pos, [sottolineerai]).
+ty_verb(italian, emphasiz, future, pl(1), pos, [sottolineeremo]).
+ty_verb(italian, emphasiz, future, pl(2), pos, [sottolineerete]).
+ty_verb(italian, practice, future, sg, pos, [praticherà]).
+ty_verb(italian, practice, future, pl, pos, [praticheranno]).
+ty_verb(italian, practice, future, sg(1), pos, [praticherò]).
+ty_verb(italian, practice, future, sg(2), pos, [praticherai]).
+ty_verb(italian, practice, future, pl(1), pos, [praticheremo]).
+ty_verb(italian, practice, future, pl(2), pos, [praticherete]).
+ty_verb(italian, reinstate, future, sg, pos, [ristabilirà]).
+ty_verb(italian, reinstate, future, pl, pos, [ristabiliranno]).
+ty_verb(italian, reinstate, future, sg(1), pos, [ristabilirò]).
+ty_verb(italian, reinstate, future, sg(2), pos, [ristabilirai]).
+ty_verb(italian, reinstate, future, pl(1), pos, [ristabiliremo]).
+ty_verb(italian, reinstate, future, pl(2), pos, [ristabilirete]).
+ty_verb(italian, rip, future, sg, pos, [strapperà]).
+ty_verb(italian, rip, future, pl, pos, [strapperanno]).
+ty_verb(italian, rip, future, sg(1), pos, [strapperò]).
+ty_verb(italian, rip, future, sg(2), pos, [strapperai]).
+ty_verb(italian, rip, future, pl(1), pos, [strapperemo]).
+ty_verb(italian, rip, future, pl(2), pos, [strapperete]).
+ty_verb(italian, rub, future, sg, pos, [strofinherà]).
+ty_verb(italian, rub, future, pl, pos, [strofinheranno]).
+ty_verb(italian, rub, future, sg(1), pos, [strofinherò]).
+ty_verb(italian, rub, future, sg(2), pos, [strofinherai]).
+ty_verb(italian, rub, future, pl(1), pos, [strofinheremo]).
+ty_verb(italian, rub, future, pl(2), pos, [strofinherete]).
+ty_verb(italian, schedule, future, sg, pos, [pianificherà]).
+ty_verb(italian, schedule, future, pl, pos, [pianificheranno]).
+ty_verb(italian, schedule, future, sg(1), pos, [pianificherò]).
+ty_verb(italian, schedule, future, sg(2), pos, [pianificherai]).
+ty_verb(italian, schedule, future, pl(1), pos, [pianificheremo]).
+ty_verb(italian, schedule, future, pl(2), pos, [pianificherete]).
+ty_verb(italian, shiver, future, sg, pos, [tremerà]).
+ty_verb(italian, shiver, future, pl, pos, [tremeranno]).
+ty_verb(italian, shiver, future, sg(1), pos, [tremerò]).
+ty_verb(italian, shiver, future, sg(2), pos, [tremerai]).
+ty_verb(italian, shiver, future, pl(1), pos, [tremeremo]).
+ty_verb(italian, shiver, future, pl(2), pos, [tremerete]).
+ty_verb(italian, surface, future, sg, pos, [emergerà]).
+ty_verb(italian, surface, future, pl, pos, [emergeranno]).
+ty_verb(italian, surface, future, sg(1), pos, [emergerò]).
+ty_verb(italian, surface, future, sg(2), pos, [emergerai]).
+ty_verb(italian, surface, future, pl(1), pos, [emergeremo]).
+ty_verb(italian, surface, future, pl(2), pos, [emergerete]).
+ty_verb(italian, abide, future, sg, pos, [sopporterà]).
+ty_verb(italian, abide, future, pl, pos, [sopporteranno]).
+ty_verb(italian, abide, future, sg(1), pos, [sopporterò]).
+ty_verb(italian, abide, future, sg(2), pos, [sopporterai]).
+ty_verb(italian, abide, future, pl(1), pos, [sopporteremo]).
+ty_verb(italian, abide, future, pl(2), pos, [sopporterete]).
+ty_verb(italian, accredit, future, sg, pos, [accrediterà]).
+ty_verb(italian, accredit, future, pl, pos, [accrediteranno]).
+ty_verb(italian, accredit, future, sg(1), pos, [accrediterò]).
+ty_verb(italian, accredit, future, sg(2), pos, [accrediterai]).
+ty_verb(italian, accredit, future, pl(1), pos, [accrediteremo]).
+ty_verb(italian, accredit, future, pl(2), pos, [accrediterete]).
+ty_verb(italian, aim, future, sg, pos, [punterà]).
+ty_verb(italian, aim, future, pl, pos, [punteranno]).
+ty_verb(italian, aim, future, sg(1), pos, [punterò]).
+ty_verb(italian, aim, future, sg(2), pos, [punterai]).
+ty_verb(italian, aim, future, pl(1), pos, [punteremo]).
+ty_verb(italian, aim, future, pl(2), pos, [punterete]).
+ty_verb(italian, amend, future, sg, pos, [modificherà]).
+ty_verb(italian, amend, future, pl, pos, [modificheranno]).
+ty_verb(italian, amend, future, sg(1), pos, [modificherò]).
+ty_verb(italian, amend, future, sg(2), pos, [modificherai]).
+ty_verb(italian, amend, future, pl(1), pos, [modificheremo]).
+ty_verb(italian, amend, future, pl(2), pos, [modificherete]).
+ty_verb(italian, appraise, future, sg, pos, [valuterà]).
+ty_verb(italian, appraise, future, pl, pos, [valuteranno]).
+ty_verb(italian, appraise, future, sg(1), pos, [valuterò]).
+ty_verb(italian, appraise, future, sg(2), pos, [valuterai]).
+ty_verb(italian, appraise, future, pl(1), pos, [valuteremo]).
+ty_verb(italian, appraise, future, pl(2), pos, [valuterete]).
+ty_verb(italian, argue, future, sg, pos, [litigherà]).
+ty_verb(italian, argue, future, pl, pos, [litigheranno]).
+ty_verb(italian, argue, future, sg(1), pos, [litigherò]).
+ty_verb(italian, argue, future, sg(2), pos, [litigherai]).
+ty_verb(italian, argue, future, pl(1), pos, [litigheremo]).
+ty_verb(italian, argue, future, pl(2), pos, [litigherete]).
+ty_verb(italian, assert, future, sg, pos, [affermerà]).
+ty_verb(italian, assert, future, pl, pos, [affermeranno]).
+ty_verb(italian, assert, future, sg(1), pos, [affermerò]).
+ty_verb(italian, assert, future, sg(2), pos, [affermerai]).
+ty_verb(italian, assert, future, pl(1), pos, [affermeremo]).
+ty_verb(italian, assert, future, pl(2), pos, [affermerete]).
+ty_verb(italian, audit, future, sg, pos, [verificherà]).
+ty_verb(italian, audit, future, pl, pos, [verificheranno]).
+ty_verb(italian, audit, future, sg(1), pos, [verificherò]).
+ty_verb(italian, audit, future, sg(2), pos, [verificherai]).
+ty_verb(italian, audit, future, pl(1), pos, [verificheremo]).
+ty_verb(italian, audit, future, pl(2), pos, [verificherete]).
+ty_verb(italian, sieve, future, sg, pos, [setaccerà]).
+ty_verb(italian, sieve, future, pl, pos, [setacceranno]).
+ty_verb(italian, sieve, future, sg(1), pos, [setaccerò]).
+ty_verb(italian, sieve, future, sg(2), pos, [setaccerai]).
+ty_verb(italian, sieve, future, pl(1), pos, [setacceremo]).
+ty_verb(italian, sieve, future, pl(2), pos, [setaccerete]).
+ty_verb(italian, spill, future, sg, pos, [verserà]).
+ty_verb(italian, spill, future, pl, pos, [verseranno]).
+ty_verb(italian, spill, future, sg(1), pos, [verserò]).
+ty_verb(italian, spill, future, sg(2), pos, [verserai]).
+ty_verb(italian, spill, future, pl(1), pos, [verseremo]).
+ty_verb(italian, spill, future, pl(2), pos, [verserete]).
+ty_verb(italian, stink, future, sg, pos, [puzzerà]).
+ty_verb(italian, stink, future, pl, pos, [puzzeranno]).
+ty_verb(italian, stink, future, sg(1), pos, [puzzerò]).
+ty_verb(italian, stink, future, sg(2), pos, [puzzerai]).
+ty_verb(italian, stink, future, pl(1), pos, [puzzeremo]).
+ty_verb(italian, stink, future, pl(2), pos, [puzzerete]).
+ty_verb(italian, suffice, future, sg, pos, [basterà]).
+ty_verb(italian, suffice, future, pl, pos, [basteranno]).
+ty_verb(italian, suffice, future, sg(1), pos, [basterò]).
+ty_verb(italian, suffice, future, sg(2), pos, [basterai]).
+ty_verb(italian, suffice, future, pl(1), pos, [basteremo]).
+ty_verb(italian, suffice, future, pl(2), pos, [basterete]).
+ty_verb(italian, stripe, future, sg, pos, [sbarrerà]).
+ty_verb(italian, stripe, future, pl, pos, [sbarreranno]).
+ty_verb(italian, stripe, future, sg(1), pos, [sbarrerò]).
+ty_verb(italian, stripe, future, sg(2), pos, [sbarrerai]).
+ty_verb(italian, stripe, future, pl(1), pos, [sbarreremo]).
+ty_verb(italian, stripe, future, pl(2), pos, [sbarrerete]).
+ty_verb(italian, second, future, sg, pos, [appoggerà]).
+ty_verb(italian, second, future, pl, pos, [appoggeranno]).
+ty_verb(italian, second, future, sg(1), pos, [appoggerò]).
+ty_verb(italian, second, future, sg(2), pos, [appoggerai]).
+ty_verb(italian, second, future, pl(1), pos, [appoggeremo]).
+ty_verb(italian, second, future, pl(2), pos, [appoggerete]).
+ty_verb(italian, baffle, future, sg, pos, [sconcerterà]).
+ty_verb(italian, baffle, future, pl, pos, [sconcerteranno]).
+ty_verb(italian, baffle, future, sg(1), pos, [sconcerterò]).
+ty_verb(italian, baffle, future, sg(2), pos, [sconcerterai]).
+ty_verb(italian, baffle, future, pl(1), pos, [sconcerteremo]).
+ty_verb(italian, baffle, future, pl(2), pos, [sconcerterete]).
+ty_verb(italian, ban, future, sg, pos, [proibirà]).
+ty_verb(italian, ban, future, pl, pos, [proibiranno]).
+ty_verb(italian, ban, future, sg(1), pos, [proibirò]).
+ty_verb(italian, ban, future, sg(2), pos, [proibirai]).
+ty_verb(italian, ban, future, pl(1), pos, [proibiremo]).
+ty_verb(italian, ban, future, pl(2), pos, [proibirete]).
+ty_verb(italian, bang, future, sg, pos, [colpirà]).
+ty_verb(italian, bang, future, pl, pos, [colpiranno]).
+ty_verb(italian, bang, future, sg(1), pos, [colpirò]).
+ty_verb(italian, bang, future, sg(2), pos, [colpirai]).
+ty_verb(italian, bang, future, pl(1), pos, [colpiremo]).
+ty_verb(italian, bang, future, pl(2), pos, [colpirete]).
+ty_verb(italian, bed, future, sg, pos, [alloggerà]).
+ty_verb(italian, bed, future, pl, pos, [alloggeranno]).
+ty_verb(italian, bed, future, sg(1), pos, [alloggerò]).
+ty_verb(italian, bed, future, sg(2), pos, [alloggerai]).
+ty_verb(italian, bed, future, pl(1), pos, [alloggeremo]).
+ty_verb(italian, bed, future, pl(2), pos, [alloggerete]).
+ty_verb(italian, skew, future, sg, pos, [inclinerà]).
+ty_verb(italian, skew, future, pl, pos, [inclineranno]).
+ty_verb(italian, skew, future, sg(1), pos, [inclinerò]).
+ty_verb(italian, skew, future, sg(2), pos, [inclinerai]).
+ty_verb(italian, skew, future, pl(1), pos, [inclineremo]).
+ty_verb(italian, skew, future, pl(2), pos, [inclinerete]).
+ty_verb(italian, bewitch, future, sg, pos, [incanterà]).
+ty_verb(italian, bewitch, future, pl, pos, [incanteranno]).
+ty_verb(italian, bewitch, future, sg(1), pos, [incanterò]).
+ty_verb(italian, bewitch, future, sg(2), pos, [incanterai]).
+ty_verb(italian, bewitch, future, pl(1), pos, [incanteremo]).
+ty_verb(italian, bewitch, future, pl(2), pos, [incanterete]).
+ty_verb(italian, biass, future, sg, pos, [influenzerà]).
+ty_verb(italian, biass, future, pl, pos, [influenzeranno]).
+ty_verb(italian, biass, future, sg(1), pos, [influenzerò]).
+ty_verb(italian, biass, future, sg(2), pos, [influenzerai]).
+ty_verb(italian, biass, future, pl(1), pos, [influenzeremo]).
+ty_verb(italian, biass, future, pl(2), pos, [influenzerete]).
+ty_verb(italian, bind, future, sg, pos, [legherà]).
+ty_verb(italian, bind, future, pl, pos, [legheranno]).
+ty_verb(italian, bind, future, sg(1), pos, [legherò]).
+ty_verb(italian, bind, future, sg(2), pos, [legherai]).
+ty_verb(italian, bind, future, pl(1), pos, [legheremo]).
+ty_verb(italian, bind, future, pl(2), pos, [legherete]).
+ty_verb(italian, book, future, sg, pos, [riserverà]).
+ty_verb(italian, book, future, pl, pos, [riserveranno]).
+ty_verb(italian, book, future, sg(1), pos, [riserverò]).
+ty_verb(italian, book, future, sg(2), pos, [riserverai]).
+ty_verb(italian, book, future, pl(1), pos, [riserveremo]).
+ty_verb(italian, book, future, pl(2), pos, [riserverete]).
+ty_verb(italian, bother, future, sg, pos, [molesterà]).
+ty_verb(italian, bother, future, pl, pos, [molesteranno]).
+ty_verb(italian, bother, future, sg(1), pos, [molesterò]).
+ty_verb(italian, bother, future, sg(2), pos, [molesterai]).
+ty_verb(italian, bother, future, pl(1), pos, [molesteremo]).
+ty_verb(italian, bother, future, pl(2), pos, [molesterete]).
+ty_verb(italian, brave, future, sg, pos, [affronterà]).
+ty_verb(italian, brave, future, pl, pos, [affronteranno]).
+ty_verb(italian, brave, future, sg(1), pos, [affronterò]).
+ty_verb(italian, brave, future, sg(2), pos, [affronterai]).
+ty_verb(italian, brave, future, pl(1), pos, [affronteremo]).
+ty_verb(italian, brave, future, pl(2), pos, [affronterete]).
+ty_verb(italian, bump, future, sg, pos, [colpirà]).
+ty_verb(italian, bump, future, pl, pos, [colpiranno]).
+ty_verb(italian, bump, future, sg(1), pos, [colpirò]).
+ty_verb(italian, bump, future, sg(2), pos, [colpirai]).
+ty_verb(italian, bump, future, pl(1), pos, [colpiremo]).
+ty_verb(italian, bump, future, pl(2), pos, [colpirete]).
+ty_verb(italian, care, future, sg, pos, [importerà]).
+ty_verb(italian, care, future, pl, pos, [importeranno]).
+ty_verb(italian, care, future, sg(1), pos, [importerò]).
+ty_verb(italian, care, future, sg(2), pos, [importerai]).
+ty_verb(italian, care, future, pl(1), pos, [importeremo]).
+ty_verb(italian, care, future, pl(2), pos, [importerete]).
+ty_verb(italian, carry, future, sg, pos, [porterà]).
+ty_verb(italian, carry, future, pl, pos, [porteranno]).
+ty_verb(italian, carry, future, sg(1), pos, [porterò]).
+ty_verb(italian, carry, future, sg(2), pos, [porterai]).
+ty_verb(italian, carry, future, pl(1), pos, [porteremo]).
+ty_verb(italian, carry, future, pl(2), pos, [porterete]).
+ty_verb(italian, cast, future, sg, pos, [lancerà]).
+ty_verb(italian, cast, future, pl, pos, [lanceranno]).
+ty_verb(italian, cast, future, sg(1), pos, [lancerò]).
+ty_verb(italian, cast, future, sg(2), pos, [lancerai]).
+ty_verb(italian, cast, future, pl(1), pos, [lanceremo]).
+ty_verb(italian, cast, future, pl(2), pos, [lancerete]).
+ty_verb(italian, cheer, future, sg, pos, [acclamerà]).
+ty_verb(italian, cheer, future, pl, pos, [acclameranno]).
+ty_verb(italian, cheer, future, sg(1), pos, [acclamerò]).
+ty_verb(italian, cheer, future, sg(2), pos, [acclamerai]).
+ty_verb(italian, cheer, future, pl(1), pos, [acclameremo]).
+ty_verb(italian, cheer, future, pl(2), pos, [acclamerete]).
+ty_verb(italian, concern, future, sg, pos, [riguarderà]).
+ty_verb(italian, concern, future, pl, pos, [riguarderanno]).
+ty_verb(italian, concern, future, sg(1), pos, [riguarderò]).
+ty_verb(italian, concern, future, sg(2), pos, [riguarderai]).
+ty_verb(italian, concern, future, pl(1), pos, [riguarderemo]).
+ty_verb(italian, concern, future, pl(2), pos, [riguarderete]).
+ty_verb(italian, confront, future, sg, pos, [affronterà]).
+ty_verb(italian, confront, future, pl, pos, [affronteranno]).
+ty_verb(italian, confront, future, sg(1), pos, [affronterò]).
+ty_verb(italian, confront, future, sg(2), pos, [affronterai]).
+ty_verb(italian, confront, future, pl(1), pos, [affronteremo]).
+ty_verb(italian, confront, future, pl(2), pos, [affronterete]).
+ty_verb(italian, congregate, future, sg, pos, [congregherà]).
+ty_verb(italian, congregate, future, pl, pos, [congregheranno]).
+ty_verb(italian, congregate, future, sg(1), pos, [congregherò]).
+ty_verb(italian, congregate, future, sg(2), pos, [congregherai]).
+ty_verb(italian, congregate, future, pl(1), pos, [congregheremo]).
+ty_verb(italian, congregate, future, pl(2), pos, [congregherete]).
+ty_verb(italian, constrain, future, sg, pos, [costringerà]).
+ty_verb(italian, constrain, future, pl, pos, [costringeranno]).
+ty_verb(italian, constrain, future, sg(1), pos, [costringerò]).
+ty_verb(italian, constrain, future, sg(2), pos, [costringerai]).
+ty_verb(italian, constrain, future, pl(1), pos, [costringeremo]).
+ty_verb(italian, constrain, future, pl(2), pos, [costringerete]).
+ty_verb(italian, consummate, future, sg, pos, [consumerà]).
+ty_verb(italian, consummate, future, pl, pos, [consumeranno]).
+ty_verb(italian, consummate, future, sg(1), pos, [consumerò]).
+ty_verb(italian, consummate, future, sg(2), pos, [consumerai]).
+ty_verb(italian, consummate, future, pl(1), pos, [consumeremo]).
+ty_verb(italian, consummate, future, pl(2), pos, [consumerete]).
+ty_verb(italian, pipe, future, sg, pos, [trasmetterà]).
+ty_verb(italian, pipe, future, pl, pos, [trasmetteranno]).
+ty_verb(italian, pipe, future, sg(1), pos, [trasmetterò]).
+ty_verb(italian, pipe, future, sg(2), pos, [trasmetterai]).
+ty_verb(italian, pipe, future, pl(1), pos, [trasmetteremo]).
+ty_verb(italian, pipe, future, pl(2), pos, [trasmetterete]).
+ty_verb(italian, convict, future, sg, pos, [condannerà]).
+ty_verb(italian, convict, future, pl, pos, [condanneranno]).
+ty_verb(italian, convict, future, sg(1), pos, [condannerò]).
+ty_verb(italian, convict, future, sg(2), pos, [condannerai]).
+ty_verb(italian, convict, future, pl(1), pos, [condanneremo]).
+ty_verb(italian, convict, future, pl(2), pos, [condannerete]).
+ty_verb(italian, cope, future, sg, pos, [sopporterà]).
+ty_verb(italian, cope, future, pl, pos, [sopporteranno]).
+ty_verb(italian, cope, future, sg(1), pos, [sopporterò]).
+ty_verb(italian, cope, future, sg(2), pos, [sopporterai]).
+ty_verb(italian, cope, future, pl(1), pos, [sopporteremo]).
+ty_verb(italian, cope, future, pl(2), pos, [sopporterete]).
+ty_verb(italian, counsel, future, sg, pos, [consiglierà]).
+ty_verb(italian, counsel, future, pl, pos, [consiglieranno]).
+ty_verb(italian, counsel, future, sg(1), pos, [consiglierò]).
+ty_verb(italian, counsel, future, sg(2), pos, [consiglierai]).
+ty_verb(italian, counsel, future, pl(1), pos, [consiglieremo]).
+ty_verb(italian, counsel, future, pl(2), pos, [consiglierete]).
+ty_verb(italian, crease, future, sg, pos, [danneggerà]).
+ty_verb(italian, crease, future, pl, pos, [danneggeranno]).
+ty_verb(italian, crease, future, sg(1), pos, [danneggerò]).
+ty_verb(italian, crease, future, sg(2), pos, [danneggerai]).
+ty_verb(italian, crease, future, pl(1), pos, [danneggeremo]).
+ty_verb(italian, crease, future, pl(2), pos, [danneggerete]).
+ty_verb(italian, darken, future, sg, pos, [oscurerà]).
+ty_verb(italian, darken, future, pl, pos, [oscureranno]).
+ty_verb(italian, darken, future, sg(1), pos, [oscurerò]).
+ty_verb(italian, darken, future, sg(2), pos, [oscurerai]).
+ty_verb(italian, darken, future, pl(1), pos, [oscureremo]).
+ty_verb(italian, darken, future, pl(2), pos, [oscurerete]).
+ty_verb(italian, deceive, future, sg, pos, [ingannerà]).
+ty_verb(italian, deceive, future, pl, pos, [inganneranno]).
+ty_verb(italian, deceive, future, sg(1), pos, [ingannerò]).
+ty_verb(italian, deceive, future, sg(2), pos, [ingannerai]).
+ty_verb(italian, deceive, future, pl(1), pos, [inganneremo]).
+ty_verb(italian, deceive, future, pl(2), pos, [ingannerete]).
+ty_verb(italian, defy, future, sg, pos, [sfiderà]).
+ty_verb(italian, defy, future, pl, pos, [sfideranno]).
+ty_verb(italian, defy, future, sg(1), pos, [sfiderò]).
+ty_verb(italian, defy, future, sg(2), pos, [sfiderai]).
+ty_verb(italian, defy, future, pl(1), pos, [sfideremo]).
+ty_verb(italian, defy, future, pl(2), pos, [sfiderete]).
+ty_verb(italian, demand, future, sg, pos, [reclamerà]).
+ty_verb(italian, demand, future, pl, pos, [reclameranno]).
+ty_verb(italian, demand, future, sg(1), pos, [reclamerò]).
+ty_verb(italian, demand, future, sg(2), pos, [reclamerai]).
+ty_verb(italian, demand, future, pl(1), pos, [reclameremo]).
+ty_verb(italian, demand, future, pl(2), pos, [reclamerete]).
+ty_verb(italian, depict, future, sg, pos, [descriverà]).
+ty_verb(italian, depict, future, pl, pos, [descriveranno]).
+ty_verb(italian, depict, future, sg(1), pos, [descriverò]).
+ty_verb(italian, depict, future, sg(2), pos, [descriverai]).
+ty_verb(italian, depict, future, pl(1), pos, [descriveremo]).
+ty_verb(italian, depict, future, pl(2), pos, [descriverete]).
+ty_verb(italian, detect, future, sg, pos, [scoprirà]).
+ty_verb(italian, detect, future, pl, pos, [scopriranno]).
+ty_verb(italian, detect, future, sg(1), pos, [scoprirò]).
+ty_verb(italian, detect, future, sg(2), pos, [scoprirai]).
+ty_verb(italian, detect, future, pl(1), pos, [scopriremo]).
+ty_verb(italian, detect, future, pl(2), pos, [scoprirete]).
+ty_verb(italian, devote, future, sg, pos, [dedicherà]).
+ty_verb(italian, devote, future, pl, pos, [dedicheranno]).
+ty_verb(italian, devote, future, sg(1), pos, [dedicherò]).
+ty_verb(italian, devote, future, sg(2), pos, [dedicherai]).
+ty_verb(italian, devote, future, pl(1), pos, [dedicheremo]).
+ty_verb(italian, devote, future, pl(2), pos, [dedicherete]).
+ty_verb(italian, discern, future, sg, pos, [percepirà]).
+ty_verb(italian, discern, future, pl, pos, [percepiranno]).
+ty_verb(italian, discern, future, sg(1), pos, [percepirò]).
+ty_verb(italian, discern, future, sg(2), pos, [percepirai]).
+ty_verb(italian, discern, future, pl(1), pos, [percepiremo]).
+ty_verb(italian, discern, future, pl(2), pos, [percepirete]).
+ty_verb(italian, disclose, future, sg, pos, [rivelerà]).
+ty_verb(italian, disclose, future, pl, pos, [riveleranno]).
+ty_verb(italian, disclose, future, sg(1), pos, [rivelerò]).
+ty_verb(italian, disclose, future, sg(2), pos, [rivelerai]).
+ty_verb(italian, disclose, future, pl(1), pos, [riveleremo]).
+ty_verb(italian, disclose, future, pl(2), pos, [rivelerete]).
+ty_verb(italian, dish, future, sg, pos, [servirà]).
+ty_verb(italian, dish, future, pl, pos, [serviranno]).
+ty_verb(italian, dish, future, sg(1), pos, [servirò]).
+ty_verb(italian, dish, future, sg(2), pos, [servirai]).
+ty_verb(italian, dish, future, pl(1), pos, [serviremo]).
+ty_verb(italian, dish, future, pl(2), pos, [servirete]).
+ty_verb(italian, dismantle, future, sg, pos, [smonterà]).
+ty_verb(italian, dismantle, future, pl, pos, [smonteranno]).
+ty_verb(italian, dismantle, future, sg(1), pos, [smonterò]).
+ty_verb(italian, dismantle, future, sg(2), pos, [smonterai]).
+ty_verb(italian, dismantle, future, pl(1), pos, [smonteremo]).
+ty_verb(italian, dismantle, future, pl(2), pos, [smonterete]).
+ty_verb(italian, disseminate, future, sg, pos, [diffonderà]).
+ty_verb(italian, disseminate, future, pl, pos, [diffonderanno]).
+ty_verb(italian, disseminate, future, sg(1), pos, [diffonderò]).
+ty_verb(italian, disseminate, future, sg(2), pos, [diffonderai]).
+ty_verb(italian, disseminate, future, pl(1), pos, [diffonderemo]).
+ty_verb(italian, disseminate, future, pl(2), pos, [diffonderete]).
+ty_verb(italian, dissipate, future, sg, pos, [dissiperà]).
+ty_verb(italian, dissipate, future, pl, pos, [dissiperanno]).
+ty_verb(italian, dissipate, future, sg(1), pos, [dissiperò]).
+ty_verb(italian, dissipate, future, sg(2), pos, [dissiperai]).
+ty_verb(italian, dissipate, future, pl(1), pos, [dissiperemo]).
+ty_verb(italian, dissipate, future, pl(2), pos, [dissiperete]).
+ty_verb(italian, distress, future, sg, pos, [affliggerà]).
+ty_verb(italian, distress, future, pl, pos, [affliggeranno]).
+ty_verb(italian, distress, future, sg(1), pos, [affliggerò]).
+ty_verb(italian, distress, future, sg(2), pos, [affliggerai]).
+ty_verb(italian, distress, future, pl(1), pos, [affliggeremo]).
+ty_verb(italian, distress, future, pl(2), pos, [affliggerete]).
+ty_verb(italian, dope, future, sg, pos, [drogherà]).
+ty_verb(italian, dope, future, pl, pos, [drogheranno]).
+ty_verb(italian, dope, future, sg(1), pos, [drogherò]).
+ty_verb(italian, dope, future, sg(2), pos, [drogherai]).
+ty_verb(italian, dope, future, pl(1), pos, [drogheremo]).
+ty_verb(italian, dope, future, pl(2), pos, [drogherete]).
+ty_verb(italian, drain, future, sg, pos, [colerà]).
+ty_verb(italian, drain, future, pl, pos, [coleranno]).
+ty_verb(italian, drain, future, sg(1), pos, [colerò]).
+ty_verb(italian, drain, future, sg(2), pos, [colerai]).
+ty_verb(italian, drain, future, pl(1), pos, [coleremo]).
+ty_verb(italian, drain, future, pl(2), pos, [colerete]).
+ty_verb(italian, draw, future, sg, pos, [disegnerà]).
+ty_verb(italian, draw, future, pl, pos, [disegneranno]).
+ty_verb(italian, draw, future, sg(1), pos, [disegnerò]).
+ty_verb(italian, draw, future, sg(2), pos, [disegnerai]).
+ty_verb(italian, draw, future, pl(1), pos, [disegneremo]).
+ty_verb(italian, draw, future, pl(2), pos, [disegnerete]).
+ty_verb(italian, drip, future, sg, pos, [colerà]).
+ty_verb(italian, drip, future, pl, pos, [coleranno]).
+ty_verb(italian, drip, future, sg(1), pos, [colerò]).
+ty_verb(italian, drip, future, sg(2), pos, [colerai]).
+ty_verb(italian, drip, future, pl(1), pos, [coleremo]).
+ty_verb(italian, drip, future, pl(2), pos, [colerete]).
+ty_verb(italian, dupe, future, sg, pos, [ingannerà]).
+ty_verb(italian, dupe, future, pl, pos, [inganneranno]).
+ty_verb(italian, dupe, future, sg(1), pos, [ingannerò]).
+ty_verb(italian, dupe, future, sg(2), pos, [ingannerai]).
+ty_verb(italian, dupe, future, pl(1), pos, [inganneremo]).
+ty_verb(italian, dupe, future, pl(2), pos, [ingannerete]).
+ty_verb(italian, dye, future, sg, pos, [colorerà]).
+ty_verb(italian, dye, future, pl, pos, [coloreranno]).
+ty_verb(italian, dye, future, sg(1), pos, [colorerò]).
+ty_verb(italian, dye, future, sg(2), pos, [colorerai]).
+ty_verb(italian, dye, future, pl(1), pos, [coloreremo]).
+ty_verb(italian, dye, future, pl(2), pos, [colorerete]).
+ty_verb(italian, ease, future, sg, pos, [allevierà]).
+ty_verb(italian, ease, future, pl, pos, [allevieranno]).
+ty_verb(italian, ease, future, sg(1), pos, [allevierò]).
+ty_verb(italian, ease, future, sg(2), pos, [allevierai]).
+ty_verb(italian, ease, future, pl(1), pos, [allevieremo]).
+ty_verb(italian, ease, future, pl(2), pos, [allevierete]).
+ty_verb(italian, echo, future, sg, pos, [ripeterà]).
+ty_verb(italian, echo, future, pl, pos, [ripeteranno]).
+ty_verb(italian, echo, future, sg(1), pos, [ripeterò]).
+ty_verb(italian, echo, future, sg(2), pos, [ripeterai]).
+ty_verb(italian, echo, future, pl(1), pos, [ripeteremo]).
+ty_verb(italian, echo, future, pl(2), pos, [ripeterete]).
+ty_verb(italian, effect, future, sg, pos, [effettuerà]).
+ty_verb(italian, effect, future, pl, pos, [effettueranno]).
+ty_verb(italian, effect, future, sg(1), pos, [effettuerò]).
+ty_verb(italian, effect, future, sg(2), pos, [effettuerai]).
+ty_verb(italian, effect, future, pl(1), pos, [effettueremo]).
+ty_verb(italian, effect, future, pl(2), pos, [effettuerete]).
+ty_verb(italian, elect, future, sg, pos, [sceglierà]).
+ty_verb(italian, elect, future, pl, pos, [sceglieranno]).
+ty_verb(italian, elect, future, sg(1), pos, [sceglierò]).
+ty_verb(italian, elect, future, sg(2), pos, [sceglierai]).
+ty_verb(italian, elect, future, pl(1), pos, [sceglieremo]).
+ty_verb(italian, elect, future, pl(2), pos, [sceglierete]).
+ty_verb(italian, eliminate, future, sg, pos, [eliminerà]).
+ty_verb(italian, eliminate, future, pl, pos, [elimineranno]).
+ty_verb(italian, eliminate, future, sg(1), pos, [eliminerò]).
+ty_verb(italian, eliminate, future, sg(2), pos, [eliminerai]).
+ty_verb(italian, eliminate, future, pl(1), pos, [elimineremo]).
+ty_verb(italian, eliminate, future, pl(2), pos, [eliminerete]).
+ty_verb(italian, empower, future, sg, pos, [autorizzerà]).
+ty_verb(italian, empower, future, pl, pos, [autorizzeranno]).
+ty_verb(italian, empower, future, sg(1), pos, [autorizzerò]).
+ty_verb(italian, empower, future, sg(2), pos, [autorizzerai]).
+ty_verb(italian, empower, future, pl(1), pos, [autorizzeremo]).
+ty_verb(italian, empower, future, pl(2), pos, [autorizzerete]).
+ty_verb(italian, enable, future, sg, pos, [autorizzerà]).
+ty_verb(italian, enable, future, pl, pos, [autorizzeranno]).
+ty_verb(italian, enable, future, sg(1), pos, [autorizzerò]).
+ty_verb(italian, enable, future, sg(2), pos, [autorizzerai]).
+ty_verb(italian, enable, future, pl(1), pos, [autorizzeremo]).
+ty_verb(italian, enable, future, pl(2), pos, [autorizzerete]).
+ty_verb(italian, encipher, future, sg, pos, [cifrerà]).
+ty_verb(italian, encipher, future, pl, pos, [cifreranno]).
+ty_verb(italian, encipher, future, sg(1), pos, [cifrerò]).
+ty_verb(italian, encipher, future, sg(2), pos, [cifrerai]).
+ty_verb(italian, encipher, future, pl(1), pos, [cifreremo]).
+ty_verb(italian, encipher, future, pl(2), pos, [cifrerete]).
+ty_verb(italian, encounter, future, sg, pos, [troverà]).
+ty_verb(italian, encounter, future, pl, pos, [troveranno]).
+ty_verb(italian, encounter, future, sg(1), pos, [troverò]).
+ty_verb(italian, encounter, future, sg(2), pos, [troverai]).
+ty_verb(italian, encounter, future, pl(1), pos, [troveremo]).
+ty_verb(italian, encounter, future, pl(2), pos, [troverete]).
+ty_verb(italian, enlarge, future, sg, pos, [amplierà]).
+ty_verb(italian, enlarge, future, pl, pos, [amplieranno]).
+ty_verb(italian, enlarge, future, sg(1), pos, [amplierò]).
+ty_verb(italian, enlarge, future, sg(2), pos, [amplierai]).
+ty_verb(italian, enlarge, future, pl(1), pos, [amplieremo]).
+ty_verb(italian, enlarge, future, pl(2), pos, [amplierete]).
+ty_verb(italian, ensure, future, sg, pos, [assicurerà]).
+ty_verb(italian, ensure, future, pl, pos, [assicureranno]).
+ty_verb(italian, ensure, future, sg(1), pos, [assicurerò]).
+ty_verb(italian, ensure, future, sg(2), pos, [assicurerai]).
+ty_verb(italian, ensure, future, pl(1), pos, [assicureremo]).
+ty_verb(italian, ensure, future, pl(2), pos, [assicurerete]).
+ty_verb(italian, entitle, future, sg, pos, [autorizzerà]).
+ty_verb(italian, entitle, future, pl, pos, [autorizzeranno]).
+ty_verb(italian, entitle, future, sg(1), pos, [autorizzerò]).
+ty_verb(italian, entitle, future, sg(2), pos, [autorizzerai]).
+ty_verb(italian, entitle, future, pl(1), pos, [autorizzeremo]).
+ty_verb(italian, entitle, future, pl(2), pos, [autorizzerete]).
+ty_verb(italian, evade, future, sg, pos, [eviterà]).
+ty_verb(italian, evade, future, pl, pos, [eviteranno]).
+ty_verb(italian, evade, future, sg(1), pos, [eviterò]).
+ty_verb(italian, evade, future, sg(2), pos, [eviterai]).
+ty_verb(italian, evade, future, pl(1), pos, [eviteremo]).
+ty_verb(italian, evade, future, pl(2), pos, [eviterete]).
+ty_verb(italian, shun, future, sg, pos, [eviterà]).
+ty_verb(italian, shun, future, pl, pos, [eviteranno]).
+ty_verb(italian, shun, future, sg(1), pos, [eviterò]).
+ty_verb(italian, shun, future, sg(2), pos, [eviterai]).
+ty_verb(italian, shun, future, pl(1), pos, [eviteremo]).
+ty_verb(italian, shun, future, pl(2), pos, [eviterete]).
+ty_verb(italian, evaluate, future, sg, pos, [valuterà]).
+ty_verb(italian, evaluate, future, pl, pos, [valuteranno]).
+ty_verb(italian, evaluate, future, sg(1), pos, [valuterò]).
+ty_verb(italian, evaluate, future, sg(2), pos, [valuterai]).
+ty_verb(italian, evaluate, future, pl(1), pos, [valuteremo]).
+ty_verb(italian, evaluate, future, pl(2), pos, [valuterete]).
+ty_verb(italian, excavate, future, sg, pos, [scaverà]).
+ty_verb(italian, excavate, future, pl, pos, [scaveranno]).
+ty_verb(italian, excavate, future, sg(1), pos, [scaverò]).
+ty_verb(italian, excavate, future, sg(2), pos, [scaverai]).
+ty_verb(italian, excavate, future, pl(1), pos, [scaveremo]).
+ty_verb(italian, excavate, future, pl(2), pos, [scaverete]).
+ty_verb(italian, exert, future, sg, pos, [eserciterà]).
+ty_verb(italian, exert, future, pl, pos, [eserciteranno]).
+ty_verb(italian, exert, future, sg(1), pos, [eserciterò]).
+ty_verb(italian, exert, future, sg(2), pos, [eserciterai]).
+ty_verb(italian, exert, future, pl(1), pos, [eserciteremo]).
+ty_verb(italian, exert, future, pl(2), pos, [eserciterete]).
+ty_verb(italian, expand, future, sg, pos, [amplierà]).
+ty_verb(italian, expand, future, pl, pos, [amplieranno]).
+ty_verb(italian, expand, future, sg(1), pos, [amplierò]).
+ty_verb(italian, expand, future, sg(2), pos, [amplierai]).
+ty_verb(italian, expand, future, pl(1), pos, [amplieremo]).
+ty_verb(italian, expand, future, pl(2), pos, [amplierete]).
+ty_verb(italian, exploit, future, sg, pos, [sfrutterà]).
+ty_verb(italian, exploit, future, pl, pos, [sfrutteranno]).
+ty_verb(italian, exploit, future, sg(1), pos, [sfrutterò]).
+ty_verb(italian, exploit, future, sg(2), pos, [sfrutterai]).
+ty_verb(italian, exploit, future, pl(1), pos, [sfrutteremo]).
+ty_verb(italian, exploit, future, pl(2), pos, [sfrutterete]).
+ty_verb(italian, face, future, sg, pos, [affronterà]).
+ty_verb(italian, face, future, pl, pos, [affronteranno]).
+ty_verb(italian, face, future, sg(1), pos, [affronterò]).
+ty_verb(italian, face, future, sg(2), pos, [affronterai]).
+ty_verb(italian, face, future, pl(1), pos, [affronteremo]).
+ty_verb(italian, face, future, pl(2), pos, [affronterete]).
+ty_verb(italian, falsify, future, sg, pos, [falsificherà]).
+ty_verb(italian, falsify, future, pl, pos, [falsificheranno]).
+ty_verb(italian, falsify, future, sg(1), pos, [falsificherò]).
+ty_verb(italian, falsify, future, sg(2), pos, [falsificherai]).
+ty_verb(italian, falsify, future, pl(1), pos, [falsificheremo]).
+ty_verb(italian, falsify, future, pl(2), pos, [falsificherete]).
+ty_verb(italian, fancy, future, sg, pos, [piacerà]).
+ty_verb(italian, fancy, future, pl, pos, [piaceranno]).
+ty_verb(italian, fancy, future, sg(1), pos, [piacerò]).
+ty_verb(italian, fancy, future, sg(2), pos, [piacerai]).
+ty_verb(italian, fancy, future, pl(1), pos, [piaceremo]).
+ty_verb(italian, fancy, future, pl(2), pos, [piacerete]).
+ty_verb(italian, farm, future, sg, pos, [coltiverà]).
+ty_verb(italian, farm, future, pl, pos, [coltiveranno]).
+ty_verb(italian, farm, future, sg(1), pos, [coltiverò]).
+ty_verb(italian, farm, future, sg(2), pos, [coltiverai]).
+ty_verb(italian, farm, future, pl(1), pos, [coltiveremo]).
+ty_verb(italian, farm, future, pl(2), pos, [coltiverete]).
+ty_verb(italian, figure, future, sg, pos, [rappresenterà]).
+ty_verb(italian, figure, future, pl, pos, [rappresenteranno]).
+ty_verb(italian, figure, future, sg(1), pos, [rappresenterò]).
+ty_verb(italian, figure, future, sg(2), pos, [rappresenterai]).
+ty_verb(italian, figure, future, pl(1), pos, [rappresenteremo]).
+ty_verb(italian, figure, future, pl(2), pos, [rappresenterete]).
+ty_verb(italian, fire, future, sg, pos, [sparerà]).
+ty_verb(italian, fire, future, pl, pos, [spareranno]).
+ty_verb(italian, fire, future, sg(1), pos, [sparerò]).
+ty_verb(italian, fire, future, sg(2), pos, [sparerai]).
+ty_verb(italian, fire, future, pl(1), pos, [spareremo]).
+ty_verb(italian, fire, future, pl(2), pos, [sparerete]).
+ty_verb(italian, fit, future, sg, pos, [adatterà]).
+ty_verb(italian, fit, future, pl, pos, [adatteranno]).
+ty_verb(italian, fit, future, sg(1), pos, [adatterò]).
+ty_verb(italian, fit, future, sg(2), pos, [adatterai]).
+ty_verb(italian, fit, future, pl(1), pos, [adatteremo]).
+ty_verb(italian, fit, future, pl(2), pos, [adatterete]).
+ty_verb(italian, flee, future, sg, pos, [fuggirà]).
+ty_verb(italian, flee, future, pl, pos, [fuggiranno]).
+ty_verb(italian, flee, future, sg(1), pos, [fuggirò]).
+ty_verb(italian, flee, future, sg(2), pos, [fuggirai]).
+ty_verb(italian, flee, future, pl(1), pos, [fuggiremo]).
+ty_verb(italian, flee, future, pl(2), pos, [fuggirete]).
+ty_verb(italian, flood, future, sg, pos, [inonderà]).
+ty_verb(italian, flood, future, pl, pos, [inonderanno]).
+ty_verb(italian, flood, future, sg(1), pos, [inonderò]).
+ty_verb(italian, flood, future, sg(2), pos, [inonderai]).
+ty_verb(italian, flood, future, pl(1), pos, [inonderemo]).
+ty_verb(italian, flood, future, pl(2), pos, [inonderete]).
+ty_verb(italian, fluctuate, future, sg, pos, [fluttuerà]).
+ty_verb(italian, fluctuate, future, pl, pos, [fluttueranno]).
+ty_verb(italian, fluctuate, future, sg(1), pos, [fluttuerò]).
+ty_verb(italian, fluctuate, future, sg(2), pos, [fluttuerai]).
+ty_verb(italian, fluctuate, future, pl(1), pos, [fluttueremo]).
+ty_verb(italian, fluctuate, future, pl(2), pos, [fluttuerete]).
+ty_verb(italian, fly, future, sg, pos, [volerà]).
+ty_verb(italian, fly, future, pl, pos, [voleranno]).
+ty_verb(italian, fly, future, sg(1), pos, [volerò]).
+ty_verb(italian, fly, future, sg(2), pos, [volerai]).
+ty_verb(italian, fly, future, pl(1), pos, [voleremo]).
+ty_verb(italian, fly, future, pl(2), pos, [volerete]).
+ty_verb(italian, focuss, future, sg, pos, [centrerà]).
+ty_verb(italian, focuss, future, pl, pos, [centreranno]).
+ty_verb(italian, focuss, future, sg(1), pos, [centrerò]).
+ty_verb(italian, focuss, future, sg(2), pos, [centrerai]).
+ty_verb(italian, focuss, future, pl(1), pos, [centreremo]).
+ty_verb(italian, focuss, future, pl(2), pos, [centrerete]).
+ty_verb(italian, fortify, future, sg, pos, [fortificherà]).
+ty_verb(italian, fortify, future, pl, pos, [fortificheranno]).
+ty_verb(italian, fortify, future, sg(1), pos, [fortificherò]).
+ty_verb(italian, fortify, future, sg(2), pos, [fortificherai]).
+ty_verb(italian, fortify, future, pl(1), pos, [fortificheremo]).
+ty_verb(italian, fortify, future, pl(2), pos, [fortificherete]).
+ty_verb(italian, free, future, sg, pos, [libererà]).
+ty_verb(italian, free, future, pl, pos, [libereranno]).
+ty_verb(italian, free, future, sg(1), pos, [libererò]).
+ty_verb(italian, free, future, sg(2), pos, [libererai]).
+ty_verb(italian, free, future, pl(1), pos, [libereremo]).
+ty_verb(italian, free, future, pl(2), pos, [libererete]).
+ty_verb(italian, freshen, future, sg, pos, [rinfrescherà]).
+ty_verb(italian, freshen, future, pl, pos, [rinfrescheranno]).
+ty_verb(italian, freshen, future, sg(1), pos, [rinfrescherò]).
+ty_verb(italian, freshen, future, sg(2), pos, [rinfrescherai]).
+ty_verb(italian, freshen, future, pl(1), pos, [rinfrescheremo]).
+ty_verb(italian, freshen, future, pl(2), pos, [rinfrescherete]).
+ty_verb(italian, frighten, future, sg, pos, [spaventerà]).
+ty_verb(italian, frighten, future, pl, pos, [spaventeranno]).
+ty_verb(italian, frighten, future, sg(1), pos, [spaventerò]).
+ty_verb(italian, frighten, future, sg(2), pos, [spaventerai]).
+ty_verb(italian, frighten, future, pl(1), pos, [spaventeremo]).
+ty_verb(italian, frighten, future, pl(2), pos, [spaventerete]).
+ty_verb(italian, fulfil, future, sg, pos, [compirà]).
+ty_verb(italian, fulfil, future, pl, pos, [compiranno]).
+ty_verb(italian, fulfil, future, sg(1), pos, [compirò]).
+ty_verb(italian, fulfil, future, sg(2), pos, [compirai]).
+ty_verb(italian, fulfil, future, pl(1), pos, [compiremo]).
+ty_verb(italian, fulfil, future, pl(2), pos, [compirete]).
+ty_verb(italian, fund, future, sg, pos, [finanzierà]).
+ty_verb(italian, fund, future, pl, pos, [finanzieranno]).
+ty_verb(italian, fund, future, sg(1), pos, [finanzierò]).
+ty_verb(italian, fund, future, sg(2), pos, [finanzierai]).
+ty_verb(italian, fund, future, pl(1), pos, [finanzieremo]).
+ty_verb(italian, fund, future, pl(2), pos, [finanzierete]).
+ty_verb(italian, glance, future, sg, pos, [guarderà]).
+ty_verb(italian, glance, future, pl, pos, [guarderanno]).
+ty_verb(italian, glance, future, sg(1), pos, [guarderò]).
+ty_verb(italian, glance, future, sg(2), pos, [guarderai]).
+ty_verb(italian, glance, future, pl(1), pos, [guarderemo]).
+ty_verb(italian, glance, future, pl(2), pos, [guarderete]).
+ty_verb(italian, glide, future, sg, pos, [scivolerà]).
+ty_verb(italian, glide, future, pl, pos, [scivoleranno]).
+ty_verb(italian, glide, future, sg(1), pos, [scivolerò]).
+ty_verb(italian, glide, future, sg(2), pos, [scivolerai]).
+ty_verb(italian, glide, future, pl(1), pos, [scivoleremo]).
+ty_verb(italian, glide, future, pl(2), pos, [scivolerete]).
+ty_verb(italian, grant, future, sg, pos, [concederà]).
+ty_verb(italian, grant, future, pl, pos, [concederanno]).
+ty_verb(italian, grant, future, sg(1), pos, [concederò]).
+ty_verb(italian, grant, future, sg(2), pos, [concederai]).
+ty_verb(italian, grant, future, pl(1), pos, [concederemo]).
+ty_verb(italian, grant, future, pl(2), pos, [concederete]).
+ty_verb(italian, halt, future, sg, pos, [arresterà]).
+ty_verb(italian, halt, future, pl, pos, [arresteranno]).
+ty_verb(italian, halt, future, sg(1), pos, [arresterò]).
+ty_verb(italian, halt, future, sg(2), pos, [arresterai]).
+ty_verb(italian, halt, future, pl(1), pos, [arresteremo]).
+ty_verb(italian, halt, future, pl(2), pos, [arresterete]).
+ty_verb(italian, hand, future, sg, pos, [consegnerà]).
+ty_verb(italian, hand, future, pl, pos, [consegneranno]).
+ty_verb(italian, hand, future, sg(1), pos, [consegnerò]).
+ty_verb(italian, hand, future, sg(2), pos, [consegnerai]).
+ty_verb(italian, hand, future, pl(1), pos, [consegneremo]).
+ty_verb(italian, hand, future, pl(2), pos, [consegnerete]).
+ty_verb(italian, harm, future, sg, pos, [danneggerà]).
+ty_verb(italian, harm, future, pl, pos, [danneggeranno]).
+ty_verb(italian, harm, future, sg(1), pos, [danneggerò]).
+ty_verb(italian, harm, future, sg(2), pos, [danneggerai]).
+ty_verb(italian, harm, future, pl(1), pos, [danneggeremo]).
+ty_verb(italian, harm, future, pl(2), pos, [danneggerete]).
+ty_verb(italian, harvest, future, sg, pos, [raccoglierà]).
+ty_verb(italian, harvest, future, pl, pos, [raccoglieranno]).
+ty_verb(italian, harvest, future, sg(1), pos, [raccoglierò]).
+ty_verb(italian, harvest, future, sg(2), pos, [raccoglierai]).
+ty_verb(italian, harvest, future, pl(1), pos, [raccoglieremo]).
+ty_verb(italian, harvest, future, pl(2), pos, [raccoglierete]).
+ty_verb(italian, head, future, sg, pos, [aprirà]).
+ty_verb(italian, head, future, pl, pos, [apriranno]).
+ty_verb(italian, head, future, sg(1), pos, [aprirò]).
+ty_verb(italian, head, future, sg(2), pos, [aprirai]).
+ty_verb(italian, head, future, pl(1), pos, [apriremo]).
+ty_verb(italian, head, future, pl(2), pos, [aprirete]).
+ty_verb(italian, heave, future, sg, pos, [alzerà]).
+ty_verb(italian, heave, future, pl, pos, [alzeranno]).
+ty_verb(italian, heave, future, sg(1), pos, [alzerò]).
+ty_verb(italian, heave, future, sg(2), pos, [alzerai]).
+ty_verb(italian, heave, future, pl(1), pos, [alzeremo]).
+ty_verb(italian, heave, future, pl(2), pos, [alzerete]).
+ty_verb(italian, hide, future, sg, pos, [nasconderà]).
+ty_verb(italian, hide, future, pl, pos, [nasconderanno]).
+ty_verb(italian, hide, future, sg(1), pos, [nasconderò]).
+ty_verb(italian, hide, future, sg(2), pos, [nasconderai]).
+ty_verb(italian, hide, future, pl(1), pos, [nasconderemo]).
+ty_verb(italian, hide, future, pl(2), pos, [nasconderete]).
+ty_verb(italian, hinder, future, sg, pos, [impaccerà]).
+ty_verb(italian, hinder, future, pl, pos, [impacceranno]).
+ty_verb(italian, hinder, future, sg(1), pos, [impaccerò]).
+ty_verb(italian, hinder, future, sg(2), pos, [impaccerai]).
+ty_verb(italian, hinder, future, pl(1), pos, [impacceremo]).
+ty_verb(italian, hinder, future, pl(2), pos, [impaccerete]).
+ty_verb(italian, import, future, sg, pos, [importerà]).
+ty_verb(italian, import, future, pl, pos, [importeranno]).
+ty_verb(italian, import, future, sg(1), pos, [importerò]).
+ty_verb(italian, import, future, sg(2), pos, [importerai]).
+ty_verb(italian, import, future, pl(1), pos, [importeremo]).
+ty_verb(italian, import, future, pl(2), pos, [importerete]).
+ty_verb(italian, incline, future, sg, pos, [inclinerà]).
+ty_verb(italian, incline, future, pl, pos, [inclineranno]).
+ty_verb(italian, incline, future, sg(1), pos, [inclinerò]).
+ty_verb(italian, incline, future, sg(2), pos, [inclinerai]).
+ty_verb(italian, incline, future, pl(1), pos, [inclineremo]).
+ty_verb(italian, incline, future, pl(2), pos, [inclinerete]).
+ty_verb(italian, inflict, future, sg, pos, [causerà]).
+ty_verb(italian, inflict, future, pl, pos, [causeranno]).
+ty_verb(italian, inflict, future, sg(1), pos, [causerò]).
+ty_verb(italian, inflict, future, sg(2), pos, [causerai]).
+ty_verb(italian, inflict, future, pl(1), pos, [causeremo]).
+ty_verb(italian, inflict, future, pl(2), pos, [causerete]).
+ty_verb(italian, inform, future, sg, pos, [informerà]).
+ty_verb(italian, inform, future, pl, pos, [informeranno]).
+ty_verb(italian, inform, future, sg(1), pos, [informerò]).
+ty_verb(italian, inform, future, sg(2), pos, [informerai]).
+ty_verb(italian, inform, future, pl(1), pos, [informeremo]).
+ty_verb(italian, inform, future, pl(2), pos, [informerete]).
+ty_verb(italian, insure, future, sg, pos, [assicurerà]).
+ty_verb(italian, insure, future, pl, pos, [assicureranno]).
+ty_verb(italian, insure, future, sg(1), pos, [assicurerò]).
+ty_verb(italian, insure, future, sg(2), pos, [assicurerai]).
+ty_verb(italian, insure, future, pl(1), pos, [assicureremo]).
+ty_verb(italian, insure, future, pl(2), pos, [assicurerete]).
+ty_verb(italian, inter, future, sg, pos, [inumerà]).
+ty_verb(italian, inter, future, pl, pos, [inumeranno]).
+ty_verb(italian, inter, future, sg(1), pos, [inumerò]).
+ty_verb(italian, inter, future, sg(2), pos, [inumerai]).
+ty_verb(italian, inter, future, pl(1), pos, [inumeremo]).
+ty_verb(italian, inter, future, pl(2), pos, [inumerete]).
+ty_verb(italian, interrupt, future, sg, pos, [interromperà]).
+ty_verb(italian, interrupt, future, pl, pos, [interromperanno]).
+ty_verb(italian, interrupt, future, sg(1), pos, [interromperò]).
+ty_verb(italian, interrupt, future, sg(2), pos, [interromperai]).
+ty_verb(italian, interrupt, future, pl(1), pos, [interromperemo]).
+ty_verb(italian, interrupt, future, pl(2), pos, [interromperete]).
+ty_verb(italian, inundate, future, sg, pos, [inonderà]).
+ty_verb(italian, inundate, future, pl, pos, [inonderanno]).
+ty_verb(italian, inundate, future, sg(1), pos, [inonderò]).
+ty_verb(italian, inundate, future, sg(2), pos, [inonderai]).
+ty_verb(italian, inundate, future, pl(1), pos, [inonderemo]).
+ty_verb(italian, inundate, future, pl(2), pos, [inonderete]).
+ty_verb(italian, invoice, future, sg, pos, [fatturerà]).
+ty_verb(italian, invoice, future, pl, pos, [fattureranno]).
+ty_verb(italian, invoice, future, sg(1), pos, [fatturerò]).
+ty_verb(italian, invoice, future, sg(2), pos, [fatturerai]).
+ty_verb(italian, invoice, future, pl(1), pos, [fattureremo]).
+ty_verb(italian, invoice, future, pl(2), pos, [fatturerete]).
+ty_verb(italian, involve, future, sg, pos, [implicherà]).
+ty_verb(italian, involve, future, pl, pos, [implicheranno]).
+ty_verb(italian, involve, future, sg(1), pos, [implicherò]).
+ty_verb(italian, involve, future, sg(2), pos, [implicherai]).
+ty_verb(italian, involve, future, pl(1), pos, [implicheremo]).
+ty_verb(italian, involve, future, pl(2), pos, [implicherete]).
+ty_verb(italian, irritate, future, sg, pos, [irriterà]).
+ty_verb(italian, irritate, future, pl, pos, [irriteranno]).
+ty_verb(italian, irritate, future, sg(1), pos, [irriterò]).
+ty_verb(italian, irritate, future, sg(2), pos, [irriterai]).
+ty_verb(italian, irritate, future, pl(1), pos, [irriteremo]).
+ty_verb(italian, irritate, future, pl(2), pos, [irriterete]).
+ty_verb(italian, knock, future, sg, pos, [colpirà]).
+ty_verb(italian, knock, future, pl, pos, [colpiranno]).
+ty_verb(italian, knock, future, sg(1), pos, [colpirò]).
+ty_verb(italian, knock, future, sg(2), pos, [colpirai]).
+ty_verb(italian, knock, future, pl(1), pos, [colpiremo]).
+ty_verb(italian, knock, future, pl(2), pos, [colpirete]).
+ty_verb(italian, lay, future, sg, pos, [metterà]).
+ty_verb(italian, lay, future, pl, pos, [metteranno]).
+ty_verb(italian, lay, future, sg(1), pos, [metterò]).
+ty_verb(italian, lay, future, sg(2), pos, [metterai]).
+ty_verb(italian, lay, future, pl(1), pos, [metteremo]).
+ty_verb(italian, lay, future, pl(2), pos, [metterete]).
+ty_verb(italian, lead, future, sg, pos, [dirigerà]).
+ty_verb(italian, lead, future, pl, pos, [dirigeranno]).
+ty_verb(italian, lead, future, sg(1), pos, [dirigerò]).
+ty_verb(italian, lead, future, sg(2), pos, [dirigerai]).
+ty_verb(italian, lead, future, pl(1), pos, [dirigeremo]).
+ty_verb(italian, lead, future, pl(2), pos, [dirigerete]).
+ty_verb(italian, leap, future, sg, pos, [salterà]).
+ty_verb(italian, leap, future, pl, pos, [salteranno]).
+ty_verb(italian, leap, future, sg(1), pos, [salterò]).
+ty_verb(italian, leap, future, sg(2), pos, [salterai]).
+ty_verb(italian, leap, future, pl(1), pos, [salteremo]).
+ty_verb(italian, leap, future, pl(2), pos, [salterete]).
+ty_verb(italian, lease, future, sg, pos, [affitterà]).
+ty_verb(italian, lease, future, pl, pos, [affitteranno]).
+ty_verb(italian, lease, future, sg(1), pos, [affitterò]).
+ty_verb(italian, lease, future, sg(2), pos, [affitterai]).
+ty_verb(italian, lease, future, pl(1), pos, [affitteremo]).
+ty_verb(italian, lease, future, pl(2), pos, [affitterete]).
+ty_verb(italian, remark, future, sg, pos, [osserverà]).
+ty_verb(italian, remark, future, pl, pos, [osserveranno]).
+ty_verb(italian, remark, future, sg(1), pos, [osserverò]).
+ty_verb(italian, remark, future, sg(2), pos, [osserverai]).
+ty_verb(italian, remark, future, pl(1), pos, [osserveremo]).
+ty_verb(italian, remark, future, pl(2), pos, [osserverete]).
+ty_verb(italian, remodel, future, sg, pos, [ristrutturerà]).
+ty_verb(italian, remodel, future, pl, pos, [ristruttureranno]).
+ty_verb(italian, remodel, future, sg(1), pos, [ristrutturerò]).
+ty_verb(italian, remodel, future, sg(2), pos, [ristrutturerai]).
+ty_verb(italian, remodel, future, pl(1), pos, [ristruttureremo]).
+ty_verb(italian, remodel, future, pl(2), pos, [ristrutturerete]).
+ty_verb(italian, retard, future, sg, pos, [ritarderà]).
+ty_verb(italian, retard, future, pl, pos, [ritarderanno]).
+ty_verb(italian, retard, future, sg(1), pos, [ritarderò]).
+ty_verb(italian, retard, future, sg(2), pos, [ritarderai]).
+ty_verb(italian, retard, future, pl(1), pos, [ritarderemo]).
+ty_verb(italian, retard, future, pl(2), pos, [ritarderete]).
+ty_verb(italian, fuse, future, sg, pos, [fonderà]).
+ty_verb(italian, fuse, future, pl, pos, [fonderanno]).
+ty_verb(italian, fuse, future, sg(1), pos, [fonderò]).
+ty_verb(italian, fuse, future, sg(2), pos, [fonderai]).
+ty_verb(italian, fuse, future, pl(1), pos, [fonderemo]).
+ty_verb(italian, fuse, future, pl(2), pos, [fonderete]).
+ty_verb(italian, lend, future, sg, pos, [lascerà]).
+ty_verb(italian, lend, future, pl, pos, [lasceranno]).
+ty_verb(italian, lend, future, sg(1), pos, [lascerò]).
+ty_verb(italian, lend, future, sg(2), pos, [lascerai]).
+ty_verb(italian, lend, future, pl(1), pos, [lasceremo]).
+ty_verb(italian, lend, future, pl(2), pos, [lascerete]).
+ty_verb(italian, let, future, sg, pos, [lascerà]).
+ty_verb(italian, let, future, pl, pos, [lasceranno]).
+ty_verb(italian, let, future, sg(1), pos, [lascerò]).
+ty_verb(italian, let, future, sg(2), pos, [lascerai]).
+ty_verb(italian, let, future, pl(1), pos, [lasceremo]).
+ty_verb(italian, let, future, pl(2), pos, [lascerete]).
+ty_verb(italian, line, future, sg, pos, [allineerà]).
+ty_verb(italian, line, future, pl, pos, [allineeranno]).
+ty_verb(italian, line, future, sg(1), pos, [allineerò]).
+ty_verb(italian, line, future, sg(2), pos, [allineerai]).
+ty_verb(italian, line, future, pl(1), pos, [allineeremo]).
+ty_verb(italian, line, future, pl(2), pos, [allineerete]).
+ty_verb(italian, load, future, sg, pos, [caricherà]).
+ty_verb(italian, load, future, pl, pos, [caricheranno]).
+ty_verb(italian, load, future, sg(1), pos, [caricherò]).
+ty_verb(italian, load, future, sg(2), pos, [caricherai]).
+ty_verb(italian, load, future, pl(1), pos, [caricheremo]).
+ty_verb(italian, load, future, pl(2), pos, [caricherete]).
+ty_verb(italian, lock, future, sg, pos, [chiuderà]).
+ty_verb(italian, lock, future, pl, pos, [chiuderanno]).
+ty_verb(italian, lock, future, sg(1), pos, [chiuderò]).
+ty_verb(italian, lock, future, sg(2), pos, [chiuderai]).
+ty_verb(italian, lock, future, pl(1), pos, [chiuderemo]).
+ty_verb(italian, lock, future, pl(2), pos, [chiuderete]).
+ty_verb(italian, lodge, future, sg, pos, [albergherà]).
+ty_verb(italian, lodge, future, pl, pos, [albergheranno]).
+ty_verb(italian, lodge, future, sg(1), pos, [albergherò]).
+ty_verb(italian, lodge, future, sg(2), pos, [albergherai]).
+ty_verb(italian, lodge, future, pl(1), pos, [albergheremo]).
+ty_verb(italian, lodge, future, pl(2), pos, [albergherete]).
+ty_verb(italian, look, future, sg, pos, [parrà]).
+ty_verb(italian, look, future, pl, pos, [parranno]).
+ty_verb(italian, look, future, sg(1), pos, [parrò]).
+ty_verb(italian, look, future, sg(2), pos, [parrai]).
+ty_verb(italian, look, future, pl(1), pos, [parremo]).
+ty_verb(italian, look, future, pl(2), pos, [parrete]).
+ty_verb(italian, treasure, future, sg, pos, [amerà]).
+ty_verb(italian, treasure, future, pl, pos, [ameranno]).
+ty_verb(italian, treasure, future, sg(1), pos, [amerò]).
+ty_verb(italian, treasure, future, sg(2), pos, [amerai]).
+ty_verb(italian, treasure, future, pl(1), pos, [ameremo]).
+ty_verb(italian, treasure, future, pl(2), pos, [amerete]).
+ty_verb(italian, lower, future, sg, pos, [scenderà]).
+ty_verb(italian, lower, future, pl, pos, [scenderanno]).
+ty_verb(italian, lower, future, sg(1), pos, [scenderò]).
+ty_verb(italian, lower, future, sg(2), pos, [scenderai]).
+ty_verb(italian, lower, future, pl(1), pos, [scenderemo]).
+ty_verb(italian, lower, future, pl(2), pos, [scenderete]).
+ty_verb(italian, lunch, future, sg, pos, [mangerà]).
+ty_verb(italian, lunch, future, pl, pos, [mangeranno]).
+ty_verb(italian, lunch, future, sg(1), pos, [mangerò]).
+ty_verb(italian, lunch, future, sg(2), pos, [mangerai]).
+ty_verb(italian, lunch, future, pl(1), pos, [mangeremo]).
+ty_verb(italian, lunch, future, pl(2), pos, [mangerete]).
+ty_verb(italian, maintain, future, sg, pos, [manterrà]).
+ty_verb(italian, maintain, future, pl, pos, [manterranno]).
+ty_verb(italian, maintain, future, sg(1), pos, [manterrò]).
+ty_verb(italian, maintain, future, sg(2), pos, [manterrai]).
+ty_verb(italian, maintain, future, pl(1), pos, [manterremo]).
+ty_verb(italian, maintain, future, pl(2), pos, [manterrete]).
+ty_verb(italian, make, future, sg, pos, [farà]).
+ty_verb(italian, make, future, pl, pos, [faranno]).
+ty_verb(italian, make, future, sg(1), pos, [farò]).
+ty_verb(italian, make, future, sg(2), pos, [farai]).
+ty_verb(italian, make, future, pl(1), pos, [faremo]).
+ty_verb(italian, make, future, pl(2), pos, [farete]).
+ty_verb(italian, manipulate, future, sg, pos, [manipolerà]).
+ty_verb(italian, manipulate, future, pl, pos, [manipoleranno]).
+ty_verb(italian, manipulate, future, sg(1), pos, [manipolerò]).
+ty_verb(italian, manipulate, future, sg(2), pos, [manipolerai]).
+ty_verb(italian, manipulate, future, pl(1), pos, [manipoleremo]).
+ty_verb(italian, manipulate, future, pl(2), pos, [manipolerete]).
+ty_verb(italian, merit, future, sg, pos, [meriterà]).
+ty_verb(italian, merit, future, pl, pos, [meriteranno]).
+ty_verb(italian, merit, future, sg(1), pos, [meriterò]).
+ty_verb(italian, merit, future, sg(2), pos, [meriterai]).
+ty_verb(italian, merit, future, pl(1), pos, [meriteremo]).
+ty_verb(italian, merit, future, pl(2), pos, [meriterete]).
+ty_verb(italian, migrate, future, sg, pos, [emigrerà]).
+ty_verb(italian, migrate, future, pl, pos, [emigreranno]).
+ty_verb(italian, migrate, future, sg(1), pos, [emigrerò]).
+ty_verb(italian, migrate, future, sg(2), pos, [emigrerai]).
+ty_verb(italian, migrate, future, pl(1), pos, [emigreremo]).
+ty_verb(italian, migrate, future, pl(2), pos, [emigrerete]).
+ty_verb(italian, mind, future, sg, pos, [importerà]).
+ty_verb(italian, mind, future, pl, pos, [importeranno]).
+ty_verb(italian, mind, future, sg(1), pos, [importerò]).
+ty_verb(italian, mind, future, sg(2), pos, [importerai]).
+ty_verb(italian, mind, future, pl(1), pos, [importeremo]).
+ty_verb(italian, mind, future, pl(2), pos, [importerete]).
+ty_verb(italian, modulate, future, sg, pos, [adatterà]).
+ty_verb(italian, modulate, future, pl, pos, [adatteranno]).
+ty_verb(italian, modulate, future, sg(1), pos, [adatterò]).
+ty_verb(italian, modulate, future, sg(2), pos, [adatterai]).
+ty_verb(italian, modulate, future, pl(1), pos, [adatteremo]).
+ty_verb(italian, modulate, future, pl(2), pos, [adatterete]).
+ty_verb(italian, monitor, future, sg, pos, [controllerà]).
+ty_verb(italian, monitor, future, pl, pos, [controlleranno]).
+ty_verb(italian, monitor, future, sg(1), pos, [controllerò]).
+ty_verb(italian, monitor, future, sg(2), pos, [controllerai]).
+ty_verb(italian, monitor, future, pl(1), pos, [controlleremo]).
+ty_verb(italian, monitor, future, pl(2), pos, [controllerete]).
+ty_verb(italian, name, future, sg, pos, [nominerà]).
+ty_verb(italian, name, future, pl, pos, [nomineranno]).
+ty_verb(italian, name, future, sg(1), pos, [nominerò]).
+ty_verb(italian, name, future, sg(2), pos, [nominerai]).
+ty_verb(italian, name, future, pl(1), pos, [nomineremo]).
+ty_verb(italian, name, future, pl(2), pos, [nominerete]).
+ty_verb(italian, negotiate, future, sg, pos, [tratterà]).
+ty_verb(italian, negotiate, future, pl, pos, [tratteranno]).
+ty_verb(italian, negotiate, future, sg(1), pos, [tratterò]).
+ty_verb(italian, negotiate, future, sg(2), pos, [tratterai]).
+ty_verb(italian, negotiate, future, pl(1), pos, [tratteremo]).
+ty_verb(italian, negotiate, future, pl(2), pos, [tratterete]).
+ty_verb(italian, obscure, future, sg, pos, [oscurerà]).
+ty_verb(italian, obscure, future, pl, pos, [oscureranno]).
+ty_verb(italian, obscure, future, sg(1), pos, [oscurerò]).
+ty_verb(italian, obscure, future, sg(2), pos, [oscurerai]).
+ty_verb(italian, obscure, future, pl(1), pos, [oscureremo]).
+ty_verb(italian, obscure, future, pl(2), pos, [oscurerete]).
+ty_verb(italian, obtain, future, sg, pos, [otterrà]).
+ty_verb(italian, obtain, future, pl, pos, [otterranno]).
+ty_verb(italian, obtain, future, sg(1), pos, [otterrò]).
+ty_verb(italian, obtain, future, sg(2), pos, [otterrai]).
+ty_verb(italian, obtain, future, pl(1), pos, [otterremo]).
+ty_verb(italian, obtain, future, pl(2), pos, [otterrete]).
+ty_verb(italian, oscillate, future, sg, pos, [oscillerà]).
+ty_verb(italian, oscillate, future, pl, pos, [oscilleranno]).
+ty_verb(italian, oscillate, future, sg(1), pos, [oscillerò]).
+ty_verb(italian, oscillate, future, sg(2), pos, [oscillerai]).
+ty_verb(italian, oscillate, future, pl(1), pos, [oscilleremo]).
+ty_verb(italian, oscillate, future, pl(2), pos, [oscillerete]).
+ty_verb(italian, participate, future, sg, pos, [parteciperà]).
+ty_verb(italian, participate, future, pl, pos, [parteciperanno]).
+ty_verb(italian, participate, future, sg(1), pos, [parteciperò]).
+ty_verb(italian, participate, future, sg(2), pos, [parteciperai]).
+ty_verb(italian, participate, future, pl(1), pos, [parteciperemo]).
+ty_verb(italian, participate, future, pl(2), pos, [parteciperete]).
+ty_verb(italian, permit, future, sg, pos, [permetterà]).
+ty_verb(italian, permit, future, pl, pos, [permetteranno]).
+ty_verb(italian, permit, future, sg(1), pos, [permetterò]).
+ty_verb(italian, permit, future, sg(2), pos, [permetterai]).
+ty_verb(italian, permit, future, pl(1), pos, [permetteremo]).
+ty_verb(italian, permit, future, pl(2), pos, [permetterete]).
+ty_verb(italian, pick, future, sg, pos, [sceglierà]).
+ty_verb(italian, pick, future, pl, pos, [sceglieranno]).
+ty_verb(italian, pick, future, sg(1), pos, [sceglierò]).
+ty_verb(italian, pick, future, sg(2), pos, [sceglierai]).
+ty_verb(italian, pick, future, pl(1), pos, [sceglieremo]).
+ty_verb(italian, pick, future, pl(2), pos, [sceglierete]).
+ty_verb(italian, select, future, sg, pos, [sceglierà]).
+ty_verb(italian, select, future, pl, pos, [sceglieranno]).
+ty_verb(italian, select, future, sg(1), pos, [sceglierò]).
+ty_verb(italian, select, future, sg(2), pos, [sceglierai]).
+ty_verb(italian, select, future, pl(1), pos, [sceglieremo]).
+ty_verb(italian, select, future, pl(2), pos, [sceglierete]).
+ty_verb(italian, pioneer, future, sg, pos, [avvierà]).
+ty_verb(italian, pioneer, future, pl, pos, [avvieranno]).
+ty_verb(italian, pioneer, future, sg(1), pos, [avvierò]).
+ty_verb(italian, pioneer, future, sg(2), pos, [avvierai]).
+ty_verb(italian, pioneer, future, pl(1), pos, [avvieremo]).
+ty_verb(italian, pioneer, future, pl(2), pos, [avvierete]).
+ty_verb(italian, please, future, sg, pos, [piacerà]).
+ty_verb(italian, please, future, pl, pos, [piaceranno]).
+ty_verb(italian, please, future, sg(1), pos, [piacerò]).
+ty_verb(italian, please, future, sg(2), pos, [piacerai]).
+ty_verb(italian, please, future, pl(1), pos, [piaceremo]).
+ty_verb(italian, please, future, pl(2), pos, [piacerete]).
+ty_verb(italian, poll, future, sg, pos, [otterrà]).
+ty_verb(italian, poll, future, pl, pos, [otterranno]).
+ty_verb(italian, poll, future, sg(1), pos, [otterrò]).
+ty_verb(italian, poll, future, sg(2), pos, [otterrai]).
+ty_verb(italian, poll, future, pl(1), pos, [otterremo]).
+ty_verb(italian, poll, future, pl(2), pos, [otterrete]).
+ty_verb(italian, popularise, future, sg, pos, [diffonderà]).
+ty_verb(italian, popularise, future, pl, pos, [diffonderanno]).
+ty_verb(italian, popularise, future, sg(1), pos, [diffonderò]).
+ty_verb(italian, popularise, future, sg(2), pos, [diffonderai]).
+ty_verb(italian, popularise, future, pl(1), pos, [diffonderemo]).
+ty_verb(italian, popularise, future, pl(2), pos, [diffonderete]).
+ty_verb(italian, position, future, sg, pos, [collocherà]).
+ty_verb(italian, position, future, pl, pos, [collocheranno]).
+ty_verb(italian, position, future, sg(1), pos, [collocherò]).
+ty_verb(italian, position, future, sg(2), pos, [collocherai]).
+ty_verb(italian, position, future, pl(1), pos, [collocheremo]).
+ty_verb(italian, position, future, pl(2), pos, [collocherete]).
+ty_verb(italian, possess, future, sg, pos, [possiederà]).
+ty_verb(italian, possess, future, pl, pos, [possiederanno]).
+ty_verb(italian, possess, future, sg(1), pos, [possiederò]).
+ty_verb(italian, possess, future, sg(2), pos, [possiederai]).
+ty_verb(italian, possess, future, pl(1), pos, [possiederemo]).
+ty_verb(italian, possess, future, pl(2), pos, [possiederete]).
+ty_verb(italian, presuppose, future, sg, pos, [presupporrà]).
+ty_verb(italian, presuppose, future, pl, pos, [presupporranno]).
+ty_verb(italian, presuppose, future, sg(1), pos, [presupporrò]).
+ty_verb(italian, presuppose, future, sg(2), pos, [presupporrai]).
+ty_verb(italian, presuppose, future, pl(1), pos, [presupporremo]).
+ty_verb(italian, presuppose, future, pl(2), pos, [presupporrete]).
+ty_verb(italian, prime, future, sg, pos, [preparerà]).
+ty_verb(italian, prime, future, pl, pos, [prepareranno]).
+ty_verb(italian, prime, future, sg(1), pos, [preparerò]).
+ty_verb(italian, prime, future, sg(2), pos, [preparerai]).
+ty_verb(italian, prime, future, pl(1), pos, [prepareremo]).
+ty_verb(italian, prime, future, pl(2), pos, [preparerete]).
+ty_verb(italian, supply, future, sg, pos, [fornirà]).
+ty_verb(italian, supply, future, pl, pos, [forniranno]).
+ty_verb(italian, supply, future, sg(1), pos, [fornirò]).
+ty_verb(italian, supply, future, sg(2), pos, [fornirai]).
+ty_verb(italian, supply, future, pl(1), pos, [forniremo]).
+ty_verb(italian, supply, future, pl(2), pos, [fornirete]).
+ty_verb(italian, pulsate, future, sg, pos, [pulserà]).
+ty_verb(italian, pulsate, future, pl, pos, [pulseranno]).
+ty_verb(italian, pulsate, future, sg(1), pos, [pulserò]).
+ty_verb(italian, pulsate, future, sg(2), pos, [pulserai]).
+ty_verb(italian, pulsate, future, pl(1), pos, [pulseremo]).
+ty_verb(italian, pulsate, future, pl(2), pos, [pulserete]).
+ty_verb(italian, punch, future, sg, pos, [attaccherà]).
+ty_verb(italian, punch, future, pl, pos, [attaccheranno]).
+ty_verb(italian, punch, future, sg(1), pos, [attaccherò]).
+ty_verb(italian, punch, future, sg(2), pos, [attaccherai]).
+ty_verb(italian, punch, future, pl(1), pos, [attaccheremo]).
+ty_verb(italian, punch, future, pl(2), pos, [attaccherete]).
+ty_verb(italian, pursue, future, sg, pos, [perseguirà]).
+ty_verb(italian, pursue, future, pl, pos, [perseguiranno]).
+ty_verb(italian, pursue, future, sg(1), pos, [perseguirò]).
+ty_verb(italian, pursue, future, sg(2), pos, [perseguirai]).
+ty_verb(italian, pursue, future, pl(1), pos, [perseguiremo]).
+ty_verb(italian, pursue, future, pl(2), pos, [perseguirete]).
+ty_verb(italian, quote, future, sg, pos, [citerà]).
+ty_verb(italian, quote, future, pl, pos, [citeranno]).
+ty_verb(italian, quote, future, sg(1), pos, [citerò]).
+ty_verb(italian, quote, future, sg(2), pos, [citerai]).
+ty_verb(italian, quote, future, pl(1), pos, [citeremo]).
+ty_verb(italian, quote, future, pl(2), pos, [citerete]).
+ty_verb(italian, raise, future, sg, pos, [alzerà]).
+ty_verb(italian, raise, future, pl, pos, [alzeranno]).
+ty_verb(italian, raise, future, sg(1), pos, [alzerò]).
+ty_verb(italian, raise, future, sg(2), pos, [alzerai]).
+ty_verb(italian, raise, future, pl(1), pos, [alzeremo]).
+ty_verb(italian, raise, future, pl(2), pos, [alzerete]).
+ty_verb(italian, rate, future, sg, pos, [stimerà]).
+ty_verb(italian, rate, future, pl, pos, [stimeranno]).
+ty_verb(italian, rate, future, sg(1), pos, [stimerò]).
+ty_verb(italian, rate, future, sg(2), pos, [stimerai]).
+ty_verb(italian, rate, future, pl(1), pos, [stimeremo]).
+ty_verb(italian, rate, future, pl(2), pos, [stimerete]).
+ty_verb(italian, recall, future, sg, pos, [ricorderà]).
+ty_verb(italian, recall, future, pl, pos, [ricorderanno]).
+ty_verb(italian, recall, future, sg(1), pos, [ricorderò]).
+ty_verb(italian, recall, future, sg(2), pos, [ricorderai]).
+ty_verb(italian, recall, future, pl(1), pos, [ricorderemo]).
+ty_verb(italian, recall, future, pl(2), pos, [ricorderete]).
+ty_verb(italian, receive, future, sg, pos, [riceverà]).
+ty_verb(italian, receive, future, pl, pos, [riceveranno]).
+ty_verb(italian, receive, future, sg(1), pos, [riceverò]).
+ty_verb(italian, receive, future, sg(2), pos, [riceverai]).
+ty_verb(italian, receive, future, pl(1), pos, [riceveremo]).
+ty_verb(italian, receive, future, pl(2), pos, [riceverete]).
+ty_verb(italian, reckon, future, sg, pos, [considererà]).
+ty_verb(italian, reckon, future, pl, pos, [considereranno]).
+ty_verb(italian, reckon, future, sg(1), pos, [considererò]).
+ty_verb(italian, reckon, future, sg(2), pos, [considererai]).
+ty_verb(italian, reckon, future, pl(1), pos, [considereremo]).
+ty_verb(italian, reckon, future, pl(2), pos, [considererete]).
+ty_verb(italian, recognise, future, sg, pos, [riconoscerà]).
+ty_verb(italian, recognise, future, pl, pos, [riconosceranno]).
+ty_verb(italian, recognise, future, sg(1), pos, [riconoscerò]).
+ty_verb(italian, recognise, future, sg(2), pos, [riconoscerai]).
+ty_verb(italian, recognise, future, pl(1), pos, [riconosceremo]).
+ty_verb(italian, recognise, future, pl(2), pos, [riconoscerete]).
+ty_verb(italian, reconciliate, future, sg, pos, [riconcilierà]).
+ty_verb(italian, reconciliate, future, pl, pos, [riconcilieranno]).
+ty_verb(italian, reconciliate, future, sg(1), pos, [riconcilierò]).
+ty_verb(italian, reconciliate, future, sg(2), pos, [riconcilierai]).
+ty_verb(italian, reconciliate, future, pl(1), pos, [riconcilieremo]).
+ty_verb(italian, reconciliate, future, pl(2), pos, [riconcilierete]).
+ty_verb(italian, reconstruct, future, sg, pos, [ricostruirà]).
+ty_verb(italian, reconstruct, future, pl, pos, [ricostruiranno]).
+ty_verb(italian, reconstruct, future, sg(1), pos, [ricostruirò]).
+ty_verb(italian, reconstruct, future, sg(2), pos, [ricostruirai]).
+ty_verb(italian, reconstruct, future, pl(1), pos, [ricostruiremo]).
+ty_verb(italian, reconstruct, future, pl(2), pos, [ricostruirete]).
+ty_verb(italian, recuperate, future, sg, pos, [recupererà]).
+ty_verb(italian, recuperate, future, pl, pos, [recupereranno]).
+ty_verb(italian, recuperate, future, sg(1), pos, [recupererò]).
+ty_verb(italian, recuperate, future, sg(2), pos, [recupererai]).
+ty_verb(italian, recuperate, future, pl(1), pos, [recupereremo]).
+ty_verb(italian, recuperate, future, pl(2), pos, [recupererete]).
+ty_verb(italian, register, future, sg, pos, [registrerà]).
+ty_verb(italian, register, future, pl, pos, [registreranno]).
+ty_verb(italian, register, future, sg(1), pos, [registrerò]).
+ty_verb(italian, register, future, sg(2), pos, [registrerai]).
+ty_verb(italian, register, future, pl(1), pos, [registreremo]).
+ty_verb(italian, register, future, pl(2), pos, [registrerete]).
+ty_verb(italian, relieve, future, sg, pos, [rileverà]).
+ty_verb(italian, relieve, future, pl, pos, [rileveranno]).
+ty_verb(italian, relieve, future, sg(1), pos, [rileverò]).
+ty_verb(italian, relieve, future, sg(2), pos, [rileverai]).
+ty_verb(italian, relieve, future, pl(1), pos, [rileveremo]).
+ty_verb(italian, relieve, future, pl(2), pos, [rileverete]).
+ty_verb(italian, rely, future, sg, pos, [affiderà]).
+ty_verb(italian, rely, future, pl, pos, [affideranno]).
+ty_verb(italian, rely, future, sg(1), pos, [affiderò]).
+ty_verb(italian, rely, future, sg(2), pos, [affiderai]).
+ty_verb(italian, rely, future, pl(1), pos, [affideremo]).
+ty_verb(italian, rely, future, pl(2), pos, [affiderete]).
+ty_verb(italian, remind, future, sg, pos, [ricorderà]).
+ty_verb(italian, remind, future, pl, pos, [ricorderanno]).
+ty_verb(italian, remind, future, sg(1), pos, [ricorderò]).
+ty_verb(italian, remind, future, sg(2), pos, [ricorderai]).
+ty_verb(italian, remind, future, pl(1), pos, [ricorderemo]).
+ty_verb(italian, remind, future, pl(2), pos, [ricorderete]).
+ty_verb(italian, reply, future, sg, pos, [risponderà]).
+ty_verb(italian, reply, future, pl, pos, [risponderanno]).
+ty_verb(italian, reply, future, sg(1), pos, [risponderò]).
+ty_verb(italian, reply, future, sg(2), pos, [risponderai]).
+ty_verb(italian, reply, future, pl(1), pos, [risponderemo]).
+ty_verb(italian, reply, future, pl(2), pos, [risponderete]).
+ty_verb(italian, request, future, sg, pos, [chiederà]).
+ty_verb(italian, request, future, pl, pos, [chiederanno]).
+ty_verb(italian, request, future, sg(1), pos, [chiederò]).
+ty_verb(italian, request, future, sg(2), pos, [chiederai]).
+ty_verb(italian, request, future, pl(1), pos, [chiederemo]).
+ty_verb(italian, request, future, pl(2), pos, [chiederete]).
+ty_verb(italian, respond, future, sg, pos, [risponderà]).
+ty_verb(italian, respond, future, pl, pos, [risponderanno]).
+ty_verb(italian, respond, future, sg(1), pos, [risponderò]).
+ty_verb(italian, respond, future, sg(2), pos, [risponderai]).
+ty_verb(italian, respond, future, pl(1), pos, [risponderemo]).
+ty_verb(italian, respond, future, pl(2), pos, [risponderete]).
+ty_verb(italian, restrict, future, sg, pos, [limiterà]).
+ty_verb(italian, restrict, future, pl, pos, [limiteranno]).
+ty_verb(italian, restrict, future, sg(1), pos, [limiterò]).
+ty_verb(italian, restrict, future, sg(2), pos, [limiterai]).
+ty_verb(italian, restrict, future, pl(1), pos, [limiteremo]).
+ty_verb(italian, restrict, future, pl(2), pos, [limiterete]).
+ty_verb(italian, run, future, sg, pos, [correrà]).
+ty_verb(italian, run, future, pl, pos, [correranno]).
+ty_verb(italian, run, future, sg(1), pos, [correrò]).
+ty_verb(italian, run, future, sg(2), pos, [correrai]).
+ty_verb(italian, run, future, pl(1), pos, [correremo]).
+ty_verb(italian, run, future, pl(2), pos, [correrete]).
+ty_verb(italian, score, future, sg, pos, [marcherà]).
+ty_verb(italian, score, future, pl, pos, [marcheranno]).
+ty_verb(italian, score, future, sg(1), pos, [marcherò]).
+ty_verb(italian, score, future, sg(2), pos, [marcherai]).
+ty_verb(italian, score, future, pl(1), pos, [marcheremo]).
+ty_verb(italian, score, future, pl(2), pos, [marcherete]).
+ty_verb(italian, scour, future, sg, pos, [registrerà]).
+ty_verb(italian, scour, future, pl, pos, [registreranno]).
+ty_verb(italian, scour, future, sg(1), pos, [registrerò]).
+ty_verb(italian, scour, future, sg(2), pos, [registrerai]).
+ty_verb(italian, scour, future, pl(1), pos, [registreremo]).
+ty_verb(italian, scour, future, pl(2), pos, [registrerete]).
+ty_verb(italian, seat, future, sg, pos, [sederà]).
+ty_verb(italian, seat, future, pl, pos, [sederanno]).
+ty_verb(italian, seat, future, sg(1), pos, [sederò]).
+ty_verb(italian, seat, future, sg(2), pos, [sederai]).
+ty_verb(italian, seat, future, pl(1), pos, [sederemo]).
+ty_verb(italian, seat, future, pl(2), pos, [sederete]).
+ty_verb(italian, secure, future, sg, pos, [assicurerà]).
+ty_verb(italian, secure, future, pl, pos, [assicureranno]).
+ty_verb(italian, secure, future, sg(1), pos, [assicurerò]).
+ty_verb(italian, secure, future, sg(2), pos, [assicurerai]).
+ty_verb(italian, secure, future, pl(1), pos, [assicureremo]).
+ty_verb(italian, secure, future, pl(2), pos, [assicurerete]).
+ty_verb(italian, seek, future, sg, pos, [cercherà]).
+ty_verb(italian, seek, future, pl, pos, [cercheranno]).
+ty_verb(italian, seek, future, sg(1), pos, [cercherò]).
+ty_verb(italian, seek, future, sg(2), pos, [cercherai]).
+ty_verb(italian, seek, future, pl(1), pos, [cercheremo]).
+ty_verb(italian, seek, future, pl(2), pos, [cercherete]).
+ty_verb(italian, appear, future, sg, pos, [parrà]).
+ty_verb(italian, appear, future, pl, pos, [parranno]).
+ty_verb(italian, appear, future, sg(1), pos, [parrò]).
+ty_verb(italian, appear, future, sg(2), pos, [parrai]).
+ty_verb(italian, appear, future, pl(1), pos, [parremo]).
+ty_verb(italian, appear, future, pl(2), pos, [parrete]).
+ty_verb(italian, seiz, future, sg, pos, [confischerà]).
+ty_verb(italian, seiz, future, pl, pos, [confischeranno]).
+ty_verb(italian, seiz, future, sg(1), pos, [confischerò]).
+ty_verb(italian, seiz, future, sg(2), pos, [confischerai]).
+ty_verb(italian, seiz, future, pl(1), pos, [confischeremo]).
+ty_verb(italian, seiz, future, pl(2), pos, [confischerete]).
+ty_verb(italian, separate, future, sg, pos, [separerà]).
+ty_verb(italian, separate, future, pl, pos, [separeranno]).
+ty_verb(italian, separate, future, sg(1), pos, [separerò]).
+ty_verb(italian, separate, future, sg(2), pos, [separerai]).
+ty_verb(italian, separate, future, pl(1), pos, [separeremo]).
+ty_verb(italian, separate, future, pl(2), pos, [separerete]).
+ty_verb(italian, set, future, sg, pos, [metterà]).
+ty_verb(italian, set, future, pl, pos, [metteranno]).
+ty_verb(italian, set, future, sg(1), pos, [metterò]).
+ty_verb(italian, set, future, sg(2), pos, [metterai]).
+ty_verb(italian, set, future, pl(1), pos, [metteremo]).
+ty_verb(italian, set, future, pl(2), pos, [metterete]).
+ty_verb(italian, settle, future, sg, pos, [risolverà]).
+ty_verb(italian, settle, future, pl, pos, [risolveranno]).
+ty_verb(italian, settle, future, sg(1), pos, [risolverò]).
+ty_verb(italian, settle, future, sg(2), pos, [risolverai]).
+ty_verb(italian, settle, future, pl(1), pos, [risolveremo]).
+ty_verb(italian, settle, future, pl(2), pos, [risolverete]).
+ty_verb(italian, shell, future, sg, pos, [pelerà]).
+ty_verb(italian, shell, future, pl, pos, [peleranno]).
+ty_verb(italian, shell, future, sg(1), pos, [pelerò]).
+ty_verb(italian, shell, future, sg(2), pos, [pelerai]).
+ty_verb(italian, shell, future, pl(1), pos, [peleremo]).
+ty_verb(italian, shell, future, pl(2), pos, [pelerete]).
+ty_verb(italian, shift, future, sg, pos, [cambierà]).
+ty_verb(italian, shift, future, pl, pos, [cambieranno]).
+ty_verb(italian, shift, future, sg(1), pos, [cambierò]).
+ty_verb(italian, shift, future, sg(2), pos, [cambierai]).
+ty_verb(italian, shift, future, pl(1), pos, [cambieremo]).
+ty_verb(italian, shift, future, pl(2), pos, [cambierete]).
+ty_verb(italian, ship, future, sg, pos, [imbarcherà]).
+ty_verb(italian, ship, future, pl, pos, [imbarcheranno]).
+ty_verb(italian, ship, future, sg(1), pos, [imbarcherò]).
+ty_verb(italian, ship, future, sg(2), pos, [imbarcherai]).
+ty_verb(italian, ship, future, pl(1), pos, [imbarcheremo]).
+ty_verb(italian, ship, future, pl(2), pos, [imbarcherete]).
+ty_verb(italian, scream, future, sg, pos, [griderà]).
+ty_verb(italian, scream, future, pl, pos, [grideranno]).
+ty_verb(italian, scream, future, sg(1), pos, [griderò]).
+ty_verb(italian, scream, future, sg(2), pos, [griderai]).
+ty_verb(italian, scream, future, pl(1), pos, [grideremo]).
+ty_verb(italian, scream, future, pl(2), pos, [griderete]).
+ty_verb(italian, shut, future, sg, pos, [chiuderà]).
+ty_verb(italian, shut, future, pl, pos, [chiuderanno]).
+ty_verb(italian, shut, future, sg(1), pos, [chiuderò]).
+ty_verb(italian, shut, future, sg(2), pos, [chiuderai]).
+ty_verb(italian, shut, future, pl(1), pos, [chiuderemo]).
+ty_verb(italian, shut, future, pl(2), pos, [chiuderete]).
+ty_verb(italian, signal, future, sg, pos, [segnalerà]).
+ty_verb(italian, signal, future, pl, pos, [segnaleranno]).
+ty_verb(italian, signal, future, sg(1), pos, [segnalerò]).
+ty_verb(italian, signal, future, sg(2), pos, [segnalerai]).
+ty_verb(italian, signal, future, pl(1), pos, [segnaleremo]).
+ty_verb(italian, signal, future, pl(2), pos, [segnalerete]).
+ty_verb(italian, sling, future, sg, pos, [lancerà]).
+ty_verb(italian, sling, future, pl, pos, [lanceranno]).
+ty_verb(italian, sling, future, sg(1), pos, [lancerò]).
+ty_verb(italian, sling, future, sg(2), pos, [lancerai]).
+ty_verb(italian, sling, future, pl(1), pos, [lanceremo]).
+ty_verb(italian, sling, future, pl(2), pos, [lancerete]).
+ty_verb(italian, smash, future, sg, pos, [romperà]).
+ty_verb(italian, smash, future, pl, pos, [romperanno]).
+ty_verb(italian, smash, future, sg(1), pos, [romperò]).
+ty_verb(italian, smash, future, sg(2), pos, [romperai]).
+ty_verb(italian, smash, future, pl(1), pos, [romperemo]).
+ty_verb(italian, smash, future, pl(2), pos, [romperete]).
+ty_verb(italian, solve, future, sg, pos, [risolverà]).
+ty_verb(italian, solve, future, pl, pos, [risolveranno]).
+ty_verb(italian, solve, future, sg(1), pos, [risolverò]).
+ty_verb(italian, solve, future, sg(2), pos, [risolverai]).
+ty_verb(italian, solve, future, pl(1), pos, [risolveremo]).
+ty_verb(italian, solve, future, pl(2), pos, [risolverete]).
+ty_verb(italian, sort, future, sg, pos, [ordinerà]).
+ty_verb(italian, sort, future, pl, pos, [ordineranno]).
+ty_verb(italian, sort, future, sg(1), pos, [ordinerò]).
+ty_verb(italian, sort, future, sg(2), pos, [ordinerai]).
+ty_verb(italian, sort, future, pl(1), pos, [ordineremo]).
+ty_verb(italian, sort, future, pl(2), pos, [ordinerete]).
+ty_verb(italian, speed, future, sg, pos, [accelererà]).
+ty_verb(italian, speed, future, pl, pos, [accelereranno]).
+ty_verb(italian, speed, future, sg(1), pos, [accelererò]).
+ty_verb(italian, speed, future, sg(2), pos, [accelererai]).
+ty_verb(italian, speed, future, pl(1), pos, [accelereremo]).
+ty_verb(italian, speed, future, pl(2), pos, [accelererete]).
+ty_verb(italian, spring, future, sg, pos, [salterà]).
+ty_verb(italian, spring, future, pl, pos, [salteranno]).
+ty_verb(italian, spring, future, sg(1), pos, [salterò]).
+ty_verb(italian, spring, future, sg(2), pos, [salterai]).
+ty_verb(italian, spring, future, pl(1), pos, [salteremo]).
+ty_verb(italian, spring, future, pl(2), pos, [salterete]).
+ty_verb(italian, stammer, future, sg, pos, [balbetterà]).
+ty_verb(italian, stammer, future, pl, pos, [balbetteranno]).
+ty_verb(italian, stammer, future, sg(1), pos, [balbetterò]).
+ty_verb(italian, stammer, future, sg(2), pos, [balbetterai]).
+ty_verb(italian, stammer, future, pl(1), pos, [balbetteremo]).
+ty_verb(italian, stammer, future, pl(2), pos, [balbetterete]).
+ty_verb(italian, state, future, sg, pos, [dichiarerà]).
+ty_verb(italian, state, future, pl, pos, [dichiareranno]).
+ty_verb(italian, state, future, sg(1), pos, [dichiarerò]).
+ty_verb(italian, state, future, sg(2), pos, [dichiarerai]).
+ty_verb(italian, state, future, pl(1), pos, [dichiareremo]).
+ty_verb(italian, state, future, pl(2), pos, [dichiarerete]).
+ty_verb(italian, stay, future, sg, pos, [resterà]).
+ty_verb(italian, stay, future, pl, pos, [resteranno]).
+ty_verb(italian, stay, future, sg(1), pos, [resterò]).
+ty_verb(italian, stay, future, sg(2), pos, [resterai]).
+ty_verb(italian, stay, future, pl(1), pos, [resteremo]).
+ty_verb(italian, stay, future, pl(2), pos, [resterete]).
+ty_verb(italian, stop, future, sg, pos, [deterrà]).
+ty_verb(italian, stop, future, pl, pos, [deterranno]).
+ty_verb(italian, stop, future, sg(1), pos, [deterrò]).
+ty_verb(italian, stop, future, sg(2), pos, [deterrai]).
+ty_verb(italian, stop, future, pl(1), pos, [deterremo]).
+ty_verb(italian, stop, future, pl(2), pos, [deterrete]).
+ty_verb(italian, stretch, future, sg, pos, [estenderà]).
+ty_verb(italian, stretch, future, pl, pos, [estenderanno]).
+ty_verb(italian, stretch, future, sg(1), pos, [estenderò]).
+ty_verb(italian, stretch, future, sg(2), pos, [estenderai]).
+ty_verb(italian, stretch, future, pl(1), pos, [estenderemo]).
+ty_verb(italian, stretch, future, pl(2), pos, [estenderete]).
+ty_verb(italian, struggle, future, sg, pos, [combatterà]).
+ty_verb(italian, struggle, future, pl, pos, [combatteranno]).
+ty_verb(italian, struggle, future, sg(1), pos, [combatterò]).
+ty_verb(italian, struggle, future, sg(2), pos, [combatterai]).
+ty_verb(italian, struggle, future, pl(1), pos, [combatteremo]).
+ty_verb(italian, struggle, future, pl(2), pos, [combatterete]).
+ty_verb(italian, submit, future, sg, pos, [consegnerà]).
+ty_verb(italian, submit, future, pl, pos, [consegneranno]).
+ty_verb(italian, submit, future, sg(1), pos, [consegnerò]).
+ty_verb(italian, submit, future, sg(2), pos, [consegnerai]).
+ty_verb(italian, submit, future, pl(1), pos, [consegneremo]).
+ty_verb(italian, submit, future, pl(2), pos, [consegnerete]).
+ty_verb(italian, suit, future, sg, pos, [adatterà]).
+ty_verb(italian, suit, future, pl, pos, [adatteranno]).
+ty_verb(italian, suit, future, sg(1), pos, [adatterò]).
+ty_verb(italian, suit, future, sg(2), pos, [adatterai]).
+ty_verb(italian, suit, future, pl(1), pos, [adatteremo]).
+ty_verb(italian, suit, future, pl(2), pos, [adatterete]).
+ty_verb(italian, summon, future, sg, pos, [convocherà]).
+ty_verb(italian, summon, future, pl, pos, [convocheranno]).
+ty_verb(italian, summon, future, sg(1), pos, [convocherò]).
+ty_verb(italian, summon, future, sg(2), pos, [convocherai]).
+ty_verb(italian, summon, future, pl(1), pos, [convocheremo]).
+ty_verb(italian, summon, future, pl(2), pos, [convocherete]).
+ty_verb(italian, surpass, future, sg, pos, [supererà]).
+ty_verb(italian, surpass, future, pl, pos, [supereranno]).
+ty_verb(italian, surpass, future, sg(1), pos, [supererò]).
+ty_verb(italian, surpass, future, sg(2), pos, [supererai]).
+ty_verb(italian, surpass, future, pl(1), pos, [supereremo]).
+ty_verb(italian, surpass, future, pl(2), pos, [supererete]).
+ty_verb(italian, switch, future, sg, pos, [cambierà]).
+ty_verb(italian, switch, future, pl, pos, [cambieranno]).
+ty_verb(italian, switch, future, sg(1), pos, [cambierò]).
+ty_verb(italian, switch, future, sg(2), pos, [cambierai]).
+ty_verb(italian, switch, future, pl(1), pos, [cambieremo]).
+ty_verb(italian, switch, future, pl(2), pos, [cambierete]).
+ty_verb(italian, talk, future, sg, pos, [parlerà]).
+ty_verb(italian, talk, future, pl, pos, [parleranno]).
+ty_verb(italian, talk, future, sg(1), pos, [parlerò]).
+ty_verb(italian, talk, future, sg(2), pos, [parlerai]).
+ty_verb(italian, talk, future, pl(1), pos, [parleremo]).
+ty_verb(italian, talk, future, pl(2), pos, [parlerete]).
+ty_verb(italian, tap, future, sg, pos, [toccherà]).
+ty_verb(italian, tap, future, pl, pos, [toccheranno]).
+ty_verb(italian, tap, future, sg(1), pos, [toccherò]).
+ty_verb(italian, tap, future, sg(2), pos, [toccherai]).
+ty_verb(italian, tap, future, pl(1), pos, [toccheremo]).
+ty_verb(italian, tap, future, pl(2), pos, [toccherete]).
+ty_verb(italian, target, future, sg, pos, [punterà]).
+ty_verb(italian, target, future, pl, pos, [punteranno]).
+ty_verb(italian, target, future, sg(1), pos, [punterò]).
+ty_verb(italian, target, future, sg(2), pos, [punterai]).
+ty_verb(italian, target, future, pl(1), pos, [punteremo]).
+ty_verb(italian, target, future, pl(2), pos, [punterete]).
+ty_verb(italian, telephone, future, sg, pos, [telefonerà]).
+ty_verb(italian, telephone, future, pl, pos, [telefoneranno]).
+ty_verb(italian, telephone, future, sg(1), pos, [telefonerò]).
+ty_verb(italian, telephone, future, sg(2), pos, [telefonerai]).
+ty_verb(italian, telephone, future, pl(1), pos, [telefoneremo]).
+ty_verb(italian, telephone, future, pl(2), pos, [telefonerete]).
+ty_verb(italian, tell, future, sg, pos, [dirà]).
+ty_verb(italian, tell, future, pl, pos, [diranno]).
+ty_verb(italian, tell, future, sg(1), pos, [dirò]).
+ty_verb(italian, tell, future, sg(2), pos, [dirai]).
+ty_verb(italian, tell, future, pl(1), pos, [diremo]).
+ty_verb(italian, tell, future, pl(2), pos, [direte]).
+ty_verb(italian, tempt, future, sg, pos, [tenterà]).
+ty_verb(italian, tempt, future, pl, pos, [tenteranno]).
+ty_verb(italian, tempt, future, sg(1), pos, [tenterò]).
+ty_verb(italian, tempt, future, sg(2), pos, [tenterai]).
+ty_verb(italian, tempt, future, pl(1), pos, [tenteremo]).
+ty_verb(italian, tempt, future, pl(2), pos, [tenterete]).
+ty_verb(italian, terminate, future, sg, pos, [terminerà]).
+ty_verb(italian, terminate, future, pl, pos, [termineranno]).
+ty_verb(italian, terminate, future, sg(1), pos, [terminerò]).
+ty_verb(italian, terminate, future, sg(2), pos, [terminerai]).
+ty_verb(italian, terminate, future, pl(1), pos, [termineremo]).
+ty_verb(italian, terminate, future, pl(2), pos, [terminerete]).
+ty_verb(italian, testify, future, sg, pos, [testimonierà]).
+ty_verb(italian, testify, future, pl, pos, [testimonieranno]).
+ty_verb(italian, testify, future, sg(1), pos, [testimonierò]).
+ty_verb(italian, testify, future, sg(2), pos, [testimonierai]).
+ty_verb(italian, testify, future, pl(1), pos, [testimonieremo]).
+ty_verb(italian, testify, future, pl(2), pos, [testimonierete]).
+ty_verb(italian, thrust, future, sg, pos, [spingerà]).
+ty_verb(italian, thrust, future, pl, pos, [spingeranno]).
+ty_verb(italian, thrust, future, sg(1), pos, [spingerò]).
+ty_verb(italian, thrust, future, sg(2), pos, [spingerai]).
+ty_verb(italian, thrust, future, pl(1), pos, [spingeremo]).
+ty_verb(italian, thrust, future, pl(2), pos, [spingerete]).
+ty_verb(italian, track, future, sg, pos, [seguirà]).
+ty_verb(italian, track, future, pl, pos, [seguiranno]).
+ty_verb(italian, track, future, sg(1), pos, [seguirò]).
+ty_verb(italian, track, future, sg(2), pos, [seguirai]).
+ty_verb(italian, track, future, pl(1), pos, [seguiremo]).
+ty_verb(italian, track, future, pl(2), pos, [seguirete]).
+ty_verb(italian, trade, future, sg, pos, [scambierà]).
+ty_verb(italian, trade, future, pl, pos, [scambieranno]).
+ty_verb(italian, trade, future, sg(1), pos, [scambierò]).
+ty_verb(italian, trade, future, sg(2), pos, [scambierai]).
+ty_verb(italian, trade, future, pl(1), pos, [scambieremo]).
+ty_verb(italian, trade, future, pl(2), pos, [scambierete]).
+ty_verb(italian, transact, future, sg, pos, [tratterà]).
+ty_verb(italian, transact, future, pl, pos, [tratteranno]).
+ty_verb(italian, transact, future, sg(1), pos, [tratterò]).
+ty_verb(italian, transact, future, sg(2), pos, [tratterai]).
+ty_verb(italian, transact, future, pl(1), pos, [tratteremo]).
+ty_verb(italian, transact, future, pl(2), pos, [tratterete]).
+ty_verb(italian, transmit, future, sg, pos, [trasmetterà]).
+ty_verb(italian, transmit, future, pl, pos, [trasmetteranno]).
+ty_verb(italian, transmit, future, sg(1), pos, [trasmetterò]).
+ty_verb(italian, transmit, future, sg(2), pos, [trasmetterai]).
+ty_verb(italian, transmit, future, pl(1), pos, [trasmetteremo]).
+ty_verb(italian, transmit, future, pl(2), pos, [trasmetterete]).
+ty_verb(italian, treat, future, sg, pos, [tratterà]).
+ty_verb(italian, treat, future, pl, pos, [tratteranno]).
+ty_verb(italian, treat, future, sg(1), pos, [tratterò]).
+ty_verb(italian, treat, future, sg(2), pos, [tratterai]).
+ty_verb(italian, treat, future, pl(1), pos, [tratteremo]).
+ty_verb(italian, treat, future, pl(2), pos, [tratterete]).
+ty_verb(italian, trick, future, sg, pos, [ingannerà]).
+ty_verb(italian, trick, future, pl, pos, [inganneranno]).
+ty_verb(italian, trick, future, sg(1), pos, [ingannerò]).
+ty_verb(italian, trick, future, sg(2), pos, [ingannerai]).
+ty_verb(italian, trick, future, pl(1), pos, [inganneremo]).
+ty_verb(italian, trick, future, pl(2), pos, [ingannerete]).
+ty_verb(italian, trigger, future, sg, pos, [provocherà]).
+ty_verb(italian, trigger, future, pl, pos, [provocheranno]).
+ty_verb(italian, trigger, future, sg(1), pos, [provocherò]).
+ty_verb(italian, trigger, future, sg(2), pos, [provocherai]).
+ty_verb(italian, trigger, future, pl(1), pos, [provocheremo]).
+ty_verb(italian, trigger, future, pl(2), pos, [provocherete]).
+ty_verb(italian, unchain, future, sg, pos, [libererà]).
+ty_verb(italian, unchain, future, pl, pos, [libereranno]).
+ty_verb(italian, unchain, future, sg(1), pos, [libererò]).
+ty_verb(italian, unchain, future, sg(2), pos, [libererai]).
+ty_verb(italian, unchain, future, pl(1), pos, [libereremo]).
+ty_verb(italian, unchain, future, pl(2), pos, [libererete]).
+ty_verb(italian, undergo, future, sg, pos, [subirà]).
+ty_verb(italian, undergo, future, pl, pos, [subiranno]).
+ty_verb(italian, undergo, future, sg(1), pos, [subirò]).
+ty_verb(italian, undergo, future, sg(2), pos, [subirai]).
+ty_verb(italian, undergo, future, pl(1), pos, [subiremo]).
+ty_verb(italian, undergo, future, pl(2), pos, [subirete]).
+ty_verb(italian, undermine, future, sg, pos, [scaverà]).
+ty_verb(italian, undermine, future, pl, pos, [scaveranno]).
+ty_verb(italian, undermine, future, sg(1), pos, [scaverò]).
+ty_verb(italian, undermine, future, sg(2), pos, [scaverai]).
+ty_verb(italian, undermine, future, pl(1), pos, [scaveremo]).
+ty_verb(italian, undermine, future, pl(2), pos, [scaverete]).
+ty_verb(italian, unite, future, sg, pos, [unirà]).
+ty_verb(italian, unite, future, pl, pos, [uniranno]).
+ty_verb(italian, unite, future, sg(1), pos, [unirò]).
+ty_verb(italian, unite, future, sg(2), pos, [unirai]).
+ty_verb(italian, unite, future, pl(1), pos, [uniremo]).
+ty_verb(italian, unite, future, pl(2), pos, [unirete]).
+ty_verb(italian, unload, future, sg, pos, [scaricherà]).
+ty_verb(italian, unload, future, pl, pos, [scaricheranno]).
+ty_verb(italian, unload, future, sg(1), pos, [scaricherò]).
+ty_verb(italian, unload, future, sg(2), pos, [scaricherai]).
+ty_verb(italian, unload, future, pl(1), pos, [scaricheremo]).
+ty_verb(italian, unload, future, pl(2), pos, [scaricherete]).
+ty_verb(italian, unveil, future, sg, pos, [scoprirà]).
+ty_verb(italian, unveil, future, pl, pos, [scopriranno]).
+ty_verb(italian, unveil, future, sg(1), pos, [scoprirò]).
+ty_verb(italian, unveil, future, sg(2), pos, [scoprirai]).
+ty_verb(italian, unveil, future, pl(1), pos, [scopriremo]).
+ty_verb(italian, unveil, future, pl(2), pos, [scoprirete]).
+ty_verb(italian, urge, future, sg, pos, [spingerà]).
+ty_verb(italian, urge, future, pl, pos, [spingeranno]).
+ty_verb(italian, urge, future, sg(1), pos, [spingerò]).
+ty_verb(italian, urge, future, sg(2), pos, [spingerai]).
+ty_verb(italian, urge, future, pl(1), pos, [spingeremo]).
+ty_verb(italian, urge, future, pl(2), pos, [spingerete]).
+ty_verb(italian, value, future, sg, pos, [valuterà]).
+ty_verb(italian, value, future, pl, pos, [valuteranno]).
+ty_verb(italian, value, future, sg(1), pos, [valuterò]).
+ty_verb(italian, value, future, sg(2), pos, [valuterai]).
+ty_verb(italian, value, future, pl(1), pos, [valuteremo]).
+ty_verb(italian, value, future, pl(2), pos, [valuterete]).
+ty_verb(italian, vary, future, sg, pos, [varierà]).
+ty_verb(italian, vary, future, pl, pos, [varieranno]).
+ty_verb(italian, vary, future, sg(1), pos, [varierò]).
+ty_verb(italian, vary, future, sg(2), pos, [varierai]).
+ty_verb(italian, vary, future, pl(1), pos, [varieremo]).
+ty_verb(italian, vary, future, pl(2), pos, [varierete]).
+ty_verb(italian, view, future, sg, pos, [vedrà]).
+ty_verb(italian, view, future, pl, pos, [vedranno]).
+ty_verb(italian, view, future, sg(1), pos, [vedrò]).
+ty_verb(italian, view, future, sg(2), pos, [vedrai]).
+ty_verb(italian, view, future, pl(1), pos, [vedremo]).
+ty_verb(italian, view, future, pl(2), pos, [vedrete]).
+ty_verb(italian, vow, future, sg, pos, [giurerà]).
+ty_verb(italian, vow, future, pl, pos, [giureranno]).
+ty_verb(italian, vow, future, sg(1), pos, [giurerò]).
+ty_verb(italian, vow, future, sg(2), pos, [giurerai]).
+ty_verb(italian, vow, future, pl(1), pos, [giureremo]).
+ty_verb(italian, vow, future, pl(2), pos, [giurerete]).
+ty_verb(italian, wait, future, sg, pos, [aspetterà]).
+ty_verb(italian, wait, future, pl, pos, [aspetteranno]).
+ty_verb(italian, wait, future, sg(1), pos, [aspetterò]).
+ty_verb(italian, wait, future, sg(2), pos, [aspetterai]).
+ty_verb(italian, wait, future, pl(1), pos, [aspetteremo]).
+ty_verb(italian, wait, future, pl(2), pos, [aspetterete]).
+ty_verb(italian, wake, future, sg, pos, [sveglierà]).
+ty_verb(italian, wake, future, pl, pos, [sveglieranno]).
+ty_verb(italian, wake, future, sg(1), pos, [sveglierò]).
+ty_verb(italian, wake, future, sg(2), pos, [sveglierai]).
+ty_verb(italian, wake, future, pl(1), pos, [sveglieremo]).
+ty_verb(italian, wake, future, pl(2), pos, [sveglierete]).
+ty_verb(italian, waken, future, sg, pos, [sveglierà]).
+ty_verb(italian, waken, future, pl, pos, [sveglieranno]).
+ty_verb(italian, waken, future, sg(1), pos, [sveglierò]).
+ty_verb(italian, waken, future, sg(2), pos, [sveglierai]).
+ty_verb(italian, waken, future, pl(1), pos, [sveglieremo]).
+ty_verb(italian, waken, future, pl(2), pos, [sveglierete]).
+ty_verb(italian, weep, future, sg, pos, [piangerà]).
+ty_verb(italian, weep, future, pl, pos, [piangeranno]).
+ty_verb(italian, weep, future, sg(1), pos, [piangerò]).
+ty_verb(italian, weep, future, sg(2), pos, [piangerai]).
+ty_verb(italian, weep, future, pl(1), pos, [piangeremo]).
+ty_verb(italian, weep, future, pl(2), pos, [piangerete]).
+ty_verb(italian, wet, future, sg, pos, [bagnerà]).
+ty_verb(italian, wet, future, pl, pos, [bagneranno]).
+ty_verb(italian, wet, future, sg(1), pos, [bagnerò]).
+ty_verb(italian, wet, future, sg(2), pos, [bagnerai]).
+ty_verb(italian, wet, future, pl(1), pos, [bagneremo]).
+ty_verb(italian, wet, future, pl(2), pos, [bagnerete]).
+ty_verb(italian, wish, future, sg, pos, [desidererà]).
+ty_verb(italian, wish, future, pl, pos, [desidereranno]).
+ty_verb(italian, wish, future, sg(1), pos, [desidererò]).
+ty_verb(italian, wish, future, sg(2), pos, [desidererai]).
+ty_verb(italian, wish, future, pl(1), pos, [desidereremo]).
+ty_verb(italian, wish, future, pl(2), pos, [desidererete]).
+ty_verb(italian, witness, future, sg, pos, [testimonierà]).
+ty_verb(italian, witness, future, pl, pos, [testimonieranno]).
+ty_verb(italian, witness, future, sg(1), pos, [testimonierò]).
+ty_verb(italian, witness, future, sg(2), pos, [testimonierai]).
+ty_verb(italian, witness, future, pl(1), pos, [testimonieremo]).
+ty_verb(italian, witness, future, pl(2), pos, [testimonierete]).
+ty_verb(italian, zone, future, sg, pos, [circonderà]).
+ty_verb(italian, zone, future, pl, pos, [circonderanno]).
+ty_verb(italian, zone, future, sg(1), pos, [circonderò]).
+ty_verb(italian, zone, future, sg(2), pos, [circonderai]).
+ty_verb(italian, zone, future, pl(1), pos, [circonderemo]).
+ty_verb(italian, zone, future, pl(2), pos, [circonderete]).

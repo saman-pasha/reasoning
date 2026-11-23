@@ -57,6 +57,67 @@ ty_negation(english, present, sg, [does, not], form(present, pl)).
 ty_negation(english, present, pl, [do, not], form(present, pl)).
 ty_negation(english, past, any, [did, not], form(present, pl)).
 
+%% The future and the perfect: words before another form, for every verb
+%% (`will see', `will not see', `has seen', `have not seen'; `I have
+%% seen' by the persons' rule below). The participle is a row, else the
+%% past (`walked').
+ty_tense_form(english, future, any, pos, [will, form(present, pl)]).
+ty_tense_form(english, future, any, neg, [will, not, form(present, pl)]).
+ty_tense_form(english, perfect, sg, pos, [has, participle]).
+ty_tense_form(english, perfect, pl, pos, [have, participle]).
+ty_tense_form(english, perfect, sg, neg, [has, not, participle]).
+ty_tense_form(english, perfect, pl, neg, [have, not, participle]).
+ty_participle(english, see, seen).
+ty_participle(english, sleep, slept).
+ty_participle_like(english, past, sg).
+%% The participles that are not the past (`spoken', `gone', `written').
+ty_participle(english, begin, begun).
+ty_participle(english, break, broken).
+ty_participle(english, choose, chosen).
+ty_participle(english, come, come).
+ty_participle(english, do, done).
+ty_participle(english, draw, drawn).
+ty_participle(english, drink, drunk).
+ty_participle(english, drive, driven).
+ty_participle(english, eat, eaten).
+ty_participle(english, fall, fallen).
+ty_participle(english, fly, flown).
+ty_participle(english, forget, forgotten).
+ty_participle(english, forgive, forgiven).
+ty_participle(english, freeze, frozen).
+ty_participle(english, give, given).
+ty_participle(english, go, gone).
+ty_participle(english, grow, grown).
+ty_participle(english, hide, hidden).
+ty_participle(english, know, known).
+ty_participle(english, ride, ridden).
+ty_participle(english, ring, rung).
+ty_participle(english, rise, risen).
+ty_participle(english, run, run).
+ty_participle(english, shake, shaken).
+ty_participle(english, show, shown).
+ty_participle(english, sing, sung).
+ty_participle(english, sink, sunk).
+ty_participle(english, speak, spoken).
+ty_participle(english, steal, stolen).
+ty_participle(english, swim, swum).
+ty_participle(english, take, taken).
+ty_participle(english, tear, torn).
+ty_participle(english, throw, thrown).
+ty_participle(english, wake, woken).
+ty_participle(english, wear, worn).
+ty_participle(english, write, written).
+ty_participle(english, become, become).
+ty_participle(english, bite, bitten).
+ty_participle(english, blow, blown).
+ty_participle(english, beat, beaten).
+ty_participle(english, forbid, forbidden).
+ty_participle(english, mistake, mistaken).
+ty_participle(english, withdraw, withdrawn).
+ty_participle(english, undertake, undertaken).
+ty_participle(english, overcome, overcome).
+ty_participle(english, lie, lain).
+
 %% The endings typology_import(english) makes the forms the vocabularies do
 %% not state with: the longest ending that fits wins.
 ty_ending(english, plural, '', s).

@@ -57,6 +57,64 @@ ty_verb(persian, look, past, pl, pos, ['نگاه', 'کردند']).
 ty_verb(persian, look, past, sg, neg, ['نگاه', 'نکرد']).
 ty_verb(persian, look, past, pl, neg, ['نگاه', 'نکردند']).
 
+%% The future: `خواستن' before the past stem (`خواهد دید', `نخواهد دید'),
+%% each person its own word; a compound verb puts it before the light
+%% verb (`فکر خواهد کرد'), rows of their own. The perfect: the participle
+%% and `است' (`دیده است'), the person's ending joined to the participle
+%% (`دیده‌اند', and by the persons' rule below `دیده‌ام').
+ty_tense_form(persian, future, sg, pos, ['خواهد', form(past, sg)]).
+ty_tense_form(persian, future, pl, pos, ['خواهند', form(past, sg)]).
+ty_tense_form(persian, future, sg(1), pos, ['خواهم', form(past, sg)]).
+ty_tense_form(persian, future, sg(2), pos, ['خواهی', form(past, sg)]).
+ty_tense_form(persian, future, pl(1), pos, ['خواهیم', form(past, sg)]).
+ty_tense_form(persian, future, pl(2), pos, ['خواهید', form(past, sg)]).
+ty_tense_form(persian, future, sg, neg, ['نخواهد', form(past, sg)]).
+ty_tense_form(persian, future, pl, neg, ['نخواهند', form(past, sg)]).
+ty_tense_form(persian, future, sg(1), neg, ['نخواهم', form(past, sg)]).
+ty_tense_form(persian, future, sg(2), neg, ['نخواهی', form(past, sg)]).
+ty_tense_form(persian, future, pl(1), neg, ['نخواهیم', form(past, sg)]).
+ty_tense_form(persian, future, pl(2), neg, ['نخواهید', form(past, sg)]).
+ty_verb(persian, see, perfect, sg, pos, ['دیده', 'است']).
+ty_verb(persian, see, perfect, pl, pos, ['دیده‌اند']).
+ty_verb(persian, see, perfect, sg, neg, ['ندیده', 'است']).
+ty_verb(persian, see, perfect, pl, neg, ['ندیده‌اند']).
+ty_verb(persian, sleep, perfect, sg, pos, ['خوابیده', 'است']).
+ty_verb(persian, sleep, perfect, pl, pos, ['خوابیده‌اند']).
+ty_verb(persian, sleep, perfect, sg, neg, ['نخوابیده', 'است']).
+ty_verb(persian, sleep, perfect, pl, neg, ['نخوابیده‌اند']).
+ty_verb(persian, think, perfect, sg, pos, ['فکر', 'کرده', 'است']).
+ty_verb(persian, think, perfect, pl, pos, ['فکر', 'کرده‌اند']).
+ty_verb(persian, think, perfect, sg, neg, ['فکر', 'نکرده', 'است']).
+ty_verb(persian, think, perfect, pl, neg, ['فکر', 'نکرده‌اند']).
+ty_verb(persian, think, future, sg, pos, ['فکر', 'خواهد', 'کرد']).
+ty_verb(persian, think, future, sg, neg, ['فکر', 'نخواهد', 'کرد']).
+ty_verb(persian, think, future, pl, pos, ['فکر', 'خواهند', 'کرد']).
+ty_verb(persian, think, future, pl, neg, ['فکر', 'نخواهند', 'کرد']).
+ty_verb(persian, think, future, sg(1), pos, ['فکر', 'خواهم', 'کرد']).
+ty_verb(persian, think, future, sg(1), neg, ['فکر', 'نخواهم', 'کرد']).
+ty_verb(persian, think, future, sg(2), pos, ['فکر', 'خواهی', 'کرد']).
+ty_verb(persian, think, future, sg(2), neg, ['فکر', 'نخواهی', 'کرد']).
+ty_verb(persian, think, future, pl(1), pos, ['فکر', 'خواهیم', 'کرد']).
+ty_verb(persian, think, future, pl(1), neg, ['فکر', 'نخواهیم', 'کرد']).
+ty_verb(persian, think, future, pl(2), pos, ['فکر', 'خواهید', 'کرد']).
+ty_verb(persian, think, future, pl(2), neg, ['فکر', 'نخواهید', 'کرد']).
+ty_verb(persian, look, perfect, sg, pos, ['نگاه', 'کرده', 'است']).
+ty_verb(persian, look, perfect, pl, pos, ['نگاه', 'کرده‌اند']).
+ty_verb(persian, look, perfect, sg, neg, ['نگاه', 'نکرده', 'است']).
+ty_verb(persian, look, perfect, pl, neg, ['نگاه', 'نکرده‌اند']).
+ty_verb(persian, look, future, sg, pos, ['نگاه', 'خواهد', 'کرد']).
+ty_verb(persian, look, future, sg, neg, ['نگاه', 'نخواهد', 'کرد']).
+ty_verb(persian, look, future, pl, pos, ['نگاه', 'خواهند', 'کرد']).
+ty_verb(persian, look, future, pl, neg, ['نگاه', 'نخواهند', 'کرد']).
+ty_verb(persian, look, future, sg(1), pos, ['نگاه', 'خواهم', 'کرد']).
+ty_verb(persian, look, future, sg(1), neg, ['نگاه', 'نخواهم', 'کرد']).
+ty_verb(persian, look, future, sg(2), pos, ['نگاه', 'خواهی', 'کرد']).
+ty_verb(persian, look, future, sg(2), neg, ['نگاه', 'نخواهی', 'کرد']).
+ty_verb(persian, look, future, pl(1), pos, ['نگاه', 'خواهیم', 'کرد']).
+ty_verb(persian, look, future, pl(1), neg, ['نگاه', 'نخواهیم', 'کرد']).
+ty_verb(persian, look, future, pl(2), pos, ['نگاه', 'خواهید', 'کرد']).
+ty_verb(persian, look, future, pl(2), neg, ['نگاه', 'نخواهید', 'کرد']).
+
 %% No definite article; `یک' before a singular indefinite noun.
 ty_article(persian, indef, any, sg, 'یک').
 %% The article of a question (`پسر کدام سگ را می‌بیند؟'): a noun phrase

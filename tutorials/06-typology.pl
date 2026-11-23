@@ -118,6 +118,7 @@ main :-
     references,
     live_topics,
     french_questions,
+    tenses,
     format("~ndone~n", []).
 
 
@@ -476,6 +477,27 @@ french_questions :-
     must('qu\'est-ce que', E3, 'What does the boy see?'),
     typology_translate(english, french, 'What does the boy think about?', F4),
     must('after a preposition, quoi', F4, 'À quoi pense le garçon?').
+
+%% 27. THE FUTURE AND THE PERFECT. A tense is a row (Spanish `verá', the
+%% import's futures of the vocabulary's verbs) or a pattern of words and
+%% another form (ty_tense_form/5: English [will, form(present, pl)], [has,
+%% participle]). A participle agrees with an object clitic before it
+%% (Italian `l'ha vista'), and a class of verbs has patterns of its own
+%% whose participle agrees with the subject (ty_class_tense_form/6:
+%% `essere', `La ragazza è andata'). French puts the negation and an
+%% inverted pronoun after the auxiliary (`n'a pas vu', `a-t-il vu').
+tenses :-
+    IR1 = clause(see, perfect, pos, np(boy, sg, def, []), pron(3, sg, f)),
+    findall(L-T, ( member(L, [english, spanish, italian, french]), typology_write(L, IR1, T) ), Ts1),
+    must('the boy has seen her, four times', Ts1,
+         [english-'The boy has seen her.', spanish-'El niño la ha visto.',
+          italian-'Il ragazzo l\'ha vista.', french-'Le garçon l\'a vue.']),
+    typology_translate(english, italian, 'The girls have gone.', I2),
+    must('essere, and the participle agrees with the subject', I2, 'Le ragazze sono andate.'),
+    typology_translate(english, french, 'The boy will not see the dog.', F3),
+    must('the future', F3, 'Le garçon ne verra pas le chien.'),
+    typology_translate(french, english, 'N\'a-t-il pas vu le chien?', E4),
+    must('the negation and the pronoun after the auxiliary', E4, 'Has he not seen the dog?').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

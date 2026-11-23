@@ -96,6 +96,78 @@ ty_verb(french, look, past, pl(2), pos, ['regardâtes']).
 ty_negation_place(french, [ne], before(v)).
 ty_negation_place(french, [pas], after(v)).
 
+%% The future, a word of its own; the passé composé, `avoir' and the
+%% participle (`a vu', `n'a pas vu'), which agrees with an object clitic
+%% of the third person before it (`il l'a vue', `il les a vus'). The
+%% negation and an inverted pronoun stand after the auxiliary (`A-t-il vu
+%% le chien?').
+ty_verb(french, see, future, sg, pos, [verra]).
+ty_verb(french, see, future, pl, pos, [verront]).
+ty_verb(french, see, future, sg(1), pos, [verrai]).
+ty_verb(french, see, future, sg(2), pos, [verras]).
+ty_verb(french, see, future, pl(1), pos, [verrons]).
+ty_verb(french, see, future, pl(2), pos, [verrez]).
+ty_verb(french, sleep, future, sg, pos, [dormira]).
+ty_verb(french, sleep, future, pl, pos, [dormiront]).
+ty_verb(french, sleep, future, sg(1), pos, [dormirai]).
+ty_verb(french, sleep, future, sg(2), pos, [dormiras]).
+ty_verb(french, sleep, future, pl(1), pos, [dormirons]).
+ty_verb(french, sleep, future, pl(2), pos, [dormirez]).
+ty_verb(french, think, future, sg, pos, [pensera]).
+ty_verb(french, think, future, pl, pos, [penseront]).
+ty_verb(french, think, future, sg(1), pos, [penserai]).
+ty_verb(french, think, future, sg(2), pos, [penseras]).
+ty_verb(french, think, future, pl(1), pos, [penserons]).
+ty_verb(french, think, future, pl(2), pos, [penserez]).
+ty_verb(french, look, future, sg, pos, [regardera]).
+ty_verb(french, look, future, pl, pos, [regarderont]).
+ty_verb(french, look, future, sg(1), pos, [regarderai]).
+ty_verb(french, look, future, sg(2), pos, [regarderas]).
+ty_verb(french, look, future, pl(1), pos, [regarderons]).
+ty_verb(french, look, future, pl(2), pos, [regarderez]).
+ty_tense_form(french, perfect, sg, pos, ['a', participle]).
+ty_tense_form(french, perfect, pl, pos, ['ont', participle]).
+ty_tense_form(french, perfect, sg(1), pos, ['ai', participle]).
+ty_tense_form(french, perfect, sg(2), pos, ['as', participle]).
+ty_tense_form(french, perfect, pl(1), pos, ['avons', participle]).
+ty_tense_form(french, perfect, pl(2), pos, ['avez', participle]).
+ty_participle(french, see, vu).
+ty_participle(french, sleep, dormi).
+ty_participle(french, think, 'pensé').
+ty_participle(french, look, 'regardé').
+ty_participle_ending(french, f, sg, '', e).
+ty_participle_ending(french, m, pl, '', s).
+ty_participle_ending(french, f, pl, '', es).
+ty_participle_agrees(french, clitic).
+%% `aller', whose passé composé takes `être', the participle agreeing with
+%% the subject (`La fille est allée', `Les filles sont allées').
+ty_verb(french, go, present, sg, pos, [va]).
+ty_verb(french, go, present, pl, pos, [vont]).
+ty_verb(french, go, present, sg(1), pos, [vais]).
+ty_verb(french, go, present, sg(2), pos, [vas]).
+ty_verb(french, go, present, pl(1), pos, [allons]).
+ty_verb(french, go, present, pl(2), pos, [allez]).
+ty_verb(french, go, past, sg, pos, [alla]).
+ty_verb(french, go, past, pl, pos, ['allèrent']).
+ty_verb(french, go, past, sg(1), pos, [allai]).
+ty_verb(french, go, past, sg(2), pos, [allas]).
+ty_verb(french, go, past, pl(1), pos, ['allâmes']).
+ty_verb(french, go, past, pl(2), pos, ['allâtes']).
+ty_verb(french, go, future, sg, pos, [ira]).
+ty_verb(french, go, future, pl, pos, [iront]).
+ty_verb(french, go, future, sg(1), pos, [irai]).
+ty_verb(french, go, future, sg(2), pos, [iras]).
+ty_verb(french, go, future, pl(1), pos, [irons]).
+ty_verb(french, go, future, pl(2), pos, [irez]).
+ty_participle(french, go, 'allé').
+ty_verb_class(french, go, 'être').
+ty_class_tense_form(french, 'être', perfect, sg, pos, [est, participle(subject)]).
+ty_class_tense_form(french, 'être', perfect, pl, pos, [sont, participle(subject)]).
+ty_class_tense_form(french, 'être', perfect, sg(1), pos, [suis, participle(subject)]).
+ty_class_tense_form(french, 'être', perfect, sg(2), pos, [es, participle(subject)]).
+ty_class_tense_form(french, 'être', perfect, pl(1), pos, [sommes, participle(subject)]).
+ty_class_tense_form(french, 'être', perfect, pl(2), pos, ['êtes', participle(subject)]).
+
 %% The articles agree with the noun; a plural indefinite is `des'.
 ty_article(french, def, m, sg, le).
 ty_article(french, def, f, sg, la).

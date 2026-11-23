@@ -46,6 +46,68 @@ ty_verb(italian, sleep, past, pl, pos, [dormirono]).
 %% The negative: `non' before the verb.
 ty_negation(italian, any, any, [non], same).
 
+%% The future, a word of its own; the passato prossimo, `avere' and the
+%% participle (`ha visto', `non l'ha visto'), which agrees with an object
+%% clitic of the third person before it (`l'ha vista', `li ha visti').
+ty_verb(italian, see, future, sg, pos, ['vedrà']).
+ty_verb(italian, see, future, pl, pos, [vedranno]).
+ty_verb(italian, see, future, sg(1), pos, ['vedrò']).
+ty_verb(italian, see, future, sg(2), pos, [vedrai]).
+ty_verb(italian, see, future, pl(1), pos, [vedremo]).
+ty_verb(italian, see, future, pl(2), pos, [vedrete]).
+ty_verb(italian, sleep, future, sg, pos, ['dormirà']).
+ty_verb(italian, sleep, future, pl, pos, [dormiranno]).
+ty_verb(italian, sleep, future, sg(1), pos, ['dormirò']).
+ty_verb(italian, sleep, future, sg(2), pos, [dormirai]).
+ty_verb(italian, sleep, future, pl(1), pos, [dormiremo]).
+ty_verb(italian, sleep, future, pl(2), pos, [dormirete]).
+ty_tense_form(italian, perfect, sg, pos, [ha, participle]).
+ty_tense_form(italian, perfect, pl, pos, [hanno, participle]).
+ty_tense_form(italian, perfect, sg(1), pos, [ho, participle]).
+ty_tense_form(italian, perfect, sg(2), pos, [hai, participle]).
+ty_tense_form(italian, perfect, pl(1), pos, [abbiamo, participle]).
+ty_tense_form(italian, perfect, pl(2), pos, [avete, participle]).
+ty_participle(italian, see, visto).
+ty_participle(italian, sleep, dormito).
+ty_participle_ending(italian, f, sg, o, a).
+ty_participle_ending(italian, m, pl, o, i).
+ty_participle_ending(italian, f, pl, o, e).
+ty_participle_agrees(italian, clitic).
+%% The verbs whose passato prossimo takes `essere', the participle agreeing
+%% with the subject (`La ragazza è andata', `I ragazzi sono andati').
+ty_verb_class(italian, go, essere).
+ty_verb_class(italian, come, essere).
+ty_verb_class(italian, arrive, essere).
+ty_verb_class(italian, return, essere).
+ty_verb_class(italian, fall, essere).
+ty_verb_class(italian, die, essere).
+ty_verb_class(italian, enter, essere).
+ty_verb_class(italian, become, essere).
+ty_verb_class(italian, stay, essere).
+ty_verb_class(italian, remain, essere).
+ty_class_tense_form(italian, essere, perfect, sg, pos, ['è', participle(subject)]).
+ty_class_tense_form(italian, essere, perfect, pl, pos, [sono, participle(subject)]).
+ty_class_tense_form(italian, essere, perfect, sg(1), pos, [sono, participle(subject)]).
+ty_class_tense_form(italian, essere, perfect, sg(2), pos, [sei, participle(subject)]).
+ty_class_tense_form(italian, essere, perfect, pl(1), pos, [siamo, participle(subject)]).
+ty_class_tense_form(italian, essere, perfect, pl(2), pos, [siete, participle(subject)]).
+%% The future the import makes: a stated future's stem, else the
+%% infinitive's (`parlare' `parlerà', `cercare' `cercherà', `mangiare'
+%% `mangerà'), and each person's ending.
+ty_ending(italian, future_stem, are, er).
+ty_ending(italian, future_stem, care, cher).
+ty_ending(italian, future_stem, gare, gher).
+ty_ending(italian, future_stem, ciare, cer).
+ty_ending(italian, future_stem, giare, ger).
+ty_ending(italian, future_stem, ere, er).
+ty_ending(italian, future_stem, ire, ir).
+ty_ending(italian, future(sg), '', 'à').
+ty_ending(italian, future(pl), '', anno).
+ty_ending(italian, future(sg(1)), '', 'ò').
+ty_ending(italian, future(sg(2)), '', ai).
+ty_ending(italian, future(pl(1)), '', emo).
+ty_ending(italian, future(pl(2)), '', ete).
+
 %% The articles agree with the noun. A plural indefinite has none.
 ty_article(italian, def, m, sg, il).
 ty_article(italian, def, f, sg, la).

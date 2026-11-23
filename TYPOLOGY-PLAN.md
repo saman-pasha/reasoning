@@ -437,7 +437,7 @@ Done:
    which only French's rows showed (Persian's rule is unchanged anyway). A
    template whose negation has a place needs no negative verb form
    (`typology_check/2`). `quoi`, the inversion and `qu'est-ce que` came in
-   1.39.0 (item 21); not yet in French: the passé composé.
+   1.39.0 (item 21), the passé composé in 1.40.0 (Phase 5).
 
 19. **A pronoun that refers back** (1.37.0). `typology_read_text/3` gives
    each pronoun of the third person the noun before it that it stands
@@ -500,12 +500,40 @@ Not yet:
    word (`march`, the month and the walk) waits for the bridge to
    translate.pl (Phase 6).
 
-## Phase 5: more features (in part done, reasoning 1.34.0)
+## Phase 5: more features (in part done, reasoning 1.34.0 and 1.40.0)
 
 Persons 1 and 2 and the pronouns, with a subject that may be dropped, are
-done (Phase 4's item 16). Not yet: more
-tenses and aspects (the future; the perfect, and the passato prossimo with
-its participle agreement); the polite and the plural `you`.
+done (Phase 4's item 16).
+
+**The future and the perfect** (1.40.0). The IR's tense is `present`,
+`past`, `future` or `perfect`; every verb has the first two, and
+`typology_check/2` asks the whole of a further tense of a verb that has a
+form of it. A tense is a row (Spanish, Italian and French futures,
+`verá`, `vedrà`, `verra`) or a pattern, `ty_tense_form(L, Tense, Number,
+Polarity, Pattern)`: words, `form(T, N)` (the verb's own form) and
+`participle` (`ty_participle(L, Verb, Word)`, else the form
+`ty_participle_like/3` names, English past: `walked`). English: `will
+see`, `has seen`, `Will the boy see the dog?` (the pattern's first word
+moves), `Yes, he will.`; Spanish `ha visto`, `no lo ha visto`; Italian `ha
+visto`; French `a vu`; Persian `خواهد دید`, `دیده است` (a compound verb's
+future a row: `فکر خواهد کرد`). A participle agrees with an object clitic
+of the third person before it (`ty_participle_agrees(L, clitic)`,
+`ty_participle_ending/5`: `l'ha vista`, `li ha visti`, `il l'a vue`), and a
+class of verbs has patterns of its own (`ty_verb_class(L, Verb, Class)`,
+`ty_class_tense_form/6`) whose item `participle(subject)` agrees with the
+subject (Italian `essere`: `La ragazza è andata`, `Sono andata` read as a
+female speaker; French `être`: `Les filles sont allées`). Where the
+negation has places round the verb or a pronoun is joined after it, the
+verb splits at its auxiliary (`Le garçon n'a pas vu le chien.`, `A-t-il vu
+le chien?`, `Ne l'a-t-il pas vue?`). The import writes the vocabularies'
+participles and futures (`"equivocado" is the participle of "equivoca"`,
+`"hará" is the future of "hace"`, else the infinitive's stem by the
+template's `future_stem` endings: `tener` `tendrá`): 76 063 Spanish rows
+and 54 789 Italian (57 682 and 40 558 through 1.39.0). The English
+template lists the participles that are not the past (`spoken`, `gone`).
+
+Not yet: the copula's future and perfect; other tenses (the imperfect,
+the conditional, the pluperfect); the polite and the plural `you`.
 
 ## Phase 6: the bridge to translate.pl
 
