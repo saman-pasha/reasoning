@@ -48,6 +48,20 @@
 %%                                     role that asks animate (Spanish `a'),
 %%                                     and a row may ask person (Persian
 %%                                     `او')
+%%     ty_noun_class(L, Class, Endings) a class of nouns and its plural:
+%%                                     Endings are From-To, the longest
+%%                                     From that ends the singular giving
+%%                                     the plural (English regular [''-s,
+%%                                     y-ies, ay-ays, ...]); the first class
+%%                                     is the one the import puts a noun in
+%%     ty_noun_in(L, Meaning, Gender, Animacy, Singular, Class)
+%%                                     a noun of a class, its plural the
+%%                                     class's (typology_load/1 makes its
+%%                                     ty_noun/6 row); an irregular noun is
+%%                                     a ty_noun/6 fact of its own
+%%     ty_closed(L, Words)             the words of grammar the import never
+%%                                     takes as a noun, a verb, an adjective
+%%                                     or an adverb (English `and', `this')
 %%     ty_adjective(L, Meaning, Gender, Number, Word)
 %%                                     a form for a gender and a number;
 %%                                     any for a form that does not change
@@ -582,7 +596,8 @@
 
 :- use_module(library(reasoning/reason), [ reason_base/2 ]).
 
-:- dynamic ty_order/3, ty_noun/6, ty_adjective/5, ty_verb/6, ty_article/5,
+:- dynamic ty_order/3, ty_noun/6, ty_noun_class/3, ty_noun_in/6, ty_closed/2,
+           ty_adjective/5, ty_verb/6, ty_article/5,
            ty_mark/5, ty_contraction/3, ty_negation/5, ty_ending/4,
            ty_letters/3, ty_before/5, ty_linked/5, ty_copula/6, ty_adposition/3,
            ty_adverb/3, ty_adjunct/2, ty_sense/5, ty_topic/2, ty_question/4,
@@ -604,7 +619,8 @@
            ty_relative_comma/1, ty_negative_article/5, ty_negative_article_roles/2,
            ty_negative_article_keeps/1, ty_and/2, ty_comma/2, ty_bare_topic/2, ty_adposition_topic/4, ty_adjunct_front/2, ty_object_front/2, ty_capital_nouns/1,
            ty_reference/4, ty_meaning_sense/2, ty_tense_like/4.
-:- discontiguous ty_order/3, ty_noun/6, ty_adjective/5, ty_verb/6,
+:- discontiguous ty_order/3, ty_noun/6, ty_noun_class/3, ty_noun_in/6, ty_closed/2,
+                 ty_adjective/5, ty_verb/6,
                  ty_article/5, ty_mark/5, ty_contraction/3, ty_negation/5,
                  ty_ending/4, ty_letters/3, ty_before/5, ty_linked/5, ty_copula/6,
                  ty_adposition/3, ty_adverb/3, ty_adjunct/2, ty_sense/5,
@@ -675,12 +691,11 @@ ty_values(negation_place, [start, end, before(s), after(s), before(v), after(v),
 
 typology_load(Name) :-
     must_be(atom, Name),
+    ty_unexpand(Name),
     consult(library(reasoning/templates/Name)),
-    atom_concat(Name, '-words', Words),
-    (   ty_file(Words, File)
-    ->  consult(File)
-    ;   true
-    ),
+    forall(( member(Kind, ['-words', '-nouns']), atom_concat(Name, Kind, Base), ty_file(Base, File) ),
+           consult(File)),
+    ty_expand(Name),
     (   \+ ty_topic(_, _), ty_file(topics, Topics)
     ->  consult(Topics),
         (   ty_file('topics-words', TopicWords) -> consult(TopicWords) ; true )
@@ -701,6 +716,29 @@ typology_load(Name) :-
 ty_file(Base, File) :-
     atomic_list_concat(['templates/', Base, '.pl'], Rel),
     catch(absolute_file_name(library(reasoning/Rel), File, [access(read)]), _, fail).
+
+%% THE CLASSES MAKE THE FORMS. typology_load/1 makes the ty_noun/6 row of
+%% each ty_noun_in/6 row, its plural the class's (ty_expand/1), and before
+%% it reads the files again it takes back the rows it made, by the rows
+%% that made them (ty_unexpand/1). A noun its class makes no plural of is
+%% typology_check/2's noun_form(Meaning).
+ty_expand(L) :-
+    forall(( ty_noun_in(L, M, G, A, Sg, C), ty_noun_class(L, C, Es), ty_class_form(Es, Sg, Pl) ),
+           assertz(ty_noun(L, M, G, A, Sg, Pl))).
+
+ty_unexpand(L) :-
+    forall(ty_noun_in(L, M, G, A, Sg, _), retractall(ty_noun(L, M, G, A, Sg, _))).
+
+%% A class's form of Word: the longest From of its endings that ends Word,
+%% its To in From's place.
+ty_class_form(Endings, Word, Form) :-
+    findall(Len-(From-To), ( member(From-To, Endings), atom_concat(_, From, Word),
+                             atom_length(From, Len) ), Fits),
+    Fits \== [],
+    keysort(Fits, Sorted),
+    last(Sorted, _-(From-To)),
+    atom_concat(Stem, From, Word),
+    atom_concat(Stem, To, Form).
 
 typology_languages(Names) :-
     (   setof(L, O^ty_order(L, clause, O), Names) -> true ; Names = [] ).
@@ -773,7 +811,20 @@ ty_template_row(row(T)) :- write_term(T, [quoted(true), spacing(next_argument)])
 ty_template_row(text(Fmt, Args)) :- format("%% ", []), format(Fmt, Args), nl.
 
 ty_template_example(Slot, Hand, Ex) :-
-    member(Ex, Hand), compound(Ex), functor(Ex, Slot, _), !.
+    member(Ex0, Hand), compound(Ex0), functor(Ex0, Slot, _), !,
+    ty_template_short(Ex0, Ex).
+
+%% An example's list of more than eight is its first eight and `...'.
+ty_template_short(T, S) :-
+    (   is_list(T)
+    ->  (   length(T, N), N > 8
+        ->  length(F, 8), append(F, _, T), maplist(ty_template_short, F, F1), append(F1, ['...'], S)
+        ;   maplist(ty_template_short, T, S)
+        )
+    ;   compound(T), T \= [_|_]
+    ->  T =.. [Fn|As], maplist(ty_template_short, As, As1), S =.. [Fn|As1]
+    ;   S = T
+    ).
 
 %% The description of each slot in this file's header: an entry starts at
 %% a line `%%     ty_...' and goes on over the lines indented more, as
@@ -808,8 +859,8 @@ ty_tdoc_more(Ls, [], Ls).
 %% The groups of the blank template, every slot once (test/typology.pl's
 %% section blank_template holds them to the header's slots).
 ty_template_group('the orders of the levels', [ty_order]).
-ty_template_group('words', [ty_noun, ty_adjective, ty_adjective_before, ty_article, ty_adposition,
-                            ty_adverb, ty_capital, ty_capital_nouns, ty_and, ty_comma, ty_sense]).
+ty_template_group('words', [ty_noun_class, ty_noun_in, ty_noun, ty_adjective, ty_adjective_before, ty_article, ty_adposition,
+                            ty_adverb, ty_capital, ty_capital_nouns, ty_and, ty_comma, ty_sense, ty_closed]).
 ty_template_group('verbs and tenses', [ty_verb, ty_tense_form, ty_tense_like, ty_participle,
                                        ty_participle_like, ty_participle_ending, ty_participle_agrees,
                                        ty_verb_class, ty_class_tense_form, ty_verb_person, ty_copula,
@@ -890,6 +941,9 @@ ty_template_flag(ty_adjunct_front, Name, ty_adjunct_front(Name, v2)).
 ty_template_flag(ty_object_front, Name, ty_object_front(Name, v2)).
 
 ty_row_shape('ty_noun(L, Meaning, Gender, Animacy, Singular, Plural).').
+ty_row_shape('ty_noun_class(L, Class, Endings).').
+ty_row_shape('ty_noun_in(L, Meaning, Gender, Animacy, Singular, Class).').
+ty_row_shape('ty_closed(L, Words).').
 ty_row_shape('ty_adjective(L, Meaning, Gender, Number, Word).').
 ty_row_shape('ty_verb(L, Meaning, Tense, Number, Polarity, Words).').
 ty_row_shape('ty_article(L, Definiteness, Gender, Number, Word).').
@@ -1173,6 +1227,23 @@ ty_missing(L, bad(ty_verb(L, V, T, N, P, Ws))) :-
 ty_missing(L, bad(ty_noun(L, M, G, A, S, P))) :-
     ty_noun(L, M, G, A, S, P),
     \+ ( ty_values(animacy, As), memberchk(A, As) ).
+ty_missing(L, bad(ty_noun_class(L, C, Es))) :-
+    ty_noun_class(L, C, Es),
+    \+ ( atom(C), is_list(Es), Es \== [],
+         forall(member(E, Es), ( nonvar(E), E = F-T, atom(F), atom(T) )) ).
+ty_missing(L, bad(ty_noun_in(L, M, G, A, S, C))) :-
+    ty_noun_in(L, M, G, A, S, C),
+    \+ ( atom(M), atom(S), atom(C), ty_values(animacy, As), memberchk(A, As) ).
+ty_missing(L, bad(ty_closed(L, Ws))) :-
+    ty_closed(L, Ws),
+    \+ ( is_list(Ws), forall(member(W, Ws), atom(W)) ).
+ty_missing(L, noun_class(C)) :-
+    ty_noun_in(L, _, _, _, _, C),
+    \+ ty_noun_class(L, C, _).
+ty_missing(L, noun_form(M)) :-
+    ty_noun_in(L, M, _, _, Sg, C),
+    ty_noun_class(L, C, Es),
+    \+ ty_class_form(Es, Sg, _).
 ty_missing(L, bad(ty_before(L, W, Ps, F, J))) :-
     ty_before(L, W, Ps, F, J),
     \+ ( memberchk(J, [space, joined]), is_list(Ps),
@@ -5514,7 +5585,7 @@ ty_tense_fit(T0, T) :-
 %% "broadcasts"' after `copenaghen'), and the block they fall in is
 %% the verbs' one the English import asks.
 
-:- dynamic tyi_entry/4, tyi_form/4, tyi_animate/1, tyi_gender/2, tyi_count/2,
+:- dynamic tyi_entry/4, tyi_form/4, tyi_lex/3, tyi_animate/1, tyi_gender/2, tyi_count/2,
            tyi_hand/1, tyi_class/2, tyi_name/1, tyi_class_word/4, tyi_person/1,
            tyi_sense/2, tyi_sense_word/4.
 
@@ -5546,6 +5617,7 @@ typology_import(Name, File) :-
     ->  findall(V, ( member(Src, [spanish, italian]), ty_vocabulary_file(Src, V) ), Vs),
         Vs \== [],
         forall(member(V, Vs), ty_read_vocabulary(V)),
+        ty_read_lexicon(english),
         findall(R, ty_english_row(R), Rows0)
     ;   Name == topics
     ->  findall(Src-V, ( member(Src, [spanish, italian]), ty_vocabulary_file(Src, V) ), Vs),
@@ -5558,11 +5630,18 @@ typology_import(Name, File) :-
         ty_read_vocabulary(V),
         findall(R, ty_import_row(Name, R), Rows0)
     ),
-    ty_dedupe(Rows0, Rows),
+    ty_dedupe(Rows0, Rows1),
+    ty_kind_split(Rows1, Kinds, Rows),
     length(Rows, NRows),
     with_output_to(codes(Codes), ty_write_rows(Name, Rows)),
     write_file_from_codes(File, Codes),
     format("~w: ~w rows into ~w~n", [Name, NRows, File]),
+    forall(member(Kind-KRows, Kinds),
+           ( ty_kind_file(File, Kind, KFile),
+             with_output_to(codes(KCodes), ty_write_kind_rows(Name, Kind, KRows)),
+             write_file_from_codes(KFile, KCodes),
+             length(KRows, NK),
+             format("~w: ~w rows into ~w~n", [Name, NK, KFile]) )),
     forall(tyi_count(What, N), format("  ~w: ~w~n", [What, N])),
     ty_import_reset.
 
@@ -5603,6 +5682,7 @@ ty_read_terms(S, Ts) :-
 
 ty_import_reset :-
     ty_import_reset_words,
+    retractall(tyi_lex(_, _, _)),
     retractall(tyi_class_word(_, _, _, _)),
     retractall(tyi_count(_, _)), retractall(tyi_hand(_)),
     retractall(tyi_sense(_, _)), retractall(tyi_sense_word(_, _, _, _)).
@@ -5921,16 +6001,16 @@ ty_adjective_complete(Forms) :-
 %% reason library (the base of a third person) and by the English
 %% template's endings, and a past the vocabulary states where it states one
 %% (`"saw" is the past of "sees"').
-ty_english_row(ty_noun(english, M, none, Anim, M, P)) :-
-    setof(M0, G^W^tyi_entry(noun, G, W, M0), Ms),
+%% An English noun is put in the template's first class (ty_noun_class/3),
+%% unless the hand template has it (a noun of a class, or an irregular one).
+ty_english_row(ty_noun_in(english, M, none, Anim, M, C)) :-
+    once(tyi_hand(ty_noun_class(english, C, _))),
+    ty_english_nouns(Ms),
     member(M, Ms),
     ty_single(M),
     \+ tyi_hand(ty_noun(english, M, _, _, _, _)),
-    ty_apply_ending(english, plural, M, P),
-    (   tyi_entry(noun, _, W, M), tyi_person(W) -> Anim = person
-    ;   tyi_entry(noun, _, W, M), tyi_animate(W) -> Anim = animate
-    ;   Anim = unknown
-    ).
+    \+ tyi_hand(ty_noun_in(english, M, _, _, _, _)),
+    ty_english_animacy(M, Anim).
 ty_english_row(ty_adjective(english, M, any, any, M)) :-
     setof(M0, G^W^tyi_entry(adjective, G, W, M0), Ms),
     member(M, Ms),
@@ -5949,6 +6029,44 @@ ty_english_row(ty_verb(english, B, T, N, pos, [W])) :-
     ),
     member(T-N-W, [present-sg-M3, present-pl-B, past-sg-P, past-pl-P]).
 
+%% THE WORDS OF lexicon/ (the English import): each word of the files a
+%% kind reads, of letters a to z alone, as tyi_lex(Kind, Word, Animacy),
+%% once, the first file's; a word of grammar the template names
+%% (ty_closed/2) is none. class.txt is the persons.
+ty_read_lexicon(L) :-
+    ( tyi_hand(ty_closed(L, Closed)) -> true ; Closed = [] ),
+    forall(member(Kind-Base-Anim, [noun-class-person, noun-known_noun-unknown, noun-noun-unknown,
+                                   noun-unit-unknown]),
+           ( ty_lexicon_file(Base, File)
+           ->  read_file_to_codes(File, Codes), atom_codes(Text, Codes),
+               atomic_list_concat(Lines, '\n', Text),
+               forall(( member(W, Lines), W \== '', ty_az_word(W), \+ memberchk(W, Closed),
+                        \+ tyi_lex(Kind, W, _) ),
+                      assertz(tyi_lex(Kind, W, Anim)))
+           ;   true
+           )).
+
+ty_lexicon_file(Base, File) :-
+    atomic_list_concat(['lexicon/', Base, '.txt'], Rel),
+    catch(absolute_file_name(library(reasoning/Rel), File, [access(read)]), _, fail).
+
+ty_az_word(W) :-
+    atom_codes(W, Cs),
+    forall(member(C, Cs), ( C >= 0'a, C =< 0'z )).
+
+%% The English nouns: the vocabularies' meanings and lexicon/'s, each once.
+ty_english_nouns(Ms) :-
+    (   setof(M, G^W^A^( tyi_entry(noun, G, W, M) ; tyi_lex(noun, M, A) ), Ms0) -> Ms = Ms0 ; Ms = [] ).
+
+%% An English noun's animacy: the vocabularies' (a person, animate), else
+%% lexicon/'s.
+ty_english_animacy(M, Anim) :-
+    (   tyi_entry(noun, _, W, M), tyi_person(W) -> Anim = person
+    ;   tyi_entry(noun, _, W, M), tyi_animate(W) -> Anim = animate
+    ;   tyi_lex(noun, M, A) -> Anim = A
+    ;   Anim = unknown
+    ).
+
 %% The form the hand template's ending rule makes: the longest From that
 %% fits.
 ty_apply_ending(L, Feature, Word, Form) :-
@@ -5959,6 +6077,22 @@ ty_apply_ending(L, Feature, Word, Form) :-
     last(Sorted, _-(From-To)),
     atom_concat(Stem, From, Word),
     atom_concat(Stem, To, Form).
+
+%% The rows of a kind with a file of its own: a noun of a class
+%% (templates/<name>-nouns.pl); the rest stay in the words file.
+ty_kind_split(Rows, Kinds, Rest) :-
+    partition([R]>>( R = ty_noun_in(_, _, _, _, _, _) ), Rows, Nouns, Rest),
+    (   Nouns == [] -> Kinds = [] ; Kinds = [nouns-Nouns] ).
+
+ty_kind_file(File, Kind, KFile) :-
+    atom_concat(Base, '-words.pl', File),
+    atomic_list_concat([Base, '-', Kind, '.pl'], KFile).
+
+ty_write_kind_rows(L, Kind, Rows) :-
+    format("%% templates/~w-~w.pl -- GENERATED by typology_import(~w) from~n", [L, Kind, L]),
+    format("%% corpus/vocabulary/ and lexicon/: each regular item in its class. Do not~n", []),
+    format("%% edit: a class and an irregular item are templates/~w.pl's; import again.~n~n", [L]),
+    forall(member(R, Rows), portray_clause(R)).
 
 ty_write_rows(L, Rows) :-
     format("%% templates/~w-words.pl -- GENERATED by typology_import(~w) from~n", [L, L]),

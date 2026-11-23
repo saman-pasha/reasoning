@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -1848,6 +1848,36 @@ german_object_first :-
     typology_translate(german, english, 'Den Hund sieht der Junge.', E),
     check('German into English', E, 'The boy sees the dog.').
 
+%% 1.56.0: the English nouns in the class design. A class of the plural is
+%% one fact (ty_noun_class/3), a noun of a class one fact (ty_noun_in/6,
+%% templates/english-nouns.pl, from the vocabularies and lexicon/), an
+%% irregular noun one ty_noun/6 fact; typology_load/1 makes the forms.
+english_nouns :-
+    section('the English nouns: the classes of the plural, then the nouns'),
+    findall(M-P, ( member(M, [house, city, day, box, church, wife, sheep, potato, crisis, cactus,
+                              phenomenon, matrix, child, march_month]),
+                   ty_noun(english, M, _, _, _, P) ), Ps),
+    check('a plural its class makes, and an irregular one', Ps,
+          [house-houses, city-cities, day-days, box-boxes, church-churches, wife-wives,
+           sheep-sheep, potato-potatoes, crisis-crises, cactus-cacti, phenomenon-phenomena,
+           matrix-matrices, child-children, march_month-'Marches']),
+    aggregate_all(count, ty_noun_in(english, _, _, _, _, _), NI),
+    ( NI >= 20000 -> R2 = enough ; R2 = NI ),
+    check('20 000 English nouns or more, each in its class', R2, enough),
+    ( ty_noun(english, table, _, _, table, tables), \+ ty_noun_in(english, and, _, _, _, _) -> R3 = yes ; R3 = no ),
+    check('a noun of lexicon/ is read, a word of grammar is none (ty_closed/2)', R3, yes),
+    findall(N4, ( typology_load(english), aggregate_all(count, ty_noun(english, _, _, _, _, _), N4) ), [N4a]),
+    aggregate_all(count, ty_noun(english, _, _, _, _, _), N4b),
+    check('a reload makes each form once', N4a, N4b),
+    assertz(ty_noun_class(tiny, regular, [x-xs])),
+    assertz(ty_noun_in(tiny, cup, none, inanimate, cup, regular)),
+    assertz(ty_noun_in(tiny, pot, none, inanimate, pot, odd)),
+    findall(X5, ( typology_check(tiny, M5), member(X5, M5), ( X5 = noun_form(_) ; X5 = noun_class(_) ) ), Xs5),
+    retractall(ty_noun_class(tiny, _, _)), retractall(ty_noun_in(tiny, _, _, _, _, _)),
+    check('a noun its class makes no form of, and a class no row defines', Xs5, [noun_class(odd), noun_form(cup)]),
+    typology_read(english, 'The farmers saw the crises.', IR6),
+    check('a plural of a class read', IR6, clause(see, past, pos, np(farmer, pl, def, []), np(crisis, pl, def, []))).
+
 %% 1.55.0: the measure. typology_coverage/4 over lexicon/prose.txt, WordNet's
 %% 8 000 example sentences: the count of the sentences read may grow and
 %% never fall below the count STATUS.md records last.
@@ -1859,8 +1889,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 215 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 215 sentences read at 1.55.0 are read', R1, yes),
+    ( K >= 250 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 250 sentences read at 1.56.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 
@@ -2133,16 +2163,19 @@ class_topics :-
 reproduced :-
     section('the word tables are what the import writes'),
     scratch(Dir),
-    forall(member(L-Base, [spanish-'spanish-words', italian-'italian-words', english-'english-words',
-                           topics-'topics-words', template-template]),
+    forall(member(L-Base-Also, [spanish-'spanish-words'-[], italian-'italian-words'-[],
+                                english-'english-words'-['english-nouns'],
+                                topics-'topics-words'-[], template-template-[]]),
            ( atomic_list_concat([Dir, '/', Base, '.pl'], Fresh),
              with_output_to(string(_), typology_import(L, Fresh)),
-             read_file_to_codes(Fresh, New),
-             atomic_list_concat(['templates/', Base, '.pl'], Committed),
-             read_file_to_codes(Committed, Old),
-             ( New == Old -> R = same ; R = differs ),
-             atomic_list_concat(['templates/', Base, '.pl is what typology_import(', L, ') writes'], Label),
-             check(Label, R, same) )).
+             forall(member(B, [Base|Also]),
+                    ( atomic_list_concat([Dir, '/', B, '.pl'], FreshB),
+                      read_file_to_codes(FreshB, New),
+                      atomic_list_concat(['templates/', B, '.pl'], Committed),
+                      read_file_to_codes(Committed, Old),
+                      ( New == Old -> R = same ; R = differs ),
+                      atomic_list_concat(['templates/', B, '.pl is what typology_import(', L, ') writes'], Label),
+                      check(Label, R, same) )) )).
 
 %% ---- a language with two orders ---------------------------------------------------
 

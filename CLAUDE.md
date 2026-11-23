@@ -62,6 +62,15 @@ consulted, and the test's import wrote a different file), where the file
 named by its path, and SWI-Prolog 9.0.4 both ways, added them back.
 cocolog 3.73.2 reads the file again (checked 2026-11-22: the 7 nouns of
 templates/spanish.pl come back, 0 on 3.65.0).
+**A kind with classes has a file of its own** (1.56.0): where the hand
+template has a class (`ty_noun_class/3`), the import writes its items, one
+fact each in their class (`ty_noun_in/6`), to `templates/<name>-nouns.pl`
+beside the words file (`ty_kind_split/3`), and `typology_load/1` reads it
+and makes the forms (`ty_expand/1`), taking back the forms it made before a
+reload (`ty_unexpand/1`, by the rows that made them: a reconsult leaves an
+asserted row). The English import reads `lexicon/` too (`ty_read_lexicon/1`),
+less the template's `ty_closed/2`; the vocabularies' meanings are kept as
+they were, a word of grammar among them.
 **The blank template is generated too** (1.54.0): `templates/template.pl`
 is what `typology_import(template)` writes, `typology_template(xx)`: every
 slot of typology.pl's header list (THE TEMPLATE) with the header's own

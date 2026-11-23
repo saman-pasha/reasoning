@@ -22,6 +22,7 @@ the count to the last one below.
 | version | read | of 8 000 | what moved it |
 |---|---|---|---|
 | 1.55.0 | 215 | 2.7 % | the start: 5 285 sentences have a word no table has, and 2 500 have no unknown word but a structure the grammar has not |
+| 1.56.0 | 250 | 3.1 % | the English nouns in the class design: 20 078 nouns, from the vocabularies and `lexicon/` |
 
 At 1.55.0 the commonest words no table has are words of grammar, not
 nouns: `and` 451 times, `by` 154, `as` 126, `out` 95, `this` 95, `all` 92,

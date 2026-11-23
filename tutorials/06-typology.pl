@@ -133,6 +133,7 @@ main :-
     german_object_first,
     bridge,
     blank_template,
+    english_noun_classes,
     format("~ndone~n", []).
 
 
@@ -720,8 +721,23 @@ blank_template :-
     must('the choices, each a row of code', N1, 82),
     ( member(L2, Lines), sub_string(L2, 0, _, _, '%% ty_noun(klingon, Meaning, Gender') -> R2 = shape ; R2 = none ),
     must('a slot of words, its shape', R2, shape),
-    ( member(L3, Lines), sub_string(L3, 0, _, _, '%%   e.g. ty_noun(english, dog,') -> R3 = example ; R3 = none ),
+    ( member(L3, Lines), sub_string(L3, 0, _, _, '%%   e.g. ty_noun_in(english, dog,') -> R3 = example ; R3 = none ),
     must('and an example', R3, example).
+
+%% 42. THE CLASSES FIRST, THEN THE ITEMS: the English nouns. A class of the
+%% plural is one fact of endings (ty_noun_class/3), a noun of a class one
+%% fact (ty_noun_in/6; templates/english-nouns.pl holds some 20 000, from
+%% the vocabularies and lexicon/), and an irregular noun one ty_noun/6 fact
+%% with its plural; typology_load/1 makes each plural from its class.
+english_noun_classes :-
+    ( ty_noun(english, city, _, _, _, P1) -> true ; P1 = none ),
+    must('a regular noun: the class''s y-ies', P1, cities),
+    ( ty_noun(english, crisis, _, _, _, P2) -> true ; P2 = none ),
+    must('a noun of the class is-es', P2, crises),
+    ( ty_noun(english, child, _, _, _, P3) -> true ; P3 = none ),
+    must('an irregular noun, its one fact', P3, children),
+    typology_read(english, 'The farmers saw the crises.', IR4),
+    must('read', IR4, clause(see, past, pos, np(farmer, pl, def, []), np(crisis, pl, def, []))).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

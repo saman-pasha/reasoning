@@ -5,17 +5,98 @@
 ty_order(english, clause, [s, v, o]).
 ty_order(english, np, [d, a, n]).
 
-%% The nouns: Meaning, Gender (English has none), Animacy (person, animate, inanimate; a person is animate too), Singular, Plural.
-ty_noun(english, dog, none, animate, dog, dogs).
-ty_noun(english, cat, none, animate, cat, cats).
-%% March, the month: a meaning of its own (templates/topics.pl).
-ty_noun(english, march_month, none, unknown, 'March', 'Marches').
-ty_noun(english, boy, none, person, boy, boys).
-ty_noun(english, girl, none, person, girl, girls).
-ty_noun(english, book, none, inanimate, book, books).
-ty_noun(english, mouse, none, animate, mouse, mice).
+%% THE NOUNS: the classes of the plural first, then the nouns. A class is
+%% one fact, its endings From-To: the longest From that ends the singular
+%% gives the plural. The first class is the one typology_import(english)
+%% puts a noun in (templates/english-nouns.pl). A noun of a class is
+%% ty_noun_in(english, Meaning, Gender, Animacy, Singular, Class): Gender
+%% none (English has none), Animacy person, animate, inanimate or unknown
+%% (a person is animate too). An irregular noun is one ty_noun/6 fact, its
+%% plural in it.
+ty_noun_class(english, regular, [''-s, s-ses, x-xes, z-zes, ch-ches, sh-shes,
+                                 y-ies, ay-ays, ey-eys, oy-oys, uy-uys]).
+ty_noun_class(english, ves, [f-ves, fe-ves]).
+ty_noun_class(english, same, [''-'']).
+ty_noun_class(english, oes, [o-oes]).
+ty_noun_class(english, is_es, [is-es]).
+ty_noun_class(english, us_i, [us-i]).
+ty_noun_class(english, um_a, [um-a]).
+ty_noun_class(english, on_a, [on-a]).
+ty_noun_class(english, ices, [ix-ices, ex-ices]).
 
-%% Plurals the ending rules below would get wrong.
+ty_noun_in(english, dog, none, animate, dog, regular).
+ty_noun_in(english, cat, none, animate, cat, regular).
+%% March, the month: a meaning of its own (templates/topics.pl).
+ty_noun_in(english, march_month, none, unknown, 'March', regular).
+ty_noun_in(english, boy, none, person, boy, regular).
+ty_noun_in(english, girl, none, person, girl, regular).
+ty_noun_in(english, book, none, inanimate, book, regular).
+ty_noun_in(english, wife, none, person, wife, ves).
+ty_noun_in(english, knife, none, inanimate, knife, ves).
+ty_noun_in(english, life, none, inanimate, life, ves).
+ty_noun_in(english, leaf, none, inanimate, leaf, ves).
+ty_noun_in(english, wolf, none, animate, wolf, ves).
+ty_noun_in(english, half, none, inanimate, half, ves).
+ty_noun_in(english, shelf, none, inanimate, shelf, ves).
+ty_noun_in(english, thief, none, person, thief, ves).
+ty_noun_in(english, loaf, none, inanimate, loaf, ves).
+ty_noun_in(english, calf, none, animate, calf, ves).
+ty_noun_in(english, self, none, inanimate, self, ves).
+ty_noun_in(english, sheaf, none, inanimate, sheaf, ves).
+ty_noun_in(english, sheep, none, animate, sheep, same).
+ty_noun_in(english, fish, none, animate, fish, same).
+ty_noun_in(english, deer, none, animate, deer, same).
+ty_noun_in(english, moose, none, animate, moose, same).
+ty_noun_in(english, salmon, none, animate, salmon, same).
+ty_noun_in(english, trout, none, animate, trout, same).
+ty_noun_in(english, swine, none, animate, swine, same).
+ty_noun_in(english, bison, none, animate, bison, same).
+ty_noun_in(english, species, none, inanimate, species, same).
+ty_noun_in(english, series, none, inanimate, series, same).
+ty_noun_in(english, aircraft, none, inanimate, aircraft, same).
+ty_noun_in(english, offspring, none, unknown, offspring, same).
+ty_noun_in(english, potato, none, inanimate, potato, oes).
+ty_noun_in(english, tomato, none, inanimate, tomato, oes).
+ty_noun_in(english, hero, none, person, hero, oes).
+ty_noun_in(english, echo, none, inanimate, echo, oes).
+ty_noun_in(english, veto, none, inanimate, veto, oes).
+ty_noun_in(english, torpedo, none, inanimate, torpedo, oes).
+ty_noun_in(english, embargo, none, inanimate, embargo, oes).
+ty_noun_in(english, crisis, none, inanimate, crisis, is_es).
+ty_noun_in(english, thesis, none, inanimate, thesis, is_es).
+ty_noun_in(english, analysis, none, inanimate, analysis, is_es).
+ty_noun_in(english, basis, none, inanimate, basis, is_es).
+ty_noun_in(english, hypothesis, none, inanimate, hypothesis, is_es).
+ty_noun_in(english, diagnosis, none, inanimate, diagnosis, is_es).
+ty_noun_in(english, axis, none, inanimate, axis, is_es).
+ty_noun_in(english, synopsis, none, inanimate, synopsis, is_es).
+ty_noun_in(english, parenthesis, none, inanimate, parenthesis, is_es).
+ty_noun_in(english, emphasis, none, inanimate, emphasis, is_es).
+ty_noun_in(english, oasis, none, inanimate, oasis, is_es).
+ty_noun_in(english, ellipsis, none, inanimate, ellipsis, is_es).
+ty_noun_in(english, prognosis, none, inanimate, prognosis, is_es).
+ty_noun_in(english, cactus, none, inanimate, cactus, us_i).
+ty_noun_in(english, fungus, none, inanimate, fungus, us_i).
+ty_noun_in(english, nucleus, none, inanimate, nucleus, us_i).
+ty_noun_in(english, radius, none, inanimate, radius, us_i).
+ty_noun_in(english, stimulus, none, inanimate, stimulus, us_i).
+ty_noun_in(english, alumnus, none, person, alumnus, us_i).
+ty_noun_in(english, locus, none, inanimate, locus, us_i).
+ty_noun_in(english, curriculum, none, inanimate, curriculum, um_a).
+ty_noun_in(english, bacterium, none, animate, bacterium, um_a).
+ty_noun_in(english, stratum, none, inanimate, stratum, um_a).
+ty_noun_in(english, memorandum, none, inanimate, memorandum, um_a).
+ty_noun_in(english, erratum, none, inanimate, erratum, um_a).
+ty_noun_in(english, phenomenon, none, inanimate, phenomenon, on_a).
+ty_noun_in(english, criterion, none, inanimate, criterion, on_a).
+ty_noun_in(english, matrix, none, inanimate, matrix, ices).
+ty_noun_in(english, vertex, none, inanimate, vertex, ices).
+ty_noun_in(english, appendix, none, inanimate, appendix, ices).
+ty_noun_in(english, vortex, none, inanimate, vortex, ices).
+
+%% The irregular nouns: one fact each, the plural in it.
+ty_noun(english, mouse, none, animate, mouse, mice).
+ty_noun(english, louse, none, animate, louse, lice).
 ty_noun(english, man, none, person, man, men).
 ty_noun(english, woman, none, person, woman, women).
 ty_noun(english, child, none, person, child, children).
@@ -23,13 +104,29 @@ ty_noun(english, person, none, person, person, people).
 ty_noun(english, foot, none, inanimate, foot, feet).
 ty_noun(english, tooth, none, inanimate, tooth, teeth).
 ty_noun(english, goose, none, animate, goose, geese).
-ty_noun(english, wife, none, person, wife, wives).
-ty_noun(english, knife, none, inanimate, knife, knives).
-ty_noun(english, life, none, inanimate, life, lives).
-ty_noun(english, leaf, none, inanimate, leaf, leaves).
-ty_noun(english, wolf, none, animate, wolf, wolves).
-ty_noun(english, sheep, none, animate, sheep, sheep).
-ty_noun(english, fish, none, animate, fish, fish).
+ty_noun(english, ox, none, animate, ox, oxen).
+
+%% The words of grammar, which typology_import(english) never takes from
+%% lexicon/ as a noun, a verb, an adjective or an adverb: each is the
+%% grammar's, or waits for its grammar (TYPOLOGY-PLAN.md, STATUS.md).
+ty_closed(english, [a, an, the, this, that, these, those, some, any, no, none, every, each, all, both,
+                    either, neither, many, much, more, most, few, fewer, less, least, several, such,
+                    own, other, another, and, or, but, nor, yet, so, if, then, than, as, because,
+                    although, though, while, whereas, unless, until, till, since, when, whenever,
+                    where, wherever, why, how, what, whatever, who, whoever, whom, whose, which,
+                    whichever, there, here, i, me, my, mine, myself, you, your, yours, yourself,
+                    yourselves, he, him, his, himself, she, her, hers, herself, it, its, itself, we,
+                    us, our, ours, ourselves, they, them, their, theirs, themselves, one, two, three,
+                    four, five, six, seven, eight, nine, ten, eleven, twelve, twenty, thirty, forty,
+                    fifty, hundred, thousand, million, billion, not, yes, to, of, in, on, at, by,
+                    for, with, from, into, onto, upon, over, under, up, down, out, off, about,
+                    above, across, after, against, along, among, amongst, around, before, behind,
+                    below, beneath, beside, besides, between, beyond, during, except, inside, near,
+                    outside, through, throughout, toward, towards, underneath, unlike, via, within,
+                    without, be, am, is, are, was, were, been, being, will, would, shall, should,
+                    can, could, may, might, must, ought, do, does, did, have, has, had, very, too,
+                    also, just, only, even, ever, never, always, often, still, already, again,
+                    almost, quite, rather, perhaps]).
 
 %% The adjectives do not change.
 ty_adjective(english, big, any, any, big).
@@ -120,19 +217,8 @@ ty_participle(english, undertake, undertaken).
 ty_participle(english, overcome, overcome).
 ty_participle(english, lie, lain).
 
-%% The endings typology_import(english) makes the forms the vocabularies do
-%% not state with: the longest ending that fits wins.
-ty_ending(english, plural, '', s).
-ty_ending(english, plural, s, ses).
-ty_ending(english, plural, x, xes).
-ty_ending(english, plural, z, zes).
-ty_ending(english, plural, ch, ches).
-ty_ending(english, plural, sh, shes).
-ty_ending(english, plural, y, ies).
-ty_ending(english, plural, ay, ays).
-ty_ending(english, plural, ey, eys).
-ty_ending(english, plural, oy, oys).
-ty_ending(english, plural, uy, uys).
+%% The endings typology_import(english) makes a verb's past with, where the
+%% vocabularies state none: the longest ending that fits wins.
 ty_ending(english, past, '', ed).
 ty_ending(english, past, e, ed).
 ty_ending(english, past, y, ied).

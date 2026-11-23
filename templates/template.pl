@@ -59,6 +59,23 @@ ty_order(xx, rel, [c, m, h]).
 
 %% ==== words ====
 
+%%     ty_noun_class(L, Class, Endings) a class of nouns and its plural:
+%%                                     Endings are From-To, the longest
+%%                                     From that ends the singular giving
+%%                                     the plural (English regular [''-s,
+%%                                     y-ies, ay-ays, ...]); the first class
+%%                                     is the one the import puts a noun in
+%% ty_noun_class(xx, Class, Endings).
+%%   e.g. ty_noun_class(english, regular, [''-s, s-ses, x-xes, z-zes, ch-ches, sh-shes, y-ies, ay-ays, ...]).
+
+%%     ty_noun_in(L, Meaning, Gender, Animacy, Singular, Class)
+%%                                     a noun of a class, its plural the
+%%                                     class's (typology_load/1 makes its
+%%                                     ty_noun/6 row); an irregular noun is
+%%                                     a ty_noun/6 fact of its own
+%% ty_noun_in(xx, Meaning, Gender, Animacy, Singular, Class).
+%%   e.g. ty_noun_in(english, dog, none, animate, dog, regular).
+
 %%     ty_noun(L, Meaning, Gender, Animacy, Singular, Plural)
 %%                                     Gender: the language's own (m, f,
 %%                                     ...), or none; Animacy: person,
@@ -70,7 +87,7 @@ ty_order(xx, rel, [c, m, h]).
 %%                                     and a row may ask person (Persian
 %%                                     `او')
 %% ty_noun(xx, Meaning, Gender, Animacy, Singular, Plural).
-%%   e.g. ty_noun(english, dog, none, animate, dog, dogs).
+%%   e.g. ty_noun(english, mouse, none, animate, mouse, mice).
 
 %%     ty_adjective(L, Meaning, Gender, Number, Word)
 %%                                     a form for a gender and a number;
@@ -132,6 +149,12 @@ ty_capital_nouns(xx).
 %%                                     with several meanings)
 %% ty_sense(xx, Word, Sense, Back, Ahead).
 %%   e.g. ty_sense(spanish, a, mark(o), [class(verb)], [opt(class(article)), opt(class(possessive)), class(noun, animate)]).
+
+%%     ty_closed(L, Words)             the words of grammar the import never
+%%                                     takes as a noun, a verb, an adjective
+%%                                     or an adverb (English `and', `this')
+%% ty_closed(xx, Words).
+%%   e.g. ty_closed(english, [a, an, the, this, that, these, those, some, ...]).
 
 %% ==== verbs and tenses ====
 
@@ -298,7 +321,7 @@ ty_verb_last(xx, rel).
 %%                                     `ays', `' to `s'); the import uses it
 %%                                     where the vocabulary states no form
 %% ty_ending(xx, Feature, From, To).
-%%   e.g. ty_ending(english, plural, '', s).
+%%   e.g. ty_ending(english, past, '', ed).
 
 %%     ty_letters(L, Class, Letters)   a class of letters a pattern names
 %%                                     (vowel, consonant)
