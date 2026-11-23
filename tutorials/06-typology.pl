@@ -123,6 +123,7 @@ main :-
     german,
     senses,
     copula_tenses,
+    other_tenses,
     format("~ndone~n", []).
 
 
@@ -568,6 +569,23 @@ copula_tenses :-
     must('a relative clause, both copula words last', G4, 'Der Hund, der klein sein wird, schläft.'),
     typology_answer(english, question(copula(future, pos, np(dog, sg, def, []), adj([small]))), pos, echo, A5),
     must('the echo keeps the first word', A5, 'Yes, it will.').
+
+%% 32. THE IMPERFECT, THE CONDITIONAL AND THE PLUPERFECT. Rows of the hand
+%% verbs and of the import (`veía', `vedrebbe'), and the pluperfect a
+%% pattern as the perfect is (`había visto', `hatte ... gesehen', `era
+%% andata'). A tense a language has no form of is written as another
+%% (ty_tense_like/4): English and German write the imperfect as the past.
+other_tenses :-
+    typology_translate(spanish, english, 'El niño veía al perro.', E1),
+    must('the imperfect written as the past', E1, 'The boy saw the dog.'),
+    typology_translate(english, italian, 'The boy would see the dog.', I2),
+    must('the conditional', I2, 'Il ragazzo vedrebbe il cane.'),
+    typology_translate(spanish, german, 'El niño había visto al perro.', G3),
+    must('the pluperfect, its participle at the end', G3, 'Der Junge hatte den Hund gesehen.'),
+    typology_translate(italian, french, 'La ragazza era andata.', F4),
+    must('the pluperfect of a verb of the class essere and être', F4, 'La fille était allée.'),
+    typology_translate(italian, spanish, 'I medici mangerebbero le mele.', S5),
+    must('an imported verb\'s conditional', S5, 'Los médicos comerían las manzanas.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

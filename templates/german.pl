@@ -414,3 +414,40 @@ ty_copula(german, any, perfect, sg(1), pos, [bin, gewesen]).
 ty_copula(german, any, perfect, sg(2), pos, [bist, gewesen]).
 ty_copula(german, any, perfect, pl(1), pos, [sind, gewesen]).
 ty_copula(german, any, perfect, pl(2), pos, [seid, gewesen]).
+
+%% The imperfect has no form of its own: it is written as the past (`sah',
+%% `war'). The conditional, `würde' and the infinitive; the pluperfect,
+%% `haben' in the past and the participle, or for the class `sein' `sein'
+%% and the participle (`war gegangen'). Their second word is at the end,
+%% as the future's and the perfect's.
+ty_tense_like(german, any, imperfect, past).
+ty_tense_form(german, conditional, sg, pos, ['würde', form(present, pl)]).
+ty_tense_form(german, conditional, pl, pos, ['würden', form(present, pl)]).
+ty_tense_form(german, conditional, sg(1), pos, ['würde', form(present, pl)]).
+ty_tense_form(german, conditional, sg(2), pos, ['würdest', form(present, pl)]).
+ty_tense_form(german, conditional, pl(1), pos, ['würden', form(present, pl)]).
+ty_tense_form(german, conditional, pl(2), pos, ['würdet', form(present, pl)]).
+ty_tense_form(german, pluperfect, sg, pos, [hatte, participle]).
+ty_tense_form(german, pluperfect, pl, pos, [hatten, participle]).
+ty_tense_form(german, pluperfect, sg(1), pos, [hatte, participle]).
+ty_tense_form(german, pluperfect, sg(2), pos, [hattest, participle]).
+ty_tense_form(german, pluperfect, pl(1), pos, [hatten, participle]).
+ty_tense_form(german, pluperfect, pl(2), pos, [hattet, participle]).
+ty_class_tense_form(german, sein, pluperfect, sg, pos, [war, participle]).
+ty_class_tense_form(german, sein, pluperfect, pl, pos, [waren, participle]).
+ty_class_tense_form(german, sein, pluperfect, sg(1), pos, [war, participle]).
+ty_class_tense_form(german, sein, pluperfect, sg(2), pos, [warst, participle]).
+ty_class_tense_form(german, sein, pluperfect, pl(1), pos, [waren, participle]).
+ty_class_tense_form(german, sein, pluperfect, pl(2), pos, [wart, participle]).
+ty_copula(german, any, conditional, sg, pos, ['würde', sein]).
+ty_copula(german, any, conditional, pl, pos, ['würden', sein]).
+ty_copula(german, any, conditional, sg(1), pos, ['würde', sein]).
+ty_copula(german, any, conditional, sg(2), pos, ['würdest', sein]).
+ty_copula(german, any, conditional, pl(1), pos, ['würden', sein]).
+ty_copula(german, any, conditional, pl(2), pos, ['würdet', sein]).
+ty_copula(german, any, pluperfect, sg, pos, [war, gewesen]).
+ty_copula(german, any, pluperfect, pl, pos, [waren, gewesen]).
+ty_copula(german, any, pluperfect, sg(1), pos, [war, gewesen]).
+ty_copula(german, any, pluperfect, sg(2), pos, [warst, gewesen]).
+ty_copula(german, any, pluperfect, pl(1), pos, [waren, gewesen]).
+ty_copula(german, any, pluperfect, pl(2), pos, [wart, gewesen]).

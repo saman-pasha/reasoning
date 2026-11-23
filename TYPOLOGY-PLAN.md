@@ -584,7 +584,8 @@ le chien?`, `Ne l'a-t-il pas vue?`). The import writes the vocabularies'
 participles and futures (`"equivocado" is the participle of "equivoca"`,
 `"hará" is the future of "hace"`, else the infinitive's stem by the
 template's `future_stem` endings: `tener` `tendrá`): 76 063 Spanish rows
-and 54 789 Italian (57 682 and 40 558 through 1.39.0). The English
+and 54 789 Italian (57 682 and 40 558 through 1.39.0; 107 569 and 79 185
+since 1.45.0). The English
 template lists the participles that are not the past (`spoken`, `gone`).
 
 **The polite `you`** (1.41.0). `pron(polite, Number, Kind)`, a person of
@@ -616,7 +617,28 @@ klein sein?`, `Wo wird der Hund sein?`, and a relative clause with both
 words last, `Der Hund, der klein sein wird, schläft.`. An English echo
 keeps the first word alone: `Yes, it will.`, `No, it has not.`.
 
-Not yet: other tenses (the imperfect, the conditional, the pluperfect).
+**The imperfect, the conditional and the pluperfect** (1.45.0). Three
+more tenses. The imperfect and the conditional are rows: the hand verbs'
+in the templates, and the import's for every verb of a vocabulary, the
+imperfect's singular as the vocabulary states it or made of the
+infinitive by the template's ending `imperfect` (Spanish `ar` `aba`, `er`
+and `ir` `ía`; Italian `are` `ava`, `fare` `faceva`), its persons of the
+singular (Italian `vedeva` `vedevo`) unless the vocabulary states them
+(`"ibas" is the second person of "iba"`), and the conditional's on the
+future's stem (`tendr` `tendría`, `vedr` `vedrebbe`). The pluperfect is a
+pattern as the perfect is (`había visto`, `aveva visto`, `avait vu`, `had
+seen`, `hatte ... gesehen`, Persian `دیده بود`), with the class rows of
+`essere`, `être` and `sein` (`era andata`, `était allée`, `war gegangen`).
+A TENSE A LANGUAGE HAS NO FORM OF is written as another
+(`ty_tense_like(L, Level, Tense, As)`, Level `clause`, `copula` or `any`):
+English and German write the imperfect as the past (`El niño veía al
+perro.` is `The boy saw the dog.`), every template the copula's imperfect
+as its past (its past is `era`, `était`, `was` already), and Persian the
+conditional as the imperfect (`می‌دید`). The writer changes the IR's
+tense before it writes; the reader never reads such a tense, so `The boy
+saw the dog.` is the past. 107 569 Spanish rows and 79 185 Italian.
+
+Not yet: the subjunctive; the future perfect and the conditional perfect.
 
 ## Phase 6: the bridge to translate.pl
 

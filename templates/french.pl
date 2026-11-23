@@ -395,3 +395,106 @@ ty_copula(french, any, perfect, sg(1), neg, [ne, ai, pas, 'été']).
 ty_copula(french, any, perfect, sg(2), neg, [ne, as, pas, 'été']).
 ty_copula(french, any, perfect, pl(1), neg, [ne, avons, pas, 'été']).
 ty_copula(french, any, perfect, pl(2), neg, [ne, avez, pas, 'été']).
+
+%% The imperfect and the conditional of each verb (`voyait', `verrait');
+%% the pluperfect, `avoir' in the imperfect and the participle, or for the
+%% class `être' `être' and the participle that agrees with the subject
+%% (`était allée'). The copula's past is its imperfect already (`était'),
+%% so its imperfect is written as its past.
+ty_verb(french, see, imperfect, sg, pos, [voyait]).
+ty_verb(french, see, imperfect, pl, pos, [voyaient]).
+ty_verb(french, see, imperfect, sg(1), pos, [voyais]).
+ty_verb(french, see, imperfect, sg(2), pos, [voyais]).
+ty_verb(french, see, imperfect, pl(1), pos, [voyions]).
+ty_verb(french, see, imperfect, pl(2), pos, [voyiez]).
+ty_verb(french, sleep, imperfect, sg, pos, [dormait]).
+ty_verb(french, sleep, imperfect, pl, pos, [dormaient]).
+ty_verb(french, sleep, imperfect, sg(1), pos, [dormais]).
+ty_verb(french, sleep, imperfect, sg(2), pos, [dormais]).
+ty_verb(french, sleep, imperfect, pl(1), pos, [dormions]).
+ty_verb(french, sleep, imperfect, pl(2), pos, [dormiez]).
+ty_verb(french, think, imperfect, sg, pos, [pensait]).
+ty_verb(french, think, imperfect, pl, pos, [pensaient]).
+ty_verb(french, think, imperfect, sg(1), pos, [pensais]).
+ty_verb(french, think, imperfect, sg(2), pos, [pensais]).
+ty_verb(french, think, imperfect, pl(1), pos, [pensions]).
+ty_verb(french, think, imperfect, pl(2), pos, [pensiez]).
+ty_verb(french, look, imperfect, sg, pos, [regardait]).
+ty_verb(french, look, imperfect, pl, pos, [regardaient]).
+ty_verb(french, look, imperfect, sg(1), pos, [regardais]).
+ty_verb(french, look, imperfect, sg(2), pos, [regardais]).
+ty_verb(french, look, imperfect, pl(1), pos, [regardions]).
+ty_verb(french, look, imperfect, pl(2), pos, [regardiez]).
+ty_verb(french, go, imperfect, sg, pos, [allait]).
+ty_verb(french, go, imperfect, pl, pos, [allaient]).
+ty_verb(french, go, imperfect, sg(1), pos, [allais]).
+ty_verb(french, go, imperfect, sg(2), pos, [allais]).
+ty_verb(french, go, imperfect, pl(1), pos, [allions]).
+ty_verb(french, go, imperfect, pl(2), pos, [alliez]).
+ty_verb(french, see, conditional, sg, pos, [verrait]).
+ty_verb(french, see, conditional, pl, pos, [verraient]).
+ty_verb(french, see, conditional, sg(1), pos, [verrais]).
+ty_verb(french, see, conditional, sg(2), pos, [verrais]).
+ty_verb(french, see, conditional, pl(1), pos, [verrions]).
+ty_verb(french, see, conditional, pl(2), pos, [verriez]).
+ty_verb(french, sleep, conditional, sg, pos, [dormirait]).
+ty_verb(french, sleep, conditional, pl, pos, [dormiraient]).
+ty_verb(french, sleep, conditional, sg(1), pos, [dormirais]).
+ty_verb(french, sleep, conditional, sg(2), pos, [dormirais]).
+ty_verb(french, sleep, conditional, pl(1), pos, [dormirions]).
+ty_verb(french, sleep, conditional, pl(2), pos, [dormiriez]).
+ty_verb(french, think, conditional, sg, pos, [penserait]).
+ty_verb(french, think, conditional, pl, pos, [penseraient]).
+ty_verb(french, think, conditional, sg(1), pos, [penserais]).
+ty_verb(french, think, conditional, sg(2), pos, [penserais]).
+ty_verb(french, think, conditional, pl(1), pos, [penserions]).
+ty_verb(french, think, conditional, pl(2), pos, [penseriez]).
+ty_verb(french, look, conditional, sg, pos, [regarderait]).
+ty_verb(french, look, conditional, pl, pos, [regarderaient]).
+ty_verb(french, look, conditional, sg(1), pos, [regarderais]).
+ty_verb(french, look, conditional, sg(2), pos, [regarderais]).
+ty_verb(french, look, conditional, pl(1), pos, [regarderions]).
+ty_verb(french, look, conditional, pl(2), pos, [regarderiez]).
+ty_verb(french, go, conditional, sg, pos, [irait]).
+ty_verb(french, go, conditional, pl, pos, [iraient]).
+ty_verb(french, go, conditional, sg(1), pos, [irais]).
+ty_verb(french, go, conditional, sg(2), pos, [irais]).
+ty_verb(french, go, conditional, pl(1), pos, [irions]).
+ty_verb(french, go, conditional, pl(2), pos, [iriez]).
+ty_tense_form(french, pluperfect, sg, pos, [avait, participle]).
+ty_tense_form(french, pluperfect, pl, pos, [avaient, participle]).
+ty_tense_form(french, pluperfect, sg(1), pos, [avais, participle]).
+ty_tense_form(french, pluperfect, sg(2), pos, [avais, participle]).
+ty_tense_form(french, pluperfect, pl(1), pos, [avions, participle]).
+ty_tense_form(french, pluperfect, pl(2), pos, [aviez, participle]).
+ty_class_tense_form(french, 'être', pluperfect, sg, pos, ['était', participle(subject)]).
+ty_class_tense_form(french, 'être', pluperfect, pl, pos, ['étaient', participle(subject)]).
+ty_class_tense_form(french, 'être', pluperfect, sg(1), pos, ['étais', participle(subject)]).
+ty_class_tense_form(french, 'être', pluperfect, sg(2), pos, ['étais', participle(subject)]).
+ty_class_tense_form(french, 'être', pluperfect, pl(1), pos, ['étions', participle(subject)]).
+ty_class_tense_form(french, 'être', pluperfect, pl(2), pos, ['étiez', participle(subject)]).
+ty_tense_like(french, copula, imperfect, past).
+ty_copula(french, any, conditional, sg, pos, [serait]).
+ty_copula(french, any, conditional, pl, pos, [seraient]).
+ty_copula(french, any, conditional, sg(1), pos, [serais]).
+ty_copula(french, any, conditional, sg(2), pos, [serais]).
+ty_copula(french, any, conditional, pl(1), pos, [serions]).
+ty_copula(french, any, conditional, pl(2), pos, [seriez]).
+ty_copula(french, any, conditional, sg, neg, [ne, serait, pas]).
+ty_copula(french, any, conditional, pl, neg, [ne, seraient, pas]).
+ty_copula(french, any, conditional, sg(1), neg, [ne, serais, pas]).
+ty_copula(french, any, conditional, sg(2), neg, [ne, serais, pas]).
+ty_copula(french, any, conditional, pl(1), neg, [ne, serions, pas]).
+ty_copula(french, any, conditional, pl(2), neg, [ne, seriez, pas]).
+ty_copula(french, any, pluperfect, sg, pos, [avait, 'été']).
+ty_copula(french, any, pluperfect, pl, pos, [avaient, 'été']).
+ty_copula(french, any, pluperfect, sg(1), pos, [avais, 'été']).
+ty_copula(french, any, pluperfect, sg(2), pos, [avais, 'été']).
+ty_copula(french, any, pluperfect, pl(1), pos, [avions, 'été']).
+ty_copula(french, any, pluperfect, pl(2), pos, [aviez, 'été']).
+ty_copula(french, any, pluperfect, sg, neg, [ne, avait, pas, 'été']).
+ty_copula(french, any, pluperfect, pl, neg, [ne, avaient, pas, 'été']).
+ty_copula(french, any, pluperfect, sg(1), neg, [ne, avais, pas, 'été']).
+ty_copula(french, any, pluperfect, sg(2), neg, [ne, avais, pas, 'été']).
+ty_copula(french, any, pluperfect, pl(1), neg, [ne, avions, pas, 'été']).
+ty_copula(french, any, pluperfect, pl(2), neg, [ne, aviez, pas, 'été']).

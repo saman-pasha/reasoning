@@ -71,6 +71,13 @@
 %%                                     participle: English future [will,
 %%                                     form(present, pl)], perfect [has,
 %%                                     participle], Spanish [ha, participle]
+%%     ty_tense_like(L, Level, Tense, As)
+%%                                     the language has no form of Tense
+%%                                     at Level (clause, copula or any):
+%%                                     its writer writes Tense as the
+%%                                     tense As, its reader never reads
+%%                                     Tense (English imperfect past:
+%%                                     Spanish `veía' is `saw')
 %%     ty_participle(L, Meaning, Word) a verb's participle (`seen', `visto')
 %%     ty_participle_like(L, Tense, Number)
 %%                                     a verb with no participle row has
@@ -565,7 +572,7 @@
            ty_declension/3, ty_adjective_ending/6, ty_wh_case/4,
            ty_verb_last/2, ty_split_place/2, ty_copula_negation/3,
            ty_relative_comma/1, ty_negative_article/5, ty_capital_nouns/1,
-           ty_reference/4, ty_meaning_sense/2.
+           ty_reference/4, ty_meaning_sense/2, ty_tense_like/4.
 :- discontiguous ty_order/3, ty_noun/6, ty_adjective/5, ty_verb/6,
                  ty_article/5, ty_mark/5, ty_contraction/3, ty_negation/5,
                  ty_ending/4, ty_letters/3, ty_before/5, ty_linked/5, ty_copula/6,
@@ -586,7 +593,8 @@
                  ty_case/3, ty_case_after/3, ty_article_case/6, ty_noun_case/5,
                  ty_declension/3, ty_adjective_ending/6, ty_wh_case/4,
                  ty_verb_last/2, ty_split_place/2, ty_copula_negation/3,
-                 ty_relative_comma/1, ty_negative_article/5, ty_capital_nouns/1.
+                 ty_relative_comma/1, ty_negative_article/5, ty_capital_nouns/1,
+                 ty_tense_like/4.
 
 %% ---- the levels and the values a slot takes -----------------------------------
 
@@ -597,10 +605,11 @@ ty_level(pp, [p, x]).
 ty_level(rel, [h, m, c]).
 ty_level(poss, [h, p, g]).
 
-ty_values(tense, [present, past, future, perfect]).
-%% The tenses every verb and every copula has; a template gives the future
-%% and the perfect where it has them (typology_check/2 asks the whole of a
-%% tense where a verb or the copula has one form of it).
+ty_values(tense, [present, past, future, perfect, imperfect, conditional, pluperfect]).
+%% The tenses every verb and every copula has; a template gives the others
+%% where it has them, or writes one as another (ty_tense_like/4);
+%% typology_check/2 asks the whole of a tense where a verb or the copula
+%% has one form of it.
 ty_values(core_tense, [present, past]).
 ty_values(number, [sg, pl]).
 ty_values(agreement, [sg, pl, sg(1), sg(2), pl(1), pl(2)]).
@@ -743,6 +752,7 @@ ty_row_shape('ty_pronoun_gender(L, System).').
 ty_row_shape('ty_inversion(L, Join, VowelJoin).').
 ty_row_shape('ty_wh_tonic(L, Meaning, Words).').
 ty_row_shape('ty_tense_form(L, Tense, Number, Polarity, Pattern).').
+ty_row_shape('ty_tense_like(L, Level, Tense, As).').
 ty_row_shape('ty_participle(L, Meaning, Word).').
 ty_row_shape('ty_participle_like(L, Tense, Number).').
 ty_row_shape('ty_participle_ending(L, Gender, Number, From, To).').
@@ -949,6 +959,11 @@ ty_missing(L, bad(ty_tense_form(L, T, N, P, Ws))) :-
     \+ ( ty_values(tense, Ts), memberchk(T, Ts),
          ( N == any ; ty_values(agreement, As), memberchk(N, As) ),
          memberchk(P, [pos, neg]), is_list(Ws), Ws \== [] ).
+ty_missing(L, bad(ty_tense_like(L, Lv, T, T1))) :-
+    ty_tense_like(L, Lv, T, T1),
+    \+ ( memberchk(Lv, [clause, copula, any]),
+         ty_values(tense, Ts), memberchk(T, Ts), memberchk(T1, Ts), T \== T1,
+         \+ ( ty_tense_like(L, Lv2, T1, _), ( Lv2 == any ; Lv == any ; Lv2 == Lv ) ) ).
 ty_missing(L, bad(ty_participle_ending(L, G, N, F, T))) :-
     ty_participle_ending(L, G, N, F, T),
     \+ ( atom(F), atom(T), memberchk(N, [sg, pl]) ).
@@ -1128,7 +1143,8 @@ typology_write(L, IR, Text) :-
 typology_write(L, IR, Text, Topics) :-
     must_be(atom, L),
     must_be(list, Topics),
-    ty_ir_in(IR, IR0),
+    ty_ir_in(IR, IR00),
+    ty_ir_tenses(L, IR00, IR0),
     ( IR0 = question(_) -> Mood = question ; Mood = statement ),
     ty_mood(Mood, L, IR0, _, Goal),
     b_setval('$ty_context', none),
@@ -1137,6 +1153,42 @@ typology_write(L, IR, Text, Topics) :-
     ty_reads_as(Mood, L, IR0, Tokens0, Topics), !,
     ty_write_tokens(L, Tokens0, Tokens),
     ty_text(L, Mood, Tokens, Text).
+
+%% A TENSE WRITTEN AS ANOTHER (ty_tense_like/4): each clause's and each
+%% copula's tense the language has no form of becomes the tense it is
+%% written as (English imperfect past: Spanish `El niño veía al perro.' is
+%% `The boy saw the dog.'), a clause's by its clause row, a copula's by its
+%% copula row, else by its any row.
+ty_ir_tenses(L, IR0, IR) :-
+    (   '$ty_tlikes'(L) -> ty_ir_tw(IR0, L, IR) ; IR = IR0 ).
+
+ty_ir_tw(X, L, Y) :- ( var(X) -> Y = X ; ty_ir_tw_(X, L, Y) ).
+
+ty_ir_tw_(clause(V, T, P, S, O, Js), L, clause(V, T1, P, S1, O1, Js1)) :- !,
+    ty_tense_as(L, clause, T, T1),
+    ty_ir_tw(S, L, S1), ty_ir_tw(O, L, O1), ty_ir_tw_list(Js, L, Js1).
+ty_ir_tw_(copula(T, P, S, Pr), L, copula(T1, P, S1, Pr1)) :- !,
+    ty_tense_as(L, copula, T, T1),
+    ty_ir_tw(S, L, S1), ty_ir_tw(Pr, L, Pr1).
+ty_ir_tw_(question(C), L, question(C1)) :- !, ty_ir_tw(C, L, C1).
+ty_ir_tw_(rel(NP, C), L, rel(NP1, C1)) :- !, ty_ir_tw(NP, L, NP1), ty_ir_tw(C, L, C1).
+ty_ir_tw_(of(G, NP), L, of(G1, NP1)) :- !, ty_ir_tw(G, L, G1), ty_ir_tw(NP, L, NP1).
+ty_ir_tw_(pp(M, NP), L, pp(M, NP1)) :- !, ty_ir_tw(NP, L, NP1).
+ty_ir_tw_(answer(P, A, C), L, answer(P, A, C1)) :- !, ty_ir_tw(C, L, C1).
+ty_ir_tw_(echo(C), L, echo(C1)) :- !, ty_ir_tw(C, L, C1).
+ty_ir_tw_(X, _, X).
+
+ty_ir_tw_list(Js, L, Js1) :-
+    (   var(Js) -> Js1 = Js
+    ;   Js = [J|Js0] -> Js1 = [J1|Js2], ty_ir_tw(J, L, J1), ty_ir_tw_list(Js0, L, Js2)
+    ;   Js1 = Js
+    ).
+
+%% The tense a clause's or a copula's tense is written as: the rows
+%% typology_load/1 keeps (`$ty_tlike'/4: a level's own row, else the any
+%% row).
+ty_tense_as(L, Level, T, T1) :-
+    (   atom(T), '$ty_tlike'(L, Level, T, T2) -> T1 = T2 ; T1 = T ).
 
 %% The words give the IR back, at a cost no other reading of them is under
 %% (`Chi vide la ragazza?' is who saw the girl, so whom the girl saw is
@@ -1739,7 +1791,7 @@ ty_word_class(L, article, W) :- ty_article(L, _, _, _, W), !.
 ty_word_class(L, mark, W) :- ty_mark(L, _, _, W, _), !.
 ty_word_class(L, adposition, W) :- ty_class_meaning(L, adposition, W, _), !.
 ty_word_class(L, adverb, W) :- ty_adverb(L, _, W), !.
-ty_word_class(L, copula, W) :- ty_copula(L, _, _, _, _, Ws), memberchk(W, Ws), !.
+ty_word_class(L, copula, W) :- '$ty_cword'(L, W, _), !.
 ty_word_class(L, relative, W) :- ty_relative(L, _, Ws, _), memberchk(W, Ws), !.
 ty_word_class(L, possessive, W) :- ty_possessive_pronoun(L, Ws, _, _), memberchk(W, Ws), !.
 
@@ -1785,7 +1837,7 @@ ty_meaning_word(L, M, adverb, W) :- ty_adverb(L, M, W).
 %% The check's view of a ty_sense/5 row: the word has the sense, and each
 %% pattern is a list of items.
 ty_has_sense(L, W, mark(R)) :- !, ty_mark(L, R, _, W, _), !.
-ty_has_sense(L, W, copula(K)) :- !, ty_copula(L, K, _, _, _, Ws), memberchk(W, Ws), !.
+ty_has_sense(L, W, copula(K)) :- !, '$ty_cword'(L, W, K), !.
 ty_has_sense(L, W, S) :-
     compound(S), S =.. [C, M],
     memberchk(C, [noun, adjective, verb, adverb, adposition]),
@@ -2447,7 +2499,7 @@ ty_question_verb_n(L, V, T, N, Words) :-
     ty_question_form(L, T0, N0, Aux, form(T1, N1)),
     append(Aux, Pos, Words),
     ty_verb_row(L, V, T1, N1, pos, Pos),
-    ty_values(tense, Ts), member(T, Ts), ty_fits(T0, T),
+    ty_tense_fit(T0, T),
     ty_values(agreement, Ns), member(N, Ns), ty_fits(N0, N).
 
 %% A question word's words, and the features its marks ask for.
@@ -2572,11 +2624,11 @@ ty_echo_aux(L, T, N, P, Ws) :-
 
 ty_echo_aux_n(L, T, pos, N, Ws) :-
     ty_question_form(L, T0, N0, Ws, _),
-    ty_values(tense, Ts), member(T, Ts), ty_fits(T0, T),
+    ty_tense_fit(T0, T),
     ty_values(agreement, Ns), member(N, Ns), ty_fits(N0, N).
 ty_echo_aux_n(L, T, neg, N, Ws) :-
     ty_negation(L, T0, N0, Ws, form(_, _)),
-    ty_values(tense, Ts), member(T, Ts), ty_fits(T0, T),
+    ty_tense_fit(T0, T),
     ty_values(agreement, Ns), member(N, Ns), ty_fits(N0, N).
 ty_echo_aux_n(L, T, P, N, Ws) :-
     ty_tense_form(L, T, N0, P, Pattern),
@@ -3730,7 +3782,7 @@ ty_verb_form_n(L, V, T, neg, N, Words) :-
     append(Neg, Pos, Words),
     ( Form == same -> T1 = T, N1 = N ; Form = form(T1, N1) ),
     ty_verb_plain(L, V, T1, pos, N1, Pos),
-    ty_values(tense, Ts), member(T, Ts), ty_fits(T0, T),
+    ty_tense_fit(T0, T),
     ty_values(agreement, Ns), member(N, Ns), ty_fits(N0, N),
     \+ ty_verb(L, V, T, N, neg, _),
     \+ ty_tense_form(L, T, _, neg, _).
@@ -3751,11 +3803,12 @@ ty_verb_plain(L, V, T, P, N, Words) :-
 %% A tense's pattern, of every verb (C none) or of a class of verbs
 %% (ty_class_tense_form/6: Italian `essere', `è andato').
 %% Reading, a pattern is tried only where the words begin with one's first
-%% word (`$ty_tfirst'/2, made with the verb tables).
+%% word (`$ty_tfirst'/2, made with the verb tables), and never for no
+%% words: no pattern is empty.
 ty_tense_may(L, Words) :-
     (   '$ty_vfirst_made'(L), nonvar(Words), Words = [W|_], atom(W)
     ->  ( '$ty_tfirst'(W, L) -> true ; '$ty_tfirst'('$any', L) )
-    ;   true
+    ;   Words \== []
     ).
 
 ty_tense_pattern(L, T, N0, P, Pattern, none) :- ty_tense_form(L, T, N0, P, Pattern).
@@ -4469,6 +4522,14 @@ ty_feats_make(L) :-
            (   member(X, Ws), compound(X), X = agree(_)
            ->  ( '$ty_cagree'(L, K, T, N, P, Ws) -> true ; assertz('$ty_cagree'(L, K, T, N, P, Ws)) )
            ;   ( '$ty_crow'(L, K, T, N, P, Ws) -> true ; assertz('$ty_crow'(L, K, T, N, P, Ws)) ) )),
+    retractall('$ty_cword'(L, _, _)),
+    forall(( ty_copula(L, K, _, _, _, Ws), member(W, Ws), atom(W) ),
+           ( '$ty_cword'(L, W, K) -> true ; assertz('$ty_cword'(L, W, K)) )),
+    retractall('$ty_tlike'(L, _, _, _)), retractall('$ty_tlikes'(L)),
+    forall(( member(Lv, [clause, copula]), ty_values(tense, Ts), member(T, Ts),
+             ( ty_tense_like(L, Lv, T, As) -> true ; ty_tense_like(L, any, T, As) ) ),
+           assertz('$ty_tlike'(L, Lv, T, As))),
+    ( once('$ty_tlike'(L, _, _, _)) -> assertz('$ty_tlikes'(L)) ; true ),
     retractall('$ty_cmax'(L, _)),
     (   aggregate_all(max(Len), ( ty_copula_form(L, _, _, _, _, Ws0), length(Ws0, Len) ), Max)
     ->  assertz('$ty_cmax'(L, Max))
@@ -4493,6 +4554,9 @@ ty_feats_make(L) :-
 :- dynamic('$ty_cagree'/6).
 :- dynamic('$ty_cmax'/2).
 :- dynamic('$ty_crow'/6).
+:- dynamic('$ty_cword'/3).
+:- dynamic('$ty_tlike'/4).
+:- dynamic('$ty_tlikes'/1).
 
 ty_role_case(L, Role) :-
     (   ty_case(L, Role, C)
@@ -4867,6 +4931,10 @@ ty_np_faults(L, np(_, N, Def, _), Det, noun(G, Anim), Rows, Anim, Next) :-
 ty_fits(any, _) :- !.
 ty_fits(X, X).
 
+%% A tense a row's tense fits: any of the tenses where the row says any.
+ty_tense_fit(T0, T) :-
+    (   T0 == any -> ty_values(tense, Ts), member(T, Ts) ; T = T0 ).
+
 %% ---- the word tables from corpus/vocabulary ---------------------------------------
 %%
 %% A vocabulary file is lesson lines of a few fixed shapes, read here by
@@ -5025,6 +5093,8 @@ ty_form_relation(' is the second person of ', second).
 ty_form_relation(' is the participle of ', participle).
 ty_form_relation(' is the infinitive of ', infinitive).
 ty_form_relation(' is the future of ', future).
+ty_form_relation(' is the imperfect of ', imperfect).
+ty_form_relation(' is the conditional of ', conditional).
 
 ty_says(' is animate.', tyi_animate(W), W).
 ty_says(' is a person.', tyi_person(W), W).
@@ -5179,6 +5249,58 @@ ty_import_row(L, ty_verb(L, B, future, N, pos, [F])) :-
     (   N == sg, ty_once_form(future, verb, W3, F0) -> F = F0
     ;   N == pl, ty_once_form(future, verb, W3p, F0) -> F = F0
     ;   ty_apply_ending(L, future(N), Stem, F)
+    ).
+
+%% A verb's imperfect and conditional, where the template gives endings
+%% for them: the singular and the plural the vocabulary states (`"veía" is
+%% the imperfect of "ve"'), else the imperfect's singular made of the
+%% infinitive by the template's ending imperfect (Spanish `ar' `aba',
+%% Italian `are' `ava') and its plural of the singular, the conditional's
+%% on the future's stem; a first or second person the vocabulary states of
+%% the third (`"ibas" is the second person of "iba"'), else the template's
+%% ending of the person, on the singular (the imperfect: Italian `vedeva'
+%% `vedevo') or on the stem (the conditional: `vedr' `vedrei').
+ty_import_row(L, ty_verb(L, B, imperfect, N, pos, [F])) :-
+    once(tyi_hand(ty_ending(L, imperfect, _, _))),
+    ty_import_verb(L, W3, W3p, B),
+    \+ tyi_hand(ty_verb(L, B, imperfect, _, _, _)),
+    (   ty_imperfect_sg(L, W3, I3) -> true ; ty_count(verb_with_no_imperfect), fail ),
+    (   ty_once_form(imperfect, verb, W3p, I3p0) -> I3p = I3p0
+    ;   ty_apply_ending(L, imperfect(pl), I3, I3p)
+    ),
+    member(N, [sg, pl, sg(1), sg(2), pl(1), pl(2)]),
+    ty_tense_person(L, imperfect, N, I3, I3p, I3, F).
+ty_import_row(L, ty_verb(L, B, conditional, N, pos, [F])) :-
+    once(tyi_hand(ty_ending(L, conditional(_), _, _))),
+    ty_import_verb(L, W3, W3p, B),
+    \+ tyi_hand(ty_verb(L, B, conditional, _, _, _)),
+    (   ty_future_stem(L, W3, Stem) -> true ; ty_count(verb_with_no_conditional), fail ),
+    (   ty_once_form(conditional, verb, W3, C30) -> C3 = C30
+    ;   ty_apply_ending(L, conditional(sg), Stem, C3)
+    ),
+    (   ty_once_form(conditional, verb, W3p, C3p0) -> C3p = C3p0
+    ;   ty_apply_ending(L, conditional(pl), Stem, C3p)
+    ),
+    member(N, [sg, pl, sg(1), sg(2), pl(1), pl(2)]),
+    ty_tense_person(L, conditional, N, C3, C3p, Stem, F).
+
+ty_imperfect_sg(L, W3, I3) :-
+    (   ty_once_form(imperfect, verb, W3, I0) -> I3 = I0
+    ;   ty_once_form(infinitive, verb, W3, Inf),
+        ty_apply_ending(L, imperfect, Inf, I3)
+    ).
+
+%% A person's form of a tense: the third persons as given; a first or a
+%% second the vocabulary states of the third (sg(P) of the singular, pl(P)
+%% of the plural), else the ending Tense(N) on Base.
+ty_tense_person(_, _, sg, F3, _, _, F3).
+ty_tense_person(_, _, pl, _, F3p, _, F3p).
+ty_tense_person(L, T, N, F3, F3p, Base, F) :-
+    N =.. [N0, P], integer(P),
+    ( P =:= 1 -> Kind = first ; Kind = second ),
+    ( N0 == sg -> W = F3 ; W = F3p ),
+    (   ty_once_form(Kind, verb, W, F0) -> F = F0
+    ;   Feature =.. [T, N], ty_apply_ending(L, Feature, Base, F)
     ).
 
 %% A verb the import writes the rows of (the conditions of its ty_verb/6

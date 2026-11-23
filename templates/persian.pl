@@ -342,3 +342,49 @@ ty_copula(persian, any, perfect, sg(1), neg, ['نبوده‌ام']).
 ty_copula(persian, any, perfect, sg(2), neg, ['نبوده‌ای']).
 ty_copula(persian, any, perfect, pl(1), neg, ['نبوده‌ایم']).
 ty_copula(persian, any, perfect, pl(2), neg, ['نبوده‌اید']).
+
+%% The imperfect: `می' before the past (`می‌دید', `نمی‌دید'), before the
+%% light verb of a compound verb (`فکر می‌کرد'); the conditional is
+%% written as the imperfect (ty_tense_like/4). The pluperfect: the
+%% participle and `بود' (`دیده بود'). The first and second persons by the
+%% persons' rule (`می‌دیدم', `دیده بودم'). The copula's imperfect and
+%% conditional are written as its past (`بود'); its pluperfect `بوده بود'.
+ty_tense_like(persian, clause, conditional, imperfect).
+ty_tense_like(persian, copula, imperfect, past).
+ty_tense_like(persian, copula, conditional, past).
+ty_verb(persian, see, imperfect, sg, pos, ['می‌دید']).
+ty_verb(persian, see, imperfect, pl, pos, ['می‌دیدند']).
+ty_verb(persian, see, imperfect, sg, neg, ['نمی‌دید']).
+ty_verb(persian, see, imperfect, pl, neg, ['نمی‌دیدند']).
+ty_verb(persian, sleep, imperfect, sg, pos, ['می‌خوابید']).
+ty_verb(persian, sleep, imperfect, pl, pos, ['می‌خوابیدند']).
+ty_verb(persian, sleep, imperfect, sg, neg, ['نمی‌خوابید']).
+ty_verb(persian, sleep, imperfect, pl, neg, ['نمی‌خوابیدند']).
+ty_verb(persian, think, imperfect, sg, pos, ['فکر', 'می‌کرد']).
+ty_verb(persian, think, imperfect, pl, pos, ['فکر', 'می‌کردند']).
+ty_verb(persian, think, imperfect, sg, neg, ['فکر', 'نمی‌کرد']).
+ty_verb(persian, think, imperfect, pl, neg, ['فکر', 'نمی‌کردند']).
+ty_verb(persian, look, imperfect, sg, pos, ['نگاه', 'می‌کرد']).
+ty_verb(persian, look, imperfect, pl, pos, ['نگاه', 'می‌کردند']).
+ty_verb(persian, look, imperfect, sg, neg, ['نگاه', 'نمی‌کرد']).
+ty_verb(persian, look, imperfect, pl, neg, ['نگاه', 'نمی‌کردند']).
+ty_verb(persian, see, pluperfect, sg, pos, ['دیده', 'بود']).
+ty_verb(persian, see, pluperfect, pl, pos, ['دیده', 'بودند']).
+ty_verb(persian, see, pluperfect, sg, neg, ['ندیده', 'بود']).
+ty_verb(persian, see, pluperfect, pl, neg, ['ندیده', 'بودند']).
+ty_verb(persian, sleep, pluperfect, sg, pos, ['خوابیده', 'بود']).
+ty_verb(persian, sleep, pluperfect, pl, pos, ['خوابیده', 'بودند']).
+ty_verb(persian, sleep, pluperfect, sg, neg, ['نخوابیده', 'بود']).
+ty_verb(persian, sleep, pluperfect, pl, neg, ['نخوابیده', 'بودند']).
+ty_verb(persian, think, pluperfect, sg, pos, ['فکر', 'کرده', 'بود']).
+ty_verb(persian, think, pluperfect, pl, pos, ['فکر', 'کرده', 'بودند']).
+ty_verb(persian, think, pluperfect, sg, neg, ['فکر', 'نکرده', 'بود']).
+ty_verb(persian, think, pluperfect, pl, neg, ['فکر', 'نکرده', 'بودند']).
+ty_verb(persian, look, pluperfect, sg, pos, ['نگاه', 'کرده', 'بود']).
+ty_verb(persian, look, pluperfect, pl, pos, ['نگاه', 'کرده', 'بودند']).
+ty_verb(persian, look, pluperfect, sg, neg, ['نگاه', 'نکرده', 'بود']).
+ty_verb(persian, look, pluperfect, pl, neg, ['نگاه', 'نکرده', 'بودند']).
+ty_copula(persian, any, pluperfect, sg, pos, ['بوده', 'بود']).
+ty_copula(persian, any, pluperfect, pl, pos, ['بوده', 'بودند']).
+ty_copula(persian, any, pluperfect, sg, neg, ['نبوده', 'بود']).
+ty_copula(persian, any, pluperfect, pl, neg, ['نبوده', 'بودند']).

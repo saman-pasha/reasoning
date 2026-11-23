@@ -357,3 +357,82 @@ ty_copula(italian, any, perfect, sg(1), pos, [sono, agree(stato)]).
 ty_copula(italian, any, perfect, sg(2), pos, [sei, agree(stato)]).
 ty_copula(italian, any, perfect, pl(1), pos, [siamo, agree(stato)]).
 ty_copula(italian, any, perfect, pl(2), pos, [siete, agree(stato)]).
+
+%% The imperfect and the conditional of the hand verbs; the import makes
+%% the others' (templates/italian-words.pl): the imperfect's singular of
+%% the infinitive (`are' `ava', `ere' `eva', `ire' `iva') and its persons
+%% of the singular (`vedeva' `vedevo'), the conditional's on the future's
+%% stem (`vedr' `vedrebbe'). The pluperfect, `avere' in the imperfect and
+%% the participle, or for a class of `essere' verbs `essere' and the
+%% participle that agrees with the subject (`era andata'). The copula's
+%% past is its imperfect already (`era'), so its imperfect is written as
+%% its past.
+ty_verb(italian, see, imperfect, sg, pos, [vedeva]).
+ty_verb(italian, see, imperfect, pl, pos, [vedevano]).
+ty_verb(italian, see, imperfect, sg(1), pos, [vedevo]).
+ty_verb(italian, see, imperfect, sg(2), pos, [vedevi]).
+ty_verb(italian, see, imperfect, pl(1), pos, [vedevamo]).
+ty_verb(italian, see, imperfect, pl(2), pos, [vedevate]).
+ty_verb(italian, sleep, imperfect, sg, pos, [dormiva]).
+ty_verb(italian, sleep, imperfect, pl, pos, [dormivano]).
+ty_verb(italian, sleep, imperfect, sg(1), pos, [dormivo]).
+ty_verb(italian, sleep, imperfect, sg(2), pos, [dormivi]).
+ty_verb(italian, sleep, imperfect, pl(1), pos, [dormivamo]).
+ty_verb(italian, sleep, imperfect, pl(2), pos, [dormivate]).
+ty_verb(italian, see, conditional, sg, pos, [vedrebbe]).
+ty_verb(italian, see, conditional, pl, pos, [vedrebbero]).
+ty_verb(italian, see, conditional, sg(1), pos, [vedrei]).
+ty_verb(italian, see, conditional, sg(2), pos, [vedresti]).
+ty_verb(italian, see, conditional, pl(1), pos, [vedremmo]).
+ty_verb(italian, see, conditional, pl(2), pos, [vedreste]).
+ty_verb(italian, sleep, conditional, sg, pos, [dormirebbe]).
+ty_verb(italian, sleep, conditional, pl, pos, [dormirebbero]).
+ty_verb(italian, sleep, conditional, sg(1), pos, [dormirei]).
+ty_verb(italian, sleep, conditional, sg(2), pos, [dormiresti]).
+ty_verb(italian, sleep, conditional, pl(1), pos, [dormiremmo]).
+ty_verb(italian, sleep, conditional, pl(2), pos, [dormireste]).
+ty_ending(italian, imperfect, are, ava).
+ty_ending(italian, imperfect, ere, eva).
+ty_ending(italian, imperfect, ire, iva).
+ty_ending(italian, imperfect, fare, faceva).
+ty_ending(italian, imperfect, dire, diceva).
+ty_ending(italian, imperfect, bere, beveva).
+ty_ending(italian, imperfect, orre, oneva).
+ty_ending(italian, imperfect, urre, uceva).
+ty_ending(italian, imperfect, arre, aeva).
+ty_ending(italian, imperfect(pl), a, ano).
+ty_ending(italian, imperfect(sg(1)), a, o).
+ty_ending(italian, imperfect(sg(2)), a, i).
+ty_ending(italian, imperfect(pl(1)), a, amo).
+ty_ending(italian, imperfect(pl(2)), a, ate).
+ty_ending(italian, conditional(sg), '', ebbe).
+ty_ending(italian, conditional(pl), '', ebbero).
+ty_ending(italian, conditional(sg(1)), '', ei).
+ty_ending(italian, conditional(sg(2)), '', esti).
+ty_ending(italian, conditional(pl(1)), '', emmo).
+ty_ending(italian, conditional(pl(2)), '', este).
+ty_tense_form(italian, pluperfect, sg, pos, [aveva, participle]).
+ty_tense_form(italian, pluperfect, pl, pos, [avevano, participle]).
+ty_tense_form(italian, pluperfect, sg(1), pos, [avevo, participle]).
+ty_tense_form(italian, pluperfect, sg(2), pos, [avevi, participle]).
+ty_tense_form(italian, pluperfect, pl(1), pos, [avevamo, participle]).
+ty_tense_form(italian, pluperfect, pl(2), pos, [avevate, participle]).
+ty_class_tense_form(italian, essere, pluperfect, sg, pos, [era, participle(subject)]).
+ty_class_tense_form(italian, essere, pluperfect, pl, pos, [erano, participle(subject)]).
+ty_class_tense_form(italian, essere, pluperfect, sg(1), pos, [ero, participle(subject)]).
+ty_class_tense_form(italian, essere, pluperfect, sg(2), pos, [eri, participle(subject)]).
+ty_class_tense_form(italian, essere, pluperfect, pl(1), pos, [eravamo, participle(subject)]).
+ty_class_tense_form(italian, essere, pluperfect, pl(2), pos, [eravate, participle(subject)]).
+ty_tense_like(italian, copula, imperfect, past).
+ty_copula(italian, any, conditional, sg, pos, [sarebbe]).
+ty_copula(italian, any, conditional, pl, pos, [sarebbero]).
+ty_copula(italian, any, conditional, sg(1), pos, [sarei]).
+ty_copula(italian, any, conditional, sg(2), pos, [saresti]).
+ty_copula(italian, any, conditional, pl(1), pos, [saremmo]).
+ty_copula(italian, any, conditional, pl(2), pos, [sareste]).
+ty_copula(italian, any, pluperfect, sg, pos, [era, agree(stato)]).
+ty_copula(italian, any, pluperfect, pl, pos, [erano, agree(stato)]).
+ty_copula(italian, any, pluperfect, sg(1), pos, [ero, agree(stato)]).
+ty_copula(italian, any, pluperfect, sg(2), pos, [eri, agree(stato)]).
+ty_copula(italian, any, pluperfect, pl(1), pos, [eravamo, agree(stato)]).
+ty_copula(italian, any, pluperfect, pl(2), pos, [eravate, agree(stato)]).

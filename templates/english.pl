@@ -296,3 +296,22 @@ ty_copula(english, any, perfect, sg, pos, [has, been]).
 ty_copula(english, any, perfect, pl, pos, [have, been]).
 ty_copula(english, any, perfect, sg, neg, [has, not, been]).
 ty_copula(english, any, perfect, pl, neg, [have, not, been]).
+
+%% The imperfect has no form of its own: it is written as the past
+%% (ty_tense_like/4: Spanish `veía' is `saw', `era' `was'). The
+%% conditional and the pluperfect are words before another form, for
+%% every verb and person (`would see', `had seen'), and the copula's
+%% (`would be', `had been').
+ty_tense_like(english, any, imperfect, past).
+ty_tense_form(english, conditional, any, pos, [would, form(present, pl)]).
+ty_tense_form(english, conditional, any, neg, [would, not, form(present, pl)]).
+ty_tense_form(english, pluperfect, any, pos, [had, participle]).
+ty_tense_form(english, pluperfect, any, neg, [had, not, participle]).
+ty_copula(english, any, conditional, sg, pos, [would, be]).
+ty_copula(english, any, conditional, sg, neg, [would, not, be]).
+ty_copula(english, any, conditional, pl, pos, [would, be]).
+ty_copula(english, any, conditional, pl, neg, [would, not, be]).
+ty_copula(english, any, pluperfect, sg, pos, [had, been]).
+ty_copula(english, any, pluperfect, sg, neg, [had, not, been]).
+ty_copula(english, any, pluperfect, pl, pos, [had, been]).
+ty_copula(english, any, pluperfect, pl, neg, [had, not, been]).

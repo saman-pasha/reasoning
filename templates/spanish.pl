@@ -384,3 +384,96 @@ ty_copula(spanish, pp, perfect, sg(1), pos, [he, estado]).
 ty_copula(spanish, pp, perfect, sg(2), pos, [has, estado]).
 ty_copula(spanish, pp, perfect, pl(1), pos, [hemos, estado]).
 ty_copula(spanish, pp, perfect, pl(2), pos, [habéis, estado]).
+
+%% The imperfect and the conditional of the hand verbs; the import makes
+%% the others' (templates/spanish-words.pl): the imperfect's singular of
+%% the infinitive (`ar' `aba', `er' and `ir' `ía') and its persons of the
+%% singular, the conditional's on the future's stem (`ver' `vería'). The
+%% pluperfect, `haber' in the imperfect and the participle. The copula's
+%% past is its imperfect already (`era', `estaba'), so its imperfect is
+%% written as its past.
+ty_verb(spanish, see, imperfect, sg, pos, ['veía']).
+ty_verb(spanish, see, imperfect, pl, pos, ['veían']).
+ty_verb(spanish, see, imperfect, sg(1), pos, ['veía']).
+ty_verb(spanish, see, imperfect, sg(2), pos, ['veías']).
+ty_verb(spanish, see, imperfect, pl(1), pos, ['veíamos']).
+ty_verb(spanish, see, imperfect, pl(2), pos, ['veíais']).
+ty_verb(spanish, sleep, imperfect, sg, pos, ['dormía']).
+ty_verb(spanish, sleep, imperfect, pl, pos, ['dormían']).
+ty_verb(spanish, sleep, imperfect, sg(1), pos, ['dormía']).
+ty_verb(spanish, sleep, imperfect, sg(2), pos, ['dormías']).
+ty_verb(spanish, sleep, imperfect, pl(1), pos, ['dormíamos']).
+ty_verb(spanish, sleep, imperfect, pl(2), pos, ['dormíais']).
+ty_verb(spanish, see, conditional, sg, pos, ['vería']).
+ty_verb(spanish, see, conditional, pl, pos, ['verían']).
+ty_verb(spanish, see, conditional, sg(1), pos, ['vería']).
+ty_verb(spanish, see, conditional, sg(2), pos, ['verías']).
+ty_verb(spanish, see, conditional, pl(1), pos, ['veríamos']).
+ty_verb(spanish, see, conditional, pl(2), pos, ['veríais']).
+ty_verb(spanish, sleep, conditional, sg, pos, ['dormiría']).
+ty_verb(spanish, sleep, conditional, pl, pos, ['dormirían']).
+ty_verb(spanish, sleep, conditional, sg(1), pos, ['dormiría']).
+ty_verb(spanish, sleep, conditional, sg(2), pos, ['dormirías']).
+ty_verb(spanish, sleep, conditional, pl(1), pos, ['dormiríamos']).
+ty_verb(spanish, sleep, conditional, pl(2), pos, ['dormiríais']).
+ty_ending(spanish, imperfect, ar, aba).
+ty_ending(spanish, imperfect, er, 'ía').
+ty_ending(spanish, imperfect, ir, 'ía').
+ty_ending(spanish, imperfect(pl), '', n).
+ty_ending(spanish, imperfect(sg(1)), '', '').
+ty_ending(spanish, imperfect(sg(2)), '', s).
+ty_ending(spanish, imperfect(pl(1)), aba, 'ábamos').
+ty_ending(spanish, imperfect(pl(1)), iba, 'íbamos').
+ty_ending(spanish, imperfect(pl(1)), 'ía', 'íamos').
+ty_ending(spanish, imperfect(pl(2)), aba, abais).
+ty_ending(spanish, imperfect(pl(2)), iba, ibais).
+ty_ending(spanish, imperfect(pl(2)), 'ía', 'íais').
+ty_ending(spanish, conditional(sg), '', 'ía').
+ty_ending(spanish, conditional(pl), '', 'ían').
+ty_ending(spanish, conditional(sg(1)), '', 'ía').
+ty_ending(spanish, conditional(sg(2)), '', 'ías').
+ty_ending(spanish, conditional(pl(1)), '', 'íamos').
+ty_ending(spanish, conditional(pl(2)), '', 'íais').
+ty_tense_form(spanish, pluperfect, sg, pos, ['había', participle]).
+ty_tense_form(spanish, pluperfect, pl, pos, ['habían', participle]).
+ty_tense_form(spanish, pluperfect, sg(1), pos, ['había', participle]).
+ty_tense_form(spanish, pluperfect, sg(2), pos, ['habías', participle]).
+ty_tense_form(spanish, pluperfect, pl(1), pos, ['habíamos', participle]).
+ty_tense_form(spanish, pluperfect, pl(2), pos, ['habíais', participle]).
+ty_tense_like(spanish, copula, imperfect, past).
+ty_copula(spanish, adj, conditional, sg, pos, ['sería']).
+ty_copula(spanish, adj, conditional, pl, pos, ['serían']).
+ty_copula(spanish, adj, conditional, sg(1), pos, ['sería']).
+ty_copula(spanish, adj, conditional, sg(2), pos, ['serías']).
+ty_copula(spanish, adj, conditional, pl(1), pos, ['seríamos']).
+ty_copula(spanish, adj, conditional, pl(2), pos, ['seríais']).
+ty_copula(spanish, adj, pluperfect, sg, pos, ['había', sido]).
+ty_copula(spanish, adj, pluperfect, pl, pos, ['habían', sido]).
+ty_copula(spanish, adj, pluperfect, sg(1), pos, ['había', sido]).
+ty_copula(spanish, adj, pluperfect, sg(2), pos, ['habías', sido]).
+ty_copula(spanish, adj, pluperfect, pl(1), pos, ['habíamos', sido]).
+ty_copula(spanish, adj, pluperfect, pl(2), pos, ['habíais', sido]).
+ty_copula(spanish, np, conditional, sg, pos, ['sería']).
+ty_copula(spanish, np, conditional, pl, pos, ['serían']).
+ty_copula(spanish, np, conditional, sg(1), pos, ['sería']).
+ty_copula(spanish, np, conditional, sg(2), pos, ['serías']).
+ty_copula(spanish, np, conditional, pl(1), pos, ['seríamos']).
+ty_copula(spanish, np, conditional, pl(2), pos, ['seríais']).
+ty_copula(spanish, np, pluperfect, sg, pos, ['había', sido]).
+ty_copula(spanish, np, pluperfect, pl, pos, ['habían', sido]).
+ty_copula(spanish, np, pluperfect, sg(1), pos, ['había', sido]).
+ty_copula(spanish, np, pluperfect, sg(2), pos, ['habías', sido]).
+ty_copula(spanish, np, pluperfect, pl(1), pos, ['habíamos', sido]).
+ty_copula(spanish, np, pluperfect, pl(2), pos, ['habíais', sido]).
+ty_copula(spanish, pp, conditional, sg, pos, ['estaría']).
+ty_copula(spanish, pp, conditional, pl, pos, ['estarían']).
+ty_copula(spanish, pp, conditional, sg(1), pos, ['estaría']).
+ty_copula(spanish, pp, conditional, sg(2), pos, ['estarías']).
+ty_copula(spanish, pp, conditional, pl(1), pos, ['estaríamos']).
+ty_copula(spanish, pp, conditional, pl(2), pos, ['estaríais']).
+ty_copula(spanish, pp, pluperfect, sg, pos, ['había', estado]).
+ty_copula(spanish, pp, pluperfect, pl, pos, ['habían', estado]).
+ty_copula(spanish, pp, pluperfect, sg(1), pos, ['había', estado]).
+ty_copula(spanish, pp, pluperfect, sg(2), pos, ['habías', estado]).
+ty_copula(spanish, pp, pluperfect, pl(1), pos, ['habíamos', estado]).
+ty_copula(spanish, pp, pluperfect, pl(2), pos, ['habíais', estado]).
