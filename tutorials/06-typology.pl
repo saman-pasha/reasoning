@@ -130,6 +130,7 @@ main :-
     german_possessives,
     german_v2,
     german_dessen,
+    german_object_first,
     format("~ndone~n", []).
 
 
@@ -669,6 +670,19 @@ german_dessen :-
     must('deren after a feminine head', E2, 'The cat whose small dog the boy sees sleeps.'),
     ( typology_read(german, 'Der Junge, deren Hund schläft, schläft.', _) -> R3 = read ; R3 = refused ),
     must('deren after a masculine head is no German', R3, refused).
+
+%% 39. GERMAN: AN OBJECT FIRST, THE VERB SECOND. ty_object_front(L, v2)
+%% reads a statement with its object first, where the first word cannot
+%% begin a subject (`den', `einen', `keinen', `ihn'); `die' and `das' may,
+%% so `Die Katze sieht das Mädchen.' keeps its one reading. The writer puts
+%% the subject first.
+german_object_first :-
+    typology_translate(german, english, 'Den Hund sieht der Junge.', E1),
+    must('the object first', E1, 'The boy sees the dog.'),
+    typology_translate(english, german, 'The boy sees the dog.', G2),
+    must('written with the subject first', G2, 'Der Junge sieht den Hund.'),
+    typology_translate(german, english, 'Die Katze sieht das Mädchen.', E3),
+    must('die may begin a subject', E3, 'The cat sees the girl.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

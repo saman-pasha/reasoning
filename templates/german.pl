@@ -526,3 +526,9 @@ ty_contraction(german, [an, das], ans).
 %% subject too (`Heute schläft der Hund.'); the adjunct is written at the
 %% end (`Der Hund schläft heute.').
 ty_adjunct_front(german, v2).
+
+%% A statement is read with its object first too, where its first word
+%% cannot begin a subject (`Den Hund sieht der Junge.', `Keinen Hund sieht
+%% der Junge.', `Ihn sieht das Mädchen.'); `Die Katze sieht das Mädchen.'
+%% is the cat that sees. The object is written after the verb.
+ty_object_front(german, v2).

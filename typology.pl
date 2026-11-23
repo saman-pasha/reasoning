@@ -363,6 +363,10 @@
 %%     ty_adjunct_front(L, v2)         a statement read with an adjunct first
 %%                                     and the verb before the subject
 %%                                     (German `Heute schläft der Hund.')
+%%     ty_object_front(L, v2)          a statement read with its object first
+%%                                     and the verb before the subject, where
+%%                                     the first word cannot begin a subject
+%%                                     (German `Den Hund sieht der Junge.')
 %%     ty_adposition_topic(L, Meaning, Topic, Words)
 %%                                     the adposition's words before a noun
 %%                                     of the topic (French `en mars')
@@ -597,7 +601,7 @@
            ty_declension/3, ty_adjective_ending/6, ty_wh_case/4,
            ty_verb_last/2, ty_split_place/2, ty_copula_negation/3,
            ty_relative_comma/1, ty_negative_article/5, ty_negative_article_roles/2,
-           ty_negative_article_keeps/1, ty_and/2, ty_comma/2, ty_bare_topic/2, ty_adposition_topic/4, ty_adjunct_front/2, ty_capital_nouns/1,
+           ty_negative_article_keeps/1, ty_and/2, ty_comma/2, ty_bare_topic/2, ty_adposition_topic/4, ty_adjunct_front/2, ty_object_front/2, ty_capital_nouns/1,
            ty_reference/4, ty_meaning_sense/2, ty_tense_like/4.
 :- discontiguous ty_order/3, ty_noun/6, ty_adjective/5, ty_verb/6,
                  ty_article/5, ty_mark/5, ty_contraction/3, ty_negation/5,
@@ -620,7 +624,7 @@
                  ty_declension/3, ty_adjective_ending/6, ty_wh_case/4,
                  ty_verb_last/2, ty_split_place/2, ty_copula_negation/3,
                  ty_relative_comma/1, ty_negative_article/5, ty_negative_article_roles/2,
-                 ty_negative_article_keeps/1, ty_and/2, ty_comma/2, ty_bare_topic/2, ty_adposition_topic/4, ty_adjunct_front/2, ty_capital_nouns/1,
+                 ty_negative_article_keeps/1, ty_and/2, ty_comma/2, ty_bare_topic/2, ty_adposition_topic/4, ty_adjunct_front/2, ty_object_front/2, ty_capital_nouns/1,
                  ty_tense_like/4.
 
 %% The next token, read and left (unbound writing).
@@ -803,6 +807,7 @@ ty_row_shape('ty_negative_article_keeps(L).').
 ty_row_shape('ty_and(L, Words).').
 ty_row_shape('ty_bare_topic(L, Topic).').
 ty_row_shape('ty_adjunct_front(L, Kind).').
+ty_row_shape('ty_object_front(L, Kind).').
 ty_row_shape('ty_adposition_topic(L, Meaning, Topic, Words).').
 ty_row_shape('ty_comma(L, Mark).').
 ty_row_shape('ty_split_place(L, end).').
@@ -1003,6 +1008,8 @@ ty_missing(L, bad(ty_negative_article_roles(L, Rs))) :-
          once(ty_negative_article(L, _, _, _, _)) ).
 ty_missing(L, bad(ty_adjunct_front(L, K))) :-
     ty_adjunct_front(L, K), K \== v2.
+ty_missing(L, bad(ty_object_front(L, K))) :-
+    ty_object_front(L, K), K \== v2.
 ty_missing(L, bad(ty_and(L, Ws))) :-
     ty_and(L, Ws),
     \+ ( is_list(Ws), Ws \== [], forall(member(W, Ws), atom(W)) ).
@@ -2785,7 +2792,8 @@ ty_clause(L, C) -->
       ty_order_at(L, clause, Order0),
       ty_valency(Order0, O, Order1),
       ty_clause_adjuncts(L, First, Order1, Js, Order2),
-      ty_neg_clause(L, C, Order2, Order3a),
+      ty_clause_object_front(L, First, Order2, Order2o),
+      ty_neg_clause(L, C, Order2o, Order3a),
       ty_verb_final(L, v, Order3a, Order3b),
       ty_verb_split(L, C, none, Order3b, Order3) },
     ty_extraposed(L, o, O, Order3, Order4),
@@ -3085,6 +3093,34 @@ ty_clause_adjuncts(L, First, O1, Js, O2) :-
     var(Js), Js = [_|_],
     selectchk(v, O1, R),
     O2 = [j, v|R].
+
+%% A STATEMENT'S OBJECT FIRST, THE VERB SECOND (ty_object_front(L, v2):
+%% German `Den Hund sieht der Junge.'), in a main clause only, where the
+%% clause's first word may begin an object and not a subject (`$ty_ofirst'/2,
+%% made at load: `den', `einen', `keinen', `meinen', `ihn'). A first word
+%% that may begin either (`die', `das') keeps the template's order, so
+%% `Die Katze sieht das Mädchen.' has one reading, the cat that sees. The
+%% writer keeps the template's order.
+ty_clause_object_front(L, First, O1, O2) :-
+    (   atom(First), '$ty_ofirst'(L, First),
+        \+ nb_current('$ty_sub', yes),
+        selectchk(o, O1, R1), selectchk(v, R1, R2)
+    ->  O2 = [o, v|R2]
+    ;   O2 = O1
+    ).
+
+%% A word that may begin a noun phrase of case C: an article's (not a
+%% question's `welchen'), a negative
+%% article's or a possessive pronoun's of C (a possessive pronoun's
+%% condition that names no case is of any), or a pronoun of the role
+%% (o for acc, s for nom).
+ty_front_word(L, W, C) :- ty_article_case(L, Def, _, _, C1, W), Def \== which, ty_fits(C1, C).
+ty_front_word(L, W, C) :- ty_negative_article(L, _, _, C1, W), ty_fits(C1, C).
+ty_front_word(L, W, C) :-
+    ty_possessive_pronoun(L, [W], _, Pd), member(Fs, Pd),
+    (   member(C1, Fs), ty_case_known(L, C1) -> C1 == C ; true ).
+ty_front_word(L, W, acc) :- ty_pronoun(L, o, [W], _).
+ty_front_word(L, W, nom) :- ty_pronoun(L, s, [W], _).
 
 ty_place_j(start, O, [j|O]).
 ty_place_j(end, O, Os) :- append(O, [j], Os).
@@ -4712,6 +4748,12 @@ ty_feats_make(L) :-
                ( '$ty_jfirst'(L, W2) -> true ; assertz('$ty_jfirst'(L, W2)) ))
     ;   true
     ),
+    retractall('$ty_ofirst'(L, _)),
+    (   ty_object_front(L, v2)
+    ->  forall(( ty_front_word(L, W3, acc), \+ ty_front_word(L, W3, nom) ),
+               ( '$ty_ofirst'(L, W3) -> true ; assertz('$ty_ofirst'(L, W3)) ))
+    ;   true
+    ),
     retractall('$ty_bare'(L, _)),
     forall(( ty_bare_topic(L, T), ty_topic(M, T), once(ty_noun(L, M, _, _, _, _)) ),
            ( '$ty_bare'(L, M) -> true ; assertz('$ty_bare'(L, M)) )),
@@ -4742,6 +4784,7 @@ ty_feats_make(L) :-
 :- dynamic('$ty_cword'/3).
 :- dynamic('$ty_bare'/2).
 :- dynamic('$ty_jfirst'/2).
+:- dynamic('$ty_ofirst'/2).
 :- dynamic('$ty_ppw'/3).
 :- dynamic('$ty_ptopic'/1).
 :- dynamic('$ty_tlike'/4).

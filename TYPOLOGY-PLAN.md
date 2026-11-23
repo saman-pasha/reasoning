@@ -606,12 +606,22 @@ kleinen Hund der Junge sieht, schläft.`, `in dessen kleinem Haus`). The
 possessed takes no article, its adjectives strong, in the case of its role
 or of the adposition.
 
+**German: an object first, the verb second** (1.52.0).
+`ty_object_front(L, v2)`: a statement is read with its object first and
+the verb before the subject, in a main clause, where the first word cannot
+begin a subject (`$ty_ofirst`/2, made at load from the articles, `kein`,
+the possessive pronouns and the pronouns of the accusative alone: `Den
+Hund sieht der Junge.`, `Keinen Hund sieht der Junge.`, `Ihn sieht das
+Mädchen.`). A first word that may begin either (`die`, `das`) keeps the
+template's order, so `Die Katze sieht das Mädchen.` has one reading, the
+cat that sees. The writer puts the subject first.
+
 Not yet:
 
-3. German: an object first with the verb second after it (`Den Hund
-   sieht der Junge.`: a feminine, neuter or plural subject and object
-   would read both ways), and `am` (a dative `an`, `at`, an adposition the
-   other templates do not have).
+3. German: an object first whose first word may begin a subject (`Das
+   Mädchen sieht der Junge.`: the case of the phrase after the verb tells
+   it, which the reader would have to weigh against the order), and `am`
+   (a dative `an`, `at`, an adposition the other templates do not have).
 6. A sense of its own is a hand row: the import gives one only where a
    template names it, as the vocabularies cannot tell a second sense
    (`marcha`, the walk) from a synonym (`jornada`, a day like `día`). A

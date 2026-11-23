@@ -16,7 +16,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -1816,6 +1816,36 @@ german_dessen :-
     check('English into German: whose is dessen', G4, 'Das Mädchen sieht den Jungen, dessen Hund schläft.'),
     typology_translate(german, spanish, 'Die Katze, deren Hund schläft, schläft.', S5),
     check('German into Spanish: deren is cuyo', S5, 'El gato cuyo perro duerme duerme.').
+
+%% 1.52.0: a German statement's object first and the verb second
+%% (ty_object_front/2), where the first word cannot begin a subject.
+german_object_first :-
+    section('German: an object first, the verb second'),
+    B = np(boy, sg, def, []), G = np(girl, sg, def, []), D = np(dog, sg, def, []),
+    Rows = [ 'Den Hund sieht der Junge.'-clause(see, present, pos, B, D)-'Der Junge sieht den Hund.',
+             'Einen Hund sieht das Mädchen.'-clause(see, present, pos, G, np(dog, sg, indef, []))-'Das Mädchen sieht einen Hund.',
+             'Den Hund hat der Junge gesehen.'-clause(see, perfect, pos, B, D)-'Der Junge hat den Hund gesehen.',
+             'Den kleinen Hund sieht der Junge nicht.'-clause(see, present, neg, B, np(dog, sg, def, [small]))-'Der Junge sieht den kleinen Hund nicht.',
+             'Keinen Hund sieht der Junge.'-clause(see, present, neg, B, np(dog, sg, indef, []))-'Der Junge sieht keinen Hund.',
+             'Ihn sieht das Mädchen.'-clause(see, present, pos, G, pron(3, sg, m))-'Das Mädchen sieht ihn.',
+             'Den Hund sieht der Junge heute.'-clause(see, present, pos, B, D, [adv(today)])-'Der Junge sieht den Hund heute.' ],
+    forall(member(S-IR-Want, Rows),
+           ( findall(I, typology_read(german, S, I), Is),
+             atomic_list_concat(['German: read: ', S], Label),
+             check(Label, Is, [IR]),
+             ( typology_write(german, IR, T) -> true ; T = none ),
+             atomic_list_concat(['German: written with the subject first: ', Want], Label2),
+             check(Label2, T, Want) )),
+    findall(I3, typology_read(german, 'Die Katze sieht das Mädchen.', I3), Is3),
+    check('German: die and das may begin a subject, so the cat sees', Is3,
+          [clause(see, present, pos, np(cat, sg, def, []), G)]),
+    forall(member(S4, [ 'Den Hund der Junge sieht.', 'Den Hund sieht den Jungen.',
+                        'Der Hund, den sieht der Junge, schläft.', 'Welchen Hund sieht der Junge.' ]),
+           ( ( typology_read(german, S4, _) -> R4 = read ; R4 = refused ),
+             atomic_list_concat(['German: refused: ', S4], Label4),
+             check(Label4, R4, refused) )),
+    typology_translate(german, english, 'Den Hund sieht der Junge.', E),
+    check('German into English', E, 'The boy sees the dog.').
 
 %% ---- the reference sentences and the senses -------------------------------------------
 
