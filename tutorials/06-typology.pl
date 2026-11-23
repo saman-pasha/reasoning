@@ -129,6 +129,7 @@ main :-
     months,
     german_possessives,
     german_v2,
+    german_dessen,
     format("~ndone~n", []).
 
 
@@ -655,6 +656,19 @@ german_v2 :-
     must('written at the end', G2, 'Der Hund schläft heute.'),
     ( typology_read(german, 'Heute der Hund schläft.', _) -> R3 = read ; R3 = refused ),
     must('the verb third is no German', R3, refused).
+
+%% 38. GERMAN DESSEN AND DEREN. A possessive relative pronoun's row may
+%% name the head's features, head(Features), where Spanish `cuyo' names
+%% the possessed's: German `dessen' after a masculine or a neuter head,
+%% `deren' after a feminine or a plural one. The possessed after it takes
+%% no article, its adjectives strong.
+german_dessen :-
+    typology_translate(english, german, 'The boy whose dog sleeps sleeps.', G1),
+    must('dessen after a masculine head', G1, 'Der Junge, dessen Hund schläft, schläft.'),
+    typology_translate(german, english, 'Die Katze, deren kleinen Hund der Junge sieht, schläft.', E2),
+    must('deren after a feminine head', E2, 'The cat whose small dog the boy sees sleeps.'),
+    ( typology_read(german, 'Der Junge, deren Hund schläft, schläft.', _) -> R3 = read ; R3 = refused ),
+    must('deren after a masculine head is no German', R3, refused).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

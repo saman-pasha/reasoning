@@ -597,12 +597,21 @@ hat der Junge den Hund gesehen.`, `Heute schläft kein Hund.`), in a main
 clause only; the writer keeps the template's place (`Der Hund schläft
 heute.`), and the verb third is refused (`Heute der Hund schläft.`).
 
+**German `dessen` and `deren`** (1.51.0). A possessive relative
+pronoun's row (`ty_relative_possessive/3`) may name the head's features,
+`head(Features)`, where Spanish `cuyo` names the possessed's: `dessen`
+after a masculine or a neuter head, `deren` after a feminine or a plural
+one (`Der Junge, dessen Hund schläft, schläft.`, `Die Katze, deren
+kleinen Hund der Junge sieht, schläft.`, `in dessen kleinem Haus`). The
+possessed takes no article, its adjectives strong, in the case of its role
+or of the adposition.
+
 Not yet:
 
-3. German: the possessive relative (`dessen`), an object first with the
-   verb second after it (`Den Hund sieht der Junge.`: a feminine, neuter or
-   plural subject and object would read both ways), and `am` (a dative `an`, `at`, an adposition the other templates do not
-   have).
+3. German: an object first with the verb second after it (`Den Hund
+   sieht der Junge.`: a feminine, neuter or plural subject and object
+   would read both ways), and `am` (a dative `an`, `at`, an adposition the
+   other templates do not have).
 6. A sense of its own is a hand row: the import gives one only where a
    template names it, as the vocabularies cannot tell a second sense
    (`marcha`, the walk) from a synonym (`jornada`, a day like `día`). A

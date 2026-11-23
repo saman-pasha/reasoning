@@ -293,7 +293,11 @@
 %%     ty_relative_possessive(L, Words, Conditions)
 %%                                     the pronoun of a moved possessor gap
 %%                                     (`whose', `cuyo', `il cui'), its
-%%                                     Conditions the possessed's features
+%%                                     Conditions the possessed's features,
+%%                                     or head(Features) the head's (German
+%%                                     `dessen' after a masculine or a neuter
+%%                                     head, `deren' after a feminine or a
+%%                                     plural one)
 %%     ty_complement(L, Verb, Words)   the object of Verb is an adposition
 %%                                     phrase with the adposition Words, in
 %%                                     the pp level's order and with no role
@@ -944,7 +948,8 @@ ty_missing(L, bad(ty_possessive(L, O, Ws, A))) :-
     \+ ( typology_choices(poss, Os), memberchk(O, Os), is_list(Ws), memberchk(A, [keep, drop]) ).
 ty_missing(L, bad(ty_relative_possessive(L, Ws, Cs))) :-
     ty_relative_possessive(L, Ws, Cs),
-    \+ ( is_list(Ws), Ws \== [], is_list(Cs) ).
+    \+ ( is_list(Ws), Ws \== [], is_list(Cs),
+         forall(member(C, Cs), ( is_list(C) ; nonvar(C), C = head(H), is_list(H) )) ).
 ty_missing(L, bad(ty_possessive_pronoun(L, Ws, A, B))) :-
     ty_possessive_pronoun(L, Ws, A, B),
     \+ ( is_list(Ws), Ws \== [], is_list(A), is_list(B) ).
@@ -4522,14 +4527,17 @@ ty_rel_close(L, S0, S) :-
 %% A moved possessor's marker: the possessive relative pronoun and the
 %% possessed, between a role's marks (`a cuyos perros'), or after the
 %% adjunct's adposition (`in whose house', `en cuya casa', `nella cui
-%% casa'); Ws is the pronoun's words.
+%% casa'); Ws is the pronoun's words. The possessed takes the case of its role, or of the
+%% adposition (German `dessen kleinen Hund', `in dessen kleinem Haus').
 ty_poss_marker(j(Prep, AWs), L, NP2, F2, Ws) --> !,
     ty_words(1, 3, AWs, ty_adposition(L, Prep, AWs)),
     ty_words(1, 2, Ws, ty_relative_possessive(L, Ws, _)),
+    { ty_case_after_words(L, AWs) },
     ty_np(L, NP2, F2, bare(none)).
 ty_poss_marker(Role, L, NP2, F2, Ws) -->
     ty_mark_slot(L, Role, before, Before),
     ty_words(1, 2, Ws, ty_relative_possessive(L, Ws, _)),
+    { ( ty_case(L, Role, C) -> b_setval('$ty_case', C) ; true ) },
     ty_np(L, NP2, F2, bare(none)),
     ty_mark_slot(L, Role, after, After),
     { ty_marks_ok(L, Role, before, F2, Before),
@@ -4593,12 +4601,16 @@ ty_verb_final(L, V, O0, O) :-
 
 %% The marker read is one a row gives for the gap and the head's features
 %% (English `who' for an animate head, `which' for a thing; Spanish `en la
-%% que' for a feminine one).
-ty_rel_marker_ok(L, r(Pl, Rule), _, Ws) :-
+%% que' for a feminine one); a possessive relative pronoun's
+%% row names the possessed's features, or the head's (German `dessen').
+ty_rel_marker_ok(L, r(Pl, Rule), Features, Ws) :-
     Pl = poss(_, _, F2), ( Rule == moves ; Rule == stays ), !,
     ty_relative_possessive(L, Ws, Alternatives),
     member(Need, Alternatives),
-    ty_features_have(Need, F2), !.
+    (   nonvar(Need), Need = head(H)
+    ->  ty_features_have(H, Features)
+    ;   ty_features_have(Need, F2)
+    ), !.
 %% A moved adposition's relative pronoun takes the adposition's case,
 %% where the language has cases (German `in dem', `an das').
 ty_rel_marker_ok(L, r(Pl, Rule), Features, Ws) :-

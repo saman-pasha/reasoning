@@ -16,7 +16,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -1775,6 +1775,47 @@ german_v2 :-
           copula(present, pos, rel(np(dog, sg, def, []), clause(sleep, present, pos, gap, none, [adv(today)])), adj([small]))),
     typology_translate(german, english, 'Heute schläft der Hund.', E),
     check('German into English', E, 'The dog sleeps today.').
+
+%% 1.51.0: German `dessen' and `deren', a possessive relative pronoun that
+%% agrees with the head (ty_relative_possessive/3's head(Features)); the
+%% possessed after it takes no article, its adjectives strong, in the case
+%% of its role or of the adposition.
+german_dessen :-
+    section('German: dessen and deren'),
+    B = np(boy, sg, def, []), G = np(girl, sg, def, []), C = np(cat, sg, def, []),
+    D = np(dog, sg, def, []), H = np(house, sg, def, []),
+    Rows = [ 'Der Junge, dessen Hund schläft, schläft.'-
+                 clause(sleep, present, pos, rel(B, clause(sleep, present, pos, of(gap, D), none)), none),
+             'Die Katze, deren Hund schläft, schläft.'-
+                 clause(sleep, present, pos, rel(C, clause(sleep, present, pos, of(gap, D), none)), none),
+             'Die Jungen, deren Hund schläft, schlafen.'-
+                 clause(sleep, present, pos, rel(np(boy, pl, def, []), clause(sleep, present, pos, of(gap, D), none)), none),
+             'Das Mädchen, dessen Haus der Hund sieht, schläft.'-
+                 clause(sleep, present, pos, rel(G, clause(see, present, pos, D, of(gap, H))), none),
+             'Der Junge, dessen kleiner Hund schläft, schläft.'-
+                 clause(sleep, present, pos, rel(B, clause(sleep, present, pos, of(gap, np(dog, sg, def, [small])), none)), none),
+             'Die Katze, deren kleinen Hund der Junge sieht, schläft.'-
+                 clause(sleep, present, pos, rel(C, clause(see, present, pos, B, of(gap, np(dog, sg, def, [small])))), none),
+             'Das Mädchen sieht den Jungen, in dessen kleinem Haus der Hund schläft.'-
+                 clause(see, present, pos, G, rel(B, clause(sleep, present, pos, D, none, [pp(in, of(gap, np(house, sg, def, [small])))]))) ],
+    forall(member(S-IR, Rows),
+           ( findall(I, typology_read(german, S, I), Is),
+             atomic_list_concat(['German: read: ', S], Label),
+             check(Label, Is, [IR]),
+             ( typology_write(german, IR, T) -> true ; T = none ),
+             atomic_list_concat(['German: written: ', S], Label2),
+             check(Label2, T, S) )),
+    forall(member(S3, [ 'Der Junge, deren Hund schläft, schläft.',
+                        'Die Katze, dessen Hund schläft, schläft.',
+                        'Der Junge, dessen der Hund schläft, schläft.',
+                        'Die Katze, deren kleinen Hund schläft, schläft.' ]),
+           ( ( typology_read(german, S3, _) -> R3 = read ; R3 = refused ),
+             atomic_list_concat(['German: refused: ', S3], Label3),
+             check(Label3, R3, refused) )),
+    typology_translate(english, german, 'The girl sees the boy whose dog sleeps.', G4),
+    check('English into German: whose is dessen', G4, 'Das Mädchen sieht den Jungen, dessen Hund schläft.'),
+    typology_translate(german, spanish, 'Die Katze, deren Hund schläft, schläft.', S5),
+    check('German into Spanish: deren is cuyo', S5, 'El gato cuyo perro duerme duerme.').
 
 %% ---- the reference sentences and the senses -------------------------------------------
 

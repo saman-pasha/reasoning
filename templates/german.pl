@@ -356,6 +356,14 @@ ty_relative_pronoun(german, [den], [[m, sg, acc]]).
 ty_relative_pronoun(german, [die], [[f, sg, acc], [pl, acc]]).
 ty_relative_pronoun(german, [das], [[n, sg, acc]]).
 
+%% The possessor as the gap: the possessive relative pronoun agrees with
+%% the head, and the possessed after it takes no article, its adjectives
+%% strong (`der Junge, dessen Hund schläft', `die Katze, deren kleinen
+%% Hund der Junge sieht', `das Mädchen, in dessen Haus der Hund schläft').
+ty_gap(german, poss, moves).
+ty_relative_possessive(german, [dessen], [head([m, sg]), head([n, sg])]).
+ty_relative_possessive(german, [deren], [head([f, sg]), head([pl])]).
+
 %% The answer to a yes or no question; `doch' contradicts a negative one.
 ty_answer(german, yes, [ja]).
 ty_answer(german, no, [nein]).
