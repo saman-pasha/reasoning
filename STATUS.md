@@ -91,6 +91,15 @@ Nothing loads `translate.pl`. Each use calls typology:
 | `run-tests.sh` | `all` runs seven cases, without `translate` |
 | the documentation | `CLAUDE.md`, `README.md`, `tutorials/README.md` and `TYPOLOGY-PLAN.md` name typology as the translator and `translate.pl` as parked |
 
+**A language is facts, and only facts** (the owner, 2026-11-23). A
+template and its word tables are facts in `templates/`. No lesson in
+controlled English gives a language or a word, in place of the facts or
+beside them. So `translate.pl`'s way to learn a language (`reason_learn/3`)
+is not carried over, and the live mode gives a word the tables lack as a
+fact row. This is about how a language is given to the translator: the
+controlled English of `reason.pl` (the reasoner, the endpoint's contract)
+is a different matter and does not change.
+
 ## The gaps
 
 Typology must read what the uses read. These are the gaps that the 25
@@ -119,10 +128,10 @@ Spanish sentences and the endpoint's sentences show:
 5. **Words.** `lexicon/` has 6 000 nouns, 2 500 transitive verbs and
    3 000 adjectives; the endpoint's lesson teaches some 47 000 words. The
    English word tables have 25 440 rows, from the vocabularies.
-6. **Learning.** `translate.pl` learns a language, or one word, from
-   controlled English, and the live mode teaches a word that way.
-   Typology has a template and an import, and its live mode gives topics
-   only.
+6. **A word in live mode.** `translate.pl`'s live mode teaches a word the
+   lesson lacks. Typology's live mode gives topics only: it must give a
+   word as a fact row (`ty_noun/6`, `ty_verb/6`, ...), held to the round
+   trip and the reference sentences.
 
 ## The steps
 
@@ -144,6 +153,9 @@ Spanish sentences and the endpoint's sentences show:
    `translate.pl` does? The endpoint would read fewer requests until the
    gaps close. Recommended: no, for the endpoint; yes, for `page.pl` and
    `live.pl`, whose tests are small.
-3. A language from controlled English: keep that, as template rows a
-   lesson gives (Phase 8), or give it up?
-4. The words of `lexicon/`: import them into the English word tables?
+3. The words of `lexicon/`: import them into the English word tables?
+
+Answered:
+
+- A language from controlled English, in place of facts: no (the owner,
+  2026-11-23). A template is facts.

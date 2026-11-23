@@ -761,4 +761,5 @@ Each one is a new file. The code changes only by the slots of phases 3 to 5.
   reference sentences as its check. In part: the topics of a meaning
   (1.38.0, Phase 4's item 20), checked against the topics the tables
   know and, since 1.43.0, the reference sentences (templates/references.pl).
-- Controlled English rows as an alternative to facts.
+- Not planned (the owner, 2026-11-23): controlled English rows in place
+  of facts, or beside them. A template is facts.
