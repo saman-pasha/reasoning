@@ -498,3 +498,11 @@ ty_copula(french, any, pluperfect, sg(1), neg, [ne, avais, pas, 'été']).
 ty_copula(french, any, pluperfect, sg(2), neg, [ne, avais, pas, 'été']).
 ty_copula(french, any, pluperfect, pl(1), neg, [ne, avions, pas, 'été']).
 ty_copula(french, any, pluperfect, pl(2), neg, [ne, aviez, pas, 'été']).
+
+%% `pas de': a negative clause's indefinite object takes `de' (`d'' before
+%% a vowel) for its article, and the clause keeps `ne ... pas' (`Le garçon
+%% ne voit pas de chien.', `Je ne vois pas d'animaux.'); a predicate keeps
+%% its article (`Ce n'est pas un chien.').
+ty_negative_article(french, any, any, any, de).
+ty_negative_article_roles(french, [o]).
+ty_negative_article_keeps(french).

@@ -541,10 +541,22 @@ of the word with the plain meaning, and its class line gives the sense
 its topics: `march` is no longer about months. `typology_check(english,
 M)` names a sense English has no row for.
 
+**The negative article of a subject, and French `pas de`** (1.46.0).
+`ty_negative_article_roles(L, Roles)` names the roles whose indefinite
+noun phrase takes the negative article in a negative clause: German `[s,
+o, p]`, so a subject takes it too (`Kein Hund schläft.`, `Keine Hunde
+schlafen.`, `Kein Hund ist klein.`), the subject's before the object's
+(`Kein Junge sieht einen Hund.`); a template that names none has `[o,
+p]`. `ty_negative_article_keeps(L)` keeps the clause's own negation beside
+the article: French `de` for an indefinite object, with `ne ... pas` (`Le
+garçon ne voit pas de chien.`, `Je ne vois pas d'animaux.`, `Le garçon
+n'a pas vu de chien.`), and a predicate keeps its article (`Le chien n'est
+pas un animal.`). A language with no cases takes the negative article as
+German does, by the role that reads the phrase.
+
 Not yet:
 
-3. German: `kein` for a subject (`Kein Hund schläft.` is written `Ein Hund
-   schläft nicht.`), the possessive pronouns (`mein`, `dein`) and the
+3. German: the possessive pronouns (`mein`, `dein`) and the
    possessive relative (`dessen`), an adjunct or an object first with the
    verb second after it (`Heute schläft der Hund.`), `ans` and `am`, and
    two predicate adjectives with `und` (no template has them).

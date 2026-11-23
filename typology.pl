@@ -354,6 +354,14 @@
 %%     ty_wh_case(L, Meaning, Case, Words)
 %%                                     a question word of a case (German
 %%                                     who acc [wen])
+%%     ty_negative_article_roles(L, Roles)
+%%                                     the roles (s, o, p) whose indefinite
+%%                                     phrase takes the negative article
+%%                                     in a negative clause (German
+%%                                     [s, o, p]; [o, p] where no row says)
+%%     ty_negative_article_keeps(L)    the clause keeps its own negation
+%%                                     beside the negative article (French
+%%                                     `ne ... pas de')
 %%     ty_negative_article(L, Gender, Number, Case, Word)
 %%                                     the article that says a negation
 %%                                     (German `kein'): a negative clause's
@@ -571,7 +579,8 @@
            ty_case/3, ty_case_after/3, ty_article_case/6, ty_noun_case/5,
            ty_declension/3, ty_adjective_ending/6, ty_wh_case/4,
            ty_verb_last/2, ty_split_place/2, ty_copula_negation/3,
-           ty_relative_comma/1, ty_negative_article/5, ty_capital_nouns/1,
+           ty_relative_comma/1, ty_negative_article/5, ty_negative_article_roles/2,
+           ty_negative_article_keeps/1, ty_capital_nouns/1,
            ty_reference/4, ty_meaning_sense/2, ty_tense_like/4.
 :- discontiguous ty_order/3, ty_noun/6, ty_adjective/5, ty_verb/6,
                  ty_article/5, ty_mark/5, ty_contraction/3, ty_negation/5,
@@ -593,7 +602,8 @@
                  ty_case/3, ty_case_after/3, ty_article_case/6, ty_noun_case/5,
                  ty_declension/3, ty_adjective_ending/6, ty_wh_case/4,
                  ty_verb_last/2, ty_split_place/2, ty_copula_negation/3,
-                 ty_relative_comma/1, ty_negative_article/5, ty_capital_nouns/1,
+                 ty_relative_comma/1, ty_negative_article/5, ty_negative_article_roles/2,
+                 ty_negative_article_keeps/1, ty_capital_nouns/1,
                  ty_tense_like/4.
 
 %% ---- the levels and the values a slot takes -----------------------------------
@@ -768,6 +778,8 @@ ty_row_shape('ty_declension(L, Definiteness, Declension).').
 ty_row_shape('ty_adjective_ending(L, Declension, Case, Gender, Number, Ending).').
 ty_row_shape('ty_wh_case(L, Meaning, Case, Words).').
 ty_row_shape('ty_negative_article(L, Gender, Number, Case, Word).').
+ty_row_shape('ty_negative_article_roles(L, Roles).').
+ty_row_shape('ty_negative_article_keeps(L).').
 ty_row_shape('ty_split_place(L, end).').
 ty_row_shape('ty_verb_last(L, rel).').
 ty_row_shape('ty_copula_negation(L, Words, Place).').
@@ -959,6 +971,13 @@ ty_missing(L, bad(ty_tense_form(L, T, N, P, Ws))) :-
     \+ ( ty_values(tense, Ts), memberchk(T, Ts),
          ( N == any ; ty_values(agreement, As), memberchk(N, As) ),
          memberchk(P, [pos, neg]), is_list(Ws), Ws \== [] ).
+ty_missing(L, bad(ty_negative_article_roles(L, Rs))) :-
+    ty_negative_article_roles(L, Rs),
+    \+ ( is_list(Rs), Rs \== [], forall(member(R, Rs), memberchk(R, [s, o, p])),
+         once(ty_negative_article(L, _, _, _, _)) ).
+ty_missing(L, bad(ty_negative_article_keeps(L))) :-
+    ty_negative_article_keeps(L),
+    \+ once(ty_negative_article(L, _, _, _, _)).
 ty_missing(L, bad(ty_tense_like(L, Lv, T, T1))) :-
     ty_tense_like(L, Lv, T, T1),
     \+ ( memberchk(Lv, [clause, copula, any]),
@@ -2074,7 +2093,7 @@ ty_ask_copula(L, C, Cost) -->
       ty_ask_order(L, Kind, Part, copula, Order0, OrderA, Q),
       ty_order_cost(OrderA, Order0, Cost),
       C = copula(_, P, _, _),
-      ty_copula_neg_order(L, P, Pred, OrderA, OrderB0),
+      ty_copula_neg_order(L, C, OrderA, OrderB0),
       ty_copula_split(L, C, OrderB0, OrderB) },
     ty_extraposed(L, p, Pred, OrderB, Order1),
     { C = copula(_, _, S, _) },
@@ -2784,22 +2803,42 @@ ty_place_part(after(P), X, O, Os) :-
 ty_neg_placed(L) :- once(ty_negation_place(L, _, _)).
 
 %% THE NEGATIVE ARTICLE (ty_negative_article(L, Gender, Number, Case, Word):
-%% German `kein'): a negative clause whose object, or a negative copula
-%% clause whose predicate, is an indefinite noun phrase says its negation
-%% in that phrase's article and nowhere else (`Der Junge sieht keinen
-%% Hund.', `Der Junge sieht keine Hunde.', `Der Hund ist kein Tier.');
-%% it is tried first. `$ty_kein' names the role whose phrase takes it,
+%% German `kein'): a negative clause whose subject or object, or a negative
+%% copula clause whose subject or predicate, is an indefinite noun phrase
+%% says its negation in that phrase's article and nowhere else (`Der Junge
+%% sieht keinen Hund.', `Kein Hund schläft.', `Der Hund ist kein Tier.');
+%% it is tried first, the subject before the object. `$ty_kein' names the role whose phrase takes it,
 %% `$ty_kein_np' says the phrase being read is it, and ty_kein_ok holds a
 %% clause read so to a phrase that took one (`$ty_kein_used').
 ty_neg_clause(L, C, O0, O) :-
-    C = clause(_, _, P, _, Obj, _),
+    C = clause(_, _, P, Subj, Obj, _),
     (   '$ty_kein_lang'(L)
     ->  b_setval('$ty_kein', none),
-        (   P = neg, ty_kein_here(L, o, Obj), O = O0
+        (   ty_negative_article_keeps(L)
+        ->  ty_negation_order(L, P, O0, O),
+            (   P == neg, ty_kein_role(L, s), ty_kein_phrase(Subj) -> ty_kein_here(L, s, Subj)
+            ;   P == neg, ty_kein_role(L, o), ty_kein_phrase(Obj) -> ty_kein_here(L, o, Obj)
+            ;   true
+            )
+        ;   P = neg, ty_kein_role(L, s), ty_kein_here(L, s, Subj), O = O0
+        ;   P = neg, ty_kein_role(L, o), ty_kein_here(L, o, Obj), O = O0
         ;   ty_negation_order(L, P, O0, O)
         )
     ;   ty_negation_order(L, P, O0, O)
     ).
+
+%% The roles whose phrase takes the negative article
+%% (ty_negative_article_roles/2; the object and the predicate where the
+%% template names none), and the clause's own negation, which the article
+%% replaces (German `Der Junge sieht keinen Hund.') or, where the template
+%% says ty_negative_article_keeps/1, keeps (French `Le garçon ne voit pas
+%% de chien.'): there the role is the clause's
+%% once its negation is placed, and its phrase's article the negative one
+%% where the phrase is indefinite, else its own (`ne voit pas le chien').
+ty_kein_role(L, R) :-
+    (   ty_negative_article_roles(L, Rs) -> memberchk(R, Rs) ; memberchk(R, [o, p]) ).
+
+
 
 ty_kein_here(L, Role, X) :-
     '$ty_kein_lang'(L),
@@ -2812,7 +2851,7 @@ ty_kein_phrase(np(_, _, D, _)) :- ( var(D) -> true ; D == indef ).
 ty_kein_phrase(rel(NP, _)) :- ty_kein_phrase(NP).
 
 ty_kein_ok(L) :-
-    (   '$ty_kein_lang'(L), nb_current('$ty_kein', K), K \== none
+    (   '$ty_kein_lang'(L), \+ ty_negative_article_keeps(L), nb_current('$ty_kein', K), K \== none
     ->  nb_current('$ty_kein_used', yes)
     ;   true
     ).
@@ -3511,7 +3550,7 @@ ty_words(Min, Max, Ws, Lookup, S0, S) :-
 ty_copula_clause(L, C) -->
     { C = copula(_, P, S, Pred),
       ty_order_at(L, copula, Order0a),
-      ty_copula_neg_order(L, P, Pred, Order0a, Order0b),
+      ty_copula_neg_order(L, C, Order0a, Order0b),
       ty_verb_final(L, c, Order0b, Order0c),
       ty_copula_split(L, C, Order0c, Order0) },
     ty_extraposed(L, p, Pred, Order0, Order1),
@@ -3546,12 +3585,14 @@ ty_copula_part(st(X), L, _, _, _) --> ty_rel_tail(L, X).
 %% a negative copula clause at Place (X one of s, c, p), and the copula
 %% takes its positive form (German `Der Hund ist nicht klein.', `der Hund,
 %% der nicht klein ist').
-ty_copula_neg_order(L, P, Pred, O0, O) :-
+ty_copula_neg_order(L, C, O0, O) :-
+    C = copula(_, P, Subj, Pred),
     (   once(ty_copula_negation(L, _, _))
     ->  b_setval('$ty_kein', none),
         findall(Ws-Pl, ty_copula_negation(L, Ws, Pl), Rows),
         (   P = pos, O = O0
-        ;   P = neg, ty_kein_here(L, p, Pred), O = O0
+        ;   P = neg, ty_kein_role(L, s), ty_kein_here(L, s, Subj), O = O0
+        ;   P = neg, ty_kein_role(L, p), ty_kein_here(L, p, Pred), O = O0
         ;   P = neg, foldl(ty_place_n, Rows, O0, O)
         )
     ;   O = O0
@@ -4495,6 +4536,8 @@ ty_parse_reset(L) :-
     (   '$ty_cased'(L)
     ->  b_setval('$ty_case', any), b_setval('$ty_sub', no),
         b_setval('$ty_kein', none), b_setval('$ty_kein_np', no)
+    ;   '$ty_kein_lang'(L)
+    ->  b_setval('$ty_kein', none), b_setval('$ty_kein_np', no)
     ;   true
     ).
 
@@ -4561,11 +4604,16 @@ ty_feats_make(L) :-
 ty_role_case(L, Role) :-
     (   ty_case(L, Role, C)
     ->  b_setval('$ty_case', C),
-        (   nb_current('$ty_kein', K), K == Role
-        ->  b_setval('$ty_kein_np', yes)
-        ;   b_setval('$ty_kein_np', no)
-        )
+        ty_kein_mark(Role)
+    ;   '$ty_kein_lang'(L)
+    ->  ty_kein_mark(Role)
     ;   true
+    ).
+
+ty_kein_mark(Role) :-
+    (   nb_current('$ty_kein', K), K \== none, K == Role
+    ->  b_setval('$ty_kein_np', yes)
+    ;   b_setval('$ty_kein_np', no)
     ).
 
 ty_case_after_words(L, Ws) :-
@@ -4592,6 +4640,11 @@ ty_article_fits(L, Def, G, N, W) :-
         ;   ty_article_case(L, Def, AG, AN, AC, W),
             ty_fits(AG, G), ty_fits(AN, N), ty_case_fits(AC, C)
         )
+    ;   '$ty_kein_lang'(L), ty_kein_np, ( ty_negative_article_keeps(L) -> Def == indef ; true )
+    ->  Def == indef,
+        ty_negative_article(L, AG, AN, _, W),
+        ty_fits(AG, G), ty_fits(AN, N),
+        b_setval('$ty_kein_used', yes)
     ;   ty_article(L, Def, AG, AN, W), ty_fits(AG, G), ty_fits(AN, N)
     ).
 
@@ -4736,16 +4789,22 @@ ty_noun_form(L, M, G, A, pl, W) :- ty_noun(L, M, G, A, _, W).
 %% cases, each word once.
 ty_det(L, Def, GN, art(W)) -->
     [W],
-    {   '$ty_cased'(L) -> ty_det_word(L, Def, GN, W) ; ty_article(L, _, _, _, W) }.
+    {   '$ty_cased'(L) -> ty_det_word(L, Def, GN, W)
+    ;   '$ty_kein_lang'(L), ty_kein_np -> ty_det_word(L, Def, GN, W)
+    ;   ty_article(L, _, _, _, W)
+    }.
 ty_det(_, _, _, none) --> [].
 
 ty_det_word(L, Def, GN, W) :-
     (   nonvar(W)
-    ->  (   '$ty_cased'(L), ty_kein_np
-        ->  once(ty_negative_article(L, _, _, _, W))
+    ->  (   ty_kein_np
+        ->  (   ty_negative_article_keeps(L)
+            ->  once(( ty_negative_article(L, _, _, _, W) ; ty_article(L, _, _, _, W) ))
+            ;   once(ty_negative_article(L, _, _, _, W))
+            )
         ;   once(ty_article(L, _, _, _, W))
         )
-    ;   '$ty_cased'(L), ty_kein_np
+    ;   ty_kein_np, ( ty_negative_article_keeps(L) -> Def == indef ; true )
     ->  Def == indef,
         ty_case_now(L, C),
         ty_case_words(L, kein, C, Ws),
@@ -4889,6 +4948,8 @@ ty_np_agrees(L, np(_, N, Def, _), Det, noun(G, Anim), Rows, Anim, Next) :-
     forall(member(adj(RG, RN), Rows), ( ty_fits(RG, G), ty_fits(RN, N) )),
     (   Det = art(W)
     ->  (   '$ty_cased'(L)
+        ->  once(ty_article_fits(L, Def, G, N, W))
+        ;   '$ty_kein_lang'(L), ty_kein_np
         ->  once(ty_article_fits(L, Def, G, N, W))
         ;   ty_article(L, Def, AG, AN, W), ty_fits(AG, G), ty_fits(AN, N)
         )

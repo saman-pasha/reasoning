@@ -16,7 +16,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -1611,6 +1611,48 @@ other_tenses :-
     check('the import\'s Spanish conditional on the future\'s stem', Cs, [eat-'comería', make-'haría', say-'diría']),
     findall(V-W, ( member(V, [eat, make, drink]), once(ty_verb(italian, V, imperfect, sg(1), pos, [W])) ), Is2),
     check('the import\'s Italian imperfect of the infinitive and its person', Is2, [eat-mangiavo, make-facevo, drink-bevevo]).
+
+%% ---- the negative article: a subject's, and French pas de ----------------------------
+
+%% 1.46.0: ty_negative_article_roles/2 (German [s, o, p]: `Kein Hund
+%% schläft.') and ty_negative_article_keeps/1 (French: the negation stays
+%% beside `de', `ne ... pas de').
+negative_article :-
+    section('the negative article: a subject\'s, and French pas de'),
+    Di = np(dog, sg, indef, []), Dp = np(dog, pl, indef, []), D = np(dog, sg, def, []),
+    B = np(boy, sg, def, []), Bi = np(boy, sg, indef, []),
+    Rows = [ german-clause(sleep, present, neg, Di, none)-'Kein Hund schläft.',
+             german-clause(sleep, present, neg, Dp, none)-'Keine Hunde schlafen.',
+             german-clause(see, present, neg, Bi, Di)-'Kein Junge sieht einen Hund.',
+             german-clause(see, present, neg, B, Di)-'Der Junge sieht keinen Hund.',
+             german-copula(present, neg, Di, adj([small]))-'Kein Hund ist klein.',
+             german-question(clause(sleep, present, neg, Di, none))-'Schläft kein Hund?',
+             german-clause(sleep, present, pos, rel(D, clause(see, present, neg, gap, Di)), none)-'Der Hund, der keinen Hund sieht, schläft.',
+             french-clause(see, present, neg, B, Di)-'Le garçon ne voit pas de chien.',
+             french-clause(see, present, neg, B, Dp)-'Le garçon ne voit pas de chiens.',
+             french-clause(see, present, neg, B, np(animal, pl, indef, []))-'Le garçon ne voit pas d\'animaux.',
+             french-clause(see, perfect, neg, B, Di)-'Le garçon n\'a pas vu de chien.',
+             french-clause(see, present, neg, pron(1, sg, m), Di)-'Je ne vois pas de chien.',
+             french-clause(sleep, present, neg, Di, none)-'Un chien ne dort pas.',
+             french-copula(present, neg, D, np(animal, sg, indef, []))-'Le chien n\'est pas un animal.',
+             french-clause(see, present, neg, B, D)-'Le garçon ne voit pas le chien.',
+             french-clause(see, present, pos, B, Di)-'Le garçon voit un chien.' ],
+    forall(member(L-IR-Want, Rows),
+           ( ( typology_write(L, IR, T) -> true ; T = none ),
+             atomic_list_concat([L, ': ', Want], Label),
+             check(Label, T, Want),
+             ( findall(I, typology_read(L, T, I), Is), member(I1, Is), subsumes_term(I1, IR) -> R = read ; R = not_read ),
+             atomic_list_concat([L, ': read back: ', Want], Label2),
+             check(Label2, R, read) )),
+    ( typology_read(french, 'Le garçon ne voit pas un chien.', _) -> R1 = read ; R1 = refused ),
+    check('French: after a negation an indefinite object takes de, not un', R1, refused),
+    forall(member(F-To-S-Want, [ german-english-'Kein Hund schläft.'-'A dog does not sleep.',
+                                 english-french-'The boy does not see a dog.'-'Le garçon ne voit pas de chien.',
+                                 french-german-'Je ne vois pas d\'animaux.'-'Ich sehe keine Tiere.',
+                                 german-french-'Der Junge sieht keinen Hund.'-'Le garçon ne voit pas de chien.' ]),
+           ( ( typology_translate(F, To, S, X) -> true ; X = none ),
+             atomic_list_concat([F, ' into ', To, ': ', S], Label),
+             check(Label, X, Want) )).
 
 %% ---- the reference sentences and the senses -------------------------------------------
 

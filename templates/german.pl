@@ -451,3 +451,8 @@ ty_copula(german, any, pluperfect, sg(1), pos, [war, gewesen]).
 ty_copula(german, any, pluperfect, sg(2), pos, [warst, gewesen]).
 ty_copula(german, any, pluperfect, pl(1), pos, [waren, gewesen]).
 ty_copula(german, any, pluperfect, pl(2), pos, [wart, gewesen]).
+
+%% The negative article for a subject too (`Kein Hund schläft.', `Kein
+%% Hund ist klein.'): the subject's before the object's (`Kein Junge sieht
+%% einen Hund.').
+ty_negative_article_roles(german, [s, o, p]).

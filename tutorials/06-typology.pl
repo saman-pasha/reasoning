@@ -124,6 +124,7 @@ main :-
     senses,
     copula_tenses,
     other_tenses,
+    negative_article,
     format("~ndone~n", []).
 
 
@@ -586,6 +587,21 @@ other_tenses :-
     must('the pluperfect of a verb of the class essere and être', F4, 'La fille était allée.'),
     typology_translate(italian, spanish, 'I medici mangerebbero le mele.', S5),
     must('an imported verb\'s conditional', S5, 'Los médicos comerían las manzanas.').
+
+%% 33. THE NEGATIVE ARTICLE OF A SUBJECT, AND FRENCH PAS DE. The roles
+%% whose indefinite phrase takes the negative article in a negative clause
+%% are the template's (ty_negative_article_roles/2): German's subject too
+%% (`Kein Hund schläft.'). French keeps its negation beside the article
+%% (ty_negative_article_keeps/1): `ne ... pas de'.
+negative_article :-
+    typology_translate(english, german, 'A dog does not sleep.', G1),
+    must('kein for a subject', G1, 'Kein Hund schläft.'),
+    typology_translate(english, french, 'The boy does not see a dog.', F2),
+    must('pas de for an object', F2, 'Le garçon ne voit pas de chien.'),
+    typology_translate(german, french, 'Der Junge sieht keine Tiere.', F3),
+    must('de before a vowel', F3, 'Le garçon ne voit pas d\'animaux.'),
+    typology_write(french, copula(present, neg, np(dog, sg, def, []), np(animal, sg, indef, [])), F4),
+    must('a predicate keeps its article', F4, 'Le chien n\'est pas un animal.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
