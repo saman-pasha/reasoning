@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -1847,6 +1847,22 @@ german_object_first :-
              check(Label4, R4, refused) )),
     typology_translate(german, english, 'Den Hund sieht der Junge.', E),
     check('German into English', E, 'The boy sees the dog.').
+
+%% 1.55.0: the measure. typology_coverage/4 over lexicon/prose.txt, WordNet's
+%% 8 000 example sentences: the count of the sentences read may grow and
+%% never fall below the count STATUS.md records last.
+english_coverage :-
+    section('the measure: how much of lexicon/prose.txt the English template reads'),
+    read_file_to_codes('lexicon/prose.txt', Codes), atom_codes(Text, Codes),
+    atomic_list_concat(Lines0, '\n', Text), exclude(==(''), Lines0, Lines),
+    length(Lines, N),
+    check('the measure has its 8 000 sentences', N, 8000),
+    typology_coverage(english, Lines, Read, Unknown),
+    length(Read, K),
+    ( K >= 215 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 215 sentences read at 1.55.0 are read', R1, yes),
+    ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
+    check('the words no table has, counted', R2, counted).
 
 %% 1.53.0: Phase 6, the bridge to translate.pl. typology_reason_ir/2 maps
 %% the typology IR to translate.pl's ir(S, Stop) and back, for the shapes

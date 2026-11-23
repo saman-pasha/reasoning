@@ -1,12 +1,71 @@
 # Status: parking translate.pl
 
-Written 2026-11-23, at reasoning 1.53.0.
+Written 2026-11-23, at reasoning 1.53.0; the first goal added at 1.55.0.
 
 **The decision** (the owner, 2026-11-23): park `translate.pl`. Every use of it
 moves to the typology template system (`typology.pl` and `templates/`).
 
 This file gives the current state, the desired state, the gaps between
 them, and the steps. Change it as the work moves.
+
+## The first goal: English, all of it
+
+**The goal** (the owner, 2026-11-23): English as one complete template,
+so that the IR of any English text can be got from it.
+
+**The measure** is `lexicon/prose.txt`, WordNet's 8 000 example sentences
+(real English of 2 to 20 words). `tools/typology/coverage.pl` reads them
+all (`typology_coverage/4`) and prints the count read into an IR and the
+commonest words no table has. test/typology.pl's `english_coverage` holds
+the count to the last one below.
+
+| version | read | of 8 000 | what moved it |
+|---|---|---|---|
+| 1.55.0 | 215 | 2.7 % | the start: 5 285 sentences have a word no table has, and 2 500 have no unknown word but a structure the grammar has not |
+
+At 1.55.0 the commonest words no table has are words of grammar, not
+nouns: `and` 451 times, `by` 154, `as` 126, `out` 95, `this` 95, `all` 92,
+`into` 79, `there` 69, `up` 68, `but` 67, `than` 53, `some` 50, `could` 48,
+`more` 47, `very` 46, `one` 45, `two` 44, `many` 43, `every` 36, `or` 36,
+`must` 29.
+
+**The design of a template: the classes first, then the items** (the
+owner, 2026-11-23). In each part of a language the template defines the
+classes and their rules first, then each item is put in a class, and
+only an irregular item is defined one by one. The fewest facts: one fact
+a class, one fact a regular item, and one fact an irregular item, which
+gives all its irregular parts (its past, its participle, its future, ...)
+and takes the rest from its class.
+
+    ty_noun_class(english, regular, [''-s, s-ses, x-xes, ch-ches, sh-shes, y-ies, ay-ays, ...]).
+    ty_noun_in(english, house, none, inanimate, house, regular).        % a regular noun
+    ty_noun(english, child, none, person, child, children).             % an irregular noun
+    ty_verb_class(english, regular, [present(sg)-[''-s, ...], past(sg)-[''-ed, e-ed, y-ied, ...], ...]).
+    ty_verb_in(english, walk, walk, regular).                           % a regular verb
+    ty_irregular_verb(english, see, see, regular, [past(sg)-saw, participle-seen]).
+
+The regular items are in a file of their kind beside the template
+(`templates/english-nouns.pl`, `-verbs.pl`, `-adjectives.pl`,
+`-adverbs.pl`), the classes and the irregular items in the template
+itself, and `typology_load/1` makes the forms from the rules. For
+English a word's meaning is the word: no translation table.
+
+**The steps:**
+
+1. The measure (1.55.0).
+2. The English words in the class design, from `lexicon/` (8 915 nouns,
+   3 616 verbs, 16 706 adjectives, 1 149 adverbs) and the vocabularies'
+   English meanings: the nouns, then the verbs, then the adjectives and
+   the adverbs, one version each.
+3. The words of grammar, each with its grammar and its IR shape, the
+   commonest first by the measure: coordination (`and`, `or`, `but`), the
+   other adpositions, the determiners and quantifiers, the numbers, the
+   modal verbs, `there is`, the particles (`out`, `up`), the adverbs of
+   degree (`very`), comparison (`than`, `more`).
+4. The structures: the subordinate clause (`that`, `if`, `when`,
+   `because`), the infinitive, the gerund, the passive, the imperative.
+
+The other five languages take the class design after English.
 
 ## What "parked" means
 

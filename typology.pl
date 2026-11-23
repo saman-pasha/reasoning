@@ -577,7 +577,8 @@
                       typology_read_text/3, typology_translate_text/4, typology_repair/5,
                       typology_answer/4, typology_answer/5,
                       typology_import/1, typology_import/2,
-                      typology_references/2, typology_reason_ir/2 ]).
+                      typology_references/2, typology_reason_ir/2,
+                      typology_coverage/4 ]).
 
 :- use_module(library(reasoning/reason), [ reason_base/2 ]).
 
@@ -1095,6 +1096,38 @@ ty_br_noun(M, W) :-
 ty_br_adjs([], []).
 ty_br_adjs([A|As], [w(W, lower)|Ws]) :-
     ty_adjective(english, A, _, _, W), ty_br_adjs(As, Ws).
+
+%% ---- the measure: how much of a text the template reads ----------------------------
+%%
+%% typology_coverage(+L, +Sentences, -Read, -Unknown): of Sentences (atoms),
+%% Read are the ones typology_read/3 reads into an IR, and Unknown the
+%% words of all of them no table of L has, as Word-Count, the commonest
+%% first (the words the reader's own split gives, ty_surface/5, its commas
+%% off). A
+%% sentence is given 2 000 000 inferences. tools/typology/coverage.pl
+%% prints it over lexicon/prose.txt, WordNet's 8 000 example sentences.
+typology_coverage(L, Sentences, Read, Unknown) :-
+    must_be(atom, L),
+    must_be(list, Sentences),
+    findall(S, ( member(S, Sentences),
+                 catch(call_with_inference_limit(once(typology_read(L, S, _)), 2000000, R), _, fail),
+                 R \== inference_limit_exceeded ), Read),
+    findall(W, ( member(S, Sentences),
+                 catch(( ty_surface(S, _, _, _, Ws), ty_uncomma(L, Ws, Ws2) ), _, fail),
+                 member(W, Ws2), W \== ',', \+ ty_known_token(L, W) ), Ws0),
+    msort(Ws0, Ws1),
+    ty_count_runs(Ws1, Counts),
+    findall(N-W, member(W-N, Counts), NWs),
+    keysort(NWs, Up), reverse(Up, Down),
+    findall(W-N, member(N-W, Down), Unknown).
+
+ty_count_runs([], []).
+ty_count_runs([X|Xs], [X-N|Rest]) :-
+    ty_count_same(X, Xs, 1, N, Xs1),
+    ty_count_runs(Xs1, Rest).
+
+ty_count_same(X, [Y|Ys], N0, N, Rest) :- X == Y, !, N1 is N0 + 1, ty_count_same(X, Ys, N1, N, Rest).
+ty_count_same(_, Rest, N, N, Rest).
 
 ty_missing(L, order(Level)) :-
     ty_level(Level, _),
