@@ -16,7 +16,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -1685,6 +1685,39 @@ predicate_and :-
     typology_translate(spanish, german, 'El perro es pequeño, negro y grande.', G),
     check('Spanish into German, three adjectives', G, 'Der Hund ist klein, schwarz und groß.').
 
+%% ---- the months: no article, and French en ----------------------------------------
+
+%% 1.48.0: ty_bare_topic/2 and ty_adposition_topic/4.
+months :-
+    section('the months: no article, and French en'),
+    B = np(boy, sg, def, []), M = np(march_month, sg, def, []),
+    Rows = [ english-clause(sleep, present, pos, B, none, [pp(in, M)])-'The boy sleeps in March.',
+             english-clause(sleep, present, pos, B, none, [pp(in, np(january, sg, def, []))])-'The boy sleeps in January.',
+             spanish-clause(sleep, present, pos, B, none, [pp(in, M)])-'El niño duerme en marzo.',
+             spanish-clause(sleep, present, pos, B, none, [pp(in, np(house, sg, def, []))])-'El niño duerme en la casa.',
+             italian-clause(sleep, present, pos, B, none, [pp(in, np(january, sg, def, []))])-'Il ragazzo dorme in gennaio.',
+             french-clause(sleep, present, pos, B, none, [pp(in, M)])-'Le garçon dort en mars.',
+             french-clause(sleep, present, pos, B, none, [pp(in, np(house, sg, def, []))])-'Le garçon dort dans la maison.',
+             german-clause(sleep, present, pos, B, none, [pp(in, M)])-'Der Junge schläft im März.',
+             persian-clause(sleep, present, pos, B, none, [pp(in, M)])-'پسر در مارس می‌خوابد.',
+             spanish-clause(see, present, pos, B, M)-'El niño ve marzo.' ],
+    forall(member(L-IR-Want, Rows),
+           ( ( typology_write(L, IR, T) -> true ; T = none ),
+             atomic_list_concat([L, ': ', Want], Label),
+             check(Label, T, Want),
+             ( findall(I, typology_read(L, T, I), Is), member(I1, Is), subsumes_term(I1, IR) -> R = read ; R = not_read ),
+             atomic_list_concat([L, ': read back: ', Want], Label2),
+             check(Label2, R, read) )),
+    ( typology_read(french, 'Le garçon dort dans mars.', _) -> R1 = read ; R1 = refused ),
+    check('French: a month takes en, not dans', R1, refused),
+    ( typology_read(spanish, 'El niño duerme en el marzo.', _) -> R2 = read ; R2 = refused ),
+    check('Spanish: a month is still read with its article', R2, read),
+    forall(member(F-To-S-Want, [ spanish-french-'El niño duerme en marzo.'-'Le garçon dort en mars.',
+                                 german-english-'Der Junge schläft im März.'-'The boy sleeps in March.' ]),
+           ( ( typology_translate(F, To, S, X) -> true ; X = none ),
+             atomic_list_concat([F, ' into ', To, ': ', S], Label),
+             check(Label, X, Want) )).
+
 %% ---- the reference sentences and the senses -------------------------------------------
 
 %% 1.43.0: templates/references.pl's sentences hold a model's topics, and a
@@ -1699,11 +1732,11 @@ reference_sentences :-
     setup_call_cleanup(true, reference_checks,
                        ( reason_set_mode(static), retractall(reason_live_stub(_, _, _)),
                          retractall(reason_live_topics(_, _)) )),
-    forall(member(F-To-S-Want, [ spanish-italian-'El niño ve el marzo.'-'Il ragazzo vede il marzo.',
+    forall(member(F-To-S-Want, [ spanish-italian-'El niño duerme en marzo.'-'Il ragazzo dorme in marzo.',
                                  spanish-italian-'El niño ve la marcha.'-'Il ragazzo vede la marcia.',
-                                 spanish-english-'El niño ve el marzo.'-'The boy sees the March.',
+                                 spanish-english-'El niño duerme en marzo.'-'The boy sleeps in March.',
                                  english-spanish-'The boy sees the march.'-'El niño ve la marcha.',
-                                 italian-spanish-'Il ragazzo vede il marzo.'-'El niño ve el marzo.' ]),
+                                 italian-spanish-'Il ragazzo dorme in marzo.'-'El niño duerme en marzo.' ]),
            ( ( typology_translate(F, To, S, Out) -> true ; Out = none ),
              atomic_list_concat([F, ' into ', To, ': ', S], Label),
              check(Label, Out, Want) )),

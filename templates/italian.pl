@@ -439,3 +439,6 @@ ty_copula(italian, any, pluperfect, pl(2), pos, [eravate, agree(stato)]).
 
 %% The word before the last of a predicate's adjectives (`small and black').
 ty_and(italian, [e]).
+
+%% A month takes no definite article (`in marzo').
+ty_bare_topic(italian, month).

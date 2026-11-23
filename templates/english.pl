@@ -318,3 +318,18 @@ ty_copula(english, any, pluperfect, pl, neg, [had, not, been]).
 
 %% The word before the last of a predicate's adjectives (`small and black').
 ty_and(english, [and]).
+
+%% A month takes no definite article (`in March'), and is written with its
+%% capital.
+ty_bare_topic(english, month).
+ty_capital(english, january, 'January').
+ty_capital(english, february, 'February').
+ty_capital(english, april, 'April').
+ty_capital(english, may, 'May').
+ty_capital(english, june, 'June').
+ty_capital(english, july, 'July').
+ty_capital(english, august, 'August').
+ty_capital(english, september, 'September').
+ty_capital(english, october, 'October').
+ty_capital(english, november, 'November').
+ty_capital(english, december, 'December').

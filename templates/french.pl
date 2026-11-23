@@ -509,3 +509,9 @@ ty_negative_article_keeps(french).
 
 %% The word before the last of a predicate's adjectives (`small and black').
 ty_and(french, [et]).
+
+%% March, the month (templates/topics.pl), takes no definite article and
+%% `en' for `in' (`en mars').
+ty_noun(french, march_month, m, unknown, mars, mars).
+ty_bare_topic(french, month).
+ty_adposition_topic(french, in, month, [en]).

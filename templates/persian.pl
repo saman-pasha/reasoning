@@ -393,3 +393,6 @@ ty_copula(persian, any, pluperfect, pl, neg, ['نبوده', 'بودند']).
 ty_and(persian, ['و']).
 %% The comma: `،' (`سگ کوچک، سیاه و بزرگ است.').
 ty_comma(persian, '،').
+
+%% March, the month (`در مارس').
+ty_noun(persian, march_month, none, unknown, 'مارس', 'مارس‌ها').

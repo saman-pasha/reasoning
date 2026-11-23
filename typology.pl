@@ -356,6 +356,11 @@
 %%                                     who acc [wen])
 %%     ty_comma(L, Mark)               the language's comma (Persian `،'),
 %%                                     `,' where it names none
+%%     ty_adposition_topic(L, Meaning, Topic, Words)
+%%                                     the adposition's words before a noun
+%%                                     of the topic (French `en mars')
+%%     ty_bare_topic(L, Topic)         a noun of the topic takes no definite
+%%                                     article (the months: `in March')
 %%     ty_and(L, Words)                the words that join the last of a
 %%                                     predicate's adjectives (`and', `y',
 %%                                     `und', `و')
@@ -585,7 +590,7 @@
            ty_declension/3, ty_adjective_ending/6, ty_wh_case/4,
            ty_verb_last/2, ty_split_place/2, ty_copula_negation/3,
            ty_relative_comma/1, ty_negative_article/5, ty_negative_article_roles/2,
-           ty_negative_article_keeps/1, ty_and/2, ty_comma/2, ty_capital_nouns/1,
+           ty_negative_article_keeps/1, ty_and/2, ty_comma/2, ty_bare_topic/2, ty_adposition_topic/4, ty_capital_nouns/1,
            ty_reference/4, ty_meaning_sense/2, ty_tense_like/4.
 :- discontiguous ty_order/3, ty_noun/6, ty_adjective/5, ty_verb/6,
                  ty_article/5, ty_mark/5, ty_contraction/3, ty_negation/5,
@@ -608,7 +613,7 @@
                  ty_declension/3, ty_adjective_ending/6, ty_wh_case/4,
                  ty_verb_last/2, ty_split_place/2, ty_copula_negation/3,
                  ty_relative_comma/1, ty_negative_article/5, ty_negative_article_roles/2,
-                 ty_negative_article_keeps/1, ty_and/2, ty_comma/2, ty_capital_nouns/1,
+                 ty_negative_article_keeps/1, ty_and/2, ty_comma/2, ty_bare_topic/2, ty_adposition_topic/4, ty_capital_nouns/1,
                  ty_tense_like/4.
 
 %% ---- the levels and the values a slot takes -----------------------------------
@@ -786,6 +791,8 @@ ty_row_shape('ty_negative_article(L, Gender, Number, Case, Word).').
 ty_row_shape('ty_negative_article_roles(L, Roles).').
 ty_row_shape('ty_negative_article_keeps(L).').
 ty_row_shape('ty_and(L, Words).').
+ty_row_shape('ty_bare_topic(L, Topic).').
+ty_row_shape('ty_adposition_topic(L, Meaning, Topic, Words).').
 ty_row_shape('ty_comma(L, Mark).').
 ty_row_shape('ty_split_place(L, end).').
 ty_row_shape('ty_verb_last(L, rel).').
@@ -3206,7 +3213,40 @@ ty_wh_adjunct(when).
 %% order the template keeps, a preposition or a postposition.
 ty_pp(L, Prep, NP) -->
     { ty_order_at(L, pp, Order) },
-    ty_pp_parts(Order, L, Prep, NP).
+    ty_pp_parts(Order, L, Prep, NP),
+    { ty_pp_topic_ok(L, Prep, NP) }.
+
+%% AN ADPOSITION BY ITS NOUN'S TOPIC (ty_adposition_topic/4: French `en' for
+%% `in' before a month, `en mars', where it is `dans' else): writing, the
+%% words of the noun's topic; reading, either, held to the noun read after
+%% them (`$ty_pwords').
+ty_pp_words(L, Prep, NP, Ws) :-
+    (   '$ty_ptopic'(L)
+    ->  (   ty_pp_head(NP, M), nonvar(M)
+        ->  ( ty_adposition_topic(L, Prep, T, Ws0), ty_topic(M, T) -> Ws = Ws0 ; ty_adposition(L, Prep, Ws) )
+        ;   ( ty_adposition(L, Prep, Ws) ; ty_adposition_topic(L, Prep, _, Ws) )
+        ),
+        b_setval('$ty_pwords', Ws)
+    ;   ty_adposition(L, Prep, Ws)
+    ).
+
+ty_pp_topic_ok(L, Prep, NP) :-
+    (   '$ty_ptopic'(L), nb_current('$ty_pwords', Ws), Ws \== none
+    ->  b_setval('$ty_pwords', none),
+        (   ty_pp_head(NP, M), nonvar(M), ty_adposition_topic(L, Prep, T, TWs), ty_topic(M, T)
+        ->  Ws == TWs
+        ;   ty_adposition(L, Prep, Ws)
+        )
+    ;   true
+    ).
+
+ty_pp_head(NP, M) :-
+    (   var(NP) -> true
+    ;   NP = np(M, _, _, _) -> true
+    ;   NP = rel(H, _) -> ty_pp_head(H, M)
+    ;   NP = of(_, H) -> ty_pp_head(H, M)
+    ;   true
+    ).
 
 ty_pp_parts([], _, _, _) --> [].
 ty_pp_parts([P|Ps], L, Prep, NP) --> ty_pp_part(P, L, Prep, NP), ty_pp_parts(Ps, L, Prep, NP).
@@ -3214,7 +3254,7 @@ ty_pp_parts([P|Ps], L, Prep, NP) --> ty_pp_part(P, L, Prep, NP), ty_pp_parts(Ps,
 ty_pp_part(p, L, Prep, NP) -->
     (   { ty_gap_moved_from(NP, AWs) }
     ->  { ty_adposition(L, Prep, AWs) }
-    ;   ty_words(1, 3, Ws, ty_adposition(L, Prep, Ws)),
+    ;   ty_words(1, 3, Ws, ty_pp_words(L, Prep, NP, Ws)),
         ty_meant(L, adposition(Prep), Ws),
         { ty_case_after_words(L, Ws) }
     ).
@@ -4611,6 +4651,11 @@ ty_feats_make(L) :-
              ( ty_tense_like(L, Lv, T, As) -> true ; ty_tense_like(L, any, T, As) ) ),
            assertz('$ty_tlike'(L, Lv, T, As))),
     ( once('$ty_tlike'(L, _, _, _)) -> assertz('$ty_tlikes'(L)) ; true ),
+    retractall('$ty_ptopic'(L)),
+    ( once(ty_adposition_topic(L, _, _, _)) -> assertz('$ty_ptopic'(L)) ; true ),
+    retractall('$ty_bare'(L, _)),
+    forall(( ty_bare_topic(L, T), ty_topic(M, T), once(ty_noun(L, M, _, _, _, _)) ),
+           ( '$ty_bare'(L, M) -> true ; assertz('$ty_bare'(L, M)) )),
     retractall('$ty_cmax'(L, _)),
     (   aggregate_all(max(Len), ( ty_copula_form(L, _, _, _, _, Ws0), length(Ws0, Len) ), Max)
     ->  assertz('$ty_cmax'(L, Max))
@@ -4636,6 +4681,8 @@ ty_feats_make(L) :-
 :- dynamic('$ty_cmax'/2).
 :- dynamic('$ty_crow'/6).
 :- dynamic('$ty_cword'/3).
+:- dynamic('$ty_bare'/2).
+:- dynamic('$ty_ptopic'/1).
 :- dynamic('$ty_tlike'/4).
 :- dynamic('$ty_tlikes'/1).
 
@@ -4755,8 +4802,8 @@ ty_np_parts([P|Ps], L, NP, Got, Next) -->
 %% so, and read with the article too.
 %% A noun phrase whose Next is bare(Next1) takes no article (English
 %% `the boy's dog': the possessor stands for it).
-ty_np_part(d, _, L, np(_, N, Def, _), got(Det, Noun, _, _), Next) -->
-    (   { ty_no_article(Next, L, Def) }
+ty_np_part(d, _, L, np(M, N, Def, _), got(Det, Noun, _, _), Next) -->
+    (   { ty_no_article(Next, L, Def) ; Def == def, nonvar(M), '$ty_bare'(L, M) }
     ->  { Det = none }
     ;   ty_det(L, Def, Noun-N, Det)
     ).
@@ -4981,7 +5028,7 @@ ty_np_ok(L, NP, Det, Noun, Rows, Anim, Next) :-
         ty_np_faults(L, NP, Det, Noun, Rows, Anim, Next)
     ).
 
-ty_np_agrees(L, np(_, N, Def, _), Det, noun(G, Anim), Rows, Anim, Next) :-
+ty_np_agrees(L, np(M, N, Def, _), Det, noun(G, Anim), Rows, Anim, Next) :-
     ty_values(definiteness, Defs), member(Def, Defs),
     forall(member(adj(RG, RN), Rows), ( ty_fits(RG, G), ty_fits(RN, N) )),
     (   Det = art(W)
@@ -4993,7 +5040,7 @@ ty_np_agrees(L, np(_, N, Def, _), Det, noun(G, Anim), Rows, Anim, Next) :-
         )
     ;   Def \== which,
         (   Next == none
-        ->  \+ ty_article_fits(L, Def, G, N, _)
+        ->  (   Def == def, nonvar(M), '$ty_bare'(L, M) -> true ; \+ ty_article_fits(L, Def, G, N, _) )
         ;   Next = bare(_)
         ->  Def == def
         ;   Next == r, ty_relative_bare(L, Def)
@@ -5001,6 +5048,11 @@ ty_np_agrees(L, np(_, N, Def, _), Det, noun(G, Anim), Rows, Anim, Next) :-
         ;   \+ ty_article_fits(L, Def, G, N, _)
         )
     ).
+
+%% A NOUN OF A TOPIC THE LANGUAGE WRITES WITH NO ARTICLE (ty_bare_topic/2:
+%% the months in English, Spanish, Italian and French): a definite phrase
+%% of it has none (`in March', `en marzo', `a marzo'), where German keeps
+%% its article (`im März'). `$ty_bare'/2 holds the meanings, made at load.
 
 %% In a repair: an adjective or an article that does not agree, and a noun
 %% phrase with no article where it needs one, are each a fault; the

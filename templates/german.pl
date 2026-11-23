@@ -459,3 +459,6 @@ ty_negative_article_roles(german, [s, o, p]).
 
 %% The word before the last of a predicate's adjectives (`small and black').
 ty_and(german, [und]).
+
+%% March, the month, keeps its article (`im März').
+ty_noun(german, march_month, m, unknown, 'März', 'Märze').

@@ -534,8 +534,8 @@ away gets none and is not asked again (`topics_refused` in
 `reason_live_stats/1`: the lime about tools and the file about food are
 refused). A hand row gives one sense of an English word a meaning of its
 own, `ty_meaning_sense(Sense, Meaning)` in templates/topics.pl: Spanish
-and Italian `marzo`, the month, are `march_month` (`El niño ve el
-marzo.` is `Il ragazzo vede il marzo.`, `The boy sees the March.`), where
+and Italian `marzo`, the month, are `march_month` (`El niño duerme en
+marzo.` is `Il ragazzo dorme in marzo.`, `The boy sleeps in March.`), where
 `marcha` and `marcia`, the walk, are `march`. The import writes no row
 of the word with the plain meaning, and its class line gives the sense
 its topics: `march` is no longer about months. `typology_check(english,
@@ -567,6 +567,17 @@ language writes only here is joined to the word before it and read apart
 again where the text has one; Persian writes its own comma (`ty_comma/2`: `سگ کوچک، سیاه و بزرگ
 است.`).
 
+**The months** (1.48.0). `ty_bare_topic(L, Topic)`: a noun of the topic
+takes no definite article, in English, Spanish, Italian and French the
+months (`The boy sleeps in March.`, `El niño duerme en marzo.`, `Il
+ragazzo dorme in gennaio.`), where German keeps it (`Der Junge schläft im
+März.`); a month is still read with its article (`en el marzo`). English
+writes each month with its capital (`ty_capital/3`). `ty_adposition_topic(L,
+Meaning, Topic, Words)` gives an adposition its words before a noun of a
+topic: French `en` for `in` before a month (`Le garçon dort en mars.`),
+where it is `dans` else; the reader holds the words read to the noun after
+them (`dans mars` is refused).
+
 Not yet:
 
 3. German: the possessive pronouns (`mein`, `dein`) and the
@@ -575,9 +586,7 @@ Not yet:
 6. A sense of its own is a hand row: the import gives one only where a
    template names it, as the vocabularies cannot tell a second sense
    (`marcha`, the walk) from a synonym (`jornada`, a day like `día`). A
-   sense inventory waits for the bridge to translate.pl (Phase 6). The
-   months take no article in Spanish, Italian and English (`en marzo`, `in
-   March`), and the IR has no such noun phrase yet.
+   sense inventory waits for the bridge to translate.pl (Phase 6).
 
 ## Phase 5: more features (in part done, reasoning 1.34.0, 1.40.0 and 1.41.0)
 

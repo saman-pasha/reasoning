@@ -485,3 +485,6 @@ ty_and(spanish, [y]).
 ty_before(spanish, y, [[i, consonant], [h, i, consonant]], e, space).
 %% The consonants, for the forms chosen by sound (`e importante').
 ty_letters(spanish, consonant, [b, c, d, f, g, h, j, k, l, m, n, 'ñ', p, q, r, s, t, v, w, x, y, z]).
+
+%% A month takes no definite article (`en marzo').
+ty_bare_topic(spanish, month).

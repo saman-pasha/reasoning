@@ -126,6 +126,7 @@ main :-
     other_tenses,
     negative_article,
     predicate_and,
+    months,
     format("~ndone~n", []).
 
 
@@ -547,8 +548,8 @@ german :-
 %% their readings: typology_references/2 names any that does not, and in
 %% live mode the topics a model gives that would take one away are refused.
 senses :-
-    typology_translate(spanish, italian, 'El niño ve el marzo.', I1),
-    must('marzo is the month', I1, 'Il ragazzo vede il marzo.'),
+    typology_translate(spanish, italian, 'El niño duerme en marzo.', I1),
+    must('marzo is the month', I1, 'Il ragazzo dorme in marzo.'),
     typology_translate(spanish, italian, 'El niño ve la marcha.', I2),
     must('marcha is the walk', I2, 'Il ragazzo vede la marcia.'),
     typology_references(spanish, F),
@@ -616,6 +617,18 @@ predicate_and :-
     must('y is e before the sound i', S3, 'El perro es pequeño e importante.'),
     typology_translate(english, persian, 'The dog is small and black.', P4),
     must('and in Persian', P4, 'سگ کوچک و سیاه است.').
+
+%% 35. THE MONTHS. A noun of a topic ty_bare_topic/2 names takes no
+%% definite article (`in March', `en marzo', `in gennaio'), where German
+%% keeps it (`im März'); ty_adposition_topic/4 gives an adposition its
+%% words before a noun of a topic (French `en mars', where `in' is `dans').
+months :-
+    typology_translate(spanish, english, 'El niño duerme en marzo.', E1),
+    must('no article, and the capital', E1, 'The boy sleeps in March.'),
+    typology_translate(english, french, 'The boy sleeps in March.', F2),
+    must('en before a month', F2, 'Le garçon dort en mars.'),
+    typology_translate(english, german, 'The boy sleeps in March.', G3),
+    must('German keeps the article', G3, 'Der Junge schläft im März.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
