@@ -578,11 +578,23 @@ topic: French `en` for `in` before a month (`Le garçon dort en mars.`),
 where it is `dans` else; the reader holds the words read to the noun after
 them (`dans mars` is refused).
 
+**The German possessive pronouns, and `ans`** (1.49.0). `mein`, `dein`,
+`sein`, `ihr`, `unser`, `euer` and the polite `Ihr`, each a stem of the
+possessor's person and number and the ending of the possessed noun's
+gender, number and case, as `kein` takes them: a condition of
+`ty_possessive_pronoun/4` may name a case, which the phrase's case is held
+to (`Mein Hund schläft.`, `Der Junge sieht meinen Hund.`, `Der Junge
+schläft mit meinem kleinen Hund.`). An adjective after one takes the
+mixed declension, as after `ein` (`Mein kleiner Hund schläft.`, `Deine
+kleinen Mädchen sehen den Jungen.`). `an das` is `ans` (`Der Junge denkt
+ans Mädchen.`).
+
 Not yet:
 
-3. German: the possessive pronouns (`mein`, `dein`) and the
-   possessive relative (`dessen`), an adjunct or an object first with the
-   verb second after it (`Heute schläft der Hund.`), and `ans` and `am`.
+3. German: the possessive relative (`dessen`), an adjunct or an object
+   first with the verb second after it (`Heute schläft der Hund.`), and
+   `am` (a dative `an`, `at`, an adposition the other templates do not
+   have).
 6. A sense of its own is a hand row: the import gives one only where a
    template names it, as the vocabularies cannot tell a second sense
    (`marcha`, the walk) from a synonym (`jornada`, a day like `día`). A

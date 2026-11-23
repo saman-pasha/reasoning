@@ -3371,12 +3371,24 @@ ty_poss_depth_ok(Ahead, Depth) :-
 ty_poss_pronoun(L, Pr, NP, F, Next) -->
     { \+ ty_possessive_clitic(L) },
     ty_words(1, 2, Ws, ty_possessive_pronoun(L, Ws, _, _)),
+    { b_setval('$ty_bare_decl', indef) },
     ty_np(L, NP, F, bare(Next)),
-    { ty_possessive_pronoun(L, Ws, PrC, PdC),
+    { b_setval('$ty_bare_decl', none),
+      ty_possessive_pronoun(L, Ws, PrC, PdC),
       Pr = pron(_, _, _),
       ty_pron_here(L, Pr, Pr1),
       member(N1, PrC), ty_pron_fits(N1, Pr1),
-      once(( member(N2, PdC), ty_features_have(N2, F) )) }.
+      once(( member(N2, PdC), ty_poss_features(L, N2, F) )) }.
+
+%% The possessed's features, and in a language with cases the phrase's
+%% case where the condition names one (German `meinen' [m, sg, acc]).
+ty_poss_features(L, N2, F) :-
+    (   '$ty_cased'(L), member(C, N2), ty_case_known(L, C)
+    ->  ty_case_now(L, C0), ty_case_fits(C, C0),
+        exclude(==(C), N2, N3),
+        ty_features_have(N3, F)
+    ;   ty_features_have(N2, F)
+    ).
 ty_poss_pronoun(L, Pr, NP, F, none) -->
     { ty_possessive_clitic(L),
       Pr = pron(P, N, _),
@@ -3555,14 +3567,16 @@ ty_poss_counts(L, Words, Count, W, P) :-
     ).
 
 %% A clitic form counts where the word without it is a noun or an
-%% adjective (Persian `موش', a mouse, ends in ش and is no one's `مو').
+%% adjective (Persian `موش', a mouse, ends in ش and is no one's `مو'); a
+%% possessive pronoun's words are asked by their first word (`$ty_ppw'/3,
+%% made at load).
 ty_pron_in(L, Words) :-
     (   ty_possessive_clitic(L)
     ->  once(( member(W, Words), atom(W), ty_unlinked(L, C1, clitic(_), W, W0), W0 \== W,
                (   C1 == n -> once(ty_noun_form(L, _, _, _, _, W0))
                ;   C1 == a, once(ty_adjective(L, _, _, _, W0))
                ) ))
-    ;   once(( ty_possessive_pronoun(L, Ws, _, _), ty_all_ahead(Ws, Words) ))
+    ;   once(( member(W, Words), atom(W), '$ty_ppw'(L, W, Ws), ty_all_ahead(Ws, Words) ))
     ).
 ty_poss_marks(L, PWs, Words, N) :-
     (   PWs = [W0|_]
@@ -4653,6 +4667,9 @@ ty_feats_make(L) :-
     ( once('$ty_tlike'(L, _, _, _)) -> assertz('$ty_tlikes'(L)) ; true ),
     retractall('$ty_ptopic'(L)),
     ( once(ty_adposition_topic(L, _, _, _)) -> assertz('$ty_ptopic'(L)) ; true ),
+    retractall('$ty_ppw'(L, _, _)),
+    forall(( ty_possessive_pronoun(L, Ws1, _, _), Ws1 = [W1|_] ),
+           ( '$ty_ppw'(L, W1, Ws1) -> true ; assertz('$ty_ppw'(L, W1, Ws1)) )),
     retractall('$ty_bare'(L, _)),
     forall(( ty_bare_topic(L, T), ty_topic(M, T), once(ty_noun(L, M, _, _, _, _)) ),
            ( '$ty_bare'(L, M) -> true ; assertz('$ty_bare'(L, M)) )),
@@ -4682,6 +4699,7 @@ ty_feats_make(L) :-
 :- dynamic('$ty_crow'/6).
 :- dynamic('$ty_cword'/3).
 :- dynamic('$ty_bare'/2).
+:- dynamic('$ty_ppw'/3).
 :- dynamic('$ty_ptopic'/1).
 :- dynamic('$ty_tlike'/4).
 :- dynamic('$ty_tlikes'/1).
@@ -4970,7 +4988,9 @@ ty_ending_fits(GN, G, N) :-
 %% THE DECLENSION of a noun phrase's adjectives, where the language puts
 %% endings on them (ty_adjective_ending/6 rows): ty_declension(L, Def, D)
 %% by the article's definiteness, `none' for a phrase with no article
-%% (German weak after `der', mixed after `ein', strong with none); an
+%% (German weak after `der', mixed after `ein', strong with none), mixed after
+%% a possessive pronoun (`$ty_bare_decl': `mein kleiner Hund', `mit meinem
+%% kleinen Hund'); an
 %% article read before them tells it; a language with no endings
 %% (no `$ty_declines' fact) has plain ones.
 ty_declined(L, Det, _, D0) :-
@@ -4980,6 +5000,8 @@ ty_declined(L, Det, _, D0) :-
         ;   Def = def
         ),
         ty_declension(L, Def, D0)
+    ;   nb_current('$ty_bare_decl', BD), BD \== none
+    ->  ty_declension(L, BD, D0)
     ;   ty_declension(L, none, D0)
     ).
 

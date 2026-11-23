@@ -462,3 +462,54 @@ ty_and(german, [und]).
 
 %% March, the month, keeps its article (`im März').
 ty_noun(german, march_month, m, unknown, 'März', 'Märze').
+
+%% The possessive pronouns: a stem of the possessor's person and number
+%% and the ending of the possessed noun's gender, number and case, as
+%% `kein' takes them (`mein Hund', `meinen Hund', `mit meinem Hund', `die
+%% Katze meines Jungen'); `euer' is `eur' before an ending, and the polite
+%% `Ihr' keeps its capital. An adjective after one takes the mixed
+%% declension, as after `ein' (`mein kleiner Hund', `mit meinem kleinen
+%% Hund').
+ty_possessive_pronoun(german, [mein], [[1, sg]], [[m, sg, nom], [n, sg, nom], [n, sg, acc]]).
+ty_possessive_pronoun(german, [meine], [[1, sg]], [[f, sg, nom], [f, sg, acc], [pl, nom], [pl, acc]]).
+ty_possessive_pronoun(german, [meinen], [[1, sg]], [[m, sg, acc], [pl, dat]]).
+ty_possessive_pronoun(german, [meinem], [[1, sg]], [[m, sg, dat], [n, sg, dat]]).
+ty_possessive_pronoun(german, [meiner], [[1, sg]], [[f, sg, dat], [f, sg, gen], [pl, gen]]).
+ty_possessive_pronoun(german, [meines], [[1, sg]], [[m, sg, gen], [n, sg, gen]]).
+ty_possessive_pronoun(german, [dein], [[2, sg]], [[m, sg, nom], [n, sg, nom], [n, sg, acc]]).
+ty_possessive_pronoun(german, [deine], [[2, sg]], [[f, sg, nom], [f, sg, acc], [pl, nom], [pl, acc]]).
+ty_possessive_pronoun(german, [deinen], [[2, sg]], [[m, sg, acc], [pl, dat]]).
+ty_possessive_pronoun(german, [deinem], [[2, sg]], [[m, sg, dat], [n, sg, dat]]).
+ty_possessive_pronoun(german, [deiner], [[2, sg]], [[f, sg, dat], [f, sg, gen], [pl, gen]]).
+ty_possessive_pronoun(german, [deines], [[2, sg]], [[m, sg, gen], [n, sg, gen]]).
+ty_possessive_pronoun(german, [sein], [[3, sg, m], [3, sg, n]], [[m, sg, nom], [n, sg, nom], [n, sg, acc]]).
+ty_possessive_pronoun(german, [seine], [[3, sg, m], [3, sg, n]], [[f, sg, nom], [f, sg, acc], [pl, nom], [pl, acc]]).
+ty_possessive_pronoun(german, [seinen], [[3, sg, m], [3, sg, n]], [[m, sg, acc], [pl, dat]]).
+ty_possessive_pronoun(german, [seinem], [[3, sg, m], [3, sg, n]], [[m, sg, dat], [n, sg, dat]]).
+ty_possessive_pronoun(german, [seiner], [[3, sg, m], [3, sg, n]], [[f, sg, dat], [f, sg, gen], [pl, gen]]).
+ty_possessive_pronoun(german, [seines], [[3, sg, m], [3, sg, n]], [[m, sg, gen], [n, sg, gen]]).
+ty_possessive_pronoun(german, [ihr], [[3, sg, f], [3, pl]], [[m, sg, nom], [n, sg, nom], [n, sg, acc]]).
+ty_possessive_pronoun(german, [ihre], [[3, sg, f], [3, pl]], [[f, sg, nom], [f, sg, acc], [pl, nom], [pl, acc]]).
+ty_possessive_pronoun(german, [ihren], [[3, sg, f], [3, pl]], [[m, sg, acc], [pl, dat]]).
+ty_possessive_pronoun(german, [ihrem], [[3, sg, f], [3, pl]], [[m, sg, dat], [n, sg, dat]]).
+ty_possessive_pronoun(german, [ihrer], [[3, sg, f], [3, pl]], [[f, sg, dat], [f, sg, gen], [pl, gen]]).
+ty_possessive_pronoun(german, [ihres], [[3, sg, f], [3, pl]], [[m, sg, gen], [n, sg, gen]]).
+ty_possessive_pronoun(german, [unser], [[1, pl]], [[m, sg, nom], [n, sg, nom], [n, sg, acc]]).
+ty_possessive_pronoun(german, [unsere], [[1, pl]], [[f, sg, nom], [f, sg, acc], [pl, nom], [pl, acc]]).
+ty_possessive_pronoun(german, [unseren], [[1, pl]], [[m, sg, acc], [pl, dat]]).
+ty_possessive_pronoun(german, [unserem], [[1, pl]], [[m, sg, dat], [n, sg, dat]]).
+ty_possessive_pronoun(german, [unserer], [[1, pl]], [[f, sg, dat], [f, sg, gen], [pl, gen]]).
+ty_possessive_pronoun(german, [unseres], [[1, pl]], [[m, sg, gen], [n, sg, gen]]).
+ty_possessive_pronoun(german, [euer], [[2, pl]], [[m, sg, nom], [n, sg, nom], [n, sg, acc]]).
+ty_possessive_pronoun(german, [eure], [[2, pl]], [[f, sg, nom], [f, sg, acc], [pl, nom], [pl, acc]]).
+ty_possessive_pronoun(german, [euren], [[2, pl]], [[m, sg, acc], [pl, dat]]).
+ty_possessive_pronoun(german, [eurem], [[2, pl]], [[m, sg, dat], [n, sg, dat]]).
+ty_possessive_pronoun(german, [eurer], [[2, pl]], [[f, sg, dat], [f, sg, gen], [pl, gen]]).
+ty_possessive_pronoun(german, [eures], [[2, pl]], [[m, sg, gen], [n, sg, gen]]).
+ty_possessive_pronoun(german, ['Ihr'], [[polite]], [[m, sg, nom], [n, sg, nom], [n, sg, acc]]).
+ty_possessive_pronoun(german, ['Ihre'], [[polite]], [[f, sg, nom], [f, sg, acc], [pl, nom], [pl, acc]]).
+ty_possessive_pronoun(german, ['Ihren'], [[polite]], [[m, sg, acc], [pl, dat]]).
+ty_possessive_pronoun(german, ['Ihrem'], [[polite]], [[m, sg, dat], [n, sg, dat]]).
+ty_possessive_pronoun(german, ['Ihrer'], [[polite]], [[f, sg, dat], [f, sg, gen], [pl, gen]]).
+ty_possessive_pronoun(german, ['Ihres'], [[polite]], [[m, sg, gen], [n, sg, gen]]).
+ty_contraction(german, [an, das], ans).

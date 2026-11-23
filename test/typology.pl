@@ -16,7 +16,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -1718,6 +1718,39 @@ months :-
              atomic_list_concat([F, ' into ', To, ': ', S], Label),
              check(Label, X, Want) )).
 
+%% ---- German: the possessive pronouns, and ans ----------------------------------
+
+%% 1.49.0: the German possessive pronouns, their endings by the possessed's
+%% case, the mixed declension after them, and `ans'.
+german_possessives :-
+    section('German: the possessive pronouns, and ans'),
+    B = np(boy, sg, def, []), D = np(dog, sg, def, []),
+    Rows = [ clause(sleep, present, pos, of(pron(1, sg, _), D), none)-'Mein Hund schläft.',
+             clause(see, present, pos, B, of(pron(1, sg, _), np(dog, sg, def, [small])))-'Der Junge sieht meinen kleinen Hund.',
+             clause(sleep, present, pos, of(pron(1, sg, _), np(dog, sg, def, [small])), none)-'Mein kleiner Hund schläft.',
+             clause(sleep, present, pos, B, none, [pp(with, of(pron(1, sg, _), np(dog, sg, def, [small])))])-'Der Junge schläft mit meinem kleinen Hund.',
+             clause(sleep, present, pos, of(pron(3, sg, m), np(cat, sg, def, [])), none)-'Seine Katze schläft.',
+             clause(see, present, pos, B, of(pron(1, pl, _), np(house, sg, def, [])))-'Der Junge sieht unser Haus.',
+             clause(see, present, pos, B, of(pron(2, pl, _), np(dog, sg, def, [])))-'Der Junge sieht euren Hund.',
+             clause(see, present, pos, of(pron(2, sg, _), np(girl, pl, def, [small])), B)-'Deine kleinen Mädchen sehen den Jungen.',
+             copula(present, pos, D, of(pron(1, sg, _), np(animal, sg, def, [])))-'Der Hund ist mein Tier.',
+             clause(think, present, pos, B, np(girl, sg, def, []))-'Der Junge denkt ans Mädchen.' ],
+    forall(member(IR-Want, Rows),
+           ( ( typology_write(german, IR, T) -> true ; T = none ),
+             atomic_list_concat(['German: ', Want], Label),
+             check(Label, T, Want),
+             ( findall(I, typology_read(german, T, I), Is), member(I1, Is), subsumes_term(I1, IR) -> R = read ; R = not_read ),
+             atomic_list_concat(['German: read back: ', Want], Label2),
+             check(Label2, R, read) )),
+    ( typology_read(german, 'Der Junge sieht mein Hund.', _) -> R1 = read ; R1 = refused ),
+    check('German: an accusative masculine takes meinen', R1, refused),
+    forall(member(F-To-S-Want, [ spanish-german-'Mi perro duerme.'-'Mein Hund schläft.',
+                                 english-german-'The boy sleeps with my small dog.'-'Der Junge schläft mit meinem kleinen Hund.',
+                                 german-spanish-'Unser Haus ist groß.'-'Nuestra casa es grande.' ]),
+           ( ( typology_translate(F, To, S, X) -> true ; X = none ),
+             atomic_list_concat([F, ' into ', To, ': ', S], Label),
+             check(Label, X, Want) )).
+
 %% ---- the reference sentences and the senses -------------------------------------------
 
 %% 1.43.0: templates/references.pl's sentences hold a model's topics, and a
@@ -1786,7 +1819,7 @@ german :-
              clause(sleep, present, pos, Dg, none, [pp(in, np(house, sg, def, []))])-'Der Hund schläft im Haus.',
              clause(sleep, present, pos, Dg, none, [pp(with, np(dog, pl, def, []))])-'Der Hund schläft mit den Hunden.',
              clause(sleep, present, pos, np(cat, sg, def, []), none, [pp(with, np(cat, sg, def, [black]))])-'Die Katze schläft mit der schwarzen Katze.',
-             clause(think, present, pos, B, G)-'Der Junge denkt an das Mädchen.',
+             clause(think, present, pos, B, G)-'Der Junge denkt ans Mädchen.',
              clause(go, perfect, pos, B, none)-'Der Junge ist gegangen.',
              clause(sleep, perfect, neg, B, none, [pp(in, np(house, sg, def, []))])-'Der Junge hat im Haus nicht geschlafen.',
              clause(sleep, present, neg, B, none, [adv(today)])-'Der Junge schläft heute nicht.',

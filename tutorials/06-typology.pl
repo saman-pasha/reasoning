@@ -127,6 +127,7 @@ main :-
     negative_article,
     predicate_and,
     months,
+    german_possessives,
     format("~ndone~n", []).
 
 
@@ -629,6 +630,18 @@ months :-
     must('en before a month', F2, 'Le garçon dort en mars.'),
     typology_translate(english, german, 'The boy sleeps in March.', G3),
     must('German keeps the article', G3, 'Der Junge schläft im März.').
+
+%% 36. THE GERMAN POSSESSIVE PRONOUNS. A stem of the possessor and the
+%% ending of the possessed's gender, number and case (`mein', `meinen',
+%% `meinem'), the case asked of the phrase where a condition names one; an
+%% adjective after one takes the mixed declension, as after `ein'.
+german_possessives :-
+    typology_translate(english, german, 'The boy sees my small dog.', G1),
+    must('the accusative, the mixed declension', G1, 'Der Junge sieht meinen kleinen Hund.'),
+    typology_translate(english, german, 'The boy sleeps with my small dog.', G2),
+    must('the dative after mit', G2, 'Der Junge schläft mit meinem kleinen Hund.'),
+    typology_translate(german, spanish, 'Unser Haus ist groß.', S3),
+    must('unser, read', S3, 'Nuestra casa es grande.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
