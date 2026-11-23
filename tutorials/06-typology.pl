@@ -125,6 +125,7 @@ main :-
     copula_tenses,
     other_tenses,
     negative_article,
+    predicate_and,
     format("~ndone~n", []).
 
 
@@ -602,6 +603,19 @@ negative_article :-
     must('de before a vowel', F3, 'Le garçon ne voit pas d\'animaux.'),
     typology_write(french, copula(present, neg, np(dog, sg, def, []), np(animal, sg, indef, [])), F4),
     must('a predicate keeps its article', F4, 'Le chien n\'est pas un animal.').
+
+%% 34. A PREDICATE'S ADJECTIVES JOINED BY AND. ty_and/2 gives the words
+%% before a copula's last predicate adjective, a comma before each of the
+%% others; a noun phrase's adjectives stay as they are.
+predicate_and :-
+    typology_translate(english, german, 'The dog is small and black.', G1),
+    must('und before the last', G1, 'Der Hund ist klein und schwarz.'),
+    typology_translate(german, spanish, 'Der Hund ist klein, schwarz und groß.', S2),
+    must('a comma before the others', S2, 'El perro es pequeño, negro y grande.'),
+    typology_write(spanish, copula(present, pos, np(dog, sg, def, []), adj([small, important])), S3),
+    must('y is e before the sound i', S3, 'El perro es pequeño e importante.'),
+    typology_translate(english, persian, 'The dog is small and black.', P4),
+    must('and in Persian', P4, 'سگ کوچک و سیاه است.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

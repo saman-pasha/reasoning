@@ -436,3 +436,6 @@ ty_copula(italian, any, pluperfect, sg(1), pos, [ero, agree(stato)]).
 ty_copula(italian, any, pluperfect, sg(2), pos, [eri, agree(stato)]).
 ty_copula(italian, any, pluperfect, pl(1), pos, [eravamo, agree(stato)]).
 ty_copula(italian, any, pluperfect, pl(2), pos, [eravate, agree(stato)]).
+
+%% The word before the last of a predicate's adjectives (`small and black').
+ty_and(italian, [e]).

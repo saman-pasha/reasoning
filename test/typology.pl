@@ -16,7 +16,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -1653,6 +1653,37 @@ negative_article :-
            ( ( typology_translate(F, To, S, X) -> true ; X = none ),
              atomic_list_concat([F, ' into ', To, ': ', S], Label),
              check(Label, X, Want) )).
+
+%% ---- the predicate's adjectives joined by `and' --------------------------------------
+
+%% 1.47.0: ty_and/2.
+predicate_and :-
+    section('the predicate\'s adjectives joined by and'),
+    D = np(dog, sg, def, []), H = np(house, pl, def, []),
+    Rows = [ english-copula(present, pos, D, adj([small, black]))-'The dog is small and black.',
+             spanish-copula(present, pos, D, adj([small, black, big]))-'El perro es pequeño, negro y grande.',
+             spanish-copula(present, pos, D, adj([small, important]))-'El perro es pequeño e importante.',
+             italian-copula(past, neg, H, adj([big, red]))-'Le case non erano grandi e rosse.',
+             french-copula(present, pos, D, adj([small, black]))-'Le chien est petit et noir.',
+             german-copula(present, pos, D, adj([small, black]))-'Der Hund ist klein und schwarz.',
+             german-clause(sleep, present, pos, rel(D, copula(present, pos, gap, adj([small, black]))), none)-'Der Hund, der klein und schwarz ist, schläft.',
+             persian-copula(present, pos, D, adj([small, black]))-'سگ کوچک و سیاه است.',
+             persian-copula(present, pos, D, adj([small, black, big]))-'سگ کوچک، سیاه و بزرگ است.',
+             english-question(copula(present, pos, D, adj([small, black])))-'Is the dog small and black?',
+             english-clause(sleep, present, pos, np(dog, sg, def, [small, black]), none)-'The small black dog sleeps.' ],
+    forall(member(L-IR-Want, Rows),
+           ( ( typology_write(L, IR, T) -> true ; T = none ),
+             atomic_list_concat([L, ': ', Want], Label),
+             check(Label, T, Want),
+             ( findall(I, typology_read(L, T, I), Is), member(I1, Is), subsumes_term(I1, IR) -> R = read ; R = not_read ),
+             atomic_list_concat([L, ': read back: ', Want], Label2),
+             check(Label2, R, read) )),
+    ( typology_read(english, 'The dog is small black.', _) -> R1 = read ; R1 = refused ),
+    check('a predicate\'s two adjectives take and', R1, refused),
+    typology_answer(english, question(copula(present, pos, D, adj([small, black]))), pos, echo, A),
+    check('an answer keeps its comma', A, 'Yes, it is.'),
+    typology_translate(spanish, german, 'El perro es pequeño, negro y grande.', G),
+    check('Spanish into German, three adjectives', G, 'Der Hund ist klein, schwarz und groß.').
 
 %% ---- the reference sentences and the senses -------------------------------------------
 

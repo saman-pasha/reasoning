@@ -554,12 +554,24 @@ n'a pas vu de chien.`), and a predicate keeps its article (`Le chien n'est
 pas un animal.`). A language with no cases takes the negative article as
 German does, by the role that reads the phrase.
 
+**Two predicate adjectives with `and`** (1.47.0). `ty_and(L, Words)`
+gives the words that join the last of a copula's predicate adjectives:
+`The dog is small and black.`, `El perro es pequeño, negro y grande.` (a
+comma before each of the others), `Il cane è piccolo e nero.`, `Le chien
+est petit et noir.`, `Der Hund ist klein und schwarz.`, `سگ کوچک و سیاه
+است.`; Spanish `y` is `e` before the sound i (`pequeño e importante`, a
+row of `ty_before/5`). A noun phrase's adjectives stay as they were (`the
+small black dog`), and the reader no longer reads a predicate's
+adjectives without the word (`The dog is small black.`). A comma a
+language writes only here is joined to the word before it and read apart
+again where the text has one; Persian writes its own comma (`ty_comma/2`: `سگ کوچک، سیاه و بزرگ
+است.`).
+
 Not yet:
 
 3. German: the possessive pronouns (`mein`, `dein`) and the
    possessive relative (`dessen`), an adjunct or an object first with the
-   verb second after it (`Heute schläft der Hund.`), `ans` and `am`, and
-   two predicate adjectives with `und` (no template has them).
+   verb second after it (`Heute schläft der Hund.`), and `ans` and `am`.
 6. A sense of its own is a hand row: the import gives one only where a
    template names it, as the vocabularies cannot tell a second sense
    (`marcha`, the walk) from a synonym (`jornada`, a day like `día`). A

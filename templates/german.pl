@@ -456,3 +456,6 @@ ty_copula(german, any, pluperfect, pl(2), pos, [wart, gewesen]).
 %% Hund ist klein.'): the subject's before the object's (`Kein Junge sieht
 %% einen Hund.').
 ty_negative_article_roles(german, [s, o, p]).
+
+%% The word before the last of a predicate's adjectives (`small and black').
+ty_and(german, [und]).

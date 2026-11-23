@@ -354,6 +354,11 @@
 %%     ty_wh_case(L, Meaning, Case, Words)
 %%                                     a question word of a case (German
 %%                                     who acc [wen])
+%%     ty_comma(L, Mark)               the language's comma (Persian `،'),
+%%                                     `,' where it names none
+%%     ty_and(L, Words)                the words that join the last of a
+%%                                     predicate's adjectives (`and', `y',
+%%                                     `und', `و')
 %%     ty_negative_article_roles(L, Roles)
 %%                                     the roles (s, o, p) whose indefinite
 %%                                     phrase takes the negative article
@@ -580,7 +585,7 @@
            ty_declension/3, ty_adjective_ending/6, ty_wh_case/4,
            ty_verb_last/2, ty_split_place/2, ty_copula_negation/3,
            ty_relative_comma/1, ty_negative_article/5, ty_negative_article_roles/2,
-           ty_negative_article_keeps/1, ty_capital_nouns/1,
+           ty_negative_article_keeps/1, ty_and/2, ty_comma/2, ty_capital_nouns/1,
            ty_reference/4, ty_meaning_sense/2, ty_tense_like/4.
 :- discontiguous ty_order/3, ty_noun/6, ty_adjective/5, ty_verb/6,
                  ty_article/5, ty_mark/5, ty_contraction/3, ty_negation/5,
@@ -603,7 +608,7 @@
                  ty_declension/3, ty_adjective_ending/6, ty_wh_case/4,
                  ty_verb_last/2, ty_split_place/2, ty_copula_negation/3,
                  ty_relative_comma/1, ty_negative_article/5, ty_negative_article_roles/2,
-                 ty_negative_article_keeps/1, ty_capital_nouns/1,
+                 ty_negative_article_keeps/1, ty_and/2, ty_comma/2, ty_capital_nouns/1,
                  ty_tense_like/4.
 
 %% ---- the levels and the values a slot takes -----------------------------------
@@ -780,6 +785,8 @@ ty_row_shape('ty_wh_case(L, Meaning, Case, Words).').
 ty_row_shape('ty_negative_article(L, Gender, Number, Case, Word).').
 ty_row_shape('ty_negative_article_roles(L, Roles).').
 ty_row_shape('ty_negative_article_keeps(L).').
+ty_row_shape('ty_and(L, Words).').
+ty_row_shape('ty_comma(L, Mark).').
 ty_row_shape('ty_split_place(L, end).').
 ty_row_shape('ty_verb_last(L, rel).').
 ty_row_shape('ty_copula_negation(L, Words, Place).').
@@ -975,6 +982,9 @@ ty_missing(L, bad(ty_negative_article_roles(L, Rs))) :-
     ty_negative_article_roles(L, Rs),
     \+ ( is_list(Rs), Rs \== [], forall(member(R, Rs), memberchk(R, [s, o, p])),
          once(ty_negative_article(L, _, _, _, _)) ).
+ty_missing(L, bad(ty_and(L, Ws))) :-
+    ty_and(L, Ws),
+    \+ ( is_list(Ws), Ws \== [], forall(member(W, Ws), atom(W)) ).
 ty_missing(L, bad(ty_negative_article_keeps(L))) :-
     ty_negative_article_keeps(L),
     \+ once(ty_negative_article(L, _, _, _, _)).
@@ -1246,34 +1256,47 @@ ty_write_tokens(L, Tokens0, Tokens) :-
     ty_contract(L, T1, T2),
     ty_join(T2, T3),
     (   ty_inversion(L, _, _) -> ty_join_inverted(T3, T4) ; T4 = T3 ),
-    (   ty_relative_comma(L) -> ty_comma_join(T4, Tokens) ; Tokens = T4 ).
+    (   ( ty_relative_comma(L) ; memberchk(',', T4) )
+    ->  ty_comma_mark(L, M), ty_comma_join(T4, M, Tokens)
+    ;   Tokens = T4
+    ).
 
 %% A comma is written joined to the word before it, once; one at the end
 %% is dropped (the full stop stands there).
-ty_comma_join([], []).
-ty_comma_join([','|Ws], Out) :- !, ty_comma_join(Ws, Out).
-ty_comma_join([W, ','|Ws], Out) :- !,
+ty_comma_join([], _, []).
+ty_comma_join([','|Ws], M, Out) :- !, ty_comma_join(Ws, M, Out).
+ty_comma_join([W, ','|Ws], M, Out) :- !,
     ty_commas_off(Ws, Ws1),
-    (   Ws1 == [] -> Out = [W] ; atom_concat(W, ',', WC), Out = [WC|Rest], ty_comma_join(Ws1, Rest) ).
-ty_comma_join([W|Ws], [W|Rest]) :- ty_comma_join(Ws, Rest).
+    (   Ws1 == [] -> Out = [W] ; atom_concat(W, M, WC), Out = [WC|Rest], ty_comma_join(Ws1, M, Rest) ).
+ty_comma_join([W|Ws], M, [W|Rest]) :- ty_comma_join(Ws, M, Rest).
+
+%% The language's comma (ty_comma/2: Persian `،'), `,' where it names none.
+ty_comma_mark(L, M) :- ( ty_comma(L, M0) -> M = M0 ; M = ',' ).
 
 ty_commas_off([','|Ws], Rest) :- !, ty_commas_off(Ws, Rest).
 ty_commas_off(Ws, Ws).
 
 %% Reading, a comma after a word is a word of its own, where the language
-%% puts commas round a relative clause; an answer's word keeps its own
+%% puts commas round a relative clause or the text has one and the
+%% language joins adjectives (ty_and/2); an answer's word keeps its own
 %% (`Ja, der Hund schläft.').
 ty_uncomma(L, Ws, Out) :-
-    (   ty_relative_comma(L) -> ty_uncomma_words(L, Ws, Out) ; Out = Ws ).
+    (   ty_relative_comma(L) -> ty_comma_mark(L, M), ty_uncomma_words(L, M, Ws, Out)
+    ;   ty_and(L, _), ty_comma_mark(L, M), ty_comma_in(Ws, M) -> ty_uncomma_words(L, M, Ws, Out)
+    ;   Out = Ws
+    ).
 
-ty_uncomma_words(_, [], []).
-ty_uncomma_words(L, [W|Ws], Out) :-
-    (   atom(W), atom_concat(W0, ',', W), W0 \== '',
+%% A word of the text ends in the comma M.
+ty_comma_in(Ws, M) :- member(W, Ws), atom(W), W \== M, atom_concat(_, M, W), !.
+
+ty_uncomma_words(_, _, [], []).
+ty_uncomma_words(L, M, [W|Ws], Out) :-
+    (   atom(W), atom_concat(W0, M, W), W0 \== '',
         \+ ( ty_answer(L, _, AWs), last(AWs, W0) )
     ->  Out = [W0, ','|Rest]
     ;   Out = [W|Rest]
     ),
-    ty_uncomma_words(L, Ws, Rest).
+    ty_uncomma_words(L, M, Ws, Rest).
 
 %% clause/5 is a clause with no adjuncts: the grammar's clause/6 with [],
 %% at every depth (a relative clause is a clause inside a noun phrase).
@@ -3672,7 +3695,22 @@ ty_copula_agreed(L, [X|Xs], [W|Ws]) :-
 %% A predicate takes the case ty_case(L, p, Case) gives it.
 ty_predicate(L, P, Rows) --> { ty_role_case(L, p) }, ty_predicate_in(L, P, Rows).
 
-ty_predicate_in(L, adj(As), Rows) --> { As = [_|_] }, ty_adjs(L, As, Rows).
+ty_predicate_in(L, adj(As), Rows) -->
+    { As = [_|_] },
+    (   { ty_and(L, _) } -> ty_pred_adjs(L, As, Rows) ; ty_adjs(L, As, Rows) ).
+
+%% THE PREDICATE'S ADJECTIVES joined (ty_and/2): the last after the
+%% language's `and', each before it after a comma (`The dog is small and
+%% black.', `El perro es pequeño, negro y grande.', Persian `سگ کوچک و
+%% سیاه است.'); a noun phrase's adjectives stay as they are (`the small
+%% black dog').
+ty_pred_adjs(L, [A|As], [R|Rs]) --> ty_adjs(L, [A], [R]), ty_pred_more(L, As, Rs).
+
+ty_pred_more(_, [], []) --> [].
+ty_pred_more(L, [A], [R]) --> ty_and_words(L), ty_adjs(L, [A], [R]).
+ty_pred_more(L, [A, B|As], [R|Rs]) --> [','], ty_adjs(L, [A], [R]), ty_pred_more(L, [B|As], Rs).
+
+ty_and_words(L, S0, S) :- ty_and(L, Ws), append(Ws, S, S0).
 ty_predicate_in(L, np(M, N, D, A), []) --> ty_np(L, np(M, N, D, A), _).
 ty_predicate_in(L, R, []) --> { ty_rel_slot(R) }, ty_rel(L, none, R, _).
 ty_predicate_in(L, P, []) --> { ty_poss_slot(P) }, ty_poss(L, P, _).

@@ -506,3 +506,6 @@ ty_copula(french, any, pluperfect, pl(2), neg, [ne, aviez, pas, 'été']).
 ty_negative_article(french, any, any, any, de).
 ty_negative_article_roles(french, [o]).
 ty_negative_article_keeps(french).
+
+%% The word before the last of a predicate's adjectives (`small and black').
+ty_and(french, [et]).

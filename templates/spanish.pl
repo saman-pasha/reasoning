@@ -477,3 +477,11 @@ ty_copula(spanish, pp, pluperfect, sg(1), pos, ['había', estado]).
 ty_copula(spanish, pp, pluperfect, sg(2), pos, ['habías', estado]).
 ty_copula(spanish, pp, pluperfect, pl(1), pos, ['habíamos', estado]).
 ty_copula(spanish, pp, pluperfect, pl(2), pos, ['habíais', estado]).
+
+%% The word before the last of a predicate's adjectives (`small and black').
+ty_and(spanish, [y]).
+%% `y' is `e' before a word that begins with the sound i (`pequeño e
+%% inteligente'), not before `hie' (`y hierro').
+ty_before(spanish, y, [[i, consonant], [h, i, consonant]], e, space).
+%% The consonants, for the forms chosen by sound (`e importante').
+ty_letters(spanish, consonant, [b, c, d, f, g, h, j, k, l, m, n, 'ñ', p, q, r, s, t, v, w, x, y, z]).

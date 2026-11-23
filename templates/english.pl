@@ -315,3 +315,6 @@ ty_copula(english, any, pluperfect, sg, pos, [had, been]).
 ty_copula(english, any, pluperfect, sg, neg, [had, not, been]).
 ty_copula(english, any, pluperfect, pl, pos, [had, been]).
 ty_copula(english, any, pluperfect, pl, neg, [had, not, been]).
+
+%% The word before the last of a predicate's adjectives (`small and black').
+ty_and(english, [and]).
