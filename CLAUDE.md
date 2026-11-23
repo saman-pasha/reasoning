@@ -62,6 +62,15 @@ consulted, and the test's import wrote a different file), where the file
 named by its path, and SWI-Prolog 9.0.4 both ways, added them back.
 cocolog 3.73.2 reads the file again (checked 2026-11-22: the 7 nouns of
 templates/spanish.pl come back, 0 on 3.65.0).
+**The blank template is generated too** (1.54.0): `templates/template.pl`
+is what `typology_import(template)` writes, `typology_template(xx)`: every
+slot of typology.pl's header list (THE TEMPLATE) with the header's own
+description, in the groups of `ty_template_group/2`, each closed choice
+(`ty_template_choice/4`) a row of code and each other slot its shape with
+the first row of it in the hand templates as an example. test/typology.pl's
+`blank_template` holds the groups to the header's slots and every row of
+code to `typology_check/2`, and `reproduced` the file to the import. A new
+slot is a header entry and a group's name: import again, commit both.
 **A sense of its own is a hand row** (1.43.0): `ty_meaning_sense(Sense,
 Meaning)` in templates/topics.pl and a hand template's noun row of the
 word with Sense (`marzo`, `march_month`); the import (`tyi_sense/2`,

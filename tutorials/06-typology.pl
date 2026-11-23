@@ -57,7 +57,7 @@ main :-
     %% 6. A new language is a filled template, nothing more: here an
     %% invented one whose verb comes first and whose article follows the
     %% noun and its adjective. typology_template/1 prints the blank
-    %% template to fill.
+    %% template to fill (templates/template.pl is it, section 41).
     new_language,
     typology_write(verbish, IR, V6),
     must('the boy sees the black dog, in a fifth order', V6, 'Seo kalo ba pito noro ba.'),
@@ -132,6 +132,7 @@ main :-
     german_dessen,
     german_object_first,
     bridge,
+    blank_template,
     format("~ndone~n", []).
 
 
@@ -705,6 +706,22 @@ bridge :-
     must('written by the template', S, 'Los perros durmieron hoy.'),
     ( typology_reason_ir(clause(see, present, pos, pron(1, sg, _), np(dog, sg, def, [])), _) -> R3 = bridged ; R3 = no_shape ),
     must('a pronoun has no shape on the other side yet', R3, no_shape).
+
+%% 41. THE BLANK TEMPLATE. templates/template.pl is every slot of the
+%% template with every choice (typology_template/1 writes it for a name,
+%% typology_import(template) the file): a choice is a row of code, which a
+%% new language keeps or deletes, and a slot of words is its shape in a
+%% comment with another language's row as an example.
+blank_template :-
+    with_output_to(string(S), typology_template(klingon)),
+    split_string(S, "\n", "", Lines),
+    include([L]>>sub_string(L, 0, _, _, 'ty_'), Lines, Choices),
+    length(Choices, N1),
+    must('the choices, each a row of code', N1, 82),
+    ( member(L2, Lines), sub_string(L2, 0, _, _, '%% ty_noun(klingon, Meaning, Gender') -> R2 = shape ; R2 = none ),
+    must('a slot of words, its shape', R2, shape),
+    ( member(L3, Lines), sub_string(L3, 0, _, _, '%%   e.g. ty_noun(english, dog,') -> R3 = example ; R3 = none ),
+    must('and an example', R3, example).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

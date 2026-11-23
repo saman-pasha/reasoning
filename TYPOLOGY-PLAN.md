@@ -756,7 +756,11 @@ Each one is a new file. The code changes only by the slots of phases 3 to 5.
 
 ## Phase 8: filling a template
 
-- `typology_template/1`'s blank template filled by choosing.
+- `typology_template/1`'s blank template filled by choosing. In part
+  (1.54.0): `templates/template.pl`, every slot with its description and
+  every choice, a row to keep or delete, and each slot of words a shape
+  with an example; generated from typology.pl (`typology_import(template)`)
+  and held to it by test/typology.pl.
 - A model fills a slot in live mode, with the round trip and the
   reference sentences as its check. In part: the topics of a meaning
   (1.38.0, Phase 4's item 20), checked against the topics the tables

@@ -2117,14 +2117,15 @@ class_topics :-
 reproduced :-
     section('the word tables are what the import writes'),
     scratch(Dir),
-    forall(member(L, [spanish, italian, english, topics]),
-           ( atomic_list_concat([Dir, '/', L, '-words.pl'], Fresh),
+    forall(member(L-Base, [spanish-'spanish-words', italian-'italian-words', english-'english-words',
+                           topics-'topics-words', template-template]),
+           ( atomic_list_concat([Dir, '/', Base, '.pl'], Fresh),
              with_output_to(string(_), typology_import(L, Fresh)),
              read_file_to_codes(Fresh, New),
-             atomic_list_concat(['templates/', L, '-words.pl'], Committed),
+             atomic_list_concat(['templates/', Base, '.pl'], Committed),
              read_file_to_codes(Committed, Old),
              ( New == Old -> R = same ; R = differs ),
-             atomic_list_concat(['templates/', L, '-words.pl is what typology_import(', L, ') writes'], Label),
+             atomic_list_concat(['templates/', Base, '.pl is what typology_import(', L, ') writes'], Label),
              check(Label, R, same) )).
 
 %% ---- a language with two orders ---------------------------------------------------
@@ -2174,4 +2175,25 @@ blank_template :-
     check('every order of every level is offered: 6 + 6 + 6 + 2 + 6', N, 26),
     include([Line]>>sub_string(Line, 0, _, _, '%% ty_possessive(klingon'), Lines, Constructions),
     length(Constructions, N2),
-    check('and the six orders of a possessor, each a construction''s row', N2, 6).
+    check('and the six orders of a possessor, each a construction''s row', N2, 6),
+    %% 1.54.0: every slot the header describes is in one group of the blank
+    %% template, once, and every row shape has a description; every row of
+    %% code of templates/template.pl, a choice, is a row the check takes.
+    ty_template_docs(Docs),
+    findall(S1, member(S1-_, Docs), Described0),
+    msort(Described0, Described), sort(Described0, DescribedSet),
+    check('the header describes each slot once', Described, DescribedSet),
+    findall(S2, ( ty_template_group(_, Slots), member(S2, Slots) ), Grouped0),
+    msort(Grouped0, Grouped),
+    check('the groups hold every slot the header describes, once', Grouped, DescribedSet),
+    findall(S3, ( ty_row_shape(Sh), once(sub_atom(Sh, B3, 1, _, '(')), sub_atom(Sh, 0, B3, _, S3) ), Shapes0),
+    sort(Shapes0, Shapes), subtract(Shapes, DescribedSet, NoDoc),
+    check('every row shape has its description', NoDoc, []),
+    ty_hand_rows(template, Rows),
+    forall(member(R4, Rows), assertz(R4)),
+    typology_check(xx, M4),
+    forall(member(R4, Rows), retract(R4)),
+    include([X4]>>( X4 = bad(_) ), M4, Bad4),
+    check('every row of code of templates/template.pl is a row the check takes', Bad4, []),
+    length(Rows, NR4),
+    check('the rows of code of the choices', NR4, 82).

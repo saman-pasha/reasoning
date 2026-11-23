@@ -24,8 +24,8 @@
 %%              (a noun phrase with a relative clause)
 %%
 %% A language keeps the orders it uses (typology_choices/2 lists all of
-%% them; typology_template/1 prints a blank template with every order in
-%% it), and the reader takes any order the language keeps; the writer
+%% them; templates/template.pl, which typology_template/1 writes, is the
+%% blank template: every slot and every choice), and the reader takes any order the language keeps; the writer
 %% writes the first. Two levels, not one flat order of every word: an
 %% adjective belongs to its noun and not to the verb, two nouns are told
 %% apart by their ROLE and not by their class, and the count of choices
@@ -710,38 +710,183 @@ typology_choices(Level, Orders) :-
     ty_level(Level, Parts),
     findall(O, permutation(Parts, O), Orders).
 
-%% A level's order is a ty_order/3 row; the possessor's is a part of each
-%% construction's row, with its words and its article.
-ty_template_order(Name, poss, O) :- !,
-    format("%% ty_possessive(~q, ~q, Words, keep_or_drop).~n", [Name, O]).
-ty_template_order(Name, Level, O) :-
-    format("ty_order(~q, ~q, ~q).~n", [Name, Level, O]).
-
+%% THE BLANK TEMPLATE (typology_template/1): every slot, in groups
+%% (ty_template_group/2), each with its description from this file's
+%% header (THE TEMPLATE, read at the call: one text, in one place) and
+%% then its rows. A slot of a closed set of choices (ty_template_choice/4)
+%% is every choice as a row of code, which a language keeps or deletes; any
+%% other slot is its shape in a comment, with an example, the first row of
+%% the slot in the hand templates of english, spanish, italian, french,
+%% german and persian. templates/template.pl is the template of `xx',
+%% written by typology_import(template).
 typology_template(Name) :-
     must_be(atom, Name),
-    format("%% The template of ~w. Keep the orders the language uses and~n", [Name]),
-    format("%% delete the others; the first one kept is the one written.~n~n", []),
-    forall(ty_level(Level, Parts),
-           ( format("%% ~w: ~w~n", [Level, Parts]),
-             typology_choices(Level, Orders),
-             forall(member(O, Orders), ty_template_order(Name, Level, O)),
-             nl )),
-    format("%% where the adjuncts stand (keep one):~n", []),
-    ty_values(adjunct_place, Places),
-    forall(member(Pl, Places), format("%% ty_adjunct(~q, ~q).~n", [Name, Pl])),
+    ty_template_docs(Docs),
+    findall(R, ( member(L, [english, spanish, italian, french, german, persian]),
+                 catch(ty_hand_rows(L, Rs), _, Rs = []),
+                 member(R, Rs) ), Hand),
+    ty_template_head(Name),
+    forall(ty_template_group(Title, Slots),
+           ( format("~n%% ==== ~w ====~n", [Title]),
+             forall(member(Slot, Slots), ty_template_slot(Name, Docs, Hand, Slot)) )).
+
+ty_template_head(Name) :-
+    format("%% The blank template of the language `~w': every slot of~n", [Name]),
+    format("%% library(reasoning/typology), and every choice. typology_template/1~n", []),
+    format("%% writes it from typology.pl; templates/template.pl is the one of `xx',~n", []),
+    format("%% written by typology_import(template). Do not edit that file: change~n", []),
+    format("%% typology.pl and import again.~n%%~n", []),
+    format("%% TO MAKE A LANGUAGE: copy it to templates/<name>.pl, with the name for~n", []),
+    format("%% each `xx' (or ask typology_template(<name>) for the same text in the~n", []),
+    format("%% name). Then, slot by slot:~n%%~n", []),
+    format("%%   - a row of code is a choice: keep it where the language uses it,~n", []),
+    format("%%     delete it where the language does not;~n", []),
+    format("%%   - a row in a comment is a shape: write a row of it for each word or~n", []),
+    format("%%     form the language has, as the example after it (another~n", []),
+    format("%%     language's row) shows. A slot the language does not need gets~n", []),
+    format("%%     no row.~n%%~n", []),
+    format("%% typology_import(<name>) writes the word tables from~n", []),
+    format("%% corpus/vocabulary/<name>.txt, typology_load(<name>) reads the~n", []),
+    format("%% template, and typology_check(<name>, Missing) names what is still~n", []),
+    format("%% missing.~n", []).
+
+ty_template_slot(Name, Docs, Hand, Slot) :-
     nl,
-    format("%% how a question changes the order (one row or more a kind and level;~n", []),
-    format("%% Kind yes_no or wh, Level clause or copula):~n", []),
-    forall(member(R, [unchanged, particle('Word', start), particle('Word', end), front(all), front(first), invert(pronoun)]),
-           format("%% ty_question(~q, Kind, Level, ~q).~n", [Name, R])),
-    format("%% where a question word stands (keep one):~n", []),
-    forall(member(Pl, [front, in_place, after(s)]), format("%% ty_wh(~q, ~q).~n", [Name, Pl])),
-    format("%% whether a complement's adposition moves with a question word (keep one):~n", []),
-    forall(member(R, [moves, stays]), format("%% ty_complement_wh(~q, ~q).~n", [Name, R])),
-    format("%% how a yes or no answer is chosen (keep one):~n", []),
-    forall(member(R, [polarity, agreement]), format("%% ty_answer_system(~q, ~q).~n", [Name, R])),
-    nl,
-    forall(ty_row_shape(Shape), format("%% ~w~n", [Shape])).
+    ( memberchk(Slot-Lines, Docs) -> forall(member(Line, Lines), format("~w~n", [Line])) ; true ),
+    (   ty_template_choice(Slot, Name, Note, Rows)
+    ->  format("%%   (~w)~n", [Note]),
+        forall(member(R, Rows), ty_template_row(R))
+    ;   atom_length(Slot, SL), ty_row_shape(Shape),
+        sub_atom(Shape, 0, SL, _, Slot), sub_atom(Shape, SL, 2, _, '(L'),
+        Start is SL + 2, sub_atom(Shape, Start, _, 0, Tail)
+    ->  format("%% ~w(~q~w~n", [Slot, Name, Tail]),
+        (   ty_template_example(Slot, Hand, Ex)
+        ->  with_output_to(string(ExS), write_term(Ex, [quoted(true), spacing(next_argument)])),
+            format("%%   e.g. ~s.~n", [ExS])
+        ;   true
+        )
+    ;   true
+    ).
+
+ty_template_row(row(T)) :- write_term(T, [quoted(true), spacing(next_argument)]), format(".~n", []).
+ty_template_row(text(Fmt, Args)) :- format("%% ", []), format(Fmt, Args), nl.
+
+ty_template_example(Slot, Hand, Ex) :-
+    member(Ex, Hand), compound(Ex), functor(Ex, Slot, _), !.
+
+%% The description of each slot in this file's header: an entry starts at
+%% a line `%%     ty_...' and goes on over the lines indented more, as
+%% Name-Lines.
+ty_template_docs(Docs) :-
+    ty_dir(Dir),
+    atom_concat(Dir, '/typology.pl', File),
+    read_file_to_codes(File, Codes),
+    atom_codes(Text, Codes),
+    atomic_list_concat(Lines, '\n', Text),
+    append(_, ['%% THE TEMPLATE. A language file is facts, the language\'s name first in'|Rest], Lines), !,
+    ty_tdoc_entries(Rest, Docs).
+
+ty_tdoc_entries([], []).
+ty_tdoc_entries([L|Ls], Docs) :-
+    (   sub_atom(L, 0, _, _, '%%     ty_')
+    ->  sub_atom(L, 7, _, _, After), sub_atom(After, BP, _, _, '('), !,
+        sub_atom(After, 0, BP, _, Name),
+        ty_tdoc_more(Ls, More, Ls1),
+        Docs = [Name-[L|More]|Docs1],
+        ty_tdoc_entries(Ls1, Docs1)
+    ;   L == '%% THE WORD TABLES. templates/<name>-words.pl holds the rows'
+    ->  Docs = []
+    ;   ty_tdoc_entries(Ls, Docs)
+    ).
+
+ty_tdoc_more([L|Ls], [L|More], Rest) :-
+    sub_atom(L, 0, _, _, '%%      '), !,
+    ty_tdoc_more(Ls, More, Rest).
+ty_tdoc_more(Ls, [], Ls).
+
+%% The groups of the blank template, every slot once (test/typology.pl's
+%% section blank_template holds them to the header's slots).
+ty_template_group('the orders of the levels', [ty_order]).
+ty_template_group('words', [ty_noun, ty_adjective, ty_adjective_before, ty_article, ty_adposition,
+                            ty_adverb, ty_capital, ty_capital_nouns, ty_and, ty_comma, ty_sense]).
+ty_template_group('verbs and tenses', [ty_verb, ty_tense_form, ty_tense_like, ty_participle,
+                                       ty_participle_like, ty_participle_ending, ty_participle_agrees,
+                                       ty_verb_class, ty_class_tense_form, ty_verb_person, ty_copula,
+                                       ty_split_place, ty_verb_last]).
+ty_template_group('the negation', [ty_negation, ty_negation_place, ty_copula_negation,
+                                   ty_negative_article, ty_negative_article_roles,
+                                   ty_negative_article_keeps]).
+ty_template_group('forms chosen by sound, and contractions', [ty_ending, ty_letters, ty_before,
+                                                               ty_linked, ty_contraction]).
+ty_template_group('roles, marks and cases', [ty_mark, ty_case, ty_case_after, ty_article_case,
+                                             ty_noun_case, ty_declension, ty_adjective_ending]).
+ty_template_group('adjuncts and complements', [ty_adjunct, ty_adjunct_front, ty_object_front,
+                                               ty_bare_topic, ty_adposition_topic, ty_complement]).
+ty_template_group('questions and answers', [ty_question, ty_inversion, ty_question_form,
+                                            ty_question_mark, ty_wh, ty_wh_word, ty_wh_tonic, ty_wh_case,
+                                            ty_complement_wh, ty_answer, ty_answer_system,
+                                            ty_answer_mark, ty_answer_echo]).
+ty_template_group('relative clauses', [ty_relative, ty_relative_comma, ty_gap, ty_relative_pronoun,
+                                       ty_resumptive, ty_relative_after, ty_relative_bare,
+                                       ty_relative_possessive]).
+ty_template_group('possessors and pronouns', [ty_possessive, ty_possessive_pronoun,
+                                              ty_possessive_clitic, ty_pronoun, ty_pronoun_gender,
+                                              ty_polite, ty_pro_drop, ty_clitic]).
+
+%% A slot of a closed set of choices: a note, and every choice as a row of
+%% code (row(Term)), or as a comment where it needs words or other rows
+%% first (text(Format, Args)).
+ty_template_choice(ty_order, Name, 'keep the orders it uses; the first kept is the one written', Rows) :-
+    findall(R, ( ty_level(Level, Parts), Level \== poss,
+                 (   atomic_list_concat(Parts, ', ', PT), R = text("~w: ~w", [Level, PT])
+                 ;   typology_choices(Level, Os), member(O, Os), R = row(ty_order(Name, Level, O))
+                 ) ), Rows).
+ty_template_choice(ty_possessive, Name, 'keep the ones it uses, with their words, and keep or drop', Rows) :-
+    typology_choices(poss, Os),
+    findall(text("ty_possessive(~q, [~w], Words, keep_or_drop).", [Name, OT]),
+            ( member(O, Os), atomic_list_concat(O, ', ', OT) ), Rows).
+ty_template_choice(ty_adjunct, Name, 'keep one', Rows) :-
+    ty_values(adjunct_place, Ps), findall(row(ty_adjunct(Name, P)), member(P, Ps), Rows).
+ty_template_choice(ty_question, Name, 'one row or more a kind and level; a particle needs its words', Rows) :-
+    findall(R, ( ty_values(question_kind, Ks), member(K, Ks),
+                 ty_values(question_level, Ls), member(Lv, Ls),
+                 (   member(Rule, [unchanged, front(all), front(first), invert(pronoun)]),
+                     R = row(ty_question(Name, K, Lv, Rule))
+                 ;   member(P, [start, end]),
+                     R = text("ty_question(~q, ~q, ~q, particle(Words, ~q)).", [Name, K, Lv, P])
+                 ) ), Rows).
+ty_template_choice(ty_wh, Name, 'keep one', Rows) :-
+    ty_values(wh_place, Ps), findall(row(ty_wh(Name, P)), member(P, Ps), Rows).
+ty_template_choice(ty_complement_wh, Name, 'keep one', Rows) :-
+    ty_values(complement_wh, Rs), findall(row(ty_complement_wh(Name, R)), member(R, Rs), Rows).
+ty_template_choice(ty_answer_system, Name, 'keep one', Rows) :-
+    ty_values(answer_system, Ss), findall(row(ty_answer_system(Name, S)), member(S, Ss), Rows).
+ty_template_choice(ty_gap, Name, 'keep the rules it uses, one or more a place', Rows) :-
+    findall(row(ty_gap(Name, Pl, R)),
+            ( ty_values(gap_place, Ps), member(Pl, Ps), ty_values(gap, Rs), member(R, Rs),
+              ( Pl == o -> memberchk(R, [gap, resumptive]) ; R \== gap ) ), Rows).
+ty_template_choice(ty_relative_after, Name, 'keep the ones the language uses, or none', Rows) :-
+    findall(row(ty_relative_after(Name, P, R)),
+            ( ty_values(relative_after, Ps), member(P, Ps), member(R, [first, second]) ), Rows).
+ty_template_choice(ty_relative_bare, Name, 'keep the ones the language uses, or none', Rows) :-
+    findall(row(ty_relative_bare(Name, D)), member(D, [def, indef]), Rows).
+ty_template_choice(ty_pronoun_gender, Name, 'keep one, or none: natural is the default', Rows) :-
+    findall(row(ty_pronoun_gender(Name, S)), member(S, [grammatical, natural]), Rows).
+ty_template_choice(ty_pro_drop, Name, 'keep the persons whose subject may be no word, or delete it', [row(ty_pro_drop(Name, [1, 2, 3]))]).
+ty_template_choice(ty_negative_article_roles, Name, 'only with ty_negative_article/5 rows; keep the roles that take it', [text("ty_negative_article_roles(~q, [s, o, p]).", [Name])]).
+ty_template_choice(ty_negative_article_keeps, Name, 'only with ty_negative_article/5 rows', [text("ty_negative_article_keeps(~q).", [Name])]).
+ty_template_choice(Slot, Name, 'keep it where the language does this, else delete it', [row(T)]) :-
+    ty_template_flag(Slot, Name, T).
+
+ty_template_flag(ty_possessive_clitic, Name, ty_possessive_clitic(Name)).
+ty_template_flag(ty_clitic, Name, ty_clitic(Name, o)).
+ty_template_flag(ty_participle_agrees, Name, ty_participle_agrees(Name, clitic)).
+ty_template_flag(ty_split_place, Name, ty_split_place(Name, end)).
+ty_template_flag(ty_verb_last, Name, ty_verb_last(Name, rel)).
+ty_template_flag(ty_relative_comma, Name, ty_relative_comma(Name)).
+ty_template_flag(ty_capital_nouns, Name, ty_capital_nouns(Name)).
+ty_template_flag(ty_adjunct_front, Name, ty_adjunct_front(Name, v2)).
+ty_template_flag(ty_object_front, Name, ty_object_front(Name, v2)).
 
 ty_row_shape('ty_noun(L, Meaning, Gender, Animacy, Singular, Plural).').
 ty_row_shape('ty_adjective(L, Meaning, Gender, Number, Word).').
@@ -5343,12 +5488,21 @@ ty_tense_fit(T0, T) :-
 typology_import(Name) :-
     must_be(atom, Name),
     ty_dir(Dir),
-    atomic_list_concat([Dir, '/templates/', Name, '-words.pl'], File),
+    (   Name == template
+    ->  atomic_list_concat([Dir, '/templates/template.pl'], File)
+    ;   atomic_list_concat([Dir, '/templates/', Name, '-words.pl'], File)
+    ),
     typology_import(Name, File).
 
 %% The hand template's rows are READ from its file, not asked of the
 %% knowledge base, so what is loaded (a words file, an earlier import)
 %% changes nothing in what is written.
+%% The name template is the blank template, written as typology_template(xx)
+%% writes it.
+typology_import(template, File) :- !,
+    with_output_to(codes(Codes), typology_template(xx)),
+    write_file_from_codes(File, Codes),
+    format("template: the blank template into ~w~n", [File]).
 typology_import(Name, File) :-
     must_be(atom, Name),
     ty_import_reset,
