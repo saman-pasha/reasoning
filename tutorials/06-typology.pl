@@ -122,6 +122,7 @@ main :-
     polite,
     german,
     senses,
+    copula_tenses,
     format("~ndone~n", []).
 
 
@@ -549,6 +550,24 @@ senses :-
     must('marcha is the walk', I2, 'Il ragazzo vede la marcia.'),
     typology_references(spanish, F),
     must('every Spanish reference sentence holds', F, []).
+
+%% 31. THE COPULA'S FUTURE AND PERFECT. A template's copula rows name the
+%% future and the perfect too (`will be', `ha sido', `wird ... sein'). An
+%% Italian participle agrees with the subject (`agree(stato)': `è stata',
+%% `sono state'), and German splits a copula of two words as it splits a
+%% verb: the second word at the end, or before the verb in a relative
+%% clause. An English echo keeps the first word alone (`Yes, it will.').
+copula_tenses :-
+    typology_translate(english, german, 'The dog will be small.', G1),
+    must('wird at the second place, sein at the end', G1, 'Der Hund wird klein sein.'),
+    typology_translate(english, italian, 'The house has been big.', I2),
+    must('the participle agrees with the subject', I2, 'La casa è stata grande.'),
+    typology_translate(english, french, 'The dog has not been small.', F3),
+    must('ne ... pas round the first word', F3, 'Le chien n\'a pas été petit.'),
+    typology_write(german, clause(sleep, present, pos, rel(np(dog, sg, def, []), copula(future, pos, gap, adj([small]))), none), G4),
+    must('a relative clause, both copula words last', G4, 'Der Hund, der klein sein wird, schläft.'),
+    typology_answer(english, question(copula(future, pos, np(dog, sg, def, []), adj([small]))), pos, echo, A5),
+    must('the echo keeps the first word', A5, 'Yes, it will.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

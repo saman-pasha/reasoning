@@ -316,3 +316,29 @@ ty_linked(persian, a, clitic(pl(2)), 'سیاه', 'سیاهتان').
 %% verb with no object (`بله، می‌بینم.', yes, I see; `چرا، می‌بینم.' to a
 %% negative question).
 ty_answer_echo(persian, verb, keep).
+
+%% The copula's future and perfect (`خواهد بود', `بوده است').
+ty_copula(persian, any, future, sg, pos, ['خواهد', 'بود']).
+ty_copula(persian, any, future, pl, pos, ['خواهند', 'بود']).
+ty_copula(persian, any, future, sg(1), pos, ['خواهم', 'بود']).
+ty_copula(persian, any, future, sg(2), pos, ['خواهی', 'بود']).
+ty_copula(persian, any, future, pl(1), pos, ['خواهیم', 'بود']).
+ty_copula(persian, any, future, pl(2), pos, ['خواهید', 'بود']).
+ty_copula(persian, any, future, sg, neg, ['نخواهد', 'بود']).
+ty_copula(persian, any, future, pl, neg, ['نخواهند', 'بود']).
+ty_copula(persian, any, future, sg(1), neg, ['نخواهم', 'بود']).
+ty_copula(persian, any, future, sg(2), neg, ['نخواهی', 'بود']).
+ty_copula(persian, any, future, pl(1), neg, ['نخواهیم', 'بود']).
+ty_copula(persian, any, future, pl(2), neg, ['نخواهید', 'بود']).
+ty_copula(persian, any, perfect, sg, pos, ['بوده', 'است']).
+ty_copula(persian, any, perfect, pl, pos, ['بوده‌اند']).
+ty_copula(persian, any, perfect, sg(1), pos, ['بوده‌ام']).
+ty_copula(persian, any, perfect, sg(2), pos, ['بوده‌ای']).
+ty_copula(persian, any, perfect, pl(1), pos, ['بوده‌ایم']).
+ty_copula(persian, any, perfect, pl(2), pos, ['بوده‌اید']).
+ty_copula(persian, any, perfect, sg, neg, ['نبوده', 'است']).
+ty_copula(persian, any, perfect, pl, neg, ['نبوده‌اند']).
+ty_copula(persian, any, perfect, sg(1), neg, ['نبوده‌ام']).
+ty_copula(persian, any, perfect, sg(2), neg, ['نبوده‌ای']).
+ty_copula(persian, any, perfect, pl(1), neg, ['نبوده‌ایم']).
+ty_copula(persian, any, perfect, pl(2), neg, ['نبوده‌اید']).

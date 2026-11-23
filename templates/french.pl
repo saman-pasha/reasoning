@@ -369,3 +369,29 @@ ty_polite(french, pl, pl(2)).
 %% A pronoun of the text takes the gender of the noun it stands for (a
 %% house is `la', a book `lo').
 ty_pronoun_gender(french, grammatical).
+
+%% The copula's future and perfect (`sera', `a été', `n'a pas été').
+ty_copula(french, any, future, sg, pos, [sera]).
+ty_copula(french, any, future, pl, pos, [seront]).
+ty_copula(french, any, future, sg(1), pos, [serai]).
+ty_copula(french, any, future, sg(2), pos, [seras]).
+ty_copula(french, any, future, pl(1), pos, [serons]).
+ty_copula(french, any, future, pl(2), pos, [serez]).
+ty_copula(french, any, future, sg, neg, [ne, sera, pas]).
+ty_copula(french, any, future, pl, neg, [ne, seront, pas]).
+ty_copula(french, any, future, sg(1), neg, [ne, serai, pas]).
+ty_copula(french, any, future, sg(2), neg, [ne, seras, pas]).
+ty_copula(french, any, future, pl(1), neg, [ne, serons, pas]).
+ty_copula(french, any, future, pl(2), neg, [ne, serez, pas]).
+ty_copula(french, any, perfect, sg, pos, [a, 'été']).
+ty_copula(french, any, perfect, pl, pos, [ont, 'été']).
+ty_copula(french, any, perfect, sg(1), pos, [ai, 'été']).
+ty_copula(french, any, perfect, sg(2), pos, [as, 'été']).
+ty_copula(french, any, perfect, pl(1), pos, [avons, 'été']).
+ty_copula(french, any, perfect, pl(2), pos, [avez, 'été']).
+ty_copula(french, any, perfect, sg, neg, [ne, a, pas, 'été']).
+ty_copula(french, any, perfect, pl, neg, [ne, ont, pas, 'été']).
+ty_copula(french, any, perfect, sg(1), neg, [ne, ai, pas, 'été']).
+ty_copula(french, any, perfect, sg(2), neg, [ne, as, pas, 'été']).
+ty_copula(french, any, perfect, pl(1), neg, [ne, avons, pas, 'été']).
+ty_copula(french, any, perfect, pl(2), neg, [ne, avez, pas, 'été']).

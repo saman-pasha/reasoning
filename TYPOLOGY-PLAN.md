@@ -602,8 +602,21 @@ or she sleeps). A reading of `you`, `vous`, Spanish `su` and `las` and
 Italian `lei` has the polite reading beside the others; English `you`
 translates as the familiar first.
 
-Not yet: the copula's future and perfect; other tenses (the imperfect,
-the conditional, the pluperfect).
+**The copula's future and perfect** (1.44.0). The copula rows
+(`ty_copula/6`) name the future and the perfect beside the present and the
+past: English `will be`, `has been`; Spanish `será`, `ha sido`, `estará`,
+`ha estado`; Italian `sarà`, `è stato`; French `sera`, `a été` (`n'a pas
+été`); German `wird ... sein`, `ist ... gewesen`; Persian `خواهد بود`,
+`بوده است`. A word of a row written `agree(W)` takes the subject's gender
+and number, as a participle's ending does (Italian `La casa è stata
+grande.`, `Le case sono state grandi.`). A template whose verb of two
+words is split (`ty_split_place(L, end)`) splits a copula of two words the
+same way: German `Der Hund wird klein sein.`, a question `Wird der Hund
+klein sein?`, `Wo wird der Hund sein?`, and a relative clause with both
+words last, `Der Hund, der klein sein wird, schläft.`. An English echo
+keeps the first word alone: `Yes, it will.`, `No, it has not.`.
+
+Not yet: other tenses (the imperfect, the conditional, the pluperfect).
 
 ## Phase 6: the bridge to translate.pl
 

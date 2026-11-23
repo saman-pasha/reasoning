@@ -794,7 +794,7 @@ ty_missing(L, copula_form(K, T, N, P)) :-
     ty_values(number, Ns), member(N, Ns),
     ty_values(polarity, Ps), member(P, Ps),
     \+ ( P == neg, once(ty_copula_negation(L, _, _)) ),
-    \+ ( ty_copula(L, K1, T, N, P, _), ty_fits(K1, K) ).
+    \+ ( ty_copula_n(L, K1, T, P, N, _), ty_fits(K1, K) ).
 ty_missing(L, adjunct_place) :-
     once(( ty_adposition(L, _, _) ; ty_adverb(L, _, _) )),
     \+ ty_adjunct(L, _).
@@ -2022,7 +2022,8 @@ ty_ask_copula(L, C, Cost) -->
       ty_ask_order(L, Kind, Part, copula, Order0, OrderA, Q),
       ty_order_cost(OrderA, Order0, Cost),
       C = copula(_, P, _, _),
-      ty_copula_neg_order(L, P, Pred, OrderA, OrderB) },
+      ty_copula_neg_order(L, P, Pred, OrderA, OrderB0),
+      ty_copula_split(L, C, OrderB0, OrderB) },
     ty_extraposed(L, p, Pred, OrderB, Order1),
     { C = copula(_, _, S, _) },
     ty_extraposed(L, s, S, Order1, Order2),
@@ -2463,7 +2464,7 @@ ty_wh_form(L, M, Form, Ws) :-
     (   '$ty_cased'(L)
     ->  ty_case_now(L, C),
         (   ty_wh_case(L, M, C1, Ws), ty_case_fits(C1, C)
-        ;   \+ ty_wh_case(L, M, _, _), ty_wh_plain(L, M, Form, Ws)
+        ;   ty_wh_plain(L, M, Form, Ws), \+ ty_wh_case(L, M, _, _)
         )
     ;   ty_wh_plain(L, M, Form, Ws)
     ).
@@ -2545,11 +2546,20 @@ ty_echo(aux, L, Pol, clause(_, T, Pol, S, none, [])) -->
     ty_role(L, s, S),
     { ty_subject_number(S, N) },
     ty_words(1, 3, Ws, ty_echo_aux(L, T, N, Pol, Ws)).
-ty_echo(_, L, Pol, copula(T, Pol, S, Pred)) -->
+ty_echo(Rule, L, Pol, copula(T, Pol, S, Pred)) -->
     ty_role(L, s, S, _),
     { ty_subject_number(S, N),
       ( nonvar(Pred) -> ty_predicate_kind(Pred, K) ; true ) },
-    ty_copula_words(L, K, T, N, Pol).
+    ty_words(1, 4, Ws, ty_echo_copula(Rule, L, K, T, N, Pol, Ws)).
+
+%% By the rule aux a copula of two words is its words but the last (`Yes, it
+%% will.', `No, it has not.'); else the whole copula.
+ty_echo_copula(Rule, L, K, T, N, P, Ws) :-
+    ty_copula_lookup(L, K, _, T, N, P, Full),
+    (   Rule == aux, ty_copula_two(L, T)
+    ->  append(Ws, [_], Full), Ws \== []
+    ;   Ws = Full
+    ).
 ty_echo(verb, L, Pol, C) -->
     { C = clause(_, _, Pol, _, none, []) },
     ty_clause(L, C).
@@ -2843,6 +2853,16 @@ ty_split_rest(sp(First, Rest), L, C, Q, S0, S) :-
         )
     ).
 
+ty_split_verb(L, copula(T, P, Subj, Pred), Q, Full) :- !,
+    b_setval('$ty_csubj', Subj),
+    (   Q == none
+    ->  ty_subject_number(Subj, N),
+        ty_predicate_kind(Pred, K),
+        ty_copula_polarity(L, P, CP),
+        ty_copula_lookup(L, K, _, T, N, CP, Full)
+    ;   phrase(ty_ask_verb(L, copula(T, P, Subj, Pred), Q), Full)
+    ),
+    Full = [_, _|_].
 ty_split_verb(L, C, Q, Full) :-
     C = clause(V, T, P, Subj, O, _),
     b_setval('$ty_csubj', Subj),
@@ -2853,6 +2873,23 @@ ty_split_verb(L, C, Q, Full) :-
     ;   phrase(ty_ask_verb(L, C, Q), Full)
     ),
     ty_tense_participle(L, T).
+
+%% THE COPULA SPLIT, where the template puts a verb's last part at the end
+%% (ty_split_place(L, end)): a copula of two words is two parts as a verb
+%% of two is (German `Der Hund wird klein sein.', `Ist der Hund klein
+%% gewesen?', `der Hund, der klein gewesen ist'); reading, both orders.
+ty_copula_split(L, C, O0, O) :-
+    (   ty_split_place(L, end),
+        C = copula(T, _, _, _),
+        once(append(A, [c|B], O0))
+    ->  (   nonvar(T)
+        ->  ( ty_copula_two(L, T) -> ty_split_at(L, A, B, O) ; O = O0 )
+        ;   ( O = O0 ; ty_split_at(L, A, B, O) )
+        )
+    ;   O = O0
+    ).
+
+ty_copula_two(L, T) :- once(ty_copula(L, _, T, _, pos, [_, _|_])).
 
 %% The polarity of the verb's own form: positive where the negation has a
 %% place of its own.
@@ -3423,7 +3460,8 @@ ty_copula_clause(L, C) -->
     { C = copula(_, P, S, Pred),
       ty_order_at(L, copula, Order0a),
       ty_copula_neg_order(L, P, Pred, Order0a, Order0b),
-      ty_verb_final(L, c, Order0b, Order0) },
+      ty_verb_final(L, c, Order0b, Order0c),
+      ty_copula_split(L, C, Order0c, Order0) },
     ty_extraposed(L, p, Pred, Order0, Order1),
     ty_extraposed(L, s, S, Order1, Order),
     ty_copula_parts(Order, L, C, Features, Rows),
@@ -3437,10 +3475,13 @@ ty_copula_parts([P|Ps], L, C, F, R) --> ty_copula_part(P, L, C, F, R), ty_copula
 ty_copula_part(s, L, copula(_, _, S, _), Features, _) --> ty_role(L, s, S, Features).
 ty_copula_part(c, L, copula(T, P, S, Pred), _, _) -->
     { ty_subject_number(S, N),
+      b_setval('$ty_csubj', S),
       ty_predicate_kind(Pred, K),
       ty_copula_polarity(L, P, CP) },
     ty_copula_words(L, K, T, N, CP).
 ty_copula_part(n(Ws), _, _, _, _) --> ty_tokens(Ws).
+ty_copula_part(vf(R), L, C, _, _) --> ty_split_first(R, L, C, none).
+ty_copula_part(vr(R), L, C, _, _) --> ty_split_rest(R, L, C, none).
 ty_copula_part(p, L, copula(_, _, _, Pred), _, Rows) --> ty_predicate(L, Pred, Rows).
 ty_copula_part(ph(X), L, copula(_, _, _, Pred), _, []) --> ty_predicate_head(L, Pred, X).
 ty_copula_part(pt(X), L, _, _, _) --> ty_rel_tail(L, X).
@@ -3484,7 +3525,8 @@ ty_wh_kind(what, np).
 ty_wh_kind(where, pp).
 
 ty_copula_words(L, K, T, N, P) -->
-    ty_words(0, 3, Ws, ty_copula_lookup(L, K, K1, T, N, P, Ws)),
+    { '$ty_cmax'(L, Max) },
+    ty_words(0, Max, Ws, ty_copula_lookup(L, K, K1, T, N, P, Ws)),
     ty_meant(L, copula(K1), Ws).
 
 %% The copula of the predicate's kind and the subject's number; in a
@@ -3508,12 +3550,31 @@ ty_copula_lookup(L, K, K1, T, N, P, Ws) :-
 ty_copula_form(L, K1, T, N, P, Ws) :-
     ty_person_form(L, T, N, ty_copula_n(L, K1, T, P), Ws).
 
-ty_copula_n(L, K1, T, P, N, Ws) :- ty_copula(L, K1, T, N, P, Ws).
+%% A row's word agree(W) is the participle W agreeing with the subject
+%% (Italian `è stato', `è stata', `sono stati'). typology_load/1 keeps a
+%% template's copula rows in two tables: `$ty_crow'/6 the rows of plain
+%% words, `$ty_cagree'/6 the rows with such a word.
+ty_copula_n(L, K1, T, P, N, Ws) :- '$ty_crow'(L, K1, T, N, P, Ws).
+ty_copula_n(L, K1, T, P, N, Ws) :-
+    '$ty_cagree'(L, K1, T, N, P, Ws0), ty_copula_agreed(L, Ws0, Ws).
 ty_copula_n(L, K1, T, neg, N, Ws) :-
     ty_negation(L, _, _, Neg, same),
     append(Neg, Pos, Ws),
-    ty_copula(L, K1, T, N, pos, Pos),
+    ty_copula_row(L, K1, T, N, pos, Pos),
     \+ ty_copula(L, K1, T, N, neg, _).
+
+ty_copula_row(L, K1, T, N, P, Ws) :- '$ty_crow'(L, K1, T, N, P, Ws).
+ty_copula_row(L, K1, T, N, P, Ws) :-
+    '$ty_cagree'(L, K1, T, N, P, Ws0), ty_copula_agreed(L, Ws0, Ws).
+
+ty_copula_agreed(_, [], []).
+ty_copula_agreed(L, [X|Xs], [W|Ws]) :-
+    (   compound(X), X = agree(W0)
+    ->  ( atom(W) -> ty_part_base(L, W, W0) ; true ),
+        ty_subject_part(L, W0, W)
+    ;   W = X
+    ),
+    ty_copula_agreed(L, Xs, Ws).
 
 %% A predicate takes the case ty_case(L, p, Case) gives it.
 ty_predicate(L, P, Rows) --> { ty_role_case(L, p) }, ty_predicate_in(L, P, Rows).
@@ -3772,7 +3833,8 @@ ty_subject_gn(L, S, G, N) :-
 ty_part_form(L, G, N, W0, W) :-
     (   ty_participle_ending(L, G, N, From, To),
         atom_concat(Stem, From, W0), atom_concat(Stem, To, W)
-    ;   \+ ty_participle_ending(L, G, N, _, _), W = W0
+    ;   ( var(G) -> G = m ; true ),
+        \+ ty_participle_ending(L, G, N, _, _), W = W0
     ).
 
 %% The participle's plain form of a form read: itself, or with an ending
@@ -4401,6 +4463,17 @@ ty_feats_make(L) :-
     retractall('$ty_ending'(L, _, _, _, _, _)),
     forall(ty_article_case(L, Def, G, N, _, W),
            ( ty_article(L, Def, G, N, W) -> true ; assertz(ty_article(L, Def, G, N, W)) )),
+    retractall('$ty_crow'(L, _, _, _, _, _)),
+    retractall('$ty_cagree'(L, _, _, _, _, _)),
+    forall(ty_copula(L, K, T, N, P, Ws),
+           (   member(X, Ws), compound(X), X = agree(_)
+           ->  ( '$ty_cagree'(L, K, T, N, P, Ws) -> true ; assertz('$ty_cagree'(L, K, T, N, P, Ws)) )
+           ;   ( '$ty_crow'(L, K, T, N, P, Ws) -> true ; assertz('$ty_crow'(L, K, T, N, P, Ws)) ) )),
+    retractall('$ty_cmax'(L, _)),
+    (   aggregate_all(max(Len), ( ty_copula_form(L, _, _, _, _, Ws0), length(Ws0, Len) ), Max)
+    ->  assertz('$ty_cmax'(L, Max))
+    ;   assertz('$ty_cmax'(L, 0))
+    ),
     forall(ty_article_case(L, Def, _, _, C, W),
            ( '$ty_art_words'(L, Def, C, W) -> true ; assertz('$ty_art_words'(L, Def, C, W)) )),
     forall(ty_negative_article(L, _, _, C, W),
@@ -4417,6 +4490,9 @@ ty_feats_make(L) :-
 :- dynamic('$ty_sub_used'/1).
 :- dynamic('$ty_art_words'/4).
 :- dynamic('$ty_ending'/6).
+:- dynamic('$ty_cagree'/6).
+:- dynamic('$ty_cmax'/2).
+:- dynamic('$ty_crow'/6).
 
 ty_role_case(L, Role) :-
     (   ty_case(L, Role, C)
@@ -5137,10 +5213,11 @@ ty_person_rows(N0, W0, N, W) :-
     N =.. [N0, P].
 %% A copula's word is the copula, never a verb: the vocabularies list `es'
 %% (`is'), `está' and `è' as verbs, and as verbs they read `el perro es en
-%% la casa', where the copula's own rows choose `está'.
+%% la casa', where the copula's own rows choose `está'. A row of one
+%% positive word is the copula; the words of a row of several (English
+%% `has been') are not (English `have' is a verb).
 ty_copula_word(L, W) :-
-    tyi_hand(ty_copula(L, _, _, _, _, Ws)),
-    memberchk(W, Ws), !.
+    tyi_hand(ty_copula(L, _, _, _, pos, [W])), !.
 
 %% An adjective's forms: a word with no gender stands for both, and each
 %% word needs its plural.

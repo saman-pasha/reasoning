@@ -341,3 +341,19 @@ ty_copula(italian, any, past, pl(2), pos, [eravate]).
 %% A pronoun of the text takes the gender of the noun it stands for (a
 %% house is `la', a book `lo').
 ty_pronoun_gender(italian, grammatical).
+
+%% The copula's future and perfect (`sarà', `è stato'); `stato' agrees
+%% with the subject (`agree(stato)': `è stata', `sono stati'); the negative
+%% is `non' before them.
+ty_copula(italian, any, future, sg, pos, [sarà]).
+ty_copula(italian, any, future, pl, pos, [saranno]).
+ty_copula(italian, any, future, sg(1), pos, [sarò]).
+ty_copula(italian, any, future, sg(2), pos, [sarai]).
+ty_copula(italian, any, future, pl(1), pos, [saremo]).
+ty_copula(italian, any, future, pl(2), pos, [sarete]).
+ty_copula(italian, any, perfect, sg, pos, [è, agree(stato)]).
+ty_copula(italian, any, perfect, pl, pos, [sono, agree(stato)]).
+ty_copula(italian, any, perfect, sg(1), pos, [sono, agree(stato)]).
+ty_copula(italian, any, perfect, sg(2), pos, [sei, agree(stato)]).
+ty_copula(italian, any, perfect, pl(1), pos, [siamo, agree(stato)]).
+ty_copula(italian, any, perfect, pl(2), pos, [siete, agree(stato)]).

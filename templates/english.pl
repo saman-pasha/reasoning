@@ -285,3 +285,14 @@ ty_copula(english, any, past, sg(1), neg, [was, not]).
 %% not.'): the yes or no word, the subject and the auxiliary of its tense
 %% and person, or the copula.
 ty_answer_echo(english, aux, keep).
+
+%% The copula's future and perfect (`will be', `has been'); the first and
+%% second persons take the plural's.
+ty_copula(english, any, future, sg, pos, [will, be]).
+ty_copula(english, any, future, sg, neg, [will, not, be]).
+ty_copula(english, any, future, pl, pos, [will, be]).
+ty_copula(english, any, future, pl, neg, [will, not, be]).
+ty_copula(english, any, perfect, sg, pos, [has, been]).
+ty_copula(english, any, perfect, pl, pos, [have, been]).
+ty_copula(english, any, perfect, sg, neg, [has, not, been]).
+ty_copula(english, any, perfect, pl, neg, [have, not, been]).

@@ -399,3 +399,18 @@ ty_polite(german, pl, pl).
 %% A pronoun of the text takes the gender of the noun it stands for (a
 %% girl is `es', a cat `sie').
 ty_pronoun_gender(german, grammatical).
+
+%% The copula's future and perfect, its second word at the end as a
+%% verb's (`Der Hund wird klein sein.', `der klein gewesen ist').
+ty_copula(german, any, future, sg, pos, [wird, sein]).
+ty_copula(german, any, future, pl, pos, [werden, sein]).
+ty_copula(german, any, future, sg(1), pos, [werde, sein]).
+ty_copula(german, any, future, sg(2), pos, [wirst, sein]).
+ty_copula(german, any, future, pl(1), pos, [werden, sein]).
+ty_copula(german, any, future, pl(2), pos, [werdet, sein]).
+ty_copula(german, any, perfect, sg, pos, [ist, gewesen]).
+ty_copula(german, any, perfect, pl, pos, [sind, gewesen]).
+ty_copula(german, any, perfect, sg(1), pos, [bin, gewesen]).
+ty_copula(german, any, perfect, sg(2), pos, [bist, gewesen]).
+ty_copula(german, any, perfect, pl(1), pos, [sind, gewesen]).
+ty_copula(german, any, perfect, pl(2), pos, [seid, gewesen]).

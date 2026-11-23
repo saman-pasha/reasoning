@@ -16,7 +16,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -1481,6 +1481,54 @@ hoja_meanings(T, Ms) :-
 
 ir_object_noun(clause(_, _, _, _, np(M, _, _, _)), M).
 ir_object_noun(clause(_, _, _, _, np(M, _, _, _), _), M).
+
+%% ---- the copula's future and perfect ------------------------------------------------
+
+%% 1.44.0: ty_copula/6 rows of the future and the perfect in the six
+%% templates; Italian `agree(stato)'; the German copula of two words split
+%% as a verb is.
+copula_tenses :-
+    section('the copula\'s future and perfect'),
+    D = np(dog, sg, def, []), H = np(house, sg, def, []),
+    Rows = [ english-copula(future, pos, D, adj([small]))-'The dog will be small.',
+             spanish-copula(future, pos, D, adj([small]))-'El perro será pequeño.',
+             italian-copula(future, pos, D, adj([small]))-'Il cane sarà piccolo.',
+             persian-copula(future, pos, D, adj([small]))-'سگ کوچک خواهد بود.',
+             french-copula(future, pos, D, adj([small]))-'Le chien sera petit.',
+             german-copula(future, pos, D, adj([small]))-'Der Hund wird klein sein.',
+             english-copula(perfect, neg, D, adj([small]))-'The dog has not been small.',
+             spanish-copula(perfect, neg, D, adj([small]))-'El perro no ha sido pequeño.',
+             italian-copula(perfect, neg, D, adj([small]))-'Il cane non è stato piccolo.',
+             persian-copula(perfect, neg, D, adj([small]))-'سگ کوچک نبوده است.',
+             french-copula(perfect, neg, D, adj([small]))-'Le chien n\'a pas été petit.',
+             german-copula(perfect, neg, D, adj([small]))-'Der Hund ist nicht klein gewesen.',
+             italian-copula(perfect, pos, H, adj([big]))-'La casa è stata grande.',
+             italian-copula(perfect, pos, np(house, pl, def, []), adj([big]))-'Le case sono state grandi.',
+             persian-copula(perfect, pos, np(house, pl, def, []), adj([big]))-'خانه\x200C\ها بزرگ بوده\x200C\اند.',
+             spanish-copula(future, neg, D, pp(in, H))-'El perro no estará en la casa.',
+             german-copula(future, neg, D, pp(in, H))-'Der Hund wird nicht im Haus sein.',
+             italian-copula(perfect, pos, pron(1, sg, f), adj([small]))-'Sono stata piccola.',
+             french-copula(future, neg, pron(1, pl, m), adj([small]))-'Nous ne serons pas petits.',
+             english-question(copula(future, pos, D, adj([small])))-'Will the dog be small?',
+             german-question(copula(future, pos, D, adj([small])))-'Wird der Hund klein sein?',
+             german-question(copula(perfect, pos, D, adj([small])))-'Ist der Hund klein gewesen?',
+             german-question(copula(future, pos, D, wh(where)))-'Wo wird der Hund sein?',
+             german-question(copula(present, pos, D, wh(where)))-'Wo ist der Hund?',
+             italian-question(copula(perfect, neg, pron(2, sg, m), adj([small])))-'Non sei stato piccolo?',
+             german-clause(sleep, present, pos, rel(D, copula(future, pos, gap, adj([small]))), none)-'Der Hund, der klein sein wird, schläft.',
+             german-clause(sleep, present, pos, rel(D, copula(perfect, neg, gap, adj([small]))), none)-'Der Hund, der nicht klein gewesen ist, schläft.' ],
+    forall(member(L-IR-Want, Rows),
+           ( ( typology_write(L, IR, T) -> true ; T = none ),
+             atomic_list_concat([L, ': ', Want], Label),
+             check(Label, T, Want),
+             ( findall(I, typology_read(L, T, I), Is), member(I1, Is), subsumes_term(I1, IR) -> R = read ; R = not_read ),
+             atomic_list_concat([L, ': read back: ', Want], Label2),
+             check(Label2, R, read) )),
+    forall(member(T-P-Want, [future-pos-'Yes, it will.', perfect-neg-'No, it has not.',
+                             present-pos-'Yes, it is.', present-neg-'No, it is not.']),
+           ( typology_answer(english, question(copula(T, pos, D, adj([small]))), P, echo, A),
+             atomic_list_concat(['English echo: ', Want], Label),
+             check(Label, A, Want) )).
 
 %% ---- the reference sentences and the senses -------------------------------------------
 

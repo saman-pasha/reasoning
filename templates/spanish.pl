@@ -345,3 +345,42 @@ ty_copula(spanish, pp, past, pl(2), pos, [estabais]).
 %% A pronoun of the text takes the gender of the noun it stands for (a
 %% house is `la', a book `lo').
 ty_pronoun_gender(spanish, grammatical).
+
+%% The copula's future and perfect, `ser' and `estar' (`será', `ha sido',
+%% `estará', `ha estado'); the negative is `no' before them.
+ty_copula(spanish, adj, future, sg, pos, [será]).
+ty_copula(spanish, adj, future, pl, pos, [serán]).
+ty_copula(spanish, adj, future, sg(1), pos, [seré]).
+ty_copula(spanish, adj, future, sg(2), pos, [serás]).
+ty_copula(spanish, adj, future, pl(1), pos, [seremos]).
+ty_copula(spanish, adj, future, pl(2), pos, [seréis]).
+ty_copula(spanish, adj, perfect, sg, pos, [ha, sido]).
+ty_copula(spanish, adj, perfect, pl, pos, [han, sido]).
+ty_copula(spanish, adj, perfect, sg(1), pos, [he, sido]).
+ty_copula(spanish, adj, perfect, sg(2), pos, [has, sido]).
+ty_copula(spanish, adj, perfect, pl(1), pos, [hemos, sido]).
+ty_copula(spanish, adj, perfect, pl(2), pos, [habéis, sido]).
+ty_copula(spanish, np, future, sg, pos, [será]).
+ty_copula(spanish, np, future, pl, pos, [serán]).
+ty_copula(spanish, np, future, sg(1), pos, [seré]).
+ty_copula(spanish, np, future, sg(2), pos, [serás]).
+ty_copula(spanish, np, future, pl(1), pos, [seremos]).
+ty_copula(spanish, np, future, pl(2), pos, [seréis]).
+ty_copula(spanish, np, perfect, sg, pos, [ha, sido]).
+ty_copula(spanish, np, perfect, pl, pos, [han, sido]).
+ty_copula(spanish, np, perfect, sg(1), pos, [he, sido]).
+ty_copula(spanish, np, perfect, sg(2), pos, [has, sido]).
+ty_copula(spanish, np, perfect, pl(1), pos, [hemos, sido]).
+ty_copula(spanish, np, perfect, pl(2), pos, [habéis, sido]).
+ty_copula(spanish, pp, future, sg, pos, [estará]).
+ty_copula(spanish, pp, future, pl, pos, [estarán]).
+ty_copula(spanish, pp, future, sg(1), pos, [estaré]).
+ty_copula(spanish, pp, future, sg(2), pos, [estarás]).
+ty_copula(spanish, pp, future, pl(1), pos, [estaremos]).
+ty_copula(spanish, pp, future, pl(2), pos, [estaréis]).
+ty_copula(spanish, pp, perfect, sg, pos, [ha, estado]).
+ty_copula(spanish, pp, perfect, pl, pos, [han, estado]).
+ty_copula(spanish, pp, perfect, sg(1), pos, [he, estado]).
+ty_copula(spanish, pp, perfect, sg(2), pos, [has, estado]).
+ty_copula(spanish, pp, perfect, pl(1), pos, [hemos, estado]).
+ty_copula(spanish, pp, perfect, pl(2), pos, [habéis, estado]).
