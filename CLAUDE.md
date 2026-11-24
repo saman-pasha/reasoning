@@ -19,6 +19,14 @@ documentation-only commit does not bump; a message names the number that
 moved (`reasoning X.Y.Z`). `test/reason.pl` (section `version`, four arms
 red) and lesson 01 pin the shape of the answer, deliberately not the number.
 
+## The goal (the owner, 2026-11-24)
+
+The reasoning library translates ALL 8 000 sentences of `lexicon/prose.txt`
+from English into the IR, and ALL of that IR into Cocolog. Every step
+moves one of the two counts and reports both (`tools/logic/prose.pl`;
+STATUS.md keeps them): at 1.80.0, 678 into the IR, 609 of them into
+Cocolog. A step that adds no sentence to either count says so.
+
 ## The reasoning library and the translator
 
 `library/reasoning/`: `reason.pl` (controlled English as a DCG, questions,
@@ -414,6 +422,20 @@ adposition clause), the English writer (`sub(when, ...)`), the general
 sentence. A pronoun subject of the when clause is the main subject only
 where it agrees (`lg_pron_agrees/2`); the if clause's rule of 1.65.0
 takes any pronoun of the third person.
+**`explain.pl` since 1.80.0** says a Cocolog program in English: the
+translator's sentence for a clause whose body has no builtin and no control
+construct, where it reads back (`ex_logic_sentence/4`), else an
+explanation, one phrase a goal (`ex_goal/5`, the rows `ex_row_pi/1` and
+`ex_row_phrase/5`), any other goal its term and `holds`. It reads a text
+with the logic module's clause cutter (`logic:lg_clauses/2`: cocolog has no
+`open_string/2`) and `term_string/3`'s `variable_names`, and obeys each
+`:- op` before the next clause. The names are bound to `'$VAR'(Name)`
+with `maplist/2`: the first cut bound them in `forall/2`, which undoes its
+bindings, and every variable came out `_`. `ex_term/3` is its own writer, a
+space each side of an infix operator, the priorities kept by parentheses;
+a body inside a construct with several goals, and the goal of `findall`,
+`forall` and `aggregate_all` always, is in parentheses, or its `and` runs
+into the goals round it.
 **The blank template is generated too** (1.54.0): `templates/template.pl`
 is what `typology_import(template)` writes, `typology_template(xx)`: every
 slot of typology.pl's header list (THE TEMPLATE) with the header's own

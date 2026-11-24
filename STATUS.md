@@ -8,6 +8,21 @@ moves to the typology template system (`typology.pl` and `templates/`).
 This file gives the current state, the desired state, the gaps between
 them, and the steps. Change it as the work moves.
 
+## THE GOAL (the owner, 2026-11-24)
+
+**The reasoning library translates all 8 000 sentences of
+`lexicon/prose.txt` from English into the IR, and all of that IR into
+Cocolog.** Every step is measured against it, both counts
+(`tools/logic/prose.pl`, the tables below). At 1.80.0: 678 of the 8 000
+read into the IR (8.5 %), 609 of those 678 into Cocolog (89.8 %). The two
+goals below are its two halves: the first the IR, the second Cocolog.
+
+Cocolog into English goes two ways: the translator's round trip for the
+logic form (`logic_write/3`), and since 1.80.0 the explainer for a
+program (`explain.pl`, lesson 08): cocolog's `library(tensor_expr)`, 217
+clauses, every goal of 177 explained or the text's own, the other 40
+naming `library(torch)`'s predicates as terms.
+
 ## The first goal: English, all of it
 
 **The goal** (the owner, 2026-11-23): English as one complete template,
