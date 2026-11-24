@@ -131,7 +131,7 @@ back to the same form, and the program written from English runs. Cocolog
 is said in English again (1.68.0, `logic_write/3`), so the first
 milestone is complete: the two round trips keep the logic form.
 
-**The second measure** (1.69.0) is `lexicon/logic.txt`: 153 English
+**The second measure** (1.69.0) is `lexicon/logic.txt`: 161 English
 sentences, each with the Cocolog it says, written by hand.
 `tools/logic/measure.pl` counts how many give that Cocolog (their first
 logic form, compared as items) and how many of the Cocolog texts are
@@ -145,6 +145,7 @@ group); test/logic.pl's `measure` holds the counts to the last row.
 | 1.71.0 | 116 | of 132: 87.9 % | 124 | the adjuncts and an adposition phrase as a predicate: 12 sentences more, all right and kept, and `John lives in Paris.` (its Cocolog now in(live(john), paris), the form 1.71.0 chose) and `The book is on the table.` right; 16 misses |
 | 1.72.0 | 127 | of 143: 88.8 % | 135 | the pronouns: 11 sentences more, all right and kept -- alone a pronoun is a constant of its own (`He sleeps.` is sleep(he)), in a text of several sentences the noun phrase it refers to (`John sleeps. He dreams.` is sleep(john), dream(john)); 16 misses |
 | 1.73.0 | 137 | of 153: 89.5 % | 145 | the possessors: 10 sentences more, all right and kept -- the possessed and its possessor one constant (`His dog sleeps.` is sleep(dog_of_he), `the edge of the bed` and `the bed's edge` edge_of_the_bed); 16 misses |
+| 1.74.0 | 145 | of 161: 90.1 % | 153 | the indefinite objects: 8 sentences more, all right and kept -- in a statement an individual (`He received a letter.` is letter(a_letter), receive(he, a_letter)), in a question or a condition a variable (`Who sees a dog?` is see(X, Y), dog(Y)); `The cat eats fish.` and `Cats eat fish.` now read an individual of the bare plural object, where the hand-written Cocolog says the kind (fish): 16 misses |
 
 **The 8 000 sentences of the first measure into Cocolog**
 (`tools/logic/prose.pl`): read into level 1, then a logic form, then
@@ -159,6 +160,7 @@ is translated wrong.
 | 1.71.0 | 142 | 1.8 % | a pronoun 271, an IR shape with no rule 145, an object that is no constant 33, a plural definite noun phrase 23, a predicate with no rule 23. Of the 31 new ones about 8 are wrong because level 1 reads them wrong: a fragment with a passive participle (`Yogurt made with skim milk.`), an adjective read as an adverb (`Prices remained flat.`), `last night` joined to a noun |
 | 1.72.0 | 231 | 2.9 % | an IR shape with no rule 233 (a possessor, a relative clause), an object that is no constant 91, a predicate with no rule 37, a plural definite noun phrase 29, an adjunct's noun phrase that is no constant 19. Of the 89 new ones about 4 are wrong: two level 1 reads wrong (`She was near tears.`), and a pronoun that refers to a noun of its own sentence is its own constant (`held them`: they, not the_receipts) |
 | 1.73.0 | 329 | 4.1 % | an object that is no constant 97, a plural definite noun phrase 68, a possessor that is no constant 40, a predicate with no rule 39, an indefinite possessed 29. Of the 98 new ones about 6 are wrong because level 1 reads them wrong: a fragment (`My best wishes.`), an infinitive, an imperative, `like` and `now` in other classes, a noun compound |
+| 1.74.0 | 417 | 5.2 % | a plural definite noun phrase 69, a possessor that is no constant 40, a predicate with no rule 39, an indefinite possessed 29, an adjunct's noun phrase that is no constant 26. Of the 88 new ones about 5 are wrong: `several` read as an adjective (three), a noun compound (`a wage floor`), and a generic plural subject with an object is read as individuals only (`Dictionaries list words in alphabetical order.`) |
 
 ## What "parked" means
 

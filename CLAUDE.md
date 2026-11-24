@@ -322,6 +322,21 @@ possessor, again a constant. A meaning whose words hold `of` would split
 wrong, and the read-back then gives the general sentence. Spanish `su` is
 his, her, its, their or your, so a pronoun's possessor in Spanish does not
 read back to its constant: a general sentence, never a wrong pronoun.
+**An indefinite object since 1.74.0**: `lg_atoms_/4` gives it a fresh
+variable and puts `'$obj'(Noun, Var, Conds)` beside the atoms, which
+`lg_atoms/4` keeps out of the tense and the adjuncts (`lg_split_objs/3`).
+Each consumer decides: a statement (`lg_facts/3`) binds the variable to
+the individual (`lg_indef_const/2`: `a_letter`, `an_owl`) and says the
+conditions as facts before the atoms; a question and a condition
+(`lg_obj_conds/3`) keep the variable and its conditions in the body; a
+rule's conclusion (`lg_rules/4`, `lg_conditional/3`'s main clause) raises
+`object(generic)`, and a generic subject with one gives the individual
+reading alone. The writer's group holds every individual it brings in
+(`lg_run/4` over a list of constants), each said as its noun phrase
+(`lg_ind_map/3`, `map(Map)`), and a question's or a condition's
+variables with a noun are noun phrases (`lg_var_map/3`, `vmap(Map,
+How)`). A bare plural object is an individual too (`a_fish`): its kind
+reading (`eat(the_cat, fish)`) is not made yet.
 **The blank template is generated too** (1.54.0): `templates/template.pl`
 is what `typology_import(template)` writes, `typology_template(xx)`: every
 slot of typology.pl's header list (THE TEMPLATE) with the header's own

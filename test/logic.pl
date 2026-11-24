@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors]), once(S)),
+                      adjuncts, pronouns, possessors, objects]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -262,11 +262,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 153),
-    ( R >= 137 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 137 right', VR, ok),
-    ( K >= 145 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 145 kept', VK, ok).
+    check('the second measure: its sentences', N, 161),
+    ( R >= 145 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 145 right', VR, ok),
+    ( K >= 153 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 153 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -415,3 +415,32 @@ possessors :-
     once(typology_read(english, 'His hands are cold.', IR5)),
     logic_why(IR5, W5),
     check('a plural possessed has no constant', W5, determiner(def)).
+
+%% 1.74.0: AN INDEFINITE OBJECT is an individual in a statement, a variable
+%% in a question or a condition, and nothing in a rule's conclusion.
+objects :-
+    section('the indefinite objects'),
+    forall(member(T-Want, [
+               'He received a letter.'-'letter(a_letter).\npast(receive(he, a_letter)).\n',
+               'They saw an owl.'-'owl(an_owl).\npast(see(they, an_owl)).\n',
+               'John sees a big dog.'-'dog(a_dog).\nbig(a_dog).\nsee(john, a_dog).\n',
+               'A person likes a dog.'-'person(a_person).\ndog(a_dog).\nlike(a_person, a_dog).\n',
+               'Who sees a dog?'-'?- see(A, B), dog(B).\n',
+               'Does John see a dog?'-'?- see(john, A), dog(A).\n',
+               'A person is happy if they own a dog.'-'happy(A) :-\n    person(A),\n    own(A, B),\n    dog(B).\n',
+               'John saw a dog. It was hungry.'-'dog(a_dog).\npast(see(john, a_dog)).\npast(hungry(a_dog)).\n' ]),
+           ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
+             one_line(['an object into Cocolog: ', T], Label),
+             check(Label, C, Want) )),
+    forall(member(C2-Want2, ['letter(a_letter). past(receive(he, a_letter)).'-'He received a letter.',
+                             'person(a_person). dog(a_dog). like(a_person, a_dog).'-'A person likes a dog.',
+                             '?- see(X, Y), dog(Y).'-'Who sees a dog?',
+                             'happy(X) :- person(X), own(X, Y), dog(Y).'-'A person is happy if they own a dog.']),
+           ( ( logic_translate(cocolog, english, C2, E2) -> true ; E2 = none ),
+             atomic_list_concat(['an object into English: ', C2], L2),
+             check(L2, E2, Want2) )),
+    ( logic_translate(cocolog, spanish, 'letter(a_letter). past(receive(he, a_letter)).', S3) -> true ; S3 = none ),
+    check('an object into Spanish', S3, 'Él recibió una carta.'),
+    once(typology_read(english, 'Every boy sees a dog.', IR4)),
+    logic_why(IR4, W4),
+    check('a rule\'s conclusion has no indefinite object', W4, object(generic)).

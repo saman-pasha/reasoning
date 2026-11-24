@@ -41,6 +41,7 @@ main :-
     adjuncts,
     pronouns,
     possessors,
+    objects,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -135,7 +136,7 @@ english_again :-
     must('English, Cocolog, English', R6, kept).
 
 %% 7. THE SECOND MEASURE. Sentences and the Cocolog each should give,
-%% written by hand (lexicon/logic.txt has 153): how many the translator
+%% written by hand (lexicon/logic.txt has 161): how many the translator
 %% gets right, and how many of the Cocolog texts come back as English that
 %% reads to them. tools/logic/measure.pl prints the whole file's.
 measured :-
@@ -195,6 +196,18 @@ possessors :-
     must('an adposition\'s possessor', C2, 'past(on(sit(she), edge_of_the_bed)).\n'),
     logic_translate(cocolog, english, 'big(house_of_dog_of_the_boy).', E3),
     must('a possessor\'s possessor, back', E3, 'The boy\'s dog\'s house is big.').
+
+%% 12. AN INDEFINITE OBJECT. In a statement it is an individual and its
+%% noun a fact of it; in a question or a condition a variable, as `a dog'
+%% there means some dog; in a rule's conclusion nothing yet: `Every boy
+%% sees a dog.' says each boy may see another dog.
+objects :-
+    logic_translate(english, cocolog, 'He received a letter.', C1),
+    must('in a statement', C1, 'letter(a_letter).\npast(receive(he, a_letter)).\n'),
+    logic_translate(english, cocolog, 'Who sees a dog?', C2),
+    must('in a question', C2, '?- see(A, B), dog(B).\n'),
+    logic_translate(cocolog, english, 'happy(X) :- person(X), own(X, Y), dog(Y).', E3),
+    must('in a condition, back', E3, 'A person is happy if they own a dog.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

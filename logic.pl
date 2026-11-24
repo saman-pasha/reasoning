@@ -59,6 +59,11 @@
 %% A PRONOUN (since 1.72.0): in a text, the noun phrase it refers to; with
 %% none, a constant of its own, its word (he, she, it, they, i, we, you).
 %%
+%% AN INDEFINITE OBJECT (since 1.74.0): in a statement an individual
+%% (letter(a_letter), receive(he, a_letter)), in a question or a condition
+%% a variable (`Who sees a dog?' is see(X, Y), dog(Y)); in a rule's
+%% conclusion none.
+%%
 %% WHAT HAS NO LOGIC FORM YET: the conditional, a negation,
 %% an adjunct, an object that is no constant, `when' and `because', a
 %% pronoun whose gender is not known, an adjunct's noun phrase that is no
@@ -150,7 +155,7 @@ lg_antecedent(name(W), Prev, name(W)) :- !,
 lg_antecedent(M, Prev, NP) :-
     member(IR, Prev), lg_np_in(IR, np(M1, Num, D, As)), M1 == M, !,
     (   memberchk(D, [def, mass]) -> NP = np(M, Num, D, As)
-    ;   D == indef -> atom_concat(a_, M, C), NP = '$const'(C)
+    ;   D == indef -> lg_indef_const(M, C), NP = '$const'(C)
     ).
 
 lg_np_in(T, _) :- var(T), !, fail.
@@ -191,8 +196,9 @@ lg_utterance(question(C), question, [query(B)]) :- !,
     lg_parts(C, S, Pred),
     lg_entity(S, ent(T, Conds, Q)),
     ( memberchk(Q, [const, wh]) -> true ; lg_no(determiner(Q)) ),
-    lg_atoms(C, T, Pred, Atoms),
-    append(Atoms, Conds, Bs),
+    lg_atoms(C, T, Pred, Atoms0),
+    lg_obj_conds(Atoms0, Atoms, OConds),
+    append([Atoms, OConds, Conds], Bs),
     lg_body(Bs, B).
 lg_utterance(IR, assertion, Items) :-
     lg_statement(IR, Items).
@@ -255,11 +261,13 @@ lg_set_subject(copula(T, P, _, Pr), S, copula(T, P, S, Pr)).
 %% of a generic indefinite its rules first and one individual's facts
 %% second; of something or someone one individual's facts.
 lg_assert(const, _, [], Atoms, _, Items) :- !,
-    findall(fact(A), member(A, Atoms), Items).
+    lg_facts([], Atoms, Items).
 lg_assert(every, T, Conds, Atoms, _, Items) :- !,
     lg_rules(Atoms, T, Conds, Items).
 lg_assert(generic, T, Conds, Atoms, S, Items) :- !,
-    (   Atoms = [at(_, _)|_]
+    (   lg_has_obj(Atoms)
+    ->  lg_individual(S, T), lg_facts(Conds, Atoms, Items)
+    ;   Atoms = [at(_, _)|_]
     ->  (   lg_individual(S, T), lg_facts(Conds, Atoms, Items)
         ;   lg_rules(Atoms, T, Conds, Items)
         )
@@ -272,6 +280,7 @@ lg_assert(some, T, Conds, Atoms, S, Items) :- !,
 lg_assert(Q, _, _, _, _, _) :- lg_no(determiner(Q)).
 
 lg_rules(Atoms, T, Conds, Items) :-
+    ( lg_has_obj(Atoms) -> lg_no(object(generic)) ; true ),
     findall(R, ( member(A, Atoms), lg_rule(A, T, Conds, R) ), Items).
 
 %% A rule whose conclusion is its only condition says nothing new; a rule
@@ -280,14 +289,21 @@ lg_rule(A, _, [], fact(A)) :- !.
 lg_rule(A, _, Conds, rule(A, B)) :- lg_body(Conds, B).
 
 lg_facts(Conds, Atoms, Items) :-
-    append(Conds, Atoms, As),
+    lg_obj_facts(Atoms, Plain, OFacts),
+    append([Conds, OFacts, Plain], As),
     findall(fact(A), member(A, As), Items).
 
 lg_body([B], B) :- !.
 lg_body(Bs, and(Bs)).
 
+%% An individual's constant: a_ and its noun, an_ before a vowel (a_dog,
+%% an_owl; since 1.74.0, a_ before every noun through 1.73.0).
+lg_indef_const(N, C) :-
+    (   sub_atom(N, 0, 1, _, F), memberchk(F, [a, e, i, o, u]) -> P = an_ ; P = a_ ),
+    atom_concat(P, N, C).
+
 %% One individual: a_person for a person, something and someone.
-lg_individual(np(N, _, _, _), const(C)) :- !, atom_concat(a_, N, C).
+lg_individual(np(N, _, _, _), const(C)) :- !, lg_indef_const(N, C).
 lg_individual(qp(_, thing), const(something)) :- !.
 lg_individual(qp(_, person), const(someone)) :- !.
 lg_individual(S, _) :- lg_no(determiner(S)).
@@ -300,12 +316,14 @@ lg_conditional(Main, Cond, Items) :-
     lg_parts(Main, S, Pred),
     lg_entity(S, ent(T, Conds, _)),
     lg_atoms(Main, T, Pred, Atoms),
+    ( lg_has_obj(Atoms) -> lg_no(object(generic)) ; true ),
     lg_parts(Cond, S2, Pred2),
     (   nonvar(S2), S2 = pron(3, _, _) -> T2 = T, Conds2 = []
     ;   lg_entity(S2, ent(T2, Conds2, Q2)), ( Q2 == const -> true ; lg_no(determiner(Q2)) )
     ),
-    lg_atoms(Cond, T2, Pred2, Atoms2),
-    append([Conds, Conds2, Atoms2], Body),
+    lg_atoms(Cond, T2, Pred2, Atoms20),
+    lg_obj_conds(Atoms20, Atoms2, OConds2),
+    append([Conds, Conds2, Atoms2, OConds2], Body),
     findall(R, ( member(A, Atoms), lg_rule(A, T, Body, R) ), Items).
 
 %% ---- a clause's parts ---------------------------------------------------------------
@@ -336,11 +354,38 @@ lg_tensed(T, [A|As], [at(T, A)|Bs]) :- lg_tensed(T, As, Bs).
 %% The atoms a clause says of its subject's term T, in the clause's tense;
 %% an object is a constant.
 lg_atoms(C, T, Pred, Atoms) :-
-    lg_atoms_(C, T, Pred, Atoms0),
+    lg_atoms_(C, T, Pred, Atoms00),
+    lg_split_objs(Atoms00, Atoms0, Objs),
     lg_clause_adjuncts(C, Js),
     lg_adjuncted(Js, Atoms0, Atoms1),
     lg_clause_tense(C, Tn),
-    lg_tensed(Tn, Atoms1, Atoms).
+    lg_tensed(Tn, Atoms1, Atoms2),
+    append(Atoms2, Objs, Atoms).
+
+%% AN INDEFINITE OBJECT (since 1.74.0) is a variable at first, and its
+%% noun's conditions travel beside the atoms as '$obj'(Noun, Var, Conds):
+%% a statement makes it an individual (lg_obj_facts/3: a_letter, its
+%% conditions facts), a question or a condition keeps the variable and
+%% its conditions in the body (lg_obj_conds/3), a rule's conclusion has no
+%% form of it (`Every boy sees a dog.': each boy may see another dog).
+lg_split_objs([], [], []).
+lg_split_objs([O|As], Ps, [O|Os]) :- O = '$obj'(_, _, _), !, lg_split_objs(As, Ps, Os).
+lg_split_objs([A|As], [A|Ps], Os) :- lg_split_objs(As, Ps, Os).
+
+lg_obj_facts([], [], []).
+lg_obj_facts(['$obj'(N, V, Cs)|As], Ps, Fs) :- !,
+    lg_indef_const(N, C), V = const(C),
+    lg_obj_facts(As, Ps, Fs0),
+    append(Cs, Fs0, Fs).
+lg_obj_facts([A|As], [A|Ps], Fs) :- lg_obj_facts(As, Ps, Fs).
+
+lg_obj_conds([], [], []).
+lg_obj_conds(['$obj'(_, _, Cs)|As], Ps, Fs) :- !,
+    lg_obj_conds(As, Ps, Fs0),
+    append(Cs, Fs0, Fs).
+lg_obj_conds([A|As], [A|Ps], Fs) :- lg_obj_conds(As, Ps, Fs).
+
+lg_has_obj(Atoms) :- memberchk('$obj'(_, _, _), Atoms).
 
 %% A clause's adjuncts at level 2: pp(Prep, Term) of a constant, adv(M),
 %% each adverb of a joined pair its own.
@@ -381,9 +426,12 @@ lg_atoms_(copula(_, _, _, _), T, pp(P, NP), [pred(P, [T, To])]) :- atom(P), !,
     ( Q == const -> true ; lg_no(object(Q)) ).
 lg_atoms_(copula(_, _, _, _), _, Pred, _) :- !, lg_no(predicate(Pred)).
 lg_atoms_(_, T, verb(V, none), [pred(V, [T])]) :- !.
-lg_atoms_(_, T, verb(V, O), [pred(V, [T, To])]) :-
-    lg_entity(O, ent(To, _, Q)),
-    ( Q == const -> true ; lg_no(object(Q)) ).
+lg_atoms_(_, T, verb(V, O), Atoms) :-
+    lg_entity(O, ent(To, OConds, Q)),
+    (   Q == const -> Atoms = [pred(V, [T, To])]
+    ;   Q == generic, nonvar(O), O = np(N, _, _, _) -> Atoms = [pred(V, [T, To]), '$obj'(N, To, OConds)]
+    ;   lg_no(object(Q))
+    ).
 
 %% The adjectives of a phrase, a joined pair's items each.
 lg_adjectives(As, Ms) :-
@@ -733,18 +781,22 @@ lg_say_again(L, [fact(A)], Ss0, Done, S) :-
 lg_groups([], []).
 lg_groups([F|Is], [[F|Run]|Gs]) :-
     lg_individual_fact(F, _, C),
-    lg_run(Is, C, Run, Rest), Run \== [], !,
+    lg_run(Is, [C], Run, Rest), Run \== [], !,
     lg_groups(Rest, Gs).
 lg_groups([I|Is], [[I]|Gs]) :- lg_groups(Is, Gs).
 
-lg_individual_fact(fact(pred(N, [const(C)])), N, C) :- atom(C), atom_concat(a_, N, C).
+lg_individual_fact(fact(pred(N, [const(C)])), N, C) :- atom(C), atom(N), lg_indef_const(N, C).
 
-%% An individual's facts of one sentence: its adjectives' (plain facts of
-%% one argument) and then one more; a fact in a tense or with an adjunct,
-%% or of two arguments, ends the run.
-lg_run([I|Is], C, [I|Run], Rest) :-
-    I = fact(A), lg_core(A, pred(_, Args)), memberchk(const(C), Args), !,
-    (   A = pred(_, [_]) -> lg_run(Is, C, Run, Rest) ; Run = [], Rest = Is ).
+%% The individuals' facts of one sentence: the noun facts of the ones it
+%% brings in (a_person, then a_dog, since 1.74.0), their adjectives'
+%% (plain facts of one argument), and then one more; a fact in a tense or
+%% with an adjunct, or of two arguments, ends the run.
+lg_run([I|Is], Cs, [I|Run], Rest) :-
+    lg_individual_fact(I, _, C), !,
+    lg_run(Is, [C|Cs], Run, Rest).
+lg_run([I|Is], Cs, [I|Run], Rest) :-
+    I = fact(A), lg_core(A, pred(_, Args)), member(const(C), Args), memberchk(C, Cs), !,
+    (   A = pred(_, [_]) -> lg_run(Is, Cs, Run, Rest) ; Run = [], Rest = Is ).
 lg_run(Is, _, [], Is).
 
 lg_say(L, Group, S) :- lg_say(L, Group, S, _).
@@ -765,10 +817,13 @@ lg_reads_back(L, S, Group) :-
 %% A group's level-1 IRs, the likeliest first.
 lg_group_ir(L, [F|Run], IR) :-
     Run = [_|_], !,
-    lg_individual_fact(F, N, C),
-    append(AFs, [fact(A)], Run),
-    lg_adjective_facts(L, AFs, C, As),
-    lg_atom_ir(L, A, sub(C, np(N, sg, indef, As)), IR).
+    append(Init, [fact(A)], [F|Run]),
+    lg_ind_map(L, Init, Map),
+    lg_atom_ir(L, A, map(Map), IR).
+lg_group_ir(L, [query(and([A|Cs]))], question(IR)) :-
+    lg_core(A, pred(_, _)),
+    lg_var_map(L, Cs, Map), Map \== [],
+    lg_atom_ir(L, A, vmap(Map, wh), IR).
 lg_group_ir(L, [fact(A)], IR) :- lg_atom_ir(L, A, every, IR).
 lg_group_ir(L, [query(A)], question(IR)) :- lg_core(A, pred(_, _)), lg_atom_ir(L, A, wh, IR).
 
@@ -778,10 +833,30 @@ lg_core(modified(_, P), C) :- !, lg_core(P, C).
 lg_core(P, P).
 lg_group_ir(L, [rule(H, B)], IR) :- lg_body_list(B, Cs), lg_rule_ir(L, H, Cs, IR).
 
-lg_adjective_facts(_, [], _, []).
-lg_adjective_facts(L, [fact(pred(A, [const(C1)]))|Fs], C, [A|As]) :-
-    C1 == C, lg_class_ok(L, A/1, adjective),
-    lg_adjective_facts(L, Fs, C, As).
+%% Each individual of a group as its noun phrase, np(N, sg, indef, As):
+%% its noun fact and its adjectives' facts, every fact before the last one
+%% of them.
+lg_ind_map(L, Init, Map) :-
+    findall(C-N, ( member(F, Init), lg_individual_fact(F, N, C) ), CNs),
+    forall(member(fact(A), Init),
+           ( A = pred(P, [const(C)]), memberchk(C-_, CNs),
+             ( memberchk(C-P, CNs) -> true ; lg_class_ok(L, P/1, adjective) ) )),
+    findall(C-np(N, sg, indef, As),
+            ( member(C-N, CNs),
+              findall(P, ( member(fact(pred(P, [const(C1)])), Init), C1 == C, P \== N ), As) ),
+            Map).
+
+%% The variables a question or a condition says of things it names by a
+%% noun (`Who sees a dog?': dog(var(2))) as their noun phrases.
+lg_var_map(L, Cs, Map) :-
+    forall(member(C, Cs), C = pred(_, [var(_)])),
+    findall(K, member(pred(_, [var(K)]), Cs), Ks0), sort(Ks0, Ks),
+    maplist(lg_var_np(L, Cs), Ks, Map).
+
+lg_var_np(L, Cs, K, K-np(N, sg, indef, As)) :-
+    findall(P, member(pred(P, [var(K)]), Cs), [N|As]),
+    lg_class_ok(L, N/1, noun),
+    forall(member(A, As), lg_class_ok(L, A/1, adjective)).
 
 lg_body_list(and(Bs), Bs) :- !.
 lg_body_list(B, [B]).
@@ -818,6 +893,9 @@ lg_adjective_conds(L, [pred(A, [V])|Cs], [A|As]) :-
 lg_cond_ir(L, Cs, P, copula(present, pos, P, adj(As))) :-
     Cs = [_, _|_], lg_adjective_conds(L, Cs, As).
 lg_cond_ir(L, [A], P, IR) :- lg_atom_ir(L, A, var1(P), IR).
+lg_cond_ir(L, [A|Cs], P, IR) :-
+    Cs \== [], lg_var_map(L, Cs, Map), \+ memberchk(1-_, Map),
+    lg_atom_ir(L, A, vmap(Map, var1(P)), IR).
 
 lg_pronoun(L, N, P) :-
     (   typology_meaning(L, person, N)
@@ -929,6 +1007,9 @@ lg_lex(File, W, R) :-
 lg_lex_row(_, '', N, N) :- !.
 lg_lex_row(File, W, N0, N) :- assertz('$lg_lex'(File, W, N0)), N is N0 + 1.
 
+lg_arg_np(L, vmap(Map, How), T, NP) :- !,
+    ( T = var(K), memberchk(K-NP0, Map) -> NP = NP0 ; lg_arg_np(L, How, T, NP) ).
+lg_arg_np(_, map(Map), const(C), NP) :- memberchk(C-NP0, Map), !, NP = NP0.
 lg_arg_np(_, sub(C, NP), const(C1), NP) :- C1 == C, !.
 lg_arg_np(_, var1(NP), var(1), NP) :- !.
 lg_arg_np(_, wh, var(_), wh(W)) :- !, member(W, [who, what]).

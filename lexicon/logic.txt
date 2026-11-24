@@ -172,3 +172,12 @@ The color of the sky is blue.	blue(color_of_the_sky).
 My friend is happy.	happy(friend_of_i).
 John sleeps. His dog barks.	sleep(john). bark(dog_of_john).
 Who sees his dog?	?- see(X, dog_of_he).
+# indefinite objects (since 1.74.0): an individual in a statement, a variable in a question or a condition
+He received a letter.	letter(a_letter). past(receive(he, a_letter)).
+John sees a big dog.	dog(a_dog). big(a_dog). see(john, a_dog).
+A person likes a dog.	person(a_person). dog(a_dog). like(a_person, a_dog).
+Who sees a dog?	?- see(X, Y), dog(Y).
+Does John see a dog?	?- see(john, X), dog(X).
+A person is happy if they own a dog.	happy(X) :- person(X), own(X, Y), dog(Y).
+Mary reads a book in the garden.	book(a_book). in(read(mary, a_book), the_garden).
+John saw a dog. It was hungry.	dog(a_dog). past(see(john, a_dog)). past(hungry(a_dog)).
