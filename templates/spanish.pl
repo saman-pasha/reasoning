@@ -173,6 +173,12 @@ ty_sense(spanish, a, mark(o), [class(noun), opt(class(article)), class(verb)],
 %% la niña', each item of a coordinated object taking the mark).
 ty_sense(spanish, a, mark(o), [y], [opt(class(article)), opt(class(possessive)), class(noun, animate)]).
 ty_sense(spanish, a, mark(o), [o], [opt(class(article)), opt(class(possessive)), class(noun, animate)]).
+%% Before a person's name it is the mark too (since 1.62.0: `ve a Juan'),
+%% and before a place's it is `to' (`va a Madrid').
+ty_sense(spanish, a, mark(o), [class(verb)], [class(name, animate)]).
+ty_sense(spanish, a, mark(o), [class(noun), opt(class(article)), class(verb)], [class(name, animate)]).
+ty_sense(spanish, a, mark(o), [y], [class(name, animate)]).
+ty_sense(spanish, a, mark(o), [o], [class(name, animate)]).
 ty_sense(spanish, a, mark(o), [], ['quién']).
 ty_sense(spanish, a, mark(o), [], ['qué', class(noun, animate)]).
 %% Before `cuyo' and an animate noun it is the mark too (`el niño a cuyo

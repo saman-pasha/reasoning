@@ -160,6 +160,11 @@ ty_adverb(persian, slowly, 'آهسته').
 ty_adverb(persian, today, 'امروز').
 ty_adverb(persian, here, 'اینجا').
 
+%% Names (since 1.62.0): the script has no capitals, so a name is a row's.
+ty_name(persian, 'Ali', 'علی', m, person).
+ty_name(persian, 'Maryam', 'مریم', f, person).
+ty_name(persian, 'Tehran', 'تهران', none, inanimate).
+
 %% Questions: `؟'; a yes or no question in the statement's order, or with
 %% `آیا' first; a question word in place (`پسر چه چیزی می‌بیند؟'),
 %% `کجا است' written `کجاست'.

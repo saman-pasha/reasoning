@@ -10,8 +10,10 @@
 %% templates/spanish-words.pl, templates/italian-words.pl, English's
 %% files of a kind (templates/english-nouns.pl, -verbs.pl, -adjectives.pl
 %% and -adverbs.pl: since 1.58.0 every English row has one, and no
-%% english-words.pl is written), templates/topics-words.pl and
-%% templates/template.pl.
+%% english-words.pl is written), the names of each (since 1.62.0,
+%% templates/english-names.pl, spanish-names.pl and italian-names.pl, from
+%% lexicon/ and Apertium's dictionaries in corpus/raw/),
+%% templates/topics-words.pl and templates/template.pl.
 
 :- use_module(library(reasoning/typology)).
 

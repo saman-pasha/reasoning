@@ -132,6 +132,30 @@ since 1.61.0**: `and(As)` as one element of a noun phrase's adjectives, and
 items are read `'$ty_adj_items'` is yes, and the joined rule is off, or
 `ty_adjs//5` would call itself before a word is read. A reader of the IR's
 adjectives or adverbs asks `ty_item_meaning/2` for the items' meanings.
+**Names since 1.62.0** (the translator's first step, TRANSLATOR-PLAN.md):
+`name(Meaning)` where a noun phrase stands, `ty_name(L, Meaning, Written,
+Gender, Animacy)` its row, the meaning the English name. A name's words
+are tokens written with a capital that no table has AS WRITTEN (so a
+German noun, which keeps its capital in the tables, is none), or a row's
+(Persian has no capitals); `'$ty_name'` says whether a text has one, and
+the name rules are off where it has none, as coordination's are. **A first
+word is a name only by a row**, or where no table has it lowered and the
+next word is a name's (`ty_first_written/4`, the written word the second
+reading): with any unknown first word a name, 31 of the measure's
+readings were false (`Intellectually influenced.`, `Shortbread is a short
+crumbly cookie.`). The rows are generated: English's from
+`lexicon/proper.txt` (a name in both census lists takes the list where it
+ranks higher: `Mary` f), `lexicon/place.txt` and the English side of
+Apertium's bilingual dictionaries in corpus/raw/ (np of `ant`, `cog`,
+`loc`); Spanish's and Italian's from those dictionaries' own side
+(`templates/<name>-names.pl`). A name's features are its row's, the first
+with a gender of any language (`ty_name_row/4`), else not known: a mark
+that asks animate is written (Spanish `ve a Juan`, a `ty_sense/5` row of
+`class(name, animate)`). A name that holds a word with no capital
+(`Alexander the Great`) is read as its capital words only. The names cost the
+benchmark's round trips 1.1 % to 3.3 % more inferences (the flag over the
+words and the tries of the name rule); a first cut that split the sentence
+twice and asked a row of each word with a small letter cost 2.2 % to 5.4 %.
 **The blank template is generated too** (1.54.0): `templates/template.pl`
 is what `typology_import(template)` writes, `typology_template(xx)`: every
 slot of typology.pl's header list (THE TEMPLATE) with the header's own

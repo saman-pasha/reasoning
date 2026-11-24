@@ -104,9 +104,11 @@ tagger, a model).
 Each step is one version or more, with its tests, its lesson section and
 its benchmark, as every typology version has.
 
-1. **Names** (level 1): `name(N)` where a noun phrase stands; a capital
-   word that no table gives another reading, and the names of
-   `lexicon/proper.txt` and `lexicon/place.txt`.
+1. **Names** (level 1, done: 1.62.0): `name(Meaning)` where a noun phrase
+   stands; a word written with a capital that no table has, and the names
+   of `lexicon/proper.txt`, `lexicon/place.txt` and Apertium's
+   dictionaries, the meaning the English name. `Socrates is human.` and
+   `Is Socrates human?` read.
 2. **The determiners and the quantifiers** (level 1): `every`, `each`,
    `all`, `some`, `no`, `any`, `this`, `these`, and the pronouns
    `something`, `someone`, `everything`, `everyone`, `nothing`.

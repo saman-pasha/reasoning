@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -1884,6 +1884,67 @@ english_verbs :-
     findall(IR6, typology_read(english, 'The girl has studied the book.', IR6), IRs6),
     check('read', IRs6, [clause(study, perfect, pos, np(girl, sg, def, []), np(book, sg, def, []))]).
 
+%% 1.62.0: names. name(Name) where a noun phrase stands: a word written
+%% with a capital that no table has, the words of a row, a sentence's first
+%% word as written; of the third person and singular, its gender and
+%% animacy its row's.
+names :-
+    section('names'),
+    Dg = np(dog, sg, def, []), B = np(boy, sg, def, []),
+    forall(member(T-Want, [
+               'Socrates is human.'-[copula(present, pos, name('Socrates'), adj([human]))],
+               'Is Socrates human?'-[question(copula(present, pos, name('Socrates'), adj([human])))],
+               'John sees the dog.'-[clause(see, present, pos, name('John'), Dg)],
+               'The dog sees John.'-[clause(see, present, pos, Dg, name('John'))],
+               'John Smith sleeps.'-[clause(sleep, present, pos, name('John Smith'), none)],
+               'John and Mary sleep.'-[clause(sleep, present, pos, and([name('John'), name('Mary')]), none)],
+               'The boy sleeps with Mary.'-[clause(sleep, present, pos, B, none, [pp(with, name('Mary'))])],
+               'Who sees Mary?'-[question(clause(see, present, pos, wh(who), name('Mary')))],
+               'John sleep.'-[], 'The dog sees john.'-[], 'The John sleeps.'-[],
+               'Intellectually influenced.'-[], 'Shortbread is a short crumbly cookie.'-[] ]),
+           ( findall(R, typology_read(english, T, R), Rs),
+             atomic_list_concat(['English: ', T], Label),
+             check(Label, Rs, Want) )),
+    forall(member(L-T2-Want2, [
+               spanish-'El perro ve a Juan.'-[name('Juan')],
+               german-'Der Hund sieht Hans.'-[name('Hans')],
+               persian-'سگ مریم را می‌بیند.'-[name('Maryam')] ]),
+           ( findall(O, typology_read(L, T2, clause(_, _, _, _, O)), Os0), sort(Os0, Os),
+             atomic_list_concat([L, ': the object of ', T2], Label2),
+             check(Label2, Os, Want2) )),
+    ( typology_translate(italian, english, 'Socrate è umano.', T15) -> true ; T15 = none ),
+    check('a name''s meaning is the English name', T15, 'Socrates is human.'),
+    ( typology_read(german, 'Hans sieht den Hund.', IR3) -> true ; IR3 = none ),
+    check('German: a name first, which no table has as written', IR3, clause(see, present, pos, name('Hans'), Dg)),
+    ( typology_read(spanish, 'El perro ve Juan.', _) -> R4 = read ; R4 = refused ),
+    check('Spanish: a person''s name takes the object''s mark', R4, refused),
+    IR5 = clause(see, present, pos, Dg, name('John')),
+    IR6 = copula(present, pos, name('Mary'), adj([small])),
+    IR7 = copula(present, pos, name('James'), adj([small])),
+    forall(member(IR-Ws, [
+               IR5-[english-'The dog sees John.', spanish-'El perro ve a John.', italian-'Il cane vede John.',
+                    french-'Le chien voit John.', german-'Der Hund sieht John.', persian-'سگ John را می‌بیند.'],
+               IR6-[english-'Mary is small.', spanish-'Mary es pequeña.', italian-'Mary è piccola.',
+                    french-'Mary est petite.', german-'Mary ist klein.'],
+               IR7-[spanish-'James es pequeño.', italian-'James è piccolo.'] ]),
+           forall(member(L8-Want8, Ws),
+                  ( ( typology_write(L8, IR, W8) -> true ; W8 = none ),
+                    atomic_list_concat([L8, ': ', Want8], Label8),
+                    check(Label8, W8, Want8) ))),
+    typology_read_text(english, ['John sees the dog.', 'He sleeps.'], [_, IR9]),
+    check('a pronoun of the text stands for a name', IR9, clause(sleep, present, pos, pron(3, sg, ref(name('John'))), none)),
+    ( typology_answer(english, question(clause(sleep, present, pos, name('Mary'), none)), pos, echo, T10) -> true ; T10 = none ),
+    check('the echo answer gives a name its pronoun', T10, 'Yes, she does.'),
+    findall(M11, ty_ir_meaning(IR5, M11), Ms11),
+    check('a name has no meaning of the tables', Ms11, [see, dog]),
+    aggregate_all(count, ty_name(english, _, _, _, _), N12),
+    check('the English names of lexicon/ and corpus/raw/', N12, 10568),
+    findall(G13-A13, ( member(N13, ['Mary', 'James', 'Jordan', 'London']), once(ty_name(english, N13, _, G13, A13)) ), GA13),
+    check('a name''s gender is its list''s, the higher one where it is in both; a place is inanimate', GA13,
+          [f-person, m-person, m-person, none-inanimate]),
+    typology_coverage(english, ['The dog sees Jupp.', 'The dog sees qwzx.'], _, U14),
+    check('a name is no unknown word of the measure', U14, [qwzx-1]).
+
 %% 1.61.0: adjectives and adverbs joined inside a phrase: and(As) or or(As)
 %% as one adjective of a noun phrase, adv(and(Ms)) as one adjunct.
 coordination_inside :-
@@ -2063,8 +2124,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 442 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 442 sentences read at 1.61.0 are read', R1, yes),
+    ( K >= 456 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 456 sentences read at 1.62.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 
@@ -2339,7 +2400,7 @@ reproduced :-
     scratch(Dir),
     forall(member(L-Base-Files, [spanish-'spanish-words'-['spanish-words'], italian-'italian-words'-['italian-words'],
                                  english-'english-words'-['english-nouns', 'english-verbs', 'english-adjectives',
-                                                          'english-adverbs'],
+                                                          'english-adverbs', 'english-names'],
                                  topics-'topics-words'-['topics-words'], template-template-[template]]),
            ( atomic_list_concat([Dir, '/', Base, '.pl'], Fresh),
              with_output_to(string(_), typology_import(L, Fresh)),

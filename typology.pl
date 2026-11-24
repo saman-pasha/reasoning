@@ -321,6 +321,19 @@
 %%                                     Persian ند made م: `می‌بینم')
 %%     ty_capital(L, Word, Written)    a word always written with its
 %%                                     capital (English `I')
+%%     ty_name(L, Meaning, Written, Gender, Animacy)
+%%                                     a name: its meaning, the English
+%%                                     name (Italian `Socrate' is
+%%                                     `Socrates'), as written, its words
+%%                                     joined by one space (`New York'),
+%%                                     its gender m, f or none (not known)
+%%                                     and its animacy person, animate or
+%%                                     inanimate; a word written with a
+%%                                     capital that no table has is a name
+%%                                     with no row, its meaning as written
+%%                                     (the rows are templates/<name>-
+%%                                     names.pl's, from lexicon/ and
+%%                                     corpus/raw/)
 %%     ty_pronoun_gender(L, System)    a third person's pronoun of the text
 %%                                     takes the noun's gender (grammatical:
 %%                                     Spanish `la' for `la casa') or the
@@ -512,6 +525,15 @@
 %%                                     do not tell (`you' is pron(2, _, _));
 %%                                     Kind ref(Meaning) in a text's IR, the
 %%                                     noun the pronoun stands for
+%%     name(Meaning)                   a name where a noun phrase stands
+%%                                     (since 1.62.0): Meaning its row's,
+%%                                     the English name, or the name as
+%%                                     written where no row has it, its
+%%                                     words joined by one space
+%%                                     (name('Socrates'), name('John
+%%                                     Smith')); a pronoun of the text that
+%%                                     stands for it is pron(3, sg,
+%%                                     ref(name(Meaning)))
 %%
 %% WHAT IS PUBLIC:
 %%
@@ -579,7 +601,9 @@
 %%      after it gives the meaning. A pattern is a list of items: a word;
 %%      class(C), a word of class C (noun, adjective, verb, article, mark,
 %%      adposition, adverb, copula); class(noun, F), a noun of gender or
-%%      animacy F; opt(Item), the item or no word; a variable, any word.
+%%      animacy F; class(name, F), a name's token of gender or animacy F
+%%      (a name with no row is a person's); opt(Item), the item or no
+%%      word; a variable, any word.
 %%      [] fits anything.
 %%   2. THE TOPICS OF THE CONTEXT: ty_topic(Meaning, Topic) in
 %%      templates/topics.pl, one table for every language (a meaning is
@@ -644,7 +668,7 @@
            ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
            ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
            ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-           ty_pro_drop/2, ty_clitic/2, ty_verb_person/6, ty_capital/3,
+           ty_pro_drop/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5,
            ty_answer_echo/3, ty_kind/2, ty_adjective_before/2, ty_pronoun_gender/2,
            ty_inversion/3, ty_wh_tonic/3,
            ty_tense_form/5, ty_participle/3, ty_participle_like/3,
@@ -670,7 +694,7 @@
                  ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
                  ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
                  ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-                 ty_pro_drop/2, ty_clitic/2, ty_verb_person/6, ty_capital/3,
+                 ty_pro_drop/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5,
                  ty_answer_echo/3, ty_adjective_before/2, ty_pronoun_gender/2,
                  ty_inversion/3, ty_wh_tonic/3,
                  ty_tense_form/5, ty_participle/3, ty_participle_like/3,
@@ -733,7 +757,7 @@ typology_load(Name) :-
     must_be(atom, Name),
     ty_unexpand(Name),
     consult(library(reasoning/templates/Name)),
-    forall(( member(Kind, ['-words', '-nouns', '-verbs', '-adjectives', '-adverbs']), atom_concat(Name, Kind, Base), ty_file(Base, File) ),
+    forall(( member(Kind, ['-words', '-nouns', '-verbs', '-adjectives', '-adverbs', '-names']), atom_concat(Name, Kind, Base), ty_file(Base, File) ),
            consult(File)),
     ty_expand(Name),
     (   \+ ty_topic(_, _), ty_file(topics, Topics)
@@ -951,7 +975,7 @@ ty_tdoc_more(Ls, [], Ls).
 %% section blank_template holds them to the header's slots).
 ty_template_group('the orders of the levels', [ty_order]).
 ty_template_group('words', [ty_noun_class, ty_class_when, ty_noun_in, ty_noun, ty_adjective, ty_adjective_before, ty_article, ty_adposition,
-                            ty_adverb, ty_capital, ty_capital_nouns, ty_and, ty_conjunction, ty_serial_comma,
+                            ty_adverb, ty_capital, ty_capital_nouns, ty_name, ty_and, ty_conjunction, ty_serial_comma,
                             ty_conjunct_marks, ty_clause_comma, ty_comma, ty_sense, ty_closed]).
 ty_template_group('verbs and tenses', [ty_conjugation, ty_verb_in, ty_irregular_verb, ty_verb, ty_tense_form, ty_tense_like, ty_participle,
                                        ty_participle_like, ty_participle_ending, ty_participle_agrees,
@@ -1078,6 +1102,7 @@ ty_row_shape('ty_pro_drop(L, Persons).').
 ty_row_shape('ty_clitic(L, Role).').
 ty_row_shape('ty_verb_person(L, Tense, Person, Base, From, To).').
 ty_row_shape('ty_capital(L, Word, Written).').
+ty_row_shape('ty_name(L, Meaning, Written, Gender, Animacy).').
 ty_row_shape('ty_answer_echo(L, Rule, Word).').
 ty_row_shape('ty_adjective_before(L, Meaning).').
 ty_row_shape('ty_pronoun_gender(L, System).').
@@ -1268,7 +1293,7 @@ typology_coverage(L, Sentences, Read, Unknown) :-
                  R \== inference_limit_exceeded ), Read),
     findall(W, ( member(S, Sentences),
                  catch(( ty_surface(S, _, _, _, Ws), ty_uncomma(L, Ws, Ws2) ), _, fail),
-                 member(W, Ws2), W \== ',', \+ ty_known_token(L, W) ), Ws0),
+                 member(W, Ws2), W \== ',', \+ ty_known_token(L, W), \+ ty_name_token(L, W) ), Ws0),
     msort(Ws0, Ws1),
     ty_count_runs(Ws1, Counts),
     findall(N-W, member(W-N, Counts), NWs),
@@ -1484,6 +1509,10 @@ ty_missing(L, bad(ty_verb_person(L, T, K, B, F, To))) :-
 ty_missing(L, bad(ty_capital(L, W, C))) :-
     ty_capital(L, W, C),
     \+ ( atom(W), atom(C), downcase_atom(C, W) ).
+ty_missing(L, bad(ty_name(L, M, W, G, A))) :-
+    ty_name(L, M, W, G, A),
+    \+ ( atom(M), M \== '', atom(W), W \== '', memberchk(G, [m, f, none]),
+         memberchk(A, [person, animate, inanimate]) ).
 ty_missing(L, bad(ty_answer_echo(L, R, W))) :-
     ty_answer_echo(L, R, W),
     \+ ( memberchk(R, [aux, verb]), memberchk(W, [keep, drop]) ).
@@ -1656,8 +1685,9 @@ typology_read(L, Text, IR) :-
 typology_read(L, Text, IR, Topics) :-
     must_be(atom, L),
     must_be(list, Topics),
-    ty_surface(Text, Mood, Open, Close, Surface0),
-    ty_first_written(L, Text, Surface0, Surface),
+    ty_surface_written(Text, Mood, Open, Close, Written),
+    ty_surface_lower(Written, Surface0),
+    ty_first_written(L, Written, Surface0, Surface),
     ty_marks_fit(L, Mood, Open, Close),
     ty_live_topics(L, Text, Surface),
     (   Mood == question
@@ -1682,6 +1712,7 @@ ty_read_bases(L, Surface, Topics, Mood, IR0, C) :-
     b_setval('$ty_rel_open', f([])),
     ty_poss_flag(L, Bases),
     ty_coord_flag(L, Bases),
+    ty_name_flag(L, Bases),
     ty_parse_reset(L),
     ty_mood(Mood, L, IR0, C, Goal),
     phrase(Goal, Bases).
@@ -1773,6 +1804,7 @@ ty_reads_as(Mood, L, IR0, Tokens, Topics) :-
            b_setval('$ty_rel_open', f([])),
            ty_poss_flag(L, Tokens),
            ty_coord_flag(L, Tokens),
+           ty_name_flag(L, Tokens),
            aggregate_all(min(C), ( ty_mood(Mood, L, IR0, C, G), phrase(G, Tokens) ), C1),
            \+ ( C1 > 0,
                 ty_ir_senses(IR0, Ms),
@@ -1972,6 +2004,7 @@ ty_mention(answer(_, _, C), R, M, N) :- !, ty_mention(C, R, M, N).
 
 ty_np_mention(X, _, _) :- var(X), !, fail.
 ty_np_mention(np(M, N, _, _), M, N).
+ty_np_mention(name(Nm), name(Nm), sg).
 ty_np_mention(pron(3, N, K), M, N) :- nonvar(K), K = ref(M).
 ty_np_mention(rel(NP, C), M, N) :- ( ty_np_mention(NP, M, N) ; ty_mention(C, _, M, N) ).
 ty_np_mention(of(G, NP), M, N) :- ( ty_np_mention(NP, M, N) ; ty_np_mention(G, M, N) ).
@@ -2086,10 +2119,12 @@ ty_open_meanings(L, Surface, Ms) :-
 %% The words of a sentence as written: the full stop off, the first word
 %% lowered (a script with no capitals is unchanged).
 ty_surface(Text, Mood, Open, Close, Words) :-
-    ty_surface_written(Text, Mood, Open, Close, [FirstA|Rest1]),
+    ty_surface_written(Text, Mood, Open, Close, Written),
+    ty_surface_lower(Written, Words).
+
+ty_surface_lower([FirstA|Rest1], [First|Rest]) :-
     downcase_atom(FirstA, First),
-    maplist(ty_lower_capital, Rest1, Rest),
-    Words = [First|Rest].
+    maplist(ty_lower_capital, Rest1, Rest).
 
 %% The words as written, the marks off.
 ty_surface_written(Text, Mood, Open, Close, Words) :-
@@ -2104,12 +2139,27 @@ ty_surface_written(Text, Mood, Open, Close, Words) :-
 %% their capital (ty_capital_nouns/1), where its tables hold it so: a noun
 %% German writes with its capital (`Hunde schlafen.'), the
 %% polite `Sie' (`Sie sehen den Hund.' is you or they).
-ty_first_written(L, Text, [First|Rest], Words) :-
-    (   ty_capital_nouns(L),
-        ty_surface_written(Text, _, _, _, [FirstA|_]),
-        FirstA \== First,
-        ty_table_word(L, FirstA)
-    ->  ( Words = [FirstA|Rest] ; Words = [First|Rest] )
+%% So is a NAME (since 1.62.0): the first word as written, after the word
+%% lowered, where a row of the language has the written one (`Socrates is
+%% human.', `John', after the noun `john'), or no table of the language
+%% has the lowered word and a row of another language has the written one
+%% (German `Hans sieht den Hund.'; Italian `Chi vede il ragazzo?' asks, as
+%% chi is Italian's, though an English row has `Chi') or the next word is
+%% a name's (`Ahmet Bey').
+ty_first_written(L, [FirstA|_], [First|Rest], Words) :-
+    (   FirstA \== First
+    ->  (   ty_capital_nouns(L), ty_table_word(L, FirstA)
+        ->  ( Words = [FirstA|Rest] ; Words = [First|Rest] )
+        ;   ty_cap_word(FirstA),
+            (   once(ty_name(L, _, FirstA, _, _)) -> true
+            ;   \+ ty_known_token(L, First),
+                (   once(ty_name(_, _, FirstA, _, _)) -> true
+                ;   Rest = [W2|_], ty_name_token(L, W2)
+                )
+            )
+        ->  ( Words = [First|Rest] ; Words = [FirstA|Rest] )
+        ;   Words = [First|Rest]
+        )
     ;   Words = [First|Rest]
     ).
 
@@ -2375,6 +2425,13 @@ ty_item_fits(L, class(C), W) :- !, ty_word_class(L, C, W).
 ty_item_fits(L, class(noun, F), W) :-
     ( ty_noun(L, _, G, A, W, _) ; ty_noun(L, _, G, A, _, W) ),
     ( F == G ; F == A ; F == animate, A == person ), !.
+ty_item_fits(L, class(name, F), W) :-
+    ty_name_token(L, W),
+    ( once(ty_name(L, M, W, _, _)) -> true ; M = W ),
+    (   ty_name_row(L, M, G, A)
+    ->  ( F == G ; F == A ; F == animate, A == person )
+    ;   memberchk(F, [animate, person])
+    ), !.
 
 ty_word_class(L, noun, W) :- ty_class_meaning(L, noun, W, _), !.
 ty_word_class(L, adjective, W) :- ty_class_meaning(L, adjective, W, _), !.
@@ -2449,6 +2506,7 @@ ty_pattern_item(class(C)) :- !,
     memberchk(C, [noun, adjective, verb, article, mark, adposition, adverb, copula,
                   relative, possessive]).
 ty_pattern_item(class(noun, F)) :- atom(F).
+ty_pattern_item(class(name, F)) :- atom(F).
 
 %% ---- the grammar ---------------------------------------------------------------------
 
@@ -3057,6 +3115,7 @@ ty_ask_words(L, copula(T, P, Subj, Pred), _, Ws) :-
 %% number (ty_agreement/3). A gap and a question word are only where
 %% something put them.
 ty_subject_number(np(_, N, _, _), N).
+ty_subject_number(Nm, sg) :- nonvar(Nm), Nm = name(_).
 ty_subject_number(W, sg) :- nonvar(W), W = wh(_).
 ty_subject_number(G, N) :- nonvar(G), G = gap(H, _, _), ty_subject_number(H, N).
 ty_subject_number(rel(np(_, N, _, _), _), N).
@@ -3185,6 +3244,7 @@ ty_same_subject(S1) :- nb_current('$ty_same', s(S1)).
 ty_ir_features(L, np(M, N, D, _), [D, N, A, G]) :- !,
     ( once(ty_noun(L, M, G, A, _, _)) -> true ; A = unknown ).
 ty_ir_features(L, Pr, F) :- Pr = pron(_, _, _), !, ty_pron_np_features(L, Pr, F).
+ty_ir_features(L, name(Nm), F) :- !, ty_name_features(L, Nm, F).
 ty_ir_features(L, of(_, NP), F) :- !, ty_ir_features(L, NP, F).
 ty_ir_features(L, rel(NP, _), F) :- !, ty_ir_features(L, NP, F).
 ty_ir_features(L, C, F) :-
@@ -3393,11 +3453,22 @@ ty_answerer(X, pron(3, N, K)) :-
 %% The noun phrase that heads a phrase: itself, a relative clause's head,
 %% the possessed.
 ty_np_head(np(M, N, _, _), M, N).
+ty_np_head(name(Nm), name(Nm), sg).
 ty_np_head(rel(NP, _), M, N) :- ty_np_head(NP, M, N).
 ty_np_head(of(_, NP), M, N) :- ty_np_head(NP, M, N).
 
 %% THE KIND OF A MEANING, a pronoun's that stands for it: templates/roles.pl's
 %% ty_kind/2 (`girl' f, `boy' m); a person of no row m, any other n (`it').
+%% A name's kind is its row's gender, n for a thing (a place), and else a
+%% person's, m or f (since 1.62.0).
+ty_meaning_kind(name(Nm), K) :- !,
+    (   ty_name_row(_, Nm, G, A)
+    ->  (   memberchk(G, [m, f]) -> K = G
+        ;   A == inanimate -> K = n
+        ;   member(K, [m, f])
+        )
+    ;   member(K, [m, f, n])
+    ).
 ty_meaning_kind(M, K) :-
     (   ty_kind(M, K0) -> K = K0
     ;   once(ty_noun(_, M, _, person, _, _)) -> K = m
@@ -3680,7 +3751,10 @@ ty_np_animacy(L, C, A) :- ty_coord_np(C, _, Xs), forall(member(X, Xs), ty_np_ani
 ty_np_animacy(L, S, A) :- S == same, ty_same_subject(S1), ty_np_animacy(L, S1, A).
 ty_np_animacy(L, pron(_, _, K), A) :-
     nonvar(K), K = ref(M), !,
-    ty_np_animacy(L, np(M, _, _, _), A).
+    (   nonvar(M), M = name(_) -> ty_np_animacy(L, M, A) ; ty_np_animacy(L, np(M, _, _, _), A) ).
+%% A name's animacy is its row's; a name with no row takes the one asked.
+ty_np_animacy(L, name(Nm), A) :-
+    ( ty_name_row(L, Nm, _, A1) -> ty_animacy_fits(A, A1) ; true ).
 ty_np_animacy(_, pron(P, _, K), A) :-
     ty_pron_animacy(P, K, A1),
     ( var(A1) -> true ; ty_animacy_fits(A, A1) ).
@@ -3967,6 +4041,7 @@ ty_pp_part(x, L, _, NP) --> ty_np_phrase(L, NP, _).
 ty_np_phrase(L, NP, F) --> { ty_np_slot(NP) }, ty_np(L, NP, F).
 ty_np_phrase(L, R, F) --> { ty_rel_slot(R) }, ty_rel(L, none, R, F).
 ty_np_phrase(L, P, F) --> { ty_poss_slot(P) }, ty_poss(L, P, F).
+ty_np_phrase(L, Nm, F) --> ty_name_here, { ty_name_slot(Nm) }, ty_name_words(L, Nm, F).
 ty_np_phrase(L, Pr, F) -->
     { ty_ppron_slot(Pr) },
     ty_flag_allows('$ty_ppron'),
@@ -3986,6 +4061,100 @@ ty_np_phrase(L, C, F) -->
 %% adposition of the accusative (German `mit ihm', `an ihn').
 ty_pp_pron_role(L, R) :- ( ty_case_now(L, acc) -> R = o ; R = j ).
 
+
+%% ---- names (since 1.62.0) -------------------------------------------------------------
+%%
+%% A NAME, name(Name), stands where a noun phrase stands: a role, a
+%% coordination's item, an adposition's phrase, a copula's predicate.
+%% Its words are tokens written with a capital that no table has as
+%% written (in the middle of a sentence `Smith' is no noun, but a German
+%% noun keeps its capital in the tables, so `Hund' is no name), or a row's
+%% (ty_name/5: a script with no capitals has no other way); the words
+%% joined by one space are the name as written, and Name its row's meaning,
+%% the English name (Italian `Socrate' is name('Socrates')), or the name as
+%% written. A sentence's first word is read as written too, after the word
+%% lowered (ty_first_written/4), where a row has it as written, or no
+%% table has the word lowered and the next word is a name's: at the start
+%% a capital says nothing, so `Shortbread is a cookie.' is no name. A name is
+%% of the third person and singular; its gender and animacy are its row's
+%% (a row of another language's too, the first with a gender), or else not
+%% known: a role that asks an animacy takes the one it asks, and so does a
+%% mark (Spanish `ve a Juan').
+
+ty_name_slot(X) :- var(X), !, X = name(_).
+ty_name_slot(name(_)).
+
+ty_name_role(L, Role, Nm, F) -->
+    { ty_role_case(L, Role) },
+    ty_mark_slot(L, Role, before, Before),
+    ty_name_words(L, Nm, F),
+    ty_mark_slot(L, Role, after, After),
+    { ty_marks_ok(L, Role, before, F, Before),
+      ty_marks_ok(L, Role, after, F, After) }.
+
+%% Writing, the name's words; reading, a name's token and the name's
+%% tokens after it, the longest first.
+ty_name_words(L, name(Nm), F) -->
+    (   { atom(Nm) }
+    ->  { ( once(ty_name(L, Nm, W, _, _)) -> true ; W = Nm ),
+          atomic_list_concat(Ws, ' ', W) },
+        ty_tokens(Ws)
+    ;   [W1], { ty_name_token(L, W1) }, ty_name_more(L, Ws),
+        { atomic_list_concat([W1|Ws], ' ', W),
+          ( once(ty_name(L, M, W, _, _)) -> Nm = M ; Nm = W ) }
+    ),
+    { ty_name_features(L, Nm, F) }.
+
+ty_name_more(L, [W|Ws]) --> [W], { ty_name_token(L, W) }, ty_name_more(L, Ws).
+ty_name_more(_, []) --> [].
+
+%% A token of a name: written with a capital that no table has as written,
+%% or, in a script with no capitals, a row's. A word that begins with a
+%% small letter asks no row.
+ty_name_token(L, W) :-
+    atom(W),
+    sub_atom(W, 0, 1, _, C),
+    upcase_atom(C, U),
+    U == C,
+    downcase_atom(C, D),
+    (   D \== C -> \+ ty_known_token(L, W)
+    ;   once(ty_name(L, _, W, _, _))
+    ).
+
+ty_cap_word(W) :-
+    sub_atom(W, 0, 1, _, C),
+    upcase_atom(C, C),
+    downcase_atom(C, D),
+    D \== C.
+
+%% A name's features: definite, singular, and its row's animacy and gender
+%% (none is no gender).
+ty_name_features(L, Nm, [def, sg, A, G]) :-
+    (   ty_name_row(L, Nm, G0, A0)
+    ->  A = A0, ( G0 == none -> true ; G = G0 )
+    ;   true
+    ).
+
+%% A name's row by its meaning: the language's with a gender, another's with
+%% one, else the first.
+ty_name_row(L, Nm, G, A) :-
+    (   once(( ty_name(L, Nm, _, G0, A0), G0 \== none )) -> G = G0, A = A0
+    ;   once(( ty_name(_, Nm, _, G0, A0), G0 \== none )) -> G = G0, A = A0
+    ;   once(ty_name(_, Nm, _, G, A))
+    ).
+
+%% THE NAMES OF A TEXT: whether one of its words is a name's token, set
+%% once a reading ('$ty_name'), so that a text with none tries no name at
+%% a role (ty_name_here//0), as coordination does.
+ty_name_flag(L, Words) :-
+    (   member(W, Words), ty_name_token(L, W) -> F = yes ; F = no ),
+    b_setval('$ty_name', f(F)).
+
+ty_name_here(S, S) :-
+    (   var(S) -> true
+    ;   nb_current('$ty_name', f(F)) -> F == yes
+    ;   true
+    ).
 
 %% ---- the possessor ------------------------------------------------------------------
 %%
@@ -4722,6 +4891,7 @@ ty_subject_gn(L, S, G, N) :-
     nonvar(S),
     (   S = np(M, N, _, _) -> ( once(ty_noun(L, M, G0, _, _, _)), memberchk(G0, [m, f]) -> G = G0 ; G = m )
     ;   S = pron(_, N, K) -> ( K == f -> G = f ; var(K) -> G = K ; G = m )
+    ;   S = name(Nm) -> N = sg, ( ty_name_row(L, Nm, G0, _), memberchk(G0, [m, f]) -> G = G0 ; true )
     ;   S = rel(H, _) -> ty_subject_gn(L, H, G, N)
     ;   S = of(_, H) -> ty_subject_gn(L, H, G, N)
     ;   S = gap(H, _, _) -> ty_subject_gn(L, H, G, N)
@@ -4883,6 +5053,13 @@ ty_role(L, Role, NP, Features) -->
     { ty_np_slot(NP) },
     ty_marked_np(L, Role, NP, Features, none).
 
+%% A name in its role (since 1.62.0), between the role's marks (Spanish
+%% `ve a Juan').
+ty_role(L, Role, Nm, Features) -->
+    ty_name_here,
+    { ty_name_slot(Nm) },
+    ty_name_role(L, Role, Nm, Features).
+
 %% A personal pronoun in its role; an object clitic's words stood in the
 %% verb's (ty_verb_group//7), which bound it before the object's place.
 ty_role(L, o, Pr, F) -->
@@ -4992,6 +5169,8 @@ ty_coord_last(L, R, C, F) -->
 %% its role's (role(Role)).
 ty_conjunct(L, none, X, F) --> { ty_np_slot(X) }, ty_np(L, X, F).
 ty_conjunct(L, none, X, F) --> { ty_poss_slot(X) }, ty_poss(L, X, F).
+ty_conjunct(L, none, X, F) --> ty_name_here, { ty_name_slot(X) }, ty_name_words(L, X, F).
+ty_conjunct(L, role(R), X, F) --> ty_name_here, { ty_name_slot(X) }, ty_name_role(L, R, X, F).
 ty_conjunct(L, role(R), X, F) --> { ty_np_slot(X) }, ty_marked_np(L, R, X, F, none).
 ty_conjunct(L, role(R), X, F) -->
     { ty_poss_slot(X) },
@@ -6013,7 +6192,7 @@ ty_tense_fit(T0, T) :-
 
 :- dynamic tyi_entry/4, tyi_form/4, tyi_lex/3, tyi_animate/1, tyi_gender/2, tyi_count/2,
            tyi_hand/1, tyi_class/2, tyi_name/1, tyi_class_word/4, tyi_person/1,
-           tyi_sense/2, tyi_sense_word/4, tyi_vbase/2.
+           tyi_sense/2, tyi_sense_word/4, tyi_vbase/2, tyi_pname/3.
 
 typology_import(Name) :-
     must_be(atom, Name),
@@ -6044,6 +6223,7 @@ typology_import(Name, File) :-
         Vs \== [],
         forall(member(V, Vs), ty_read_vocabulary(V)),
         ty_read_lexicon(english),
+        ty_read_names(english),
         findall(R, ty_english_row(R), Rows0)
     ;   Name == topics
     ->  findall(Src-V, ( member(Src, [spanish, italian]), ty_vocabulary_file(Src, V) ), Vs),
@@ -6054,7 +6234,9 @@ typology_import(Name, File) :-
         findall(R, ty_topic_row(R), Rows0)
     ;   ty_vocabulary_file(Name, V),
         ty_read_vocabulary(V),
-        findall(R, ty_import_row(Name, R), Rows0)
+        findall(R, ty_import_row(Name, R), Rows00),
+        ty_dix_name_rows(Name, NameRows),
+        append(Rows00, NameRows, Rows0)
     ),
     ty_dedupe(Rows0, Rows1),
     ty_kind_split(Rows1, Kinds, Rows),
@@ -6112,7 +6294,7 @@ ty_read_terms(S, Ts) :-
 
 ty_import_reset :-
     ty_import_reset_words,
-    retractall(tyi_lex(_, _, _)),
+    retractall(tyi_lex(_, _, _)), retractall(tyi_pname(_, _, _)),
     retractall(tyi_class_word(_, _, _, _)),
     retractall(tyi_count(_, _)), retractall(tyi_hand(_)),
     retractall(tyi_sense(_, _)), retractall(tyi_sense_word(_, _, _, _)).
@@ -6434,6 +6616,7 @@ ty_adjective_complete(Forms) :-
 %% (`"saw" is the past of "sees"').
 %% An English noun is put in the template's first class (ty_noun_class/3),
 %% unless the hand template has it (a noun of a class, or an irregular one).
+ty_english_row(ty_name(english, N, N, G, A)) :- tyi_pname(N, G, A).
 ty_english_row(ty_noun_in(english, M, none, Anim, M, C)) :-
     once(tyi_hand(ty_noun_class(english, _, _))),
     ty_english_nouns(Ms),
@@ -6509,6 +6692,116 @@ ty_lexicon_file(Base, File) :-
 ty_az_word(W) :-
     atom_codes(W, Cs),
     forall(member(C, Cs), ( C >= 0'a, C =< 0'z )).
+
+%% THE NAMES OF lexicon/ (the English import, since 1.62.0), as
+%% tyi_pname(Name, Gender, Animacy): proper.txt's first names, the 1 500
+%% female ones first and then the 1 000 male ones, each a person's (a name
+%% in both lists, as `Mary' is, takes the gender of the list where it
+%% stands higher, none where its places are the same); then place.txt's
+%% places, each inanimate with no gender. A name whose lowered word is a word of grammar the template
+%% names (ty_closed/2: `Will', `May') is none.
+ty_read_names(L) :-
+    ( tyi_hand(ty_closed(L, Closed)) -> true ; Closed = [] ),
+    ( ty_lexicon_file(proper, F1) -> ty_lexicon_lines(F1, Ns) ; Ns = [] ),
+    (   length(Fem, 1500), append(Fem, Male, Ns) -> true ; Fem = Ns, Male = [] ),
+    ty_name_ranks(Fem, FemR), ty_name_ranks(Male, MaleR),
+    forall(member(N, Fem), ( ty_name_gender(N, FemR, MaleR, f, m, G), ty_note_name(N, G, person, Closed) )),
+    forall(member(N, Male), ( ty_name_gender(N, MaleR, FemR, m, f, G), ty_note_name(N, G, person, Closed) )),
+    (   ty_lexicon_file(place, F2)
+    ->  ty_lexicon_lines(F2, Ps),
+        forall(member(P, Ps), ty_note_name(P, none, inanimate, Closed))
+    ;   true
+    ),
+    forall(( member(Src, [italian, spanish]), ty_dix_path(Src, DF) ),
+           ( ty_dix_names(DF, Es),
+             forall(( member(e(EN, _, LT, _), Es), ty_dix_kind(LT, A) ),
+                    ty_note_name(EN, none, A, Closed)) )).
+
+%% THE NAMES OF APERTIUM'S BILINGUAL DICTIONARIES (corpus/raw/, since
+%% 1.62.0): each entry of a proper noun (np) of a person (ant, a surname
+%% cog) or a place (loc), as e(English, Written, EnglishTags, OtherTags);
+%% an entry the same in both languages (<i>) twice the same. A place's
+%% gender is the other side's tag (m, f), a person's none. The Spanish and
+%% the Italian import write a row of each: its meaning the English name.
+ty_dix_file(spanish, 'corpus/raw/apertium-eng-spa.eng-spa.dix').
+ty_dix_file(italian, 'corpus/raw/apertium-eng-ita.eng-ita.dix').
+
+ty_dix_path(L, File) :-
+    ty_dix_file(L, Rel),
+    catch(absolute_file_name(library(reasoning/Rel), File, [access(read)]), _, fail).
+
+ty_dix_names(File, Es) :-
+    read_file_to_codes(File, Codes), atom_codes(Text, Codes),
+    atomic_list_concat(Lines, '\n', Text),
+    findall(E, ( member(Ln, Lines), sub_atom(Ln, _, _, _, 'n="np"'), ty_dix_entry(Ln, E) ), Es).
+
+ty_dix_entry(Ln, e(L, R, LT, RT)) :-
+    (   ty_dix_side(Ln, '<l>', '</l>', L, LT), ty_dix_side(Ln, '<r>', '</r>', R, RT) -> true
+    ;   ty_dix_side(Ln, '<i>', '</i>', L, LT), R = L, RT = LT
+    ),
+    sub_atom(LT, _, _, _, 'n="np"').
+
+ty_dix_side(Ln, Open, Close, Word, Tags) :-
+    sub_atom(Ln, _, _, A, Open), !,
+    sub_atom(Ln, _, A, 0, After),
+    sub_atom(After, C, _, _, Close), !,
+    sub_atom(After, 0, C, _, Inner),
+    sub_atom(Inner, S, _, _, '<s '), !,
+    sub_atom(Inner, 0, S, _, W0),
+    sub_atom(Inner, S, _, 0, Tags),
+    atomic_list_concat(P1, '<b/>', W0), atomic_list_concat(P1, ' ', W1),
+    atomic_list_concat(P2, '<b />', W1), atomic_list_concat(P2, ' ', Word),
+    Word \== '',
+    \+ ( sub_atom(Word, _, 1, _, Ch), memberchk(Ch, ['<', '>', '&', ';', '#']) ).
+
+ty_dix_kind(Tags, A) :-
+    (   ( sub_atom(Tags, _, _, _, 'n="ant"') ; sub_atom(Tags, _, _, _, 'n="cog"') ) -> A = person
+    ;   sub_atom(Tags, _, _, _, 'n="loc"') -> A = inanimate
+    ).
+
+ty_dix_gender(Tags, G) :-
+    (   sub_atom(Tags, _, _, _, 'n="m"') -> G = m
+    ;   sub_atom(Tags, _, _, _, 'n="f"') -> G = f
+    ;   G = none
+    ).
+
+ty_dix_name_rows(L, Rows) :-
+    ( tyi_hand(ty_closed(L, Closed)) -> true ; Closed = [] ),
+    (   ty_dix_path(L, F)
+    ->  ty_dix_names(F, Es),
+        findall(ty_name(L, EN, W, G, A),
+                ( member(e(EN, W, LT, RT), Es),
+                  ( ty_dix_kind(RT, A) -> true ; ty_dix_kind(LT, A) ),
+                  downcase_atom(W, D), \+ memberchk(D, Closed),
+                  ty_dix_gender(RT, G) ), Rows)
+    ;   Rows = []
+    ).
+
+%% Each name's first place in a list, as an assoc.
+ty_name_ranks(Ns, Ranks) :-
+    empty_assoc(R0),
+    foldl([N, I0-A0, I-A]>>( I is I0 + 1, ( get_assoc(N, A0, _) -> A = A0 ; put_assoc(N, A0, I, A) ) ),
+          Ns, 0-R0, _-Ranks).
+
+ty_name_gender(N, Here, Other, G1, G2, G) :-
+    get_assoc(N, Here, R1),
+    (   get_assoc(N, Other, R2)
+    ->  ( R1 < R2 -> G = G1 ; R2 < R1 -> G = G2 ; G = none )
+    ;   G = G1
+    ).
+
+ty_note_name(N, G, A, Closed) :-
+    downcase_atom(N, D),
+    (   memberchk(D, Closed) -> true
+    ;   tyi_pname(N, _, A) -> true
+    ;   assertz(tyi_pname(N, G, A))
+    ).
+
+%% A lexicon file's lines, the empty ones and the comments (`#') off.
+ty_lexicon_lines(File, Lines) :-
+    read_file_to_codes(File, Codes), atom_codes(Text, Codes),
+    atomic_list_concat(Lines0, '\n', Text),
+    exclude([W]>>( W == '' ; sub_atom(W, 0, 1, _, '#') ), Lines0, Lines).
 
 
 %% The class the import puts an item of Kind in: the first ty_class_when/4
@@ -6587,8 +6880,10 @@ ty_kind_split(Rows, Kinds, Rest) :-
     partition([R]>>( R = ty_noun_in(_, _, _, _, _, _) ), Rows, Nouns, Rest1),
     partition([R]>>( R = ty_verb_in(_, _, _, _) ), Rest1, Verbs, Rest2),
     partition([R]>>( R = ty_adjective(english, _, _, _, _) ), Rest2, Adjectives, Rest3),
-    partition([R]>>( R = ty_adverb(english, _, _) ), Rest3, Adverbs, Rest),
-    findall(K-Rs, ( member(K-Rs, [nouns-Nouns, verbs-Verbs, adjectives-Adjectives, adverbs-Adverbs]),
+    partition([R]>>( R = ty_adverb(english, _, _) ), Rest3, Adverbs, Rest4),
+    partition([R]>>( R = ty_name(_, _, _, _, _) ), Rest4, Names, Rest),
+    findall(K-Rs, ( member(K-Rs, [nouns-Nouns, verbs-Verbs, adjectives-Adjectives, adverbs-Adverbs,
+                                  names-Names]),
                     Rs \== [] ), Kinds).
 
 ty_kind_file(File, Kind, KFile) :-

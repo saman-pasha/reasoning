@@ -139,6 +139,7 @@ main :-
     coordination,
     coordination_same,
     coordination_inside,
+    names,
     format("~ndone~n", []).
 
 
@@ -820,6 +821,27 @@ coordination_inside :-
     must('German declines each', W2, 'Der Junge sieht einen kleinen und schwarzen Hund.'),
     typology_read(english, 'The boy sleeps slowly and quietly.', IR3),
     must('two adverbs', IR3, clause(sleep, present, pos, np(boy, sg, def, []), none, [adv(and([slowly, quietly]))])).
+
+%% 48. NAMES (1.62.0, the translator's first step, TRANSLATOR-PLAN.md):
+%% name(Meaning) where a noun phrase stands. A name's words are written
+%% with a capital that no table has, or a row's (ty_name/5, from the census
+%% names and WordNet's places in lexicon/ and Apertium's proper nouns in
+%% corpus/raw/); its meaning is the English name, so Italian `Socrate' is
+%% name('Socrates'). At a sentence's start a capital says nothing: only a
+%% row, or a name's word after it, makes the first word a name.
+names :-
+    typology_read(english, 'Socrates is human.', IR1),
+    must('a name of a row', IR1, copula(present, pos, name('Socrates'), adj([human]))),
+    typology_write(italian, IR1, W2),
+    must('written in Italian', W2, 'Socrate è umano.'),
+    typology_read(english, 'The dog sees John Smith.', IR3),
+    must('two words with a capital', IR3, clause(see, present, pos, np(dog, sg, def, []), name('John Smith'))),
+    typology_write(spanish, IR3, W4),
+    must('Spanish marks a person''s name', W4, 'El perro ve a John Smith.'),
+    typology_write(spanish, copula(present, pos, name('Mary'), adj([small])), W5),
+    must('and its adjective agrees with the name''s gender', W5, 'Mary es pequeña.'),
+    ( typology_read(english, 'Shortbread is a short crumbly cookie.', _) -> R6 = read ; R6 = refused ),
+    must('an unknown first word is no name', R6, refused).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

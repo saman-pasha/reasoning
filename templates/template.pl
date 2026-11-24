@@ -141,6 +141,22 @@ ty_order(xx, rel, [c, m, h]).
 %%   (keep it where the language does this, else delete it)
 ty_capital_nouns(xx).
 
+%%     ty_name(L, Meaning, Written, Gender, Animacy)
+%%                                     a name: its meaning, the English
+%%                                     name (Italian `Socrate' is
+%%                                     `Socrates'), as written, its words
+%%                                     joined by one space (`New York'),
+%%                                     its gender m, f or none (not known)
+%%                                     and its animacy person, animate or
+%%                                     inanimate; a word written with a
+%%                                     capital that no table has is a name
+%%                                     with no row, its meaning as written
+%%                                     (the rows are templates/<name>-
+%%                                     names.pl's, from lexicon/ and
+%%                                     corpus/raw/)
+%% ty_name(xx, Meaning, Written, Gender, Animacy).
+%%   e.g. ty_name(persian, 'Ali', علی, m, person).
+
 %%     ty_and(L, Words)                the words that join the last item of
 %%                                     a list: a predicate's adjectives, noun
 %%                                     phrases, clauses (`and', `y', `und',
