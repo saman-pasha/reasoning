@@ -542,6 +542,10 @@ ty_order(english, pp, [p, x]).
 ty_adjunct(english, end).
 %% A noun phrase's adposition phrase stands after it (since 1.83.0).
 ty_noun_adposition(english, after).
+%% A clause may say no subject (since 1.86.0): `Took the joke well.'
+ty_subject_unsaid(english, 3).
+%% The verbs that may take no object: WordNet's, lexicon/vi.txt (since 1.86.0).
+ty_verb_list(english, no_object, vi).
 ty_adposition(english, in, [in]).
 ty_adposition(english, on, [on]).
 ty_adposition(english, with, [with]).

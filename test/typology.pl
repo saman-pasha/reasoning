@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2069,6 +2069,34 @@ prepositions :-
     ( typology_write(spanish, IR2, W3) -> true ; W3 = none ),
     check('a language with no row for the meaning writes none', W3, none).
 
+%% 1.86.0: A CLAUSE WITH NO SUBJECT, where the template has
+%% ty_subject_unsaid(L, 3): its subject pron(3, sg, zero), someone the text
+%% does not name; tried after the command; with no object no past verb
+%% whose word is an adjective's, unless the verb may take no object
+%% (ty_verb_list(english, no_object, vi)).
+unsaid_subjects :-
+    section('a clause with no subject'),
+    Z = pron(3, sg, zero),
+    forall(member(T-Want, [
+               'Took the joke well.'-clause(take, past, pos, Z, np(joke, sg, def, []), [adv(well)]),
+               'Ate a light supper.'-clause(eat, past, pos, Z, np(supper, sg, indef, [light])),
+               'Has eaten a cake.'-clause(eat, perfect, pos, Z, np(cake, sg, indef, [])),
+               'Fell into a profound sleep.'-clause(fall, past, pos, Z, none, [pp(into, np(sleep, sg, indef, [profound]))]),
+               'Interested in sports.'-none,
+               'Take the joke well.'-command ]),
+           ( ( typology_read(english, T, R) -> true ; R = none ),
+             ( R = clause(_, imperative, _, _, _, _) -> V = command ; V = R ),
+             atomic_list_concat(['English: ', T, ', the first reading'], Label),
+             check(Label, V, Want) )),
+    IR2 = clause(sleep, past, pos, Z, none),
+    forall(member(L2-Want2, [english-'Slept.', spanish-'Durmió.', italian-'Dormì.', french-none, german-none]),
+           ( ( typology_write(L2, IR2, W2) -> true ; W2 = none ),
+             atomic_list_concat([L2, ': ', Want2], Label2),
+             check(Label2, W2, Want2) )),
+    ( typology_read(spanish, 'Durmió.', R3) -> true ; R3 = none ),
+    ( R3 = clause(sleep, past, pos, pron(3, sg, K3), none), var(K3) -> V3 = dropped ; V3 = R3 ),
+    check('Spanish reads its own dropped subject, of no kind', V3, dropped).
+
 %% 1.64.0: the bare singular noun. np(M, sg, mass, []): a singular noun
 %% with no article, read after the other readings, written with none;
 %% Persian, whose definite noun has none either, writes it as def.
@@ -2400,8 +2428,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 3550 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 3 550 sentences read at 1.84.0 are read', R1, yes),
+    ( K >= 3644 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 3 644 sentences read at 1.86.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 
@@ -2761,4 +2789,4 @@ blank_template :-
     include([X4]>>( X4 = bad(_) ), M4, Bad4),
     check('every row of code of templates/template.pl is a row the check takes', Bad4, []),
     length(Rows, NR4),
-    check('the rows of code of the choices', NR4, 87).
+    check('the rows of code of the choices', NR4, 88).

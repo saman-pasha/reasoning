@@ -287,6 +287,12 @@ ty_conjunct_marks(xx).
 %% ty_verb(xx, Meaning, Tense, Number, Polarity, Words).
 %%   e.g. ty_verb(spanish, see, present, sg, pos, [ve]).
 
+%%     ty_verb_list(L, Kind, Base)     the verbs of lexicon/Base.txt are of
+%%                                     Kind (no_object: one that may take
+%%                                     no object; since 1.86.0)
+%% ty_verb_list(xx, Kind, Base).
+%%   e.g. ty_verb_list(english, no_object, vi).
+
 %%     ty_tense_form(L, Tense, Number, Polarity, Pattern)
 %%                                     a verb in Tense with no row of its
 %%                                     own is Pattern: words, and form(T, N)
@@ -869,6 +875,14 @@ ty_pronoun_gender(xx, natural).
 %%                                     person (Spanish `Veo al perro.')
 %%   (keep the persons whose subject may be no word, or delete it)
 ty_pro_drop(xx, [1, 2, 3]).
+
+%%     ty_subject_unsaid(L, 3)         a clause of the third person may say
+%%                                     no subject (since 1.86.0): its
+%%                                     subject pron(3, sg, zero), someone
+%%                                     the text does not name (`Took the
+%%                                     joke well.')
+%%   (keep it where a clause may say no subject, or delete it)
+ty_subject_unsaid(xx, 3).
 
 %%     ty_clitic(L, o)                 an object pronoun is a clitic in the
 %%                                     verb's words, after the negation's

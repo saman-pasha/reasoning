@@ -100,6 +100,9 @@
 %%                                     parts its class does not make
 %%                                     (English see [past(sg)-saw,
 %%                                     participle-seen])
+%%     ty_verb_list(L, Kind, Base)     the verbs of lexicon/Base.txt are of
+%%                                     Kind (no_object: one that may take
+%%                                     no object; since 1.86.0)
 %%     ty_tense_form(L, Tense, Number, Polarity, Pattern)
 %%                                     a verb in Tense with no row of its
 %%                                     own is Pattern: words, and form(T, N)
@@ -321,6 +324,11 @@
 %%                                     verb's form tells it): written so of
 %%                                     the Persons listed, read so of every
 %%                                     person (Spanish `Veo al perro.')
+%%     ty_subject_unsaid(L, 3)         a clause of the third person may say
+%%                                     no subject (since 1.86.0): its
+%%                                     subject pron(3, sg, zero), someone
+%%                                     the text does not name (`Took the
+%%                                     joke well.')
 %%     ty_clitic(L, o)                 an object pronoun is a clitic in the
 %%                                     verb's words, after the negation's
 %%                                     (Spanish `no lo ve')
@@ -749,7 +757,7 @@
            ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
            ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
            ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-           ty_pro_drop/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
+           ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
            ty_answer_echo/3, ty_kind/2, ty_adjective_before/2, ty_pronoun_gender/2,
            ty_inversion/3, ty_wh_tonic/3,
            ty_tense_form/5, ty_participle/3, ty_participle_like/3,
@@ -775,7 +783,7 @@
                  ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
                  ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
                  ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-                 ty_pro_drop/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
+                 ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
                  ty_answer_echo/3, ty_adjective_before/2, ty_pronoun_gender/2,
                  ty_inversion/3, ty_wh_tonic/3,
                  ty_tense_form/5, ty_participle/3, ty_participle_like/3,
@@ -1063,7 +1071,7 @@ ty_template_group('the orders of the levels', [ty_order]).
 ty_template_group('words', [ty_noun_class, ty_class_when, ty_noun_in, ty_noun, ty_adjective, ty_adjective_before, ty_article, ty_adposition,
                             ty_adverb, ty_capital, ty_capital_nouns, ty_name, ty_quantifier_pronoun, ty_definite_like, ty_subordinator, ty_subordinate_first, ty_subordinate_comma, ty_and, ty_conjunction, ty_serial_comma,
                             ty_conjunct_marks, ty_clause_comma, ty_comma, ty_sense, ty_closed]).
-ty_template_group('verbs and tenses', [ty_conjugation, ty_verb_in, ty_irregular_verb, ty_verb, ty_tense_form, ty_tense_like, ty_participle,
+ty_template_group('verbs and tenses', [ty_conjugation, ty_verb_in, ty_irregular_verb, ty_verb, ty_verb_list, ty_tense_form, ty_tense_like, ty_participle,
                                        ty_participle_like, ty_participle_ending, ty_participle_agrees,
                                        ty_verb_class, ty_class_tense_form, ty_verb_person, ty_copula,
                                        ty_split_place, ty_verb_last]).
@@ -1085,7 +1093,7 @@ ty_template_group('relative clauses', [ty_relative, ty_relative_comma, ty_gap, t
                                        ty_relative_possessive]).
 ty_template_group('possessors and pronouns', [ty_possessive, ty_possessive_pronoun,
                                               ty_possessive_clitic, ty_pronoun, ty_pronoun_gender,
-                                              ty_polite, ty_pro_drop, ty_clitic]).
+                                              ty_polite, ty_pro_drop, ty_subject_unsaid, ty_clitic]).
 
 %% A slot of a closed set of choices: a note, and every choice as a row of
 %% code (row(Term)), or as a comment where it needs words or other rows
@@ -1128,6 +1136,7 @@ ty_template_choice(ty_relative_bare, Name, 'keep the ones the language uses, or 
 ty_template_choice(ty_pronoun_gender, Name, 'keep one, or none: natural is the default', Rows) :-
     findall(row(ty_pronoun_gender(Name, S)), member(S, [grammatical, natural]), Rows).
 ty_template_choice(ty_pro_drop, Name, 'keep the persons whose subject may be no word, or delete it', [row(ty_pro_drop(Name, [1, 2, 3]))]).
+ty_template_choice(ty_subject_unsaid, Name, 'keep it where a clause may say no subject, or delete it', [row(ty_subject_unsaid(Name, 3))]).
 ty_template_choice(ty_negative_article_roles, Name, 'only with ty_negative_article/5 rows; keep the roles that take it', [text("ty_negative_article_roles(~q, [s, o, p]).", [Name])]).
 ty_template_choice(ty_negative_article_keeps, Name, 'only with ty_negative_article/5 rows', [text("ty_negative_article_keeps(~q).", [Name])]).
 ty_template_choice(Slot, Name, 'keep it where the language does this, else delete it', [row(T)]) :-
@@ -1201,6 +1210,7 @@ ty_row_shape('ty_adjective_before(L, Meaning).').
 ty_row_shape('ty_pronoun_gender(L, System).').
 ty_row_shape('ty_inversion(L, Join, VowelJoin).').
 ty_row_shape('ty_wh_tonic(L, Meaning, Words).').
+ty_row_shape('ty_verb_list(L, Kind, Base).').
 ty_row_shape('ty_tense_form(L, Tense, Number, Polarity, Pattern).').
 ty_row_shape('ty_tense_like(L, Level, Tense, As).').
 ty_row_shape('ty_definite_like(L, Def, As).').
@@ -1618,6 +1628,9 @@ ty_missing(L, bad(ty_possessive_pronoun(L, Ws, A, B))) :-
 ty_missing(L, bad(ty_pro_drop(L, Ps))) :-
     ty_pro_drop(L, Ps),
     \+ ( is_list(Ps), ty_values(person, Ks), forall(member(P, Ps), memberchk(P, Ks)) ).
+ty_missing(L, bad(ty_subject_unsaid(L, P))) :-
+    ty_subject_unsaid(L, P),
+    P \== 3.
 ty_missing(L, bad(ty_clitic(L, R))) :-
     ty_clitic(L, R),
     R \== o.
@@ -3447,6 +3460,63 @@ ty_sentence(L, phrase(NP)) -->
 %% object of lexicon/prose.txt, and none of the 13 true ones).
 ty_sentence(L, C) --> ty_command(L, C).
 
+%% A CLAUSE WITH NO SUBJECT (since 1.86.0): a statement of the third
+%% person whose subject no words say, where the template has
+%% ty_subject_unsaid(L, 3) -- WordNet's examples of a verb (`Took the joke
+%% well.', `Ate a light supper.'). Its subject is pron(3, sg, zero),
+%% someone the text does not name; '$ty_command' holds z(Clause) while it
+%% is read or written, so ty_command_subject/1 finds its subject as it
+%% finds a command's. Tried after the command: `Take the joke well.' is a
+%% command. One with no object takes no past verb whose word is an
+%% adjective's too, unless the verb may take no object (ty_verb_of/3):
+%% those are participles, a passive (`Interested in sports.', `Depressed by
+%% the loss of his job.'), which an active clause of someone says wrong.
+ty_sentence(L, C) -->
+    ty_here(S0),
+    { '$ty_unsaid'(L),
+      ( nonvar(S0) -> Rd = read ; Rd = write ),
+      C = clause(_, T, _, pron(3, sg, zero), _, _),
+      b_setval('$ty_command', z(C)) },
+    ty_clause(L, C),
+    ty_here(S),
+    { b_setval('$ty_command', none), T \== imperative,
+      \+ ty_unsaid_participle(L, C),
+      \+ ty_said_subject(Rd, L, S0, S) }.
+
+%% Reading (the words given before the rule began, not made by it), no
+%% clause with no subject where the words are a clause with one: `Dogs
+%% sleep.' is no clause of someone who dogs sleep.
+ty_said_subject(read, L, S0, S) :-
+    ty_clause(L, C2, S0, S),
+    arg(4, C2, Sub), Sub \== pron(3, sg, zero), !.
+
+ty_unsaid_participle(L, clause(V, past, _, _, O, _)) :-
+    O == none,
+    ty_verb_row(L, V, past, sg, pos, [W]),
+    ty_word_class(L, adjective, W),
+    \+ ty_verb_of(L, no_object, V).
+
+%% A verb of a kind: of the list ty_verb_list(L, Kind, Base) names, read
+%% from lexicon/Base.txt the first time it is asked (English no_object is
+%% WordNet's vi.txt: `Fell into a profound sleep.' and `Held hard to the
+%% railing.' are clauses, fall and hold verbs that may take no object,
+%% where `Interested in sports.' is a participle).
+ty_verb_of(L, Kind, V) :-
+    ty_verb_list(L, Kind, Base),
+    ty_lex_base_read(Base),
+    '$ty_lexw'(Base, V), !.
+
+ty_lex_base_read(Base) :-
+    (   '$ty_lexw_read'(Base) -> true
+    ;   assertz('$ty_lexw_read'(Base)),
+        (   ty_lexicon_file(Base, File)
+        ->  read_file_to_codes(File, Codes), atom_codes(Text, Codes),
+            atomic_list_concat(Lines, '\n', Text),
+            forall(( member(W, Lines), W \== '' ), assertz('$ty_lexw'(Base, W)))
+        ;   true
+        )
+    ).
+
 %% The words a phrase read (ty_sentence//2 above), and the command they
 %% read as.
 ty_here(S, S, S).
@@ -3471,7 +3541,7 @@ ty_command_adjective(L, clause(V, _, _, _, O, _)) :-
     ty_word_class(L, adjective, W).
 
 ty_command_subject(Pr) :-
-    nb_current('$ty_command', c(C)), arg(4, C, S), S == Pr.
+    nb_current('$ty_command', X), ( X = c(C) -> true ; X = z(C) ), arg(4, C, S), S == Pr.
 
 %% Only a command's own clause is in the imperative (a clause inside it,
 %% `the goal that you see', is not). Asked of the command once it is read:
@@ -4787,7 +4857,7 @@ ty_ppron_role(L, s, Pr, F) -->
 %% so too: its noun was said.
 ty_dropped_first(L, pron(P, _, K)) :-
     nonvar(P), ty_pro_drop(L, Persons),
-    ( memberchk(P, Persons) -> true ; P == 3, ( var(K) -> true ; K = ref(_) ) ).
+    ( memberchk(P, Persons) -> true ; P == 3, ( var(K) -> true ; K = ref(_) -> true ; K == zero ) ).
 
 ty_flag_allows(Flag, S0, S0) :- ( var(S0) -> true ; \+ nb_current(Flag, f(no)) ).
 
@@ -6139,8 +6209,9 @@ ty_parse_reset(L) :-
 ty_feats_make(L) :-
     retractall('$ty_cased'(L)), retractall('$ty_declines'(L)),
     retractall('$ty_kein_lang'(L)), retractall('$ty_sub_used'(L)), retractall('$ty_commands'(L)),
-    retractall('$ty_noun_pp'(L)),
+    retractall('$ty_noun_pp'(L)), retractall('$ty_unsaid'(L)),
     ( ty_noun_adposition(L, after) -> assertz('$ty_noun_pp'(L)) ; true ),
+    ( ty_subject_unsaid(L, 3) -> assertz('$ty_unsaid'(L)) ; true ),
     ( once(ty_tense_form(L, imperative, _, _, _)) -> assertz('$ty_commands'(L)) ; true ),
     ( once(ty_case(L, _, _)) -> assertz('$ty_cased'(L)) ; true ),
     ( once(ty_adjective_ending(L, _, _, _, _, _)) -> assertz('$ty_declines'(L)) ; true ),
@@ -6219,6 +6290,9 @@ ty_feats_make(L) :-
 :- dynamic('$ty_sub_used'/1).
 :- dynamic('$ty_commands'/1).
 :- dynamic('$ty_noun_pp'/1).
+:- dynamic('$ty_unsaid'/1).
+:- dynamic('$ty_lexw'/2).
+:- dynamic('$ty_lexw_read'/1).
 :- dynamic('$ty_art_words'/4).
 :- dynamic('$ty_art_multi'/4).
 :- dynamic('$ty_art_defs'/3).

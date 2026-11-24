@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -263,11 +263,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 239),
-    ( R >= 225 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 225 right', VR, ok),
-    ( K >= 231 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 231 kept', VK, ok).
+    check('the second measure: its sentences', N, 249),
+    ( R >= 235 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 235 right', VR, ok),
+    ( K >= 241 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 241 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -753,6 +753,23 @@ prepositions :-
            ( logic_translate(english, cocolog, T3, P3), assert_text(P3) )),
     findall(X3-Y3, at(X3, Y3), XYs3),
     check('a query of what is where', XYs3, [the(book)-the(station), the(bag)-the(door)]).
+
+%% 1.86.0: A CLAUSE WITH NO SUBJECT says its atoms of someone, the
+%% constant `Someone' is said back as.
+unsaid_subjects :-
+    section('a clause with no subject'),
+    forall(member(T-Want-Back, [
+               'Took the joke well.'-'past(well(take(someone, the(joke)))).\n'-'Someone took the joke well.',
+               'Listened intently.'-'past(intently(listen(someone))).\n'-'Someone listened intently.',
+               'Clinched a victory.'-'victory(a(victory)).\npast(clinch(someone, a(victory))).\n'-'Someone clinched a victory.' ]),
+           ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
+             ( C \== none, logic_translate(cocolog, english, C, E) -> true ; E = none ),
+             one_line(['into Cocolog and back: ', T], Label),
+             check(Label, C-E, Want-Back) )),
+    once(typology_read(english, 'Took the joke well.', IR2)),
+    logic_from_ir(IR2, U2),
+    check('the subject no words say is the constant someone', U2,
+          utterance(assertion, [fact(at(past, modified(adv(well), pred(take, [const(someone), const(the(joke))]))))])).
 
 %% Each clause of a Cocolog text asserted.
 assert_text(P) :-

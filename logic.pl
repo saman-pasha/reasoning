@@ -730,7 +730,8 @@ lg_pron_const(pron(1, N, _), C) :- N == sg, !, C = i.
 lg_pron_const(pron(1, N, _), C) :- N == pl, !, C = we.
 lg_pron_const(pron(P, _, _), you) :- ( P == 2 ; P == polite ), !.
 lg_pron_const(pron(3, N, _), they) :- N == pl, !.
-lg_pron_const(pron(3, N, G), C) :- N == sg, atom(G), memberchk(G-C, [m-he, f-she, n-it]).
+%% a subject no words say (pron(3, sg, zero), since 1.86.0) is someone
+lg_pron_const(pron(3, N, G), C) :- N == sg, atom(G), memberchk(G-C, [m-he, f-she, n-it, zero-someone]).
 
 %% A name's constant: its words lowered, joined by `_' (`John Smith' is
 %% john_smith).

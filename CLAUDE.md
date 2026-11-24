@@ -24,8 +24,8 @@ red) and lesson 01 pin the shape of the answer, deliberately not the number.
 The reasoning library translates ALL 8 000 sentences of `lexicon/prose.txt`
 from English into the IR, and ALL of that IR into Cocolog. Every step
 moves one of the two counts and reports both (`tools/logic/prose.pl`;
-STATUS.md keeps them): at 1.84.0, 3 550 into the IR, 3 415 of them into
-Cocolog (1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
+STATUS.md keeps them): at 1.86.0, 3 644 into the IR, 3 508 of them into
+Cocolog (1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
 count says so. **Measure what blocks the rest before choosing a step**:
 at 1.80.0 the words no table has looked like the gap, and 5 115 of the
 8 000 had none -- 2 130 of them a noun phrase alone, which one rule read.
@@ -563,6 +563,24 @@ row is a cost per row**: the gap check of an adposition phrase
 43 rows cost English's round trips 10 % more inferences; it asks the
 text's adpositions now (`ty_adp_ahead/2`, `'$ty_adp'`, set for every
 language since 1.84.0), and English is 0.6 % cheaper than at 1.83.0.
+**A clause with no subject since 1.86.0** (`Took the joke well.`, where
+the template has `ty_subject_unsaid(L, 3)`, English alone) is a clause
+whose subject is `pron(3, sg, zero)`, someone the text does not name: a
+`ty_sentence//2` clause after the command's, `'$ty_command'` holding
+`z(Clause)` so `ty_command_subject/1` finds its subject as it finds a
+command's (one global, one call where the subject's role asks it). Level
+2: the constant `someone` (`lg_pron_const/2`), said back as `Someone`. A
+language that drops a subject drops it (`ty_dropped_first/2`: Spanish
+`Durmió.`). Refused: in the imperative; reading, where the same words are
+a clause with a subject (`ty_said_subject/4`: `Dogs sleep.` had a second
+reading, someone dogs sleep); with no object, where the past verb's word
+is an adjective's and the verb is not one of `ty_verb_list(L, no_object,
+Base)`'s (English `vi`: WordNet's lexicon/vi.txt, read the first time it
+is asked, `ty_verb_of/3`) -- a passive participle (`Interested in
+sports.`). What bit: **a check of the words read must know at the start
+whether it reads**: after `ty_clause//2` a write has bound the words, and
+the check read them back inside the write, which then made no sentence of
+the 94 (`Rd`, taken before the clause).
 **The blank template copies the row descriptions of typology.pl's head**:
 a changed description is `typology_import(template)` again, or the
 `reproduced` section is red.

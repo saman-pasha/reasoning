@@ -51,6 +51,7 @@ main :-
     commands,
     noun_adpositions,
     prepositions,
+    unsaid_subjects,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -331,6 +332,14 @@ prepositions :-
     must('round the atom', C1, 'past(during(is_sleep(he), the(storm))).\n'),
     logic_translate(english, cocolog, 'The book is at the station.', C2),
     must('after is', C2, 'at(the(book), the(station)).\n').
+
+%% 22. A CLAUSE WITH NO SUBJECT says its atoms of someone, and is said back
+%% with `Someone'.
+unsaid_subjects :-
+    logic_translate(english, cocolog, 'Took the joke well.', C1),
+    must('of someone', C1, 'past(well(take(someone, the(joke)))).\n'),
+    logic_translate(cocolog, english, C1, E2),
+    must('back into English', E2, 'Someone took the joke well.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

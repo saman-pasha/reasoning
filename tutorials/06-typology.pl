@@ -147,6 +147,7 @@ main :-
     commands,
     noun_adpositions,
     prepositions,
+    unsaid_subjects,
     format("~ndone~n", []).
 
 
@@ -731,7 +732,7 @@ blank_template :-
     split_string(S, "\n", "", Lines),
     include([L]>>sub_string(L, 0, _, _, 'ty_'), Lines, Choices),
     length(Choices, N1),
-    must('the choices, each a row of code', N1, 87),
+    must('the choices, each a row of code', N1, 88),
     ( member(L2, Lines), sub_string(L2, 0, _, _, '%% ty_noun(klingon, Meaning, Gender') -> R2 = shape ; R2 = none ),
     must('a slot of words, its shape', R2, shape),
     ( member(L3, Lines), sub_string(L3, 0, _, _, '%%   e.g. ty_noun_in(english, dog,') -> R3 = example ; R3 = none ),
@@ -938,6 +939,15 @@ prepositions :-
     once(typology_read(english, 'She looked out of her tent.', IR2)),
     IR2 = clause(_, _, _, _, _, [pp(P2, _)]),
     must('a preposition of two words', P2, out_of).
+
+%% 56. A CLAUSE WITH NO SUBJECT (1.86.0), where the template has
+%% ty_subject_unsaid(L, 3): its subject pron(3, sg, zero), someone the text
+%% does not name. A language that drops a subject writes it so.
+unsaid_subjects :-
+    typology_read(english, 'Took the joke well.', IR1),
+    must('no subject', IR1, clause(take, past, pos, pron(3, sg, zero), np(joke, sg, def, []), [adv(well)])),
+    typology_write(spanish, clause(sleep, past, pos, pron(3, sg, zero), none), W2),
+    must('in Spanish', W2, 'Durmió.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
