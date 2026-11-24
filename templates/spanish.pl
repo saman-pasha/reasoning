@@ -183,6 +183,8 @@ ty_copula(spanish, pp, past, pl, neg, [no, estaban]).
 %% Prepositions; the adjuncts at the clause's end; `de el' is `del'.
 ty_order(spanish, pp, [p, x]).
 ty_adjunct(spanish, end).
+%% A noun phrase's adposition phrase stands after it (since 1.83.0).
+ty_noun_adposition(spanish, after).
 ty_adposition(spanish, in, [en]).
 ty_adposition(spanish, on, [sobre]).
 ty_adposition(spanish, with, [con]).

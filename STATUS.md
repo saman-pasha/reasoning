@@ -13,26 +13,30 @@ them, and the steps. Change it as the work moves.
 **The reasoning library translates all 8 000 sentences of
 `lexicon/prose.txt` from English into the IR, and all of that IR into
 Cocolog.** Every step is measured against it, both counts
-(`tools/logic/prose.pl`, the tables below). At 1.82.0: 3 118 of the 8 000
-read into the IR (39.0 %), 3 015 of those 3 118 into Cocolog (96.7 %);
-at 1.81.0 2 813 and 2 723, at 1.80.0 678 and 609. The two goals below are its two halves: the first
+(`tools/logic/prose.pl`, the tables below). At 1.83.0: 3 268 of the 8 000
+read into the IR (40.9 %), 3 155 of those 3 268 into Cocolog (96.5 %);
+at 1.82.0 3 118 and 3 015, at 1.81.0 2 813 and 2 723, at 1.80.0 678 and 609. The two goals below are its two halves: the first
 the IR, the second Cocolog.
 
-**What blocks the rest** (measured at 1.82.0, `typology_coverage/4`'s
-words and a probe that changes each sentence a known way): of the 4 882
-sentences not read, 2 885 have a word no table has (`by`, `as`, `out`,
-`into`, `there`, `up`, `than`, `could` are the commonest), and the other
-1 997 have every word in a table and a structure level 1 does not read:
-a noun phrase with an adposition phrase after its noun (at least 170 read
-with `He sees` before them: `An award for bravery.`), an adjective with
-its complement (`A child prone to mischief.`), a verb with no subject
-(some 108 read with `He` before them: `Used devious means to achieve
-success.`), a noun before a noun (`A heart condition.`). Of the words, the
-prepositions are the most: 169 sentences read with each unknown one
-changed to `in`. Through 1.80.0 the largest gap was the noun phrase alone,
+**What blocks the rest** (measured at 1.83.0, `typology_coverage/4`'s
+words and a probe that changes each sentence a known way): of the 4 732
+sentences not read, 2 846 have a word no table has (`by` 154, `as` 126,
+`out` 95, `into` 79, `there` 69, `up` 68, `than` 53, `could` 48 are the
+commonest), and the other 1 886 have every word in a table and a
+structure level 1 does not read: a verb with no subject (some 78 read
+with `He` before them: `Took the joke well.`), an adjective with its
+complement (`A child prone to mischief.`), a noun before a noun (`A heart
+condition.`). THE LARGEST GAP IS THE PREPOSITIONS: 346 sentences read
+with each preposition no row has changed to `in` (169 at 1.82.0, before
+an adposition phrase could stand after a noun), `for` the commonest in
+them (106), then `at` 32, `into` 30, `out` 23, `by` 21, `over` and
+`against` 11. Through 1.80.0 the largest gap was the noun phrase alone,
 2 130 sentences of the 4 451 with every word known (`A heavy coat.`),
 which 1.81.0 reads; then the commands, 397 read with `You` before them
-(`Construct a proof.`), which 1.82.0 reads.
+(`Construct a proof.`), which 1.82.0 reads; then the noun phrase with an
+adposition phrase after its noun, at least 170 read with `He sees` before
+them (`An award for bravery.` with `for`; 150 with the adpositions level
+1 has), which 1.83.0 reads.
 
 Cocolog into English goes two ways: the translator's round trip for the
 logic form (`logic_write/3`), and since 1.80.0 the explainer for a
@@ -187,6 +191,7 @@ group); test/logic.pl's `measure` holds the counts to the last row.
 | 1.79.0 | 183 | of 197: 92.9 % | 189 | `when`: 8 sentences more, all right and kept -- in the present a rule (`John sleeps when Mary sings.` is sleep(john) :- sing(mary)), in a tense a link of the two atoms (`John slept when Mary sang.` is when(past(sleep(john)), past(sing(mary)))); 14 misses |
 | 1.81.0 | 194 | of 208: 93.3 % | 200 | a noun phrase alone: 11 sentences of lexicon/prose.txt more, all right and kept -- its noun and its adjectives said of its term (`A heavy coat.` is coat(a(heavy(coat))), heavy(a(heavy(coat)))), and said back as the phrase; the Cocolog reader takes no adverb on a copula's atom (good(good(taste)) is `Good taste.`); 14 misses, 1.80.0's |
 | 1.82.0 | 203 | of 217: 93.5 % | 209 | the commands: 9 sentences of lexicon/prose.txt more, all right and kept -- the imperative a tense of the atoms, the subject you (`Mince the garlic.` is imperative(mince(you, the(garlic)))); 14 misses, 1.80.0's |
+| 1.83.0 | 214 | of 228: 93.9 % | 220 | a noun phrase with an adposition phrase after its noun: 11 sentences more, 10 of them lexicon/prose.txt's, all right and kept -- one constant, the adposition's term inside the(...) or a(...) (`The house on the hill is old.` is old(the(on(house, the(hill))))); 14 misses, 1.80.0's |
 
 **The 8 000 sentences of the first measure into Cocolog**
 (`tools/logic/prose.pl`): read into level 1, then a logic form, then
@@ -206,6 +211,7 @@ meaning in another form (`the bed's edge` for `the edge of the bed`).
 | 1.80.0 | 678 | 678 (587) | 609 (7.6 %) |
 | 1.81.0 | 2 813 | 2 813 (2 559) | 2 723 (34.0 %) |
 | 1.82.0 | 3 118 | 3 118 (2 847) | 3 015 (37.7 %) |
+| 1.83.0 | 3 268 | 3 268 (2 986) | 3 155 (39.4 %) |
 
 | version | translated | of 8 000 | the first reasons of the others read into level 1 |
 |---|---|---|---|
@@ -221,6 +227,7 @@ meaning in another form (`the bed's edge` for `the edge of the bed`).
 | 1.79.0 | 609 | 7.6 % | an IR shape with no rule 15, a noun of relation with an adjective 13, `no` 7, `this` 7, a copula's definite noun phrase with no possessor 6, a negation 4. No sentence lost or changed. Of the 10 new ones (all but one of the 11 `when` sentences: the last level 1 reads wrong) about 3 are imperfect: a pronoun of its own sentence is its own constant (2: `The house was a wreck when they bought it.`: it, not the house), and `turned on the juice` read as an adjunct |
 | 1.81.0 | 2 723 | 34.0 % | an IR shape with no rule 15, a noun of relation with an adjective 13, `this` 9, a phrase with a relative clause 9 (`Roads that lead therefrom.`), a predicate with no rule 8, `no` 7. Level 1 reads 2 135 sentences more, every one a noun phrase alone (`phrase(NP)`), and 2 114 of them go into Cocolog: its noun and its adjectives said of its term. One old reading changed, for the better (`Vital signs.`: the phrase, where it was the verb `sign` of a name `Vital`); no other sentence lost or changed. In two samples of 60 of the new ones about 6 are imperfect: a noun before a noun read as an adjective (`An oil baron.`: oil(a(oil(baron)))), a bare plural possessor read as individuals, not the kind (`The formation of sentences.`). A relative clause in a phrase alone has its marker: with none the first cut read 6 clauses as phrases (`The ice cream melted.`, the ice that cream melted) and keeps 3 true ones unread (`A sudden recognition of the problem he faced.`) |
 | 1.82.0 | 3 015 | 37.7 % | an IR shape with no rule 19, `this` 16, a noun of relation with an adjective 13, a phrase with a relative clause 9, a predicate with no rule 8, `no` 7, `that` 5. Level 1 reads 305 sentences more, every one a command (the tense `imperative`, the subject you said by no words: `Construct a proof.`), and 292 of them go into Cocolog as imperative(Atom); the others are `this` (7: `Park your bag in this locker.`) and a negation (`Do not ...`). No sentence lost or changed. A command with no object takes no verb that is an adjective's word: the first cut read 7 adjectives with their complement as commands (`Close to noon.`, `Secure from harm.`). In a sample of 60 of the new ones 1 is wrong, and of the 46 whose object is a bare noun about 5: a noun before a noun read as a command (`Travel allowance.`, `String beans.`) |
+| 1.83.0 | 3 155 | 39.4 % | an IR shape with no rule 23 (a coordination where a constant stands 16: `A church with a shuttered belfry and spire.`, `Drive a car or bus.`; a relative clause in a role 7), `this` 16, a noun of relation with an adjective 14, a phrase with a relative clause 9, a predicate with no rule 9, `no` 8, `that` 6. Level 1 reads 150 sentences more, every one with a noun phrase that has an adposition phrase after its noun (`np_pp(NP, pp(Prep, X))`: `A dip in prices.`, `The man with the hat sleeps.`), and 140 of them go into Cocolog, the phrase one constant (the(with(man, the(hat)))). One old reading changed, for the better (`People in high places.`: the phrase, where it was a command); no sentence lost. A phrase whose head has no article is a command where its words read as one: the 8 such sentences stay 1.82.0's commands (`Knock on the door.`; `Murder in the second degree.`, a phrase, among them). In a sample of 38 of the new ones 4 are wrong -- a verb with no subject read as a noun phrase (2: `Spoke with unmoderated harshness.`), `Hands in the starting position.` with `position` the verb, `Work in the butter and ...` -- and 2 put on the noun a phrase that is the clause's (`The common people in those days suffered greatly.`) |
 
 ## What "parked" means
 

@@ -264,6 +264,8 @@ ty_copula(french, any, past, pl(2), neg, [ne, 'étiez', pas]).
 %% Prepositions; the adjuncts at the clause's end.
 ty_order(french, pp, [p, x]).
 ty_adjunct(french, end).
+%% A noun phrase's adposition phrase stands after it (since 1.83.0).
+ty_noun_adposition(french, after).
 ty_adposition(french, in, [dans]).
 ty_adposition(french, on, [sur]).
 ty_adposition(french, with, [avec]).

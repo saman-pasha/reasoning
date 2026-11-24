@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -263,11 +263,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 217),
-    ( R >= 203 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 203 right', VR, ok),
-    ( K >= 209 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 209 kept', VK, ok).
+    check('the second measure: its sentences', N, 228),
+    ( R >= 214 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 214 right', VR, ok),
+    ( K >= 220 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 220 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -698,10 +698,42 @@ commands :-
     findall(A, imperative(A), As),
     check('a query of what you are told to do', As, [mince(you, the(garlic)), bottle(you, the(mineral(water)))]).
 
+%% 1.83.0: A NOUN PHRASE WITH AN ADPOSITION PHRASE AFTER IT is a constant
+%% of its head with the adposition's term inside, Prep(Head, X), as of/2 is
+%% for a possessor: the(with(man, the(hat))). An indefinite one is an
+%% individual whose facts are its head's and X's; with `every', `all' or
+%% `no' it has no form yet.
+noun_adpositions :-
+    section('a noun phrase with an adposition phrase after it'),
+    forall(member(T-Want, [
+               'The man with the hat sleeps.'-'is_sleep(the(with(man, the(hat)))).\n',
+               'The house on the hill is old.'-'old(the(on(house, the(hill)))).\n',
+               'The boy in the house sees the dog.'-'see(the(in(boy, the(house))), the(dog)).\n',
+               'The dog in the house with the garden sleeps.'-'is_sleep(the(in(dog, the(with(house, the(garden)))))).\n',
+               'A dip in prices.'-'dip(a(in(dip, a(pl(price))))).\nprice(a(pl(price))).\n',
+               'His place in history was foreordained.'-'past(foreordained(in(of(place, he), history))).\n' ]),
+           ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
+             ( C \== none, logic_translate(cocolog, english, C, E) -> true ; E = none ),
+             one_line(['into Cocolog and back: ', T], Label),
+             check(Label, C-E, Want-T) )),
+    ( cocolog_read('old(the(on(house, the(hill)))).', U2) -> true ; U2 = none ),
+    check('read: one constant', U2, utterance(assertion, [fact(pred(old, [const(the(on(house, the(hill))))]))])),
+    ( logic_translate(cocolog, english, 'in(the(dog), the(house)).', E3) -> true ; E3 = none ),
+    check('the adposition predicate stays a predicate', E3, 'The dog is in the house.'),
+    forall(member(T4, ['The house on the hill is old.', 'The cabin in the woods is old.']),
+           ( logic_translate(english, cocolog, T4, P4), assert_text(P4) )),
+    findall(X4, old(X4), Xs4),
+    check('a query of what is old', Xs4, [the(on(house, the(hill))), the(in(cabin, the(woods)))]),
+    findall(Y5, old(the(on(house, Y5))), Ys5),
+    check('a query of what the old house is on', Ys5, [the(hill)]),
+    once(typology_read(english, 'Every man with a hat sleeps.', IR6)),
+    logic_why(IR6, W6),
+    check('every with an adposition phrase has no form yet', W6, determiner(every)).
+
 %% Each clause of a Cocolog text asserted.
 assert_text(P) :-
     atomic_list_concat(Ps, '.\n', P),
     forall(( member(S, Ps), S \== '' ), ( term_string(Cl, S), assertz(Cl) )).
 
 %% A test's own predicates: what the clauses written from English assert.
-:- dynamic is_sleep/1, past/1, book/1, stamp/1, father/2, when/2, coat/1, heavy/1, warm/1, imperative/1.
+:- dynamic is_sleep/1, past/1, book/1, stamp/1, father/2, when/2, coat/1, heavy/1, warm/1, imperative/1, old/1.

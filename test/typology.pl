@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -230,11 +230,14 @@ adjuncts :-
             [italian-'Il ragazzo dorme negli studenti.'],
         clause(sleep, present, pos, np(boy, sg, def, []), none, [pp(from, np(book, sg, def, []))])-
             [spanish-'El niño duerme del libro.'] ]),
+    %% Since 1.83.0 an adposition phrase after an English subject is the
+    %% subject's own (noun_adpositions): `The boy in the house sees the
+    %% dog.' is read.
     forall(member(L-T-Why,
                   [ italian-'Il cane dorme in la casa.'-'in la, which is nella',
                     spanish-'El niño duerme de el libro.'-'de el, which is del',
                     persian-'پسر سگ را می‌بیند در خانه.'-'a Persian adjunct after the verb',
-                    english-'The boy in the house sees the dog.'-'an English adjunct after the subject' ]),
+                    english-'The boy today sees the dog.'-'an English adverb after the subject' ]),
            ( yes_no(typology_read(L, T, _), R),
              atomic_list_concat([L, ': not read: ', Why], Label),
              check(Label, R, no) )).
@@ -2005,6 +2008,41 @@ commands :-
     ( typology_write(english, clause(construct, imperative, pos, np(boy, sg, def, []), none), W5) -> true ; W5 = none ),
     check('a command\'s subject is you', W5, none).
 
+%% 1.83.0: A NOUN PHRASE WITH AN ADPOSITION PHRASE AFTER IT, np_pp(NP,
+%% pp(Prep, X)), in a language whose template keeps the phrase after its
+%% noun phrase (ty_noun_adposition(L, after)): a tail of the head's own
+%% clause, tried after no tail, so a phrase after an object is the
+%% clause's adjunct first. A phrase whose head has no article is a command
+%% where its words read as one.
+noun_adpositions :-
+    section('a noun phrase with an adposition phrase after it'),
+    D = np(dog, sg, def, []),
+    forall(member(T-Want, [
+               'A dip in prices.'-phrase(np_pp(np(dip, sg, indef, []), pp(in, np(price, pl, indef, [])))),
+               'The man with the hat sleeps.'-clause(sleep, present, pos, np_pp(np(man, sg, def, []), pp(with, np(hat, sg, def, []))), none),
+               'The house on the hill is old.'-copula(present, pos, np_pp(np(house, sg, def, []), pp(on, np(hill, sg, def, []))), adj([old])),
+               'His place in history was foreordained.'-copula(past, pos, np_pp(of(pron(3, sg, m), np(place, sg, def, [])), pp(in, np(history, sg, mass, []))), adj([foreordained])),
+               'The dog in the house with the garden sleeps.'-clause(sleep, present, pos, np_pp(D, pp(in, np_pp(np(house, sg, def, []), pp(with, np(garden, sg, def, []))))), none),
+               'People in high places.'-phrase(np_pp(np(person, pl, indef, []), pp(in, np(place, pl, indef, [high])))),
+               'Knock on the door.'-command ]),
+           ( ( typology_read(english, T, R) -> true ; R = none ),
+             ( R = clause(_, imperative, _, _, _, _) -> V = command ; V = R ),
+             atomic_list_concat(['English: ', T, ', the first reading'], Label),
+             check(Label, V, Want) )),
+    findall(R2, typology_read(english, 'He sees a dog with a telescope.', R2), Rs2),
+    check('after an object: the clause\'s adjunct, then the object\'s phrase', Rs2,
+          [clause(see, present, pos, pron(3, sg, m), np(dog, sg, indef, []), [pp(with, np(telescope, sg, indef, []))]),
+           clause(see, present, pos, pron(3, sg, m), np_pp(np(dog, sg, indef, []), pp(with, np(telescope, sg, indef, []))))]),
+    IR3 = clause(sleep, present, pos, np_pp(D, pp(in, np(house, sg, def, []))), none),
+    forall(member(L3-Want3, [english-'The dog in the house sleeps.', spanish-'El perro en la casa duerme.',
+                             italian-'Il cane nella casa dorme.', french-'Le chien dans la maison dort.',
+                             german-'Der Hund im Haus schläft.', persian-none]),
+           ( ( typology_write(L3, IR3, W3), once(typology_read(L3, W3, IR3b)), IR3b == IR3 -> true ; W3 = none ),
+             atomic_list_concat([L3, ': ', Want3, ', and read back first'], Label3),
+             check(Label3, W3, Want3) )),
+    findall(M4, ty_ir_meaning(IR3, M4), Ms4),
+    check('the meanings of the phrase', Ms4, [sleep, dog, house]).
+
 %% 1.64.0: the bare singular noun. np(M, sg, mass, []): a singular noun
 %% with no article, read after the other readings, written with none;
 %% Persian, whose definite noun has none either, writes it as def.
@@ -2336,8 +2374,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 3118 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 3 118 sentences read at 1.82.0 are read', R1, yes),
+    ( K >= 3268 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 3 268 sentences read at 1.83.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 
@@ -2697,4 +2735,4 @@ blank_template :-
     include([X4]>>( X4 = bad(_) ), M4, Bad4),
     check('every row of code of templates/template.pl is a row the check takes', Bad4, []),
     length(Rows, NR4),
-    check('the rows of code of the choices', NR4, 86).
+    check('the rows of code of the choices', NR4, 87).

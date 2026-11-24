@@ -301,6 +301,7 @@ lg_phrases([X|Xs], Items) :-
 
 lg_phrase_noun(np(N, _, _, As), N, As).
 lg_phrase_noun(of(_, NP), N, As) :- nonvar(NP), lg_phrase_noun(NP, N, As).
+lg_phrase_noun(np_pp(H, _), N, As) :- nonvar(H), lg_phrase_noun(H, N, As).
 
 %% An atom in a tense, its when clause round it or not.
 lg_in_tense(at(_, _)) :- !.
@@ -369,6 +370,7 @@ lg_assert(Q, _, _, _, _, _, _) :- lg_no(determiner(Q)).
 %% it).
 lg_generic_rules(Inds, Atoms, T, Conds, Items) :-
     ( memberchk('$ind'(_, of(_, _)), Inds) -> lg_no(possessor(generic)) ; true ),
+    ( member('$ind'(_, S), Inds), lg_pp_term(S) -> lg_no(adposition(generic)) ; true ),
     lg_rules(Atoms, T, Conds, Items).
 
 lg_rules(Atoms, T, Conds, Items) :-
@@ -620,6 +622,7 @@ lg_entity(qp(some, _), ent(_, [], some), []) :- !.
 lg_entity(wh(_), ent(_, [], wh), []) :- !.
 lg_entity('$const'(C), ent(const(C), [], const), []) :- !.
 lg_entity(of(P, NP), E, Ms) :- !, lg_possessed(P, NP, E, Ms).
+lg_entity(np_pp(H, pp(P, X)), E, Ms) :- !, lg_np_pp(H, P, X, E, Ms).
 lg_entity(pron(P, N, K), ent(const(C), [], const), []) :- lg_pron_const(pron(P, N, K), C), !.
 lg_entity(pron(_, _, _), _, _) :- !, lg_no(pronoun).
 lg_entity(np(_, _, D, _), _, _) :- !, lg_no(determiner(D)).
@@ -686,6 +689,36 @@ lg_possessed(P, NP, E, Ms) :-
     ->  lg_np_term(N, Num, As, T), lg_noun_conds(N, As, V, Conds),
         E = ent(V, Conds, generic), Ms = ['$ind'(V, of(T, Pc))|PMs]
     ;   lg_no(determiner(D))
+    ).
+
+%% A NOUN PHRASE WITH AN ADPOSITION PHRASE AFTER IT (since 1.83.0): the
+%% phrase is in the term, as a possessor is, Prep(T, X) round the head's
+%% term (`the man with the hat' the(with(man, the(hat))), `a dip in
+%% prices' the individual a(in(dip, a(pl(price)))), `the elevation of the
+%% temperature in the afternoon' in(of(elevation, the(temperature)),
+%% the(afternoon))), X a constant or an indefinite noun phrase, whose
+%% individual's facts come after; a head of `every' or `some' has none.
+lg_np_pp(H, P, X, E, Ms) :-
+    ( atom(P) -> true ; lg_no(adposition(P)) ),
+    lg_arg(adposition, X, _, Xc, XMs),
+    (   nonvar(H), H = np(N, Num, D, As)
+    ->  lg_np_term(N, Num, As, T0), T =.. [P, T0, Xc],
+        (   D == def -> E = ent(const(the(T)), [], const), Ms = XMs
+        ;   D == mass -> E = ent(const(T), [], const), Ms = XMs
+        ;   D == indef
+        ->  lg_noun_conds(N, As, V, Conds),
+            E = ent(V, Conds, generic), Ms = ['$ind'(V, T)|XMs]
+        ;   lg_no(determiner(D))
+        )
+    ;   nonvar(H), H = of(Pr, NP)
+    ->  lg_possessed(Pr, NP, E0, Ms0),
+        (   E0 = ent(const(C0), [], const)
+        ->  C =.. [P, C0, Xc], E = ent(const(C), [], const), append(Ms0, XMs, Ms)
+        ;   E0 = ent(V, Conds, generic), Ms0 = ['$ind'(V0, S0)|R], V0 == V
+        ->  S =.. [P, S0, Xc], E = ent(V, Conds, generic), append(['$ind'(V, S)|R], XMs, Ms)
+        ;   lg_no(shape(H))
+        )
+    ;   lg_no(shape(H))
     ).
 
 %% A PRONOUN WITH NO REFERENT (since 1.72.0) is a constant of its own, its
@@ -895,15 +928,26 @@ lg_const_term(T) :-
     compound(T), ground(T),
     T =.. [A, X], \+ memberchk(A, [the, a, of, pl]), lg_np_shape(X),
     catch(typology_meaning(english, adjective, A), _, fail).
+lg_const_term(T) :- ground(T), lg_pp_shape(T).
 
 lg_det_term(T) :-
     compound(T), ground(T),
-    (   T = the(X) -> lg_np_shape(X)
-    ;   T = a(X) -> ( X = of(Y, P) -> lg_np_shape(Y), lg_poss_term(P) ; lg_np_shape(X) )
+    (   T = the(X) -> ( lg_np_shape(X) -> true ; lg_pp_shape(X) )
+    ;   T = a(X) -> ( X = of(Y, P) -> lg_np_shape(Y), lg_poss_term(P) ; lg_np_shape(X) -> true ; lg_pp_shape(X) )
     ;   T = of(X, P) -> lg_np_shape(X), lg_poss_term(P)
     ).
 
 lg_poss_term(P) :- ( atom(P) -> true ; lg_const_term(P) ).
+
+%% A noun phrase's term with an adposition phrase (since 1.83.0):
+%% Prep(T, X) where the English template's adposition is Prep, T a noun's
+%% term or a possessed's or one of these, X a constant (the(with(man,
+%% the(hat)))).
+lg_pp_shape(S) :-
+    compound(S), S =.. [P, T, X], P \== of,
+    catch(typology_meaning(english, adposition, P), _, fail),
+    ( lg_np_shape(T) -> true ; T = of(Y, Z) -> lg_np_shape(Y), lg_poss_term(Z) ; lg_pp_shape(T) ),
+    lg_poss_term(X).
 
 lg_np_shape(X) :- atom(X), !.
 lg_np_shape(pl(X)) :- !, lg_np_shape(X).
@@ -1058,15 +1102,24 @@ lg_phrase_group([F|Is], G, Rest) :-
 %% them): its noun's, its adjectives' (the first the outermost), and an
 %% indefinite possessor's own after them.
 lg_term_facts(a(S), Fs) :- !, lg_shape_facts(S, const(a(S)), Fs).
-lg_term_facts(the(T), Fs) :- !, lg_np_facts(T, const(the(T)), Fs).
+lg_term_facts(the(T), Fs) :- !, lg_shape_facts(T, const(the(T)), Fs).
 lg_term_facts(of(T, P), Fs) :- !, lg_shape_facts(of(T, P), const(of(T, P)), Fs).
-lg_term_facts(T, Fs) :- lg_np_facts(T, const(T), Fs).
+lg_term_facts(T, Fs) :- lg_shape_facts(T, const(T), Fs).
 
 lg_shape_facts(of(T, P), K, Fs) :- !,
     lg_np_facts(T, K, Fs0),
     (   nonvar(P), P = a(_) -> lg_term_facts(P, Fs1) ; Fs1 = [] ),
     append(Fs0, Fs1, Fs).
+lg_shape_facts(S, K, Fs) :- lg_pp_term(S), !,
+    S =.. [_, T, X],
+    lg_shape_facts(T, K, Fs0),
+    (   nonvar(X), X = a(_) -> lg_term_facts(X, Fs1) ; Fs1 = [] ),
+    append(Fs0, Fs1, Fs).
 lg_shape_facts(T, K, Fs) :- lg_np_facts(T, K, Fs).
+
+%% A term of an adposition phrase after a noun (since 1.83.0): Prep(T, X),
+%% two arguments, any name but of.
+lg_pp_term(S) :- compound(S), S =.. [P, _, _], atom(P), P \== of.
 
 lg_np_facts(T, _, _) :- var(T), !, fail.
 lg_np_facts(pl(T), K, Fs) :- !, lg_np_facts(T, K, Fs).
@@ -1090,6 +1143,7 @@ lg_individual_fact(fact(pred(N, [const(C)])), N, C) :- nonvar(C), C = a(S), lg_s
 %% of(large(book), a(pl(stamp))).
 lg_shape_head(S, _) :- var(S), !, fail.
 lg_shape_head(of(T, _), N) :- !, lg_shape_head(T, N).
+lg_shape_head(S, N) :- lg_pp_term(S), !, arg(1, S, T), lg_shape_head(T, N).
 lg_shape_head(pl(T), N) :- !, lg_shape_head(T, N).
 lg_shape_head(N, N) :- atom(N), !.
 lg_shape_head(T, N) :- compound(T), T =.. [_, X], lg_shape_head(X, N).
@@ -1391,11 +1445,19 @@ lg_const_np(_, Cs, C, NP) :- member(sub(C1, NP0), Cs), C1 == C, !, NP = NP0.
 lg_const_np(_, _, C, P) :- atom(C), lg_pron_np(C, P).
 lg_const_np(_, _, something, qp(some, thing)).
 lg_const_np(_, _, someone, qp(some, person)).
+lg_const_np(L, Cs, the(T), np_pp(np(N, Num, def, As), pp(P, XNP))) :-
+    lg_pp_term(T), T =.. [P, T0, X], typology_meaning(L, adposition, P), !,
+    lg_np_of_term(L, T0, N, Num, As),
+    lg_const_np(L, Cs, X, XNP).
 lg_const_np(L, _, the(T), np(N, Num, def, As)) :- !, lg_np_of_term(L, T, N, Num, As).
 lg_const_np(L, Cs, a(S), NP) :- !, memberchk(a(S), Cs), lg_indef_np(L, Cs, S, NP).
 lg_const_np(L, Cs, of(T, P), of(PNP, np(N, Num, def, As))) :- !,
     lg_np_of_term(L, T, N, Num, As),
     lg_const_np(L, Cs, P, PNP).
+lg_const_np(L, Cs, C, np_pp(HNP, pp(P, XNP))) :-
+    lg_pp_term(C), C =.. [P, T0, X], typology_meaning(L, adposition, P), !,
+    lg_const_np(L, Cs, T0, HNP),
+    lg_const_np(L, Cs, X, XNP).
 lg_const_np(L, _, C, name(W)) :- atom(C), lg_name_written(C, W), typology_meaning(L, name, W).
 lg_const_np(L, _, C, np(N, sg, mass, As)) :- lg_np_of_term(L, C, N, sg, As).
 lg_const_np(L, _, C, name(W)) :- atom(C), lg_name_written(C, W), \+ typology_meaning(L, name, W).
@@ -1403,6 +1465,10 @@ lg_const_np(L, _, C, name(W)) :- atom(C), lg_name_written(C, W), \+ typology_mea
 %% An individual's noun phrase, from its shape (since 1.77.0): a(pl(book))
 %% `books', a(of(book, a(pl(stamp)))) `a book of stamps'. Only the
 %% individuals a group brings in (Cs) are said so.
+lg_indef_np(L, Cs, S, np_pp(HNP, pp(P, XNP))) :-
+    lg_pp_term(S), S =.. [P, T0, X], typology_meaning(L, adposition, P), !,
+    lg_indef_np(L, Cs, T0, HNP),
+    lg_const_np(L, Cs, X, XNP).
 lg_indef_np(L, Cs, of(T, P), of(PNP, np(N, Num, indef, As))) :- !,
     lg_np_of_term(L, T, N, Num, As),
     lg_const_np(L, Cs, P, PNP).

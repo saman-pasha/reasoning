@@ -547,6 +547,12 @@ ty_adjunct(xx, end).
 ty_adjunct(xx, before(v)).
 ty_adjunct(xx, after(s)).
 
+%%     ty_noun_adposition(L, Place)    a noun phrase's adposition phrase
+%%                                     stands after it (Place after; since
+%%                                     1.83.0): `a dip in prices'
+%%   (keep it where a noun phrase's adposition phrase stands after it, or delete it)
+ty_noun_adposition(xx, after).
+
 %%     ty_adjunct_front(L, v2)         a statement read with an adjunct first
 %%                                     and the verb before the subject
 %%                                     (German `Heute schläft der Hund.')

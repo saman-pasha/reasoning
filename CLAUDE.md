@@ -24,8 +24,8 @@ red) and lesson 01 pin the shape of the answer, deliberately not the number.
 The reasoning library translates ALL 8 000 sentences of `lexicon/prose.txt`
 from English into the IR, and ALL of that IR into Cocolog. Every step
 moves one of the two counts and reports both (`tools/logic/prose.pl`;
-STATUS.md keeps them): at 1.82.0, 3 118 into the IR, 3 015 of them into
-Cocolog (1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
+STATUS.md keeps them): at 1.83.0, 3 268 into the IR, 3 155 of them into
+Cocolog (1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
 count says so. **Measure what blocks the rest before choosing a step**:
 at 1.80.0 the words no table has looked like the gap, and 5 115 of the
 8 000 had none -- 2 130 of them a noun phrase alone, which one rule read.
@@ -493,6 +493,35 @@ command, 0.8 %, and the clause check at the end of every `ty_clause//2`
 0.3 % -- **every construct a hot path adds is an inference**. Now English
 is 1.9 % dearer and the other five 0.02 % to 0.10 %. Level 2:
 `imperative` is a tense (`lg_tense/1`), Cocolog `imperative(Atom)`.
+**A noun phrase with an adposition phrase after its noun since 1.83.0**
+is `np_pp(NP, pp(Prep, X))`, NP a noun phrase or a possessed one, in a
+language whose template has `ty_noun_adposition(L, after)` (English,
+Spanish, Italian, French, German; Persian none, so it writes none). **It
+is a TAIL of the clause that reads its head, never a clause of its own**:
+`ty_np_phrase//3`'s np and poss clauses and `ty_role//4`'s ask a slot
+(`ty_np_tail_slot/4`, `ty_poss_tail_slot/4`, the head's slot test too) and
+end in `ty_pp_tail//3`, no tail first, then an adposition phrase where the
+next word is an adposition's (`'$ty_adp'`, set with the subordinators'
+flag from the text's words, and empty in a language with no row). As a
+clause of its own that read the head again, the first cut cost the round
+trips French 12.6 % and Spanish 5.5 % (`de` and `a` are in nearly every
+sentence); the tail costs 0.5 % (Persian) to 1.3 % (French) more
+inferences, nothing the clock sees. No tail first means an adposition
+phrase after an object is the clause's adjunct first (`He sees a dog with
+a telescope.`). A phrase alone whose head has no article is a command
+where its words read as one (`ty_phrase_command/4`: `Knock on the door.`,
+not the noun knock). The walkers have their clauses (`ty_ir_tw_/3`,
+`ty_ir_map/3`, `ty_np_mention/3`, `ty_ir_meaning/2`, `ty_ir_features/3`,
+`ty_subject_number/2`, `ty_pp_head/2`, `ty_np_animacy/3` -- without the
+last, `The man with the hat sleeps.` read nothing). Level 2: one
+constant, the head's term with the adposition's inside it, `Prep(T, X)`
+(`lg_np_pp/5`), as `of/2` is a possessor's -- the(with(man, the(hat))),
+a(in(dip, a(pl(price)))), in(of(place, he), history) -- an indefinite one
+an individual whose facts are its head's and X's (`lg_shape_facts/3`);
+`every`, `all` and `no` have none yet (`determiner(D)`), nor a generic
+rule of one (`adposition(generic)`). The Cocolog reader takes `Prep(T, X)`
+inside the(...) or a(...) as a constant where Prep is an adposition's
+meaning (`lg_pp_shape/1`), so in(the(dog), the(house)) stays a predicate.
 **The blank template copies the row descriptions of typology.pl's head**:
 a changed description is `typology_import(template)` again, or the
 `reproduced` section is red.

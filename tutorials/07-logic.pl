@@ -49,6 +49,7 @@ main :-
     whens,
     phrases,
     commands,
+    noun_adpositions,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -312,6 +313,15 @@ commands :-
     must('a command', C1, 'imperative(mince(you, the(garlic))).\n'),
     logic_translate(cocolog, english, 'cake(a(cake)). imperative(make(you, a(cake))).', E2),
     must('back into English', E2, 'Make a cake.').
+
+%% 20. A NOUN PHRASE WITH AN ADPOSITION PHRASE AFTER IT is one constant, the
+%% adposition's term inside the(...) or a(...), Prep(Head, X), as of/2 is
+%% for a possessor; a program asks by its structure.
+noun_adpositions :-
+    logic_translate(english, cocolog, 'The house on the hill is old.', C1),
+    must('one constant', C1, 'old(the(on(house, the(hill)))).\n'),
+    logic_translate(cocolog, english, 'is_sleep(the(with(man, the(hat)))).', E2),
+    must('back into English', E2, 'The man with the hat sleeps.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

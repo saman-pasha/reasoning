@@ -187,6 +187,8 @@ ty_copula(italian, any, past, pl, neg, [non, erano]).
 %% noun, `negli'; the same for `su', `a' and `da'.
 ty_order(italian, pp, [p, x]).
 ty_adjunct(italian, end).
+%% A noun phrase's adposition phrase stands after it (since 1.83.0).
+ty_noun_adposition(italian, after).
 ty_adposition(italian, in, [in]).
 ty_adposition(italian, on, [su]).
 ty_adposition(italian, with, [con]).

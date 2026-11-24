@@ -199,6 +199,9 @@
 %%                                     (adj, np, pp, or any: Spanish `es'
 %%                                     and `está'); Words [] drops it;
 %%                                     Number a person's key, as ty_verb/6's
+%%     ty_noun_adposition(L, Place)    a noun phrase's adposition phrase
+%%                                     stands after it (Place after; since
+%%                                     1.83.0): `a dip in prices'
 %%     ty_adposition(L, Meaning, Words)
 %%                                     a preposition or a postposition, by
 %%                                     the pp level's order
@@ -592,6 +595,13 @@
 %%                                     Smith')); a pronoun of the text that
 %%                                     stands for it is pron(3, sg,
 %%                                     ref(name(Meaning)))
+%%     np_pp(NP, pp(Prep, X))          a noun phrase and the adposition
+%%                                     phrase after it (since 1.83.0), where
+%%                                     a noun phrase stands: `a dip in
+%%                                     prices' is np_pp(np(dip, sg, indef,
+%%                                     []), pp(in, np(price, pl, indef,
+%%                                     []))); NP an np/4 or an of/2, X any
+%%                                     noun phrase, one with a phrase too
 %%     phrase(NP)                      a noun phrase alone, a sentence that
 %%                                     says no clause (since 1.81.0): `A
 %%                                     heavy coat.' is phrase(np(coat, sg,
@@ -732,7 +742,7 @@
            ty_adjective/5, ty_verb/6, ty_article/5,
            ty_mark/5, ty_contraction/3, ty_negation/5, ty_ending/4,
            ty_letters/3, ty_before/5, ty_linked/5, ty_copula/6, ty_adposition/3,
-           ty_adverb/3, ty_adjunct/2, ty_sense/5, ty_topic/2, ty_question/4,
+           ty_adverb/3, ty_adjunct/2, ty_noun_adposition/2, ty_sense/5, ty_topic/2, ty_question/4,
            ty_question_form/5, ty_wh/2, ty_wh_word/3, ty_question_mark/3,
            ty_role_animacy/3, ty_relative/4, ty_complement/3, ty_complement_wh/2, ty_negation_place/3,
            ty_answer/3, ty_answer_system/2, ty_answer_mark/2, ty_gap/3,
@@ -757,7 +767,7 @@
                  ty_adjective/5, ty_verb/6,
                  ty_article/5, ty_mark/5, ty_contraction/3, ty_negation/5,
                  ty_ending/4, ty_letters/3, ty_before/5, ty_linked/5, ty_copula/6,
-                 ty_adposition/3, ty_adverb/3, ty_adjunct/2, ty_sense/5,
+                 ty_adposition/3, ty_adverb/3, ty_adjunct/2, ty_noun_adposition/2, ty_sense/5,
                  ty_question/4, ty_question_form/5, ty_wh/2, ty_wh_word/3,
                  ty_question_mark/3, ty_relative/4, ty_complement/3,
                  ty_complement_wh/2, ty_negation_place/3, ty_answer/3,
@@ -1064,7 +1074,7 @@ ty_template_group('forms chosen by sound, and contractions', [ty_ending, ty_lett
                                                                ty_linked, ty_contraction]).
 ty_template_group('roles, marks and cases', [ty_mark, ty_case, ty_case_after, ty_article_case,
                                              ty_noun_case, ty_declension, ty_adjective_ending]).
-ty_template_group('adjuncts and complements', [ty_adjunct, ty_adjunct_front, ty_object_front,
+ty_template_group('adjuncts and complements', [ty_adjunct, ty_noun_adposition, ty_adjunct_front, ty_object_front,
                                                ty_bare_topic, ty_adposition_topic, ty_complement]).
 ty_template_group('questions and answers', [ty_question, ty_inversion, ty_question_form,
                                             ty_question_mark, ty_wh, ty_wh_word, ty_wh_tonic, ty_wh_case,
@@ -1091,6 +1101,7 @@ ty_template_choice(ty_possessive, Name, 'keep the ones it uses, with their words
             ( member(O, Os), atomic_list_concat(O, ', ', OT) ), Rows).
 ty_template_choice(ty_adjunct, Name, 'keep one', Rows) :-
     ty_values(adjunct_place, Ps), findall(row(ty_adjunct(Name, P)), member(P, Ps), Rows).
+ty_template_choice(ty_noun_adposition, Name, 'keep it where a noun phrase\'s adposition phrase stands after it, or delete it', [row(ty_noun_adposition(Name, after))]).
 ty_template_choice(ty_question, Name, 'one row or more a kind and level; a particle needs its words', Rows) :-
     findall(R, ( ty_values(question_kind, Ks), member(K, Ks),
                  ty_values(question_level, Ls), member(Lv, Ls),
@@ -1430,6 +1441,9 @@ ty_missing(L, copula_form(K, T, N, P)) :-
 ty_missing(L, adjunct_place) :-
     once(( ty_adposition(L, _, _) ; ty_adverb(L, _, _) )),
     \+ ty_adjunct(L, _).
+ty_missing(L, bad(ty_noun_adposition(L, P))) :-
+    ty_noun_adposition(L, P),
+    P \== after.
 ty_missing(L, bad(ty_adjunct(L, P))) :-
     ty_adjunct(L, P),
     \+ ( ty_values(adjunct_place, Ps), memberchk(P, Ps) ).
@@ -1832,6 +1846,7 @@ ty_read_bases(L, Surface, Topics, Mood, IR0, C) :-
     ty_name_flag(L, Bases),
     ty_qp_flag(L, Bases),
     ty_subord_flag(L, Bases),
+    ty_adp_flag(L, Bases),
     ty_parse_reset(L),
     ty_mood(Mood, L, IR0, C, Goal),
     phrase(Goal, Bases).
@@ -1897,6 +1912,7 @@ ty_ir_tw_(answer(P, A, C), L, answer(P, A, C1)) :- !, ty_ir_tw(C, L, C1).
 ty_ir_tw_(sub(K, M, C), L, sub(K, M1, C1)) :- !, ty_ir_tw(M, L, M1), ty_ir_tw(C, L, C1).
 ty_ir_tw_(echo(C), L, echo(C1)) :- !, ty_ir_tw(C, L, C1).
 ty_ir_tw_(phrase(X), L, phrase(X1)) :- !, ty_ir_tw(X, L, X1).
+ty_ir_tw_(np_pp(X, P), L, np_pp(X1, P1)) :- !, ty_ir_tw(X, L, X1), ty_ir_tw(P, L, P1).
 ty_ir_tw_(C, L, C1) :- ty_coord_any(C, K, Xs), !, ty_ir_tw_items(Xs, L, Ys), C1 =.. [K, Ys].
 ty_ir_tw_(X, _, X).
 
@@ -1928,6 +1944,7 @@ ty_reads_as(Mood, L, IR0, Tokens, Topics) :-
            ty_name_flag(L, Tokens),
            ty_qp_flag(L, Tokens),
            ty_subord_flag(L, Tokens),
+           ty_adp_flag(L, Tokens),
            aggregate_all(min(C), ( ty_mood(Mood, L, IR0, C, G), phrase(G, Tokens) ), C1),
            \+ ( C1 > 0,
                 ty_ir_senses(IR0, Ms),
@@ -2023,6 +2040,7 @@ ty_ir_map(D, answer(P, A, C), answer(P, A, C1)) :- !, ty_ir_map(D, C, C1).
 ty_ir_map(D, sub(K, M, C), sub(K, M1, C1)) :- !, ty_ir_map(D, M, M1), ty_ir_map(D, C, C1).
 ty_ir_map(D, echo(C), echo(C1)) :- !, ty_ir_map(D, C, C1).
 ty_ir_map(D, phrase(X), phrase(X1)) :- !, ty_ir_map(D, X, X1).
+ty_ir_map(D, np_pp(X, P), np_pp(X1, P1)) :- !, ty_ir_map(D, X, X1), ty_ir_map(D, P, P1).
 ty_ir_map(D, C, C1) :- ty_coord_any(C, K, Xs), !, maplist(ty_ir_map(D), Xs, Ys), C1 =.. [K, Ys].
 ty_ir_map(_, X, X).
 
@@ -2136,6 +2154,7 @@ ty_np_mention(pron(3, N, K), M, N) :- nonvar(K), K = ref(M).
 ty_np_mention(rel(NP, C), M, N) :- ( ty_np_mention(NP, M, N) ; ty_mention(C, _, M, N) ).
 ty_np_mention(of(G, NP), M, N) :- ( ty_np_mention(NP, M, N) ; ty_np_mention(G, M, N) ).
 ty_np_mention(pp(_, NP), M, N) :- ty_np_mention(NP, M, N).
+ty_np_mention(np_pp(NP, P), M, N) :- ( ty_np_mention(NP, M, N) ; ty_np_mention(P, M, N) ).
 ty_np_mention(C, M, N) :- ty_coord_np(C, _, Xs), member(X, Xs), ty_np_mention(X, M, N).
 
 %% The mentions of Role first, the others after, each in its order.
@@ -2195,6 +2214,10 @@ ty_ir_meaning(rel(NP, C), M) :-
 ty_ir_meaning(of(G, NP), M) :-
     (   ty_ir_meaning(G, M)
     ;   ty_ir_meaning(NP, M)
+    ).
+ty_ir_meaning(np_pp(NP, P), M) :-
+    (   ty_ir_meaning(NP, M)
+    ;   ty_ir_meaning(P, M)
     ).
 ty_ir_meaning(adv(A), M) :- ty_item_meaning(A, M).
 
@@ -3256,6 +3279,7 @@ ty_subject_number(W, sg) :- nonvar(W), W = wh(_).
 ty_subject_number(G, N) :- nonvar(G), G = gap(H, _, _), ty_subject_number(H, N).
 ty_subject_number(rel(np(_, N, _, _), _), N).
 ty_subject_number(of(_, np(_, N, _, _)), N).
+ty_subject_number(np_pp(NP, _), N) :- nonvar(NP), ty_subject_number(NP, N).
 ty_subject_number(pron(P, N0, _), N) :- ty_agreement(P, N0, N).
 %% A coordination (since 1.59.0): and's is plural, of the least person of
 %% its items (`you and I' are pl(1)), or's its last item's (`a cat or a
@@ -3395,10 +3419,19 @@ ty_sentence(L, sub(K, Main, C)) -->
 %% by ty_rel//4): with none, a clause read as a phrase, `The boy drinks
 %% water.' the boy that drinks (a plural noun) water (a verb), and `This
 %% time he succeeded.' the time that he succeeded.
+%% A phrase whose head has no article and an adposition phrase after it
+%% is a command where the words read as one (since 1.83.0): `Knock on the
+%% door.', `Play water from a hose.': the 8 such sentences of
+%% lexicon/prose.txt that read as both stay 1.82.0's commands (`Murder in
+%% the second degree.', a phrase, among them); `People in high places.',
+%% with a plural head, is a phrase.
 ty_sentence(L, phrase(NP)) -->
+    ty_here(S0),
     { ty_role_case(L, s), b_setval('$ty_phrase', yes) },
     ty_np_phrase(L, NP, _),
-    { b_setval('$ty_phrase', no), \+ ty_is_asked(NP) }.
+    ty_here(S),
+    { b_setval('$ty_phrase', no), \+ ty_is_asked(NP),
+      \+ ty_phrase_command(L, NP, S0, S) }.
 
 %% A COMMAND (since 1.82.0): a clause in the imperative, a tense whose verb
 %% forms the language's ty_tense_form/5 rows give (English: the present's
@@ -3412,7 +3445,18 @@ ty_sentence(L, phrase(NP)) -->
 %% adjectives with an adposition phrase (`Close to noon.', `Alert to the
 %% problems.', `Secure from harm.': 7 of the 9 false commands with no
 %% object of lexicon/prose.txt, and none of the 13 true ones).
-ty_sentence(L, C) -->
+ty_sentence(L, C) --> ty_command(L, C).
+
+%% The words a phrase read (ty_sentence//2 above), and the command they
+%% read as.
+ty_here(S, S, S).
+
+ty_phrase_command(L, np_pp(H, _), S0, S) :-
+    nonvar(S0), nonvar(H), H = np(_, sg, mass, _),
+    '$ty_commands'(L),
+    ty_command(L, _, S0, S).
+
+ty_command(L, C) -->
     { '$ty_commands'(L),
       C = clause(_, imperative, _, pron(2, _, _), _, _),
       b_setval('$ty_command', c(C)) },
@@ -3497,6 +3541,7 @@ ty_ir_features(L, name(Nm), F) :- !, ty_name_features(L, Nm, F).
 ty_ir_features(_, qp(Q, K), F) :- !, ty_qp_features(Q, K, F).
 ty_ir_features(L, of(_, NP), F) :- !, ty_ir_features(L, NP, F).
 ty_ir_features(L, rel(NP, _), F) :- !, ty_ir_features(L, NP, F).
+ty_ir_features(L, np_pp(NP, _), F) :- !, ty_ir_features(L, NP, F).
 ty_ir_features(L, C, F) :-
     ty_coord_np(C, K, Xs), !,
     findall(F1, ( member(X, Xs), ty_ir_features(L, X, F1) ), Fs),
@@ -4010,6 +4055,7 @@ ty_np_animacy(_, wh(M), A) :-
 ty_np_animacy(L, rel(NP, _), A) :- NP = np(_, _, _, _), ty_np_animacy(L, NP, A).
 ty_np_animacy(L, gap(NP, _, _), A) :- ty_np_animacy(L, NP, A).
 ty_np_animacy(L, of(_, NP), A) :- NP = np(_, _, _, _), ty_np_animacy(L, NP, A).
+ty_np_animacy(L, np_pp(NP, _), A) :- nonvar(NP), ty_np_animacy(L, NP, A).
 ty_np_animacy(L, C, A) :- ty_coord_np(C, _, Xs), forall(member(X, Xs), ty_np_animacy(L, X, A)).
 ty_np_animacy(L, S, A) :- S == same, ty_same_subject(S1), ty_np_animacy(L, S1, A).
 ty_np_animacy(L, pron(_, _, K), A) :-
@@ -4287,6 +4333,7 @@ ty_pp_head(NP, M) :-
     ;   NP = np(M, _, _, _) -> true
     ;   NP = rel(H, _) -> ty_pp_head(H, M)
     ;   NP = of(_, H) -> ty_pp_head(H, M)
+    ;   NP = np_pp(H, _) -> ty_pp_head(H, M)
     ;   true
     ).
 
@@ -4305,9 +4352,9 @@ ty_pp_part(x, L, _, NP) --> ty_np_phrase(L, NP, _).
 
 %% A noun phrase where no role's marks stand (an adposition's, a copula's
 %% predicate): a noun phrase, or a noun phrase with a relative clause.
-ty_np_phrase(L, NP, F) --> { ty_np_slot(NP) }, ty_np(L, NP, F).
+ty_np_phrase(L, NP0, F) --> { ty_np_tail_slot(L, NP0, NP, T) }, ty_np(L, NP, F), ty_pp_tail(L, T, NP).
 ty_np_phrase(L, R, F) --> { ty_rel_slot(R) }, ty_rel(L, none, R, F).
-ty_np_phrase(L, P, F) --> { ty_poss_slot(P) }, ty_poss(L, P, F).
+ty_np_phrase(L, P0, F) --> { ty_poss_tail_slot(L, P0, P, T) }, ty_poss(L, P, F), ty_pp_tail(L, T, P).
 ty_np_phrase(L, Nm, F) --> ty_name_here, { ty_name_slot(Nm) }, ty_name_words(L, Nm, F).
 ty_np_phrase(L, Qp, F) --> ty_qp_here, { ty_qp_slot(Qp) }, ty_qp_words(L, Qp, F).
 ty_np_phrase(L, Pr, F) -->
@@ -4316,6 +4363,7 @@ ty_np_phrase(L, Pr, F) -->
     { ty_pp_pron_role(L, R) },
     ty_words(1, 2, Ws, ty_pron_words(L, R, Pr, Ws)),
     { ty_pron_np_features(L, Pr, F) }.
+
 %% Coordinated noun phrases with no marks (since 1.59.0: `with mines and
 %% traps').
 ty_np_phrase(L, C, F) -->
@@ -4324,6 +4372,69 @@ ty_np_phrase(L, C, F) -->
     ty_coord_ahead(L, K),
     ty_coord_list(L, none, K, Xs, Fs),
     { ty_coord_features(K, Fs, F) }.
+
+%% A NOUN PHRASE WITH AN ADPOSITION PHRASE AFTER IT (since 1.83.0):
+%% np_pp(NP, pp(Prep, X)), in a language that keeps the phrase after its
+%% noun phrase (ty_noun_adposition(L, after)): `A dip in prices.', `the
+%% man with the hat sleeps'. The phrase is a tail of the clause that reads
+%% its head, a noun phrase or a possessed one, here and in a role
+%% (ty_role//4): no tail first, then an adposition phrase where the next
+%% word is an adposition's ('$ty_adp'). So an adposition phrase after an
+%% object is the clause's adjunct first (`He sees a dog with a
+%% telescope.'), and the head is read once: as a clause of its own after
+%% the others, which read the head again, the round trips cost French
+%% 12.6 % more and Spanish 5.5 % (their `de' and `a' are in nearly every
+%% sentence), 1.83.0's first cut. X may have a phrase of its own (`a
+%% parent with a toddler in tow'). Reading, the tail is open only in a
+%% language with the row and a text with an adposition's word: with no row
+%% the head is the phrase, and no choice is left.
+%% The slot tests of the head are the tail's too (ty_np_slot/1,
+%% ty_poss_slot/1): one call where there were two.
+ty_np_tail_slot(L, NP0, NP, T) :-
+    (   var(NP0)
+    ->  (   '$ty_noun_pp'(L), nb_current('$ty_adp', f([_|_]))
+        ->  T = open(NP0)
+        ;   T = none, NP = NP0
+        )
+    ;   NP0 = np(_, _, _, _) -> NP = NP0, T = none
+    ;   NP0 = np_pp(NP, PP), nonvar(NP), NP = np(_, _, _, _), T = pp(PP)
+    ).
+
+ty_poss_tail_slot(L, P0, P, T) :-
+    (   var(P0)
+    ->  \+ nb_current('$ty_poss', f(0)), P = of(_, _),
+        (   '$ty_noun_pp'(L), nb_current('$ty_adp', f([_|_]))
+        ->  T = open(P0)
+        ;   T = none, P0 = P
+        )
+    ;   P0 = of(_, _) -> P = P0, T = none
+    ;   P0 = np_pp(P, PP), nonvar(P), P = of(_, _), T = pp(PP)
+    ).
+
+ty_pp_tail(_, none, _) --> [].
+ty_pp_tail(L, pp(pp(Prep, X)), _) --> { '$ty_noun_pp'(L) }, ty_pp(L, Prep, X).
+ty_pp_tail(L, open(NP0), H) -->
+    (   { NP0 = H }
+    ;   ty_adp_next,
+        ty_pp(L, Prep, X),
+        { NP0 = np_pp(H, pp(Prep, X)) }
+    ).
+
+%% THE ADPOSITIONS OF A TEXT: the first words of its adposition rows that
+%% its words hold ('$ty_adp'), as the subordinators'.
+ty_adp_flag(L, Words) :-
+    (   '$ty_noun_pp'(L)
+    ->  findall(W, ( ty_adposition(L, _, [W|_]), memberchk(W, Words) ), Ws0),
+        sort(Ws0, Ws)
+    ;   Ws = []
+    ),
+    b_setval('$ty_adp', f(Ws)).
+
+ty_adp_next(S, S) :-
+    (   var(S) -> true
+    ;   S = [W|_], nb_current('$ty_adp', f(Ws)) -> memberchk(W, Ws)
+    ;   true
+    ).
 
 %% A pronoun after an adposition takes the rows of j, or of o after an
 %% adposition of the accusative (German `mit ihm', `an ihn').
@@ -5411,9 +5522,10 @@ ty_role(L, Role, W, [Def, N, Anim, _]) -->
     { ty_marks_ok(L, Role, before, [Def, N, Anim], Before),
       ty_marks_ok(L, Role, after, [Def, N, Anim], After) }.
 
-ty_role(L, Role, NP, Features) -->
-    { ty_np_slot(NP) },
-    ty_marked_np(L, Role, NP, Features, none).
+ty_role(L, Role, NP0, Features) -->
+    { ty_np_tail_slot(L, NP0, NP, T) },
+    ty_marked_np(L, Role, NP, Features, none),
+    ty_pp_tail(L, T, NP).
 
 %% A name in its role (since 1.62.0), between the role's marks (Spanish
 %% `ve a Juan').
@@ -5452,14 +5564,15 @@ ty_role(L, Role, R, Features) --> { ty_rel_slot(R) }, ty_rel(L, Role, R, Feature
 
 %% A noun phrase of a possessor between its role's marks; moved into a
 %% relative clause's marker (`whose dog'), nothing.
-ty_role(L, Role, P, Features) -->
-    { ty_poss_slot(P), \+ ty_poss_moved(P),
+ty_role(L, Role, P0, Features) -->
+    { ty_poss_tail_slot(L, P0, P, T), \+ ty_poss_moved(P),
       ty_role_case(L, Role) },
     ty_mark_slot(L, Role, before, Before),
     ty_poss(L, P, Features),
     ty_mark_slot(L, Role, after, After),
     { ty_marks_ok(L, Role, before, Features, Before),
-      ty_marks_ok(L, Role, after, Features, After) }.
+      ty_marks_ok(L, Role, after, Features, After) },
+    ty_pp_tail(L, T, P).
 ty_role(_, _, P, Features) -->
     { ty_poss_moved(P), P = of(gap(_, _, r(poss(_, _, Features), _)), _) }.
 
@@ -6018,6 +6131,8 @@ ty_parse_reset(L) :-
 ty_feats_make(L) :-
     retractall('$ty_cased'(L)), retractall('$ty_declines'(L)),
     retractall('$ty_kein_lang'(L)), retractall('$ty_sub_used'(L)), retractall('$ty_commands'(L)),
+    retractall('$ty_noun_pp'(L)),
+    ( ty_noun_adposition(L, after) -> assertz('$ty_noun_pp'(L)) ; true ),
     ( once(ty_tense_form(L, imperative, _, _, _)) -> assertz('$ty_commands'(L)) ; true ),
     ( once(ty_case(L, _, _)) -> assertz('$ty_cased'(L)) ; true ),
     ( once(ty_adjective_ending(L, _, _, _, _, _)) -> assertz('$ty_declines'(L)) ; true ),
@@ -6095,6 +6210,7 @@ ty_feats_make(L) :-
 :- dynamic('$ty_kein_lang'/1).
 :- dynamic('$ty_sub_used'/1).
 :- dynamic('$ty_commands'/1).
+:- dynamic('$ty_noun_pp'/1).
 :- dynamic('$ty_art_words'/4).
 :- dynamic('$ty_art_multi'/4).
 :- dynamic('$ty_art_defs'/3).

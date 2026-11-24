@@ -373,6 +373,8 @@ ty_copula(german, any, past, pl(2), pos, [wart]).
 %% Prepositions; the adjuncts at the clause's end, before the negation.
 ty_order(german, pp, [p, x]).
 ty_adjunct(german, end).
+%% A noun phrase's adposition phrase stands after it (since 1.83.0).
+ty_noun_adposition(german, after).
 ty_adposition(german, in, [in]).
 ty_adposition(german, on, [auf]).
 ty_adposition(german, with, [mit]).

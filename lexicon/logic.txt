@@ -243,3 +243,15 @@ Untie the knot.	imperative(untie(you, the(knot))).
 Refer to your notes.	imperative(to(refer(you), of(pl(note), you))).
 Charge the wagon with hay.	imperative(with(charge(you, the(wagon)), hay)).
 Bathe daily.	imperative(daily(bathe(you))).
+# a noun phrase with an adposition phrase after it (since 1.83.0): Prep(Head, X) inside the(...) or a(...), as of/2 is for a possessor
+The man with the hat sleeps.	is_sleep(the(with(man, the(hat)))).
+The house on the hill is old.	old(the(on(house, the(hill)))).
+The boy in the house sees the dog.	see(the(in(boy, the(house))), the(dog)).
+The view from the peak was magnificent.	past(magnificent(the(from(view, the(peak))))).
+The workers in the plant were unorganized.	past(unorganized(the(in(pl(worker), the(plant))))).
+The difference in her is amazing.	amazing(the(in(difference, she))).
+The cost in human life was enormous.	past(enormous(the(in(cost, human(life))))).
+His place in history was foreordained.	past(foreordained(in(of(place, he), history))).
+A dip in prices.	dip(a(in(dip, a(pl(price))))). price(a(pl(price))).
+Hands in the starting position.	hand(a(in(pl(hand), the(starting(position))))).
+Slavish devotion to her job ruled her life.	past(rule(to(slavish(devotion), of(job, she)), of(life, she))).

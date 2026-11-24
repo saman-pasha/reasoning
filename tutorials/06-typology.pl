@@ -145,6 +145,7 @@ main :-
     subordinate,
     phrases,
     commands,
+    noun_adpositions,
     format("~ndone~n", []).
 
 
@@ -729,7 +730,7 @@ blank_template :-
     split_string(S, "\n", "", Lines),
     include([L]>>sub_string(L, 0, _, _, 'ty_'), Lines, Choices),
     length(Choices, N1),
-    must('the choices, each a row of code', N1, 86),
+    must('the choices, each a row of code', N1, 87),
     ( member(L2, Lines), sub_string(L2, 0, _, _, '%% ty_noun(klingon, Meaning, Gender') -> R2 = shape ; R2 = none ),
     must('a slot of words, its shape', R2, shape),
     ( member(L3, Lines), sub_string(L3, 0, _, _, '%%   e.g. ty_noun_in(english, dog,') -> R3 = example ; R3 = none ),
@@ -912,6 +913,20 @@ commands :-
     must('its subject you, of the second person', P1-N1, 2-sg),
     typology_write(english, clause(open, imperative, neg, pron(2, _, _), np(door, sg, def, [])), W2),
     must('not to', W2, 'Do not open the door.').
+
+%% 54. A NOUN PHRASE WITH AN ADPOSITION PHRASE AFTER IT (1.83.0): np_pp(NP,
+%% pp(Prep, X)), where the template keeps the phrase after its noun phrase
+%% (ty_noun_adposition(L, after)); a phrase after an object is the clause's
+%% adjunct first.
+noun_adpositions :-
+    typology_read(english, 'The man with the hat sleeps.', IR1),
+    must('a subject with its phrase', IR1,
+         clause(sleep, present, pos, np_pp(np(man, sg, def, []), pp(with, np(hat, sg, def, []))), none)),
+    typology_write(german, clause(sleep, present, pos, np_pp(np(dog, sg, def, []), pp(in, np(house, sg, def, []))), none), W2),
+    must('in German', W2, 'Der Hund im Haus schläft.'),
+    once(typology_read(english, 'He sees a dog with a telescope.', IR3)),
+    must('after an object, the clause\'s adjunct first', IR3,
+         clause(see, present, pos, pron(3, sg, m), np(dog, sg, indef, []), [pp(with, np(telescope, sg, indef, []))])).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

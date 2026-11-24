@@ -540,6 +540,8 @@ ty_copula(english, any, past, pl, neg, [were, not]).
 %% Prepositions before their noun phrase; the adjuncts at the clause's end.
 ty_order(english, pp, [p, x]).
 ty_adjunct(english, end).
+%% A noun phrase's adposition phrase stands after it (since 1.83.0).
+ty_noun_adposition(english, after).
 ty_adposition(english, in, [in]).
 ty_adposition(english, on, [on]).
 ty_adposition(english, with, [with]).
