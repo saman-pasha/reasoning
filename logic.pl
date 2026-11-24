@@ -25,9 +25,10 @@
 %%                                 definite noun phrase (the(dog),
 %%                                 the(pl(rebel)), the(big(dog))), a bare
 %%                                 noun (music), one individual
-%%                                 (a(person)), a possessed (of(dog,
-%%                                 john)); terms since 1.76.0, one atom
-%%                                 each (the_dog) through 1.75.0
+%%                                 (a(person), a(big(dog)), a(pl(book)),
+%%                                 a(of(book, a(pl(stamp))))), a possessed
+%%                                 (of(dog, john)); terms since 1.76.0,
+%%                                 one atom each (the_dog) through 1.75.0
 %%     var(N)                      a variable, numbered from 1 by its first
 %%                                 use in its item
 %%     num(N), str(S), list(Terms), fun(Name, Args)
@@ -67,15 +68,28 @@
 %% the(pl(rebel)) since 1.76.0.
 %%
 %% AN INDEFINITE OBJECT (since 1.74.0): in a statement an individual
-%% (letter(a_letter), receive(he, a_letter)), in a question or a condition
-%% a variable (`Who sees a dog?' is see(X, Y), dog(Y)); in a rule's
-%% conclusion none.
+%% (letter(a(letter)), receive(he, a(letter))), in a question or a
+%% condition a variable (`Who sees a dog?' is see(X, Y), dog(Y)); in a
+%% rule's conclusion none.
 %%
-%% WHAT HAS NO LOGIC FORM YET: the conditional, a negation,
-%% an adjunct, an object that is no constant, `when' and `because', a
-%% pronoun whose gender is not known, an adjunct's noun phrase that is no
-%% constant, `no' and `nothing', and a determiner
-%% other than the ones above. logic_why/2 names the first reason.
+%% AN INDEFINITE NOUN PHRASE (since 1.77.0) is so wherever a statement
+%% says it: an object, an adjunct's (`He sat on a chair.': on(sit(he),
+%% a(chair))), a possessor (of(status, a(classic))) and a possessed
+%% (a(of(book, a(pl(stamp))))). Its individual is a(T), T its term as in
+%% the(T), so its adjectives and its number are in it: a(big(dog)),
+%% a(pl(book)), and `A good woman met a bad woman.' names two (a(woman)
+%% for both through 1.76.0). Its facts are its noun's and its adjectives'
+%% (dog(a(big(dog))), big(a(big(dog)))). In a question a variable inside
+%% a constant is a compound term: `Who knows the father of a student?' is
+%% know(X, of(father, Y)), student(Y).
+%%
+%% WHAT HAS NO LOGIC FORM YET: the conditional, a negation, `when' and
+%% `because', a pronoun whose gender is not known, an indefinite noun
+%% phrase in a rule's conclusion, a generic subject with a possessor in
+%% the present (`Lilies of the valley are racemose.'), a noun phrase of
+%% `every' or `some' that is no subject, a copula's noun phrase with a
+%% possessor, `no' and `nothing', and a determiner other than the ones
+%% above. logic_why/2 names the first reason.
 %%
 %% WHAT IS PUBLIC:
 %%
@@ -162,11 +176,17 @@ lg_antecedent(name(W), Prev, name(W)) :- !,
 lg_antecedent(M, Prev, NP) :-
     member(IR, Prev), lg_np_in(IR, np(M1, Num, D, As)), M1 == M, !,
     (   memberchk(D, [def, mass]) -> NP = np(M, Num, D, As)
-    ;   D == indef -> NP = '$const'(a(M))
+    ;   D == indef -> catch(lg_np_term(M, Num, As, T), lg_no(_), fail), NP = '$const'(a(T))
     ).
 
+%% The noun phrases of an IR; an indefinite possessed is no referent of its
+%% own (its individual is a(of(...)), lg_possessed/4).
 lg_np_in(T, _) :- var(T), !, fail.
 lg_np_in(T, T) :- ( T = np(_, _, _, _) ; T = name(_) ).
+lg_np_in(of(P, NP), X) :- !,
+    (   lg_np_in(P, X)
+    ;   nonvar(NP), NP = np(_, _, D, _), D \== indef, lg_np_in(NP, X)
+    ).
 lg_np_in(T, NP) :- compound(T), T =.. [_|As], member(A, As), lg_np_in(A, NP).
 
 %% A text's sentences: each ends at a full stop, a question mark or an
@@ -201,9 +221,10 @@ lg_no(Why) :- throw(lg_no(Why)).
 
 lg_utterance(question(C), question, [query(B)]) :- !,
     lg_parts(C, S, Pred),
-    lg_entity(S, ent(T, Conds, Q)),
+    lg_entity(S, ent(T, Conds, Q), SMs),
     ( memberchk(Q, [const, wh]) -> true ; lg_no(determiner(Q)) ),
-    lg_atoms(C, T, Pred, Atoms0),
+    lg_atoms(C, T, Pred, Atoms00),
+    append(Atoms00, SMs, Atoms0),
     lg_obj_conds(Atoms0, Atoms, OConds),
     append([Atoms, OConds, Conds], Bs),
     lg_body(Bs, B).
@@ -224,10 +245,13 @@ lg_statement(sub(K, Main, Cond), Items) :- !,
     lg_conditional(Main, Cond, Items).
 lg_statement(C, Items) :-
     lg_parts(C, S, Pred),
-    lg_entity(S, E),
-    E = ent(T, Conds, Q),
-    lg_atoms(C, T, Pred, Atoms),
-    lg_assert(Q, T, Conds, Atoms, S, Items).
+    lg_entity(S, ent(T, Conds, Q), SMs),
+    lg_atoms(C, T, Pred, Atoms0),
+    partition(lg_is_ind, SMs, Inds, SObjs),
+    append(Atoms0, SObjs, Atoms),
+    lg_assert(Q, T, Conds, Atoms, S, Inds, Items).
+
+lg_is_ind('$ind'(_, _)).
 
 %% A clause of a joined subject or object (`John and Mary sleep.') is a
 %% clause of each item.
@@ -267,24 +291,31 @@ lg_set_subject(copula(T, P, _, Pr), S, copula(T, P, S, Pr)).
 %% A statement of a constant is its facts; of every, each or all its rules;
 %% of a generic indefinite its rules first and one individual's facts
 %% second; of something or someone one individual's facts.
-lg_assert(const, _, [], Atoms, _, Items) :- !,
+lg_assert(const, _, [], Atoms, _, _, Items) :- !,
     lg_facts([], Atoms, Items).
-lg_assert(every, T, Conds, Atoms, _, Items) :- !,
+lg_assert(every, T, Conds, Atoms, _, _, Items) :- !,
     lg_rules(Atoms, T, Conds, Items).
-lg_assert(generic, T, Conds, Atoms, S, Items) :- !,
+lg_assert(generic, T, Conds, Atoms, S, Inds, Items) :- !,
     (   lg_has_obj(Atoms)
-    ->  lg_individual(S, T), lg_facts(Conds, Atoms, Items)
+    ->  lg_individual(S, Inds, T), lg_facts(Conds, Atoms, Items)
     ;   Atoms = [at(_, _)|_]
-    ->  (   lg_individual(S, T), lg_facts(Conds, Atoms, Items)
-        ;   lg_rules(Atoms, T, Conds, Items)
+    ->  (   lg_individual(S, Inds, T), lg_facts(Conds, Atoms, Items)
+        ;   lg_generic_rules(Inds, Atoms, T, Conds, Items)
         )
-    ;   (   lg_rules(Atoms, T, Conds, Items)
-        ;   lg_individual(S, T), lg_facts(Conds, Atoms, Items)
+    ;   (   lg_generic_rules(Inds, Atoms, T, Conds, Items)
+        ;   lg_individual(S, Inds, T), lg_facts(Conds, Atoms, Items)
         )
     ).
-lg_assert(some, T, Conds, Atoms, S, Items) :- !,
-    lg_individual(S, T), lg_facts(Conds, Atoms, Items).
-lg_assert(Q, _, _, _, _, _) :- lg_no(determiner(Q)).
+lg_assert(some, T, Conds, Atoms, S, Inds, Items) :- !,
+    lg_individual(S, Inds, T), lg_facts(Conds, Atoms, Items).
+lg_assert(Q, _, _, _, _, _, _) :- lg_no(determiner(Q)).
+
+%% A generic subject's rules; none where its noun has a possessor
+%% (`Lilies of the valley are racemose.': the rule's variable would lose
+%% it).
+lg_generic_rules(Inds, Atoms, T, Conds, Items) :-
+    ( memberchk('$ind'(_, of(_, _)), Inds) -> lg_no(possessor(generic)) ; true ),
+    lg_rules(Atoms, T, Conds, Items).
 
 lg_rules(Atoms, T, Conds, Items) :-
     ( lg_has_obj(Atoms) -> lg_no(object(generic)) ; true ),
@@ -303,12 +334,14 @@ lg_facts(Conds, Atoms, Items) :-
 lg_body([B], B) :- !.
 lg_body(Bs, and(Bs)).
 
-%% One individual: a(person) for a person (a_person through 1.75.0),
+%% One individual: a(T) for an indefinite noun phrase, T its term as in
+%% the(T) (a(person), a(big(dog)), a(pl(book)), a(of(pair, a(pl(post)))));
+%% since 1.77.0, a(Noun) through 1.76.0 and a_person through 1.75.0), and
 %% something and someone.
-lg_individual(np(N, _, _, _), const(a(N))) :- !.
-lg_individual(qp(_, thing), const(something)) :- !.
-lg_individual(qp(_, person), const(someone)) :- !.
-lg_individual(S, _) :- lg_no(determiner(S)).
+lg_individual(_, Inds, T) :- member('$ind'(V, Shape), Inds), V == T, !, T = const(a(Shape)).
+lg_individual(qp(_, thing), _, const(something)) :- !.
+lg_individual(qp(_, person), _, const(someone)) :- !.
+lg_individual(S, _, _) :- lg_no(determiner(S)).
 
 %% IF: the conditional's conclusions are its main clause's atoms; its
 %% conditions the main subject's own (person(X)), then the if clause's
@@ -316,14 +349,17 @@ lg_individual(S, _) :- lg_no(determiner(S)).
 %% for the main clause's subject; something and someone are the variable.
 lg_conditional(Main, Cond, Items) :-
     lg_parts(Main, S, Pred),
-    lg_entity(S, ent(T, Conds, _)),
-    lg_atoms(Main, T, Pred, Atoms),
+    lg_entity(S, ent(T, Conds, _), SMs),
+    lg_atoms(Main, T, Pred, Atoms0),
+    exclude(lg_is_ind, SMs, SObjs),
+    append(Atoms0, SObjs, Atoms),
     ( lg_has_obj(Atoms) -> lg_no(object(generic)) ; true ),
     lg_parts(Cond, S2, Pred2),
-    (   nonvar(S2), S2 = pron(3, _, _) -> T2 = T, Conds2 = []
-    ;   lg_entity(S2, ent(T2, Conds2, Q2)), ( Q2 == const -> true ; lg_no(determiner(Q2)) )
+    (   nonvar(S2), S2 = pron(3, _, _) -> T2 = T, Conds2 = [], SMs2 = []
+    ;   lg_entity(S2, ent(T2, Conds2, Q2), SMs2), ( Q2 == const -> true ; lg_no(determiner(Q2)) )
     ),
-    lg_atoms(Cond, T2, Pred2, Atoms20),
+    lg_atoms(Cond, T2, Pred2, Atoms21),
+    append(Atoms21, SMs2, Atoms20),
     lg_obj_conds(Atoms20, Atoms2, OConds2),
     append([Conds, Conds2, Atoms2, OConds2], Body),
     findall(R, ( member(A, Atoms), lg_rule(A, T, Body, R) ), Items).
@@ -358,56 +394,62 @@ lg_tensed(T, [A|As], [at(T, A)|Bs]) :- lg_tensed(T, As, Bs).
 lg_atoms(C, T, Pred, Atoms) :-
     lg_atoms_(C, T, Pred, Atoms00),
     lg_split_objs(Atoms00, Atoms0, Objs),
-    lg_clause_adjuncts(C, Js),
+    lg_clause_adjuncts(C, Js, JObjs),
     lg_adjuncted(Js, Atoms0, Atoms1),
     lg_clause_tense(C, Tn),
     lg_tensed(Tn, Atoms1, Atoms2),
-    append(Atoms2, Objs, Atoms).
+    append([Atoms2, Objs, JObjs], Atoms).
 
-%% AN INDEFINITE OBJECT (since 1.74.0) is a variable at first, and its
-%% noun's conditions travel beside the atoms as '$obj'(Noun, Var, Conds):
-%% a statement makes it an individual (lg_obj_facts/3: a_letter, its
-%% conditions facts), a question or a condition keeps the variable and
-%% its conditions in the body (lg_obj_conds/3), a rule's conclusion has no
-%% form of it (`Every boy sees a dog.': each boy may see another dog).
+%% AN INDEFINITE NOUN PHRASE THAT IS NO SUBJECT (an object since 1.74.0;
+%% an adjunct's, a possessor and a possessed since 1.77.0) is a variable
+%% at first, and its noun's conditions travel beside the atoms as
+%% '$obj'(Shape, Var, Raw, Conds): Shape its term (letter, big(dog),
+%% pl(book), of(bag, ...)), Var the term an atom names it by, Raw the term
+%% a possessed's term names it by. A statement makes it an individual
+%% (lg_obj_facts/3: Raw a(Shape), Var const(Raw), its conditions facts), a
+%% question or a condition keeps the variable and its conditions in the
+%% body (lg_obj_conds/3), a rule's conclusion has no form of it (`Every
+%% boy sees a dog.': each boy may see another dog).
 lg_split_objs([], [], []).
-lg_split_objs([O|As], Ps, [O|Os]) :- O = '$obj'(_, _, _), !, lg_split_objs(As, Ps, Os).
+lg_split_objs([O|As], Ps, [O|Os]) :- O = '$obj'(_, _, _, _), !, lg_split_objs(As, Ps, Os).
 lg_split_objs([A|As], [A|Ps], Os) :- lg_split_objs(As, Ps, Os).
 
 lg_obj_facts([], [], []).
-lg_obj_facts(['$obj'(N, V, Cs)|As], Ps, Fs) :- !,
-    V = const(a(N)),
+lg_obj_facts(['$obj'(S, V, R, Cs)|As], Ps, Fs) :- !,
+    R = a(S), V = const(R),
     lg_obj_facts(As, Ps, Fs0),
     append(Cs, Fs0, Fs).
 lg_obj_facts([A|As], [A|Ps], Fs) :- lg_obj_facts(As, Ps, Fs).
 
 lg_obj_conds([], [], []).
-lg_obj_conds(['$obj'(_, _, Cs)|As], Ps, Fs) :- !,
+lg_obj_conds(['$obj'(_, V, R, Cs)|As], Ps, Fs) :- !,
+    R = V,
     lg_obj_conds(As, Ps, Fs0),
     append(Cs, Fs0, Fs).
 lg_obj_conds([A|As], [A|Ps], Fs) :- lg_obj_conds(As, Ps, Fs).
 
-lg_has_obj(Atoms) :- memberchk('$obj'(_, _, _), Atoms).
+lg_has_obj(Atoms) :- memberchk('$obj'(_, _, _, _), Atoms).
 
-%% A clause's adjuncts at level 2: pp(Prep, Term) of a constant, adv(M),
-%% each adverb of a joined pair its own.
-lg_clause_adjuncts(clause(_, _, _, _, _, Js), Ks) :- !, lg_adjuncts(Js, Ks).
-lg_clause_adjuncts(_, []).
+%% A clause's adjuncts at level 2: pp(Prep, Term) of a constant or (since
+%% 1.77.0) an indefinite noun phrase's individual, its marks beside them;
+%% adv(M), each adverb of a joined pair its own.
+lg_clause_adjuncts(clause(_, _, _, _, _, Js), Ks, Os) :- !, lg_adjuncts(Js, Ks, Os).
+lg_clause_adjuncts(_, [], []).
 
-lg_adjuncts([], []).
-lg_adjuncts([J|Js], Ks) :-
-    lg_adjunct(J, K1),
-    lg_adjuncts(Js, Ks2),
-    append(K1, Ks2, Ks).
+lg_adjuncts([], [], []).
+lg_adjuncts([J|Js], Ks, Os) :-
+    lg_adjunct(J, K1, O1),
+    lg_adjuncts(Js, Ks2, Os2),
+    append(K1, Ks2, Ks),
+    append(O1, Os2, Os).
 
-lg_adjunct(J, _) :- var(J), !, lg_no(adjunct(J)).
-lg_adjunct(pp(P, NP), [pp(P, T)]) :- atom(P), !,
-    lg_entity(NP, ent(T, _, Q)),
-    ( Q == const -> true ; lg_no(adjunct(Q)) ).
-lg_adjunct(adv(M), [adv(M)]) :- atom(M), !.
-lg_adjunct(adv(and(Ms)), Ks) :- is_list(Ms), forall(member(M, Ms), atom(M)), !,
+lg_adjunct(J, _, _) :- var(J), !, lg_no(adjunct(J)).
+lg_adjunct(pp(P, NP), [pp(P, T)], Os) :- atom(P), !,
+    lg_arg(adjunct, NP, T, _, Os).
+lg_adjunct(adv(M), [adv(M)], []) :- atom(M), !.
+lg_adjunct(adv(and(Ms)), Ks, []) :- is_list(Ms), forall(member(M, Ms), atom(M)), !,
     findall(adv(M), member(M, Ms), Ks).
-lg_adjunct(J, _) :- lg_no(adjunct(J)).
+lg_adjunct(J, _, _) :- lg_no(adjunct(J)).
 
 %% Each atom inside its adjuncts, the first the innermost.
 lg_adjuncted([], As, As) :- !.
@@ -423,17 +465,12 @@ lg_atoms_(copula(_, _, _, _), T, np(N, _, D, As), Atoms) :-
     memberchk(D, [indef, mass]), !,
     lg_adjectives(As, Ms),
     lg_preds_of([N|Ms], T, Atoms).
-lg_atoms_(copula(_, _, _, _), T, pp(P, NP), [pred(P, [T, To])]) :- atom(P), !,
-    lg_entity(NP, ent(To, _, Q)),
-    ( Q == const -> true ; lg_no(object(Q)) ).
+lg_atoms_(copula(_, _, _, _), T, pp(P, NP), [pred(P, [T, To])|Os]) :- atom(P), !,
+    lg_arg(object, NP, To, _, Os).
 lg_atoms_(copula(_, _, _, _), _, Pred, _) :- !, lg_no(predicate(Pred)).
 lg_atoms_(_, T, verb(V, none), [pred(V, [T])]) :- !.
-lg_atoms_(_, T, verb(V, O), Atoms) :-
-    lg_entity(O, ent(To, OConds, Q)),
-    (   Q == const -> Atoms = [pred(V, [T, To])]
-    ;   Q == generic, nonvar(O), O = np(N, _, _, _) -> Atoms = [pred(V, [T, To]), '$obj'(N, To, OConds)]
-    ;   lg_no(object(Q))
-    ).
+lg_atoms_(_, T, verb(V, O), [pred(V, [T, To])|Os]) :-
+    lg_arg(object, O, To, _, Os).
 
 %% The adjectives of a phrase, a joined pair's items each.
 lg_adjectives(As, Ms) :-
@@ -447,28 +484,49 @@ lg_adjective(A, M) :-
 
 %% ---- noun phrases ---------------------------------------------------------------
 
-lg_entity(X, _) :- var(X), !, lg_no(shape(X)).
-lg_entity(name(N), ent(const(C), [], const)) :- !, lg_name_atom(N, C).
-lg_entity(np(N, Num, def, As), ent(const(the(T)), [], const)) :- memberchk(Num, [sg, pl]), !,
+%% A noun phrase's entity, ent(Term, Conds, Q), and the marks of the
+%% indefinite noun phrases in it: '$ind'(Var, Shape) for itself where it
+%% is indefinite (its individual, lg_individual/3), and its possessor's
+%% '$obj' marks (lg_arg/5).
+lg_entity(X, _, _) :- var(X), !, lg_no(shape(X)).
+lg_entity(name(N), ent(const(C), [], const), []) :- !, lg_name_atom(N, C).
+lg_entity(np(N, Num, def, As), ent(const(the(T)), [], const), []) :- memberchk(Num, [sg, pl]), !,
     lg_np_term(N, Num, As, T).
-lg_entity(np(N, _, mass, As), ent(const(T), [], const)) :- !,
+lg_entity(np(N, _, mass, As), ent(const(T), [], const), []) :- !,
     lg_np_term(N, sg, As, T).
-lg_entity(np(N, _, D, As), ent(V, Conds, every)) :- memberchk(D, [every, each, all]), !,
+lg_entity(np(N, _, D, As), ent(V, Conds, every), []) :- memberchk(D, [every, each, all]), !,
     lg_noun_conds(N, As, V, Conds).
-lg_entity(np(N, _, D, As), ent(V, Conds, generic)) :- D == indef, !,
-    lg_noun_conds(N, As, V, Conds).
-lg_entity(np(N, _, some, As), ent(V, Conds, some)) :- !,
-    lg_noun_conds(N, As, V, Conds).
-lg_entity(qp(every, _), ent(_, [], every)) :- !.
-lg_entity(qp(some, _), ent(_, [], some)) :- !.
-lg_entity(wh(_), ent(_, [], wh)) :- !.
-lg_entity('$const'(C), ent(const(C), [], const)) :- !.
-lg_entity(of(P, NP), ent(const(C), [], const)) :- !, lg_possessed(P, NP, C).
-lg_entity(pron(P, N, K), ent(const(C), [], const)) :- lg_pron_const(pron(P, N, K), C), !.
-lg_entity(pron(_, _, _), _) :- !, lg_no(pronoun).
-lg_entity(np(_, _, D, _), _) :- !, lg_no(determiner(D)).
-lg_entity(qp(Q, _), _) :- !, lg_no(determiner(Q)).
-lg_entity(X, _) :- lg_no(shape(X)).
+lg_entity(np(N, Num, D, As), ent(V, Conds, generic), ['$ind'(V, T)]) :- D == indef, !,
+    lg_noun_conds(N, As, V, Conds),
+    lg_np_term(N, Num, As, T).
+lg_entity(np(N, Num, some, As), ent(V, Conds, some), ['$ind'(V, T)]) :- !,
+    lg_noun_conds(N, As, V, Conds),
+    lg_np_term(N, Num, As, T).
+lg_entity(qp(every, _), ent(_, [], every), []) :- !.
+lg_entity(qp(some, _), ent(_, [], some), []) :- !.
+lg_entity(wh(_), ent(_, [], wh), []) :- !.
+lg_entity('$const'(C), ent(const(C), [], const), []) :- !.
+lg_entity(of(P, NP), E, Ms) :- !, lg_possessed(P, NP, E, Ms).
+lg_entity(pron(P, N, K), ent(const(C), [], const), []) :- lg_pron_const(pron(P, N, K), C), !.
+lg_entity(pron(_, _, _), _, _) :- !, lg_no(pronoun).
+lg_entity(np(_, _, D, _), _, _) :- !, lg_no(determiner(D)).
+lg_entity(qp(Q, _), _, _) :- !, lg_no(determiner(Q)).
+lg_entity(X, _, _) :- lg_no(shape(X)).
+
+%% A NOUN PHRASE AS AN ARGUMENT (an object, an adjunct's, a copula's
+%% adposition phrase's, a possessor): a constant, or (since 1.77.0 where
+%% it is no object) an indefinite one, then a '$obj' mark; anything else
+%% has no form there, its reason K(Q) (object(every), adjunct(some)). Raw
+%% is the term a possessed's term names it by: the constant, or the
+%% individual's a(Shape), or the variable.
+lg_arg(K, X, V, Raw, Ms) :-
+    lg_entity(X, ent(T, Conds, Q), Ms0),
+    (   Q == const
+    ->  V = T, T = const(Raw), Ms = Ms0
+    ;   Q == generic, Ms0 = ['$ind'(V0, Shape)|Rest]
+    ->  V = V0, Ms = ['$obj'(Shape, V, Raw, Conds)|Rest]
+    ;   Why =.. [K, Q], lg_no(Why)
+    ).
 
 lg_noun_conds(N, As, V, Cs) :-
     lg_adjectives(As, Ms),
@@ -494,20 +552,28 @@ lg_np_term(N, Num, As, T) :-
 lg_wrap1(M, X, T) :- T =.. [M, X].
 
 %% A POSSESSOR (since 1.73.0): the possessed and its possessor are one
-%% constant, of(Possessed, Possessor) since 1.76.0: `his spot' is
-%% of(spot, he), `John's dog' of(dog, john), `the edge of the bed' and `the
-%% bed's edge' of(edge, the(bed)), `the boy's dog's house' of(house,
-%% of(dog, the(boy))), `his hands' of(pl(hand), he). The possessed is
-%% definite (an indefinite one is no constant), and the possessor a
-%% constant.
-lg_possessed(P, NP, of(T, Pc)) :-
-    lg_entity(P, ent(Cp, _, Q)),
-    ( Q == const, Cp = const(Pc) -> true ; lg_no(possessor(Q)) ),
-    (   nonvar(NP), NP = np(N, Num, D, As)
-    ->  ( D == def -> true ; lg_no(determiner(D)) )
-    ;   lg_no(shape(NP))
-    ),
-    lg_np_term(N, Num, As, T).
+%% term, of(Possessed, Possessor) since 1.76.0: `his spot' is of(spot, he),
+%% `John's dog' of(dog, john), `the edge of the bed' and `the bed's edge'
+%% of(edge, the(bed)), `the boy's dog's house' of(house, of(dog,
+%% the(boy))), `his hands' of(pl(hand), he). A definite or a bare possessed
+%% is a constant (`in favor of landlords': of(favor, ...)); an indefinite
+%% one an individual's shape (`a book of stamps': a(of(book,
+%% a(pl(stamp))))). The possessor is a constant or an indefinite noun
+%% phrase (`the status of a classic': of(status, a(classic))). The bare
+%% possessed, the indefinite possessed and the indefinite possessor since
+%% 1.77.0.
+lg_possessed(P, NP, E, Ms) :-
+    lg_arg(possessor, P, _, Pc, PMs),
+    ( nonvar(NP), NP = np(N, Num, D, As) -> true ; lg_no(shape(NP)) ),
+    (   D == def
+    ->  lg_np_term(N, Num, As, T), E = ent(const(of(T, Pc)), [], const), Ms = PMs
+    ;   D == mass
+    ->  lg_np_term(N, sg, As, T), E = ent(const(of(T, Pc)), [], const), Ms = PMs
+    ;   D == indef
+    ->  lg_np_term(N, Num, As, T), lg_noun_conds(N, As, V, Conds),
+        E = ent(V, Conds, generic), Ms = ['$ind'(V, of(T, Pc))|PMs]
+    ;   lg_no(determiner(D))
+    ).
 
 %% A PRONOUN WITH NO REFERENT (since 1.72.0) is a constant of its own, its
 %% word as a subject: he, she, it, they, i, we, you. All the sentences that
@@ -531,9 +597,18 @@ lg_name_atom(N, C) :-
 
 %% An item's variables, var(1), var(2), ... by their first use.
 lg_number(Item0, Item) :-
-    copy_term(Item0, Item),
+    copy_term(Item0, Item1),
+    lg_fix(Item1, Item),
     term_variables(Item, Vs),
     lg_bind(Vs, 1).
+
+%% A constant with a variable in it is a compound term (since 1.77.0): `Who
+%% has the hands of a surgeon?' names fun(of, [fun(pl, [const(hand)]),
+%% var(2)]), as Cocolog's reader reads of(pl(hand), B).
+lg_fix(X, X) :- var(X), !.
+lg_fix(const(C), T) :- !, ( ground(C) -> T = const(C) ; lg_in_term(C, T) ).
+lg_fix(X, Y) :- compound(X), !, X =.. [F|As], maplist(lg_fix, As, Bs), Y =.. [F|Bs].
+lg_fix(X, X).
 
 lg_bind([], _).
 lg_bind([var(N)|Vs], N) :- N1 is N + 1, lg_bind(Vs, N1).
@@ -688,9 +763,11 @@ lg_const_term(T) :-
 lg_det_term(T) :-
     compound(T), ground(T),
     (   T = the(X) -> lg_np_shape(X)
-    ;   T = a(X) -> atom(X)
-    ;   T = of(X, P) -> lg_np_shape(X), ( atom(P) -> true ; lg_const_term(P) )
+    ;   T = a(X) -> ( X = of(Y, P) -> lg_np_shape(Y), lg_poss_term(P) ; lg_np_shape(X) )
+    ;   T = of(X, P) -> lg_np_shape(X), lg_poss_term(P)
     ).
+
+lg_poss_term(P) :- ( atom(P) -> true ; lg_const_term(P) ).
 
 lg_np_shape(X) :- atom(X), !.
 lg_np_shape(pl(X)) :- !, lg_np_shape(X).
@@ -794,7 +871,8 @@ logic_write(L, utterance(_, Items), Text) :-
 %% no sentence says alone that names an individual an earlier group
 %% brought in (a(dog)) is said again with a pronoun for it, kept where the
 %% text so far reads back to the items so far (since 1.72.0): `A dog
-%% barked. It was hungry.'
+%% barked. It was hungry.'; an individual inside a term too, as a
+%% possessor's pronoun (since 1.77.0): `Its addition was major.'
 lg_say_all(L, Groups, Said) :- lg_say_all(L, Groups, [], [], Said).
 
 lg_say_all(_, [], _, _, []).
@@ -810,7 +888,7 @@ lg_say_all(L, [G|Gs], Ss0, Done, [S-How|Said]) :-
 
 lg_say_again(L, [fact(A)], Ss0, Done, S) :-
     member(F, Done), lg_individual_fact(F, N, C),
-    lg_core(A, pred(_, Args)), memberchk(const(C), Args),
+    lg_core(A, pred(_, Args)), lg_names_in(C, Args),
     (   typology_meaning(L, person, N) -> member(P, [pron(3, sg, m), pron(3, sg, f)]) ; P = pron(3, sg, n) ),
     lg_atom_ir(L, A, sub(C, P), IR),
     catch(typology_write(L, IR, S), _, fail),
@@ -826,7 +904,15 @@ lg_groups([F|Is], [[F|Run]|Gs]) :-
     lg_groups(Rest, Gs).
 lg_groups([I|Is], [[I]|Gs]) :- lg_groups(Is, Gs).
 
-lg_individual_fact(fact(pred(N, [const(C)])), N, C) :- nonvar(C), C = a(N1), N1 == N.
+lg_individual_fact(fact(pred(N, [const(C)])), N, C) :- nonvar(C), C = a(S), lg_shape_head(S, N1), N1 == N.
+
+%% The noun an individual's shape is of: book of pl(book) and of
+%% of(large(book), a(pl(stamp))).
+lg_shape_head(S, _) :- var(S), !, fail.
+lg_shape_head(of(T, _), N) :- !, lg_shape_head(T, N).
+lg_shape_head(pl(T), N) :- !, lg_shape_head(T, N).
+lg_shape_head(N, N) :- atom(N), !.
+lg_shape_head(T, N) :- compound(T), T =.. [_, X], lg_shape_head(X, N).
 
 %% The individuals' facts of one sentence: the noun facts of the ones it
 %% brings in (a(person), then a(dog), since 1.74.0), their adjectives'
@@ -838,7 +924,14 @@ lg_run([I|Is], Cs, [I|Run], Rest) :-
 lg_run([I|Is], Cs, [I|Run], Rest) :-
     I = fact(A), lg_core(A, pred(_, Args)), member(const(C), Args), memberchk(C, Cs), !,
     (   A = pred(_, [_]) -> lg_run(Is, Cs, Run, Rest) ; Run = [], Rest = Is ).
+lg_run([I|Is], Cs, [I], Is) :-
+    I = fact(A), member(C, Cs), lg_names_in(C, A), !.
 lg_run(Is, _, [], Is).
+
+%% A term names an individual inside it (of(pl(hand), a(surgeon)) names
+%% a(surgeon)).
+lg_names_in(C, X) :- X == C, !.
+lg_names_in(C, X) :- compound(X), X =.. [_|As], member(A, As), lg_names_in(C, A), !.
 
 lg_say(L, Group, S) :- lg_say(L, Group, S, _).
 
@@ -874,18 +967,18 @@ lg_core(modified(_, P), C) :- !, lg_core(P, C).
 lg_core(P, P).
 lg_group_ir(L, [rule(H, B)], IR) :- lg_body_list(B, Cs), lg_rule_ir(L, H, Cs, IR).
 
-%% Each individual of a group as its noun phrase, np(N, sg, indef, As):
-%% its noun fact and its adjectives' facts, every fact before the last one
-%% of them.
-lg_ind_map(L, Init, Map) :-
+%% The individuals a group brings in, each said as its term's indefinite
+%% noun phrase (lg_const_np/4: a(big(dog)) `a big dog', a(pl(book))
+%% `books'; since 1.77.0, the adjectives from the facts through 1.76.0):
+%% every fact before the last one is an individual's, its noun's or an
+%% adjective's.
+lg_ind_map(L, Init, Cs) :-
     findall(C-N, ( member(F, Init), lg_individual_fact(F, N, C) ), CNs),
     forall(member(fact(A), Init),
            ( A = pred(P, [const(C)]), memberchk(C-_, CNs),
              ( memberchk(C-P, CNs) -> true ; lg_class_ok(L, P/1, adjective) ) )),
-    findall(C-np(N, sg, indef, As),
-            ( member(C-N, CNs),
-              findall(P, ( member(fact(pred(P, [const(C1)])), Init), C1 == C, P \== N ), As) ),
-            Map).
+    findall(C, member(C-_, CNs), Cs0),
+    list_to_set(Cs0, Cs).
 
 %% The variables a question or a condition says of things it names by a
 %% noun (`Who sees a dog?': dog(var(2))) as their noun phrases.
@@ -1053,29 +1146,49 @@ lg_lex(File, W, R) :-
 lg_lex_row(_, '', N, N) :- !.
 lg_lex_row(File, W, N0, N) :- assertz('$lg_lex'(File, W, N0)), N is N0 + 1.
 
+lg_arg_np(L, How, fun(of, [T, P]), of(PNP, np(N, Num, def, As))) :- !,
+    lg_fun_shape(T, S),
+    lg_np_of_term(L, S, N, Num, As),
+    lg_arg_np(L, How, P, PNP).
 lg_arg_np(L, vmap(Map, How), T, NP) :- !,
     ( T = var(K), memberchk(K-NP0, Map) -> NP = NP0 ; lg_arg_np(L, How, T, NP) ).
-lg_arg_np(_, map(Map), const(C), NP) :- memberchk(C-NP0, Map), !, NP = NP0.
+lg_arg_np(L, map(Cs), const(C), NP) :- !, lg_const_np(L, Cs, C, NP).
 lg_arg_np(_, sub(C, NP), const(C1), NP) :- C1 == C, !.
+lg_arg_np(L, sub(C, NP), const(C1), NP1) :- !, lg_const_np(L, [sub(C, NP)], C1, NP1).
 lg_arg_np(_, var1(NP), var(1), NP) :- !.
 lg_arg_np(_, wh, var(_), wh(W)) :- !, member(W, [who, what]).
 lg_arg_np(_, every, var(_), qp(every, K)) :- !, member(K, [thing, person]).
-lg_arg_np(L, _, const(C), NP) :- lg_const_np(L, C, NP).
+lg_arg_np(L, _, const(C), NP) :- lg_const_np(L, [], C, NP).
+
+%% A shape read from the compound term a variable in it makes (lg_fix/2):
+%% fun(pl, [const(hand)]) is pl(hand).
+lg_fun_shape(const(X), X) :- !.
+lg_fun_shape(fun(F, As), T) :- maplist(lg_fun_shape, As, Xs), T =.. [F|Xs].
 
 %% A constant's noun phrase: a pronoun's, something, someone; the(T) a
 %% definite noun phrase, of(T, P) a possessed, each read from its term (no
 %% spelling taken apart since 1.76.0); a name a row has; a bare noun; a
 %% name no row has.
-lg_const_np(_, C, P) :- atom(C), lg_pron_np(C, P).
-lg_const_np(_, something, qp(some, thing)).
-lg_const_np(_, someone, qp(some, person)).
-lg_const_np(L, the(T), np(N, Num, def, As)) :- !, lg_np_of_term(L, T, N, Num, As).
-lg_const_np(L, of(T, P), of(PNP, np(N, Num, def, As))) :- !,
+lg_const_np(_, Cs, C, NP) :- member(sub(C1, NP0), Cs), C1 == C, !, NP = NP0.
+lg_const_np(_, _, C, P) :- atom(C), lg_pron_np(C, P).
+lg_const_np(_, _, something, qp(some, thing)).
+lg_const_np(_, _, someone, qp(some, person)).
+lg_const_np(L, _, the(T), np(N, Num, def, As)) :- !, lg_np_of_term(L, T, N, Num, As).
+lg_const_np(L, Cs, a(S), NP) :- !, memberchk(a(S), Cs), lg_indef_np(L, Cs, S, NP).
+lg_const_np(L, Cs, of(T, P), of(PNP, np(N, Num, def, As))) :- !,
     lg_np_of_term(L, T, N, Num, As),
-    lg_const_np(L, P, PNP).
-lg_const_np(L, C, name(W)) :- atom(C), lg_name_written(C, W), typology_meaning(L, name, W).
-lg_const_np(L, C, np(N, sg, mass, As)) :- lg_np_of_term(L, C, N, sg, As).
-lg_const_np(L, C, name(W)) :- atom(C), lg_name_written(C, W), \+ typology_meaning(L, name, W).
+    lg_const_np(L, Cs, P, PNP).
+lg_const_np(L, _, C, name(W)) :- atom(C), lg_name_written(C, W), typology_meaning(L, name, W).
+lg_const_np(L, _, C, np(N, sg, mass, As)) :- lg_np_of_term(L, C, N, sg, As).
+lg_const_np(L, _, C, name(W)) :- atom(C), lg_name_written(C, W), \+ typology_meaning(L, name, W).
+
+%% An individual's noun phrase, from its shape (since 1.77.0): a(pl(book))
+%% `books', a(of(book, a(pl(stamp)))) `a book of stamps'. Only the
+%% individuals a group brings in (Cs) are said so.
+lg_indef_np(L, Cs, of(T, P), of(PNP, np(N, Num, indef, As))) :- !,
+    lg_np_of_term(L, T, N, Num, As),
+    lg_const_np(L, Cs, P, PNP).
+lg_indef_np(L, _, T, np(N, Num, indef, As)) :- lg_np_of_term(L, T, N, Num, As).
 
 %% A pronoun's constant written as the pronoun.
 lg_pron_np(i, pron(1, sg, _)).

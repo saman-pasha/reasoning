@@ -364,6 +364,26 @@ predicate `in` of the constant `live(john)` (`live` is an adjective too).
 `tools/logic/prose.pl` counts the 8 000 sentences into the IR and back
 into English as well as into Cocolog: run it after each step and put
 both counts in STATUS.md (the owner's rule).
+**An indefinite noun phrase is an individual wherever a statement says
+it since 1.77.0**: `lg_arg/5` is the one way a noun phrase becomes an
+argument (an object, an adjunct's, a copula's adposition phrase's, a
+possessor), and an indefinite one is a `'$obj'(Shape, Var, Raw, Conds)`
+mark beside the atoms: Var is the term an atom names it by, Raw the term
+a possessed's term names it by (`of(status, Raw)`), so a statement binds
+Raw to `a(Shape)` and Var to `const(Raw)`, and a question binds Raw to
+Var. `lg_entity/3` gives a subject's marks too: `'$ind'(Var, Shape)` for
+an indefinite subject (`lg_individual/3` reads its shape from it, never
+from the IR again, or a possessor's marks would be made twice). The
+individual is `a(T)` with T `lg_np_term/4`'s (adjectives and `pl` in it:
+`a(big(dog))`), its facts the noun's and the adjectives' still, which a
+query asks (`dog(Y), big(Y)`). A constant with a variable in it -- a
+question's possessor -- is a compound term (`lg_fix/2` in `lg_number/2`,
+by `lg_in_term/2`, so it is what Cocolog's reader reads back). The
+writer's map is the list of a group's individuals (`lg_ind_map/3`), and
+`lg_const_np/4` says an individual from its shape (`lg_indef_np/4`); a
+group's run ends at a fact that names an individual inside a term
+(`lg_names_in/2`). A generic subject with a possessor has no rule
+(`Lilies of the valley are racemose.`: possessor(generic)).
 **The blank template is generated too** (1.54.0): `templates/template.pl`
 is what `typology_import(template)` writes, `typology_template(xx)`: every
 slot of typology.pl's header list (THE TEMPLATE) with the header's own

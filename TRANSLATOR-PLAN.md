@@ -51,7 +51,10 @@ One shape for each construct:
     const(Name)                     a constant: a name, a thing; since
                                     1.76.0 a term where the noun phrase
                                     has a determiner: the(dog),
-                                    the(pl(rebel)), a(dog), of(dog, john)
+                                    the(pl(rebel)), a(dog), of(dog, john);
+                                    since 1.77.0 an individual keeps its
+                                    adjectives and number, a(big(dog)),
+                                    a(pl(book)), a(of(book, a(pl(stamp))))
     var(N)                          a variable, numbered by its first
                                     use from 1; no Prolog variable
     num(N), str(Text), list(Terms), fun(Name, Args)
@@ -159,8 +162,8 @@ its benchmark, as every typology version has.
    lists in `lexicon/` (a common adjective first; a verb that takes no
    object before a noun for a person or an animal).
 8. **The second measure** (done: 1.69.0, `lexicon/logic.txt`,
-   `tools/logic/measure.pl`): 104 sentences with their Cocolog (169 since
-   1.75.0), written
+   `tools/logic/measure.pl`): 104 sentences with their Cocolog (179 since
+   1.77.0), written
    by hand, counted as the first measure is (STATUS.md keeps the counts).
    At 1.69.0, 86 give their Cocolog and 94 Cocolog texts come back as
    English that reads to them; the misses are the next work: a relative

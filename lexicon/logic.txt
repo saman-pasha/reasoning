@@ -117,7 +117,7 @@ Something is mortal.	mortal(something).
 Someone sleeps.	sleep(someone).
 Everyone is happy.	happy(X).
 Everybody likes music.	like(X, music).
-Some dogs bark.	dog(a(dog)). bark(a(dog)).
+Some dogs bark.	dog(a(pl(dog))). bark(a(pl(dog))).
 Some dog is hungry.	dog(a(dog)). hungry(a(dog)).
 # the tenses (since 1.70.0): an atom said in a tense is Tense(Atom)
 John slept.	past(sleep(john)).
@@ -174,7 +174,7 @@ John sleeps. His dog barks.	sleep(john). bark(of(dog, john)).
 Who sees his dog?	?- see(X, of(dog, he)).
 # indefinite objects (since 1.74.0): an individual in a statement, a variable in a question or a condition
 He received a letter.	letter(a(letter)). past(receive(he, a(letter))).
-John sees a big dog.	dog(a(dog)). big(a(dog)). see(john, a(dog)).
+John sees a big dog.	dog(a(big(dog))). big(a(big(dog))). see(john, a(big(dog))).
 A person likes a dog.	person(a(person)). dog(a(dog)). like(a(person), a(dog)).
 Who sees a dog?	?- see(X, Y), dog(Y).
 Does John see a dog?	?- see(john, X), dog(X).
@@ -190,3 +190,14 @@ His hands are cold.	cold(of(pl(hand), he)).
 The dogs are animals.	animal(the(pl(dog))).
 Who sees the dogs?	?- see(X, the(pl(dog))).
 The children sleep. They dream.	sleep(the(pl(child))). dream(the(pl(child))).
+# indefinite noun phrases (since 1.77.0): an individual a(T) wherever a statement says it, T its term as in the(T)
+She bought books.	book(a(pl(book))). past(buy(she, a(pl(book)))).
+A good woman met a bad woman.	woman(a(good(woman))). good(a(good(woman))). woman(a(bad(woman))). bad(a(bad(woman))). past(meet(a(good(woman)), a(bad(woman)))).
+He sat on a chair.	chair(a(chair)). past(on(sit(he), a(chair))).
+Who sat on a chair?	?- past(on(sit(X), Y)), chair(Y).
+He bought a book of stamps.	book(a(of(book, a(pl(stamp))))). stamp(a(pl(stamp))). past(buy(he, a(of(book, a(pl(stamp)))))).
+The novel attained the status of a classic.	classic(a(classic)). past(attain(the(novel), of(status, a(classic)))).
+The house was in a terrible state of neglect.	state(a(of(terrible(state), neglect))). terrible(a(of(terrible(state), neglect))). past(in(the(house), a(of(terrible(state), neglect)))).
+A number of factors determined the outcome.	is_number(a(of(number, a(pl(factor))))). factor(a(pl(factor))). past(determine(a(of(number, a(pl(factor)))), the(outcome))).
+Who knows the father of a student?	?- know(X, of(father, Y)), student(Y).
+She met a man. His dog barked.	man(a(man)). past(meet(she, a(man))). past(bark(of(dog, a(man)))).

@@ -44,6 +44,7 @@ main :-
     objects,
     plurals,
     terms,
+    individuals,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -236,6 +237,23 @@ terms :-
     must('every definite thing that sleeps', Xs, [dog, cat]).
 
 :- dynamic lesson_sleeps/1.
+
+%% 15. AN INDEFINITE NOUN PHRASE IS AN INDIVIDUAL wherever a statement says
+%% it: an object, an adjunct's, a possessor and a possessed. Its term is
+%% a(T), T as in the(T), so it keeps its adjectives and its number, and its
+%% facts say its noun and its adjectives. In a question it is a variable.
+individuals :-
+    logic_translate(english, cocolog, 'He sat on a chair.', C1),
+    must('an adjunct\'s individual', C1, 'chair(a(chair)).\npast(on(sit(he), a(chair))).\n'),
+    logic_translate(english, cocolog, 'She bought books.', C2),
+    must('a plural individual', C2, 'book(a(pl(book))).\npast(buy(she, a(pl(book)))).\n'),
+    logic_translate(english, cocolog, 'He bought a book of stamps.', C3),
+    must('a possessed and its possessor',
+         C3, 'book(a(of(book, a(pl(stamp))))).\nstamp(a(pl(stamp))).\npast(buy(he, a(of(book, a(pl(stamp)))))).\n'),
+    logic_translate(cocolog, english, 'woman(a(good(woman))). good(a(good(woman))). woman(a(bad(woman))). bad(a(bad(woman))). past(meet(a(good(woman)), a(bad(woman)))).', E4),
+    must('two individuals of one noun', E4, 'A good woman met a bad woman.'),
+    logic_translate(english, cocolog, 'Who knows the father of a student?', C5),
+    must('a variable inside a constant', C5, '?- know(A, of(father, B)), student(B).\n').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

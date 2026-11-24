@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -86,9 +86,10 @@ diagnostics :-
                'The boy does not sleep.'-negation,
                'Every boy sees a dog.'-object(generic),
                'The boy sleeps because the dog sleeps.'-subordinate(because),
-               'He received a mass of correspondence.'-determiner(indef),
+               'He received this letter.'-determiner(this),
                'No dog sleeps.'-determiner(no),
-               'The boy sleeps with dogs.'-adjunct(generic) ]),
+               'The boy sleeps with every dog.'-adjunct(every),
+               'Lilies of the valley are racemose.'-possessor(generic) ]),
            ( once(typology_read(english, T, IR)),
              ( logic_from_ir(IR, _) -> W = read ; logic_why(IR, W) ),
              atomic_list_concat(['English: ', T], Label),
@@ -262,11 +263,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 169),
-    ( R >= 153 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 153 right', VR, ok),
-    ( K >= 161 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 161 kept', VK, ok).
+    check('the second measure: its sentences', N, 179),
+    ( R >= 163 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 163 right', VR, ok),
+    ( K >= 171 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 171 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -347,9 +348,9 @@ adjuncts :-
     ( cocolog_read('size([a, b], 2).', U5) -> true ; U5 = none ),
     check('a list is no adjunct\'s atom', U5,
           utterance(assertion, [fact(pred(size, [list([const(a), const(b)]), num(2)]))])),
-    once(typology_read(english, 'John sleeps with dogs.', IR6)),
+    once(typology_read(english, 'John sleeps with every dog.', IR6)),
     logic_why(IR6, W6),
-    check('an adjunct\'s noun phrase that is no constant', W6, adjunct(generic)).
+    check('an adjunct\'s noun phrase of every', W6, adjunct(every)).
 
 %% 1.72.0: A PRONOUN with no referent is a constant of its own, its word;
 %% in a text, the noun phrase it refers to.
@@ -424,7 +425,7 @@ objects :-
                'He received a letter.'-'letter(a(letter)).\npast(receive(he, a(letter))).\n',
                'They saw an owl.'-'owl(a(owl)).\npast(see(they, a(owl))).\n',
                'They saw a university.'-'university(a(university)).\npast(see(they, a(university))).\n',
-               'John sees a big dog.'-'dog(a(dog)).\nbig(a(dog)).\nsee(john, a(dog)).\n',
+               'John sees a big dog.'-'dog(a(big(dog))).\nbig(a(big(dog))).\nsee(john, a(big(dog))).\n',
                'A person likes a dog.'-'person(a(person)).\ndog(a(dog)).\nlike(a(person), a(dog)).\n',
                'Who sees a dog?'-'?- see(A, B), dog(B).\n',
                'Does John see a dog?'-'?- see(john, A), dog(A).\n',
@@ -502,5 +503,56 @@ terms :-
     findall(X, is_sleep(the(X)), Xs),
     check('a query of every definite thing that sleeps', Xs, [dog, cat]).
 
-%% A test's own predicate: what the clauses written from English assert.
-:- dynamic is_sleep/1.
+%% 1.77.0: AN INDEFINITE NOUN PHRASE is an individual a(T) wherever a
+%% statement says it, T its term as in the(T) (a(pl(book)), a(big(dog))):
+%% an object, an adjunct's, a possessor and a possessed. In a question or a
+%% condition it is a variable, in a rule's conclusion nothing.
+individuals :-
+    section('the indefinite noun phrases'),
+    forall(member(T-Want, [
+               'She bought books.'-'book(a(pl(book))).\npast(buy(she, a(pl(book)))).\n',
+               'A good woman met a bad woman.'-'woman(a(good(woman))).\ngood(a(good(woman))).\nwoman(a(bad(woman))).\nbad(a(bad(woman))).\npast(meet(a(good(woman)), a(bad(woman)))).\n',
+               'He sat on a chair.'-'chair(a(chair)).\npast(on(sit(he), a(chair))).\n',
+               'Who sat on a chair?'-'?- past(on(sit(A), B)), chair(B).\n',
+               'He bought a book of stamps.'-'book(a(of(book, a(pl(stamp))))).\nstamp(a(pl(stamp))).\npast(buy(he, a(of(book, a(pl(stamp)))))).\n',
+               'The novel attained the status of a classic.'-'classic(a(classic)).\npast(attain(the(novel), of(status, a(classic)))).\n',
+               'Who knows the father of a student?'-'?- know(A, of(father, B)), student(B).\n',
+               'She met a man. His dog barked.'-'man(a(man)).\npast(meet(she, a(man))).\npast(bark(of(dog, a(man)))).\n' ]),
+           ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
+             one_line(['an individual into Cocolog: ', T], Label),
+             check(Label, C, Want) )),
+    forall(member(C2-Want2, ['book(a(pl(book))). past(buy(she, a(pl(book)))).'-'She bought books.',
+                             'woman(a(good(woman))). good(a(good(woman))). woman(a(bad(woman))). bad(a(bad(woman))). past(meet(a(good(woman)), a(bad(woman)))).'-'A good woman met a bad woman.',
+                             'book(a(of(book, a(pl(stamp))))). stamp(a(pl(stamp))). past(buy(he, a(of(book, a(pl(stamp)))))).'-'He bought a book of stamps.',
+                             '?- past(on(sit(X), Y)), chair(Y).'-'Who sat on a chair?',
+                             'man(a(man)). past(meet(she, a(man))). past(bark(of(dog, a(man)))).'-'She met a man. His dog barked.']),
+           ( ( logic_translate(cocolog, english, C2, E2) -> true ; E2 = none ),
+             one_line(['an individual into English: ', C2], L2),
+             check(L2, E2, Want2) )),
+    ( logic_translate(cocolog, spanish, 'book(a(of(book, a(pl(stamp))))). stamp(a(pl(stamp))). past(buy(he, a(of(book, a(pl(stamp)))))).', S3) -> true ; S3 = none ),
+    check('an individual into Spanish', S3, 'Él compró un libro de sellos.'),
+    logic_readings(english, 'The novel attained the status of a classic.', [U4|_]),
+    check('a possessor\'s individual inside the possessed\'s constant', U4,
+          utterance(assertion, [fact(pred(classic, [const(a(classic))])),
+                                fact(at(past, pred(attain, [const(the(novel)), const(of(status, a(classic)))])))])),
+    logic_readings(english, 'Who knows the father of a student?', [U5|_]),
+    check('a variable inside a constant is a compound term', U5,
+          utterance(question, [query(and([pred(know, [var(1), fun(of, [const(father), var(2)])]),
+                                          pred(student, [var(2)])]))])),
+    forall(member(T6-Want6, ['Lilies of the valley are racemose.'-possessor(generic),
+                             'Every dog sleeps on a mat.'-object(generic)]),
+           ( once(typology_read(english, T6, IR6)), logic_why(IR6, W6),
+             atomic_list_concat(['no individual: ', T6], L6),
+             check(L6, W6, Want6) )),
+    forall(member(T7, ['She bought books.', 'He bought a book of stamps.']),
+           ( logic_translate(english, cocolog, T7, P7), assert_text(P7) )),
+    findall(X-Y, ( past(buy(X, Y)), book(Y) ), XYs),
+    check('a query of who bought a book', XYs, [she-a(pl(book)), he-a(of(book, a(pl(stamp))))]).
+
+%% Each clause of a Cocolog text asserted.
+assert_text(P) :-
+    atomic_list_concat(Ps, '.\n', P),
+    forall(( member(S, Ps), S \== '' ), ( term_string(Cl, S), assertz(Cl) )).
+
+%% A test's own predicates: what the clauses written from English assert.
+:- dynamic is_sleep/1, past/1, book/1, stamp/1.
