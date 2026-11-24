@@ -124,9 +124,13 @@ its benchmark, as every typology version has.
    for the table above, with its diagnostics (`logic_why/2`); the seven
    sentences of the milestone give the table's forms (test/logic.pl,
    lesson 07). A joined subject or object is a clause of each item.
-6. **The Cocolog template**: the reader, the writer, the predicate
-   lexicon and the reserved names; the round trip Cocolog to level 2 to
-   Cocolog.
+6. **The Cocolog template** (done: 1.67.0, `templates/cocolog.pl`): the
+   writer (`cocolog_write/2`), the reader (`cocolog_read/2`), the reserved
+   names (a prefix, `is_sleep/1`, where predicate_property/2 says the
+   system defines the name), and the round trip Cocolog to level 2 to
+   Cocolog. The reader reads each clause with term_string/2 and keeps no
+   source place yet. The predicate lexicon is step 7's: English needs it,
+   Cocolog does not.
 7. **Cocolog to English**: level 2 to level 1 to English
    (`typology_write/3`), and the round trip English to Cocolog to
    English.

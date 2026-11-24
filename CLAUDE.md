@@ -219,6 +219,19 @@ the first cut's `Every human is mortal.` was `mortal(var(1))` from
 are Prolog variables until `lg_number/2` names them var(1), var(2) by
 their first use. `logic_readings/3` drops a form a second level-1 reading
 gives again (two senses of a word, a name and a bare noun).
+**The Cocolog template since 1.67.0** (`templates/cocolog.pl`, read by
+`lg_code_loaded/1` the first time it is asked): `cocolog_write/2` writes
+a fact and a rule with portray_clause/1 and a query as `?- ` and the body
+under numbervars; `cocolog_read/2` cuts a text into clauses
+(`lg_clauses/2`: a full stop before layout or the end, never inside quotes
+or after a symbol character, `%` to the line's end left out) and reads
+each with term_string/2. **A reserved name is the system's**:
+`lg_reserved/2` asks predicate_property/2 for `imported_from/1`, which
+every builtin and library predicate has and a program's own has not, so
+the template's prefix goes before it (`is_sleep/1`) and the reader takes
+it off only where the rest is reserved again (`is_happy/1` stays). A
+variable is var(N) by its first use in the clause, as level 2 numbers it,
+so a text read and written again is the same text.
 **The blank template is generated too** (1.54.0): `templates/template.pl`
 is what `typology_import(template)` writes, `typology_template(xx)`: every
 slot of typology.pl's header list (THE TEMPLATE) with the header's own

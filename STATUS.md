@@ -125,7 +125,9 @@ sentences.
 **Where it stands:** names (1.62.0), the determiners and the quantifiers
 (1.63.0), the bare noun (1.64.0) and the `if` clause (1.65.0) at level 1,
 and level 2, the logic form (1.66.0, `logic.pl`): the seven sentences of
-the milestone read into the plan's logic forms.
+the milestone read into the plan's logic forms. The Cocolog template
+(1.67.0, `templates/cocolog.pl`) writes each form as Cocolog and reads it
+back to the same form, and the program written from English runs.
 
 ## What "parked" means
 

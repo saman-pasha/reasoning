@@ -13,6 +13,11 @@
 %% facts, rules and queries over predicates and terms. Rules make the
 %% second from the first, so every language the typology reads has its
 %% logic form; what has none yet says why.
+%%
+%% COCOLOG IS A TEMPLATE TOO (templates/cocolog.pl): the logic form written
+%% as Cocolog source and read back. A programming language connects to the
+%% logic form alone, so a Spanish sentence gets its Cocolog by the same
+%% rules as an English one.
 
 :- use_module(library(reasoning/typology)).
 :- use_module(library(reasoning/logic)).
@@ -24,6 +29,7 @@ main :-
     rules,
     questions,
     why,
+    cocolog,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -67,6 +73,34 @@ why :-
     once(typology_read(english, 'Every boy sees a dog.', IR2)),
     logic_why(IR2, W2),
     must('an object that is no constant', W2, object(generic)).
+
+%% 5. COCOLOG. The writer makes a fact, a rule or a query of each item; the
+%% reader makes the logic form of a Cocolog text again. A predicate that
+%% Cocolog defines already gets the template's prefix: sleep/1 is a
+%% builtin, so `John sleeps.' is is_sleep(john), and the reader takes the
+%% prefix off. The clause written from Spanish runs.
+cocolog :-
+    logic_translate(english, cocolog, 'Every human is mortal.', C1),
+    must('a rule', C1, 'mortal(A) :-\n    human(A).\n'),
+    logic_translate(english, cocolog, 'Who is human?', C2),
+    must('a query', C2, '?- human(A).\n'),
+    logic_translate(english, cocolog, 'John sleeps.', C3),
+    must('a reserved name', C3, 'is_sleep(john).\n'),
+    cocolog_read(C3, U4),
+    must('read back', U4, utterance(assertion, [fact(pred(sleep, [const(john)]))])),
+    logic_readings(english, 'A person is happy if they are healthy and safe.', [U5]),
+    cocolog_write(U5, C5),
+    cocolog_read(C5, U6),
+    ( U6 =@= U5 -> R6 = same ; R6 = U6 ),
+    must('English, Cocolog and back', R6, same),
+    logic_translate(spanish, cocolog, 'Cada perro duerme.', C7),
+    show('Spanish', C7),
+    sub_atom(C7, 0, _, 2, S8),
+    term_string(T8, S8),
+    assertz(T8),
+    assertz(dog(rex)),
+    ( is_sleep(rex) -> R8 = proved ; R8 = failed ),
+    must('a rule written runs', R8, proved).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

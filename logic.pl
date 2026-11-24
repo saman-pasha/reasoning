@@ -48,8 +48,16 @@
 %%                                     object(Q), subordinate(K), pronoun,
 %%                                     determiner(D), predicate(P),
 %%                                     shape(IR)
+%%     cocolog_write(+Utterance, -Text)
+%%                                     the logic form as Cocolog source
+%%                                     (since 1.67.0)
+%%     cocolog_read(+Text, -Utterance) Cocolog source's logic form
+%%     logic_translate(+From, +To, +Text, -Text2)
+%%                                     a natural language's text into
+%%                                     Cocolog (To cocolog)
 
-:- module(logic, [logic_from_ir/2, logic_read/3, logic_readings/3, logic_why/2]).
+:- module(logic, [logic_from_ir/2, logic_read/3, logic_readings/3, logic_why/2,
+                  cocolog_write/2, cocolog_read/2, logic_translate/4]).
 
 :- use_module(library(reasoning/typology)).
 
@@ -280,3 +288,164 @@ lg_number(Item0, Item) :-
 
 lg_bind([], _).
 lg_bind([var(N)|Vs], N) :- N1 is N + 1, lg_bind(Vs, N1).
+
+%% ---- Cocolog (since 1.67.0) -------------------------------------------------------
+%%
+%% THE COCOLOG TEMPLATE (templates/cocolog.pl, read once) writes the logic
+%% form as Cocolog source and reads it back. A fact is a clause with no
+%% body, a rule `Head :- Body', a query `?- Body.'; and/1 is `,', a const/1
+%% an atom, a var/1 a variable (A, B, ... as portray_clause/1 names them).
+%% A predicate the system defines (sleep/1, member/2) is written with the
+%% template's prefix (is_sleep/1) and read back without it.
+
+:- dynamic lg_code/1, lg_code_reserved_prefix/2, lg_code_name/3, lg_code_query_mark/2.
+
+lg_code_loaded(L) :-
+    (   lg_code(L) -> true
+    ;   L == cocolog -> consult(library(reasoning/templates/cocolog))
+    ;   true
+    ),
+    lg_code(L).
+
+cocolog_write(utterance(_, Items), Text) :-
+    lg_code_loaded(cocolog),
+    maplist(lg_item_text, Items, Texts),
+    atomic_list_concat(Texts, Text).
+
+lg_item_text(Item, Text) :-
+    lg_item_term(Item, T),
+    (   T = query(B)
+    ->  lg_code_query_mark(cocolog, Mark),
+        \+ \+ ( numbervars(B, 0, _),
+                with_output_to(string(S), write_term(B, [quoted(true), numbervars(true), spacing(next_argument)])),
+                atomic_list_concat([Mark, ' ', S, '.\n'], Text0), nb_setval('$lg_text', Text0) ),
+        nb_getval('$lg_text', Text)
+    ;   with_output_to(string(S), portray_clause(T)),
+        atom_string(Text, S)
+    ).
+
+%% An item as a Cocolog term, each var(N) one variable.
+lg_item_term(Item, T) :-
+    lg_out(Item, [], _, T).
+
+lg_out(fact(A), M0, M, A1) :- !, lg_out_atom(A, M0, M, A1).
+lg_out(rule(H, B), M0, M, (H1 :- B1)) :- !, lg_out_atom(H, M0, M1, H1), lg_out_body(B, M1, M, B1).
+lg_out(query(B), M0, M, query(B1)) :- lg_out_body(B, M0, M, B1).
+
+lg_out_body(and([B]), M0, M, B1) :- !, lg_out_body(B, M0, M, B1).
+lg_out_body(and([B|Bs]), M0, M, (B1, Bs1)) :- !, lg_out_body(B, M0, M1, B1), lg_out_body(and(Bs), M1, M, Bs1).
+lg_out_body(A, M0, M, A1) :- lg_out_atom(A, M0, M, A1).
+
+lg_out_atom(pred(N, As), M0, M, A) :-
+    length(As, Ar),
+    lg_code_pred_name(N, Ar, N1),
+    lg_out_terms(As, M0, M, As1),
+    A =.. [N1|As1].
+
+lg_out_terms([], M, M, []).
+lg_out_terms([T|Ts], M0, M, [T1|Ts1]) :- lg_out_term(T, M0, M1, T1), lg_out_terms(Ts, M1, M, Ts1).
+
+lg_out_term(const(C), M, M, C) :- !.
+lg_out_term(num(N), M, M, N) :- !.
+lg_out_term(str(S), M, M, S) :- !.
+lg_out_term(var(N), M0, M, V) :- !, ( memberchk(N-V0, M0) -> V = V0, M = M0 ; M = [N-V|M0] ).
+lg_out_term(fun(F, As), M0, M, T) :- !, lg_out_terms(As, M0, M, As1), T =.. [F|As1].
+lg_out_term(X, _, _, _) :- lg_no(term(X)).
+
+%% A predicate's name in Cocolog: a row's, else its meaning, the template's
+%% prefix before it where the system defines that name and arity.
+lg_code_pred_name(N, Ar, N1) :-
+    (   lg_code_name(cocolog, N/Ar, N0) -> true ; N0 = N ),
+    (   lg_reserved(N0, Ar) -> lg_code_reserved_prefix(cocolog, P), atom_concat(P, N0, N1) ; N1 = N0 ).
+
+lg_reserved(N, Ar) :- functor(H, N, Ar), predicate_property(H, imported_from(_)), !.
+
+%% READING: the text cut into clauses outside quotes and comments, each read
+%% as a term; its variables var(1), var(2) by their first use.
+cocolog_read(Text, utterance(Intent, Items)) :-
+    lg_code_loaded(cocolog),
+    lg_clauses(Text, Cs),
+    Cs \== [],
+    maplist(lg_clause_item, Cs, Items0),
+    maplist(lg_number, Items0, Items),
+    ( forall(member(I, Items), I = query(_)) -> Intent = question ; Intent = assertion ).
+
+lg_clause_item(C, Item) :-
+    catch(term_string(T, C), _, lg_no(syntax(C))),
+    lg_in(T, Item).
+
+lg_in(T, _) :- var(T), !, lg_no(term(T)).
+lg_in((?- B), query(B1)) :- !, lg_in_body(B, B1).
+lg_in((H :- B), rule(H1, B1)) :- !, lg_in_atom(H, H1), lg_in_body(B, B1).
+lg_in(H, fact(H1)) :- lg_in_atom(H, H1).
+
+lg_in_body(B, _) :- var(B), !, lg_no(term(B)).
+lg_in_body((A, B), and([A1|Bs])) :- !, lg_in_atom(A, A1), lg_in_body(B, B0), ( B0 = and(Bs) -> true ; Bs = [B0] ).
+lg_in_body(A, A1) :- lg_in_atom(A, A1).
+
+lg_in_atom(A, _) :- \+ callable(A), !, lg_no(term(A)).
+lg_in_atom(A, pred(N, As1)) :-
+    A =.. [N1|As], length(As, Ar),
+    lg_code_meaning(N1, Ar, N),
+    maplist(lg_in_term, As, As1).
+
+%% A name read back: the prefix off where the rest is a reserved name of
+%% that arity, a row's meaning, else the name.
+lg_code_meaning(N1, Ar, N) :-
+    lg_code_reserved_prefix(cocolog, P),
+    (   atom_concat(P, N0, N1), lg_reserved(N0, Ar) -> true ; N0 = N1 ),
+    (   lg_code_name(cocolog, M/Ar, N0) -> N = M ; N = N0 ).
+
+lg_in_term(V, V) :- var(V), !.
+lg_in_term(A, const(A)) :- atom(A), !.
+lg_in_term(N, num(N)) :- number(N), !.
+lg_in_term(S, str(S)) :- string(S), !.
+lg_in_term(T, fun(F, As1)) :- compound(T), !, T =.. [F|As], maplist(lg_in_term, As, As1).
+
+%% The clauses of a text: each ends at a full stop before layout or the
+%% text's end, outside a quoted atom or string and a comment; a full stop
+%% after a symbol (`=..') ends none.
+lg_clauses(Text, Cs) :-
+    atom_codes(Text, Codes),
+    lg_cut(Codes, normal, [], Cs0),
+    exclude(==(''), Cs0, Cs).
+
+lg_cut([], _, Acc, Cs) :- !, lg_rest(Acc, Cs).
+lg_cut([0'%|Cs0], normal, Acc, Cs) :- !, lg_skip_line(Cs0, Cs1), lg_cut(Cs1, normal, Acc, Cs).
+lg_cut([Q|Cs0], normal, Acc, Cs) :- ( Q == 0'' ; Q == 0'" ), !, lg_cut(Cs0, quote(Q), [Q|Acc], Cs).
+lg_cut([Q|Cs0], quote(Q), Acc, Cs) :- !, lg_cut(Cs0, normal, [Q|Acc], Cs).
+lg_cut([0'\\, C|Cs0], quote(Q), Acc, Cs) :- !, lg_cut(Cs0, quote(Q), [C, 0'\\|Acc], Cs).
+lg_cut([C|Cs0], quote(Q), Acc, Cs) :- !, lg_cut(Cs0, quote(Q), [C|Acc], Cs).
+lg_cut([0'.|Cs0], normal, Acc, [C|Cs]) :-
+    ( Cs0 = [] ; Cs0 = [N|_], code_type(N, space) ),
+    \+ ( Acc = [P|_], lg_symbol_code(P) ), !,
+    reverse([0'.|Acc], R), lg_trim(R, C),
+    lg_cut(Cs0, normal, [], Cs).
+lg_cut([C|Cs0], normal, Acc, Cs) :- lg_cut(Cs0, normal, [C|Acc], Cs).
+
+lg_rest(Acc, Cs) :-
+    reverse(Acc, R), lg_trim(R, A1),
+    ( A1 == '' -> Cs = [] ; lg_no(syntax(A1)) ).
+
+%% Codes as an atom, the layout at its two ends off.
+lg_trim(Codes, A) :-
+    lg_drop_space(Codes, C1), reverse(C1, R1), lg_drop_space(R1, R2), reverse(R2, C2),
+    atom_codes(A, C2).
+
+lg_drop_space([C|Cs], Rest) :- code_type(C, space), !, lg_drop_space(Cs, Rest).
+lg_drop_space(Cs, Cs).
+
+lg_skip_line([], []).
+lg_skip_line([0'\n|Cs], Cs) :- !.
+lg_skip_line([_|Cs0], Cs) :- lg_skip_line(Cs0, Cs).
+
+lg_symbol_code(C) :- memberchk(C, `+-*/\\^<>=~:.?@#&$`).
+
+%% ---- translating (since 1.67.0) --------------------------------------------------
+
+%% logic_translate(+From, +To, +Text, -Text2): a natural language's text
+%% into Cocolog through both levels, its first logic form.
+logic_translate(From, cocolog, Text, Code) :-
+    From \== cocolog, !,
+    logic_readings(From, Text, [U|_]),
+    cocolog_write(U, Code).
