@@ -120,8 +120,10 @@ its benchmark, as every typology version has.
    after its clause, `sub(if, Main, Clause)`, with `when` and `because`.
    A pronoun in it that refers to a noun phrase of its clause is level
    2's to bind. The seven sentences of the milestone all read at level 1.
-5. **Level 2**: the logic form from level 1, for the table above, with
-   its diagnostics.
+5. **Level 2** (done: 1.66.0, `logic.pl`): the logic form from level 1,
+   for the table above, with its diagnostics (`logic_why/2`); the seven
+   sentences of the milestone give the table's forms (test/logic.pl,
+   lesson 07). A joined subject or object is a clause of each item.
 6. **The Cocolog template**: the reader, the writer, the predicate
    lexicon and the reserved names; the round trip Cocolog to level 2 to
    Cocolog.

@@ -122,6 +122,11 @@ the measure needs them too: `all` is in it 92 times, `some` 50, `every`
 36. `reason.pl` stays as it is until the logic form reads all of its
 sentences.
 
+**Where it stands:** names (1.62.0), the determiners and the quantifiers
+(1.63.0), the bare noun (1.64.0) and the `if` clause (1.65.0) at level 1,
+and level 2, the logic form (1.66.0, `logic.pl`): the seven sentences of
+the milestone read into the plan's logic forms.
+
 ## What "parked" means
 
 A parked file stays in the repository. Nothing else loads it, and
@@ -202,7 +207,7 @@ Nothing loads `translate.pl`. Each use calls typology:
 | `test/live.pl`, `coding/endpoint/test.pl` | their sections hold the typology readings |
 | `test/typology.pl` | section `bridge` stays while the work runs (it is the measure), and is parked with `translate.pl` at the end |
 | `tutorials/04-translate.pl` | parked; lesson 06 is the translator's lesson |
-| `run-tests.sh` | `all` runs seven cases, without `translate` |
+| `run-tests.sh` | `all` runs eight cases, without `translate` |
 | the documentation | `CLAUDE.md`, `README.md`, `tutorials/README.md` and `TYPOLOGY-PLAN.md` name typology as the translator and `translate.pl` as parked |
 
 **A language is facts, and only facts** (the owner, 2026-11-23). A

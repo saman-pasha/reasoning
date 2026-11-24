@@ -209,6 +209,16 @@ first (it moves the main clause's verb before its subject: not yet).
 verb second. The IR walkers (`ty_ir_map/3`, `ty_ir_tw_/3`, `ty_mention/4`,
 `ty_ir_meaning/2`) have a clause for `sub/3`: without one, `ty_ir_map`
 would leave its clauses in the five-argument shape and the parse would fail.
+**Level 2 since 1.66.0** (`logic.pl`, TRANSLATOR-PLAN.md): `logic_from_ir/2`
+makes the logic form from a typology IR; `logic_why/2` names why there is
+none. The analysis raises `lg_no(Why)` where it stops, and the entry
+catches it, so a reading the rules cannot make is no guess. **Never build an
+atom of a rule's variable with `findall/3`**: it copies the template, and
+the first cut's `Every human is mortal.` was `mortal(var(1))` from
+`human(var(2))`; `lg_preds_of/3` is a plain recursion. A rule's variables
+are Prolog variables until `lg_number/2` names them var(1), var(2) by
+their first use. `logic_readings/3` drops a form a second level-1 reading
+gives again (two senses of a word, a name and a bare noun).
 **The blank template is generated too** (1.54.0): `templates/template.pl`
 is what `typology_import(template)` writes, `typology_template(xx)`: every
 slot of typology.pl's header list (THE TEMPLATE) with the header's own
