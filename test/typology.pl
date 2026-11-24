@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -1884,6 +1884,32 @@ english_verbs :-
     findall(IR6, typology_read(english, 'The girl has studied the book.', IR6), IRs6),
     check('read', IRs6, [clause(study, perfect, pos, np(girl, sg, def, []), np(book, sg, def, []))]).
 
+%% 1.64.0: the bare singular noun. np(M, sg, mass, []): a singular noun
+%% with no article, read after the other readings, written with none;
+%% Persian, whose definite noun has none either, writes it as def.
+mass :-
+    section('the bare singular noun'),
+    forall(member(T-Want, [
+               'Helium is monatomic.'-[copula(present, pos, np(helium, sg, mass, []), adj([monatomic]))],
+               'A person likes music.'-[clause(like, present, pos, np(person, sg, indef, []), np(music, sg, mass, []))],
+               'The boy drinks water.'-[clause(drink, present, pos, np(boy, sg, def, []), np(water, sg, mass, []))],
+               'Dogs sleep.'-[clause(sleep, present, pos, np(dog, pl, indef, []), none)],
+               'The boy sees the dog.'-[clause(see, present, pos, np(boy, sg, def, []), np(dog, sg, def, []))] ]),
+           ( findall(R, typology_read(english, T, R), Rs),
+             atomic_list_concat(['English: ', T], Label),
+             check(Label, Rs, Want) )),
+    findall(D2, typology_read(persian, 'سگ می‌خوابد.', clause(_, _, _, np(_, _, D2, _), _)), Ds2),
+    check('Persian: a bare noun is def, never mass', Ds2, [def]),
+    IR3 = clause(drink, present, pos, np(boy, sg, def, []), np(water, sg, mass, [])),
+    forall(member(L4-Want4, [spanish-'El niño bebe agua.', italian-'Il ragazzo beve acqua.']),
+           ( ( typology_write(L4, IR3, W4) -> true ; W4 = none ),
+             atomic_list_concat([L4, ': ', Want4], Label4),
+             check(Label4, W4, Want4) )),
+    ( typology_write(persian, clause(sleep, present, pos, np(dog, sg, mass, []), none), W5) -> true ; W5 = none ),
+    check('Persian writes mass as def', W5, 'سگ می‌خوابد.'),
+    ( typology_read(english, 'The boy sees dog water.', _) -> R6 = read ; R6 = refused ),
+    check('two bare nouns are no noun phrase', R6, refused).
+
 %% 1.63.0: the determiners and the quantifiers. A determiner is a
 %% definiteness of its own (np(dog, sg, every, [])), with its words in
 %% each language; a quantifier pronoun qp(Quantifier, Kind) stands where a
@@ -1949,17 +1975,25 @@ names :-
     forall(member(T-Want, [
                'Socrates is human.'-[copula(present, pos, name('Socrates'), adj([human]))],
                'Is Socrates human?'-[question(copula(present, pos, name('Socrates'), adj([human])))],
-               'John sees the dog.'-[clause(see, present, pos, name('John'), Dg)],
                'The dog sees John.'-[clause(see, present, pos, Dg, name('John'))],
                'John Smith sleeps.'-[clause(sleep, present, pos, name('John Smith'), none)],
-               'John and Mary sleep.'-[clause(sleep, present, pos, and([name('John'), name('Mary')]), none)],
                'The boy sleeps with Mary.'-[clause(sleep, present, pos, B, none, [pp(with, name('Mary'))])],
                'Who sees Mary?'-[question(clause(see, present, pos, wh(who), name('Mary')))],
-               'John sleep.'-[], 'The dog sees john.'-[], 'The John sleeps.'-[],
+               'John sleep.'-[], 'The John sleeps.'-[],
                'Intellectually influenced.'-[], 'Shortbread is a short crumbly cookie.'-[] ]),
            ( findall(R, typology_read(english, T, R), Rs),
              atomic_list_concat(['English: ', T], Label),
              check(Label, Rs, Want) )),
+    %% A first name is the name first (1.64.0: a bare noun reads too, so
+    %% the noun john is a second reading, and a john with no capital the
+    %% noun's).
+    forall(member(T16-Want16, [
+               'John sees the dog.'-clause(see, present, pos, name('John'), Dg),
+               'John and Mary sleep.'-clause(sleep, present, pos, and([name('John'), name('Mary')]), none),
+               'The dog sees john.'-clause(see, present, pos, Dg, np(john, sg, mass, [])) ]),
+           ( ( once(typology_read(english, T16, R16)) -> true ; R16 = none ),
+             atomic_list_concat(['English, the first reading: ', T16], Label16),
+             check(Label16, R16, Want16) )),
     forall(member(L-T2-Want2, [
                spanish-'El perro ve a Juan.'-[name('Juan')],
                german-'Der Hund sieht Hans.'-[name('Hans')],
@@ -2179,8 +2213,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 498 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 498 sentences read at 1.63.0 are read', R1, yes),
+    ( K >= 661 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 661 sentences read at 1.64.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

@@ -170,6 +170,13 @@ ty_capital_nouns(xx).
 %% ty_quantifier_pronoun(xx, Quantifier, Kind, Words).
 %%   e.g. ty_quantifier_pronoun(english, some, thing, [something]).
 
+%%     ty_definite_like(L, Def, As)    the language writes the definiteness
+%%                                     Def as As, and never reads Def
+%%                                     (since 1.64.0: Persian writes mass
+%%                                     as def, which has no article either)
+%% ty_definite_like(xx, Def, As).
+%%   e.g. ty_definite_like(persian, mass, def).
+
 %%     ty_and(L, Words)                the words that join the last item of
 %%                                     a list: a predicate's adjectives, noun
 %%                                     phrases, clauses (`and', `y', `und',

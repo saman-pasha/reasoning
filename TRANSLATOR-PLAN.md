@@ -113,8 +113,9 @@ its benchmark, as every typology version has.
    `every`, `each`, `all`, `some`, `no`, `any`, `this`, `these`, and the
    pronouns `something`, `someone`, `everything`, `everyone`, `nothing`.
    `Every human is mortal.` reads as np(human, sg, every, []).
-3. **The bare noun** (level 1): a mass noun or a plural with no article
-   (`likes music`, `Dogs sleep.`).
+3. **The bare noun** (level 1, done: 1.64.0): a mass noun or a plural
+   with no article (`likes music`, `Dogs sleep.`). The plural read so
+   already (indef); the singular is np(music, sg, mass, []).
 4. **The `if` clause** (level 1): a condition before or after its
    clause, and a pronoun in it that refers to a noun phrase of its clause.
 5. **Level 2**: the logic form from level 1, for the table above, with

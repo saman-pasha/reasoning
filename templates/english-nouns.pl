@@ -12218,7 +12218,6 @@ ty_noun_in(english, nitroglycerine, none, unknown, nitroglycerine, regular).
 ty_noun_in(english, nobelist, none, person, nobelist, regular).
 ty_noun_in(english, nobelium, none, unknown, nobelium, regular).
 ty_noun_in(english, nobility, none, unknown, nobility, regular).
-ty_noun_in(english, nobody, none, person, nobody, regular).
 ty_noun_in(english, noctambulist, none, person, noctambulist, regular).
 ty_noun_in(english, nod, none, unknown, nod, regular).
 ty_noun_in(english, node, none, unknown, node, regular).
@@ -12280,7 +12279,6 @@ ty_noun_in(english, notation, none, unknown, notation, regular).
 ty_noun_in(english, notch, none, unknown, notch, regular).
 ty_noun_in(english, note, none, unknown, note, regular).
 ty_noun_in(english, notebook, none, unknown, notebook, regular).
-ty_noun_in(english, nothing, none, unknown, nothing, regular).
 ty_noun_in(english, nothofagus, none, unknown, nothofagus, regular).
 ty_noun_in(english, notice, none, unknown, notice, regular).
 ty_noun_in(english, noticeboard, none, unknown, noticeboard, regular).
@@ -16860,7 +16858,6 @@ ty_noun_in(english, som, none, unknown, som, regular).
 ty_noun_in(english, soma, none, unknown, soma, regular).
 ty_noun_in(english, somali, none, unknown, somali, regular).
 ty_noun_in(english, somateria, none, unknown, somateria, regular).
-ty_noun_in(english, someone, none, unknown, someone, regular).
 ty_noun_in(english, somersault, none, unknown, somersault, regular).
 ty_noun_in(english, somite, none, unknown, somite, regular).
 ty_noun_in(english, sommelier, none, unknown, sommelier, regular).

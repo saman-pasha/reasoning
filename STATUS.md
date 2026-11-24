@@ -28,6 +28,7 @@ the count to the last one below.
 | 1.59.0 | 436 | 5.5 % | coordination, first part: noun phrases and two clauses joined by `and`, `or`, `but` |
 | 1.60.0 | 438 | 5.5 % | coordination, second part: the verbs of one subject (`same`) |
 | 1.61.0 | 442 | 5.5 % | coordination, third part: adjectives and adverbs joined inside a phrase |
+| 1.64.0 | 661 | 8.3 % | the bare singular noun (`likes music`, `Helium is monatomic.`): no person, no animal, no adjective's word |
 | 1.63.0 | 498 | 6.2 % | the determiners (every, each, all, some, no, any, this, that) and the quantifier pronouns (`something`, `everyone`, `nothing`, `this` alone) |
 | 1.62.0 | 456 | 5.7 % | names: a word with a capital that no table has, and 10 568 English names of rows (the census, WordNet's places, Apertium); a first word is a name only by a row |
 
@@ -91,7 +92,7 @@ English a word's meaning is the word: no translation table.
    Since 2026-11-24 the rest of step 3 takes its items in the order the
    translator needs them (the second goal, below): names (done: 1.62.0),
    then the determiners and the quantifiers (done: 1.63.0), then the bare
-   noun; then the
+   noun (done: 1.64.0); then the
    `if` clause of step 4. The determiners and the quantifiers read 42 more,
    about four of them false (`He is no better today.`, `All mammals except
    monotremes ...` with `except` a verb). Names read 14 more sentences of the measure;

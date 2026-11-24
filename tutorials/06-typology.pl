@@ -141,6 +141,7 @@ main :-
     coordination_inside,
     names,
     quantifiers,
+    mass,
     format("~ndone~n", []).
 
 
@@ -860,6 +861,20 @@ quantifiers :-
     must('French everyone, in its singular form', W4, 'Tout le monde dort.'),
     typology_write(italian, clause(sleep, present, pos, np(friend, pl, all, []), none), W5),
     must('Italian all, its second word by its sound', W5, 'Tutti gli amici dormono.').
+
+%% 50. THE BARE SINGULAR NOUN (1.64.0, the translator's third step):
+%% np(music, sg, mass, []), a singular noun with no article, read after the
+%% other readings. No table says which nouns are mass nouns, so a bare
+%% noun is no person and no animal, and its word is no adjective and no
+%% other noun's plural. Persian, whose definite noun has no article either,
+%% writes it as def (ty_definite_like/3).
+mass :-
+    typology_read(english, 'A person likes music.', IR1),
+    must('a bare noun', IR1, clause(like, present, pos, np(person, sg, indef, []), np(music, sg, mass, []))),
+    typology_write(italian, clause(drink, present, pos, np(boy, sg, def, []), np(water, sg, mass, [])), W2),
+    must('Italian', W2, 'Il ragazzo beve acqua.'),
+    ( typology_read(english, 'Dog sleeps.', _) -> R3 = read ; R3 = refused ),
+    must('an animal is no bare noun', R3, refused).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

@@ -179,6 +179,24 @@ language with cases asks `'$ty_art_defs'/3`, made at load), and the
 writer asks only the IR's definiteness's words: the first cut tried each of
 the eleven values for each article, and the benchmark cost 16 % to 49 %
 more; now German 4.4 % more than 1.62.0 and the others 1.7 % to 13 % less.
+**The bare singular noun since 1.64.0** (the translator's third step):
+definiteness `mass`, a singular noun with no article (`likes music`,
+`Helium is monatomic.`), tried after def and indef. No table says which
+nouns are mass nouns, so `ty_mass_ok/2` keeps a person or an animal, an
+adjective's word (`small`, `mortal`) and another noun's plural (`times`)
+from it: with any noun the measure read 765, and `Boy sees the dog.`,
+`a small and black dog` as two nouns, and `vexed and troubled times` as a
+singular were among them. Reading, a bare subject of a present verb with
+nothing after it whose word is a noun's plural too is no clause
+(`ty_mass_fragment_ok//2`: `Disposable paper cups.`, 7 of a sample of 31
+false readings). A copula's bare predicate is no adjective's word (`is
+mortal`). Persian writes mass as def and never reads it
+(`ty_definite_like/3`). A census first name at a sentence's start is now
+read as the name first (`John`, before the bare noun john). The quantifier
+words are English's closed words, so no noun row has `someone`.
+The bare noun costs the benchmark's English 13.8 % more inferences (its
+checks, asked wherever a noun stands with no article), the other languages
+under 1.3 %.
 **The blank template is generated too** (1.54.0): `templates/template.pl`
 is what `typology_import(template)` writes, `typology_template(xx)`: every
 slot of typology.pl's header list (THE TEMPLATE) with the header's own

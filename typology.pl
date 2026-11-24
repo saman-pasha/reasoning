@@ -107,6 +107,10 @@
 %%                                     participle: English future [will,
 %%                                     form(present, pl)], perfect [has,
 %%                                     participle], Spanish [ha, participle]
+%%     ty_definite_like(L, Def, As)    the language writes the definiteness
+%%                                     Def as As, and never reads Def
+%%                                     (since 1.64.0: Persian writes mass
+%%                                     as def, which has no article either)
 %%     ty_tense_like(L, Level, Tense, As)
 %%                                     the language has no form of Tense
 %%                                     at Level (clause, copula or any):
@@ -519,7 +523,12 @@
 %%                                     each, all, some, no, any, this, that
 %%                                     (`these' is this's plural); a
 %%                                     determiner always has its words, and
-%%                                     only def and indef may have none
+%%                                     only def and indef may have none;
+%%                                     since 1.64.0 mass, a singular noun
+%%                                     with no article (`likes music',
+%%                                     `Helium is monatomic.'), read after
+%%                                     the others: no table says which
+%%                                     nouns are mass nouns
 %%     rel(NP, Clause)                 a noun phrase with a relative clause,
 %%                                     where a noun phrase stands: Clause a
 %%                                     clause or a copula clause with `gap'
@@ -702,7 +711,7 @@
            ty_relative_comma/1, ty_negative_article/5, ty_negative_article_roles/2,
            ty_negative_article_keeps/1, ty_and/2, ty_conjunction/3, ty_serial_comma/1,
            ty_conjunct_marks/1, ty_clause_comma/2, ty_comma/2, ty_bare_topic/2, ty_adposition_topic/4, ty_adjunct_front/2, ty_object_front/2, ty_capital_nouns/1,
-           ty_reference/4, ty_meaning_sense/2, ty_tense_like/4.
+           ty_reference/4, ty_meaning_sense/2, ty_tense_like/4, ty_definite_like/3.
 :- discontiguous ty_order/3, ty_noun/6, ty_noun_class/3, ty_noun_in/6, ty_closed/2,
                  ty_conjugation/3, ty_class_when/4, ty_verb_in/4, ty_irregular_verb/5,
                  ty_adjective/5, ty_verb/6,
@@ -728,7 +737,7 @@
                  ty_relative_comma/1, ty_negative_article/5, ty_negative_article_roles/2,
                  ty_negative_article_keeps/1, ty_and/2, ty_conjunction/3, ty_serial_comma/1,
            ty_conjunct_marks/1, ty_clause_comma/2, ty_comma/2, ty_bare_topic/2, ty_adposition_topic/4, ty_adjunct_front/2, ty_object_front/2, ty_capital_nouns/1,
-                 ty_tense_like/4.
+                 ty_tense_like/4, ty_definite_like/3.
 
 %% The next token, read and left (unbound writing).
 ty_peek(W, S, S) :- ( nonvar(S), S = [W0|_] -> W = W0 ; true ).
@@ -753,7 +762,7 @@ ty_values(agreement, [sg, pl, sg(1), sg(2), pl(1), pl(2)]).
 ty_values(pronoun_role, [s, o, j]).
 ty_values(person, [1, 2, 3]).
 ty_values(polarity, [pos, neg]).
-ty_values(definiteness, [def, indef, which, every, each, all, some, no, any, this, that]).
+ty_values(definiteness, [def, indef, which, every, each, all, some, no, any, this, that, mass]).
 %% A quantifier pronoun's quantifier and kind (since 1.63.0).
 ty_values(quantifier, [some, every, no, any, this, that]).
 ty_values(quantifier_kind, [thing, person]).
@@ -1000,7 +1009,7 @@ ty_tdoc_more(Ls, [], Ls).
 %% section blank_template holds them to the header's slots).
 ty_template_group('the orders of the levels', [ty_order]).
 ty_template_group('words', [ty_noun_class, ty_class_when, ty_noun_in, ty_noun, ty_adjective, ty_adjective_before, ty_article, ty_adposition,
-                            ty_adverb, ty_capital, ty_capital_nouns, ty_name, ty_quantifier_pronoun, ty_and, ty_conjunction, ty_serial_comma,
+                            ty_adverb, ty_capital, ty_capital_nouns, ty_name, ty_quantifier_pronoun, ty_definite_like, ty_and, ty_conjunction, ty_serial_comma,
                             ty_conjunct_marks, ty_clause_comma, ty_comma, ty_sense, ty_closed]).
 ty_template_group('verbs and tenses', [ty_conjugation, ty_verb_in, ty_irregular_verb, ty_verb, ty_tense_form, ty_tense_like, ty_participle,
                                        ty_participle_like, ty_participle_ending, ty_participle_agrees,
@@ -1136,6 +1145,7 @@ ty_row_shape('ty_inversion(L, Join, VowelJoin).').
 ty_row_shape('ty_wh_tonic(L, Meaning, Words).').
 ty_row_shape('ty_tense_form(L, Tense, Number, Polarity, Pattern).').
 ty_row_shape('ty_tense_like(L, Level, Tense, As).').
+ty_row_shape('ty_definite_like(L, Def, As).').
 ty_row_shape('ty_participle(L, Meaning, Word).').
 ty_row_shape('ty_participle_like(L, Tense, Number).').
 ty_row_shape('ty_participle_ending(L, Gender, Number, From, To).').
@@ -1535,6 +1545,9 @@ ty_missing(L, bad(ty_verb_person(L, T, K, B, F, To))) :-
 ty_missing(L, bad(ty_capital(L, W, C))) :-
     ty_capital(L, W, C),
     \+ ( atom(W), atom(C), downcase_atom(C, W) ).
+ty_missing(L, bad(ty_definite_like(L, D, As))) :-
+    ty_definite_like(L, D, As),
+    \+ ( ty_values(definiteness, Ds), memberchk(D, Ds), memberchk(As, Ds), D \== As ).
 ty_missing(L, bad(ty_quantifier_pronoun(L, Q, K, Ws))) :-
     ty_quantifier_pronoun(L, Q, K, Ws),
     \+ ( ty_values(quantifier, Qs), memberchk(Q, Qs), ty_values(quantifier_kind, Ks), memberchk(K, Ks),
@@ -2177,7 +2190,9 @@ ty_surface_written(Text, Mood, Open, Close, Words) :-
 %% has the lowered word and a row of another language has the written one
 %% (German `Hans sieht den Hund.'; Italian `Chi vede il ragazzo?' asks, as
 %% chi is Italian's, though an English row has `Chi') or the next word is
-%% a name's (`Ahmet Bey').
+%% a name's (`Ahmet Bey'). A first name, a row with
+%% a gender, is read as the name first, the word after (since 1.64.0: a
+%% bare noun reads, so `John sees the dog.' was the noun john first).
 ty_first_written(L, [FirstA|_], [First|Rest], Words) :-
     (   FirstA \== First
     ->  (   ty_capital_nouns(L), ty_table_word(L, FirstA)
@@ -2189,7 +2204,10 @@ ty_first_written(L, [FirstA|_], [First|Rest], Words) :-
                 ;   Rest = [W2|_], ty_name_token(L, W2)
                 )
             )
-        ->  ( Words = [First|Rest] ; Words = [FirstA|Rest] )
+        ->  (   once(( ty_name(L, _, FirstA, G1, _), memberchk(G1, [m, f]) ))
+            ->  ( Words = [FirstA|Rest] ; Words = [First|Rest] )
+            ;   ( Words = [First|Rest] ; Words = [FirstA|Rest] )
+            )
         ;   Words = [First|Rest]
         )
     ;   Words = [First|Rest]
@@ -3525,10 +3543,23 @@ ty_clause(L, C) -->
     ty_extraposed(L, o, O, Order3, Order4),
     ty_extraposed(L, s, S, Order4, Order),
     ty_clause_parts(Order, L, C, How),
+    ty_mass_fragment_ok(L, C),
     { ty_roles_ok(L, C),
       ty_object_ok(L, C, How),
       ty_split_kept(L, C, none, Order),
       ty_kein_ok(L) }.
+
+%% Reading, a bare singular subject (mass, since 1.64.0) of a present verb
+%% with no object and no adjunct, whose word is a noun's plural too, is no
+%% clause: it is a phrase of nouns (`Disposable paper cups.', `Recess
+%% lights.' were the verbs cup and light). Writing, any.
+ty_mass_fragment_ok(L, C, S, S) :-
+    (   var(S) -> true
+    ;   C = clause(V, present, _, Subj, O, Js), nonvar(Subj), Subj = np(_, sg, mass, _),
+        O == none, Js == []
+    ->  \+ ( ty_verb(L, V, present, sg, pos, [W]), once(ty_noun(L, _, _, _, _, W)) )
+    ;   true
+    ).
 
 %% ---- the place of the negation ------------------------------------------------------
 %%
@@ -4729,7 +4760,12 @@ ty_pred_more(L, [A], [R], At) --> ty_serial_mark(L, At), ty_and_words(L), ty_adj
 ty_pred_more(L, [A, B|As], [R|Rs], _) --> [','], ty_adjs(L, [A], [R]), ty_pred_more(L, [B|As], Rs, later).
 
 ty_and_words(L, S0, S) :- ty_and(L, Ws), append(Ws, S, S0).
-ty_predicate_in(L, np(M, N, D, A), []) --> ty_np(L, np(M, N, D, A), _).
+%% A bare noun (mass) is no predicate where its word is an adjective too
+%% (since 1.64.0: `is mortal' is the adjective's alone).
+ty_predicate_in(L, np(M, N, D, A), []) -->
+    ty_peek(W0),
+    ty_np(L, np(M, N, D, A), _),
+    { D == mass, A == [], nonvar(W0) -> \+ ty_word_class(L, adjective, W0) ; true }.
 ty_predicate_in(L, R, []) --> { ty_rel_slot(R) }, ty_rel(L, none, R, _).
 ty_predicate_in(L, P, []) --> { ty_poss_slot(P) }, ty_poss(L, P, _).
 ty_predicate_in(L, pp(Prep, NP), []) --> ty_pp(L, Prep, NP).
@@ -5903,8 +5939,11 @@ ty_np(L, NP, Features) --> ty_np(L, NP, Features, none).
 %% A noun phrase of `which' is definite to its marks (Spanish `a qué
 %% perro', Persian `کدام سگ را'). Writing in a language with cases, the noun's
 %% gender is known before its article and adjectives are chosen.
-ty_np(L, NP, [FDef, N, Anim, G], Next) -->
-    { NP = np(M, N, Def, As),
+ty_np(L, NP0, [FDef, N, Anim, G], Next) -->
+    { NP0 = np(M, N, Def0, As),
+      (   nonvar(Def0), ty_definite_like(L, Def0, Def1) -> Def = Def1, NP = np(M, N, Def, As)
+      ;   Def = Def0, NP = NP0
+      ),
       ty_order_at(L, np, Order0),
       ty_np_split(L, Order0, Order, As, Bs, As2),
       (   nonvar(M), '$ty_cased'(L), once(ty_noun(L, M, G0, _, _, _))
@@ -6035,7 +6074,7 @@ ty_det(_, _, _, none) --> [].
 %% The definiteness a noun phrase's marks and checks see: a determiner of
 %% a quantifier of some, no or any is indefinite, every other one
 %% definite (`which', `every', `this').
-ty_def_feature(Def, F) :- ( memberchk(Def, [indef, some, no, any]) -> F = indef ; F = def ).
+ty_def_feature(Def, F) :- ( memberchk(Def, [indef, some, no, any, mass]) -> F = indef ; F = def ).
 
 ty_det_word(L, Def, GN, W) :-
     (   nonvar(W)
@@ -6059,6 +6098,17 @@ ty_det_word(L, Def, GN, W) :-
         ty_det_fits(L, Def, GN, C, W)
     ;   ty_article(L, _, _, _, W)
     ).
+
+%% A BARE SINGULAR NOUN (mass, since 1.64.0) is no person and no animal,
+%% its word is no adjective (`small', `mortal') and no other noun's plural
+%% (`times'): no table says which nouns are mass nouns, and with any noun
+%% `Boy sees the dog.' read and `vexed and troubled times' was a singular.
+ty_mass_ok(L, M) :-
+    nonvar(M),
+    once(ty_noun(L, M, _, A, Sg, _)),
+    \+ memberchk(A, [person, animate]),
+    \+ ty_word_class(L, adjective, Sg),
+    \+ ( ty_noun(L, M2, _, _, _, Sg), M2 \== M ).
 
 %% The definiteness values an article word has: its rows', and indef for a
 %% negative article, made at load for a language with cases or a negative
@@ -6243,7 +6293,8 @@ ty_np_agrees(L, np(M, N, Def, _), Det, noun(G, Anim), Rows, Anim, Next) :-
             once(ty_article_fits(L, Def, G, N, W))
         ;   ty_article(L, Def, AG, AN, W), ty_fits(AG, G), ty_fits(AN, N)
         )
-    ;   member(Def, [def, indef]),
+    ;   member(Def, [def, indef, mass]),
+        ( Def == mass -> N == sg, \+ ty_definite_like(L, mass, _), ty_mass_ok(L, M) ; true ),
         (   Next == none
         ->  (   Def == def, nonvar(M), '$ty_bare'(L, M) -> true ; \+ ty_article_fits(L, Def, G, N, _) )
         ;   Next = bare(_)
@@ -6274,7 +6325,7 @@ ty_np_faults(L, np(_, N, Def, _), Det, noun(G, Anim), Rows, Anim, Next) :-
         ->  true
         ;   ty_fault(agreement(article, W))
         )
-    ;   memberchk(Def, [def, indef]),
+    ;   memberchk(Def, [def, indef, mass]),
         (   (   ty_next_bare(Next), Def == def
             ;   Next == r, ty_relative_bare(L, Def)
             ;   \+ ty_article_fits(L, Def, G, N, _)

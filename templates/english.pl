@@ -110,6 +110,8 @@ ty_noun(english, ox, none, animate, ox, oxen).
 %% lexicon/ as a noun, a verb, an adjective or an adverb: each is the
 %% grammar's, or waits for its grammar (TYPOLOGY-PLAN.md, STATUS.md).
 ty_closed(english, [a, an, the, this, that, these, those, some, any, no, none, every, each, all, both,
+                    someone, something, somebody, everyone, everything, everybody, nothing, nobody,
+                    anyone, anything, anybody,
                     either, neither, many, much, more, most, few, fewer, less, least, several, such,
                     own, other, another, and, or, but, nor, yet, so, if, then, than, as, because,
                     although, though, while, whereas, unless, until, till, since, when, whenever,

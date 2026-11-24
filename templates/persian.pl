@@ -127,6 +127,9 @@ ty_article(persian, every, any, sg, 'هر').
 ty_article(persian, each, any, sg, 'هر').
 ty_article(persian, this, any, any, 'این').
 ty_article(persian, that, any, any, 'آن').
+%% A mass noun (since 1.64.0) is written as a definite one, with no article
+%% either, and never read so: `آب' is the water.
+ty_definite_like(persian, mass, def).
 ty_quantifier_pronoun(persian, some, thing, ['چیزی']).
 ty_quantifier_pronoun(persian, some, person, ['کسی']).
 ty_quantifier_pronoun(persian, every, thing, ['همه‌چیز']).
