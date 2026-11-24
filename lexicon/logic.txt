@@ -181,3 +181,12 @@ Does John see a dog?	?- see(john, X), dog(X).
 A person is happy if they own a dog.	happy(X) :- person(X), own(X, Y), dog(Y).
 Mary reads a book in the garden.	book(a_book). in(read(mary, a_book), the_garden).
 John saw a dog. It was hungry.	dog(a_dog). past(see(john, a_dog)). past(hungry(a_dog)).
+# plural definite noun phrases (since 1.75.0): a constant of the group, the English plural word
+The rebels salted the fields.	past(salt(the_rebels, the_fields)).
+The dogs sleep.	sleep(the_dogs).
+The small children play.	play(the_small_children).
+Mary sees the children.	see(mary, the_children).
+His hands are cold.	cold(hands_of_he).
+The dogs are animals.	animal(the_dogs).
+Who sees the dogs?	?- see(X, the_dogs).
+The children sleep. They dream.	sleep(the_children). dream(the_children).

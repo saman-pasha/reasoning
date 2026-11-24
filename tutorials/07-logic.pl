@@ -42,6 +42,7 @@ main :-
     pronouns,
     possessors,
     objects,
+    plurals,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -136,7 +137,7 @@ english_again :-
     must('English, Cocolog, English', R6, kept).
 
 %% 7. THE SECOND MEASURE. Sentences and the Cocolog each should give,
-%% written by hand (lexicon/logic.txt has 161): how many the translator
+%% written by hand (lexicon/logic.txt has 169): how many the translator
 %% gets right, and how many of the Cocolog texts come back as English that
 %% reads to them. tools/logic/measure.pl prints the whole file's.
 measured :-
@@ -208,6 +209,17 @@ objects :-
     must('in a question', C2, '?- see(A, B), dog(B).\n'),
     logic_translate(cocolog, english, 'happy(X) :- person(X), own(X, Y), dog(Y).', E3),
     must('in a condition, back', E3, 'A person is happy if they own a dog.').
+
+%% 13. A PLURAL DEFINITE NOUN PHRASE. `the rebels' is one constant, the
+%% group: the_, its adjectives and the English plural word, in every
+%% language (Spanish `los perros' is the_dogs too).
+plurals :-
+    logic_translate(english, cocolog, 'The rebels salted the fields.', C1),
+    must('a group', C1, 'past(salt(the_rebels, the_fields)).\n'),
+    logic_translate(spanish, cocolog, 'Los perros duermen.', C2),
+    must('from Spanish', C2, 'is_sleep(the_dogs).\n'),
+    logic_translate(cocolog, english, 'cold(hands_of_he).', E3),
+    must('a plural possessed, back', E3, 'His hands are cold.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

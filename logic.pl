@@ -59,6 +59,9 @@
 %% A PRONOUN (since 1.72.0): in a text, the noun phrase it refers to; with
 %% none, a constant of its own, its word (he, she, it, they, i, we, you).
 %%
+%% A PLURAL DEFINITE NOUN PHRASE (since 1.75.0): a constant of the group,
+%% the_rebels.
+%%
 %% AN INDEFINITE OBJECT (since 1.74.0): in a statement an individual
 %% (letter(a_letter), receive(he, a_letter)), in a question or a condition
 %% a variable (`Who sees a dog?' is see(X, Y), dog(Y)); in a rule's
@@ -296,10 +299,15 @@ lg_facts(Conds, Atoms, Items) :-
 lg_body([B], B) :- !.
 lg_body(Bs, and(Bs)).
 
-%% An individual's constant: a_ and its noun, an_ before a vowel (a_dog,
-%% an_owl; since 1.74.0, a_ before every noun through 1.73.0).
+%% An individual's constant: a_ and its noun, an_ before a vowel's sound
+%% (a_dog, an_owl, a_university; since 1.74.0, a_ before every noun
+%% through 1.73.0). A u before `ni' or `se' sounds as `you'.
 lg_indef_const(N, C) :-
-    (   sub_atom(N, 0, 1, _, F), memberchk(F, [a, e, i, o, u]) -> P = an_ ; P = a_ ),
+    (   sub_atom(N, 0, 1, _, F), memberchk(F, [a, e, i, o, u]),
+        \+ ( sub_atom(N, 0, 3, _, U), memberchk(U, [uni, use, usu, uti, ure]) )
+    ->  P = an_
+    ;   P = a_
+    ),
     atom_concat(P, N, C).
 
 %% One individual: a_person for a person, something and someone.
@@ -449,6 +457,8 @@ lg_entity(X, _) :- var(X), !, lg_no(shape(X)).
 lg_entity(name(N), ent(const(C), [], const)) :- !, lg_name_atom(N, C).
 lg_entity(np(N, sg, def, As), ent(const(C), [], const)) :- !,
     lg_adjectives(As, Ms), append([the|Ms], [N], Ws), atomic_list_concat(Ws, '_', C).
+lg_entity(np(N, pl, def, As), ent(const(C), [], const)) :- !,
+    lg_adjectives(As, Ms), lg_plural_word(N, P), append([the|Ms], [P], Ws), atomic_list_concat(Ws, '_', C).
 lg_entity(np(N, _, mass, As), ent(const(C), [], const)) :- !,
     lg_adjectives(As, Ms), append(Ms, [N], Ws), atomic_list_concat(Ws, '_', C).
 lg_entity(np(N, _, D, As), ent(V, Conds, every)) :- memberchk(D, [every, each, all]), !,
@@ -477,22 +487,30 @@ lg_noun_conds(N, As, V, Cs) :-
 lg_preds_of([], _, []).
 lg_preds_of([M|Ms], T, [pred(M, [T])|Ps]) :- lg_preds_of(Ms, T, Ps).
 
+%% A PLURAL DEFINITE NOUN PHRASE (since 1.75.0) is a constant of the group,
+%% the_, its adjectives and the English plural word: `the rebels' is
+%% the_rebels, `the small children' the_small_children. With no English
+%% template loaded the plural is the meaning and an s.
+lg_plural_word(N, P) :-
+    (   catch(typology_plural(english, N, P0), _, fail) -> P = P0 ; atom_concat(N, s, P) ).
+
 %% A POSSESSOR (since 1.73.0): the possessed and its possessor are one
 %% constant, the possessed's words, `_of_', the possessor's constant: `his
 %% spot' is spot_of_he, `John's dog' dog_of_john, `the edge of the bed' and
 %% `the bed's edge' edge_of_the_bed, `the boy's dog's house'
-%% house_of_dog_of_the_boy. The possessed is singular and definite (a
-%% plural or an indefinite one is no constant, as elsewhere), and the
-%% possessor a constant.
+%% house_of_dog_of_the_boy. The possessed is definite, a plural one its
+%% plural word (hands_of_he, since 1.75.0; an indefinite one is no
+%% constant), and the possessor a constant.
 lg_possessed(P, NP, C) :-
     lg_entity(P, ent(Cp, _, Q)),
     ( Q == const, Cp = const(Pc) -> true ; lg_no(possessor(Q)) ),
     (   nonvar(NP), NP = np(N, Num, D, As)
-    ->  ( Num == sg, D == def -> true ; lg_no(determiner(D)) )
+    ->  ( D == def -> true ; lg_no(determiner(D)) )
     ;   lg_no(shape(NP))
     ),
     lg_adjectives(As, Ms),
-    append(Ms, [N, of, Pc], Ws),
+    ( Num == pl -> lg_plural_word(N, W) ; W = N ),
+    append(Ms, [W, of, Pc], Ws),
     atomic_list_concat(Ws, '_', C).
 
 %% A PRONOUN WITH NO REFERENT (since 1.72.0) is a constant of its own, its
@@ -949,8 +967,13 @@ lg_unary_ir(L, P, S, IR) :-
     lg_unary_shape(C, P, S, IR).
 
 lg_unary_shape(adjective, P, S, copula(present, pos, S, adj([P]))).
-lg_unary_shape(noun, P, S, copula(present, pos, S, np(P, sg, indef, []))).
+lg_unary_shape(noun, P, S, copula(present, pos, S, np(P, Num, indef, []))) :-
+    ( lg_plural_np(S) -> member(Num, [pl, sg]) ; member(Num, [sg, pl]) ).
 lg_unary_shape(verb, P, S, clause(P, present, pos, S, none)).
+
+%% A noun phrase of a group: a noun's plural, a plural pronoun, a joined
+%% pair; its noun predicate is a plural first (`The dogs are animals.').
+lg_plural_np(NP) :- nonvar(NP), ( NP = np(_, pl, _, _) ; NP = pron(_, pl, _) ; NP = of(_, np(_, pl, _, _)) ; NP = and(_) ), !.
 
 %% THE ORDER OF THE CLASSES of a word said of one thing S, from WordNet's
 %% lists in lexicon/: an adjective of the 3 000 commonest (adj.txt: human,
@@ -1021,11 +1044,14 @@ lg_arg_np(L, _, const(C), NP) :- lg_const_np(L, C, NP).
 lg_const_np(_, C, P) :- lg_pron_np(C, P).
 lg_const_np(_, something, qp(some, thing)).
 lg_const_np(_, someone, qp(some, person)).
+lg_const_np(L, C, np(N, pl, def, As)) :- atom_concat(the_, R, C), lg_plural_split(L, R, N, As).
 lg_const_np(L, C, np(N, sg, def, As)) :- atom_concat(the_, R, C), lg_noun_split(L, R, N, As).
-lg_const_np(L, C, of(PNP, np(N, sg, def, As))) :-
+lg_const_np(L, C, of(PNP, np(N, Num, def, As))) :-
     sub_atom(C, B, 4, A, '_of_'), B > 0, A > 0, !,
     sub_atom(C, 0, B, _, Before), sub_atom(C, _, A, 0, After),
-    lg_noun_split(L, Before, N, As),
+    (   lg_plural_split(L, Before, N, As), Num = pl
+    ;   lg_noun_split(L, Before, N, As), Num = sg
+    ),
     lg_const_np(L, After, PNP).
 lg_const_np(L, C, name(W)) :- lg_name_written(C, W), typology_meaning(L, name, W).
 lg_const_np(L, C, np(N, sg, mass, As)) :- \+ atom_concat(the_, _, C), lg_noun_split(L, C, N, As).
@@ -1046,6 +1072,17 @@ lg_noun_split(L, C, N, As) :-
     atomic_list_concat(Ps, '_', C),
     append(As, Ns, Ps), Ns \== [],
     atomic_list_concat(Ns, '_', N),
+    typology_meaning(L, noun, N),
+    forall(member(A, As), typology_meaning(L, adjective, A)).
+
+%% A plural constant's words as adjectives and a plural noun; asked before
+%% the singular, as a word that is a noun's plural (hands) may be a
+%% singular meaning too, and the reader takes `His hands is cold.'
+lg_plural_split(L, C, N, As) :-
+    atomic_list_concat(Ps, '_', C),
+    append(As, Ns, Ps), Ns \== [],
+    atomic_list_concat(Ns, '_', W),
+    catch(typology_plural(english, N, W), _, fail),
     typology_meaning(L, noun, N),
     forall(member(A, As), typology_meaning(L, adjective, A)).
 

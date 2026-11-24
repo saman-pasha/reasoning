@@ -645,6 +645,8 @@
 %%                                     (noun, adjective, verb, name,
 %%                                     person, animate, adposition,
 %%                                     adverb) of that meaning
+%%     typology_plural(+Name, ?Meaning, ?Plural)
+%%                                     a noun's plural word
 %%
 %% A WORD WITH SEVERAL MEANINGS IN ONE PLACE of the grammar -- Spanish `a',
 %% the object's mark and `to', both after a verb and before a noun phrase;
@@ -708,7 +710,7 @@
                       typology_answer/4, typology_answer/5,
                       typology_import/1, typology_import/2,
                       typology_references/2, typology_reason_ir/2,
-                      typology_coverage/4, typology_meaning/3 ]).
+                      typology_coverage/4, typology_meaning/3, typology_plural/3 ]).
 
 :- use_module(library(reasoning/reason), [ reason_base/2 ]).
 
@@ -1358,6 +1360,11 @@ typology_meaning(L, name, M) :- once(ty_name(L, M, _, _, _)).
 typology_meaning(L, person, M) :- once(ty_noun(L, M, _, person, _, _)).
 typology_meaning(L, adposition, M) :- once(ty_adposition(L, M, _)).
 typology_meaning(L, adverb, M) :- once(ty_adverb(L, M, _)).
+
+%% typology_plural(+L, ?Meaning, ?Plural): a noun of L of that meaning and
+%% its plural word (since 1.75.0; library(reasoning/logic) names a plural
+%% definite noun phrase by it, the_rebels).
+typology_plural(L, M, P) :- once(ty_noun(L, M, _, _, _, P)).
 typology_meaning(L, animate, M) :-
     once(( ( ty_noun(L, M, _, A, _, _) ; ty_name(L, M, _, _, A) ), memberchk(A, [person, animate]) )).
 

@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -86,7 +86,7 @@ diagnostics :-
                'The boy does not sleep.'-negation,
                'Every boy sees a dog.'-object(generic),
                'The boy sleeps because the dog sleeps.'-subordinate(because),
-               'His hands are cold.'-determiner(def),
+               'He received a mass of correspondence.'-determiner(indef),
                'No dog sleeps.'-determiner(no),
                'The boy sleeps with dogs.'-adjunct(generic) ]),
            ( once(typology_read(english, T, IR)),
@@ -262,11 +262,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 161),
-    ( R >= 145 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 145 right', VR, ok),
-    ( K >= 153 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 153 kept', VK, ok).
+    check('the second measure: its sentences', N, 169),
+    ( R >= 153 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 153 right', VR, ok),
+    ( K >= 161 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 161 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -380,7 +380,7 @@ pronouns :-
     logic_readings(english, 'Who is human? Is Socrates human?', [U4|_]),
     check('a text of two questions is a question', U4,
           utterance(question, [query(pred(human, [var(1)])), query(pred(human, [const(socrates)]))])),
-    logic_readings(english, 'The dogs sleep. It dreams.', Us5),
+    logic_readings(english, 'Every dog sleeps. It dreams.', Us5),
     check('a pronoun whose referent no earlier sentence has', Us5, []).
 
 %% 1.73.0: A POSSESSOR and its possessed are one constant, the possessed's
@@ -413,8 +413,8 @@ possessors :-
     ( logic_translate(cocolog, spanish, 'happy(friend_of_i).', S4) -> true ; S4 = none ),
     check('a possessor into Spanish', S4, 'Mi amigo es feliz.'),
     once(typology_read(english, 'His hands are cold.', IR5)),
-    logic_why(IR5, W5),
-    check('a plural possessed has no constant', W5, determiner(def)).
+    ( logic_from_ir(IR5, _) -> W5 = read ; logic_why(IR5, W5) ),
+    check('a plural possessed has its plural word', W5, read).
 
 %% 1.74.0: AN INDEFINITE OBJECT is an individual in a statement, a variable
 %% in a question or a condition, and nothing in a rule's conclusion.
@@ -423,6 +423,7 @@ objects :-
     forall(member(T-Want, [
                'He received a letter.'-'letter(a_letter).\npast(receive(he, a_letter)).\n',
                'They saw an owl.'-'owl(an_owl).\npast(see(they, an_owl)).\n',
+               'They saw a university.'-'university(a_university).\npast(see(they, a_university)).\n',
                'John sees a big dog.'-'dog(a_dog).\nbig(a_dog).\nsee(john, a_dog).\n',
                'A person likes a dog.'-'person(a_person).\ndog(a_dog).\nlike(a_person, a_dog).\n',
                'Who sees a dog?'-'?- see(A, B), dog(B).\n',
@@ -444,3 +445,31 @@ objects :-
     once(typology_read(english, 'Every boy sees a dog.', IR4)),
     logic_why(IR4, W4),
     check('a rule\'s conclusion has no indefinite object', W4, object(generic)).
+
+%% 1.75.0: A PLURAL DEFINITE NOUN PHRASE is a constant of the group: the_,
+%% its adjectives and the English plural word.
+plurals :-
+    section('the plural definite noun phrases'),
+    forall(member(T-Want, [
+               'The rebels salted the fields.'-'past(salt(the_rebels, the_fields)).\n',
+               'The small children play.'-'play(the_small_children).\n',
+               'Mary sees the children.'-'see(mary, the_children).\n',
+               'His hands are cold.'-'cold(hands_of_he).\n',
+               'The dogs are animals.'-'animal(the_dogs).\n',
+               'Who sees the dogs?'-'?- see(A, the_dogs).\n',
+               'The children sleep. They dream.'-'is_sleep(the_children).\ndream(the_children).\n' ]),
+           ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
+             one_line(['a plural into Cocolog: ', T], Label),
+             check(Label, C, Want) )),
+    forall(member(C2-Want2, ['past(salt(the_rebels, the_fields)).'-'The rebels salted the fields.',
+                             'cold(hands_of_he).'-'His hands are cold.',
+                             'animal(the_dogs).'-'The dogs are animals.',
+                             'play(the_small_children).'-'The small children play.']),
+           ( ( logic_translate(cocolog, english, C2, E2) -> true ; E2 = none ),
+             atomic_list_concat(['a plural into English: ', C2], L2),
+             check(L2, E2, Want2) )),
+    ( logic_translate(cocolog, spanish, 'is_sleep(the_dogs).', S3) -> true ; S3 = none ),
+    check('a plural into Spanish', S3, 'Los perros duermen.'),
+    logic_readings(spanish, 'Los perros duermen.', [U4|_]),
+    check('a Spanish plural is the English plural word', U4,
+          utterance(assertion, [fact(pred(sleep, [const(the_dogs)]))])).

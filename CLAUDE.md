@@ -336,7 +336,17 @@ reading alone. The writer's group holds every individual it brings in
 (`lg_ind_map/3`, `map(Map)`), and a question's or a condition's
 variables with a noun are noun phrases (`lg_var_map/3`, `vmap(Map,
 How)`). A bare plural object is an individual too (`a_fish`): its kind
-reading (`eat(the_cat, fish)`) is not made yet.
+reading (`eat(the_cat, fish)`) is not made yet. An individual is `an_`
+before a vowel's sound (`lg_indef_const/2`: `an_owl`, `a_university`).
+**A plural definite noun phrase since 1.75.0**: `np(N, pl, def, As)` is
+`the_`, the adjectives and the English plural word
+(`lg_plural_word/2` over `typology_plural/3`, the meaning and an `s` with
+no English template), a plural possessed the same (`hands_of_he`). The
+writer asks the PLURAL first (`lg_plural_split/4`, before
+`lg_noun_split/4`, in the `the_` and the `_of_` clauses): `hands` is a
+singular meaning too, and the reader takes `His hands is cold.`, so the
+read-back cannot tell. For the same reason a group's noun predicate is a
+plural first (`lg_plural_np/1`: `The dogs are animals.`).
 **The blank template is generated too** (1.54.0): `templates/template.pl`
 is what `typology_import(template)` writes, `typology_template(xx)`: every
 slot of typology.pl's header list (THE TEMPLATE) with the header's own
