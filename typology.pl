@@ -321,6 +321,16 @@
 %%                                     Persian ند made م: `می‌بینم')
 %%     ty_capital(L, Word, Written)    a word always written with its
 %%                                     capital (English `I')
+%%     ty_quantifier_pronoun(L, Quantifier, Kind, Words)
+%%                                     a word of a quantifier and a kind
+%%                                     where a noun phrase stands (since
+%%                                     1.63.0): Quantifier some, every,
+%%                                     no, any, this or that, Kind thing
+%%                                     or person (`someone', `nothing',
+%%                                     `todo el mundo', `this' alone), one
+%%                                     word or several; singular, so a
+%%                                     language gives its singular form
+%%                                     (Italian `ognuno', not `tutti')
 %%     ty_name(L, Meaning, Written, Gender, Animacy)
 %%                                     a name: its meaning, the English
 %%                                     name (Italian `Socrate' is
@@ -504,6 +514,12 @@
 %%                                     and no adjuncts, its verb unbound
 %%                                     where the words say none
 %%     np(Noun, Number, Definiteness, Adjectives)
+%%                                     Definiteness def, indef or which, or
+%%                                     since 1.63.0 a determiner: every,
+%%                                     each, all, some, no, any, this, that
+%%                                     (`these' is this's plural); a
+%%                                     determiner always has its words, and
+%%                                     only def and indef may have none
 %%     rel(NP, Clause)                 a noun phrase with a relative clause,
 %%                                     where a noun phrase stands: Clause a
 %%                                     clause or a copula clause with `gap'
@@ -525,6 +541,12 @@
 %%                                     do not tell (`you' is pron(2, _, _));
 %%                                     Kind ref(Meaning) in a text's IR, the
 %%                                     noun the pronoun stands for
+%%     qp(Quantifier, Kind)            a quantifier pronoun where a noun
+%%                                     phrase stands (since 1.63.0):
+%%                                     qp(some, person) `someone',
+%%                                     qp(no, thing) `nothing', qp(this,
+%%                                     thing) `this' alone; of the third
+%%                                     person and singular
 %%     name(Meaning)                   a name where a noun phrase stands
 %%                                     (since 1.62.0): Meaning its row's,
 %%                                     the English name, or the name as
@@ -668,7 +690,7 @@
            ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
            ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
            ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-           ty_pro_drop/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5,
+           ty_pro_drop/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4,
            ty_answer_echo/3, ty_kind/2, ty_adjective_before/2, ty_pronoun_gender/2,
            ty_inversion/3, ty_wh_tonic/3,
            ty_tense_form/5, ty_participle/3, ty_participle_like/3,
@@ -694,7 +716,7 @@
                  ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
                  ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
                  ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-                 ty_pro_drop/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5,
+                 ty_pro_drop/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4,
                  ty_answer_echo/3, ty_adjective_before/2, ty_pronoun_gender/2,
                  ty_inversion/3, ty_wh_tonic/3,
                  ty_tense_form/5, ty_participle/3, ty_participle_like/3,
@@ -731,7 +753,10 @@ ty_values(agreement, [sg, pl, sg(1), sg(2), pl(1), pl(2)]).
 ty_values(pronoun_role, [s, o, j]).
 ty_values(person, [1, 2, 3]).
 ty_values(polarity, [pos, neg]).
-ty_values(definiteness, [def, indef, which]).
+ty_values(definiteness, [def, indef, which, every, each, all, some, no, any, this, that]).
+%% A quantifier pronoun's quantifier and kind (since 1.63.0).
+ty_values(quantifier, [some, every, no, any, this, that]).
+ty_values(quantifier_kind, [thing, person]).
 ty_values(animacy, [person, animate, inanimate, unknown]).
 ty_values(place, [before, after]).
 ty_values(role, [s, o]).
@@ -975,7 +1000,7 @@ ty_tdoc_more(Ls, [], Ls).
 %% section blank_template holds them to the header's slots).
 ty_template_group('the orders of the levels', [ty_order]).
 ty_template_group('words', [ty_noun_class, ty_class_when, ty_noun_in, ty_noun, ty_adjective, ty_adjective_before, ty_article, ty_adposition,
-                            ty_adverb, ty_capital, ty_capital_nouns, ty_name, ty_and, ty_conjunction, ty_serial_comma,
+                            ty_adverb, ty_capital, ty_capital_nouns, ty_name, ty_quantifier_pronoun, ty_and, ty_conjunction, ty_serial_comma,
                             ty_conjunct_marks, ty_clause_comma, ty_comma, ty_sense, ty_closed]).
 ty_template_group('verbs and tenses', [ty_conjugation, ty_verb_in, ty_irregular_verb, ty_verb, ty_tense_form, ty_tense_like, ty_participle,
                                        ty_participle_like, ty_participle_ending, ty_participle_agrees,
@@ -1103,6 +1128,7 @@ ty_row_shape('ty_clitic(L, Role).').
 ty_row_shape('ty_verb_person(L, Tense, Person, Base, From, To).').
 ty_row_shape('ty_capital(L, Word, Written).').
 ty_row_shape('ty_name(L, Meaning, Written, Gender, Animacy).').
+ty_row_shape('ty_quantifier_pronoun(L, Quantifier, Kind, Words).').
 ty_row_shape('ty_answer_echo(L, Rule, Word).').
 ty_row_shape('ty_adjective_before(L, Meaning).').
 ty_row_shape('ty_pronoun_gender(L, System).').
@@ -1509,6 +1535,10 @@ ty_missing(L, bad(ty_verb_person(L, T, K, B, F, To))) :-
 ty_missing(L, bad(ty_capital(L, W, C))) :-
     ty_capital(L, W, C),
     \+ ( atom(W), atom(C), downcase_atom(C, W) ).
+ty_missing(L, bad(ty_quantifier_pronoun(L, Q, K, Ws))) :-
+    ty_quantifier_pronoun(L, Q, K, Ws),
+    \+ ( ty_values(quantifier, Qs), memberchk(Q, Qs), ty_values(quantifier_kind, Ks), memberchk(K, Ks),
+         is_list(Ws), Ws \== [], forall(member(W, Ws), atom(W)) ).
 ty_missing(L, bad(ty_name(L, M, W, G, A))) :-
     ty_name(L, M, W, G, A),
     \+ ( atom(M), M \== '', atom(W), W \== '', memberchk(G, [m, f, none]),
@@ -1713,6 +1743,7 @@ ty_read_bases(L, Surface, Topics, Mood, IR0, C) :-
     ty_poss_flag(L, Bases),
     ty_coord_flag(L, Bases),
     ty_name_flag(L, Bases),
+    ty_qp_flag(L, Bases),
     ty_parse_reset(L),
     ty_mood(Mood, L, IR0, C, Goal),
     phrase(Goal, Bases).
@@ -1805,6 +1836,7 @@ ty_reads_as(Mood, L, IR0, Tokens, Topics) :-
            ty_poss_flag(L, Tokens),
            ty_coord_flag(L, Tokens),
            ty_name_flag(L, Tokens),
+           ty_qp_flag(L, Tokens),
            aggregate_all(min(C), ( ty_mood(Mood, L, IR0, C, G), phrase(G, Tokens) ), C1),
            \+ ( C1 > 0,
                 ty_ir_senses(IR0, Ms),
@@ -2439,7 +2471,7 @@ ty_word_class(L, verb, W) :-
     (   ty_class_meaning(L, verb, W, _)
     ;   ty_negation(L, _, _, Ws, _), memberchk(W, Ws)
     ), !.
-ty_word_class(L, article, W) :- ty_article(L, _, _, _, W), !.
+ty_word_class(L, article, W) :- ( ty_article(L, _, _, _, W) ; '$ty_art_multi'(L, W, _, _) ), !.
 ty_word_class(L, mark, W) :- ty_mark(L, _, _, W, _), !.
 ty_word_class(L, adposition, W) :- ty_class_meaning(L, adposition, W, _), !.
 ty_word_class(L, adverb, W) :- ty_adverb(L, _, W), !.
@@ -3116,6 +3148,7 @@ ty_ask_words(L, copula(T, P, Subj, Pred), _, Ws) :-
 %% something put them.
 ty_subject_number(np(_, N, _, _), N).
 ty_subject_number(Nm, sg) :- nonvar(Nm), Nm = name(_).
+ty_subject_number(Qp, sg) :- nonvar(Qp), Qp = qp(_, _).
 ty_subject_number(W, sg) :- nonvar(W), W = wh(_).
 ty_subject_number(G, N) :- nonvar(G), G = gap(H, _, _), ty_subject_number(H, N).
 ty_subject_number(rel(np(_, N, _, _), _), N).
@@ -3241,10 +3274,12 @@ ty_ir_subject(copula(_, _, S, _), S).
 ty_same_subject(S1) :- nb_current('$ty_same', s(S1)).
 
 %% The features of a phrase of the IR, as its reading gives them.
-ty_ir_features(L, np(M, N, D, _), [D, N, A, G]) :- !,
+ty_ir_features(L, np(M, N, D0, _), [D, N, A, G]) :- !,
+    ty_def_feature(D0, D),
     ( once(ty_noun(L, M, G, A, _, _)) -> true ; A = unknown ).
 ty_ir_features(L, Pr, F) :- Pr = pron(_, _, _), !, ty_pron_np_features(L, Pr, F).
 ty_ir_features(L, name(Nm), F) :- !, ty_name_features(L, Nm, F).
+ty_ir_features(_, qp(Q, K), F) :- !, ty_qp_features(Q, K, F).
 ty_ir_features(L, of(_, NP), F) :- !, ty_ir_features(L, NP, F).
 ty_ir_features(L, rel(NP, _), F) :- !, ty_ir_features(L, NP, F).
 ty_ir_features(L, C, F) :-
@@ -3753,6 +3788,10 @@ ty_np_animacy(L, pron(_, _, K), A) :-
     nonvar(K), K = ref(M), !,
     (   nonvar(M), M = name(_) -> ty_np_animacy(L, M, A) ; ty_np_animacy(L, np(M, _, _, _), A) ).
 %% A name's animacy is its row's; a name with no row takes the one asked.
+%% A quantifier pronoun's is its kind's: a person, or a thing (inanimate).
+ty_np_animacy(_, qp(_, K), A) :-
+    ( K == person -> A1 = person ; A1 = inanimate ),
+    ty_animacy_fits(A, A1).
 ty_np_animacy(L, name(Nm), A) :-
     ( ty_name_row(L, Nm, _, A1) -> ty_animacy_fits(A, A1) ; true ).
 ty_np_animacy(_, pron(P, _, K), A) :-
@@ -4042,6 +4081,7 @@ ty_np_phrase(L, NP, F) --> { ty_np_slot(NP) }, ty_np(L, NP, F).
 ty_np_phrase(L, R, F) --> { ty_rel_slot(R) }, ty_rel(L, none, R, F).
 ty_np_phrase(L, P, F) --> { ty_poss_slot(P) }, ty_poss(L, P, F).
 ty_np_phrase(L, Nm, F) --> ty_name_here, { ty_name_slot(Nm) }, ty_name_words(L, Nm, F).
+ty_np_phrase(L, Qp, F) --> ty_qp_here, { ty_qp_slot(Qp) }, ty_qp_words(L, Qp, F).
 ty_np_phrase(L, Pr, F) -->
     { ty_ppron_slot(Pr) },
     ty_flag_allows('$ty_ppron'),
@@ -4153,6 +4193,50 @@ ty_name_flag(L, Words) :-
 ty_name_here(S, S) :-
     (   var(S) -> true
     ;   nb_current('$ty_name', f(F)) -> F == yes
+    ;   true
+    ).
+
+%% ---- quantifier pronouns (since 1.63.0) ----------------------------------------------
+%%
+%% A QUANTIFIER PRONOUN, qp(Quantifier, Kind), stands where a noun phrase
+%% stands: a word or words of a quantifier and a kind (ty_quantifier_pronoun/4:
+%% `someone', `nothing', `todo el mundo', `this' alone), the third person
+%% and singular. Its definiteness is its quantifier's (ty_def_feature/2)
+%% and its animacy its kind's, which the marks and the roles ask.
+
+ty_qp_slot(X) :- var(X), !, X = qp(_, _).
+ty_qp_slot(qp(_, _)).
+
+ty_qp_role(L, Role, Qp, F) -->
+    { ty_role_case(L, Role) },
+    ty_mark_slot(L, Role, before, Before),
+    ty_qp_words(L, Qp, F),
+    ty_mark_slot(L, Role, after, After),
+    { ty_marks_ok(L, Role, before, F, Before),
+      ty_marks_ok(L, Role, after, F, After) }.
+
+%% Writing, the first row's words; reading, a row's first word, indexed at
+%% load ('$ty_qp_first'/5), and the rest of its words.
+ty_qp_words(L, qp(Q, K), F) -->
+    (   { nonvar(Q) }
+    ->  { once(ty_quantifier_pronoun(L, Q, K, Ws)) }, ty_tokens(Ws)
+    ;   [W1], { '$ty_qp_first'(L, W1, Q, K, Rest) }, ty_tokens(Rest)
+    ),
+    { ty_qp_features(Q, K, F) }.
+
+ty_qp_features(Q, K, [D, sg, A, _]) :-
+    ty_def_feature(Q, D),
+    ( K == person -> A = person ; A = inanimate ).
+
+%% Whether a text holds a quantifier pronoun's first word ('$ty_qp'), as
+%% the names and the conjunctions.
+ty_qp_flag(L, Words) :-
+    (   member(W, Words), '$ty_qp_first'(L, W, _, _, _) -> F = yes ; F = no ),
+    b_setval('$ty_qp', f(F)).
+
+ty_qp_here(S, S) :-
+    (   var(S) -> true
+    ;   nb_current('$ty_qp', f(F)) -> F == yes
     ;   true
     ).
 
@@ -4892,6 +4976,7 @@ ty_subject_gn(L, S, G, N) :-
     (   S = np(M, N, _, _) -> ( once(ty_noun(L, M, G0, _, _, _)), memberchk(G0, [m, f]) -> G = G0 ; G = m )
     ;   S = pron(_, N, K) -> ( K == f -> G = f ; var(K) -> G = K ; G = m )
     ;   S = name(Nm) -> N = sg, ( ty_name_row(L, Nm, G0, _), memberchk(G0, [m, f]) -> G = G0 ; true )
+    ;   S = qp(_, _) -> N = sg
     ;   S = rel(H, _) -> ty_subject_gn(L, H, G, N)
     ;   S = of(_, H) -> ty_subject_gn(L, H, G, N)
     ;   S = gap(H, _, _) -> ty_subject_gn(L, H, G, N)
@@ -5059,6 +5144,13 @@ ty_role(L, Role, Nm, Features) -->
     ty_name_here,
     { ty_name_slot(Nm) },
     ty_name_role(L, Role, Nm, Features).
+
+%% A quantifier pronoun in its role (since 1.63.0), between the role's
+%% marks (Spanish `ve a alguien').
+ty_role(L, Role, Qp, Features) -->
+    ty_qp_here,
+    { ty_qp_slot(Qp) },
+    ty_qp_role(L, Role, Qp, Features).
 
 %% A personal pronoun in its role; an object clitic's words stood in the
 %% verb's (ty_verb_group//7), which bound it before the object's place.
@@ -5656,6 +5748,11 @@ ty_feats_make(L) :-
     ;   true
     ),
     retractall('$ty_art_words'(L, _, _, _)),
+    retractall('$ty_art_multi'(L, _, _, _)),
+    forall(( ty_article(L, _, _, _, AW), atomic_list_concat([AW1, AW2|AWs], ' ', AW) ),
+           ( '$ty_art_multi'(L, AW1, AW, [AW2|AWs]) -> true ; assertz('$ty_art_multi'(L, AW1, AW, [AW2|AWs])) )),
+    retractall('$ty_qp_first'(L, _, _, _, _)),
+    forall(ty_quantifier_pronoun(L, Q, K, [QW1|QWs]), assertz('$ty_qp_first'(L, QW1, Q, K, QWs))),
     retractall('$ty_ending'(L, _, _, _, _, _)),
     forall(ty_article_case(L, Def, G, N, _, W),
            ( ty_article(L, Def, G, N, W) -> true ; assertz(ty_article(L, Def, G, N, W)) )),
@@ -5706,13 +5803,22 @@ ty_feats_make(L) :-
     sort(Cs0, Cs),
     forall(( ty_adjective_ending(L, D, AC, G, N, E),
              ( AC == any -> member(C, Cs) ; C = AC ) ),
-           ( '$ty_ending'(L, D, C, G, N, E) -> true ; assertz('$ty_ending'(L, D, C, G, N, E)) )).
+           ( '$ty_ending'(L, D, C, G, N, E) -> true ; assertz('$ty_ending'(L, D, C, G, N, E)) )),
+    retractall('$ty_art_defs'(L, _, _)),
+    (   ( '$ty_cased'(L) ; '$ty_kein_lang'(L) )
+    ->  forall(setof(AW0, AD^AG^AN^( ty_article(L, AD, AG, AN, AW0) ; ty_negative_article(L, AG, AN, AD, AW0) ), AW0s),
+               forall(member(AW0, AW0s), ( ty_art_defs_make(L, AW0, ADs), assertz('$ty_art_defs'(L, AW0, ADs)) )))
+    ;   true
+    ).
 
 :- dynamic('$ty_cased'/1).
 :- dynamic('$ty_declines'/1).
 :- dynamic('$ty_kein_lang'/1).
 :- dynamic('$ty_sub_used'/1).
 :- dynamic('$ty_art_words'/4).
+:- dynamic('$ty_art_multi'/4).
+:- dynamic('$ty_art_defs'/3).
+:- dynamic('$ty_qp_first'/5).
 :- dynamic('$ty_ending'/6).
 :- dynamic('$ty_cagree'/6).
 :- dynamic('$ty_cmax'/2).
@@ -5810,7 +5916,7 @@ ty_np(L, NP, [FDef, N, Anim, G], Next) -->
       ( var(As) -> append(Bs, As2, As) ; true ),
       ( var(BRows) -> Adjs = ARows ; append(BRows, ARows, Adjs) ),
       ty_np_ok(L, NP, Det, Noun, Adjs, Anim, Next),
-      ( Def == which -> FDef = def ; FDef = Def ) }.
+      ty_def_feature(Def, FDef) }.
 
 %% ty_adjective_before(L, Meaning): the adjective stands before the noun
 %% (French `le petit chien noir'): where the order has the adjectives after
@@ -5916,9 +6022,20 @@ ty_det(L, Def, GN, art(W)) -->
     [W],
     {   '$ty_cased'(L) -> ty_det_word(L, Def, GN, W)
     ;   '$ty_kein_lang'(L), ty_kein_np -> ty_det_word(L, Def, GN, W)
-    ;   ty_article(L, _, _, _, W)
+    ;   nonvar(W) -> once(ty_article(L, _, _, _, W))
+    ;   ty_article(L, Def, _, _, W), \+ '$ty_art_multi'(L, _, W, _)
     }.
+%% An article of several words (since 1.63.0: Spanish `todos los'), its
+%% first word indexed at load ('$ty_art_multi'/4).
+ty_det(L, _, _, art(W)) -->
+    { \+ '$ty_cased'(L), '$ty_art_multi'(L, W1, W, Rest) },
+    [W1], ty_tokens(Rest).
 ty_det(_, _, _, none) --> [].
+
+%% The definiteness a noun phrase's marks and checks see: a determiner of
+%% a quantifier of some, no or any is indefinite, every other one
+%% definite (`which', `every', `this').
+ty_def_feature(Def, F) :- ( memberchk(Def, [indef, some, no, any]) -> F = indef ; F = def ).
 
 ty_det_word(L, Def, GN, W) :-
     (   nonvar(W)
@@ -5942,6 +6059,15 @@ ty_det_word(L, Def, GN, W) :-
         ty_det_fits(L, Def, GN, C, W)
     ;   ty_article(L, _, _, _, W)
     ).
+
+%% The definiteness values an article word has: its rows', and indef for a
+%% negative article, made at load for a language with cases or a negative
+%% article ('$ty_art_defs'/3, ty_feats_make/1).
+ty_art_defs(L, W, Ds) :- ( '$ty_art_defs'(L, W, Ds0) -> Ds = Ds0 ; ty_art_defs_make(L, W, Ds) ).
+
+ty_art_defs_make(L, W, Ds) :-
+    ( setof(D, AG^AN^ty_article(L, D, AG, AN, W), Ds0) -> true ; Ds0 = [] ),
+    ( ty_negative_article(L, _, _, _, W) -> ord_union(Ds0, [indef], Ds) ; Ds = Ds0 ).
 
 %% Writing, an article word fits the noun the IR names.
 ty_det_fits(L, Def, GN, C, W) :-
@@ -6107,17 +6233,17 @@ ty_np_ok(L, NP, Det, Noun, Rows, Anim, Next) :-
         ty_np_faults(L, NP, Det, Noun, Rows, Anim, Next)
     ).
 
+%% The article's own rows give the definiteness (since 1.63.0: asked of
+%% each of the eleven values, a reading cost the benchmark 16 % to 49 % more).
 ty_np_agrees(L, np(M, N, Def, _), Det, noun(G, Anim), Rows, Anim, Next) :-
-    ty_values(definiteness, Defs), member(Def, Defs),
     forall(member(adj(RG, RN), Rows), ( ty_fits(RG, G), ty_fits(RN, N) )),
     (   Det = art(W)
-    ->  (   '$ty_cased'(L)
-        ->  once(ty_article_fits(L, Def, G, N, W))
-        ;   '$ty_kein_lang'(L), ty_kein_np
-        ->  once(ty_article_fits(L, Def, G, N, W))
+    ->  (   ( '$ty_cased'(L) ; '$ty_kein_lang'(L), ty_kein_np )
+        ->  ( nonvar(Def) -> true ; ty_art_defs(L, W, Ds), member(Def, Ds) ),
+            once(ty_article_fits(L, Def, G, N, W))
         ;   ty_article(L, Def, AG, AN, W), ty_fits(AG, G), ty_fits(AN, N)
         )
-    ;   Def \== which,
+    ;   member(Def, [def, indef]),
         (   Next == none
         ->  (   Def == def, nonvar(M), '$ty_bare'(L, M) -> true ; \+ ty_article_fits(L, Def, G, N, _) )
         ;   Next = bare(_)
@@ -6148,7 +6274,7 @@ ty_np_faults(L, np(_, N, Def, _), Det, noun(G, Anim), Rows, Anim, Next) :-
         ->  true
         ;   ty_fault(agreement(article, W))
         )
-    ;   Def \== which,
+    ;   memberchk(Def, [def, indef]),
         (   (   ty_next_bare(Next), Def == def
             ;   Next == r, ty_relative_bare(L, Def)
             ;   \+ ty_article_fits(L, Def, G, N, _)

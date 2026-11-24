@@ -118,6 +118,72 @@ ty_declension(german, def, weak).
 ty_declension(german, which, weak).
 ty_declension(german, indef, mixed).
 ty_declension(german, none, strong).
+%% THE DETERMINERS AND THE QUANTIFIERS (since 1.63.0): each a definiteness
+%% of its own with its article's words, and the quantifier pronouns, a
+%% quantifier and a kind (qp(Quantifier, Kind) in the IR), singular.
+%% `jeder', `alle' and `dieser' decline as `der', the adjective after them
+%% weak; after `einige' it is strong. `kein' stays the negation's.
+ty_declension(german, every, weak).
+ty_declension(german, each, weak).
+ty_declension(german, all, weak).
+ty_declension(german, this, weak).
+ty_declension(german, some, strong).
+ty_article_case(german, every, m, sg, nom, jeder).
+ty_article_case(german, every, m, sg, acc, jeden).
+ty_article_case(german, every, m, sg, dat, jedem).
+ty_article_case(german, every, m, sg, gen, jedes).
+ty_article_case(german, every, f, sg, nom, jede).
+ty_article_case(german, every, f, sg, acc, jede).
+ty_article_case(german, every, f, sg, dat, jeder).
+ty_article_case(german, every, f, sg, gen, jeder).
+ty_article_case(german, every, n, sg, nom, jedes).
+ty_article_case(german, every, n, sg, acc, jedes).
+ty_article_case(german, every, n, sg, dat, jedem).
+ty_article_case(german, every, n, sg, gen, jedes).
+ty_article_case(german, each, m, sg, nom, jeder).
+ty_article_case(german, each, m, sg, acc, jeden).
+ty_article_case(german, each, m, sg, dat, jedem).
+ty_article_case(german, each, m, sg, gen, jedes).
+ty_article_case(german, each, f, sg, nom, jede).
+ty_article_case(german, each, f, sg, acc, jede).
+ty_article_case(german, each, f, sg, dat, jeder).
+ty_article_case(german, each, f, sg, gen, jeder).
+ty_article_case(german, each, n, sg, nom, jedes).
+ty_article_case(german, each, n, sg, acc, jedes).
+ty_article_case(german, each, n, sg, dat, jedem).
+ty_article_case(german, each, n, sg, gen, jedes).
+ty_article_case(german, this, m, sg, nom, dieser).
+ty_article_case(german, this, m, sg, acc, diesen).
+ty_article_case(german, this, m, sg, dat, diesem).
+ty_article_case(german, this, m, sg, gen, dieses).
+ty_article_case(german, this, f, sg, nom, diese).
+ty_article_case(german, this, f, sg, acc, diese).
+ty_article_case(german, this, f, sg, dat, dieser).
+ty_article_case(german, this, f, sg, gen, dieser).
+ty_article_case(german, this, n, sg, nom, dieses).
+ty_article_case(german, this, n, sg, acc, dieses).
+ty_article_case(german, this, n, sg, dat, diesem).
+ty_article_case(german, this, n, sg, gen, dieses).
+ty_article_case(german, this, any, pl, nom, diese).
+ty_article_case(german, this, any, pl, acc, diese).
+ty_article_case(german, this, any, pl, dat, diesen).
+ty_article_case(german, this, any, pl, gen, dieser).
+ty_article_case(german, all, any, pl, nom, alle).
+ty_article_case(german, all, any, pl, acc, alle).
+ty_article_case(german, all, any, pl, dat, allen).
+ty_article_case(german, all, any, pl, gen, aller).
+ty_article_case(german, some, any, pl, nom, einige).
+ty_article_case(german, some, any, pl, acc, einige).
+ty_article_case(german, some, any, pl, dat, einigen).
+ty_article_case(german, some, any, pl, gen, einiger).
+ty_quantifier_pronoun(german, some, thing, [etwas]).
+ty_quantifier_pronoun(german, some, person, [jemand]).
+ty_quantifier_pronoun(german, every, thing, [alles]).
+ty_quantifier_pronoun(german, every, person, [jeder]).
+ty_quantifier_pronoun(german, no, thing, [nichts]).
+ty_quantifier_pronoun(german, no, person, [niemand]).
+ty_quantifier_pronoun(german, this, thing, [dies]).
+ty_quantifier_pronoun(german, that, thing, [das]).
 ty_adjective_ending(german, weak, nom, any, sg, e).
 ty_adjective_ending(german, weak, acc, m, sg, en).
 ty_adjective_ending(german, weak, acc, f, sg, e).

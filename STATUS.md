@@ -28,6 +28,7 @@ the count to the last one below.
 | 1.59.0 | 436 | 5.5 % | coordination, first part: noun phrases and two clauses joined by `and`, `or`, `but` |
 | 1.60.0 | 438 | 5.5 % | coordination, second part: the verbs of one subject (`same`) |
 | 1.61.0 | 442 | 5.5 % | coordination, third part: adjectives and adverbs joined inside a phrase |
+| 1.63.0 | 498 | 6.2 % | the determiners (every, each, all, some, no, any, this, that) and the quantifier pronouns (`something`, `everyone`, `nothing`, `this` alone) |
 | 1.62.0 | 456 | 5.7 % | names: a word with a capital that no table has, and 10 568 English names of rows (the census, WordNet's places, Apertium); a first word is a name only by a row |
 
 At 1.55.0 the commonest words no table has are words of grammar, not
@@ -89,8 +90,11 @@ English a word's meaning is the word: no translation table.
    noun (`Helium is monatomic.` is not read either).
    Since 2026-11-24 the rest of step 3 takes its items in the order the
    translator needs them (the second goal, below): names (done: 1.62.0),
-   then the determiners and the quantifiers, then the bare noun; then the
-   `if` clause of step 4. Names read 14 more sentences of the measure;
+   then the determiners and the quantifiers (done: 1.63.0), then the bare
+   noun; then the
+   `if` clause of step 4. The determiners and the quantifiers read 42 more,
+   about four of them false (`He is no better today.`, `All mammals except
+   monotremes ...` with `except` a verb). Names read 14 more sentences of the measure;
    with every unknown first word a name they read 45, 31 of them false.
    Of the 14, four are still false: a row's name that is a common word
    too, at the start (`Snow blanketed the fields.`, `Rusty deposits.`,

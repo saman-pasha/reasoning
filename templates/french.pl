@@ -181,6 +181,28 @@ ty_article(french, which, m, sg, quel).
 ty_article(french, which, f, sg, quelle).
 ty_article(french, which, m, pl, quels).
 ty_article(french, which, f, pl, quelles).
+%% THE DETERMINERS AND THE QUANTIFIERS (since 1.63.0): each a definiteness
+%% of its own with its article's words, and the quantifier pronouns, a
+%% quantifier and a kind (qp(Quantifier, Kind) in the IR), singular.
+%% `ce', `cette' and `ces' are this and that both.
+ty_article(french, every, any, sg, chaque).
+ty_article(french, each, any, sg, chaque).
+ty_article(french, all, m, pl, 'tous les').
+ty_article(french, all, f, pl, 'toutes les').
+ty_article(french, some, any, pl, quelques).
+ty_article(french, this, m, sg, ce).
+ty_article(french, this, f, sg, cette).
+ty_article(french, this, any, pl, ces).
+ty_article(french, that, m, sg, ce).
+ty_article(french, that, f, sg, cette).
+ty_article(french, that, any, pl, ces).
+ty_before(french, ce, [[vowel], [h]], cet, space).
+ty_quantifier_pronoun(french, some, thing, [quelque, chose]).
+ty_quantifier_pronoun(french, some, person, ['quelqu\'un']).
+ty_quantifier_pronoun(french, every, thing, [tout]).
+ty_quantifier_pronoun(french, every, person, [tout, le, monde]).
+ty_quantifier_pronoun(french, this, thing, [ceci]).
+ty_quantifier_pronoun(french, that, thing, [cela]).
 
 %% Elision: `le', `la', `de', `ne', `que', `je', `me' and `te' lose their
 %% vowel before a vowel or a mute h, written joined to the next word

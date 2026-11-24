@@ -120,6 +120,34 @@ ty_article(italian, indef, f, sg, una).
 %% The article of a question (`Quale cane vede il ragazzo?').
 ty_article(italian, which, any, sg, quale).
 ty_article(italian, which, any, pl, quali).
+%% THE DETERMINERS AND THE QUANTIFIERS (since 1.63.0): each a definiteness
+%% of its own with its article's words, and the quantifier pronouns, a
+%% quantifier and a kind (qp(Quantifier, Kind) in the IR), singular.
+ty_article(italian, every, any, sg, ogni).
+ty_article(italian, each, any, sg, ogni).
+ty_article(italian, all, m, pl, 'tutti i').
+ty_article(italian, all, f, pl, 'tutte le').
+ty_article(italian, some, m, pl, alcuni).
+ty_article(italian, some, f, pl, alcune).
+ty_article(italian, any, any, sg, qualsiasi).
+ty_article(italian, this, m, sg, questo).
+ty_article(italian, this, f, sg, questa).
+ty_article(italian, this, m, pl, questi).
+ty_article(italian, this, f, pl, queste).
+ty_article(italian, that, m, sg, quel).
+ty_article(italian, that, f, sg, quella).
+ty_article(italian, that, m, pl, quei).
+ty_article(italian, that, f, pl, quelle).
+ty_before(italian, quel, [[s, consonant], [z], [g, n], [p, s], [p, n], [x], [y]], quello, space).
+ty_before(italian, quel, [[vowel], [h]], 'quell\'', joined).
+ty_before(italian, quella, [[vowel], [h]], 'quell\'', joined).
+ty_before(italian, quei, [[vowel], [h], [s, consonant], [z], [g, n], [p, s], [p, n], [x], [y]], quegli, space).
+ty_quantifier_pronoun(italian, some, thing, [qualcosa]).
+ty_quantifier_pronoun(italian, some, person, [qualcuno]).
+ty_quantifier_pronoun(italian, every, thing, [tutto]).
+ty_quantifier_pronoun(italian, every, person, [ognuno]).
+ty_quantifier_pronoun(italian, this, thing, [questo]).
+ty_quantifier_pronoun(italian, that, thing, [quello]).
 
 %% The articles by the sound of the next word: `lo', `gli' and `uno' before
 %% s and a consonant, z, gn, ps, pn, x and y; `l'' and `un'' before a vowel,

@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -1884,6 +1884,61 @@ english_verbs :-
     findall(IR6, typology_read(english, 'The girl has studied the book.', IR6), IRs6),
     check('read', IRs6, [clause(study, perfect, pos, np(girl, sg, def, []), np(book, sg, def, []))]).
 
+%% 1.63.0: the determiners and the quantifiers. A determiner is a
+%% definiteness of its own (np(dog, sg, every, [])), with its words in
+%% each language; a quantifier pronoun qp(Quantifier, Kind) stands where a
+%% noun phrase stands, singular.
+quantifiers :-
+    section('determiners and quantifiers'),
+    B = np(boy, sg, def, []), Dg = np(dog, sg, def, []),
+    forall(member(T-Want, [
+               'Every human is mortal.'-[copula(present, pos, np(human, sg, every, []), adj([mortal]))],
+               'All dogs sleep.'-[clause(sleep, present, pos, np(dog, pl, all, []), none)],
+               'Some dogs sleep.'-[clause(sleep, present, pos, np(dog, pl, some, []), none)],
+               'No dog sleeps.'-[clause(sleep, present, pos, np(dog, sg, no, []), none)],
+               'Each girl sees a dog.'-[clause(see, present, pos, np(girl, sg, each, []), np(dog, sg, indef, []))],
+               'The boy sees these dogs.'-[clause(see, present, pos, B, np(dog, pl, this, []))],
+               'That boy sees those dogs.'-[clause(see, present, pos, np(boy, sg, that, []), np(dog, pl, that, []))],
+               'Something is mortal.'-[copula(present, pos, qp(some, thing), adj([mortal]))],
+               'Someone sees the dog.'-[clause(see, present, pos, qp(some, person), Dg)],
+               'The boy sees nothing.'-[clause(see, present, pos, B, qp(no, thing))],
+               'No one sleeps.'-[clause(sleep, present, pos, qp(no, person), none)],
+               'This is a dog.'-[copula(present, pos, qp(this, thing), np(dog, sg, indef, []))],
+               'Everyone sleeps.'-[clause(sleep, present, pos, qp(every, person), none)],
+               'Every dogs sleep.'-[], 'All dog sleeps.'-[], 'Someone sleep.'-[] ]),
+           ( findall(R, typology_read(english, T, R), Rs),
+             atomic_list_concat(['English: ', T], Label),
+             check(Label, Rs, Want) )),
+    findall(D2, typology_read(spanish, 'Cada perro duerme.', clause(_, _, _, np(_, _, D2, _), _)), Ds2),
+    check('Spanish: cada is every and each', Ds2, [every, each]),
+    IR3 = clause(sleep, present, pos, np(dog, sg, every, []), none),
+    IR4 = clause(sleep, present, pos, np(friend, pl, all, []), none),
+    IR5 = clause(see, present, pos, B, np(dog, pl, this, [])),
+    IR6 = clause(sleep, present, pos, qp(every, person), none),
+    IR7 = clause(see, present, pos, Dg, qp(some, person)),
+    forall(member(IR-Ws, [
+               IR3-[spanish-'Cada perro duerme.', italian-'Ogni cane dorme.', french-'Chaque chien dort.',
+                    german-'Jeder Hund schläft.', persian-'هر سگ می‌خوابد.'],
+               IR4-[spanish-'Todos los amigos duermen.', italian-'Tutti gli amici dormono.'],
+               clause(sleep, present, pos, np(dog, pl, all, []), none)-[french-'Tous les chiens dorment.', german-'Alle Hunde schlafen.'],
+               IR5-[german-'Der Junge sieht diese Hunde.', persian-'پسر این سگ‌ها را می‌بیند.',
+                    italian-'Il ragazzo vede questi cani.'],
+               IR6-[spanish-'Todo el mundo duerme.', italian-'Ognuno dorme.', french-'Tout le monde dort.',
+                    german-'Jeder schläft.', persian-'هر کس می‌خوابد.'],
+               IR7-[spanish-'El perro ve a alguien.', french-'Le chien voit quelqu\'un.', italian-'Il cane vede qualcuno.'] ]),
+           forall(member(L8-Want8, Ws),
+                  ( ( typology_write(L8, IR, W8) -> true ; W8 = none ),
+                    atomic_list_concat([L8, ': ', Want8], Label8),
+                    check(Label8, W8, Want8) ))),
+    ( typology_write(german, clause(see, present, pos, B, np(dog, sg, every, [small])), W9) -> true ; W9 = none ),
+    check('German: an adjective after jeder is weak', W9, 'Der Junge sieht jeden kleinen Hund.'),
+    ( typology_write(spanish, clause(sleep, present, pos, np(dog, sg, no, []), none), W10) -> true ; W10 = none ),
+    check('Spanish: a negative determiner is not written yet', W10, none),
+    ( typology_read(italian, 'Tutti gli amici dormono.', IR11) -> true ; IR11 = none ),
+    check('Italian: an article of two words, its second word by its sound', IR11, IR4),
+    ( typology_read(english, 'Dog sleeps.', _) -> R12 = read ; R12 = refused ),
+    check('a determiner always has its words: no noun reads bare as every', R12, refused).
+
 %% 1.62.0: names. name(Name) where a noun phrase stands: a word written
 %% with a capital that no table has, the words of a row, a sentence's first
 %% word as written; of the third person and singular, its gender and
@@ -2124,8 +2179,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 456 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 456 sentences read at 1.62.0 are read', R1, yes),
+    ( K >= 498 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 498 sentences read at 1.63.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

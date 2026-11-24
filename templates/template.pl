@@ -157,6 +157,19 @@ ty_capital_nouns(xx).
 %% ty_name(xx, Meaning, Written, Gender, Animacy).
 %%   e.g. ty_name(persian, 'Ali', علی, m, person).
 
+%%     ty_quantifier_pronoun(L, Quantifier, Kind, Words)
+%%                                     a word of a quantifier and a kind
+%%                                     where a noun phrase stands (since
+%%                                     1.63.0): Quantifier some, every,
+%%                                     no, any, this or that, Kind thing
+%%                                     or person (`someone', `nothing',
+%%                                     `todo el mundo', `this' alone), one
+%%                                     word or several; singular, so a
+%%                                     language gives its singular form
+%%                                     (Italian `ognuno', not `tutti')
+%% ty_quantifier_pronoun(xx, Quantifier, Kind, Words).
+%%   e.g. ty_quantifier_pronoun(english, some, thing, [something]).
+
 %%     ty_and(L, Words)                the words that join the last item of
 %%                                     a list: a predicate's adjectives, noun
 %%                                     phrases, clauses (`and', `y', `und',

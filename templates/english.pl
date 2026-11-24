@@ -456,6 +456,33 @@ ty_article(english, def, any, any, the).
 ty_article(english, indef, any, sg, a).
 %% The article of a question (`Which dog does the boy see?').
 ty_article(english, which, any, any, which).
+%% THE DETERMINERS AND THE QUANTIFIERS (since 1.63.0): each a definiteness
+%% of its own with its article's words, and the quantifier pronouns, a
+%% quantifier and a kind (qp(Quantifier, Kind) in the IR), singular.
+ty_article(english, every, any, sg, every).
+ty_article(english, each, any, sg, each).
+ty_article(english, all, any, pl, all).
+ty_article(english, some, any, any, some).
+ty_article(english, no, any, any, no).
+ty_article(english, any, any, any, any).
+ty_article(english, this, any, sg, this).
+ty_article(english, this, any, pl, these).
+ty_article(english, that, any, sg, that).
+ty_article(english, that, any, pl, those).
+ty_quantifier_pronoun(english, some, thing, [something]).
+ty_quantifier_pronoun(english, some, person, [someone]).
+ty_quantifier_pronoun(english, some, person, [somebody]).
+ty_quantifier_pronoun(english, every, thing, [everything]).
+ty_quantifier_pronoun(english, every, person, [everyone]).
+ty_quantifier_pronoun(english, every, person, [everybody]).
+ty_quantifier_pronoun(english, no, thing, [nothing]).
+ty_quantifier_pronoun(english, no, person, [nobody]).
+ty_quantifier_pronoun(english, no, person, [no, one]).
+ty_quantifier_pronoun(english, any, thing, [anything]).
+ty_quantifier_pronoun(english, any, person, [anyone]).
+ty_quantifier_pronoun(english, any, person, [anybody]).
+ty_quantifier_pronoun(english, this, thing, [this]).
+ty_quantifier_pronoun(english, that, thing, [that]).
 
 %% The negative: `does not', `do not', `did not' before the base, which is
 %% the present plural.

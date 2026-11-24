@@ -156,6 +156,29 @@ that asks animate is written (Spanish `ve a Juan`, a `ty_sense/5` row of
 benchmark's round trips 1.1 % to 3.3 % more inferences (the flag over the
 words and the tries of the name rule); a first cut that split the sentence
 twice and asked a row of each word with a small letter cost 2.2 % to 5.4 %.
+**Determiners and quantifiers since 1.63.0** (the translator's second
+step): a determiner is a value of the noun phrase's definiteness
+(`ty_values(definiteness, _)`: every, each, all, some, no, any, this, that),
+its words `ty_article/5` rows (`these` is this's plural; German's
+`ty_article_case/6` rows and a `ty_declension/3` row each). Only def and
+indef may stand with no article word, or every bare noun would read as
+`every` in a language with no row for it. The marks and the checks see a
+determiner as definite or indefinite (`ty_def_feature/2`: some, no and any
+indefinite). An article of several words (Spanish `todos los`, Italian
+`tutti i`, whose `i` is `gli` by its sound) is read by its first word,
+indexed at load (`'$ty_art_multi'/4`), and the one-word rule never writes
+it as one token. A quantifier pronoun is `qp(Quantifier, Kind)`
+(`ty_quantifier_pronoun/4`: `someone`, `nothing`, `todo el mundo`, `this`
+alone), always singular, because `ty_subject_number/2` knows no language:
+each language gives its singular form (Italian `ognuno`, not `tutti`).
+A negative determiner or pronoun is written only where no negative
+concord is needed (English, German): Spanish `nadie`, `ningún`, Italian
+`nessuno` and French `personne` want the verb's negation too, not yet.
+The article's own rows give its definiteness (`ty_np_agrees/7`; a
+language with cases asks `'$ty_art_defs'/3`, made at load), and the
+writer asks only the IR's definiteness's words: the first cut tried each of
+the eleven values for each article, and the benchmark cost 16 % to 49 %
+more; now German 4.4 % more than 1.62.0 and the others 1.7 % to 13 % less.
 **The blank template is generated too** (1.54.0): `templates/template.pl`
 is what `typology_import(template)` writes, `typology_template(xx)`: every
 slot of typology.pl's header list (THE TEMPLATE) with the header's own

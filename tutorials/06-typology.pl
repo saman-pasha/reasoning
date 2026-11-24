@@ -140,6 +140,7 @@ main :-
     coordination_same,
     coordination_inside,
     names,
+    quantifiers,
     format("~ndone~n", []).
 
 
@@ -842,6 +843,23 @@ names :-
     must('and its adjective agrees with the name''s gender', W5, 'Mary es pequeña.'),
     ( typology_read(english, 'Shortbread is a short crumbly cookie.', _) -> R6 = read ; R6 = refused ),
     must('an unknown first word is no name', R6, refused).
+
+%% 49. DETERMINERS AND QUANTIFIERS (1.63.0, the translator's second step):
+%% a determiner is a definiteness of its own, np(human, sg, every, []),
+%% with its article's words in each language (an article of two words too:
+%% Spanish `todos los'); a quantifier pronoun is qp(Quantifier, Kind)
+%% where a noun phrase stands, singular in every language.
+quantifiers :-
+    typology_read(english, 'Every human is mortal.', IR1),
+    must('every', IR1, copula(present, pos, np(human, sg, every, []), adj([mortal]))),
+    typology_write(italian, IR1, W2),
+    must('Italian ogni', W2, 'Ogni umano è mortale.'),
+    typology_read(english, 'Something is mortal.', IR3),
+    must('a quantifier pronoun', IR3, copula(present, pos, qp(some, thing), adj([mortal]))),
+    typology_write(french, clause(sleep, present, pos, qp(every, person), none), W4),
+    must('French everyone, in its singular form', W4, 'Tout le monde dort.'),
+    typology_write(italian, clause(sleep, present, pos, np(friend, pl, all, []), none), W5),
+    must('Italian all, its second word by its sound', W5, 'Tutti gli amici dormono.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

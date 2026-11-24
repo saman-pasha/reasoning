@@ -120,6 +120,19 @@ ty_article(persian, indef, any, sg, 'یک').
 %% The article of a question (`پسر کدام سگ را می‌بیند؟'): a noun phrase
 %% of کدام is definite to را.
 ty_article(persian, which, any, any, 'کدام').
+%% THE DETERMINERS AND THE QUANTIFIERS (since 1.63.0): each a definiteness
+%% of its own with its article's words, and the quantifier pronouns, a
+%% quantifier and a kind (qp(Quantifier, Kind) in the IR), singular.
+ty_article(persian, every, any, sg, 'هر').
+ty_article(persian, each, any, sg, 'هر').
+ty_article(persian, this, any, any, 'این').
+ty_article(persian, that, any, any, 'آن').
+ty_quantifier_pronoun(persian, some, thing, ['چیزی']).
+ty_quantifier_pronoun(persian, some, person, ['کسی']).
+ty_quantifier_pronoun(persian, every, thing, ['همه‌چیز']).
+ty_quantifier_pronoun(persian, every, person, ['هر', 'کس']).
+ty_quantifier_pronoun(persian, this, thing, ['این']).
+ty_quantifier_pronoun(persian, that, thing, ['آن']).
 
 %% `را' after a definite object.
 ty_mark(persian, o, after, 'را', [[def]]).

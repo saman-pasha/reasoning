@@ -99,6 +99,34 @@ ty_article(spanish, indef, m, sg, un).
 ty_article(spanish, indef, f, sg, una).
 %% The article of a question (`¿Qué perro ve el niño?').
 ty_article(spanish, which, any, any, 'qué').
+%% THE DETERMINERS AND THE QUANTIFIERS (since 1.63.0): each a definiteness
+%% of its own with its article's words, and the quantifier pronouns, a
+%% quantifier and a kind (qp(Quantifier, Kind) in the IR), singular.
+%% A negative one (`nadie', `ningún') wants the verb's `no' after the verb:
+%% not yet.
+ty_article(spanish, every, any, sg, cada).
+ty_article(spanish, each, any, sg, cada).
+ty_article(spanish, all, m, pl, 'todos los').
+ty_article(spanish, all, f, pl, 'todas las').
+ty_article(spanish, some, m, sg, 'algún').
+ty_article(spanish, some, f, sg, alguna).
+ty_article(spanish, some, m, pl, algunos).
+ty_article(spanish, some, f, pl, algunas).
+ty_article(spanish, any, any, sg, cualquier).
+ty_article(spanish, this, m, sg, este).
+ty_article(spanish, this, f, sg, esta).
+ty_article(spanish, this, m, pl, estos).
+ty_article(spanish, this, f, pl, estas).
+ty_article(spanish, that, m, sg, ese).
+ty_article(spanish, that, f, sg, esa).
+ty_article(spanish, that, m, pl, esos).
+ty_article(spanish, that, f, pl, esas).
+ty_quantifier_pronoun(spanish, some, thing, [algo]).
+ty_quantifier_pronoun(spanish, some, person, [alguien]).
+ty_quantifier_pronoun(spanish, every, thing, [todo]).
+ty_quantifier_pronoun(spanish, every, person, [todo, el, mundo]).
+ty_quantifier_pronoun(spanish, this, thing, [esto]).
+ty_quantifier_pronoun(spanish, that, thing, [eso]).
 
 %% The personal `a': before an animate object that is definite or
 %% singular (`ve al perro', `ve a una niña'; `ve perros', `ve un libro').
@@ -179,6 +207,12 @@ ty_sense(spanish, a, mark(o), [class(verb)], [class(name, animate)]).
 ty_sense(spanish, a, mark(o), [class(noun), opt(class(article)), class(verb)], [class(name, animate)]).
 ty_sense(spanish, a, mark(o), [y], [class(name, animate)]).
 ty_sense(spanish, a, mark(o), [o], [class(name, animate)]).
+%% Before a person's quantifier pronoun, and before `todos los', it is the
+%% mark too (since 1.63.0: `ve a alguien', `ve a todos los niños').
+ty_sense(spanish, a, mark(o), [class(verb)], [alguien]).
+ty_sense(spanish, a, mark(o), [class(verb)], [todo, el, mundo]).
+ty_sense(spanish, a, mark(o), [class(verb)], [todos, los, class(noun, animate)]).
+ty_sense(spanish, a, mark(o), [class(verb)], [todas, las, class(noun, animate)]).
 ty_sense(spanish, a, mark(o), [], ['quién']).
 ty_sense(spanish, a, mark(o), [], ['qué', class(noun, animate)]).
 %% Before `cuyo' and an animate noun it is the mark too (`el niño a cuyo

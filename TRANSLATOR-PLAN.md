@@ -109,9 +109,10 @@ its benchmark, as every typology version has.
    of `lexicon/proper.txt`, `lexicon/place.txt` and Apertium's
    dictionaries, the meaning the English name. `Socrates is human.` and
    `Is Socrates human?` read.
-2. **The determiners and the quantifiers** (level 1): `every`, `each`,
-   `all`, `some`, `no`, `any`, `this`, `these`, and the pronouns
-   `something`, `someone`, `everything`, `everyone`, `nothing`.
+2. **The determiners and the quantifiers** (level 1, done: 1.63.0):
+   `every`, `each`, `all`, `some`, `no`, `any`, `this`, `these`, and the
+   pronouns `something`, `someone`, `everything`, `everyone`, `nothing`.
+   `Every human is mortal.` reads as np(human, sg, every, []).
 3. **The bare noun** (level 1): a mass noun or a plural with no article
    (`likes music`, `Dogs sleep.`).
 4. **The `if` clause** (level 1): a condition before or after its
