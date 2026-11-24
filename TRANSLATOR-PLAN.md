@@ -139,8 +139,17 @@ its benchmark, as every typology version has.
    (`typology_meaning/3`) and an order of the classes from WordNet's
    lists in `lexicon/` (a common adjective first; a verb that takes no
    object before a noun for a person or an animal).
-8. **The second measure**: a set of sentences with their Cocolog,
-   counted as the first measure is.
+8. **The second measure** (done: 1.69.0, `lexicon/logic.txt`,
+   `tools/logic/measure.pl`): 104 sentences with their Cocolog, written
+   by hand, counted as the first measure is (STATUS.md keeps the counts).
+   At 1.69.0, 86 give their Cocolog and 94 Cocolog texts come back as
+   English that reads to them; the misses are the next work: a relative
+   clause in a rule (`Every man who is wise is happy.`), an object that is
+   no constant (`Cats eat fish.`, `What does John like?`), a pronoun of a
+   clause before its main clause (`If a person is a student, they
+   study.`), `which`, an adposition phrase (`John lives in Paris.`), a
+   verb of three, a comparative, a possessor, and a name no row has that
+   the reader takes for no name (`Tweety`).
 
 ## The first milestone
 

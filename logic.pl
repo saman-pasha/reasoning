@@ -67,7 +67,8 @@
 %%                                     (since 1.68.0)
 
 :- module(logic, [logic_from_ir/2, logic_read/3, logic_readings/3, logic_why/2,
-                  cocolog_write/2, cocolog_read/2, logic_translate/4, logic_write/3]).
+                  cocolog_write/2, cocolog_read/2, logic_translate/4, logic_write/3,
+                  logic_measure/3, logic_measure_cases/2]).
 
 :- use_module(library(reasoning/typology)).
 
@@ -755,3 +756,70 @@ lg_vars_of(_, Ns, Ns).
 
 lg_sentence(T, End, S) :-
     lg_capital(T, T1), atom_concat(T1, End, S).
+
+%% ---- the second measure (since 1.69.0) ----------------------------------------------
+%%
+%% logic_measure(+Lang, +Cases, -Result): of Cases, Sentence-Cocolog pairs
+%% (lexicon/logic.txt, hand-written), how many Lang's reader and writer get
+%% right. Result is measure(N, Right, Later, Kept, General, Misses, Unkept):
+%%
+%%     Right     the sentences whose first logic form is the Cocolog's
+%%               (compared as items, cocolog_read/2, so layout, variable
+%%               names and a reserved name's prefix are free)
+%%     Later     the ones a later reading gets right
+%%     Kept      the Cocolog texts logic_write/3 says in sentences that
+%%               read back to them, each group's its own
+%%     General   the ones with a group it says as a general sentence
+%%     Misses    miss(Sentence, Why) for each sentence not Right: later,
+%%               got(Items), why(W) logic_why/2's reason, or unread
+%%     Unkept    unkept(Cocolog, Text) for each Cocolog text not Kept
+%%
+%% Each sentence is given 20 000 000 inferences. tools/logic/measure.pl
+%% prints it over lexicon/logic.txt.
+logic_measure(L, Cases, measure(N, Right, Later, Kept, General, Misses, Unkept)) :-
+    must_be(atom, L),
+    must_be(list, Cases),
+    lg_code_loaded(cocolog),
+    length(Cases, N),
+    foldl(lg_measure_case(L), Cases, m(0, 0, 0, 0, [], []), m(Right, Later, Kept, General, Ms, Us)),
+    reverse(Ms, Misses), reverse(Us, Unkept).
+
+lg_measure_case(L, S-C, m(R0, A0, K0, G0, Ms0, Uk0), m(R, A, K, G, Ms, Uk)) :-
+    (   catch(cocolog_read(C, utterance(_, Want)), _, fail)
+    ->  true
+    ;   throw(error(domain_error(cocolog, C), logic_measure/3))
+    ),
+    (   catch(call_with_inference_limit(logic_readings(L, S, Us), 20000000, Lim), _, fail),
+        Lim \== inference_limit_exceeded
+    ->  true
+    ;   Us = []
+    ),
+    (   Us = [utterance(_, Is)|_], Is == Want
+    ->  R is R0 + 1, A = A0, Ms = Ms0
+    ;   member(utterance(_, Is), Us), Is == Want
+    ->  R = R0, A is A0 + 1, Ms = [miss(S, later)|Ms0]
+    ;   Us = [utterance(_, Is)|_]
+    ->  R = R0, A = A0, Ms = [miss(S, got(Is))|Ms0]
+    ;   R = R0, A = A0, lg_measure_why(L, S, W), Ms = [miss(S, W)|Ms0]
+    ),
+    lg_groups(Want, Gs),
+    maplist(lg_say(L), Gs, Ss, Hows),
+    atomic_list_concat(Ss, ' ', T),
+    (   \+ memberchk(general, Hows)
+    ->  K is K0 + 1, G = G0, Uk = Uk0
+    ;   K = K0, G is G0 + 1, Uk = [unkept(C, T)|Uk0]
+    ).
+
+lg_measure_why(L, S, W) :-
+    (   catch(once(typology_read(L, S, IR)), _, fail)
+    ->  ( logic_why(IR, W0) -> W = why(W0) ; W = why(unknown) )
+    ;   W = unread
+    ).
+
+%% logic_measure_cases(+File, -Cases): a measure file's Sentence-Cocolog
+%% pairs, a line each, apart by a tab; a line beginning # a comment.
+logic_measure_cases(F, Cases) :-
+    read_file_to_codes(F, Codes), atom_codes(Text, Codes),
+    atomic_list_concat(Lines, '\n', Text),
+    findall(S-C, ( member(Line, Lines), Line \== '', \+ sub_atom(Line, 0, 1, _, '#'),
+                   atomic_list_concat([S, C], '\t', Line) ), Cases).

@@ -11,7 +11,7 @@ main :-
     forall(member(L, [english, spanish, italian]), typology_load(L)),
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
-                      code_english, code_general, round_trips]), once(S)),
+                      code_english, code_general, round_trips, measure]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -245,3 +245,24 @@ round_trips :-
            ( ( logic_translate(cocolog, english, C, E), logic_translate(english, cocolog, E, C2) -> true ; C2 = none ),
              one_line(['Cocolog, English, Cocolog: ', C], Label),
              check(Label, C2, C) )).
+
+%% 1.69.0: THE SECOND MEASURE holds its counts: lexicon/logic.txt's
+%% sentences, how many give the Cocolog written beside them, and how many
+%% of those Cocolog texts come back as English that reads to them.
+measure :-
+    section('the second measure'),
+    logic_measure(english, ['Socrates is human.'-'human(socrates).',
+                            'Tweety is a bird.'-'bird(tweety).',
+                            'Who is human?'-'?- human(Who).'],
+                  measure(N1, R1, A1, K1, G1, Ms1, Us1)),
+    check('a measure of three: its counts', c(N1, R1, A1, K1, G1), c(3, 2, 0, 2, 1)),
+    check('a measure of three: the miss', Ms1, [miss('Tweety is a bird.', unread)]),
+    check('a measure of three: the Cocolog not kept', Us1, [unkept('bird(tweety).', 'Bird holds for tweety.')]),
+    absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
+    logic_measure_cases(F, Cases),
+    logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
+    check('the second measure: its sentences', N, 104),
+    ( R >= 86 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 86 right', VR, ok),
+    ( K >= 94 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 94 kept', VK, ok).

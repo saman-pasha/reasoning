@@ -1,0 +1,121 @@
+# lexicon/logic.txt -- the second measure (TRANSLATOR-PLAN.md, since
+# reasoning 1.69.0): English sentences and the Cocolog each says, written
+# by hand, one a line, the sentence and its Cocolog apart by a tab. The
+# Cocolog is compared as a logic form (cocolog_read/2), so its layout and
+# its variables names are free, and a reserved name may be written either
+# way (sleep(john) or is_sleep(john)). A line beginning # is a comment.
+#
+# facts: an adjective
+Socrates is human.	human(socrates).
+Socrates is mortal.	mortal(socrates).
+Mary is happy.	happy(mary).
+John is tall.	tall(john).
+The dog is hungry.	hungry(the_dog).
+The sky is blue.	blue(the_sky).
+Water is wet.	wet(water).
+John is happy and healthy.	happy(john). healthy(john).
+The big dog is happy.	happy(the_big_dog).
+The old man is wise.	wise(the_old_man).
+# facts: a noun
+Socrates is a man.	man(socrates).
+Rex is a dog.	dog(rex).
+Tweety is a bird.	bird(tweety).
+John is a student.	student(john).
+Mary is a teacher.	teacher(mary).
+Paris is a city.	city(paris).
+Socrates is a wise man.	man(socrates). wise(socrates).
+John and Mary are students.	student(john). student(mary).
+Socrates is a man and Plato is a man.	man(socrates). man(plato).
+# facts: a verb with no object
+John sleeps.	sleep(john).
+Mary runs.	run(mary).
+The baby cries.	cry(the_baby).
+Rex barks.	bark(rex).
+John and Mary sleep.	sleep(john). sleep(mary).
+The dog sleeps.	sleep(the_dog).
+Mary sings and dances.	sing(mary). dance(mary).
+# facts: a verb with an object
+John sees the dog.	see(john, the_dog).
+Mary likes John.	like(mary, john).
+John loves Mary.	love(john, mary).
+John likes music.	like(john, music).
+Mary reads the book.	read(mary, the_book).
+The cat eats fish.	eat(the_cat, fish).
+John knows Mary.	know(john, mary).
+Alice helps Bob.	help(alice, bob).
+John likes Mary and Mary likes John.	like(john, mary). like(mary, john).
+John and Mary like music.	like(john, music). like(mary, music).
+John likes music and art.	like(john, music). like(john, art).
+John gives Mary the book.	give(john, mary, the_book).
+John lives in Paris.	live_in(john, paris).
+The book is on the table.	on(the_book, the_table).
+John is taller than Mary.	taller(john, mary).
+John is Mary's father.	father(john, mary).
+Mary is the mother of John.	mother(mary, john).
+# rules: every, each, all
+Every human is mortal.	mortal(X) :- human(X).
+Every man is mortal.	mortal(X) :- man(X).
+Every dog barks.	bark(X) :- dog(X).
+Every student studies.	study(X) :- student(X).
+Each child plays.	play(X) :- child(X).
+All men are mortal.	mortal(X) :- man(X).
+All dogs bark.	bark(X) :- dog(X).
+Every man is a human.	human(X) :- man(X).
+Every dog is an animal.	animal(X) :- dog(X).
+Every bird flies.	fly(X) :- bird(X).
+Every person likes music.	like(X, music) :- person(X).
+Every student reads the book.	read(X, the_book) :- student(X).
+Every happy person sings.	sing(X) :- person(X), happy(X).
+Every big dog barks.	bark(X) :- dog(X), big(X).
+Every man is mortal and wise.	mortal(X) :- man(X). wise(X) :- man(X).
+Every child likes John.	like(X, john) :- child(X).
+# rules: a generic subject
+Dogs bark.	bark(X) :- dog(X).
+Birds fly.	fly(X) :- bird(X).
+Cats eat fish.	eat(X, fish) :- cat(X).
+Dogs are animals.	animal(X) :- dog(X).
+Men are mortal.	mortal(X) :- man(X).
+A dog is an animal.	animal(X) :- dog(X).
+A person likes music.	like(X, music) :- person(X).
+Students study.	study(X) :- student(X).
+A cat is an animal.	animal(X) :- cat(X).
+# rules: an if clause
+Something is mortal if it is human.	mortal(X) :- human(X).
+A person is happy if they are healthy and safe.	happy(X) :- person(X), healthy(X), safe(X).
+A dog is happy if it is fed.	happy(X) :- dog(X), fed(X).
+A person is tired if they work.	tired(X) :- person(X), work(X).
+If a person is a student, they study.	study(X) :- person(X), student(X).
+If something is a bird, it flies.	fly(X) :- bird(X).
+Someone is happy if they sing.	happy(X) :- sing(X).
+A student passes if they study.	pass(X) :- student(X), study(X).
+John is happy if Mary is happy.	happy(john) :- happy(mary).
+Something is an animal if it is a dog.	animal(X) :- dog(X).
+A person is wise if they read.	wise(X) :- person(X), read(X).
+# rules: a relative clause
+Every man who is wise is happy.	happy(X) :- man(X), wise(X).
+A person who studies is wise.	wise(X) :- person(X), study(X).
+Every dog that barks is loud.	loud(X) :- dog(X), bark(X).
+# questions
+Who is human?	?- human(X).
+Is Socrates human?	?- human(socrates).
+Who sleeps?	?- sleep(X).
+Who likes music?	?- like(X, music).
+Who sees the dog?	?- see(X, the_dog).
+Does John like Mary?	?- like(john, mary).
+Is Rex a dog?	?- dog(rex).
+Is the dog hungry?	?- hungry(the_dog).
+Does Mary sleep?	?- sleep(mary).
+What does John like?	?- like(john, X).
+Whom does Mary love?	?- love(mary, X).
+Which dog barks?	?- dog(X), bark(X).
+Who is a student?	?- student(X).
+Who is happy and healthy?	?- happy(X), healthy(X).
+Who loves Mary?	?- love(X, mary).
+# the quantifier pronouns and some
+Everything is mortal.	mortal(X).
+Something is mortal.	mortal(something).
+Someone sleeps.	sleep(someone).
+Everyone is happy.	happy(X).
+Everybody likes music.	like(X, music).
+Some dogs bark.	dog(a_dog). bark(a_dog).
+Some dog is hungry.	dog(a_dog). hungry(a_dog).

@@ -255,6 +255,17 @@ something or someone, `the_` a definite noun phrase, a name a row has
 What none keeps is the general sentence (`lg_general/2`), English words
 whatever the language. A list is `list(Terms)` (`[]` is no atom in
 Cocolog, so a list read as `fun/2` failed at its end).
+**The second measure since 1.69.0** (`logic_measure/3`,
+`tools/logic/measure.pl`, `lexicon/logic.txt`): a sentence and its Cocolog
+a line, apart by a tab, the Cocolog WRITTEN BY HAND -- never copied from
+the translator's output, or the measure measures nothing -- and compared
+as items (`cocolog_read/2`), so its layout, its variables' names and a
+reserved name's prefix are free. The Cocolog side is kept where every
+group's sentence reads back (`lg_say/4`'s `sentence`), as logic_write/3
+decides it: a text of two sentences is no sentence typology_read/3 reads,
+and the first cut counted `John is happy. John is healthy.` as lost.
+test/logic.pl's `measure` holds the counts to floors (86 right, 94 kept):
+raise them when a version raises the counts.
 **The blank template is generated too** (1.54.0): `templates/template.pl`
 is what `typology_import(template)` writes, `typology_template(xx)`: every
 slot of typology.pl's header list (THE TEMPLATE) with the header's own

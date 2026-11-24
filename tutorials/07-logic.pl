@@ -36,6 +36,7 @@ main :-
     why,
     cocolog,
     english_again,
+    measured,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -128,6 +129,19 @@ english_again :-
     logic_readings(english, E6, Us6),
     ( memberchk(U6, Us6) -> R6 = kept ; R6 = lost ),
     must('English, Cocolog, English', R6, kept).
+
+%% 7. THE SECOND MEASURE. Sentences and the Cocolog each should give,
+%% written by hand (lexicon/logic.txt has 104): how many the translator
+%% gets right, and how many of the Cocolog texts come back as English that
+%% reads to them. tools/logic/measure.pl prints the whole file's.
+measured :-
+    logic_measure(english, ['Socrates is human.'-'human(socrates).',
+                            'John lives in Paris.'-'live_in(john, paris).'],
+                  measure(N, Right, _, Kept, _, Misses, _)),
+    must('sentences', N, 2),
+    must('right', Right, 1),
+    must('kept', Kept, 1),
+    must('why one is not', Misses, [miss('John lives in Paris.', why(adjunct))]).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

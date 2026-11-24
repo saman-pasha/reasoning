@@ -131,6 +131,17 @@ back to the same form, and the program written from English runs. Cocolog
 is said in English again (1.68.0, `logic_write/3`), so the first
 milestone is complete: the two round trips keep the logic form.
 
+**The second measure** (1.69.0) is `lexicon/logic.txt`: 104 English
+sentences, each with the Cocolog it says, written by hand.
+`tools/logic/measure.pl` counts how many give that Cocolog (their first
+logic form, compared as items) and how many of the Cocolog texts are
+said in English that reads back to them (`logic_write/3`, a sentence a
+group); test/logic.pl's `measure` holds the counts to the last row.
+
+| version | right | of 104 | kept | what moved it |
+|---|---|---|---|---|
+| 1.69.0 | 86 | 82.7 % | 94 | the start. The 18 misses: 7 unread (a verb of three, a comparative, a possessor, `Tweety`, `Whom`, `fed`), 3 relative clauses in a rule, 2 objects that are no constant, 2 pronouns of a clause first, 1 adjunct, 1 adposition phrase, 1 `which`, 1 question word as the object. The 10 not kept are the general sentence's: a predicate of no word or of three, a query of two atoms or of an object |
+
 ## What "parked" means
 
 A parked file stays in the repository. Nothing else loads it, and
