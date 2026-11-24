@@ -201,3 +201,14 @@ The house was in a terrible state of neglect.	state(a(of(terrible(state), neglec
 A number of factors determined the outcome.	is_number(a(of(number, a(pl(factor))))). factor(a(pl(factor))). past(determine(a(of(number, a(pl(factor)))), the(outcome))).
 Who knows the father of a student?	?- know(X, of(father, Y)), student(Y).
 She met a man. His dog barked.	man(a(man)). past(meet(she, a(man))). past(bark(of(dog, a(man)))).
+# nouns of relation (since 1.78.0): a copula's noun phrase with a possessor is a predicate of two, the noun's
+Bob is the friend of John.	friend(bob, john).
+Bob was the friend of a farmer.	farmer(a(farmer)). past(friend(bob, a(farmer))).
+Sculpture is a form of art.	form(sculpture, art).
+Faith is his anchor.	anchor(faith, he).
+Who is the father of John?	?- father(X, john).
+Is Bob the father of John?	?- father(bob, john).
+Every set is a subset of the universal set.	is_subset(X, the(universal(set))) :- set(X).
+Tears are an expression of grief.	expression(X, grief) :- tear(X).
+He was the toast of the town.	past(toast(he, the(town))).
+The boy sees John's dog.	see(the(boy), of(dog, john)).

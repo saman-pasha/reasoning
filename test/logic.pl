@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -263,11 +263,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 179),
-    ( R >= 163 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 163 right', VR, ok),
-    ( K >= 171 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 171 kept', VK, ok).
+    check('the second measure: its sentences', N, 189),
+    ( R >= 175 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 175 right', VR, ok),
+    ( K >= 181 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 181 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -549,10 +549,45 @@ individuals :-
     findall(X-Y, ( past(buy(X, Y)), book(Y) ), XYs),
     check('a query of who bought a book', XYs, [she-a(pl(book)), he-a(of(book, a(pl(stamp))))]).
 
+%% 1.78.0: A NOUN OF RELATION, a copula's noun phrase with a possessor, is
+%% a predicate of two, of the subject and the possessor; and a name is a
+%% possessor anywhere (level 1).
+relations :-
+    section('the nouns of relation'),
+    forall(member(T-Want, [
+               'John is Mary\'s father.'-'father(john, mary).\n',
+               'Mary is the mother of John.'-'mother(mary, john).\n',
+               'Sculpture is a form of art.'-'form(sculpture, art).\n',
+               'Bob was the friend of a farmer.'-'farmer(a(farmer)).\npast(friend(bob, a(farmer))).\n',
+               'Who is the father of John?'-'?- father(A, john).\n',
+               'Is Bob the father of John?'-'?- father(bob, john).\n',
+               'Every set is a subset of the universal set.'-'is_subset(A, the(universal(set))) :-\n    set(A).\n',
+               'The boy sees John\'s dog.'-'see(the(boy), of(dog, john)).\n' ]),
+           ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
+             one_line(['a relation into Cocolog: ', T], Label),
+             check(Label, C, Want) )),
+    forall(member(C2-Want2, ['father(john, mary).'-'John is Mary\'s father.',
+                             '?- father(X, john).'-'Who is John\'s father?',
+                             'friend(bob, john).'-'Bob is John\'s friend.',
+                             'is_subset(X, the(universal(set))) :- set(X).'-'Every set is a subset of the universal set.',
+                             'past(salt(the(pl(rebel)), the(pl(field)))).'-'The rebels salted the fields.']),
+           ( ( logic_translate(cocolog, english, C2, E2) -> true ; E2 = none ),
+             one_line(['a relation into English: ', C2], L2),
+             check(L2, E2, Want2) )),
+    ( logic_translate(cocolog, spanish, 'father(john, mary).', S3) -> true ; S3 = none ),
+    check('a relation into Spanish', S3, 'John es el padre de Mary.'),
+    once(typology_read(english, 'She was his main squeeze.', IR4)),
+    logic_why(IR4, W4),
+    check('a relation with an adjective has no form yet', W4, relation(adjective)),
+    forall(member(T5, ['John is Mary\'s father.', 'Bob is the father of John.']),
+           ( logic_translate(english, cocolog, T5, P5), assert_text(P5) )),
+    findall(X-Y, ( father(X, Z), father(Z, Y) ), XYs),
+    check('a query over the relation: a father\'s father', XYs, [bob-mary]).
+
 %% Each clause of a Cocolog text asserted.
 assert_text(P) :-
     atomic_list_concat(Ps, '.\n', P),
     forall(( member(S, Ps), S \== '' ), ( term_string(Cl, S), assertz(Cl) )).
 
 %% A test's own predicates: what the clauses written from English assert.
-:- dynamic is_sleep/1, past/1, book/1, stamp/1.
+:- dynamic is_sleep/1, past/1, book/1, stamp/1, father/2.

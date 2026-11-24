@@ -753,7 +753,22 @@ more_possessors :-
              check(Label, R, refused) )),
     typology_translate(spanish, english, 'La niña ve al niño en cuya casa el perro duerme.', E2),
     check('Spanish into English: en cuya casa is in whose house', E2,
-          'The girl sees the boy in whose house the dog sleeps.').
+          'The girl sees the boy in whose house the dog sleeps.'),
+    %% 1.78.0: a name is a possessor anywhere, its last word linked (John's);
+    %% through 1.77.0 only as a sentence's first word, read as a bare noun.
+    written_each(name_possessors, [
+        clause(see, present, pos, G, of(name('John'), D))-
+            [english-'The girl sees John\'s dog.', spanish-'La niña ve al perro de John.',
+             italian-'La ragazza vede il cane di John.', french-'La fille voit le chien de John.'],
+        copula(present, pos, name('Bob'), of(name('Mary'), np(father, sg, def, [])))-
+            [english-'Bob is Mary\'s father.', spanish-'Bob es el padre de Mary.',
+             italian-'Bob è il padre di Mary.'],
+        clause(sleep, present, pos, of(name('John Smith'), D), none)-
+            [english-'John Smith\'s dog sleeps.', spanish-'El perro de John Smith duerme.'] ]),
+    ( typology_read(english, 'Bob is the father of John.',
+                    copula(present, pos, name('Bob'), of(name('John'), np(father, sg, def, []))))
+    -> R3 = read ; R3 = not_read ),
+    check('English: the father of John, a name after of', R3, read).
 
 %% ---- a verb's complement ---------------------------------------------------------------
 

@@ -149,6 +149,7 @@ group); test/logic.pl's `measure` holds the counts to the last row.
 | 1.75.0 | 153 | of 169: 90.5 % | 161 | the plural definite noun phrases: 8 sentences more, all right and kept -- a constant of the group, the English plural word (`The rebels salted the fields.` is salt(the_rebels, the_fields), `His hands are cold.` cold(hands_of_he)); 16 misses |
 | 1.76.0 | 153 | of 169: 90.5 % | 161 | the constants are terms (the(dog), the(pl(rebel)), a(dog), of(dog, john)): the hand-written Cocolog of the measure took the new form, and every count is 1.75.0's |
 | 1.77.0 | 163 | of 179: 91.1 % | 171 | the indefinite noun phrases: 10 sentences more, all right and kept -- an individual wherever a statement says it (an adjunct's, a possessor, a possessed), its term a(T) with its adjectives and number (`Some dogs bark.` is dog(a(pl(dog))), `John sees a big dog.` dog(a(big(dog))): those two lines of the measure took the new form); 16 misses |
+| 1.78.0 | 175 | of 189: 92.6 % | 181 | the nouns of relation: 10 sentences more, all right and kept, and `John is Mary's father.` and `Mary is the mother of John.` right (father(john, mary), mother(mary, john): level 1 reads a name as a possessor since 1.78.0); 14 misses |
 
 **The 8 000 sentences of the first measure into Cocolog**
 (`tools/logic/prose.pl`): read into level 1, then a logic form, then
@@ -163,6 +164,7 @@ meaning in another form (`the bed's edge` for `the edge of the bed`).
 |---|---|---|---|
 | 1.76.0 | 673 | 673 (584) | 476 (6.0 %) |
 | 1.77.0 | 673 | 673 (584) | 574 (7.2 %) |
+| 1.78.0 | 678 | 678 (587) | 599 (7.5 %) |
 
 | version | translated | of 8 000 | the first reasons of the others read into level 1 |
 |---|---|---|---|
@@ -174,6 +176,7 @@ meaning in another form (`the bed's edge` for `the edge of the bed`).
 | 1.74.0 | 417 | 5.2 % | a plural definite noun phrase 69, a possessor that is no constant 40, a predicate with no rule 39, an indefinite possessed 29, an adjunct's noun phrase that is no constant 26. Of the 88 new ones about 5 are wrong: `several` read as an adjective (three), a noun compound (`a wage floor`), and a generic plural subject with an object is read as individuals only (`Dictionaries list words in alphabetical order.`) |
 | 1.75.0 | 476 | 6.0 % | a possessor that is no constant 40, a predicate with no rule 40, an indefinite possessed 32, an adjunct's noun phrase that is no constant 29, an IR shape with no rule 13. Of the 59 new ones about 7 are wrong: fragments, an infinitive and `like` that level 1 reads wrong (`The problems involved.`), and a possessive pronoun of its own sentence's subject (`Each industry has its own trade publications.`: its is the constant it, not the rule's variable) |
 | 1.77.0 | 574 | 7.2 % | a predicate with no rule 40 (a copula's noun phrase with a possessor: `Sculpture is a form of art.`), an IR shape with no rule 13, `when` 11, `no` 7, `this` 7. No sentence lost; 92 of the 476 keep their facts with a fuller individual (a(pl(book)), a(big(dog))). Of the 98 new ones about 18 are wrong: level 1 joins an adposition phrase to the verb (6: `an abrupt end to a promising career`), a generic statement is read as individuals (5: `Children need a lot of love.`), a fragment is read as a clause (4: `Bonnets smothered with flowers.`), `several` read as an adjective (3), `hands` not made its noun |
+| 1.78.0 | 599 | 7.5 % | an IR shape with no rule 14, a noun of relation with an adjective 13 (`She was his main squeeze.`), `when` 11, `no` 7, `this` 7, a copula's definite noun phrase with no possessor 6. Level 1 reads 5 sentences more (a name as a possessor: `They clambered to the tip of Monadnock.`), and all 678 go back into English. No sentence lost or changed. Of the 25 new ones about 4 are wrong: `several` read as an adjective, `other` made a condition (`All other sets are subsets of the universal set.`), and a bare plural possessor read as a group, not the kind (2: `the dean of foreign correspondents`) |
 
 ## What "parked" means
 

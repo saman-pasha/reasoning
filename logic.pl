@@ -83,13 +83,21 @@
 %% a constant is a compound term: `Who knows the father of a student?' is
 %% know(X, of(father, Y)), student(Y).
 %%
+%% A NOUN OF RELATION (since 1.78.0), a copula's noun phrase with a
+%% possessor, is a predicate of two, the noun's, of the subject and the
+%% possessor: `John is Mary's father.' and `John is the father of Mary.'
+%% are father(john, mary), `Every set is a subset of the universal set.'
+%% subset(X, the(universal(set))) :- set(X).
+%%
 %% WHAT HAS NO LOGIC FORM YET: the conditional, a negation, `when' and
 %% `because', a pronoun whose gender is not known, an indefinite noun
 %% phrase in a rule's conclusion, a generic subject with a possessor in
 %% the present (`Lilies of the valley are racemose.'), a noun phrase of
-%% `every' or `some' that is no subject, a copula's noun phrase with a
-%% possessor, `no' and `nothing', and a determiner other than the ones
-%% above. logic_why/2 names the first reason.
+%% `every' or `some' that is no subject, a noun of relation with an
+%% adjective (`the main source of'), a copula's definite noun phrase with
+%% no possessor (`Leather is the latest vogue.'), `no' and `nothing', and
+%% a determiner other than the ones above. logic_why/2 names the first
+%% reason.
 %%
 %% WHAT IS PUBLIC:
 %%
@@ -465,6 +473,17 @@ lg_atoms_(copula(_, _, _, _), T, np(N, _, D, As), Atoms) :-
     memberchk(D, [indef, mass]), !,
     lg_adjectives(As, Ms),
     lg_preds_of([N|Ms], T, Atoms).
+%% A NOUN OF RELATION (since 1.78.0): a copula's noun phrase with a
+%% possessor is a predicate of two, the noun's, of the subject and the
+%% possessor: `John is Mary's father.' and `John is the father of Mary.'
+%% are father(john, mary), `Sculpture is a form of art.' form(sculpture,
+%% art). One with an adjective has no form yet (relation(adjective)): `the
+%% main source of his frustration', `a mere skeleton of its former self'
+%% say the adjective of the relation, not of the subject.
+lg_atoms_(copula(_, _, _, _), T, of(P, NP), [pred(N, [T, Pc])|Ms]) :-
+    nonvar(NP), NP = np(N, _, D, As), memberchk(D, [def, indef, mass]), !,
+    ( As == [] -> true ; lg_no(relation(adjective)) ),
+    lg_arg(possessor, P, Pc, _, Ms).
 lg_atoms_(copula(_, _, _, _), T, pp(P, NP), [pred(P, [T, To])|Os]) :- atom(P), !,
     lg_arg(object, NP, To, _, Os).
 lg_atoms_(copula(_, _, _, _), _, Pred, _) :- !, lg_no(predicate(Pred)).
@@ -1050,14 +1069,41 @@ lg_atom_ir(L, modified(J, A), How, IR) :- !,
 lg_atom_ir(L, pred(P, [A]), How, IR) :-
     lg_arg_np(L, How, A, S),
     lg_unary_ir(L, P, S, IR).
-lg_atom_ir(L, pred(P, [A, B]), How, clause(P, present, pos, S, O)) :-
-    lg_class_ok(L, P/2, verb),
+lg_atom_ir(L, pred(P, [A, B]), How, IR) :-
+    lg_binary_classes(L, P, Cs),
     lg_arg_np(L, How, A, S),
-    lg_arg_np(L, How, B, O).
-lg_atom_ir(L, pred(P, [A, B]), How, copula(present, pos, S, pp(P, O))) :-
-    lg_class_ok(L, P/2, adposition),
-    lg_arg_np(L, How, A, S),
-    lg_arg_np(L, How, B, O).
+    lg_arg_np(L, How, B, O),
+    member(C, Cs),
+    lg_binary_shape(C, P, How, S, O, IR).
+
+%% A predicate of two said as a verb (`John likes Mary.'), an adposition
+%% (`The book is on the table.') or (since 1.78.0) a noun of relation
+%% (`John is Mary's father.'): the noun first where the word is no
+%% adposition and its first sense is a person (class.txt: father, friend,
+%% owner) or it is no verb at all (known_verb.txt: source; not salt,
+%% form, love). The sentence is still kept only where it reads back.
+lg_binary_classes(L, P, Cs) :-
+    (   typology_meaning(L, adposition, P) -> Order = [verb, adposition]
+    ;   lg_noun_first2(L, P) -> Order = [noun, verb]
+    ;   Order = [verb, noun]
+    ),
+    findall(C, ( member(C, Order), lg_class_ok(L, P/2, C) ), Cs).
+
+lg_noun_first2(_, P) :- lg_lex(class, P, _), !.
+lg_noun_first2(_, P) :- \+ lg_lex(known_verb, P, _).
+
+lg_binary_shape(verb, P, _, S, O, clause(P, present, pos, S, O)).
+lg_binary_shape(adposition, P, _, S, O, copula(present, pos, S, pp(P, O))).
+lg_binary_shape(noun, P, How, S, O, copula(present, pos, S, of(O, np(P, Num, D, [])))) :-
+    lg_relation_det(How, Ds), member(D, Ds),
+    ( lg_plural_np(S) -> member(Num, [pl, sg]) ; Num = sg ).
+
+%% A noun of relation is definite first (`the father of'), and indefinite
+%% first said of a rule's variable (`Every set is a subset of the universal
+%% set.').
+lg_relation_det(var1(_), [indef, def]) :- !.
+lg_relation_det(vmap(_, H), Ds) :- !, lg_relation_det(H, Ds).
+lg_relation_det(_, [def, indef]).
 
 lg_ir_tense(copula(_, P, S, Pr), T, copula(T, P, S, Pr)).
 lg_ir_tense(clause(V, _, P, S, O), T, clause(V, T, P, S, O)).
@@ -1228,7 +1274,7 @@ lg_class_ok(L, P/A, C) :-
     (   lg_code_class(cocolog, P/A, _)
     ->  lg_code_class(cocolog, P/A, C)
     ;   A == 1 -> typology_meaning(L, C, P)
-    ;   memberchk(C, [verb, adposition]), typology_meaning(L, C, P)
+    ;   memberchk(C, [verb, adposition, noun]), typology_meaning(L, C, P)
     ).
 
 %% THE GENERAL SENTENCE: `P holds for T1, T2 and T3.', a rule's conditions

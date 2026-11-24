@@ -4257,7 +4257,8 @@ ty_pp_pron_role(L, R) :- ( ty_case_now(L, acc) -> R = o ; R = j ).
 %% ---- names (since 1.62.0) -------------------------------------------------------------
 %%
 %% A NAME, name(Name), stands where a noun phrase stands: a role, a
-%% coordination's item, an adposition's phrase, a copula's predicate.
+%% coordination's item, an adposition's phrase, a copula's predicate, and
+%% (since 1.78.0) a possessor, ty_name_linked//3.
 %% Its words are tokens written with a capital that no table has as
 %% written (in the middle of a sentence `Smith' is no noun, but a German
 %% noun keeps its capital in the tables, so `Hund' is no name), or a row's
@@ -4455,13 +4456,40 @@ ty_poss_next([], _, Outer, Outer) :- !.
 ty_poss_next([X|_], X, _, X) :- !.
 ty_poss_next(_, _, _, none).
 
-%% A possessor: a noun phrase, a possessor's phrase, or a noun phrase with
-%% a relative clause where nothing links to its last word.
+%% A possessor: a noun phrase, a possessor's phrase, a noun phrase with a
+%% relative clause where nothing links to its last word, or (since
+%% 1.78.0) a name, its last word in the linked form the possessed asks
+%% (`John's friend', `the friend of John'; through 1.77.0 a name was a
+%% possessor only as a sentence's first word, read as a bare noun).
 ty_possessor(L, G, Next, _) --> { ty_np_slot(G) }, ty_np(L, G, _, Next).
 ty_possessor(L, G, Next, Depth) -->
     { ty_poss_slot(G), Depth1 is Depth + 1 },
     ty_poss(L, G, _, Next, Depth1).
 ty_possessor(L, G, Next, _) --> { Next == none, ty_rel_slot(G) }, ty_rel(L, none, G, _).
+ty_possessor(L, G, Next, _) --> ty_name_here, { ty_name_slot(G) }, ty_name_linked(L, G, Next).
+
+%% A name whose last word takes the form of what follows it (Next): written,
+%% its row's words with the last one linked; read, name tokens and a last
+%% one that is a name token's linked form.
+ty_name_linked(L, name(Nm), Next) -->
+    { ty_end_link(Next, C2, Linked) },
+    (   { atom(Nm) }
+    ->  { ( once(ty_name(L, Nm, W, _, _)) -> true ; W = Nm ),
+          atomic_list_concat(Ws0, ' ', W),
+          (   Linked == yes
+          ->  append(Init, [Last0], Ws0), ty_link_form(L, n, C2, Last0, Last), append(Init, [Last], Ws)
+          ;   Ws = Ws0
+          ) },
+        ty_tokens(Ws)
+    ;   ty_name_tokens_linked(L, C2, Linked, Ws),
+        { atomic_list_concat(Ws, ' ', W),
+          ( once(ty_name(L, M, W, _, _)) -> Nm = M ; Nm = W ) }
+    ).
+
+ty_name_tokens_linked(L, _, no, [W|Ws]) --> [W], { ty_name_token(L, W) }, ty_name_more(L, Ws).
+ty_name_tokens_linked(L, C2, yes, Ws) -->
+    ty_name_more(L, Ws0), [T],
+    { ty_unlinked(L, n, C2, T, T0), T0 \== T, ty_name_token(L, T0), append(Ws0, [T0], Ws) }.
 
 ty_poss_depth_ok(Ahead, Depth) :-
     (   var(Ahead) -> true

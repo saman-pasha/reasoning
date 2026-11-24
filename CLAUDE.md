@@ -384,6 +384,24 @@ writer's map is the list of a group's individuals (`lg_ind_map/3`), and
 group's run ends at a fact that names an individual inside a term
 (`lg_names_in/2`). A generic subject with a possessor has no rule
 (`Lilies of the valley are racemose.`: possessor(generic)).
+**A noun of relation is a predicate of two since 1.78.0**: a copula whose
+predicate is `of(P, np(N, ...))` gives `pred(N, [Subject, P])`
+(`lg_atoms_/4`), and one with an adjective has no form
+(`relation(adjective)`): `main`, `mere`, `greatest` say the relation,
+and the first cut, which said them of the subject as a copula noun's
+adjectives are said, gave 13 such wrong facts of the 38 new sentences.
+The writer orders a predicate of two's classes (`lg_binary_classes/3`):
+an adposition as before; else the noun first only where its first sense
+is a person (`class.txt`) or it is no verb (`known_verb.txt`). The first
+cut ranked noun against verb (`known_noun.txt`, `vt.txt`) and wrote
+`salt(the(pl(rebel)), the(pl(field)))` as `The rebels were the fields'
+salts.`, which reads back to the same items: the read-back cannot tell
+a verb from a noun of relation, so the order is all that keeps the verb.
+**A name is a possessor in typology.pl since 1.78.0** (`ty_possessor//4`'s
+last clause, `ty_name_linked//3`): its last word takes the linked form
+the possessed asks (English `John's`), written and read. Through 1.77.0
+`John's dog barks.` read only because the first word was read as the bare
+noun `john`, and `The boy sees John's dog.` did not read at all.
 **The blank template is generated too** (1.54.0): `templates/template.pl`
 is what `typology_import(template)` writes, `typology_template(xx)`: every
 slot of typology.pl's header list (THE TEMPLATE) with the header's own

@@ -45,6 +45,7 @@ main :-
     plurals,
     terms,
     individuals,
+    relations,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -254,6 +255,24 @@ individuals :-
     must('two individuals of one noun', E4, 'A good woman met a bad woman.'),
     logic_translate(english, cocolog, 'Who knows the father of a student?', C5),
     must('a variable inside a constant', C5, '?- know(A, of(father, B)), student(B).\n').
+
+%% 16. A NOUN OF RELATION is a predicate of two: `John is Mary's father.'
+%% and `John is the father of Mary.' are father(john, mary). So a program
+%% can reason over the relation: a father's father is a grandfather.
+relations :-
+    logic_translate(english, cocolog, 'John is Mary\'s father.', C1),
+    must('a possessive', C1, 'father(john, mary).\n'),
+    logic_translate(english, cocolog, 'Bob is the father of John.', C2),
+    must('of', C2, 'father(bob, john).\n'),
+    logic_translate(english, cocolog, 'Who is the father of John?', C3),
+    must('a question', C3, '?- father(A, john).\n'),
+    logic_translate(cocolog, english, 'father(john, mary).', E4),
+    must('back into English', E4, 'John is Mary\'s father.'),
+    assertz(lesson_father(john, mary)), assertz(lesson_father(bob, john)),
+    findall(G-C, ( lesson_father(G, F), lesson_father(F, C) ), GCs),
+    must('a grandfather', GCs, [bob-mary]).
+
+:- dynamic lesson_father/2.
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
