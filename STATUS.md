@@ -86,10 +86,28 @@ English a word's meaning is the word: no translation table.
    others need a structure that is no coordination: a phrase with no verb
    (`An animated and expressive face.`), an imperative, a bare singular
    noun (`Helium is monatomic.` is not read either).
+   Since 2026-11-24 the rest of step 3 takes its items in the order the
+   translator needs them (the second goal, below): names, then the
+   determiners and the quantifiers, then the bare noun; then the `if`
+   clause of step 4.
 4. The structures: the subordinate clause (`that`, `if`, `when`,
    `because`), the infinitive, the gerund, the passive, the imperative.
 
 The other five languages take the class design after English.
+
+## The second goal: English and Cocolog
+
+**The goal** (the owner, 2026-11-24): a translator between English and
+Cocolog in the two directions, through a shared IR, with other languages
+added later as templates. `TRANSLATOR-PLAN.md` is its plan: two levels of
+IR (the typology IR, and a logic form that rules make from it), the
+Cocolog template, the steps and the first milestone.
+
+The two goals are one line of work. The translator needs names, the
+determiners and the quantifiers, the bare noun and the `if` clause, and
+the measure needs them too: `all` is in it 92 times, `some` 50, `every`
+36. `reason.pl` stays as it is until the logic form reads all of its
+sentences.
 
 ## What "parked" means
 

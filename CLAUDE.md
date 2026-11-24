@@ -46,7 +46,10 @@ a part of the grammar that asks it, never a language's own clause.
 `typology_check/2` names a template's gaps, and test/typology.pl holds
 every clause of a sample (1 632 a language) to a round trip, and the
 outputs to sentences written out. It shares nothing with translate.pl's
-IR yet. TYPOLOGY-PLAN.md is the plan, phase by phase. **The word tables
+IR yet. TYPOLOGY-PLAN.md is the plan, phase by phase, and
+TRANSLATOR-PLAN.md the plan of the second goal (2026-11-24): a translator
+between English and Cocolog through two levels of IR, the typology IR and a
+logic form that rules make from it. **The word tables
 are generated** (1.20.0): `templates/<name>-words.pl` is what
 `typology_import/1` writes from corpus/vocabulary (`cocolog -s
 tools/typology/import.pl`, some 23 s for the four, the topics too), committed, and
