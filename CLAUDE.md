@@ -439,6 +439,33 @@ space each side of an infix operator, the priorities kept by parentheses;
 a body inside a construct with several goals, and the goal of `findall`,
 `forall` and `aggregate_all` always, is in parentheses, or its `and` runs
 into the goals round it.
+**The arguments since 1.85.0** (`explain_arguments/3`; THE ARGUMENTS in
+explain.pl): each argument's role -- `goal(N)`, `input`, `output`,
+`either`, `term`; a grammar rule's two lists `list_in` and `list_out` --
+from a `meta_predicate` declaration of the text, a mode comment
+(`ex_doc_sigs/2`, a line `%% name(+A, -B)` or `%! ...`, `//` after it a
+grammar rule's), else the clauses: three rounds over the text's
+predicates, each argument the first goal of a body that decides it -- a
+builtin by its first row of cocolog's `library(flow/modes)` (`flow_mode/4`,
+`flow_test/2`), a loadable module's by `library(flow/tables)`'s
+`flow_t_portal/8` where `make modules` made it (loaded in a `catch/3`), a
+predicate of the text by the round before, a meta-call by its goal
+(`ex_scan_meta/5`: `call/N`, `findall/3`, `maplist/N` by its closure's
+role, `phrase/2,3` its non-terminal with the lists). A head variable in an
+earlier head argument is an output, a pattern with variables an input
+(none in a grammar rule, which builds its head as often as it reads it),
+`nonvar/1` an input. What bit: **`findall/3` of variables copies them**:
+the head's input variables were collected so and never matched a body's
+(`ex_args_at/3`); **a recursive call says nothing of the argument it is
+voted for** (`ex_roles_without/4`), or a base case's pattern made
+`digits([D|T]) --> digit(D), digits(T).` an input; and **`S0 = [W|S]`
+makes W an output only where W is a head argument of its own**: in a
+pattern (`answer(params(Name), Ps) --> [params_load(Name, Ps)].`) it is
+a grammar that writes its list. `explain_arguments_measure/3` holds the
+inference to a file's comments (`library(tensor_expr)`: 41 of 41).
+`explain_text/3` says the sentence before a predicate's first clause where
+one clause is explained (not said by the translator) and some argument is
+more than a term.
 **A noun phrase alone since 1.81.0** (`phrase(NP)`, the last clause of
 `ty_sentence//2`, so a clause reads as a clause first): NP whatever
 `ty_np_phrase//3` reads, in a subject's case (German) and with no role's

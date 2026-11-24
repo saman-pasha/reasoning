@@ -8,7 +8,9 @@
 %% OUT, where named, takes the clauses and their English; the counts go to
 %% the standard output: the clauses, those the translator says as English
 %% that reads back, those whose every goal is explained or the text's own,
-%% and the names with no row, the commonest first.
+%% and the names with no row, the commonest first; then (since 1.85.0) the
+%% role of each predicate's arguments, and how many arguments a mode
+%% comment names are inferred as it says.
 
 :- use_module(library(reasoning/explain)).
 
@@ -26,4 +28,11 @@ main :-
     format("  said by the translator, as English that reads back: ~w~n", [ByLogic]),
     format("  every goal explained or the text's own: ~w~n", [Full]),
     format("names with no row, said as terms:~n"),
-    forall(member(PI-C, Us), format("  ~w ~q~n", [C, PI])).
+    forall(member(PI-C, Us), format("  ~w ~q~n", [C, PI])),
+    read_file_to_codes(F, Codes), atom_codes(Text, Codes),
+    explain_arguments(english, Text, As),
+    format("the arguments:~n"),
+    forall(member(arguments(_, _, E), As), format("  ~w~n", [E])),
+    explain_arguments_measure(english, F, measure(N2, A2, Ms2)),
+    format("mode comments: ~w arguments, ~w inferred as they say~n", [N2, A2]),
+    forall(member(PI2-Nm-M-R, Ms2), format("  ~q ~w: the comment ~w, inferred ~w~n", [PI2, Nm, M, R])).

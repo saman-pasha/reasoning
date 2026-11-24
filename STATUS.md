@@ -46,7 +46,14 @@ Cocolog into English goes two ways: the translator's round trip for the
 logic form (`logic_write/3`), and since 1.80.0 the explainer for a
 program (`explain.pl`, lesson 08): cocolog's `library(tensor_expr)`, 217
 clauses, every goal of 177 explained or the text's own, the other 40
-naming `library(torch)`'s predicates as terms.
+naming `library(torch)`'s predicates as terms. Since 1.85.0 it says the
+role of each argument of a predicate before its first clause -- a goal
+it calls, an input, an output, either, a term (`area/3 takes three
+arguments: W, an input; H, an input; and A, an output.`) -- from a
+meta_predicate declaration, a mode comment or the clauses; the 41
+arguments `library(tensor_expr)`'s 17 mode comments name are all
+inferred as the comments say, with the comments unread. 1.85.0 adds no
+sentence to either count of the goal.
 
 ## The first goal: English, all of it
 
