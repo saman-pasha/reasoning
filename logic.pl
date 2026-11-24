@@ -53,6 +53,9 @@
 %% copula's predicate is a predicate of two: `The book is on the table.' is
 %% pred(on, [const(the_book), const(the_table)]).
 %%
+%% A POSSESSOR (since 1.73.0): the possessed and the possessor are one
+%% constant, dog_of_john, spot_of_he, edge_of_the_bed.
+%%
 %% A PRONOUN (since 1.72.0): in a text, the noun phrase it refers to; with
 %% none, a constant of its own, its word (he, she, it, they, i, we, you).
 %%
@@ -410,6 +413,7 @@ lg_entity(qp(every, _), ent(_, [], every)) :- !.
 lg_entity(qp(some, _), ent(_, [], some)) :- !.
 lg_entity(wh(_), ent(_, [], wh)) :- !.
 lg_entity('$const'(C), ent(const(C), [], const)) :- !.
+lg_entity(of(P, NP), ent(const(C), [], const)) :- !, lg_possessed(P, NP, C).
 lg_entity(pron(P, N, K), ent(const(C), [], const)) :- lg_pron_const(pron(P, N, K), C), !.
 lg_entity(pron(_, _, _), _) :- !, lg_no(pronoun).
 lg_entity(np(_, _, D, _), _) :- !, lg_no(determiner(D)).
@@ -424,6 +428,24 @@ lg_noun_conds(N, As, V, Cs) :-
 %% copy the term apart from the rule's other atoms.
 lg_preds_of([], _, []).
 lg_preds_of([M|Ms], T, [pred(M, [T])|Ps]) :- lg_preds_of(Ms, T, Ps).
+
+%% A POSSESSOR (since 1.73.0): the possessed and its possessor are one
+%% constant, the possessed's words, `_of_', the possessor's constant: `his
+%% spot' is spot_of_he, `John's dog' dog_of_john, `the edge of the bed' and
+%% `the bed's edge' edge_of_the_bed, `the boy's dog's house'
+%% house_of_dog_of_the_boy. The possessed is singular and definite (a
+%% plural or an indefinite one is no constant, as elsewhere), and the
+%% possessor a constant.
+lg_possessed(P, NP, C) :-
+    lg_entity(P, ent(Cp, _, Q)),
+    ( Q == const, Cp = const(Pc) -> true ; lg_no(possessor(Q)) ),
+    (   nonvar(NP), NP = np(N, Num, D, As)
+    ->  ( Num == sg, D == def -> true ; lg_no(determiner(D)) )
+    ;   lg_no(shape(NP))
+    ),
+    lg_adjectives(As, Ms),
+    append(Ms, [N, of, Pc], Ws),
+    atomic_list_concat(Ws, '_', C).
 
 %% A PRONOUN WITH NO REFERENT (since 1.72.0) is a constant of its own, its
 %% word as a subject: he, she, it, they, i, we, you. All the sentences that
@@ -919,6 +941,11 @@ lg_const_np(_, C, P) :- lg_pron_np(C, P).
 lg_const_np(_, something, qp(some, thing)).
 lg_const_np(_, someone, qp(some, person)).
 lg_const_np(L, C, np(N, sg, def, As)) :- atom_concat(the_, R, C), lg_noun_split(L, R, N, As).
+lg_const_np(L, C, of(PNP, np(N, sg, def, As))) :-
+    sub_atom(C, B, 4, A, '_of_'), B > 0, A > 0, !,
+    sub_atom(C, 0, B, _, Before), sub_atom(C, _, A, 0, After),
+    lg_noun_split(L, Before, N, As),
+    lg_const_np(L, After, PNP).
 lg_const_np(L, C, name(W)) :- lg_name_written(C, W), typology_meaning(L, name, W).
 lg_const_np(L, C, np(N, sg, mass, As)) :- \+ atom_concat(the_, _, C), lg_noun_split(L, C, N, As).
 lg_const_np(L, C, name(W)) :- lg_name_written(C, W), \+ typology_meaning(L, name, W).

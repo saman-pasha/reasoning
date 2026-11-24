@@ -40,6 +40,7 @@ main :-
     tenses,
     adjuncts,
     pronouns,
+    possessors,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -134,7 +135,7 @@ english_again :-
     must('English, Cocolog, English', R6, kept).
 
 %% 7. THE SECOND MEASURE. Sentences and the Cocolog each should give,
-%% written by hand (lexicon/logic.txt has 143): how many the translator
+%% written by hand (lexicon/logic.txt has 153): how many the translator
 %% gets right, and how many of the Cocolog texts come back as English that
 %% reads to them. tools/logic/measure.pl prints the whole file's.
 measured :-
@@ -183,6 +184,17 @@ pronouns :-
     must('no referent', C2, 'see(she, he).\n'),
     logic_translate(cocolog, english, 'dog(a_dog). past(bark(a_dog)). past(hungry(a_dog)).', E3),
     must('an individual said again', E3, 'A dog barked. It was hungry.').
+
+%% 11. A POSSESSOR. The possessed and its possessor are one constant: the
+%% possessed's words, `_of_', the possessor's constant. `the edge of the
+%% bed' and `the bed's edge' are one constant, as they say one thing.
+possessors :-
+    logic_translate(english, cocolog, 'His dog sleeps.', C1),
+    must('a possessive pronoun', C1, 'is_sleep(dog_of_he).\n'),
+    logic_translate(english, cocolog, 'She sat on the edge of the bed.', C2),
+    must('an adposition\'s possessor', C2, 'past(on(sit(she), edge_of_the_bed)).\n'),
+    logic_translate(cocolog, english, 'big(house_of_dog_of_the_boy).', E3),
+    must('a possessor\'s possessor, back', E3, 'The boy\'s dog\'s house is big.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

@@ -161,3 +161,14 @@ The boy sees the house. He sees it.	see(the_boy, the_house). see(the_boy, the_ho
 John sleeps. He dreams.	sleep(john). dream(john).
 Mary sees the dog. She likes it.	see(mary, the_dog). like(mary, the_dog).
 A dog barked. It was hungry.	dog(a_dog). past(bark(a_dog)). past(hungry(a_dog)).
+# possessors (since 1.73.0): the possessed and the possessor one constant
+His dog sleeps.	sleep(dog_of_he).
+John's dog barks.	bark(dog_of_john).
+She sat on the edge of the bed.	past(on(sit(she), edge_of_the_bed)).
+The bed's edge is soft.	soft(edge_of_the_bed).
+The boy's dog's house is big.	big(house_of_dog_of_the_boy).
+Mary loves her cat.	love(mary, cat_of_she).
+The color of the sky is blue.	blue(color_of_the_sky).
+My friend is happy.	happy(friend_of_i).
+John sleeps. His dog barks.	sleep(john). bark(dog_of_john).
+Who sees his dog?	?- see(X, dog_of_he).

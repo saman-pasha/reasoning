@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns]), once(S)),
+                      adjuncts, pronouns, possessors]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -86,7 +86,7 @@ diagnostics :-
                'The boy does not sleep.'-negation,
                'Every boy sees a dog.'-object(generic),
                'The boy sleeps because the dog sleeps.'-subordinate(because),
-               'His dog sleeps.'-shape(of(pron(3, sg, m), np(dog, sg, def, []))),
+               'His hands are cold.'-determiner(def),
                'No dog sleeps.'-determiner(no),
                'The boy sleeps with dogs.'-adjunct(generic) ]),
            ( once(typology_read(english, T, IR)),
@@ -262,11 +262,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 143),
-    ( R >= 127 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 127 right', VR, ok),
-    ( K >= 135 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 135 kept', VK, ok).
+    check('the second measure: its sentences', N, 153),
+    ( R >= 137 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 137 right', VR, ok),
+    ( K >= 145 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 145 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -382,3 +382,36 @@ pronouns :-
           utterance(question, [query(pred(human, [var(1)])), query(pred(human, [const(socrates)]))])),
     logic_readings(english, 'The dogs sleep. It dreams.', Us5),
     check('a pronoun whose referent no earlier sentence has', Us5, []).
+
+%% 1.73.0: A POSSESSOR and its possessed are one constant, the possessed's
+%% words, `_of_' and the possessor's constant.
+possessors :-
+    section('the possessors'),
+    forall(member(T-Want, [
+               'His dog sleeps.'-'is_sleep(dog_of_he).\n',
+               'John\'s dog barks.'-'bark(dog_of_john).\n',
+               'She sat on the edge of the bed.'-'past(on(sit(she), edge_of_the_bed)).\n',
+               'The boy\'s dog\'s house is big.'-'big(house_of_dog_of_the_boy).\n',
+               'Mary loves her cat.'-'love(mary, cat_of_she).\n',
+               'His hesitancy revealed his basic indisposition.'-'past(reveal(hesitancy_of_he, basic_indisposition_of_he)).\n',
+               'John sleeps. His dog barks.'-'is_sleep(john).\nbark(dog_of_john).\n' ]),
+           ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
+             one_line(['a possessor into Cocolog: ', T], Label),
+             check(Label, C, Want) )),
+    logic_readings(english, 'The bed\'s edge is soft.', [U1|_]),
+    logic_readings(english, 'The edge of the bed is soft.', [U2|_]),
+    check('the two possessives are one constant', U1-U2,
+          utterance(assertion, [fact(pred(soft, [const(edge_of_the_bed)]))])-
+          utterance(assertion, [fact(pred(soft, [const(edge_of_the_bed)]))])),
+    forall(member(C3-Want3, ['is_sleep(dog_of_he).'-'His dog sleeps.',
+                             'big(house_of_dog_of_the_boy).'-'The boy\'s dog\'s house is big.',
+                             'happy(friend_of_i).'-'My friend is happy.',
+                             '?- see(X, dog_of_he).'-'Who sees his dog?']),
+           ( ( logic_translate(cocolog, english, C3, E3) -> true ; E3 = none ),
+             atomic_list_concat(['a possessor into English: ', C3], L3),
+             check(L3, E3, Want3) )),
+    ( logic_translate(cocolog, spanish, 'happy(friend_of_i).', S4) -> true ; S4 = none ),
+    check('a possessor into Spanish', S4, 'Mi amigo es feliz.'),
+    once(typology_read(english, 'His hands are cold.', IR5)),
+    logic_why(IR5, W5),
+    check('a plural possessed has no constant', W5, determiner(def)).

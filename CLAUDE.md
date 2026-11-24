@@ -311,6 +311,17 @@ back with a pronoun (`lg_say_again/5`), checked as a TEXT: the sentences
 so far must read back to the items so far. An individual's group
 (`lg_run/4`) is its adjectives' facts and one more, so a second fact of
 it is a group of its own.
+**A possessor since 1.73.0** (`lg_possessed/3`): `of(P, NP)` is one
+constant, NP's adjectives and noun, `of`, P's constant, joined by `_`
+(`spot_of_he`, `house_of_dog_of_the_boy`), so the two English
+possessives of one meaning are one constant. NP must be singular and
+definite and P a constant (`lg_no(determiner(D))`,
+`lg_no(possessor(Q))`). The writer takes a constant apart at its FIRST
+`_of_` (`lg_const_np/3`): the words before it the possessed, the rest the
+possessor, again a constant. A meaning whose words hold `of` would split
+wrong, and the read-back then gives the general sentence. Spanish `su` is
+his, her, its, their or your, so a pronoun's possessor in Spanish does not
+read back to its constant: a general sentence, never a wrong pronoun.
 **The blank template is generated too** (1.54.0): `templates/template.pl`
 is what `typology_import(template)` writes, `typology_template(xx)`: every
 slot of typology.pl's header list (THE TEMPLATE) with the header's own
