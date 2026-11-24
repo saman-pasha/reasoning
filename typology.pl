@@ -643,7 +643,8 @@
 %%     typology_meaning(+Name, ?Class, +Meaning)
 %%                                     the language has a word of Class
 %%                                     (noun, adjective, verb, name,
-%%                                     person, animate) of that meaning
+%%                                     person, animate, adposition,
+%%                                     adverb) of that meaning
 %%
 %% A WORD WITH SEVERAL MEANINGS IN ONE PLACE of the grammar -- Spanish `a',
 %% the object's mark and `to', both after a verb and before a noun phrase;
@@ -1348,13 +1349,15 @@ ty_br_adjs([A|As], [w(W, lower)|Ws]) :-
 %% typology_meaning(+L, ?Class, +Meaning): L has a word of Class whose
 %% meaning is Meaning: noun, adjective, verb, name (ty_name/5's meaning,
 %% `Socrates'), person (a noun of a person), animate (a noun or a name of a
-%% person or an animal). library(reasoning/logic) asks
+%% person or an animal), adposition, adverb (since 1.71.0). library(reasoning/logic) asks
 %% it to say a logic form (since 1.68.0).
 typology_meaning(L, noun, M) :- once(ty_noun(L, M, _, _, _, _)).
 typology_meaning(L, adjective, M) :- once(ty_adjective(L, M, _, _, _)).
 typology_meaning(L, verb, M) :- once(ty_verb(L, M, _, _, _, _)).
 typology_meaning(L, name, M) :- once(ty_name(L, M, _, _, _)).
 typology_meaning(L, person, M) :- once(ty_noun(L, M, _, person, _, _)).
+typology_meaning(L, adposition, M) :- once(ty_adposition(L, M, _)).
+typology_meaning(L, adverb, M) :- once(ty_adverb(L, M, _)).
 typology_meaning(L, animate, M) :-
     once(( ( ty_noun(L, M, _, A, _, _) ; ty_name(L, M, _, _, A) ), memberchk(A, [person, animate]) )).
 

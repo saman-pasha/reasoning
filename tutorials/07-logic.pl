@@ -38,6 +38,7 @@ main :-
     english_again,
     measured,
     tenses,
+    adjuncts,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -132,17 +133,17 @@ english_again :-
     must('English, Cocolog, English', R6, kept).
 
 %% 7. THE SECOND MEASURE. Sentences and the Cocolog each should give,
-%% written by hand (lexicon/logic.txt has 120): how many the translator
+%% written by hand (lexicon/logic.txt has 132): how many the translator
 %% gets right, and how many of the Cocolog texts come back as English that
 %% reads to them. tools/logic/measure.pl prints the whole file's.
 measured :-
     logic_measure(english, ['Socrates is human.'-'human(socrates).',
-                            'John lives in Paris.'-'live_in(john, paris).'],
+                            'John is taller than Mary.'-'taller(john, mary).'],
                   measure(N, Right, _, Kept, _, Misses, _)),
     must('sentences', N, 2),
     must('right', Right, 1),
     must('kept', Kept, 1),
-    must('why one is not', Misses, [miss('John lives in Paris.', why(adjunct))]).
+    must('why one is not', Misses, [miss('John is taller than Mary.', unread)]).
 
 %% 8. A TENSE. The past, the future, the perfect and the pluperfect are said
 %% of each atom of their clause, never of a subject's noun: a man is a man
@@ -156,6 +157,20 @@ tenses :-
     must('the future, in English', E3, 'Mary will see the dog.'),
     logic_translate(cocolog, spanish, 'perfect(see(mary, the_dog)).', E4),
     show('the perfect, in Spanish', E4).
+
+%% 9. AN ADJUNCT. An adposition phrase or an adverb of a clause is said of
+%% each atom of the clause, inside its tense: Cocolog writes it round the
+%% atom, the adposition of two arguments (the atom and the place) and the
+%% adverb of one. An adposition phrase after `is' is a predicate of two.
+adjuncts :-
+    logic_translate(english, cocolog, 'John walked to the house.', C1),
+    must('a place in the past', C1, 'past(to(walk(john), the_house)).\n'),
+    logic_translate(english, cocolog, 'Mary runs quickly.', C2),
+    must('an adverb', C2, 'quickly(run(mary)).\n'),
+    logic_translate(english, cocolog, 'The book is on the table.', C3),
+    must('a predicate of a place', C3, 'on(the_book, the_table).\n'),
+    logic_translate(cocolog, english, 'in(is_sleep(X), the_house) :- dog(X).', E4),
+    must('back into English', E4, 'Every dog sleeps in the house.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

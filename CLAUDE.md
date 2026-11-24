@@ -278,6 +278,24 @@ diagnostic: it is a mood, not a time. `tools/logic/prose.pl` counts the
 8 000 sentences into Cocolog (16 s). The predicate lexicon has its first
 rows: `bark/1` and six more verbs of an animal's sound are verbs
 (`lg_code_class/3`), as `bark` is in `noun.txt` too.
+**An adjunct since 1.71.0**: `lg_atoms/4` wraps each atom in its clause's
+adjuncts (`lg_adjuncted/3`, the first the innermost: `modified(J, A)`),
+then in the tense, so Cocolog is `past(to(quickly(run(the_dog)),
+the_house))`. NOT `mod/2`: `mod` is an infix operator, and the first cut's
+level 2 printed as `pp(...) mod pred(...)`. An adjunct's noun phrase must
+be a constant (`lg_no(adjunct(Q))`). Cocolog's reader takes `Prep(Atom,
+Term)` and `Adverb(Atom)` for an adjunct only where Atom is a compound
+term that is no list and the name is an English adposition or adverb
+(`typology_meaning(english, adposition, P)`): with no English template
+loaded it reads a predicate. The English writer adds the adjunct to the
+IR's list (`lg_ir_adjunct/3`), two adverbs side by side joined (`slowly
+and quietly`); a copula takes none, so a copula's atom with an adjunct is
+a general sentence. A copula's adposition phrase is `pred(Prep, [S, O])`,
+and the writer says a predicate of two that is an adposition as `S is
+Prep O` (`lg_class_ok/3` for arity 2: a verb, else an adposition). The
+measure's `John lives in Paris.` took the new form (`in(live(john),
+paris)`, was `live_in(john, paris)`): a hand-written Cocolog states a
+form, and this version chose it.
 **The blank template is generated too** (1.54.0): `templates/template.pl`
 is what `typology_import(template)` writes, `typology_template(xx)`: every
 slot of typology.pl's header list (THE TEMPLATE) with the header's own

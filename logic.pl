@@ -16,6 +16,11 @@
 %%                                 present: past, future, perfect,
 %%                                 pluperfect, imperfect (since 1.70.0;
 %%                                 Cocolog past(Atom))
+%%     modified(Adjunct, Atom)     an atom with an adjunct of its clause
+%%                                 (since 1.71.0): pp(Prep, Term), an
+%%                                 adposition phrase, or adv(Meaning), an
+%%                                 adverb; Cocolog in(Atom, Term) and
+%%                                 quickly(Atom)
 %%     const(Name)                 a constant: a name (socrates), a
 %%                                 definite noun phrase (the_dog), a bare
 %%                                 noun (music), one individual (a_person)
@@ -40,9 +45,18 @@
 %% tense gives one individual's facts first and the rule second (`A dog
 %% barked.').
 %%
+%% AN ADJUNCT (since 1.71.0) is said of each atom its clause says, inside
+%% the tense, the clause's first adjunct the innermost: `The dog ran
+%% quickly to the house.' is at(past, modified(pp(to, const(the_house)),
+%% modified(adv(quickly), pred(run, [const(the_dog)])))), Cocolog
+%% past(to(quickly(run(the_dog)), the_house)). An adposition phrase as a
+%% copula's predicate is a predicate of two: `The book is on the table.' is
+%% pred(on, [const(the_book), const(the_table)]).
+%%
 %% WHAT HAS NO LOGIC FORM YET: the conditional, a negation,
 %% an adjunct, an object that is no constant, `when' and `because', a
-%% pronoun outside an if clause, `no' and `nothing', and a determiner
+%% pronoun outside an if clause, an adjunct's noun phrase that is no
+%% constant, `no' and `nothing', and a determiner
 %% other than the ones above. logic_why/2 names the first reason.
 %%
 %% WHAT IS PUBLIC:
@@ -232,9 +246,8 @@ lg_conditional(Main, Cond, Items) :-
 lg_parts(C, _, _) :- var(C), !, lg_no(shape(C)).
 lg_parts(copula(T, P, S, Pred), S, Pred) :- !, lg_present(T, P).
 lg_parts(clause(V, T, P, S, O), S, verb(V, O)) :- !, lg_present(T, P).
-lg_parts(clause(V, T, P, S, O, Js), S, verb(V, O)) :- !,
-    lg_present(T, P),
-    ( Js == [] -> true ; lg_no(adjunct) ).
+lg_parts(clause(V, T, P, S, O, _), S, verb(V, O)) :- !,
+    lg_present(T, P).
 lg_parts(C, _, _) :- lg_no(shape(C)).
 
 lg_present(T, P) :-
@@ -257,8 +270,37 @@ lg_tensed(T, [A|As], [at(T, A)|Bs]) :- lg_tensed(T, As, Bs).
 %% an object is a constant.
 lg_atoms(C, T, Pred, Atoms) :-
     lg_atoms_(C, T, Pred, Atoms0),
+    lg_clause_adjuncts(C, Js),
+    lg_adjuncted(Js, Atoms0, Atoms1),
     lg_clause_tense(C, Tn),
-    lg_tensed(Tn, Atoms0, Atoms).
+    lg_tensed(Tn, Atoms1, Atoms).
+
+%% A clause's adjuncts at level 2: pp(Prep, Term) of a constant, adv(M),
+%% each adverb of a joined pair its own.
+lg_clause_adjuncts(clause(_, _, _, _, _, Js), Ks) :- !, lg_adjuncts(Js, Ks).
+lg_clause_adjuncts(_, []).
+
+lg_adjuncts([], []).
+lg_adjuncts([J|Js], Ks) :-
+    lg_adjunct(J, K1),
+    lg_adjuncts(Js, Ks2),
+    append(K1, Ks2, Ks).
+
+lg_adjunct(J, _) :- var(J), !, lg_no(adjunct(J)).
+lg_adjunct(pp(P, NP), [pp(P, T)]) :- atom(P), !,
+    lg_entity(NP, ent(T, _, Q)),
+    ( Q == const -> true ; lg_no(adjunct(Q)) ).
+lg_adjunct(adv(M), [adv(M)]) :- atom(M), !.
+lg_adjunct(adv(and(Ms)), Ks) :- is_list(Ms), forall(member(M, Ms), atom(M)), !,
+    findall(adv(M), member(M, Ms), Ks).
+lg_adjunct(J, _) :- lg_no(adjunct(J)).
+
+%% Each atom inside its adjuncts, the first the innermost.
+lg_adjuncted([], As, As) :- !.
+lg_adjuncted(_, [], []).
+lg_adjuncted(Js, [A|As], [B|Bs]) :- foldl(lg_wrap_adjunct, Js, A, B), lg_adjuncted(Js, As, Bs).
+
+lg_wrap_adjunct(J, A, modified(J, A)).
 
 lg_atoms_(copula(_, _, _, _), T, adj(As), Atoms) :- !,
     lg_adjectives(As, Ms),
@@ -267,6 +309,9 @@ lg_atoms_(copula(_, _, _, _), T, np(N, _, D, As), Atoms) :-
     memberchk(D, [indef, mass]), !,
     lg_adjectives(As, Ms),
     lg_preds_of([N|Ms], T, Atoms).
+lg_atoms_(copula(_, _, _, _), T, pp(P, NP), [pred(P, [T, To])]) :- atom(P), !,
+    lg_entity(NP, ent(To, _, Q)),
+    ( Q == const -> true ; lg_no(object(Q)) ).
 lg_atoms_(copula(_, _, _, _), _, Pred, _) :- !, lg_no(predicate(Pred)).
 lg_atoms_(_, T, verb(V, none), [pred(V, [T])]) :- !.
 lg_atoms_(_, T, verb(V, O), [pred(V, [T, To])]) :-
@@ -384,6 +429,15 @@ lg_out_atom(at(T, P), M0, M, A) :- !,
     lg_out_atom(P, M0, M, P1),
     lg_code_tense(cocolog, T, W),
     A =.. [W, P1].
+lg_out_atom(modified(pp(P, T), At), M0, M, A) :- !,
+    lg_out_atom(At, M0, M1, At1),
+    lg_out_term(T, M1, M, T1),
+    lg_code_pred_name(P, 2, N),
+    A =.. [N, At1, T1].
+lg_out_atom(modified(adv(Ad), At), M0, M, A) :- !,
+    lg_out_atom(At, M0, M, At1),
+    lg_code_pred_name(Ad, 1, N),
+    A =.. [N, At1].
 lg_out_atom(pred(N, As), M0, M, A) :-
     length(As, Ar),
     lg_code_pred_name(N, Ar, N1),
@@ -437,10 +491,23 @@ lg_in_atom(A, at(T, P)) :-
     compound(A), A =.. [W, Inner], compound(Inner),
     lg_code_tense(cocolog, T, W), !,
     lg_in_atom(Inner, P).
+lg_in_atom(A, modified(pp(P, T), At)) :-
+    compound(A), A =.. [N, Inner, Arg], lg_adjunct_inner(Inner),
+    lg_code_meaning(N, 2, P), typology_meaning(english, adposition, P), !,
+    lg_in_atom(Inner, At),
+    lg_in_term(Arg, T).
+lg_in_atom(A, modified(adv(M), At)) :-
+    compound(A), A =.. [N, Inner], lg_adjunct_inner(Inner),
+    lg_code_meaning(N, 1, M), typology_meaning(english, adverb, M), !,
+    lg_in_atom(Inner, At).
 lg_in_atom(A, pred(N, As1)) :-
     A =.. [N1|As], length(As, Ar),
     lg_code_meaning(N1, Ar, N),
     maplist(lg_in_term, As, As1).
+
+%% An adjunct's atom: a compound term that is no list (size([a], 1) is a
+%% predicate of a list).
+lg_adjunct_inner(T) :- compound(T), \+ is_list(T), \+ T = [_|_].
 
 %% A name read back: the prefix off where the rest is a reserved name of
 %% that arity, a row's meaning, else the name.
@@ -544,7 +611,7 @@ lg_groups([I|Is], [[I]|Gs]) :- lg_groups(Is, Gs).
 lg_individual_fact(fact(pred(N, [const(C)])), N, C) :- atom(C), atom_concat(a_, N, C).
 
 lg_run([I|Is], C, [I|Run], Rest) :-
-    I = fact(A), lg_untensed(A, pred(_, Args)), memberchk(const(C), Args), !,
+    I = fact(A), lg_core(A, pred(_, Args)), memberchk(const(C), Args), !,
     lg_run(Is, C, Run, Rest).
 lg_run(Is, _, [], Is).
 
@@ -571,10 +638,12 @@ lg_group_ir(L, [F|Run], IR) :-
     lg_adjective_facts(L, AFs, C, As),
     lg_atom_ir(L, A, sub(C, np(N, sg, indef, As)), IR).
 lg_group_ir(L, [fact(A)], IR) :- lg_atom_ir(L, A, every, IR).
-lg_group_ir(L, [query(A)], question(IR)) :- lg_untensed(A, pred(_, _)), lg_atom_ir(L, A, wh, IR).
+lg_group_ir(L, [query(A)], question(IR)) :- lg_core(A, pred(_, _)), lg_atom_ir(L, A, wh, IR).
 
-lg_untensed(at(_, P), P) :- !.
-lg_untensed(P, P).
+%% An atom without its tense and its adjuncts.
+lg_core(at(_, P), C) :- !, lg_core(P, C).
+lg_core(modified(_, P), C) :- !, lg_core(P, C).
+lg_core(P, P).
 lg_group_ir(L, [rule(H, B)], IR) :- lg_body_list(B, Cs), lg_rule_ir(L, H, Cs, IR).
 
 lg_adjective_facts(_, [], _, []).
@@ -630,6 +699,10 @@ lg_pronoun(L, N, P) :-
 lg_atom_ir(L, at(T, A), How, IR) :- !,
     lg_atom_ir(L, A, How, IR0),
     lg_ir_tense(IR0, T, IR).
+lg_atom_ir(L, modified(J, A), How, IR) :- !,
+    lg_atom_ir(L, A, How, IR0),
+    lg_adjunct_ir(L, How, J, J1),
+    lg_ir_adjunct(IR0, J1, IR).
 lg_atom_ir(L, pred(P, [A]), How, IR) :-
     lg_arg_np(L, How, A, S),
     lg_unary_ir(L, P, S, IR).
@@ -637,9 +710,28 @@ lg_atom_ir(L, pred(P, [A, B]), How, clause(P, present, pos, S, O)) :-
     lg_class_ok(L, P/2, verb),
     lg_arg_np(L, How, A, S),
     lg_arg_np(L, How, B, O).
+lg_atom_ir(L, pred(P, [A, B]), How, copula(present, pos, S, pp(P, O))) :-
+    lg_class_ok(L, P/2, adposition),
+    lg_arg_np(L, How, A, S),
+    lg_arg_np(L, How, B, O).
 
 lg_ir_tense(copula(_, P, S, Pr), T, copula(T, P, S, Pr)).
 lg_ir_tense(clause(V, _, P, S, O), T, clause(V, T, P, S, O)).
+lg_ir_tense(clause(V, _, P, S, O, Js), T, clause(V, T, P, S, O, Js)).
+
+lg_adjunct_ir(L, How, pp(P, T), pp(P, NP)) :- lg_arg_np(L, How, T, NP).
+lg_adjunct_ir(_, _, adv(M), adv(M)).
+
+%% An adjunct after a clause's others; a copula takes none.
+lg_ir_adjunct(clause(V, T, P, S, O), J, clause(V, T, P, S, O, [J])).
+lg_ir_adjunct(clause(V, T, P, S, O, Js), J, clause(V, T, P, S, O, Js1)) :- lg_add_adjunct(Js, J, Js1).
+
+%% Two adverbs side by side are joined (`slowly and quietly').
+lg_add_adjunct(Js, adv(M), Js1) :-
+    append(Init, [adv(M0)], Js), !,
+    ( M0 = and(Ms0) -> append(Ms0, [M], Ms) ; Ms = [M0, M] ),
+    append(Init, [adv(and(Ms))], Js1).
+lg_add_adjunct(Js, J, Js1) :- append(Js, [J], Js1).
 
 lg_unary_ir(L, P, S, IR) :-
     lg_unary_classes(L, P, S, Cs),
@@ -745,7 +837,7 @@ lg_class_ok(L, P/A, C) :-
     (   lg_code_class(cocolog, P/A, _)
     ->  lg_code_class(cocolog, P/A, C)
     ;   A == 1 -> typology_meaning(L, C, P)
-    ;   C == verb, typology_meaning(L, verb, P)
+    ;   memberchk(C, [verb, adposition]), typology_meaning(L, C, P)
     ).
 
 %% THE GENERAL SENTENCE: `P holds for T1, T2 and T3.', a rule's conditions
@@ -780,6 +872,12 @@ lg_holds(at(Tn, A), T) :- !,
     lg_holds(A, T0),
     ( memberchk(Tn, [future]) -> W = 'in the future' ; W = 'in the past' ),
     format(atom(T), '~w ~w', [T0, W]).
+lg_holds(modified(pp(P, Tm), A), T) :- !,
+    lg_holds(A, T0), lg_term_words(Tm, W),
+    format(atom(T), '~w ~w ~w', [T0, P, W]).
+lg_holds(modified(adv(M), A), T) :- !,
+    lg_holds(A, T0),
+    format(atom(T), '~w ~w', [T0, M]).
 lg_holds(pred(P, []), T) :- !, format(atom(T), '~w holds', [P]).
 lg_holds(pred(P, Args), T) :-
     maplist(lg_term_words, Args, Ws), lg_and(Ws, W),

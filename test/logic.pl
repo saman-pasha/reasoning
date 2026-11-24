@@ -11,7 +11,8 @@ main :-
     forall(member(L, [english, spanish, italian]), typology_load(L)),
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
-                      code_english, code_general, round_trips, measure, tenses]), once(S)),
+                      code_english, code_general, round_trips, measure, tenses,
+                      adjuncts]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -87,7 +88,7 @@ diagnostics :-
                'The boy sleeps because the dog sleeps.'-subordinate(because),
                'He sleeps.'-pronoun,
                'No dog sleeps.'-determiner(no),
-               'The boy sleeps in the house.'-adjunct ]),
+               'The boy sleeps with dogs.'-adjunct(generic) ]),
            ( once(typology_read(english, T, IR)),
              ( logic_from_ir(IR, _) -> W = read ; logic_why(IR, W) ),
              atomic_list_concat(['English: ', T], Label),
@@ -261,11 +262,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 120),
-    ( R >= 102 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 102 right', VR, ok),
-    ( K >= 110 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 110 kept', VK, ok).
+    check('the second measure: its sentences', N, 132),
+    ( R >= 116 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 116 right', VR, ok),
+    ( K >= 124 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 124 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -309,3 +310,43 @@ tenses :-
     once(typology_read(english, 'John would sleep.', IR7)),
     logic_why(IR7, W7),
     check('the conditional has no logic form yet', W7, tense(conditional)).
+
+%% 1.71.0: AN ADJUNCT is said of each atom its clause says, inside the
+%% tense, the first adjunct the innermost; an adposition phrase as a
+%% copula's predicate is a predicate of two.
+adjuncts :-
+    section('the adjuncts'),
+    forall(member(T-Want, [
+               'John sleeps in the garden.'-'in(is_sleep(john), the_garden).\n',
+               'Mary runs quickly.'-'quickly(run(mary)).\n',
+               'John walked to the house.'-'past(to(walk(john), the_house)).\n',
+               'The dog ran quickly to the house.'-'past(to(quickly(run(the_dog)), the_house)).\n',
+               'Every dog sleeps in the house.'-'in(is_sleep(A), the_house) :-\n    dog(A).\n',
+               'Who sleeps in the garden?'-'?- in(is_sleep(A), the_garden).\n',
+               'The book is on the table.'-'on(the_book, the_table).\n',
+               'John is with Mary.'-'with(john, mary).\n' ]),
+           ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
+             one_line(['an adjunct into Cocolog: ', T], Label),
+             check(Label, C, Want) )),
+    logic_readings(english, 'The dog ran quickly to the house.', [U1|_]),
+    check('the adjuncts inside the tense, the first the innermost', U1,
+          utterance(assertion, [fact(at(past, modified(pp(to, const(the_house)),
+                                                     modified(adv(quickly), pred(run, [const(the_dog)])))))])),
+    forall(member(C2-Want2, ['in(is_sleep(john), the_garden).'-'John sleeps in the garden.',
+                             'past(to(quickly(run(the_dog)), the_house)).'-'The dog ran quickly to the house.',
+                             'quietly(slowly(sing(mary))).'-'Mary sings slowly and quietly.',
+                             'on(the_book, the_table).'-'The book is on the table.',
+                             '?- in(is_sleep(X), the_garden).'-'Who sleeps in the garden?']),
+           ( ( logic_translate(cocolog, english, C2, E2) -> true ; E2 = none ),
+             atomic_list_concat(['an adjunct into English: ', C2], L2),
+             check(L2, E2, Want2) )),
+    ( logic_translate(cocolog, spanish, 'in(live(john), paris).', S3) -> true ; S3 = none ),
+    check('an adjunct into Spanish', S3, 'John vive en Paris.'),
+    ( logic_translate(cocolog, english, 'in(append(a, b, c), the_box).', E4) -> true ; E4 = none ),
+    check('an adjunct in a general sentence', E4, 'Append holds for a, b and c in the_box.'),
+    ( cocolog_read('size([a, b], 2).', U5) -> true ; U5 = none ),
+    check('a list is no adjunct\'s atom', U5,
+          utterance(assertion, [fact(pred(size, [list([const(a), const(b)]), num(2)]))])),
+    once(typology_read(english, 'John sleeps with dogs.', IR6)),
+    logic_why(IR6, W6),
+    check('an adjunct\'s noun phrase that is no constant', W6, adjunct(generic)).

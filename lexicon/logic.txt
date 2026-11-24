@@ -47,7 +47,7 @@ John likes Mary and Mary likes John.	like(john, mary). like(mary, john).
 John and Mary like music.	like(john, music). like(mary, music).
 John likes music and art.	like(john, music). like(john, art).
 John gives Mary the book.	give(john, mary, the_book).
-John lives in Paris.	live_in(john, paris).
+John lives in Paris.	in(live(john), paris).
 The book is on the table.	on(the_book, the_table).
 John is taller than Mary.	taller(john, mary).
 John is Mary's father.	father(john, mary).
@@ -136,3 +136,16 @@ Mary will be happy.	future(happy(mary)).
 Mary has seen the dog.	perfect(see(mary, the_dog)).
 The boy had seen the dog.	pluperfect(see(the_boy, the_dog)).
 A dog barked.	dog(a_dog). past(bark(a_dog)).
+# adjuncts (since 1.71.0): an adposition phrase or an adverb round its atom
+John sleeps in the garden.	in(sleep(john), the_garden).
+Mary runs quickly.	quickly(run(mary)).
+The dog sleeps on the bed.	on(sleep(the_dog), the_bed).
+John walked to the house.	past(to(walk(john), the_house)).
+Mary reads the book in the garden.	in(read(mary, the_book), the_garden).
+Every dog sleeps in the house.	in(sleep(X), the_house) :- dog(X).
+Who sleeps in the garden?	?- in(sleep(X), the_garden).
+The cat is in the house.	in(the_cat, the_house).
+John is with Mary.	with(john, mary).
+The dog ran quickly to the house.	past(to(quickly(run(the_dog)), the_house)).
+Mary sings slowly and quietly.	quietly(slowly(sing(mary))).
+John came from Paris.	past(from(come(john), paris)).

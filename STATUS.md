@@ -131,7 +131,7 @@ back to the same form, and the program written from English runs. Cocolog
 is said in English again (1.68.0, `logic_write/3`), so the first
 milestone is complete: the two round trips keep the logic form.
 
-**The second measure** (1.69.0) is `lexicon/logic.txt`: 120 English
+**The second measure** (1.69.0) is `lexicon/logic.txt`: 132 English
 sentences, each with the Cocolog it says, written by hand.
 `tools/logic/measure.pl` counts how many give that Cocolog (their first
 logic form, compared as items) and how many of the Cocolog texts are
@@ -142,6 +142,7 @@ group); test/logic.pl's `measure` holds the counts to the last row.
 |---|---|---|---|---|
 | 1.69.0 | 86 | of 104: 82.7 % | 94 | the start. The 18 misses: 7 unread (a verb of three, a comparative, a possessor, `Tweety`, `Whom`, `fed`), 3 relative clauses in a rule, 2 objects that are no constant, 2 pronouns of a clause first, 1 adjunct, 1 adposition phrase, 1 `which`, 1 question word as the object. The 10 not kept are the general sentence's: a predicate of no word or of three, a query of two atoms or of an object |
 | 1.70.0 | 102 | of 120: 85.0 % | 110 | the tenses: 16 sentences more (the past, the future, the perfect, the pluperfect), all right and kept; the 18 misses as before |
+| 1.71.0 | 116 | of 132: 87.9 % | 124 | the adjuncts and an adposition phrase as a predicate: 12 sentences more, all right and kept, and `John lives in Paris.` (its Cocolog now in(live(john), paris), the form 1.71.0 chose) and `The book is on the table.` right; 16 misses |
 
 **The 8 000 sentences of the first measure into Cocolog**
 (`tools/logic/prose.pl`): read into level 1, then a logic form, then
@@ -153,6 +154,7 @@ is translated wrong.
 |---|---|---|---|
 | 1.69.0 | 59 | 0.7 % | the past tense 451, an adjunct 41, an IR shape with no rule 36, a pronoun 27 |
 | 1.70.0 | 111 | 1.4 % | an adjunct 248, a pronoun 112, an IR shape with no rule 110, a predicate with no rule 28, an object that is no constant 24 |
+| 1.71.0 | 142 | 1.8 % | a pronoun 271, an IR shape with no rule 145, an object that is no constant 33, a plural definite noun phrase 23, a predicate with no rule 23. Of the 31 new ones about 8 are wrong because level 1 reads them wrong: a fragment with a passive participle (`Yogurt made with skim milk.`), an adjective read as an adverb (`Prices remained flat.`), `last night` joined to a noun |
 
 ## What "parked" means
 
