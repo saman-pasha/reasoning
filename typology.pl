@@ -640,6 +640,10 @@
 %%                                     as the one who answers says it, a
 %%                                     noun its pronoun by templates/
 %%                                     roles.pl's ty_kind/2)
+%%     typology_meaning(+Name, ?Class, +Meaning)
+%%                                     the language has a word of Class
+%%                                     (noun, adjective, verb, name,
+%%                                     person, animate) of that meaning
 %%
 %% A WORD WITH SEVERAL MEANINGS IN ONE PLACE of the grammar -- Spanish `a',
 %% the object's mark and `to', both after a verb and before a noun phrase;
@@ -703,7 +707,7 @@
                       typology_answer/4, typology_answer/5,
                       typology_import/1, typology_import/2,
                       typology_references/2, typology_reason_ir/2,
-                      typology_coverage/4 ]).
+                      typology_coverage/4, typology_meaning/3 ]).
 
 :- use_module(library(reasoning/reason), [ reason_base/2 ]).
 
@@ -1338,6 +1342,21 @@ ty_br_noun(M, W) :-
 ty_br_adjs([], []).
 ty_br_adjs([A|As], [w(W, lower)|Ws]) :-
     ty_adjective(english, A, _, _, W), ty_br_adjs(As, Ws).
+
+%% ---- a meaning's class --------------------------------------------------------------
+%%
+%% typology_meaning(+L, ?Class, +Meaning): L has a word of Class whose
+%% meaning is Meaning: noun, adjective, verb, name (ty_name/5's meaning,
+%% `Socrates'), person (a noun of a person), animate (a noun or a name of a
+%% person or an animal). library(reasoning/logic) asks
+%% it to say a logic form (since 1.68.0).
+typology_meaning(L, noun, M) :- once(ty_noun(L, M, _, _, _, _)).
+typology_meaning(L, adjective, M) :- once(ty_adjective(L, M, _, _, _)).
+typology_meaning(L, verb, M) :- once(ty_verb(L, M, _, _, _, _)).
+typology_meaning(L, name, M) :- once(ty_name(L, M, _, _, _)).
+typology_meaning(L, person, M) :- once(ty_noun(L, M, _, person, _, _)).
+typology_meaning(L, animate, M) :-
+    once(( ( ty_noun(L, M, _, A, _, _) ; ty_name(L, M, _, _, A) ), memberchk(A, [person, animate]) )).
 
 %% ---- the measure: how much of a text the template reads ----------------------------
 %%

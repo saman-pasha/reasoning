@@ -127,7 +127,9 @@ sentences.
 and level 2, the logic form (1.66.0, `logic.pl`): the seven sentences of
 the milestone read into the plan's logic forms. The Cocolog template
 (1.67.0, `templates/cocolog.pl`) writes each form as Cocolog and reads it
-back to the same form, and the program written from English runs.
+back to the same form, and the program written from English runs. Cocolog
+is said in English again (1.68.0, `logic_write/3`), so the first
+milestone is complete: the two round trips keep the logic form.
 
 ## What "parked" means
 

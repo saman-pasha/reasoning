@@ -18,6 +18,11 @@
 %% as Cocolog source and read back. A programming language connects to the
 %% logic form alone, so a Spanish sentence gets its Cocolog by the same
 %% rules as an English one.
+%%
+%% AND BACK. Cocolog is said in a natural language the other way: the logic
+%% form to the typology IR, the typology IR to a sentence. A sentence is
+%% kept only where it reads back to the same logic form; what none says is
+%% a general sentence.
 
 :- use_module(library(reasoning/typology)).
 :- use_module(library(reasoning/logic)).
@@ -30,6 +35,7 @@ main :-
     questions,
     why,
     cocolog,
+    english_again,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -101,6 +107,27 @@ cocolog :-
     assertz(dog(rex)),
     ( is_sleep(rex) -> R8 = proved ; R8 = failed ),
     must('a rule written runs', R8, proved).
+
+%% 6. COCOLOG INTO ENGLISH. Each item is a sentence that reads back to it.
+%% A word of two classes is said as its commoner use of one thing (`sleep'
+%% a verb, `man' a noun); a predicate that is no word holds for its terms.
+english_again :-
+    logic_translate(cocolog, english, 'mortal(X) :- human(X).', E1),
+    must('a rule', E1, 'Every human is mortal.'),
+    logic_translate(cocolog, english, 'is_sleep(john). man(socrates).', E2),
+    must('two facts', E2, 'John sleeps. Socrates is a man.'),
+    logic_translate(cocolog, english, '?- see(X, the_dog).', E3),
+    must('a query', E3, 'Who sees the dog?'),
+    logic_translate(cocolog, english, 'append(a, b, c).', E4),
+    must('no word', E4, 'Append holds for a, b and c.'),
+    logic_translate(cocolog, spanish, 'happy(X) :- person(X), healthy(X), safe(X).', E5),
+    show('Spanish', E5),
+    logic_readings(english, 'A person is happy if they are healthy and safe.', [U6]),
+    cocolog_write(U6, C6),
+    logic_translate(cocolog, english, C6, E6),
+    logic_readings(english, E6, Us6),
+    ( memberchk(U6, Us6) -> R6 = kept ; R6 = lost ),
+    must('English, Cocolog, English', R6, kept).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

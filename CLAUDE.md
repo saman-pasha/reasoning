@@ -232,6 +232,29 @@ the template's prefix goes before it (`is_sleep/1`) and the reader takes
 it off only where the rest is reserved again (`is_happy/1` stays). A
 variable is var(N) by its first use in the clause, as level 2 numbers it,
 so a text read and written again is the same text.
+**Cocolog into English since 1.68.0** (`logic_write/3`): a group of items
+-- one item, or one individual's facts (person(a_person) and what is said
+of a_person), which level 2 made from one sentence -- is tried as level-1
+IRs in order (`lg_group_ir/3`), each written by typology_write/3 and KEPT
+ONLY WHERE THE SENTENCE READS BACK TO THE GROUP'S OWN ITEMS
+(`lg_reads_back/3`). The read-back cannot choose a word class: `John is a
+sleep.` reads back to sleep(john) as well as `John sleeps.` does. So the
+class order (`lg_unary_classes/4`) decides first, from WordNet's lists in
+`lexicon/` (each read once into `'$lg_lex'/3` by `lg_lex/3`): an
+adjective of `adj.txt`'s 3 000 (human, mortal; `student` is an English
+adjective only by a meaning the Spanish vocabulary gives, `estudiantil`);
+then a noun and a verb of `vi.txt` (no object), the verb first for a
+subject that is a person or an animal (`John works.`), else the commoner
+by its rank in `known_noun.txt` and `vi.txt` (`Every bird flies.`, `A
+novel is a book.`); a noun before a verb that takes an object (`to man`);
+then any adjective. A ranking by SemCor's ranks alone fails: `work` and
+`study` rank commoner as nouns. A template row (`lg_code_class/3`)
+overrides the order. A constant is
+something or someone, `the_` a definite noun phrase, a name a row has
+(`typology_meaning(L, name, 'Socrates')`), a bare noun, a name no row has.
+What none keeps is the general sentence (`lg_general/2`), English words
+whatever the language. A list is `list(Terms)` (`[]` is no atom in
+Cocolog, so a list read as `fun/2` failed at its end).
 **The blank template is generated too** (1.54.0): `templates/template.pl`
 is what `typology_import(template)` writes, `typology_template(xx)`: every
 slot of typology.pl's header list (THE TEMPLATE) with the header's own

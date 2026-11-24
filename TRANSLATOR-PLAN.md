@@ -131,9 +131,14 @@ its benchmark, as every typology version has.
    Cocolog. The reader reads each clause with term_string/2 and keeps no
    source place yet. The predicate lexicon is step 7's: English needs it,
    Cocolog does not.
-7. **Cocolog to English**: level 2 to level 1 to English
-   (`typology_write/3`), and the round trip English to Cocolog to
-   English.
+7. **Cocolog to English** (done: 1.68.0, `logic_write/3`): level 2 to
+   level 1 to English (`typology_write/3`), each sentence kept only where
+   it reads back to its items, else a general sentence; and the two
+   round trips. The predicate lexicon is the template's rows
+   (`lg_code_class/3`, none yet) over the language's tables
+   (`typology_meaning/3`) and an order of the classes from WordNet's
+   lists in `lexicon/` (a common adjective first; a verb that takes no
+   object before a noun for a person or an animal).
 8. **The second measure**: a set of sentences with their Cocolog,
    counted as the first measure is.
 
@@ -150,6 +155,11 @@ The milestone is complete when:
 5. The two round trips keep the logic form.
 6. An input with no level-2 form gets a diagnostic.
 7. The templates load through `typology_load/1`.
+
+**Since 1.68.0 the milestone is complete**: test/logic.pl holds each of
+the seven points (the levels, Cocolog's own clauses, the writer and its
+read-back, the English, the two round trips, the diagnostics, the
+templates through `typology_load/1` and `templates/cocolog.pl`).
 
 ## What was there before (2026-11-24)
 

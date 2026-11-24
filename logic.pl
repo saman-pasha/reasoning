@@ -17,6 +17,9 @@
 %%                                 noun (music), one individual (a_person)
 %%     var(N)                      a variable, numbered from 1 by its first
 %%                                 use in its item
+%%     num(N), str(S), list(Terms), fun(Name, Args)
+%%                                 a number, a string, a list (since
+%%                                 1.68.0) and a compound term of Cocolog
 %%
 %% WHAT A NOUN PHRASE IS. A name, a definite noun phrase and a bare noun
 %% are constants. `every', `each' and `all' make a variable whose noun is a
@@ -54,10 +57,17 @@
 %%     cocolog_read(+Text, -Utterance) Cocolog source's logic form
 %%     logic_translate(+From, +To, +Text, -Text2)
 %%                                     a natural language's text into
-%%                                     Cocolog (To cocolog)
+%%                                     Cocolog (To cocolog), or Cocolog
+%%                                     into a natural language (From
+%%                                     cocolog, since 1.68.0)
+%%     logic_write(+Lang, +Utterance, -Text)
+%%                                     the logic form said in Lang, each
+%%                                     sentence one that reads back to its
+%%                                     items, else a general sentence
+%%                                     (since 1.68.0)
 
 :- module(logic, [logic_from_ir/2, logic_read/3, logic_readings/3, logic_why/2,
-                  cocolog_write/2, cocolog_read/2, logic_translate/4]).
+                  cocolog_write/2, cocolog_read/2, logic_translate/4, logic_write/3]).
 
 :- use_module(library(reasoning/typology)).
 
@@ -298,7 +308,8 @@ lg_bind([var(N)|Vs], N) :- N1 is N + 1, lg_bind(Vs, N1).
 %% A predicate the system defines (sleep/1, member/2) is written with the
 %% template's prefix (is_sleep/1) and read back without it.
 
-:- dynamic lg_code/1, lg_code_reserved_prefix/2, lg_code_name/3, lg_code_query_mark/2.
+:- dynamic lg_code/1, lg_code_reserved_prefix/2, lg_code_name/3, lg_code_query_mark/2,
+           lg_code_class/3, '$lg_lex'/3.
 
 lg_code_loaded(L) :-
     (   lg_code(L) -> true
@@ -348,6 +359,7 @@ lg_out_terms([T|Ts], M0, M, [T1|Ts1]) :- lg_out_term(T, M0, M1, T1), lg_out_term
 lg_out_term(const(C), M, M, C) :- !.
 lg_out_term(num(N), M, M, N) :- !.
 lg_out_term(str(S), M, M, S) :- !.
+lg_out_term(list(Ts), M0, M, L) :- !, lg_out_terms(Ts, M0, M, L).
 lg_out_term(var(N), M0, M, V) :- !, ( memberchk(N-V0, M0) -> V = V0, M = M0 ; M = [N-V|M0] ).
 lg_out_term(fun(F, As), M0, M, T) :- !, lg_out_terms(As, M0, M, As1), T =.. [F|As1].
 lg_out_term(X, _, _, _) :- lg_no(term(X)).
@@ -397,6 +409,7 @@ lg_code_meaning(N1, Ar, N) :-
     (   lg_code_name(cocolog, M/Ar, N0) -> N = M ; N = N0 ).
 
 lg_in_term(V, V) :- var(V), !.
+lg_in_term(L, list(Ts)) :- is_list(L), !, maplist(lg_in_term, L, Ts).
 lg_in_term(A, const(A)) :- atom(A), !.
 lg_in_term(N, num(N)) :- number(N), !.
 lg_in_term(S, str(S)) :- string(S), !.
@@ -444,8 +457,301 @@ lg_symbol_code(C) :- memberchk(C, `+-*/\\^<>=~:.?@#&$`).
 %% ---- translating (since 1.67.0) --------------------------------------------------
 
 %% logic_translate(+From, +To, +Text, -Text2): a natural language's text
-%% into Cocolog through both levels, its first logic form.
+%% into Cocolog through both levels, its first logic form; Cocolog into a
+%% natural language through both levels the other way.
 logic_translate(From, cocolog, Text, Code) :-
     From \== cocolog, !,
     logic_readings(From, Text, [U|_]),
     cocolog_write(U, Code).
+logic_translate(cocolog, To, Code, Text) :-
+    To \== cocolog, !,
+    cocolog_read(Code, U),
+    logic_write(To, U, Text).
+
+%% ---- level 2 into a natural language (since 1.68.0) -------------------------------
+%%
+%% logic_write(+Lang, +Utterance, -Text): the logic form said in Lang, one
+%% sentence a group of items. A group's level-1 IRs are tried in order, each
+%% written by typology_write/3 and kept only where the sentence reads back to
+%% the group's own items (logic_readings/3): so what is written means what
+%% the logic form says, and a word class guessed wrong is never written. A
+%% group no IR keeps is a general sentence, English words whatever Lang:
+%% `append holds for X, Y and Z.'
+%%
+%% A GROUP is one item, or one individual's facts together: the fact of its
+%% noun (person(a_person)), its adjectives' and one more, which level 2 made
+%% from one sentence (`A person likes music.', its second reading).
+%%
+%% THE WORD CLASS of a predicate is the template's row (lg_code_class/3),
+%% else the language's tables (typology_meaning/3): an adjective, then a
+%% noun, then a verb of one argument, a verb of two.
+
+logic_write(L, utterance(_, Items), Text) :-
+    must_be(atom, L),
+    lg_code_loaded(cocolog),
+    lg_groups(Items, Groups),
+    maplist(lg_say(L), Groups, Ss),
+    atomic_list_concat(Ss, ' ', Text).
+
+lg_groups([], []).
+lg_groups([F|Is], [[F|Run]|Gs]) :-
+    lg_individual_fact(F, _, C),
+    lg_run(Is, C, Run, Rest), Run \== [], !,
+    lg_groups(Rest, Gs).
+lg_groups([I|Is], [[I]|Gs]) :- lg_groups(Is, Gs).
+
+lg_individual_fact(fact(pred(N, [const(C)])), N, C) :- atom(C), atom_concat(a_, N, C).
+
+lg_run([I|Is], C, [I|Run], Rest) :-
+    I = fact(pred(_, Args)), memberchk(const(C), Args), !,
+    lg_run(Is, C, Run, Rest).
+lg_run(Is, _, [], Is).
+
+lg_say(L, Group, S) :- lg_say(L, Group, S, _).
+
+%% How a group was said: sentence (one that reads back) or general.
+lg_say(L, Group, S, How) :-
+    (   lg_group_ir(L, Group, IR),
+        catch(typology_write(L, IR, S0), _, fail),
+        lg_reads_back(L, S0, Group)
+    ->  S = S0, How = sentence
+    ;   lg_general(Group, S), How = general
+    ).
+
+lg_reads_back(L, S, Group) :-
+    catch(logic_readings(L, S, Us), _, fail),
+    member(utterance(_, Is), Us), Is == Group, !.
+
+%% A group's level-1 IRs, the likeliest first.
+lg_group_ir(L, [F|Run], IR) :-
+    Run = [_|_], !,
+    lg_individual_fact(F, N, C),
+    append(AFs, [fact(A)], Run),
+    lg_adjective_facts(L, AFs, C, As),
+    lg_atom_ir(L, A, sub(C, np(N, sg, indef, As)), IR).
+lg_group_ir(L, [fact(A)], IR) :- lg_atom_ir(L, A, every, IR).
+lg_group_ir(L, [query(A)], question(IR)) :- A = pred(_, _), lg_atom_ir(L, A, wh, IR).
+lg_group_ir(L, [rule(H, B)], IR) :- lg_body_list(B, Cs), lg_rule_ir(L, H, Cs, IR).
+
+lg_adjective_facts(_, [], _, []).
+lg_adjective_facts(L, [fact(pred(A, [const(C1)]))|Fs], C, [A|As]) :-
+    C1 == C, lg_class_ok(L, A/1, adjective),
+    lg_adjective_facts(L, Fs, C, As).
+
+lg_body_list(and(Bs), Bs) :- !.
+lg_body_list(B, [B]).
+
+%% A rule over var(1), its subject: one noun is `every' (`Every human is
+%% mortal.'); a noun and more conditions an if clause whose pronoun is the
+%% subject (`A person is happy if they are healthy and safe.'), or the noun's
+%% adjectives (`Every happy dog sleeps.'); no noun `something' and an if
+%% clause (`Something sleeps if it is tired.').
+lg_rule_ir(L, pred(H, Args), [pred(N, [var(1)])], IR) :-
+    lg_class_ok(L, N/1, noun),
+    lg_atom_ir(L, pred(H, Args), var1(np(N, sg, every, [])), IR).
+lg_rule_ir(L, pred(H, Args), [pred(N, [var(1)])|Cs], sub(if, Main, Cond)) :-
+    Cs \== [], lg_class_ok(L, N/1, noun),
+    lg_atom_ir(L, pred(H, Args), var1(np(N, sg, indef, [])), Main),
+    lg_pronoun(L, N, P),
+    lg_cond_ir(L, Cs, P, Cond).
+lg_rule_ir(L, pred(H, Args), [pred(N, [var(1)])|Cs], IR) :-
+    Cs \== [], lg_class_ok(L, N/1, noun),
+    lg_adjective_conds(L, Cs, As),
+    lg_atom_ir(L, pred(H, Args), var1(np(N, sg, every, As)), IR).
+lg_rule_ir(L, pred(H, Args), Cs, sub(if, Main, Cond)) :-
+    member(K-P, [thing-pron(3, sg, n), person-pron(3, pl, _)]),
+    lg_atom_ir(L, pred(H, Args), var1(qp(some, K)), Main),
+    lg_cond_ir(L, Cs, P, Cond).
+
+lg_adjective_conds(_, [], []).
+lg_adjective_conds(L, [pred(A, [V])|Cs], [A|As]) :-
+    V == var(1), lg_class_ok(L, A/1, adjective),
+    lg_adjective_conds(L, Cs, As).
+
+%% An if clause of the subject's pronoun: its adjectives joined (`they are
+%% healthy and safe'), or one atom.
+lg_cond_ir(L, Cs, P, copula(present, pos, P, adj(As))) :-
+    Cs = [_, _|_], lg_adjective_conds(L, Cs, As).
+lg_cond_ir(L, [A], P, IR) :- lg_atom_ir(L, A, var1(P), IR).
+
+lg_pronoun(L, N, P) :-
+    (   typology_meaning(L, person, N)
+    ->  member(P, [pron(3, pl, _), pron(3, sg, n)])
+    ;   member(P, [pron(3, sg, n), pron(3, pl, _)])
+    ).
+
+%% An atom's level-1 clause. How a term is said: SUB names one constant's
+%% noun phrase (sub(C, NP)), var1(NP) var(1)'s; `every' says a variable of a
+%% fact (`Everything is mortal.'), wh a query's (`Who is human?').
+lg_atom_ir(L, pred(P, [A]), How, IR) :-
+    lg_arg_np(L, How, A, S),
+    lg_unary_ir(L, P, S, IR).
+lg_atom_ir(L, pred(P, [A, B]), How, clause(P, present, pos, S, O)) :-
+    lg_class_ok(L, P/2, verb),
+    lg_arg_np(L, How, A, S),
+    lg_arg_np(L, How, B, O).
+
+lg_unary_ir(L, P, S, IR) :-
+    lg_unary_classes(L, P, S, Cs),
+    member(C, Cs),
+    lg_unary_shape(C, P, S, IR).
+
+lg_unary_shape(adjective, P, S, copula(present, pos, S, adj([P]))).
+lg_unary_shape(noun, P, S, copula(present, pos, S, np(P, sg, indef, []))).
+lg_unary_shape(verb, P, S, clause(P, present, pos, S, none)).
+
+%% THE ORDER OF THE CLASSES of a word said of one thing S, from WordNet's
+%% lists in lexicon/: an adjective of the 3 000 commonest (adj.txt: human,
+%% mortal, wise; not animal, student); then a noun and a verb that takes no
+%% object (vi.txt), the verb first where S is a person or an animal
+%% (`John works.', `Rex sleeps.'), else the commoner first by their ranks
+%% in known_noun.txt and vi.txt (`Every bird flies.', `A novel is a
+%% book.'); a noun before a verb that takes an object (`to man', `to dog');
+%% then any adjective. The sentence is still kept only where it reads back.
+lg_unary_classes(L, P, S, Cs) :-
+    (   lg_lex(adj, P, _) -> Cs1 = [adjective] ; Cs1 = [] ),
+    (   lg_lex(vi, P, Rv)
+    ->  (   lg_animate_np(L, S) -> Cs2 = [verb, noun]
+        ;   lg_lex(known_noun, P, Rn), Rn < Rv -> Cs2 = [noun, verb]
+        ;   Cs2 = [verb, noun]
+        )
+    ;   Cs2 = [noun, verb]
+    ),
+    append([Cs1, Cs2, [adjective]], Cs3),
+    findall(C, ( member(C, Cs3), lg_class_ok(L, P/1, C) ), Cs4),
+    list_to_set(Cs4, Cs).
+
+%% A noun phrase of a person or an animal: a name a row says so, or no row
+%% has (a name with no row is a person's); a noun of one; someone, who, a
+%% pronoun of a person.
+lg_animate_np(L, name(W)) :- !, ( typology_meaning(L, animate, W) -> true ; \+ typology_meaning(L, name, W) ).
+lg_animate_np(L, np(N, _, _, _)) :- !, typology_meaning(L, animate, N).
+lg_animate_np(_, qp(_, person)) :- !.
+lg_animate_np(_, wh(who)) :- !.
+lg_animate_np(_, pron(_, pl, _)) :- !.
+lg_animate_np(_, pron(_, sg, G)) :- G \== n.
+
+%% A word's place in a list of lexicon/ (adj, vi, known_noun), the
+%% commonest first; each list is read once.
+lg_lex(File, W, R) :-
+    (   nb_current('$lg_lex', Read), memberchk(File, Read) -> true
+    ;   (   atomic_list_concat(['lexicon/', File, '.txt'], Rel),
+            catch(absolute_file_name(library(reasoning/Rel), F, [access(read)]), _, fail)
+        ->  read_file_to_codes(F, Codes), atom_codes(Text, Codes),
+            atomic_list_concat(Ws, '\n', Text),
+            foldl(lg_lex_row(File), Ws, 1, _)
+        ;   true
+        ),
+        ( nb_current('$lg_lex', R0) -> true ; R0 = [] ),
+        nb_setval('$lg_lex', [File|R0])
+    ),
+    '$lg_lex'(File, W, R), !.
+
+lg_lex_row(_, '', N, N) :- !.
+lg_lex_row(File, W, N0, N) :- assertz('$lg_lex'(File, W, N0)), N is N0 + 1.
+
+lg_arg_np(_, sub(C, NP), const(C1), NP) :- C1 == C, !.
+lg_arg_np(_, var1(NP), var(1), NP) :- !.
+lg_arg_np(_, wh, var(_), wh(W)) :- !, member(W, [who, what]).
+lg_arg_np(_, every, var(_), qp(every, K)) :- !, member(K, [thing, person]).
+lg_arg_np(L, _, const(C), NP) :- lg_const_np(L, C, NP).
+
+%% A constant's noun phrase: something, someone; the_ a definite noun
+%% phrase; a name a row has; a bare noun; a name no row has.
+lg_const_np(_, something, qp(some, thing)).
+lg_const_np(_, someone, qp(some, person)).
+lg_const_np(L, C, np(N, sg, def, As)) :- atom_concat(the_, R, C), lg_noun_split(L, R, N, As).
+lg_const_np(L, C, name(W)) :- lg_name_written(C, W), typology_meaning(L, name, W).
+lg_const_np(L, C, np(N, sg, mass, As)) :- \+ atom_concat(the_, _, C), lg_noun_split(L, C, N, As).
+lg_const_np(L, C, name(W)) :- lg_name_written(C, W), \+ typology_meaning(L, name, W).
+
+%% A constant's words as adjectives and a noun, the longest noun first.
+lg_noun_split(L, C, N, As) :-
+    atomic_list_concat(Ps, '_', C),
+    append(As, Ns, Ps), Ns \== [],
+    atomic_list_concat(Ns, '_', N),
+    typology_meaning(L, noun, N),
+    forall(member(A, As), typology_meaning(L, adjective, A)).
+
+%% A name's constant written: each word with a capital (john_smith is
+%% `John Smith').
+lg_name_written(C, W) :-
+    atomic_list_concat(Ps, '_', C),
+    maplist(lg_capital, Ps, Ws),
+    atomic_list_concat(Ws, ' ', W).
+
+lg_capital(W, C) :-
+    (   sub_atom(W, 0, 1, _, F)
+    ->  upcase_atom(F, U), sub_atom(W, 1, _, 0, R), atom_concat(U, R, C)
+    ;   C = W
+    ).
+
+lg_class_ok(L, P/A, C) :-
+    (   lg_code_class(cocolog, P/A, _)
+    ->  lg_code_class(cocolog, P/A, C)
+    ;   A == 1 -> typology_meaning(L, C, P)
+    ;   C == verb, typology_meaning(L, verb, P)
+    ).
+
+%% THE GENERAL SENTENCE: `P holds for T1, T2 and T3.', a rule's conditions
+%% after `if', a query `Does P hold for T?' or `For which X does it hold
+%% that ...?'.
+lg_general(Group, S) :-
+    maplist(lg_general_item, Group, Ss),
+    atomic_list_concat(Ss, ' ', S).
+
+lg_general_item(fact(A), S) :-
+    lg_holds(A, T), lg_sentence(T, '.', S).
+lg_general_item(rule(H, B), S) :-
+    lg_holds(H, T1),
+    lg_body_list(B, Cs), maplist(lg_holds, Cs, Ts), lg_and(Ts, T2),
+    format(atom(T), '~w if ~w', [T1, T2]),
+    lg_sentence(T, '.', S).
+lg_general_item(query(B), S) :-
+    lg_vars_of(B, Ns),
+    (   Ns == [], B = pred(P, [_|_])
+    ->  B = pred(P, Args), maplist(lg_term_words, Args, Ws), lg_and(Ws, W),
+        format(atom(T), 'does ~w hold for ~w', [P, W])
+    ;   lg_body_list(B, Cs), maplist(lg_holds, Cs, Ts), lg_and(Ts, T2),
+        (   Ns == []
+        ->  format(atom(T), 'does it hold that ~w', [T2])
+        ;   maplist(lg_var_word, Ns, Vs), lg_and(Vs, V),
+            format(atom(T), 'for which ~w does it hold that ~w', [V, T2])
+        )
+    ),
+    lg_sentence(T, '?', S).
+
+lg_holds(pred(P, []), T) :- !, format(atom(T), '~w holds', [P]).
+lg_holds(pred(P, Args), T) :-
+    maplist(lg_term_words, Args, Ws), lg_and(Ws, W),
+    format(atom(T), '~w holds for ~w', [P, W]).
+
+lg_and([W], W) :- !.
+lg_and(Ws, T) :-
+    append(Init, [Last], Ws),
+    atomic_list_concat(Init, ', ', I),
+    format(atom(T), '~w and ~w', [I, Last]).
+
+lg_term_words(var(N), W) :- !, lg_var_word(N, W).
+lg_term_words(const(C), C) :- !.
+lg_term_words(num(N), N) :- !.
+lg_term_words(str(S), W) :- !, format(atom(W), '"~w"', [S]).
+lg_term_words(list(Ts), W) :- !,
+    maplist(lg_term_words, Ts, Ws), atomic_list_concat(Ws, ', ', A),
+    format(atom(W), '[~w]', [A]).
+lg_term_words(fun(F, As), W) :- !,
+    maplist(lg_term_words, As, Ws), atomic_list_concat(Ws, ', ', A),
+    format(atom(W), '~w(~w)', [F, A]).
+lg_term_words(X, _) :- lg_no(term(X)).
+
+lg_var_word(N, W) :-
+    (   nth1(N, ['X', 'Y', 'Z', 'W'], W) -> true ; format(atom(W), 'X~w', [N]) ).
+
+%% The numbers of a body's variables, in order of first use.
+lg_vars_of(B, Ns) :- lg_vars_of(B, [], Ns0), reverse(Ns0, Ns).
+lg_vars_of(var(N), Ns0, Ns) :- !, ( memberchk(N, Ns0) -> Ns = Ns0 ; Ns = [N|Ns0] ).
+lg_vars_of(T, Ns0, Ns) :- compound(T), !, T =.. [_|As], foldl(lg_vars_of, As, Ns0, Ns).
+lg_vars_of(_, Ns, Ns).
+
+lg_sentence(T, End, S) :-
+    lg_capital(T, T1), atom_concat(T1, End, S).

@@ -10,7 +10,8 @@
 main :-
     forall(member(L, [english, spanish, italian]), typology_load(L)),
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
-                      code_write, code_read, code_round_trip]), once(S)),
+                      code_write, code_read, code_round_trip,
+                      code_english, code_general, round_trips]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -175,3 +176,72 @@ one_line(Parts, Label) :-
     atomic_list_concat(Parts, Text),
     atomic_list_concat(Lines, '\n', Text),
     atomic_list_concat(Lines, ' ', Label).
+
+%% 1.68.0: Cocolog into English. The logic form through level 1 to a
+%% sentence that reads back to it, else a general sentence.
+code_english :-
+    section('Cocolog into English'),
+    forall(member(C-Want, [
+               'human(socrates).'-'Socrates is human.',
+               'mortal(X) :- human(X).'-'Every human is mortal.',
+               '?- human(X).'-'Who is human?',
+               '?- human(socrates).'-'Is Socrates human?',
+               'happy(X) :- person(X), healthy(X), safe(X).'-'A person is happy if they are healthy and safe.',
+               'like(X, music) :- person(X).'-'Every person likes music.',
+               'see(john, the_dog).'-'John sees the dog.',
+               'like(mary, john).'-'Mary likes John.',
+               'is_sleep(john).'-'John sleeps.',
+               'man(socrates).'-'Socrates is a man.',
+               'is_sleep(X) :- dog(X).'-'Every dog sleeps.',
+               'is_sleep(the_big_dog).'-'The big dog sleeps.',
+               'mortal(something).'-'Something is mortal.',
+               'mortal(X).'-'Everything is mortal.',
+               '?- see(X, the_dog).'-'Who sees the dog?',
+               'human(socrates). mortal(X) :- human(X).'-'Socrates is human. Every human is mortal.' ]),
+           ( ( logic_translate(cocolog, english, C, T) -> true ; T = none ),
+             atomic_list_concat(['Cocolog into English: ', C], Label),
+             check(Label, T, Want) )),
+    ( logic_translate(cocolog, spanish, 'mortal(X) :- human(X).', T2) -> true ; T2 = none ),
+    check('Cocolog into Spanish: mortal(X) :- human(X).', T2, 'Cada humano es mortal.'),
+    ( logic_write(english, utterance(assertion, [fact(pred(person, [const(a_person)])),
+                                                 fact(pred(like, [const(a_person), const(music)]))]), T3) -> true ; T3 = none ),
+    check('one individual\'s facts are one sentence', T3, 'A person likes music.').
+
+%% What no level-1 IR says is a general sentence: a predicate that is no
+%% word, a body that is no adjective, a query of two variables or atoms.
+code_general :-
+    section('the general sentence'),
+    forall(member(C-Want, [
+               'append(a, b, c).'-'Append holds for a, b and c.',
+               'size(the_box, 3).'-'Size holds for the_box and 3.',
+               'happy(X) :- dog(X), fed(X).'-'Happy holds for X if dog holds for X and fed holds for X.',
+               '?- like(X, Y).'-'For which X and Y does it hold that like holds for X and Y?',
+               '?- human(socrates), mortal(socrates).'-'Does it hold that human holds for socrates and mortal holds for socrates?',
+               'name(t, "Ann").'-'Name holds for t and [65, 110, 110].',
+               'size([a, b], 2).'-'Size holds for [a, b] and 2.' ]),
+           ( ( logic_translate(cocolog, english, C, T) -> true ; T = none ),
+             atomic_list_concat(['a general sentence: ', C], Label),
+             check(Label, T, Want) )),
+    assertz(logic:lg_code_class(cocolog, mortal/1, noun)),
+    ( logic_translate(cocolog, english, 'mortal(socrates).', T4) -> true ; T4 = none ),
+    retractall(logic:lg_code_class(cocolog, mortal/1, _)),
+    check('a template row gives the word class', T4, 'Socrates is a mortal.').
+
+%% THE ROUND TRIPS keep the logic form: English, Cocolog and English again
+%% reads to the same form; Cocolog, English and Cocolog again is the same
+%% source.
+round_trips :-
+    section('the round trips through English'),
+    forall(member(T, ['Socrates is human.', 'Every human is mortal.', 'Who is human?', 'Is Socrates human?',
+                      'Something is mortal if it is human.', 'A person is happy if they are healthy and safe.',
+                      'A person likes music.', 'John sees the dog.', 'John sleeps.', 'Dogs sleep.']),
+           ( logic_readings(english, T, [U|_]),
+             ( cocolog_write(U, C), cocolog_read(C, U2), logic_write(english, U2, T2),
+               logic_readings(english, T2, Us), memberchk(U, Us) -> R = kept ; R = lost ),
+             atomic_list_concat(['English, Cocolog, English: ', T], Label),
+             check(Label, R, kept) )),
+    forall(member(C, ['human(socrates).\n', 'mortal(A) :-\n    human(A).\n', '?- human(A).\n',
+                      'is_sleep(john).\n', 'see(mary, the_dog).\n', 'like(A, music) :-\n    person(A).\n']),
+           ( ( logic_translate(cocolog, english, C, E), logic_translate(english, cocolog, E, C2) -> true ; C2 = none ),
+             one_line(['Cocolog, English, Cocolog: ', C], Label),
+             check(Label, C2, C) )).
