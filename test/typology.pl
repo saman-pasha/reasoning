@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -1884,6 +1884,41 @@ english_verbs :-
     findall(IR6, typology_read(english, 'The girl has studied the book.', IR6), IRs6),
     check('read', IRs6, [clause(study, perfect, pos, np(girl, sg, def, []), np(book, sg, def, []))]).
 
+%% 1.60.0: the verbs of one subject. The second clause of a coordination
+%% says no subject, same in the IR, the first clause's, and its verb agrees
+%% with that subject.
+coordination_same :-
+    section('coordination: the verbs of one subject'),
+    B = np(boy, sg, def, []), G = np(girl, sg, def, []), Dg = np(dog, sg, def, []),
+    forall(member(T-Want, [
+               'The boy sleeps and sees the dog.'-[and([clause(sleep, present, pos, B, none), clause(see, present, pos, same, Dg)])],
+               'The boys sleep and see the dog.'-[and([clause(sleep, present, pos, np(boy, pl, def, []), none), clause(see, present, pos, same, Dg)])],
+               'The boy and the girl sleep and see the dog.'-[and([clause(sleep, present, pos, and([B, G]), none), clause(see, present, pos, same, Dg)])],
+               'The boy sees the dog and is small.'-[and([clause(see, present, pos, B, Dg), copula(present, pos, same, adj([small]))])],
+               'The boy sleeps but sees the dog.'-[but([clause(sleep, present, pos, B, none), clause(see, present, pos, same, Dg)])],
+               'The boys sleep and sees the dog.'-[], 'The boy sleeps and see the dog.'-[] ]),
+           ( findall(R, typology_read(english, T, R), Rs),
+             atomic_list_concat(['English: ', T], Label),
+             check(Label, Rs, Want) )),
+    findall(S2, ( typology_read(spanish, 'El niño duerme y ve al perro.', and([_, C2])), C2 = clause(_, _, _, S2, _) ), Ss2),
+    sort(Ss2, Ss2u),
+    check('Spanish: the second clause''s subject is same, never a dropped pronoun', Ss2u, [same]),
+    IR1 = and([clause(sleep, present, pos, B, none), clause(see, present, pos, same, Dg)]),
+    IR2 = and([clause(sleep, present, pos, G, none), copula(present, pos, same, adj([small]))]),
+    forall(member(IR-Ws, [
+               IR1-[english-'The boy sleeps and sees the dog.', spanish-'El niño duerme y ve al perro.',
+                    italian-'Il ragazzo dorme e vede il cane.', french-'Le garçon dort et voit le chien.',
+                    german-'Der Junge schläft und sieht den Hund.', persian-'پسر می‌خوابد و سگ را می‌بیند.'],
+               IR2-[english-'The girl sleeps and is small.', spanish-'La niña duerme y es pequeña.',
+                    italian-'La ragazza dorme ed è piccola.', french-'La fille dort et est petite.',
+                    german-'Das Mädchen schläft und ist klein.', persian-'دختر می‌خوابد و کوچک است.'] ]),
+           forall(member(L-Want2, Ws),
+                  ( ( typology_write(L, IR, W) -> true ; W = none ),
+                    atomic_list_concat([L, ': ', Want2], Label2),
+                    check(Label2, W, Want2) ))),
+    ( typology_translate(english, german, 'The boy sleeps and sees the dog.', T3) -> true ; T3 = none ),
+    check('one subject translates', T3, 'Der Junge schläft und sieht den Hund.').
+
 %% 1.59.0: coordination. and(Xs) and or(Xs) where a noun phrase stands,
 %% and(Cs), or(Cs) and but(Cs) of two clauses, written in each language.
 coordination :-
@@ -1998,8 +2033,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 436 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 436 sentences read at 1.59.0 are read', R1, yes),
+    ( K >= 438 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 438 sentences read at 1.60.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

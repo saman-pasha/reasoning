@@ -26,6 +26,7 @@ the count to the last one below.
 | 1.57.0 | 278 | 3.5 % | the English verbs in the class design: 3 835 regular verbs, 217 irregular ones (`do` stays a word of grammar) |
 | 1.58.0 | 428 | 5.4 % | the English adjectives and adverbs, one fact each: 17 703 adjectives, 1 081 adverbs, from `lexicon/` and the vocabularies |
 | 1.59.0 | 436 | 5.5 % | coordination, first part: noun phrases and two clauses joined by `and`, `or`, `but` |
+| 1.60.0 | 438 | 5.5 % | coordination, second part: the verbs of one subject (`same`) |
 
 At 1.55.0 the commonest words no table has are words of grammar, not
 nouns: `and` 451 times, `by` 154, `as` 126, `out` 95, `this` 95, `all` 92,
@@ -74,8 +75,9 @@ English a word's meaning is the word: no translation table.
    main verb: until then `do` is a word of grammar only, or `Yes, he
    does.` reads as the verb `do` with no object too.
    Coordination is three versions: 1.59.0 the noun phrases and two
-   clauses (done); 1.60.0 the verbs of one subject (`They stood on high
-   and observed the countryside.`); 1.61.0 the adjectives, the adverbs
+   clauses (done); 1.60.0 the verbs of one subject (done: `The boy sleeps
+   and sees the dog.`; `They stood on high and observed the countryside.`
+   waits for `on high`); 1.61.0 the adjectives, the adverbs
    and the nouns inside a phrase (`a vicious and degrading cult`,
    `politically and economically`, `the corn and tomatoes`). Of the 215
    sentences of the measure that only a conjunction stopped at 1.58.0, 8

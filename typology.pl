@@ -3062,6 +3062,7 @@ ty_subject_number(pron(P, N0, _), N) :- ty_agreement(P, N0, N).
 %% its items (`you and I' are pl(1)), or's its last item's (`a cat or a
 %% dog sleeps').
 ty_subject_number(C, N) :- ty_coord_np(C, K, Xs), ty_coord_number(K, Xs, N).
+ty_subject_number(S, N) :- S == same, ty_same_subject(S1), ty_subject_number(S1, N).
 
 ty_coord_number(and, Xs, N) :-
     findall(P, ( member(X, Xs), ( X = pron(P0, _, _), integer(P0) -> P = P0 ; P = 3 ) ), Ps),
@@ -3160,7 +3161,33 @@ ty_sentence(L, IR) -->
     ty_statement(L, C1),
     ty_clause_comma_mark(L, K),
     ty_conjunction_words(L, K),
-    ty_statement(L, C2).
+    { ty_ir_subject(C1, S1), b_setval('$ty_same', s(S1)) },
+    ty_statement(L, C2),
+    { b_setval('$ty_same', none) }.
+
+%% THE VERBS OF ONE SUBJECT (since 1.60.0): the second clause says no
+%% subject, same in the IR, the first clause's (`They stood on high and
+%% observed the countryside.' is and([clause(stand, ...), clause(observe,
+%% past, pos, same, np(countryside, sg, def, []))])). Its verb agrees with
+%% that subject, '$ty_same' while it is read or written, and a dropped
+%% pronoun is no reading there (Spanish `El niño duerme y ve al perro.' is
+%% same, not he or she).
+ty_ir_subject(clause(_, _, _, S, _, _), S).
+ty_ir_subject(copula(_, _, S, _), S).
+
+ty_same_subject(S1) :- nb_current('$ty_same', s(S1)).
+
+%% The features of a phrase of the IR, as its reading gives them.
+ty_ir_features(L, np(M, N, D, _), [D, N, A, G]) :- !,
+    ( once(ty_noun(L, M, G, A, _, _)) -> true ; A = unknown ).
+ty_ir_features(L, Pr, F) :- Pr = pron(_, _, _), !, ty_pron_np_features(L, Pr, F).
+ty_ir_features(L, of(_, NP), F) :- !, ty_ir_features(L, NP, F).
+ty_ir_features(L, rel(NP, _), F) :- !, ty_ir_features(L, NP, F).
+ty_ir_features(L, C, F) :-
+    ty_coord_np(C, K, Xs), !,
+    findall(F1, ( member(X, Xs), ty_ir_features(L, X, F1) ), Fs),
+    ty_coord_features(K, Fs, F).
+ty_ir_features(_, _, [_, _, _, _]).
 
 ty_statement(L, C) --> ty_clause(L, C), { ty_wh_count(C, yes_no) }.
 ty_statement(L, C) --> ty_copula_clause(L, C), { ty_wh_count(C, yes_no) }.
@@ -3646,6 +3673,7 @@ ty_np_animacy(L, rel(NP, _), A) :- NP = np(_, _, _, _), ty_np_animacy(L, NP, A).
 ty_np_animacy(L, gap(NP, _, _), A) :- ty_np_animacy(L, NP, A).
 ty_np_animacy(L, of(_, NP), A) :- NP = np(_, _, _, _), ty_np_animacy(L, NP, A).
 ty_np_animacy(L, C, A) :- ty_coord_np(C, _, Xs), forall(member(X, Xs), ty_np_animacy(L, X, A)).
+ty_np_animacy(L, S, A) :- S == same, ty_same_subject(S1), ty_np_animacy(L, S1, A).
 ty_np_animacy(L, pron(_, _, K), A) :-
     nonvar(K), K = ref(M), !,
     ty_np_animacy(L, np(M, _, _, _), A).
@@ -4111,7 +4139,7 @@ ty_ppron_role(L, Role, Pr, F) -->
       ty_marks_ok(L, Role, before, F, Before),
       ty_marks_ok(L, Role, after, F, After) }.
 ty_ppron_role(L, s, Pr, F) -->
-    { ty_pro_drop(L, _), \+ ty_dropped_first(L, Pr),
+    { ty_pro_drop(L, _), \+ ty_dropped_first(L, Pr), \+ ty_same_subject(_),
       Pr = pron(P, _, _), ( var(P) -> member(P, [1, 2, 3]) ; P \== polite ),
       ty_pron_np_features(L, Pr, F) }.
 
@@ -4680,6 +4708,7 @@ ty_subject_gn(L, S, G, N) :-
     ;   S = of(_, H) -> ty_subject_gn(L, H, G, N)
     ;   S = gap(H, _, _) -> ty_subject_gn(L, H, G, N)
     ;   ty_coord_np(S, K, Xs) -> ty_coord_gn(L, K, Xs, G, N)
+    ;   S == same -> ty_same_subject(S1), ty_subject_gn(L, S1, G, N)
     ).
 
 %% A coordination's gender and number (since 1.59.0): and's plural, f
@@ -4893,6 +4922,11 @@ ty_role(L, Role, C, Features) -->
           ty_marks_ok(L, Role, before, Features, Before),
           ty_marks_ok(L, Role, after, Features, After) }
     ).
+
+%% The subject of a coordination's second clause that says none (since
+%% 1.60.0): same, with the first clause's subject's features.
+ty_role(L, s, S, F) -->
+    { ty_same_subject(S1), ( var(S) -> S = same ; S == same ), ty_ir_features(L, S1, F) }.
 
 %% What a coordination's slot may hold, reading (unbound: and, then or)
 %% or writing.

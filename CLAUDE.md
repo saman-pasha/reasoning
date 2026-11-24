@@ -116,7 +116,15 @@ and C`). The agreement of a coordination asks its IR (`ty_subject_number/2`,
 was read: a verb before its subject (Spanish `Duermen el niño y la niña.`)
 reads no coordination. Spanish `a` after `y` or `o` is the object's mark
 again (a `ty_sense/5` row), or the second item of `al perro y a la niña`
-is no object.**The blank template is generated too** (1.54.0): `templates/template.pl`
+is no object. **The verbs of one subject since 1.60.0**: a coordination's
+second clause may say no subject, `same` in the IR. `ty_sentence/3` puts
+the first clause's subject in `'$ty_same'` while the second is read or
+written, and `ty_role/4`'s rule for `same` reads no words;
+`ty_subject_number/2`, `ty_subject_gn/4` and `ty_np_animacy/3` ask that
+subject, and the reading of a dropped pronoun is off there
+(`ty_ppron_role/6`), or Spanish `y ve al perro` would read twice. Italian
+`e` is `ed` before e (a `ty_before/5` row).
+**The blank template is generated too** (1.54.0): `templates/template.pl`
 is what `typology_import(template)` writes, `typology_template(xx)`: every
 slot of typology.pl's header list (THE TEMPLATE) with the header's own
 description, in the groups of `ty_template_group/2`, each closed choice

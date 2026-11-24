@@ -131,6 +131,9 @@ ty_before(italian, il, [[vowel], [h]], 'l\'', joined).
 ty_before(italian, la, [[vowel], [h]], 'l\'', joined).
 ty_before(italian, i, [[vowel], [h], [s, consonant], [z], [g, n], [p, s], [p, n], [x], [y]], gli, space).
 ty_before(italian, un, [[s, consonant], [z], [g, n], [p, s], [p, n], [x], [y]], uno, space).
+%% `e' is `ed' before a word that begins with e (since 1.60.0: `dorme ed è
+%% piccola').
+ty_before(italian, e, [[e], ['è'], ['é']], ed, space).
 ty_before(italian, una, [[vowel]], 'un\'', joined).
 
 %% The copula clause: subject, copula, predicate; `essere' for every kind

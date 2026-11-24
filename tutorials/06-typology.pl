@@ -137,6 +137,7 @@ main :-
     english_verb_classes,
     english_modifiers,
     coordination,
+    coordination_same,
     format("~ndone~n", []).
 
 
@@ -792,6 +793,20 @@ coordination :-
     must('two clauses', IR4, but([clause(sleep, present, pos, B, none), clause(see, present, pos, G, D)])),
     typology_write(german, IR4, W5),
     must('German writes a comma before aber', W5, 'Der Junge schläft, aber das Mädchen sieht den Hund.').
+
+%% 46. THE VERBS OF ONE SUBJECT (1.60.0): the second clause of a coordination
+%% may say no subject, same in the IR, the first clause's; its verb agrees
+%% with that subject, and each language writes no subject there.
+coordination_same :-
+    typology_read(english, 'The boys sleep and see the dog.', IR1),
+    must('same is the first clause''s subject', IR1,
+         and([clause(sleep, present, pos, np(boy, pl, def, []), none),
+              clause(see, present, pos, same, np(dog, sg, def, []))])),
+    ( typology_read(english, 'The boys sleep and sees the dog.', _) -> R2 = read ; R2 = refused ),
+    must('and its verb agrees with it', R2, refused),
+    typology_write(italian, and([clause(sleep, present, pos, np(girl, sg, def, []), none),
+                                 copula(present, pos, same, adj([small]))]), W3),
+    must('Italian, its adjective agreeing with the girl', W3, 'La ragazza dorme ed è piccola.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
