@@ -197,6 +197,18 @@ words are English's closed words, so no noun row has `someone`.
 The bare noun costs the benchmark's English 13.8 % more inferences (its
 checks, asked wherever a noun stands with no article), the other languages
 under 1.3 %.
+**The subordinate clause since 1.65.0** (the translator's fourth step):
+`sub(Kind, Main, Clause)` at the sentence's level, Kind if, when or because
+(`ty_subordinator/3`), written after its main clause and read before it too
+where `ty_subordinate_first/1` says, a comma after it; a comma before a
+clause after its main one where `ty_subordinate_comma/1` says (German).
+The clause is read as a relative clause is, through `ty_sub//1`, so
+`ty_verb_last(german, rel)` puts its verb last too. German reads no clause
+first (it moves the main clause's verb before its subject: not yet).
+`'$ty_sub'` is set only inside the clause, so the main clause keeps its
+verb second. The IR walkers (`ty_ir_map/3`, `ty_ir_tw_/3`, `ty_mention/4`,
+`ty_ir_meaning/2`) have a clause for `sub/3`: without one, `ty_ir_map`
+would leave its clauses in the five-argument shape and the parse would fail.
 **The blank template is generated too** (1.54.0): `templates/template.pl`
 is what `typology_import(template)` writes, `typology_template(xx)`: every
 slot of typology.pl's header list (THE TEMPLATE) with the header's own

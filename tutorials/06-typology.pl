@@ -142,6 +142,7 @@ main :-
     names,
     quantifiers,
     mass,
+    subordinate,
     format("~ndone~n", []).
 
 
@@ -726,7 +727,7 @@ blank_template :-
     split_string(S, "\n", "", Lines),
     include([L]>>sub_string(L, 0, _, _, 'ty_'), Lines, Choices),
     length(Choices, N1),
-    must('the choices, each a row of code', N1, 84),
+    must('the choices, each a row of code', N1, 86),
     ( member(L2, Lines), sub_string(L2, 0, _, _, '%% ty_noun(klingon, Meaning, Gender') -> R2 = shape ; R2 = none ),
     must('a slot of words, its shape', R2, shape),
     ( member(L3, Lines), sub_string(L3, 0, _, _, '%%   e.g. ty_noun_in(english, dog,') -> R3 = example ; R3 = none ),
@@ -875,6 +876,18 @@ mass :-
     must('Italian', W2, 'Il ragazzo beve acqua.'),
     ( typology_read(english, 'Dog sleeps.', _) -> R3 = read ; R3 = refused ),
     must('an animal is no bare noun', R3, refused).
+
+%% 51. THE SUBORDINATE CLAUSE (1.65.0, the translator's fourth step):
+%% sub(Kind, Main, Clause), a statement and a clause of if, when or
+%% because (ty_subordinator/3), after it, or before it where the language
+%% allows (ty_subordinate_first/1); German's verb stands last in it.
+subordinate :-
+    typology_read(english, 'Something is mortal if it is human.', IR1),
+    must('an if clause', IR1, sub(if, copula(present, pos, qp(some, thing), adj([mortal])),
+                                  copula(present, pos, pron(3, sg, n), adj([human])))),
+    typology_read(english, 'If the dog sleeps, the boy sleeps.', IR2),
+    typology_write(german, IR2, W3),
+    must('German, the clause after, its verb last', W3, 'Der Junge schläft, wenn der Hund schläft.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

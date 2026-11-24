@@ -325,6 +325,17 @@
 %%                                     Persian ند made م: `می‌بینم')
 %%     ty_capital(L, Word, Written)    a word always written with its
 %%                                     capital (English `I')
+%%     ty_subordinator(L, Kind, Words) the words that begin a subordinate
+%%                                     clause of Kind if, when or because
+%%                                     (since 1.65.0: `if', `si', `wenn',
+%%                                     `parce que')
+%%     ty_subordinate_first(L)         a subordinate clause may stand before
+%%                                     its main clause, a comma after it
+%%                                     (`If it sleeps, the dog is small.');
+%%                                     written after it
+%%     ty_subordinate_comma(L)         a comma before a subordinate clause
+%%                                     after its main clause too (German
+%%                                     `, wenn'); read with or without one
 %%     ty_quantifier_pronoun(L, Quantifier, Kind, Words)
 %%                                     a word of a quantifier and a kind
 %%                                     where a noun phrase stands (since
@@ -471,7 +482,9 @@
 %%                                     infinitive) stands at the clause's
 %%                                     end (German `Der Junge hat den Hund
 %%                                     nicht gesehen.')
-%%     ty_verb_last(L, rel)            a relative clause's verb stands after
+%%     ty_verb_last(L, rel)            a relative clause's (and since 1.65.0
+%%                                     a subordinate clause's) verb stands
+%%                                     after
 %%                                     its other parts (German `der Hund,
 %%                                     den der Junge sieht')
 %%     ty_copula_negation(L, Words, Place)
@@ -550,6 +563,13 @@
 %%                                     do not tell (`you' is pron(2, _, _));
 %%                                     Kind ref(Meaning) in a text's IR, the
 %%                                     noun the pronoun stands for
+%%     sub(Kind, Main, Clause)         a statement and a subordinate clause
+%%                                     of Kind if, when or because (since
+%%                                     1.65.0): `Something is mortal if it
+%%                                     is human.' is sub(if, copula(...,
+%%                                     qp(some, thing), adj([mortal])),
+%%                                     copula(..., pron(3, sg, n),
+%%                                     adj([human])))
 %%     qp(Quantifier, Kind)            a quantifier pronoun where a noun
 %%                                     phrase stands (since 1.63.0):
 %%                                     qp(some, person) `someone',
@@ -699,7 +719,7 @@
            ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
            ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
            ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-           ty_pro_drop/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4,
+           ty_pro_drop/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
            ty_answer_echo/3, ty_kind/2, ty_adjective_before/2, ty_pronoun_gender/2,
            ty_inversion/3, ty_wh_tonic/3,
            ty_tense_form/5, ty_participle/3, ty_participle_like/3,
@@ -725,7 +745,7 @@
                  ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
                  ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
                  ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-                 ty_pro_drop/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4,
+                 ty_pro_drop/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
                  ty_answer_echo/3, ty_adjective_before/2, ty_pronoun_gender/2,
                  ty_inversion/3, ty_wh_tonic/3,
                  ty_tense_form/5, ty_participle/3, ty_participle_like/3,
@@ -766,6 +786,8 @@ ty_values(definiteness, [def, indef, which, every, each, all, some, no, any, thi
 %% A quantifier pronoun's quantifier and kind (since 1.63.0).
 ty_values(quantifier, [some, every, no, any, this, that]).
 ty_values(quantifier_kind, [thing, person]).
+%% A subordinate clause's kind (since 1.65.0).
+ty_values(subordinator, [if, when, because]).
 ty_values(animacy, [person, animate, inanimate, unknown]).
 ty_values(place, [before, after]).
 ty_values(role, [s, o]).
@@ -1009,7 +1031,7 @@ ty_tdoc_more(Ls, [], Ls).
 %% section blank_template holds them to the header's slots).
 ty_template_group('the orders of the levels', [ty_order]).
 ty_template_group('words', [ty_noun_class, ty_class_when, ty_noun_in, ty_noun, ty_adjective, ty_adjective_before, ty_article, ty_adposition,
-                            ty_adverb, ty_capital, ty_capital_nouns, ty_name, ty_quantifier_pronoun, ty_definite_like, ty_and, ty_conjunction, ty_serial_comma,
+                            ty_adverb, ty_capital, ty_capital_nouns, ty_name, ty_quantifier_pronoun, ty_definite_like, ty_subordinator, ty_subordinate_first, ty_subordinate_comma, ty_and, ty_conjunction, ty_serial_comma,
                             ty_conjunct_marks, ty_clause_comma, ty_comma, ty_sense, ty_closed]).
 ty_template_group('verbs and tenses', [ty_conjugation, ty_verb_in, ty_irregular_verb, ty_verb, ty_tense_form, ty_tense_like, ty_participle,
                                        ty_participle_like, ty_participle_ending, ty_participle_agrees,
@@ -1085,6 +1107,8 @@ ty_template_flag(ty_clitic, Name, ty_clitic(Name, o)).
 ty_template_flag(ty_participle_agrees, Name, ty_participle_agrees(Name, clitic)).
 ty_template_flag(ty_split_place, Name, ty_split_place(Name, end)).
 ty_template_flag(ty_verb_last, Name, ty_verb_last(Name, rel)).
+ty_template_flag(ty_subordinate_first, Name, ty_subordinate_first(Name)).
+ty_template_flag(ty_subordinate_comma, Name, ty_subordinate_comma(Name)).
 ty_template_flag(ty_relative_comma, Name, ty_relative_comma(Name)).
 ty_template_flag(ty_capital_nouns, Name, ty_capital_nouns(Name)).
 ty_template_flag(ty_adjunct_front, Name, ty_adjunct_front(Name, v2)).
@@ -1138,6 +1162,9 @@ ty_row_shape('ty_verb_person(L, Tense, Person, Base, From, To).').
 ty_row_shape('ty_capital(L, Word, Written).').
 ty_row_shape('ty_name(L, Meaning, Written, Gender, Animacy).').
 ty_row_shape('ty_quantifier_pronoun(L, Quantifier, Kind, Words).').
+ty_row_shape('ty_subordinator(L, Kind, Words).').
+ty_row_shape('ty_subordinate_first(L).').
+ty_row_shape('ty_subordinate_comma(L).').
 ty_row_shape('ty_answer_echo(L, Rule, Word).').
 ty_row_shape('ty_adjective_before(L, Meaning).').
 ty_row_shape('ty_pronoun_gender(L, System).').
@@ -1545,6 +1572,10 @@ ty_missing(L, bad(ty_verb_person(L, T, K, B, F, To))) :-
 ty_missing(L, bad(ty_capital(L, W, C))) :-
     ty_capital(L, W, C),
     \+ ( atom(W), atom(C), downcase_atom(C, W) ).
+ty_missing(L, bad(ty_subordinator(L, K, Ws))) :-
+    ty_subordinator(L, K, Ws),
+    \+ ( ty_values(subordinator, Ks), memberchk(K, Ks), is_list(Ws), Ws \== [],
+         forall(member(W, Ws), atom(W)) ).
 ty_missing(L, bad(ty_definite_like(L, D, As))) :-
     ty_definite_like(L, D, As),
     \+ ( ty_values(definiteness, Ds), memberchk(D, Ds), memberchk(As, Ds), D \== As ).
@@ -1757,6 +1788,7 @@ ty_read_bases(L, Surface, Topics, Mood, IR0, C) :-
     ty_coord_flag(L, Bases),
     ty_name_flag(L, Bases),
     ty_qp_flag(L, Bases),
+    ty_subord_flag(L, Bases),
     ty_parse_reset(L),
     ty_mood(Mood, L, IR0, C, Goal),
     phrase(Goal, Bases).
@@ -1819,6 +1851,7 @@ ty_ir_tw_(rel(NP, C), L, rel(NP1, C1)) :- !, ty_ir_tw(NP, L, NP1), ty_ir_tw(C, L
 ty_ir_tw_(of(G, NP), L, of(G1, NP1)) :- !, ty_ir_tw(G, L, G1), ty_ir_tw(NP, L, NP1).
 ty_ir_tw_(pp(M, NP), L, pp(M, NP1)) :- !, ty_ir_tw(NP, L, NP1).
 ty_ir_tw_(answer(P, A, C), L, answer(P, A, C1)) :- !, ty_ir_tw(C, L, C1).
+ty_ir_tw_(sub(K, M, C), L, sub(K, M1, C1)) :- !, ty_ir_tw(M, L, M1), ty_ir_tw(C, L, C1).
 ty_ir_tw_(echo(C), L, echo(C1)) :- !, ty_ir_tw(C, L, C1).
 ty_ir_tw_(C, L, C1) :- ty_coord_any(C, K, Xs), !, ty_ir_tw_items(Xs, L, Ys), C1 =.. [K, Ys].
 ty_ir_tw_(X, _, X).
@@ -1850,6 +1883,7 @@ ty_reads_as(Mood, L, IR0, Tokens, Topics) :-
            ty_coord_flag(L, Tokens),
            ty_name_flag(L, Tokens),
            ty_qp_flag(L, Tokens),
+           ty_subord_flag(L, Tokens),
            aggregate_all(min(C), ( ty_mood(Mood, L, IR0, C, G), phrase(G, Tokens) ), C1),
            \+ ( C1 > 0,
                 ty_ir_senses(IR0, Ms),
@@ -1942,6 +1976,7 @@ ty_ir_map(D, rel(NP, C), rel(NP1, C1)) :- !,
 ty_ir_map(D, of(G, NP), of(G1, NP1)) :- !, ty_ir_map(D, G, G1), ty_ir_map(D, NP, NP1).
 ty_ir_map(D, pp(M, NP), pp(M, NP1)) :- !, ty_ir_map(D, NP, NP1).
 ty_ir_map(D, answer(P, A, C), answer(P, A, C1)) :- !, ty_ir_map(D, C, C1).
+ty_ir_map(D, sub(K, M, C), sub(K, M1, C1)) :- !, ty_ir_map(D, M, M1), ty_ir_map(D, C, C1).
 ty_ir_map(D, echo(C), echo(C1)) :- !, ty_ir_map(D, C, C1).
 ty_ir_map(D, C, C1) :- ty_coord_any(C, K, Xs), !, maplist(ty_ir_map(D), Xs, Ys), C1 =.. [K, Ys].
 ty_ir_map(_, X, X).
@@ -2046,6 +2081,7 @@ ty_mention(copula(_, _, S, Pr), R, M, N) :- !,
 ty_mention(C, R, M, N) :- ty_coord_any(C, _, Cs), Cs = [X|_], X \= np(_, _, _, _), !, member(X1, Cs), ty_mention(X1, R, M, N).
 ty_mention(question(C), R, M, N) :- !, ty_mention(C, R, M, N).
 ty_mention(answer(_, _, C), R, M, N) :- !, ty_mention(C, R, M, N).
+ty_mention(sub(_, Main, C), R, M, N) :- !, ( ty_mention(Main, R, M, N) ; ty_mention(C, R, M, N) ).
 
 ty_np_mention(X, _, _) :- var(X), !, fail.
 ty_np_mention(np(M, N, _, _), M, N).
@@ -2085,6 +2121,7 @@ typology_topics(IR, Topics) :-
 
 ty_ir_meaning(question(C), M) :- ty_ir_meaning(C, M).
 ty_ir_meaning(answer(_, _, C), M) :- ty_ir_meaning(C, M).
+ty_ir_meaning(sub(_, Main, C), M) :- ( ty_ir_meaning(Main, M) ; ty_ir_meaning(C, M) ).
 ty_ir_meaning(echo(C), M) :- ty_ir_meaning(C, M).
 ty_ir_meaning(clause(V, T, P, S, O), M) :-
     ty_ir_meaning(clause(V, T, P, S, O, []), M).
@@ -2653,6 +2690,7 @@ ty_known_base(L, B) :-
         ty_pronoun(L, s, [W], _)
     ;   ty_and(L, Ws), memberchk(B, Ws)
     ;   ty_conjunction(L, _, Ws), memberchk(B, Ws)
+    ;   ty_subordinator(L, _, Ws), memberchk(B, Ws)
     ;   ty_relative(L, _, Ws, _), memberchk(B, Ws)
     ;   ty_relative_pronoun(L, Ws, _), memberchk(B, Ws)
     ;   ty_resumptive(L, Ws, _), memberchk(B, Ws)
@@ -3278,6 +3316,59 @@ ty_sentence(L, IR) -->
     { ty_ir_subject(C1, S1), b_setval('$ty_same', s(S1)) },
     ty_statement(L, C2),
     { b_setval('$ty_same', none) }.
+
+%% SUBORDINATE CLAUSES (since 1.65.0): sub(Kind, Main, Clause), a statement
+%% and a clause its kind's words begin (ty_subordinator/3: `if', `si',
+%% `wenn'). Written after the main clause, with a comma before it where
+%% ty_subordinate_comma/1 says (German); read before it too where
+%% ty_subordinate_first/1 says, a comma after it (`If it sleeps, the dog is
+%% small.'). The clause is read as a relative clause is (ty_sub//1), so
+%% German's verb stands last (`, wenn der Hund schläft').
+ty_sentence(L, sub(K, Main, C)) -->
+    ty_subord_here,
+    { ty_subord_kind(K) },
+    ty_subord_ahead(L, K),
+    (   ty_statement(L, Main),
+        ty_subord_comma_mark(L),
+        ty_subordinator_words(L, K),
+        ty_subord_statement(L, C)
+    ;   { ty_subordinate_first(L) },
+        ty_subordinator_words(L, K),
+        ty_subord_statement(L, C),
+        ( [','] ; [] ),
+        ty_statement(L, Main)
+    ).
+
+ty_subord_kind(K) :- ( var(K) -> ty_values(subordinator, Ks), member(K, Ks) ; true ).
+
+ty_subord_statement(L, C) -->
+    (   { '$ty_sub_used'(L) } -> ty_sub(ty_statement(L, C)) ; ty_statement(L, C) ).
+
+ty_subord_comma_mark(L) --> ( { ty_subordinate_comma(L) } -> ( [','] ; [] ) ; ( [] ; [','] ) ).
+
+ty_subordinator_words(L, K) -->
+    (   { nonvar(K) } -> { once(ty_subordinator(L, K, Ws)) }, ty_tokens(Ws)
+    ;   { ty_subordinator(L, K, Ws) }, ty_tokens(Ws)
+    ).
+
+%% THE SUBORDINATORS OF A TEXT: the kinds whose first word its words hold
+%% ('$ty_subord'), as the conjunctions'.
+ty_subord_flag(L, Words) :-
+    findall(K, ( ty_subordinator(L, K, [W|_]), memberchk(W, Words) ), Ks0),
+    sort(Ks0, Ks),
+    b_setval('$ty_subord', f(Ks)).
+
+ty_subord_here(S, S) :-
+    (   var(S) -> true
+    ;   nb_current('$ty_subord', f(Ks)) -> Ks \== []
+    ;   true
+    ).
+
+ty_subord_ahead(L, K, S, S) :-
+    (   var(S) -> true
+    ;   nb_current('$ty_subord', f(Ks)) -> memberchk(K, Ks)
+    ;   \+ \+ ( ty_subordinator(L, K, [W|_]), memberchk(W, S) )
+    ).
 
 %% THE VERBS OF ONE SUBJECT (since 1.60.0): the second clause says no
 %% subject, same in the IR, the first clause's (`They stood on high and

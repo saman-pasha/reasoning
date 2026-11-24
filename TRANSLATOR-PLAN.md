@@ -116,8 +116,10 @@ its benchmark, as every typology version has.
 3. **The bare noun** (level 1, done: 1.64.0): a mass noun or a plural
    with no article (`likes music`, `Dogs sleep.`). The plural read so
    already (indef); the singular is np(music, sg, mass, []).
-4. **The `if` clause** (level 1): a condition before or after its
-   clause, and a pronoun in it that refers to a noun phrase of its clause.
+4. **The `if` clause** (level 1, done: 1.65.0): a condition before or
+   after its clause, `sub(if, Main, Clause)`, with `when` and `because`.
+   A pronoun in it that refers to a noun phrase of its clause is level
+   2's to bind. The seven sentences of the milestone all read at level 1.
 5. **Level 2**: the logic form from level 1, for the table above, with
    its diagnostics.
 6. **The Cocolog template**: the reader, the writer, the predicate

@@ -127,6 +127,12 @@ ty_quantifier_pronoun(spanish, every, thing, [todo]).
 ty_quantifier_pronoun(spanish, every, person, [todo, el, mundo]).
 ty_quantifier_pronoun(spanish, this, thing, [esto]).
 ty_quantifier_pronoun(spanish, that, thing, [eso]).
+%% SUBORDINATE CLAUSES (since 1.65.0): the words of each kind, and where
+%% the clause may stand.
+ty_subordinator(spanish, if, [si]).
+ty_subordinator(spanish, when, [cuando]).
+ty_subordinator(spanish, because, [porque]).
+ty_subordinate_first(spanish).
 
 %% The personal `a': before an animate object that is definite or
 %% singular (`ve al perro', `ve a una niña'; `ve perros', `ve un libro').

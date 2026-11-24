@@ -148,6 +148,12 @@ ty_quantifier_pronoun(italian, every, thing, [tutto]).
 ty_quantifier_pronoun(italian, every, person, [ognuno]).
 ty_quantifier_pronoun(italian, this, thing, [questo]).
 ty_quantifier_pronoun(italian, that, thing, [quello]).
+%% SUBORDINATE CLAUSES (since 1.65.0): the words of each kind, and where
+%% the clause may stand.
+ty_subordinator(italian, if, [se]).
+ty_subordinator(italian, when, [quando]).
+ty_subordinator(italian, because, ['perché']).
+ty_subordinate_first(italian).
 
 %% The articles by the sound of the next word: `lo', `gli' and `uno' before
 %% s and a consonant, z, gn, ps, pn, x and y; `l'' and `un'' before a vowel,

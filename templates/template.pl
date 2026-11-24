@@ -177,6 +177,26 @@ ty_capital_nouns(xx).
 %% ty_definite_like(xx, Def, As).
 %%   e.g. ty_definite_like(persian, mass, def).
 
+%%     ty_subordinator(L, Kind, Words) the words that begin a subordinate
+%%                                     clause of Kind if, when or because
+%%                                     (since 1.65.0: `if', `si', `wenn',
+%%                                     `parce que')
+%% ty_subordinator(xx, Kind, Words).
+%%   e.g. ty_subordinator(english, if, [if]).
+
+%%     ty_subordinate_first(L)         a subordinate clause may stand before
+%%                                     its main clause, a comma after it
+%%                                     (`If it sleeps, the dog is small.');
+%%                                     written after it
+%%   (keep it where the language does this, else delete it)
+ty_subordinate_first(xx).
+
+%%     ty_subordinate_comma(L)         a comma before a subordinate clause
+%%                                     after its main clause too (German
+%%                                     `, wenn'); read with or without one
+%%   (keep it where the language does this, else delete it)
+ty_subordinate_comma(xx).
+
 %%     ty_and(L, Words)                the words that join the last item of
 %%                                     a list: a predicate's adjectives, noun
 %%                                     phrases, clauses (`and', `y', `und',
@@ -349,7 +369,9 @@ ty_participle_agrees(xx, clitic).
 %%   (keep it where the language does this, else delete it)
 ty_split_place(xx, end).
 
-%%     ty_verb_last(L, rel)            a relative clause's verb stands after
+%%     ty_verb_last(L, rel)            a relative clause's (and since 1.65.0
+%%                                     a subordinate clause's) verb stands
+%%                                     after
 %%                                     its other parts (German `der Hund,
 %%                                     den der Junge sieht')
 %%   (keep it where the language does this, else delete it)

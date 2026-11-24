@@ -485,6 +485,12 @@ ty_quantifier_pronoun(english, any, person, [anyone]).
 ty_quantifier_pronoun(english, any, person, [anybody]).
 ty_quantifier_pronoun(english, this, thing, [this]).
 ty_quantifier_pronoun(english, that, thing, [that]).
+%% SUBORDINATE CLAUSES (since 1.65.0): the words of each kind, and where
+%% the clause may stand.
+ty_subordinator(english, if, [if]).
+ty_subordinator(english, when, [when]).
+ty_subordinator(english, because, [because]).
+ty_subordinate_first(english).
 
 %% The negative: `does not', `do not', `did not' before the base, which is
 %% the present plural.

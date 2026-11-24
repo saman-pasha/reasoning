@@ -203,6 +203,14 @@ ty_quantifier_pronoun(french, every, thing, [tout]).
 ty_quantifier_pronoun(french, every, person, [tout, le, monde]).
 ty_quantifier_pronoun(french, this, thing, [ceci]).
 ty_quantifier_pronoun(french, that, thing, [cela]).
+%% SUBORDINATE CLAUSES (since 1.65.0): the words of each kind, and where
+%% the clause may stand.
+%% `si' is `s\'' before `il' and `ils'.
+ty_subordinator(french, if, [si]).
+ty_subordinator(french, when, [quand]).
+ty_subordinator(french, because, [parce, que]).
+ty_subordinate_first(french).
+ty_before(french, si, [[i, l]], 's\'', joined).
 
 %% Elision: `le', `la', `de', `ne', `que', `je', `me' and `te' lose their
 %% vowel before a vowel or a mute h, written joined to the next word

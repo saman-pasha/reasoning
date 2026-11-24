@@ -136,6 +136,12 @@ ty_quantifier_pronoun(persian, every, thing, ['همه‌چیز']).
 ty_quantifier_pronoun(persian, every, person, ['هر', 'کس']).
 ty_quantifier_pronoun(persian, this, thing, ['این']).
 ty_quantifier_pronoun(persian, that, thing, ['آن']).
+%% SUBORDINATE CLAUSES (since 1.65.0): the words of each kind, and where
+%% the clause may stand.
+ty_subordinator(persian, if, ['اگر']).
+ty_subordinator(persian, when, ['وقتی']).
+ty_subordinator(persian, because, ['چون']).
+ty_subordinate_first(persian).
 
 %% `را' after a definite object.
 ty_mark(persian, o, after, 'را', [[def]]).

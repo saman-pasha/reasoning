@@ -184,6 +184,15 @@ ty_quantifier_pronoun(german, no, thing, [nichts]).
 ty_quantifier_pronoun(german, no, person, [niemand]).
 ty_quantifier_pronoun(german, this, thing, [dies]).
 ty_quantifier_pronoun(german, that, thing, [das]).
+%% SUBORDINATE CLAUSES (since 1.65.0): the words of each kind, and where
+%% the clause may stand.
+%% The clause after its main clause alone (a clause first moves the main
+%% clause's verb before its subject: not yet), a comma before it, its verb
+%% last (ty_verb_last(german, rel)). `wenn' is if and when.
+ty_subordinator(german, if, [wenn]).
+ty_subordinator(german, when, [wenn]).
+ty_subordinator(german, because, [weil]).
+ty_subordinate_comma(german).
 ty_adjective_ending(german, weak, nom, any, sg, e).
 ty_adjective_ending(german, weak, acc, m, sg, en).
 ty_adjective_ending(german, weak, acc, f, sg, e).

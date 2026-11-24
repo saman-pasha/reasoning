@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -1884,6 +1884,42 @@ english_verbs :-
     findall(IR6, typology_read(english, 'The girl has studied the book.', IR6), IRs6),
     check('read', IRs6, [clause(study, perfect, pos, np(girl, sg, def, []), np(book, sg, def, []))]).
 
+%% 1.65.0: the subordinate clause. sub(Kind, Main, Clause): a statement and
+%% a clause of if, when or because, after it or, where the language allows,
+%% before it; German's verb last in it.
+subordinate :-
+    section('the subordinate clause'),
+    B = np(boy, sg, def, []), Dg = np(dog, sg, def, []),
+    S1 = clause(sleep, present, pos, B, none), S2 = clause(sleep, present, pos, Dg, none),
+    forall(member(T-Want, [
+               'Something is mortal if it is human.'-[sub(if, copula(present, pos, qp(some, thing), adj([mortal])),
+                                                          copula(present, pos, pron(3, sg, n), adj([human])))],
+               'The boy sleeps because the dog sleeps.'-[sub(because, S1, S2)],
+               'If the dog sleeps, the boy sleeps.'-[sub(if, S1, S2)],
+               'If the dog sleeps the boy sleeps.'-[sub(if, S1, S2)],
+               'The boy sleeps if.'-[] ]),
+           ( findall(R, typology_read(english, T, R), Rs),
+             atomic_list_concat(['English: ', T], Label),
+             check(Label, Rs, Want) )),
+    findall(K2, typology_read(german, 'Der Junge schläft, wenn der Hund schläft.', sub(K2, _, _)), Ks2),
+    check('German: wenn is if and when', Ks2, [if, when]),
+    ( typology_read(german, 'Der Junge schläft, wenn der Hund schläft nicht.', _) -> R3 = read ; R3 = refused ),
+    check('German: the verb last', R3, refused),
+    IR4 = sub(because, S1, clause(see, present, pos, np(girl, sg, def, []), Dg)),
+    forall(member(L5-Want5, [english-'The boy sleeps because the girl sees the dog.',
+                             spanish-'El niño duerme porque la niña ve al perro.',
+                             italian-'Il ragazzo dorme perché la ragazza vede il cane.',
+                             french-'Le garçon dort parce que la fille voit le chien.',
+                             german-'Der Junge schläft, weil das Mädchen den Hund sieht.',
+                             persian-'پسر می‌خوابد چون دختر سگ را می‌بیند.']),
+           ( ( typology_write(L5, IR4, W5) -> true ; W5 = none ),
+             atomic_list_concat([L5, ': ', Want5], Label5),
+             check(Label5, W5, Want5) )),
+    ( typology_write(french, sub(if, S1, clause(see, present, pos, pron(3, sg, m), Dg)), W6) -> true ; W6 = none ),
+    check('French: si is s\' before il', W6, 'Le garçon dort s\'il voit le chien.'),
+    findall(M7, ty_ir_meaning(IR4, M7), Ms7),
+    check('the meanings of both clauses', Ms7, [sleep, boy, see, girl, dog]).
+
 %% 1.64.0: the bare singular noun. np(M, sg, mass, []): a singular noun
 %% with no article, read after the other readings, written with none;
 %% Persian, whose definite noun has none either, writes it as def.
@@ -2213,8 +2249,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 661 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 661 sentences read at 1.64.0 are read', R1, yes),
+    ( K >= 673 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 673 sentences read at 1.65.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 
@@ -2574,4 +2610,4 @@ blank_template :-
     include([X4]>>( X4 = bad(_) ), M4, Bad4),
     check('every row of code of templates/template.pl is a row the check takes', Bad4, []),
     length(Rows, NR4),
-    check('the rows of code of the choices', NR4, 84).
+    check('the rows of code of the choices', NR4, 86).
