@@ -402,6 +402,18 @@ last clause, `ty_name_linked//3`): its last word takes the linked form
 the possessed asks (English `John's`), written and read. Through 1.77.0
 `John's dog barks.` read only because the first word was read as the bare
 noun `john`, and `The boy sees John's dog.` did not read at all.
+**`when` since 1.79.0** (`lg_when/3`): both clauses in the present go to
+`lg_conditional/3`, a rule as `if`; any other is the main clause's
+statement with each atom `modified(when(B), A)`, B the when clause's one
+atom (two refused: subordinate(when)), the link OUTSIDE both tenses, so
+`lg_assert/7`'s test of a tense looks inside it (`lg_in_tense/1`: the
+first cut tested `at/2` at the top, and a past generic subject gave its
+rule first). Every reader of `modified/2` has a `when` clause: the Cocolog
+writer and reader (`when(A, B)`, both compound atoms, before the
+adposition clause), the English writer (`sub(when, ...)`), the general
+sentence. A pronoun subject of the when clause is the main subject only
+where it agrees (`lg_pron_agrees/2`); the if clause's rule of 1.65.0
+takes any pronoun of the third person.
 **The blank template is generated too** (1.54.0): `templates/template.pl`
 is what `typology_import(template)` writes, `typology_template(xx)`: every
 slot of typology.pl's header list (THE TEMPLATE) with the header's own

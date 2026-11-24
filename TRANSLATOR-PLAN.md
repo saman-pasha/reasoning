@@ -66,7 +66,9 @@ One shape for each construct:
                                     1.71.0): pp(Prep, Term) or
                                     adv(Meaning); Cocolog in(Atom,
                                     Term), quickly(Atom), inside the
-                                    tense
+                                    tense; when(Atom2), a when clause's
+                                    atom, outside both tenses (since
+                                    1.79.0): Cocolog when(Atom, Atom2)
 
 A variable's name in a source is a source detail and is kept apart
 (`read_term/3`'s `variable_names`). Two IRs are the same when they are
@@ -162,8 +164,8 @@ its benchmark, as every typology version has.
    lists in `lexicon/` (a common adjective first; a verb that takes no
    object before a noun for a person or an animal).
 8. **The second measure** (done: 1.69.0, `lexicon/logic.txt`,
-   `tools/logic/measure.pl`): 104 sentences with their Cocolog (189 since
-   1.78.0), written
+   `tools/logic/measure.pl`): 104 sentences with their Cocolog (197 since
+   1.79.0), written
    by hand, counted as the first measure is (STATUS.md keeps the counts).
    At 1.69.0, 86 give their Cocolog and 94 Cocolog texts come back as
    English that reads to them; the misses are the next work: a relative

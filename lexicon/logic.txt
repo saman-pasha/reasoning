@@ -212,3 +212,12 @@ Every set is a subset of the universal set.	is_subset(X, the(universal(set))) :-
 Tears are an expression of grief.	expression(X, grief) :- tear(X).
 He was the toast of the town.	past(toast(he, the(town))).
 The boy sees John's dog.	see(the(boy), of(dog, john)).
+# when (since 1.79.0): in the present a rule as if; in a tense each atom of the main clause linked to the when clause's, when(A, B)
+John sleeps when Mary sings.	is_sleep(john) :- sing(mary).
+When liberty becomes license dictatorship is near.	near(dictatorship) :- become(liberty, license).
+John slept when Mary sang.	when(past(is_sleep(john)), past(sing(mary))).
+She was happy when he sang.	when(past(happy(she)), past(sing(he))).
+The saw buckled when it hit a knot.	knot(a(knot)). when(past(buckle(the(saw))), past(hit(the(saw), a(knot)))).
+The bullet pinged when they struck the car.	when(past(ping(the(bullet))), past(strike(they, the(car)))).
+A dog barked when the bell rang.	dog(a(dog)). when(past(bark(a(dog))), past(ring(the(bell)))).
+The dog will sleep when the boy comes.	when(future(is_sleep(the(dog))), come(the(boy))).

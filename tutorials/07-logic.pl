@@ -46,6 +46,7 @@ main :-
     terms,
     individuals,
     relations,
+    whens,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -273,6 +274,23 @@ relations :-
     must('a grandfather', GCs, [bob-mary]).
 
 :- dynamic lesson_father/2.
+
+%% 17. WHEN. In the present it is a rule, as `if' is; in a tense it links
+%% the main clause's atom to the when clause's, when(A, B), each in its own
+%% tense, so a program can ask what happened when something happened.
+whens :-
+    logic_translate(english, cocolog, 'John sleeps when Mary sings.', C1),
+    must('the present, a rule', C1, 'is_sleep(john) :-\n    sing(mary).\n'),
+    logic_translate(english, cocolog, 'John slept when Mary sang.', C2),
+    must('a tense, a link', C2, 'when(past(is_sleep(john)), past(sing(mary))).\n'),
+    logic_translate(cocolog, english, 'when(past(bark(the(dog))), past(sing(mary))).', E3),
+    must('back into English', E3, 'The dog barked when Mary sang.'),
+    assertz(lesson_when(past(sleep(john)), past(sing(mary)))),
+    assertz(lesson_when(past(bark(the(dog))), past(sing(mary)))),
+    findall(A, lesson_when(A, past(sing(mary))), As),
+    must('what happened when Mary sang', As, [past(sleep(john)), past(bark(the(dog)))]).
+
+:- dynamic lesson_when/2.
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

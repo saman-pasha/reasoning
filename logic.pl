@@ -20,7 +20,10 @@
 %%                                 (since 1.71.0): pp(Prep, Term), an
 %%                                 adposition phrase, or adv(Meaning), an
 %%                                 adverb; Cocolog in(Atom, Term) and
-%%                                 quickly(Atom)
+%%                                 quickly(Atom); when(Atom2), a when
+%%                                 clause's atom, outside the tenses
+%%                                 (since 1.79.0; Cocolog when(Atom,
+%%                                 Atom2))
 %%     const(Name)                 a constant: a name (socrates), a
 %%                                 definite noun phrase (the(dog),
 %%                                 the(pl(rebel)), the(big(dog))), a bare
@@ -89,8 +92,13 @@
 %% are father(john, mary), `Every set is a subset of the universal set.'
 %% subset(X, the(universal(set))) :- set(X).
 %%
-%% WHAT HAS NO LOGIC FORM YET: the conditional, a negation, `when' and
-%% `because', a pronoun whose gender is not known, an indefinite noun
+%% WHEN (since 1.79.0): in the present a rule as `if' (`John sleeps when
+%% Mary sings.': sleep(john) :- sing(mary)); in a tense each atom of the
+%% main clause linked to the when clause's one atom, when(A, B), each in
+%% its own tense (`John slept when Mary sang.': when(past(sleep(john)),
+%% past(sing(mary)))).
+%%
+%% WHAT HAS NO LOGIC FORM YET: the conditional, a negation, `because', a pronoun whose gender is not known, an indefinite noun
 %% phrase in a rule's conclusion, a generic subject with a possessor in
 %% the present (`Lilies of the valley are racemose.'), a noun phrase of
 %% `every' or `some' that is no subject, a noun of relation with an
@@ -249,8 +257,12 @@ lg_statement(C, Items) :-
     lg_joined(C, Cs), !,
     lg_statements(Cs, Items).
 lg_statement(sub(K, Main, Cond), Items) :- !,
-    ( K == if -> true ; lg_no(subordinate(K)) ),
-    lg_conditional(Main, Cond, Items).
+    (   K == if -> lg_conditional(Main, Cond, Items)
+    ;   K == when, lg_clause_tense(Main, present), lg_clause_tense(Cond, present)
+    ->  lg_conditional(Main, Cond, Items)
+    ;   K == when -> lg_when(Main, Cond, Items)
+    ;   lg_no(subordinate(K))
+    ).
 lg_statement(C, Items) :-
     lg_parts(C, S, Pred),
     lg_entity(S, ent(T, Conds, Q), SMs),
@@ -260,6 +272,11 @@ lg_statement(C, Items) :-
     lg_assert(Q, T, Conds, Atoms, S, Inds, Items).
 
 lg_is_ind('$ind'(_, _)).
+
+%% An atom in a tense, its when clause round it or not.
+lg_in_tense(at(_, _)) :- !.
+% cocolint: X3 -- when/1 here is a term of the logic form, a when clause's atom, not SWI's when/2
+lg_in_tense(modified(when(_), A)) :- lg_in_tense(A).
 
 %% A clause of a joined subject or object (`John and Mary sleep.') is a
 %% clause of each item.
@@ -306,7 +323,7 @@ lg_assert(every, T, Conds, Atoms, _, _, Items) :- !,
 lg_assert(generic, T, Conds, Atoms, S, Inds, Items) :- !,
     (   lg_has_obj(Atoms)
     ->  lg_individual(S, Inds, T), lg_facts(Conds, Atoms, Items)
-    ;   Atoms = [at(_, _)|_]
+    ;   Atoms = [A1|_], lg_in_tense(A1)
     ->  (   lg_individual(S, Inds, T), lg_facts(Conds, Atoms, Items)
         ;   lg_generic_rules(Inds, Atoms, T, Conds, Items)
         )
@@ -350,6 +367,51 @@ lg_individual(_, Inds, T) :- member('$ind'(V, Shape), Inds), V == T, !, T = cons
 lg_individual(qp(_, thing), _, const(something)) :- !.
 lg_individual(qp(_, person), _, const(someone)) :- !.
 lg_individual(S, _, _) :- lg_no(determiner(S)).
+
+%% WHEN (since 1.79.0): in the present, a rule as `if' is (`When liberty
+%% becomes license dictatorship is near.': near(dictatorship) :-
+%% become(liberty, license)); in a tense, each atom of the main clause is
+%% linked to the when clause's one atom, modified(when(B), A), outside both
+%% tenses: `The saw buckled when it hit a knot.' is
+%% when(past(buckle(the(saw))), past(hit(the(saw), a(knot)))). A pronoun
+%% subject of the when clause is the main subject where it agrees with it
+%% (`it' the saw; `they' not the house), else a constant of its own.
+lg_when(Main, Cond, Items) :-
+    lg_parts(Main, S, Pred),
+    lg_entity(S, ent(T, Conds, Q), SMs),
+    lg_atoms(Main, T, Pred, Atoms0),
+    lg_parts(Cond, S2, Pred2),
+    (   lg_pron_agrees(S2, S) -> T2 = T, SMs2 = []
+    ;   lg_entity(S2, ent(T2, _, Q2), SMs2), ( Q2 == const -> true ; lg_no(determiner(Q2)) )
+    ),
+    lg_atoms(Cond, T2, Pred2, Atoms20),
+    lg_split_objs(Atoms20, Bs, BObjs),
+    ( Bs = [B] -> true ; lg_no(subordinate(when)) ),
+    lg_split_objs(Atoms0, As, AObjs),
+    maplist(lg_wrap_when(B), As, Ws),
+    partition(lg_is_ind, SMs, Inds, SObjs),
+    exclude(lg_is_ind, SMs2, SObjs2),
+    append([Ws, AObjs, SObjs, BObjs, SObjs2], Atoms),
+    lg_assert(Q, T, Conds, Atoms, S, Inds, Items).
+
+% cocolint: X3 -- when/1 here is a term of the logic form, a when clause's atom, not SWI's when/2
+lg_wrap_when(B, A, modified(when(B), A)).
+
+%% A pronoun of the third person agrees with a noun phrase of its number
+%% and its kind: `it' with a thing's, `he' and `she' with a person's or a
+%% name, `they' with any plural.
+lg_pron_agrees(P, S) :-
+    nonvar(P), P = pron(3, N, G), nonvar(S), nonvar(N),
+    (   S = np(M, Num, _, _) -> N == Num, lg_pron_kind(N, G, M)
+    ;   S = name(_) -> N == sg, nonvar(G), G \== n
+    ;   S = of(_, NP) -> lg_pron_agrees(P, NP)
+    ;   S = pron(3, N2, G2) -> N == N2, G == G2
+    ).
+
+lg_pron_kind(pl, _, _) :- !.
+lg_pron_kind(sg, G, M) :-
+    nonvar(G),
+    ( typology_meaning(english, person, M) -> memberchk(G, [m, f]) ; G == n ).
 
 %% IF: the conditional's conclusions are its main clause's atoms; its
 %% conditions the main subject's own (person(X)), then the if clause's
@@ -684,6 +746,12 @@ lg_out_atom(at(T, P), M0, M, A) :- !,
     lg_out_atom(P, M0, M, P1),
     lg_code_tense(cocolog, T, W),
     A =.. [W, P1].
+% cocolint: X3 -- when/1 here is a term of the logic form, a when clause's atom, not SWI's when/2
+lg_out_atom(modified(when(B), At), M0, M, A) :- !,
+    lg_out_atom(At, M0, M1, At1),
+    lg_out_atom(B, M1, M, B1),
+    lg_code_pred_name(when, 2, N),
+    A =.. [N, At1, B1].
 lg_out_atom(modified(pp(P, T), At), M0, M, A) :- !,
     lg_out_atom(At, M0, M1, At1),
     lg_out_term(T, M1, M, T1),
@@ -746,6 +814,12 @@ lg_in_atom(A, at(T, P)) :-
     compound(A), A =.. [W, Inner], compound(Inner), \+ lg_det_term(Inner),
     lg_code_tense(cocolog, T, W), !,
     lg_in_atom(Inner, P).
+% cocolint: X3 -- when/1 here is a term of the logic form, a when clause's atom, not SWI's when/2
+lg_in_atom(A, modified(when(B), At)) :-
+    compound(A), A =.. [N, Inner, Sub], lg_adjunct_inner(Inner), lg_adjunct_inner(Sub),
+    lg_code_meaning(N, 2, when), !,
+    lg_in_atom(Inner, At),
+    lg_in_atom(Sub, B).
 lg_in_atom(A, modified(pp(P, T), At)) :-
     compound(A), A =.. [N, Inner, Arg], lg_adjunct_inner(Inner),
     lg_code_meaning(N, 2, P), typology_meaning(english, adposition, P), !,
@@ -1062,6 +1136,10 @@ lg_pronoun(L, N, P) :-
 lg_atom_ir(L, at(T, A), How, IR) :- !,
     lg_atom_ir(L, A, How, IR0),
     lg_ir_tense(IR0, T, IR).
+% cocolint: X3 -- when/1 here is a term of the logic form, a when clause's atom, not SWI's when/2
+lg_atom_ir(L, modified(when(B), A), How, sub(when, IR1, IR2)) :- !,
+    lg_atom_ir(L, A, How, IR1),
+    lg_atom_ir(L, B, How, IR2).
 lg_atom_ir(L, modified(J, A), How, IR) :- !,
     lg_atom_ir(L, A, How, IR0),
     lg_adjunct_ir(L, How, J, J1),
@@ -1309,6 +1387,10 @@ lg_holds(at(Tn, A), T) :- !,
     lg_holds(A, T0),
     ( memberchk(Tn, [future]) -> W = 'in the future' ; W = 'in the past' ),
     format(atom(T), '~w ~w', [T0, W]).
+% cocolint: X3 -- when/1 here is a term of the logic form, a when clause's atom, not SWI's when/2
+lg_holds(modified(when(B), A), T) :- !,
+    lg_holds(A, T1), lg_holds(B, T2),
+    format(atom(T), '~w when ~w', [T1, T2]).
 lg_holds(modified(pp(P, Tm), A), T) :- !,
     lg_holds(A, T0), lg_term_words(Tm, W),
     format(atom(T), '~w ~w ~w', [T0, P, W]).
