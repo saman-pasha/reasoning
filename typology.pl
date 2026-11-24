@@ -2022,7 +2022,7 @@ ty_ir_meaning(copula(_, _, S, Pred), M) :-
     ).
 ty_ir_meaning(np(N, _, _, As), M) :-
     (   M = N
-    ;   member(M, As)
+    ;   member(A, As), ty_item_meaning(A, M)
     ).
 ty_ir_meaning(adj(As), M) :- member(M, As).
 ty_ir_meaning(pp(_, NP), M) :- ty_ir_meaning(NP, M).
@@ -2034,7 +2034,11 @@ ty_ir_meaning(of(G, NP), M) :-
     (   ty_ir_meaning(G, M)
     ;   ty_ir_meaning(NP, M)
     ).
-ty_ir_meaning(adv(M), M).
+ty_ir_meaning(adv(A), M) :- ty_item_meaning(A, M).
+
+%% A meaning of an adjective's or an adverb's place: its own, or each of
+%% a joined one's (since 1.61.0).
+ty_item_meaning(A, M) :- ( ty_coord_any(A, _, Ms) -> member(M, Ms) ; M = A ).
 ty_ir_meaning(C, M) :- ty_coord_any(C, _, Xs), member(X, Xs), ty_ir_meaning(X, M).
 
 ty_meaning_topic(M, M).
@@ -3887,6 +3891,20 @@ ty_adjuncts_gapped(L, Prep, X, G, [J|Js], Taken) -->
 ty_adjunct_item(L, pp(Prep, NP)) --> ty_pp(L, Prep, NP).
 ty_adjunct_item(L, W) --> { nonvar(W), W = wh(M), ty_wh_adjunct(M) }, ty_wh_words(L, M).
 ty_adjunct_item(L, adv(M)) --> [W], { ty_adverb(L, M, W) }, ty_meant(L, adverb(M), [W]).
+%% ADVERBS JOINED (since 1.61.0): adv(and(Ms)), adv(or(Ms)) (`politically
+%% and economically'), written `A, B and C'.
+ty_adjunct_item(L, adv(C)) -->
+    ty_coord_here,
+    { ty_coord_adj_slot(C, K, Ms) },
+    ty_coord_ahead(L, K),
+    ty_adv_items(L, K, Ms).
+
+ty_adv_one(L, M) --> [W], { ty_adverb(L, M, W) }, ty_meant(L, adverb(M), [W]).
+
+ty_adv_items(L, K, [M|Ms]) --> ty_adv_one(L, M), ty_adv_rest(L, K, Ms, first).
+
+ty_adv_rest(L, K, [M], At) --> ty_serial_mark(L, At), ty_conjunction_words(L, K), ty_adv_one(L, M).
+ty_adv_rest(L, K, [M, N|Ms], _) --> [','], ty_adv_one(L, M), ty_adv_rest(L, K, [N|Ms], later).
 
 %% The question words that stand as an adjunct.
 ty_wh_adjunct(where).
@@ -5767,6 +5785,26 @@ ty_case_words(L, Def, C, Ws) :-
 
 ty_adjs(L, As, Rows) --> ty_adjs(L, As, Rows, none, plain).
 
+%% What a joined adjective's or adverb's slot may hold, reading (unbound:
+%% and, then or) or writing.
+ty_coord_adj_slot(C, K, Bs) :-
+    (   var(C) -> member(K, [and, or]), C =.. [K, Bs]
+    ;   C =.. [K, Bs], memberchk(K, [and, or]), is_list(Bs)
+    ).
+
+ty_adj_items(L, K, [A|As], [R|Rs], D) -->
+    ty_adjs(L, [A], [R], none, D),
+    ty_adj_rest(L, K, As, Rs, D, first).
+
+ty_adj_rest(L, K, [A], [R], D, At) -->
+    ty_serial_mark(L, At),
+    ty_conjunction_words(L, K),
+    ty_adjs(L, [A], [R], none, D).
+ty_adj_rest(L, K, [A, B|As], [R|Rs], D, _) -->
+    [','],
+    ty_adjs(L, [A], [R], none, D),
+    ty_adj_rest(L, K, [B|As], Rs, D, later).
+
 %% End r: the last adjective is the phrase's last word before a relative
 %% clause. D is plain, or decl(Declension) where the language puts an
 %% ending on an adjective before a noun (ty_declined/4).
@@ -5787,6 +5825,21 @@ ty_adjs(L, [A|As], [adj(G, N)|Rows], End, decl(D, GN)) -->
       ty_linked_word(L, a, C2, Linked, W0, W, ty_adjective_in(decl(D, GN), L, A, G, N, W0)) },
     ty_meant(L, adjective(A), [W]),
     ty_adjs(L, As, Rows, End, decl(D, GN)).
+
+%% ADJECTIVES JOINED (since 1.61.0): and(As) or or(As) as one adjective of
+%% a noun phrase (`a vicious and degrading cult', `un culto vicioso y
+%% degradante'), each in its own form, agreeing with the noun, written `A,
+%% B and C'. An item is one adjective ('$ty_adj_items' while the items are
+%% read), so no rule calls itself before a word is read.
+ty_adjs(L, [C|As], Rows, End, D) -->
+    ty_coord_here,
+    { \+ nb_current('$ty_adj_items', yes), ty_coord_adj_slot(C, K, Bs) },
+    ty_coord_ahead(L, K),
+    { b_setval('$ty_adj_items', yes) },
+    ty_adj_items(L, K, Bs, Rows1, D),
+    { b_setval('$ty_adj_items', no) },
+    ty_adjs(L, As, Rows2, End, D),
+    { append(Rows1, Rows2, Rows) }.
 
 %% An adjective's word: its row's; or, declined, the row's word (the
 %% predicate's, `klein') and an ending of the declension and the phrase's

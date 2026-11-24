@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -1884,6 +1884,36 @@ english_verbs :-
     findall(IR6, typology_read(english, 'The girl has studied the book.', IR6), IRs6),
     check('read', IRs6, [clause(study, perfect, pos, np(girl, sg, def, []), np(book, sg, def, []))]).
 
+%% 1.61.0: adjectives and adverbs joined inside a phrase: and(As) or or(As)
+%% as one adjective of a noun phrase, adv(and(Ms)) as one adjunct.
+coordination_inside :-
+    section('coordination: adjectives and adverbs inside a phrase'),
+    B = np(boy, sg, def, []),
+    forall(member(T-Want, [
+               'The boy sees a small and black dog.'-[clause(see, present, pos, B, np(dog, sg, indef, [and([small, black])]))],
+               'The boy sees a small, black and big dog.'-[clause(see, present, pos, B, np(dog, sg, indef, [and([small, black, big])]))],
+               'The boy sees a small or black dog.'-[clause(see, present, pos, B, np(dog, sg, indef, [or([small, black])]))],
+               'We live in vexed and troubled times.'-[clause(live, present, pos, pron(1, pl, _), none, [pp(in, np(time, pl, indef, [and([vexed, troubled])]))])],
+               'The boy sleeps slowly and quietly.'-[clause(sleep, present, pos, B, none, [adv(and([slowly, quietly]))])],
+               'The boy sees a small and dog.'-[] ]),
+           ( findall(R, typology_read(english, T, R), Rs),
+             atomic_list_concat(['English: ', T], Label),
+             ( Rs =@= Want -> R2 = Want ; R2 = Rs ),
+             check(Label, R2, Want) )),
+    IR1 = clause(see, present, pos, B, np(girl, sg, def, [and([small, black])])),
+    IR2 = clause(sleep, present, pos, np(girl, sg, def, []), none, [adv(and([slowly, quickly]))]),
+    forall(member(IR-Ws, [
+               IR1-[english-'The boy sees the small and black girl.', spanish-'El niño ve a la niña pequeña y negra.',
+                    italian-'Il ragazzo vede la ragazza piccola e nera.', french-'Le garçon voit la fille petite et noire.',
+                    german-'Der Junge sieht das kleine und schwarze Mädchen.', persian-'پسر دختر کوچک و سیاه را می‌بیند.'],
+               IR2-[english-'The girl sleeps slowly and quickly.', german-'Das Mädchen schläft langsam und schnell.'] ]),
+           forall(member(L-Want2, Ws),
+                  ( ( typology_write(L, IR, W) -> true ; W = none ),
+                    atomic_list_concat([L, ': ', Want2], Label2),
+                    check(Label2, W, Want2) ))),
+    findall(M3, ty_ir_meaning(IR1, M3), Ms3),
+    check('the meanings of a joined adjective are its items', Ms3, [see, boy, girl, small, black]).
+
 %% 1.60.0: the verbs of one subject. The second clause of a coordination
 %% says no subject, same in the IR, the first clause's, and its verb agrees
 %% with that subject.
@@ -2033,8 +2063,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 438 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 438 sentences read at 1.60.0 are read', R1, yes),
+    ( K >= 442 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 442 sentences read at 1.61.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

@@ -138,6 +138,7 @@ main :-
     english_modifiers,
     coordination,
     coordination_same,
+    coordination_inside,
     format("~ndone~n", []).
 
 
@@ -807,6 +808,18 @@ coordination_same :-
     typology_write(italian, and([clause(sleep, present, pos, np(girl, sg, def, []), none),
                                  copula(present, pos, same, adj([small]))]), W3),
     must('Italian, its adjective agreeing with the girl', W3, 'La ragazza dorme ed è piccola.').
+
+%% 47. ADJECTIVES AND ADVERBS JOINED INSIDE A PHRASE (1.61.0): and(As) as one
+%% adjective of a noun phrase, each item in its own form (German endings,
+%% Spanish agreement), and adv(and(Ms)) as one adjunct.
+coordination_inside :-
+    typology_read(english, 'The boy lives in vexed and troubled times.', IR1),
+    must('two adjectives of one noun', IR1,
+         clause(live, present, pos, np(boy, sg, def, []), none, [pp(in, np(time, pl, indef, [and([vexed, troubled])]))])),
+    typology_write(german, clause(see, present, pos, np(boy, sg, def, []), np(dog, sg, indef, [and([small, black])])), W2),
+    must('German declines each', W2, 'Der Junge sieht einen kleinen und schwarzen Hund.'),
+    typology_read(english, 'The boy sleeps slowly and quietly.', IR3),
+    must('two adverbs', IR3, clause(sleep, present, pos, np(boy, sg, def, []), none, [adv(and([slowly, quietly]))])).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

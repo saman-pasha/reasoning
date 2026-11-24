@@ -123,7 +123,12 @@ written, and `ty_role/4`'s rule for `same` reads no words;
 `ty_subject_number/2`, `ty_subject_gn/4` and `ty_np_animacy/3` ask that
 subject, and the reading of a dropped pronoun is off there
 (`ty_ppron_role/6`), or Spanish `y ve al perro` would read twice. Italian
-`e` is `ed` before e (a `ty_before/5` row).
+`e` is `ed` before e (a `ty_before/5` row). **Adjectives and adverbs joined
+since 1.61.0**: `and(As)` as one element of a noun phrase's adjectives, and
+`adv(and(Ms))` as one adjunct. An item is one plain adjective: while the
+items are read `'$ty_adj_items'` is yes, and the joined rule is off, or
+`ty_adjs//5` would call itself before a word is read. A reader of the IR's
+adjectives or adverbs asks `ty_item_meaning/2` for the items' meanings.
 **The blank template is generated too** (1.54.0): `templates/template.pl`
 is what `typology_import(template)` writes, `typology_template(xx)`: every
 slot of typology.pl's header list (THE TEMPLATE) with the header's own
