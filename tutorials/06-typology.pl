@@ -136,6 +136,7 @@ main :-
     english_noun_classes,
     english_verb_classes,
     english_modifiers,
+    coordination,
     format("~ndone~n", []).
 
 
@@ -720,7 +721,7 @@ blank_template :-
     split_string(S, "\n", "", Lines),
     include([L]>>sub_string(L, 0, _, _, 'ty_'), Lines, Choices),
     length(Choices, N1),
-    must('the choices, each a row of code', N1, 82),
+    must('the choices, each a row of code', N1, 84),
     ( member(L2, Lines), sub_string(L2, 0, _, _, '%% ty_noun(klingon, Meaning, Gender') -> R2 = shape ; R2 = none ),
     must('a slot of words, its shape', R2, shape),
     ( member(L3, Lines), sub_string(L3, 0, _, _, '%%   e.g. ty_noun_in(english, dog,') -> R3 = example ; R3 = none ),
@@ -773,6 +774,24 @@ english_modifiers :-
     must('an imported adjective', IR2, copula(past, pos, np(wine, sg, def, []), adj([unclouded]))),
     ( ty_adverb(english, very, _) -> W3 = adverb ; W3 = grammar ),
     must('very waits for its grammar', W3, grammar).
+
+%% 45. COORDINATION (step 3 of the English goal, 1.59.0): and(Xs) and or(Xs)
+%% where a noun phrase stands, and(Cs), or(Cs) and but(Cs) of two clauses.
+%% The words are ty_and/2's and ty_conjunction/3's; an and of noun phrases
+%% is plural, an or its last item's number; a list is written `A, B and C',
+%% and English reads `A, B, and C' too (ty_serial_comma/1).
+coordination :-
+    B = np(boy, sg, def, []), G = np(girl, sg, def, []), D = np(dog, sg, def, []),
+    typology_read(english, 'The boy and the girl see the dog.', IR1),
+    must('two subjects, a plural verb', IR1, clause(see, present, pos, and([B, G]), D)),
+    ( typology_read(english, 'The boy and the girl sees the dog.', _) -> R2 = read ; R2 = refused ),
+    must('a singular verb is refused', R2, refused),
+    typology_write(spanish, clause(see, present, pos, B, and([D, G])), W3),
+    must('Spanish puts the mark before each object', W3, 'El niño ve al perro y a la niña.'),
+    typology_read(english, 'The boy sleeps but the girl sees the dog.', IR4),
+    must('two clauses', IR4, but([clause(sleep, present, pos, B, none), clause(see, present, pos, G, D)])),
+    typology_write(german, IR4, W5),
+    must('German writes a comma before aber', W5, 'Der Junge schläft, aber das Mädchen sieht den Hund.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

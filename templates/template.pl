@@ -141,11 +141,37 @@ ty_order(xx, rel, [c, m, h]).
 %%   (keep it where the language does this, else delete it)
 ty_capital_nouns(xx).
 
-%%     ty_and(L, Words)                the words that join the last of a
-%%                                     predicate's adjectives (`and', `y',
-%%                                     `und', `و')
+%%     ty_and(L, Words)                the words that join the last item of
+%%                                     a list: a predicate's adjectives, noun
+%%                                     phrases, clauses (`and', `y', `und',
+%%                                     `و')
 %% ty_and(xx, Words).
 %%   e.g. ty_and(english, [and]).
+
+%%     ty_conjunction(L, Kind, Words)  the words of another conjunction,
+%%                                     Kind or or but (`or', `o', `but',
+%%                                     `aber')
+%% ty_conjunction(xx, Kind, Words).
+%%   e.g. ty_conjunction(english, or, [or]).
+
+%%     ty_serial_comma(L)              a comma may stand before the last
+%%                                     item's conjunction of a list of three
+%%                                     or more (`red, blue, and yellow'):
+%%                                     read, not written
+%%   (keep it where the language does this, else delete it)
+ty_serial_comma(xx).
+
+%%     ty_conjunct_marks(L)            each item of a coordinated role takes
+%%                                     the role's marks (Spanish `al niño y
+%%                                     a la niña'); else the whole takes them
+%%   (keep it where the language does this, else delete it)
+ty_conjunct_marks(xx).
+
+%%     ty_clause_comma(L, Kind)        a comma before the conjunction Kind
+%%                                     that joins two clauses (German `,
+%%                                     aber'); read with or without one
+%% ty_clause_comma(xx, Kind).
+%%   e.g. ty_clause_comma(german, but).
 
 %%     ty_comma(L, Mark)               the language's comma (Persian `،'),
 %%                                     `,' where it names none

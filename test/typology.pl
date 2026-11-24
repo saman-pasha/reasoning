@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -1884,6 +1884,56 @@ english_verbs :-
     findall(IR6, typology_read(english, 'The girl has studied the book.', IR6), IRs6),
     check('read', IRs6, [clause(study, perfect, pos, np(girl, sg, def, []), np(book, sg, def, []))]).
 
+%% 1.59.0: coordination. and(Xs) and or(Xs) where a noun phrase stands,
+%% and(Cs), or(Cs) and but(Cs) of two clauses, written in each language.
+coordination :-
+    section('coordination: noun phrases and clauses joined'),
+    B = np(boy, sg, def, []), G = np(girl, sg, def, []), Dg = np(dog, sg, def, []), C = np(cat, sg, def, []),
+    forall(member(T-Want, [
+               'The boy and the girl see the dog.'-[clause(see, present, pos, and([B, G]), Dg)],
+               'The boy sees the dog and the cat.'-[clause(see, present, pos, B, and([Dg, C]))],
+               'A cat or a dog sleeps.'-[clause(sleep, present, pos, or([np(cat, sg, indef, []), np(dog, sg, indef, [])]), none)],
+               'The dog, the cat and the boy sleep.'-[clause(sleep, present, pos, and([Dg, C, B]), none)],
+               'The dog, the cat, and the boy sleep.'-[clause(sleep, present, pos, and([Dg, C, B]), none)],
+               'The dog and the cat and the boy sleep.'-[clause(sleep, present, pos, and([Dg, and([C, B])]), none)],
+               'The boy sleeps with the dog and the cat.'-[clause(sleep, present, pos, B, none, [pp(with, and([Dg, C]))])],
+               'The boy and the girl are small.'-[copula(present, pos, and([B, G]), adj([small]))],
+               'The boy sleeps but the girl sees the dog.'-[but([clause(sleep, present, pos, B, none), clause(see, present, pos, G, Dg)])],
+               'The boy sleeps, but the girl sees the dog.'-[but([clause(sleep, present, pos, B, none), clause(see, present, pos, G, Dg)])],
+               'The dog is small and the cat sleeps.'-[and([copula(present, pos, Dg, adj([small])), clause(sleep, present, pos, C, none)])],
+               'The boy and the girl sees the dog.'-[], 'A cat or a dog sleep.'-[], 'The boy sees the dog, and.'-[] ]),
+           ( findall(R, typology_read(english, T, R), Rs),
+             atomic_list_concat(['English: ', T], Label),
+             check(Label, Rs, Want) )),
+    forall(member(IR-Ws, [
+               clause(see, present, pos, and([B, G]), Dg)-
+                   [english-'The boy and the girl see the dog.', spanish-'El niño y la niña ven al perro.',
+                    italian-'Il ragazzo e la ragazza vedono il cane.', french-'Le garçon et la fille voient le chien.',
+                    german-'Der Junge und das Mädchen sehen den Hund.', persian-'پسر و دختر سگ را می‌بینند.'],
+               clause(see, present, pos, B, and([Dg, G]))-
+                   [english-'The boy sees the dog and the girl.', spanish-'El niño ve al perro y a la niña.',
+                    persian-'پسر سگ و دختر را می‌بیند.'],
+               clause(sleep, present, pos, and([Dg, C, B]), none)-
+                   [english-'The dog, the cat and the boy sleep.', spanish-'El perro, el gato y el niño duermen.'],
+               copula(present, pos, and([B, G]), adj([small]))-
+                   [spanish-'El niño y la niña son pequeños.', italian-'Il ragazzo e la ragazza sono piccoli.'],
+               but([clause(sleep, present, pos, B, none), clause(see, present, pos, G, Dg)])-
+                   [english-'The boy sleeps but the girl sees the dog.', german-'Der Junge schläft, aber das Mädchen sieht den Hund.',
+                    spanish-'El niño duerme pero la niña ve al perro.', persian-'پسر می‌خوابد اما دختر سگ را می‌بیند.'] ]),
+           forall(member(L-Want2, Ws),
+                  ( ( typology_write(L, IR, W) -> true ; W = none ),
+                    atomic_list_concat([L, ': ', Want2], Label2),
+                    check(Label2, W, Want2) ))),
+    ( typology_translate(english, spanish, 'The boy and the girl see the dog.', T3) -> true ; T3 = none ),
+    check('a coordination translates', T3, 'El niño y la niña ven al perro.'),
+    ty_write_tokens(spanish, [perro, o, oso], T4),
+    check('Spanish o is u before the sound o', T4, [perro, u, oso]),
+    assertz(ty_conjunction(tiny2, nor, [nor])), assertz(ty_clause_comma(tiny2, also)),
+    findall(X5, ( typology_check(tiny2, M5), member(X5, M5), X5 = bad(_) ), Xs5),
+    retractall(ty_conjunction(tiny2, _, _)), retractall(ty_clause_comma(tiny2, _)),
+    check('a conjunction no kind has, and a comma of none, are bad rows', Xs5,
+          [bad(ty_clause_comma(tiny2, also)), bad(ty_conjunction(tiny2, nor, [nor]))]).
+
 %% 1.58.0: the English adjectives and adverbs, one fact each in a file of
 %% its kind (templates/english-adjectives.pl, -adverbs.pl), from the
 %% vocabularies and lexicon/.
@@ -1948,8 +1998,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 428 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 428 sentences read at 1.58.0 are read', R1, yes),
+    ( K >= 436 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 436 sentences read at 1.59.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 
@@ -2309,4 +2359,4 @@ blank_template :-
     include([X4]>>( X4 = bad(_) ), M4, Bad4),
     check('every row of code of templates/template.pl is a row the check takes', Bad4, []),
     length(Rows, NR4),
-    check('the rows of code of the choices', NR4, 82).
+    check('the rows of code of the choices', NR4, 84).

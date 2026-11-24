@@ -408,9 +408,23 @@
 %%                                     of the topic (French `en mars')
 %%     ty_bare_topic(L, Topic)         a noun of the topic takes no definite
 %%                                     article (the months: `in March')
-%%     ty_and(L, Words)                the words that join the last of a
-%%                                     predicate's adjectives (`and', `y',
-%%                                     `und', `و')
+%%     ty_and(L, Words)                the words that join the last item of
+%%                                     a list: a predicate's adjectives, noun
+%%                                     phrases, clauses (`and', `y', `und',
+%%                                     `و')
+%%     ty_conjunction(L, Kind, Words)  the words of another conjunction,
+%%                                     Kind or or but (`or', `o', `but',
+%%                                     `aber')
+%%     ty_serial_comma(L)              a comma may stand before the last
+%%                                     item's conjunction of a list of three
+%%                                     or more (`red, blue, and yellow'):
+%%                                     read, not written
+%%     ty_conjunct_marks(L)            each item of a coordinated role takes
+%%                                     the role's marks (Spanish `al niño y
+%%                                     a la niña'); else the whole takes them
+%%     ty_clause_comma(L, Kind)        a comma before the conjunction Kind
+%%                                     that joins two clauses (German `,
+%%                                     aber'); read with or without one
 %%     ty_negative_article_roles(L, Roles)
 %%                                     the roles (s, o, p) whose indefinite
 %%                                     phrase takes the negative article
@@ -640,7 +654,8 @@
            ty_declension/3, ty_adjective_ending/6, ty_wh_case/4,
            ty_verb_last/2, ty_split_place/2, ty_copula_negation/3,
            ty_relative_comma/1, ty_negative_article/5, ty_negative_article_roles/2,
-           ty_negative_article_keeps/1, ty_and/2, ty_comma/2, ty_bare_topic/2, ty_adposition_topic/4, ty_adjunct_front/2, ty_object_front/2, ty_capital_nouns/1,
+           ty_negative_article_keeps/1, ty_and/2, ty_conjunction/3, ty_serial_comma/1,
+           ty_conjunct_marks/1, ty_clause_comma/2, ty_comma/2, ty_bare_topic/2, ty_adposition_topic/4, ty_adjunct_front/2, ty_object_front/2, ty_capital_nouns/1,
            ty_reference/4, ty_meaning_sense/2, ty_tense_like/4.
 :- discontiguous ty_order/3, ty_noun/6, ty_noun_class/3, ty_noun_in/6, ty_closed/2,
                  ty_conjugation/3, ty_class_when/4, ty_verb_in/4, ty_irregular_verb/5,
@@ -665,7 +680,8 @@
                  ty_declension/3, ty_adjective_ending/6, ty_wh_case/4,
                  ty_verb_last/2, ty_split_place/2, ty_copula_negation/3,
                  ty_relative_comma/1, ty_negative_article/5, ty_negative_article_roles/2,
-                 ty_negative_article_keeps/1, ty_and/2, ty_comma/2, ty_bare_topic/2, ty_adposition_topic/4, ty_adjunct_front/2, ty_object_front/2, ty_capital_nouns/1,
+                 ty_negative_article_keeps/1, ty_and/2, ty_conjunction/3, ty_serial_comma/1,
+           ty_conjunct_marks/1, ty_clause_comma/2, ty_comma/2, ty_bare_topic/2, ty_adposition_topic/4, ty_adjunct_front/2, ty_object_front/2, ty_capital_nouns/1,
                  ty_tense_like/4.
 
 %% The next token, read and left (unbound writing).
@@ -751,10 +767,23 @@ ty_expand(L) :-
            assertz(ty_noun(L, M, G, A, Sg, Pl))),
     forall(ty_class_verb(L, M, B, C, Over), ty_expand_verb(L, M, B, C, Over)).
 
+%% The rows the classes made go while a call on their predicate stays open
+%% (forall/2's own walk of the rows, since 1.59.0): taken one key at a time
+%% by retractall/1, 20 010 nouns took 10 s on cocolog 3.73.2 and 53 s on
+%% 3.78.14, and the verbs 4.6 s and 48 s; this way each kind takes 0.1 s.
 ty_unexpand(L) :-
-    forall(ty_noun_in(L, M, G, A, Sg, _), retractall(ty_noun(L, M, G, A, Sg, _))),
-    forall(ty_class_verb(L, M, _, _, _),
-           ( retractall(ty_verb(L, M, _, _, pos, _)), retractall(ty_participle(L, M, _)) )).
+    (   once(ty_noun_in(L, _, _, _, _, _))
+    ->  forall(( ty_noun(L, M, G, A, Sg, P), ty_noun_in(L, M, G, A, Sg, _) ),
+               retract(ty_noun(L, M, G, A, Sg, P)))
+    ;   true
+    ),
+    (   once(ty_class_verb(L, _, _, _, _))
+    ->  forall(( ty_verb(L, M1, T, N, pos, Ws), once(ty_class_verb(L, M1, _, _, _)) ),
+               retract(ty_verb(L, M1, T, N, pos, Ws))),
+        forall(( ty_participle(L, M2, P2), once(ty_class_verb(L, M2, _, _, _)) ),
+               retract(ty_participle(L, M2, P2)))
+    ;   true
+    ).
 
 
 %% A verb's forms (ty_expand/1): each part of its class, the form its rule
@@ -922,7 +951,8 @@ ty_tdoc_more(Ls, [], Ls).
 %% section blank_template holds them to the header's slots).
 ty_template_group('the orders of the levels', [ty_order]).
 ty_template_group('words', [ty_noun_class, ty_class_when, ty_noun_in, ty_noun, ty_adjective, ty_adjective_before, ty_article, ty_adposition,
-                            ty_adverb, ty_capital, ty_capital_nouns, ty_and, ty_comma, ty_sense, ty_closed]).
+                            ty_adverb, ty_capital, ty_capital_nouns, ty_and, ty_conjunction, ty_serial_comma,
+                            ty_conjunct_marks, ty_clause_comma, ty_comma, ty_sense, ty_closed]).
 ty_template_group('verbs and tenses', [ty_conjugation, ty_verb_in, ty_irregular_verb, ty_verb, ty_tense_form, ty_tense_like, ty_participle,
                                        ty_participle_like, ty_participle_ending, ty_participle_agrees,
                                        ty_verb_class, ty_class_tense_form, ty_verb_person, ty_copula,
@@ -1001,6 +1031,8 @@ ty_template_flag(ty_relative_comma, Name, ty_relative_comma(Name)).
 ty_template_flag(ty_capital_nouns, Name, ty_capital_nouns(Name)).
 ty_template_flag(ty_adjunct_front, Name, ty_adjunct_front(Name, v2)).
 ty_template_flag(ty_object_front, Name, ty_object_front(Name, v2)).
+ty_template_flag(ty_serial_comma, Name, ty_serial_comma(Name)).
+ty_template_flag(ty_conjunct_marks, Name, ty_conjunct_marks(Name)).
 
 ty_row_shape('ty_noun(L, Meaning, Gender, Animacy, Singular, Plural).').
 ty_row_shape('ty_noun_class(L, Class, Endings).').
@@ -1071,6 +1103,8 @@ ty_row_shape('ty_negative_article(L, Gender, Number, Case, Word).').
 ty_row_shape('ty_negative_article_roles(L, Roles).').
 ty_row_shape('ty_negative_article_keeps(L).').
 ty_row_shape('ty_and(L, Words).').
+ty_row_shape('ty_conjunction(L, Kind, Words).').
+ty_row_shape('ty_clause_comma(L, Kind).').
 ty_row_shape('ty_bare_topic(L, Topic).').
 ty_row_shape('ty_adjunct_front(L, Kind).').
 ty_row_shape('ty_object_front(L, Kind).').
@@ -1484,6 +1518,12 @@ ty_missing(L, bad(ty_object_front(L, K))) :-
 ty_missing(L, bad(ty_and(L, Ws))) :-
     ty_and(L, Ws),
     \+ ( is_list(Ws), Ws \== [], forall(member(W, Ws), atom(W)) ).
+ty_missing(L, bad(ty_conjunction(L, K, Ws))) :-
+    ty_conjunction(L, K, Ws),
+    \+ ( memberchk(K, [or, but]), is_list(Ws), Ws \== [], forall(member(W, Ws), atom(W)) ).
+ty_missing(L, bad(ty_clause_comma(L, K))) :-
+    ty_clause_comma(L, K),
+    \+ memberchk(K, [and, or, but]).
 ty_missing(L, bad(ty_negative_article_keeps(L))) :-
     ty_negative_article_keeps(L),
     \+ once(ty_negative_article(L, _, _, _, _)).
@@ -1641,6 +1681,7 @@ ty_read_bases(L, Surface, Topics, Mood, IR0, C) :-
     b_setval('$ty_context', Context),
     b_setval('$ty_rel_open', f([])),
     ty_poss_flag(L, Bases),
+    ty_coord_flag(L, Bases),
     ty_parse_reset(L),
     ty_mood(Mood, L, IR0, C, Goal),
     phrase(Goal, Bases).
@@ -1704,7 +1745,11 @@ ty_ir_tw_(of(G, NP), L, of(G1, NP1)) :- !, ty_ir_tw(G, L, G1), ty_ir_tw(NP, L, N
 ty_ir_tw_(pp(M, NP), L, pp(M, NP1)) :- !, ty_ir_tw(NP, L, NP1).
 ty_ir_tw_(answer(P, A, C), L, answer(P, A, C1)) :- !, ty_ir_tw(C, L, C1).
 ty_ir_tw_(echo(C), L, echo(C1)) :- !, ty_ir_tw(C, L, C1).
+ty_ir_tw_(C, L, C1) :- ty_coord_any(C, K, Xs), !, ty_ir_tw_items(Xs, L, Ys), C1 =.. [K, Ys].
 ty_ir_tw_(X, _, X).
+
+ty_ir_tw_items([], _, []).
+ty_ir_tw_items([X|Xs], L, [Y|Ys]) :- ty_ir_tw(X, L, Y), ty_ir_tw_items(Xs, L, Ys).
 
 ty_ir_tw_list(Js, L, Js1) :-
     (   var(Js) -> Js1 = Js
@@ -1727,6 +1772,7 @@ ty_reads_as(Mood, L, IR0, Tokens, Topics) :-
            ty_parse_reset(L),
            b_setval('$ty_rel_open', f([])),
            ty_poss_flag(L, Tokens),
+           ty_coord_flag(L, Tokens),
            aggregate_all(min(C), ( ty_mood(Mood, L, IR0, C, G), phrase(G, Tokens) ), C1),
            \+ ( C1 > 0,
                 ty_ir_senses(IR0, Ms),
@@ -1820,6 +1866,7 @@ ty_ir_map(D, of(G, NP), of(G1, NP1)) :- !, ty_ir_map(D, G, G1), ty_ir_map(D, NP,
 ty_ir_map(D, pp(M, NP), pp(M, NP1)) :- !, ty_ir_map(D, NP, NP1).
 ty_ir_map(D, answer(P, A, C), answer(P, A, C1)) :- !, ty_ir_map(D, C, C1).
 ty_ir_map(D, echo(C), echo(C1)) :- !, ty_ir_map(D, C, C1).
+ty_ir_map(D, C, C1) :- ty_coord_any(C, K, Xs), !, maplist(ty_ir_map(D), Xs, Ys), C1 =.. [K, Ys].
 ty_ir_map(_, X, X).
 
 typology_translate(From, To, Text, Text2) :-
@@ -1919,6 +1966,7 @@ ty_mention(copula(_, _, S, Pr), R, M, N) :- !,
     (   R = s, ty_np_mention(S, M, N)
     ;   R = x, ty_np_mention(Pr, M, N)
     ).
+ty_mention(C, R, M, N) :- ty_coord_any(C, _, Cs), Cs = [X|_], X \= np(_, _, _, _), !, member(X1, Cs), ty_mention(X1, R, M, N).
 ty_mention(question(C), R, M, N) :- !, ty_mention(C, R, M, N).
 ty_mention(answer(_, _, C), R, M, N) :- !, ty_mention(C, R, M, N).
 
@@ -1928,6 +1976,7 @@ ty_np_mention(pron(3, N, K), M, N) :- nonvar(K), K = ref(M).
 ty_np_mention(rel(NP, C), M, N) :- ( ty_np_mention(NP, M, N) ; ty_mention(C, _, M, N) ).
 ty_np_mention(of(G, NP), M, N) :- ( ty_np_mention(NP, M, N) ; ty_np_mention(G, M, N) ).
 ty_np_mention(pp(_, NP), M, N) :- ty_np_mention(NP, M, N).
+ty_np_mention(C, M, N) :- ty_coord_np(C, _, Xs), member(X, Xs), ty_np_mention(X, M, N).
 
 %% The mentions of Role first, the others after, each in its order.
 ty_role_first(Ms, Role, Ordered) :-
@@ -1986,6 +2035,7 @@ ty_ir_meaning(of(G, NP), M) :-
     ;   ty_ir_meaning(NP, M)
     ).
 ty_ir_meaning(adv(M), M).
+ty_ir_meaning(C, M) :- ty_coord_any(C, _, Xs), member(X, Xs), ty_ir_meaning(X, M).
 
 ty_meaning_topic(M, M).
 ty_meaning_topic(M, T) :- ty_topic(M, T).
@@ -2489,6 +2539,8 @@ ty_known_base(L, B) :-
     ;   ty_wh_tonic(L, _, Ws), memberchk(B, Ws)
     ;   ty_inversion(L, J, JV), ( atom_concat(J, W, B) ; atom_concat(JV, W, B) ),
         ty_pronoun(L, s, [W], _)
+    ;   ty_and(L, Ws), memberchk(B, Ws)
+    ;   ty_conjunction(L, _, Ws), memberchk(B, Ws)
     ;   ty_relative(L, _, Ws, _), memberchk(B, Ws)
     ;   ty_relative_pronoun(L, Ws, _), memberchk(B, Ws)
     ;   ty_resumptive(L, Ws, _), memberchk(B, Ws)
@@ -3006,6 +3058,16 @@ ty_subject_number(G, N) :- nonvar(G), G = gap(H, _, _), ty_subject_number(H, N).
 ty_subject_number(rel(np(_, N, _, _), _), N).
 ty_subject_number(of(_, np(_, N, _, _)), N).
 ty_subject_number(pron(P, N0, _), N) :- ty_agreement(P, N0, N).
+%% A coordination (since 1.59.0): and's is plural, of the least person of
+%% its items (`you and I' are pl(1)), or's its last item's (`a cat or a
+%% dog sleeps').
+ty_subject_number(C, N) :- ty_coord_np(C, K, Xs), ty_coord_number(K, Xs, N).
+
+ty_coord_number(and, Xs, N) :-
+    findall(P, ( member(X, Xs), ( X = pron(P0, _, _), integer(P0) -> P = P0 ; P = 3 ) ), Ps),
+    min_list(Ps, P1),
+    ty_agreement(P1, pl, N).
+ty_coord_number(or, Xs, N) :- last(Xs, X), ty_subject_number(X, N).
 
 %% A verb the rule moved, in a language with question forms, is the
 %% question form if positive (`does see') and its negative if negative
@@ -3085,6 +3147,62 @@ ty_wh_features(what, [indef, sg, inanimate]).
 ty_sentence(L, IR) --> ty_clause(L, IR), { ty_wh_count(IR, yes_no) }.
 ty_sentence(L, IR) --> ty_copula_clause(L, IR), { ty_wh_count(IR, yes_no) }.
 ty_sentence(L, IR) --> ty_answer(L, IR).
+
+%% CLAUSES JOINED (since 1.59.0): and([C1, C2]), or([C1, C2]) and
+%% but([C1, C2]), two statements with the language's word between them
+%% (ty_and/2, ty_conjunction/3: `The spirit is willing but the flesh is
+%% weak.'), a comma before the word where ty_clause_comma/2 says (German
+%% `, aber'), and read with or without one in any language.
+ty_sentence(L, IR) -->
+    ty_coord_here,
+    { ty_coord_clauses(IR, K, C1, C2) },
+    ty_coord_ahead(L, K),
+    ty_statement(L, C1),
+    ty_clause_comma_mark(L, K),
+    ty_conjunction_words(L, K),
+    ty_statement(L, C2).
+
+ty_statement(L, C) --> ty_clause(L, C), { ty_wh_count(C, yes_no) }.
+ty_statement(L, C) --> ty_copula_clause(L, C), { ty_wh_count(C, yes_no) }.
+
+ty_coord_clauses(IR, K, C1, C2) :-
+    (   var(IR) -> member(K, [and, or, but]), IR =.. [K, [C1, C2]]
+    ;   IR =.. [K, [C1, C2]], memberchk(K, [and, or, but])
+    ).
+
+ty_clause_comma_mark(L, K) -->
+    (   { ty_clause_comma(L, K) } -> ( [','] ; [] ) ; ( [] ; [','] ) ).
+
+%% THE WORDS OF A CONJUNCTION: and's are ty_and/2's, the others
+%% ty_conjunction/3's.
+ty_conjunction_words(L, and) --> ty_and_words(L).
+ty_conjunction_words(L, K) --> { K \== and, ty_conjunction(L, K, Ws) }, ty_tokens(Ws).
+
+%% Reading, the words still to read hold the conjunction K's first word:
+%% no coordination is tried where none is. Writing, always.
+ty_coord_ahead(L, K, S, S) :-
+    (   var(S) -> true
+    ;   nb_current('$ty_coord', f(Ks)), \+ memberchk(K, Ks) -> fail
+    ;   \+ \+ ( ty_conjunction_first(L, K, W), memberchk(W, S) )
+    ).
+
+%% THE CONJUNCTIONS OF A TEXT: the kinds whose first word its words hold,
+%% set once a reading ('$ty_coord'), so that a text with none tries no
+%% coordination at a role (ty_coord_here//0): asked at each, the tries
+%% cost the benchmark's sentences, which have none, 0.9 % to 3.2 % more
+%% inferences (1.59.0's first cut).
+ty_coord_flag(L, Words) :-
+    findall(K, ( member(K, [and, or, but]), ty_conjunction_first(L, K, W), memberchk(W, Words) ), Ks),
+    b_setval('$ty_coord', f(Ks)).
+
+ty_coord_here(S, S) :-
+    (   var(S) -> true
+    ;   nb_current('$ty_coord', f(Ks)) -> Ks \== []
+    ;   true
+    ).
+
+ty_conjunction_first(L, and, W) :- ty_and(L, [W|_]).
+ty_conjunction_first(L, K, W) :- K \== and, ty_conjunction(L, K, [W|_]).
 
 %% ---- the answer to a yes or no question -----------------------------------------
 %%
@@ -3527,6 +3645,7 @@ ty_np_animacy(_, wh(M), A) :-
 ty_np_animacy(L, rel(NP, _), A) :- NP = np(_, _, _, _), ty_np_animacy(L, NP, A).
 ty_np_animacy(L, gap(NP, _, _), A) :- ty_np_animacy(L, NP, A).
 ty_np_animacy(L, of(_, NP), A) :- NP = np(_, _, _, _), ty_np_animacy(L, NP, A).
+ty_np_animacy(L, C, A) :- ty_coord_np(C, _, Xs), forall(member(X, Xs), ty_np_animacy(L, X, A)).
 ty_np_animacy(L, pron(_, _, K), A) :-
     nonvar(K), K = ref(M), !,
     ty_np_animacy(L, np(M, _, _, _), A).
@@ -3808,6 +3927,14 @@ ty_np_phrase(L, Pr, F) -->
     { ty_pp_pron_role(L, R) },
     ty_words(1, 2, Ws, ty_pron_words(L, R, Pr, Ws)),
     { ty_pron_np_features(L, Pr, F) }.
+%% Coordinated noun phrases with no marks (since 1.59.0: `with mines and
+%% traps').
+ty_np_phrase(L, C, F) -->
+    ty_coord_here,
+    { ty_coord_np_slot(C, K, Xs) },
+    ty_coord_ahead(L, K),
+    ty_coord_list(L, none, K, Xs, Fs),
+    { ty_coord_features(K, Fs, F) }.
 
 %% A pronoun after an adposition takes the rows of j, or of o after an
 %% adposition of the accusative (German `mit ihm', `an ihn').
@@ -4294,11 +4421,13 @@ ty_predicate_in(L, adj(As), Rows) -->
 %% black.', `El perro es pequeño, negro y grande.', Persian `سگ کوچک و
 %% سیاه است.'); a noun phrase's adjectives stay as they are (`the small
 %% black dog').
-ty_pred_adjs(L, [A|As], [R|Rs]) --> ty_adjs(L, [A], [R]), ty_pred_more(L, As, Rs).
+%% A comma before the last one's `and', after a comma, is read where
+%% ty_serial_comma/1 says (since 1.59.0: `red, blue, and yellow').
+ty_pred_adjs(L, [A|As], [R|Rs]) --> ty_adjs(L, [A], [R]), ty_pred_more(L, As, Rs, first).
 
-ty_pred_more(_, [], []) --> [].
-ty_pred_more(L, [A], [R]) --> ty_and_words(L), ty_adjs(L, [A], [R]).
-ty_pred_more(L, [A, B|As], [R|Rs]) --> [','], ty_adjs(L, [A], [R]), ty_pred_more(L, [B|As], Rs).
+ty_pred_more(_, [], [], _) --> [].
+ty_pred_more(L, [A], [R], At) --> ty_serial_mark(L, At), ty_and_words(L), ty_adjs(L, [A], [R]).
+ty_pred_more(L, [A, B|As], [R|Rs], _) --> [','], ty_adjs(L, [A], [R]), ty_pred_more(L, [B|As], Rs, later).
 
 ty_and_words(L, S0, S) :- ty_and(L, Ws), append(Ws, S, S0).
 ty_predicate_in(L, np(M, N, D, A), []) --> ty_np(L, np(M, N, D, A), _).
@@ -4550,7 +4679,15 @@ ty_subject_gn(L, S, G, N) :-
     ;   S = rel(H, _) -> ty_subject_gn(L, H, G, N)
     ;   S = of(_, H) -> ty_subject_gn(L, H, G, N)
     ;   S = gap(H, _, _) -> ty_subject_gn(L, H, G, N)
+    ;   ty_coord_np(S, K, Xs) -> ty_coord_gn(L, K, Xs, G, N)
     ).
+
+%% A coordination's gender and number (since 1.59.0): and's plural, f
+%% where every item is f, else m; or's its last item's.
+ty_coord_gn(L, and, Xs, G, pl) :-
+    findall(G0, ( member(X, Xs), ty_subject_gn(L, X, G0, _) ), Gs),
+    ( Gs \== [], forall(member(G1, Gs), G1 == f) -> G = f ; G = m ).
+ty_coord_gn(L, or, Xs, G, N) :- last(Xs, X), ty_subject_gn(L, X, G, N).
 
 ty_part_form(L, G, N, W0, W) :-
     (   ty_participle_ending(L, G, N, From, To),
@@ -4732,6 +4869,98 @@ ty_role(L, Role, P, Features) -->
       ty_marks_ok(L, Role, after, Features, After) }.
 ty_role(_, _, P, Features) -->
     { ty_poss_moved(P), P = of(gap(_, _, r(poss(_, _, Features), _)), _) }.
+
+%% COORDINATED NOUN PHRASES (since 1.59.0): and(Xs) and or(Xs) where a
+%% noun phrase stands, two items or more (`the boy and the girl', `a cat
+%% or a dog'), each a noun phrase or a possessor's. The list is written
+%% `A, B and C' (ty_coord_list//5); its last item may be a coordination
+%% itself, written with no comma (`water and milk and blood' is
+%% and([water, and([milk, blood])])). The role's marks go round the whole
+%% (Persian `سگ و گربه را'), or round each item where ty_conjunct_marks/1
+%% says (Spanish `al niño y a la niña').
+ty_role(L, Role, C, Features) -->
+    ty_coord_here,
+    { ty_coord_np_slot(C, K, Xs) },
+    ty_coord_ahead(L, K),
+    { ty_role_case(L, Role) },
+    (   { ty_conjunct_marks(L) }
+    ->  ty_coord_list(L, role(Role), K, Xs, Fs),
+        { ty_coord_features(K, Fs, Features) }
+    ;   ty_mark_slot(L, Role, before, Before),
+        ty_coord_list(L, none, K, Xs, Fs),
+        ty_mark_slot(L, Role, after, After),
+        { ty_coord_features(K, Fs, Features),
+          ty_marks_ok(L, Role, before, Features, Before),
+          ty_marks_ok(L, Role, after, Features, After) }
+    ).
+
+%% What a coordination's slot may hold, reading (unbound: and, then or)
+%% or writing.
+ty_coord_np_slot(C, K, Xs) :-
+    (   var(C) -> member(K, [and, or]), C =.. [K, Xs]
+    ;   C =.. [K, Xs], memberchk(K, [and, or]), is_list(Xs)
+    ).
+
+%% A coordination of noun phrases, as written: its kind and its items.
+ty_coord_np(C, K, Xs) :-
+    nonvar(C), C =.. [K, Xs], memberchk(K, [and, or]), is_list(Xs).
+
+%% A coordination of noun phrases or of clauses, as written.
+ty_coord_any(C, K, Xs) :-
+    nonvar(C), C =.. [K, Xs], memberchk(K, [and, or, but]), is_list(Xs).
+
+%% The items: the first, each after it but the last after a comma, the
+%% last after the conjunction's words.
+ty_coord_list(L, R, K, [X|Xs], [F|Fs]) -->
+    ty_conjunct(L, R, X, F),
+    ty_coord_rest(L, R, K, first, Xs, Fs).
+
+ty_coord_rest(L, R, K, At, [X], [F]) -->
+    ty_serial_mark(L, At),
+    ty_conjunction_words(L, K),
+    ty_coord_last(L, R, X, F).
+ty_coord_rest(L, R, K, _, [X, Y|Xs], [F|Fs]) -->
+    [','],
+    ty_conjunct(L, R, X, F),
+    ty_coord_rest(L, R, K, later, [Y|Xs], Fs).
+
+%% A comma before the last item's conjunction, after a comma (`red, blue,
+%% and yellow'): read where ty_serial_comma/1 says, never written.
+ty_serial_mark(_, _) --> [].
+ty_serial_mark(L, later) --> { ty_serial_comma(L) }, [','].
+
+ty_coord_last(L, R, X, F) --> ty_conjunct(L, R, X, F).
+ty_coord_last(L, R, C, F) -->
+    { ty_coord_np_slot(C, K, Xs) },
+    ty_coord_ahead(L, K),
+    ty_coord_list(L, R, K, Xs, Fs),
+    { ty_coord_features(K, Fs, F) }.
+
+%% An item: a noun phrase or a possessor's, with no marks (none) or with
+%% its role's (role(Role)).
+ty_conjunct(L, none, X, F) --> { ty_np_slot(X) }, ty_np(L, X, F).
+ty_conjunct(L, none, X, F) --> { ty_poss_slot(X) }, ty_poss(L, X, F).
+ty_conjunct(L, role(R), X, F) --> { ty_np_slot(X) }, ty_marked_np(L, R, X, F, none).
+ty_conjunct(L, role(R), X, F) -->
+    { ty_poss_slot(X) },
+    ty_mark_slot(L, R, before, Before),
+    ty_poss(L, X, F),
+    ty_mark_slot(L, R, after, After),
+    { ty_marks_ok(L, R, before, F, Before),
+      ty_marks_ok(L, R, after, F, After) }.
+
+%% A coordination's features are its last item's but the number, plural
+%% for and, and the gender: the items' own where they share one, else m
+%% where one is m (Spanish `el niño y la niña son pequeños'), else the
+%% first item's.
+ty_coord_features(K, Fs, [Def, N, Anim, Gen]) :-
+    last(Fs, [Def, N0, Anim, _]),
+    ( K == and -> N = pl ; N = N0 ),
+    findall(G, member([_, _, _, G], Fs), Gs),
+    (   Gs = [G0|Gr], nonvar(G0), forall(member(G1, Gr), G1 == G0) -> Gen = G0
+    ;   member(G2, Gs), G2 == m -> Gen = m
+    ;   Gs = [Gen|_]
+    ).
 
 %% A noun phrase between the marks its role asks for. Next is r when a
 %% relative clause follows it (its last word may take a linked form).

@@ -88,8 +88,12 @@ where the import makes ten million. **A big predicate's rows of one
 language go by a walk of retract/1, never by retractall/1 with its first
 argument unbound** (`ty_vfirst_make/1`): cocolog 3.73.2's retractall/1
 took 70 s for 20 000 rows that stand after 100 000 others, and a third
-load of English 180 s; the walk takes 0.01 s. With the first argument
-bound, retractall/1 is the faster (9 s against 55 s for 20 000 keys).
+load of English 180 s; the walk takes 0.01 s (3.78.14 takes those
+rows in 0.01 s either way). **Rows taken one key at a time go while a call
+on their predicate stays open** (`ty_unexpand/1`, since 1.59.0): on
+3.78.14 a keyed retractall/1 of 20 000 keys among 120 000 rows took 60 s
+(3.73.2: 12 s), and a reload of English 100 s; a forall/2 that walks the
+rows and retracts each made one takes 0.09 s on both.
 The adjectives and the adverbs since 1.58.0: one fact each, the word its
 meaning (`ty_adjective/5` in `-adjectives.pl`, `ty_adverb/3` in
 `-adverbs.pl`), from `lexicon/`'s known_adj, adj, known_adverb and adverb
@@ -99,7 +103,20 @@ and deletes an old one (a words file with no rows is not written);
 `typology_load/1` reads the files that are there. **`typology_check/2` asks
 `ty_gender/2` once** (it walks every noun): asked for each of the 17 703
 adjectives, the adjective check made 358 million inferences, and each
-section that checks a template paid it (1.58.0's first full case, 680 s).**The blank template is generated too** (1.54.0): `templates/template.pl`
+section that checks a template paid it (1.58.0's first full case, 680 s).
+**Coordination since 1.59.0** (`ty_coord_list/5` and the rules around it):
+`and(Xs)` and `or(Xs)` in `ty_role/4` and `ty_np_phrase/3`, `and`, `or` and
+`but` of two clauses in `ty_sentence/3`. Each is tried only where the words
+still to read hold the conjunction (`ty_coord_ahead/4`), so a sentence with
+none pays a `memberchk/2` a role. An item is a noun phrase or a
+possessor's, never a coordination, so no rule calls itself before a word
+is read; only the LAST item may be one, written with no comma (`A and B
+and C`). The agreement of a coordination asks its IR (`ty_subject_number/2`,
+`ty_subject_gn/4`, `ty_np_animacy/3`), which is bound only once the subject
+was read: a verb before its subject (Spanish `Duermen el niño y la niña.`)
+reads no coordination. Spanish `a` after `y` or `o` is the object's mark
+again (a `ty_sense/5` row), or the second item of `al perro y a la niña`
+is no object.**The blank template is generated too** (1.54.0): `templates/template.pl`
 is what `typology_import(template)` writes, `typology_template(xx)`: every
 slot of typology.pl's header list (THE TEMPLATE) with the header's own
 description, in the groups of `ty_template_group/2`, each closed choice

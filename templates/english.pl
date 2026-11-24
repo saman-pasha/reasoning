@@ -650,8 +650,15 @@ ty_copula(english, any, pluperfect, sg, neg, [had, not, been]).
 ty_copula(english, any, pluperfect, pl, pos, [had, been]).
 ty_copula(english, any, pluperfect, pl, neg, [had, not, been]).
 
-%% The word before the last of a predicate's adjectives (`small and black').
+%% The word before the last item of a list: a predicate's adjectives
+%% (`small and black'), noun phrases (`the boy and the girl'), clauses.
 ty_and(english, [and]).
+%% The other conjunctions (since 1.59.0): `or', `but'.
+ty_conjunction(english, or, [or]).
+ty_conjunction(english, but, [but]).
+%% A comma may stand before the last item's `and' (`red, blue, and yellow'),
+%% read and not written.
+ty_serial_comma(english).
 
 %% A month takes no definite article (`in March'), and is written with its
 %% capital.

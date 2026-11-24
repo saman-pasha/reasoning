@@ -25,6 +25,7 @@ the count to the last one below.
 | 1.56.0 | 250 | 3.1 % | the English nouns in the class design: 20 078 nouns, from the vocabularies and `lexicon/` |
 | 1.57.0 | 278 | 3.5 % | the English verbs in the class design: 3 835 regular verbs, 217 irregular ones (`do` stays a word of grammar) |
 | 1.58.0 | 428 | 5.4 % | the English adjectives and adverbs, one fact each: 17 703 adjectives, 1 081 adverbs, from `lexicon/` and the vocabularies |
+| 1.59.0 | 436 | 5.5 % | coordination, first part: noun phrases and two clauses joined by `and`, `or`, `but` |
 
 At 1.55.0 the commonest words no table has are words of grammar, not
 nouns: `and` 451 times, `by` 154, `as` 126, `out` 95, `this` 95, `all` 92,
@@ -72,6 +73,15 @@ English a word's meaning is the word: no translation table.
    (whether a verb takes one: `lexicon/`'s `vt` and `vi`), with `do` as a
    main verb: until then `do` is a word of grammar only, or `Yes, he
    does.` reads as the verb `do` with no object too.
+   Coordination is three versions: 1.59.0 the noun phrases and two
+   clauses (done); 1.60.0 the verbs of one subject (`They stood on high
+   and observed the countryside.`); 1.61.0 the adjectives, the adverbs
+   and the nouns inside a phrase (`a vicious and degrading cult`,
+   `politically and economically`, `the corn and tomatoes`). Of the 215
+   sentences of the measure that only a conjunction stopped at 1.58.0, 8
+   read at 1.59.0; the others need those, or a structure that is no
+   coordination (a phrase with no verb, an imperative, a bare singular
+   noun: `Helium is monatomic.` is not read either).
 4. The structures: the subordinate clause (`that`, `if`, `when`,
    `because`), the infinitive, the gerund, the passive, the imperative.
 

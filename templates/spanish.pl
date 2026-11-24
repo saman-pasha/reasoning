@@ -169,6 +169,10 @@ ty_adverb(spanish, here, aquí).
 ty_sense(spanish, a, mark(o), [class(verb)], [opt(class(article)), opt(class(possessive)), class(noun, animate)]).
 ty_sense(spanish, a, mark(o), [class(noun), opt(class(article)), class(verb)],
          [opt(class(article)), opt(class(possessive)), class(noun, animate)]).
+%% After `y' or `o' it is the mark again (since 1.59.0: `ve al perro y a
+%% la niña', each item of a coordinated object taking the mark).
+ty_sense(spanish, a, mark(o), [y], [opt(class(article)), opt(class(possessive)), class(noun, animate)]).
+ty_sense(spanish, a, mark(o), [o], [opt(class(article)), opt(class(possessive)), class(noun, animate)]).
 ty_sense(spanish, a, mark(o), [], ['quién']).
 ty_sense(spanish, a, mark(o), [], ['qué', class(noun, animate)]).
 %% Before `cuyo' and an animate noun it is the mark too (`el niño a cuyo
@@ -478,11 +482,20 @@ ty_copula(spanish, pp, pluperfect, sg(2), pos, ['habías', estado]).
 ty_copula(spanish, pp, pluperfect, pl(1), pos, ['habíamos', estado]).
 ty_copula(spanish, pp, pluperfect, pl(2), pos, ['habíais', estado]).
 
-%% The word before the last of a predicate's adjectives (`small and black').
+%% The word before the last item of a list: a predicate's adjectives
+%% (`small and black'), noun phrases (`the boy and the girl'), clauses.
 ty_and(spanish, [y]).
+%% The other conjunctions (since 1.59.0): `or', `but'.
+ty_conjunction(spanish, or, [o]).
+ty_conjunction(spanish, but, [pero]).
+%% Each item of a coordinated role takes the role's marks (`al niño y a
+%% la niña').
+ty_conjunct_marks(spanish).
 %% `y' is `e' before a word that begins with the sound i (`pequeño e
 %% inteligente'), not before `hie' (`y hierro').
 ty_before(spanish, y, [[i, consonant], [h, i, consonant]], e, space).
+%% `o' is `u' before a word that begins with the sound o (`siete u ocho').
+ty_before(spanish, o, [[o], [h, o]], u, space).
 %% The consonants, for the forms chosen by sound (`e importante').
 ty_letters(spanish, consonant, [b, c, d, f, g, h, j, k, l, m, n, 'ñ', p, q, r, s, t, v, w, x, y, z]).
 

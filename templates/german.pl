@@ -465,8 +465,14 @@ ty_copula(german, any, pluperfect, pl(2), pos, [wart, gewesen]).
 %% einen Hund.').
 ty_negative_article_roles(german, [s, o, p]).
 
-%% The word before the last of a predicate's adjectives (`small and black').
+%% The word before the last item of a list: a predicate's adjectives
+%% (`small and black'), noun phrases (`the boy and the girl'), clauses.
 ty_and(german, [und]).
+%% The other conjunctions (since 1.59.0): `or', `but'.
+ty_conjunction(german, or, [oder]).
+ty_conjunction(german, but, [aber]).
+%% A comma before `aber' between two clauses.
+ty_clause_comma(german, but).
 
 %% March, the month, keeps its article (`im März').
 ty_noun(german, march_month, m, unknown, 'März', 'Märze').

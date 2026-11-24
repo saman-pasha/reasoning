@@ -507,8 +507,12 @@ ty_negative_article(french, any, any, any, de).
 ty_negative_article_roles(french, [o]).
 ty_negative_article_keeps(french).
 
-%% The word before the last of a predicate's adjectives (`small and black').
+%% The word before the last item of a list: a predicate's adjectives
+%% (`small and black'), noun phrases (`the boy and the girl'), clauses.
 ty_and(french, [et]).
+%% The other conjunctions (since 1.59.0): `or', `but'.
+ty_conjunction(french, or, [ou]).
+ty_conjunction(french, but, [mais]).
 
 %% March, the month (templates/topics.pl), takes no definite article and
 %% `en' for `in' (`en mars').

@@ -437,8 +437,12 @@ ty_copula(italian, any, pluperfect, sg(2), pos, [eri, agree(stato)]).
 ty_copula(italian, any, pluperfect, pl(1), pos, [eravamo, agree(stato)]).
 ty_copula(italian, any, pluperfect, pl(2), pos, [eravate, agree(stato)]).
 
-%% The word before the last of a predicate's adjectives (`small and black').
+%% The word before the last item of a list: a predicate's adjectives
+%% (`small and black'), noun phrases (`the boy and the girl'), clauses.
 ty_and(italian, [e]).
+%% The other conjunctions (since 1.59.0): `or', `but'.
+ty_conjunction(italian, or, [o]).
+ty_conjunction(italian, but, [ma]).
 
 %% A month takes no definite article (`in marzo').
 ty_bare_topic(italian, month).

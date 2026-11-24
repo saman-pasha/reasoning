@@ -389,8 +389,12 @@ ty_copula(persian, any, pluperfect, pl, pos, ['بوده', 'بودند']).
 ty_copula(persian, any, pluperfect, sg, neg, ['نبوده', 'بود']).
 ty_copula(persian, any, pluperfect, pl, neg, ['نبوده', 'بودند']).
 
-%% The word before the last of a predicate's adjectives (`small and black').
+%% The word before the last item of a list: a predicate's adjectives
+%% (`small and black'), noun phrases (`the boy and the girl'), clauses.
 ty_and(persian, ['و']).
+%% The other conjunctions (since 1.59.0): `or', `but'.
+ty_conjunction(persian, or, ['یا']).
+ty_conjunction(persian, but, ['اما']).
 %% The comma: `،' (`سگ کوچک، سیاه و بزرگ است.').
 ty_comma(persian, '،').
 
