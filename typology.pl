@@ -4423,11 +4423,8 @@ ty_pp_tail(L, open(NP0), H) -->
 %% THE ADPOSITIONS OF A TEXT: the first words of its adposition rows that
 %% its words hold ('$ty_adp'), as the subordinators'.
 ty_adp_flag(L, Words) :-
-    (   '$ty_noun_pp'(L)
-    ->  findall(W, ( ty_adposition(L, _, [W|_]), memberchk(W, Words) ), Ws0),
-        sort(Ws0, Ws)
-    ;   Ws = []
-    ),
+    findall(W, ( ty_adposition(L, _, [W|_]), memberchk(W, Words) ), Ws0),
+    sort(Ws0, Ws),
     b_setval('$ty_adp', f(Ws)).
 
 ty_adp_next(S, S) :-
@@ -5884,6 +5881,17 @@ ty_gap_possible(L, r(Pl, Rule), Ahead) :-
     ;   Rule = moves(_) -> once(( ty_relative_pronoun(L, Ws, _), ty_all_ahead(Ws, Ahead) ))
     ;   Rule == resumptive -> once(( ty_resumptive(L, Ws, _), ty_all_ahead(Ws, Ahead) ))
     ;   Pl = c(_) -> once(( ty_complement(L, _, Ws), ty_all_ahead(Ws, Ahead) ))
+    ;   ty_adp_ahead(L, Ahead)
+    ).
+
+%% An adposition's words among the words left: the text's adpositions
+%% ('$ty_adp', ty_adp_flag/2) where a read set them, so a text with none
+%% asks no row (English has 43 since 1.84.0, and the walk over them all
+%% cost its round trips 10 % more inferences); else every row.
+ty_adp_ahead(L, Ahead) :-
+    (   nb_current('$ty_adp', f(As))
+    ->  As = [_|_],
+        once(( member(W, As), ty_adposition(L, _, [W|Ws]), ty_all_ahead([W|Ws], Ahead) ))
     ;   once(( ty_adposition(L, _, Ws), ty_all_ahead(Ws, Ahead) ))
     ).
 

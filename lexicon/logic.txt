@@ -255,3 +255,15 @@ His place in history was foreordained.	past(foreordained(in(of(place, he), histo
 A dip in prices.	dip(a(in(dip, a(pl(price))))). price(a(pl(price))).
 Hands in the starting position.	hand(a(in(pl(hand), the(starting(position))))).
 Slavish devotion to her job ruled her life.	past(rule(to(slavish(devotion), of(job, she)), of(life, she))).
+# the other prepositions (since 1.84.0): a predicate of two like in/2, round the atom or inside a constant
+The knocker thudded against the front door.	past(against(thud(the(knocker)), the(front(door)))).
+He wrapped a tape around the package.	tape(a(tape)). past(around(wrap(he, a(tape)), the(package))).
+A dim light beside the bed.	light(a(beside(dim(light), the(bed)))). dim(a(beside(dim(light), the(bed)))).
+The book is at the station.	at(the(book), the(station)).
+He fell into a trap.	trap(a(trap)). past(into(fall(he), a(trap))).
+Guard against infection.	imperative(against(guard(you), infection)).
+The road twists sharply after the light.	after(sharply(twist(the(road))), the(light)).
+A large turnout for the meeting.	turnout(a(for(large(turnout), the(meeting)))). large(a(for(large(turnout), the(meeting)))).
+She looked haggardly out of her tent.	past(out_of(haggardly(look(she)), of(tent, she))).
+He slept during the storm.	past(during(is_sleep(he), the(storm))).
+The cat sleeps under the table.	under(is_sleep(the(cat)), the(table)).

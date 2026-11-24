@@ -24,8 +24,8 @@ red) and lesson 01 pin the shape of the answer, deliberately not the number.
 The reasoning library translates ALL 8 000 sentences of `lexicon/prose.txt`
 from English into the IR, and ALL of that IR into Cocolog. Every step
 moves one of the two counts and reports both (`tools/logic/prose.pl`;
-STATUS.md keeps them): at 1.83.0, 3 268 into the IR, 3 155 of them into
-Cocolog (1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
+STATUS.md keeps them): at 1.84.0, 3 550 into the IR, 3 415 of them into
+Cocolog (1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
 count says so. **Measure what blocks the rest before choosing a step**:
 at 1.80.0 the words no table has looked like the gap, and 5 115 of the
 8 000 had none -- 2 130 of them a noun phrase alone, which one rule read.
@@ -502,7 +502,7 @@ is a TAIL of the clause that reads its head, never a clause of its own**:
 (`ty_np_tail_slot/4`, `ty_poss_tail_slot/4`, the head's slot test too) and
 end in `ty_pp_tail//3`, no tail first, then an adposition phrase where the
 next word is an adposition's (`'$ty_adp'`, set with the subordinators'
-flag from the text's words, and empty in a language with no row). As a
+flag from the text's words; the tail asks `'$ty_noun_pp'` too). As a
 clause of its own that read the head again, the first cut cost the round
 trips French 12.6 % and Spanish 5.5 % (`de` and `a` are in nearly every
 sentence); the tail costs 0.5 % (Persian) to 1.3 % (French) more
@@ -522,6 +522,20 @@ an individual whose facts are its head's and X's (`lg_shape_facts/3`);
 rule of one (`adposition(generic)`). The Cocolog reader takes `Prep(T, X)`
 inside the(...) or a(...) as a constant where Prep is an adposition's
 meaning (`lg_pp_shape/1`), so in(the(dog), the(house)) stays a predicate.
+**The other English prepositions since 1.84.0** are a `ty_adposition/3`
+row each in `templates/english.pl` (38 more: `for`, `at`, `into`, `by`,
+...; `towards` a second word of `toward`, `out of` and `instead of` two
+words) and nothing else: every level, and Cocolog's predicate of two,
+takes a new meaning as it took `in`. No row for `up`, `down` and `off`,
+which in lexicon/prose.txt are verbs' particles (`Fold up the
+newspaper.` read the newspaper as an adposition's noun phrase), nor for
+`past`, a tense's name in Cocolog; the other languages have no row for
+the new meanings yet, so they write none. **A walk over every adposition
+row is a cost per row**: the gap check of an adposition phrase
+(`ty_gap_possible/3`) walked them all at each relative clause tried, and
+43 rows cost English's round trips 10 % more inferences; it asks the
+text's adpositions now (`ty_adp_ahead/2`, `'$ty_adp'`, set for every
+language since 1.84.0), and English is 0.6 % cheaper than at 1.83.0.
 **The blank template copies the row descriptions of typology.pl's head**:
 a changed description is `typology_import(template)` again, or the
 `reproduced` section is red.

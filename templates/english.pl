@@ -547,6 +547,49 @@ ty_adposition(english, on, [on]).
 ty_adposition(english, with, [with]).
 ty_adposition(english, to, [to]).
 ty_adposition(english, from, [from]).
+%% The other prepositions (since 1.84.0): each its word, `towards' a second
+%% word of `toward', two words for `out of' and `instead of'. No row for `up',
+%% `down' and `off': in lexicon/prose.txt they are the particles of verbs
+%% (`Fold up the newspaper.'), and as prepositions they made its object an
+%% adjunct; nor for `past', the name of a tense in Cocolog.
+ty_adposition(english, for, [for]).
+ty_adposition(english, at, [at]).
+ty_adposition(english, into, [into]).
+ty_adposition(english, by, [by]).
+ty_adposition(english, over, [over]).
+ty_adposition(english, against, [against]).
+ty_adposition(english, onto, [onto]).
+ty_adposition(english, between, [between]).
+ty_adposition(english, about, [about]).
+ty_adposition(english, under, [under]).
+ty_adposition(english, without, [without]).
+ty_adposition(english, through, [through]).
+ty_adposition(english, after, [after]).
+ty_adposition(english, before, [before]).
+ty_adposition(english, around, [around]).
+ty_adposition(english, during, [during]).
+ty_adposition(english, toward, [toward]).
+ty_adposition(english, toward, [towards]).
+ty_adposition(english, among, [among]).
+ty_adposition(english, above, [above]).
+ty_adposition(english, across, [across]).
+ty_adposition(english, behind, [behind]).
+ty_adposition(english, along, [along]).
+ty_adposition(english, below, [below]).
+ty_adposition(english, beneath, [beneath]).
+ty_adposition(english, beside, [beside]).
+ty_adposition(english, beyond, [beyond]).
+ty_adposition(english, inside, [inside]).
+ty_adposition(english, near, [near]).
+ty_adposition(english, outside, [outside]).
+ty_adposition(english, throughout, [throughout]).
+ty_adposition(english, upon, [upon]).
+ty_adposition(english, within, [within]).
+ty_adposition(english, until, [until]).
+ty_adposition(english, despite, [despite]).
+ty_adposition(english, except, [except]).
+ty_adposition(english, out_of, [out, of]).
+ty_adposition(english, instead_of, [instead, of]).
 ty_adverb(english, quickly, quickly).
 ty_adverb(english, slowly, slowly).
 ty_adverb(english, today, today).

@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2043,6 +2043,32 @@ noun_adpositions :-
     findall(M4, ty_ir_meaning(IR3, M4), Ms4),
     check('the meanings of the phrase', Ms4, [sleep, dog, house]).
 
+%% 1.84.0: THE OTHER ENGLISH PREPOSITIONS, a row each (`for', `at',
+%% `into', `by', ...; `towards' a second word of `toward', `out of' and
+%% `instead of' two words). No row for the particles `up', `down', `off'.
+%% The other languages have no rows for the new meanings yet.
+prepositions :-
+    section('the other English prepositions'),
+    B = np(boy, sg, def, []),
+    forall(member(T-Want, [
+               'A gift for the boy.'-phrase(np_pp(np(gift, sg, indef, []), pp(for, B))),
+               'The book is at the station.'-copula(present, pos, np(book, sg, def, []), pp(at, np(station, sg, def, []))),
+               'He fell into a trap.'-clause(fall, past, pos, pron(3, sg, m), none, [pp(into, np(trap, sg, indef, []))]),
+               'She looked out of her tent.'-clause(look, past, pos, pron(3, sg, f), none, [pp(out_of, of(pron(3, sg, f), np(tent, sg, def, [])))]),
+               'A poem by an unknown author.'-phrase(np_pp(np(poem, sg, indef, []), pp(by, np(author, sg, indef, [unknown])))),
+               'The dog walked towards the house.'-clause(walk, past, pos, np(dog, sg, def, []), none, [pp(toward, np(house, sg, def, []))]),
+               'He slept during the storm.'-clause(sleep, past, pos, pron(3, sg, m), none, [pp(during, np(storm, sg, def, []))]),
+               'He waited for the bus.'-clause(wait, past, pos, pron(3, sg, m), np(bus, sg, def, [])),
+               'Fold up the newspaper.'-none ]),
+           ( ( typology_read(english, T, R) -> true ; R = none ),
+             atomic_list_concat(['English: ', T, ', the first reading'], Label),
+             check(Label, R, Want) )),
+    IR2 = clause(walk, past, pos, np(dog, sg, def, []), none, [pp(toward, np(house, sg, def, []))]),
+    ( typology_write(english, IR2, W2) -> true ; W2 = none ),
+    check('toward is written with its first word', W2, 'The dog walked toward the house.'),
+    ( typology_write(spanish, IR2, W3) -> true ; W3 = none ),
+    check('a language with no row for the meaning writes none', W3, none).
+
 %% 1.64.0: the bare singular noun. np(M, sg, mass, []): a singular noun
 %% with no article, read after the other readings, written with none;
 %% Persian, whose definite noun has none either, writes it as def.
@@ -2374,8 +2400,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 3268 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 3 268 sentences read at 1.83.0 are read', R1, yes),
+    ( K >= 3550 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 3 550 sentences read at 1.84.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

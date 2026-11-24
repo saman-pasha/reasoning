@@ -146,6 +146,7 @@ main :-
     phrases,
     commands,
     noun_adpositions,
+    prepositions,
     format("~ndone~n", []).
 
 
@@ -927,6 +928,16 @@ noun_adpositions :-
     once(typology_read(english, 'He sees a dog with a telescope.', IR3)),
     must('after an object, the clause\'s adjunct first', IR3,
          clause(see, present, pos, pron(3, sg, m), np(dog, sg, indef, []), [pp(with, np(telescope, sg, indef, []))])).
+
+%% 55. THE OTHER PREPOSITIONS (1.84.0): a ty_adposition/3 row each in the
+%% English template, of one word or two (`out of'); a row is all a new
+%% adposition needs.
+prepositions :-
+    typology_read(english, 'He fell into a trap.', IR1),
+    must('into', IR1, clause(fall, past, pos, pron(3, sg, m), none, [pp(into, np(trap, sg, indef, []))])),
+    once(typology_read(english, 'She looked out of her tent.', IR2)),
+    IR2 = clause(_, _, _, _, _, [pp(P2, _)]),
+    must('a preposition of two words', P2, out_of).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

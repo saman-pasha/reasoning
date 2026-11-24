@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -263,11 +263,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 228),
-    ( R >= 214 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 214 right', VR, ok),
-    ( K >= 220 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 220 kept', VK, ok).
+    check('the second measure: its sentences', N, 239),
+    ( R >= 225 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 225 right', VR, ok),
+    ( K >= 231 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 231 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -730,10 +730,34 @@ noun_adpositions :-
     logic_why(IR6, W6),
     check('every with an adposition phrase has no form yet', W6, determiner(every)).
 
+%% 1.84.0: THE OTHER PREPOSITIONS are predicates of two as in/2 is: round
+%% the atom (an adjunct), between a copula's subject and its noun phrase,
+%% inside a constant (a noun phrase's).
+prepositions :-
+    section('the other prepositions'),
+    forall(member(T-Want, [
+               'He fell into a trap.'-'trap(a(trap)).\npast(into(fall(he), a(trap))).\n',
+               'The book is at the station.'-'at(the(book), the(station)).\n',
+               'The cat sleeps under the table.'-'under(is_sleep(the(cat)), the(table)).\n',
+               'She looked haggardly out of her tent.'-'past(out_of(haggardly(look(she)), of(tent, she))).\n',
+               'A large turnout for the meeting.'-'turnout(a(for(large(turnout), the(meeting)))).\nlarge(a(for(large(turnout), the(meeting)))).\n',
+               'Guard against infection.'-'imperative(against(guard(you), infection)).\n' ]),
+           ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
+             ( C \== none, logic_translate(cocolog, english, C, E) -> true ; E = none ),
+             one_line(['into Cocolog and back: ', T], Label),
+             check(Label, C-E, Want-T) )),
+    ( cocolog_read('at(the(book), the(station)).', U2) -> true ; U2 = none ),
+    check('at read: a predicate of two, no tense', U2,
+          utterance(assertion, [fact(pred(at, [const(the(book)), const(the(station))]))])),
+    forall(member(T3, ['The book is at the station.', 'The bag is at the door.']),
+           ( logic_translate(english, cocolog, T3, P3), assert_text(P3) )),
+    findall(X3-Y3, at(X3, Y3), XYs3),
+    check('a query of what is where', XYs3, [the(book)-the(station), the(bag)-the(door)]).
+
 %% Each clause of a Cocolog text asserted.
 assert_text(P) :-
     atomic_list_concat(Ps, '.\n', P),
     forall(( member(S, Ps), S \== '' ), ( term_string(Cl, S), assertz(Cl) )).
 
 %% A test's own predicates: what the clauses written from English assert.
-:- dynamic is_sleep/1, past/1, book/1, stamp/1, father/2, when/2, coat/1, heavy/1, warm/1, imperative/1, old/1.
+:- dynamic is_sleep/1, past/1, book/1, stamp/1, father/2, when/2, coat/1, heavy/1, warm/1, imperative/1, old/1, at/2.

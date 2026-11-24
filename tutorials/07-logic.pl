@@ -50,6 +50,7 @@ main :-
     phrases,
     commands,
     noun_adpositions,
+    prepositions,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -322,6 +323,14 @@ noun_adpositions :-
     must('one constant', C1, 'old(the(on(house, the(hill)))).\n'),
     logic_translate(cocolog, english, 'is_sleep(the(with(man, the(hat)))).', E2),
     must('back into English', E2, 'The man with the hat sleeps.').
+
+%% 21. EVERY PREPOSITION is a predicate of two, as in/2 is: round the atom
+%% it modifies, or between a copula's subject and its noun phrase.
+prepositions :-
+    logic_translate(english, cocolog, 'He slept during the storm.', C1),
+    must('round the atom', C1, 'past(during(is_sleep(he), the(storm))).\n'),
+    logic_translate(english, cocolog, 'The book is at the station.', C2),
+    must('after is', C2, 'at(the(book), the(station)).\n').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
