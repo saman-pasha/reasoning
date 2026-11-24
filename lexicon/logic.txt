@@ -149,3 +149,15 @@ John is with Mary.	with(john, mary).
 The dog ran quickly to the house.	past(to(quickly(run(the_dog)), the_house)).
 Mary sings slowly and quietly.	quietly(slowly(sing(mary))).
 John came from Paris.	past(from(come(john), paris)).
+# pronouns (since 1.72.0): alone a constant of its own, in a text the noun it refers to
+He sleeps.	sleep(he).
+She sees him.	see(she, he).
+I see you.	see(i, you).
+We are happy.	happy(we).
+They like music.	like(they, music).
+He stood on the rock.	past(on(stand(he), the_rock)).
+It is hungry.	hungry(it).
+The boy sees the house. He sees it.	see(the_boy, the_house). see(the_boy, the_house).
+John sleeps. He dreams.	sleep(john). dream(john).
+Mary sees the dog. She likes it.	see(mary, the_dog). like(mary, the_dog).
+A dog barked. It was hungry.	dog(a_dog). past(bark(a_dog)). past(hungry(a_dog)).

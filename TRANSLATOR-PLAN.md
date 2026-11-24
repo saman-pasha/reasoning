@@ -81,7 +81,8 @@ What level 2 makes from level 1, for the first milestone:
 **Not in level 2 at first, with a diagnostic:** a tense other than the
 present (since 1.70.0 at(Tense, Atom), but the conditional), an adjunct
 (since 1.71.0 modified(Adjunct, Atom), but one whose noun phrase is no
-constant), a negation, a question with `where`, `when` or `why`, an
+constant), a pronoun (since 1.72.0: in a text the noun phrase it refers
+to, alone a constant of its own, its word), a negation, a question with `where`, `when` or `why`, an
 instruction about code ("Define a fact stating that ..."), a relative
 clause in a condition. Each comes later as its own item.
 
@@ -151,8 +152,8 @@ its benchmark, as every typology version has.
    lists in `lexicon/` (a common adjective first; a verb that takes no
    object before a noun for a person or an animal).
 8. **The second measure** (done: 1.69.0, `lexicon/logic.txt`,
-   `tools/logic/measure.pl`): 104 sentences with their Cocolog (132 since
-   1.71.0), written
+   `tools/logic/measure.pl`): 104 sentences with their Cocolog (143 since
+   1.72.0), written
    by hand, counted as the first measure is (STATUS.md keeps the counts).
    At 1.69.0, 86 give their Cocolog and 94 Cocolog texts come back as
    English that reads to them; the misses are the next work: a relative

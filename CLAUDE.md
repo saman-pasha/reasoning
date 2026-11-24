@@ -296,6 +296,21 @@ Prep O` (`lg_class_ok/3` for arity 2: a verb, else an adposition). The
 measure's `John lives in Paris.` took the new form (`in(live(john),
 paris)`, was `live_in(john, paris)`): a hand-written Cocolog states a
 form, and this version chose it.
+**A pronoun since 1.72.0**: alone, `lg_pron_const/2` makes it a constant,
+its word as a subject (`him` is he); `lg_pron_np/2` writes it back. A
+text of several sentences (`lg_sentences/2` cuts at `. `, `? `, `! `) is
+read by typology_read_text/3, whose pronouns name their noun
+(`pron(3, sg, ref(boy))`), and `lg_resolve/3` puts the noun phrase of
+the nearest earlier sentence in the pronoun's place -- a name or a
+definite one as it is, an indefinite one its individual,
+`'$const'(a_dog)`, which `lg_entity/2` takes for a constant. A pronoun
+with no such referent is `pron(3, _, unresolved)`, no logic form. A
+pronoun that refers to a noun of its own sentence is NOT resolved: the
+typology refers only across sentences. The writer brings an individual
+back with a pronoun (`lg_say_again/5`), checked as a TEXT: the sentences
+so far must read back to the items so far. An individual's group
+(`lg_run/4`) is its adjectives' facts and one more, so a second fact of
+it is a group of its own.
 **The blank template is generated too** (1.54.0): `templates/template.pl`
 is what `typology_import(template)` writes, `typology_template(xx)`: every
 slot of typology.pl's header list (THE TEMPLATE) with the header's own

@@ -39,6 +39,7 @@ main :-
     measured,
     tenses,
     adjuncts,
+    pronouns,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -133,7 +134,7 @@ english_again :-
     must('English, Cocolog, English', R6, kept).
 
 %% 7. THE SECOND MEASURE. Sentences and the Cocolog each should give,
-%% written by hand (lexicon/logic.txt has 132): how many the translator
+%% written by hand (lexicon/logic.txt has 143): how many the translator
 %% gets right, and how many of the Cocolog texts come back as English that
 %% reads to them. tools/logic/measure.pl prints the whole file's.
 measured :-
@@ -171,6 +172,17 @@ adjuncts :-
     must('a predicate of a place', C3, 'on(the_book, the_table).\n'),
     logic_translate(cocolog, english, 'in(is_sleep(X), the_house) :- dog(X).', E4),
     must('back into English', E4, 'Every dog sleeps in the house.').
+
+%% 10. A PRONOUN. In a text a pronoun is the noun phrase it refers to, from
+%% an earlier sentence; alone it is a constant of its own, its word, which
+%% every sentence that says it shares.
+pronouns :-
+    logic_translate(english, cocolog, 'John sleeps. He dreams.', C1),
+    must('a referent', C1, 'is_sleep(john).\ndream(john).\n'),
+    logic_translate(english, cocolog, 'She sees him.', C2),
+    must('no referent', C2, 'see(she, he).\n'),
+    logic_translate(cocolog, english, 'dog(a_dog). past(bark(a_dog)). past(hungry(a_dog)).', E3),
+    must('an individual said again', E3, 'A dog barked. It was hungry.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

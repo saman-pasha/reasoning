@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts]), once(S)),
+                      adjuncts, pronouns]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -86,7 +86,7 @@ diagnostics :-
                'The boy does not sleep.'-negation,
                'Every boy sees a dog.'-object(generic),
                'The boy sleeps because the dog sleeps.'-subordinate(because),
-               'He sleeps.'-pronoun,
+               'His dog sleeps.'-shape(of(pron(3, sg, m), np(dog, sg, def, []))),
                'No dog sleeps.'-determiner(no),
                'The boy sleeps with dogs.'-adjunct(generic) ]),
            ( once(typology_read(english, T, IR)),
@@ -262,11 +262,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 132),
-    ( R >= 116 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 116 right', VR, ok),
-    ( K >= 124 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 124 kept', VK, ok).
+    check('the second measure: its sentences', N, 143),
+    ( R >= 127 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 127 right', VR, ok),
+    ( K >= 135 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 135 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -350,3 +350,35 @@ adjuncts :-
     once(typology_read(english, 'John sleeps with dogs.', IR6)),
     logic_why(IR6, W6),
     check('an adjunct\'s noun phrase that is no constant', W6, adjunct(generic)).
+
+%% 1.72.0: A PRONOUN with no referent is a constant of its own, its word;
+%% in a text, the noun phrase it refers to.
+pronouns :-
+    section('the pronouns'),
+    forall(member(T-Want, [
+               'He sleeps.'-'is_sleep(he).\n',
+               'She sees him.'-'see(she, he).\n',
+               'I see you.'-'see(i, you).\n',
+               'They like music.'-'like(they, music).\n',
+               'He stood on the rock.'-'past(on(stand(he), the_rock)).\n',
+               'He is happy if he is safe.'-'happy(he) :-\n    safe(he).\n',
+               'The boy sees the house. He sees it.'-'see(the_boy, the_house).\nsee(the_boy, the_house).\n',
+               'John sleeps. He dreams.'-'is_sleep(john).\ndream(john).\n',
+               'A dog barked. It was hungry.'-'dog(a_dog).\npast(bark(a_dog)).\npast(hungry(a_dog)).\n' ]),
+           ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
+             one_line(['a pronoun into Cocolog: ', T], Label),
+             check(Label, C, Want) )),
+    forall(member(C2-Want2, ['see(she, he).'-'She sees him.',
+                             'happy(we).'-'We are happy.',
+                             'see(i, you).'-'I see you.',
+                             'dog(a_dog). past(bark(a_dog)). past(hungry(a_dog)).'-'A dog barked. It was hungry.']),
+           ( ( logic_translate(cocolog, english, C2, E2) -> true ; E2 = none ),
+             atomic_list_concat(['a pronoun into English: ', C2], L2),
+             check(L2, E2, Want2) )),
+    ( logic_translate(cocolog, spanish, 'see(she, he).', S3) -> true ; S3 = none ),
+    check('a pronoun into Spanish', S3, 'Ella lo ve.'),
+    logic_readings(english, 'Who is human? Is Socrates human?', [U4|_]),
+    check('a text of two questions is a question', U4,
+          utterance(question, [query(pred(human, [var(1)])), query(pred(human, [const(socrates)]))])),
+    logic_readings(english, 'The dogs sleep. It dreams.', Us5),
+    check('a pronoun whose referent no earlier sentence has', Us5, []).

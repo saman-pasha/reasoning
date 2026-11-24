@@ -53,9 +53,12 @@
 %% copula's predicate is a predicate of two: `The book is on the table.' is
 %% pred(on, [const(the_book), const(the_table)]).
 %%
+%% A PRONOUN (since 1.72.0): in a text, the noun phrase it refers to; with
+%% none, a constant of its own, its word (he, she, it, they, i, we, you).
+%%
 %% WHAT HAS NO LOGIC FORM YET: the conditional, a negation,
 %% an adjunct, an object that is no constant, `when' and `because', a
-%% pronoun outside an if clause, an adjunct's noun phrase that is no
+%% pronoun whose gender is not known, an adjunct's noun phrase that is no
 %% constant, `no' and `nothing', and a determiner
 %% other than the ones above. logic_why/2 names the first reason.
 %%
@@ -101,8 +104,69 @@ logic_read(L, Text, U) :-
     logic_from_ir(IR, U).
 
 logic_readings(L, Text, Us) :-
-    findall(U, logic_read(L, Text, U), Us0),
+    (   lg_sentences(Text, Ss), Ss = [_, _|_],
+        findall(U, lg_text_read(L, Ss, U), Us0), Us0 \== []
+    ->  true
+    ;   findall(U, logic_read(L, Text, U), Us0)
+    ),
     lg_distinct(Us0, Us).
+
+%% A TEXT OF SEVERAL SENTENCES (since 1.72.0) is read by
+%% typology_read_text/3, whose pronouns of the third person name the noun
+%% they stand for (pron(3, sg, ref(boy))); each such pronoun is the noun
+%% phrase it refers to, from an earlier sentence, the nearest first: a
+%% name or a definite noun phrase as it is, an indefinite one its
+%% individual (a_dog). The utterance is the sentences' items in order, a
+%% question if every sentence is one.
+lg_text_read(L, Ss, utterance(Intent, Items)) :-
+    typology_read_text(L, Ss, IRs),
+    lg_resolve(IRs, [], IRs1),
+    maplist(logic_from_ir, IRs1, Us),
+    findall(I, member(utterance(I, _), Us), Is),
+    ( forall(member(I, Is), I == question) -> Intent = question ; Intent = assertion ),
+    findall(It, ( member(utterance(_, Its), Us), member(It, Its) ), Items).
+
+lg_resolve([], _, []).
+lg_resolve([IR|IRs], Prev, [IR1|Out]) :-
+    lg_subst_refs(IR, Prev, IR1),
+    lg_resolve(IRs, [IR|Prev], Out).
+
+lg_subst_refs(T, _, T) :- var(T), !.
+lg_subst_refs(pron(_, _, K), Prev, NP) :- nonvar(K), K = ref(X), !,
+    ( lg_antecedent(X, Prev, NP) -> true ; NP = pron(3, _, unresolved) ).
+lg_subst_refs(T, Prev, T1) :- compound(T), !,
+    T =.. [F|As], maplist(lg_subst_arg(Prev), As, As1), T1 =.. [F|As1].
+lg_subst_refs(T, _, T).
+
+lg_subst_arg(Prev, A, A1) :- lg_subst_refs(A, Prev, A1).
+
+%% The noun phrase a pronoun's referent X names, in the nearest earlier
+%% sentence that has one.
+lg_antecedent(name(W), Prev, name(W)) :- !,
+    member(IR, Prev), lg_np_in(IR, name(W1)), W1 == W, !.
+lg_antecedent(M, Prev, NP) :-
+    member(IR, Prev), lg_np_in(IR, np(M1, Num, D, As)), M1 == M, !,
+    (   memberchk(D, [def, mass]) -> NP = np(M, Num, D, As)
+    ;   D == indef -> atom_concat(a_, M, C), NP = '$const'(C)
+    ).
+
+lg_np_in(T, _) :- var(T), !, fail.
+lg_np_in(T, T) :- ( T = np(_, _, _, _) ; T = name(_) ).
+lg_np_in(T, NP) :- compound(T), T =.. [_|As], member(A, As), lg_np_in(A, NP).
+
+%% A text's sentences: each ends at a full stop, a question mark or an
+%% exclamation mark before a space.
+lg_sentences(Text, Ss) :-
+    atom(Text),
+    atom_codes(Text, Cs),
+    lg_split(Cs, [], Ss0),
+    exclude(==(''), Ss0, Ss).
+
+lg_split([], Acc, [S]) :- !, reverse(Acc, R), lg_trim(R, S).
+lg_split([C, 0' |Cs], Acc, [S|Ss]) :- memberchk(C, `.?!`), !,
+    reverse([C|Acc], R), lg_trim(R, S),
+    lg_split(Cs, [], Ss).
+lg_split([C|Cs], Acc, Ss) :- lg_split(Cs, [C|Acc], Ss).
 
 lg_distinct([], []).
 lg_distinct([U|Us], [U|Ds]) :-
@@ -345,6 +409,8 @@ lg_entity(np(N, _, some, As), ent(V, Conds, some)) :- !,
 lg_entity(qp(every, _), ent(_, [], every)) :- !.
 lg_entity(qp(some, _), ent(_, [], some)) :- !.
 lg_entity(wh(_), ent(_, [], wh)) :- !.
+lg_entity('$const'(C), ent(const(C), [], const)) :- !.
+lg_entity(pron(P, N, K), ent(const(C), [], const)) :- lg_pron_const(pron(P, N, K), C), !.
 lg_entity(pron(_, _, _), _) :- !, lg_no(pronoun).
 lg_entity(np(_, _, D, _), _) :- !, lg_no(determiner(D)).
 lg_entity(qp(Q, _), _) :- !, lg_no(determiner(Q)).
@@ -358,6 +424,17 @@ lg_noun_conds(N, As, V, Cs) :-
 %% copy the term apart from the rule's other atoms.
 lg_preds_of([], _, []).
 lg_preds_of([M|Ms], T, [pred(M, [T])|Ps]) :- lg_preds_of(Ms, T, Ps).
+
+%% A PRONOUN WITH NO REFERENT (since 1.72.0) is a constant of its own, its
+%% word as a subject: he, she, it, they, i, we, you. All the sentences that
+%% say `he' share one he; a text's pronoun that refers to a noun is that
+%% noun's (lg_text_read/3). A pronoun of the third person singular whose
+%% gender is not known has none.
+lg_pron_const(pron(1, N, _), C) :- N == sg, !, C = i.
+lg_pron_const(pron(1, N, _), C) :- N == pl, !, C = we.
+lg_pron_const(pron(P, _, _), you) :- ( P == 2 ; P == polite ), !.
+lg_pron_const(pron(3, N, _), they) :- N == pl, !.
+lg_pron_const(pron(3, N, G), C) :- N == sg, atom(G), memberchk(G-C, [m-he, f-she, n-it]).
 
 %% A name's constant: its words lowered, joined by `_' (`John Smith' is
 %% john_smith).
@@ -598,8 +675,38 @@ logic_write(L, utterance(_, Items), Text) :-
     must_be(atom, L),
     lg_code_loaded(cocolog),
     lg_groups(Items, Groups),
-    maplist(lg_say(L), Groups, Ss),
+    lg_say_all(L, Groups, Said),
+    findall(S, member(S-_, Said), Ss),
     atomic_list_concat(Ss, ' ', Text).
+
+%% Each group's sentence and how it was said (sentence, general). A group
+%% no sentence says alone that names an individual an earlier group
+%% brought in (a_dog) is said again with a pronoun for it, kept where the
+%% text so far reads back to the items so far (since 1.72.0): `A dog
+%% barked. It was hungry.'
+lg_say_all(L, Groups, Said) :- lg_say_all(L, Groups, [], [], Said).
+
+lg_say_all(_, [], _, _, []).
+lg_say_all(L, [G|Gs], Ss0, Done, [S-How|Said]) :-
+    lg_say(L, G, S1, How1),
+    (   How1 == general, lg_say_again(L, G, Ss0, Done, S2)
+    ->  S = S2, How = sentence
+    ;   S = S1, How = How1
+    ),
+    append(Ss0, [S], Ss1),
+    append(Done, G, Done1),
+    lg_say_all(L, Gs, Ss1, Done1, Said).
+
+lg_say_again(L, [fact(A)], Ss0, Done, S) :-
+    member(F, Done), lg_individual_fact(F, N, C),
+    lg_core(A, pred(_, Args)), memberchk(const(C), Args),
+    (   typology_meaning(L, person, N) -> member(P, [pron(3, sg, m), pron(3, sg, f)]) ; P = pron(3, sg, n) ),
+    lg_atom_ir(L, A, sub(C, P), IR),
+    catch(typology_write(L, IR, S), _, fail),
+    append(Ss0, [S], Ss1), atomic_list_concat(Ss1, ' ', Text),
+    append(Done, [fact(A)], Want),
+    catch(logic_readings(L, Text, Us), _, fail),
+    member(utterance(_, Is), Us), Is == Want, !.
 
 lg_groups([], []).
 lg_groups([F|Is], [[F|Run]|Gs]) :-
@@ -610,9 +717,12 @@ lg_groups([I|Is], [[I]|Gs]) :- lg_groups(Is, Gs).
 
 lg_individual_fact(fact(pred(N, [const(C)])), N, C) :- atom(C), atom_concat(a_, N, C).
 
+%% An individual's facts of one sentence: its adjectives' (plain facts of
+%% one argument) and then one more; a fact in a tense or with an adjunct,
+%% or of two arguments, ends the run.
 lg_run([I|Is], C, [I|Run], Rest) :-
     I = fact(A), lg_core(A, pred(_, Args)), memberchk(const(C), Args), !,
-    lg_run(Is, C, Run, Rest).
+    (   A = pred(_, [_]) -> lg_run(Is, C, Run, Rest) ; Run = [], Rest = Is ).
 lg_run(Is, _, [], Is).
 
 lg_say(L, Group, S) :- lg_say(L, Group, S, _).
@@ -805,12 +915,23 @@ lg_arg_np(L, _, const(C), NP) :- lg_const_np(L, C, NP).
 
 %% A constant's noun phrase: something, someone; the_ a definite noun
 %% phrase; a name a row has; a bare noun; a name no row has.
+lg_const_np(_, C, P) :- lg_pron_np(C, P).
 lg_const_np(_, something, qp(some, thing)).
 lg_const_np(_, someone, qp(some, person)).
 lg_const_np(L, C, np(N, sg, def, As)) :- atom_concat(the_, R, C), lg_noun_split(L, R, N, As).
 lg_const_np(L, C, name(W)) :- lg_name_written(C, W), typology_meaning(L, name, W).
 lg_const_np(L, C, np(N, sg, mass, As)) :- \+ atom_concat(the_, _, C), lg_noun_split(L, C, N, As).
 lg_const_np(L, C, name(W)) :- lg_name_written(C, W), \+ typology_meaning(L, name, W).
+
+%% A pronoun's constant written as the pronoun.
+lg_pron_np(i, pron(1, sg, _)).
+lg_pron_np(we, pron(1, pl, _)).
+lg_pron_np(you, pron(2, sg, _)).
+lg_pron_np(you, pron(2, pl, _)).
+lg_pron_np(he, pron(3, sg, m)).
+lg_pron_np(she, pron(3, sg, f)).
+lg_pron_np(it, pron(3, sg, n)).
+lg_pron_np(they, pron(3, pl, _)).
 
 %% A constant's words as adjectives and a noun, the longest noun first.
 lg_noun_split(L, C, N, As) :-
@@ -959,7 +1080,8 @@ lg_measure_case(L, S-C, m(R0, A0, K0, G0, Ms0, Uk0), m(R, A, K, G, Ms, Uk)) :-
     ;   R = R0, A = A0, lg_measure_why(L, S, W), Ms = [miss(S, W)|Ms0]
     ),
     lg_groups(Want, Gs),
-    maplist(lg_say(L), Gs, Ss, Hows),
+    lg_say_all(L, Gs, Said),
+    findall(S1, member(S1-_, Said), Ss), findall(H1, member(_-H1, Said), Hows),
     atomic_list_concat(Ss, ' ', T),
     (   \+ memberchk(general, Hows)
     ->  K is K0 + 1, G = G0, Uk = Uk0
