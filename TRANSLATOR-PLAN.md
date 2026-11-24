@@ -52,6 +52,10 @@ One shape for each construct:
     var(N)                          a variable, numbered by its first
                                     use from 1; no Prolog variable
     num(N), str(Text), list(Terms), fun(Name, Args)
+    at(Tense, Atom)                 an atom in a tense other than the
+                                    present (since 1.70.0): past,
+                                    future, perfect, pluperfect,
+                                    imperfect; Cocolog past(Atom)
 
 A variable's name in a source is a source detail and is kept apart
 (`read_term/3`'s `variable_names`). Two IRs are the same when they are
@@ -70,7 +74,7 @@ What level 2 makes from level 1, for the first milestone:
 | A person likes music. | an indefinite subject, a bare object | two readings, a rule (in general) and a fact (one person), in that order |
 
 **Not in level 2 at first, with a diagnostic:** a tense other than the
-present, a negation, a question with `where`, `when` or `why`, an
+present (since 1.70.0 at(Tense, Atom), but the conditional), a negation, a question with `where`, `when` or `why`, an
 instruction about code ("Define a fact stating that ..."), a relative
 clause in a condition. Each comes later as its own item.
 
@@ -140,7 +144,8 @@ its benchmark, as every typology version has.
    lists in `lexicon/` (a common adjective first; a verb that takes no
    object before a noun for a person or an animal).
 8. **The second measure** (done: 1.69.0, `lexicon/logic.txt`,
-   `tools/logic/measure.pl`): 104 sentences with their Cocolog, written
+   `tools/logic/measure.pl`): 104 sentences with their Cocolog (120 since
+   1.70.0), written
    by hand, counted as the first measure is (STATUS.md keeps the counts).
    At 1.69.0, 86 give their Cocolog and 94 Cocolog texts come back as
    English that reads to them; the misses are the next work: a relative

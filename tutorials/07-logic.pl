@@ -37,6 +37,7 @@ main :-
     cocolog,
     english_again,
     measured,
+    tenses,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -74,9 +75,9 @@ questions :-
 
 %% 4. NO GUESS. What has no logic form yet says why, and is not made one.
 why :-
-    once(typology_read(english, 'The boy saw the dog.', IR1)),
+    once(typology_read(english, 'The boy would see the dog.', IR1)),
     logic_why(IR1, W1),
-    must('a past tense', W1, tense(past)),
+    must('the conditional', W1, tense(conditional)),
     once(typology_read(english, 'Every boy sees a dog.', IR2)),
     logic_why(IR2, W2),
     must('an object that is no constant', W2, object(generic)).
@@ -131,7 +132,7 @@ english_again :-
     must('English, Cocolog, English', R6, kept).
 
 %% 7. THE SECOND MEASURE. Sentences and the Cocolog each should give,
-%% written by hand (lexicon/logic.txt has 104): how many the translator
+%% written by hand (lexicon/logic.txt has 120): how many the translator
 %% gets right, and how many of the Cocolog texts come back as English that
 %% reads to them. tools/logic/measure.pl prints the whole file's.
 measured :-
@@ -142,6 +143,19 @@ measured :-
     must('right', Right, 1),
     must('kept', Kept, 1),
     must('why one is not', Misses, [miss('John lives in Paris.', why(adjunct))]).
+
+%% 8. A TENSE. The past, the future, the perfect and the pluperfect are said
+%% of each atom of their clause, never of a subject's noun: a man is a man
+%% at all times. Cocolog writes the tense round the atom.
+tenses :-
+    logic_translate(english, cocolog, 'John slept.', C1),
+    must('the past', C1, 'past(is_sleep(john)).\n'),
+    logic_translate(english, cocolog, 'Every man was happy.', C2),
+    must('a rule in the past', C2, 'past(happy(A)) :-\n    man(A).\n'),
+    logic_translate(cocolog, english, 'future(see(mary, the_dog)).', E3),
+    must('the future, in English', E3, 'Mary will see the dog.'),
+    logic_translate(cocolog, spanish, 'perfect(see(mary, the_dog)).', E4),
+    show('the perfect, in Spanish', E4).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

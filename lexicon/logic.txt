@@ -119,3 +119,20 @@ Everyone is happy.	happy(X).
 Everybody likes music.	like(X, music).
 Some dogs bark.	dog(a_dog). bark(a_dog).
 Some dog is hungry.	dog(a_dog). hungry(a_dog).
+# the tenses (since 1.70.0): an atom said in a tense is Tense(Atom)
+John slept.	past(sleep(john)).
+The dog barked.	past(bark(the_dog)).
+Mary saw John.	past(see(mary, john)).
+Socrates was a man.	past(man(socrates)).
+Socrates was wise.	past(wise(socrates)).
+John was a teacher.	past(teacher(john)).
+John and Mary slept.	past(sleep(john)). past(sleep(mary)).
+Every man was happy.	past(happy(X)) :- man(X).
+Who saw the dog?	?- past(see(X, the_dog)).
+Did John see the dog?	?- past(see(john, the_dog)).
+Was Socrates human?	?- past(human(socrates)).
+John will sleep.	future(sleep(john)).
+Mary will be happy.	future(happy(mary)).
+Mary has seen the dog.	perfect(see(mary, the_dog)).
+The boy had seen the dog.	pluperfect(see(the_boy, the_dog)).
+A dog barked.	dog(a_dog). past(bark(a_dog)).

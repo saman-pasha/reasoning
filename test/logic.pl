@@ -11,7 +11,7 @@ main :-
     forall(member(L, [english, spanish, italian]), typology_load(L)),
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
-                      code_english, code_general, round_trips, measure]), once(S)),
+                      code_english, code_general, round_trips, measure, tenses]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -81,7 +81,7 @@ joined :-
 diagnostics :-
     section('what has no logic form yet'),
     forall(member(T-Want, [
-               'The boy saw the dog.'-tense(past),
+               'The boy would see the dog.'-tense(conditional),
                'The boy does not sleep.'-negation,
                'Every boy sees a dog.'-object(generic),
                'The boy sleeps because the dog sleeps.'-subordinate(because),
@@ -261,8 +261,51 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 104),
-    ( R >= 86 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 86 right', VR, ok),
-    ( K >= 94 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 94 kept', VK, ok).
+    check('the second measure: its sentences', N, 120),
+    ( R >= 102 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 102 right', VR, ok),
+    ( K >= 110 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 110 kept', VK, ok).
+
+%% 1.70.0: A TENSE other than the present is said of each atom its clause
+%% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
+%% Tense(Atom).
+tenses :-
+    section('the tenses'),
+    forall(member(T-Want, [
+               'John slept.'-'past(is_sleep(john)).\n',
+               'Every man was happy.'-'past(happy(A)) :-\n    man(A).\n',
+               'Who saw the dog?'-'?- past(see(A, the_dog)).\n',
+               'John will sleep.'-'future(is_sleep(john)).\n',
+               'Mary has seen the dog.'-'perfect(see(mary, the_dog)).\n',
+               'The boy had seen the dog.'-'pluperfect(see(the_boy, the_dog)).\n',
+               'A dog barked.'-'dog(a_dog).\npast(bark(a_dog)).\n' ]),
+           ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
+             one_line(['a tense into Cocolog: ', T], Label),
+             check(Label, C, Want) )),
+    logic_readings(english, 'A person was happy if they were safe.', [U1]),
+    check('a tense in an if clause', U1,
+          utterance(assertion, [rule(at(past, pred(happy, [var(1)])),
+                                     and([pred(person, [var(1)]), at(past, pred(safe, [var(1)]))]))])),
+    logic_readings(english, 'A dog barked.', Us2),
+    length(Us2, N2),
+    ( Us2 = [utterance(_, [fact(_)|_])|_] -> F2 = facts ; F2 = rules ),
+    check('an indefinite subject in a tense: one individual first', N2-F2, 2-facts),
+    forall(member(C3-Want3, ['past(is_sleep(john)).'-'John slept.',
+                             'past(happy(X)) :- man(X).'-'Every man was happy.',
+                             '?- past(see(john, the_dog)).'-'Did John see the dog?',
+                             'future(is_sleep(john)).'-'John will sleep.',
+                             'past(bark(X)) :- dog(X).'-'Every dog barked.']),
+           ( ( logic_translate(cocolog, english, C3, E3) -> true ; E3 = none ),
+             atomic_list_concat(['a tense into English: ', C3], L3),
+             check(L3, E3, Want3) )),
+    ( logic_translate(cocolog, spanish, 'past(is_sleep(john)).', S4) -> true ; S4 = none ),
+    check('a tense into Spanish', S4, 'John durmió.'),
+    ( logic_translate(cocolog, english, 'past(append(a, b, c)).', E5) -> true ; E5 = none ),
+    check('a tense in a general sentence', E5, 'Append holds for a, b and c in the past.'),
+    ( cocolog_read('past(the_war).', U6) -> true ; U6 = none ),
+    check('a tense\'s name before no compound term is a predicate', U6,
+          utterance(assertion, [fact(pred(past, [const(the_war)]))])),
+    once(typology_read(english, 'John would sleep.', IR7)),
+    logic_why(IR7, W7),
+    check('the conditional has no logic form yet', W7, tense(conditional)).

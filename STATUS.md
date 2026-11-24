@@ -131,16 +131,28 @@ back to the same form, and the program written from English runs. Cocolog
 is said in English again (1.68.0, `logic_write/3`), so the first
 milestone is complete: the two round trips keep the logic form.
 
-**The second measure** (1.69.0) is `lexicon/logic.txt`: 104 English
+**The second measure** (1.69.0) is `lexicon/logic.txt`: 120 English
 sentences, each with the Cocolog it says, written by hand.
 `tools/logic/measure.pl` counts how many give that Cocolog (their first
 logic form, compared as items) and how many of the Cocolog texts are
 said in English that reads back to them (`logic_write/3`, a sentence a
 group); test/logic.pl's `measure` holds the counts to the last row.
 
-| version | right | of 104 | kept | what moved it |
+| version | right | of all | kept | what moved it |
 |---|---|---|---|---|
-| 1.69.0 | 86 | 82.7 % | 94 | the start. The 18 misses: 7 unread (a verb of three, a comparative, a possessor, `Tweety`, `Whom`, `fed`), 3 relative clauses in a rule, 2 objects that are no constant, 2 pronouns of a clause first, 1 adjunct, 1 adposition phrase, 1 `which`, 1 question word as the object. The 10 not kept are the general sentence's: a predicate of no word or of three, a query of two atoms or of an object |
+| 1.69.0 | 86 | of 104: 82.7 % | 94 | the start. The 18 misses: 7 unread (a verb of three, a comparative, a possessor, `Tweety`, `Whom`, `fed`), 3 relative clauses in a rule, 2 objects that are no constant, 2 pronouns of a clause first, 1 adjunct, 1 adposition phrase, 1 `which`, 1 question word as the object. The 10 not kept are the general sentence's: a predicate of no word or of three, a query of two atoms or of an object |
+| 1.70.0 | 102 | of 120: 85.0 % | 110 | the tenses: 16 sentences more (the past, the future, the perfect, the pluperfect), all right and kept; the 18 misses as before |
+
+**The 8 000 sentences of the first measure into Cocolog**
+(`tools/logic/prose.pl`): read into level 1, then a logic form, then
+Cocolog. A count translated is not a count right: the Cocolog is not
+checked, and a sentence level 1 reads wrong (a fragment, `A dead shot.`)
+is translated wrong.
+
+| version | translated | of 8 000 | the first reasons of the others read into level 1 |
+|---|---|---|---|
+| 1.69.0 | 59 | 0.7 % | the past tense 451, an adjunct 41, an IR shape with no rule 36, a pronoun 27 |
+| 1.70.0 | 111 | 1.4 % | an adjunct 248, a pronoun 112, an IR shape with no rule 110, a predicate with no rule 28, an object that is no constant 24 |
 
 ## What "parked" means
 

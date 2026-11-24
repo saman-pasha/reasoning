@@ -264,8 +264,20 @@ reserved name's prefix are free. The Cocolog side is kept where every
 group's sentence reads back (`lg_say/4`'s `sentence`), as logic_write/3
 decides it: a text of two sentences is no sentence typology_read/3 reads,
 and the first cut counted `John is happy. John is healthy.` as lost.
-test/logic.pl's `measure` holds the counts to floors (86 right, 94 kept):
-raise them when a version raises the counts.
+test/logic.pl's `measure` holds the counts to floors (102 right, 110
+kept, since 1.70.0): raise them when a version raises the counts.
+**A tense since 1.70.0**: `lg_atoms/4` wraps each atom its clause says in
+`at(Tense, Atom)` (`lg_tensed/3`), never the subject's noun conditions,
+which `lg_entity/2` makes apart; so a rule's head is tensed and its noun
+condition not. An indefinite subject in a tense gives the individual's
+facts first (`lg_assert(generic, ...)`). Cocolog writes `Name(Atom)` by
+`lg_code_tense/3`, and the reader takes `Name` of ONE COMPOUND TERM for
+the tense (`past(the_war)` stays a predicate). The English writer puts
+the tense back in the IR (`lg_ir_tense/3`). The conditional stays a
+diagnostic: it is a mood, not a time. `tools/logic/prose.pl` counts the
+8 000 sentences into Cocolog (16 s). The predicate lexicon has its first
+rows: `bark/1` and six more verbs of an animal's sound are verbs
+(`lg_code_class/3`), as `bark` is in `noun.txt` too.
 **The blank template is generated too** (1.54.0): `templates/template.pl`
 is what `typology_import(template)` writes, `typology_template(xx)`: every
 slot of typology.pl's header list (THE TEMPLATE) with the header's own

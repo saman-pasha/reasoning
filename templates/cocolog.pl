@@ -19,7 +19,32 @@
 %%                                     than its meaning; none: a predicate's
 %%                                     name is its meaning (the English word)
 %%     lg_code_query_mark(L, Mark)     the mark before a query
+%%     lg_code_class(L, Meaning/Arity, Class)
+%%                                     the word class a predicate is said
+%%                                     as in a natural language (adjective,
+%%                                     noun, verb), where WordNet's lists
+%%                                     cannot give it (since 1.70.0)
+%%     lg_code_tense(L, Tense, Name)   an atom in a tense other than the
+%%                                     present is Name(Atom): `John
+%%                                     slept.' is past(sleep(john)) (since
+%%                                     1.70.0); read back, Name of one
+%%                                     compound term is that tense
 
 lg_code(cocolog).
 lg_code_reserved_prefix(cocolog, is_).
 lg_code_query_mark(cocolog, '?-').
+lg_code_tense(cocolog, past, past).
+lg_code_tense(cocolog, future, future).
+lg_code_tense(cocolog, perfect, perfect).
+lg_code_tense(cocolog, pluperfect, pluperfect).
+lg_code_tense(cocolog, imperfect, imperfect).
+
+%% The verbs of an animal's sound: each a noun too (the bark of a tree, a
+%% roar), and no list of lexicon/ says which a dog's bark is.
+lg_code_class(cocolog, bark/1, verb).
+lg_code_class(cocolog, moo/1, verb).
+lg_code_class(cocolog, quack/1, verb).
+lg_code_class(cocolog, roar/1, verb).
+lg_code_class(cocolog, howl/1, verb).
+lg_code_class(cocolog, growl/1, verb).
+lg_code_class(cocolog, bleat/1, verb).

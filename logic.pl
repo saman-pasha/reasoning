@@ -12,6 +12,10 @@
 %%     pred(Name, Args)            an atom of the logic: Name a meaning
 %%                                 (the English word), Args terms
 %%     and(Bodies)                 conditions that must all hold
+%%     at(Tense, Atom)             an atom said in a tense other than the
+%%                                 present: past, future, perfect,
+%%                                 pluperfect, imperfect (since 1.70.0;
+%%                                 Cocolog past(Atom))
 %%     const(Name)                 a constant: a name (socrates), a
 %%                                 definite noun phrase (the_dog), a bare
 %%                                 noun (music), one individual (a_person)
@@ -30,7 +34,13 @@
 %% A question word is the query's variable. A pronoun of an if clause
 %% stands for its main clause's subject.
 %%
-%% WHAT HAS NO LOGIC FORM YET: a tense other than the present, a negation,
+%% A TENSE (since 1.70.0) is said of each atom its clause says, at(past,
+%% pred(sleep, [const(john)])), never of a subject's noun: `Every man was
+%% happy.' is at(past, happy(X)) if man(X). An indefinite subject in a
+%% tense gives one individual's facts first and the rule second (`A dog
+%% barked.').
+%%
+%% WHAT HAS NO LOGIC FORM YET: the conditional, a negation,
 %% an adjunct, an object that is no constant, `when' and `because', a
 %% pronoun outside an if clause, `no' and `nothing', and a determiner
 %% other than the ones above. logic_why/2 names the first reason.
@@ -47,7 +57,7 @@
 %%                                     word, or a name and a bare noun,
 %%                                     give one form twice)
 %%     logic_why(+IR, -Why)            why an IR has no logic form:
-%%                                     tense(T), negation, adjunct,
+%%                                     tense(conditional), negation, adjunct,
 %%                                     object(Q), subordinate(K), pronoun,
 %%                                     determiner(D), predicate(P),
 %%                                     shape(IR)
@@ -168,8 +178,13 @@ lg_assert(const, _, [], Atoms, _, Items) :- !,
 lg_assert(every, T, Conds, Atoms, _, Items) :- !,
     lg_rules(Atoms, T, Conds, Items).
 lg_assert(generic, T, Conds, Atoms, S, Items) :- !,
-    (   lg_rules(Atoms, T, Conds, Items)
-    ;   lg_individual(S, T), lg_facts(Conds, Atoms, Items)
+    (   Atoms = [at(_, _)|_]
+    ->  (   lg_individual(S, T), lg_facts(Conds, Atoms, Items)
+        ;   lg_rules(Atoms, T, Conds, Items)
+        )
+    ;   (   lg_rules(Atoms, T, Conds, Items)
+        ;   lg_individual(S, T), lg_facts(Conds, Atoms, Items)
+        )
     ).
 lg_assert(some, T, Conds, Atoms, S, Items) :- !,
     lg_individual(S, T), lg_facts(Conds, Atoms, Items).
@@ -223,21 +238,38 @@ lg_parts(clause(V, T, P, S, O, Js), S, verb(V, O)) :- !,
 lg_parts(C, _, _) :- lg_no(shape(C)).
 
 lg_present(T, P) :-
-    ( T == present -> true ; lg_no(tense(T)) ),
+    ( lg_tense(T) -> true ; lg_no(tense(T)) ),
     ( P == pos -> true ; lg_no(negation) ).
 
-%% The atoms a clause says of its subject's term T; an object is a
-%% constant.
-lg_atoms(copula(_, _, _, _), T, adj(As), Atoms) :- !,
+lg_tense(T) :- atom(T), memberchk(T, [present, past, future, perfect, pluperfect, imperfect]).
+
+%% A clause's tense, and its atoms in it: present as they are, any other
+%% each at(Tense, Atom).
+lg_clause_tense(copula(T, _, _, _), T).
+lg_clause_tense(clause(_, T, _, _, _), T).
+lg_clause_tense(clause(_, T, _, _, _, _), T).
+
+lg_tensed(present, As, As) :- !.
+lg_tensed(_, [], []).
+lg_tensed(T, [A|As], [at(T, A)|Bs]) :- lg_tensed(T, As, Bs).
+
+%% The atoms a clause says of its subject's term T, in the clause's tense;
+%% an object is a constant.
+lg_atoms(C, T, Pred, Atoms) :-
+    lg_atoms_(C, T, Pred, Atoms0),
+    lg_clause_tense(C, Tn),
+    lg_tensed(Tn, Atoms0, Atoms).
+
+lg_atoms_(copula(_, _, _, _), T, adj(As), Atoms) :- !,
     lg_adjectives(As, Ms),
     lg_preds_of(Ms, T, Atoms).
-lg_atoms(copula(_, _, _, _), T, np(N, _, D, As), Atoms) :-
+lg_atoms_(copula(_, _, _, _), T, np(N, _, D, As), Atoms) :-
     memberchk(D, [indef, mass]), !,
     lg_adjectives(As, Ms),
     lg_preds_of([N|Ms], T, Atoms).
-lg_atoms(copula(_, _, _, _), _, Pred, _) :- !, lg_no(predicate(Pred)).
-lg_atoms(_, T, verb(V, none), [pred(V, [T])]) :- !.
-lg_atoms(_, T, verb(V, O), [pred(V, [T, To])]) :-
+lg_atoms_(copula(_, _, _, _), _, Pred, _) :- !, lg_no(predicate(Pred)).
+lg_atoms_(_, T, verb(V, none), [pred(V, [T])]) :- !.
+lg_atoms_(_, T, verb(V, O), [pred(V, [T, To])]) :-
     lg_entity(O, ent(To, _, Q)),
     ( Q == const -> true ; lg_no(object(Q)) ).
 
@@ -310,7 +342,7 @@ lg_bind([var(N)|Vs], N) :- N1 is N + 1, lg_bind(Vs, N1).
 %% template's prefix (is_sleep/1) and read back without it.
 
 :- dynamic lg_code/1, lg_code_reserved_prefix/2, lg_code_name/3, lg_code_query_mark/2,
-           lg_code_class/3, '$lg_lex'/3.
+           lg_code_class/3, lg_code_tense/3, '$lg_lex'/3.
 
 lg_code_loaded(L) :-
     (   lg_code(L) -> true
@@ -348,6 +380,10 @@ lg_out_body(and([B]), M0, M, B1) :- !, lg_out_body(B, M0, M, B1).
 lg_out_body(and([B|Bs]), M0, M, (B1, Bs1)) :- !, lg_out_body(B, M0, M1, B1), lg_out_body(and(Bs), M1, M, Bs1).
 lg_out_body(A, M0, M, A1) :- lg_out_atom(A, M0, M, A1).
 
+lg_out_atom(at(T, P), M0, M, A) :- !,
+    lg_out_atom(P, M0, M, P1),
+    lg_code_tense(cocolog, T, W),
+    A =.. [W, P1].
 lg_out_atom(pred(N, As), M0, M, A) :-
     length(As, Ar),
     lg_code_pred_name(N, Ar, N1),
@@ -397,6 +433,10 @@ lg_in_body((A, B), and([A1|Bs])) :- !, lg_in_atom(A, A1), lg_in_body(B, B0), ( B
 lg_in_body(A, A1) :- lg_in_atom(A, A1).
 
 lg_in_atom(A, _) :- \+ callable(A), !, lg_no(term(A)).
+lg_in_atom(A, at(T, P)) :-
+    compound(A), A =.. [W, Inner], compound(Inner),
+    lg_code_tense(cocolog, T, W), !,
+    lg_in_atom(Inner, P).
 lg_in_atom(A, pred(N, As1)) :-
     A =.. [N1|As], length(As, Ar),
     lg_code_meaning(N1, Ar, N),
@@ -504,7 +544,7 @@ lg_groups([I|Is], [[I]|Gs]) :- lg_groups(Is, Gs).
 lg_individual_fact(fact(pred(N, [const(C)])), N, C) :- atom(C), atom_concat(a_, N, C).
 
 lg_run([I|Is], C, [I|Run], Rest) :-
-    I = fact(pred(_, Args)), memberchk(const(C), Args), !,
+    I = fact(A), lg_untensed(A, pred(_, Args)), memberchk(const(C), Args), !,
     lg_run(Is, C, Run, Rest).
 lg_run(Is, _, [], Is).
 
@@ -531,7 +571,10 @@ lg_group_ir(L, [F|Run], IR) :-
     lg_adjective_facts(L, AFs, C, As),
     lg_atom_ir(L, A, sub(C, np(N, sg, indef, As)), IR).
 lg_group_ir(L, [fact(A)], IR) :- lg_atom_ir(L, A, every, IR).
-lg_group_ir(L, [query(A)], question(IR)) :- A = pred(_, _), lg_atom_ir(L, A, wh, IR).
+lg_group_ir(L, [query(A)], question(IR)) :- lg_untensed(A, pred(_, _)), lg_atom_ir(L, A, wh, IR).
+
+lg_untensed(at(_, P), P) :- !.
+lg_untensed(P, P).
 lg_group_ir(L, [rule(H, B)], IR) :- lg_body_list(B, Cs), lg_rule_ir(L, H, Cs, IR).
 
 lg_adjective_facts(_, [], _, []).
@@ -547,21 +590,21 @@ lg_body_list(B, [B]).
 %% subject (`A person is happy if they are healthy and safe.'), or the noun's
 %% adjectives (`Every happy dog sleeps.'); no noun `something' and an if
 %% clause (`Something sleeps if it is tired.').
-lg_rule_ir(L, pred(H, Args), [pred(N, [var(1)])], IR) :-
+lg_rule_ir(L, H, [pred(N, [var(1)])], IR) :-
     lg_class_ok(L, N/1, noun),
-    lg_atom_ir(L, pred(H, Args), var1(np(N, sg, every, [])), IR).
-lg_rule_ir(L, pred(H, Args), [pred(N, [var(1)])|Cs], sub(if, Main, Cond)) :-
+    lg_atom_ir(L, H, var1(np(N, sg, every, [])), IR).
+lg_rule_ir(L, H, [pred(N, [var(1)])|Cs], sub(if, Main, Cond)) :-
     Cs \== [], lg_class_ok(L, N/1, noun),
-    lg_atom_ir(L, pred(H, Args), var1(np(N, sg, indef, [])), Main),
+    lg_atom_ir(L, H, var1(np(N, sg, indef, [])), Main),
     lg_pronoun(L, N, P),
     lg_cond_ir(L, Cs, P, Cond).
-lg_rule_ir(L, pred(H, Args), [pred(N, [var(1)])|Cs], IR) :-
+lg_rule_ir(L, H, [pred(N, [var(1)])|Cs], IR) :-
     Cs \== [], lg_class_ok(L, N/1, noun),
     lg_adjective_conds(L, Cs, As),
-    lg_atom_ir(L, pred(H, Args), var1(np(N, sg, every, As)), IR).
-lg_rule_ir(L, pred(H, Args), Cs, sub(if, Main, Cond)) :-
+    lg_atom_ir(L, H, var1(np(N, sg, every, As)), IR).
+lg_rule_ir(L, H, Cs, sub(if, Main, Cond)) :-
     member(K-P, [thing-pron(3, sg, n), person-pron(3, pl, _)]),
-    lg_atom_ir(L, pred(H, Args), var1(qp(some, K)), Main),
+    lg_atom_ir(L, H, var1(qp(some, K)), Main),
     lg_cond_ir(L, Cs, P, Cond).
 
 lg_adjective_conds(_, [], []).
@@ -584,6 +627,9 @@ lg_pronoun(L, N, P) :-
 %% An atom's level-1 clause. How a term is said: SUB names one constant's
 %% noun phrase (sub(C, NP)), var1(NP) var(1)'s; `every' says a variable of a
 %% fact (`Everything is mortal.'), wh a query's (`Who is human?').
+lg_atom_ir(L, at(T, A), How, IR) :- !,
+    lg_atom_ir(L, A, How, IR0),
+    lg_ir_tense(IR0, T, IR).
 lg_atom_ir(L, pred(P, [A]), How, IR) :-
     lg_arg_np(L, How, A, S),
     lg_unary_ir(L, P, S, IR).
@@ -591,6 +637,9 @@ lg_atom_ir(L, pred(P, [A, B]), How, clause(P, present, pos, S, O)) :-
     lg_class_ok(L, P/2, verb),
     lg_arg_np(L, How, A, S),
     lg_arg_np(L, How, B, O).
+
+lg_ir_tense(copula(_, P, S, Pr), T, copula(T, P, S, Pr)).
+lg_ir_tense(clause(V, _, P, S, O), T, clause(V, T, P, S, O)).
 
 lg_unary_ir(L, P, S, IR) :-
     lg_unary_classes(L, P, S, Cs),
@@ -603,19 +652,24 @@ lg_unary_shape(verb, P, S, clause(P, present, pos, S, none)).
 
 %% THE ORDER OF THE CLASSES of a word said of one thing S, from WordNet's
 %% lists in lexicon/: an adjective of the 3 000 commonest (adj.txt: human,
-%% mortal, wise; not animal, student); then a noun and a verb that takes no
-%% object (vi.txt), the verb first where S is a person or an animal
-%% (`John works.', `Rex sleeps.'), else the commoner first by their ranks
+%% mortal, wise; not animal, student) first. Then, where S is a person or
+%% an animal, a noun whose first sense is a person, an animal or a thing
+%% (class.txt, noun.txt: `Rex is a dog.', `Tweety is a bird.') before a
+%% verb, and any other noun after it (`John works.', `Rex barks.': vi.txt
+%% stops at 1 200 verbs and has no `bark'). Where S is none, a verb that
+%% takes no object (vi.txt) and a noun the commoner first, by their ranks
 %% in known_noun.txt and vi.txt (`Every bird flies.', `A novel is a
-%% book.'); a noun before a verb that takes an object (`to man', `to dog');
-%% then any adjective. The sentence is still kept only where it reads back.
+%% book.'), and any other noun first. Then any adjective. The sentence is
+%% still kept only where it reads back.
 lg_unary_classes(L, P, S, Cs) :-
     (   lg_lex(adj, P, _) -> Cs1 = [adjective] ; Cs1 = [] ),
-    (   lg_lex(vi, P, Rv)
-    ->  (   lg_animate_np(L, S) -> Cs2 = [verb, noun]
-        ;   lg_lex(known_noun, P, Rn), Rn < Rv -> Cs2 = [noun, verb]
+    (   lg_animate_np(L, S)
+    ->  (   ( lg_lex(class, P, _) ; lg_lex(noun, P, _) ; typology_meaning(L, animate, P) )
+        ->  Cs2 = [noun, verb]
         ;   Cs2 = [verb, noun]
         )
+    ;   lg_lex(vi, P, Rv)
+    ->  (   lg_lex(known_noun, P, Rn), Rn < Rv -> Cs2 = [noun, verb] ; Cs2 = [verb, noun] )
     ;   Cs2 = [noun, verb]
     ),
     append([Cs1, Cs2, [adjective]], Cs3),
@@ -632,7 +686,7 @@ lg_animate_np(_, wh(who)) :- !.
 lg_animate_np(_, pron(_, pl, _)) :- !.
 lg_animate_np(_, pron(_, sg, G)) :- G \== n.
 
-%% A word's place in a list of lexicon/ (adj, vi, known_noun), the
+%% A word's place in a list of lexicon/ (adj, vi, known_noun, class, noun), the
 %% commonest first; each list is read once.
 lg_lex(File, W, R) :-
     (   nb_current('$lg_lex', Read), memberchk(File, Read) -> true
@@ -722,6 +776,10 @@ lg_general_item(query(B), S) :-
     ),
     lg_sentence(T, '?', S).
 
+lg_holds(at(Tn, A), T) :- !,
+    lg_holds(A, T0),
+    ( memberchk(Tn, [future]) -> W = 'in the future' ; W = 'in the past' ),
+    format(atom(T), '~w ~w', [T0, W]).
 lg_holds(pred(P, []), T) :- !, format(atom(T), '~w holds', [P]).
 lg_holds(pred(P, Args), T) :-
     maplist(lg_term_words, Args, Ws), lg_and(Ws, W),
