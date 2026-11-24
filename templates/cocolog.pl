@@ -38,6 +38,9 @@ lg_code_tense(cocolog, future, future).
 lg_code_tense(cocolog, perfect, perfect).
 lg_code_tense(cocolog, pluperfect, pluperfect).
 lg_code_tense(cocolog, imperfect, imperfect).
+%% A command (since 1.82.0): `Construct a proof.' is
+%% imperative(construct(you, a(proof))).
+lg_code_tense(cocolog, imperative, imperative).
 
 %% The verbs of an animal's sound: each a noun too (the bark of a tree, a
 %% roar), and no list of lexicon/ says which a dog's bark is.

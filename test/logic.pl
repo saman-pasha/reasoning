@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -263,11 +263,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 208),
-    ( R >= 194 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 194 right', VR, ok),
-    ( K >= 200 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 200 kept', VK, ok).
+    check('the second measure: its sentences', N, 217),
+    ( R >= 203 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 203 right', VR, ok),
+    ( K >= 209 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 209 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -667,10 +667,41 @@ phrases :-
     findall(X7, coat(X7), Xs7),
     check('a query of the coats the phrases say', Xs7, [a(heavy(coat)), a(warm(coat))]).
 
+%% 1.82.0: A COMMAND is its atoms in the imperative, a tense, its subject
+%% you; Cocolog writes imperative(Atom), and a program asks what it is told
+%% to do.
+commands :-
+    section('a command'),
+    forall(member(T-Want, [
+               'Construct a proof.'-'proof(a(proof)).\nimperative(construct(you, a(proof))).\n',
+               'Mince the garlic.'-'imperative(mince(you, the(garlic))).\n',
+               'Look at the dog.'-'imperative(look(you, the(dog))).\n',
+               'Charge the wagon with hay.'-'imperative(with(charge(you, the(wagon)), hay)).\n',
+               'Bathe daily.'-'imperative(daily(bathe(you))).\n' ]),
+           ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
+             one_line(['a command into Cocolog: ', T], Label),
+             check(Label, C, Want) )),
+    forall(member(C2-Want2, ['imperative(mince(you, the(garlic))).'-'Mince the garlic.',
+                             'cake(a(cake)). imperative(make(you, a(cake))).'-'Make a cake.',
+                             'imperative(is_sleep(you)).'-'Sleep.']),
+           ( ( logic_translate(cocolog, english, C2, E2) -> true ; E2 = none ),
+             one_line(['a command into English: ', C2], L2),
+             check(L2, E2, Want2) )),
+    ( cocolog_read('imperative(mince(you, the(garlic))).', U3) -> true ; U3 = none ),
+    check('imperative read: the tense of its atom', U3,
+          utterance(assertion, [fact(at(imperative, pred(mince, [const(you), const(the(garlic))])))])),
+    once(typology_read(english, 'Do not open the door.', IR4)),
+    logic_why(IR4, W4),
+    check('a command not to has no form yet', W4, negation),
+    forall(member(T5, ['Mince the garlic.', 'Bottle the mineral water.']),
+           ( logic_translate(english, cocolog, T5, P5), assert_text(P5) )),
+    findall(A, imperative(A), As),
+    check('a query of what you are told to do', As, [mince(you, the(garlic)), bottle(you, the(mineral(water)))]).
+
 %% Each clause of a Cocolog text asserted.
 assert_text(P) :-
     atomic_list_concat(Ps, '.\n', P),
     forall(( member(S, Ps), S \== '' ), ( term_string(Cl, S), assertz(Cl) )).
 
 %% A test's own predicates: what the clauses written from English assert.
-:- dynamic is_sleep/1, past/1, book/1, stamp/1, father/2, when/2, coat/1, heavy/1, warm/1.
+:- dynamic is_sleep/1, past/1, book/1, stamp/1, father/2, when/2, coat/1, heavy/1, warm/1, imperative/1.

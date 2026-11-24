@@ -73,7 +73,9 @@ One shape for each construct:
 A noun phrase alone (since 1.81.0, level 1's `phrase(NP)`) is the facts
 its noun and its adjectives say of its term: `A heavy coat.` is
 `fact(pred(coat, [const(a(heavy(coat)))]))` and
-`fact(pred(heavy, [const(a(heavy(coat)))]))`.
+`fact(pred(heavy, [const(a(heavy(coat)))]))`. A command (since 1.82.0) is
+its atoms in the tense imperative, its subject you: `Mince the garlic.` is
+`fact(at(imperative, pred(mince, [const(you), const(the(garlic))])))`.
 
 A variable's name in a source is a source detail and is kept apart
 (`read_term/3`'s `variable_names`). Two IRs are the same when they are
@@ -169,8 +171,8 @@ its benchmark, as every typology version has.
    lists in `lexicon/` (a common adjective first; a verb that takes no
    object before a noun for a person or an animal).
 8. **The second measure** (done: 1.69.0, `lexicon/logic.txt`,
-   `tools/logic/measure.pl`): 104 sentences with their Cocolog (208 since
-   1.81.0), written
+   `tools/logic/measure.pl`): 104 sentences with their Cocolog (217 since
+   1.82.0), written
    by hand, counted as the first measure is (STATUS.md keeps the counts).
    At 1.69.0, 86 give their Cocolog and 94 Cocolog texts come back as
    English that reads to them; the misses are the next work: a relative

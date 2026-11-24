@@ -510,6 +510,14 @@ ty_tense_form(english, perfect, sg, neg, [has, not, participle]).
 ty_tense_form(english, perfect, pl, neg, [have, not, participle]).
 ty_participle_like(english, past, sg).
 
+%% A command (since 1.82.0): the imperative is the present's plural form,
+%% `do not' before it, with no subject (`Construct a proof.', `Do not
+%% open the door.'). Of the plural, as the person rule gives `you': of any
+%% number the row fits the second person's own key, and a present `you see'
+%% inside a command was lost (ty_person_form/5 takes a key's own rows first).
+ty_tense_form(english, imperative, pl, pos, [form(present, pl)]).
+ty_tense_form(english, imperative, pl, neg, [do, not, form(present, pl)]).
+
 %% `a' is `an' before a vowel sound: spelled with a vowel, but not `uni',
 %% `use', `eu', `one'; and before the silent h of `hour' and `honest'.
 ty_letters(english, vowel, [a, e, i, o, u]).

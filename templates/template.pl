@@ -293,7 +293,11 @@ ty_conjunct_marks(xx).
 %%                                     (the verb's own positive form) or
 %%                                     participle: English future [will,
 %%                                     form(present, pl)], perfect [has,
-%%                                     participle], Spanish [ha, participle]
+%%                                     participle], Spanish [ha, participle];
+%%                                     since 1.82.0 the imperative's rows
+%%                                     are the language's commands (English
+%%                                     [form(present, pl)], [do, not,
+%%                                     form(present, pl)])
 %% ty_tense_form(xx, Tense, Number, Polarity, Pattern).
 %%   e.g. ty_tense_form(english, future, any, pos, [will, form(present, pl)]).
 

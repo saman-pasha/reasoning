@@ -144,6 +144,7 @@ main :-
     mass,
     subordinate,
     phrases,
+    commands,
     format("~ndone~n", []).
 
 
@@ -875,7 +876,7 @@ mass :-
     must('a bare noun', IR1, clause(like, present, pos, np(person, sg, indef, []), np(music, sg, mass, []))),
     typology_write(italian, clause(drink, present, pos, np(boy, sg, def, []), np(water, sg, mass, [])), W2),
     must('Italian', W2, 'Il ragazzo beve acqua.'),
-    ( typology_read(english, 'Dog sleeps.', _) -> R3 = read ; R3 = refused ),
+    ( typology_read(english, 'Cat sleeps.', _) -> R3 = read ; R3 = refused ),
     must('an animal is no bare noun', R3, refused).
 
 %% 51. THE SUBORDINATE CLAUSE (1.65.0, the translator's fourth step):
@@ -899,6 +900,18 @@ phrases :-
     must('in Spanish', W2, 'Los portales de la catedral.'),
     findall(IR3, typology_read(english, 'The dog sleeps.', IR3), IRs3),
     must('a clause is no phrase', IRs3, [clause(sleep, present, pos, np(dog, sg, def, []), none)]).
+
+%% 53. A COMMAND (1.82.0): a clause in the imperative, a tense whose verb
+%% forms are ty_tense_form/5 rows (English: the present's plural form, `do
+%% not' before it), its subject you said by no words.
+commands :-
+    once(typology_read(english, 'Construct a proof.', IR1)),
+    IR1 = clause(V1, T1, _, S1, O1),
+    must('a command', V1-T1-O1, construct-imperative-np(proof, sg, indef, [])),
+    S1 = pron(P1, N1, _),
+    must('its subject you, of the second person', P1-N1, 2-sg),
+    typology_write(english, clause(open, imperative, neg, pron(2, _, _), np(door, sg, def, [])), W2),
+    must('not to', W2, 'Do not open the door.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

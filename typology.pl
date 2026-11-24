@@ -106,7 +106,11 @@
 %%                                     (the verb's own positive form) or
 %%                                     participle: English future [will,
 %%                                     form(present, pl)], perfect [has,
-%%                                     participle], Spanish [ha, participle]
+%%                                     participle], Spanish [ha, participle];
+%%                                     since 1.82.0 the imperative's rows
+%%                                     are the language's commands (English
+%%                                     [form(present, pl)], [do, not,
+%%                                     form(present, pl)])
 %%     ty_definite_like(L, Def, As)    the language writes the definiteness
 %%                                     Def as As, and never reads Def
 %%                                     (since 1.64.0: Persian writes mass
@@ -508,7 +512,10 @@
 %% language:
 %%
 %%     clause(Predicate, Tense, Polarity, Subject, Object)  Object none
-%%                                     for a clause with no object
+%%                                     for a clause with no object; Tense
+%%                                     imperative a command (since 1.82.0),
+%%                                     its Subject pron(2, _, _) and said by
+%%                                     no words (`Construct a proof.')
 %%     clause(Predicate, Tense, Polarity, Subject, Object, Adjuncts)
 %%                                     Adjuncts a list of pp(Meaning, NP)
 %%                                     and adv(Meaning)
@@ -784,7 +791,7 @@ ty_level(pp, [p, x]).
 ty_level(rel, [h, m, c]).
 ty_level(poss, [h, p, g]).
 
-ty_values(tense, [present, past, future, perfect, imperfect, conditional, pluperfect]).
+ty_values(tense, [present, past, future, perfect, imperfect, conditional, pluperfect, imperative]).
 %% The tenses every verb and every copula has; a template gives the others
 %% where it has them, or writes one as another (ty_tense_like/4);
 %% typology_check/2 asks the whole of a tense where a verb or the copula
@@ -3393,6 +3400,51 @@ ty_sentence(L, phrase(NP)) -->
     ty_np_phrase(L, NP, _),
     { b_setval('$ty_phrase', no), \+ ty_is_asked(NP) }.
 
+%% A COMMAND (since 1.82.0): a clause in the imperative, a tense whose verb
+%% forms the language's ty_tense_form/5 rows give (English: the present's
+%% plural form, `Construct a proof.', `do not' before it), its subject
+%% `you', pron(2, _, _), said by no words. '$ty_command' names the command's
+%% own clause while it is read or written: its subject is the one no words
+%% say (ty_command_subject/1), and no other clause is in the imperative
+%% (ty_verb_plain/6, ty_command_inner_ok/1). Tried after the phrase alone:
+%% `Dry sobs.' is a phrase, not the command to dry sobs. A command with no
+%% object takes no verb whose word is an adjective's too: those are
+%% adjectives with an adposition phrase (`Close to noon.', `Alert to the
+%% problems.', `Secure from harm.': 7 of the 9 false commands with no
+%% object of lexicon/prose.txt, and none of the 13 true ones).
+ty_sentence(L, C) -->
+    { '$ty_commands'(L),
+      C = clause(_, imperative, _, pron(2, _, _), _, _),
+      b_setval('$ty_command', c(C)) },
+    ty_clause(L, C),
+    { b_setval('$ty_command', none),
+      ty_command_inner_ok(C),
+      \+ ty_command_adjective(L, C) }.
+
+ty_command_adjective(L, clause(V, _, _, _, O, _)) :-
+    O == none,
+    ty_verb_row(L, V, present, pl, pos, [W]),
+    ty_word_class(L, adjective, W).
+
+ty_command_subject(Pr) :-
+    nb_current('$ty_command', c(C)), arg(4, C, S), S == Pr.
+
+%% Only a command's own clause is in the imperative (a clause inside it,
+%% `the goal that you see', is not). Asked of the command once it is read:
+%% asked at the end of every clause, the check cost every reading 0.3 %.
+ty_command_inner_ok(C) :-
+    C =.. [_|As],
+    \+ ( member(A, As), ty_has_imperative(A) ).
+
+ty_has_imperative(X) :-
+    compound(X),
+    (   X =.. [clause, _, T|_], T == imperative -> true
+    ;   X =.. [_|As], member(A, As), ty_has_imperative(A)
+    ), !.
+
+ty_imperative_ok(T) :-
+    (   T == imperative -> nb_current('$ty_command', c(_)) ; true ).
+
 ty_subord_kind(K) :- ( var(K) -> ty_values(subordinator, Ks), member(K, Ks) ; true ).
 
 ty_subord_statement(L, C) -->
@@ -4603,6 +4655,9 @@ ty_ppron_slot(Pr) :- var(Pr), !, Pr = pron(_, _, _).
 ty_ppron_slot(pron(_, _, _)).
 
 ty_ppron_role(L, s, Pr, F) -->
+    { ty_command_subject(Pr) }, !,
+    { ty_pron_np_features(L, Pr, F) }.
+ty_ppron_role(L, s, Pr, F) -->
     { ty_dropped_first(L, Pr), ty_pron_np_features(L, Pr, F) }.
 ty_ppron_role(L, Role, Pr, F) -->
     { \+ ( Role == o, ty_clitic(L, o) ) },
@@ -5101,6 +5156,7 @@ ty_verb_plain(L, V, T, P, N, Words) :-
 ty_verb_plain(L, V, T, P, N, Words) :-
     ty_tense_may(L, Words),
     ty_tense_pattern(L, T, N0, P, Pattern, C),
+    ty_imperative_ok(T),
     ty_values(agreement, Ns), member(N, Ns), ty_fits(N0, N),
     ty_tense_words(Pattern, L, V, Words),
     ty_class_ok(L, V, C),
@@ -5110,7 +5166,12 @@ ty_verb_plain(L, V, T, P, N, Words) :-
 %% (ty_class_tense_form/6: Italian `essere', `è andato').
 %% Reading, a pattern is tried only where the words begin with one's first
 %% word (`$ty_tfirst'/2, made with the verb tables), and never for no
-%% words: no pattern is empty.
+%% words: no pattern is empty. An imperative pattern that begins with a
+%% form makes `$any' a rule, true only while a command is read
+%% (ty_vfirst_make/1): as a fact, English's [form(present, pl)] made every
+%% verb reading try every pattern, the round trips 16.5 % dearer, and a
+%% third branch here for it cost Spanish, which has no command, 0.8 %
+%% (1.82.0's first cuts).
 ty_tense_may(L, Words) :-
     (   '$ty_vfirst_made'(L), nonvar(Words), Words = [W|_], atom(W)
     ->  ( '$ty_tfirst'(W, L) -> true ; '$ty_tfirst'('$any', L) )
@@ -5264,10 +5325,17 @@ ty_vfirst_make(L) :-
                (   '$ty_vrow'(K, L, M, T, N, P) -> true ; assertz('$ty_vrow'(K, L, M, T, N, P)) ),
                (   '$ty_vfirst'(W, L, M) -> true ; assertz('$ty_vfirst'(W, L, M)) )
            )),
-    findall(F, ( ty_tense_pattern(L, _, _, _, [I|_], _),
-                 ( atom(I) -> F = I ; F = '$any' ) ), Fs0),
+    findall(F, ( ty_tense_pattern(L, T, _, _, [I|_], _),
+                 (   atom(I) -> F = I
+                 ;   T == imperative -> F = '$imperative'
+                 ;   F = '$any'
+                 ) ), Fs0),
     sort(Fs0, Fs1),
-    forall(member(F, Fs1), assertz('$ty_tfirst'(F, L))),
+    forall(( member(F, Fs1), F \== '$imperative' ), assertz('$ty_tfirst'(F, L))),
+    (   memberchk('$imperative', Fs1), \+ memberchk('$any', Fs1)
+    ->  assertz(('$ty_tfirst'('$any', L) :- nb_current('$ty_command', c(_))))
+    ;   true
+    ),
     assertz('$ty_vfirst_made'(L)).
 
 %% ---- the person -------------------------------------------------------------------
@@ -5949,7 +6017,8 @@ ty_parse_reset(L) :-
 %% ty_article/5 row of its definiteness, gender and number too.
 ty_feats_make(L) :-
     retractall('$ty_cased'(L)), retractall('$ty_declines'(L)),
-    retractall('$ty_kein_lang'(L)), retractall('$ty_sub_used'(L)),
+    retractall('$ty_kein_lang'(L)), retractall('$ty_sub_used'(L)), retractall('$ty_commands'(L)),
+    ( once(ty_tense_form(L, imperative, _, _, _)) -> assertz('$ty_commands'(L)) ; true ),
     ( once(ty_case(L, _, _)) -> assertz('$ty_cased'(L)) ; true ),
     ( once(ty_adjective_ending(L, _, _, _, _, _)) -> assertz('$ty_declines'(L)) ; true ),
     ( once(ty_negative_article(L, _, _, _, _)) -> assertz('$ty_kein_lang'(L)) ; true ),
@@ -6025,6 +6094,7 @@ ty_feats_make(L) :-
 :- dynamic('$ty_declines'/1).
 :- dynamic('$ty_kein_lang'/1).
 :- dynamic('$ty_sub_used'/1).
+:- dynamic('$ty_commands'/1).
 :- dynamic('$ty_art_words'/4).
 :- dynamic('$ty_art_multi'/4).
 :- dynamic('$ty_art_defs'/3).

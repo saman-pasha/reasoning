@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -103,7 +103,7 @@ refused :-
                     spanish-'Los niños ve al gato.'-'a verb that does not agree',
                     spanish-'El niño ve el perro.'-'an animate object with no personal a',
                     english-'The dog black sleeps.'-'an English adjective after its noun',
-                    english-'Dog the sleeps.'-'an English article after its noun',
+                    english-'Cat the sleeps.'-'an English article after its noun',
                     persian-'پسر می‌بیند سگ را.'-'a Persian verb before its object',
                     italian-'Il ragazzo vede la cane.'-'an Italian article that does not agree' ]),
            ( yes_no(typology_read(L, T, _), R),
@@ -1944,7 +1944,6 @@ phrases :-
     section('a noun phrase alone'),
     forall(member(T-Want, [
                'A heavy coat.'-[phrase(np(coat, sg, indef, [heavy]))],
-               'Dry sobs.'-[phrase(np(sob, pl, indef, [dry]))],
                'Good taste.'-[phrase(np(taste, sg, mass, [good]))],
                'The portals of the cathedral.'-[phrase(of(np(cathedral, sg, def, []), np(portal, pl, def, [])))],
                'The dog sleeps.'-[clause(sleep, present, pos, np(dog, sg, def, []), none)],
@@ -1955,6 +1954,10 @@ phrases :-
            ( findall(R, typology_read(english, T, R), Rs),
              atomic_list_concat(['English: ', T], Label),
              check(Label, Rs, Want) )),
+    findall(R1, typology_read(english, 'Dry sobs.', R1), [R1a, R1b|_]),
+    check('English: Dry sobs., the phrase first', R1a, phrase(np(sob, pl, indef, [dry]))),
+    ( R1b = clause(dry, imperative, _, _, _) -> V1 = command ; V1 = R1b ),
+    check('... and the command after it (since 1.82.0)', V1, command),
     IR2 = phrase(np(dog, sg, def, [big])),
     forall(member(L2-Want2, [english-'The big dog.', spanish-'El perro grande.', italian-'Il cane grande.',
                              french-'Le grand chien.', german-'Der große Hund.', persian-'سگ بزرگ.']),
@@ -1968,6 +1971,39 @@ phrases :-
           [phrase(np(dog, sg, indef, [big])), clause(sleep, present, pos, pron(3, sg, ref(dog)), none)]),
     findall(M5, ty_ir_meaning(phrase(of(np(cathedral, sg, def, []), np(portal, pl, def, [old]))), M5), Ms5),
     check('the meanings of a phrase', Ms5, [cathedral, portal, old]).
+
+%% 1.82.0: A COMMAND is a clause in the imperative, its subject you said by
+%% no words; English's verb is the present's plural form, `do not' before
+%% it. A clause inside it is no command, a phrase alone is read first, and
+%% a command with no object takes no verb that is an adjective's word.
+commands :-
+    section('a command'),
+    Y = pron(2, sg, _),
+    forall(member(T-Want, [
+               'Construct a proof.'-[clause(construct, imperative, pos, Y, np(proof, sg, indef, []))],
+               'Do not open the door.'-[clause(open, imperative, neg, Y, np(door, sg, def, []))],
+               'Look at the dog.'-[clause(look, imperative, pos, Y, np(dog, sg, def, []))],
+               'Choose a goal that you see.'-[clause(choose, imperative, pos, Y, rel(np(goal, sg, indef, []), clause(see, present, pos, pron(2, sg, _), gap)))],
+               'Dry sobs.'-[phrase(np(sob, pl, indef, [dry]))],
+               'Close to noon.'-[],
+               'You construct a proof.'-[clause(construct, present, pos, Y, np(proof, sg, indef, []))] ]),
+           ( ( typology_read(english, T, R) -> Rs = [R] ; Rs = [] ),
+             atomic_list_concat(['English: ', T], Label),
+             ( Rs = [R0] -> copy_term(R0, R1), numbervars(R1, 0, _) ; R1 = none ),
+             ( Want = [W0] -> copy_term(W0, W1), numbervars(W1, 0, _) ; W1 = none ),
+             check(Label, R1, W1) )),
+    findall(T2, typology_read(english, 'Construct a proof.', clause(_, T2, _, _, _)), Ts2),
+    check('no reading of a command is in another tense', Ts2, [imperative, imperative]),
+    forall(member(IR3-Want3, [clause(construct, imperative, pos, pron(2, _, _), np(proof, sg, indef, []))-'Construct a proof.',
+                              clause(open, imperative, neg, pron(2, _, _), np(door, sg, def, []))-'Do not open the door.',
+                              clause(sleep, imperative, pos, pron(2, _, _), none)-'Sleep.']),
+           ( ( typology_write(english, IR3, W3) -> true ; W3 = none ),
+             atomic_list_concat(['written: ', Want3], Label3),
+             check(Label3, W3, Want3) )),
+    ( typology_write(spanish, clause(sleep, imperative, pos, pron(2, _, _), none), W4) -> true ; W4 = none ),
+    check('a language with no imperative rows writes no command', W4, none),
+    ( typology_write(english, clause(construct, imperative, pos, np(boy, sg, def, []), none), W5) -> true ; W5 = none ),
+    check('a command\'s subject is you', W5, none).
 
 %% 1.64.0: the bare singular noun. np(M, sg, mass, []): a singular noun
 %% with no article, read after the other readings, written with none;
@@ -2047,7 +2083,9 @@ quantifiers :-
     check('Spanish: a negative determiner is not written yet', W10, none),
     ( typology_read(italian, 'Tutti gli amici dormono.', IR11) -> true ; IR11 = none ),
     check('Italian: an article of two words, its second word by its sound', IR11, IR4),
-    ( typology_read(english, 'Dog sleeps.', _) -> R12 = read ; R12 = refused ),
+    %% `Cat', which is no verb: since 1.82.0 `Dog sleeps.' is the command to
+    %% dog (follow) the sleeps.
+    ( typology_read(english, 'Cat sleeps.', _) -> R12 = read ; R12 = refused ),
     check('a determiner always has its words: no noun reads bare as every', R12, refused).
 
 %% 1.62.0: names. name(Name) where a noun phrase stands: a word written
@@ -2298,8 +2336,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 2813 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 2 813 sentences read at 1.81.0 are read', R1, yes),
+    ( K >= 3118 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 3 118 sentences read at 1.82.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

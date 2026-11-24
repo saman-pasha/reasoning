@@ -476,7 +476,10 @@ lg_present(T, P) :-
     ( lg_tense(T) -> true ; lg_no(tense(T)) ),
     ( P == pos -> true ; lg_no(negation) ).
 
-lg_tense(T) :- atom(T), memberchk(T, [present, past, future, perfect, pluperfect, imperfect]).
+%% Since 1.82.0 the imperative too: a command is its atoms in it, its
+%% subject you (`Construct a proof.' is imperative(construct(you,
+%% a(proof)))).
+lg_tense(T) :- atom(T), memberchk(T, [present, past, future, perfect, pluperfect, imperfect, imperative]).
 
 %% A clause's tense, and its atoms in it: present as they are, any other
 %% each at(Tense, Atom).

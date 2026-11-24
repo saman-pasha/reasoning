@@ -233,3 +233,13 @@ A severe case of flu.	case(a(of(severe(case), flu))). severe(a(of(severe(case), 
 A hail of bullets.	hail(a(of(hail, a(pl(bullet))))). bullet(a(pl(bullet))).
 His newfound aggressiveness.	aggressiveness(of(newfound(aggressiveness), he)). newfound(of(newfound(aggressiveness), he)).
 Underclass mothers and children.	mother(a(pl(underclass(mother)))). underclass(a(pl(underclass(mother)))). child(a(pl(child))).
+# commands (since 1.82.0): the imperative is a tense of the atoms, the subject you
+Construct a proof.	proof(a(proof)). imperative(construct(you, a(proof))).
+Choose an attainable goal.	goal(a(attainable(goal))). attainable(a(attainable(goal))). imperative(choose(you, a(attainable(goal)))).
+Bottle the mineral water.	imperative(bottle(you, the(mineral(water)))).
+Mince the garlic.	imperative(mince(you, the(garlic))).
+Make a cake.	cake(a(cake)). imperative(make(you, a(cake))).
+Untie the knot.	imperative(untie(you, the(knot))).
+Refer to your notes.	imperative(to(refer(you), of(pl(note), you))).
+Charge the wagon with hay.	imperative(with(charge(you, the(wagon)), hay)).
+Bathe daily.	imperative(daily(bathe(you))).

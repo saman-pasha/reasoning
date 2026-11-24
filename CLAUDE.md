@@ -24,8 +24,8 @@ red) and lesson 01 pin the shape of the answer, deliberately not the number.
 The reasoning library translates ALL 8 000 sentences of `lexicon/prose.txt`
 from English into the IR, and ALL of that IR into Cocolog. Every step
 moves one of the two counts and reports both (`tools/logic/prose.pl`;
-STATUS.md keeps them): at 1.81.0, 2 813 into the IR, 2 723 of them into
-Cocolog (1.80.0: 678 and 609). A step that adds no sentence to either
+STATUS.md keeps them): at 1.82.0, 3 118 into the IR, 3 015 of them into
+Cocolog (1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
 count says so. **Measure what blocks the rest before choosing a step**:
 at 1.80.0 the words no table has looked like the gap, and 5 115 of the
 8 000 had none -- 2 130 of them a noun phrase alone, which one rule read.
@@ -469,6 +469,33 @@ constant's term too, its name an adjective and no verb, is the
 predicate's argument (`good(good(taste))` is `Good taste.`), where 1.80.0
 read the adverb good of `good(taste)`; the first cut asked only the
 name, and `quietly(slowly(sing(mary)))` lost its outer adverb.
+**A command since 1.82.0** is a clause in the tense `imperative`, its
+subject `pron(2, _, _)` said by no words: the verb's words are the
+language's `ty_tense_form/5` rows of that tense (English
+`[form(present, pl)]` and `[do, not, form(present, pl)]`), so a language
+with no rows has no command, and no new row shape was needed. The rule is
+the last clause of `ty_sentence//2`, after the phrase alone (`Dry sobs.`
+is a phrase, not the command to dry sobs); `'$ty_command'` holds the
+command's own clause while it is read or written (`b_setval/2` keeps the
+term linked, so `==` finds its subject), and `ty_command_inner_ok/1` keeps
+an inner clause out of the imperative (`Choose a goal that you see.`). A
+command with no object takes no verb that is an adjective's word
+(`Close to noon.`, `Secure from harm.` are adjectives). What bit:
+**English's imperative rows are of the plural, never `any`**: of any
+number they fit the second person's own key, `ty_person_form/5` takes a
+key's own rows first (`*->`), and every present `you see` inside a command
+was lost. **No tense pattern that begins with a form is `'$any'` for
+the imperative**: as a fact `'$any'` made every English verb reading try
+every pattern (the round trips 16.5 % dearer); it is a RULE clause of
+`'$ty_tfirst'/2`, true only while a command is read (`ty_vfirst_make/1`),
+because a third branch in `ty_tense_may/2` cost Spanish, which has no
+command, 0.8 %, and the clause check at the end of every `ty_clause//2`
+0.3 % -- **every construct a hot path adds is an inference**. Now English
+is 1.9 % dearer and the other five 0.02 % to 0.10 %. Level 2:
+`imperative` is a tense (`lg_tense/1`), Cocolog `imperative(Atom)`.
+**The blank template copies the row descriptions of typology.pl's head**:
+a changed description is `typology_import(template)` again, or the
+`reproduced` section is red.
 **The blank template is generated too** (1.54.0): `templates/template.pl`
 is what `typology_import(template)` writes, `typology_template(xx)`: every
 slot of typology.pl's header list (THE TEMPLATE) with the header's own

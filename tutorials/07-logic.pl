@@ -48,6 +48,7 @@ main :-
     relations,
     whens,
     phrases,
+    commands,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -303,6 +304,14 @@ phrases :-
     must('a possessed', C2, 'portal(of(pl(portal), the(cathedral))).\n'),
     logic_translate(cocolog, english, 'year(the(past(year))). past(the(past(year))).', E3),
     must('back into English', E3, 'The past year.').
+
+%% 19. A COMMAND is its atoms in the imperative, a tense, its subject you:
+%% Cocolog writes imperative(Atom).
+commands :-
+    logic_translate(english, cocolog, 'Mince the garlic.', C1),
+    must('a command', C1, 'imperative(mince(you, the(garlic))).\n'),
+    logic_translate(cocolog, english, 'cake(a(cake)). imperative(make(you, a(cake))).', E2),
+    must('back into English', E2, 'Make a cake.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
