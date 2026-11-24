@@ -1362,8 +1362,9 @@ typology_meaning(L, adposition, M) :- once(ty_adposition(L, M, _)).
 typology_meaning(L, adverb, M) :- once(ty_adverb(L, M, _)).
 
 %% typology_plural(+L, ?Meaning, ?Plural): a noun of L of that meaning and
-%% its plural word (since 1.75.0; library(reasoning/logic) names a plural
-%% definite noun phrase by it, the_rebels).
+%% its plural word (since 1.75.0; library(reasoning/logic) named a plural
+%% definite noun phrase by it in 1.75.0, the_rebels, and keeps the meaning
+%% and the number since 1.76.0, the(pl(rebel))).
 typology_plural(L, M, P) :- once(ty_noun(L, M, _, _, _, P)).
 typology_meaning(L, animate, M) :-
     once(( ( ty_noun(L, M, _, A, _, _) ; ty_name(L, M, _, _, A) ), memberchk(A, [person, animate]) )).

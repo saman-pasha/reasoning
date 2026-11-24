@@ -10,12 +10,12 @@ Socrates is human.	human(socrates).
 Socrates is mortal.	mortal(socrates).
 Mary is happy.	happy(mary).
 John is tall.	tall(john).
-The dog is hungry.	hungry(the_dog).
-The sky is blue.	blue(the_sky).
+The dog is hungry.	hungry(the(dog)).
+The sky is blue.	blue(the(sky)).
 Water is wet.	wet(water).
 John is happy and healthy.	happy(john). healthy(john).
-The big dog is happy.	happy(the_big_dog).
-The old man is wise.	wise(the_old_man).
+The big dog is happy.	happy(the(big(dog))).
+The old man is wise.	wise(the(old(man))).
 # facts: a noun
 Socrates is a man.	man(socrates).
 Rex is a dog.	dog(rex).
@@ -29,26 +29,26 @@ Socrates is a man and Plato is a man.	man(socrates). man(plato).
 # facts: a verb with no object
 John sleeps.	sleep(john).
 Mary runs.	run(mary).
-The baby cries.	cry(the_baby).
+The baby cries.	cry(the(baby)).
 Rex barks.	bark(rex).
 John and Mary sleep.	sleep(john). sleep(mary).
-The dog sleeps.	sleep(the_dog).
+The dog sleeps.	sleep(the(dog)).
 Mary sings and dances.	sing(mary). dance(mary).
 # facts: a verb with an object
-John sees the dog.	see(john, the_dog).
+John sees the dog.	see(john, the(dog)).
 Mary likes John.	like(mary, john).
 John loves Mary.	love(john, mary).
 John likes music.	like(john, music).
-Mary reads the book.	read(mary, the_book).
-The cat eats fish.	eat(the_cat, fish).
+Mary reads the book.	read(mary, the(book)).
+The cat eats fish.	eat(the(cat), fish).
 John knows Mary.	know(john, mary).
 Alice helps Bob.	help(alice, bob).
 John likes Mary and Mary likes John.	like(john, mary). like(mary, john).
 John and Mary like music.	like(john, music). like(mary, music).
 John likes music and art.	like(john, music). like(john, art).
-John gives Mary the book.	give(john, mary, the_book).
+John gives Mary the book.	give(john, mary, the(book)).
 John lives in Paris.	in(live(john), paris).
-The book is on the table.	on(the_book, the_table).
+The book is on the table.	on(the(book), the(table)).
 John is taller than Mary.	taller(john, mary).
 John is Mary's father.	father(john, mary).
 Mary is the mother of John.	mother(mary, john).
@@ -64,7 +64,7 @@ Every man is a human.	human(X) :- man(X).
 Every dog is an animal.	animal(X) :- dog(X).
 Every bird flies.	fly(X) :- bird(X).
 Every person likes music.	like(X, music) :- person(X).
-Every student reads the book.	read(X, the_book) :- student(X).
+Every student reads the book.	read(X, the(book)) :- student(X).
 Every happy person sings.	sing(X) :- person(X), happy(X).
 Every big dog barks.	bark(X) :- dog(X), big(X).
 Every man is mortal and wise.	mortal(X) :- man(X). wise(X) :- man(X).
@@ -100,10 +100,10 @@ Who is human?	?- human(X).
 Is Socrates human?	?- human(socrates).
 Who sleeps?	?- sleep(X).
 Who likes music?	?- like(X, music).
-Who sees the dog?	?- see(X, the_dog).
+Who sees the dog?	?- see(X, the(dog)).
 Does John like Mary?	?- like(john, mary).
 Is Rex a dog?	?- dog(rex).
-Is the dog hungry?	?- hungry(the_dog).
+Is the dog hungry?	?- hungry(the(dog)).
 Does Mary sleep?	?- sleep(mary).
 What does John like?	?- like(john, X).
 Whom does Mary love?	?- love(mary, X).
@@ -117,36 +117,36 @@ Something is mortal.	mortal(something).
 Someone sleeps.	sleep(someone).
 Everyone is happy.	happy(X).
 Everybody likes music.	like(X, music).
-Some dogs bark.	dog(a_dog). bark(a_dog).
-Some dog is hungry.	dog(a_dog). hungry(a_dog).
+Some dogs bark.	dog(a(dog)). bark(a(dog)).
+Some dog is hungry.	dog(a(dog)). hungry(a(dog)).
 # the tenses (since 1.70.0): an atom said in a tense is Tense(Atom)
 John slept.	past(sleep(john)).
-The dog barked.	past(bark(the_dog)).
+The dog barked.	past(bark(the(dog))).
 Mary saw John.	past(see(mary, john)).
 Socrates was a man.	past(man(socrates)).
 Socrates was wise.	past(wise(socrates)).
 John was a teacher.	past(teacher(john)).
 John and Mary slept.	past(sleep(john)). past(sleep(mary)).
 Every man was happy.	past(happy(X)) :- man(X).
-Who saw the dog?	?- past(see(X, the_dog)).
-Did John see the dog?	?- past(see(john, the_dog)).
+Who saw the dog?	?- past(see(X, the(dog))).
+Did John see the dog?	?- past(see(john, the(dog))).
 Was Socrates human?	?- past(human(socrates)).
 John will sleep.	future(sleep(john)).
 Mary will be happy.	future(happy(mary)).
-Mary has seen the dog.	perfect(see(mary, the_dog)).
-The boy had seen the dog.	pluperfect(see(the_boy, the_dog)).
-A dog barked.	dog(a_dog). past(bark(a_dog)).
+Mary has seen the dog.	perfect(see(mary, the(dog))).
+The boy had seen the dog.	pluperfect(see(the(boy), the(dog))).
+A dog barked.	dog(a(dog)). past(bark(a(dog))).
 # adjuncts (since 1.71.0): an adposition phrase or an adverb round its atom
-John sleeps in the garden.	in(sleep(john), the_garden).
+John sleeps in the garden.	in(sleep(john), the(garden)).
 Mary runs quickly.	quickly(run(mary)).
-The dog sleeps on the bed.	on(sleep(the_dog), the_bed).
-John walked to the house.	past(to(walk(john), the_house)).
-Mary reads the book in the garden.	in(read(mary, the_book), the_garden).
-Every dog sleeps in the house.	in(sleep(X), the_house) :- dog(X).
-Who sleeps in the garden?	?- in(sleep(X), the_garden).
-The cat is in the house.	in(the_cat, the_house).
+The dog sleeps on the bed.	on(sleep(the(dog)), the(bed)).
+John walked to the house.	past(to(walk(john), the(house))).
+Mary reads the book in the garden.	in(read(mary, the(book)), the(garden)).
+Every dog sleeps in the house.	in(sleep(X), the(house)) :- dog(X).
+Who sleeps in the garden?	?- in(sleep(X), the(garden)).
+The cat is in the house.	in(the(cat), the(house)).
 John is with Mary.	with(john, mary).
-The dog ran quickly to the house.	past(to(quickly(run(the_dog)), the_house)).
+The dog ran quickly to the house.	past(to(quickly(run(the(dog))), the(house))).
 Mary sings slowly and quietly.	quietly(slowly(sing(mary))).
 John came from Paris.	past(from(come(john), paris)).
 # pronouns (since 1.72.0): alone a constant of its own, in a text the noun it refers to
@@ -155,38 +155,38 @@ She sees him.	see(she, he).
 I see you.	see(i, you).
 We are happy.	happy(we).
 They like music.	like(they, music).
-He stood on the rock.	past(on(stand(he), the_rock)).
+He stood on the rock.	past(on(stand(he), the(rock))).
 It is hungry.	hungry(it).
-The boy sees the house. He sees it.	see(the_boy, the_house). see(the_boy, the_house).
+The boy sees the house. He sees it.	see(the(boy), the(house)). see(the(boy), the(house)).
 John sleeps. He dreams.	sleep(john). dream(john).
-Mary sees the dog. She likes it.	see(mary, the_dog). like(mary, the_dog).
-A dog barked. It was hungry.	dog(a_dog). past(bark(a_dog)). past(hungry(a_dog)).
-# possessors (since 1.73.0): the possessed and the possessor one constant
-His dog sleeps.	sleep(dog_of_he).
-John's dog barks.	bark(dog_of_john).
-She sat on the edge of the bed.	past(on(sit(she), edge_of_the_bed)).
-The bed's edge is soft.	soft(edge_of_the_bed).
-The boy's dog's house is big.	big(house_of_dog_of_the_boy).
-Mary loves her cat.	love(mary, cat_of_she).
-The color of the sky is blue.	blue(color_of_the_sky).
-My friend is happy.	happy(friend_of_i).
-John sleeps. His dog barks.	sleep(john). bark(dog_of_john).
-Who sees his dog?	?- see(X, dog_of_he).
+Mary sees the dog. She likes it.	see(mary, the(dog)). like(mary, the(dog)).
+A dog barked. It was hungry.	dog(a(dog)). past(bark(a(dog))). past(hungry(a(dog))).
+# possessors (since 1.73.0): the possessed and the possessor one constant, of(Possessed, Possessor)
+His dog sleeps.	sleep(of(dog, he)).
+John's dog barks.	bark(of(dog, john)).
+She sat on the edge of the bed.	past(on(sit(she), of(edge, the(bed)))).
+The bed's edge is soft.	soft(of(edge, the(bed))).
+The boy's dog's house is big.	big(of(house, of(dog, the(boy)))).
+Mary loves her cat.	love(mary, of(cat, she)).
+The color of the sky is blue.	blue(of(color, the(sky))).
+My friend is happy.	happy(of(friend, i)).
+John sleeps. His dog barks.	sleep(john). bark(of(dog, john)).
+Who sees his dog?	?- see(X, of(dog, he)).
 # indefinite objects (since 1.74.0): an individual in a statement, a variable in a question or a condition
-He received a letter.	letter(a_letter). past(receive(he, a_letter)).
-John sees a big dog.	dog(a_dog). big(a_dog). see(john, a_dog).
-A person likes a dog.	person(a_person). dog(a_dog). like(a_person, a_dog).
+He received a letter.	letter(a(letter)). past(receive(he, a(letter))).
+John sees a big dog.	dog(a(dog)). big(a(dog)). see(john, a(dog)).
+A person likes a dog.	person(a(person)). dog(a(dog)). like(a(person), a(dog)).
 Who sees a dog?	?- see(X, Y), dog(Y).
 Does John see a dog?	?- see(john, X), dog(X).
 A person is happy if they own a dog.	happy(X) :- person(X), own(X, Y), dog(Y).
-Mary reads a book in the garden.	book(a_book). in(read(mary, a_book), the_garden).
-John saw a dog. It was hungry.	dog(a_dog). past(see(john, a_dog)). past(hungry(a_dog)).
-# plural definite noun phrases (since 1.75.0): a constant of the group, the English plural word
-The rebels salted the fields.	past(salt(the_rebels, the_fields)).
-The dogs sleep.	sleep(the_dogs).
-The small children play.	play(the_small_children).
-Mary sees the children.	see(mary, the_children).
-His hands are cold.	cold(hands_of_he).
-The dogs are animals.	animal(the_dogs).
-Who sees the dogs?	?- see(X, the_dogs).
-The children sleep. They dream.	sleep(the_children). dream(the_children).
+Mary reads a book in the garden.	book(a(book)). in(read(mary, a(book)), the(garden)).
+John saw a dog. It was hungry.	dog(a(dog)). past(see(john, a(dog))). past(hungry(a(dog))).
+# plural definite noun phrases (since 1.75.0): a constant of the group, the(pl(Meaning)) since 1.76.0
+The rebels salted the fields.	past(salt(the(pl(rebel)), the(pl(field)))).
+The dogs sleep.	sleep(the(pl(dog))).
+The small children play.	play(the(pl(small(child)))).
+Mary sees the children.	see(mary, the(pl(child))).
+His hands are cold.	cold(of(pl(hand), he)).
+The dogs are animals.	animal(the(pl(dog))).
+Who sees the dogs?	?- see(X, the(pl(dog))).
+The children sleep. They dream.	sleep(the(pl(child))). dream(the(pl(child))).

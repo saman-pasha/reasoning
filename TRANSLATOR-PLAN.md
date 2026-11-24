@@ -48,7 +48,10 @@ One shape for each construct:
                                     Args a list of terms
     and(Bodies), or(Bodies), not(Body)
     compare(Op, Term, Term)         Op one of < =< > >= =:= =\=
-    const(Name)                     a constant: a name, a thing
+    const(Name)                     a constant: a name, a thing; since
+                                    1.76.0 a term where the noun phrase
+                                    has a determiner: the(dog),
+                                    the(pl(rebel)), a(dog), of(dog, john)
     var(N)                          a variable, numbered by its first
                                     use from 1; no Prolog variable
     num(N), str(Text), list(Terms), fun(Name, Args)
@@ -83,10 +86,10 @@ present (since 1.70.0 at(Tense, Atom), but the conditional), an adjunct
 (since 1.71.0 modified(Adjunct, Atom), but one whose noun phrase is no
 constant), a pronoun (since 1.72.0: in a text the noun phrase it refers
 to, alone a constant of its own, its word), a possessor (since 1.73.0:
-one constant with its possessed, dog_of_john), an indefinite object
+one constant with its possessed, of(dog, john)), an indefinite object
 (since 1.74.0: an individual in a statement, a variable in a question
 or a condition, but none in a rule's conclusion), a plural definite noun
-phrase (since 1.75.0: a constant of the group, the_rebels), a negation, a question with `where`, `when` or `why`, an
+phrase (since 1.75.0: a constant of the group, the(pl(rebel))), a negation, a question with `where`, `when` or `why`, an
 instruction about code ("Define a fact stating that ..."), a relative
 clause in a condition. Each comes later as its own item.
 

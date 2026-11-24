@@ -22,8 +22,12 @@
 %%                                 adverb; Cocolog in(Atom, Term) and
 %%                                 quickly(Atom)
 %%     const(Name)                 a constant: a name (socrates), a
-%%                                 definite noun phrase (the_dog), a bare
-%%                                 noun (music), one individual (a_person)
+%%                                 definite noun phrase (the(dog),
+%%                                 the(pl(rebel)), the(big(dog))), a bare
+%%                                 noun (music), one individual
+%%                                 (a(person)), a possessed (of(dog,
+%%                                 john)); terms since 1.76.0, one atom
+%%                                 each (the_dog) through 1.75.0
 %%     var(N)                      a variable, numbered from 1 by its first
 %%                                 use in its item
 %%     num(N), str(S), list(Terms), fun(Name, Args)
@@ -34,7 +38,7 @@
 %% are constants. `every', `each' and `all' make a variable whose noun is a
 %% condition of each rule; an indefinite subject (`A person likes music.',
 %% `Dogs sleep.') is generic: a rule first, and one individual's facts
-%% second (a_person). `something' and `someone' are one individual
+%% second (a(person)). `something' and `someone' are one individual
 %% (something), except in a conditional, where they are the rule's variable.
 %% A question word is the query's variable. A pronoun of an if clause
 %% stands for its main clause's subject.
@@ -47,20 +51,20 @@
 %%
 %% AN ADJUNCT (since 1.71.0) is said of each atom its clause says, inside
 %% the tense, the clause's first adjunct the innermost: `The dog ran
-%% quickly to the house.' is at(past, modified(pp(to, const(the_house)),
-%% modified(adv(quickly), pred(run, [const(the_dog)])))), Cocolog
-%% past(to(quickly(run(the_dog)), the_house)). An adposition phrase as a
+%% quickly to the house.' is at(past, modified(pp(to, const(the(house))),
+%% modified(adv(quickly), pred(run, [const(the(dog))])))), Cocolog
+%% past(to(quickly(run(the(dog))), the(house))). An adposition phrase as a
 %% copula's predicate is a predicate of two: `The book is on the table.' is
-%% pred(on, [const(the_book), const(the_table)]).
+%% pred(on, [const(the(book)), const(the(table))]).
 %%
 %% A POSSESSOR (since 1.73.0): the possessed and the possessor are one
-%% constant, dog_of_john, spot_of_he, edge_of_the_bed.
+%% constant, of(dog, john), of(spot, he), of(edge, the(bed)).
 %%
 %% A PRONOUN (since 1.72.0): in a text, the noun phrase it refers to; with
 %% none, a constant of its own, its word (he, she, it, they, i, we, you).
 %%
 %% A PLURAL DEFINITE NOUN PHRASE (since 1.75.0): a constant of the group,
-%% the_rebels.
+%% the(pl(rebel)) since 1.76.0.
 %%
 %% AN INDEFINITE OBJECT (since 1.74.0): in a statement an individual
 %% (letter(a_letter), receive(he, a_letter)), in a question or a condition
@@ -127,7 +131,7 @@ logic_readings(L, Text, Us) :-
 %% they stand for (pron(3, sg, ref(boy))); each such pronoun is the noun
 %% phrase it refers to, from an earlier sentence, the nearest first: a
 %% name or a definite noun phrase as it is, an indefinite one its
-%% individual (a_dog). The utterance is the sentences' items in order, a
+%% individual (a(dog)). The utterance is the sentences' items in order, a
 %% question if every sentence is one.
 lg_text_read(L, Ss, utterance(Intent, Items)) :-
     typology_read_text(L, Ss, IRs),
@@ -158,7 +162,7 @@ lg_antecedent(name(W), Prev, name(W)) :- !,
 lg_antecedent(M, Prev, NP) :-
     member(IR, Prev), lg_np_in(IR, np(M1, Num, D, As)), M1 == M, !,
     (   memberchk(D, [def, mass]) -> NP = np(M, Num, D, As)
-    ;   D == indef -> lg_indef_const(M, C), NP = '$const'(C)
+    ;   D == indef -> NP = '$const'(a(M))
     ).
 
 lg_np_in(T, _) :- var(T), !, fail.
@@ -299,19 +303,9 @@ lg_facts(Conds, Atoms, Items) :-
 lg_body([B], B) :- !.
 lg_body(Bs, and(Bs)).
 
-%% An individual's constant: a_ and its noun, an_ before a vowel's sound
-%% (a_dog, an_owl, a_university; since 1.74.0, a_ before every noun
-%% through 1.73.0). A u before `ni' or `se' sounds as `you'.
-lg_indef_const(N, C) :-
-    (   sub_atom(N, 0, 1, _, F), memberchk(F, [a, e, i, o, u]),
-        \+ ( sub_atom(N, 0, 3, _, U), memberchk(U, [uni, use, usu, uti, ure]) )
-    ->  P = an_
-    ;   P = a_
-    ),
-    atom_concat(P, N, C).
-
-%% One individual: a_person for a person, something and someone.
-lg_individual(np(N, _, _, _), const(C)) :- !, lg_indef_const(N, C).
+%% One individual: a(person) for a person (a_person through 1.75.0),
+%% something and someone.
+lg_individual(np(N, _, _, _), const(a(N))) :- !.
 lg_individual(qp(_, thing), const(something)) :- !.
 lg_individual(qp(_, person), const(someone)) :- !.
 lg_individual(S, _) :- lg_no(determiner(S)).
@@ -382,7 +376,7 @@ lg_split_objs([A|As], [A|Ps], Os) :- lg_split_objs(As, Ps, Os).
 
 lg_obj_facts([], [], []).
 lg_obj_facts(['$obj'(N, V, Cs)|As], Ps, Fs) :- !,
-    lg_indef_const(N, C), V = const(C),
+    V = const(a(N)),
     lg_obj_facts(As, Ps, Fs0),
     append(Cs, Fs0, Fs).
 lg_obj_facts([A|As], [A|Ps], Fs) :- lg_obj_facts(As, Ps, Fs).
@@ -455,12 +449,10 @@ lg_adjective(A, M) :-
 
 lg_entity(X, _) :- var(X), !, lg_no(shape(X)).
 lg_entity(name(N), ent(const(C), [], const)) :- !, lg_name_atom(N, C).
-lg_entity(np(N, sg, def, As), ent(const(C), [], const)) :- !,
-    lg_adjectives(As, Ms), append([the|Ms], [N], Ws), atomic_list_concat(Ws, '_', C).
-lg_entity(np(N, pl, def, As), ent(const(C), [], const)) :- !,
-    lg_adjectives(As, Ms), lg_plural_word(N, P), append([the|Ms], [P], Ws), atomic_list_concat(Ws, '_', C).
-lg_entity(np(N, _, mass, As), ent(const(C), [], const)) :- !,
-    lg_adjectives(As, Ms), append(Ms, [N], Ws), atomic_list_concat(Ws, '_', C).
+lg_entity(np(N, Num, def, As), ent(const(the(T)), [], const)) :- memberchk(Num, [sg, pl]), !,
+    lg_np_term(N, Num, As, T).
+lg_entity(np(N, _, mass, As), ent(const(T), [], const)) :- !,
+    lg_np_term(N, sg, As, T).
 lg_entity(np(N, _, D, As), ent(V, Conds, every)) :- memberchk(D, [every, each, all]), !,
     lg_noun_conds(N, As, V, Conds).
 lg_entity(np(N, _, D, As), ent(V, Conds, generic)) :- D == indef, !,
@@ -487,31 +479,35 @@ lg_noun_conds(N, As, V, Cs) :-
 lg_preds_of([], _, []).
 lg_preds_of([M|Ms], T, [pred(M, [T])|Ps]) :- lg_preds_of(Ms, T, Ps).
 
-%% A PLURAL DEFINITE NOUN PHRASE (since 1.75.0) is a constant of the group,
-%% the_, its adjectives and the English plural word: `the rebels' is
-%% the_rebels, `the small children' the_small_children. With no English
-%% template loaded the plural is the meaning and an s.
-lg_plural_word(N, P) :-
-    (   catch(typology_plural(english, N, P0), _, fail) -> P = P0 ; atom_concat(N, s, P) ).
+%% A NOUN PHRASE'S TERM (since 1.76.0): its noun inside its adjectives,
+%% the first adjective the outermost, and pl round them for a plural:
+%% `big old dog' big(old(dog)), `the small children' the(pl(small(child))).
+%% A definite noun phrase is the(T), a bare noun T itself (music,
+%% apparent(motion)). Through 1.75.0 the constant was one atom,
+%% the_small_children, its structure in its spelling (1.75.0's form).
+lg_np_term(N, Num, As, T) :-
+    lg_adjectives(As, Ms),
+    reverse(Ms, Rs),
+    foldl(lg_wrap1, Rs, N, T0),
+    ( Num == pl -> T = pl(T0) ; T = T0 ).
+
+lg_wrap1(M, X, T) :- T =.. [M, X].
 
 %% A POSSESSOR (since 1.73.0): the possessed and its possessor are one
-%% constant, the possessed's words, `_of_', the possessor's constant: `his
-%% spot' is spot_of_he, `John's dog' dog_of_john, `the edge of the bed' and
-%% `the bed's edge' edge_of_the_bed, `the boy's dog's house'
-%% house_of_dog_of_the_boy. The possessed is definite, a plural one its
-%% plural word (hands_of_he, since 1.75.0; an indefinite one is no
-%% constant), and the possessor a constant.
-lg_possessed(P, NP, C) :-
+%% constant, of(Possessed, Possessor) since 1.76.0: `his spot' is
+%% of(spot, he), `John's dog' of(dog, john), `the edge of the bed' and `the
+%% bed's edge' of(edge, the(bed)), `the boy's dog's house' of(house,
+%% of(dog, the(boy))), `his hands' of(pl(hand), he). The possessed is
+%% definite (an indefinite one is no constant), and the possessor a
+%% constant.
+lg_possessed(P, NP, of(T, Pc)) :-
     lg_entity(P, ent(Cp, _, Q)),
     ( Q == const, Cp = const(Pc) -> true ; lg_no(possessor(Q)) ),
     (   nonvar(NP), NP = np(N, Num, D, As)
     ->  ( D == def -> true ; lg_no(determiner(D)) )
     ;   lg_no(shape(NP))
     ),
-    lg_adjectives(As, Ms),
-    ( Num == pl -> lg_plural_word(N, W) ; W = N ),
-    append(Ms, [W, of, Pc], Ws),
-    atomic_list_concat(Ws, '_', C).
+    lg_np_term(N, Num, As, T).
 
 %% A PRONOUN WITH NO REFERENT (since 1.72.0) is a constant of its own, its
 %% word as a subject: he, she, it, they, i, we, you. All the sentences that
@@ -653,7 +649,7 @@ lg_in_body(A, A1) :- lg_in_atom(A, A1).
 
 lg_in_atom(A, _) :- \+ callable(A), !, lg_no(term(A)).
 lg_in_atom(A, at(T, P)) :-
-    compound(A), A =.. [W, Inner], compound(Inner),
+    compound(A), A =.. [W, Inner], compound(Inner), \+ lg_det_term(Inner),
     lg_code_tense(cocolog, T, W), !,
     lg_in_atom(Inner, P).
 lg_in_atom(A, modified(pp(P, T), At)) :-
@@ -672,7 +668,33 @@ lg_in_atom(A, pred(N, As1)) :-
 
 %% An adjunct's atom: a compound term that is no list (size([a], 1) is a
 %% predicate of a list).
-lg_adjunct_inner(T) :- compound(T), \+ is_list(T), \+ T = [_|_].
+lg_adjunct_inner(T) :- compound(T), \+ is_list(T), \+ T = [_|_], \+ lg_det_term(T).
+
+%% A CONSTANT'S TERM in Cocolog (since 1.76.0): the(T), a(Noun), of(T,
+%% Possessor) and, where the English template is loaded, a bare noun with
+%% an adjective (apparent(motion)); T a noun inside adjectives and pl.
+%% the, a, of and pl name terms, never predicates, so past(the(dog)) is
+%% the predicate past of the dog, not the tense of the(dog). A tense's and
+%% an adjunct's atom is told from these alone (lg_det_term/1): a bare noun
+%% with an adjective is a term only as an argument, as live(john) in
+%% in(live(john), paris) is an atom, `live' an adjective too.
+lg_const_term(T) :-
+    lg_det_term(T), !.
+lg_const_term(T) :-
+    compound(T), ground(T),
+    T =.. [A, X], \+ memberchk(A, [the, a, of, pl]), lg_np_shape(X),
+    catch(typology_meaning(english, adjective, A), _, fail).
+
+lg_det_term(T) :-
+    compound(T), ground(T),
+    (   T = the(X) -> lg_np_shape(X)
+    ;   T = a(X) -> atom(X)
+    ;   T = of(X, P) -> lg_np_shape(X), ( atom(P) -> true ; lg_const_term(P) )
+    ).
+
+lg_np_shape(X) :- atom(X), !.
+lg_np_shape(pl(X)) :- !, lg_np_shape(X).
+lg_np_shape(X) :- compound(X), X =.. [A, Y], atom(A), \+ memberchk(A, [the, a, of]), lg_np_shape(Y).
 
 %% A name read back: the prefix off where the rest is a reserved name of
 %% that arity, a row's meaning, else the name.
@@ -684,6 +706,7 @@ lg_code_meaning(N1, Ar, N) :-
 lg_in_term(V, V) :- var(V), !.
 lg_in_term(L, list(Ts)) :- is_list(L), !, maplist(lg_in_term, L, Ts).
 lg_in_term(A, const(A)) :- atom(A), !.
+lg_in_term(T, const(T)) :- lg_const_term(T), !.
 lg_in_term(N, num(N)) :- number(N), !.
 lg_in_term(S, str(S)) :- string(S), !.
 lg_in_term(T, fun(F, As1)) :- compound(T), !, T =.. [F|As], maplist(lg_in_term, As, As1).
@@ -752,7 +775,7 @@ logic_translate(cocolog, To, Code, Text) :-
 %% `append holds for X, Y and Z.'
 %%
 %% A GROUP is one item, or one individual's facts together: the fact of its
-%% noun (person(a_person)), its adjectives' and one more, which level 2 made
+%% noun (person(a(person))), its adjectives' and one more, which level 2 made
 %% from one sentence (`A person likes music.', its second reading).
 %%
 %% THE WORD CLASS of a predicate is the template's row (lg_code_class/3),
@@ -769,7 +792,7 @@ logic_write(L, utterance(_, Items), Text) :-
 
 %% Each group's sentence and how it was said (sentence, general). A group
 %% no sentence says alone that names an individual an earlier group
-%% brought in (a_dog) is said again with a pronoun for it, kept where the
+%% brought in (a(dog)) is said again with a pronoun for it, kept where the
 %% text so far reads back to the items so far (since 1.72.0): `A dog
 %% barked. It was hungry.'
 lg_say_all(L, Groups, Said) :- lg_say_all(L, Groups, [], [], Said).
@@ -803,10 +826,10 @@ lg_groups([F|Is], [[F|Run]|Gs]) :-
     lg_groups(Rest, Gs).
 lg_groups([I|Is], [[I]|Gs]) :- lg_groups(Is, Gs).
 
-lg_individual_fact(fact(pred(N, [const(C)])), N, C) :- atom(C), atom(N), lg_indef_const(N, C).
+lg_individual_fact(fact(pred(N, [const(C)])), N, C) :- nonvar(C), C = a(N1), N1 == N.
 
 %% The individuals' facts of one sentence: the noun facts of the ones it
-%% brings in (a_person, then a_dog, since 1.74.0), their adjectives'
+%% brings in (a(person), then a(dog), since 1.74.0), their adjectives'
 %% (plain facts of one argument), and then one more; a fact in a tense or
 %% with an adjunct, or of two arguments, ends the run.
 lg_run([I|Is], Cs, [I|Run], Rest) :-
@@ -1039,23 +1062,20 @@ lg_arg_np(_, wh, var(_), wh(W)) :- !, member(W, [who, what]).
 lg_arg_np(_, every, var(_), qp(every, K)) :- !, member(K, [thing, person]).
 lg_arg_np(L, _, const(C), NP) :- lg_const_np(L, C, NP).
 
-%% A constant's noun phrase: something, someone; the_ a definite noun
-%% phrase; a name a row has; a bare noun; a name no row has.
-lg_const_np(_, C, P) :- lg_pron_np(C, P).
+%% A constant's noun phrase: a pronoun's, something, someone; the(T) a
+%% definite noun phrase, of(T, P) a possessed, each read from its term (no
+%% spelling taken apart since 1.76.0); a name a row has; a bare noun; a
+%% name no row has.
+lg_const_np(_, C, P) :- atom(C), lg_pron_np(C, P).
 lg_const_np(_, something, qp(some, thing)).
 lg_const_np(_, someone, qp(some, person)).
-lg_const_np(L, C, np(N, pl, def, As)) :- atom_concat(the_, R, C), lg_plural_split(L, R, N, As).
-lg_const_np(L, C, np(N, sg, def, As)) :- atom_concat(the_, R, C), lg_noun_split(L, R, N, As).
-lg_const_np(L, C, of(PNP, np(N, Num, def, As))) :-
-    sub_atom(C, B, 4, A, '_of_'), B > 0, A > 0, !,
-    sub_atom(C, 0, B, _, Before), sub_atom(C, _, A, 0, After),
-    (   lg_plural_split(L, Before, N, As), Num = pl
-    ;   lg_noun_split(L, Before, N, As), Num = sg
-    ),
-    lg_const_np(L, After, PNP).
-lg_const_np(L, C, name(W)) :- lg_name_written(C, W), typology_meaning(L, name, W).
-lg_const_np(L, C, np(N, sg, mass, As)) :- \+ atom_concat(the_, _, C), lg_noun_split(L, C, N, As).
-lg_const_np(L, C, name(W)) :- lg_name_written(C, W), \+ typology_meaning(L, name, W).
+lg_const_np(L, the(T), np(N, Num, def, As)) :- !, lg_np_of_term(L, T, N, Num, As).
+lg_const_np(L, of(T, P), of(PNP, np(N, Num, def, As))) :- !,
+    lg_np_of_term(L, T, N, Num, As),
+    lg_const_np(L, P, PNP).
+lg_const_np(L, C, name(W)) :- atom(C), lg_name_written(C, W), typology_meaning(L, name, W).
+lg_const_np(L, C, np(N, sg, mass, As)) :- lg_np_of_term(L, C, N, sg, As).
+lg_const_np(L, C, name(W)) :- atom(C), lg_name_written(C, W), \+ typology_meaning(L, name, W).
 
 %% A pronoun's constant written as the pronoun.
 lg_pron_np(i, pron(1, sg, _)).
@@ -1067,24 +1087,16 @@ lg_pron_np(she, pron(3, sg, f)).
 lg_pron_np(it, pron(3, sg, n)).
 lg_pron_np(they, pron(3, pl, _)).
 
-%% A constant's words as adjectives and a noun, the longest noun first.
-lg_noun_split(L, C, N, As) :-
-    atomic_list_concat(Ps, '_', C),
-    append(As, Ns, Ps), Ns \== [],
-    atomic_list_concat(Ns, '_', N),
+%% A noun phrase's term read back: its number, noun and adjectives, each
+%% a word of its class.
+lg_np_of_term(L, pl(T), N, pl, As) :- !, lg_np_of_term(L, T, N, sg, As).
+lg_np_of_term(L, T, N, sg, As) :-
+    lg_np_parts(T, N, As),
     typology_meaning(L, noun, N),
     forall(member(A, As), typology_meaning(L, adjective, A)).
 
-%% A plural constant's words as adjectives and a plural noun; asked before
-%% the singular, as a word that is a noun's plural (hands) may be a
-%% singular meaning too, and the reader takes `His hands is cold.'
-lg_plural_split(L, C, N, As) :-
-    atomic_list_concat(Ps, '_', C),
-    append(As, Ns, Ps), Ns \== [],
-    atomic_list_concat(Ns, '_', W),
-    catch(typology_plural(english, N, W), _, fail),
-    typology_meaning(L, noun, N),
-    forall(member(A, As), typology_meaning(L, adjective, A)).
+lg_np_parts(N, N, []) :- atom(N), !.
+lg_np_parts(T, N, [A|As]) :- compound(T), T =.. [A, X], atom(A), lg_np_parts(X, N, As).
 
 %% A name's constant written: each word with a capital (john_smith is
 %% `John Smith').
@@ -1156,7 +1168,7 @@ lg_and(Ws, T) :-
     format(atom(T), '~w and ~w', [I, Last]).
 
 lg_term_words(var(N), W) :- !, lg_var_word(N, W).
-lg_term_words(const(C), C) :- !.
+lg_term_words(const(C), W) :- !, ( atom(C) -> W = C ; format(atom(W), '~w', [C]) ).
 lg_term_words(num(N), N) :- !.
 lg_term_words(str(S), W) :- !, format(atom(W), '"~w"', [S]).
 lg_term_words(list(Ts), W) :- !,

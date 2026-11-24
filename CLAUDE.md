@@ -347,6 +347,23 @@ writer asks the PLURAL first (`lg_plural_split/4`, before
 singular meaning too, and the reader takes `His hands is cold.`, so the
 read-back cannot tell. For the same reason a group's noun predicate is a
 plural first (`lg_plural_np/1`: `The dogs are animals.`).
+**A constant is a term since 1.76.0** (the owner's choice, 2026-11-24):
+`the(T)`, `a(Noun)`, `of(T, Possessor)`, a bare noun's `Adj(Noun)`, T a
+noun inside its adjectives (the first the outermost) and `pl` round them
+(`lg_np_term/4`: `the(pl(small(child)))`). The notes above name the
+atoms of their versions (`the_dog`, `a_dog`, `dog_of_john`,
+`the_rebels`): read each as its term now. The writer reads the term
+(`lg_np_of_term/5`) where it split the spelling, so `lg_noun_split/4`,
+`lg_plural_split/4`, `lg_plural_word/2` and `lg_indef_const/2` are gone,
+and `an_` with them. The Cocolog reader takes a term for a constant
+(`lg_const_term/1`), and tells a tense's or an adjunct's atom by the
+determiner terms ALONE (`lg_det_term/1`): a bare noun with an adjective
+is ambiguous there, and the first cut read `in(live(john), paris)` as the
+predicate `in` of the constant `live(john)` (`live` is an adjective too).
+`typology_plural/3` is public still, used by nothing here since 1.76.0.
+`tools/logic/prose.pl` counts the 8 000 sentences into the IR and back
+into English as well as into Cocolog: run it after each step and put
+both counts in STATUS.md (the owner's rule).
 **The blank template is generated too** (1.54.0): `templates/template.pl`
 is what `typology_import(template)` writes, `typology_template(xx)`: every
 slot of typology.pl's header list (THE TEMPLATE) with the header's own

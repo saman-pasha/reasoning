@@ -43,6 +43,7 @@ main :-
     possessors,
     objects,
     plurals,
+    terms,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -52,7 +53,7 @@ facts :-
     must('a name is a constant', U1, utterance(assertion, [fact(pred(human, [const(socrates)]))])),
     logic_readings(english, 'John sees the dog.', [U2]),
     must('a verb with an object is a predicate of two', U2,
-         utterance(assertion, [fact(pred(see, [const(john), const(the_dog)]))])).
+         utterance(assertion, [fact(pred(see, [const(john), const(the(dog))]))])).
 
 %% 2. A RULE. `every' makes a variable whose noun is the rule's condition;
 %% an if clause gives more conditions, its pronoun the main clause's
@@ -123,7 +124,7 @@ english_again :-
     must('a rule', E1, 'Every human is mortal.'),
     logic_translate(cocolog, english, 'is_sleep(john). man(socrates).', E2),
     must('two facts', E2, 'John sleeps. Socrates is a man.'),
-    logic_translate(cocolog, english, '?- see(X, the_dog).', E3),
+    logic_translate(cocolog, english, '?- see(X, the(dog)).', E3),
     must('a query', E3, 'Who sees the dog?'),
     logic_translate(cocolog, english, 'append(a, b, c).', E4),
     must('no word', E4, 'Append holds for a, b and c.'),
@@ -157,9 +158,9 @@ tenses :-
     must('the past', C1, 'past(is_sleep(john)).\n'),
     logic_translate(english, cocolog, 'Every man was happy.', C2),
     must('a rule in the past', C2, 'past(happy(A)) :-\n    man(A).\n'),
-    logic_translate(cocolog, english, 'future(see(mary, the_dog)).', E3),
+    logic_translate(cocolog, english, 'future(see(mary, the(dog))).', E3),
     must('the future, in English', E3, 'Mary will see the dog.'),
-    logic_translate(cocolog, spanish, 'perfect(see(mary, the_dog)).', E4),
+    logic_translate(cocolog, spanish, 'perfect(see(mary, the(dog))).', E4),
     show('the perfect, in Spanish', E4).
 
 %% 9. AN ADJUNCT. An adposition phrase or an adverb of a clause is said of
@@ -168,12 +169,12 @@ tenses :-
 %% adverb of one. An adposition phrase after `is' is a predicate of two.
 adjuncts :-
     logic_translate(english, cocolog, 'John walked to the house.', C1),
-    must('a place in the past', C1, 'past(to(walk(john), the_house)).\n'),
+    must('a place in the past', C1, 'past(to(walk(john), the(house))).\n'),
     logic_translate(english, cocolog, 'Mary runs quickly.', C2),
     must('an adverb', C2, 'quickly(run(mary)).\n'),
     logic_translate(english, cocolog, 'The book is on the table.', C3),
-    must('a predicate of a place', C3, 'on(the_book, the_table).\n'),
-    logic_translate(cocolog, english, 'in(is_sleep(X), the_house) :- dog(X).', E4),
+    must('a predicate of a place', C3, 'on(the(book), the(table)).\n'),
+    logic_translate(cocolog, english, 'in(is_sleep(X), the(house)) :- dog(X).', E4),
     must('back into English', E4, 'Every dog sleeps in the house.').
 
 %% 10. A PRONOUN. In a text a pronoun is the noun phrase it refers to, from
@@ -184,18 +185,18 @@ pronouns :-
     must('a referent', C1, 'is_sleep(john).\ndream(john).\n'),
     logic_translate(english, cocolog, 'She sees him.', C2),
     must('no referent', C2, 'see(she, he).\n'),
-    logic_translate(cocolog, english, 'dog(a_dog). past(bark(a_dog)). past(hungry(a_dog)).', E3),
+    logic_translate(cocolog, english, 'dog(a(dog)). past(bark(a(dog))). past(hungry(a(dog))).', E3),
     must('an individual said again', E3, 'A dog barked. It was hungry.').
 
-%% 11. A POSSESSOR. The possessed and its possessor are one constant: the
-%% possessed's words, `_of_', the possessor's constant. `the edge of the
-%% bed' and `the bed's edge' are one constant, as they say one thing.
+%% 11. A POSSESSOR. The possessed and its possessor are one constant,
+%% of(Possessed, Possessor). `the edge of the bed' and `the bed's edge' are
+%% one constant, of(edge, the(bed)), as they say one thing.
 possessors :-
     logic_translate(english, cocolog, 'His dog sleeps.', C1),
-    must('a possessive pronoun', C1, 'is_sleep(dog_of_he).\n'),
+    must('a possessive pronoun', C1, 'is_sleep(of(dog, he)).\n'),
     logic_translate(english, cocolog, 'She sat on the edge of the bed.', C2),
-    must('an adposition\'s possessor', C2, 'past(on(sit(she), edge_of_the_bed)).\n'),
-    logic_translate(cocolog, english, 'big(house_of_dog_of_the_boy).', E3),
+    must('an adposition\'s possessor', C2, 'past(on(sit(she), of(edge, the(bed)))).\n'),
+    logic_translate(cocolog, english, 'big(of(house, of(dog, the(boy)))).', E3),
     must('a possessor\'s possessor, back', E3, 'The boy\'s dog\'s house is big.').
 
 %% 12. AN INDEFINITE OBJECT. In a statement it is an individual and its
@@ -204,22 +205,37 @@ possessors :-
 %% sees a dog.' says each boy may see another dog.
 objects :-
     logic_translate(english, cocolog, 'He received a letter.', C1),
-    must('in a statement', C1, 'letter(a_letter).\npast(receive(he, a_letter)).\n'),
+    must('in a statement', C1, 'letter(a(letter)).\npast(receive(he, a(letter))).\n'),
     logic_translate(english, cocolog, 'Who sees a dog?', C2),
     must('in a question', C2, '?- see(A, B), dog(B).\n'),
     logic_translate(cocolog, english, 'happy(X) :- person(X), own(X, Y), dog(Y).', E3),
     must('in a condition, back', E3, 'A person is happy if they own a dog.').
 
 %% 13. A PLURAL DEFINITE NOUN PHRASE. `the rebels' is one constant, the
-%% group: the_, its adjectives and the English plural word, in every
-%% language (Spanish `los perros' is the_dogs too).
+%% group: the(pl(rebel)), the meaning and its number, the same in every
+%% language (Spanish `los perros' is the(pl(dog)) too).
 plurals :-
     logic_translate(english, cocolog, 'The rebels salted the fields.', C1),
-    must('a group', C1, 'past(salt(the_rebels, the_fields)).\n'),
+    must('a group', C1, 'past(salt(the(pl(rebel)), the(pl(field)))).\n'),
     logic_translate(spanish, cocolog, 'Los perros duermen.', C2),
-    must('from Spanish', C2, 'is_sleep(the_dogs).\n'),
-    logic_translate(cocolog, english, 'cold(hands_of_he).', E3),
+    must('from Spanish', C2, 'is_sleep(the(pl(dog))).\n'),
+    logic_translate(cocolog, english, 'cold(of(pl(hand), he)).', E3),
     must('a plural possessed, back', E3, 'His hands are cold.').
+
+%% 14. A CONSTANT IS A TERM. A noun phrase with a determiner keeps its
+%% structure in Cocolog: the(dog), the(pl(rebel)), the(big(dog)), a(dog),
+%% of(dog, john). So a program can ask by the structure: is_sleep(the(X))
+%% finds every definite thing that sleeps, and a name is no definite thing.
+terms :-
+    logic_translate(english, cocolog, 'The big old dog sleeps.', C1),
+    must('adjectives', C1, 'is_sleep(the(big(old(dog)))).\n'),
+    logic_translate(english, cocolog, 'His hands are cold.', C2),
+    must('a plural possessed', C2, 'cold(of(pl(hand), he)).\n'),
+    assertz(lesson_sleeps(the(dog))), assertz(lesson_sleeps(john)), assertz(lesson_sleeps(the(cat))),
+    findall(X, lesson_sleeps(the(X)), Xs),
+    must('every definite thing that sleeps', Xs, [dog, cat]).
+
+:- dynamic lesson_sleeps/1.
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
