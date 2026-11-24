@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -263,11 +263,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 197),
-    ( R >= 183 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 183 right', VR, ok),
-    ( K >= 189 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 189 kept', VK, ok).
+    check('the second measure: its sentences', N, 208),
+    ( R >= 194 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 194 right', VR, ok),
+    ( K >= 200 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 200 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -625,10 +625,52 @@ whens :-
     findall(A, when(A, past(sing(mary))), As),
     check('a query of what happened when Mary sang', As, [past(is_sleep(john)), past(bark(the(dog)))]).
 
+%% 1.81.0: A NOUN PHRASE ALONE says its noun and its adjectives of its
+%% term: an indefinite one's individual, a definite one's the(T), a bare
+%% noun's term; and a group that is those facts is said as the phrase.
+phrases :-
+    section('a noun phrase alone'),
+    forall(member(T-Want, [
+               'A heavy coat.'-'coat(a(heavy(coat))).\nheavy(a(heavy(coat))).\n',
+               'The past year.'-'year(the(past(year))).\npast(the(past(year))).\n',
+               'Good taste.'-'taste(good(taste)).\ngood(good(taste)).\n',
+               'The portals of the cathedral.'-'portal(of(pl(portal), the(cathedral))).\n',
+               'A hail of bullets.'-'hail(a(of(hail, a(pl(bullet))))).\nbullet(a(pl(bullet))).\n',
+               'His newfound aggressiveness.'-'aggressiveness(of(newfound(aggressiveness), he)).\nnewfound(of(newfound(aggressiveness), he)).\n' ]),
+           ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
+             one_line(['a phrase into Cocolog: ', T], Label),
+             check(Label, C, Want) )),
+    forall(member(C2-Want2, ['coat(a(heavy(coat))). heavy(a(heavy(coat))).'-'A heavy coat.',
+                             'year(the(past(year))). past(the(past(year))).'-'The past year.',
+                             'taste(good(taste)). good(good(taste)).'-'Good taste.',
+                             'dog(the(dog)).'-'The dog.',
+                             'dog(a(big(dog))). big(a(big(dog))). past(bark(a(big(dog)))).'-'A big dog barked.',
+                             'portal(of(pl(portal), the(cathedral))).'-'The cathedral\'s portals.']),
+           ( ( logic_translate(cocolog, english, C2, E2) -> true ; E2 = none ),
+             one_line(['a phrase into English: ', C2], L2),
+             check(L2, E2, Want2) )),
+    ( logic_translate(cocolog, spanish, 'dog(the(big(dog))). big(the(big(dog))).', S3) -> true ; S3 = none ),
+    check('a phrase into Spanish', S3, 'El perro grande.'),
+    ( cocolog_read('good(good(taste)).', U4) -> true ; U4 = none ),
+    check('an adverb never stands on a copula\'s atom: good of good(taste)', U4,
+          utterance(assertion, [fact(pred(good, [const(good(taste))]))])),
+    ( cocolog_read('quickly(run(the(dog))).', U5) -> true ; U5 = none ),
+    check('... and stands on a verb\'s', U5,
+          utterance(assertion, [fact(modified(adv(quickly), pred(run, [const(the(dog))])))])),
+    forall(member(T6-Want6, ['Roads that lead therefrom.'-phrase(rel), 'Him.'-phrase(pron), 'Some dogs.'-phrase(some)]),
+           ( once(typology_read(english, T6, IR6)),
+             ( logic_from_ir(IR6, _) -> W6 = read ; logic_why(IR6, W6) ),
+             atomic_list_concat(['no form yet: ', T6], L6),
+             check(L6, W6, Want6) )),
+    forall(member(T7, ['A heavy coat.', 'A warm coat.']),
+           ( logic_translate(english, cocolog, T7, P7), assert_text(P7) )),
+    findall(X7, coat(X7), Xs7),
+    check('a query of the coats the phrases say', Xs7, [a(heavy(coat)), a(warm(coat))]).
+
 %% Each clause of a Cocolog text asserted.
 assert_text(P) :-
     atomic_list_concat(Ps, '.\n', P),
     forall(( member(S, Ps), S \== '' ), ( term_string(Cl, S), assertz(Cl) )).
 
 %% A test's own predicates: what the clauses written from English assert.
-:- dynamic is_sleep/1, past/1, book/1, stamp/1, father/2, when/2.
+:- dynamic is_sleep/1, past/1, book/1, stamp/1, father/2, when/2, coat/1, heavy/1, warm/1.

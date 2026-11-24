@@ -143,6 +143,7 @@ main :-
     quantifiers,
     mass,
     subordinate,
+    phrases,
     format("~ndone~n", []).
 
 
@@ -888,6 +889,16 @@ subordinate :-
     typology_read(english, 'If the dog sleeps, the boy sleeps.', IR2),
     typology_write(german, IR2, W3),
     must('German, the clause after, its verb last', W3, 'Der Junge schläft, wenn der Hund schläft.').
+
+%% 52. A NOUN PHRASE ALONE (1.81.0): phrase(NP), a sentence that says no
+%% clause, read after every other reading and written in every language.
+phrases :-
+    typology_read(english, 'The portals of the cathedral.', IR1),
+    must('a phrase alone', IR1, phrase(of(np(cathedral, sg, def, []), np(portal, pl, def, [])))),
+    typology_write(spanish, IR1, W2),
+    must('in Spanish', W2, 'Los portales de la catedral.'),
+    findall(IR3, typology_read(english, 'The dog sleeps.', IR3), IRs3),
+    must('a clause is no phrase', IRs3, [clause(sleep, present, pos, np(dog, sg, def, []), none)]).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

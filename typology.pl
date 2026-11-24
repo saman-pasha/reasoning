@@ -585,6 +585,12 @@
 %%                                     Smith')); a pronoun of the text that
 %%                                     stands for it is pron(3, sg,
 %%                                     ref(name(Meaning)))
+%%     phrase(NP)                      a noun phrase alone, a sentence that
+%%                                     says no clause (since 1.81.0): `A
+%%                                     heavy coat.' is phrase(np(coat, sg,
+%%                                     indef, [heavy])); NP anything a noun
+%%                                     phrase is where no role's marks
+%%                                     stand (ty_np_phrase//3)
 %%
 %% WHAT IS PUBLIC:
 %%
@@ -1883,6 +1889,7 @@ ty_ir_tw_(pp(M, NP), L, pp(M, NP1)) :- !, ty_ir_tw(NP, L, NP1).
 ty_ir_tw_(answer(P, A, C), L, answer(P, A, C1)) :- !, ty_ir_tw(C, L, C1).
 ty_ir_tw_(sub(K, M, C), L, sub(K, M1, C1)) :- !, ty_ir_tw(M, L, M1), ty_ir_tw(C, L, C1).
 ty_ir_tw_(echo(C), L, echo(C1)) :- !, ty_ir_tw(C, L, C1).
+ty_ir_tw_(phrase(X), L, phrase(X1)) :- !, ty_ir_tw(X, L, X1).
 ty_ir_tw_(C, L, C1) :- ty_coord_any(C, K, Xs), !, ty_ir_tw_items(Xs, L, Ys), C1 =.. [K, Ys].
 ty_ir_tw_(X, _, X).
 
@@ -2008,6 +2015,7 @@ ty_ir_map(D, pp(M, NP), pp(M, NP1)) :- !, ty_ir_map(D, NP, NP1).
 ty_ir_map(D, answer(P, A, C), answer(P, A, C1)) :- !, ty_ir_map(D, C, C1).
 ty_ir_map(D, sub(K, M, C), sub(K, M1, C1)) :- !, ty_ir_map(D, M, M1), ty_ir_map(D, C, C1).
 ty_ir_map(D, echo(C), echo(C1)) :- !, ty_ir_map(D, C, C1).
+ty_ir_map(D, phrase(X), phrase(X1)) :- !, ty_ir_map(D, X, X1).
 ty_ir_map(D, C, C1) :- ty_coord_any(C, K, Xs), !, maplist(ty_ir_map(D), Xs, Ys), C1 =.. [K, Ys].
 ty_ir_map(_, X, X).
 
@@ -2112,6 +2120,7 @@ ty_mention(C, R, M, N) :- ty_coord_any(C, _, Cs), Cs = [X|_], X \= np(_, _, _, _
 ty_mention(question(C), R, M, N) :- !, ty_mention(C, R, M, N).
 ty_mention(answer(_, _, C), R, M, N) :- !, ty_mention(C, R, M, N).
 ty_mention(sub(_, Main, C), R, M, N) :- !, ( ty_mention(Main, R, M, N) ; ty_mention(C, R, M, N) ).
+ty_mention(phrase(X), s, M, N) :- !, ty_np_mention(X, M, N).
 
 ty_np_mention(X, _, _) :- var(X), !, fail.
 ty_np_mention(np(M, N, _, _), M, N).
@@ -2153,6 +2162,7 @@ ty_ir_meaning(question(C), M) :- ty_ir_meaning(C, M).
 ty_ir_meaning(answer(_, _, C), M) :- ty_ir_meaning(C, M).
 ty_ir_meaning(sub(_, Main, C), M) :- ( ty_ir_meaning(Main, M) ; ty_ir_meaning(C, M) ).
 ty_ir_meaning(echo(C), M) :- ty_ir_meaning(C, M).
+ty_ir_meaning(phrase(X), M) :- ty_ir_meaning(X, M).
 ty_ir_meaning(clause(V, T, P, S, O), M) :-
     ty_ir_meaning(clause(V, T, P, S, O, []), M).
 ty_ir_meaning(clause(V, _, _, S, O, Js), M) :-
@@ -3368,6 +3378,20 @@ ty_sentence(L, sub(K, Main, C)) -->
         ( [','] ; [] ),
         ty_statement(L, Main)
     ).
+
+%% A NOUN PHRASE ALONE (since 1.81.0): phrase(NP), a sentence that says no
+%% clause (`A heavy coat.', `The portals of the cathedral.': some 2 100 of
+%% lexicon/prose.txt's 8 000), NP whatever ty_np_phrase//3 reads, in the
+%% case a subject has (German) and with no role's marks. Tried last, so a
+%% sentence that reads as a clause reads so; a phrase of `which' is a
+%% question's. A relative clause in it has its marker ('$ty_phrase', asked
+%% by ty_rel//4): with none, a clause read as a phrase, `The boy drinks
+%% water.' the boy that drinks (a plural noun) water (a verb), and `This
+%% time he succeeded.' the time that he succeeded.
+ty_sentence(L, phrase(NP)) -->
+    { ty_role_case(L, s), b_setval('$ty_phrase', yes) },
+    ty_np_phrase(L, NP, _),
+    { b_setval('$ty_phrase', no), \+ ty_is_asked(NP) }.
 
 ty_subord_kind(K) :- ( var(K) -> ty_values(subordinator, Ks), member(K, Ks) ; true ).
 
@@ -5518,7 +5542,8 @@ ty_rel(L, Role, rel(NP, C), Features) -->
       ty_gap_place(L, NP, Features, R, C, C1),
       ty_gap_possible(L, R, Ahead) },
     ty_rel_parts(Order, L, Role, NP, Features, C1, m(Ws, R)),
-    { ty_rel_marker_ok(L, R, Features, Ws) }.
+    { ty_rel_marker_ok(L, R, Features, Ws),
+      \+ ( Ws == [], nb_current('$ty_phrase', yes) ) }.
 
 %% A relative clause after its verb (ty_extraposed//5): the marker and the
 %% clause, in the rel level's order less the head, which was read where

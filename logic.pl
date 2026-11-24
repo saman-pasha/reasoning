@@ -263,6 +263,7 @@ lg_statement(sub(K, Main, Cond), Items) :- !,
     ;   K == when -> lg_when(Main, Cond, Items)
     ;   lg_no(subordinate(K))
     ).
+lg_statement(phrase(X), Items) :- !, lg_phrase(X, Items).
 lg_statement(C, Items) :-
     lg_parts(C, S, Pred),
     lg_entity(S, ent(T, Conds, Q), SMs),
@@ -272,6 +273,34 @@ lg_statement(C, Items) :-
     lg_assert(Q, T, Conds, Atoms, S, Inds, Items).
 
 lg_is_ind('$ind'(_, _)).
+
+%% A NOUN PHRASE ALONE (since 1.81.0): its noun and its adjectives said of
+%% its term, as facts. An indefinite one is its individual (`A heavy
+%% coat.' is coat(a(heavy(coat))) and heavy(a(heavy(coat))); `Dry sobs.'
+%% sob(a(pl(dry(sob))))), a definite one the(T) (`The past year.'
+%% year(the(past(year)))), a bare noun its term (`Good taste.'
+%% taste(good(taste))), a possessed of(T, P) with an indefinite
+%% possessor's own facts after (`A severe case of flu.'); each item of a
+%% coordination its own (`Mines and traps.'). A name, a pronoun and a
+%% phrase of another determiner say nothing of a noun: none
+%% (phrase(Kind)).
+lg_phrase(X, _) :- var(X), !, lg_no(phrase(X)).
+lg_phrase(and(Xs), Items) :- !, lg_phrases(Xs, Items).
+lg_phrase(X, Items) :-
+    ( lg_phrase_noun(X, N, As) -> true ; functor(X, F, _), lg_no(phrase(F)) ),
+    lg_arg(phrase, X, V, _, Ms),
+    (   Ms = ['$obj'(_, V1, _, _)|_], V1 == V
+    ->  lg_facts([], Ms, Items)
+    ;   lg_noun_conds(N, As, V, Cs),
+        lg_facts(Cs, Ms, Items)
+    ).
+
+lg_phrases([], []).
+lg_phrases([X|Xs], Items) :-
+    lg_phrase(X, Items1), lg_phrases(Xs, Items2), append(Items1, Items2, Items).
+
+lg_phrase_noun(np(N, _, _, As), N, As).
+lg_phrase_noun(of(_, NP), N, As) :- nonvar(NP), lg_phrase_noun(NP, N, As).
 
 %% An atom in a tense, its when clause round it or not.
 lg_in_tense(at(_, _)) :- !.
@@ -827,7 +856,8 @@ lg_in_atom(A, modified(pp(P, T), At)) :-
     lg_in_term(Arg, T).
 lg_in_atom(A, modified(adv(M), At)) :-
     compound(A), A =.. [N, Inner], lg_adjunct_inner(Inner),
-    lg_code_meaning(N, 1, M), typology_meaning(english, adverb, M), !,
+    lg_code_meaning(N, 1, M), typology_meaning(english, adverb, M),
+    \+ lg_copula_atom(Inner), !,
     lg_in_atom(Inner, At).
 lg_in_atom(A, pred(N, As1)) :-
     A =.. [N1|As], length(As, Ar),
@@ -836,6 +866,16 @@ lg_in_atom(A, pred(N, As1)) :-
 
 %% An adjunct's atom: a compound term that is no list (size([a], 1) is a
 %% predicate of a list).
+%% An adverb's atom is no copula's (since 1.81.0): an atom that is a
+%% constant's term too, its name an adjective and no verb, is said by a
+%% copula, which takes no adjunct, so good(good(taste)) is the predicate
+%% good of good(taste) (`Good taste.'), never the adverb good of
+%% good(taste); quietly(slowly(sing(mary))) keeps both adverbs.
+lg_copula_atom(T) :-
+    lg_const_term(T),
+    T =.. [N, _], lg_code_meaning(N, 1, M),
+    \+ catch(typology_meaning(english, verb, M), _, fail).
+
 lg_adjunct_inner(T) :- compound(T), \+ is_list(T), \+ T = [_|_], \+ lg_det_term(T).
 
 %% A CONSTANT'S TERM in Cocolog (since 1.76.0): the(T), a(Noun), of(T,
@@ -991,11 +1031,55 @@ lg_say_again(L, [fact(A)], Ss0, Done, S) :-
     member(utterance(_, Is), Us), Is == Want, !.
 
 lg_groups([], []).
+lg_groups(Is, [G|Gs]) :-
+    lg_phrase_group(Is, G, Rest), !,
+    lg_groups(Rest, Gs).
 lg_groups([F|Is], [[F|Run]|Gs]) :-
     lg_individual_fact(F, _, C),
     lg_run(Is, [C], Run, Rest), Run \== [], !,
     lg_groups(Rest, Gs).
 lg_groups([I|Is], [[I]|Gs]) :- lg_groups(Is, Gs).
+
+%% A NOUN PHRASE ALONE'S GROUP (since 1.81.0): the facts a noun phrase
+%% alone says of its term (lg_term_facts/2: `A heavy coat.' coat and
+%% heavy of a(heavy(coat))), where they begin the items; an individual's
+%% only where no item after them names it, which its own run takes (`A
+%% big dog barked.', `A person likes a dog.').
+lg_phrase_group([F|Is], G, Rest) :-
+    F = fact(pred(_, [const(C)])), nonvar(C),
+    lg_term_facts(C, G),
+    append(G, Rest, [F|Is]),
+    \+ ( C = a(_), member(I, Rest), lg_names_in(C, I) ).
+
+%% The facts a noun phrase alone says of its term (as lg_phrase/2 makes
+%% them): its noun's, its adjectives' (the first the outermost), and an
+%% indefinite possessor's own after them.
+lg_term_facts(a(S), Fs) :- !, lg_shape_facts(S, const(a(S)), Fs).
+lg_term_facts(the(T), Fs) :- !, lg_np_facts(T, const(the(T)), Fs).
+lg_term_facts(of(T, P), Fs) :- !, lg_shape_facts(of(T, P), const(of(T, P)), Fs).
+lg_term_facts(T, Fs) :- lg_np_facts(T, const(T), Fs).
+
+lg_shape_facts(of(T, P), K, Fs) :- !,
+    lg_np_facts(T, K, Fs0),
+    (   nonvar(P), P = a(_) -> lg_term_facts(P, Fs1) ; Fs1 = [] ),
+    append(Fs0, Fs1, Fs).
+lg_shape_facts(T, K, Fs) :- lg_np_facts(T, K, Fs).
+
+lg_np_facts(T, _, _) :- var(T), !, fail.
+lg_np_facts(pl(T), K, Fs) :- !, lg_np_facts(T, K, Fs).
+lg_np_facts(T, K, [fact(pred(N, [K]))|AFs]) :-
+    lg_np_parts(T, N, As),
+    findall(fact(pred(A, [K])), member(A, As), AFs).
+
+%% The individuals a term holds, itself among them.
+lg_term_individuals(C, Cs) :- lg_term_inds(C, Cs, []).
+
+lg_term_inds(X, Cs, Cs) :- \+ compound(X), !.
+lg_term_inds(X, [X|Cs0], Cs) :- X = a(_), !, X =.. [_|As], lg_term_inds_list(As, Cs0, Cs).
+lg_term_inds(X, Cs0, Cs) :- X =.. [_|As], lg_term_inds_list(As, Cs0, Cs).
+
+lg_term_inds_list([], Cs, Cs).
+lg_term_inds_list([A|As], Cs0, Cs) :- lg_term_inds(A, Cs0, Cs1), lg_term_inds_list(As, Cs1, Cs).
 
 lg_individual_fact(fact(pred(N, [const(C)])), N, C) :- nonvar(C), C = a(S), lg_shape_head(S, N1), N1 == N.
 
@@ -1041,7 +1125,14 @@ lg_reads_back(L, S, Group) :-
     catch(logic_readings(L, S, Us), _, fail),
     member(utterance(_, Is), Us), Is == Group, !.
 
-%% A group's level-1 IRs, the likeliest first.
+%% A group's level-1 IRs, the likeliest first: a noun phrase alone first
+%% where the group is its facts (`The past year.', not `The past year is
+%% a year. The past year is past.').
+lg_group_ir(L, Group, phrase(NP)) :-
+    Group = [fact(pred(_, [const(C)]))|_], nonvar(C),
+    lg_term_facts(C, G), G == Group, !,
+    lg_term_individuals(C, Cs),
+    lg_const_np(L, Cs, C, NP).
 lg_group_ir(L, [F|Run], IR) :-
     Run = [_|_], !,
     append(Init, [fact(A)], [F|Run]),

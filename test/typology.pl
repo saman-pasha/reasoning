@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -466,15 +466,17 @@ relatives :-
              atomic_list_concat(['English: ', T], Label),
              check(Label, R, read) )),
     %% Refused: a marker of no words where the gap is the subject, a verb
-    %% that does not agree with its head, a head the verb does not take, a
-    %% noun phrase that is no clause.
+    %% that does not agree with its head, a head the verb does not take.
     forall(member(L-T, [ english-'The boy sees the dog sleeps.',
                          spanish-'Los niños que ve al perro duermen.',
-                         english-'The book that sees the dog sleeps.',
-                         english-'The boy who sleeps.' ]),
+                         english-'The book that sees the dog sleeps.' ]),
            ( ( typology_read(L, T, _) -> R = read ; R = refused ),
              atomic_list_concat([L, ': ', T], Label),
              check(Label, R, refused) )),
+    %% A noun phrase with a relative clause is a sentence alone since
+    %% 1.81.0, its relative clause with a marker.
+    findall(IR7, typology_read(english, 'The boy who sleeps.', IR7), IRs7),
+    check('English: The boy who sleeps., a phrase alone', IRs7, [phrase(rel(B, clause(sleep, present, pos, gap, none)))]),
     %% An adjunct after a relative clause may be the main clause's or the
     %% relative clause's: both are read.
     findall(At, ( typology_read(spanish, 'El niño ve al perro que duerme en la casa.', IR),
@@ -1935,6 +1937,38 @@ subordinate :-
     findall(M7, ty_ir_meaning(IR4, M7), Ms7),
     check('the meanings of both clauses', Ms7, [sleep, boy, see, girl, dog]).
 
+%% 1.81.0: A NOUN PHRASE ALONE is a sentence, phrase(NP), read after every
+%% other reading (a clause reads as a clause), written in every language;
+%% a pronoun of the next sentence may stand for its noun.
+phrases :-
+    section('a noun phrase alone'),
+    forall(member(T-Want, [
+               'A heavy coat.'-[phrase(np(coat, sg, indef, [heavy]))],
+               'Dry sobs.'-[phrase(np(sob, pl, indef, [dry]))],
+               'Good taste.'-[phrase(np(taste, sg, mass, [good]))],
+               'The portals of the cathedral.'-[phrase(of(np(cathedral, sg, def, []), np(portal, pl, def, [])))],
+               'The dog sleeps.'-[clause(sleep, present, pos, np(dog, sg, def, []), none)],
+               'Vital signs.'-[phrase(np(sign, pl, indef, [vital])), clause(sign, present, pos, name('Vital'), none)],
+               'This time he succeeded.'-[],
+               'A heavy coat?'-[],
+               'Which dog.'-[] ]),
+           ( findall(R, typology_read(english, T, R), Rs),
+             atomic_list_concat(['English: ', T], Label),
+             check(Label, Rs, Want) )),
+    IR2 = phrase(np(dog, sg, def, [big])),
+    forall(member(L2-Want2, [english-'The big dog.', spanish-'El perro grande.', italian-'Il cane grande.',
+                             french-'Le grand chien.', german-'Der große Hund.', persian-'سگ بزرگ.']),
+           ( ( typology_write(L2, IR2, W2), typology_read(L2, W2, IR2b), IR2b == IR2 -> true ; W2 = none ),
+             atomic_list_concat([L2, ': ', Want2, ', and read back'], Label2),
+             check(Label2, W2, Want2) )),
+    ( typology_write(english, phrase(and([np(mine, pl, indef, []), np(trap, pl, indef, [])])), W3) -> true ; W3 = none ),
+    check('a coordination alone', W3, 'Mines and traps.'),
+    typology_read_text(english, ['A big dog.', 'It sleeps.'], IRs4),
+    check('a pronoun of the next sentence stands for its noun', IRs4,
+          [phrase(np(dog, sg, indef, [big])), clause(sleep, present, pos, pron(3, sg, ref(dog)), none)]),
+    findall(M5, ty_ir_meaning(phrase(of(np(cathedral, sg, def, []), np(portal, pl, def, [old]))), M5), Ms5),
+    check('the meanings of a phrase', Ms5, [cathedral, portal, old]).
+
 %% 1.64.0: the bare singular noun. np(M, sg, mass, []): a singular noun
 %% with no article, read after the other readings, written with none;
 %% Persian, whose definite noun has none either, writes it as def.
@@ -2264,8 +2298,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 673 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 673 sentences read at 1.65.0 are read', R1, yes),
+    ( K >= 2813 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 2 813 sentences read at 1.81.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

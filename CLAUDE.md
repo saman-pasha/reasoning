@@ -24,8 +24,11 @@ red) and lesson 01 pin the shape of the answer, deliberately not the number.
 The reasoning library translates ALL 8 000 sentences of `lexicon/prose.txt`
 from English into the IR, and ALL of that IR into Cocolog. Every step
 moves one of the two counts and reports both (`tools/logic/prose.pl`;
-STATUS.md keeps them): at 1.80.0, 678 into the IR, 609 of them into
-Cocolog. A step that adds no sentence to either count says so.
+STATUS.md keeps them): at 1.81.0, 2 813 into the IR, 2 723 of them into
+Cocolog (1.80.0: 678 and 609). A step that adds no sentence to either
+count says so. **Measure what blocks the rest before choosing a step**:
+at 1.80.0 the words no table has looked like the gap, and 5 115 of the
+8 000 had none -- 2 130 of them a noun phrase alone, which one rule read.
 
 ## The reasoning library and the translator
 
@@ -436,6 +439,36 @@ space each side of an infix operator, the priorities kept by parentheses;
 a body inside a construct with several goals, and the goal of `findall`,
 `forall` and `aggregate_all` always, is in parentheses, or its `and` runs
 into the goals round it.
+**A noun phrase alone since 1.81.0** (`phrase(NP)`, the last clause of
+`ty_sentence//2`, so a clause reads as a clause first): NP whatever
+`ty_np_phrase//3` reads, in a subject's case (German) and with no role's
+marks; a phrase of `which` is a question's, and no question is a phrase.
+**A relative clause in a phrase alone has its marker** (`'$ty_phrase'`,
+asked by `ty_rel//4`): with none, 6 clauses of the 8 000 read as phrases
+(`The ice cream melted.` the ice that cream melted, `Rock music appeals
+to the young.`), and `The boy drinks water.` had a second reading, the
+boy that drinks (a plural noun) water (a verb); 3 true phrases are lost
+so (`A sudden recognition of the problem he faced.`).
+The IR walkers have a clause for it (`ty_ir_map/3`, `ty_ir_tw_/3`,
+`ty_mention/4` as the subject, so a pronoun of the next sentence stands
+for its noun, `ty_ir_meaning/2`). Level 2 says its noun and its
+adjectives of its term (`lg_phrase/2`, through `lg_arg/5`: an indefinite
+one its individual, `coat(a(heavy(coat)))`, a definite one the(T), a bare
+noun its term, a possessed of(T, P) with an indefinite possessor's own
+facts after); a name, a pronoun, a relative clause and another
+determiner have none (`phrase(Kind)`). The writer groups those facts
+(`lg_phrase_group/3` over `lg_term_facts/2`, the same facts made from the
+term alone) and says them as the phrase first; an individual's only where
+no later item names it, or `A person likes a dog.` split into `A person.`
+and the general sentence (the first cut asked only the next item).
+**Never compare a group with a pattern that holds a fresh variable**: the
+first cut's `G == [fact(pred(_, ...))|Fs]` was never true. cocolog has no
+`sub_term/2` (`lg_term_inds/3` walks the term). **The Cocolog reader takes
+no adverb on a copula's atom** (`lg_copula_atom/1`): an atom that is a
+constant's term too, its name an adjective and no verb, is the
+predicate's argument (`good(good(taste))` is `Good taste.`), where 1.80.0
+read the adverb good of `good(taste)`; the first cut asked only the
+name, and `quietly(slowly(sing(mary)))` lost its outer adverb.
 **The blank template is generated too** (1.54.0): `templates/template.pl`
 is what `typology_import(template)` writes, `typology_template(xx)`: every
 slot of typology.pl's header list (THE TEMPLATE) with the header's own

@@ -47,6 +47,7 @@ main :-
     individuals,
     relations,
     whens,
+    phrases,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -141,7 +142,7 @@ english_again :-
     must('English, Cocolog, English', R6, kept).
 
 %% 7. THE SECOND MEASURE. Sentences and the Cocolog each should give,
-%% written by hand (lexicon/logic.txt has 169): how many the translator
+%% written by hand (lexicon/logic.txt has 208): how many the translator
 %% gets right, and how many of the Cocolog texts come back as English that
 %% reads to them. tools/logic/measure.pl prints the whole file's.
 measured :-
@@ -291,6 +292,17 @@ whens :-
     must('what happened when Mary sang', As, [past(sleep(john)), past(bark(the(dog)))]).
 
 :- dynamic lesson_when/2.
+
+%% 18. A NOUN PHRASE ALONE is a sentence too (most of WordNet's example
+%% sentences are one): it says its noun and its adjectives of its term,
+%% an indefinite one's individual, and comes back as the phrase.
+phrases :-
+    logic_translate(english, cocolog, 'A heavy coat.', C1),
+    must('an individual', C1, 'coat(a(heavy(coat))).\nheavy(a(heavy(coat))).\n'),
+    logic_translate(english, cocolog, 'The portals of the cathedral.', C2),
+    must('a possessed', C2, 'portal(of(pl(portal), the(cathedral))).\n'),
+    logic_translate(cocolog, english, 'year(the(past(year))). past(the(past(year))).', E3),
+    must('back into English', E3, 'The past year.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
