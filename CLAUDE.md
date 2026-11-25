@@ -24,8 +24,8 @@ red) and lesson 01 pin the shape of the answer, deliberately not the number.
 The reasoning library translates ALL 8 000 sentences of `lexicon/prose.txt`
 from English into the IR, and ALL of that IR into Cocolog. Every step
 moves one of the two counts and reports both (`tools/logic/prose.pl`;
-STATUS.md keeps them): at 1.86.0, 3 644 into the IR, 3 508 of them into
-Cocolog (1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
+STATUS.md keeps them): at 1.87.0, 3 849 into the IR, 3 704 of them into
+Cocolog (1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
 count says so. **Measure what blocks the rest before choosing a step**:
 at 1.80.0 the words no table has looked like the gap, and 5 115 of the
 8 000 had none -- 2 130 of them a noun phrase alone, which one rule read.
@@ -581,6 +581,28 @@ sports.`). What bit: **a check of the words read must know at the start
 whether it reads**: after `ty_clause//2` a write has bound the words, and
 the check read them back inside the write, which then made no sentence of
 the 94 (`Rd`, taken before the clause).
+**A noun before a noun since 1.87.0** (`Black leather jackets.`, a noun
+compound) is an item `n(M)` of the noun phrase's adjective list, after
+its adjectives (`np(jacket, pl, indef, [black, n(leather)])`), and the
+template's row `ty_noun_modifier(L, P)` says where it stands: `before`
+(English), `compound` (German, one word, `Hundhaus`), `after(Words)`
+(Spanish and French `de`, Italian `di`, Persian `after([])`, the ezafe).
+The parse has TWO PASSES (`ty_nn_passes/3`): the words are read with the
+item off (`'$ty_nn'` off), and only where that finds no reading and two
+nouns stand in a row (`ty_nn_ahead/2`) again with it on -- a soft cut,
+`*->`, so a sentence 1.86.0 read reads as it did (one pass changed 40
+readings). A write has it on (`typology_write/4`, `ty_reads_as/5`). The
+modifier's word is no adjective's (`[n(black), n(leather)]` was read
+first), and `ty_infinitive_mark(L, Words)` keeps `to raise money` an
+infinitive, not an adposition phrase of a compound (`ty_pp_infinitive`).
+Level 2: the predicate `nn(Modifier, Thing)` and, where the noun is
+wrapped, the term `nn(M, X)` (`a(pl(black(nn(leather, jacket))))`). It
+costs English 0.24 % more inferences, German 0.50 %. **A switch that a
+soft cut tests is set with b_setval/2, not nb_setarg/3**: the first cut
+kept it in a term written with nb_setarg/3, and after a heap collection
+a read of a ground global's copy gave `<?>` (`memberchk(class, <?>)` in
+the logic case) -- a suspected cocolog engine fault, not yet reported
+upstream.
 **The blank template copies the row descriptions of typology.pl's head**:
 a changed description is `typology_import(template)` again, or the
 `reproduced` section is red.

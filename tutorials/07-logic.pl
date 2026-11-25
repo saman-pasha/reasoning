@@ -52,6 +52,7 @@ main :-
     noun_adpositions,
     prepositions,
     unsaid_subjects,
+    noun_modifiers,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -340,6 +341,15 @@ unsaid_subjects :-
     must('of someone', C1, 'past(well(take(someone, the(joke)))).\n'),
     logic_translate(cocolog, english, C1, E2),
     must('back into English', E2, 'Someone took the joke well.').
+
+%% 23. A NOUN BEFORE A NOUN is no atom of one argument (a glove
+%% compartment is no glove): nn(Modifier, Thing), in a constant's term and
+%% as a predicate of two.
+noun_modifiers :-
+    logic_translate(english, cocolog, 'Every leather jacket is expensive.', C1),
+    must('a rule', C1, 'expensive(A) :-\n    jacket(A),\n    nn(leather, A).\n'),
+    logic_translate(english, cocolog, 'The patient is on life support.', C2),
+    must('a constant', C2, 'on(the(patient), nn(life, support)).\n').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

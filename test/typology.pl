@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -102,7 +102,7 @@ refused :-
                     spanish-'La niña pequeño duerme.'-'an adjective that does not agree',
                     spanish-'Los niños ve al gato.'-'a verb that does not agree',
                     spanish-'El niño ve el perro.'-'an animate object with no personal a',
-                    english-'The dog black sleeps.'-'an English adjective after its noun',
+                    english-'The dog happy sleeps.'-'an English adjective after its noun',
                     english-'Cat the sleeps.'-'an English article after its noun',
                     persian-'پسر می‌بیند سگ را.'-'a Persian verb before its object',
                     italian-'Il ragazzo vede la cane.'-'an Italian article that does not agree' ]),
@@ -237,7 +237,7 @@ adjuncts :-
                   [ italian-'Il cane dorme in la casa.'-'in la, which is nella',
                     spanish-'El niño duerme de el libro.'-'de el, which is del',
                     persian-'پسر سگ را می‌بیند در خانه.'-'a Persian adjunct after the verb',
-                    english-'The boy today sees the dog.'-'an English adverb after the subject' ]),
+                    english-'The boy quickly sees the dog.'-'an English adverb after the subject' ]),
            ( yes_no(typology_read(L, T, _), R),
              atomic_list_concat([L, ': not read: ', Why], Label),
              check(Label, R, no) )).
@@ -393,7 +393,7 @@ repairs :-
                     spanish-'¿Qué el niño ve?'-'¿Qué ve el niño?'-[question(wh, clause, unchanged)],
                     english-'What the boy sees?'-'What does the boy see?'-[question(wh, clause, unchanged)],
                     english-'Sees the boy the dog?'-'Does the boy see the dog?'-[question_form([sees])],
-                    english-'The dog black sleeps.'-'The black dog sleeps.'-[order(np, [d, n, a])],
+                    english-'The dog happy sleeps.'-'The happy dog sleeps.'-[order(np, [d, n, a])],
                     english-'Does the boy see the dog.'-'Does the boy see the dog?'-[mood(question)],
                     italian-'Il ragazzo vede la cane.'-'Il ragazzo vede il cane.'-[agreement(article, la)],
                     persian-'پسر می‌بیند سگ را.'-'پسر سگ را می‌بیند.'-[order(clause, [s, v, o])] ]),
@@ -470,7 +470,7 @@ relatives :-
              check(Label, R, read) )),
     %% Refused: a marker of no words where the gap is the subject, a verb
     %% that does not agree with its head, a head the verb does not take.
-    forall(member(L-T, [ english-'The boy sees the dog sleeps.',
+    forall(member(L-T, [ english-'The boy sees the dog swims.',
                          spanish-'Los niños que ve al perro duermen.',
                          english-'The book that sees the dog sleeps.' ]),
            ( ( typology_read(L, T, _) -> R = read ; R = refused ),
@@ -1379,7 +1379,7 @@ tenses :-
              atomic_list_concat([L, ': read back: ', Want], Label2),
              check(Label2, R, read) )),
     forall(member(L-T-Why, [ english-'The boy has saw the dog.'-'the participle, not the past',
-                             english-'The boy will sees the dog.'-'will before the base',
+                             english-'He will sees the dog.'-'will before the base',
                              spanish-'El niño ha vio al perro.'-'haber before the participle',
                              italian-'Il ragazzo l\'ha visti.'-'the participle agrees with the clitic',
                              italian-'La ragazza ha andata.'-'andare takes essere',
@@ -2097,6 +2097,37 @@ unsaid_subjects :-
     ( R3 = clause(sleep, past, pos, pron(3, sg, K3), none), var(K3) -> V3 = dropped ; V3 = R3 ),
     check('Spanish reads its own dropped subject, of no kind', V3, dropped).
 
+%% 1.87.0: a noun before a noun. n(M) last in the IR's adjectives, read
+%% only where the words have no reading without one, so no reading of
+%% 1.86.0 changes; written by each template's ty_noun_modifier/2 row.
+noun_modifiers :-
+    section('a noun before a noun'),
+    forall(member(T-Want, [
+               'Black leather jackets.'-phrase(np(jacket, pl, indef, [black, n(leather)])),
+               'The patient is on life support.'-copula(present, pos, np(patient, sg, def, []), pp(on, np(support, sg, mass, [n(life)]))),
+               'The boy sees the leather jacket.'-clause(see, present, pos, np(boy, sg, def, []), np(jacket, sg, def, [n(leather)])),
+               'Plant fish.'-command,
+               'Grind designs into the glass bowl.'-command,
+               'When liberty becomes license dictatorship is near.'-sub(when, copula(present, pos, np(dictatorship, sg, mass, []), adj([near])), clause(become, present, pos, np(liberty, sg, mass, []), np(license, sg, mass, []))),
+               'He made a bid to gain attention.'-none ]),
+           ( ( typology_read(english, T, R) -> true ; R = none ),
+             ( compound(R), R =.. [clause, _, imperative|_] -> V = command ; V = R ),
+             atomic_list_concat(['English: ', T, ', the first reading'], Label),
+             check(Label, V, Want) )),
+    IR2 = phrase(np(house, sg, indef, [big, n(dog)])),
+    forall(member(L2-Want2, [english-'A big dog house.', spanish-'Una casa grande de perro.',
+                             italian-'Una casa grande di cane.', french-'Une grande maison de chien.',
+                             german-'Ein großes Hundhaus.', persian-'یک خانه‌ی بزرگ سگ.']),
+           ( ( typology_write(L2, IR2, W2) -> true ; W2 = none ),
+             atomic_list_concat([L2, ': ', Want2], Label2),
+             check(Label2, W2, Want2) )),
+    forall(member(L3-T3, [spanish-'Una casa grande de perro.', italian-'Una casa grande di cane.', french-'Une grande maison de chien.']),
+           ( ( typology_read(L3, T3, R3) -> true ; R3 = none ),
+             atomic_list_concat([L3, ' reads it back: ', T3], Label3),
+             check(Label3, R3, IR2) )),
+    forall(member(L4, [english, spanish, italian, persian, french, german]),
+           ( typology_check(L4, M4), atomic_list_concat([L4, ': its row is one the check takes'], Label4), check(Label4, M4, []) )).
+
 %% 1.64.0: the bare singular noun. np(M, sg, mass, []): a singular noun
 %% with no article, read after the other readings, written with none;
 %% Persian, whose definite noun has none either, writes it as def.
@@ -2120,8 +2151,9 @@ mass :-
              check(Label4, W4, Want4) )),
     ( typology_write(persian, clause(sleep, present, pos, np(dog, sg, mass, []), none), W5) -> true ; W5 = none ),
     check('Persian writes mass as def', W5, 'سگ می‌خوابد.'),
-    ( typology_read(english, 'The boy sees dog water.', _) -> R6 = read ; R6 = refused ),
-    check('two bare nouns are no noun phrase', R6, refused).
+    %% Since 1.87.0 two bare nouns are a noun before a noun.
+    ( typology_read(english, 'The boy sees dog water.', R6) -> true ; R6 = refused ),
+    check('two bare nouns are a noun compound', R6, clause(see, present, pos, np(boy, sg, def, []), np(water, sg, mass, [n(dog)]))).
 
 %% 1.63.0: the determiners and the quantifiers. A determiner is a
 %% definiteness of its own (np(dog, sg, every, [])), with its words in
@@ -2144,7 +2176,7 @@ quantifiers :-
                'No one sleeps.'-[clause(sleep, present, pos, qp(no, person), none)],
                'This is a dog.'-[copula(present, pos, qp(this, thing), np(dog, sg, indef, []))],
                'Everyone sleeps.'-[clause(sleep, present, pos, qp(every, person), none)],
-               'Every dogs sleep.'-[], 'All dog sleeps.'-[], 'Someone sleep.'-[] ]),
+               'Every dogs sleep.'-[], 'All dog swims.'-[], 'Someone sleep.'-[] ]),
            ( findall(R, typology_read(english, T, R), Rs),
              atomic_list_concat(['English: ', T], Label),
              check(Label, Rs, Want) )),
@@ -2176,8 +2208,9 @@ quantifiers :-
     ( typology_read(italian, 'Tutti gli amici dormono.', IR11) -> true ; IR11 = none ),
     check('Italian: an article of two words, its second word by its sound', IR11, IR4),
     %% `Cat', which is no verb: since 1.82.0 `Dog sleeps.' is the command to
-    %% dog (follow) the sleeps.
-    ( typology_read(english, 'Cat sleeps.', _) -> R12 = read ; R12 = refused ),
+    %% dog (follow) the sleeps; and `swims', no noun's word: since 1.87.0
+    %% `Cat sleeps.' is the noun compound cat sleeps.
+    ( typology_read(english, 'Cat swims.', _) -> R12 = read ; R12 = refused ),
     check('a determiner always has its words: no noun reads bare as every', R12, refused).
 
 %% 1.62.0: names. name(Name) where a noun phrase stands: a word written
@@ -2194,7 +2227,7 @@ names :-
                'John Smith sleeps.'-[clause(sleep, present, pos, name('John Smith'), none)],
                'The boy sleeps with Mary.'-[clause(sleep, present, pos, B, none, [pp(with, name('Mary'))])],
                'Who sees Mary?'-[question(clause(see, present, pos, wh(who), name('Mary')))],
-               'John sleep.'-[], 'The John sleeps.'-[],
+               'John swim.'-[], 'The John sleeps.'-[],
                'Intellectually influenced.'-[], 'Shortbread is a short crumbly cookie.'-[] ]),
            ( findall(R, typology_read(english, T, R), Rs),
              atomic_list_concat(['English: ', T], Label),
@@ -2331,7 +2364,7 @@ coordination :-
                'The boy sleeps but the girl sees the dog.'-[but([clause(sleep, present, pos, B, none), clause(see, present, pos, G, Dg)])],
                'The boy sleeps, but the girl sees the dog.'-[but([clause(sleep, present, pos, B, none), clause(see, present, pos, G, Dg)])],
                'The dog is small and the cat sleeps.'-[and([copula(present, pos, Dg, adj([small])), clause(sleep, present, pos, C, none)])],
-               'The boy and the girl sees the dog.'-[], 'A cat or a dog sleep.'-[], 'The boy sees the dog, and.'-[] ]),
+               'The boy and the girl sees the dog.'-[], 'A cat or a dog swim.'-[], 'The boy sees the dog, and.'-[] ]),
            ( findall(R, typology_read(english, T, R), Rs),
              atomic_list_concat(['English: ', T], Label),
              check(Label, Rs, Want) )),
@@ -2428,8 +2461,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 3644 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 3 644 sentences read at 1.86.0 are read', R1, yes),
+    ( K >= 3849 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 3 849 sentences read at 1.87.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 
@@ -2789,4 +2822,4 @@ blank_template :-
     include([X4]>>( X4 = bad(_) ), M4, Bad4),
     check('every row of code of templates/template.pl is a row the check takes', Bad4, []),
     length(Rows, NR4),
-    check('the rows of code of the choices', NR4, 88).
+    check('the rows of code of the choices', NR4, 90).

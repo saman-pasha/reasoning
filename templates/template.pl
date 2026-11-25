@@ -559,6 +559,27 @@ ty_adjunct(xx, after(s)).
 %%   (keep it where a noun phrase's adposition phrase stands after it, or delete it)
 ty_noun_adposition(xx, after).
 
+%%     ty_noun_modifier(L, Place)      a noun before a noun, n(M) in the
+%%                                     IR's adjectives (since 1.87.0): its
+%%                                     word before the noun (before:
+%%                                     `leather jackets'), joined to the
+%%                                     noun's (compound: `Lederjacken'), or
+%%                                     after the noun and its adjectives
+%%                                     with Words before it (after(Words):
+%%                                     `chaquetas negras de cuero')
+%%   (keep one, or none: a noun before a noun before it, joined to it, or after it with words)
+ty_noun_modifier(xx, before).
+ty_noun_modifier(xx, compound).
+%% ty_noun_modifier(xx, after([of])).
+
+%%     ty_infinitive_mark(L, Words)    the words that begin an infinitive
+%%                                     (since 1.87.0: `to'): no noun before
+%%                                     a noun begins a phrase with no
+%%                                     article after them (`to raise money'
+%%                                     is no money of raising)
+%%   (keep it with the words that begin an infinitive, or delete it)
+%% ty_infinitive_mark(xx, [to]).
+
 %%     ty_adjunct_front(L, v2)         a statement read with an adjunct first
 %%                                     and the verb before the subject
 %%                                     (German `Heute schläft der Hund.')

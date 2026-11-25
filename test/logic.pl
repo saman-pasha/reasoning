@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -263,11 +263,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 249),
-    ( R >= 235 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 235 right', VR, ok),
-    ( K >= 241 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 241 kept', VK, ok).
+    check('the second measure: its sentences', N, 259),
+    ( R >= 245 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 245 right', VR, ok),
+    ( K >= 251 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 251 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -770,6 +770,25 @@ unsaid_subjects :-
     logic_from_ir(IR2, U2),
     check('the subject no words say is the constant someone', U2,
           utterance(assertion, [fact(at(past, modified(adv(well), pred(take, [const(someone), const(the(joke))]))))])).
+
+noun_modifiers :-
+    section('a noun before a noun'),
+    forall(member(T-Want-Back, [
+               'The patient is on life support.'-'on(the(patient), nn(life, support)).\n'-'The patient is on life support.',
+               'A treasure hunter.'-'hunter(a(nn(treasure, hunter))).\nnn(treasure, a(nn(treasure, hunter))).\n'-'A treasure hunter.',
+               'The boy sees a leather jacket.'-'jacket(a(nn(leather, jacket))).\nnn(leather, a(nn(leather, jacket))).\nsee(the(boy), a(nn(leather, jacket))).\n'-'The boy sees a leather jacket.',
+               'Every leather jacket is expensive.'-'expensive(A) :-\n    jacket(A),\n    nn(leather, A).\n'-'Every leather jacket is expensive.',
+               'Who sees a leather jacket?'-'?- see(A, B), jacket(B), nn(leather, B).\n'-'Who sees a leather jacket?' ]),
+           ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
+             ( C \== none, logic_translate(cocolog, english, C, E) -> true ; E = none ),
+             one_line(['into Cocolog and back: ', T], Label),
+             check(Label, C-E, Want-Back) )),
+    once(typology_read(english, 'A black leather jacket.', IR2)),
+    logic_from_ir(IR2, U2),
+    check('a noun before a noun is no atom of one argument: nn/2', U2,
+          utterance(assertion, [fact(pred(jacket, [const(a(black(nn(leather, jacket))))])),
+                                fact(pred(black, [const(a(black(nn(leather, jacket))))])),
+                                fact(pred(nn, [const(leather), const(a(black(nn(leather, jacket))))]))])).
 
 %% Each clause of a Cocolog text asserted.
 assert_text(P) :-

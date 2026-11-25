@@ -278,3 +278,13 @@ Solved the problem perfectly.	past(perfectly(solve(someone, the(problem)))).
 Received a hefty bonus.	bonus(a(hefty(bonus))). hefty(a(hefty(bonus))). past(receive(someone, a(hefty(bonus)))).
 Has a dirty mouth.	mouth(a(dirty(mouth))). dirty(a(dirty(mouth))). have(someone, a(dirty(mouth))).
 Clinched a victory.	victory(a(victory)). past(clinch(someone, a(victory))).
+Black leather jackets.	jacket(a(pl(black(nn(leather, jacket))))). black(a(pl(black(nn(leather, jacket))))). nn(leather, a(pl(black(nn(leather, jacket))))).
+The early sets ran on storage batteries.	battery(a(pl(nn(storage, battery)))). nn(storage, a(pl(nn(storage, battery)))). past(on(run(the(pl(early(set)))), a(pl(nn(storage, battery))))).
+A local bus line.	line(a(local(nn(bus, line)))). local(a(local(nn(bus, line)))). nn(bus, a(local(nn(bus, line)))).
+A treasure hunter.	hunter(a(nn(treasure, hunter))). nn(treasure, a(nn(treasure, hunter))).
+The population explosion.	explosion(the(nn(population, explosion))). nn(population, the(nn(population, explosion))).
+The ice cream melted.	past(melt(the(nn(ice, cream)))).
+His father signed his report card.	past(sign(of(father, he), of(nn(report, card), he))).
+He menaced the bank manager with a stick.	stick(a(stick)). past(with(menace(he, the(nn(bank, manager))), a(stick))).
+The patient is on life support.	on(the(patient), nn(life, support)).
+Wedding cake.	cake(nn(wedding, cake)). nn(wedding, nn(wedding, cake)).

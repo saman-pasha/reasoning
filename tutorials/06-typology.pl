@@ -148,6 +148,7 @@ main :-
     noun_adpositions,
     prepositions,
     unsaid_subjects,
+    noun_modifiers,
     format("~ndone~n", []).
 
 
@@ -732,7 +733,7 @@ blank_template :-
     split_string(S, "\n", "", Lines),
     include([L]>>sub_string(L, 0, _, _, 'ty_'), Lines, Choices),
     length(Choices, N1),
-    must('the choices, each a row of code', N1, 88),
+    must('the choices, each a row of code', N1, 90),
     ( member(L2, Lines), sub_string(L2, 0, _, _, '%% ty_noun(klingon, Meaning, Gender') -> R2 = shape ; R2 = none ),
     must('a slot of words, its shape', R2, shape),
     ( member(L3, Lines), sub_string(L3, 0, _, _, '%%   e.g. ty_noun_in(english, dog,') -> R3 = example ; R3 = none ),
@@ -879,7 +880,8 @@ mass :-
     must('a bare noun', IR1, clause(like, present, pos, np(person, sg, indef, []), np(music, sg, mass, []))),
     typology_write(italian, clause(drink, present, pos, np(boy, sg, def, []), np(water, sg, mass, [])), W2),
     must('Italian', W2, 'Il ragazzo beve acqua.'),
-    ( typology_read(english, 'Cat sleeps.', _) -> R3 = read ; R3 = refused ),
+    %% (`swims', no noun's word: `Cat sleeps.' is a noun compound since 1.87.0)
+    ( typology_read(english, 'Cat swims.', _) -> R3 = read ; R3 = refused ),
     must('an animal is no bare noun', R3, refused).
 
 %% 51. THE SUBORDINATE CLAUSE (1.65.0, the translator's fourth step):
@@ -948,6 +950,17 @@ unsaid_subjects :-
     must('no subject', IR1, clause(take, past, pos, pron(3, sg, zero), np(joke, sg, def, []), [adv(well)])),
     typology_write(spanish, clause(sleep, past, pos, pron(3, sg, zero), none), W2),
     must('in Spanish', W2, 'Durmió.').
+
+%% 57. A NOUN BEFORE A NOUN (1.87.0): n(M), last among the IR's
+%% adjectives, written where the template's ty_noun_modifier/2 row says:
+%% before the noun, joined to it, or after it with words.
+noun_modifiers :-
+    typology_read(english, 'Black leather jackets.', IR1),
+    must('read', IR1, phrase(np(jacket, pl, indef, [black, n(leather)]))),
+    typology_write(spanish, IR1, W2),
+    must('in Spanish', W2, 'Chaquetas negras de pellejo.'),
+    typology_write(german, phrase(np(house, sg, indef, [big, n(dog)])), W3),
+    must('in German, one word', W3, 'Ein großes Hundhaus.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

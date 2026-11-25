@@ -266,6 +266,8 @@ ty_order(french, pp, [p, x]).
 ty_adjunct(french, end).
 %% A noun phrase's adposition phrase stands after it (since 1.83.0).
 ty_noun_adposition(french, after).
+%% A noun before a noun (since 1.87.0): `vestes noires de cuir'.
+ty_noun_modifier(french, after([de])).
 ty_adposition(french, in, [dans]).
 ty_adposition(french, on, [sur]).
 ty_adposition(french, with, [avec]).

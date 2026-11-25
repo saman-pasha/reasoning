@@ -587,13 +587,15 @@ lg_atoms_(_, T, verb(V, none), [pred(V, [T])]) :- !.
 lg_atoms_(_, T, verb(V, O), [pred(V, [T, To])|Os]) :-
     lg_arg(object, O, To, _, Os).
 
-%% The adjectives of a phrase, a joined pair's items each.
+%% The adjectives of a phrase, a joined pair's items each, and its nouns
+%% before its noun as they are (n(M), since 1.87.0).
 lg_adjectives(As, Ms) :-
     findall(M, ( member(A, As), lg_adjective(A, M) ), Ms).
 
 lg_adjective(A, M) :-
     (   atom(A) -> M = A
     ;   nonvar(A), A = and(Bs) -> member(M, Bs)
+    ;   nonvar(A), A = n(X), atom(X) -> M = A
     ;   lg_no(predicate(adj(A)))
     ).
 
@@ -651,7 +653,14 @@ lg_noun_conds(N, As, V, Cs) :-
 %% The atoms of meanings said of one term; never by findall/3, which would
 %% copy the term apart from the rule's other atoms.
 lg_preds_of([], _, []).
-lg_preds_of([M|Ms], T, [pred(M, [T])|Ps]) :- lg_preds_of(Ms, T, Ps).
+lg_preds_of([M|Ms], T, [P|Ps]) :- lg_pred_of(M, T, P), lg_preds_of(Ms, T, Ps).
+
+%% A NOUN BEFORE A NOUN (since 1.87.0) is no atom of one argument (a glove
+%% compartment is no glove): nn(Modifier, Thing), the noun-compound
+%% relation of the two, which says nothing more of how they are related
+%% (`a leather jacket' nn(leather, X), `life support' nn(life, X)).
+lg_pred_of(n(X), T, pred(nn, [const(X), T])) :- !.
+lg_pred_of(M, T, pred(M, [T])).
 
 %% A NOUN PHRASE'S TERM (since 1.76.0): its noun inside its adjectives,
 %% the first adjective the outermost, and pl round them for a plural:
@@ -665,6 +674,7 @@ lg_np_term(N, Num, As, T) :-
     foldl(lg_wrap1, Rs, N, T0),
     ( Num == pl -> T = pl(T0) ; T = T0 ).
 
+lg_wrap1(n(M), X, nn(M, X)) :- !.
 lg_wrap1(M, X, T) :- T =.. [M, X].
 
 %% A POSSESSOR (since 1.73.0): the possessed and its possessor are one
@@ -930,6 +940,8 @@ lg_const_term(T) :-
     T =.. [A, X], \+ memberchk(A, [the, a, of, pl]), lg_np_shape(X),
     catch(typology_meaning(english, adjective, A), _, fail).
 lg_const_term(T) :- ground(T), lg_pp_shape(T).
+%% A bare noun with a noun before it (since 1.87.0): nn(life, support).
+lg_const_term(nn(M, X)) :- ground(X), atom(M), lg_np_shape(X).
 
 lg_det_term(T) :-
     compound(T), ground(T),
@@ -952,6 +964,7 @@ lg_pp_shape(S) :-
 
 lg_np_shape(X) :- atom(X), !.
 lg_np_shape(pl(X)) :- !, lg_np_shape(X).
+lg_np_shape(nn(M, X)) :- !, atom(M), lg_np_shape(X).
 lg_np_shape(X) :- compound(X), X =.. [A, Y], atom(A), \+ memberchk(A, [the, a, of]), lg_np_shape(Y).
 
 %% A name read back: the prefix off where the rest is a reserved name of
@@ -1120,13 +1133,13 @@ lg_shape_facts(T, K, Fs) :- lg_np_facts(T, K, Fs).
 
 %% A term of an adposition phrase after a noun (since 1.83.0): Prep(T, X),
 %% two arguments, any name but of.
-lg_pp_term(S) :- compound(S), S =.. [P, _, _], atom(P), P \== of.
+lg_pp_term(S) :- compound(S), S =.. [P, _, _], atom(P), P \== of, P \== nn.
 
 lg_np_facts(T, _, _) :- var(T), !, fail.
 lg_np_facts(pl(T), K, Fs) :- !, lg_np_facts(T, K, Fs).
 lg_np_facts(T, K, [fact(pred(N, [K]))|AFs]) :-
     lg_np_parts(T, N, As),
-    findall(fact(pred(A, [K])), member(A, As), AFs).
+    findall(F, ( member(A, As), lg_pred_of(A, K, P), F = fact(P) ), AFs).
 
 %% The individuals a term holds, itself among them.
 lg_term_individuals(C, Cs) :- lg_term_inds(C, Cs, []).
@@ -1146,6 +1159,7 @@ lg_shape_head(S, _) :- var(S), !, fail.
 lg_shape_head(of(T, _), N) :- !, lg_shape_head(T, N).
 lg_shape_head(S, N) :- lg_pp_term(S), !, arg(1, S, T), lg_shape_head(T, N).
 lg_shape_head(pl(T), N) :- !, lg_shape_head(T, N).
+lg_shape_head(nn(_, T), N) :- !, lg_shape_head(T, N).
 lg_shape_head(N, N) :- atom(N), !.
 lg_shape_head(T, N) :- compound(T), T =.. [_, X], lg_shape_head(X, N).
 
@@ -1156,6 +1170,10 @@ lg_shape_head(T, N) :- compound(T), T =.. [_, X], lg_shape_head(X, N).
 lg_run([I|Is], Cs, [I|Run], Rest) :-
     lg_individual_fact(I, _, C), !,
     lg_run(Is, [C|Cs], Run, Rest).
+%% An individual's noun before its noun is one of its facts (since 1.87.0).
+lg_run([I|Is], Cs, [I|Run], Rest) :-
+    I = fact(pred(nn, [const(_), const(C)])), memberchk(C, Cs), !,
+    lg_run(Is, Cs, Run, Rest).
 lg_run([I|Is], Cs, [I|Run], Rest) :-
     I = fact(A), lg_core(A, pred(_, Args)), member(const(C), Args), memberchk(C, Cs), !,
     (   A = pred(_, [_]) -> lg_run(Is, Cs, Run, Rest) ; Run = [], Rest = Is ).
@@ -1217,22 +1235,33 @@ lg_group_ir(L, [rule(H, B)], IR) :- lg_body_list(B, Cs), lg_rule_ir(L, H, Cs, IR
 lg_ind_map(L, Init, Cs) :-
     findall(C-N, ( member(F, Init), lg_individual_fact(F, N, C) ), CNs),
     forall(member(fact(A), Init),
-           ( A = pred(P, [const(C)]), memberchk(C-_, CNs),
-             ( memberchk(C-P, CNs) -> true ; lg_class_ok(L, P/1, adjective) ) )),
+           (   A = pred(nn, [const(M), const(C)]), memberchk(C-_, CNs)
+           ->  lg_class_ok(L, M/1, noun)
+           ;   A = pred(P, [const(C)]), memberchk(C-_, CNs),
+               ( memberchk(C-P, CNs) -> true ; lg_class_ok(L, P/1, adjective) )
+           )),
     findall(C, member(C-_, CNs), Cs0),
     list_to_set(Cs0, Cs).
 
 %% The variables a question or a condition says of things it names by a
 %% noun (`Who sees a dog?': dog(var(2))) as their noun phrases.
 lg_var_map(L, Cs, Map) :-
-    forall(member(C, Cs), C = pred(_, [var(_)])),
+    forall(member(C, Cs), ( C = pred(_, [var(_)]) ; C = pred(nn, [const(_), var(_)]) )),
     findall(K, member(pred(_, [var(K)]), Cs), Ks0), sort(Ks0, Ks),
     maplist(lg_var_np(L, Cs), Ks, Map).
 
 lg_var_np(L, Cs, K, K-np(N, sg, indef, As)) :-
-    findall(P, member(pred(P, [var(K)]), Cs), [N|As]),
-    lg_class_ok(L, N/1, noun),
-    forall(member(A, As), lg_class_ok(L, A/1, adjective)).
+    findall(P, ( member(C, Cs), lg_cond_part(C, K, P) ), [N|As]),
+    atom(N), lg_class_ok(L, N/1, noun),
+    forall(member(A, As), lg_mod_ok(L, A)).
+
+%% A condition of var(K): its predicate's name, or n(M) of nn(M, var(K)).
+lg_cond_part(pred(nn, [const(M), var(K0)]), K, n(M)) :- K0 == K, !.
+lg_cond_part(pred(P, [var(K0)]), K, P) :- K0 == K.
+
+%% An adjective, or a noun before the noun (n(M)).
+lg_mod_ok(L, n(M)) :- !, atom(M), lg_class_ok(L, M/1, noun).
+lg_mod_ok(L, A) :- lg_class_ok(L, A/1, adjective).
 
 lg_body_list(and(Bs), Bs) :- !.
 lg_body_list(B, [B]).
@@ -1262,6 +1291,9 @@ lg_rule_ir(L, H, Cs, sub(if, Main, Cond)) :-
 lg_adjective_conds(_, [], []).
 lg_adjective_conds(L, [pred(A, [V])|Cs], [A|As]) :-
     V == var(1), lg_class_ok(L, A/1, adjective),
+    lg_adjective_conds(L, Cs, As).
+lg_adjective_conds(L, [pred(nn, [const(M), V])|Cs], [n(M)|As]) :-
+    V == var(1), atom(M), lg_class_ok(L, M/1, noun),
     lg_adjective_conds(L, Cs, As).
 
 %% An if clause of the subject's pronoun: its adjectives joined (`they are
@@ -1491,9 +1523,10 @@ lg_np_of_term(L, pl(T), N, pl, As) :- !, lg_np_of_term(L, T, N, sg, As).
 lg_np_of_term(L, T, N, sg, As) :-
     lg_np_parts(T, N, As),
     typology_meaning(L, noun, N),
-    forall(member(A, As), typology_meaning(L, adjective, A)).
+    forall(member(A, As), ( A = n(M) -> typology_meaning(L, noun, M) ; typology_meaning(L, adjective, A) )).
 
 lg_np_parts(N, N, []) :- atom(N), !.
+lg_np_parts(nn(M, X), N, [n(M)|As]) :- !, atom(M), lg_np_parts(X, N, As).
 lg_np_parts(T, N, [A|As]) :- compound(T), T =.. [A, X], atom(A), lg_np_parts(X, N, As).
 
 %% A name's constant written: each word with a capital (john_smith is

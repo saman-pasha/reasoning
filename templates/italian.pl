@@ -189,6 +189,8 @@ ty_order(italian, pp, [p, x]).
 ty_adjunct(italian, end).
 %% A noun phrase's adposition phrase stands after it (since 1.83.0).
 ty_noun_adposition(italian, after).
+%% A noun before a noun (since 1.87.0): `giacche nere di pelle'.
+ty_noun_modifier(italian, after([di])).
 ty_adposition(italian, in, [in]).
 ty_adposition(italian, on, [su]).
 ty_adposition(italian, with, [con]).

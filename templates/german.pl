@@ -375,6 +375,8 @@ ty_order(german, pp, [p, x]).
 ty_adjunct(german, end).
 %% A noun phrase's adposition phrase stands after it (since 1.83.0).
 ty_noun_adposition(german, after).
+%% A noun before a noun (since 1.87.0): one word, `schwarze Lederjacken'.
+ty_noun_modifier(german, compound).
 ty_adposition(german, in, [in]).
 ty_adposition(german, on, [auf]).
 ty_adposition(german, with, [mit]).

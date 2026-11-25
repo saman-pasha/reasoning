@@ -542,6 +542,10 @@ ty_order(english, pp, [p, x]).
 ty_adjunct(english, end).
 %% A noun phrase's adposition phrase stands after it (since 1.83.0).
 ty_noun_adposition(english, after).
+%% A noun before a noun (since 1.87.0): `black leather jackets'; none
+%% after `to', which begins an infinitive (`to raise money').
+ty_noun_modifier(english, before).
+ty_infinitive_mark(english, [to]).
 %% A clause may say no subject (since 1.86.0): `Took the joke well.'
 ty_subject_unsaid(english, 3).
 %% The verbs that may take no object: WordNet's, lexicon/vi.txt (since 1.86.0).

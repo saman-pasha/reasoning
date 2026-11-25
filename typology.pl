@@ -205,6 +205,19 @@
 %%     ty_noun_adposition(L, Place)    a noun phrase's adposition phrase
 %%                                     stands after it (Place after; since
 %%                                     1.83.0): `a dip in prices'
+%%     ty_noun_modifier(L, Place)      a noun before a noun, n(M) in the
+%%                                     IR's adjectives (since 1.87.0): its
+%%                                     word before the noun (before:
+%%                                     `leather jackets'), joined to the
+%%                                     noun's (compound: `Lederjacken'), or
+%%                                     after the noun and its adjectives
+%%                                     with Words before it (after(Words):
+%%                                     `chaquetas negras de cuero')
+%%     ty_infinitive_mark(L, Words)    the words that begin an infinitive
+%%                                     (since 1.87.0: `to'): no noun before
+%%                                     a noun begins a phrase with no
+%%                                     article after them (`to raise money'
+%%                                     is no money of raising)
 %%     ty_adposition(L, Meaning, Words)
 %%                                     a preposition or a postposition, by
 %%                                     the pp level's order
@@ -757,7 +770,7 @@
            ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
            ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
            ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-           ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
+           ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_noun_modifier/2, ty_infinitive_mark/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
            ty_answer_echo/3, ty_kind/2, ty_adjective_before/2, ty_pronoun_gender/2,
            ty_inversion/3, ty_wh_tonic/3,
            ty_tense_form/5, ty_participle/3, ty_participle_like/3,
@@ -783,7 +796,7 @@
                  ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
                  ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
                  ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-                 ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
+                 ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_noun_modifier/2, ty_infinitive_mark/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
                  ty_answer_echo/3, ty_adjective_before/2, ty_pronoun_gender/2,
                  ty_inversion/3, ty_wh_tonic/3,
                  ty_tense_form/5, ty_participle/3, ty_participle_like/3,
@@ -1082,7 +1095,7 @@ ty_template_group('forms chosen by sound, and contractions', [ty_ending, ty_lett
                                                                ty_linked, ty_contraction]).
 ty_template_group('roles, marks and cases', [ty_mark, ty_case, ty_case_after, ty_article_case,
                                              ty_noun_case, ty_declension, ty_adjective_ending]).
-ty_template_group('adjuncts and complements', [ty_adjunct, ty_noun_adposition, ty_adjunct_front, ty_object_front,
+ty_template_group('adjuncts and complements', [ty_adjunct, ty_noun_adposition, ty_noun_modifier, ty_infinitive_mark, ty_adjunct_front, ty_object_front,
                                                ty_bare_topic, ty_adposition_topic, ty_complement]).
 ty_template_group('questions and answers', [ty_question, ty_inversion, ty_question_form,
                                             ty_question_mark, ty_wh, ty_wh_word, ty_wh_tonic, ty_wh_case,
@@ -1110,6 +1123,8 @@ ty_template_choice(ty_possessive, Name, 'keep the ones it uses, with their words
 ty_template_choice(ty_adjunct, Name, 'keep one', Rows) :-
     ty_values(adjunct_place, Ps), findall(row(ty_adjunct(Name, P)), member(P, Ps), Rows).
 ty_template_choice(ty_noun_adposition, Name, 'keep it where a noun phrase\'s adposition phrase stands after it, or delete it', [row(ty_noun_adposition(Name, after))]).
+ty_template_choice(ty_noun_modifier, Name, 'keep one, or none: a noun before a noun before it, joined to it, or after it with words', [row(ty_noun_modifier(Name, before)), row(ty_noun_modifier(Name, compound)), text("ty_noun_modifier(~q, after([of])).", [Name])]).
+ty_template_choice(ty_infinitive_mark, Name, 'keep it with the words that begin an infinitive, or delete it', [text("ty_infinitive_mark(~q, [to]).", [Name])]).
 ty_template_choice(ty_question, Name, 'one row or more a kind and level; a particle needs its words', Rows) :-
     findall(R, ( ty_values(question_kind, Ks), member(K, Ks),
                  ty_values(question_level, Ls), member(Lv, Ls),
@@ -1631,6 +1646,12 @@ ty_missing(L, bad(ty_pro_drop(L, Ps))) :-
 ty_missing(L, bad(ty_subject_unsaid(L, P))) :-
     ty_subject_unsaid(L, P),
     P \== 3.
+ty_missing(L, bad(ty_noun_modifier(L, P))) :-
+    ty_noun_modifier(L, P),
+    \+ ( P == before ; P == compound ; nonvar(P), P = after(Ws), is_list(Ws) ).
+ty_missing(L, bad(ty_infinitive_mark(L, Ws))) :-
+    ty_infinitive_mark(L, Ws),
+    \+ ( is_list(Ws), Ws = [_|_] ).
 ty_missing(L, bad(ty_clitic(L, R))) :-
     ty_clitic(L, R),
     R \== o.
@@ -1862,7 +1883,31 @@ ty_read_bases(L, Surface, Topics, Mood, IR0, C) :-
     ty_adp_flag(L, Bases),
     ty_parse_reset(L),
     ty_mood(Mood, L, IR0, C, Goal),
-    phrase(Goal, Bases).
+    ty_nn_passes(L, Bases, Goal).
+
+%% A NOUN BEFORE A NOUN is read only where the words have no reading
+%% without one (since 1.87.0): a first pass with none ('$ty_nn' off), and
+%% a second with them where the first found nothing and two words in a row
+%% are nouns, the first a singular's. So no reading of 1.86.0 changes
+%% (`Plant fish.' stays a command, `When liberty becomes license
+%% dictatorship is near.' keeps its object).
+ty_nn_passes(L, Bases, Goal) :-
+    (   b_setval('$ty_nn', off), phrase(Goal, Bases)
+    *-> true
+    ;   ty_nn_ahead(L, Bases),
+        b_setval('$ty_nn', on), phrase(Goal, Bases)
+    ).
+
+ty_nn_ahead(L, Bases) :-
+    '$ty_nmod'(L, P),
+    (   P == before
+    ->  append(_, [W1, W2|_], Bases), atom(W1), atom(W2),
+        once(ty_noun(L, _, _, _, W1, _)),
+        once(( ty_noun(L, _, _, _, W2, _) ; ty_noun(L, _, _, _, _, W2) ))
+    ;   P = after(Ws)
+    ->  append(Ws, [W2|_], Tail), append(_, Tail, Bases), atom(W2),
+        once(ty_noun(L, _, _, _, W2, _))
+    ), !.
 
 %% The writer writes the very words read; in a repair, a fault.
 ty_sound_ok(L, Bases, Surface) :-
@@ -1895,6 +1940,7 @@ typology_write(L, IR, Text, Topics) :-
     ( IR0 = question(_) -> Mood = question ; Mood = statement ),
     ty_mood(Mood, L, IR0, _, Goal),
     b_setval('$ty_context', none),
+    b_setval('$ty_nn', on),
     ty_parse_reset(L),
     phrase(Goal, Tokens0),
     ty_reads_as(Mood, L, IR0, Tokens0, Topics), !,
@@ -1950,6 +1996,7 @@ ty_tense_as(L, Level, T, T1) :-
 ty_reads_as(Mood, L, IR0, Tokens, Topics) :-
     ty_new_context(Tokens, Topics, Context),
     \+ \+ ( b_setval('$ty_context', Context),
+           b_setval('$ty_nn', on),
            ty_parse_reset(L),
            b_setval('$ty_rel_open', f([])),
            ty_poss_flag(L, Tokens),
@@ -2468,6 +2515,14 @@ ty_contract(L, [W|Ws], [W|Rest]) :-
     ty_contract(L, Ws, Rest).
 
 ty_join([], []).
+%% A compound's word and the word after it, which loses its capital (since
+%% 1.87.0: German `Leder' `Jacken', `Lederjacken').
+ty_join([jc(F), N|Ws], Out) :- !,
+    ( N = jc(N0) -> Joined = jc(FN) ; N0 = N, Joined = FN ),
+    sub_atom(N0, 0, 1, _, C), sub_atom(N0, 1, _, 0, R), downcase_atom(C, C1),
+    atomic_list_concat([F, C1, R], FN),
+    ty_join([Joined|Ws], Out).
+ty_join([jc(F)], [F]) :- !.
 ty_join([j(F), N|Ws], [FN|Rest]) :- !,
     atom_concat(F, N, FN),
     ty_join(Ws, Rest).
@@ -3525,6 +3580,13 @@ ty_phrase_command(L, np_pp(H, _), S0, S) :-
     nonvar(S0), nonvar(H), H = np(_, sg, mass, _),
     '$ty_commands'(L),
     ty_command(L, _, S0, S).
+%% In the second pass, a phrase with no article that begins with a noun
+%% before a noun is a command where the words read as one (since 1.87.0:
+%% `Grind designs into the glass bowl.').
+ty_phrase_command(L, NP, S0, S) :-
+    nonvar(S0), nb_current('$ty_nn', on), ty_bare_nmod_head(NP),
+    '$ty_commands'(L),
+    ty_command(L, _, S0, S).
 
 ty_command(L, C) -->
     { '$ty_commands'(L),
@@ -4372,7 +4434,24 @@ ty_wh_adjunct(when).
 ty_pp(L, Prep, NP) -->
     { ty_order_at(L, pp, Order) },
     ty_pp_parts(Order, L, Prep, NP),
-    { ty_pp_topic_ok(L, Prep, NP) }.
+    { ty_pp_topic_ok(L, Prep, NP),
+      ( nb_current('$ty_nn', on) -> \+ ty_pp_infinitive(L, Prep, NP) ; true ) }.
+
+%% After the words of an infinitive (ty_infinitive_mark/2, since 1.87.0) a
+%% phrase with no article begins with no noun before a noun: `to raise
+%% money', `to change society' (asked where those are read or written).
+ty_pp_infinitive(L, Prep, NP) :-
+    ty_infinitive_mark(L, Ws), ty_adposition(L, Prep, Ws),
+    ty_bare_nmod_head(NP).
+
+%% A phrase with no article whose first item is a noun before its noun,
+%% its head's where an adposition phrase or a coordination holds it.
+ty_bare_nmod_head(NP) :-
+    nonvar(NP),
+    (   NP = np(_, N, D, [A|_]) -> nonvar(A), A = n(_), ( D == mass ; D == indef, N == pl )
+    ;   NP = np_pp(H, _) -> ty_bare_nmod_head(H)
+    ;   NP =.. [K, [H|_]], memberchk(K, [and, or]) -> ty_bare_nmod_head(H)
+    ).
 
 %% AN ADPOSITION BY ITS NOUN'S TOPIC (ty_adposition_topic/4: French `en' for
 %% `in' before a month, `en mars', where it is `dans' else): writing, the
@@ -6209,9 +6288,10 @@ ty_parse_reset(L) :-
 ty_feats_make(L) :-
     retractall('$ty_cased'(L)), retractall('$ty_declines'(L)),
     retractall('$ty_kein_lang'(L)), retractall('$ty_sub_used'(L)), retractall('$ty_commands'(L)),
-    retractall('$ty_noun_pp'(L)), retractall('$ty_unsaid'(L)),
+    retractall('$ty_noun_pp'(L)), retractall('$ty_unsaid'(L)), retractall('$ty_nmod'(L, _)),
     ( ty_noun_adposition(L, after) -> assertz('$ty_noun_pp'(L)) ; true ),
     ( ty_subject_unsaid(L, 3) -> assertz('$ty_unsaid'(L)) ; true ),
+    ( ty_noun_modifier(L, NmP) -> assertz('$ty_nmod'(L, NmP)) ; true ),
     ( once(ty_tense_form(L, imperative, _, _, _)) -> assertz('$ty_commands'(L)) ; true ),
     ( once(ty_case(L, _, _)) -> assertz('$ty_cased'(L)) ; true ),
     ( once(ty_adjective_ending(L, _, _, _, _, _)) -> assertz('$ty_declines'(L)) ; true ),
@@ -6291,6 +6371,7 @@ ty_feats_make(L) :-
 :- dynamic('$ty_commands'/1).
 :- dynamic('$ty_noun_pp'/1).
 :- dynamic('$ty_unsaid'/1).
+:- dynamic('$ty_nmod'/2).
 :- dynamic('$ty_lexw'/2).
 :- dynamic('$ty_lexw_read'/1).
 :- dynamic('$ty_art_words'/4).
@@ -6637,6 +6718,42 @@ ty_adjs(L, [C|As], Rows, End, D) -->
     { b_setval('$ty_adj_items', no) },
     ty_adjs(L, As, Rows2, End, D),
     { append(Rows1, Rows2, Rows) }.
+%% A NOUN BEFORE A NOUN (since 1.87.0): n(X), an item of the IR's list of
+%% adjectives after its adjectives, the noun's singular word written where
+%% ty_noun_modifier/2 says: English `black leather jackets' [black,
+%% n(leather)], Spanish `chaquetas negras de cuero', German `schwarze
+%% Lederjacken'. No agreement row: the item agrees with nothing. Read only
+%% in a parse's second pass (ty_nn_passes/3), written always ('$ty_nn' on:
+%% typology_write/4, ty_reads_as/5); a plain clause, so a first pass asks
+%% the pass and nothing more.
+ty_adjs(L, [n(X)|As], Rows, End, D, S0, S) :-
+    nb_current('$ty_nn', on),
+    '$ty_nmod'(L, P),
+    ty_nmod_item(P, L, X, As, End, S0, S1),
+    ty_nmods(L, As, Rows, End, D, S1, S).
+
+%% After a noun before a noun, only another.
+ty_nmods(_, [], [], _, _) --> [].
+ty_nmods(L, [n(M)|As], Rows, End, D) --> ty_adjs(L, [n(M)|As], Rows, End, D).
+
+%% before: the word, no adjective's word (an adjective reads it: `black
+%% leather jackets' is [black, n(leather)], never [n(black), n(leather)]);
+%% compound: the word joined to the noun after it, which loses its capital
+%% (jc(Word), ty_join/2: `Leder' and `Jacken' `Lederjacken'); after(Words):
+%% Words and the word, linked where an item follows or as the phrase's end
+%% asks (the Persian ezafe).
+ty_nmod_item(before, L, X, _, _) -->
+    [W], { ty_noun_form(L, X, _, _, sg, W), \+ ty_adjective(L, _, _, _, W) }, ty_meant(L, noun(X), [W]).
+ty_nmod_item(compound, L, X, _, _) -->
+    [jc(W)], { ty_noun_form(L, X, _, _, sg, W) }, ty_meant(L, noun(X), [W]).
+ty_nmod_item(after(Ws), L, X, As, End) -->
+    ty_tokens(Ws),
+    [W],
+    { (   As = [_|_], C2 = a, Linked = yes
+      ;   As = [], ty_linked_end([], End, C2, Linked)
+      ),
+      ty_linked_word(L, n, C2, Linked, W0, W, ty_noun_form(L, X, _, _, sg, W0)) },
+    ty_meant(L, noun(X), [W]).
 
 %% An adjective's word: its row's; or, declined, the row's word (the
 %% predicate's, `klein') and an ending of the declension and the phrase's
@@ -6648,7 +6765,8 @@ ty_adjective_in(decl(D, GN), L, A, G, N, W) :-
     ty_case_now(L, C0),
     ( C0 == any -> true ; C = C0 ),
     (   nonvar(W)
-    ->  '$ty_ending'(L, D, C, G, N, E),
+    ->  atom(W),
+        '$ty_ending'(L, D, C, G, N, E),
         atom_concat(S, E, W), ty_adjective(L, A, _, _, S)
     ;   ty_adjective(L, A, _, _, S),
         '$ty_ending'(L, D, C, G, N, E),
