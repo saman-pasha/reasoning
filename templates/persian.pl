@@ -176,6 +176,9 @@ ty_noun_modifier(persian, after([])).
 %% An adjective's adposition phrase before it (since 1.88.0), as the
 %% predicate before the copula.
 ty_adjective_complement(persian, before).
+%% An adverb that grades an adjective stands before it (since 1.90.0):
+%% `خیلی بزرگ'; `very' is one.
+ty_adjective_adverb(persian, before).
 ty_adposition(persian, of, ['از']).
 ty_adjunct(persian, before(v)).
 ty_adposition(persian, in, ['در']).
@@ -187,6 +190,7 @@ ty_adverb(persian, quickly, 'تند').
 ty_adverb(persian, slowly, 'آهسته').
 ty_adverb(persian, today, 'امروز').
 ty_adverb(persian, here, 'اینجا').
+ty_adverb(persian, very, 'خیلی').
 
 %% Names (since 1.62.0): the script has no capitals, so a name is a row's.
 ty_name(persian, 'Ali', 'علی', m, person).

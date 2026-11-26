@@ -549,6 +549,9 @@ ty_infinitive_mark(english, [to]).
 %% An adjective's adposition phrase stands after it (since 1.88.0): `The
 %% movie is unsuitable for children.'
 ty_adjective_complement(english, after).
+%% An adverb that grades an adjective stands before it (since 1.90.0):
+%% `A perfectly natural explanation.'; `very' is one.
+ty_adjective_adverb(english, before).
 %% A clause may say no subject (since 1.86.0): `Took the joke well.'
 ty_subject_unsaid(english, 3).
 %% The verbs that may take no object: WordNet's, lexicon/vi.txt (since 1.86.0).
@@ -608,6 +611,7 @@ ty_adverb(english, quickly, quickly).
 ty_adverb(english, slowly, slowly).
 ty_adverb(english, today, today).
 ty_adverb(english, here, here).
+ty_adverb(english, very, very).
 
 %% Questions: the verb's first word before the subject, a positive verb in
 %% its question form (`does' before the base: `Does the boy see the dog?',

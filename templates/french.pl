@@ -271,6 +271,9 @@ ty_noun_modifier(french, after([de])).
 %% An adjective's adposition phrase after it (since 1.88.0): `Le chien est
 %% grand dans la maison.'
 ty_adjective_complement(french, after).
+%% An adverb that grades an adjective stands before it (since 1.90.0):
+%% `très grand'; `very' is one.
+ty_adjective_adverb(french, before).
 ty_adposition(french, of, [de]).
 ty_adposition(french, in, [dans]).
 ty_adposition(french, on, [sur]).
@@ -281,6 +284,7 @@ ty_adverb(french, quickly, vite).
 ty_adverb(french, slowly, lentement).
 ty_adverb(french, today, 'aujourd\'hui').
 ty_adverb(french, here, ici).
+ty_adverb(french, very, 'très').
 
 %% Questions: a yes or no question with `est-ce que' first, or in the
 %% statement's order; a question word at the front, the verb before a

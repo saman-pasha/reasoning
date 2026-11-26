@@ -190,6 +190,9 @@ ty_noun_modifier(spanish, after([de])).
 %% An adjective's adposition phrase after it (since 1.88.0): `Él era
 %% consciente del peligro.'
 ty_adjective_complement(spanish, after).
+%% An adverb that grades an adjective stands before it (since 1.90.0):
+%% `muy grande'; `very' is one.
+ty_adjective_adverb(spanish, before).
 ty_adposition(spanish, of, [de]).
 ty_adposition(spanish, in, [en]).
 ty_adposition(spanish, on, [sobre]).
@@ -201,6 +204,7 @@ ty_adverb(spanish, quickly, rápidamente).
 ty_adverb(spanish, slowly, lentamente).
 ty_adverb(spanish, today, hoy).
 ty_adverb(spanish, here, aquí).
+ty_adverb(spanish, very, muy).
 
 %% A word with several meanings in one place: `a' after a verb and before an
 %% animate noun is the object's mark (`ve al perro'); anywhere else it is

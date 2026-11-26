@@ -298,3 +298,13 @@ The room was abuzz over the latest scandal.	past(over(abuzz(the(room)), the(late
 He is alone in the field of microbiology.	in(alone(he), of(field, microbiology)).
 He was late for chapel.	past(for(late(he), chapel)).
 The theater is dark on Mondays.	on(dark(the(theater)), mondays).
+The product is commercially available.	commercially(available(the(product))).
+A highly maneuverable ship.	ship(a(highly(maneuverable(ship)))). highly(maneuverable(a(highly(maneuverable(ship))))).
+His intentions are entirely honorable.	entirely(honorable(of(pl(intention), he))).
+The storyline is wildly unrealistic.	wildly(unrealistic(the(storyline))).
+The large shoes were very loose.	past(very(loose(the(pl(large(shoe)))))).
+His function was purely consultative.	past(purely(consultative(of(function, he)))).
+The explanation was very simple.	past(very(simple(the(explanation)))).
+He is permanently disabled.	permanently(disabled(he)).
+A dimly lit room.	room(a(dimly(lit(room)))). dimly(lit(a(dimly(lit(room))))).
+They envied her naturally curly hair.	past(envy(they, of(naturally(curly(hair)), she))).

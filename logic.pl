@@ -722,11 +722,14 @@ lg_ap_split([A|As], Ps, Aps) :-
     ).
 
 lg_ap_atoms([], _, [], []).
-lg_ap_atoms([ap(A, PP)|Xs], T, [modified(pp(P, To), pred(A, [T]))|As], Os) :-
-    ( atom(A), nonvar(PP), PP = pp(P, NP), atom(P) -> true ; lg_no(predicate(adj(ap(A, PP)))) ),
+lg_ap_atoms([ap(A, PP)|Xs], T, [modified(pp(P, To), At)|As], Os) :-
+    ( lg_ap_adj(A, T, At), nonvar(PP), PP = pp(P, NP), atom(P) -> true ; lg_no(predicate(adj(ap(A, PP)))) ),
     lg_arg(adjunct, NP, To, _, Os1),
     lg_ap_atoms(Xs, T, As, Os2),
     append(Os1, Os2, Os).
+
+lg_ap_adj(A, T, pred(A, [T])) :- atom(A), !.
+lg_ap_adj(adv(M, A), T, modified(adv(M), pred(A, [T]))) :- atom(M), atom(A).
 
 %% The adjectives of a phrase, a joined pair's items each, and its nouns
 %% before its noun as they are (n(M), since 1.87.0).
@@ -737,6 +740,7 @@ lg_adjective(A, M) :-
     (   atom(A) -> M = A
     ;   nonvar(A), A = and(Bs) -> member(M, Bs)
     ;   nonvar(A), A = n(X), atom(X) -> M = A
+    ;   nonvar(A), A = adv(Ad, B), atom(Ad), atom(B) -> M = A
     ;   lg_no(predicate(adj(A)))
     ).
 
@@ -801,6 +805,11 @@ lg_preds_of([M|Ms], T, [P|Ps]) :- lg_pred_of(M, T, P), lg_preds_of(Ms, T, Ps).
 %% relation of the two, which says nothing more of how they are related
 %% (`a leather jacket' nn(leather, X), `life support' nn(life, X)).
 lg_pred_of(n(X), T, pred(nn, [const(X), T])) :- !.
+%% AN ADVERB THAT GRADES AN ADJECTIVE (since 1.90.0) is round the
+%% adjective's atom, as a clause's adverb is round its verb's: `She was
+%% incurably optimistic.' is past(incurably(optimistic(she))), `a perfectly
+%% natural explanation' says perfectly(natural(T)).
+lg_pred_of(adv(M, A), T, modified(adv(M), pred(A, [T]))) :- !.
 lg_pred_of(M, T, pred(M, [T])).
 
 %% A NOUN PHRASE'S TERM (since 1.76.0): its noun inside its adjectives,
@@ -816,6 +825,9 @@ lg_np_term(N, Num, As, T) :-
     ( Num == pl -> T = pl(T0) ; T = T0 ).
 
 lg_wrap1(n(M), X, nn(M, X)) :- !.
+lg_wrap1(adv(M, A), X, T) :- !,
+    ( lg_grade_adverb(M) -> true ; lg_no(adjective(adv(M, A))) ),
+    T0 =.. [A, X], T =.. [M, T0].
 lg_wrap1(M, X, T) :- T =.. [M, X].
 
 %% A POSSESSOR (since 1.73.0): the possessed and its possessor are one
@@ -1045,7 +1057,7 @@ lg_in_atom(A, modified(pp(P, T), At)) :-
 lg_in_atom(A, modified(adv(M), At)) :-
     compound(A), A =.. [N, Inner], lg_adjunct_inner(Inner),
     lg_code_meaning(N, 1, M), typology_meaning(english, adverb, M),
-    \+ lg_copula_atom(Inner), !,
+    ( \+ lg_copula_atom(Inner) -> true ; lg_grade_adverb(M) ), !,
     lg_in_atom(Inner, At).
 lg_in_atom(A, pred(N, As1)) :-
     A =.. [N1|As], length(As, Ar),
@@ -1081,6 +1093,9 @@ lg_const_term(T) :-
     T =.. [A, X], \+ memberchk(A, [the, a, of, pl]), lg_np_shape(X),
     catch(typology_meaning(english, adjective, A), _, fail).
 lg_const_term(T) :- ground(T), lg_pp_shape(T).
+%% A bare noun with a graded adjective (since 1.90.0): very(hot(water)).
+lg_const_term(T) :-
+    compound(T), ground(T), T =.. [M, Y], lg_grade_adverb(M), lg_const_term(Y).
 %% A bare noun with a noun before it (since 1.87.0): nn(life, support).
 lg_const_term(nn(M, X)) :- ground(X), atom(M), lg_np_shape(X).
 
@@ -1097,6 +1112,8 @@ lg_det_term(T) :-
 %% adjective's `of' phrase (since 1.88.0: `He was aware of the danger.'),
 %% where of(big(dog), he) is his big dog. A name that is a noun too (john,
 %% a toilet's) is read as the possessed.
+lg_ap_atom(X) :-
+    compound(X), X =.. [M, Y], lg_grade_adverb(M), !, lg_ap_atom(Y).
 lg_ap_atom(X) :-
     compound(X), X =.. [F, Y], atom(Y),
     catch(typology_meaning(english, adjective, F), _, fail),
@@ -1327,6 +1344,10 @@ lg_run([I|Is], Cs, [I|Run], Rest) :-
 lg_run([I|Is], Cs, [I|Run], Rest) :-
     I = fact(pred(nn, [const(_), const(C)])), memberchk(C, Cs), !,
     lg_run(Is, Cs, Run, Rest).
+%% So is a graded adjective's (since 1.90.0).
+lg_run([I|Is], Cs, [I|Run], Rest) :-
+    I = fact(modified(adv(_), pred(_, [const(C)]))), memberchk(C, Cs), !,
+    lg_run(Is, Cs, Run, Rest).
 lg_run([I|Is], Cs, [I|Run], Rest) :-
     I = fact(A), lg_core(A, pred(_, Args)), member(const(C), Args), memberchk(C, Cs), !,
     (   A = pred(_, [_]) -> lg_run(Is, Cs, Run, Rest) ; Run = [], Rest = Is ).
@@ -1404,6 +1425,8 @@ lg_ind_map(L, Init, Cs) :-
     forall(member(fact(A), Init),
            (   A = pred(nn, [const(M), const(C)]), memberchk(C-_, CNs)
            ->  lg_class_ok(L, M/1, noun)
+           ;   A = modified(adv(M), pred(P, [const(C)])), memberchk(C-_, CNs)
+           ->  lg_grade_adverb(M), lg_class_ok(L, P/1, adjective)
            ;   A = pred(P, [const(C)]), memberchk(C-_, CNs),
                ( memberchk(C-P, CNs) -> true ; lg_class_ok(L, P/1, adjective) )
            )),
@@ -1413,7 +1436,7 @@ lg_ind_map(L, Init, Cs) :-
 %% The variables a question or a condition says of things it names by a
 %% noun (`Who sees a dog?': dog(var(2))) as their noun phrases.
 lg_var_map(L, Cs, Map) :-
-    forall(member(C, Cs), ( C = pred(_, [var(_)]) ; C = pred(nn, [const(_), var(_)]) )),
+    forall(member(C, Cs), ( C = pred(_, [var(_)]) ; C = pred(nn, [const(_), var(_)]) ; C = modified(adv(_), pred(_, [var(_)])) )),
     findall(K, member(pred(_, [var(K)]), Cs), Ks0), sort(Ks0, Ks),
     maplist(lg_var_np(L, Cs), Ks, Map).
 
@@ -1425,9 +1448,11 @@ lg_var_np(L, Cs, K, K-np(N, sg, indef, As)) :-
 %% A condition of var(K): its predicate's name, or n(M) of nn(M, var(K)).
 lg_cond_part(pred(nn, [const(M), var(K0)]), K, n(M)) :- K0 == K, !.
 lg_cond_part(pred(P, [var(K0)]), K, P) :- K0 == K.
+lg_cond_part(modified(adv(M), pred(A, [var(K0)])), K, adv(M, A)) :- K0 == K.
 
 %% An adjective, or a noun before the noun (n(M)).
 lg_mod_ok(L, n(M)) :- !, atom(M), lg_class_ok(L, M/1, noun).
+lg_mod_ok(L, adv(M, A)) :- !, lg_grade_adverb(M), lg_class_ok(L, A/1, adjective).
 lg_mod_ok(L, A) :- lg_class_ok(L, A/1, adjective).
 
 lg_body_list(and(Bs), Bs) :- !.
@@ -1461,6 +1486,9 @@ lg_adjective_conds(L, [pred(A, [V])|Cs], [A|As]) :-
     lg_adjective_conds(L, Cs, As).
 lg_adjective_conds(L, [pred(nn, [const(M), V])|Cs], [n(M)|As]) :-
     V == var(1), atom(M), lg_class_ok(L, M/1, noun),
+    lg_adjective_conds(L, Cs, As).
+lg_adjective_conds(L, [modified(adv(M), pred(A, [V]))|Cs], [adv(M, A)|As]) :-
+    V == var(1), lg_grade_adverb(M), lg_class_ok(L, A/1, adjective),
     lg_adjective_conds(L, Cs, As).
 
 %% An if clause of the subject's pronoun: its adjectives joined (`they are
@@ -1553,7 +1581,9 @@ lg_adjunct_ir(_, _, adv(M), adv(M)).
 %% adjective's atom inside an adposition phrase is the adjective's phrase
 %% (since 1.88.0: `The movie is unsuitable for children.').
 lg_ir_adjunct(clause(V, T, P, S, O), J, clause(V, T, P, S, O, [J])).
-lg_ir_adjunct(copula(T, P, S, adj([A])), pp(Pr, NP), copula(T, P, S, adj([ap(A, pp(Pr, NP))]))) :- atom(A).
+lg_ir_adjunct(copula(T, P, S, adj([A])), pp(Pr, NP), copula(T, P, S, adj([ap(A, pp(Pr, NP))]))) :-
+    ( atom(A) -> true ; A = adv(_, A1), atom(A1) ).
+lg_ir_adjunct(copula(T, P, S, adj([A])), adv(M), copula(T, P, S, adj([adv(M, A)]))) :- atom(A), lg_grade_adverb(M).
 lg_ir_adjunct(clause(V, T, P, S, O, Js), J, clause(V, T, P, S, O, Js1)) :- lg_add_adjunct(Js, J, Js1).
 
 %% Two adverbs side by side are joined (`slowly and quietly').
@@ -1706,10 +1736,26 @@ lg_np_of_term(L, pl(T), N, pl, As) :- !, lg_np_of_term(L, T, N, sg, As).
 lg_np_of_term(L, T, N, sg, As) :-
     lg_np_parts(T, N, As),
     typology_meaning(L, noun, N),
-    forall(member(A, As), ( A = n(M) -> typology_meaning(L, noun, M) ; typology_meaning(L, adjective, A) )).
+    forall(member(A, As), lg_np_item_ok(L, A)).
+
+lg_np_item_ok(L, n(M)) :- !, typology_meaning(L, noun, M).
+lg_np_item_ok(L, adv(M, A)) :- !, typology_meaning(L, adverb, M), typology_meaning(L, adjective, A).
+lg_np_item_ok(L, A) :- typology_meaning(L, adjective, A).
+
+%% An adverb that grades an adjective in a term: an adverb's word that is
+%% no adjective's (`incurably', `very'); one that is (`pretty') is the
+%% adjective level 1 reads first.
+lg_grade_adverb(M) :-
+    atom(M),
+    catch(typology_meaning(english, adverb, M), _, fail),
+    \+ catch(typology_meaning(english, adjective, M), _, fail).
 
 lg_np_parts(N, N, []) :- atom(N), !.
 lg_np_parts(nn(M, X), N, [n(M)|As]) :- !, atom(M), lg_np_parts(X, N, As).
+lg_np_parts(T, N, [adv(M, A)|As]) :-
+    compound(T), T =.. [M, Y], atom(M), compound(Y), Y =.. [A, X], atom(A),
+    lg_grade_adverb(M), !,
+    lg_np_parts(X, N, As).
 lg_np_parts(T, N, [A|As]) :- compound(T), T =.. [A, X], atom(A), lg_np_parts(X, N, As).
 
 %% A name's constant written: each word with a capital (john_smith is

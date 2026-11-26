@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -263,11 +263,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 269),
-    ( R >= 255 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 255 right', VR, ok),
-    ( K >= 261 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 261 kept', VK, ok).
+    check('the second measure: its sentences', N, 279),
+    ( R >= 265 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 265 right', VR, ok),
+    ( K >= 271 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 271 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -845,6 +845,23 @@ meanings_apart :-
     once(logic_readings(english, 'Something is mortal.', [U4|_])),
     ( U3 == U4 -> R5 = same ; R5 = apart ),
     check('every human and something: two meanings', R5, apart).
+
+%% 1.90.0: an adverb that grades an adjective is round the adjective's atom,
+%% and in a term round the adjective's wrap; an adverb that is an
+%% adjective too (good) is the old reading's adjective.
+graded_adjectives :-
+    section('an adverb that grades an adjective'),
+    forall(member(T-Want-Back, [
+               'She was incurably optimistic.'-'past(incurably(optimistic(she))).\n'-'She was incurably optimistic.',
+               'A perfectly natural explanation.'-'explanation(a(perfectly(natural(explanation)))).\nperfectly(natural(a(perfectly(natural(explanation))))).\n'-'A perfectly natural explanation.',
+               'The boy sees a very big dog.'-'dog(a(very(big(dog)))).\nvery(big(a(very(big(dog))))).\nsee(the(boy), a(very(big(dog)))).\n'-'The boy sees a very big dog.',
+               'He was blissfully unaware of the danger.'-'past(of(blissfully(unaware(he)), the(danger))).\n'-'He was blissfully unaware of the danger.',
+               'Who sees a very big dog?'-'?- see(A, B), dog(B), very(big(B)).\n'-'Who sees a very big dog?',
+               'Good taste.'-'taste(good(taste)).\ngood(good(taste)).\n'-'Good taste.' ]),
+           ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
+             ( C \== none, logic_translate(cocolog, english, C, E) -> true ; E = none ),
+             one_line(['into Cocolog and back: ', T], Label),
+             check(Label, C-E, Want-Back) )).
 
 %% Each clause of a Cocolog text asserted.
 assert_text(P) :-

@@ -55,6 +55,7 @@ main :-
     noun_modifiers,
     adjective_phrases,
     text_individuals,
+    graded_adjectives,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -369,6 +370,14 @@ text_individuals :-
     must('two things', C1, 'red(something).\nblue(something_2).\n'),
     logic_translate(english, cocolog, 'A dog barks. It sleeps.', C2),
     must('every dog, twice', C2, 'bark(A) :-\n    dog(A).\nis_sleep(A) :-\n    dog(A).\n').
+
+%% 26. AN ADVERB THAT GRADES AN ADJECTIVE is round the adjective's atom, as
+%% a clause's adverb is round its verb's.
+graded_adjectives :-
+    logic_translate(english, cocolog, 'She was incurably optimistic.', C1),
+    must('in the past', C1, 'past(incurably(optimistic(she))).\n'),
+    logic_translate(cocolog, english, C1, E2),
+    must('back into English', E2, 'She was incurably optimistic.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

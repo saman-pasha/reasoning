@@ -193,6 +193,9 @@ ty_noun_adposition(italian, after).
 ty_noun_modifier(italian, after([di])).
 %% An adjective's adposition phrase after it (since 1.88.0).
 ty_adjective_complement(italian, after).
+%% An adverb that grades an adjective stands before it (since 1.90.0):
+%% `molto grande'; `very' is one.
+ty_adjective_adverb(italian, before).
 ty_adposition(italian, of, [di]).
 ty_adposition(italian, in, [in]).
 ty_adposition(italian, on, [su]).
@@ -231,6 +234,7 @@ ty_adverb(italian, quickly, rapidamente).
 ty_adverb(italian, slowly, lentamente).
 ty_adverb(italian, today, oggi).
 ty_adverb(italian, here, qui).
+ty_adverb(italian, very, molto).
 
 %% Questions: a yes or no question in the statement's order; a question
 %% word at the front, the verb before the subject after it (`Cosa vede il

@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2166,6 +2166,41 @@ adjective_phrases :-
     forall(member(L6, [english, spanish, italian, persian, french, german]),
            ( typology_check(L6, M6), atomic_list_concat([L6, ': its row is one the check takes'], Label6), check(Label6, M6, []) )).
 
+%% 1.90.0: an adverb that grades an adjective, adv(M, A), an item of a noun
+%% phrase's or a copula's predicate's adjectives, the adverb where
+%% ty_adjective_adverb/2 puts it; its word no adjective's and no verb's, so
+%% `small red' stays two adjectives.
+graded_adjectives :-
+    section('an adverb that grades an adjective'),
+    forall(member(T-Want, [
+               'She was incurably optimistic.'-copula(past, pos, pron(3, sg, f), adj([adv(incurably, optimistic)])),
+               'A perfectly natural explanation.'-phrase(np(explanation, sg, indef, [adv(perfectly, natural)])),
+               'The very big dog sleeps.'-clause(sleep, present, pos, np(dog, sg, def, [adv(very, big)]), none),
+               'The small red dog sleeps.'-clause(sleep, present, pos, np(dog, sg, def, [small, red]), none),
+               'He was blissfully unaware of the danger.'-copula(past, pos, pron(3, sg, m), adj([ap(adv(blissfully, unaware), pp(of, np(danger, sg, def, [])))])) ]),
+           ( ( typology_read(english, T, R) -> true ; R = none ),
+             atomic_list_concat(['English: ', T, ', the first reading'], Label),
+             check(Label, R, Want) )),
+    IR2 = clause(sleep, present, pos, np(dog, sg, def, [adv(very, big)]), none),
+    Ws2 = [english-'The very big dog sleeps.', spanish-'El perro muy grande duerme.',
+           italian-'Il cane molto grande dorme.', french-'Le chien très grand dort.',
+           german-'Der sehr große Hund schläft.', persian-'سگ خیلی بزرگ می‌خوابد.'],
+    forall(member(L2-Want2, Ws2),
+           ( ( typology_write(L2, IR2, W2) -> true ; W2 = none ),
+             atomic_list_concat([L2, ': ', Want2], Label2),
+             check(Label2, W2, Want2) )),
+    forall(member(L3-T3, Ws2),
+           ( ( typology_read(L3, T3, R3) -> true ; R3 = none ),
+             atomic_list_concat([L3, ' reads it back: ', T3], Label3),
+             check(Label3, R3, IR2) )),
+    IR4 = copula(present, pos, np(dog, sg, def, []), adj([adv(very, big)])),
+    forall(member(L4-Want4, [french-'Le chien est très grand.', german-'Der Hund ist sehr groß.', persian-'سگ خیلی بزرگ است.']),
+           ( ( typology_write(L4, IR4, W4) -> true ; W4 = none ),
+             atomic_list_concat([L4, ', a predicate: ', Want4], Label4),
+             check(Label4, W4, Want4) )),
+    forall(member(L6, [english, spanish, italian, persian, french, german]),
+           ( typology_check(L6, M6), atomic_list_concat([L6, ': its row is one the check takes'], Label6), check(Label6, M6, []) )).
+
 %% 1.64.0: the bare singular noun. np(M, sg, mass, []): a singular noun
 %% with no article, read after the other readings, written with none;
 %% Persian, whose definite noun has none either, writes it as def.
@@ -2448,7 +2483,9 @@ english_modifiers :-
     check('1 000 English adverbs or more', R2, enough),
     findall(M3, ( member(M3, [unclouded, gravel, poorly, eagerly, the, very, not]),
                   once(( ty_adjective(english, M3, _, _, _) ; ty_adverb(english, M3, _) )) ), Ms3),
-    check('an imported adjective and adverb, and no word of grammar', Ms3, [unclouded, gravel, poorly, eagerly]),
+    check('an imported adjective and adverb, and no word of grammar but very, the template\'s own row since 1.90.0', Ms3, [unclouded, gravel, poorly, eagerly, very]),
+    ( ty_closed(english, Ws3b), memberchk(very, Ws3b) -> R3b = closed ; R3b = open ),
+    check('very is still a word of grammar, imported from no file', R3b, closed),
     findall(IR4, typology_read(english, 'The team played poorly.', IR4), IRs4),
     check('an imported adverb is an adjunct', IRs4,
           [clause(play, past, pos, np(team, sg, def, []), none, [adv(poorly)])]),
@@ -2499,8 +2536,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 3952 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 3 952 sentences read at 1.88.0 are read', R1, yes),
+    ( K >= 4055 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 4 055 sentences read at 1.90.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 
@@ -2860,4 +2897,4 @@ blank_template :-
     include([X4]>>( X4 = bad(_) ), M4, Bad4),
     check('every row of code of templates/template.pl is a row the check takes', Bad4, []),
     length(Rows, NR4),
-    check('the rows of code of the choices', NR4, 92).
+    check('the rows of code of the choices', NR4, 94).

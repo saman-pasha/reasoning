@@ -24,8 +24,8 @@ red) and lesson 01 pin the shape of the answer, deliberately not the number.
 The reasoning library translates ALL 8 000 sentences of `lexicon/prose.txt`
 from English into the IR, and ALL of that IR into Cocolog. Every step
 moves one of the two counts and reports both (`tools/logic/prose.pl`;
-STATUS.md keeps them): at 1.88.0, 3 952 into the IR, 3 789 of them into
-Cocolog (1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
+STATUS.md keeps them): at 1.90.0, 4 055 into the IR, 3 884 of them into
+Cocolog (1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
 count says so. **Measure what blocks the rest before choosing a step**:
 at 1.80.0 the words no table has looked like the gap, and 5 115 of the
 8 000 had none -- 2 130 of them a noun phrase alone, which one rule read.
@@ -654,6 +654,28 @@ check compares with no numbers (`lg_unnumbered/2`). No sentence of the
 8 000 changed: none says one indefinite name twice. "Something ... it"
 in an if clause stays a rule (the controlled reading, Attempto's), and
 `meanings_apart` in test/logic.pl holds the two readings apart.
+**An adverb that grades an adjective since 1.90.0** (`She was incurably
+optimistic.`, `A perfectly natural explanation.`) is an item `adv(M, A)`
+of a noun phrase's or a copula's predicate's adjectives, the adverb where
+`ty_adjective_adverb(L, P)` puts it (before in all six; `very` a row of
+each template, still a `ty_closed/2` word). The adjective is read as a
+plain item is, linked and declined (`ty_av_adj`: German `Der sehr große
+Hund schläft.`). The adverb's word is no adjective's and no verb's
+(`ty_av_word_ok/2`): `small red` stays two adjectives and `see red` a
+verb and its object (WordNet has an adverb `see`, vide). Read where the
+text has such a word right before an adjective's (`'$ty_av'`,
+`ty_av_flag/2`, by `'$ty_avw'(Word, L)`, the adverb-only words
+`ty_feats_make/1` keeps by the word). **What a text switch costs is its
+scan, and when it turns on**: an `append/3` walk asking the adverb rows
+cost English's round trips 1.2 % more inferences, and `see` turned the
+switch on in the bench's own sentences; keyed by the word and with the
+verb words out, 0.52 %. Computing the switch from the written words in
+`ty_reads_as/5` cost more than it saved. Level 2: the adverb round the
+adjective's atom (`past(incurably(optimistic(she)))`) and round its wrap
+in a term (`a(perfectly(natural(explanation)))`, `lg_wrap1/3`,
+`lg_np_parts/3`); `lg_grade_adverb/1` is an adverb no adjective is
+(`good(good(taste))` stays `Good taste.`), and the Cocolog reader takes
+such an adverb round a copula's atom.
 **The blank template copies the row descriptions of typology.pl's head**:
 a changed description is `typology_import(template)` again, or the
 `reproduced` section is red.

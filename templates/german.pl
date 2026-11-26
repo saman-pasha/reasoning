@@ -380,6 +380,9 @@ ty_noun_modifier(german, compound).
 %% An adjective's adposition phrase before it (since 1.88.0): `Der Hund ist
 %% im Haus groß.'
 ty_adjective_complement(german, before).
+%% An adverb that grades an adjective stands before it (since 1.90.0):
+%% `sehr groß'; `very' is one.
+ty_adjective_adverb(german, before).
 ty_adposition(german, of, [von]).
 ty_adposition(german, in, [in]).
 ty_adposition(german, on, [auf]).
@@ -390,6 +393,7 @@ ty_adverb(german, quickly, schnell).
 ty_adverb(german, slowly, langsam).
 ty_adverb(german, today, heute).
 ty_adverb(german, here, hier).
+ty_adverb(german, very, sehr).
 
 %% Questions: the verb before the subject, its last part at the end
 %% (`Sieht der Junge den Hund?', `Hat der Junge den Hund gesehen?'); a

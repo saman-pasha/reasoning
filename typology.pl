@@ -225,6 +225,11 @@
 %%                                     adjective (after: `unsuitable for
 %%                                     children') or before it (before:
 %%                                     `im Haus groß')
+%%     ty_adjective_adverb(L, Place)   an adverb that grades an adjective,
+%%                                     adv(M, A) in the IR's adjectives
+%%                                     (since 1.90.0): before the adjective
+%%                                     (before: `perfectly natural') or
+%%                                     after it (after)
 %%     ty_adposition(L, Meaning, Words)
 %%                                     a preposition or a postposition, by
 %%                                     the pp level's order
@@ -777,7 +782,7 @@
            ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
            ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
            ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-           ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
+           ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
            ty_answer_echo/3, ty_kind/2, ty_adjective_before/2, ty_pronoun_gender/2,
            ty_inversion/3, ty_wh_tonic/3,
            ty_tense_form/5, ty_participle/3, ty_participle_like/3,
@@ -803,7 +808,7 @@
                  ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
                  ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
                  ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-                 ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
+                 ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
                  ty_answer_echo/3, ty_adjective_before/2, ty_pronoun_gender/2,
                  ty_inversion/3, ty_wh_tonic/3,
                  ty_tense_form/5, ty_participle/3, ty_participle_like/3,
@@ -1102,7 +1107,7 @@ ty_template_group('forms chosen by sound, and contractions', [ty_ending, ty_lett
                                                                ty_linked, ty_contraction]).
 ty_template_group('roles, marks and cases', [ty_mark, ty_case, ty_case_after, ty_article_case,
                                              ty_noun_case, ty_declension, ty_adjective_ending]).
-ty_template_group('adjuncts and complements', [ty_adjunct, ty_noun_adposition, ty_noun_modifier, ty_infinitive_mark, ty_adjective_complement, ty_adjunct_front, ty_object_front,
+ty_template_group('adjuncts and complements', [ty_adjunct, ty_noun_adposition, ty_noun_modifier, ty_infinitive_mark, ty_adjective_complement, ty_adjective_adverb, ty_adjunct_front, ty_object_front,
                                                ty_bare_topic, ty_adposition_topic, ty_complement]).
 ty_template_group('questions and answers', [ty_question, ty_inversion, ty_question_form,
                                             ty_question_mark, ty_wh, ty_wh_word, ty_wh_tonic, ty_wh_case,
@@ -1132,6 +1137,7 @@ ty_template_choice(ty_adjunct, Name, 'keep one', Rows) :-
 ty_template_choice(ty_noun_adposition, Name, 'keep it where a noun phrase\'s adposition phrase stands after it, or delete it', [row(ty_noun_adposition(Name, after))]).
 ty_template_choice(ty_noun_modifier, Name, 'keep one, or none: a noun before a noun before it, joined to it, or after it with words', [row(ty_noun_modifier(Name, before)), row(ty_noun_modifier(Name, compound)), text("ty_noun_modifier(~q, after([of])).", [Name])]).
 ty_template_choice(ty_infinitive_mark, Name, 'keep it with the words that begin an infinitive, or delete it', [text("ty_infinitive_mark(~q, [to]).", [Name])]).
+ty_template_choice(ty_adjective_adverb, Name, 'keep one, or none: an adverb that grades an adjective before it or after it', [row(ty_adjective_adverb(Name, before)), row(ty_adjective_adverb(Name, after))]).
 ty_template_choice(ty_adjective_complement, Name, 'keep one, or none: an adjective\'s adposition phrase after it or before it', [row(ty_adjective_complement(Name, after)), row(ty_adjective_complement(Name, before))]).
 ty_template_choice(ty_question, Name, 'one row or more a kind and level; a particle needs its words', Rows) :-
     findall(R, ( ty_values(question_kind, Ks), member(K, Ks),
@@ -1660,6 +1666,9 @@ ty_missing(L, bad(ty_noun_modifier(L, P))) :-
 ty_missing(L, bad(ty_infinitive_mark(L, Ws))) :-
     ty_infinitive_mark(L, Ws),
     \+ ( is_list(Ws), Ws = [_|_] ).
+ty_missing(L, bad(ty_adjective_adverb(L, P))) :-
+    ty_adjective_adverb(L, P),
+    \+ ( P == before ; P == after ).
 ty_missing(L, bad(ty_adjective_complement(L, P))) :-
     ty_adjective_complement(L, P),
     \+ ( P == after ; P == before ).
@@ -1893,6 +1902,7 @@ ty_read_bases(L, Surface, Topics, Mood, IR0, C) :-
     ty_subord_flag(L, Bases),
     ty_adp_flag(L, Bases),
     ty_ap_flag(L, Bases),
+    ty_av_flag(L, Bases),
     ty_parse_reset(L),
     ty_mood(Mood, L, IR0, C, Goal),
     ty_nn_passes(L, Bases, Goal).
@@ -1954,6 +1964,7 @@ typology_write(L, IR, Text, Topics) :-
     b_setval('$ty_context', none),
     b_setval('$ty_nn', on),
     b_setval('$ty_ap', on),
+    b_setval('$ty_av', on),
     ty_parse_reset(L),
     phrase(Goal, Tokens0),
     ty_reads_as(Mood, L, IR0, Tokens0, Topics), !,
@@ -2011,6 +2022,7 @@ ty_reads_as(Mood, L, IR0, Tokens, Topics) :-
     \+ \+ ( b_setval('$ty_context', Context),
            b_setval('$ty_nn', on),
            b_setval('$ty_ap', on),
+           b_setval('$ty_av', on),
            ty_parse_reset(L),
            b_setval('$ty_rel_open', f([])),
            ty_poss_flag(L, Tokens),
@@ -6309,7 +6321,13 @@ ty_feats_make(L) :-
     retractall('$ty_cased'(L)), retractall('$ty_declines'(L)),
     retractall('$ty_kein_lang'(L)), retractall('$ty_sub_used'(L)), retractall('$ty_commands'(L)),
     retractall('$ty_noun_pp'(L)), retractall('$ty_unsaid'(L)), retractall('$ty_nmod'(L, _)),
-    retractall('$ty_apc'(L, _)),
+    retractall('$ty_apc'(L, _)), retractall('$ty_avp'(L, _)), retractall('$ty_avw'(_, L)),
+    (   ty_adjective_adverb(L, AvP)
+    ->  assertz('$ty_avp'(L, AvP)),
+        forall(( ty_adverb(L, _, AvW), atom(AvW), ty_av_word_ok(L, AvW), \+ '$ty_avw'(AvW, L) ),
+               assertz('$ty_avw'(AvW, L)))
+    ;   true
+    ),
     ( ty_adjective_complement(L, ApP) -> assertz('$ty_apc'(L, ApP)) ; true ),
     ( ty_noun_adposition(L, after) -> assertz('$ty_noun_pp'(L)) ; true ),
     ( ty_subject_unsaid(L, 3) -> assertz('$ty_unsaid'(L)) ; true ),
@@ -6395,6 +6413,8 @@ ty_feats_make(L) :-
 :- dynamic('$ty_unsaid'/1).
 :- dynamic('$ty_nmod'/2).
 :- dynamic('$ty_apc'/2).
+:- dynamic('$ty_avp'/2).
+:- dynamic('$ty_avw'/2).
 :- dynamic('$ty_lexw'/2).
 :- dynamic('$ty_lexw_read'/1).
 :- dynamic('$ty_art_words'/4).
@@ -6774,7 +6794,7 @@ ty_ap(L, A, P, NP, R, S0, S) :-
     '$ty_apc'(L, Place),
     ( nb_current('$ty_case', C0) -> true ; C0 = '$none' ),
     ty_ap_parts(Place, L, A, P, NP, R, C0, S0, S),
-    atom(A).
+    ( atom(A) -> true ; A = adv(_, A1), atom(A1) ).
 
 ty_ap_parts(after, L, A, P, NP, R, C0) -->
     ty_adjs(L, [A], [R], none, plain),
@@ -6816,6 +6836,70 @@ ty_ap_flag(L, Bases) :-
         )
     ->  b_setval('$ty_ap', on)
     ;   b_setval('$ty_ap', off)
+    ).
+
+%% AN ADVERB THAT GRADES AN ADJECTIVE (since 1.90.0): adv(M, A), an item
+%% of the IR's adjectives, a noun phrase's (`A perfectly natural
+%% explanation.') or a copula's predicate's (`She was incurably
+%% optimistic.'), the adverb's word where ty_adjective_adverb/2 says
+%% (before it in all six). The adjective is read and agrees as a plain
+%% item is, linked as the items after it ask (the Persian ezafe), declined
+%% where the phrase declines (German `eine vollkommen natürliche
+%% Erklärung'). Read where the text has an adverb's word right before an
+%% adjective's ('$ty_av', ty_av_flag/2), written always; a plain clause,
+%% so a phrase with none asks the flag and nothing more.
+ty_adjs(L, [adv(M, A)|As], [R|Rows], End, D, S0, S) :-
+    nb_current('$ty_av', on),
+    '$ty_avp'(L, Place),
+    ty_av_item(Place, L, M, A, R, As, End, D, S0, S1),
+    ty_adjs(L, As, Rows, End, D, S1, S).
+
+ty_av_item(before, L, M, A, R, As, End, D) --> ty_av_word(L, M), ty_av_adj(L, A, R, As, End, D).
+ty_av_item(after, L, M, A, R, As, End, D) --> ty_av_adj(L, A, R, As, End, D), ty_av_word(L, M).
+
+%% The adverb's word is no adjective's and no verb's: `pretty good' and
+%% `small red' are two adjectives (level 2's lg_grade_adverb/1 holds the
+%% same), `see red' a verb and its object (WordNet's adverb `see', vide).
+ty_av_word(L, M) --> [W], { ty_adverb(L, M, W), ty_av_word_ok(L, W) }, ty_meant(L, adverb(M), [W]).
+
+ty_av_word_ok(L, W) :- \+ ty_adjective(L, _, _, _, W), \+ ty_word_class(L, verb, W).
+
+ty_av_adj(L, A, adj(G, N), As, End, D) -->
+    [W],
+    { (   As = [_|_], C2 = a, Linked = yes
+      ;   As = [], ty_linked_end([], End, C2, Linked)
+      ),
+      ty_linked_word(L, a, C2, Linked, W0, W, ty_adjective_in(D, L, A, G, N, W0)) },
+    ty_meant(L, adjective(A), [W]).
+
+%% A TEXT'S GRADED ADJECTIVES: '$ty_av' on where the language has the row
+%% and the text an adverb's word right before (or, after: after) an
+%% adjective's, or, in a language that declines its adjectives, any
+%% adverb's word.
+%% One walk over the words by '$ty_avw'(Word, L), the adverbs' words that
+%% are no adjective's, which ty_feats_make/1 keeps by the word: a walk of
+%% append/3's pairs, each asking the adverb rows, cost the round trips 1 %
+%% more inferences.
+ty_av_flag(L, Bases) :-
+    (   '$ty_avp'(L, Place),
+        (   '$ty_declines'(L) -> ty_av_any(Bases, L)
+        ;   Place == before -> ty_av_before(Bases, L)
+        ;   ty_av_after(Bases, L)
+        )
+    ->  b_setval('$ty_av', on)
+    ;   b_setval('$ty_av', off)
+    ).
+
+ty_av_any([W|Ws], L) :- ( '$ty_avw'(W, L) -> true ; ty_av_any(Ws, L) ).
+
+ty_av_before([W|Ws], L) :-
+    (   '$ty_avw'(W, L), Ws = [W2|_], atom(W2), once(ty_adjective(L, _, _, _, W2)) -> true
+    ;   ty_av_before(Ws, L)
+    ).
+
+ty_av_after([W1|Ws], L) :-
+    (   Ws = [W2|_], '$ty_avw'(W2, L), atom(W1), once(ty_adjective(L, _, _, _, W1)) -> true
+    ;   ty_av_after(Ws, L)
     ).
 
 %% After a noun before a noun, only another.

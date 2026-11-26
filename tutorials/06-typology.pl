@@ -150,6 +150,7 @@ main :-
     unsaid_subjects,
     noun_modifiers,
     adjective_phrases,
+    graded_adjectives,
     format("~ndone~n", []).
 
 
@@ -734,7 +735,7 @@ blank_template :-
     split_string(S, "\n", "", Lines),
     include([L]>>sub_string(L, 0, _, _, 'ty_'), Lines, Choices),
     length(Choices, N1),
-    must('the choices, each a row of code', N1, 92),
+    must('the choices, each a row of code', N1, 94),
     ( member(L2, Lines), sub_string(L2, 0, _, _, '%% ty_noun(klingon, Meaning, Gender') -> R2 = shape ; R2 = none ),
     must('a slot of words, its shape', R2, shape),
     ( member(L3, Lines), sub_string(L3, 0, _, _, '%%   e.g. ty_noun_in(english, dog,') -> R3 = example ; R3 = none ),
@@ -786,7 +787,7 @@ english_modifiers :-
     typology_read(english, 'The wine was unclouded.', IR2),
     must('an imported adjective', IR2, copula(past, pos, np(wine, sg, def, []), adj([unclouded]))),
     ( ty_adverb(english, very, _) -> W3 = adverb ; W3 = grammar ),
-    must('very waits for its grammar', W3, grammar).
+    must('very has its grammar since 1.90.0, a row of the template\'s own', W3, adverb).
 
 %% 45. COORDINATION (step 3 of the English goal, 1.59.0): and(Xs) and or(Xs)
 %% where a noun phrase stands, and(Cs), or(Cs) and but(Cs) of two clauses.
@@ -974,6 +975,16 @@ adjective_phrases :-
     must('in Spanish', W2, 'Él era consciente del peligro.'),
     typology_write(german, copula(present, pos, np(dog, sg, def, []), adj([ap(big, pp(in, np(house, sg, def, [])))])), W3),
     must('in German, the phrase first', W3, 'Der Hund ist im Haus groß.').
+
+%% 59. AN ADVERB THAT GRADES AN ADJECTIVE (1.90.0): adv(M, A), an item of
+%% a noun phrase's or a copula's predicate's adjectives, the adverb where
+%% the template's ty_adjective_adverb/2 row says (before it in all six);
+%% the adjective agrees and declines as a plain one does.
+graded_adjectives :-
+    typology_read(english, 'The very big dog sleeps.', IR1),
+    must('read', IR1, clause(sleep, present, pos, np(dog, sg, def, [adv(very, big)]), none)),
+    typology_write(german, IR1, W2),
+    must('in German, declined', W2, 'Der sehr große Hund schläft.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

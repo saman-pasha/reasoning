@@ -591,6 +591,15 @@ ty_noun_modifier(xx, compound).
 ty_adjective_complement(xx, after).
 ty_adjective_complement(xx, before).
 
+%%     ty_adjective_adverb(L, Place)   an adverb that grades an adjective,
+%%                                     adv(M, A) in the IR's adjectives
+%%                                     (since 1.90.0): before the adjective
+%%                                     (before: `perfectly natural') or
+%%                                     after it (after)
+%%   (keep one, or none: an adverb that grades an adjective before it or after it)
+ty_adjective_adverb(xx, before).
+ty_adjective_adverb(xx, after).
+
 %%     ty_adjunct_front(L, v2)         a statement read with an adjunct first
 %%                                     and the verb before the subject
 %%                                     (German `Heute schläft der Hund.')
