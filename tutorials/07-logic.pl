@@ -68,6 +68,7 @@ main :-
     object_complement,
     passive_languages,
     progressive,
+    complement_terms,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -511,6 +512,18 @@ progressive :-
     must('the present progressive', C1, 'progressive(idle(the(engine))).\n'),
     logic_translate(cocolog, english, 'past_progressive(purl(the(water))).\n', E2),
     must('back into English', E2, 'The water was purling.').
+
+%% 39. A COMPLEMENT OF SEVERAL ATOMS (1.103.0) is the noun phrase's term,
+%% an indefinite one a(Shape) and no fact; a progressive passive is the
+%% progressive of its active.
+complement_terms :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'They considered him a good man.', C1),
+    must('a noun phrase of two atoms', C1, 'past(consider(they, he, a(good(man)))).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and into English', E1, 'They considered him a good man.'),
+    logic_translate(english, cocolog, 'The house is being built.', C2),
+    must('a progressive passive', C2, 'progressive(build(someone, the(house))).\n').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

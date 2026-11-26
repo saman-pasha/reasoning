@@ -263,11 +263,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 379),
-    ( R >= 365 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 365 right', VR, ok),
-    ( K >= 371 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 371 kept', VK, ok).
+    check('the second measure: its sentences', N, 382),
+    ( R >= 368 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 368 right', VR, ok),
+    ( K >= 374 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 374 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -1017,7 +1017,9 @@ progressive :-
     typology_load(english),
     forall(member(T-Want, [
                'The engine is idling.'-'progressive(idle(the(engine))).\n',
-               'The water was purling.'-'past_progressive(purl(the(water))).\n' ]),
+               'The water was purling.'-'past_progressive(purl(the(water))).\n',
+               'The house is being built.'-'progressive(build(someone, the(house))).\n',
+               'The dog was being fed by the boy.'-'past_progressive(feed(the(boy), the(dog))).\n' ]),
            ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
              one_line(['into Cocolog: ', T], Label),
              check(Label, C, Want) )),
@@ -1025,8 +1027,9 @@ progressive :-
     check('back into English, the perfect progressive', E, 'They have been watching the dog.').
 
 %% 1.100.0: an object's complement is the verb's third argument, the atom a
-%% copula would make of the object; a passive's is its active's; one of
-%% several atoms has no Cocolog yet; back into English the complement.
+%% copula would make of the object; a passive's is its active's; back into
+%% English the complement. 1.103.0: a noun phrase of several atoms is its
+%% term, a(Shape) or a constant; a verb with no complement takes none.
 object_complement :-
     section('an object and its complement'),
     typology_load(english),
@@ -1035,13 +1038,19 @@ object_complement :-
                'The dog was considered small.'-'past(consider(someone, the(dog), small(the(dog)))).\n',
                'The boy called the dog a hero.'-'past(is_call(the(boy), the(dog), hero(the(dog)))).\n',
                'The accident left her badly shaken.'-'past(leave(the(accident), she, badly(shaken(she)))).\n',
-               'He found the dog a big hero.'-none ]),
+               'He found the dog a big hero.'-'past(find(he, the(dog), a(big(hero)))).\n',
+               'The satellite was considered a necessary research step.'-'past(consider(someone, the(satellite), a(necessary(nn(research, step))))).\n',
+               'He found the dog the best friend.'-'past(find(he, the(dog), the(best(friend)))).\n',
+               'He considered the dog rich and famous.'-none ]),
            ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
              one_line(['into Cocolog: ', T], Label),
              check(Label, C, Want) )),
     forall(member(C2-Want2, [
                'past(consider(he, the(dog), small(the(dog)))).\n'-'He considered the dog small.',
-               'past(leave(the(accident), she, badly(shaken(she)))).\n'-'The accident left her badly shaken.' ]),
+               'past(leave(the(accident), she, badly(shaken(she)))).\n'-'The accident left her badly shaken.',
+               'past(find(he, the(dog), a(big(hero)))).\n'-'He found the dog a big hero.',
+               'past(paint(they, it, a(of(light(shade), bluish(green))))).\n'-'They painted it a light shade of bluish green.',
+               'past(see(he, the(dog), a(big(hero)))).\n'-'See holds for he, the(dog) and a(big(hero)) in the past.' ]),
            ( ( logic_translate(cocolog, english, C2, E) -> true ; E = none ),
              one_line(['back into English: ', C2], Label2),
              check(Label2, E, Want2) )).

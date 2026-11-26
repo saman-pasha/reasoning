@@ -387,7 +387,11 @@ ty_adverb_inside(xx).
 %%                                     participle]), and since 1.102.0 the
 %%                                     progressive's, Tense prog(T), ing
 %%                                     the verb's form in -ing (English
-%%                                     prog(past) [was, ing])
+%%                                     prog(past) [was, ing]), and since
+%%                                     1.103.0 the progressive passive's,
+%%                                     Tense pass(prog(T)) (English
+%%                                     pass(prog(present)) [is, being,
+%%                                     participle])
 %% ty_tense_form(xx, Tense, Number, Polarity, Pattern).
 %%   e.g. ty_tense_form(english, future, any, pos, [will, form(present, pl)]).
 

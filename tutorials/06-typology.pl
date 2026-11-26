@@ -163,6 +163,7 @@ main :-
     object_complement,
     passive_languages,
     progressive,
+    progressive_passive,
     format("~ndone~n", []).
 
 
@@ -1163,6 +1164,14 @@ progressive :-
     must('written', W2, 'The dog is dying.'),
     typology_write(english, clause(begin, prog(past), pos, pron(3, sg, m), none), W3),
     must('a consonant that doubles', W3, 'He was beginning.').
+
+%% 72. THE PROGRESSIVE PASSIVE (1.103.0): a passive in a tense
+%% pass(prog(T)), its rows a form of be, `being' and the participle.
+progressive_passive :-
+    typology_read(english, 'The house is being built.', IR1),
+    must('read', IR1, clause(build, pass(prog(present)), pos, np(house, sg, def, []), none)),
+    typology_write(english, clause(open, pass(prog(past)), neg, np(door, pl, def, []), none), W2),
+    must('written', W2, 'The doors were not being opened.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

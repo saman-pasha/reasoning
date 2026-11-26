@@ -547,6 +547,20 @@ ty_tense_form(english, pass(conditional), any, pos, [would, be, participle]).
 ty_tense_form(english, pass(conditional), any, neg, [would, not, be, participle]).
 %% A passive infinitive (since 1.99.0): `The machine needs to be serviced.'
 ty_tense_form(english, pass(infinitive), any, pos, [to, be, participle]).
+%% A progressive passive (since 1.103.0): `being' before the participle,
+%% the tense pass(prog(T)) (`The house is being built.').
+ty_tense_form(english, pass(prog(present)), sg, pos, [is, being, participle]).
+ty_tense_form(english, pass(prog(present)), pl, pos, [are, being, participle]).
+ty_tense_form(english, pass(prog(present)), sg(1), pos, [am, being, participle]).
+ty_tense_form(english, pass(prog(present)), sg, neg, [is, not, being, participle]).
+ty_tense_form(english, pass(prog(present)), pl, neg, [are, not, being, participle]).
+ty_tense_form(english, pass(prog(present)), sg(1), neg, [am, not, being, participle]).
+ty_tense_form(english, pass(prog(past)), sg, pos, [was, being, participle]).
+ty_tense_form(english, pass(prog(past)), pl, pos, [were, being, participle]).
+ty_tense_form(english, pass(prog(past)), sg(1), pos, [was, being, participle]).
+ty_tense_form(english, pass(prog(past)), sg, neg, [was, not, being, participle]).
+ty_tense_form(english, pass(prog(past)), pl, neg, [were, not, being, participle]).
+ty_tense_form(english, pass(prog(past)), sg(1), neg, [was, not, being, participle]).
 %% THE PROGRESSIVE (since 1.102.0): a form of be and the verb's form in
 %% -ing (ing: `wallowing', `running', `dying'), read after every other
 %% reading, as the passive is (ty_progressive//2).

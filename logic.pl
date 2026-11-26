@@ -801,16 +801,32 @@ lg_inf_obj('$obj'(S, const(a(S)), a(S), _)).
 %% `They considered colonialism immoral.' is past(consider(they,
 %% colonialism, immoral(colonialism))), `His landscapes were deemed the
 %% acme of beauty.' past(deem(someone, of(pl(landscape), he),
-%% acme(of(pl(landscape), he), beauty))). A complement of several atoms (a
-%% noun phrase with an adjective) has no form yet (complement(Pred)).
+%% acme(of(pl(landscape), he), beauty))). A COMPLEMENT OF SEVERAL ATOMS
+%% (since 1.103.0), a noun phrase the copula says more than one atom of,
+%% is the noun phrase's term, an indefinite one a(Shape) and no fact, as an
+%% infinitive's object is: `A manned earth satellite was considered a
+%% necessary research step.' is past(consider(someone,
+%% a(manned(nn(earth, satellite))), a(necessary(nn(research, step))))),
+%% the satellite's facts beside it. Any other complement of several atoms
+%% (rich and famous) has no form yet (complement(Pred)).
 lg_atoms_(_, T, verb(V, OC), [pred(V, [T, To, F])|Os]) :-
     nonvar(OC), OC = oc(NP, Pred), !,
     lg_arg(object, NP, To, _, Os),
-    lg_atoms_(copula(present, pos, NP, Pred), To, Pred, Atoms),
-    ( Atoms = [A] -> true ; lg_no(complement(Pred)) ),
-    lg_fun_of_atom(A, F).
+    (   catch(lg_atoms_(copula(present, pos, NP, Pred), To, Pred, [A]), lg_no(_), fail)
+    ->  lg_fun_of_atom(A, F)
+    ;   lg_oc_term(Pred, F)
+    ->  true
+    ;   lg_no(complement(Pred))
+    ).
 lg_atoms_(_, T, verb(V, O), [pred(V, [T, To])|Os]) :-
     lg_arg(object, O, To, _, Os).
+
+lg_oc_term(Pred, F) :-
+    nonvar(Pred), ( Pred = np(_, _, _, _) ; Pred = of(_, _) ; Pred = np_pp(_, _) ), !,
+    catch(lg_arg(object, Pred, F, _, Ms), lg_no(_), fail),
+    (   Ms == [] -> true
+    ;   Ms = [M], lg_inf_obj(M)
+    ).
 
 lg_inf_how(How, F, How2) :-
     findall(I, lg_fun_ind(F, I), Is),
@@ -1899,6 +1915,20 @@ lg_atom_ir(L, pred(P, [A, B, F]), How, IR) :-
         lg_atom_ir(L, A2, How, IR2),
         IR2 = copula(present, pos, _, Pred)
     ), !,
+    IR = clause(P, present, pos, S, oc(O, Pred)).
+%% A complement of several atoms (since 1.103.0): a noun phrase's term as
+%% the third argument of a verb of the complement list is the noun phrase,
+%% consider(someone, a(satellite), a(necessary(nn(research, step)))) `A
+%% satellite was considered a necessary research step.'.
+lg_atom_ir(L, pred(P, [A, B, F]), How, IR) :-
+    nonvar(F), F = const(C), compound(C),
+    catch(typology_meaning(L, verb, P), _, fail),
+    catch(ty_verb_of(L, complement, P), _, fail),
+    lg_arg_np(L, How, A, S),
+    lg_arg_np(L, How, B, O),
+    lg_inf_how(How, F, How2),
+    lg_arg_np(L, How2, F, Pred),
+    ( Pred = np(_, _, _, _) ; Pred = of(_, _) ; Pred = np_pp(_, _) ), !,
     IR = clause(P, present, pos, S, oc(O, Pred)).
 lg_atom_ir(L, pred(P, [A, B]), How, IR) :-
     lg_binary_classes(L, P, Cs),

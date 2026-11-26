@@ -177,7 +177,11 @@
 %%                                     participle]), and since 1.102.0 the
 %%                                     progressive's, Tense prog(T), ing
 %%                                     the verb's form in -ing (English
-%%                                     prog(past) [was, ing])
+%%                                     prog(past) [was, ing]), and since
+%%                                     1.103.0 the progressive passive's,
+%%                                     Tense pass(prog(T)) (English
+%%                                     pass(prog(present)) [is, being,
+%%                                     participle])
 %%     ty_definite_like(L, Def, As)    the language writes the definiteness
 %%                                     Def as As, and never reads Def
 %%                                     (since 1.64.0: Persian writes mass
@@ -1815,7 +1819,11 @@ ty_missing(L, bad(ty_wh_tonic(L, M, Ws))) :-
     \+ ( is_list(Ws), Ws \== [], ty_wh_word(L, M, _) ).
 ty_missing(L, bad(ty_tense_form(L, T, N, P, Ws))) :-
     ty_tense_form(L, T, N, P, Ws),
-    \+ ( ty_values(tense, Ts), ( nonvar(T), ( T = pass(T0) ; T = prog(T0) ) -> memberchk(T0, Ts) ; memberchk(T, Ts) ),
+    \+ ( ty_values(tense, Ts),
+         (   nonvar(T), ( T = pass(T1) ; T = prog(T1) )
+         ->  ( nonvar(T1), T = pass(_), T1 = prog(T0) -> true ; T0 = T1 ), memberchk(T0, Ts)
+         ;   memberchk(T, Ts)
+         ),
          ( N == any ; ty_values(agreement, As), memberchk(N, As) ),
          memberchk(P, [pos, neg]), is_list(Ws), Ws \== [] ).
 ty_missing(L, bad(ty_negative_article_roles(L, Rs))) :-
@@ -3985,7 +3993,8 @@ ty_ing_vowel(C) :- memberchk(C, [0'a, 0'e, 0'i, 0'o, 0'u]).
 %% `fixing', `playing').
 ty_ing_doubles(C) :- C >= 0'a, C =< 0'z, \+ ty_ing_vowel(C), \+ memberchk(C, [0'w, 0'x, 0'y]).
 
-%% THE PASSIVE (since 1.98.0): a clause in a tense pass(T), its subject the
+%% THE PASSIVE (since 1.98.0): a clause in a tense pass(T) (since 1.103.0 T
+%% may be prog(T0), `The house is being built.'), its subject the
 %% verb's patient and its object none, the verb's words a ty_tense_form/5
 %% row of pass(T) (English pass(past) [was, participle]: `The pass was
 %% fumbled.' is clause(fumble, pass(past), pos, np(pass, sg, def, []),
@@ -4006,11 +4015,21 @@ ty_passive(L, C) -->
     ty_here(S0),
     { ( O = inf(_, _, _) ; O = none ; O = oc(_), ty_ocp_ahead(L, S0) ),
       ( nb_current('$ty_pass', Old) -> true ; Old = off ),
-      b_setval('$ty_pass', on) },
+      b_setval('$ty_pass', on),
+      ( nb_current('$ty_pprog', OldP) -> true ; OldP = on ),
+      ty_pprog_ahead(L, S0) },
     ty_clause(L, C),
-    { b_setval('$ty_pass', Old), ty_wh_count(C, yes_no),
+    { b_setval('$ty_pass', Old), b_setval('$ty_pprog', OldP), ty_wh_count(C, yes_no),
       ( O == none -> true ; O = oc(_) -> true ; ty_object_infinitive(L, V) ),
       ty_agent_first(L, S0, C) }.
+
+%% Reading, a passive tries a progressive passive's rows only where one of
+%% their own words is ahead ('$ty_ppw'/2, English `being'; '$ty_pprog').
+ty_pprog_ahead(L, S0) :-
+    (   '$ty_pprog_made'(L), nonvar(S0), \+ ( member(X, S0), atom(X), '$ty_ppw'(X, L) )
+    ->  b_setval('$ty_pprog', off)
+    ;   b_setval('$ty_pprog', on)
+    ).
 
 %% Reading, a passive's adjunct whose words are an agent's too is its
 %% agent (since 1.101.0: Italian da, German von, which are from and of
@@ -6176,11 +6195,20 @@ ty_tense_may(L, Words) :-
 %% ('$ty_tact'/6, made with the verb tables: English `do not' read beside
 %% the 22 passive rows cost `The boys do not see the dogs.' 1 303
 %% inferences more, 1.98.0's first cut).
+%% Reading a passive with no word of a progressive passive's ahead
+%% ('$ty_pprog' off: English `being'), its patterns but those
+%% ('$ty_tnpp'/6: the 12 rows tried in every passive cost `The steady state
+%% theory has been abandoned in favor of the big bang theory.' 3.6 % more,
+%% 1.103.0's first cut).
 ty_tense_pattern_now(L, T, N0, P, Pattern, C) :-
     (   var(T), '$ty_pass_made'(L), \+ nb_current('$ty_pass', on), \+ nb_current('$ty_prog', on)
     ->  '$ty_tact'(L, T, N0, P, Pattern, C)
+    ;   '$ty_pprog_made'(L), nb_current('$ty_pprog', off), ( var(T) -> true ; T = pass(T1), var(T1) )
+    ->  '$ty_tnpp'(L, T, N0, P, Pattern, C)
     ;   ty_tense_pattern(L, T, N0, P, Pattern, C)
     ).
+
+ty_pass_prog(T) :- nonvar(T), T = pass(T1), nonvar(T1), T1 = prog(_).
 
 ty_tense_pattern(L, T, N0, P, Pattern, none) :- ty_tense_form(L, T, N0, P, Pattern).
 ty_tense_pattern(L, T, N0, P, Pattern, C) :- ty_class_tense_form(L, C, T, N0, P, Pattern).
@@ -6339,6 +6367,12 @@ ty_verb_row(L, V, T, N, P, Words) :-
 %% A language's active tense patterns, where it has a passive
 %% (ty_tense_pattern_now/6).
 :- dynamic('$ty_tact'/6).
+%% A language with a progressive passive's row (since 1.103.0), its
+%% patterns but those ('$ty_tnpp'/6), and the words only those rows have
+%% (English `being'): a passive tries the rows only where one is ahead.
+:- dynamic('$ty_pprog_made'/1).
+:- dynamic('$ty_tnpp'/6).
+:- dynamic('$ty_ppw'/2).
 :- dynamic('$ty_particle'/2).
 
 %% Each particle of L's phrasal rows, once.
@@ -6373,6 +6407,9 @@ ty_vfirst_make(L) :-
     retractall('$ty_ocpw'(_, L)),
     retractall('$ty_pword'(_, L)),
     retractall('$ty_tact'(L, _, _, _, _, _)),
+    retractall('$ty_pprog_made'(L)),
+    retractall('$ty_tnpp'(L, _, _, _, _, _)),
+    retractall('$ty_ppw'(_, L)),
     ( ty_phrasal(L, _, _, _, _) -> assertz('$ty_phrasal_made'(L)) ; true ),
     forall(( ty_verb_list(L, complement, _), ty_verb(L, OcV, _, _, _, _), \+ '$ty_ocv'(OcV, L),
              ty_verb_of(L, complement, OcV) ),
@@ -6419,6 +6456,16 @@ ty_vfirst_make(L) :-
     (   '$ty_pass_made'(L)
     ->  forall(( ty_tense_pattern(L, T3, N3, P3, Pt3, C3), \+ ( nonvar(T3), ( T3 = pass(_) ; T3 = prog(_) ) ) ),
                assertz('$ty_tact'(L, T3, N3, P3, Pt3, C3)))
+    ;   true
+    ),
+    (   ty_tense_form(L, T5, _, _, _), ty_pass_prog(T5)
+    ->  assertz('$ty_pprog_made'(L)),
+        forall(( ty_tense_pattern(L, T6, N6, P6, Pt6, C6), \+ ty_pass_prog(T6) ),
+               assertz('$ty_tnpp'(L, T6, N6, P6, Pt6, C6))),
+        forall(( ty_tense_form(L, T7, _, _, Ws7), ty_pass_prog(T7), member(W7, Ws7), atom(W7),
+                 \+ ( ty_tense_form(L, T8, _, _, Ws8), \+ ty_pass_prog(T8), memberchk(W7, Ws8) ),
+                 \+ '$ty_ppw'(W7, L) ),
+               assertz('$ty_ppw'(W7, L)))
     ;   true
     ),
     (   memberchk('$imperative', Fs1), \+ memberchk('$any', Fs1)

@@ -408,3 +408,6 @@ The birds were chirping in the bushes.	past_progressive(in(chirp(the(pl(bird))),
 They were trying to find a peaceful solution.	past_progressive(try(they, to(find(they, a(peaceful(solution)))))).
 The patient is breathing irregularly.	progressive(irregularly(breathe(the(patient)))).
 They are trying to determine the cause of the crash.	progressive(try(they, to(determine(they, of(cause, the(crash)))))).
+A manned earth satellite was considered a necessary research step.	satellite(a(manned(nn(earth, satellite)))). manned(a(manned(nn(earth, satellite)))). nn(earth, a(manned(nn(earth, satellite)))). past(consider(someone, a(manned(nn(earth, satellite))), a(necessary(nn(research, step))))).
+They painted it a light shade of bluish green.	past(paint(they, it, a(of(light(shade), bluish(green))))).
+He was rightly considered the greatest singer of his time.	past(rightly(consider(someone, he, of(greatest(singer), of(time, he))))).

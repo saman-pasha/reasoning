@@ -24,8 +24,8 @@ red) and lesson 01 pin the shape of the answer, deliberately not the number.
 The reasoning library translates ALL 8 000 sentences of `lexicon/prose.txt`
 from English into the IR, and ALL of that IR into Cocolog. Every step
 moves one of the two counts and reports both (`tools/logic/prose.pl`;
-STATUS.md keeps them): at 1.102.0, 4 405 into the IR, 4 206 of them into
-Cocolog (1.100.0 and 1.101.0: 4 377 and 4 179; 1.99.0: 4 358 and 4 165; 1.98.0: 4 325 and 4 141; 1.96.0 and 1.97.0: 4 295 and 4 111; 1.95.0: 4 243 and 4 063; 1.94.0: 4 218 and 4 040; 1.93.0: 4 167 and 3 990; 1.92.0: 4 129 and 3 954; 1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
+STATUS.md keeps them): at 1.103.0, 4 405 into the IR, 4 209 of them into
+Cocolog (1.102.0: 4 405 and 4 206; 1.100.0 and 1.101.0: 4 377 and 4 179; 1.99.0: 4 358 and 4 165; 1.98.0: 4 325 and 4 141; 1.96.0 and 1.97.0: 4 295 and 4 111; 1.95.0: 4 243 and 4 063; 1.94.0: 4 218 and 4 040; 1.93.0: 4 167 and 3 990; 1.92.0: 4 129 and 3 954; 1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
 count says so. **Measure what blocks the rest before choosing a step**:
 at 1.80.0 the words no table has looked like the gap, and 5 115 of the
 8 000 had none -- 2 130 of them a noun phrase alone, which one rule read.
@@ -835,6 +835,14 @@ dearer; the word right after a word the rows put before `ing`
 (`'$ty_ingw'/2`), or after `not` or an adverb, 3.6 % at most. At level 2
 prog(T) is a tense (`lg_tense/1`), named in Cocolog by the template's
 `lg_code_tense/3` rows (progressive, past_progressive ...).
+**The progressive passive since 1.103.0** is the passive in a tense
+pass(prog(T)) (English [is, being, participle]), its active's progressive
+at level 2. **A passive tries those rows only where a word only they
+have is ahead** (`being`: `'$ty_ppw'/2`, set by `ty_pprog_ahead/2` as
+`'$ty_pprog'`, read by `ty_tense_pattern_now/6`, which then takes the
+patterns but those, `'$ty_tnpp'/6`): tried in every passive, the 12 rows
+cost the longest passive 3.6 % more; gated, 0.16 %. `ty_missing/2` reads
+pass(prog(T)) as T's tense.
 
 **An adverb inside or before a verb's words since 1.99.0**
 (`ty_adverb_inside/1`, English's row: `The area is well populated.`) is
@@ -884,7 +892,15 @@ argument, the copula's one atom of the object (`lg_atoms_/4` of
 copula(present, pos, Object, Predicate)); read back from Cocolog, a verb's
 third argument whose first argument is its second is an atom
 (`lg_in_atom/2`), not a structured constant such as fair(trial). Cost:
-0.02 % to 0.04 %.
+0.02 % to 0.04 %. **A complement of several atoms since 1.103.0** that
+is a noun phrase is the noun phrase's term (`lg_oc_term/2`: an
+indefinite one a(Shape) and no fact, as an infinitive's object;
+consider(they, he, a(good(man)))), and read back a noun phrase's term as
+the third argument of a verb of the complement list (`ty_verb_of/3`) is
+that noun phrase (`lg_atom_ir/4`, its individuals' How from
+`lg_inf_how/3`, or the term reads as no noun phrase). A complement of one
+atom keeps the atom: read back, consider(they, he, a(fool)) has no
+English (the sentence's own Cocolog is fool(he)) and is said as a program.
 **The blank template copies the row descriptions of typology.pl's head**:
 a changed description is `typology_import(template)` again, or the
 `reproduced` section is red.

@@ -2557,7 +2557,21 @@ progressive :-
                clause(see, prog(future), pos, np(boy, sg, def, []), np(dog, sg, def, []))-'The boy will be seeing the dog.' ]),
            ( ( typology_write(english, IR2, W2) -> true ; W2 = none ),
              atomic_list_concat(['written: ', Want2], Label2),
-             check(Label2, W2, Want2) )).
+             check(Label2, W2, Want2) )),
+    %% 1.103.0: the progressive passive, pass(prog(T)) [is, being, participle].
+    forall(member(T3-Want3, [
+               'The house is being built.'-[clause(build, pass(prog(present)), pos, np(house, sg, def, []), none)],
+               'He is being watched.'-[clause(watch, pass(prog(present)), pos, pron(3, sg, m), none)],
+               'The door was not being opened.'-[clause(open, pass(prog(past)), neg, np(door, sg, def, []), none)] ]),
+           ( findall(R3, typology_read(english, T3, R3), Rs3),
+             atomic_list_concat(['English: ', T3], Label3),
+             check(Label3, Rs3, Want3) )),
+    forall(member(IR4-Want4, [
+               clause(build, pass(prog(present)), pos, np(house, pl, def, []), none)-'The houses are being built.',
+               clause(open, pass(prog(past)), neg, np(door, sg, def, []), none, [pp(by, np(boy, sg, def, []))])-'The door was not being opened by the boy.' ]),
+           ( ( typology_write(english, IR4, W4) -> true ; W4 = none ),
+             atomic_list_concat(['written: ', Want4], Label4),
+             check(Label4, W4, Want4) )).
 
 %% 1.64.0: the bare singular noun. np(M, sg, mass, []): a singular noun
 %% with no article, read after the other readings, written with none;
