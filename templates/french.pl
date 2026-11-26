@@ -339,6 +339,8 @@ ty_adposition(french, on, [sur]).
 ty_adposition(french, with, [avec]).
 ty_adposition(french, to, ['à']).
 ty_adposition(french, from, [de]).
+%% The passive's agent (since 1.101.0).
+ty_adposition(french, by, [par]).
 ty_adverb(french, quickly, vite).
 ty_adverb(french, slowly, lentement).
 ty_adverb(french, today, 'aujourd\'hui').
@@ -592,6 +594,14 @@ ty_tense_form(french, pluperfect, sg(1), pos, [avais, participle]).
 ty_tense_form(french, pluperfect, sg(2), pos, [avais, participle]).
 ty_tense_form(french, pluperfect, pl(1), pos, [avions, participle]).
 ty_tense_form(french, pluperfect, pl(2), pos, [aviez, participle]).
+%% THE PASSIVE (since 1.101.0): être and the participle, which agrees with
+%% the subject (`La maison fut construite.').
+ty_tense_form(french, pass(present), sg, pos, [est, participle(subject)]).
+ty_tense_form(french, pass(present), pl, pos, [sont, participle(subject)]).
+ty_tense_form(french, pass(past), sg, pos, [fut, participle(subject)]).
+ty_tense_form(french, pass(past), pl, pos, [furent, participle(subject)]).
+ty_tense_form(french, pass(perfect), sg, pos, [a, 'été', participle(subject)]).
+ty_tense_form(french, pass(perfect), pl, pos, [ont, 'été', participle(subject)]).
 ty_class_tense_form(french, 'être', pluperfect, sg, pos, ['était', participle(subject)]).
 ty_class_tense_form(french, 'être', pluperfect, pl, pos, ['étaient', participle(subject)]).
 ty_class_tense_form(french, 'être', pluperfect, sg(1), pos, ['étais', participle(subject)]).

@@ -66,6 +66,7 @@ main :-
     passive,
     passive_places,
     object_complement,
+    passive_languages,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -489,6 +490,16 @@ object_complement :-
     must('and into English', E1, 'He considered the dog small.'),
     logic_translate(english, cocolog, 'The dog was considered small.', C2),
     must('a passive with a complement', C2, 'past(consider(someone, the(dog), small(the(dog)))).\n').
+
+%% 37. A PASSIVE IN ANOTHER LANGUAGE (1.101.0) is its active at level 2, as
+%% English's is: a Spanish passive into Cocolog and out as German.
+passive_languages :-
+    typology_load(spanish),
+    typology_load(german),
+    logic_translate(spanish, cocolog, 'El perro fue visto por el niño.', C1),
+    must('a Spanish passive, its active', C1, 'past(see(the(boy), the(dog))).\n'),
+    logic_translate(cocolog, german, C1, G1),
+    must('and into German', G1, 'Der Junge sah den Hund.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

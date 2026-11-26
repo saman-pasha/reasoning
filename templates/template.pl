@@ -410,7 +410,7 @@ ty_adverb_inside(xx).
 %%                                     a participle that agrees takes this
 %%                                     ending (Italian f, sg, o, a: `vista')
 %% ty_participle_ending(xx, Gender, Number, From, To).
-%%   e.g. ty_participle_ending(italian, f, sg, o, a).
+%%   e.g. ty_participle_ending(spanish, f, sg, o, a).
 
 %%     ty_participle_agrees(L, clitic) a participle agrees with an object
 %%                                     clitic of the third person before it

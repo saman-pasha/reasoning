@@ -416,6 +416,9 @@ ty_adposition(german, on, [auf]).
 ty_adposition(german, with, [mit]).
 ty_adposition(german, to, [zu]).
 ty_adposition(german, from, [von]).
+%% The passive's agent (since 1.101.0), after of and from: a passive's
+%% adjunct of von is its agent (ty_passive//2).
+ty_adposition(german, by, [von]).
 ty_adverb(german, quickly, schnell).
 ty_adverb(german, slowly, langsam).
 ty_adverb(german, today, heute).
@@ -555,6 +558,13 @@ ty_tense_form(german, pluperfect, sg(1), pos, [hatte, participle]).
 ty_tense_form(german, pluperfect, sg(2), pos, [hattest, participle]).
 ty_tense_form(german, pluperfect, pl(1), pos, [hatten, participle]).
 ty_tense_form(german, pluperfect, pl(2), pos, [hattet, participle]).
+%% THE PASSIVE (since 1.101.0): werden and the participle, which goes to
+%% the clause's end as the perfect's does (`Der Hund wurde von dem Jungen
+%% gesehen.').
+ty_tense_form(german, pass(present), sg, pos, [wird, participle]).
+ty_tense_form(german, pass(present), pl, pos, [werden, participle]).
+ty_tense_form(german, pass(past), sg, pos, [wurde, participle]).
+ty_tense_form(german, pass(past), pl, pos, [wurden, participle]).
 ty_class_tense_form(german, sein, pluperfect, sg, pos, [war, participle]).
 ty_class_tense_form(german, sein, pluperfect, pl, pos, [waren, participle]).
 ty_class_tense_form(german, sein, pluperfect, sg(1), pos, [war, participle]).

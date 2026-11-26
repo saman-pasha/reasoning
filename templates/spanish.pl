@@ -217,6 +217,8 @@ ty_adposition(spanish, on, [sobre]).
 ty_adposition(spanish, with, [con]).
 ty_adposition(spanish, to, [a]).
 ty_adposition(spanish, from, [de]).
+%% The passive's agent (since 1.101.0).
+ty_adposition(spanish, by, [por]).
 ty_contraction(spanish, [de, el], del).
 ty_adverb(spanish, quickly, rápidamente).
 ty_adverb(spanish, slowly, lentamente).
@@ -520,6 +522,19 @@ ty_tense_form(spanish, pluperfect, sg(1), pos, ['había', participle]).
 ty_tense_form(spanish, pluperfect, sg(2), pos, ['habías', participle]).
 ty_tense_form(spanish, pluperfect, pl(1), pos, ['habíamos', participle]).
 ty_tense_form(spanish, pluperfect, pl(2), pos, ['habíais', participle]).
+%% THE PASSIVE (since 1.101.0, as English's since 1.98.0): ser and the
+%% participle, which agrees with the subject (`La casa fue construida.').
+ty_tense_form(spanish, pass(present), sg, pos, [es, participle(subject)]).
+ty_tense_form(spanish, pass(present), pl, pos, [son, participle(subject)]).
+ty_tense_form(spanish, pass(past), sg, pos, [fue, participle(subject)]).
+ty_tense_form(spanish, pass(past), pl, pos, [fueron, participle(subject)]).
+ty_tense_form(spanish, pass(perfect), sg, pos, [ha, sido, participle(subject)]).
+ty_tense_form(spanish, pass(perfect), pl, pos, [han, sido, participle(subject)]).
+%% A participle's ending for the subject's gender and number (since
+%% 1.101.0, the passive's: visto, vista, vistos, vistas).
+ty_participle_ending(spanish, f, sg, o, a).
+ty_participle_ending(spanish, m, pl, o, os).
+ty_participle_ending(spanish, f, pl, o, as).
 ty_tense_like(spanish, copula, imperfect, past).
 ty_copula(spanish, adj, conditional, sg, pos, ['sería']).
 ty_copula(spanish, adj, conditional, pl, pos, ['serían']).

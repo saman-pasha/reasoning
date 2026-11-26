@@ -161,6 +161,7 @@ main :-
     passive,
     passive_places,
     object_complement,
+    passive_languages,
     format("~ndone~n", []).
 
 
@@ -1133,6 +1134,22 @@ object_complement :-
     must('a passive with a complement', IR3, clause(consider, pass(past), pos, np(dog, sg, def, []), oc(adj([small])))),
     typology_write(english, IR3, W3),
     must('written back', W3, 'The dog was considered small.').
+
+%% 70. THE PASSIVE IN FOUR MORE LANGUAGES (1.101.0): the auxiliary and the
+%% participle, rows of pass(T); in Spanish, Italian and French the
+%% participle agrees with the subject (participle(subject)), in German it
+%% goes to the clause's end.
+passive_languages :-
+    typology_write(spanish, clause(see, pass(past), pos, np(girl, sg, def, []), none), W1),
+    must('Spanish, the participle agreeing', W1, 'La niña fue vista.'),
+    typology_load(french),
+    typology_write(french, clause(see, pass(perfect), pos, np(girl, pl, def, []), none), W2),
+    must('French', W2, 'Les filles ont été vues.'),
+    typology_load(german),
+    typology_write(german, clause(see, pass(past), pos, np(girl, sg, def, []), none, [pp(by, np(boy, sg, def, []))]), W3),
+    must('German, the participle last', W3, 'Das Mädchen wurde vom Jungen gesehen.'),
+    typology_read(german, W3, IR3),
+    must('read back, von its agent', IR3, clause(see, pass(past), pos, np(girl, sg, def, []), none, [pp(by, np(boy, sg, def, []))])).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

@@ -223,6 +223,9 @@ ty_adposition(italian, on, [su]).
 ty_adposition(italian, with, [con]).
 ty_adposition(italian, to, [a]).
 ty_adposition(italian, from, [da]).
+%% The passive's agent (since 1.101.0), after from: a passive's adjunct of
+%% da is its agent (ty_passive//2).
+ty_adposition(italian, by, [da]).
 ty_contraction(italian, [in, il], nel).
 ty_contraction(italian, [in, lo], nello).
 ty_contraction(italian, [in, 'l\''], 'nell\'').
@@ -486,6 +489,12 @@ ty_tense_form(italian, pluperfect, sg(1), pos, [avevo, participle]).
 ty_tense_form(italian, pluperfect, sg(2), pos, [avevi, participle]).
 ty_tense_form(italian, pluperfect, pl(1), pos, [avevamo, participle]).
 ty_tense_form(italian, pluperfect, pl(2), pos, [avevate, participle]).
+%% THE PASSIVE (since 1.101.0): essere and the participle, which agrees with
+%% the subject (`La casa fu costruita.').
+ty_tense_form(italian, pass(present), sg, pos, ['è', participle(subject)]).
+ty_tense_form(italian, pass(present), pl, pos, [sono, participle(subject)]).
+ty_tense_form(italian, pass(past), sg, pos, [fu, participle(subject)]).
+ty_tense_form(italian, pass(past), pl, pos, [furono, participle(subject)]).
 ty_class_tense_form(italian, essere, pluperfect, sg, pos, [era, participle(subject)]).
 ty_class_tense_form(italian, essere, pluperfect, pl, pos, [erano, participle(subject)]).
 ty_class_tense_form(italian, essere, pluperfect, sg(1), pos, [ero, participle(subject)]).

@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2462,7 +2462,7 @@ passive :-
            ( ( typology_write(english, clause(fumble, pass(T2), P2, np(pass, sg, def, []), none), W3) -> true ; W3 = none ),
              atomic_list_concat(['written in the tense ', T2, ', ', P2], Label2),
              check(Label2, W3, W2) )),
-    forall(member(L4, [spanish, persian]),
+    forall(member(L4, [persian]),
            ( ( typology_write(L4, clause(fumble, pass(past), pos, np(pass, sg, def, []), none), W4) -> true ; W4 = none ),
              atomic_list_concat([L4, ' has no passive row yet'], Label4),
              check(Label4, W4, none) )).
@@ -2512,6 +2512,28 @@ object_complement :-
     check('a passive with a complement written', W2, 'The dog was considered small.'),
     ( typology_write(spanish, clause(consider, past, pos, pron(3, sg, m), oc(np(dog, sg, def, []), adj([small]))), W3) -> true ; W3 = none ),
     check('Spanish has no complement row yet', W3, none).
+
+%% 1.101.0: the passive in Spanish, Italian, French and German: the
+%% auxiliary and the participle (ty_tense_form/5 of pass(T)), which agrees
+%% with the subject in the three that say participle(subject), German's at
+%% the clause's end; the agent pp(by, NP), Italian da and German von read
+%% as by in a passive.
+passive_languages :-
+    section('the passive in four more languages'),
+    forall(member(L-IR-Want, [
+               spanish-clause(see, pass(past), pos, np(dog, sg, def, []), none)-'El perro fue visto.',
+               spanish-clause(see, pass(present), neg, np(dog, pl, def, []), none)-'Los perros no son vistos.',
+               italian-clause(see, pass(past), pos, np(girl, sg, def, []), none, [pp(by, np(boy, sg, def, []))])-'La ragazza fu vista dal ragazzo.',
+               french-clause(see, pass(perfect), pos, np(girl, pl, def, []), none)-'Les filles ont été vues.',
+               french-clause(see, pass(past), pos, np(girl, sg, def, []), none, [pp(by, np(boy, sg, def, []))])-'La fille fut vue par le garçon.',
+               german-clause(see, pass(past), pos, np(girl, sg, def, []), none, [pp(by, np(boy, sg, def, []))])-'Das Mädchen wurde vom Jungen gesehen.',
+               german-clause(see, pass(present), neg, np(dog, pl, def, []), none)-'Die Hunde werden nicht gesehen.' ]),
+           ( ( typology_write(L, IR, W) -> true ; W = none ),
+             atomic_list_concat([L, ': ', Want], Label),
+             check(Label, W, Want),
+             ( typology_read(L, Want, R1) -> true ; R1 = none ),
+             atomic_list_concat([L, ': read back, the first reading: ', Want], Label1),
+             check(Label1, R1, IR) )).
 
 %% 1.64.0: the bare singular noun. np(M, sg, mass, []): a singular noun
 %% with no article, read after the other readings, written with none;

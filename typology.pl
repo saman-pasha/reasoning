@@ -3925,7 +3925,18 @@ ty_passive(L, C) -->
       b_setval('$ty_pass', on) },
     ty_clause(L, C),
     { b_setval('$ty_pass', Old), ty_wh_count(C, yes_no),
-      ( O == none -> true ; O = oc(_) -> true ; ty_object_infinitive(L, V) ) }.
+      ( O == none -> true ; O = oc(_) -> true ; ty_object_infinitive(L, V) ),
+      ty_agent_first(L, S0, C) }.
+
+%% Reading, a passive's adjunct whose words are an agent's too is its
+%% agent (since 1.101.0: Italian da, German von, which are from and of
+%% before by): the reading with another meaning there is passed by.
+ty_agent_first(L, S0, clause(_, _, _, _, _, Js)) :-
+    (   var(S0) -> true
+    ;   \+ is_list(Js) -> true
+    ;   \+ ( member(J, Js), nonvar(J), J = pp(P, _), P \== by,
+             ty_adposition(L, P, Ws), ty_adposition(L, by, Ws) )
+    ).
 
 %% Reading, a passive with a complement (since 1.100.0, oc(Predicate)) is
 %% tried only where a complement verb's participle is among the words
@@ -4329,7 +4340,7 @@ ty_verb_split(L, C, Rule, O0, O) :-
         ty_split_wanted(L, P, Rule),
         once(append(A, [v|B], O0))
     ->  (   nonvar(T)
-        ->  ( ty_tense_participle(L, T) -> ty_split_at(L, A, B, O) ; O = O0 )
+        ->  ( \+ \+ ty_tense_participle(L, T) -> ty_split_at(L, A, B, O) ; O = O0 )
         ;   ( O = O0 ; ty_split_at(L, A, B, O) )
         )
     ;   O = O0
@@ -6301,7 +6312,8 @@ ty_vfirst_make(L) :-
            assertz(('$ty_tfirst'(F, L) :- nb_current('$ty_pass', on)))),
     ( memberchk(pass(_), Fs1) -> assertz('$ty_pass_made'(L)) ; true ),
     forall(( ty_tense_form(L, T2, _, _, Ws2), nonvar(T2), T2 = pass(_),
-             append(_, [W2, participle|_], Ws2), atom(W2), \+ '$ty_pword'(W2, L) ),
+             append(_, [W2, PT2|_], Ws2), ( PT2 == participle ; PT2 == participle(subject) ),
+             atom(W2), \+ '$ty_pword'(W2, L) ),
            assertz('$ty_pword'(W2, L))),
     (   '$ty_pass_made'(L)
     ->  forall(( ty_tense_pattern(L, T3, N3, P3, Pt3, C3), \+ ( nonvar(T3), T3 = pass(_) ) ),
@@ -7902,8 +7914,15 @@ ty_fits(any, _) :- !.
 ty_fits(X, X).
 
 %% A tense a row's tense fits: any of the tenses where the row says any.
+%% A rule of any tense fits a passive's too (since 1.101.0: Spanish `no fue
+%% visto').
 ty_tense_fit(T0, T) :-
-    (   T0 == any -> ty_values(tense, Ts), member(T, Ts) ; T = T0 ).
+    (   T0 == any
+    ->  (   nonvar(T), T = pass(T1) -> ty_values(tense, Ts), memberchk(T1, Ts)
+        ;   ty_values(tense, Ts), member(T, Ts)
+        )
+    ;   T = T0
+    ).
 
 %% ---- the word tables from corpus/vocabulary ---------------------------------------
 %%
