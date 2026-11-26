@@ -263,11 +263,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 382),
-    ( R >= 368 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 368 right', VR, ok),
-    ( K >= 374 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 374 kept', VK, ok).
+    check('the second measure: its sentences', N, 392),
+    ( R >= 378 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 378 right', VR, ok),
+    ( K >= 384 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 384 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -665,7 +665,16 @@ phrases :-
     forall(member(T7, ['A heavy coat.', 'A warm coat.']),
            ( logic_translate(english, cocolog, T7, P7), assert_text(P7) )),
     findall(X7, coat(X7), Xs7),
-    check('a query of the coats the phrases say', Xs7, [a(heavy(coat)), a(warm(coat))]).
+    check('a query of the coats the phrases say', Xs7, [a(heavy(coat)), a(warm(coat))]),
+    %% 1.104.0: an adposition phrase alone is said of something.
+    forall(member(T8-Want8, [
+               'In direct sunlight.'-'in(something, direct(sunlight)).\n',
+               'With dry eyes.'-'eye(a(pl(dry(eye)))).\ndry(a(pl(dry(eye)))).\nwith(something, a(pl(dry(eye)))).\n' ]),
+           ( ( logic_translate(english, cocolog, T8, C8) -> true ; C8 = none ),
+             one_line(['a phrase into Cocolog: ', T8], Label8),
+             check(Label8, C8, Want8) )),
+    ( logic_translate(cocolog, english, 'in(something, direct(sunlight)).\n', E9) -> true ; E9 = none ),
+    check('and back into English, a copula of something', E9, 'Something is in direct sunlight.').
 
 %% 1.82.0: A COMMAND is its atoms in the imperative, a tense, its subject
 %% you; Cocolog writes imperative(Atom), and a program asks what it is told

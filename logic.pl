@@ -441,6 +441,13 @@ lg_someone(thing, something).
 %% (phrase(Kind)).
 lg_phrase(X, _) :- var(X), !, lg_no(phrase(X)).
 lg_phrase(and(Xs), Items) :- !, lg_phrases(Xs, Items).
+%% AN ADPOSITION PHRASE ALONE (since 1.104.0) is said of something, as a
+%% copula's adposition phrase is of its subject: `In direct sunlight.' is
+%% in(something, direct(sunlight)), `With dry eyes.' eye(a(pl(dry(eye)))),
+%% dry(...), with(something, a(pl(dry(eye)))). Back into English it is
+%% `Something is in direct sunlight.'
+lg_phrase(pp(P, NP), Items) :- !,
+    lg_statement(copula(present, pos, qp(some, thing), pp(P, NP)), Items).
 lg_phrase(X0, Items) :-
     ( lg_phrase_noun(X0, N, As0) -> true ; functor(X0, F, _), lg_no(phrase(F)) ),
     lg_phrase_aps(X0, X, As0, As, XMs),

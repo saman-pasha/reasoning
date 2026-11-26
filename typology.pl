@@ -723,7 +723,10 @@
 %%                                     heavy coat.' is phrase(np(coat, sg,
 %%                                     indef, [heavy])); NP anything a noun
 %%                                     phrase is where no role's marks
-%%                                     stand (ty_np_phrase//3)
+%%                                     stand (ty_np_phrase//3); since
+%%                                     1.104.0 an adposition phrase alone
+%%                                     is phrase(pp(Prep, NP)) (`In direct
+%%                                     sunlight.')
 %%
 %% WHAT IS PUBLIC:
 %%
@@ -3692,6 +3695,17 @@ ty_sentence(L, phrase(NP)) -->
     { b_setval('$ty_phrase', no), \+ ty_is_asked(NP),
       \+ ty_phrase_command(L, NP, S0, S) }.
 
+%% AN ADPOSITION PHRASE ALONE (since 1.104.0): phrase(pp(Prep, NP)), a
+%% sentence that says no clause (`In direct sunlight.', `At the height of
+%% her career.': some 50 of lexicon/prose.txt's 8 000), read after the
+%% noun phrase alone, and only where the first word may begin an
+%% adposition phrase (an adposition's first word or a contraction).
+ty_sentence(L, phrase(pp(Prep, NP))) -->
+    ty_here(S0),
+    { ty_pp_first(L, S0), b_setval('$ty_phrase', yes) },
+    ty_pp(L, Prep, NP),
+    { b_setval('$ty_phrase', no), \+ ty_is_asked(NP) }.
+
 %% A COMMAND (since 1.82.0): a clause in the imperative, a tense whose verb
 %% forms the language's ty_tense_form/5 rows give (English: the present's
 %% plural form, `Construct a proof.', `do not' before it), its subject
@@ -3758,6 +3772,13 @@ ty_said_passive(read, L, S0, S) :-
 ty_said_subject(read, L, S0, S) :-
     ty_clause(L, C2, S0, S),
     arg(4, C2, Sub), Sub \== pron(3, sg, zero), !.
+
+%% Reading, a first word that may begin an adposition phrase: an
+%% adposition's first word or a contraction (an adposition phrase alone).
+ty_pp_first(L, S0) :-
+    (   var(S0) -> true
+    ;   S0 = [W|_], atom(W), ( ty_adposition(L, _, [W|_]) ; ty_contraction(L, _, W) ) -> true
+    ).
 
 ty_unsaid_participle(L, clause(V, past, _, _, O, _)) :-
     O == none,
@@ -4024,9 +4045,9 @@ ty_passive(L, C) -->
       ty_agent_first(L, S0, C) }.
 
 %% Reading, a passive tries a progressive passive's rows only where one of
-%% their own words is ahead ('$ty_ppw'/2, English `being'; '$ty_pprog').
+%% their own words is ahead ('$ty_pprw'/2, English `being'; '$ty_pprog').
 ty_pprog_ahead(L, S0) :-
-    (   '$ty_pprog_made'(L), nonvar(S0), \+ ( member(X, S0), atom(X), '$ty_ppw'(X, L) )
+    (   '$ty_pprog_made'(L), nonvar(S0), \+ ( member(X, S0), atom(X), '$ty_pprw'(X, L) )
     ->  b_setval('$ty_pprog', off)
     ;   b_setval('$ty_pprog', on)
     ).
@@ -6372,7 +6393,7 @@ ty_verb_row(L, V, T, N, P, Words) :-
 %% (English `being'): a passive tries the rows only where one is ahead.
 :- dynamic('$ty_pprog_made'/1).
 :- dynamic('$ty_tnpp'/6).
-:- dynamic('$ty_ppw'/2).
+:- dynamic('$ty_pprw'/2).
 :- dynamic('$ty_particle'/2).
 
 %% Each particle of L's phrasal rows, once.
@@ -6409,7 +6430,7 @@ ty_vfirst_make(L) :-
     retractall('$ty_tact'(L, _, _, _, _, _)),
     retractall('$ty_pprog_made'(L)),
     retractall('$ty_tnpp'(L, _, _, _, _, _)),
-    retractall('$ty_ppw'(_, L)),
+    retractall('$ty_pprw'(_, L)),
     ( ty_phrasal(L, _, _, _, _) -> assertz('$ty_phrasal_made'(L)) ; true ),
     forall(( ty_verb_list(L, complement, _), ty_verb(L, OcV, _, _, _, _), \+ '$ty_ocv'(OcV, L),
              ty_verb_of(L, complement, OcV) ),
@@ -6464,8 +6485,8 @@ ty_vfirst_make(L) :-
                assertz('$ty_tnpp'(L, T6, N6, P6, Pt6, C6))),
         forall(( ty_tense_form(L, T7, _, _, Ws7), ty_pass_prog(T7), member(W7, Ws7), atom(W7),
                  \+ ( ty_tense_form(L, T8, _, _, Ws8), \+ ty_pass_prog(T8), memberchk(W7, Ws8) ),
-                 \+ '$ty_ppw'(W7, L) ),
-               assertz('$ty_ppw'(W7, L)))
+                 \+ '$ty_pprw'(W7, L) ),
+               assertz('$ty_pprw'(W7, L)))
     ;   true
     ),
     (   memberchk('$imperative', Fs1), \+ memberchk('$any', Fs1)

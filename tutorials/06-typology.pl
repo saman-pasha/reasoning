@@ -164,6 +164,7 @@ main :-
     passive_languages,
     progressive,
     progressive_passive,
+    pp_phrase,
     format("~ndone~n", []).
 
 
@@ -1172,6 +1173,17 @@ progressive_passive :-
     must('read', IR1, clause(build, pass(prog(present)), pos, np(house, sg, def, []), none)),
     typology_write(english, clause(open, pass(prog(past)), neg, np(door, pl, def, []), none), W2),
     must('written', W2, 'The doors were not being opened.').
+
+%% 73. AN ADPOSITION PHRASE ALONE (1.104.0): phrase(pp(Prep, NP)), a
+%% sentence that says no clause, read after the noun phrase alone where
+%% the first word may begin an adposition phrase; written in every
+%% language as its adposition phrase.
+pp_phrase :-
+    typology_read(english, 'In direct sunlight.', IR1),
+    must('read', IR1, phrase(pp(in, np(sunlight, sg, mass, [direct])))),
+    typology_load(german),
+    typology_write(german, phrase(pp(in, np(house, sg, def, [big]))), W2),
+    must('in German, the contraction', W2, 'Im großen Haus.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

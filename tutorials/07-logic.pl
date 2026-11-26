@@ -69,6 +69,7 @@ main :-
     passive_languages,
     progressive,
     complement_terms,
+    pp_phrase,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -524,6 +525,16 @@ complement_terms :-
     must('and into English', E1, 'They considered him a good man.'),
     logic_translate(english, cocolog, 'The house is being built.', C2),
     must('a progressive passive', C2, 'progressive(build(someone, the(house))).\n').
+
+%% 40. AN ADPOSITION PHRASE ALONE (1.104.0) is said of something, as a
+%% copula's adposition phrase is said of its subject; back into English
+%% it is that copula.
+pp_phrase :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'In direct sunlight.', C1),
+    must('the phrase said of something', C1, 'in(something, direct(sunlight)).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and into English', E1, 'Something is in direct sunlight.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

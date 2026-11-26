@@ -1973,7 +1973,20 @@ phrases :-
     check('a pronoun of the next sentence stands for its noun', IRs4,
           [phrase(np(dog, sg, indef, [big])), clause(sleep, present, pos, pron(3, sg, ref(dog)), none)]),
     findall(M5, ty_ir_meaning(phrase(of(np(cathedral, sg, def, []), np(portal, pl, def, [old]))), M5), Ms5),
-    check('the meanings of a phrase', Ms5, [cathedral, portal, old]).
+    check('the meanings of a phrase', Ms5, [cathedral, portal, old]),
+    %% 1.104.0: an adposition phrase alone, phrase(pp(Prep, NP)).
+    forall(member(T6-Want6, [
+               'In direct sunlight.'-[phrase(pp(in, np(sunlight, sg, mass, [direct])))],
+               'With dry eyes.'-[phrase(pp(with, np(eye, pl, indef, [dry])))],
+               'In which house?'-[] ]),
+           ( findall(R6, typology_read(english, T6, R6), Rs6),
+             atomic_list_concat(['English: ', T6], Label6),
+             check(Label6, Rs6, Want6) )),
+    IR7 = phrase(pp(in, np(house, sg, def, [big]))),
+    forall(member(L7-Want7, [english-'In the big house.', french-'Dans la grande maison.', german-'Im großen Haus.']),
+           ( ( typology_write(L7, IR7, W7), typology_read(L7, W7, IR7b), IR7b == IR7 -> true ; W7 = none ),
+             atomic_list_concat([L7, ': ', Want7, ', and read back'], Label7),
+             check(Label7, W7, Want7) )).
 
 %% 1.82.0: A COMMAND is a clause in the imperative, its subject you said by
 %% no words; English's verb is the present's plural form, `do not' before
@@ -2908,8 +2921,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 4405 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 4 405 sentences read at 1.102.0 are read', R1, yes),
+    ( K >= 4456 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 4 456 sentences read at 1.104.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

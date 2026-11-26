@@ -411,3 +411,13 @@ They are trying to determine the cause of the crash.	progressive(try(they, to(de
 A manned earth satellite was considered a necessary research step.	satellite(a(manned(nn(earth, satellite)))). manned(a(manned(nn(earth, satellite)))). nn(earth, a(manned(nn(earth, satellite)))). past(consider(someone, a(manned(nn(earth, satellite))), a(necessary(nn(research, step))))).
 They painted it a light shade of bluish green.	past(paint(they, it, a(of(light(shade), bluish(green))))).
 He was rightly considered the greatest singer of his time.	past(rightly(consider(someone, he, of(greatest(singer), of(time, he))))).
+In direct sunlight.	in(something, direct(sunlight)).
+Within living memory.	within(something, living(memory)).
+In the near future.	in(something, the(near(future))).
+With dry eyes.	eye(a(pl(dry(eye)))). dry(a(pl(dry(eye)))). with(something, a(pl(dry(eye)))).
+In a nasty mood.	mood(a(nasty(mood))). nasty(a(nasty(mood))). in(something, a(nasty(mood))).
+At the height of her career.	at(something, of(height, of(career, she))).
+On the job.	on(something, the(job)).
+Beyond my ken.	beyond(something, of(ken, i)).
+In the midst of the crowd.	in(something, of(midst, the(crowd))).
+On active duty.	on(something, active(duty)).
