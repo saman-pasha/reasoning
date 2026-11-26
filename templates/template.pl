@@ -303,8 +303,11 @@ ty_conjunct_marks(xx).
 %%                                     adposition phrase, since 1.96.0;
 %%                                     complement: one whose object may be
 %%                                     followed by a predicate said of it,
-%%                                     since 1.100.0), or Base is a list of
-%%                                     verbs (since 1.95.0)
+%%                                     since 1.100.0; ing_double: one whose
+%%                                     last consonant doubles before -ing
+%%                                     though it has two syllables, since
+%%                                     1.102.0), or Base is a list of verbs
+%%                                     (since 1.95.0)
 %% ty_verb_list(xx, Kind, Base).
 %%   e.g. ty_verb_list(english, no_object, vi).
 
@@ -381,7 +384,10 @@ ty_adverb_inside(xx).
 %%                                     passive's, Tense pass(T) of a tense
 %%                                     T, its subject the verb's patient
 %%                                     (English pass(past) [was,
-%%                                     participle])
+%%                                     participle]), and since 1.102.0 the
+%%                                     progressive's, Tense prog(T), ing
+%%                                     the verb's form in -ing (English
+%%                                     prog(past) [was, ing])
 %% ty_tense_form(xx, Tense, Number, Polarity, Pattern).
 %%   e.g. ty_tense_form(english, future, any, pos, [will, form(present, pl)]).
 

@@ -547,6 +547,29 @@ ty_tense_form(english, pass(conditional), any, pos, [would, be, participle]).
 ty_tense_form(english, pass(conditional), any, neg, [would, not, be, participle]).
 %% A passive infinitive (since 1.99.0): `The machine needs to be serviced.'
 ty_tense_form(english, pass(infinitive), any, pos, [to, be, participle]).
+%% THE PROGRESSIVE (since 1.102.0): a form of be and the verb's form in
+%% -ing (ing: `wallowing', `running', `dying'), read after every other
+%% reading, as the passive is (ty_progressive//2).
+ty_tense_form(english, prog(present), sg, pos, [is, ing]).
+ty_tense_form(english, prog(present), pl, pos, [are, ing]).
+ty_tense_form(english, prog(present), sg(1), pos, [am, ing]).
+ty_tense_form(english, prog(present), sg, neg, [is, not, ing]).
+ty_tense_form(english, prog(present), pl, neg, [are, not, ing]).
+ty_tense_form(english, prog(present), sg(1), neg, [am, not, ing]).
+ty_tense_form(english, prog(past), sg, pos, [was, ing]).
+ty_tense_form(english, prog(past), pl, pos, [were, ing]).
+ty_tense_form(english, prog(past), sg(1), pos, [was, ing]).
+ty_tense_form(english, prog(past), sg, neg, [was, not, ing]).
+ty_tense_form(english, prog(past), pl, neg, [were, not, ing]).
+ty_tense_form(english, prog(past), sg(1), neg, [was, not, ing]).
+ty_tense_form(english, prog(future), any, pos, [will, be, ing]).
+ty_tense_form(english, prog(future), any, neg, [will, not, be, ing]).
+ty_tense_form(english, prog(perfect), sg, pos, [has, been, ing]).
+ty_tense_form(english, prog(perfect), pl, pos, [have, been, ing]).
+ty_tense_form(english, prog(perfect), sg, neg, [has, not, been, ing]).
+ty_tense_form(english, prog(perfect), pl, neg, [have, not, been, ing]).
+ty_tense_form(english, prog(pluperfect), any, pos, [had, been, ing]).
+ty_tense_form(english, prog(pluperfect), any, neg, [had, not, been, ing]).
 %% An adverb may stand inside a verb's words, or before them (since 1.99.0:
 %% `The area is well populated.'); the writer puts it after the verb.
 ty_adverb_inside(english).
@@ -616,6 +639,9 @@ ty_verb_list(english, to_noun, [come, get, run]).
 %% wing.'): WordNet's `Something ----s something Adjective/Noun' less the
 %% senses the corpus seldom says (do_by, fit, grow, handle, play, see),
 %% and the verbs of naming and choosing it leaves out.
+%% The verbs whose last consonant doubles before -ing though they have two
+%% syllables (since 1.102.0: `beginning', `preferring').
+ty_verb_list(english, ing_double, [abhor, acquit, admit, allot, begin, commit, compel, concur, confer, control, defer, deter, emit, equip, excel, expel, forget, incur, infer, occur, omit, outwit, patrol, permit, prefer, propel, rebel, recur, refer, regret, submit, transfer, transmit, upset]).
 ty_verb_list(english, complement, [adjudge, appoint, believe, brand, call, color, consider, crown, declare, deem, dub, dye, elect, feel, find, hold, judge, keep, label, leave, make, name, nominate, paint, proclaim, pronounce, prove, reckon, regard, render, rule, set, term, think, turn]).
 %% The adjectives an infinitive may follow, its subject the adjective's own
 %% (since 1.96.0: `able to walk', `glad to help'); WordNet gives

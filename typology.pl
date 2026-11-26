@@ -116,8 +116,11 @@
 %%                                     adposition phrase, since 1.96.0;
 %%                                     complement: one whose object may be
 %%                                     followed by a predicate said of it,
-%%                                     since 1.100.0), or Base is a list of
-%%                                     verbs (since 1.95.0)
+%%                                     since 1.100.0; ing_double: one whose
+%%                                     last consonant doubles before -ing
+%%                                     though it has two syllables, since
+%%                                     1.102.0), or Base is a list of verbs
+%%                                     (since 1.95.0)
 %%     ty_adjective_list(L, Kind, Base)
 %%                                     the adjectives of lexicon/Base.txt,
 %%                                     or of the list Base, are of Kind
@@ -171,7 +174,10 @@
 %%                                     passive's, Tense pass(T) of a tense
 %%                                     T, its subject the verb's patient
 %%                                     (English pass(past) [was,
-%%                                     participle])
+%%                                     participle]), and since 1.102.0 the
+%%                                     progressive's, Tense prog(T), ing
+%%                                     the verb's form in -ing (English
+%%                                     prog(past) [was, ing])
 %%     ty_definite_like(L, Def, As)    the language writes the definiteness
 %%                                     Def as As, and never reads Def
 %%                                     (since 1.64.0: Persian writes mass
@@ -1809,7 +1815,7 @@ ty_missing(L, bad(ty_wh_tonic(L, M, Ws))) :-
     \+ ( is_list(Ws), Ws \== [], ty_wh_word(L, M, _) ).
 ty_missing(L, bad(ty_tense_form(L, T, N, P, Ws))) :-
     ty_tense_form(L, T, N, P, Ws),
-    \+ ( ty_values(tense, Ts), ( nonvar(T), T = pass(T0) -> memberchk(T0, Ts) ; memberchk(T, Ts) ),
+    \+ ( ty_values(tense, Ts), ( nonvar(T), ( T = pass(T0) ; T = prog(T0) ) -> memberchk(T0, Ts) ; memberchk(T, Ts) ),
          ( N == any ; ty_values(agreement, As), memberchk(N, As) ),
          memberchk(P, [pos, neg]), is_list(Ws), Ws \== [] ).
 ty_missing(L, bad(ty_negative_article_roles(L, Rs))) :-
@@ -3717,6 +3723,8 @@ ty_sentence(L, C) -->
 
 %% A passive (since 1.98.0, ty_passive//2), after every other reading.
 ty_sentence(L, C) --> ty_passive(L, C).
+%% A progressive (since 1.102.0, ty_progressive//2), after the passive.
+ty_sentence(L, C) --> ty_progressive(L, C).
 %% A passive with no subject (since 1.99.0: `Was transferred up to
 %% headquarters.'), its patient someone the text does not name, as a
 %% clause's with no subject: after the passive with one, and not where the
@@ -3835,6 +3843,7 @@ ty_imperative_ok(T) :-
     (   T == imperative -> nb_current('$ty_command', c(_))
     ;   T == infinitive -> nb_current('$ty_command', i(_))
     ;   T = pass(T0) -> nb_current('$ty_pass', on), ( T0 == infinitive -> nb_current('$ty_command', i(_)) ; true )
+    ;   T = prog(_) -> nb_current('$ty_prog', on)
     ;   true
     ).
 
@@ -3900,6 +3909,81 @@ ty_ir_features(_, _, [_, _, _, _]).
 ty_statement(L, C) --> ty_clause(L, C), { ty_wh_count(C, yes_no) }.
 ty_statement(L, C) --> ty_copula_clause(L, C), { ty_wh_count(C, yes_no) }.
 ty_statement(L, C) --> ty_passive(L, C).
+ty_statement(L, C) --> ty_progressive(L, C).
+
+%% THE PROGRESSIVE (since 1.102.0): a clause in a tense prog(T), the verb's
+%% words a ty_tense_form/5 row of prog(T) (English prog(past) [was, ing]:
+%% `Pigs were wallowing in the mud.' is clause(wallow, prog(past), pos,
+%% np(pig, pl, indef, []), none, [pp(in, np(mud, sg, def, []))])), ing the
+%% verb's form in -ing (ty_ing_word/3). As the passive, it is read after
+%% every other reading: '$ty_prog' is on only while its clause is read or
+%% written, the only time a prog(T) pattern is tried (ty_imperative_ok/1)
+%% and its first words (`is', `was') are a tense's first words; reading,
+%% only where a word in -ing stands right after a word the rows put before
+%% ing ('$ty_ingw'/2: `is', `was', `been', `be'), or one word after it (an
+%% adverb inside the verb's words): any word in -ing ahead, `washing' and
+%% `building' among them, cost `The washing machine needs to be serviced.'
+%% a third more inferences to read.
+ty_progressive(L, C) -->
+    { C = clause(_, prog(_), _, _, _, _), '$ty_prog_made'(L) },
+    ty_prog_ahead(L),
+    { ( nb_current('$ty_prog', Old) -> true ; Old = off ),
+      b_setval('$ty_prog', on) },
+    ty_clause(L, C),
+    { b_setval('$ty_prog', Old), ty_wh_count(C, yes_no) }.
+
+ty_prog_ahead(L, S0, S0) :-
+    (   var(S0) -> true
+    ;   append(_, [A|R], S0), atom(A), '$ty_ingw'(A, L),
+        ( R = [X|_] ; R = [M, X|_], atom(M), ( M == not ; ty_adverb(L, _, M) ) ),
+        atom(X), atom_concat(_, ing, X)
+    ->  true
+    ).
+
+%% A verb's form in -ing (since 1.102.0), made from its base (its present
+%% plural form): `wallow' wallowing, `make' making, `die' dying, `run'
+%% running (one vowel before one last consonant, the word of one syllable);
+%% reading, the bases the word's spelling may come from, first one whose
+%% own form in -ing it is (`staring' is stare's before star's, which is
+%% `starring'), then the others (`beginning', whose doubling the rule does
+%% not make).
+ty_ing_word(L, V, W) :-
+    (   atom(W)
+    ->  atom_concat(B0, ing, W),
+        findall(B, ( ty_ing_base(B0, B), once(ty_verb_row(L, _, present, pl, pos, [B])) ), Bs),
+        (   member(B, Bs), ty_ing_of(B, W)
+        ;   member(B, Bs), \+ ty_ing_of(B, W)
+        ),
+        ty_verb_row(L, V, present, pl, pos, [B])
+    ;   ty_verb_row(L, V, present, pl, pos, [B]),
+        (   ty_verb_of(L, ing_double, V), atom_codes(B, Cs), last(Cs, C)
+        ->  append(Cs, [C], Ds), atom_codes(B2, Ds), atom_concat(B2, ing, W)
+        ;   ty_ing_of(B, W)
+        )
+    ).
+
+ty_ing_base(B0, B0).
+ty_ing_base(B0, B) :- atom_concat(B0, e, B).
+ty_ing_base(B0, B) :- atom_concat(S, y, B0), atom_concat(S, ie, B).
+ty_ing_base(B0, B) :-
+    atom_codes(B0, Cs), append(F, [C, C], Cs), ty_ing_doubles(C),
+    append(F, [C], Bs), atom_codes(B, Bs).
+
+ty_ing_of(B, W) :-
+    (   atom_concat(S, ie, B) -> atomic_list_concat([S, ying], W)
+    ;   atom_concat(S, e, B), \+ atom_concat(_, ee, B), \+ atom_concat(_, ye, B), \+ atom_concat(_, oe, B), S \== ''
+    ->  atom_concat(S, ing, W)
+    ;   atom_codes(B, Cs), append(F, [V, C], Cs),
+        ty_ing_vowel(V), ty_ing_doubles(C),
+        F \== [], \+ ( member(X, F), ty_ing_vowel(X) )
+    ->  append(Cs, [C], Ds), atom_codes(B2, Ds), atom_concat(B2, ing, W)
+    ;   atom_concat(B, ing, W)
+    ).
+
+ty_ing_vowel(C) :- memberchk(C, [0'a, 0'e, 0'i, 0'o, 0'u]).
+%% A last consonant that doubles before -ing (`running'; not `showing',
+%% `fixing', `playing').
+ty_ing_doubles(C) :- C >= 0'a, C =< 0'z, \+ ty_ing_vowel(C), \+ memberchk(C, [0'w, 0'x, 0'y]).
 
 %% THE PASSIVE (since 1.98.0): a clause in a tense pass(T), its subject the
 %% verb's patient and its object none, the verb's words a ty_tense_form/5
@@ -6093,7 +6177,7 @@ ty_tense_may(L, Words) :-
 %% the 22 passive rows cost `The boys do not see the dogs.' 1 303
 %% inferences more, 1.98.0's first cut).
 ty_tense_pattern_now(L, T, N0, P, Pattern, C) :-
-    (   var(T), '$ty_pass_made'(L), \+ nb_current('$ty_pass', on)
+    (   var(T), '$ty_pass_made'(L), \+ nb_current('$ty_pass', on), \+ nb_current('$ty_prog', on)
     ->  '$ty_tact'(L, T, N0, P, Pattern, C)
     ;   ty_tense_pattern(L, T, N0, P, Pattern, C)
     ).
@@ -6118,6 +6202,8 @@ ty_tense_words([I|Is], L, V, Words) :-
         )
     ;   I == participle
     ->  Words = [W|Rest], ty_participle_word(L, V, W)
+    ;   I == ing
+    ->  Words = [W|Rest], ty_ing_word(L, V, W)
     ;   I == participle(subject)
     ->  Words = [W|Rest],
         (   atom(W)
@@ -6238,6 +6324,9 @@ ty_verb_row(L, V, T, N, P, Words) :-
 %% A language with a passive's ty_tense_form/5 row (since 1.98.0), whose
 %% clauses ty_passive//2 tries.
 :- dynamic('$ty_pass_made'/1).
+%% A language with a progressive's ty_tense_form/5 row (since 1.102.0).
+:- dynamic('$ty_prog_made'/1).
+:- dynamic('$ty_ingw'/2).
 %% A verb of a ty_verb_list(L, complement, Base) row (since 1.100.0), whose
 %% object ty_object//4 may read with its complement.
 :- dynamic('$ty_ocv'/2).
@@ -6278,6 +6367,8 @@ ty_vfirst_make(L) :-
     retractall('$ty_inf_made'(L)),
     retractall('$ty_vinf'(_, L)),
     retractall('$ty_pass_made'(L)),
+    retractall('$ty_prog_made'(L)),
+    retractall('$ty_ingw'(_, L)),
     retractall('$ty_ocv'(_, L)),
     retractall('$ty_ocpw'(_, L)),
     retractall('$ty_pword'(_, L)),
@@ -6302,21 +6393,31 @@ ty_vfirst_make(L) :-
     ( ty_infinitive_mark(L, _) -> assertz('$ty_inf_made'(L)) ; true ),
     findall(F, ( ty_tense_pattern(L, T, _, _, [I|_], _),
                  (   atom(I), nonvar(T), T = pass(_) -> F = pass(I)
+                 ;   atom(I), nonvar(T), T = prog(_) -> F = prog(I)
                  ;   atom(I) -> F = I
                  ;   T == imperative -> F = '$imperative'
                  ;   F = '$any'
                  ) ), Fs0),
     sort(Fs0, Fs1),
-    forall(( member(F, Fs1), F \== '$imperative', F \= pass(_) ), assertz('$ty_tfirst'(F, L))),
+    forall(( member(F, Fs1), F \== '$imperative', F \= pass(_), F \= prog(_) ), assertz('$ty_tfirst'(F, L))),
     forall(( member(pass(F), Fs1), \+ memberchk(F, Fs1) ),
-           assertz(('$ty_tfirst'(F, L) :- nb_current('$ty_pass', on)))),
+           (   memberchk(prog(F), Fs1)
+           ->  assertz(('$ty_tfirst'(F, L) :- ( nb_current('$ty_pass', on) -> true ; nb_current('$ty_prog', on) )))
+           ;   assertz(('$ty_tfirst'(F, L) :- nb_current('$ty_pass', on)))
+           )),
+    forall(( member(prog(F), Fs1), \+ memberchk(F, Fs1), \+ memberchk(pass(F), Fs1) ),
+           assertz(('$ty_tfirst'(F, L) :- nb_current('$ty_prog', on)))),
     ( memberchk(pass(_), Fs1) -> assertz('$ty_pass_made'(L)) ; true ),
+    ( memberchk(prog(_), Fs1) -> assertz('$ty_prog_made'(L)) ; true ),
+    forall(( ty_tense_form(L, T4, _, _, Ws4), nonvar(T4), T4 = prog(_),
+             append(_, [W4, ing|_], Ws4), atom(W4), \+ '$ty_ingw'(W4, L) ),
+           assertz('$ty_ingw'(W4, L))),
     forall(( ty_tense_form(L, T2, _, _, Ws2), nonvar(T2), T2 = pass(_),
              append(_, [W2, PT2|_], Ws2), ( PT2 == participle ; PT2 == participle(subject) ),
              atom(W2), \+ '$ty_pword'(W2, L) ),
            assertz('$ty_pword'(W2, L))),
     (   '$ty_pass_made'(L)
-    ->  forall(( ty_tense_pattern(L, T3, N3, P3, Pt3, C3), \+ ( nonvar(T3), T3 = pass(_) ) ),
+    ->  forall(( ty_tense_pattern(L, T3, N3, P3, Pt3, C3), \+ ( nonvar(T3), ( T3 = pass(_) ; T3 = prog(_) ) ) ),
                assertz('$ty_tact'(L, T3, N3, P3, Pt3, C3)))
     ;   true
     ),

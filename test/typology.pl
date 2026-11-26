@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2535,6 +2535,30 @@ passive_languages :-
              atomic_list_concat([L, ': read back, the first reading: ', Want], Label1),
              check(Label1, R1, IR) )).
 
+%% 1.102.0: the progressive, a clause in a tense prog(T), its words a row of
+%% prog(T) with ing, the verb's form in -ing; read after every other
+%% reading, so a word in -ing that is an adjective too is the copula's
+%% first (`The boy is walking.').
+progressive :-
+    section('the progressive'),
+    forall(member(T-Want, [
+               'Pigs were wallowing in the mud.'-[clause(wallow, prog(past), pos, np(pig, pl, indef, []), none, [pp(in, np(mud, sg, def, []))])],
+               'The engine is idling.'-[clause(idle, prog(present), pos, np(engine, sg, def, []), none)],
+               'The boy is walking.'-[copula(present, pos, np(boy, sg, def, []), adj([walking])), clause(walk, prog(present), pos, np(boy, sg, def, []), none)] ]),
+           ( findall(R, typology_read(english, T, R), Rs),
+             atomic_list_concat(['English: ', T], Label),
+             check(Label, Rs, Want) )),
+    ( once(typology_read(english, 'She was staring vacantly into the room.', clause(V5, _, _, _, _, _))) -> true ; V5 = none ),
+    check('staring is stare, not star (starring)', V5, stare),
+    forall(member(IR2-Want2, [
+               clause(begin, prog(past), pos, pron(3, sg, m), none)-'He was beginning.',
+               clause(run, prog(perfect), neg, np(dog, pl, def, []), none)-'The dogs have not been running.',
+               clause(die, prog(present), pos, np(dog, sg, def, []), none)-'The dog is dying.',
+               clause(see, prog(future), pos, np(boy, sg, def, []), np(dog, sg, def, []))-'The boy will be seeing the dog.' ]),
+           ( ( typology_write(english, IR2, W2) -> true ; W2 = none ),
+             atomic_list_concat(['written: ', Want2], Label2),
+             check(Label2, W2, Want2) )).
+
 %% 1.64.0: the bare singular noun. np(M, sg, mass, []): a singular noun
 %% with no article, read after the other readings, written with none;
 %% Persian, whose definite noun has none either, writes it as def.
@@ -2870,8 +2894,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 4377 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 4 377 sentences read at 1.100.0 are read', R1, yes),
+    ( K >= 4405 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 4 405 sentences read at 1.102.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

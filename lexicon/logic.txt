@@ -398,3 +398,13 @@ The accident left her badly shaken.	past(leave(the(accident), she, badly(shaken(
 His landscapes were deemed the acme of beauty.	past(deem(someone, of(pl(landscape), he), acme(of(pl(landscape), he), beauty))).
 Set the house afire.	imperative(set(you, the(house), afire(the(house)))).
 He had a fair trial and the jury found him guilty.	trial(a(fair(trial))). fair(a(fair(trial))). past(have(he, a(fair(trial)))). past(find(the(jury), he, guilty(he))).
+Pigs were wallowing in the mud.	pig(a(pl(pig))). past_progressive(in(wallow(a(pl(pig))), the(mud))).
+The engine is idling.	progressive(idle(the(engine))).
+The water was purling.	past_progressive(purl(the(water))).
+His face is twitching.	progressive(twitch(of(face, he))).
+They were behaving abnormally.	past_progressive(abnormally(behave(they))).
+She was crying quietly.	past_progressive(quietly(cry(she))).
+The birds were chirping in the bushes.	past_progressive(in(chirp(the(pl(bird))), the(pl(bush)))).
+They were trying to find a peaceful solution.	past_progressive(try(they, to(find(they, a(peaceful(solution)))))).
+The patient is breathing irregularly.	progressive(irregularly(breathe(the(patient)))).
+They are trying to determine the cause of the crash.	progressive(try(they, to(determine(they, of(cause, the(crash)))))).

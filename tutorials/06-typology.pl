@@ -162,6 +162,7 @@ main :-
     passive_places,
     object_complement,
     passive_languages,
+    progressive,
     format("~ndone~n", []).
 
 
@@ -1150,6 +1151,18 @@ passive_languages :-
     must('German, the participle last', W3, 'Das Mädchen wurde vom Jungen gesehen.'),
     typology_read(german, W3, IR3),
     must('read back, von its agent', IR3, clause(see, pass(past), pos, np(girl, sg, def, []), none, [pp(by, np(boy, sg, def, []))])).
+
+%% 71. THE PROGRESSIVE (1.102.0): a clause in a tense prog(T), a form of be
+%% and ing, the verb's form in -ing, which the template makes from the
+%% verb's base (`die' dying, `run' running, `begin' beginning, a verb of
+%% its ing_double list); read after every other reading.
+progressive :-
+    typology_read(english, 'Pigs were wallowing in the mud.', IR1),
+    must('the past progressive', IR1, clause(wallow, prog(past), pos, np(pig, pl, indef, []), none, [pp(in, np(mud, sg, def, []))])),
+    typology_write(english, clause(die, prog(present), pos, np(dog, sg, def, []), none), W2),
+    must('written', W2, 'The dog is dying.'),
+    typology_write(english, clause(begin, prog(past), pos, pron(3, sg, m), none), W3),
+    must('a consonant that doubles', W3, 'He was beginning.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

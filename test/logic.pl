@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -263,11 +263,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 369),
-    ( R >= 355 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 355 right', VR, ok),
-    ( K >= 361 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 361 kept', VK, ok).
+    check('the second measure: its sentences', N, 379),
+    ( R >= 365 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 365 right', VR, ok),
+    ( K >= 371 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 371 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -1009,6 +1009,20 @@ passive_places :-
     check('back into English, the passive infinitive', E1, 'The machine needs to be serviced.'),
     ( logic_translate(cocolog, english, 'past(praise(the(pl(critic)), someone)).\n', E2) -> true ; E2 = none ),
     check('someone as an object, back into English', E2, 'The critics praised someone.').
+
+%% 1.102.0: the progressive is a tense of its own in Cocolog, its name the
+%% template's (progressive, past_progressive, perfect_progressive ...).
+progressive :-
+    section('the progressive'),
+    typology_load(english),
+    forall(member(T-Want, [
+               'The engine is idling.'-'progressive(idle(the(engine))).\n',
+               'The water was purling.'-'past_progressive(purl(the(water))).\n' ]),
+           ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
+             one_line(['into Cocolog: ', T], Label),
+             check(Label, C, Want) )),
+    ( logic_translate(cocolog, english, 'perfect_progressive(watch(they, the(dog))).\n', E) -> true ; E = none ),
+    check('back into English, the perfect progressive', E, 'They have been watching the dog.').
 
 %% 1.100.0: an object's complement is the verb's third argument, the atom a
 %% copula would make of the object; a passive's is its active's; one of

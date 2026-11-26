@@ -67,6 +67,7 @@ main :-
     passive_places,
     object_complement,
     passive_languages,
+    progressive,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -500,6 +501,16 @@ passive_languages :-
     must('a Spanish passive, its active', C1, 'past(see(the(boy), the(dog))).\n'),
     logic_translate(cocolog, german, C1, G1),
     must('and into German', G1, 'Der Junge sah den Hund.').
+
+%% 38. THE PROGRESSIVE (1.102.0) is a tense of its own in Cocolog: the
+%% template's name round the atom, progressive, past_progressive,
+%% perfect_progressive ...; and back into English.
+progressive :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'The engine is idling.', C1),
+    must('the present progressive', C1, 'progressive(idle(the(engine))).\n'),
+    logic_translate(cocolog, english, 'past_progressive(purl(the(water))).\n', E2),
+    must('back into English', E2, 'The water was purling.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

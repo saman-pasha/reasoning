@@ -41,6 +41,13 @@ lg_code_tense(cocolog, imperfect, imperfect).
 %% A command (since 1.82.0): `Construct a proof.' is
 %% imperative(construct(you, a(proof))).
 lg_code_tense(cocolog, imperative, imperative).
+%% The progressive (since 1.102.0): `The baby is sleeping.' is
+%% progressive(sleep(the(baby))).
+lg_code_tense(cocolog, prog(present), progressive).
+lg_code_tense(cocolog, prog(past), past_progressive).
+lg_code_tense(cocolog, prog(future), future_progressive).
+lg_code_tense(cocolog, prog(perfect), perfect_progressive).
+lg_code_tense(cocolog, prog(pluperfect), pluperfect_progressive).
 
 %% The verbs of an animal's sound: each a noun too (the bark of a tree, a
 %% roar), and no list of lexicon/ says which a dog's bark is.

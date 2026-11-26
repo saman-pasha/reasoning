@@ -645,7 +645,10 @@ lg_present(T, P) :-
 %% Since 1.82.0 the imperative too: a command is its atoms in it, its
 %% subject you (`Construct a proof.' is imperative(construct(you,
 %% a(proof)))).
+%% The progressive of a tense (since 1.102.0), prog(T): `The engine is
+%% idling.' is progressive(idle(the(engine))).
 lg_tense(T) :- atom(T), memberchk(T, [present, past, future, perfect, pluperfect, imperfect, imperative]).
+lg_tense(prog(T)) :- atom(T), memberchk(T, [present, past, future, perfect, pluperfect]).
 
 %% A clause's tense, and its atoms in it: present as they are, any other
 %% each at(Tense, Atom).

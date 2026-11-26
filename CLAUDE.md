@@ -24,8 +24,8 @@ red) and lesson 01 pin the shape of the answer, deliberately not the number.
 The reasoning library translates ALL 8 000 sentences of `lexicon/prose.txt`
 from English into the IR, and ALL of that IR into Cocolog. Every step
 moves one of the two counts and reports both (`tools/logic/prose.pl`;
-STATUS.md keeps them): at 1.100.0 and 1.101.0, 4 377 into the IR, 4 179 of them into
-Cocolog (1.99.0: 4 358 and 4 165; 1.98.0: 4 325 and 4 141; 1.96.0 and 1.97.0: 4 295 and 4 111; 1.95.0: 4 243 and 4 063; 1.94.0: 4 218 and 4 040; 1.93.0: 4 167 and 3 990; 1.92.0: 4 129 and 3 954; 1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
+STATUS.md keeps them): at 1.102.0, 4 405 into the IR, 4 206 of them into
+Cocolog (1.100.0 and 1.101.0: 4 377 and 4 179; 1.99.0: 4 358 and 4 165; 1.98.0: 4 325 and 4 141; 1.96.0 and 1.97.0: 4 295 and 4 111; 1.95.0: 4 243 and 4 063; 1.94.0: 4 218 and 4 040; 1.93.0: 4 167 and 3 990; 1.92.0: 4 129 and 3 954; 1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
 count says so. **Measure what blocks the rest before choosing a step**:
 at 1.80.0 the words no table has looked like the gap, and 5 115 of the
 8 000 had none -- 2 130 of them a noun phrase alone, which one rule read.
@@ -819,6 +819,22 @@ names `participle` (`'$ty_pword'/2`, `ty_tense_participle/2`) names
 it is asked of**: asked of pass(_) it bound pass(present), and German's
 `wurde gesehen` never read; ask it under `\+ \+` where the tense is only
 being tested. Persian has none (no participle row).
+
+**The progressive since 1.102.0** is a clause in a tense prog(T), read as
+the passive is: after every other reading (`ty_progressive//2`, after
+`ty_passive//2` in `ty_sentence//2` and `ty_statement//2`), with
+`'$ty_prog'` on, the only time a prog(T) pattern is taken
+(`ty_imperative_ok/1`) or its first words are a tense's first words (one
+conditional `'$ty_tfirst'/2` clause a word of both, `is`, `was`: two
+cost every check of them). Its pattern word `ing` is the verb's form in
+-ing (`ty_ing_word/3`, from the present plural form by English's
+spelling, `ing_double` the verbs whose consonant doubles though they have
+two syllables). **A text gate that scans for one word costs every
+sentence reading**: any word in -ing ahead made the long sentences a third
+dearer; the word right after a word the rows put before `ing`
+(`'$ty_ingw'/2`), or after `not` or an adverb, 3.6 % at most. At level 2
+prog(T) is a tense (`lg_tense/1`), named in Cocolog by the template's
+`lg_code_tense/3` rows (progressive, past_progressive ...).
 
 **An adverb inside or before a verb's words since 1.99.0**
 (`ty_adverb_inside/1`, English's row: `The area is well populated.`) is
