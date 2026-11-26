@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2242,6 +2242,34 @@ adjectives_after_noun :-
     forall(member(L6, [english, spanish, italian, persian, french, german]),
            ( typology_check(L6, M6), atomic_list_concat([L6, ': its row is one the check takes'], Label6), check(Label6, M6, []) )).
 
+%% 1.92.0: A WORD WRITTEN ONLY WITH A CAPITAL, lexicon/capital.txt's
+%% (WordNet's adjectives of a capital alone), is a ty_capital/3 row of
+%% the English import: read from its capital, wherever it stands, and
+%% written with it; never a word that is a name too.
+capital_adjectives :-
+    section('an adjective written with a capital'),
+    forall(member(T-Want, [
+               'The Guyanese capital.'-phrase(np(capital, sg, def, [guyanese])),
+               'American cars are big.'-copula(present, pos, np(car, pl, indef, [american]), adj([big])),
+               'The boy sees the Chinese dog.'-clause(see, present, pos, np(boy, sg, def, []), np(dog, sg, def, [chinese])),
+               'An American sees the dog.'-clause(see, present, pos, np(american, sg, indef, []), np(dog, sg, def, [])),
+               'Mary sees Julian.'-clause(see, present, pos, name('Mary'), name('Julian')) ]),
+           ( ( typology_read(english, T, R) -> true ; R = none ),
+             atomic_list_concat(['English: ', T, ', the first reading'], Label),
+             check(Label, R, Want) )),
+    IR2 = phrase(np(capital, sg, def, [guyanese])),
+    forall(member(L2-Want2, [english-'The Guyanese capital.', spanish-'La capital guyanesa.']),
+           ( ( typology_write(L2, IR2, W2) -> true ; W2 = none ),
+             atomic_list_concat([L2, ': ', Want2], Label2),
+             check(Label2, W2, Want2) )),
+    ( ty_capital(english, guyanese, 'Guyanese') -> G = row ; G = none ),
+    check('a capital row of the import: guyanese', G, row),
+    ( ty_capital(english, julian, _) -> J = row ; J = none ),
+    check('a name keeps its reading: no capital row of julian', J, none),
+    ( ty_capital(english, polish, _) -> P = row ; P = none ),
+    check('a word small elsewhere has none: polish is a verb', P, none),
+    typology_check(english, M6), check('English: its rows are ones the check takes', M6, []).
+
 %% 1.64.0: the bare singular noun. np(M, sg, mass, []): a singular noun
 %% with no article, read after the other readings, written with none;
 %% Persian, whose definite noun has none either, writes it as def.
@@ -2577,8 +2605,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 4108 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 4 108 sentences read at 1.91.0 are read', R1, yes),
+    ( K >= 4129 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 4 129 sentences read at 1.92.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

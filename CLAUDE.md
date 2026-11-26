@@ -24,8 +24,8 @@ red) and lesson 01 pin the shape of the answer, deliberately not the number.
 The reasoning library translates ALL 8 000 sentences of `lexicon/prose.txt`
 from English into the IR, and ALL of that IR into Cocolog. Every step
 moves one of the two counts and reports both (`tools/logic/prose.pl`;
-STATUS.md keeps them): at 1.91.0, 4 108 into the IR, 3 933 of them into
-Cocolog (1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
+STATUS.md keeps them): at 1.92.0, 4 129 into the IR, 3 954 of them into
+Cocolog (1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
 count says so. **Measure what blocks the rest before choosing a step**:
 at 1.80.0 the words no table has looked like the gap, and 5 115 of the
 8 000 had none -- 2 130 of them a noun phrase alone, which one rule read.
@@ -704,6 +704,20 @@ a copula's phrase is (`to(adnate(K), the(ovary))`, `lg_pred_of/3`); an
 individual's facts' run takes it where its name is an adjective's and no
 verb's (`lg_run/4`, `lg_ap_adjective/1`), and `lg_adjectives/2` keeps it
 uncopied, as its argument may be an individual's variable.
+**An adjective written with a capital since 1.92.0** (`The Guyanese
+capital.`) is DATA: `lexicon/capital.txt`, WordNet's one-word adjectives
+written only with a capital (629; `lexicon/build.pl -- --capitals` from
+the four `data.*` files, WordNet 3.1's from npm's `wordnet-db`, as no
+`cntlist.rev` is needed), which the English import makes `ty_capital/3`
+rows (612: none for a name, `\+ tyi_pname/3`, or a vocabulary's own
+meaning, `\+ tyi_entry(_, _, _, C)`), so the word is read from its
+capital wherever it stands and written with it; the IR and Cocolog have
+the small word. **Check an import against the committed files before
+changing it**: `typology_import(english, 'DIR/english-words.pl')` writes
+into DIR, and at 1.91.0 it gave the five files byte for byte. A row lowers
+its word everywhere, so `typology_read/4` reads the words again, with an
+adjective's capital word as written (`ty_surface_kept/2`), where they read
+nothing lowered: `He speaks French after a fashion.` keeps the name.
 **The blank template copies the row descriptions of typology.pl's head**:
 a changed description is `typology_import(template)` again, or the
 `reproduced` section is red.

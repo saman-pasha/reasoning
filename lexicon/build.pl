@@ -1,6 +1,7 @@
 %% lexicon/build.pl -- WordNet 3.0 to lexicon/*.txt.
 %%
 %%     ./cocolog -s lexicon/build.pl -- --wordnet DIR [--out DIR] [--cap CLASS=N]...
+%%     ./cocolog -s lexicon/build.pl -- --capitals --wordnet DIR [--out DIR]
 %%     sh tools/lexicon/build.sh                         the same, from this repository's root
 %%
 %% THE LEXICON IS DATA, NOT SOURCE. library(reasoning/normalise) generates
@@ -60,6 +61,17 @@
 %% megabytes in half a second and split_string/4 cuts a megabyte into lines
 %% in ten milliseconds, and a parse over fields is what a Prolog is for.
 
+%% --capitals writes capital.txt alone (since reasoning 1.92.0): the
+%% adjectives WordNet writes ONLY with a capital, from the four data files
+%% (no cntlist.rev, so WordNet 3.1's files serve as well as 3.0's).
+main :-
+    current_prolog_flag(argv, [_|Args0]),
+    select('--capitals', Args0, Args), !,
+    lx_options(Args, '/usr/share/wordnet', WN, 'lexicon', Out, [], _),
+    lx_capitals(WN, Caps),
+    lx_write(Out, capital, Caps),
+    length(Caps, N), lx_take(6, Caps, First),
+    format("   capital ~w  ~w~nwrote ~w/capital.txt~n", [N, First, Out]).
 main :-
     current_prolog_flag(argv, [_|Args]),
     lx_options(Args, '/usr/share/wordnet', WN, 'lexicon', Out, [], Caps),
@@ -112,6 +124,34 @@ lx_cap(known_noun, _, 20000).
 lx_cap(known_verb, _, 8000).
 lx_cap(known_adj, _, 20000).
 lx_cap(known_adverb, _, 3000).
+
+%% ---- capital.txt: the adjectives written only with a capital ----------------------
+%% A one-word adjective lemma of data.adj that is a capital and then small
+%% letters (`American', `Guyanese', `Gallic') where no lemma of any part
+%% of speech has the word in small letters: `Polish' is a verb's polish,
+%% and `Victorian' an adjective's victorian too (prim), so neither is
+%% one. Alphabetical: the file is a set, never capped.
+lx_capitals(WN, Caps) :-
+    findall(W, ( member(F, ['data.adj', 'data.noun', 'data.verb', 'data.adv']),
+                 lx_data_word(WN, F, W), \+ lx_capital_form(W) ), Low0),
+    sort(Low0, Low),
+    findall(W, ( lx_data_word(WN, 'data.adj', W), lx_capital_form(W),
+                 downcase_atom(W, L), lx_word(L), \+ ord_memberchk(L, Low) ), Caps0),
+    sort(Caps0, Caps).
+
+%% each lemma of a data file, its adjective marker ((a), (p), (ip)) off
+lx_data_word(WN, F, W) :-
+    lx_lines(WN, F, Lines),
+    member(L, Lines), \+ sub_string(L, 0, 1, _, ' '),
+    split_string(L, [32], [32], [_, _, _, WcntS|R]),
+    lx_hex(WcntS, N), lx_take_words(N, R, Ws, _),
+    member(W0, Ws),
+    ( sub_atom(W0, B, _, _, '(') -> sub_atom(W0, 0, B, _, W) ; W = W0 ).
+
+%% a capital and then small letters, nothing else
+lx_capital_form(W) :-
+    atom_codes(W, [C|Cs]), C >= 0'A, C =< 0'Z, Cs \== [],
+    forall(member(X, Cs), ( X >= 0'a, X =< 0'z )).
 
 %% ---- the files, as lines --------------------------------------------------------
 

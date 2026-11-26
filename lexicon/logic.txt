@@ -318,3 +318,13 @@ Mountains visible in the distance.	mountain(a(pl(visible(mountain, in, the(dista
 A child prone to mischief.	child(a(prone(child, to, mischief))). to(prone(a(prone(child, to, mischief))), mischief).
 A decision unfavorable to the opposition.	decision(a(unfavorable(decision, to, the(opposition)))). to(unfavorable(a(unfavorable(decision, to, the(opposition)))), the(opposition)).
 A little man obedient to his wife.	man(a(little(obedient(man, to, of(wife, he))))). little(a(little(obedient(man, to, of(wife, he))))). to(obedient(a(little(obedient(man, to, of(wife, he))))), of(wife, he)).
+The Guyanese capital.	capital(the(guyanese(capital))). guyanese(the(guyanese(capital))).
+A Gallic shrug.	shrug(a(gallic(shrug))). gallic(a(gallic(shrug))).
+He left an indelible mark on the American theater.	mark(a(indelible(mark))). indelible(a(indelible(mark))). past(on(leave(he, a(indelible(mark))), the(american(theater)))).
+An elocutionary Oxonian delivery.	delivery(a(elocutionary(oxonian(delivery)))). elocutionary(a(elocutionary(oxonian(delivery)))). oxonian(a(elocutionary(oxonian(delivery)))).
+The Congolese republic.	republic(the(congolese(republic))). congolese(the(congolese(republic))).
+The Indian subcontinent.	subcontinent(the(indian(subcontinent))). indian(the(indian(subcontinent))).
+The Hindu faith.	faith(the(hindu(faith))). hindu(the(hindu(faith))).
+The Syrian government.	government(the(syrian(government))). syrian(the(syrian(government))).
+The Greek ethos.	ethos(the(greek(ethos))). greek(the(greek(ethos))).
+The American dream.	dream(the(american(dream))). american(the(american(dream))).

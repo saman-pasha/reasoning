@@ -152,6 +152,7 @@ main :-
     adjective_phrases,
     graded_adjectives,
     adjectives_after_noun,
+    capital_adjectives,
     format("~ndone~n", []).
 
 
@@ -1003,6 +1004,18 @@ adjectives_after_noun :-
     must('in German, before the noun, declined', W3, 'Der im Haus große Hund schläft.'),
     typology_read(english, 'A special kind of paint.', IR4),
     must('a special kind', IR4, phrase(of(np(paint, sg, mass, []), np(kind, sg, indef, [special])))).
+
+%% 61. A WORD WRITTEN ONLY WITH A CAPITAL (1.92.0): lexicon/capital.txt,
+%% WordNet's adjectives that have a capital alone, makes a ty_capital/3
+%% row of the English import for each, so the word is read from its
+%% capital and written with it; its meaning is the small word.
+capital_adjectives :-
+    typology_read(english, 'The Guyanese capital.', IR1),
+    must('read', IR1, phrase(np(capital, sg, def, [guyanese]))),
+    typology_write(english, IR1, W2),
+    must('written with its capital', W2, 'The Guyanese capital.'),
+    typology_write(spanish, IR1, W3),
+    must('and in Spanish with none', W3, 'La capital guyanesa.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

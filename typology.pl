@@ -1885,17 +1885,37 @@ typology_read(L, Text, IR, Topics) :-
     must_be(atom, L),
     must_be(list, Topics),
     ty_surface_written(Text, Mood, Open, Close, Written),
-    ty_surface_lower(Written, Surface0),
-    ty_first_written(L, Written, Surface0, Surface),
     ty_marks_fit(L, Mood, Open, Close),
+    ty_surface_lower(Written, Lowered),
+    (   ty_read_words(L, Text, Written, Lowered, Topics, Mood, IR1)
+    *-> true
+    ;   ty_surface_kept(Written, Kept), Kept \== Lowered,
+        ty_read_words(L, Text, Written, Kept, Topics, Mood, IR1)
+    ),
+    ty_ir_out(IR1, IR).
+
+ty_read_words(L, Text, Written, Surface0, Topics, Mood, IR1) :-
+    ty_first_written(L, Written, Surface0, Surface),
     ty_live_topics(L, Text, Surface),
     (   Mood == question
     ->  findall(C-IR0, ty_read_bases(L, Surface, Topics, Mood, IR0, C), All),
         ty_least(All, IRs),
         member(IR1, IRs)
     ;   ty_read_bases(L, Surface, Topics, Mood, IR1, _)
-    ),
-    ty_ir_out(IR1, IR).
+    ).
+
+%% A WORD A CAPITAL ROW LOWERS (since 1.92.0) that is an adjective's is
+%% read as written, a name, where the words lowered read nothing: `He
+%% speaks French after a fashion.' (name('French')), where `French
+%% history' is the adjective's.
+ty_surface_kept([FirstA|Rest1], [First|Rest]) :-
+    downcase_atom(FirstA, First),
+    maplist(ty_kept_capital, Rest1, Rest).
+
+ty_kept_capital(W, W0) :-
+    (   atom(W), ty_capital(_, W1, W), once(ty_adjective(_, _, _, _, W1)) -> W0 = W
+    ;   ty_lower_capital(W, W0)
+    ).
 
 %% The words as the tables have them, parsed in their context; C is the
 %% reading's cost, how far its order is from the statement's (0 for a
@@ -7669,6 +7689,25 @@ ty_english_row(ty_adjective(english, M, any, any, M)) :-
     member(M, Ms),
     ty_single(M),
     \+ tyi_hand(ty_adjective(english, M, _, _, _)).
+%% A WORD WordNet writes only with a capital (since 1.92.0: lexicon/capital.txt,
+%% `American', `Guyanese', `Gallic') is a ty_capital/3 row where a table of
+%% the import has its word, so it is read from its capital and written with
+%% it (`The Guyanese capital.'), the first word of a sentence too; unless
+%% the hand template has a row of it or names it a word of grammar, or it
+%% is a name too (`Julian', `Norman', `Burundi': a capital row lowers the
+%% word wherever it stands, and the name would be read no more), or the
+%% vocabularies' meaning as written (`Neapolitan', `Corsican': Italian's
+%% and Spanish's words are of that meaning, not of neapolitan).
+ty_english_row(ty_capital(english, W, C)) :-
+    ( ty_lexicon_file(capital, F) -> ty_lexicon_lines(F, Cs) ; Cs = [] ),
+    ( tyi_hand(ty_closed(english, Closed)) -> true ; Closed = [] ),
+    member(C, Cs),
+    downcase_atom(C, W),
+    \+ memberchk(W, Closed),
+    \+ tyi_pname(C, _, _),
+    \+ tyi_entry(_, _, _, C),
+    once(( tyi_lex(_, W, _) ; tyi_entry(_, _, W, _) )),
+    \+ tyi_hand(ty_capital(english, W, _)).
 %% An English adverb is one fact, its word its meaning: lexicon/'s (the
 %% vocabularies state none), unless the hand template has it (since 1.58.0).
 ty_english_row(ty_adverb(english, M, M)) :-
@@ -7910,11 +7949,12 @@ ty_apply_ending(L, Feature, Word, Form) :-
 %% The rows of a kind with a file of its own: a noun of a class
 %% (templates/<name>-nouns.pl), a verb of a class (-verbs.pl), and since
 %% 1.58.0 an English adjective (-adjectives.pl) and adverb (-adverbs.pl);
-%% the rest stay in the words file.
+%% the rest stay in the words file. An English capital (since 1.92.0) goes
+%% with the adjectives, whose words most of them are.
 ty_kind_split(Rows, Kinds, Rest) :-
     partition([R]>>( R = ty_noun_in(_, _, _, _, _, _) ), Rows, Nouns, Rest1),
     partition([R]>>( R = ty_verb_in(_, _, _, _) ), Rest1, Verbs, Rest2),
-    partition([R]>>( R = ty_adjective(english, _, _, _, _) ), Rest2, Adjectives, Rest3),
+    partition([R]>>( R = ty_adjective(english, _, _, _, _) ; R = ty_capital(english, _, _) ), Rest2, Adjectives, Rest3),
     partition([R]>>( R = ty_adverb(english, _, _) ), Rest3, Adverbs, Rest4),
     partition([R]>>( R = ty_name(_, _, _, _, _) ), Rest4, Names, Rest),
     findall(K-Rs, ( member(K-Rs, [nouns-Nouns, verbs-Verbs, adjectives-Adjectives, adverbs-Adverbs,

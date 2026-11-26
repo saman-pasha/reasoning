@@ -57,6 +57,7 @@ main :-
     text_individuals,
     graded_adjectives,
     adjectives_after_noun,
+    capital_adjectives,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -388,6 +389,14 @@ adjectives_after_noun :-
     must('an individual and its phrase', C1, 'book(a(full(book, of, a(pl(error))))).\nof(full(a(full(book, of, a(pl(error))))), a(pl(error))).\nerror(a(pl(error))).\n'),
     logic_translate(cocolog, english, C1, E2),
     must('back into English', E2, 'A book full of errors.').
+
+%% 28. AN ADJECTIVE WRITTEN WITH A CAPITAL is its meaning's atom, and the
+%% English template puts the capital back.
+capital_adjectives :-
+    logic_translate(english, cocolog, 'The Guyanese capital.', C1),
+    must('the small atom', C1, 'capital(the(guyanese(capital))).\nguyanese(the(guyanese(capital))).\n'),
+    logic_translate(cocolog, english, C1, E2),
+    must('back into English, the capital', E2, 'The Guyanese capital.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
