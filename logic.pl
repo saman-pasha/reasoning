@@ -366,6 +366,7 @@ lg_active(clause(V, T, P, S, O0, Js0), C) :- \+ ( nonvar(T), T = pass(_) ), lg_p
 lg_active(clause(V, pass(T), P, S, O0, Js0), C) :- !,
     lg_active(S, S1),
     (   O0 == none -> O = S1
+    ;   nonvar(O0), O0 = oc(Pred) -> O = oc(S1, Pred)
     ;   nonvar(O0), ( O0 = inf(V2, O2) -> Js3 = [] ; O0 = inf(V2, O2, Js3) )
     ->  lg_active(O2, O3), maplist(lg_active, Js3, Js4),
         ( Js4 == [] -> O = clause(V2, infinitive, pos, S1, O3) ; O = clause(V2, infinitive, pos, S1, O3, Js4) )
@@ -791,6 +792,20 @@ lg_atoms_(_, T, verb(V, C2), [pred(V, [T, fun(to, [F])])|Os]) :-
     lg_inf_fun(To, V2, O2, Js2, F).
 
 lg_inf_obj('$obj'(S, const(a(S)), a(S), _)).
+%% AN OBJECT AND ITS COMPLEMENT (since 1.100.0): the complement's atom, a
+%% copula's of the object (lg_atoms_/4 of copula(present, pos, Object,
+%% Predicate)), is the verb's third argument, the object's facts beside it:
+%% `They considered colonialism immoral.' is past(consider(they,
+%% colonialism, immoral(colonialism))), `His landscapes were deemed the
+%% acme of beauty.' past(deem(someone, of(pl(landscape), he),
+%% acme(of(pl(landscape), he), beauty))). A complement of several atoms (a
+%% noun phrase with an adjective) has no form yet (complement(Pred)).
+lg_atoms_(_, T, verb(V, OC), [pred(V, [T, To, F])|Os]) :-
+    nonvar(OC), OC = oc(NP, Pred), !,
+    lg_arg(object, NP, To, _, Os),
+    lg_atoms_(copula(present, pos, NP, Pred), To, Pred, Atoms),
+    ( Atoms = [A] -> true ; lg_no(complement(Pred)) ),
+    lg_fun_of_atom(A, F).
 lg_atoms_(_, T, verb(V, O), [pred(V, [T, To])|Os]) :-
     lg_arg(object, O, To, _, Os).
 
@@ -1266,10 +1281,19 @@ lg_in_atom(A, modified(adv(M), At)) :-
     lg_code_meaning(N, 1, M), typology_meaning(english, adverb, M),
     ( \+ lg_copula_atom(Inner) -> true ; lg_grade_adverb(M) ), !,
     lg_in_atom(Inner, At).
+%% A verb's third argument said of its second is an object's complement
+%% (since 1.100.0), an atom, not a constant's term: consider(they,
+%% colonialism, immoral(colonialism)) has immoral(colonialism) as
+%% a(fair(trial)) has fair(trial), and leave(the(accident), she,
+%% badly(shaken(she))) an adverb round it.
 lg_in_atom(A, pred(N, As1)) :-
     A =.. [N1|As], length(As, Ar),
     lg_code_meaning(N1, Ar, N),
-    maplist(lg_in_term, As, As1).
+    (   As = [X, Y, Z], compound(Z), lg_atom_subject(Z, S2), S2 == Y
+    ->  lg_in_term(X, T1), lg_in_term(Y, T2), lg_in_atom_term(Z, T3),
+        As1 = [T1, T2, T3]
+    ;   maplist(lg_in_term, As, As1)
+    ).
 
 %% An adjunct's atom: a compound term that is no list (size([a], 1) is a
 %% predicate of a list).
@@ -1854,6 +1878,25 @@ lg_inf_adjunct(L, How, J, IR0, IR) :-
     lg_adjunct_ir(L, How, J, J1),
     lg_ir_adjunct(IR0, J1, IR).
 
+%% An object's complement (since 1.100.0): a verb's third argument, an
+%% atom whose first argument is the object, is the copula's predicate it
+%% makes of the object, oc(Object, Predicate); an adverb round an
+%% adjective's atom grades it (leave(the(accident), she,
+%% badly(shaken(she))) is `left her badly shaken').
+lg_atom_ir(L, pred(P, [A, B, F]), How, IR) :-
+    nonvar(F), F = fun(_, [B2|_]),
+    catch(typology_meaning(L, verb, P), _, fail),
+    lg_arg_np(L, How, A, S),
+    lg_arg_np(L, How, B, O),
+    lg_atom_of_fun(F, A2),
+    (   A2 = modified(adv(M), A3), B2 = fun(_, [B3|_]), B3 == B,
+        lg_atom_ir(L, A3, How, copula(present, pos, _, adj([Ad]))), atom(Ad)
+    ->  Pred = adj([adv(M, Ad)])
+    ;   B2 == B,
+        lg_atom_ir(L, A2, How, IR2),
+        IR2 = copula(present, pos, _, Pred)
+    ), !,
+    IR = clause(P, present, pos, S, oc(O, Pred)).
 lg_atom_ir(L, pred(P, [A, B]), How, IR) :-
     lg_binary_classes(L, P, Cs),
     lg_arg_np(L, How, A, S),

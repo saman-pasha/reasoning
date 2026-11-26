@@ -113,8 +113,11 @@
 %%                                     or the object's own, since 1.96.0;
 %%                                     to_noun: one whose `to' with a bare
 %%                                     noun that is a verb too may be an
-%%                                     adposition phrase, since 1.96.0), or
-%%                                     Base is a list of verbs (since 1.95.0)
+%%                                     adposition phrase, since 1.96.0;
+%%                                     complement: one whose object may be
+%%                                     followed by a predicate said of it,
+%%                                     since 1.100.0), or Base is a list of
+%%                                     verbs (since 1.95.0)
 %%     ty_adjective_list(L, Kind, Base)
 %%                                     the adjectives of lexicon/Base.txt,
 %%                                     or of the list Base, are of Kind
@@ -3916,12 +3919,22 @@ ty_statement(L, C) --> ty_passive(L, C).
 ty_passive(L, C) -->
     { C = clause(V, pass(_), _, _, O, _), '$ty_pass_made'(L) },
     ty_pass_ahead(L),
-    { ( O = inf(_, _, _) ; O = none ),
+    ty_here(S0),
+    { ( O = inf(_, _, _) ; O = none ; O = oc(_), ty_ocp_ahead(L, S0) ),
       ( nb_current('$ty_pass', Old) -> true ; Old = off ),
       b_setval('$ty_pass', on) },
     ty_clause(L, C),
     { b_setval('$ty_pass', Old), ty_wh_count(C, yes_no),
-      ( O == none -> true ; ty_object_infinitive(L, V) ) }.
+      ( O == none -> true ; O = oc(_) -> true ; ty_object_infinitive(L, V) ) }.
+
+%% Reading, a passive with a complement (since 1.100.0, oc(Predicate)) is
+%% tried only where a complement verb's participle is among the words
+%% ('$ty_ocpw'/2: `considered', `deemed'): tried in every passive, its
+%% clause read a third time, the long passives cost a fifth more.
+ty_ocp_ahead(L, S0) :-
+    (   var(S0) -> true
+    ;   member(X, S0), atom(X), '$ty_ocpw'(X, L) -> true
+    ).
 
 %% Reading, a passive is tried only where a word ahead is one its
 %% participle follows ('$ty_pword'/2: English `was', `been'). Asked here,
@@ -4636,6 +4649,52 @@ ty_object(L, V, inf(V2, O2, Js2), pinf) -->
       \+ ty_verb_of(L, infinitive, V) },
     ty_infinitive_ahead(L),
     ty_infinitive(L, V2, O2, Js2).
+%% AN OBJECT AND ITS COMPLEMENT (since 1.100.0: `They considered
+%% colonialism immoral.' is clause(consider, past, pos, pron(3, pl, _),
+%% oc(np(colonialism, sg, mass, []), adj([immoral])))): after a verb
+%% ty_verb_list(L, complement, Base) names, the object and a predicate
+%% said of it, an adjective's or a noun phrase's as a copula's predicate
+%% is (ty_ocomp_pred//3), oc(Object, Predicate); a passive's is the
+%% predicate alone, oc(Predicate), said of the patient (`His landscapes
+%% were deemed the acme of beauty.'). The last readings of an object,
+%% tried where the plain object's do not read the clause, one clause for
+%% the two asking a fact a verb made with the verb tables
+%% ('$ty_ocv'/2): two clauses asking ty_verb_of/3 each cost `The steady
+%% state theory has been abandoned in favor of the big bang theory.' a
+%% fifth more inferences to read, past typology_coverage/4's 2 000 000.
+%% The passive's is the one ty_passive//2 (or the IR written) gave before
+%% the object is read: asked by '$ty_pass' alone, an infinitive inside a
+%% passive read its own object as a complement (`He was asked to leave the
+%% room.').
+ty_object(L, V, O, How) -->
+    { nonvar(V), '$ty_ocv'(V, L) },
+    (   { nonvar(O), O = oc(Pred) }
+    ->  { How = pcomp },
+        ty_ocomp_pred(L, none, Pred)
+    ;   { O = oc(NP, Pred), How = ocomp },
+        ty_role(L, o, NP),
+        ty_ocomp_pred(L, NP, Pred)
+    ).
+
+%% An object's complement: a copula's predicate that is an adjective's or
+%% a noun phrase's, never an adposition phrase (`She made a graceful
+%% entree into the ballroom.' is no entree in the ballroom). Reading, a
+%% complement of one word that is a noun's too, after an object that is no
+%% pronoun, is one of the common adjectives (lexicon/adj.txt: `They
+%% painted the house red.'), else the two words may be one compound noun,
+%% which a later pass reads (ty_nn_passes/3: `He kept the title in the
+%% glove compartment.', `She made a copy of the designer dress.').
+ty_ocomp_pred(L, NP, Pred) -->
+    ty_here(S0),
+    ty_predicate(L, Pred, _),
+    ty_here(S),
+    { Pred \= pp(_, _), Pred \= wh(_), Pred \= rel(_, _),
+      (   nonvar(S0), S0 = [W|S1], S1 == S, atom(W),
+          NP \== none, \+ ( nonvar(NP), NP = pron(_, _, _) ),
+          ty_word_class(L, noun, W)
+      ->  ty_lex_base_read(adj), once('$ty_lexw'(adj, W))
+      ;   true
+      ) }.
 
 %% The words a verb says before its infinitive object (since 1.97.0:
 %% Spanish `Empieza a correr.'), none where ty_infinitive_after/3 says none.
@@ -6168,6 +6227,10 @@ ty_verb_row(L, V, T, N, P, Words) :-
 %% A language with a passive's ty_tense_form/5 row (since 1.98.0), whose
 %% clauses ty_passive//2 tries.
 :- dynamic('$ty_pass_made'/1).
+%% A verb of a ty_verb_list(L, complement, Base) row (since 1.100.0), whose
+%% object ty_object//4 may read with its complement.
+:- dynamic('$ty_ocv'/2).
+:- dynamic('$ty_ocpw'/2).
 :- dynamic('$ty_vg_more'/1).
 %% The words a passive's participle follows in its patterns (English `is',
 %% `was', `be', `been'); a text with one ahead may hold a passive
@@ -6204,9 +6267,16 @@ ty_vfirst_make(L) :-
     retractall('$ty_inf_made'(L)),
     retractall('$ty_vinf'(_, L)),
     retractall('$ty_pass_made'(L)),
+    retractall('$ty_ocv'(_, L)),
+    retractall('$ty_ocpw'(_, L)),
     retractall('$ty_pword'(_, L)),
     retractall('$ty_tact'(L, _, _, _, _, _)),
     ( ty_phrasal(L, _, _, _, _) -> assertz('$ty_phrasal_made'(L)) ; true ),
+    forall(( ty_verb_list(L, complement, _), ty_verb(L, OcV, _, _, _, _), \+ '$ty_ocv'(OcV, L),
+             ty_verb_of(L, complement, OcV) ),
+           assertz('$ty_ocv'(OcV, L))),
+    forall(( '$ty_ocv'(OcV2, L), ty_participle_word(L, OcV2, OcW), \+ '$ty_ocpw'(OcW, L) ),
+           assertz('$ty_ocpw'(OcW, L))),
     ( ( ty_phrasal(L, _, _, _, _) ; ty_adverb_inside(L) ) -> assertz('$ty_vg_more'(L)) ; true ),
     forall(ty_particle_of(L, Pt), assertz('$ty_particle'(Pt, L))),
     forall(ty_verb(L, M, T, N, P, Fs),

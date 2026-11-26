@@ -611,6 +611,12 @@ ty_verb_list(english, object_purpose, [apply, can, clear, commit, condemn, conse
 %% adposition phrase, though an infinitive may be their object (since
 %% 1.96.0: `The ball came to rest.', `He got to work.').
 ty_verb_list(english, to_noun, [come, get, run]).
+%% The verbs whose object may be followed by a predicate said of it (since
+%% 1.100.0: `They considered colonialism immoral.', `They call a fender a
+%% wing.'): WordNet's `Something ----s something Adjective/Noun' less the
+%% senses the corpus seldom says (do_by, fit, grow, handle, play, see),
+%% and the verbs of naming and choosing it leaves out.
+ty_verb_list(english, complement, [adjudge, appoint, believe, brand, call, color, consider, crown, declare, deem, dub, dye, elect, feel, find, hold, judge, keep, label, leave, make, name, nominate, paint, proclaim, pronounce, prove, reckon, regard, render, rule, set, term, think, turn]).
 %% The adjectives an infinitive may follow, its subject the adjective's own
 %% (since 1.96.0: `able to walk', `glad to help'); WordNet gives
 %% adjectives no frames.

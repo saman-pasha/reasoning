@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2489,6 +2489,30 @@ passive_places :-
     ( typology_write(english, clause(need, present, pos, np(machine, sg, def, []), clause(service, pass(infinitive), pos, pron(3, sg, zero), none)), W2) -> true ; W2 = none ),
     check('a passive infinitive written', W2, 'The machine needs to be serviced.').
 
+%% 1.100.0: an object and its complement, oc(Object, Predicate), after a
+%% verb ty_verb_list(L, complement, Base) names, and a passive's,
+%% oc(Predicate); after an object that is no pronoun, a complement of one
+%% word that is a noun's too is a common adjective (`red'), else the two
+%% words are the compound noun a later pass reads.
+object_complement :-
+    section('an object and its complement'),
+    forall(member(T-Want, [
+               'He considered the dog small.'-[clause(consider, past, pos, pron(3, sg, m), oc(np(dog, sg, def, []), adj([small])))],
+               'The boy called the dog a hero.'-[clause(call, past, pos, np(boy, sg, def, []), oc(np(dog, sg, def, []), np(hero, sg, indef, [])))],
+               'The dog was considered small.'-[clause(consider, pass(past), pos, np(dog, sg, def, []), oc(adj([small])))],
+               'He painted the house red.'-[clause(paint, past, pos, pron(3, sg, m), oc(np(house, sg, def, []), adj([red])))],
+               'The accident left her badly shaken.'-[clause(leave, past, pos, np(accident, sg, def, []), oc(pron(3, sg, f), adj([adv(badly, shaken)])))],
+               'She made a copy of the designer dress.'-[clause(make, past, pos, pron(3, sg, f), of(np(dress, sg, def, [n(designer)]), np(copy, sg, indef, [])))] ]),
+           ( findall(R, typology_read(english, T, R), Rs),
+             atomic_list_concat(['English: ', T], Label),
+             check(Label, Rs, Want) )),
+    ( typology_write(english, clause(consider, past, pos, pron(3, sg, m), oc(np(dog, sg, def, []), adj([small]))), W1) -> true ; W1 = none ),
+    check('an object and its complement written', W1, 'He considered the dog small.'),
+    ( typology_write(english, clause(consider, pass(past), pos, np(dog, sg, def, []), oc(adj([small]))), W2) -> true ; W2 = none ),
+    check('a passive with a complement written', W2, 'The dog was considered small.'),
+    ( typology_write(spanish, clause(consider, past, pos, pron(3, sg, m), oc(np(dog, sg, def, []), adj([small]))), W3) -> true ; W3 = none ),
+    check('Spanish has no complement row yet', W3, none).
+
 %% 1.64.0: the bare singular noun. np(M, sg, mass, []): a singular noun
 %% with no article, read after the other readings, written with none;
 %% Persian, whose definite noun has none either, writes it as def.
@@ -2824,8 +2848,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 4358 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 4 358 sentences read at 1.99.0 are read', R1, yes),
+    ( K >= 4377 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 4 377 sentences read at 1.100.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

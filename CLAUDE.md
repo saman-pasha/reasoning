@@ -24,8 +24,8 @@ red) and lesson 01 pin the shape of the answer, deliberately not the number.
 The reasoning library translates ALL 8 000 sentences of `lexicon/prose.txt`
 from English into the IR, and ALL of that IR into Cocolog. Every step
 moves one of the two counts and reports both (`tools/logic/prose.pl`;
-STATUS.md keeps them): at 1.99.0, 4 358 into the IR, 4 165 of them into
-Cocolog (1.98.0: 4 325 and 4 141; 1.96.0 and 1.97.0: 4 295 and 4 111; 1.95.0: 4 243 and 4 063; 1.94.0: 4 218 and 4 040; 1.93.0: 4 167 and 3 990; 1.92.0: 4 129 and 3 954; 1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
+STATUS.md keeps them): at 1.100.0, 4 377 into the IR, 4 179 of them into
+Cocolog (1.99.0: 4 358 and 4 165; 1.98.0: 4 325 and 4 141; 1.96.0 and 1.97.0: 4 295 and 4 111; 1.95.0: 4 243 and 4 063; 1.94.0: 4 218 and 4 040; 1.93.0: 4 167 and 3 990; 1.92.0: 4 129 and 3 954; 1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
 count says so. **Measure what blocks the rest before choosing a step**:
 at 1.80.0 the words no table has looked like the gap, and 5 115 of the
 8 000 had none -- 2 130 of them a noun phrase alone, which one rule read.
@@ -841,6 +841,28 @@ says `passive(unsaid)` unless an agent is said); and an infinitive's
 machine needs to be serviced.`, its patient the clause's subject at level
 2). `someone` and `something` are constants where an object stands
 (`lg_someone/2`). Cost: English 0.94 %, the others 0.12 % to 0.15 %.
+
+**An object's complement since 1.100.0** is oc(Object, Predicate) where
+the object stands (`They considered colonialism immoral.`), after a verb
+of the template's `ty_verb_list(L, complement, Base)` row, made a fact a
+verb at load (`'$ty_ocv'/2`); a passive's is oc(Predicate), which
+`ty_passive//2` gives the clause only where a complement verb's
+participle is among the words (`'$ty_ocpw'/2`), and `ty_object//4` takes
+it only where it was given before the object is read: asked by
+`'$ty_pass'` alone, an infinitive inside a passive read its own object as
+a complement (`He was asked to leave the room.`). **A passive's object
+choice reads its whole clause again**: tried in every passive, oc(_) cost
+the long passives a fifth more inferences, past `typology_coverage/4`'s
+2 000 000. The predicate is a copula's (`ty_ocomp_pred//3`), no
+adposition phrase; after an object that is no pronoun, one word that is a
+noun's too must be a common adjective (`lexicon/adj.txt`, asked once: it
+lists some words twice), else the compound noun of a later pass
+(`ty_nn_passes/3`) stays. At level 2 the complement is the verb's third
+argument, the copula's one atom of the object (`lg_atoms_/4` of
+copula(present, pos, Object, Predicate)); read back from Cocolog, a verb's
+third argument whose first argument is its second is an atom
+(`lg_in_atom/2`), not a structured constant such as fair(trial). Cost:
+0.02 % to 0.04 %.
 **The blank template copies the row descriptions of typology.pl's head**:
 a changed description is `typology_import(template)` again, or the
 `reproduced` section is red.

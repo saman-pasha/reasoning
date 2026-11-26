@@ -300,8 +300,11 @@ ty_conjunct_marks(xx).
 %%                                     or the object's own, since 1.96.0;
 %%                                     to_noun: one whose `to' with a bare
 %%                                     noun that is a verb too may be an
-%%                                     adposition phrase, since 1.96.0), or
-%%                                     Base is a list of verbs (since 1.95.0)
+%%                                     adposition phrase, since 1.96.0;
+%%                                     complement: one whose object may be
+%%                                     followed by a predicate said of it,
+%%                                     since 1.100.0), or Base is a list of
+%%                                     verbs (since 1.95.0)
 %% ty_verb_list(xx, Kind, Base).
 %%   e.g. ty_verb_list(english, no_object, vi).
 

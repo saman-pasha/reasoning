@@ -388,3 +388,13 @@ She actually spoke Latin.	past(actually(speak(she, latin))).
 The new president obviously enjoyed his inauguration.	past(obviously(enjoy(the(new(president)), of(inauguration, he)))).
 We had long anticipated his cadaverous end.	pluperfect(long(anticipate(we, of(cadaverous(end), he)))).
 They finally reached a settlement with the union.	settlement(a(settlement)). past(with(finally(reach(they, a(settlement))), the(union))).
+They considered colonialism immoral.	past(consider(they, colonialism, immoral(colonialism))).
+She made her wishes explicit.	past(make(she, of(pl(wish), she), explicit(of(pl(wish), she)))).
+Her severe upbringing had left her inhibited.	pluperfect(leave(of(severe(upbringing), she), she, inhibited(she))).
+Removal of the central post left the roof unsupported.	past(leave(of(removal, the(central(post))), the(roof), unsupported(the(roof)))).
+The dullness of the pencil made his writing illegible.	past(make(of(dullness, the(pencil)), of(writing, he), illegible(of(writing, he)))).
+The monsoon left the whole place awash.	past(leave(the(monsoon), the(whole(place)), awash(the(whole(place))))).
+The accident left her badly shaken.	past(leave(the(accident), she, badly(shaken(she)))).
+His landscapes were deemed the acme of beauty.	past(deem(someone, of(pl(landscape), he), acme(of(pl(landscape), he), beauty))).
+Set the house afire.	imperative(set(you, the(house), afire(the(house)))).
+He had a fair trial and the jury found him guilty.	trial(a(fair(trial))). fair(a(fair(trial))). past(have(he, a(fair(trial)))). past(find(the(jury), he, guilty(he))).

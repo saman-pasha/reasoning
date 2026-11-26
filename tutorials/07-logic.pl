@@ -65,6 +65,7 @@ main :-
     infinitive_languages,
     passive,
     passive_places,
+    object_complement,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -475,6 +476,19 @@ passive_places :-
     must('and into English', E1, 'The machine needs to be serviced.'),
     logic_translate(english, cocolog, 'He promptly forgot the address.', C2),
     must('an adverb before the verb', C2, 'past(promptly(forget(he, the(address)))).\n').
+
+%% 36. AN OBJECT'S COMPLEMENT (1.100.0) is the verb's third argument: the
+%% atom a copula would make of the object, the object its first argument;
+%% a passive's is its active's, and back into English the complement after
+%% the object.
+object_complement :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'He considered the dog small.', C1),
+    must('the complement an atom of the object', C1, 'past(consider(he, the(dog), small(the(dog)))).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and into English', E1, 'He considered the dog small.'),
+    logic_translate(english, cocolog, 'The dog was considered small.', C2),
+    must('a passive with a complement', C2, 'past(consider(someone, the(dog), small(the(dog)))).\n').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

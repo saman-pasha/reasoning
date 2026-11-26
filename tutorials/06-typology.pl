@@ -160,6 +160,7 @@ main :-
     infinitive_languages,
     passive,
     passive_places,
+    object_complement,
     format("~ndone~n", []).
 
 
@@ -1118,6 +1119,20 @@ passive_places :-
     must('an adverb inside the verb', IR3, clause(populate, pass(present), pos, np(area, sg, def, []), none, [adv(well)])),
     typology_write(english, IR3, W3),
     must('written after it', W3, 'The area is populated well.').
+
+%% 69. AN OBJECT AND ITS COMPLEMENT (1.100.0): after a verb of the
+%% template's ty_verb_list(L, complement, Base) row, the object and a
+%% predicate said of it, an adjective's or a noun phrase's,
+%% oc(Object, Predicate); a passive's is the predicate alone, oc(Predicate).
+object_complement :-
+    typology_read(english, 'He considered the dog small.', IR1),
+    must('an object and its complement', IR1, clause(consider, past, pos, pron(3, sg, m), oc(np(dog, sg, def, []), adj([small])))),
+    typology_read(english, 'The boy called the dog a hero.', IR2),
+    must('a noun phrase as the complement', IR2, clause(call, past, pos, np(boy, sg, def, []), oc(np(dog, sg, def, []), np(hero, sg, indef, [])))),
+    typology_read(english, 'The dog was considered small.', IR3),
+    must('a passive with a complement', IR3, clause(consider, pass(past), pos, np(dog, sg, def, []), oc(adj([small])))),
+    typology_write(english, IR3, W3),
+    must('written back', W3, 'The dog was considered small.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
