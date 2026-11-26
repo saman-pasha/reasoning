@@ -293,6 +293,14 @@ ty_conjunct_marks(xx).
 %% ty_verb_list(xx, Kind, Base).
 %%   e.g. ty_verb_list(english, no_object, vi).
 
+%%     ty_phrasal(L, Meaning, Verb, Particle, Object)
+%%                                     Meaning is Verb's words and Particle
+%%                                     after them, before the object (since
+%%                                     1.94.0: English throw_out, `threw out
+%%                                     the ball'); Object says what it
+%%                                     takes: object, none or any
+%% ty_phrasal(xx, Meaning, Verb, Particle, Object).
+
 %%     ty_tense_form(L, Tense, Number, Polarity, Pattern)
 %%                                     a verb in Tense with no row of its
 %%                                     own is Pattern: words, and form(T, N)

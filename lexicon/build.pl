@@ -2,6 +2,7 @@
 %%
 %%     ./cocolog -s lexicon/build.pl -- --wordnet DIR [--out DIR] [--cap CLASS=N]...
 %%     ./cocolog -s lexicon/build.pl -- --capitals --wordnet DIR [--out DIR]
+%%     ./cocolog -s lexicon/build.pl -- --phrasal --wordnet DIR [--out DIR]
 %%     sh tools/lexicon/build.sh                         the same, from this repository's root
 %%
 %% THE LEXICON IS DATA, NOT SOURCE. library(reasoning/normalise) generates
@@ -72,6 +73,16 @@ main :-
     lx_write(Out, capital, Caps),
     length(Caps, N), lx_take(6, Caps, First),
     format("   capital ~w  ~w~nwrote ~w/capital.txt~n", [N, First, Out]).
+%% --phrasal writes phrasal.txt alone (since reasoning 1.94.0): WordNet's
+%% verbs of a verb and a particle, from data.verb (either version's).
+main :-
+    current_prolog_flag(argv, [_|Args0]),
+    select('--phrasal', Args0, Args), !,
+    lx_options(Args, '/usr/share/wordnet', WN, 'lexicon', Out, [], _),
+    lx_phrasals(WN, Rows),
+    lx_write(Out, phrasal, Rows),
+    length(Rows, N), lx_take(6, Rows, First),
+    format("   phrasal ~w  ~w~nwrote ~w/phrasal.txt~n", [N, First, Out]).
 main :-
     current_prolog_flag(argv, [_|Args]),
     lx_options(Args, '/usr/share/wordnet', WN, 'lexicon', Out, [], Caps),
@@ -138,6 +149,44 @@ lx_capitals(WN, Caps) :-
     findall(W, ( lx_data_word(WN, 'data.adj', W), lx_capital_form(W),
                  downcase_atom(W, L), lx_word(L), \+ ord_memberchk(L, Low) ), Caps0),
     sort(Caps0, Caps).
+
+%% ---- phrasal.txt: the verbs of a verb and a particle ------------------------------
+%% A lemma of data.verb that is a verb's word, `_' and a particle
+%% (`throw_out', `set_up', `come_up'), and what its synsets' frames let it
+%% take: `object' where every frame has an object (8 `Somebody ----s
+%% something' and the like), `none' where none has (1 `Something ----s', 22
+%% `Somebody ----s PP'), `any' where both stand; a lemma of neither kind of
+%% frame (`It ----s that CLAUSE' alone) is left out. A line is the lemma
+%% and that word, `throw_out object'. Alphabetical: the file is a set,
+%% never capped.
+lx_phrasals(WN, Rows) :-
+    lx_lines(WN, 'data.verb', Lines),
+    findall(V-F,
+            ( member(L, Lines), \+ sub_string(L, 0, 1, _, ' '),
+              lx_synset(L, Words, Fs),
+              member(W0, Words), downcase_atom(W0, V), lx_phrasal_lemma(V),
+              member(F, Fs) ),
+            Pairs),
+    msort(Pairs, Sorted),
+    lx_group_frames(Sorted, [], Grouped),
+    findall(Row, ( member(V-Fs, Grouped), lx_phrasal_takes(Fs, K),
+                   atomic_list_concat([V, K], ' ', Row) ), Rows).
+
+lx_phrasal_lemma(V) :-
+    atomic_list_concat([B, P], '_', V),
+    memberchk(P, [about, along, apart, around, aside, away, back, down, forward,
+                  in, off, on, out, over, through, together, up]),
+    atom_codes(B, Cs), length(Cs, N), N >= 2, N =< 12,
+    forall(member(C, Cs), ( C >= 0'a, C =< 0'z )).
+
+lx_phrasal_takes(Fs, K) :-
+    ( lx_meets(Fs, [5, 8, 9, 10, 11, 14, 15, 16, 17, 18, 19, 20, 21, 24, 25, 30, 31]) -> O = yes ; O = no ),
+    ( lx_meets(Fs, [1, 2, 3, 4, 6, 7, 12, 13, 22, 23, 27]) -> I = yes ; I = no ),
+    lx_takes(O, I, K).
+
+lx_takes(yes, no, object).
+lx_takes(no, yes, none).
+lx_takes(yes, yes, any).
 
 %% each lemma of a data file, its adjective marker ((a), (p), (ip)) off
 lx_data_word(WN, F, W) :-

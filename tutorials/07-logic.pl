@@ -59,6 +59,7 @@ main :-
     adjectives_after_noun,
     capital_adjectives,
     of_bare_nouns,
+    phrasal_verbs,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -406,6 +407,13 @@ of_bare_nouns :-
     must('the air a constant', C1, 'stream(a(of(stream, air))).\npast(feel(he, a(of(stream, air)))).\n'),
     logic_translate(cocolog, english, C1, E2),
     must('back into English', E2, 'He felt a stream of air.').
+
+%% 30. A PHRASAL VERB is one predicate, named by its meaning.
+phrasal_verbs :-
+    logic_translate(english, cocolog, 'The mayor threw out the first ball.', C1),
+    must('the predicate throw_out', C1, 'past(throw_out(the(mayor), the(first(ball)))).\n'),
+    logic_translate(cocolog, english, C1, E2),
+    must('back into English, the particle after the verb', E2, 'The mayor threw out the first ball.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

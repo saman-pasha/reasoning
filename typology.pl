@@ -103,6 +103,12 @@
 %%     ty_verb_list(L, Kind, Base)     the verbs of lexicon/Base.txt are of
 %%                                     Kind (no_object: one that may take
 %%                                     no object; since 1.86.0)
+%%     ty_phrasal(L, Meaning, Verb, Particle, Object)
+%%                                     Meaning is Verb's words and Particle
+%%                                     after them, before the object (since
+%%                                     1.94.0: English throw_out, `threw out
+%%                                     the ball'); Object says what it
+%%                                     takes: object, none or any
 %%     ty_tense_form(L, Tense, Number, Polarity, Pattern)
 %%                                     a verb in Tense with no row of its
 %%                                     own is Pattern: words, and form(T, N)
@@ -792,7 +798,7 @@
            ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
            ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
            ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-           ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
+           ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_phrasal/5, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
            ty_answer_echo/3, ty_kind/2, ty_adjective_before/2, ty_pronoun_gender/2,
            ty_inversion/3, ty_wh_tonic/3,
            ty_tense_form/5, ty_participle/3, ty_participle_like/3,
@@ -818,7 +824,7 @@
                  ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
                  ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
                  ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-                 ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
+                 ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_phrasal/5, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
                  ty_answer_echo/3, ty_adjective_before/2, ty_pronoun_gender/2,
                  ty_inversion/3, ty_wh_tonic/3,
                  ty_tense_form/5, ty_participle/3, ty_participle_like/3,
@@ -1106,7 +1112,7 @@ ty_template_group('the orders of the levels', [ty_order]).
 ty_template_group('words', [ty_noun_class, ty_class_when, ty_noun_in, ty_noun, ty_adjective, ty_adjective_before, ty_article, ty_adposition,
                             ty_adverb, ty_capital, ty_capital_nouns, ty_name, ty_quantifier_pronoun, ty_definite_like, ty_subordinator, ty_subordinate_first, ty_subordinate_comma, ty_and, ty_conjunction, ty_serial_comma,
                             ty_conjunct_marks, ty_clause_comma, ty_comma, ty_sense, ty_closed]).
-ty_template_group('verbs and tenses', [ty_conjugation, ty_verb_in, ty_irregular_verb, ty_verb, ty_verb_list, ty_tense_form, ty_tense_like, ty_participle,
+ty_template_group('verbs and tenses', [ty_conjugation, ty_verb_in, ty_irregular_verb, ty_verb, ty_verb_list, ty_phrasal, ty_tense_form, ty_tense_like, ty_participle,
                                        ty_participle_like, ty_participle_ending, ty_participle_agrees,
                                        ty_verb_class, ty_class_tense_form, ty_verb_person, ty_copula,
                                        ty_split_place, ty_verb_last]).
@@ -1251,6 +1257,7 @@ ty_row_shape('ty_pronoun_gender(L, System).').
 ty_row_shape('ty_inversion(L, Join, VowelJoin).').
 ty_row_shape('ty_wh_tonic(L, Meaning, Words).').
 ty_row_shape('ty_verb_list(L, Kind, Base).').
+ty_row_shape('ty_phrasal(L, Meaning, Verb, Particle, Object).').
 ty_row_shape('ty_tense_form(L, Tense, Number, Polarity, Pattern).').
 ty_row_shape('ty_tense_like(L, Level, Tense, As).').
 ty_row_shape('ty_definite_like(L, Def, As).').
@@ -1429,7 +1436,7 @@ ty_br_adjs([A|As], [w(W, lower)|Ws]) :-
 %% it to say a logic form (since 1.68.0).
 typology_meaning(L, noun, M) :- once(ty_noun(L, M, _, _, _, _)).
 typology_meaning(L, adjective, M) :- once(ty_adjective(L, M, _, _, _)).
-typology_meaning(L, verb, M) :- once(ty_verb(L, M, _, _, _, _)).
+typology_meaning(L, verb, M) :- once(( ty_verb(L, M, _, _, _, _) ; ty_phrasal(L, M, _, _, _) )).
 typology_meaning(L, name, M) :- once(ty_name(L, M, _, _, _)).
 typology_meaning(L, person, M) :- once(ty_noun(L, M, _, person, _, _)).
 typology_meaning(L, adposition, M) :- once(ty_adposition(L, M, _)).
@@ -1694,6 +1701,9 @@ ty_missing(L, bad(ty_verb_person(L, T, K, B, F, To))) :-
     \+ ( ( T == any ; ty_values(tense, Ts), memberchk(T, Ts) ),
          ty_values(agreement, As), memberchk(K, As), memberchk(B, As),
          atom(F), atom(To) ).
+ty_missing(L, bad(ty_phrasal(L, M, V, P, O))) :-
+    ty_phrasal(L, M, V, P, O),
+    \+ ( atom(M), atom(V), atom(P), memberchk(O, [object, none, any]) ).
 ty_missing(L, bad(ty_capital(L, W, C))) :-
     ty_capital(L, W, C),
     \+ ( atom(W), atom(C), downcase_atom(C, W) ).
@@ -2920,6 +2930,7 @@ ty_known_base(L, B) :-
     ;   ty_possessive_pronoun(L, Ws, _, _), memberchk(B, Ws)
     ;   ty_pronoun(L, _, Ws, _), memberchk(B, Ws)
     ;   ty_complement(L, _, Ws), memberchk(B, Ws)
+    ;   ty_phrasal(L, _, _, B, _)
     ;   ty_negation_place(L, Ws, _), memberchk(B, Ws)
     ;   ty_answer(L, _, Ws), ( memberchk(B, Ws) ; last(Ws, W), ty_answer_comma(L, M), atom_concat(W, M, B) )
     ;   ty_verb(L, _, _, _, _, Ws), memberchk(B, Ws)
@@ -4222,12 +4233,12 @@ ty_split_verb(L, copula(T, P, Subj, Pred), Q, Full) :- !,
     ),
     Full = [_, _|_].
 ty_split_verb(L, C, Q, Full) :-
-    C = clause(V, T, P, Subj, O, _),
+    C = clause(V, T, P, Subj, O, Js),
     b_setval('$ty_csubj', Subj),
     (   Q == none
     ->  ty_subject_number(Subj, N),
         ty_verb_polarity(L, P, VP),
-        phrase(ty_verb_group(L, V, T, N, VP, O, _), Full)
+        phrase(ty_verb_group(L, V, T, N, VP, O, Js, _), Full)
     ;   phrase(ty_ask_verb(L, C, Q), Full)
     ),
     ty_tense_participle(L, T).
@@ -4361,11 +4372,11 @@ ty_clause_parts([P|Ps], L, C, How) --> ty_clause_part(P, L, C, How), ty_clause_p
 
 ty_clause_part(s, L, clause(_, _, _, S, _, _), _) --> ty_role(L, s, S).
 ty_clause_part(o, L, clause(V, _, _, _, O, _), How) --> ty_object(L, V, O, How).
-ty_clause_part(v, L, clause(V, T, P, S, O, _), _) -->
+ty_clause_part(v, L, clause(V, T, P, S, O, Js), _) -->
     { ty_subject_number(S, N),
       b_setval('$ty_csubj', S),
       ty_verb_polarity(L, P, VP) },
-    ty_verb_group(L, V, T, N, VP, O, Ws),
+    ty_verb_group(L, V, T, N, VP, O, Js, Ws),
     ty_meant(L, verb(V), Ws).
 ty_clause_part(j, L, clause(_, _, _, _, _, Js), _) --> ty_adjuncts(L, Js).
 ty_clause_part(n(Ws), _, _, _) --> ty_tokens(Ws).
@@ -5108,18 +5119,21 @@ ty_poss_words_in(L, PWs, Words) :-
 %% asks; a construction with neither (Persian, whose ezafe is not written
 %% after a consonant) counts the nouns less one, two nouns to a possessor. And whether a possessor's gap may
 %% stand (`$ty_whose'), and whether a personal pronoun's word is among the
-%% words (`$ty_ppron').
+%% words (`$ty_ppron'), and since 1.94.0 a phrasal verb's particle
+%% (`$ty_pparticle').
 ty_poss_flag(L, Words) :-
-    (   nb_current('$ty_poss_memo', memo(L0, Words0, Count, W, P, PP)), L0 == L, Words0 == Words
+    (   nb_current('$ty_poss_memo', memo(L0, Words0, Count, W, P, PP, PT)), L0 == L, Words0 == Words
     ->  true
     ;   ty_poss_counts(L, Words, Count, W, P),
         ( ty_ppron_in(L, Words) -> PP = yes ; PP = no ),
-        nb_setval('$ty_poss_memo', memo(L, Words, Count, W, P, PP))
+        ( '$ty_phrasal_made'(L), member(X, Words), atom(X), '$ty_particle'(X, L) -> PT = yes ; PT = no ),
+        nb_setval('$ty_poss_memo', memo(L, Words, Count, W, P, PP, PT))
     ),
     b_setval('$ty_poss', f(Count)),
     b_setval('$ty_whose', f(W)),
     b_setval('$ty_pron', f(P)),
-    b_setval('$ty_ppron', f(PP)).
+    b_setval('$ty_ppron', f(PP)),
+    b_setval('$ty_pparticle', f(PT)).
 
 ty_ppron_in(L, Words) :-
     once(( ty_pronoun(L, _, Ws, _), ty_all_ahead(Ws, Words) )).
@@ -5371,13 +5385,46 @@ ty_rows_fit([adj(RG, RN)|Rows], G, N) :-
 %% object stands; its words are the ty_pronoun(L, o, ...) rows. A verb with
 %% a complement keeps its adposition, and the pronoun stands after it
 %% (`piensa en él'). Ws, for the verb's meaning, are the form's own words
-%% (the last ones before the rest of the sentence).
-ty_verb_group(L, V, T, N, P, O, Ws) -->
+%% (the last ones before the rest of the sentence). Js, the clause's
+%% adjuncts, are a phrasal verb's (below).
+ty_verb_group(L, V, T, N, P, O, _, Ws) -->
     { \+ ty_clitic_pron(L, V, O) },
     ty_verb_words(L, V, T, N, P, Ws).
-ty_verb_group(L, V, T, N, P, O, Ws) -->
+ty_verb_group(L, V, T, N, P, O, _, Ws) -->
     { ty_clitic_slot(L, O) },
     ty_clitic_verb(L, V, T, N, P, O, Ws).
+%% A PHRASAL VERB (since 1.94.0, ty_phrasal/5: WordNet's throw_out, set_up,
+%% come_up) is its verb's words and its particle after them: `The mayor
+%% threw out the first ball.' is clause(throw_out, past, pos, np(mayor,
+%% ...), np(ball, ...)). It is the verb group's last clause, so reading
+%% tries the plain verb first and the particle only where the rest is no
+%% reading with it (`Walks about in his stockinged feet.'), and only in a
+%% language with phrasal rows (`$ty_phrasal_made'/1, made with the verb
+%% tables), and in reading only where the sentence has a particle's word
+%% (`$ty_pparticle', ty_poss_flag/2). The words the word-sense check asks
+%% of are none, the meaning being the phrase's. With the particle asked of every verb read and the
+%% object of every clause, the round trips cost 0.5 % to 2.4 % more
+%% inferences, a language with no row the most (1.94.0's first cut; read
+%% with the meaning unbound where the IR gave it, English 129 %). A
+%% particle is not the adposition a relative clause's gap moved to its
+%% front (`the house in which the dog sleeps in' is no clause of sleep_in).
+ty_verb_group(L, V, T, N, P, O, Js, [], S0, S) :-
+    '$ty_phrasal_made'(L),
+    (   var(V)
+    ->  \+ nb_current('$ty_pparticle', f(no)),
+        ty_verb_words(L, B, T, N, P, _, S0, [Pt|S]), ty_phrasal(L, V, B, Pt, K)
+    ;   ty_phrasal(L, V, B, Pt, K), ty_verb_words(L, B, T, N, P, _, S0, [Pt|S])
+    ),
+    ty_phrasal_ok(K, O),
+    \+ ( nonvar(Js), Js = gapped(Pt, _, _, _) ).
+
+%% A phrasal verb's object as its row says (none, or one to come, as
+%% ty_valency/3 has bound it), and no pronoun: English puts one before the
+%% particle (`threw it out'), which no row reads yet.
+ty_phrasal_ok(K, O) :-
+    (   O == none -> K \== object
+    ;   K \== none, \+ ( nonvar(O), O = pron(_, _, _) )
+    ).
 
 %% Writing, an object pronoun of a verb with no complement, in a clitic
 %% language.
@@ -5650,6 +5697,12 @@ ty_verb_row(L, V, T, N, P, Words) :-
 :- dynamic('$ty_vfirst'/3).
 :- dynamic('$ty_vrow'/6).
 :- dynamic('$ty_vfirst_made'/1).
+:- dynamic('$ty_phrasal_made'/1).
+:- dynamic('$ty_particle'/2).
+
+%% Each particle of L's phrasal rows, once.
+ty_particle_of(L, Pt) :- setof(Pt0, ty_phrasal_particle(L, Pt0), Pts), member(Pt, Pts).
+ty_phrasal_particle(L, Pt) :- ty_phrasal(L, _, _, Pt, _).
 :- dynamic('$ty_tfirst'/2).
 
 %% Whether a verb's form may begin with W (the words around a word with
@@ -5667,6 +5720,10 @@ ty_vfirst_make(L) :-
     forall(retract('$ty_vrow'(_, L, _, _, _, _)), true),
     retractall('$ty_tfirst'(_, L)),
     retractall('$ty_vfirst_made'(L)),
+    retractall('$ty_phrasal_made'(L)),
+    retractall('$ty_particle'(_, L)),
+    ( ty_phrasal(L, _, _, _, _) -> assertz('$ty_phrasal_made'(L)) ; true ),
+    forall(ty_particle_of(L, Pt), assertz('$ty_particle'(Pt, L))),
     forall(ty_verb(L, M, T, N, P, Fs),
            (   Fs = [W|_],
                atomic_list_concat(Fs, ' ', K),
@@ -5779,7 +5836,7 @@ ty_role(L, Role, Qp, Features) -->
     ty_qp_role(L, Role, Qp, Features).
 
 %% A personal pronoun in its role; an object clitic's words stood in the
-%% verb's (ty_verb_group//7), which bound it before the object's place.
+%% verb's (ty_verb_group//8), which bound it before the object's place.
 ty_role(L, o, Pr, F) -->
     { nonvar(Pr), Pr = pron(_, _, _), ty_clitic(L, o), ty_pron_np_features(L, Pr, F) }.
 ty_role(L, Role, Pr, F) --> { ty_ppron_slot(Pr) }, ty_ppron_role(L, Role, Pr, F).
@@ -7727,6 +7784,18 @@ ty_english_row(ty_capital(english, W, C)) :-
     \+ tyi_entry(_, _, _, C),
     once(( tyi_lex(_, W, _) ; tyi_entry(_, _, W, _) )),
     \+ tyi_hand(ty_capital(english, W, _)).
+%% A VERB OF A VERB AND A PARTICLE (since 1.94.0: lexicon/phrasal.txt,
+%% WordNet's throw_out, set_up) is a ty_phrasal/5 row where its verb is one
+%% of the import's, a regular verb or the hand template's irregular one,
+%% unless the hand template has a row of it.
+ty_english_row(ty_phrasal(english, M, B, P, K)) :-
+    ( ty_lexicon_file(phrasal, F) -> ty_lexicon_lines(F, Ls) ; Ls = [] ),
+    ty_english_verbs(Bs0), sort(Bs0, Bs),
+    member(Line, Ls),
+    atomic_list_concat([M, K], ' ', Line),
+    atomic_list_concat([B, P], '_', M),
+    (   ord_memberchk(B, Bs) -> true ; tyi_hand(ty_irregular_verb(english, B, _, _, _)) ),
+    \+ tyi_hand(ty_phrasal(english, M, _, _, _)).
 %% An English adverb is one fact, its word its meaning: lexicon/'s (the
 %% vocabularies state none), unless the hand template has it (since 1.58.0).
 ty_english_row(ty_adverb(english, M, M)) :-
@@ -7972,7 +8041,7 @@ ty_apply_ending(L, Feature, Word, Form) :-
 %% with the adjectives, whose words most of them are.
 ty_kind_split(Rows, Kinds, Rest) :-
     partition([R]>>( R = ty_noun_in(_, _, _, _, _, _) ), Rows, Nouns, Rest1),
-    partition([R]>>( R = ty_verb_in(_, _, _, _) ), Rest1, Verbs, Rest2),
+    partition([R]>>( R = ty_verb_in(_, _, _, _) ; R = ty_phrasal(english, _, _, _, _) ), Rest1, Verbs, Rest2),
     partition([R]>>( R = ty_adjective(english, _, _, _, _) ; R = ty_capital(english, _, _) ), Rest2, Adjectives, Rest3),
     partition([R]>>( R = ty_adverb(english, _, _) ), Rest3, Adverbs, Rest4),
     partition([R]>>( R = ty_name(_, _, _, _, _) ), Rest4, Names, Rest),

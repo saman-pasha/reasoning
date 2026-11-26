@@ -338,3 +338,13 @@ He stood in a pool of light.	pool(a(of(pool, light))). past(in(stand(he), a(of(p
 The conquest of space.	conquest(of(conquest, space)).
 The place had an aura of romance.	aura(a(of(aura, romance))). past(have(the(place), a(of(aura, romance)))).
 A person of hot blood.	person(a(of(person, hot(blood)))).
+The mayor threw out the first ball.	past(throw_out(the(mayor), the(first(ball)))).
+An opportunity opened up.	opportunity(a(opportunity)). past(open_up(a(opportunity))).
+The plague wiped out an entire population.	population(a(entire(population))). entire(a(entire(population))). past(wipe_out(the(plague), a(entire(population)))).
+He threw away the rest.	past(throw_away(he, the(rest))).
+The plane touched down at noon.	past(at(touch_down(the(plane)), noon)).
+He knocked off the corners.	past(knock_off(he, the(pl(corner)))).
+The explosive devices went off.	past(go_off(the(pl(explosive(device))))).
+He had filled out the form completely.	pluperfect(completely(fill_out(he, the(form)))).
+Fold up the newspaper.	imperative(fold_up(you, the(newspaper))).
+He blends in with the crowd.	with(blend_in(he), the(crowd)).

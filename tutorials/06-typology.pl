@@ -154,6 +154,7 @@ main :-
     adjectives_after_noun,
     capital_adjectives,
     of_bare_nouns,
+    phrasal_verbs,
     format("~ndone~n", []).
 
 
@@ -1026,6 +1027,17 @@ of_bare_nouns :-
     must('read', IR1, phrase(of(np(evil, sg, mass, []), np(incarnation, sg, def, [])))),
     typology_read(english, 'The big dog is red.', IR2),
     must('a predicate adjective stays one', IR2, copula(present, pos, np(dog, sg, def, [big]), adj([red]))).
+
+%% 63. A PHRASAL VERB (1.94.0) is its verb's words and a particle after
+%% them, one meaning of WordNet's (throw_out), before the object; read
+%% where the plain verb is no reading.
+phrasal_verbs :-
+    typology_read(english, 'The mayor threw out the first ball.', IR1),
+    must('read', IR1, clause(throw_out, past, pos, np(mayor, sg, def, []), np(ball, sg, def, [first]))),
+    typology_write(english, clause(throw_out, future, neg, pron(3, sg, m), np(ball, sg, def, [])), W2),
+    must('written in any tense', W2, 'He will not throw out the ball.'),
+    typology_read(english, 'The dog sat on the mat.', IR3),
+    must('a preposition stays one', IR3, clause(sit, past, pos, np(dog, sg, def, []), none, [pp(on, np(mat, sg, def, []))])).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

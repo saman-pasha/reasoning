@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2045,8 +2045,10 @@ noun_adpositions :-
 
 %% 1.84.0: THE OTHER ENGLISH PREPOSITIONS, a row each (`for', `at',
 %% `into', `by', ...; `towards' a second word of `toward', `out of' and
-%% `instead of' two words). No row for the particles `up', `down', `off'.
-%% The other languages have no rows for the new meanings yet.
+%% `instead of' two words). No row for the particles `up', `down', `off'
+%% (since 1.94.0 they are a phrasal verb's: `Fold up the newspaper.' is
+%% fold_up, section phrasal_verbs). The other languages have no rows for
+%% the new meanings yet.
 prepositions :-
     section('the other English prepositions'),
     B = np(boy, sg, def, []),
@@ -2058,8 +2060,7 @@ prepositions :-
                'A poem by an unknown author.'-phrase(np_pp(np(poem, sg, indef, []), pp(by, np(author, sg, indef, [unknown])))),
                'The dog walked towards the house.'-clause(walk, past, pos, np(dog, sg, def, []), none, [pp(toward, np(house, sg, def, []))]),
                'He slept during the storm.'-clause(sleep, past, pos, pron(3, sg, m), none, [pp(during, np(storm, sg, def, []))]),
-               'He waited for the bus.'-clause(wait, past, pos, pron(3, sg, m), np(bus, sg, def, [])),
-               'Fold up the newspaper.'-none ]),
+               'He waited for the bus.'-clause(wait, past, pos, pron(3, sg, m), np(bus, sg, def, [])) ]),
            ( ( typology_read(english, T, R) -> true ; R = none ),
              atomic_list_concat(['English: ', T, ', the first reading'], Label),
              check(Label, R, Want) )),
@@ -2290,6 +2291,40 @@ of_bare_nouns :-
            ( ( typology_write(L2, IR2, W2) -> true ; W2 = none ),
              atomic_list_concat([L2, ': ', Want2], Label2),
              check(Label2, W2, Want2) )).
+
+%% 1.94.0: A PHRASAL VERB (ty_phrasal/5, WordNet's throw_out) is its verb's
+%% words and its particle after them, before the object, read where the
+%% plain verb is no reading: a preposition after a verb stays one.
+phrasal_verbs :-
+    section('a verb with a particle'),
+    forall(member(T-Want, [
+               'The mayor threw out the first ball.'-clause(throw_out, past, pos, np(mayor, sg, def, []), np(ball, sg, def, [first])),
+               'An opportunity opened up.'-clause(open_up, past, pos, np(opportunity, sg, indef, []), none),
+               'The plane touched down at noon.'-clause(touch_down, past, pos, np(plane, sg, def, []), none, [pp(at, np(noon, sg, mass, []))]),
+               'The dog sat on the mat.'-clause(sit, past, pos, np(dog, sg, def, []), none, [pp(on, np(mat, sg, def, []))]),
+               'He threw it out.'-none ]),
+           ( ( typology_read(english, T, R) -> true ; R = none ),
+             atomic_list_concat(['English: ', T, ', the first reading'], Label),
+             check(Label, R, Want) )),
+    B = np(ball, sg, def, []), He = pron(3, sg, m),
+    forall(member(IR-Want2, [
+               clause(throw_out, past, pos, He, B)-'He threw out the ball.',
+               clause(throw_out, future, neg, He, B)-'He will not throw out the ball.',
+               clause(throw_out, perfect, pos, He, B)-'He has thrown out the ball.',
+               clause(throw_out, past, pos, He, pron(3, sg, n))-none,
+               clause(touch_down, past, pos, np(plane, sg, def, []), np(dog, sg, def, []))-none ]),
+           ( ( typology_write(english, IR, W2) -> true ; W2 = none ),
+             format(atom(Label2), 'English writes ~q', [IR]),
+             check(Label2, W2, Want2) )),
+    ( typology_read(english, 'Fold up the newspaper.', R5) -> true ; R5 = none ),
+    ( subsumes_term(clause(fold_up, imperative, pos, pron(2, sg, _), np(newspaper, sg, def, [])), R5) -> F5 = fold_up ; F5 = R5 ),
+    check('a command with a particle: Fold up the newspaper.', F5, fold_up),
+    ( typology_read(english, 'The boy sees the house in which the dog sleeps in.', R6) -> true ; R6 = refused ),
+    check('no particle where the gap\'s adposition moved: in which ... sleeps in', R6, refused),
+    ( ty_phrasal(english, throw_out, V3, P3, K3) -> R3 = row(V3, P3, K3) ; R3 = none ),
+    check('the row of throw_out, from lexicon/phrasal.txt', R3, row(throw, out, any)),
+    ( typology_meaning(english, verb, throw_out) -> R4 = yes ; R4 = no ),
+    check('a phrasal verb is a verb meaning', R4, yes).
 
 %% 1.64.0: the bare singular noun. np(M, sg, mass, []): a singular noun
 %% with no article, read after the other readings, written with none;
@@ -2626,8 +2661,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 4167 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 4 167 sentences read at 1.93.0 are read', R1, yes),
+    ( K >= 4218 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 4 218 sentences read at 1.94.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

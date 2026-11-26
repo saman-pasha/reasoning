@@ -2,7 +2,8 @@
 # Writes lexicon/{noun,class,adj,vt,vi,vpp,adverb,place,unit,language,prose,known_*}.txt
 # from WordNet 3.0, with a cocolog -- lexicon/build.pl is the program, this
 # only sets the library path. proper.txt is not touched. With --capitals it
-# writes lexicon/capital.txt alone (the four data.* files are enough).
+# writes lexicon/capital.txt alone (the four data.* files are enough), and
+# with --phrasal lexicon/phrasal.txt alone (data.verb is enough).
 #
 # The module names are library(reasoning/...), so this repository's PARENT
 # directory goes on the library path; the cocolog checkout beside it (or a
