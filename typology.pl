@@ -134,6 +134,12 @@
 %%                                     with no ty_purpose_mark/2 words before
 %%                                     it (since 1.97.0: English `He used
 %%                                     pressure to stop the bleeding.')
+%%     ty_adverb_inside(L)             reading, an adverb may stand inside a
+%%                                     verb's words or before them, the
+%%                                     clause's first adjunct (since 1.99.0:
+%%                                     English `The area is well
+%%                                     populated.', `The detective
+%%                                     carefully lifted the prints.')
 %%     ty_infinitive_after(L, Meaning, Words)
 %%                                     the words between a verb and its
 %%                                     infinitive object (since 1.97.0:
@@ -846,7 +852,7 @@
            ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
            ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
            ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-           ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_adjective_list/3, ty_noun_list/3, ty_purpose_mark/2, ty_purpose_bare/1, ty_infinitive_after/3, ty_phrasal/5, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
+           ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_adjective_list/3, ty_noun_list/3, ty_purpose_mark/2, ty_purpose_bare/1, ty_adverb_inside/1, ty_infinitive_after/3, ty_phrasal/5, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
            ty_answer_echo/3, ty_kind/2, ty_adjective_before/2, ty_pronoun_gender/2,
            ty_inversion/3, ty_wh_tonic/3,
            ty_tense_form/5, ty_participle/3, ty_participle_like/3,
@@ -872,7 +878,7 @@
                  ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
                  ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
                  ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-                 ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_adjective_list/3, ty_noun_list/3, ty_purpose_mark/2, ty_purpose_bare/1, ty_infinitive_after/3, ty_phrasal/5, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
+                 ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_adjective_list/3, ty_noun_list/3, ty_purpose_mark/2, ty_purpose_bare/1, ty_adverb_inside/1, ty_infinitive_after/3, ty_phrasal/5, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
                  ty_answer_echo/3, ty_adjective_before/2, ty_pronoun_gender/2,
                  ty_inversion/3, ty_wh_tonic/3,
                  ty_tense_form/5, ty_participle/3, ty_participle_like/3,
@@ -1160,7 +1166,7 @@ ty_template_group('the orders of the levels', [ty_order]).
 ty_template_group('words', [ty_noun_class, ty_class_when, ty_noun_in, ty_noun, ty_adjective, ty_adjective_before, ty_article, ty_adposition,
                             ty_adverb, ty_capital, ty_capital_nouns, ty_name, ty_quantifier_pronoun, ty_definite_like, ty_subordinator, ty_subordinate_first, ty_subordinate_comma, ty_and, ty_conjunction, ty_serial_comma,
                             ty_conjunct_marks, ty_clause_comma, ty_comma, ty_sense, ty_closed]).
-ty_template_group('verbs and tenses', [ty_conjugation, ty_verb_in, ty_irregular_verb, ty_verb, ty_verb_list, ty_adjective_list, ty_noun_list, ty_purpose_mark, ty_purpose_bare, ty_infinitive_after, ty_phrasal, ty_tense_form, ty_tense_like, ty_participle,
+ty_template_group('verbs and tenses', [ty_conjugation, ty_verb_in, ty_irregular_verb, ty_verb, ty_verb_list, ty_adjective_list, ty_noun_list, ty_purpose_mark, ty_purpose_bare, ty_adverb_inside, ty_infinitive_after, ty_phrasal, ty_tense_form, ty_tense_like, ty_participle,
                                        ty_participle_like, ty_participle_ending, ty_participle_agrees,
                                        ty_verb_class, ty_class_tense_form, ty_verb_person, ty_copula,
                                        ty_split_place, ty_verb_last]).
@@ -1241,6 +1247,7 @@ ty_template_flag(ty_clitic, Name, ty_clitic(Name, o)).
 ty_template_flag(ty_participle_agrees, Name, ty_participle_agrees(Name, clitic)).
 ty_template_flag(ty_split_place, Name, ty_split_place(Name, end)).
 ty_template_flag(ty_purpose_bare, Name, ty_purpose_bare(Name)).
+ty_template_flag(ty_adverb_inside, Name, ty_adverb_inside(Name)).
 ty_template_flag(ty_verb_last, Name, ty_verb_last(Name, rel)).
 ty_template_flag(ty_subordinate_first, Name, ty_subordinate_first(Name)).
 ty_template_flag(ty_subordinate_comma, Name, ty_subordinate_comma(Name)).
@@ -1310,6 +1317,7 @@ ty_row_shape('ty_adjective_list(L, Kind, Base).').
 ty_row_shape('ty_noun_list(L, Kind, Base).').
 ty_row_shape('ty_purpose_mark(L, Words).').
 ty_row_shape('ty_purpose_bare(L).').
+ty_row_shape('ty_adverb_inside(L).').
 ty_row_shape('ty_infinitive_after(L, Meaning, Words).').
 ty_row_shape('ty_phrasal(L, Meaning, Verb, Particle, Object).').
 ty_row_shape('ty_tense_form(L, Tense, Number, Polarity, Pattern).').
@@ -3706,6 +3714,24 @@ ty_sentence(L, C) -->
 
 %% A passive (since 1.98.0, ty_passive//2), after every other reading.
 ty_sentence(L, C) --> ty_passive(L, C).
+%% A passive with no subject (since 1.99.0: `Was transferred up to
+%% headquarters.'), its patient someone the text does not name, as a
+%% clause's with no subject: after the passive with one, and not where the
+%% words are one.
+ty_sentence(L, C) -->
+    ty_here(S0),
+    { C = clause(_, pass(_), _, pron(3, sg, zero), _, _),
+      '$ty_unsaid'(L), '$ty_pass_made'(L),
+      ( nonvar(S0) -> Rd = read ; Rd = write ),
+      b_setval('$ty_command', z(C)) },
+    ty_passive(L, C),
+    ty_here(S),
+    { b_setval('$ty_command', none),
+      \+ ty_said_passive(Rd, L, S0, S) }.
+
+ty_said_passive(read, L, S0, S) :-
+    ty_passive(L, C2, S0, S),
+    arg(4, C2, Sub), Sub \== pron(3, sg, zero), !.
 
 %% Reading (the words given before the rule began, not made by it), no
 %% clause with no subject where the words are a clause with one: `Dogs
@@ -3805,7 +3831,7 @@ ty_has_imperative(X) :-
 ty_imperative_ok(T) :-
     (   T == imperative -> nb_current('$ty_command', c(_))
     ;   T == infinitive -> nb_current('$ty_command', i(_))
-    ;   T = pass(_) -> nb_current('$ty_pass', on)
+    ;   T = pass(T0) -> nb_current('$ty_pass', on), ( T0 == infinitive -> nb_current('$ty_command', i(_)) ; true )
     ;   true
     ).
 
@@ -3900,7 +3926,9 @@ ty_passive(L, C) -->
 %% Reading, a passive is tried only where a word ahead is one its
 %% participle follows ('$ty_pword'/2: English `was', `been'). Asked here,
 %% not of every text read (ty_poss_flag/2): the writer reads each text back
-%% with its IR, which a passive's reading of another IR never is.
+%% with its IR, which a passive's reading of another IR never is; and so
+%% asked once a text and kept with its words, each ask cost more than the
+%% scan (1.99.0).
 ty_pass_ahead(L, S0, S0) :-
     (   var(S0) -> true
     ;   member(X, S0), atom(X), '$ty_pword'(X, L) -> true
@@ -4516,6 +4544,15 @@ ty_clause_part(v, L, clause(V, T, P, S, O, Js), _) -->
       ty_verb_polarity(L, P, VP) },
     ty_verb_group(L, V, T, N, VP, O, Js, Ws),
     ty_meant(L, verb(V), Ws).
+%% An adverb ty_vg_adverb/10 read inside the verb's words is the first of
+%% the clause's adjuncts (`$ty_vadv' holds it with the list's variable,
+%% set back as each parse starts, ty_parse_reset/1). Asked with ty_here//1
+%% and nonvar/1 before the global, the part cost Spanish's round trips
+%% 0.14 % more inferences, the global alone 0.07 %.
+ty_clause_part(j, L, clause(_, _, _, _, _, Js), _) -->
+    { nb_current('$ty_vadv', v(J0, A)), J0 == Js }, !,
+    { Js = [A|Js1], b_setval('$ty_vadv', none) },
+    ty_adjuncts(L, Js1).
 ty_clause_part(j, L, clause(_, _, _, _, _, Js), _) --> ty_adjuncts(L, Js).
 ty_clause_part(n(Ws), _, _, _) --> ty_tokens(Ws).
 ty_clause_part(vf(R), L, C, _) --> ty_split_first(R, L, C, none).
@@ -4574,6 +4611,24 @@ ty_object(L, V, clause(V2, infinitive, pos, NP, O2, Js2), oinf) -->
     ty_role(L, o, NP),
     ty_infinitive_ahead(L),
     ty_infinitive(L, V2, O2, Js2).
+%% A PASSIVE INFINITIVE as a verb's object (since 1.99.0: `The machine
+%% needs to be serviced.' is clause(need, present, pos, np(machine, ...),
+%% clause(service, pass(infinitive), pos, pron(3, sg, zero), none))): of a
+%% verb that may take an infinitive, the clause in the tense
+%% pass(infinitive) (English [to, be, participle]), its patient the
+%% clause's own subject, which level 2 says.
+ty_object(L, V, clause(V2, pass(infinitive), pos, pron(3, sg, zero), none, Js2), ipass) -->
+    { '$ty_pass_made'(L) },
+    ty_infinitive_ahead(L),
+    { nonvar(V), ty_verb_of(L, infinitive, V) },
+    ty_pass_ahead(L),
+    { C = clause(V2, pass(infinitive), pos, pron(3, sg, zero), none, Js2),
+      ( nb_current('$ty_command', X0) -> true ; X0 = none ),
+      ( nb_current('$ty_pass', P0) -> true ; P0 = off ),
+      b_setval('$ty_command', i(C)), b_setval('$ty_pass', on) },
+    ty_clause(L, C),
+    ty_infinitive_end(L),
+    { b_setval('$ty_command', X0), b_setval('$ty_pass', P0) }.
 %% A passive's infinitive object (since 1.98.0, ty_passive//2), of a verb
 %% whose object may take one.
 ty_object(L, V, inf(V2, O2, Js2), pinf) -->
@@ -5433,20 +5488,22 @@ ty_poss_words_in(L, PWs, Words) :-
 %% (`$ty_pinf', asked by the infinitive after a noun, an adjective, an
 %% object and of purpose).
 ty_poss_flag(L, Words) :-
-    (   nb_current('$ty_poss_memo', memo(L0, Words0, Count, W, P, PP, PT, PI)), L0 == L, Words0 == Words
+    (   nb_current('$ty_poss_memo', memo(L0, Words0, Count, W, P, PP, PT, PI, PV)), L0 == L, Words0 == Words
     ->  true
     ;   ty_poss_counts(L, Words, Count, W, P),
         ( ty_ppron_in(L, Words) -> PP = yes ; PP = no ),
         ( '$ty_phrasal_made'(L), member(X, Words), atom(X), '$ty_particle'(X, L) -> PT = yes ; PT = no ),
         ( ty_inf_in(L, Words) -> PI = yes ; PI = no ),
-        nb_setval('$ty_poss_memo', memo(L, Words, Count, W, P, PP, PT, PI))
+        ( ty_adverb_inside(L), member(X2, Words), atom(X2), ty_adverb(L, _, X2) -> PV = yes ; PV = no ),
+        nb_setval('$ty_poss_memo', memo(L, Words, Count, W, P, PP, PT, PI, PV))
     ),
     b_setval('$ty_poss', f(Count)),
     b_setval('$ty_whose', f(W)),
     b_setval('$ty_pron', f(P)),
     b_setval('$ty_ppron', f(PP)),
     b_setval('$ty_pparticle', f(PT)),
-    b_setval('$ty_pinf', f(PI)).
+    b_setval('$ty_pinf', f(PI)),
+    b_setval('$ty_padv', f(PV)).
 
 %% Whether the text has an infinitive's first word ('$ty_vinf'/2): of a
 %% language whose infinitive a mark begins, the mark (English `to'), else
@@ -5731,7 +5788,17 @@ ty_verb_group(L, V, T, N, P, O, _, Ws) -->
 %% with the meaning unbound where the IR gave it, English 129 %). A
 %% particle is not the adposition a relative clause's gap moved to its
 %% front (`the house in which the dog sleeps in' is no clause of sleep_in).
-ty_verb_group(L, V, T, N, P, O, Js, [], S0, S) :-
+ty_verb_group(L, V, T, N, P, O, Js, Ws, S0, S) :-
+    '$ty_vg_more'(L),
+    (   ty_vg_phrasal(L, V, T, N, P, O, Js, Ws, S0, S)
+    ;   ty_vg_adverb(L, V, T, N, P, O, Js, Ws, S0, S)
+    ).
+
+%% A language with a phrasal row or an adverb inside a verb's words
+%% (`$ty_vg_more'/1, made with the verb tables), whose verb group has one
+%% last clause for the two: as a clause each, the adverb's cost Spanish's
+%% round trips 0.08 % more inferences (1.99.0's first cut).
+ty_vg_phrasal(L, V, T, N, P, O, Js, [], S0, S) :-
     '$ty_phrasal_made'(L),
     (   var(V)
     ->  \+ nb_current('$ty_pparticle', f(no)),
@@ -5740,6 +5807,60 @@ ty_verb_group(L, V, T, N, P, O, Js, [], S0, S) :-
     ),
     ty_phrasal_ok(K, O),
     \+ ( nonvar(Js), Js = gapped(Pt, _, _, _) ).
+
+%% AN ADVERB INSIDE A VERB'S WORDS OR BEFORE THEM (since 1.99.0,
+%% ty_adverb_inside/1: English `The area is well populated.', `The
+%% detective carefully lifted some fingerprints.'), reading only: the
+%% adverb after the verb's first or second word, or before its first,
+%% where the verb's words go on past it, but not in an infinitive's words
+%% (`to second base' is no base of second), before a command's verb (`Good
+%% taste.' is no command to taste well) nor before a past verb of a clause
+%% with no subject (`Chemically related.', `Linearly polarized radiation.'
+%% are participles); it is the clause's first adjunct,
+%% which the clause's adjuncts take (`$ty_vadv' holds it with the clause's
+%% list of adjuncts: the adjuncts stand after the verb in a language with
+%% the row; it is cleared as each text is read or written, ty_parse_reset/1,
+%% and set only reading), and the writer puts it with the other adjuncts
+%% (`The area is populated well.'). Tried only in a text with an adverb's word
+%% (`$ty_padv', ty_poss_flag/2): tried at every verb read, the first cut
+%% cost English's round trips 3.9 % more inferences.
+ty_vg_adverb(L, V, T, N, P, O, Js, Ws, S0, S) :-
+    ty_adverb_inside(L), nonvar(S0), var(Js),
+    \+ nb_current('$ty_padv', f(no)),
+    ty_vadv_split(L, S0, K, M, S1),
+    \+ ty_clitic_pron(L, V, O),
+    ty_verb_words(L, V, T, N, P, Ws, S1, S),
+    length(S1, N1), length(S, N2), N1 - N2 > K,
+    \+ ty_vadv_unsaid(Js, T, K),
+    b_setval('$ty_vadv', v(Js, adv(M))).
+
+ty_vadv_unsaid(Js, T, K) :-
+    nb_current('$ty_command', X), compound(X), X =.. [F, C],
+    arg(6, C, J), J == Js,
+    ( F == i -> true ; K == 0, ( F == c -> true ; F == z, T == past ) ).
+
+%% The words with one adverb taken out, K the words before it. An adverb
+%% that may begin a verb's form too (`well', `long', and WordNet's `see')
+%% is one only where a verb's form, a participle or a passive's word
+%% stands after it (`was well developed', `are well known', `has long been
+%% forgotten'): `did not see a red book' tried
+%% `see' as an adverb, and the round trips cost 3.8 % more.
+%% Inside the verb's words only after a tense pattern's first word (`has',
+%% `will', or `was' while a passive is read, '$ty_tfirst'/2), and never an
+%% adposition's word (`in', `up').
+ty_vadv_split(L, [A|R], 0, M, R) :- ty_vadv_word(L, A, R, M).
+ty_vadv_split(L, [W1, A|R], 1, M, [W1|R]) :-
+    atom(W1), '$ty_tfirst'(W1, L), ty_vadv_word(L, A, R, M).
+ty_vadv_split(L, [W1, W2, A|R], 2, M, [W1, W2|R]) :-
+    atom(W1), '$ty_tfirst'(W1, L), ty_vadv_word(L, A, R, M).
+
+ty_vadv_word(L, A, R, M) :-
+    atom(A), ty_adverb(L, M, A), \+ ty_word_class(L, adposition, A),
+    (   '$ty_vfirst'(A, L, _)
+    ->  R = [Nx|_], atom(Nx),
+        ( '$ty_vfirst'(Nx, L, _) -> true ; '$ty_pword'(Nx, L) -> true ; ty_participle(L, _, Nx) -> true )
+    ;   true
+    ).
 
 %% A phrasal verb's object as its row says (none, or one to come, as
 %% ty_valency/3 has bound it), and no pronoun: English puts one before the
@@ -6047,6 +6168,7 @@ ty_verb_row(L, V, T, N, P, Words) :-
 %% A language with a passive's ty_tense_form/5 row (since 1.98.0), whose
 %% clauses ty_passive//2 tries.
 :- dynamic('$ty_pass_made'/1).
+:- dynamic('$ty_vg_more'/1).
 %% The words a passive's participle follows in its patterns (English `is',
 %% `was', `be', `been'); a text with one ahead may hold a passive
 %% (ty_pass_ahead//1).
@@ -6077,6 +6199,7 @@ ty_vfirst_make(L) :-
     retractall('$ty_tfirst'(_, L)),
     retractall('$ty_vfirst_made'(L)),
     retractall('$ty_phrasal_made'(L)),
+    retractall('$ty_vg_more'(L)),
     retractall('$ty_particle'(_, L)),
     retractall('$ty_inf_made'(L)),
     retractall('$ty_vinf'(_, L)),
@@ -6084,6 +6207,7 @@ ty_vfirst_make(L) :-
     retractall('$ty_pword'(_, L)),
     retractall('$ty_tact'(L, _, _, _, _, _)),
     ( ty_phrasal(L, _, _, _, _) -> assertz('$ty_phrasal_made'(L)) ; true ),
+    ( ( ty_phrasal(L, _, _, _, _) ; ty_adverb_inside(L) ) -> assertz('$ty_vg_more'(L)) ; true ),
     forall(ty_particle_of(L, Pt), assertz('$ty_particle'(Pt, L))),
     forall(ty_verb(L, M, T, N, P, Fs),
            (   Fs = [W|_],
@@ -6644,7 +6768,7 @@ ty_rel_part(m, L, _, _, _, _, m(Ws, R)) -->
     { ty_marker_span(R, Min, Max) },
     ty_rel_comma(L),
     ty_words(Min, Max, Ws, ty_marker_words(L, R, Ws)).
-ty_rel_part(c, L, _, _, _, C, _) --> ty_rel_clause(L, C), ty_rel_close(L).
+ty_rel_part(c, L, _, _, _, C, m(Ws, _)) --> ty_rel_clause(L, C, Ws), ty_rel_close(L).
 
 %% THE COMMAS OF A RELATIVE CLAUSE (ty_relative_comma(L): German `Der Hund,
 %% der schläft, ist klein.'): a comma before the marker, and one after the
@@ -6709,12 +6833,32 @@ ty_gap_marker_role(poss(_, _, _), o).
 
 %% A relative clause is a subordinate one (`$ty_sub'), whose verb
 %% ty_verb_last/2 may put last.
-ty_rel_clause(L, C) -->
+ty_rel_clause(L, C, _) -->
     { C = clause(_, _, _, _, _, _) },
     (   { '$ty_sub_used'(L) } -> ty_sub(ty_clause(L, C)) ; ty_clause(L, C) ).
-ty_rel_clause(L, C) -->
+ty_rel_clause(L, C, _) -->
     { C = copula(_, _, _, _) },
     (   { '$ty_sub_used'(L) } -> ty_sub(ty_copula_clause(L, C)) ; ty_copula_clause(L, C) ).
+%% A passive (since 1.99.0, ty_passive//2), after the other readings: `the
+%% pages that were divided into columns', `the difficulties in which the
+%% question is involved'. Only after a marker of one word or more (Ws,
+%% bound where the marker comes first), and not where the gap is the
+%% object's or its possessor's (a passive's object is none or an
+%% infinitive): tried after every noun of English too, whose object takes
+%% a marker of no words, a long sentence with `was' cost three times the
+%% inferences to read.
+ty_rel_clause(L, C, Ws) -->
+    { Ws \== [],
+      C = clause(_, pass(_), _, _, O, _), '$ty_pass_made'(L),
+      \+ ty_gap_object(O) },
+    ty_pass_ahead(L),
+    (   { '$ty_sub_used'(L) } -> ty_sub(ty_passive(L, C)) ; ty_passive(L, C) ).
+
+ty_gap_object(O) :-
+    nonvar(O),
+    (   O = gap(_, _, _) -> true
+    ;   O = of(G, _), nonvar(G), G = gap(_, _, _)
+    ).
 
 ty_sub(G, S0, S) :-
     (   nb_current('$ty_sub', Old) -> true ; Old = no ),
@@ -6796,8 +6940,12 @@ ty_marks_needed(L, Role, Place, Features, Marks) :-
 %% nothing set one takes any.
 ty_cased(L) :- '$ty_cased'(L).
 
-%% Where a parse starts, the globals of a language with cases are set back.
+%% Where a parse starts, the globals of a language with cases are set back,
+%% and the adverb read inside a verb's words (`$ty_vadv', ty_vg_adverb/10)
+%% of every language: asked first whether the language has the row, the
+%% reset cost twice the inferences.
 ty_parse_reset(L) :-
+    b_setval('$ty_vadv', none),
     (   '$ty_cased'(L)
     ->  b_setval('$ty_case', any), b_setval('$ty_sub', no),
         b_setval('$ty_kein', none), b_setval('$ty_kein_np', no)

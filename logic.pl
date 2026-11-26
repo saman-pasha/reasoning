@@ -347,10 +347,22 @@ logic_why(IR0, Why) :-
 %% as an object's infinitive is (`The auditor was required to produce his
 %% working papers.' is past(require(someone, to(produce(the(auditor),
 %% ...))))). A passive with another object (`He was given a book.') has
-%% none.
+%% none, and so has one whose patient and agent the text both leaves
+%% unsaid (since 1.99.0: `Was transferred up to headquarters.'), each of
+%% which would be someone.
 lg_active(X, X) :- var(X), !.
 lg_active(clause(V, T, P, S, O), C) :- nonvar(T), T = pass(_), !,
     lg_active(clause(V, T, P, S, O, []), C).
+lg_active(clause(V, T, P, S, O), C) :- lg_pass_inf(O), !,
+    lg_active(clause(V, T, P, S, O, []), C).
+%% A passive infinitive object (since 1.99.0) is the active's, its patient
+%% the clause's own subject: `The machine needs to be serviced.' is
+%% need(the(machine), to(service(someone, the(machine)))).
+lg_active(clause(V, T, P, S, O0, Js0), C) :- \+ ( nonvar(T), T = pass(_) ), lg_pass_inf(O0), !,
+    ( O0 = clause(V2, _, _, _, _, Js2) -> true ; O0 = clause(V2, _, _, _, _), Js2 = [] ),
+    lg_active(S, S1), maplist(lg_active, Js2, Js3), maplist(lg_active, Js0, Js),
+    ( Js3 == [] -> O = clause(V2, infinitive, pos, pron(3, sg, zero), S1) ; O = clause(V2, infinitive, pos, pron(3, sg, zero), S1, Js3) ),
+    ( Js == [] -> C = clause(V, T, P, S1, O) ; C = clause(V, T, P, S1, O, Js) ).
 lg_active(clause(V, pass(T), P, S, O0, Js0), C) :- !,
     lg_active(S, S1),
     (   O0 == none -> O = S1
@@ -360,10 +372,15 @@ lg_active(clause(V, pass(T), P, S, O0, Js0), C) :- !,
     ;   lg_no(passive(object))
     ),
     (   select(J, Js0, Js2), nonvar(J), J = pp(by, A0) -> true ; A0 = pron(3, sg, zero), Js2 = Js0 ),
+    ( S == pron(3, sg, zero), A0 == pron(3, sg, zero) -> lg_no(passive(unsaid)) ; true ),
     lg_active(A0, A), maplist(lg_active, Js2, Js),
     ( Js == [] -> C = clause(V, T, P, A, O) ; C = clause(V, T, P, A, O, Js) ).
 lg_active(X, Y) :- compound(X), !, X =.. [F|As], maplist(lg_active, As, Bs), Y =.. [F|Bs].
 lg_active(X, X).
+
+lg_pass_inf(O) :-
+    nonvar(O), ( O = clause(_, T, _, Z, _) ; O = clause(_, T, _, Z, _, _) ),
+    T == pass(infinitive), Z == pron(3, sg, zero).
 
 lg_no(Why) :- throw(lg_no(Why)).
 
@@ -407,6 +424,9 @@ lg_statement(C, Items) :-
     lg_assert(Q, T, Conds, Atoms, S, Inds, Items).
 
 lg_is_ind('$ind'(_, _)).
+
+lg_someone(person, someone).
+lg_someone(thing, something).
 
 %% A NOUN PHRASE ALONE (since 1.81.0): its noun and its adjectives said of
 %% its term, as facts. An indefinite one is its individual (`A heavy
@@ -941,11 +961,16 @@ lg_entity(X, _, _) :- lg_no(shape(X)).
 %% it is no object) an indefinite one, then a '$obj' mark; anything else
 %% has no form there, its reason K(Q) (object(every), adjunct(some)). Raw
 %% is the term a possessed's term names it by: the constant, or the
-%% individual's a(Shape), or the variable.
+%% individual's a(Shape), or the variable. `someone' and `something' are
+%% the one individual a subject of them is (since 1.99.0: `The critics
+%% praised someone.' is past(praise(the(pl(critic)), someone)), which a
+%% passive's agent with its patient unsaid says).
 lg_arg(K, X, V, Raw, Ms) :-
     lg_entity(X, ent(T, Conds, Q), Ms0),
     (   Q == const
     ->  V = T, T = const(Raw), Ms = Ms0
+    ;   Q == some, nonvar(X), X = qp(_, Kind), lg_someone(Kind, Raw)
+    ->  V = const(Raw), Ms = Ms0
     ;   Q == generic, Ms0 = ['$ind'(V0, Shape)|Rest]
     ->  V = V0, Ms = ['$obj'(Shape, V, Raw, Conds)|Rest]
     ;   Why =.. [K, Q], lg_no(Why)
@@ -1779,13 +1804,19 @@ lg_atom_ir(L, pred(P, [A]), How, IR) :-
 %% an individual a(Shape) in it, which no fact names, is said as one there.
 %% Said of another term (since 1.96.0) it is the object's infinitive,
 %% clause(Verb, infinitive, pos, Object's NP, ...); after an adjective, the
-%% adjective's (copula(..., adj([ap(A, inf(...))]))).
+%% adjective's (copula(..., adj([ap(A, inf(...))]))). Said by someone of
+%% the clause's own subject (since 1.99.0) it is the passive infinitive
+%% (need(the(machine), to(service(someone, the(machine)))) is `The machine
+%% needs to be serviced.').
 lg_atom_ir(L, pred(P, [A, fun(to, [F])]), How, IR) :-
     lg_arg_np(L, How, A, S),
     lg_inf_ir(L, How, F, V2, S2, O2, Js2),
     (   catch(typology_meaning(L, verb, P), _, fail),
         (   S2 = S
         ->  ( Js2 == [] -> Inf = inf(V2, O2) ; Inf = inf(V2, O2, Js2) )
+        ;   ( S2 == pron(3, sg, zero) -> true ; S2 == qp(some, person) ), O2 =@= S
+        ->  Z = pron(3, sg, zero),
+            ( Js2 == [] -> Inf = clause(V2, pass(infinitive), pos, Z, none) ; Inf = clause(V2, pass(infinitive), pos, Z, none, Js2) )
         ;   ( Js2 == [] -> Inf = clause(V2, infinitive, pos, S2, O2) ; Inf = clause(V2, infinitive, pos, S2, O2, Js2) )
         ),
         IR = clause(P, present, pos, S, Inf)

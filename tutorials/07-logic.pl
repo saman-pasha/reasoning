@@ -64,6 +64,7 @@ main :-
     infinitive_places,
     infinitive_languages,
     passive,
+    passive_places,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -462,6 +463,18 @@ passive :-
     must('and into English', E2, 'The workers built the house.'),
     logic_translate(english, cocolog, 'He was asked to leave the room.', C3),
     must('an object\'s infinitive', C3, 'past(ask(someone, to(leave(he, the(room))))).\n').
+
+%% 35. A PASSIVE INFINITIVE (1.99.0) is the active's, its patient the
+%% clause's own subject, and back into English the passive infinitive; an
+%% adverb inside the verb's words is round the atom, as any adverb is.
+passive_places :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'The machine needs to be serviced.', C1),
+    must('a passive infinitive', C1, 'need(the(machine), to(service(someone, the(machine)))).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and into English', E1, 'The machine needs to be serviced.'),
+    logic_translate(english, cocolog, 'He promptly forgot the address.', C2),
+    must('an adverb before the verb', C2, 'past(promptly(forget(he, the(address)))).\n').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

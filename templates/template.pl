@@ -336,6 +336,15 @@ ty_conjunct_marks(xx).
 %%   (keep it where the language does this, else delete it)
 ty_purpose_bare(xx).
 
+%%     ty_adverb_inside(L)             reading, an adverb may stand inside a
+%%                                     verb's words or before them, the
+%%                                     clause's first adjunct (since 1.99.0:
+%%                                     English `The area is well
+%%                                     populated.', `The detective
+%%                                     carefully lifted the prints.')
+%%   (keep it where the language does this, else delete it)
+ty_adverb_inside(xx).
+
 %%     ty_infinitive_after(L, Meaning, Words)
 %%                                     the words between a verb and its
 %%                                     infinitive object (since 1.97.0:

@@ -378,3 +378,13 @@ The saint's bones were enshrined in the cathedral.	past(in(enshrine(someone, of(
 The thief's identification was followed quickly by his arrest.	past(quickly(follow(of(arrest, he), of(identification, the(thief))))).
 Their appeal was denied in the superior court.	past(in(deny(someone, of(appeal, they)), the(superior(court)))).
 The shoes are priced reasonably.	reasonably(price(someone, the(pl(shoe)))).
+He promptly forgot the address.	past(promptly(forget(he, the(address)))).
+The area is well populated.	well(populate(someone, the(area))).
+His name has long been forgotten.	perfect(long(forget(someone, of(name, he)))).
+The washing machine needs to be serviced.	need(the(nn(washing, machine)), to(service(someone, the(nn(washing, machine))))).
+Experience generally improves performance.	generally(improve(experience, performance)).
+Good classroom teaching is seldom rewarded.	seldom(reward(someone, good(nn(classroom, teaching)))).
+She actually spoke Latin.	past(actually(speak(she, latin))).
+The new president obviously enjoyed his inauguration.	past(obviously(enjoy(the(new(president)), of(inauguration, he)))).
+We had long anticipated his cadaverous end.	pluperfect(long(anticipate(we, of(cadaverous(end), he)))).
+They finally reached a settlement with the union.	settlement(a(settlement)). past(with(finally(reach(they, a(settlement))), the(union))).

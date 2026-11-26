@@ -159,6 +159,7 @@ main :-
     infinitive_places,
     infinitive_languages,
     passive,
+    passive_places,
     format("~ndone~n", []).
 
 
@@ -743,7 +744,7 @@ blank_template :-
     split_string(S, "\n", "", Lines),
     include([L]>>sub_string(L, 0, _, _, 'ty_'), Lines, Choices),
     length(Choices, N1),
-    must('the choices, each a row of code', N1, 97),
+    must('the choices, each a row of code', N1, 98),
     ( member(L2, Lines), sub_string(L2, 0, _, _, '%% ty_noun(klingon, Meaning, Gender') -> R2 = shape ; R2 = none ),
     must('a slot of words, its shape', R2, shape),
     ( member(L3, Lines), sub_string(L3, 0, _, _, '%%   e.g. ty_noun_in(english, dog,') -> R3 = example ; R3 = none ),
@@ -1101,6 +1102,22 @@ passive :-
     must('written in another tense', W3, 'The passes have not been fumbled.'),
     typology_read(english, 'He was killed.', IR4),
     must('the copula first', IR4, copula(past, pos, pron(3, sg, m), adj([killed]))).
+
+%% 68. THE PASSIVE IN MORE PLACES, AND AN ADVERB INSIDE THE VERB (1.99.0):
+%% a relative clause's passive, a passive infinitive (the tense
+%% pass(infinitive), English [to, be, participle]) and a passive with no
+%% subject; and, where the template has ty_adverb_inside/1, an adverb inside
+%% a verb's words or before them, the clause's first adjunct, which the
+%% writer puts after the verb.
+passive_places :-
+    typology_read(english, 'The dog that was fed sleeps.', IR1),
+    must('in a relative clause', IR1, clause(sleep, present, pos, rel(np(dog, sg, def, []), clause(feed, pass(past), pos, gap, none)), none)),
+    typology_read(english, 'The machine needs to be serviced.', IR2),
+    must('a passive infinitive', IR2, clause(need, present, pos, np(machine, sg, def, []), clause(service, pass(infinitive), pos, pron(3, sg, zero), none))),
+    typology_read(english, 'The area is well populated.', IR3),
+    must('an adverb inside the verb', IR3, clause(populate, pass(present), pos, np(area, sg, def, []), none, [adv(well)])),
+    typology_write(english, IR3, W3),
+    must('written after it', W3, 'The area is populated well.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

@@ -24,8 +24,8 @@ red) and lesson 01 pin the shape of the answer, deliberately not the number.
 The reasoning library translates ALL 8 000 sentences of `lexicon/prose.txt`
 from English into the IR, and ALL of that IR into Cocolog. Every step
 moves one of the two counts and reports both (`tools/logic/prose.pl`;
-STATUS.md keeps them): at 1.98.0, 4 325 into the IR, 4 141 of them into
-Cocolog (1.96.0 and 1.97.0: 4 295 and 4 111; 1.95.0: 4 243 and 4 063; 1.94.0: 4 218 and 4 040; 1.93.0: 4 167 and 3 990; 1.92.0: 4 129 and 3 954; 1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
+STATUS.md keeps them): at 1.99.0, 4 358 into the IR, 4 165 of them into
+Cocolog (1.98.0: 4 325 and 4 141; 1.96.0 and 1.97.0: 4 295 and 4 111; 1.95.0: 4 243 and 4 063; 1.94.0: 4 218 and 4 040; 1.93.0: 4 167 and 3 990; 1.92.0: 4 129 and 3 954; 1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
 count says so. **Measure what blocks the rest before choosing a step**:
 at 1.80.0 the words no table has looked like the gap, and 5 115 of the
 8 000 had none -- 2 130 of them a noun phrase alone, which one rule read.
@@ -813,6 +813,34 @@ is. At level 2 the passive is its active (`lg_active/2`, at
 `logic_from_ir/2`): the agent the first pp(by, NP) wherever it stands,
 else pron(3, sg, zero), someone; Cocolog back into English is the active.
 No other template has a passive row yet.
+
+**An adverb inside or before a verb's words since 1.99.0**
+(`ty_adverb_inside/1`, English's row: `The area is well populated.`) is
+the clause's first adjunct: `ty_vg_adverb/10`, the verb group's last
+clause beside the phrasal one, both behind one load-time fact
+(`'$ty_vg_more'/1`), takes it out of the words (`ty_vadv_split/5`: before
+the first word, or after a tense pattern's first word, `'$ty_tfirst'/2`)
+and leaves it in `'$ty_vadv'` with the clause's list of adjuncts, which
+the j part puts first (`ty_clause_part//4`'s first j clause; the global
+set back as each parse starts, `ty_parse_reset/1`). Reading only, in a
+text with an adverb's word (`'$ty_padv'`), where the verb's words go on
+past it; an adverb that may begin a verb's form (`well`, `long`, `see`)
+only before a verb's form, a passive's word or a participle. **A new
+clause that a predicate's every call reaches costs a call of each goal in
+it, in every language**: asked with `ty_here//1` and `nonvar/1` before its
+global, the j part cost Spanish's round trips 0.14 % more inferences; the
+global alone 0.07 %. The passive's other places: in a relative clause
+after a marker of one word or more, and not at an object's gap
+(`ty_rel_clause//3`: tried after every English noun, whose object takes a
+marker of no words, a long sentence with `was` cost three times the
+inferences to read, past `typology_coverage/4`'s 2 000 000, and the
+typology case's floor went red); with no subject (`Was easily
+confused.`, a `ty_sentence//2` clause after the passive with one; level 2
+says `passive(unsaid)` unless an agent is said); and an infinitive's
+(`pass(infinitive)`, [to, be, participle], a verb's object: `The washing
+machine needs to be serviced.`, its patient the clause's subject at level
+2). `someone` and `something` are constants where an object stands
+(`lg_someone/2`). Cost: English 0.94 %, the others 0.12 % to 0.15 %.
 **The blank template copies the row descriptions of typology.pl's head**:
 a changed description is `typology_import(template)` again, or the
 `reproduced` section is red.

@@ -545,6 +545,11 @@ ty_tense_form(english, pass(pluperfect), any, pos, [had, been, participle]).
 ty_tense_form(english, pass(pluperfect), any, neg, [had, not, been, participle]).
 ty_tense_form(english, pass(conditional), any, pos, [would, be, participle]).
 ty_tense_form(english, pass(conditional), any, neg, [would, not, be, participle]).
+%% A passive infinitive (since 1.99.0): `The machine needs to be serviced.'
+ty_tense_form(english, pass(infinitive), any, pos, [to, be, participle]).
+%% An adverb may stand inside a verb's words, or before them (since 1.99.0:
+%% `The area is well populated.'); the writer puts it after the verb.
+ty_adverb_inside(english).
 
 %% `a' is `an' before a vowel sound: spelled with a vowel, but not `uni',
 %% `use', `eu', `one'; and before the silent h of `hour' and `honest'.

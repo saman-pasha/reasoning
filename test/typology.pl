@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -232,12 +232,12 @@ adjuncts :-
             [spanish-'El niño duerme del libro.'] ]),
     %% Since 1.83.0 an adposition phrase after an English subject is the
     %% subject's own (noun_adpositions): `The boy in the house sees the
-    %% dog.' is read.
+    %% dog.' is read; since 1.99.0 an adverb there is the clause's first
+    %% adjunct (passive_places): `The boy quickly sees the dog.'.
     forall(member(L-T-Why,
                   [ italian-'Il cane dorme in la casa.'-'in la, which is nella',
                     spanish-'El niño duerme de el libro.'-'de el, which is del',
-                    persian-'پسر سگ را می‌بیند در خانه.'-'a Persian adjunct after the verb',
-                    english-'The boy quickly sees the dog.'-'an English adverb after the subject' ]),
+                    persian-'پسر سگ را می‌بیند در خانه.'-'a Persian adjunct after the verb' ]),
            ( yes_no(typology_read(L, T, _), R),
              atomic_list_concat([L, ': not read: ', Why], Label),
              check(Label, R, no) )).
@@ -2467,6 +2467,28 @@ passive :-
              atomic_list_concat([L4, ' has no passive row yet'], Label4),
              check(Label4, W4, none) )).
 
+%% 1.99.0: the passive in a relative clause, with no subject and in an
+%% infinitive; an adverb inside a verb's words or before them
+%% (ty_adverb_inside/1), the clause's first adjunct, never in an
+%% infinitive's words nor before a past verb of a clause with no subject.
+passive_places :-
+    section('the passive in more places, and an adverb inside the verb'),
+    forall(member(T-Want, [
+               'The dog that was fed sleeps.'-[clause(sleep, present, pos, rel(np(dog, sg, def, []), clause(feed, pass(past), pos, gap, none)), none)],
+               'Was praised by the critics.'-[clause(praise, pass(past), pos, pron(3, sg, zero), none, [pp(by, np(critic, pl, def, []))])],
+               'The machine needs to be serviced.'-[clause(need, present, pos, np(machine, sg, def, []), clause(service, pass(infinitive), pos, pron(3, sg, zero), none))],
+               'The area is well populated.'-[clause(populate, pass(present), pos, np(area, sg, def, []), none, [adv(well)])],
+               'He promptly forgot the address.'-[clause(forget, past, pos, pron(3, sg, m), np(address, sg, def, []), [adv(promptly)])],
+               'Chemically related.'-[],
+               'The catcher made a good throw to second base.'-[] ]),
+           ( findall(R, typology_read(english, T, R), Rs),
+             atomic_list_concat(['English: ', T], Label),
+             check(Label, Rs, Want) )),
+    ( typology_write(english, clause(populate, pass(present), pos, np(area, sg, def, []), none, [adv(well)]), W1) -> true ; W1 = none ),
+    check('an adverb read inside is written after the verb', W1, 'The area is populated well.'),
+    ( typology_write(english, clause(need, present, pos, np(machine, sg, def, []), clause(service, pass(infinitive), pos, pron(3, sg, zero), none)), W2) -> true ; W2 = none ),
+    check('a passive infinitive written', W2, 'The machine needs to be serviced.').
+
 %% 1.64.0: the bare singular noun. np(M, sg, mass, []): a singular noun
 %% with no article, read after the other readings, written with none;
 %% Persian, whose definite noun has none either, writes it as def.
@@ -2802,8 +2824,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 4325 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 4 325 sentences read at 1.98.0 are read', R1, yes),
+    ( K >= 4358 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 4 358 sentences read at 1.99.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 
@@ -3163,4 +3185,4 @@ blank_template :-
     include([X4]>>( X4 = bad(_) ), M4, Bad4),
     check('every row of code of templates/template.pl is a row the check takes', Bad4, []),
     length(Rows, NR4),
-    check('the rows of code of the choices', NR4, 97).
+    check('the rows of code of the choices', NR4, 98).
