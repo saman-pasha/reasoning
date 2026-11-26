@@ -597,12 +597,16 @@ first), and `ty_infinitive_mark(L, Words)` keeps `to raise money` an
 infinitive, not an adposition phrase of a compound (`ty_pp_infinitive`).
 Level 2: the predicate `nn(Modifier, Thing)` and, where the noun is
 wrapped, the term `nn(M, X)` (`a(pl(black(nn(leather, jacket))))`). It
-costs English 0.24 % more inferences, German 0.50 %. **A switch that a
-soft cut tests is set with b_setval/2, not nb_setarg/3**: the first cut
-kept it in a term written with nb_setarg/3, and after a heap collection
-a read of a ground global's copy gave `<?>` (`memberchk(class, <?>)` in
-the logic case) -- a suspected cocolog engine fault, not yet reported
-upstream.
+costs English 0.24 % more inferences, German 0.50 %. **The passes'
+switch is b_setval/2's**, which backtracking undoes: each pass sets it
+before its reading, and a pass backtracked out of leaves none behind --
+the scope the two passes want. A switch that must outlive a
+failure-driven loop or a `\+` is nb_setval/2's or nb_setarg/3's. The
+first cut kept the first pass's verdict in a term written with
+nb_setarg/3, and on cocolog 3.78.15 a read of another global after it
+gave `<?>` (`memberchk(class, <?>)` in the logic case): a fault in the
+copies a machine keeps of ground globals (since cocolog 1.12.1), fixed in
+3.78.16, where that cut is green too.
 **The blank template copies the row descriptions of typology.pl's head**:
 a changed description is `typology_import(template)` again, or the
 `reproduced` section is red.
