@@ -383,6 +383,9 @@ ty_adjective_complement(german, before).
 %% An adverb that grades an adjective stands before it (since 1.90.0):
 %% `sehr groß'; `very' is one.
 ty_adjective_adverb(german, before).
+%% A noun phrase's adjective with an adposition phrase stands where its
+%% adjectives do, the last of them (since 1.91.0): `Ein am Fruchtknoten angewachsener Kelch.'
+ty_adjective_phrase_noun(german, with).
 ty_adposition(german, of, [von]).
 ty_adposition(german, in, [in]).
 ty_adposition(german, on, [auf]).

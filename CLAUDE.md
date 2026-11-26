@@ -24,8 +24,8 @@ red) and lesson 01 pin the shape of the answer, deliberately not the number.
 The reasoning library translates ALL 8 000 sentences of `lexicon/prose.txt`
 from English into the IR, and ALL of that IR into Cocolog. Every step
 moves one of the two counts and reports both (`tools/logic/prose.pl`;
-STATUS.md keeps them): at 1.90.0, 4 055 into the IR, 3 884 of them into
-Cocolog (1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
+STATUS.md keeps them): at 1.91.0, 4 108 into the IR, 3 933 of them into
+Cocolog (1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
 count says so. **Measure what blocks the rest before choosing a step**:
 at 1.80.0 the words no table has looked like the gap, and 5 115 of the
 8 000 had none -- 2 130 of them a noun phrase alone, which one rule read.
@@ -676,6 +676,34 @@ in a term (`a(perfectly(natural(explanation)))`, `lg_wrap1/3`,
 `lg_np_parts/3`); `lg_grade_adverb/1` is an adverb no adjective is
 (`good(good(taste))` stays `Good taste.`), and the Cocolog reader takes
 such an adverb round a copula's atom.
+**An adjective with an adposition phrase in a noun phrase since 1.91.0**
+(`A calyx adnate to the ovary.`) is the item `ap(A, pp(P, NP))`, the last
+of the noun phrase's adjectives: after the noun where
+`ty_adjective_phrase_noun(L, after)` (English: a part `p` after `n`,
+`ty_np_ap_split/5`), where the adjectives stand where it is `with` (the
+other five: part a's `ty_np_adjs//5`, the adjective declined, German `Der
+im Haus große Hund schläft.`; the Persian noun linked before it).
+**It is read in a pass of its own** (`'$ty_apnp'`, `ty_nn_passes/3`:
+plain, then this, then the nouns before a noun): in the plain pass a word
+that is a noun and an adjective was read as the noun and the next noun as
+an adjective with a phrase (`a special kind of paint` the noun special),
+8 right readings of 1.90.0 wrong. So where the words have a plain reading
+the item is not read (Spanish `el perro grande en la casa` is the
+adjective and the noun's own phrase). **A part that may hold nothing costs
+every noun phrase tried**: a parse tries noun phrases very many times,
+and a part `p` in every English noun phrase, with the switch set by a walk
+of the IR in the writer, cost the round trips 2 % to 8 % more
+inferences. Now the part is there only where the IR's items end with the
+item or the pass is on (`ty_ends_ap/1`, asked once in `ty_np//4`, its
+answer carried to part a in `got/5`'s `p(Ps, Rows, ApA)` and told there
+by the clause's head, which costs no inference): 1.1 % to 1.6 %. Level 2:
+the item with its phrase's argument (`lg_np_aps/3`: `ap(A, P, V, X)`) is
+in the term, A(T, Prep, X) (`a(adnate(calyx, to, the(ovary)))`, three
+arguments so no adposition term Prep(T, X) is it), and said of the term as
+a copula's phrase is (`to(adnate(K), the(ovary))`, `lg_pred_of/3`); an
+individual's facts' run takes it where its name is an adjective's and no
+verb's (`lg_run/4`, `lg_ap_adjective/1`), and `lg_adjectives/2` keeps it
+uncopied, as its argument may be an individual's variable.
 **The blank template copies the row descriptions of typology.pl's head**:
 a changed description is `typology_import(template)` again, or the
 `reproduced` section is red.

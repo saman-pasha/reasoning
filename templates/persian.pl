@@ -179,6 +179,9 @@ ty_adjective_complement(persian, before).
 %% An adverb that grades an adjective stands before it (since 1.90.0):
 %% `خیلی بزرگ'; `very' is one.
 ty_adjective_adverb(persian, before).
+%% A noun phrase's adjective with an adposition phrase stands where its
+%% adjectives do, the last of them (since 1.91.0): as the other adjectives
+ty_adjective_phrase_noun(persian, with).
 ty_adposition(persian, of, ['از']).
 ty_adjunct(persian, before(v)).
 ty_adposition(persian, in, ['در']).

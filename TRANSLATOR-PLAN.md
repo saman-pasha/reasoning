@@ -95,7 +95,12 @@ the phrase, as a clause's adjunct is: `The dog is big in the house.` is
 [const(the(dog))])))`. An adverb that grades an adjective (since 1.90.0,
 level 1's item `adv(M, A)`) is the adjective's atom inside the adverb:
 `She was incurably optimistic.` is `fact(at(past, modified(adv(incurably),
-pred(optimistic, [const(she)]))))`.
+pred(optimistic, [const(she)]))))`. An adjective with an adposition phrase
+in a noun phrase (since 1.91.0, level 1's item `ap(A, pp(Prep, NP))` among
+a noun phrase's adjectives) is in the noun phrase's term, A(T, Prep, X),
+and said of the term as a copula's phrase is: `A calyx adnate to the
+ovary.` is the individual `a(adnate(calyx, to, the(ovary)))` and
+`fact(modified(pp(to, const(the(ovary))), pred(adnate, [const(a(...))])))`.
 
 A variable's name in a source is a source detail and is to be kept apart
 (`read_term/3`'s `variable_names`; not yet: the reader numbers a variable
@@ -198,8 +203,8 @@ its benchmark, as every typology version has.
    lists in `lexicon/` (a common adjective first; a verb that takes no
    object before a noun for a person or an animal).
 8. **The second measure** (done: 1.69.0, `lexicon/logic.txt`,
-   `tools/logic/measure.pl`): 104 sentences with their Cocolog (279 since
-   1.90.0), written
+   `tools/logic/measure.pl`): 104 sentences with their Cocolog (289 since
+   1.91.0), written
    by hand, counted as the first measure is (STATUS.md keeps the counts).
    At 1.69.0, 86 give their Cocolog and 94 Cocolog texts come back as
    English that reads to them; the misses are the next work: a relative

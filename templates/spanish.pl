@@ -193,6 +193,9 @@ ty_adjective_complement(spanish, after).
 %% An adverb that grades an adjective stands before it (since 1.90.0):
 %% `muy grande'; `very' is one.
 ty_adjective_adverb(spanish, before).
+%% A noun phrase's adjective with an adposition phrase stands where its
+%% adjectives do, the last of them (since 1.91.0): `Un cáliz adnato al ovario.'
+ty_adjective_phrase_noun(spanish, with).
 ty_adposition(spanish, of, [de]).
 ty_adposition(spanish, in, [en]).
 ty_adposition(spanish, on, [sobre]).

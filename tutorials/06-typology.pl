@@ -151,6 +151,7 @@ main :-
     noun_modifiers,
     adjective_phrases,
     graded_adjectives,
+    adjectives_after_noun,
     format("~ndone~n", []).
 
 
@@ -735,7 +736,7 @@ blank_template :-
     split_string(S, "\n", "", Lines),
     include([L]>>sub_string(L, 0, _, _, 'ty_'), Lines, Choices),
     length(Choices, N1),
-    must('the choices, each a row of code', N1, 94),
+    must('the choices, each a row of code', N1, 96),
     ( member(L2, Lines), sub_string(L2, 0, _, _, '%% ty_noun(klingon, Meaning, Gender') -> R2 = shape ; R2 = none ),
     must('a slot of words, its shape', R2, shape),
     ( member(L3, Lines), sub_string(L3, 0, _, _, '%%   e.g. ty_noun_in(english, dog,') -> R3 = example ; R3 = none ),
@@ -985,6 +986,23 @@ graded_adjectives :-
     must('read', IR1, clause(sleep, present, pos, np(dog, sg, def, [adv(very, big)]), none)),
     typology_write(german, IR1, W2),
     must('in German, declined', W2, 'Der sehr große Hund schläft.').
+
+%% 60. AN ADJECTIVE WITH AN ADPOSITION PHRASE IN A NOUN PHRASE (1.91.0):
+%% ap(A, pp(Prep, NP)), the last item of the noun phrase's adjectives,
+%% after the noun where the template's ty_adjective_phrase_noun/2 says
+%% after (English), where the adjectives stand where it says with (the
+%% other five), declined as they are. It is read only where the words have
+%% no reading without it: `a special kind of paint' keeps its adjective.
+adjectives_after_noun :-
+    typology_read(english, 'A calyx adnate to the ovary.', IR1),
+    must('read', IR1, phrase(np(calyx, sg, indef, [ap(adnate, pp(to, np(ovary, sg, def, [])))]))),
+    IR2 = clause(sleep, present, pos, np(dog, sg, def, [ap(big, pp(in, np(house, sg, def, [])))]), none),
+    typology_write(spanish, IR2, W2),
+    must('in Spanish, after the noun', W2, 'El perro grande en la casa duerme.'),
+    typology_write(german, IR2, W3),
+    must('in German, before the noun, declined', W3, 'Der im Haus große Hund schläft.'),
+    typology_read(english, 'A special kind of paint.', IR4),
+    must('a special kind', IR4, phrase(of(np(paint, sg, mass, []), np(kind, sg, indef, [special])))).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

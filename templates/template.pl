@@ -600,6 +600,20 @@ ty_adjective_complement(xx, before).
 ty_adjective_adverb(xx, before).
 ty_adjective_adverb(xx, after).
 
+%%     ty_adjective_phrase_noun(L, Place)
+%%                                     where a noun phrase's adjective with
+%%                                     an adposition phrase stands, the last
+%%                                     item of its adjectives (since
+%%                                     1.91.0): after the noun (after: `a
+%%                                     calyx adnate to the ovary'), or where
+%%                                     the adjectives stand, the last of
+%%                                     them (with: `un cáliz adnato al
+%%                                     ovario', `ein am Fruchtknoten
+%%                                     angewachsener Kelch')
+%%   (keep one, or none: an adjective with an adposition phrase after the noun or where the adjectives stand)
+ty_adjective_phrase_noun(xx, after).
+ty_adjective_phrase_noun(xx, with).
+
 %%     ty_adjunct_front(L, v2)         a statement read with an adjunct first
 %%                                     and the verb before the subject
 %%                                     (German `Heute schläft der Hund.')

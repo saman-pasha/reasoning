@@ -196,6 +196,9 @@ ty_adjective_complement(italian, after).
 %% An adverb that grades an adjective stands before it (since 1.90.0):
 %% `molto grande'; `very' is one.
 ty_adjective_adverb(italian, before).
+%% A noun phrase's adjective with an adposition phrase stands where its
+%% adjectives do, the last of them (since 1.91.0): `Un calice aderente all'ovario.'
+ty_adjective_phrase_noun(italian, with).
 ty_adposition(italian, of, [di]).
 ty_adposition(italian, in, [in]).
 ty_adposition(italian, on, [su]).

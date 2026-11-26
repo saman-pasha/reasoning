@@ -308,3 +308,13 @@ The explanation was very simple.	past(very(simple(the(explanation)))).
 He is permanently disabled.	permanently(disabled(he)).
 A dimly lit room.	room(a(dimly(lit(room)))). dimly(lit(a(dimly(lit(room))))).
 They envied her naturally curly hair.	past(envy(they, of(naturally(curly(hair)), she))).
+A calyx adnate to the ovary.	calyx(a(adnate(calyx, to, the(ovary)))). to(adnate(a(adnate(calyx, to, the(ovary)))), the(ovary)).
+A note payable on demand.	note(a(payable(note, on, demand))). on(payable(a(payable(note, on, demand))), demand).
+Stripes characteristic of the zebra.	stripe(a(pl(characteristic(stripe, of, the(zebra))))). of(characteristic(a(pl(characteristic(stripe, of, the(zebra))))), the(zebra)).
+A house aglow with lights.	house(a(aglow(house, with, a(pl(light))))). with(aglow(a(aglow(house, with, a(pl(light))))), a(pl(light))). light(a(pl(light))).
+A crisis unbeknown to me.	crisis(a(unbeknown(crisis, to, i))). to(unbeknown(a(unbeknown(crisis, to, i))), i).
+A plan incongruous with reason.	plan(a(incongruous(plan, with, reason))). with(incongruous(a(incongruous(plan, with, reason))), reason).
+Mountains visible in the distance.	mountain(a(pl(visible(mountain, in, the(distance))))). in(visible(a(pl(visible(mountain, in, the(distance))))), the(distance)).
+A child prone to mischief.	child(a(prone(child, to, mischief))). to(prone(a(prone(child, to, mischief))), mischief).
+A decision unfavorable to the opposition.	decision(a(unfavorable(decision, to, the(opposition)))). to(unfavorable(a(unfavorable(decision, to, the(opposition)))), the(opposition)).
+A little man obedient to his wife.	man(a(little(obedient(man, to, of(wife, he))))). little(a(little(obedient(man, to, of(wife, he))))). to(obedient(a(little(obedient(man, to, of(wife, he))))), of(wife, he)).

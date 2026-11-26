@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -263,11 +263,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 279),
-    ( R >= 265 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 265 right', VR, ok),
-    ( K >= 271 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 271 kept', VK, ok).
+    check('the second measure: its sentences', N, 289),
+    ( R >= 275 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 275 right', VR, ok),
+    ( K >= 281 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 281 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -858,6 +858,24 @@ graded_adjectives :-
                'He was blissfully unaware of the danger.'-'past(of(blissfully(unaware(he)), the(danger))).\n'-'He was blissfully unaware of the danger.',
                'Who sees a very big dog?'-'?- see(A, B), dog(B), very(big(B)).\n'-'Who sees a very big dog?',
                'Good taste.'-'taste(good(taste)).\ngood(good(taste)).\n'-'Good taste.' ]),
+           ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
+             ( C \== none, logic_translate(cocolog, english, C, E) -> true ; E = none ),
+             one_line(['into Cocolog and back: ', T], Label),
+             check(Label, C-E, Want-Back) )).
+
+%% 1.91.0: AN ADJECTIVE WITH AN ADPOSITION PHRASE IN A NOUN PHRASE is in
+%% the noun phrase's term, A(T, Prep, X), and said of it as a copula's
+%% phrase is, the adjective's atom inside the phrase; the phrase's
+%% individual's facts come after. A clause's adjunct stays the clause's.
+adjectives_after_noun :-
+    section('an adjective with an adposition phrase in a noun phrase'),
+    forall(member(T-Want-Back, [
+               'A calyx adnate to the ovary.'-'calyx(a(adnate(calyx, to, the(ovary)))).\nto(adnate(a(adnate(calyx, to, the(ovary)))), the(ovary)).\n'-'A calyx adnate to the ovary.',
+               'He sees a man proud of his son.'-'man(a(proud(man, of, of(son, he)))).\nof(proud(a(proud(man, of, of(son, he)))), of(son, he)).\nsee(he, a(proud(man, of, of(son, he)))).\n'-'He sees a man proud of his son.',
+               'The man proud of his son sleeps.'-'is_sleep(the(proud(man, of, of(son, he)))).\n'-'The man proud of his son sleeps.',
+               'A book full of errors.'-'book(a(full(book, of, a(pl(error))))).\nof(full(a(full(book, of, a(pl(error))))), a(pl(error))).\nerror(a(pl(error))).\n'-'A book full of errors.',
+               'A dog sleeps in the house.'-'in(is_sleep(A), the(house)) :-\n    dog(A).\n'-'Every dog sleeps in the house.',
+               'He was aware of the danger.'-'past(of(aware(he), the(danger))).\n'-'He was aware of the danger.' ]),
            ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
              ( C \== none, logic_translate(cocolog, english, C, E) -> true ; E = none ),
              one_line(['into Cocolog and back: ', T], Label),

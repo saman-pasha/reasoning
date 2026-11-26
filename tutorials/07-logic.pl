@@ -56,6 +56,7 @@ main :-
     adjective_phrases,
     text_individuals,
     graded_adjectives,
+    adjectives_after_noun,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -378,6 +379,15 @@ graded_adjectives :-
     must('in the past', C1, 'past(incurably(optimistic(she))).\n'),
     logic_translate(cocolog, english, C1, E2),
     must('back into English', E2, 'She was incurably optimistic.').
+
+%% 27. AN ADJECTIVE WITH AN ADPOSITION PHRASE IN A NOUN PHRASE is in the
+%% noun phrase's term, A(T, Prep, X), and said of it as a copula's phrase
+%% is: the adjective's atom inside the phrase.
+adjectives_after_noun :-
+    logic_translate(english, cocolog, 'A book full of errors.', C1),
+    must('an individual and its phrase', C1, 'book(a(full(book, of, a(pl(error))))).\nof(full(a(full(book, of, a(pl(error))))), a(pl(error))).\nerror(a(pl(error))).\n'),
+    logic_translate(cocolog, english, C1, E2),
+    must('back into English', E2, 'A book full of errors.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

@@ -552,6 +552,9 @@ ty_adjective_complement(english, after).
 %% An adverb that grades an adjective stands before it (since 1.90.0):
 %% `A perfectly natural explanation.'; `very' is one.
 ty_adjective_adverb(english, before).
+%% A noun phrase's adjective with an adposition phrase stands after the
+%% noun (since 1.91.0): `A calyx adnate to the ovary.'
+ty_adjective_phrase_noun(english, after).
 %% A clause may say no subject (since 1.86.0): `Took the joke well.'
 ty_subject_unsaid(english, 3).
 %% The verbs that may take no object: WordNet's, lexicon/vi.txt (since 1.86.0).

@@ -274,6 +274,9 @@ ty_adjective_complement(french, after).
 %% An adverb that grades an adjective stands before it (since 1.90.0):
 %% `très grand'; `very' is one.
 ty_adjective_adverb(french, before).
+%% A noun phrase's adjective with an adposition phrase stands where its
+%% adjectives do, the last of them (since 1.91.0): `Un calice adné à l'ovaire.'
+ty_adjective_phrase_noun(french, with).
 ty_adposition(french, of, [de]).
 ty_adposition(french, in, [dans]).
 ty_adposition(french, on, [sur]).
