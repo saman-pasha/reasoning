@@ -157,6 +157,7 @@ main :-
     phrasal_verbs,
     infinitives,
     infinitive_places,
+    infinitive_languages,
     format("~ndone~n", []).
 
 
@@ -741,7 +742,7 @@ blank_template :-
     split_string(S, "\n", "", Lines),
     include([L]>>sub_string(L, 0, _, _, 'ty_'), Lines, Choices),
     length(Choices, N1),
-    must('the choices, each a row of code', N1, 96),
+    must('the choices, each a row of code', N1, 97),
     ( member(L2, Lines), sub_string(L2, 0, _, _, '%% ty_noun(klingon, Meaning, Gender') -> R2 = shape ; R2 = none ),
     must('a slot of words, its shape', R2, shape),
     ( member(L3, Lines), sub_string(L3, 0, _, _, '%%   e.g. ty_noun_in(english, dog,') -> R3 = example ; R3 = none ),
@@ -1067,6 +1068,23 @@ infinitive_places :-
     must('of purpose', IR4, clause(use, past, pos, pron(3, sg, m), np(pressure, sg, mass, []), [inf(stop, np(bleeding, sg, def, []))])),
     typology_write(english, IR4, W5),
     must('written', W5, 'He used pressure to stop the bleeding.').
+
+%% 66. THE INFINITIVE IN THE OTHER LANGUAGES (1.97.0): no word before it in
+%% Spanish, Italian and French, its form a row of the tense infinitive; a
+%% verb says its own words before it (`tener que', `essayer de'); German
+%% says `zu' and puts the verb last; one of purpose says `para', `per',
+%% `pour' or `um'. The IR is English's.
+infinitive_languages :-
+    typology_read(english, 'The boy wants to see the dog.', IR1),
+    typology_write(spanish, IR1, W1),
+    must('English into Spanish', W1, 'El niño quiere ver al perro.'),
+    IR2 = clause(try, present, pos, np(boy, sg, def, []), inf(see, np(dog, sg, def, []))),
+    typology_write(french, IR2, W2),
+    must('French, the verb\'s own word', W2, 'Le garçon essaie de voir le chien.'),
+    typology_write(german, IR2, W3),
+    must('German, zu and the verb last', W3, 'Der Junge versucht den Hund zu sehen.'),
+    typology_write(italian, clause(sleep, present, pos, np(boy, sg, def, []), none, [inf(see, np(dog, sg, def, []))]), W4),
+    must('Italian, of purpose', W4, 'Il ragazzo dorme per vedere il cane.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

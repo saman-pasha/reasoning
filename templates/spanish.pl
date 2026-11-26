@@ -41,6 +41,21 @@ ty_verb(spanish, sleep, present, sg, pos, [duerme]).
 ty_verb(spanish, sleep, present, pl, pos, [duermen]).
 ty_verb(spanish, sleep, past, sg, pos, [durmió]).
 ty_verb(spanish, sleep, past, pl, pos, [durmieron]).
+%% THE INFINITIVE (since 1.97.0): no word begins it, its form a row of the
+%% tense infinitive (the import's, from the vocabulary, the hand verbs'
+%% here); the verbs whose object it may be are English's (WordNet's frame,
+%% lexicon/vinf.txt, and the list), with the words a verb says before it
+%% (`El niño tiene que ver al perro.', `Empieza a correr.'); one of
+%% purpose is `para' and it (`El niño duerme para ver al perro.').
+ty_verb(spanish, see, infinitive, sg, pos, [ver]).
+ty_verb(spanish, sleep, infinitive, sg, pos, [dormir]).
+ty_verb_list(spanish, infinitive, vinf).
+ty_verb_list(spanish, infinitive, [have, hope, need, prefer, decide, hate, remember, deserve]).
+ty_infinitive_after(spanish, have, [que]).
+ty_infinitive_after(spanish, begin, [a]).
+ty_infinitive_after(spanish, start, [a]).
+ty_infinitive_after(spanish, learn, [a]).
+ty_purpose_mark(spanish, [para]).
 
 %% The negative: `no' before the verb.
 ty_negation(spanish, any, any, [no], same).

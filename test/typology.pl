@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2344,7 +2344,7 @@ infinitives :-
              atomic_list_concat(['English: ', T, ', the first reading'], Label),
              check(Label, R, Want) )),
     IR2 = clause(want, present, pos, np(boy, sg, def, []), inf(see, np(dog, sg, def, []))),
-    forall(member(L2-Want2, [english-'The boy wants to see the dog.', spanish-none]),
+    forall(member(L2-Want2, [english-'The boy wants to see the dog.', spanish-'El niño quiere ver al perro.', persian-none]),
            ( ( typology_write(L2, IR2, W2) -> true ; W2 = none ),
              atomic_list_concat([L2, ' writes the infinitive: ', Want2], Label2),
              check(Label2, W2, Want2) )),
@@ -2395,6 +2395,48 @@ infinitive_places :-
     check('the adjectives an infinitive follows', As4, [glad, able]),
     findall(N5, ( member(N5, [bid, right, pressure]), ty_noun_of(english, infinitive, N5) ), Ns5),
     check('the nouns an infinitive follows', Ns5, [bid, right]).
+
+%% 1.97.0: THE INFINITIVE IN THE OTHER LANGUAGES. With no mark before it
+%% (no ty_infinitive_mark/2 row), the infinitive is a row of the tense
+%% infinitive (Spanish and Italian: the import's, from the vocabulary) or a
+%% ty_tense_form/5 row (German [zu, form(present, pl)], the verb last as in
+%% a subordinate clause); a verb says its own words before it
+%% (ty_infinitive_after/3: Spanish `tener que', Italian `tentare di',
+%% French `essayer de'), and one of purpose says ty_purpose_mark/2's words
+%% (`para', `per', `pour', `um'), as a language with no ty_purpose_bare/1
+%% row always does. Persian has none: it says a subjunctive.
+infinitive_languages :-
+    section('the infinitive in the other languages'),
+    IR1 = clause(want, present, pos, np(boy, sg, def, []), inf(see, np(dog, sg, def, []))),
+    IR2 = clause(try, present, pos, np(boy, sg, def, []), inf(see, np(dog, sg, def, []))),
+    IR3 = clause(sleep, present, pos, np(boy, sg, def, []), none, [inf(see, np(dog, sg, def, []))]),
+    forall(member(L-IR-Want, [
+               spanish-IR1-'El niño quiere ver al perro.',
+               italian-IR1-'Il ragazzo vuole vedere il cane.',
+               french-IR1-'Le garçon veut voir le chien.',
+               german-IR1-none,
+               persian-IR1-none,
+               spanish-IR2-'El niño intenta ver al perro.',
+               italian-IR2-'Il ragazzo tenta di vedere il cane.',
+               french-IR2-'Le garçon essaie de voir le chien.',
+               german-IR2-'Der Junge versucht den Hund zu sehen.',
+               spanish-clause(have, present, pos, np(boy, sg, def, []), inf(see, np(dog, sg, def, [])))-'El niño tiene que ver al perro.',
+               spanish-clause(begin, present, pos, np(boy, sg, def, []), inf(see, np(dog, sg, def, [])))-'El niño empieza a ver al perro.',
+               spanish-IR3-'El niño duerme para ver al perro.',
+               italian-IR3-'Il ragazzo dorme per vedere il cane.',
+               french-IR3-'Le garçon dort pour voir le chien.',
+               german-IR3-'Der Junge schläft um den Hund zu sehen.' ]),
+           ( ( typology_write(L, IR, W) -> true ; W = none ),
+             ( W \== none, typology_read(L, W, R), R =@= IR -> Back = back ; Back = none ),
+             ( Want == none -> WantB = none ; WantB = back ),
+             atomic_list_concat([L, ' writes and reads back: ', Want], Label),
+             check(Label, W-Back, Want-WantB) )),
+    ( typology_read(german, 'Der Junge versuchte zu schlafen.', R4) -> true ; R4 = none ),
+    check('German: an infinitive with no object', R4, clause(try, past, pos, np(boy, sg, def, []), inf(sleep, none))),
+    ( typology_read(english, 'The boy wants to see the dog.', R5), typology_write(spanish, R5, W5) -> true ; W5 = none ),
+    check('English into Spanish', W5, 'El niño quiere ver al perro.'),
+    ( ty_verb(spanish, want, infinitive, sg, pos, W6) -> true ; W6 = none ),
+    check('Spanish: the import\'s infinitive of a verb', W6, [querer]).
 
 %% 1.64.0: the bare singular noun. np(M, sg, mass, []): a singular noun
 %% with no article, read after the other readings, written with none;
@@ -3092,4 +3134,4 @@ blank_template :-
     include([X4]>>( X4 = bad(_) ), M4, Bad4),
     check('every row of code of templates/template.pl is a row the check takes', Bad4, []),
     length(Rows, NR4),
-    check('the rows of code of the choices', NR4, 96).
+    check('the rows of code of the choices', NR4, 97).

@@ -424,6 +424,9 @@ ty_verb(persian, look, pluperfect, sg, pos, ['نگاه', 'کرده', 'بود']).
 ty_verb(persian, look, pluperfect, pl, pos, ['نگاه', 'کرده', 'بودند']).
 ty_verb(persian, look, pluperfect, sg, neg, ['نگاه', 'نکرده', 'بود']).
 ty_verb(persian, look, pluperfect, pl, neg, ['نگاه', 'نکرده', 'بودند']).
+%% No infinitive object (1.97.0): where English says one, Persian says a
+%% clause in the subjunctive (`او می‌خواهد سگ را ببیند.'), a form this
+%% template has none of; an IR with inf(...) is not written.
 ty_copula(persian, any, pluperfect, sg, pos, ['بوده', 'بود']).
 ty_copula(persian, any, pluperfect, pl, pos, ['بوده', 'بودند']).
 ty_copula(persian, any, pluperfect, sg, neg, ['نبوده', 'بود']).

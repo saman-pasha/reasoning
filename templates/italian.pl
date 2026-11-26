@@ -44,6 +44,24 @@ ty_verb(italian, sleep, present, sg, pos, [dorme]).
 ty_verb(italian, sleep, present, pl, pos, [dormono]).
 ty_verb(italian, sleep, past, sg, pos, [dormì]).
 ty_verb(italian, sleep, past, pl, pos, [dormirono]).
+%% THE INFINITIVE (since 1.97.0): no word begins it, its form a row of the
+%% tense infinitive (the import's, from the vocabulary, the hand verbs'
+%% here); the verbs whose object it may be are English's (WordNet's frame,
+%% lexicon/vinf.txt, and the list), with the words a verb says before it
+%% (`Il ragazzo tenta di vedere il cane.', `Inizia a correre.'); one of
+%% purpose is `per' and it (`Il ragazzo dorme per vedere il cane.').
+ty_verb(italian, see, infinitive, sg, pos, [vedere]).
+ty_verb(italian, sleep, infinitive, sg, pos, [dormire]).
+ty_verb_list(italian, infinitive, vinf).
+ty_verb_list(italian, infinitive, [have, hope, need, prefer, decide, hate, remember, deserve]).
+ty_infinitive_after(italian, try, [di]).
+ty_infinitive_after(italian, decide, [di]).
+ty_infinitive_after(italian, hope, [di]).
+ty_infinitive_after(italian, remember, [di]).
+ty_infinitive_after(italian, begin, [a]).
+ty_infinitive_after(italian, start, [a]).
+ty_infinitive_after(italian, learn, [a]).
+ty_purpose_mark(italian, [per]).
 
 %% The negative: `non' before the verb.
 ty_negation(italian, any, any, [non], same).

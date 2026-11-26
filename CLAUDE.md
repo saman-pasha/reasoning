@@ -24,7 +24,7 @@ red) and lesson 01 pin the shape of the answer, deliberately not the number.
 The reasoning library translates ALL 8 000 sentences of `lexicon/prose.txt`
 from English into the IR, and ALL of that IR into Cocolog. Every step
 moves one of the two counts and reports both (`tools/logic/prose.pl`;
-STATUS.md keeps them): at 1.96.0, 4 295 into the IR, 4 111 of them into
+STATUS.md keeps them): at 1.96.0 and 1.97.0, 4 295 into the IR, 4 111 of them into
 Cocolog (1.95.0: 4 243 and 4 063; 1.94.0: 4 218 and 4 040; 1.93.0: 4 167 and 3 990; 1.92.0: 4 129 and 3 954; 1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
 count says so. **Measure what blocks the rest before choosing a step**:
 at 1.80.0 the words no table has looked like the gap, and 5 115 of the
@@ -768,6 +768,28 @@ of someone; an adjective's and an object's the second argument to(Atom);
 one of purpose the term to(Atom, Atom2). **Inside to(...) a term is an
 atom** (`lg_in_atom_term/2`, `lg_purpose_arg/2`): by(find_out(he),
 indirection) has a noun phrase's shape, he and an adjective find_out.
+
+**The infinitive in the other languages since 1.97.0** (a verb's object
+and one of purpose; the noun's, the adjective's and the object's are
+English's alone yet): a language with no word before its infinitive has
+NO `ty_infinitive_mark/2` row (a row's list may not be empty,
+`ty_missing/2`), and its infinitive is a ty_verb row of the tense
+`infinitive` (the import makes one of each verb its words' table gives
+the form of, `ty_import_row/2`) or a `ty_tense_form/5` (German [zu,
+form(present, pl)], at the clause's end). `ty_infinitive_after(L, Meaning,
+Words)` says the words a verb says before it (Spanish `tener que`),
+`ty_purpose_mark/2` the purpose's (`para`, `um`), and `ty_purpose_bare(L)`,
+English's alone, lets a purpose with no mark follow a clause. The gates:
+`'$ty_inf_made'(L)` holds only where a language has a mark row (the
+readings with no mark: German read the noun's tail first when it held for
+every language); the text flag `'$ty_pinf'` asks the mark's word, or with
+no mark a word of the text that is an infinitive (`'$ty_vinf'/2`, made by
+`ty_vfirst_make/1` at load). **In `ty_poss_flag/2`'s body every variable is
+the clause's**: the first cut named the infinitive's word X, which the
+possessor's test had bound, and 16 English readings were lost. An
+infinitive's clause is never split (`ty_verb_split`, `ty_split_kept`): a
+German verb second does not move it. `ty_missing/2` asks no infinitive of
+each number. Cost: 0.10 % (Persian) to 0.50 % (Italian) more inferences.
 **The blank template copies the row descriptions of typology.pl's head**:
 a changed description is `typology_import(template)` again, or the
 `reproduced` section is red.

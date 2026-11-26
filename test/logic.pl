@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -958,6 +958,19 @@ infinitive_places :-
              ( C \== none, logic_translate(cocolog, english, C, E) -> true ; E = none ),
              one_line(['into Cocolog and back: ', T], Label),
              check(Label, C-E, Want-Back) )).
+
+%% 1.97.0: THE INFINITIVE OF THE OTHER LANGUAGES has the logic form and the
+%% Cocolog of English's.
+infinitive_languages :-
+    section('the infinitive in the other languages'),
+    forall(member(L-T-Want, [
+               spanish-'El niño quiere ver al perro.'-'want(the(boy), to(see(the(boy), the(dog)))).\n',
+               italian-'Il ragazzo vuole vedere il cane.'-'want(the(boy), to(see(the(boy), the(dog)))).\n',
+               german-'Der Junge versucht den Hund zu sehen.'-'try(the(boy), to(see(the(boy), the(dog)))).\n' ]),
+           ( typology_load(L),
+             ( logic_translate(L, cocolog, T, C) -> true ; C = none ),
+             one_line([L, ' into Cocolog: ', T], Label),
+             check(Label, C, Want) )).
 
 %% Each clause of a Cocolog text asserted.
 assert_text(P) :-

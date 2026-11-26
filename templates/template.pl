@@ -322,9 +322,27 @@ ty_conjunct_marks(xx).
 
 %%     ty_purpose_mark(L, Words)       the words that may stand before an
 %%                                     infinitive of purpose (since 1.96.0:
-%%                                     English `in order')
+%%                                     English `in order'; since 1.97.0
+%%                                     Spanish `para', which a language
+%%                                     with no ty_purpose_bare/1 row always
+%%                                     says)
 %% ty_purpose_mark(xx, Words).
 %%   e.g. ty_purpose_mark(english, [in, order]).
+
+%%     ty_purpose_bare(L)              an infinitive of purpose may stand
+%%                                     with no ty_purpose_mark/2 words before
+%%                                     it (since 1.97.0: English `He used
+%%                                     pressure to stop the bleeding.')
+%%   (keep it where the language does this, else delete it)
+ty_purpose_bare(xx).
+
+%%     ty_infinitive_after(L, Meaning, Words)
+%%                                     the words between a verb and its
+%%                                     infinitive object (since 1.97.0:
+%%                                     Spanish `empezar a', French `essayer
+%%                                     de'); none where no row says
+%% ty_infinitive_after(xx, Meaning, Words).
+%%   e.g. ty_infinitive_after(spanish, have, [que]).
 
 %%     ty_phrasal(L, Meaning, Verb, Particle, Object)
 %%                                     Meaning is Verb's words and Particle
@@ -617,7 +635,12 @@ ty_noun_modifier(xx, compound).
 %% ty_noun_modifier(xx, after([of])).
 
 %%     ty_infinitive_mark(L, Words)    the words that begin an infinitive
-%%                                     (since 1.87.0: `to'): no noun before
+%%                                     (since 1.87.0: `to'; a language with
+%%                                     no row has none, its infinitive a
+%%                                     ty_verb/6 row of the tense infinitive,
+%%                                     Spanish `ver', or a ty_tense_form/5
+%%                                     row, German [zu, form(present,
+%%                                     pl)], since 1.97.0): no noun before
 %%                                     a noun begins a phrase with no
 %%                                     article after them (`to raise money'
 %%                                     is no money of raising)

@@ -592,6 +592,8 @@ ty_adjective_list(english, infinitive, [able, unable, glad, eager, willing, unwi
 ty_noun_list(english, infinitive, [ability, appeal, arrangement, attempt, bid, campaign, chance, compulsion, decision, demand, desire, determination, drive, eagerness, effort, failure, freedom, impulse, inability, incentive, intention, license, motion, need, offer, opportunity, permission, plan, plot, power, promise, proposal, readiness, refusal, reluctance, right, struggle, temptation, tendency, time, urge, way, willingness, wish]).
 %% The words before an infinitive of purpose (since 1.96.0: `in order to').
 ty_purpose_mark(english, [in, order]).
+%% An infinitive of purpose may stand with no words before it (since 1.97.0).
+ty_purpose_bare(english).
 ty_adposition(english, in, [in]).
 ty_adposition(english, on, [on]).
 ty_adposition(english, with, [with]).

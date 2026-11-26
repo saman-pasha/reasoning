@@ -77,6 +77,48 @@ ty_verb(french, think, past, sg(1), pos, [pensai]).
 ty_verb(french, think, past, sg(2), pos, [pensas]).
 ty_verb(french, think, past, pl(1), pos, ['pensâmes']).
 ty_verb(french, think, past, pl(2), pos, ['pensâtes']).
+%% `vouloir' and `essayer' (since 1.97.0), whose object may be an infinitive.
+ty_verb(french, want, present, sg, pos, [veut]).
+ty_verb(french, want, present, pl, pos, [veulent]).
+ty_verb(french, want, present, sg(1), pos, [veux]).
+ty_verb(french, want, present, sg(2), pos, [veux]).
+ty_verb(french, want, present, pl(1), pos, [voulons]).
+ty_verb(french, want, present, pl(2), pos, [voulez]).
+ty_verb(french, want, past, sg, pos, [voulut]).
+ty_verb(french, want, past, pl, pos, [voulurent]).
+ty_verb(french, want, past, sg(1), pos, [voulus]).
+ty_verb(french, want, past, sg(2), pos, [voulus]).
+ty_verb(french, want, past, pl(1), pos, ['voulûmes']).
+ty_verb(french, want, past, pl(2), pos, ['voulûtes']).
+ty_verb(french, try, present, sg, pos, [essaie]).
+ty_verb(french, try, present, pl, pos, [essaient]).
+ty_verb(french, try, present, sg(1), pos, [essaie]).
+ty_verb(french, try, present, sg(2), pos, [essaies]).
+ty_verb(french, try, present, pl(1), pos, [essayons]).
+ty_verb(french, try, present, pl(2), pos, [essayez]).
+ty_verb(french, try, past, sg, pos, [essaya]).
+ty_verb(french, try, past, pl, pos, ['essayèrent']).
+ty_verb(french, try, past, sg(1), pos, [essayai]).
+ty_verb(french, try, past, sg(2), pos, [essayas]).
+ty_verb(french, try, past, pl(1), pos, ['essayâmes']).
+ty_verb(french, try, past, pl(2), pos, ['essayâtes']).
+%% THE INFINITIVE (since 1.97.0): no word begins it, its form a row of the
+%% tense infinitive; the verbs whose object it may be are English's
+%% (WordNet's frame, lexicon/vinf.txt, and the list), with the words a verb
+%% says before it (`Le garçon veut voir le chien.', `Le garçon essaie de
+%% voir le chien.'); one of purpose is `pour' and it.
+ty_verb(french, go, infinitive, sg, pos, [aller]).
+ty_verb(french, look, infinitive, sg, pos, [regarder]).
+ty_verb(french, see, infinitive, sg, pos, [voir]).
+ty_verb(french, sleep, infinitive, sg, pos, [dormir]).
+ty_verb(french, think, infinitive, sg, pos, [penser]).
+ty_verb(french, want, infinitive, sg, pos, [vouloir]).
+ty_verb(french, try, infinitive, sg, pos, [essayer]).
+ty_verb_list(french, infinitive, vinf).
+ty_verb_list(french, infinitive, [have, hope, need, prefer, decide, hate, remember, deserve]).
+ty_infinitive_after(french, try, [de]).
+ty_infinitive_after(french, decide, [de]).
+ty_purpose_mark(french, [pour]).
 ty_verb(french, look, present, sg, pos, [regarde]).
 ty_verb(french, look, present, pl, pos, [regardent]).
 ty_verb(french, look, present, sg(1), pos, [regarde]).
@@ -125,6 +167,18 @@ ty_verb(french, look, future, sg(1), pos, [regarderai]).
 ty_verb(french, look, future, sg(2), pos, [regarderas]).
 ty_verb(french, look, future, pl(1), pos, [regarderons]).
 ty_verb(french, look, future, pl(2), pos, [regarderez]).
+ty_verb(french, want, future, sg, pos, [voudra]).
+ty_verb(french, want, future, pl, pos, [voudront]).
+ty_verb(french, want, future, sg(1), pos, [voudrai]).
+ty_verb(french, want, future, sg(2), pos, [voudras]).
+ty_verb(french, want, future, pl(1), pos, [voudrons]).
+ty_verb(french, want, future, pl(2), pos, [voudrez]).
+ty_verb(french, try, future, sg, pos, [essaiera]).
+ty_verb(french, try, future, pl, pos, [essaieront]).
+ty_verb(french, try, future, sg(1), pos, [essaierai]).
+ty_verb(french, try, future, sg(2), pos, [essaieras]).
+ty_verb(french, try, future, pl(1), pos, [essaierons]).
+ty_verb(french, try, future, pl(2), pos, [essaierez]).
 ty_tense_form(french, perfect, sg, pos, ['a', participle]).
 ty_tense_form(french, perfect, pl, pos, ['ont', participle]).
 ty_tense_form(french, perfect, sg(1), pos, ['ai', participle]).
@@ -135,6 +189,8 @@ ty_participle(french, see, vu).
 ty_participle(french, sleep, dormi).
 ty_participle(french, think, 'pensé').
 ty_participle(french, look, 'regardé').
+ty_participle(french, want, voulu).
+ty_participle(french, try, 'essayé').
 ty_participle_ending(french, f, sg, '', e).
 ty_participle_ending(french, m, pl, '', s).
 ty_participle_ending(french, f, pl, '', es).
@@ -470,6 +526,18 @@ ty_verb(french, look, imperfect, sg(1), pos, [regardais]).
 ty_verb(french, look, imperfect, sg(2), pos, [regardais]).
 ty_verb(french, look, imperfect, pl(1), pos, [regardions]).
 ty_verb(french, look, imperfect, pl(2), pos, [regardiez]).
+ty_verb(french, want, imperfect, sg, pos, [voulait]).
+ty_verb(french, want, imperfect, pl, pos, [voulaient]).
+ty_verb(french, want, imperfect, sg(1), pos, [voulais]).
+ty_verb(french, want, imperfect, sg(2), pos, [voulais]).
+ty_verb(french, want, imperfect, pl(1), pos, [voulions]).
+ty_verb(french, want, imperfect, pl(2), pos, [vouliez]).
+ty_verb(french, try, imperfect, sg, pos, [essayait]).
+ty_verb(french, try, imperfect, pl, pos, [essayaient]).
+ty_verb(french, try, imperfect, sg(1), pos, [essayais]).
+ty_verb(french, try, imperfect, sg(2), pos, [essayais]).
+ty_verb(french, try, imperfect, pl(1), pos, [essayions]).
+ty_verb(french, try, imperfect, pl(2), pos, [essayiez]).
 ty_verb(french, go, imperfect, sg, pos, [allait]).
 ty_verb(french, go, imperfect, pl, pos, [allaient]).
 ty_verb(french, go, imperfect, sg(1), pos, [allais]).
@@ -500,6 +568,18 @@ ty_verb(french, look, conditional, sg(1), pos, [regarderais]).
 ty_verb(french, look, conditional, sg(2), pos, [regarderais]).
 ty_verb(french, look, conditional, pl(1), pos, [regarderions]).
 ty_verb(french, look, conditional, pl(2), pos, [regarderiez]).
+ty_verb(french, want, conditional, sg, pos, [voudrait]).
+ty_verb(french, want, conditional, pl, pos, [voudraient]).
+ty_verb(french, want, conditional, sg(1), pos, [voudrais]).
+ty_verb(french, want, conditional, sg(2), pos, [voudrais]).
+ty_verb(french, want, conditional, pl(1), pos, [voudrions]).
+ty_verb(french, want, conditional, pl(2), pos, [voudriez]).
+ty_verb(french, try, conditional, sg, pos, [essaierait]).
+ty_verb(french, try, conditional, pl, pos, [essaieraient]).
+ty_verb(french, try, conditional, sg(1), pos, [essaierais]).
+ty_verb(french, try, conditional, sg(2), pos, [essaierais]).
+ty_verb(french, try, conditional, pl(1), pos, [essaierions]).
+ty_verb(french, try, conditional, pl(2), pos, [essaieriez]).
 ty_verb(french, go, conditional, sg, pos, [irait]).
 ty_verb(french, go, conditional, pl, pos, [iraient]).
 ty_verb(french, go, conditional, sg(1), pos, [irais]).

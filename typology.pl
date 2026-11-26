@@ -126,7 +126,19 @@
 %%                                     may follow, `a bid to gain attention')
 %%     ty_purpose_mark(L, Words)       the words that may stand before an
 %%                                     infinitive of purpose (since 1.96.0:
-%%                                     English `in order')
+%%                                     English `in order'; since 1.97.0
+%%                                     Spanish `para', which a language
+%%                                     with no ty_purpose_bare/1 row always
+%%                                     says)
+%%     ty_purpose_bare(L)              an infinitive of purpose may stand
+%%                                     with no ty_purpose_mark/2 words before
+%%                                     it (since 1.97.0: English `He used
+%%                                     pressure to stop the bleeding.')
+%%     ty_infinitive_after(L, Meaning, Words)
+%%                                     the words between a verb and its
+%%                                     infinitive object (since 1.97.0:
+%%                                     Spanish `empezar a', French `essayer
+%%                                     de'); none where no row says
 %%     ty_phrasal(L, Meaning, Verb, Particle, Object)
 %%                                     Meaning is Verb's words and Particle
 %%                                     after them, before the object (since
@@ -247,7 +259,12 @@
 %%                                     with Words before it (after(Words):
 %%                                     `chaquetas negras de cuero')
 %%     ty_infinitive_mark(L, Words)    the words that begin an infinitive
-%%                                     (since 1.87.0: `to'): no noun before
+%%                                     (since 1.87.0: `to'; a language with
+%%                                     no row has none, its infinitive a
+%%                                     ty_verb/6 row of the tense infinitive,
+%%                                     Spanish `ver', or a ty_tense_form/5
+%%                                     row, German [zu, form(present,
+%%                                     pl)], since 1.97.0): no noun before
 %%                                     a noun begins a phrase with no
 %%                                     article after them (`to raise money'
 %%                                     is no money of raising)
@@ -825,7 +842,7 @@
            ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
            ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
            ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-           ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_adjective_list/3, ty_noun_list/3, ty_purpose_mark/2, ty_phrasal/5, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
+           ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_adjective_list/3, ty_noun_list/3, ty_purpose_mark/2, ty_purpose_bare/1, ty_infinitive_after/3, ty_phrasal/5, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
            ty_answer_echo/3, ty_kind/2, ty_adjective_before/2, ty_pronoun_gender/2,
            ty_inversion/3, ty_wh_tonic/3,
            ty_tense_form/5, ty_participle/3, ty_participle_like/3,
@@ -851,7 +868,7 @@
                  ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
                  ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
                  ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-                 ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_adjective_list/3, ty_noun_list/3, ty_purpose_mark/2, ty_phrasal/5, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
+                 ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_adjective_list/3, ty_noun_list/3, ty_purpose_mark/2, ty_purpose_bare/1, ty_infinitive_after/3, ty_phrasal/5, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
                  ty_answer_echo/3, ty_adjective_before/2, ty_pronoun_gender/2,
                  ty_inversion/3, ty_wh_tonic/3,
                  ty_tense_form/5, ty_participle/3, ty_participle_like/3,
@@ -1139,7 +1156,7 @@ ty_template_group('the orders of the levels', [ty_order]).
 ty_template_group('words', [ty_noun_class, ty_class_when, ty_noun_in, ty_noun, ty_adjective, ty_adjective_before, ty_article, ty_adposition,
                             ty_adverb, ty_capital, ty_capital_nouns, ty_name, ty_quantifier_pronoun, ty_definite_like, ty_subordinator, ty_subordinate_first, ty_subordinate_comma, ty_and, ty_conjunction, ty_serial_comma,
                             ty_conjunct_marks, ty_clause_comma, ty_comma, ty_sense, ty_closed]).
-ty_template_group('verbs and tenses', [ty_conjugation, ty_verb_in, ty_irregular_verb, ty_verb, ty_verb_list, ty_adjective_list, ty_noun_list, ty_purpose_mark, ty_phrasal, ty_tense_form, ty_tense_like, ty_participle,
+ty_template_group('verbs and tenses', [ty_conjugation, ty_verb_in, ty_irregular_verb, ty_verb, ty_verb_list, ty_adjective_list, ty_noun_list, ty_purpose_mark, ty_purpose_bare, ty_infinitive_after, ty_phrasal, ty_tense_form, ty_tense_like, ty_participle,
                                        ty_participle_like, ty_participle_ending, ty_participle_agrees,
                                        ty_verb_class, ty_class_tense_form, ty_verb_person, ty_copula,
                                        ty_split_place, ty_verb_last]).
@@ -1219,6 +1236,7 @@ ty_template_flag(ty_possessive_clitic, Name, ty_possessive_clitic(Name)).
 ty_template_flag(ty_clitic, Name, ty_clitic(Name, o)).
 ty_template_flag(ty_participle_agrees, Name, ty_participle_agrees(Name, clitic)).
 ty_template_flag(ty_split_place, Name, ty_split_place(Name, end)).
+ty_template_flag(ty_purpose_bare, Name, ty_purpose_bare(Name)).
 ty_template_flag(ty_verb_last, Name, ty_verb_last(Name, rel)).
 ty_template_flag(ty_subordinate_first, Name, ty_subordinate_first(Name)).
 ty_template_flag(ty_subordinate_comma, Name, ty_subordinate_comma(Name)).
@@ -1287,6 +1305,8 @@ ty_row_shape('ty_verb_list(L, Kind, Base).').
 ty_row_shape('ty_adjective_list(L, Kind, Base).').
 ty_row_shape('ty_noun_list(L, Kind, Base).').
 ty_row_shape('ty_purpose_mark(L, Words).').
+ty_row_shape('ty_purpose_bare(L).').
+ty_row_shape('ty_infinitive_after(L, Meaning, Words).').
 ty_row_shape('ty_phrasal(L, Meaning, Verb, Particle, Object).').
 ty_row_shape('ty_tense_form(L, Tense, Number, Polarity, Pattern).').
 ty_row_shape('ty_tense_like(L, Level, Tense, As).').
@@ -1537,9 +1557,11 @@ ty_missing(L, bad(ty_adjunct(L, P))) :-
 ty_missing(L, not_an_order(Level, Order)) :-
     ty_order(L, Level, Order),
     \+ ( ty_level(Level, Parts), permutation(Parts, Order) ).
+%% An infinitive's one form, which its subject's number never changes, is
+%% not asked of each number (since 1.97.0: Spanish `ver').
 ty_missing(L, verb_form(V, T, N, P)) :-
     ty_verb_meaning(L, V),
-    ty_values(tense, Ts), member(T, Ts),
+    ty_values(tense, Ts), member(T, Ts), T \== infinitive,
     ty_tense_asked(L, V, T),
     ty_values(number, Ns), member(N, Ns),
     ty_values(polarity, Ps), member(P, Ps),
@@ -4210,7 +4232,7 @@ ty_kein_np :- nb_current('$ty_kein_np', yes).
 %% Reading, both orders are tried, and the whole one is kept only for a
 %% tense with no auxiliary (ty_split_kept/4).
 ty_verb_split(L, C, Rule, O0, O) :-
-    (   C = clause(_, T, P, _, _, _),
+    (   C = clause(_, T, P, _, _, _), T \== infinitive,
         ty_split_wanted(L, P, Rule),
         once(append(A, [v|B], O0))
     ->  (   nonvar(T)
@@ -4248,7 +4270,7 @@ ty_n_parts(Ps, [], Ps).
 ty_split_kept(L, C, Rule, Order) :-
     (   memberchk(vf(_), Order)
     ->  true
-    ;   C = clause(_, T, P, _, _, _), ty_split_wanted(L, P, Rule)
+    ;   C = clause(_, T, P, _, _, _), T \== infinitive, ty_split_wanted(L, P, Rule)
     ->  \+ ty_tense_participle(L, T)
     ;   true
     ).
@@ -4491,6 +4513,7 @@ ty_object(L, V, O, comp(Ws)) -->
 ty_object(L, V, inf(V2, O2, Js2), inf) -->
     ty_infinitive_ahead(L),
     { nonvar(V), ty_verb_of(L, infinitive, V) },
+    ty_infinitive_words(L, V),
     ty_infinitive(L, V2, O2, Js2).
 ty_object(L, V, clause(V2, infinitive, pos, NP, O2, Js2), oinf) -->
     { '$ty_inf_made'(L) },
@@ -4499,6 +4522,12 @@ ty_object(L, V, clause(V2, infinitive, pos, NP, O2, Js2), oinf) -->
     ty_role(L, o, NP),
     ty_infinitive_ahead(L),
     ty_infinitive(L, V2, O2, Js2).
+
+%% The words a verb says before its infinitive object (since 1.97.0:
+%% Spanish `Empieza a correr.'), none where ty_infinitive_after/3 says none.
+ty_infinitive_words(L, V) -->
+    { ty_infinitive_after(L, V, Ws) -> true ; Ws = [] },
+    ty_tokens(Ws).
 
 %% AN INFINITIVE AS A VERB'S OBJECT (since 1.95.0: `He tried to catch her
 %% eye.' is clause(try, past, pos, pron(3, sg, m), inf(catch, of(pron(3,
@@ -4513,13 +4542,19 @@ ty_object(L, V, clause(V2, infinitive, pos, NP, O2, Js2), oinf) -->
 %% the next words are an infinitive's mark (ty_infinitive_mark/2). The
 %% infinitive's subject is the clause's own subject at level 2.
 ty_infinitive_ahead(L, S0, S0) :-
-    (   var(S0) -> true ; ty_infinitive_mark(L, Ws), append(Ws, _, S0) ).
+    (   var(S0) -> true
+    ;   ty_infinitive_mark(L, Ws) -> append(Ws, _, S0)
+    ;   \+ nb_current('$ty_pinf', f(no))
+    ).
 
+%% Where a subordinate clause's verb is last (ty_verb_last(L, rel)), so is
+%% an infinitive's, never split at its first word (since 1.97.0: German
+%% `Der Junge versucht den Hund zu sehen.').
 ty_infinitive(L, V, O, Js) -->
     { C = clause(V, infinitive, pos, pron(3, sg, zero), O, Js),
       ( nb_current('$ty_command', X0) -> true ; X0 = none ),
       b_setval('$ty_command', i(C)) },
-    ty_clause(L, C),
+    (   { ty_verb_last(L, rel) } -> ty_sub(ty_clause(L, C)) ; ty_clause(L, C) ),
     ty_infinitive_end(L),
     { b_setval('$ty_command', X0) }.
 
@@ -4636,7 +4671,9 @@ ty_adjuncts_gapped(L, Prep, X, G, [J|Js], Taken) -->
 %% may take an infinitive as its object takes none of purpose with no
 %% object (ty_purpose_ok/4): `He tried to catch her eye.' is the object.
 ty_adjunct_item(L, inf(V, O, Js), S0, S) :-
-    ty_purpose_mark(L, [W|Ws]), nonvar(S0), S0 = [W|S2], append(Ws, S1, S2),
+    ty_purpose_mark(L, [W|Ws]),
+    ( nonvar(S0) -> true ; \+ ty_purpose_bare(L) ),
+    S0 = [W|S2], append(Ws, S1, S2),
     ty_infinitive_ahead(L, S1, S1),
     ty_infinitive(L, V, O, Js, S1, S).
 ty_adjunct_item(L, pp(Prep, NP)) --> ty_pp(L, Prep, NP).
@@ -4653,6 +4690,7 @@ ty_adjunct_item(L, adv(C)) -->
 ty_adjunct_item(L, inf(V, O, Js)) -->
     { '$ty_inf_made'(L) },
     ty_flag_allows('$ty_pinf'),
+    { ty_purpose_bare(L) },
     ty_infinitive_ahead(L),
     ty_infinitive(L, V, O, Js),
     { ty_inf_not_noun(L, V, O, Js) }.
@@ -5339,7 +5377,7 @@ ty_poss_flag(L, Words) :-
     ;   ty_poss_counts(L, Words, Count, W, P),
         ( ty_ppron_in(L, Words) -> PP = yes ; PP = no ),
         ( '$ty_phrasal_made'(L), member(X, Words), atom(X), '$ty_particle'(X, L) -> PT = yes ; PT = no ),
-        ( ty_infinitive_mark(L, [M|_]), memberchk(M, Words) -> PI = yes ; PI = no ),
+        ( ty_inf_in(L, Words) -> PI = yes ; PI = no ),
         nb_setval('$ty_poss_memo', memo(L, Words, Count, W, P, PP, PT, PI))
     ),
     b_setval('$ty_poss', f(Count)),
@@ -5348,6 +5386,15 @@ ty_poss_flag(L, Words) :-
     b_setval('$ty_ppron', f(PP)),
     b_setval('$ty_pparticle', f(PT)),
     b_setval('$ty_pinf', f(PI)).
+
+%% Whether the text has an infinitive's first word ('$ty_vinf'/2): of a
+%% language whose infinitive a mark begins, the mark (English `to'), else
+%% each word, where the language has an infinitive at all.
+ty_inf_in(L, Words) :-
+    (   ty_infinitive_mark(L, [M|_]) -> memberchk(M, Words)
+    ;   '$ty_vinf'(_, L) -> member(X, Words), atom(X), '$ty_vinf'(X, L), !
+    ;   fail
+    ).
 
 ty_ppron_in(L, Words) :-
     once(( ty_pronoun(L, _, Ws, _), ty_all_ahead(Ws, Words) )).
@@ -5913,9 +5960,17 @@ ty_verb_row(L, V, T, N, P, Words) :-
 :- dynamic('$ty_vfirst_made'/1).
 :- dynamic('$ty_phrasal_made'/1).
 %% A language with an infinitive's mark (since 1.96.0): the infinitive's
-%% readings after a noun, an adjective and an object and of purpose are
-%% asked only of it, one call where a language with none paid each.
+%% readings after a noun, an adjective and an object and of purpose with no
+%% mark are asked only of it, one call where a language with none paid
+%% each. A language whose infinitive has no mark before it (Spanish `ver',
+%% German `den Hund zu sehen') reads one as a verb's object and after
+%% ty_purpose_mark/2's words (since 1.97.0), never in those places.
 :- dynamic('$ty_inf_made'/1).
+%% The first words of a language's infinitives (since 1.97.0): its
+%% ty_verb/6 rows of the tense infinitive, its ty_tense_form/5 row's first
+%% word (English `to', German `zu'); a text with one may hold an infinitive
+%% (`$ty_pinf').
+:- dynamic('$ty_vinf'/2).
 :- dynamic('$ty_particle'/2).
 
 %% Each particle of L's phrasal rows, once.
@@ -5941,15 +5996,19 @@ ty_vfirst_make(L) :-
     retractall('$ty_phrasal_made'(L)),
     retractall('$ty_particle'(_, L)),
     retractall('$ty_inf_made'(L)),
+    retractall('$ty_vinf'(_, L)),
     ( ty_phrasal(L, _, _, _, _) -> assertz('$ty_phrasal_made'(L)) ; true ),
-    ( ty_infinitive_mark(L, _) -> assertz('$ty_inf_made'(L)) ; true ),
     forall(ty_particle_of(L, Pt), assertz('$ty_particle'(Pt, L))),
     forall(ty_verb(L, M, T, N, P, Fs),
            (   Fs = [W|_],
                atomic_list_concat(Fs, ' ', K),
                (   '$ty_vrow'(K, L, M, T, N, P) -> true ; assertz('$ty_vrow'(K, L, M, T, N, P)) ),
-               (   '$ty_vfirst'(W, L, M) -> true ; assertz('$ty_vfirst'(W, L, M)) )
+               (   '$ty_vfirst'(W, L, M) -> true ; assertz('$ty_vfirst'(W, L, M)) ),
+               (   T == infinitive, \+ '$ty_vinf'(W, L) -> assertz('$ty_vinf'(W, L)) ; true )
            )),
+    forall(( ty_tense_form(L, infinitive, _, pos, [I|_]), atom(I), \+ '$ty_vinf'(I, L) ),
+           assertz('$ty_vinf'(I, L))),
+    ( ty_infinitive_mark(L, _) -> assertz('$ty_inf_made'(L)) ; true ),
     findall(F, ( ty_tense_pattern(L, T, _, _, [I|_], _),
                  (   atom(I) -> F = I
                  ;   T == imperative -> F = '$imperative'
@@ -7850,6 +7909,12 @@ ty_import_row(L, ty_verb(L, B, T, N, pos, [W])) :-
     member(T-N0-W0, [present-sg-W3, present-pl-W3p, past-sg-Wp, past-pl-Wpp]),
     ty_person_rows(N0, W0, N, W).
 
+%% A verb's infinitive, as the vocabulary states it (since 1.97.0: `"ver"
+%% is the infinitive of "ve"'), the form an infinitive's clause takes.
+ty_import_row(L, ty_verb(L, B, infinitive, sg, pos, [I])) :-
+    ty_import_verb(L, W3, _, B),
+    \+ tyi_hand(ty_verb(L, B, infinitive, _, _, _)),
+    (   ty_once_form(infinitive, verb, W3, I) -> true ; ty_count(verb_with_no_infinitive), fail ).
 %% A verb's participle, as the vocabulary states it (`"visto" is the
 %% participle of "ve"').
 ty_import_row(L, ty_participle(L, B, P)) :-

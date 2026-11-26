@@ -263,6 +263,29 @@ ty_verb(german, think, past, sg(1), pos, [dachte]).
 ty_verb(german, think, past, sg(2), pos, [dachtest]).
 ty_verb(german, think, past, pl(1), pos, [dachten]).
 ty_verb(german, think, past, pl(2), pos, [dachtet]).
+%% `versuchen' (since 1.97.0), whose object may be an infinitive.
+ty_verb(german, try, present, sg, pos, [versucht]).
+ty_verb(german, try, present, pl, pos, [versuchen]).
+ty_verb(german, try, present, sg(1), pos, [versuche]).
+ty_verb(german, try, present, sg(2), pos, [versuchst]).
+ty_verb(german, try, present, pl(1), pos, [versuchen]).
+ty_verb(german, try, present, pl(2), pos, [versucht]).
+ty_verb(german, try, past, sg, pos, [versuchte]).
+ty_verb(german, try, past, pl, pos, [versuchten]).
+ty_verb(german, try, past, sg(1), pos, [versuchte]).
+ty_verb(german, try, past, sg(2), pos, [versuchtest]).
+ty_verb(german, try, past, pl(1), pos, [versuchten]).
+ty_verb(german, try, past, pl(2), pos, [versuchtet]).
+%% THE INFINITIVE (since 1.97.0): `zu' and the form of the present plural,
+%% the verb last as in a subordinate clause (`Der Junge versucht den Hund
+%% zu sehen.'); the verbs whose object it may be are English's (WordNet's
+%% frame, lexicon/vinf.txt, and the list); one of purpose is `um' and it
+%% (`Der Junge schläft um den Hund zu sehen.'). Not `wollen', whose
+%% infinitive takes no `zu'.
+ty_tense_form(german, infinitive, any, pos, [zu, form(present, pl)]).
+ty_verb_list(german, infinitive, vinf).
+ty_verb_list(german, infinitive, [have, hope, need, prefer, decide, hate, remember, deserve]).
+ty_purpose_mark(german, [um]).
 ty_verb(german, look, present, sg, pos, [betrachtet]).
 ty_verb(german, look, present, pl, pos, [betrachten]).
 ty_verb(german, look, present, sg(1), pos, [betrachte]).
@@ -326,6 +349,7 @@ ty_participle(german, see, gesehen).
 ty_participle(german, sleep, geschlafen).
 ty_participle(german, think, gedacht).
 ty_participle(german, look, betrachtet).
+ty_participle(german, try, versucht).
 %% `gehen', whose perfect takes `sein' (`Der Junge ist gegangen.').
 ty_verb(german, go, present, sg, pos, [geht]).
 ty_verb(german, go, present, pl, pos, [gehen]).

@@ -62,6 +62,7 @@ main :-
     phrasal_verbs,
     infinitives,
     infinitive_places,
+    infinitive_languages,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -437,6 +438,15 @@ infinitive_places :-
     must('of purpose', C3, 'past(to(use(he, pressure), stop(he, the(bleeding)))).\n'),
     logic_translate(cocolog, english, C3, E4),
     must('back into English', E4, 'He used pressure to stop the bleeding.').
+
+%% 33. THE INFINITIVE OF ANOTHER LANGUAGE has English's logic form, so the
+%% same Cocolog.
+infinitive_languages :-
+    typology_load(spanish),
+    logic_translate(spanish, cocolog, 'El niño quiere ver al perro.', C1),
+    must('Spanish into Cocolog', C1, 'want(the(boy), to(see(the(boy), the(dog)))).\n'),
+    logic_translate(cocolog, english, C1, E2),
+    must('and into English', E2, 'The boy wants to see the dog.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
