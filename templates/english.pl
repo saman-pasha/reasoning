@@ -567,6 +567,31 @@ ty_verb_list(english, no_object, vi).
 %% car.', `I hope to win.').
 ty_verb_list(english, infinitive, vinf).
 ty_verb_list(english, infinitive, [have, hope, need, prefer, decide, hate, remember, deserve]).
+%% The verbs whose object may be followed by an infinitive whose subject it
+%% is (since 1.96.0): WordNet's `Somebody ----s somebody to INFINITIVE',
+%% lexicon/vtinf.txt (`Pressure causes plantar warts to develop a painful
+%% callus.').
+ty_verb_list(english, object_infinitive, vtinf).
+%% Of those, the ones whose object's infinitive is one of purpose, or the
+%% object's own, more than one whose subject the object is (since 1.96.0:
+%% `He used pressure to stop the bleeding.', `Make arrangements to
+%% leave.'); WordNet's frame gives them for senses the corpus seldom says.
+ty_verb_list(english, object_purpose, [apply, can, clear, commit, condemn, consecrate, dedicate, devote, displace, dismiss, employ, evaluate, fall, feel, find, fire, get, give, have, hold, involve, learn, light, make, need, pass, rededicate, reduce, sack, say, schedule, see, specify, squeeze, take, terminate, thrust, tip, turn, use, utilise, utilize, witness]).
+%% The verbs whose `to' with a bare noun that is a verb too may be an
+%% adposition phrase, though an infinitive may be their object (since
+%% 1.96.0: `The ball came to rest.', `He got to work.').
+ty_verb_list(english, to_noun, [come, get, run]).
+%% The adjectives an infinitive may follow, its subject the adjective's own
+%% (since 1.96.0: `able to walk', `glad to help'); WordNet gives
+%% adjectives no frames.
+ty_adjective_list(english, infinitive, [able, unable, glad, eager, willing, unwilling, ready, likely, unlikely, liable, welcome, quick, slow, happy, sorry, afraid, careful, free, sure, certain, apt, prone, keen, anxious, determined, prepared, reluctant, inclined, due, bound, content, proud, ashamed, fit, unfit, careless]).
+%% The nouns an infinitive may follow, its subject the one the noun's act
+%% is of (since 1.96.0: `a bid to gain attention', `the right to vote');
+%% after them an infinitive is the noun's, never one of purpose. WordNet
+%% gives nouns no frames.
+ty_noun_list(english, infinitive, [ability, appeal, arrangement, attempt, bid, campaign, chance, compulsion, decision, demand, desire, determination, drive, eagerness, effort, failure, freedom, impulse, inability, incentive, intention, license, motion, need, offer, opportunity, permission, plan, plot, power, promise, proposal, readiness, refusal, reluctance, right, struggle, temptation, tendency, time, urge, way, willingness, wish]).
+%% The words before an infinitive of purpose (since 1.96.0: `in order to').
+ty_purpose_mark(english, [in, order]).
 ty_adposition(english, in, [in]).
 ty_adposition(english, on, [on]).
 ty_adposition(english, with, [with]).

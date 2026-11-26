@@ -357,4 +357,14 @@ The company tried to project an altruistic image.	past(try(the(company), to(proj
 He tried to strangle his opponent.	past(try(he, to(strangle(he, of(opponent, he))))).
 Our plans began to take shape.	past(begin(of(pl(plan), we), to(take(of(pl(plan), we), shape)))).
 They had to consolidate their operations.	past(have(they, to(consolidate(they, of(operations, they))))).
-He tried to find out by indirection.	past(by(try(he, to(find_out(he))), indirection)).
+He tried to find out by indirection.	past(try(he, to(by(find_out(he), indirection)))).
+She is liable to forget.	liable(she, to(forget(she))).
+You are welcome to join us.	welcome(you, to(join(you, we))).
+He reads to improve his mind.	to(is_read(he), improve(he, of(mind, he))).
+He strained to hear the faint sounds.	past(to(strain(he), hear(he, the(pl(faint(sound)))))).
+We were unable to get satisfaction from the local store.	past(unable(we, to(from(get(we, satisfaction), the(local(store)))))).
+They dug a pit to bury the body.	pit(a(pit)). past(to(dig(they, a(pit)), bury(they, the(body)))).
+She was quick to point out my errors.	past(quick(she, to(point_out(she, of(pl(error), i))))).
+He made a motion to adjourn.	motion(a(to(motion, adjourn(someone)))). past(make(he, a(to(motion, adjourn(someone))))).
+A flaw caused the crystal to shatter.	flaw(a(flaw)). past(cause(a(flaw), to(shatter(the(crystal))))).
+A foursquare refusal to yield.	refusal(a(to(foursquare(refusal), yield(someone)))). foursquare(a(to(foursquare(refusal), yield(someone)))).

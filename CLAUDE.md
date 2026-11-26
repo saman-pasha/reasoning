@@ -24,8 +24,8 @@ red) and lesson 01 pin the shape of the answer, deliberately not the number.
 The reasoning library translates ALL 8 000 sentences of `lexicon/prose.txt`
 from English into the IR, and ALL of that IR into Cocolog. Every step
 moves one of the two counts and reports both (`tools/logic/prose.pl`;
-STATUS.md keeps them): at 1.95.0, 4 243 into the IR, 4 063 of them into
-Cocolog (1.94.0: 4 218 and 4 040; 1.93.0: 4 167 and 3 990; 1.92.0: 4 129 and 3 954; 1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
+STATUS.md keeps them): at 1.96.0, 4 295 into the IR, 4 111 of them into
+Cocolog (1.95.0: 4 243 and 4 063; 1.94.0: 4 218 and 4 040; 1.93.0: 4 167 and 3 990; 1.92.0: 4 129 and 3 954; 1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
 count says so. **Measure what blocks the rest before choosing a step**:
 at 1.80.0 the words no table has looked like the gap, and 5 115 of the
 8 000 had none -- 2 130 of them a noun phrase alone, which one rule read.
@@ -748,6 +748,26 @@ only that clause take the tense). At level 2 it is the term to(Atom),
 the atom said of the clause's own subject (`lg_fun_of_atom/2`,
 `lg_atom_of_fun/2`); an indefinite noun phrase in it is a term and no
 fact, read back through `inds(Is, How)` in `lg_arg_np/4`.
+**The infinitive after a noun, an adjective and an object, and of purpose
+since 1.96.0**: np_pp(NP, inf(...)) as a noun phrase's tail, ap(A,
+inf(...)) after an adjective `ty_adjective_list(L, infinitive, Base)`
+names, clause(V, infinitive, pos, Object, ...) after a verb of WordNet's
+`Somebody ----s somebody to INFINITIVE` (lexicon/vtinf.txt, less the
+template's `object_purpose` list; `ty_object//4`'s last clause), and an
+inf(...) adjunct of purpose (after the object, or `in order`,
+`ty_purpose_mark/2`). An infinitive's clause takes the adjuncts after it
+(`ty_infinitive_end//1`); after a verb or an adjective an infinitive may
+follow, or a noun of `ty_noun_list(L, infinitive, Base)`, `to` and a bare
+noun that is a verb too is the infinitive (`ty_to_verb_noun/3`, a
+template's `to_noun` verbs aside). Each reading asks `'$ty_inf_made'(L)`
+first and the text's `to` (`'$ty_pinf'`); asked of every object, adjunct
+and clause in every language, the first cut cost the round trips 0.34 %
+to 1.19 % more inferences, gated 0.18 % to 0.40 %. At level 2 a noun's
+infinitive is a constant to(Noun, Atom) of an individual, the atom said
+of someone; an adjective's and an object's the second argument to(Atom);
+one of purpose the term to(Atom, Atom2). **Inside to(...) a term is an
+atom** (`lg_in_atom_term/2`, `lg_purpose_arg/2`): by(find_out(he),
+indirection) has a noun phrase's shape, he and an adjective find_out.
 **The blank template copies the row descriptions of typology.pl's head**:
 a changed description is `typology_import(template)` again, or the
 `reproduced` section is red.

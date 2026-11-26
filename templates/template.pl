@@ -291,10 +291,40 @@ ty_conjunct_marks(xx).
 %%                                     Kind (no_object: one that may take
 %%                                     no object; since 1.86.0; infinitive:
 %%                                     one whose object may be an infinitive,
-%%                                     since 1.95.0), or Base is a list of
-%%                                     verbs (since 1.95.0)
+%%                                     since 1.95.0; object_infinitive: one
+%%                                     whose object may be followed by an
+%%                                     infinitive whose subject it is, since
+%%                                     1.96.0; object_purpose: one an
+%%                                     object_infinitive Base names whose
+%%                                     object's infinitive is one of purpose
+%%                                     or the object's own, since 1.96.0;
+%%                                     to_noun: one whose `to' with a bare
+%%                                     noun that is a verb too may be an
+%%                                     adposition phrase, since 1.96.0), or
+%%                                     Base is a list of verbs (since 1.95.0)
 %% ty_verb_list(xx, Kind, Base).
 %%   e.g. ty_verb_list(english, no_object, vi).
+
+%%     ty_adjective_list(L, Kind, Base)
+%%                                     the adjectives of lexicon/Base.txt,
+%%                                     or of the list Base, are of Kind
+%%                                     (since 1.96.0; infinitive: one an
+%%                                     infinitive may follow, `able to walk')
+%% ty_adjective_list(xx, Kind, Base).
+%%   e.g. ty_adjective_list(english, infinitive, [able, unable, glad, eager, willing, unwilling, ready, likely, ...]).
+
+%%     ty_noun_list(L, Kind, Base)     the nouns of lexicon/Base.txt, or of
+%%                                     the list Base, are of Kind (since
+%%                                     1.96.0; infinitive: one an infinitive
+%%                                     may follow, `a bid to gain attention')
+%% ty_noun_list(xx, Kind, Base).
+%%   e.g. ty_noun_list(english, infinitive, [ability, appeal, arrangement, attempt, bid, campaign, chance, compulsion, ...]).
+
+%%     ty_purpose_mark(L, Words)       the words that may stand before an
+%%                                     infinitive of purpose (since 1.96.0:
+%%                                     English `in order')
+%% ty_purpose_mark(xx, Words).
+%%   e.g. ty_purpose_mark(english, [in, order]).
 
 %%     ty_phrasal(L, Meaning, Verb, Particle, Object)
 %%                                     Meaning is Verb's words and Particle

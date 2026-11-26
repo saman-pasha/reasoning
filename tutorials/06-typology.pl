@@ -156,6 +156,7 @@ main :-
     of_bare_nouns,
     phrasal_verbs,
     infinitives,
+    infinitive_places,
     format("~ndone~n", []).
 
 
@@ -1048,6 +1049,24 @@ infinitives :-
     must('read', IR1, clause(try, past, pos, pron(3, sg, m), inf(catch, of(pron(3, sg, f), np(eye, sg, def, []))))),
     typology_write(english, clause(want, present, pos, np(boy, sg, def, []), inf(see, np(dog, sg, def, []))), W2),
     must('written', W2, 'The boy wants to see the dog.').
+
+%% 65. AN INFINITIVE AFTER A NOUN, AN ADJECTIVE AND AN OBJECT, AND OF
+%% PURPOSE (1.96.0): after a noun, the noun phrase's tail; after an
+%% adjective an infinitive may follow, ap(A, inf(...)); after an object of a
+%% verb like `cause' (WordNet's `Somebody ----s somebody to INFINITIVE'),
+%% the infinitive's clause, whose subject the object is; else, after the
+%% object or `in order', an adjunct of purpose.
+infinitive_places :-
+    typology_read(english, 'A knowing attempt to defraud.', IR1),
+    must('after a noun', IR1, phrase(np_pp(np(attempt, sg, indef, [knowing]), inf(defraud, none)))),
+    typology_read(english, 'He is glad to help.', IR2),
+    must('after an adjective', IR2, copula(present, pos, pron(3, sg, m), adj([ap(glad, inf(help, none))]))),
+    typology_read(english, 'He asked her to leave the room.', IR3),
+    must('after an object, its subject', IR3, clause(ask, past, pos, pron(3, sg, m), clause(leave, infinitive, pos, pron(3, sg, f), np(room, sg, def, [])))),
+    typology_read(english, 'He used pressure to stop the bleeding.', IR4),
+    must('of purpose', IR4, clause(use, past, pos, pron(3, sg, m), np(pressure, sg, mass, []), [inf(stop, np(bleeding, sg, def, []))])),
+    typology_write(english, IR4, W5),
+    must('written', W5, 'He used pressure to stop the bleeding.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2110,7 +2110,8 @@ noun_modifiers :-
                'Plant fish.'-command,
                'Grind designs into the glass bowl.'-command,
                'When liberty becomes license dictatorship is near.'-sub(when, copula(present, pos, np(dictatorship, sg, mass, []), adj([near])), clause(become, present, pos, np(liberty, sg, mass, []), np(license, sg, mass, []))),
-               'He made a bid to gain attention.'-none ]),
+               %% read since 1.96.0, the noun's infinitive and no noun before a noun
+               'He made a bid to gain attention.'-clause(make, past, pos, pron(3, sg, m), np_pp(np(bid, sg, indef, []), inf(gain, np(attention, sg, mass, [])))) ]),
            ( ( typology_read(english, T, R) -> true ; R = none ),
              ( compound(R), R =.. [clause, _, imperative|_] -> V = command ; V = R ),
              atomic_list_concat(['English: ', T, ', the first reading'], Label),
@@ -2335,8 +2336,8 @@ infinitives :-
     forall(member(T-Want, [
                'He tried to catch her eye.'-clause(try, past, pos, pron(3, sg, m), inf(catch, of(pron(3, sg, f), np(eye, sg, def, [])))),
                'The boy wants to see the dog.'-clause(want, present, pos, np(boy, sg, def, []), inf(see, np(dog, sg, def, []))),
-               'He tried to find out by indirection.'-clause(try, past, pos, pron(3, sg, m), inf(find_out, none), [pp(by, np(indirection, sg, mass, []))]),
-               'He slept to see the dog.'-none,
+               'He tried to find out by indirection.'-clause(try, past, pos, pron(3, sg, m), inf(find_out, none, [pp(by, np(indirection, sg, mass, []))])),
+               'He slept to see the dog.'-clause(sleep, past, pos, pron(3, sg, m), none, [inf(see, np(dog, sg, def, []))]),
                'He to see the dog.'-none,
                'To see the dog.'-none ]),
            ( ( typology_read(english, T, R) -> true ; R = none ),
@@ -2349,6 +2350,51 @@ infinitives :-
              check(Label2, W2, Want2) )),
     findall(V3, ( member(V3, [try, have, sleep]), ty_verb_of(english, infinitive, V3) ), Vs3),
     check('the verbs that take an infinitive: WordNet\'s and the list', Vs3, [try, have]).
+
+%% 1.96.0: AN INFINITIVE AFTER A NOUN, AN ADJECTIVE AND AN OBJECT, AND OF
+%% PURPOSE. A noun's is its phrase's tail, np_pp(NP, inf(...)); an
+%% adjective's is ap(A, inf(...)); after a verb ty_verb_list(L,
+%% object_infinitive, Base) names, the object is the infinitive's subject,
+%% clause(V, infinitive, pos, NP, O); else an infinitive after the verb's
+%% object, or after `in order', is an adjunct of purpose, but after a noun
+%% ty_noun_list(L, infinitive, Base) names the noun's. `to' and a bare noun
+%% that is a verb too are the infinitive after a verb, an adjective or a
+%% noun an infinitive may follow, and an infinitive takes the adjuncts
+%% after it.
+infinitive_places :-
+    section('an infinitive after a noun, an adjective and an object, and of purpose'),
+    forall(member(T-Want, [
+               'A knowing attempt to defraud.'-phrase(np_pp(np(attempt, sg, indef, [knowing]), inf(defraud, none))),
+               'He made a bid to gain attention.'-clause(make, past, pos, pron(3, sg, m), np_pp(np(bid, sg, indef, []), inf(gain, np(attention, sg, mass, [])))),
+               'He has the right to vote.'-clause(have, present, pos, pron(3, sg, m), np_pp(np(right, sg, def, []), inf(vote, none))),
+               'He is glad to help.'-copula(present, pos, pron(3, sg, m), adj([ap(glad, inf(help, none))])),
+               'He is sure to win.'-copula(present, pos, pron(3, sg, m), adj([ap(sure, inf(win, none))])),
+               'Pressure causes plantar warts to develop a painful callus.'-clause(cause, present, pos, np(pressure, sg, mass, []), clause(develop, infinitive, pos, np(wart, pl, indef, [plantar]), np(callus, sg, indef, [painful]))),
+               'He wanted a stone to mark the site.'-clause(want, past, pos, pron(3, sg, m), clause(mark, infinitive, pos, np(stone, sg, indef, []), np(site, sg, def, []))),
+               'He used pressure to stop the bleeding.'-clause(use, past, pos, pron(3, sg, m), np(pressure, sg, mass, []), [inf(stop, np(bleeding, sg, def, []))]),
+               'He saved money in order to buy a house.'-clause(save, past, pos, pron(3, sg, m), np(money, sg, mass, []), [inf(buy, np(house, sg, indef, []))]),
+               'The culprit started to run.'-clause(start, past, pos, np(culprit, sg, def, []), inf(run, none)),
+               'The ball came to rest.'-clause(come, past, pos, np(ball, sg, def, []), none, [pp(to, np(rest, sg, mass, []))]),
+               'He went to work.'-clause(go, past, pos, pron(3, sg, m), none, [pp(to, np(work, sg, mass, []))]),
+               'He had to sell his car at a considerable sacrifice.'-clause(have, past, pos, pron(3, sg, m), inf(sell, of(pron(3, sg, m), np(car, sg, def, [])), [pp(at, np(sacrifice, sg, indef, [considerable]))])) ]),
+           ( ( typology_read(english, T, R) -> true ; R = none ),
+             atomic_list_concat(['English: ', T, ', the first reading'], Label),
+             check(Label, R, Want) )),
+    forall(member(IR2-Want2, [
+               phrase(np_pp(np(attempt, sg, indef, [knowing]), inf(defraud, none)))-'A knowing attempt to defraud.',
+               copula(present, pos, pron(3, sg, m), adj([ap(glad, inf(help, none))]))-'He is glad to help.',
+               clause(want, past, pos, pron(3, sg, m), clause(mark, infinitive, pos, np(stone, sg, indef, []), np(site, sg, def, [])))-'He wanted a stone to mark the site.',
+               clause(use, past, pos, pron(3, sg, m), np(pressure, sg, mass, []), [inf(stop, np(bleeding, sg, def, []))])-'He used pressure to stop the bleeding.' ]),
+           ( ( typology_write(english, IR2, W2) -> true ; W2 = none ),
+             atomic_list_concat(['English writes ', Want2], Label2),
+             check(Label2, W2, Want2) )),
+    findall(V3-K3, ( member(V3, [cause, want, use, make, eat]),
+                     ( ty_object_infinitive(english, V3) -> K3 = object ; ty_verb_of(english, object_infinitive, V3) -> K3 = purpose ; K3 = none ) ), Ks3),
+    check('the verbs whose object an infinitive follows', Ks3, [cause-object, want-object, use-purpose, make-purpose, eat-none]),
+    findall(A4, ( member(A4, [glad, able, red]), ty_adjective_of(english, infinitive, A4) ), As4),
+    check('the adjectives an infinitive follows', As4, [glad, able]),
+    findall(N5, ( member(N5, [bid, right, pressure]), ty_noun_of(english, infinitive, N5) ), Ns5),
+    check('the nouns an infinitive follows', Ns5, [bid, right]).
 
 %% 1.64.0: the bare singular noun. np(M, sg, mass, []): a singular noun
 %% with no article, read after the other readings, written with none;
@@ -2685,8 +2731,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 4243 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 4 243 sentences read at 1.95.0 are read', R1, yes),
+    ( K >= 4295 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 4 295 sentences read at 1.96.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

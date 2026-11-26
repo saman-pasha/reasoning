@@ -61,6 +61,7 @@ main :-
     of_bare_nouns,
     phrasal_verbs,
     infinitives,
+    infinitive_places,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -423,6 +424,19 @@ infinitives :-
     must('the term to(...)', C1, 'past(try(he, to(catch(he, of(eye, she))))).\n'),
     logic_translate(cocolog, english, C1, E2),
     must('back into English', E2, 'He tried to catch her eye.').
+
+%% 32. AN INFINITIVE AFTER AN ADJECTIVE is its second argument, to(Atom);
+%% after an object of a verb like `ask', to(Atom) said of the object; ONE
+%% OF PURPOSE is the term to(Atom, Atom2), said of the subject.
+infinitive_places :-
+    logic_translate(english, cocolog, 'He is glad to help.', C1),
+    must('the adjective\'s second argument', C1, 'glad(he, to(help(he))).\n'),
+    logic_translate(english, cocolog, 'He asked her to leave the room.', C2),
+    must('said of the object', C2, 'past(ask(he, to(leave(she, the(room))))).\n'),
+    logic_translate(english, cocolog, 'He used pressure to stop the bleeding.', C3),
+    must('of purpose', C3, 'past(to(use(he, pressure), stop(he, the(bleeding)))).\n'),
+    logic_translate(cocolog, english, C3, E4),
+    must('back into English', E4, 'He used pressure to stop the bleeding.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

@@ -612,7 +612,7 @@ lg_tensed(T, [A|As], [at(T, A)|Bs]) :- lg_tensed(T, As, Bs).
 lg_atoms(C, T, Pred, Atoms) :-
     lg_atoms_(C, T, Pred, Atoms00),
     lg_split_objs(Atoms00, Atoms0, Objs),
-    lg_clause_adjuncts(C, Js, JObjs),
+    lg_clause_adjuncts(C, T, Js, JObjs),
     lg_adjuncted(Js, Atoms0, Atoms1),
     lg_clause_tense(C, Tn),
     lg_tensed(Tn, Atoms1, Atoms2),
@@ -663,23 +663,28 @@ lg_has_obj(Atoms) :- memberchk('$obj'(_, _, _, _), Atoms).
 %% A clause's adjuncts at level 2: pp(Prep, Term) of a constant or (since
 %% 1.77.0) an indefinite noun phrase's individual, its marks beside them;
 %% adv(M), each adverb of a joined pair its own.
-lg_clause_adjuncts(clause(_, _, _, _, _, Js), Ks, Os) :- !, lg_adjuncts(Js, Ks, Os).
-lg_clause_adjuncts(_, [], []).
+lg_clause_adjuncts(clause(_, _, _, _, _, Js), T, Ks, Os) :- !, lg_adjuncts(Js, T, Ks, Os).
+lg_clause_adjuncts(_, _, [], []).
 
-lg_adjuncts([], [], []).
-lg_adjuncts([J|Js], Ks, Os) :-
-    lg_adjunct(J, K1, O1),
-    lg_adjuncts(Js, Ks2, Os2),
+lg_adjuncts([], _, [], []).
+lg_adjuncts([J|Js], T, Ks, Os) :-
+    lg_adjunct(J, T, K1, O1),
+    lg_adjuncts(Js, T, Ks2, Os2),
     append(K1, Ks2, Ks),
     append(O1, Os2, Os).
 
-lg_adjunct(J, _, _) :- var(J), !, lg_no(adjunct(J)).
-lg_adjunct(pp(P, NP), [pp(P, T)], Os) :- atom(P), !,
+lg_adjunct(J, _, _, _) :- var(J), !, lg_no(adjunct(J)).
+%% AN INFINITIVE OF PURPOSE (since 1.96.0) is the adjunct pp(to, Atom), its
+%% atom said of the clause's subject: `He used pressure to stop the
+%% bleeding.' is to(use(he, pressure), stop(he, the(bleeding))).
+lg_adjunct(Inf, S, [pp(to, F)], []) :- lg_inf_parts(Inf, V2, O2, Js2), !,
+    lg_inf_fun(S, V2, O2, Js2, F).
+lg_adjunct(pp(P, NP), _, [pp(P, T)], Os) :- atom(P), !,
     lg_arg(adjunct, NP, T, _, Os).
-lg_adjunct(adv(M), [adv(M)], []) :- atom(M), !.
-lg_adjunct(adv(and(Ms)), Ks, []) :- is_list(Ms), forall(member(M, Ms), atom(M)), !,
+lg_adjunct(adv(M), _, [adv(M)], []) :- atom(M), !.
+lg_adjunct(adv(and(Ms)), _, Ks, []) :- is_list(Ms), forall(member(M, Ms), atom(M)), !,
     findall(adv(M), member(M, Ms), Ks).
-lg_adjunct(J, _, _) :- lg_no(adjunct(J)).
+lg_adjunct(J, _, _, _) :- lg_no(adjunct(J)).
 
 %% Each atom inside its adjuncts, the first the innermost.
 lg_adjuncted([], As, As) :- !.
@@ -726,9 +731,15 @@ lg_atoms_(_, T, verb(V, none), [pred(V, [T])]) :- !.
 %% a(altruistic(image)))))), and no image(...) fact).
 lg_atoms_(_, T, verb(V, Inf), [pred(V, [T, fun(to, [F])])]) :-
     lg_inf_parts(Inf, V2, O2, Js2), !,
-    lg_atoms(clause(V2, present, pos, none, O2, Js2), T, verb(V2, O2), [A2|Objs]),
-    ( maplist(lg_inf_obj, Objs) -> true ; lg_no(object(infinitive)) ),
-    lg_fun_of_atom(A2, F).
+    lg_inf_fun(T, V2, O2, Js2, F).
+%% AN OBJECT AND ITS INFINITIVE (since 1.96.0): the infinitive's atom said
+%% of the object's term, `Pressure causes plantar warts to develop a
+%% painful callus.' cause(pressure, to(develop(a(pl(plantar(wart))),
+%% a(painful(callus))))), the object's facts beside it.
+lg_atoms_(_, T, verb(V, C2), [pred(V, [T, fun(to, [F])])|Os]) :-
+    lg_oinf_parts(C2, NP, V2, O2, Js2), !,
+    lg_arg(object, NP, To, _, Os),
+    lg_inf_fun(To, V2, O2, Js2, F).
 
 lg_inf_obj('$obj'(S, const(a(S)), a(S), _)).
 lg_atoms_(_, T, verb(V, O), [pred(V, [T, To])|Os]) :-
@@ -740,6 +751,18 @@ lg_inf_how(How, F, How2) :-
 
 lg_fun_ind(const(C), C) :- nonvar(C), ( C = a(_) ; C = a(_, _) ).
 lg_fun_ind(fun(_, As), I) :- member(A, As), lg_fun_ind(A, I).
+
+%% An infinitive's term: its atom said of S, an indefinite noun phrase in it
+%% a term and no fact.
+lg_inf_fun(S, V2, O2, Js2, F) :-
+    lg_atoms(clause(V2, present, pos, none, O2, Js2), S, verb(V2, O2), [A2|Objs]),
+    ( maplist(lg_inf_obj, Objs) -> true ; lg_no(object(infinitive)) ),
+    lg_fun_of_atom(A2, F).
+
+lg_oinf_parts(C, NP, V, O, Js) :-
+    nonvar(C),
+    (   C = clause(V, T, pos, NP, O) -> Js = [] ; C = clause(V, T, pos, NP, O, Js) ),
+    T == infinitive.
 
 lg_inf_parts(Inf, V, O, Js) :-
     nonvar(Inf),
@@ -781,6 +804,13 @@ lg_ap_split([A|As], Ps, Aps) :-
     ).
 
 lg_ap_atoms([], _, [], []).
+%% AN ADJECTIVE AND ITS INFINITIVE (since 1.96.0): a predicate of two, the
+%% adjective's, of the subject and the infinitive's term, its atom said of
+%% the subject: `She is liable to forget.' liable(she, to(forget(she))).
+lg_ap_atoms([ap(A, Inf)|Xs], T, [pred(A, [T, fun(to, [F])])|As], Os) :-
+    atom(A), lg_inf_parts(Inf, V2, O2, Js2), !,
+    lg_inf_fun(T, V2, O2, Js2, F),
+    lg_ap_atoms(Xs, T, As, Os).
 lg_ap_atoms([ap(A, PP)|Xs], T, [modified(pp(P, To), At)|As], Os) :-
     ( lg_ap_adj(A, T, At), nonvar(PP), PP = pp(P, NP), atom(P) -> true ; lg_no(predicate(adj(ap(A, PP)))) ),
     lg_arg(adjunct, NP, To, _, Os1),
@@ -862,6 +892,15 @@ lg_entity(wh(_), ent(_, [], wh), []) :- !.
 lg_entity('$const'(C), ent(const(C), [], const), []) :- !.
 lg_entity(of(P, NP), E, Ms) :- !, lg_possessed(P, NP, E, Ms).
 lg_entity(np_pp(H, pp(P, X)), E, Ms) :- !, lg_np_pp(H, P, X, E, Ms).
+%% A NOUN AND ITS INFINITIVE (since 1.96.0) is a term as a noun and its
+%% adposition phrase is, to(T, Atom), the atom said of someone: `A knowing
+%% attempt to defraud.' is the individual a(to(knowing(attempt),
+%% defraud(someone))).
+lg_entity(np_pp(H, Inf), E, Ms) :- lg_inf_parts(Inf, V2, O2, Js2), !,
+    lg_inf_fun(const(someone), V2, O2, Js2, F),
+    lg_out_term(F, [], _, Xc),
+    ( ground(Xc) -> true ; lg_no(shape(np_pp(H, Inf))) ),
+    lg_np_pp_c(H, to, Xc, [], E, Ms).
 lg_entity(pron(P, N, K), ent(const(C), [], const), []) :- lg_pron_const(pron(P, N, K), C), !.
 lg_entity(pron(_, _, _), _, _) :- !, lg_no(pronoun).
 lg_entity(np(_, _, D, _), _, _) :- !, lg_no(determiner(D)).
@@ -961,6 +1000,9 @@ lg_possessed(P, NP, E, Ms) :-
 lg_np_pp(H, P, X, E, Ms) :-
     ( atom(P) -> true ; lg_no(adposition(P)) ),
     lg_arg(adposition, X, _, Xc, XMs),
+    lg_np_pp_c(H, P, Xc, XMs, E, Ms).
+
+lg_np_pp_c(H, P, Xc, XMs, E, Ms) :-
     (   nonvar(H), H = np(N, Num, D, As)
     ->  lg_np_term(N, Num, As, T0), T =.. [P, T0, Xc],
         (   D == def -> E = ent(const(the(T)), [], const), Ms = XMs
@@ -1150,7 +1192,21 @@ lg_in_atom(A, modified(pp(P, T), At)) :-
     compound(A), A =.. [N, Inner, Arg], lg_adjunct_inner(Inner),
     lg_code_meaning(N, 2, P), typology_meaning(english, adposition, P), !,
     lg_in_atom(Inner, At),
-    lg_in_term(Arg, T).
+    (   P == to, lg_purpose_arg(Inner, Arg) -> lg_in_atom_term(Arg, T) ; lg_in_term(Arg, T) ).
+
+%% An infinitive of purpose's atom (since 1.96.0): said of the clause's own
+%% subject, so to(make(they, a(pl(arrangement))), in(meet(they), chicago))
+%% is no adposition phrase of a noun phrase `they meet in Chicago'.
+lg_purpose_arg(Inner, Arg) :-
+    compound(Arg), lg_atom_subject(Inner, S), lg_atom_subject(Arg, S2), S2 == S.
+
+lg_atom_subject(A, S) :-
+    compound(A), A =.. [N, X1|Xs],
+    (   compound(X1), length(Xs, K), K =< 1, Ar is K + 1,
+        lg_code_meaning(N, Ar, M), lg_round_word(K, M)
+    ->  lg_atom_subject(X1, S)
+    ;   S = X1
+    ).
 lg_in_atom(A, modified(adv(M), At)) :-
     compound(A), A =.. [N, Inner], lg_adjunct_inner(Inner),
     lg_code_meaning(N, 1, M), typology_meaning(english, adverb, M),
@@ -1201,8 +1257,8 @@ lg_const_term(nn(M, X)) :- ground(X), atom(M), lg_np_shape(X).
 
 lg_det_term(T) :-
     compound(T), ground(T),
-    (   T = the(X) -> ( lg_np_shape(X) -> true ; lg_pp_shape(X) )
-    ;   T = a(X) -> ( X = of(Y, P) -> lg_np_shape(Y), lg_poss_term(P) ; lg_np_shape(X) -> true ; lg_pp_shape(X) )
+    (   T = the(X) -> ( lg_np_shape(X) -> true ; lg_pp_shape(X) -> true ; lg_to_shape(X) )
+    ;   T = a(X) -> ( X = of(Y, P) -> lg_np_shape(Y), lg_poss_term(P) ; lg_np_shape(X) -> true ; lg_pp_shape(X) -> true ; lg_to_shape(X) )
     ;   T = a(X, K) -> integer(K), K > 1, lg_det_term(a(X))
     ;   T = of(X, P) -> lg_np_shape(X), \+ lg_ap_atom(X), lg_poss_term(P)
     ).
@@ -1240,6 +1296,30 @@ lg_pp_shape(S) :-
     ( lg_np_shape(T) -> true ; T = of(Y, Z) -> lg_np_shape(Y), lg_poss_term(Z) ; lg_pp_shape(T) ),
     lg_poss_term(X).
 
+%% A noun with its infinitive (since 1.96.0): to(attempt, defraud(someone)),
+%% the infinitive's atom said of someone, its adjuncts around it
+%% (in(explain(someone, it), the(world))).
+lg_to_shape(to(Y, Z)) :- lg_np_shape(Y), lg_inf_shape(Z).
+
+lg_inf_shape(Z) :-
+    compound(Z), functor(Z, F, _), \+ memberchk(F, [the, a, of, pl, nn, to]),
+    arg(1, Z, A),
+    (   A == someone -> true ; lg_inf_shape(A) ).
+
+%% An infinitive's atom read as a term (since 1.96.0): never a constant,
+%% the atom an adjunct is round an atom too, so by(find_out(he),
+%% indirection) is no noun phrase `he find_out by indirection'.
+lg_in_atom_term(X, fun(N, [F1|Ts])) :-
+    X =.. [N, X1|Xs], compound(X1), length(Xs, K), K =< 1,
+    Ar is K + 1, lg_code_meaning(N, Ar, M), lg_round_word(K, M), !,
+    lg_in_atom_term(X1, F1),
+    maplist(lg_in_term, Xs, Ts).
+lg_in_atom_term(X, fun(N, Ts)) :-
+    X =.. [N|Xs], maplist(lg_in_term, Xs, Ts).
+
+lg_round_word(1, M) :- catch(typology_meaning(english, adposition, M), _, fail).
+lg_round_word(0, M) :- catch(typology_meaning(english, adverb, M), _, fail).
+
 lg_np_shape(X) :- atom(X), !.
 lg_np_shape(pl(X)) :- !, lg_np_shape(X).
 lg_np_shape(nn(M, X)) :- !, atom(M), lg_np_shape(X).
@@ -1256,6 +1336,7 @@ lg_code_meaning(N1, Ar, N) :-
 lg_in_term(V, V) :- var(V), !.
 lg_in_term(L, list(Ts)) :- is_list(L), !, maplist(lg_in_term, L, Ts).
 lg_in_term(A, const(A)) :- atom(A), !.
+lg_in_term(to(X), fun(to, [F])) :- compound(X), !, lg_in_atom_term(X, F).
 lg_in_term(T, const(T)) :- lg_const_term(T), !.
 lg_in_term(N, num(N)) :- number(N), !.
 lg_in_term(S, str(S)) :- string(S), !.
@@ -1667,17 +1748,52 @@ lg_atom_ir(L, pred(P, [A]), How, IR) :-
 %% An infinitive (since 1.95.0): to(Atom) where a verb's object stands, the
 %% atom said of the clause's own subject, is inf(Verb, Object, Adjuncts);
 %% an individual a(Shape) in it, which no fact names, is said as one there.
-lg_atom_ir(L, pred(P, [A, fun(to, [F])]), How, clause(P, present, pos, S, Inf)) :-
-    catch(typology_meaning(L, verb, P), _, fail),
+%% Said of another term (since 1.96.0) it is the object's infinitive,
+%% clause(Verb, infinitive, pos, Object's NP, ...); after an adjective, the
+%% adjective's (copula(..., adj([ap(A, inf(...))]))).
+lg_atom_ir(L, pred(P, [A, fun(to, [F])]), How, IR) :-
     lg_arg_np(L, How, A, S),
+    lg_inf_ir(L, How, F, V2, S2, O2, Js2),
+    (   catch(typology_meaning(L, verb, P), _, fail),
+        (   S2 = S
+        ->  ( Js2 == [] -> Inf = inf(V2, O2) ; Inf = inf(V2, O2, Js2) )
+        ;   ( Js2 == [] -> Inf = clause(V2, infinitive, pos, S2, O2) ; Inf = clause(V2, infinitive, pos, S2, O2, Js2) )
+        ),
+        IR = clause(P, present, pos, S, Inf)
+    ;   catch(typology_meaning(L, adjective, P), _, fail),
+        S2 = S,
+        ( Js2 == [] -> Inf = inf(V2, O2) ; Inf = inf(V2, O2, Js2) ),
+        IR = copula(present, pos, S, adj([ap(P, Inf)]))
+    ).
+
+%% An infinitive's atom term read back: its verb, the noun phrase it is
+%% said of, its object and adjuncts.
+lg_inf_ir(L, How, F, V2, S2, O2, Js2) :-
+    nonvar(F), F = fun(_, _),
     lg_atom_of_fun(F, A2),
     lg_inf_how(How, F, How2),
-    lg_atom_ir(L, A2, How2, IR2),
+    lg_inf_peel(A2, A3, Ms),
+    (   A3 = pred(V, [A]), catch(typology_meaning(L, verb, V), _, fail)
+    ->  lg_arg_np(L, How2, A, S),
+        foldl(lg_inf_adjunct(L, How2), Ms, clause(V, present, pos, S, none), IR2)
+    ;   lg_atom_ir(L, A2, How2, IR2)
+    ),
     (   IR2 = clause(V2, present, pos, S2, O2) -> Js2 = []
     ;   IR2 = clause(V2, present, pos, S2, O2, Js2)
-    ),
-    S2 = S,
-    ( Js2 == [] -> Inf = inf(V2, O2) ; Inf = inf(V2, O2, Js2) ).
+    ).
+%% The adjuncts round an infinitive's atom, the innermost first: a verb of
+%% one place inside them is the verb (`He tried to find out by
+%% indirection.' is to(by(find_out(he), indirection))).
+lg_inf_peel(modified(J, A), Core, Ms) :-
+    ( J = pp(_, _) ; J = adv(_) ), !,
+    lg_inf_peel(A, Core, Ms0),
+    append(Ms0, [J], Ms).
+lg_inf_peel(A, A, []).
+
+lg_inf_adjunct(L, How, J, IR0, IR) :-
+    lg_adjunct_ir(L, How, J, J1),
+    lg_ir_adjunct(IR0, J1, IR).
+
 lg_atom_ir(L, pred(P, [A, B]), How, IR) :-
     lg_binary_classes(L, P, Cs),
     lg_arg_np(L, How, A, S),
@@ -1718,6 +1834,12 @@ lg_ir_tense(copula(_, P, S, Pr), T, copula(T, P, S, Pr)).
 lg_ir_tense(clause(V, _, P, S, O), T, clause(V, T, P, S, O)).
 lg_ir_tense(clause(V, _, P, S, O, Js), T, clause(V, T, P, S, O, Js)).
 
+%% An infinitive of purpose (since 1.96.0): to(Atom, Atom2), Atom2 said of
+%% the clause's subject.
+lg_adjunct_ir(L, How, pp(to, F), Inf) :-
+    nonvar(F), F = fun(_, _),
+    lg_inf_ir(L, How, F, V2, _, O2, Js2), !,
+    ( Js2 == [] -> Inf = inf(V2, O2) ; Inf = inf(V2, O2, Js2) ).
 lg_adjunct_ir(L, How, pp(P, T), pp(P, NP)) :- lg_arg_np(L, How, T, NP).
 lg_adjunct_ir(_, _, adv(M), adv(M)).
 
@@ -1836,6 +1958,9 @@ lg_const_np(_, _, C, P) :- atom(C), lg_pron_np(C, P).
 lg_const_np(_, _, something, qp(some, thing)).
 lg_const_np(_, _, someone, qp(some, person)).
 lg_const_np(_, _, C, qp(some, K)) :- atom(C), lg_numbered(C, W), memberchk(W-K, [something-thing, someone-person]), !.
+lg_const_np(L, _, the(T), np_pp(np(N, Num, def, As), Inf)) :-
+    nonvar(T), T = to(T0, X), lg_inf_term(L, X, Inf), !,
+    lg_np_of_term(L, T0, N, Num, As).
 lg_const_np(L, Cs, the(T), np_pp(np(N, Num, def, As), pp(P, XNP))) :-
     lg_pp_term(T), T =.. [P, T0, X], typology_meaning(L, adposition, P), !,
     lg_np_of_term(L, T0, N, Num, As),
@@ -1846,6 +1971,9 @@ lg_const_np(L, Cs, a(S, K), NP) :- integer(K), !, memberchk(a(S, K), Cs), lg_ind
 lg_const_np(L, Cs, of(T, P), of(PNP, np(N, Num, def, As))) :- !,
     lg_np_of_term(L, T, N, Num, As),
     lg_const_np(L, Cs, P, PNP).
+lg_const_np(L, Cs, C, np_pp(HNP, Inf)) :-
+    nonvar(C), C = to(T0, X), lg_inf_term(L, X, Inf), !,
+    lg_const_np(L, Cs, T0, HNP).
 lg_const_np(L, Cs, C, np_pp(HNP, pp(P, XNP))) :-
     lg_pp_term(C), C =.. [P, T0, X], typology_meaning(L, adposition, P), !,
     lg_const_np(L, Cs, T0, HNP),
@@ -1857,6 +1985,9 @@ lg_const_np(L, _, C, name(W)) :- atom(C), lg_name_written(C, W), \+ typology_mea
 %% An individual's noun phrase, from its shape (since 1.77.0): a(pl(book))
 %% `books', a(of(book, a(pl(stamp)))) `a book of stamps'. Only the
 %% individuals a group brings in (Cs) are said so.
+lg_indef_np(L, Cs, S, np_pp(HNP, Inf)) :-
+    nonvar(S), S = to(T0, X), lg_inf_term(L, X, Inf), !,
+    lg_indef_np(L, Cs, T0, HNP).
 lg_indef_np(L, Cs, S, np_pp(HNP, pp(P, XNP))) :-
     lg_pp_term(S), S =.. [P, T0, X], typology_meaning(L, adposition, P), !,
     lg_indef_np(L, Cs, T0, HNP),
@@ -1865,6 +1996,15 @@ lg_indef_np(L, Cs, of(T, P), of(PNP, np(N, Num, indef, As))) :- !,
     lg_np_of_term(L, T, N, Num, As),
     lg_const_np(L, Cs, P, PNP).
 lg_indef_np(L, Cs, T, np(N, Num, indef, As)) :- lg_np_of_term(L, Cs, T, N, Num, As).
+
+%% A noun's infinitive in a term (since 1.96.0): an atom of a verb said of
+%% someone, inf(Verb, Object[, Adjuncts]).
+lg_inf_term(L, X, Inf) :-
+    compound(X), lg_inf_shape(X),
+    lg_in_atom_term(X, F),
+    lg_inf_ir(L, every, F, V2, S2, O2, Js2),
+    S2 == qp(some, person),
+    ( Js2 == [] -> Inf = inf(V2, O2) ; Inf = inf(V2, O2, Js2) ).
 
 %% A pronoun's constant written as the pronoun.
 lg_pron_np(i, pron(1, sg, _)).

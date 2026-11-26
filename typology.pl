@@ -104,8 +104,29 @@
 %%                                     Kind (no_object: one that may take
 %%                                     no object; since 1.86.0; infinitive:
 %%                                     one whose object may be an infinitive,
-%%                                     since 1.95.0), or Base is a list of
-%%                                     verbs (since 1.95.0)
+%%                                     since 1.95.0; object_infinitive: one
+%%                                     whose object may be followed by an
+%%                                     infinitive whose subject it is, since
+%%                                     1.96.0; object_purpose: one an
+%%                                     object_infinitive Base names whose
+%%                                     object's infinitive is one of purpose
+%%                                     or the object's own, since 1.96.0;
+%%                                     to_noun: one whose `to' with a bare
+%%                                     noun that is a verb too may be an
+%%                                     adposition phrase, since 1.96.0), or
+%%                                     Base is a list of verbs (since 1.95.0)
+%%     ty_adjective_list(L, Kind, Base)
+%%                                     the adjectives of lexicon/Base.txt,
+%%                                     or of the list Base, are of Kind
+%%                                     (since 1.96.0; infinitive: one an
+%%                                     infinitive may follow, `able to walk')
+%%     ty_noun_list(L, Kind, Base)     the nouns of lexicon/Base.txt, or of
+%%                                     the list Base, are of Kind (since
+%%                                     1.96.0; infinitive: one an infinitive
+%%                                     may follow, `a bid to gain attention')
+%%     ty_purpose_mark(L, Words)       the words that may stand before an
+%%                                     infinitive of purpose (since 1.96.0:
+%%                                     English `in order')
 %%     ty_phrasal(L, Meaning, Verb, Particle, Object)
 %%                                     Meaning is Verb's words and Particle
 %%                                     after them, before the object (since
@@ -804,7 +825,7 @@
            ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
            ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
            ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-           ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_phrasal/5, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
+           ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_adjective_list/3, ty_noun_list/3, ty_purpose_mark/2, ty_phrasal/5, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
            ty_answer_echo/3, ty_kind/2, ty_adjective_before/2, ty_pronoun_gender/2,
            ty_inversion/3, ty_wh_tonic/3,
            ty_tense_form/5, ty_participle/3, ty_participle_like/3,
@@ -830,7 +851,7 @@
                  ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
                  ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
                  ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-                 ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_phrasal/5, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
+                 ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_adjective_list/3, ty_noun_list/3, ty_purpose_mark/2, ty_phrasal/5, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
                  ty_answer_echo/3, ty_adjective_before/2, ty_pronoun_gender/2,
                  ty_inversion/3, ty_wh_tonic/3,
                  ty_tense_form/5, ty_participle/3, ty_participle_like/3,
@@ -1118,7 +1139,7 @@ ty_template_group('the orders of the levels', [ty_order]).
 ty_template_group('words', [ty_noun_class, ty_class_when, ty_noun_in, ty_noun, ty_adjective, ty_adjective_before, ty_article, ty_adposition,
                             ty_adverb, ty_capital, ty_capital_nouns, ty_name, ty_quantifier_pronoun, ty_definite_like, ty_subordinator, ty_subordinate_first, ty_subordinate_comma, ty_and, ty_conjunction, ty_serial_comma,
                             ty_conjunct_marks, ty_clause_comma, ty_comma, ty_sense, ty_closed]).
-ty_template_group('verbs and tenses', [ty_conjugation, ty_verb_in, ty_irregular_verb, ty_verb, ty_verb_list, ty_phrasal, ty_tense_form, ty_tense_like, ty_participle,
+ty_template_group('verbs and tenses', [ty_conjugation, ty_verb_in, ty_irregular_verb, ty_verb, ty_verb_list, ty_adjective_list, ty_noun_list, ty_purpose_mark, ty_phrasal, ty_tense_form, ty_tense_like, ty_participle,
                                        ty_participle_like, ty_participle_ending, ty_participle_agrees,
                                        ty_verb_class, ty_class_tense_form, ty_verb_person, ty_copula,
                                        ty_split_place, ty_verb_last]).
@@ -1263,6 +1284,9 @@ ty_row_shape('ty_pronoun_gender(L, System).').
 ty_row_shape('ty_inversion(L, Join, VowelJoin).').
 ty_row_shape('ty_wh_tonic(L, Meaning, Words).').
 ty_row_shape('ty_verb_list(L, Kind, Base).').
+ty_row_shape('ty_adjective_list(L, Kind, Base).').
+ty_row_shape('ty_noun_list(L, Kind, Base).').
+ty_row_shape('ty_purpose_mark(L, Words).').
 ty_row_shape('ty_phrasal(L, Meaning, Verb, Particle, Object).').
 ty_row_shape('ty_tense_form(L, Tense, Number, Polarity, Pattern).').
 ty_row_shape('ty_tense_like(L, Level, Tense, As).').
@@ -2193,6 +2217,7 @@ ty_ir_map(out, inf(V, O, []), inf(V, O1)) :- !, ty_ir_map(out, O, O1).
 ty_ir_map(D, inf(V, O, Js), inf(V, O1, Js1)) :- !,
     ty_ir_map(D, O, O1), maplist(ty_ir_map(D), Js, Js1).
 ty_ir_map(D, question(C), question(C1)) :- !, ty_ir_map(D, C, C1).
+ty_ir_map(D, adj(As), adj(As1)) :- !, maplist(ty_ir_map_ap(D), As, As1).
 ty_ir_map(D, copula(T, P, S, Pred), copula(T, P, S1, Pred1)) :- !,
     ty_ir_map(D, S, S1), ty_ir_map(D, Pred, Pred1).
 ty_ir_map(D, rel(NP, C), rel(NP1, C1)) :- !,
@@ -2206,6 +2231,11 @@ ty_ir_map(D, phrase(X), phrase(X1)) :- !, ty_ir_map(D, X, X1).
 ty_ir_map(D, np_pp(X, P), np_pp(X1, P1)) :- !, ty_ir_map(D, X, X1), ty_ir_map(D, P, P1).
 ty_ir_map(D, C, C1) :- ty_coord_any(C, K, Xs), !, maplist(ty_ir_map(D), Xs, Ys), C1 =.. [K, Ys].
 ty_ir_map(_, X, X).
+
+%% An adjective's phrase (since 1.96.0 an infinitive: ap(able, inf(walk,
+%% none))), the rest as they are.
+ty_ir_map_ap(D, A, A1) :- nonvar(A), A = ap(M, X), !, ty_ir_map(D, X, X1), A1 = ap(M, X1).
+ty_ir_map_ap(_, A, A).
 
 typology_translate(From, To, Text, Text2) :-
     once(typology_read(From, Text, IR)),
@@ -3672,6 +3702,20 @@ ty_verb_of(L, Kind, V) :-
     ;   ty_lex_base_read(Base), '$ty_lexw'(Base, V)
     ), !.
 
+%% An adjective of a kind (since 1.96.0), as a verb's.
+ty_adjective_of(L, Kind, A) :-
+    ty_adjective_list(L, Kind, Base),
+    (   is_list(Base) -> memberchk(A, Base)
+    ;   ty_lex_base_read(Base), '$ty_lexw'(Base, A)
+    ), !.
+
+%% A noun of a kind (since 1.96.0), as a verb's.
+ty_noun_of(L, Kind, N) :-
+    ty_noun_list(L, Kind, Base),
+    (   is_list(Base) -> memberchk(N, Base)
+    ;   ty_lex_base_read(Base), '$ty_lexw'(Base, N)
+    ), !.
+
 ty_lex_base_read(Base) :-
     (   '$ty_lexw_read'(Base) -> true
     ;   assertz('$ty_lexw_read'(Base)),
@@ -4422,6 +4466,22 @@ ty_clause_part(st(X), L, _, _) --> ty_rel_tail(L, X).
 %% (ty_object_ok/3): a verb with a complement row takes no plain object,
 %% and one with none no complement. Reading, a verb read before its object
 %% decides at once; after it (Persian), at the clause's end.
+%% AN OBJECT AND AN INFINITIVE WHOSE SUBJECT IT IS (since 1.96.0), after a
+%% verb ty_verb_list(L, object_infinitive, Base) names (English WordNet's
+%% `Somebody ----s somebody to INFINITIVE', lexicon/vtinf.txt): the
+%% object is the infinitive's clause, its subject the noun phrase read
+%% where an object stands (`Pressure causes plantar warts to develop a
+%% painful callus.' is clause(cause, ..., clause(develop, infinitive, pos,
+%% np(wart, pl, indef, [plantar]), np(callus, ...)))). Tried first, in a
+%% text with an infinitive's word, the last reading tried (a clause of
+%% such a verb takes no infinitive of purpose after its object,
+%% ty_purpose_ok/4): `He wanted a special stone to mark the site.' is the
+%% stone's marking, not his wanting it for the purpose, nor a stone to mark
+%% the site as a noun with its infinitive. Not after a verb
+%% ty_verb_list(L, object_purpose, Base) names: `He used pressure to stop
+%% the bleeding.' is the purpose. After a noun ty_noun_list(L, infinitive,
+%% Base) names, the infinitive is the noun's, never one of purpose: `He made
+%% a bid to gain attention.'
 ty_object(L, V, O, plain) -->
     { \+ ( nonvar(V), ty_complement(L, V, _), \+ ty_lenient ) },
     ty_role(L, o, O).
@@ -4431,6 +4491,13 @@ ty_object(L, V, O, comp(Ws)) -->
 ty_object(L, V, inf(V2, O2, Js2), inf) -->
     ty_infinitive_ahead(L),
     { nonvar(V), ty_verb_of(L, infinitive, V) },
+    ty_infinitive(L, V2, O2, Js2).
+ty_object(L, V, clause(V2, infinitive, pos, NP, O2, Js2), oinf) -->
+    { '$ty_inf_made'(L) },
+    ty_flag_allows('$ty_pinf'),
+    { nonvar(V), ty_object_infinitive(L, V) },
+    ty_role(L, o, NP),
+    ty_infinitive_ahead(L),
     ty_infinitive(L, V2, O2, Js2).
 
 %% AN INFINITIVE AS A VERB'S OBJECT (since 1.95.0: `He tried to catch her
@@ -4453,7 +4520,17 @@ ty_infinitive(L, V, O, Js) -->
       ( nb_current('$ty_command', X0) -> true ; X0 = none ),
       b_setval('$ty_command', i(C)) },
     ty_clause(L, C),
+    ty_infinitive_end(L),
     { b_setval('$ty_command', X0) }.
+
+%% An infinitive's clause takes the adjuncts after it (since 1.96.0): read,
+%% it ends where no adposition or adverb follows, so `He had to sell his
+%% car at a considerable sacrifice.' sells at a sacrifice, and `He tried to
+%% find out by indirection.' finds out so.
+ty_infinitive_end(L, S, S) :-
+    (   var(S) -> true
+    ;   \+ ( S = [W|_], atom(W), ( ty_word_class(L, adposition, W) -> true ; ty_word_class(L, adverb, W) ) )
+    ).
 
 %% The head of an object whose relative clause stands after the verb
 %% (ty_extraposed//5): its noun phrase in the linked form a relative clause
@@ -4522,6 +4599,10 @@ ty_object_ok(L, clause(V, _, _, _, O, Js), How) :-
     ;   ty_complement(L, V, Ws)
     ->  ty_lenient, ty_fault(complement(missing, Ws))
     ;   true
+    ),
+    (   '$ty_inf_made'(L)
+    ->  ( nb_current('$ty_pinf', f(yes)) -> ty_purpose_ok(L, V, O, Js) ; true )
+    ;   true
     ).
 
 %% The adjuncts: adposition phrases and adverbs, in the IR's order.
@@ -4547,6 +4628,17 @@ ty_adjuncts_gapped(L, Prep, X, G, [J|Js], Taken) -->
     ty_adjunct_item(L, J),
     ty_adjuncts_gapped(L, Prep, X, G, Js, Taken).
 
+%% AN INFINITIVE OF PURPOSE (since 1.96.0) is an adjunct, inf(Verb, Object[,
+%% Adjuncts]), its subject the clause's at level 2: `He used pressure to
+%% stop the bleeding.'; with the words ty_purpose_mark/2 gives before it,
+%% read before an adposition phrase (`in order to cause a shakeout' is no
+%% `in order' and a purpose), and written with none. A clause whose verb
+%% may take an infinitive as its object takes none of purpose with no
+%% object (ty_purpose_ok/4): `He tried to catch her eye.' is the object.
+ty_adjunct_item(L, inf(V, O, Js), S0, S) :-
+    ty_purpose_mark(L, [W|Ws]), nonvar(S0), S0 = [W|S2], append(Ws, S1, S2),
+    ty_infinitive_ahead(L, S1, S1),
+    ty_infinitive(L, V, O, Js, S1, S).
 ty_adjunct_item(L, pp(Prep, NP)) --> ty_pp(L, Prep, NP).
 ty_adjunct_item(L, W) --> { nonvar(W), W = wh(M), ty_wh_adjunct(M) }, ty_wh_words(L, M).
 ty_adjunct_item(L, adv(M)) --> [W], { ty_adverb(L, M, W) }, ty_meant(L, adverb(M), [W]).
@@ -4557,6 +4649,64 @@ ty_adjunct_item(L, adv(C)) -->
     { ty_coord_adj_slot(C, K, Ms) },
     ty_coord_ahead(L, K),
     ty_adv_items(L, K, Ms).
+
+ty_adjunct_item(L, inf(V, O, Js)) -->
+    { '$ty_inf_made'(L) },
+    ty_flag_allows('$ty_pinf'),
+    ty_infinitive_ahead(L),
+    ty_infinitive(L, V, O, Js),
+    { ty_inf_not_noun(L, V, O, Js) }.
+
+%% An infinitive of purpose or after a noun is more than a verb that is a
+%% noun too: `He went to work.' is no going in order to work (the
+%% adposition phrase, `to work', is the reading).
+ty_inf_not_noun(L, V, O, Js) :-
+    \+ ( O == none, Js == [], once(ty_noun(L, V, _, _, _, _)) ).
+
+%% A verb whose object may be an infinitive takes no infinitive of purpose
+%% with no object, and no `to' with a bare noun that is a verb too: `The
+%% culprit started to run.' is the infinitive, inf(run, none), not
+%% pp(to, np(run, sg, mass, [])) (since 1.96.0), but after a verb
+%% ty_verb_list(L, to_noun, Base) names it is either (`The ball came to
+%% rest.').
+ty_purpose_ok(L, V, none, Js) :- !,
+    (   Js == [] -> true
+    ;   \+ ( is_list(Js), ty_to_infinitive_item(L, V, Js), ty_verb_of(L, infinitive, V) )
+    ).
+ty_purpose_ok(L, V, O, Js) :-
+    \+ ( (   nonvar(O), O = np_pp(_, inf(_, _, _)) -> true
+         ;   is_list(Js), memberchk(inf(_, _, _), Js),
+             O \= clause(_, _, _, _, _, _), O \= inf(_, _, _)
+         ),
+         ty_object_infinitive(L, V) ),
+    \+ ( is_list(Js), ty_head_noun(O, N), ty_noun_of(L, infinitive, N),
+         member(J, Js), ty_noun_inf_item(L, J) ).
+
+%% What after a noun an infinitive may follow is the noun's infinitive: one
+%% of purpose, or `to' and a bare noun that is a verb too (`He has the
+%% right to vote.').
+ty_noun_inf_item(_, inf(_, _, _)) :- !.
+ty_noun_inf_item(L, pp(P, NP)) :- ty_to_verb_noun(L, P, NP).
+
+%% An object's head noun: its own, or a possessed one's.
+ty_head_noun(np(N, _, _, _), N).
+ty_head_noun(of(_, np(N, _, _, _)), N).
+
+ty_object_infinitive(L, V) :-
+    ty_verb_of(L, object_infinitive, V), \+ ty_verb_of(L, object_purpose, V).
+
+ty_to_infinitive_item(_, _, Js) :- memberchk(inf(_, _, _), Js), !.
+ty_to_infinitive_item(L, V, Js) :-
+    member(pp(P, NP), Js), ty_to_verb_noun(L, P, NP), !,
+    \+ ty_verb_of(L, to_noun, V).
+
+%% `to' and a bare noun that is a verb too, which after a word an
+%% infinitive may follow is the infinitive (since 1.96.0).
+ty_to_verb_noun(L, P, NP) :-
+    P == to, ty_to_bare(NP, W), atom(W), typology_meaning(L, verb, W).
+
+ty_to_bare(np(W, sg, mass, []), W).
+ty_to_bare(np_pp(np(W, sg, mass, []), _), W).
 
 ty_adv_one(L, M) --> [W], { ty_adverb(L, M, W) }, ty_meant(L, adverb(M), [W]).
 
@@ -4703,12 +4853,26 @@ ty_poss_tail_slot(L, P0, P, T) :-
 
 ty_pp_tail(_, none, _) --> [].
 ty_pp_tail(L, pp(pp(Prep, X)), _) --> { '$ty_noun_pp'(L) }, ty_pp(L, Prep, X).
+ty_pp_tail(L, pp(inf(V, O, Js)), _) --> ty_infinitive(L, V, O, Js).
 ty_pp_tail(L, open(NP0), H) -->
     (   { NP0 = H }
     ;   ty_adp_next,
         ty_pp(L, Prep, X),
-        { NP0 = np_pp(H, pp(Prep, X)) }
+        { \+ ( ty_to_verb_noun(L, Prep, X), ty_head_noun(H, N), ty_noun_of(L, infinitive, N) ),
+          NP0 = np_pp(H, pp(Prep, X)) }
+    ;   { '$ty_inf_made'(L) },
+        ty_flag_allows('$ty_pinf'),
+        ty_infinitive_ahead(L),
+        ty_infinitive(L, V, O, Js),
+        { ( ty_head_noun(H, N), ty_noun_of(L, infinitive, N) -> true ; ty_inf_not_noun(L, V, O, Js) ),
+          \+ ( H = np(N2, sg, mass, []), ty_purpose_mark(L, Ws2), last(Ws2, N2) ),
+          NP0 = np_pp(H, inf(V, O, Js)) }
     ).
+%% AN INFINITIVE AFTER A NOUN (since 1.96.0) is the noun phrase's tail as an
+%% adposition phrase is, np_pp(NP, inf(Verb, Object[, Adjuncts])): `A
+%% knowing attempt to defraud.', `He made a bid to gain attention.' (the
+%% clause's own adjunct first: `He used pressure to stop the bleeding.' is
+%% an infinitive of purpose, ty_adjunct_item//2).
 
 %% THE ADPOSITIONS OF A TEXT: the first words of its adposition rows that
 %% its words hold ('$ty_adp'), as the subordinators'.
@@ -5166,20 +5330,24 @@ ty_poss_words_in(L, PWs, Words) :-
 %% after a consonant) counts the nouns less one, two nouns to a possessor. And whether a possessor's gap may
 %% stand (`$ty_whose'), and whether a personal pronoun's word is among the
 %% words (`$ty_ppron'), and since 1.94.0 a phrasal verb's particle
-%% (`$ty_pparticle').
+%% (`$ty_pparticle'), and since 1.96.0 an infinitive's first word
+%% (`$ty_pinf', asked by the infinitive after a noun, an adjective, an
+%% object and of purpose).
 ty_poss_flag(L, Words) :-
-    (   nb_current('$ty_poss_memo', memo(L0, Words0, Count, W, P, PP, PT)), L0 == L, Words0 == Words
+    (   nb_current('$ty_poss_memo', memo(L0, Words0, Count, W, P, PP, PT, PI)), L0 == L, Words0 == Words
     ->  true
     ;   ty_poss_counts(L, Words, Count, W, P),
         ( ty_ppron_in(L, Words) -> PP = yes ; PP = no ),
         ( '$ty_phrasal_made'(L), member(X, Words), atom(X), '$ty_particle'(X, L) -> PT = yes ; PT = no ),
-        nb_setval('$ty_poss_memo', memo(L, Words, Count, W, P, PP, PT))
+        ( ty_infinitive_mark(L, [M|_]), memberchk(M, Words) -> PI = yes ; PI = no ),
+        nb_setval('$ty_poss_memo', memo(L, Words, Count, W, P, PP, PT, PI))
     ),
     b_setval('$ty_poss', f(Count)),
     b_setval('$ty_whose', f(W)),
     b_setval('$ty_pron', f(P)),
     b_setval('$ty_ppron', f(PP)),
-    b_setval('$ty_pparticle', f(PT)).
+    b_setval('$ty_pparticle', f(PT)),
+    b_setval('$ty_pinf', f(PI)).
 
 ty_ppron_in(L, Words) :-
     once(( ty_pronoun(L, _, Ws, _), ty_all_ahead(Ws, Words) )).
@@ -5744,6 +5912,10 @@ ty_verb_row(L, V, T, N, P, Words) :-
 :- dynamic('$ty_vrow'/6).
 :- dynamic('$ty_vfirst_made'/1).
 :- dynamic('$ty_phrasal_made'/1).
+%% A language with an infinitive's mark (since 1.96.0): the infinitive's
+%% readings after a noun, an adjective and an object and of purpose are
+%% asked only of it, one call where a language with none paid each.
+:- dynamic('$ty_inf_made'/1).
 :- dynamic('$ty_particle'/2).
 
 %% Each particle of L's phrasal rows, once.
@@ -5768,7 +5940,9 @@ ty_vfirst_make(L) :-
     retractall('$ty_vfirst_made'(L)),
     retractall('$ty_phrasal_made'(L)),
     retractall('$ty_particle'(_, L)),
+    retractall('$ty_inf_made'(L)),
     ( ty_phrasal(L, _, _, _, _) -> assertz('$ty_phrasal_made'(L)) ; true ),
+    ( ty_infinitive_mark(L, _) -> assertz('$ty_inf_made'(L)) ; true ),
     forall(ty_particle_of(L, Pt), assertz('$ty_particle'(Pt, L))),
     forall(ty_verb(L, M, T, N, P, Fs),
            (   Fs = [W|_],
@@ -6962,7 +7136,21 @@ ty_case_words(L, Def, C, Ws) :-
 %% one of them (each item of a joined pair is read alone) with an
 %% adposition phrase since 1.88.0 (ty_ap//5).
 ty_adjs(L, As, Rows) --> ty_adjs(L, As, Rows, none, plain).
-ty_adjs(L, [ap(A, pp(P, NP))], [R]) --> ty_ap(L, A, P, NP, R).
+ty_adjs(L, [ap(A, pp(P, NP))], [R]) -->
+    ty_ap(L, A, P, NP, R),
+    { \+ ( ty_to_verb_noun(L, P, NP), ty_adjective_of(L, infinitive, A) ) }.
+%% AN ADJECTIVE AND AN INFINITIVE (since 1.96.0), ap(A, inf(Verb, Object[,
+%% Adjuncts])), of an adjective ty_adjective_list(L, infinitive, Base)
+%% names: `Human beings are able to walk on two feet.', `Glad to help.';
+%% `He is sure to win.' is no adjective with `to win' an adposition
+%% phrase (ty_to_verb_noun/3).
+ty_adjs(L, [ap(A, inf(V, O, Js))], [R]) -->
+    { '$ty_inf_made'(L) },
+    ty_flag_allows('$ty_pinf'),
+    ty_adjs(L, [A], [R], none, plain),
+    { atom(A), ty_adjective_of(L, infinitive, A) },
+    ty_infinitive_ahead(L),
+    ty_infinitive(L, V, O, Js).
 
 %% What a joined adjective's or adverb's slot may hold, reading (unbound:
 %% and, then or) or writing.

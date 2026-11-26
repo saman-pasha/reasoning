@@ -84,18 +84,21 @@ main :-
     lx_write(Out, phrasal, Rows),
     length(Rows, N), lx_take(6, Rows, First),
     format("   phrasal ~w  ~w~nwrote ~w/phrasal.txt~n", [N, First, Out]).
-%% --infinitive writes vinf.txt alone (since reasoning 1.95.0): the verbs
-%% WordNet gives the frame `Somebody ----s to INFINITIVE', from data.verb.
+%% --infinitive writes vinf.txt and vtinf.txt alone (since reasoning 1.95.0
+%% and 1.96.0): the verbs WordNet gives the frame `Somebody ----s to
+%% INFINITIVE' (28), and `Somebody ----s somebody to INFINITIVE' (24), from
+%% data.verb.
 main :-
     current_prolog_flag(argv, [_|Args0]),
     select('--infinitive', Args0, Args), !,
     lx_options(Args, '/usr/share/wordnet', WN, 'lexicon', Out, [], _),
     lx_verb_frames(WN, Frames),
     assoc_to_keys(Frames, Verbs),
-    findall(V, ( member(V, Verbs), lx_frames(V, Frames, Fs), memberchk(28, Fs) ), Vs),
-    lx_write(Out, vinf, Vs),
-    length(Vs, N), lx_take(6, Vs, First),
-    format("   vinf ~w  ~w~nwrote ~w/vinf.txt~n", [N, First, Out]).
+    forall(member(Name-F, [vinf-28, vtinf-24]),
+           ( findall(V, ( member(V, Verbs), lx_frames(V, Frames, Fs), memberchk(F, Fs) ), Vs),
+             lx_write(Out, Name, Vs),
+             length(Vs, N), lx_take(6, Vs, First),
+             format("   ~w ~w  ~w~nwrote ~w/~w.txt~n", [Name, N, First, Out, Name]) )).
 main :-
     current_prolog_flag(argv, [_|Args]),
     lx_options(Args, '/usr/share/wordnet', WN, 'lexicon', Out, [], Caps),

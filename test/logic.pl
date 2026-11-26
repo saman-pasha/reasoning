@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -263,11 +263,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 329),
-    ( R >= 315 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 315 right', VR, ok),
-    ( K >= 321 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 321 kept', VK, ok).
+    check('the second measure: its sentences', N, 339),
+    ( R >= 325 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 325 right', VR, ok),
+    ( K >= 331 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 331 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -929,6 +929,31 @@ infinitives :-
                'He tried to catch her eye.'-'past(try(he, to(catch(he, of(eye, she))))).\n'-'He tried to catch her eye.',
                'The company tried to project an altruistic image.'-'past(try(the(company), to(project(the(company), a(altruistic(image)))))).\n'-'The company tried to project an altruistic image.',
                'Demographers try to predict social fluidity.'-'try(A, to(predict(A, social(fluidity)))) :-\n    demographer(A).\n'-'Every demographer tries to predict social fluidity.' ]),
+           ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
+             ( C \== none, logic_translate(cocolog, english, C, E) -> true ; E = none ),
+             one_line(['into Cocolog and back: ', T], Label),
+             check(Label, C-E, Want-Back) )).
+
+%% 1.96.0: AN INFINITIVE AFTER A NOUN, AN ADJECTIVE AND AN OBJECT, AND OF
+%% PURPOSE. A noun's is a constant to(Noun, Atom) of an individual, its
+%% atom said of someone; an adjective's the adjective's second argument,
+%% to(Atom) said of the subject; after a verb whose object is the
+%% infinitive's subject, to(Atom) said of the object; one of purpose the
+%% term to(Atom, Atom2), Atom2 said of the subject. `in order' is not said
+%% back.
+infinitive_places :-
+    section('an infinitive after a noun, an adjective and an object, and of purpose'),
+    forall(member(T-Want-Back, [
+               'A knowing attempt to defraud.'-'attempt(a(to(knowing(attempt), defraud(someone)))).\nknowing(a(to(knowing(attempt), defraud(someone)))).\n'-'A knowing attempt to defraud.',
+               'They made arrangements to meet in Chicago.'-'arrangement(a(to(pl(arrangement), in(meet(someone), chicago)))).\npast(make(they, a(to(pl(arrangement), in(meet(someone), chicago))))).\n'-'They made arrangements to meet in Chicago.',
+               'He is glad to help.'-'glad(he, to(help(he))).\n'-'He is glad to help.',
+               'Dogs are able to swim.'-'able(A, to(swim(A))) :-\n    dog(A).\n'-'Every dog is able to swim.',
+               'He asked her to leave the room.'-'past(ask(he, to(leave(she, the(room))))).\n'-'He asked her to leave the room.',
+               'He wanted a stone to mark the site.'-'stone(a(stone)).\npast(want(he, to(mark(a(stone), the(site))))).\n'-'He wanted a stone to mark the site.',
+               'He used pressure to stop the bleeding.'-'past(to(use(he, pressure), stop(he, the(bleeding)))).\n'-'He used pressure to stop the bleeding.',
+               'He saved money in order to buy a house.'-'past(to(save(he, money), buy(he, a(house)))).\n'-'He saved money to buy a house.',
+               'He had to sell his car at a considerable sacrifice.'-'past(have(he, to(at(sell(he, of(car, he)), a(considerable(sacrifice)))))).\n'-'He had to sell his car at a considerable sacrifice.',
+               'He tried to find out by indirection.'-'past(try(he, to(by(find_out(he), indirection)))).\n'-'He tried to find out by indirection.' ]),
            ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
              ( C \== none, logic_translate(cocolog, english, C, E) -> true ; E = none ),
              one_line(['into Cocolog and back: ', T], Label),

@@ -4,7 +4,8 @@
 # only sets the library path. proper.txt is not touched. With --capitals it
 # writes lexicon/capital.txt alone (the four data.* files are enough), and
 # with --phrasal lexicon/phrasal.txt alone (data.verb is enough), and
-# with --infinitive lexicon/vinf.txt alone (data.verb too).
+# with --infinitive lexicon/vinf.txt and lexicon/vtinf.txt alone
+# (data.verb too).
 #
 # The module names are library(reasoning/...), so this repository's PARENT
 # directory goes on the library path; the cocolog checkout beside it (or a
