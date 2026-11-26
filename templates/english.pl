@@ -546,6 +546,9 @@ ty_noun_adposition(english, after).
 %% after `to', which begins an infinitive (`to raise money').
 ty_noun_modifier(english, before).
 ty_infinitive_mark(english, [to]).
+%% An adjective's adposition phrase stands after it (since 1.88.0): `The
+%% movie is unsuitable for children.'
+ty_adjective_complement(english, after).
 %% A clause may say no subject (since 1.86.0): `Took the joke well.'
 ty_subject_unsaid(english, 3).
 %% The verbs that may take no object: WordNet's, lexicon/vi.txt (since 1.86.0).
@@ -598,6 +601,9 @@ ty_adposition(english, despite, [despite]).
 ty_adposition(english, except, [except]).
 ty_adposition(english, out_of, [out, of]).
 ty_adposition(english, instead_of, [instead, of]).
+%% `of' is an adposition only in an adjective's phrase (since 1.88.0:
+%% `proud of his son'); elsewhere it is the possessor's word.
+ty_adposition(english, of, [of]).
 ty_adverb(english, quickly, quickly).
 ty_adverb(english, slowly, slowly).
 ty_adverb(english, today, today).

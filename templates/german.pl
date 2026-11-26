@@ -377,6 +377,10 @@ ty_adjunct(german, end).
 ty_noun_adposition(german, after).
 %% A noun before a noun (since 1.87.0): one word, `schwarze Lederjacken'.
 ty_noun_modifier(german, compound).
+%% An adjective's adposition phrase before it (since 1.88.0): `Der Hund ist
+%% im Haus groß.'
+ty_adjective_complement(german, before).
+ty_adposition(german, of, [von]).
 ty_adposition(german, in, [in]).
 ty_adposition(german, on, [auf]).
 ty_adposition(german, with, [mit]).

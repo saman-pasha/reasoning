@@ -563,8 +563,11 @@ lg_adjuncted(Js, [A|As], [B|Bs]) :- foldl(lg_wrap_adjunct, Js, A, B), lg_adjunct
 lg_wrap_adjunct(J, A, modified(J, A)).
 
 lg_atoms_(copula(_, _, _, _), T, adj(As), Atoms) :- !,
-    lg_adjectives(As, Ms),
-    lg_preds_of(Ms, T, Atoms).
+    lg_ap_split(As, Ps, Aps),
+    lg_adjectives(Ps, Ms),
+    lg_preds_of(Ms, T, Atoms0),
+    lg_ap_atoms(Aps, T, Atoms1, Os),
+    append([Atoms0, Atoms1, Os], Atoms).
 lg_atoms_(copula(_, _, _, _), T, np(N, _, D, As), Atoms) :-
     memberchk(D, [indef, mass]), !,
     lg_adjectives(As, Ms),
@@ -586,6 +589,26 @@ lg_atoms_(copula(_, _, _, _), _, Pred, _) :- !, lg_no(predicate(Pred)).
 lg_atoms_(_, T, verb(V, none), [pred(V, [T])]) :- !.
 lg_atoms_(_, T, verb(V, O), [pred(V, [T, To])|Os]) :-
     lg_arg(object, O, To, _, Os).
+
+%% AN ADJECTIVE WITH AN ADPOSITION PHRASE (since 1.88.0), ap(A, pp(Prep,
+%% NP)) in a copula's predicate, is the adjective's atom inside the
+%% phrase, as a clause's adjunct is round the verb's: `The movie is
+%% unsuitable for children.' is modified(pp(for, a(pl(child))),
+%% pred(unsuitable, [const(the(movie))])), Cocolog
+%% for(unsuitable(the(movie)), a(pl(child))). The phrase's noun phrase is a
+%% constant or an indefinite one's individual, its facts after.
+lg_ap_split([], [], []).
+lg_ap_split([A|As], Ps, Aps) :-
+    (   nonvar(A), A = ap(_, _) -> Aps = [A|Aps1], lg_ap_split(As, Ps, Aps1)
+    ;   Ps = [A|Ps1], lg_ap_split(As, Ps1, Aps)
+    ).
+
+lg_ap_atoms([], _, [], []).
+lg_ap_atoms([ap(A, PP)|Xs], T, [modified(pp(P, To), pred(A, [T]))|As], Os) :-
+    ( atom(A), nonvar(PP), PP = pp(P, NP), atom(P) -> true ; lg_no(predicate(adj(ap(A, PP)))) ),
+    lg_arg(adjunct, NP, To, _, Os1),
+    lg_ap_atoms(Xs, T, As, Os2),
+    append(Os1, Os2, Os).
 
 %% The adjectives of a phrase, a joined pair's items each, and its nouns
 %% before its noun as they are (n(M), since 1.87.0).
@@ -947,8 +970,18 @@ lg_det_term(T) :-
     compound(T), ground(T),
     (   T = the(X) -> ( lg_np_shape(X) -> true ; lg_pp_shape(X) )
     ;   T = a(X) -> ( X = of(Y, P) -> lg_np_shape(Y), lg_poss_term(P) ; lg_np_shape(X) -> true ; lg_pp_shape(X) )
-    ;   T = of(X, P) -> lg_np_shape(X), lg_poss_term(P)
+    ;   T = of(X, P) -> lg_np_shape(X), \+ lg_ap_atom(X), lg_poss_term(P)
     ).
+
+%% An adjective's atom of a pronoun or of a name that is no noun is no
+%% possessed's term, so past(of(aware(he), the(danger))) is the tense of an
+%% adjective's `of' phrase (since 1.88.0: `He was aware of the danger.'),
+%% where of(big(dog), he) is his big dog. A name that is a noun too (john,
+%% a toilet's) is read as the possessed.
+lg_ap_atom(X) :-
+    compound(X), X =.. [F, Y], atom(Y),
+    catch(typology_meaning(english, adjective, F), _, fail),
+    \+ catch(typology_meaning(english, noun, Y), _, fail).
 
 lg_poss_term(P) :- ( atom(P) -> true ; lg_const_term(P) ).
 
@@ -1321,10 +1354,21 @@ lg_atom_ir(L, at(T, A), How, IR) :- !,
 lg_atom_ir(L, modified(when(B), A), How, sub(when, IR1, IR2)) :- !,
     lg_atom_ir(L, A, How, IR1),
     lg_atom_ir(L, B, How, IR2).
+%% Inside an adposition phrase a word that is a verb which may take no
+%% object (vi.txt) is the verb first, an adjective's phrase after (since
+%% 1.88.0: in(live(john), paris) is `John lives in Paris.', where `live' is
+%% a common adjective too).
 lg_atom_ir(L, modified(J, A), How, IR) :- !,
-    lg_atom_ir(L, A, How, IR0),
-    lg_adjunct_ir(L, How, J, J1),
-    lg_ir_adjunct(IR0, J1, IR).
+    (   A = pred(P, [_]), J = pp(_, _), lg_lex(vi, P, _)
+    ->  (   lg_atom_ir(L, A, How, IR0), IR0 \= copula(_, _, _, _),
+            lg_adjunct_ir(L, How, J, J1), lg_ir_adjunct(IR0, J1, IR)
+        ;   lg_atom_ir(L, A, How, IR0), IR0 = copula(_, _, _, _),
+            lg_adjunct_ir(L, How, J, J1), lg_ir_adjunct(IR0, J1, IR)
+        )
+    ;   lg_atom_ir(L, A, How, IR0),
+        lg_adjunct_ir(L, How, J, J1),
+        lg_ir_adjunct(IR0, J1, IR)
+    ).
 lg_atom_ir(L, pred(P, [A]), How, IR) :-
     lg_arg_np(L, How, A, S),
     lg_unary_ir(L, P, S, IR).
@@ -1371,8 +1415,11 @@ lg_ir_tense(clause(V, _, P, S, O, Js), T, clause(V, T, P, S, O, Js)).
 lg_adjunct_ir(L, How, pp(P, T), pp(P, NP)) :- lg_arg_np(L, How, T, NP).
 lg_adjunct_ir(_, _, adv(M), adv(M)).
 
-%% An adjunct after a clause's others; a copula takes none.
+%% An adjunct after a clause's others; a copula takes none, but an
+%% adjective's atom inside an adposition phrase is the adjective's phrase
+%% (since 1.88.0: `The movie is unsuitable for children.').
 lg_ir_adjunct(clause(V, T, P, S, O), J, clause(V, T, P, S, O, [J])).
+lg_ir_adjunct(copula(T, P, S, adj([A])), pp(Pr, NP), copula(T, P, S, adj([ap(A, pp(Pr, NP))]))) :- atom(A).
 lg_ir_adjunct(clause(V, T, P, S, O, Js), J, clause(V, T, P, S, O, Js1)) :- lg_add_adjunct(Js, J, Js1).
 
 %% Two adverbs side by side are joined (`slowly and quietly').

@@ -87,7 +87,12 @@ const(the(joke))]))))`. A noun before a noun (since 1.87.0, level 1's
 item `n(M)` among a noun phrase's adjectives) is the predicate
 `nn(Modifier, Thing)`, and inside a term `nn(M, X)`: `A treasure
 hunter.` is `fact(pred(hunter, [T]))` and `fact(pred(nn, [const(treasure),
-T]))`, T the constant `a(nn(treasure, hunter))`.
+T]))`, T the constant `a(nn(treasure, hunter))`. An adjective with an
+adposition phrase (since 1.88.0, level 1's item `ap(A, pp(Prep, NP))`
+among a copula's predicate's adjectives) is the adjective's atom inside
+the phrase, as a clause's adjunct is: `The dog is big in the house.` is
+`fact(modified(pp(in, const(the(house))), pred(big,
+[const(the(dog))])))`.
 
 A variable's name in a source is a source detail and is kept apart
 (`read_term/3`'s `variable_names`). Two IRs are the same when they are
@@ -183,8 +188,8 @@ its benchmark, as every typology version has.
    lists in `lexicon/` (a common adjective first; a verb that takes no
    object before a noun for a person or an animal).
 8. **The second measure** (done: 1.69.0, `lexicon/logic.txt`,
-   `tools/logic/measure.pl`): 104 sentences with their Cocolog (259 since
-   1.87.0), written
+   `tools/logic/measure.pl`): 104 sentences with their Cocolog (269 since
+   1.88.0), written
    by hand, counted as the first measure is (STATUS.md keeps the counts).
    At 1.69.0, 86 give their Cocolog and 94 Cocolog texts come back as
    English that reads to them; the misses are the next work: a relative

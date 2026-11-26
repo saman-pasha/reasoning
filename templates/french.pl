@@ -268,6 +268,10 @@ ty_adjunct(french, end).
 ty_noun_adposition(french, after).
 %% A noun before a noun (since 1.87.0): `vestes noires de cuir'.
 ty_noun_modifier(french, after([de])).
+%% An adjective's adposition phrase after it (since 1.88.0): `Le chien est
+%% grand dans la maison.'
+ty_adjective_complement(french, after).
+ty_adposition(french, of, [de]).
 ty_adposition(french, in, [dans]).
 ty_adposition(french, on, [sur]).
 ty_adposition(french, with, [avec]).

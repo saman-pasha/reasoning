@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -263,11 +263,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 259),
-    ( R >= 245 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 245 right', VR, ok),
-    ( K >= 251 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 251 kept', VK, ok).
+    check('the second measure: its sentences', N, 269),
+    ( R >= 255 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 255 right', VR, ok),
+    ( K >= 261 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 261 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -789,6 +789,28 @@ noun_modifiers :-
           utterance(assertion, [fact(pred(jacket, [const(a(black(nn(leather, jacket))))])),
                                 fact(pred(black, [const(a(black(nn(leather, jacket))))])),
                                 fact(pred(nn, [const(leather), const(a(black(nn(leather, jacket))))]))])).
+
+%% 1.88.0: an adjective with an adposition phrase is the adjective's atom
+%% inside the phrase, as a clause's adjunct is round its verb's; a tense
+%% round an `of' phrase is the tense (no possessed's term).
+adjective_phrases :-
+    section('an adjective with an adposition phrase'),
+    forall(member(T-Want-Back, [
+               'The movie is unsuitable for children.'-'child(a(pl(child))).\nfor(unsuitable(the(movie)), a(pl(child))).\n'-'The movie is unsuitable for children.',
+               'He is proud of his son.'-'of(proud(he), of(son, he)).\n'-'He is proud of his son.',
+               'He was aware of the danger.'-'past(of(aware(he), the(danger))).\n'-'He was aware of the danger.',
+               'All men are equal before the law.'-'before(equal(A), the(law)) :-\n    man(A).\n'-'Every man is equal before the law.',
+               'The boy is small and happy with the bone.'-'small(the(boy)).\nwith(happy(the(boy)), the(bone)).\n'-'The boy is small. The boy is happy with the bone.' ]),
+           ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
+             ( C \== none, logic_translate(cocolog, english, C, E) -> true ; E = none ),
+             one_line(['into Cocolog and back: ', T], Label),
+             check(Label, C-E, Want-Back) )),
+    once(typology_read(english, 'The dog is big in the house.', IR2)),
+    logic_from_ir(IR2, U2),
+    check('the adjective\'s atom inside its phrase', U2,
+          utterance(assertion, [fact(modified(pp(in, const(the(house))), pred(big, [const(the(dog))])))])),
+    ( logic_translate(cocolog, english, 'past(of(big(dog), he)).', E3) -> true ; E3 = none ),
+    check('of(big(dog), he) is still his big dog', E3, 'His big dog is past.').
 
 %% Each clause of a Cocolog text asserted.
 assert_text(P) :-

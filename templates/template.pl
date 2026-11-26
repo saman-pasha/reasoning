@@ -580,6 +580,17 @@ ty_noun_modifier(xx, compound).
 %%   (keep it with the words that begin an infinitive, or delete it)
 %% ty_infinitive_mark(xx, [to]).
 
+%%     ty_adjective_complement(L, Place)
+%%                                     an adjective's adposition phrase,
+%%                                     ap(A, pp(Prep, NP)) in the IR's
+%%                                     adjectives (since 1.88.0): after the
+%%                                     adjective (after: `unsuitable for
+%%                                     children') or before it (before:
+%%                                     `im Haus groß')
+%%   (keep one, or none: an adjective's adposition phrase after it or before it)
+ty_adjective_complement(xx, after).
+ty_adjective_complement(xx, before).
+
 %%     ty_adjunct_front(L, v2)         a statement read with an adjunct first
 %%                                     and the verb before the subject
 %%                                     (German `Heute schläft der Hund.')

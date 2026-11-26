@@ -149,6 +149,7 @@ main :-
     prepositions,
     unsaid_subjects,
     noun_modifiers,
+    adjective_phrases,
     format("~ndone~n", []).
 
 
@@ -733,7 +734,7 @@ blank_template :-
     split_string(S, "\n", "", Lines),
     include([L]>>sub_string(L, 0, _, _, 'ty_'), Lines, Choices),
     length(Choices, N1),
-    must('the choices, each a row of code', N1, 90),
+    must('the choices, each a row of code', N1, 92),
     ( member(L2, Lines), sub_string(L2, 0, _, _, '%% ty_noun(klingon, Meaning, Gender') -> R2 = shape ; R2 = none ),
     must('a slot of words, its shape', R2, shape),
     ( member(L3, Lines), sub_string(L3, 0, _, _, '%%   e.g. ty_noun_in(english, dog,') -> R3 = example ; R3 = none ),
@@ -961,6 +962,18 @@ noun_modifiers :-
     must('in Spanish', W2, 'Chaquetas negras de pellejo.'),
     typology_write(german, phrase(np(house, sg, indef, [big, n(dog)])), W3),
     must('in German, one word', W3, 'Ein großes Hundhaus.').
+
+%% 58. AN ADJECTIVE WITH AN ADPOSITION PHRASE (1.88.0): ap(A, pp(Prep, NP)),
+%% an item of a copula's predicate's adjectives, the phrase after the
+%% adjective or before it as the template's ty_adjective_complement/2 row
+%% says; `of' begins such a phrase and no other.
+adjective_phrases :-
+    typology_read(english, 'He was aware of the danger.', IR1),
+    must('read', IR1, copula(past, pos, pron(3, sg, m), adj([ap(aware, pp(of, np(danger, sg, def, [])))]))),
+    typology_write(spanish, IR1, W2),
+    must('in Spanish', W2, 'Él era consciente del peligro.'),
+    typology_write(german, copula(present, pos, np(dog, sg, def, []), adj([ap(big, pp(in, np(house, sg, def, [])))])), W3),
+    must('in German, the phrase first', W3, 'Der Hund ist im Haus groß.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

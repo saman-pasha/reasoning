@@ -173,6 +173,10 @@ ty_copula(persian, any, past, pl, neg, ['نبودند']).
 ty_order(persian, pp, [p, x]).
 %% A noun before a noun (since 1.87.0): after it, the ezafe between (`کت‌های سیاه چرم').
 ty_noun_modifier(persian, after([])).
+%% An adjective's adposition phrase before it (since 1.88.0), as the
+%% predicate before the copula.
+ty_adjective_complement(persian, before).
+ty_adposition(persian, of, ['از']).
 ty_adjunct(persian, before(v)).
 ty_adposition(persian, in, ['در']).
 ty_adposition(persian, on, ['روی']).

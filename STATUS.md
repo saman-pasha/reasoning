@@ -13,35 +13,39 @@ them, and the steps. Change it as the work moves.
 **The reasoning library translates all 8 000 sentences of
 `lexicon/prose.txt` from English into the IR, and all of that IR into
 Cocolog.** Every step is measured against it, both counts
-(`tools/logic/prose.pl`, the tables below). At 1.87.0: 3 849 of the 8 000
-read into the IR (48.1 %), 3 704 of those 3 849 into Cocolog (96.2 %);
-at 1.86.0 3 644 and 3 508, at 1.84.0 and 1.85.0 3 550 and 3 415, at 1.83.0 3 268 and 3 155, at 1.82.0 3 118 and 3 015, at 1.81.0 2 813 and 2 723, at 1.80.0 678 and 609. The two goals below are its two halves: the first
+(`tools/logic/prose.pl`, the tables below). At 1.88.0: 3 952 of the 8 000
+read into the IR (49.4 %), 3 789 of those 3 952 into Cocolog (95.9 %);
+at 1.87.0 3 849 and 3 704, at 1.86.0 3 644 and 3 508, at 1.84.0 and 1.85.0 3 550 and 3 415, at 1.83.0 3 268 and 3 155, at 1.82.0 3 118 and 3 015, at 1.81.0 2 813 and 2 723, at 1.80.0 678 and 609. The two goals below are its two halves: the first
 the IR, the second Cocolog.
 
-**What blocks the rest** (measured at 1.87.0, `typology_coverage/4`'s
-words and probes that change each sentence a known way): of the 4 151
-sentences not read, 2 424 have a word no table has (at 1.86.0 the commonest were
-`as` 126, `there` 69, `up` 68, `than` 53, `could` 48, `more` 47, `very`
-46, `one` 45, `two` 44, `many` 43 are the commonest), and the other 1 727
+**What blocks the rest** (measured at 1.88.0, `typology_coverage/4`'s
+words and probes that change each sentence a known way): of the 4 048
+sentences not read, 2 421 have a word no table has (at 1.86.0 the
+commonest were `as` 126, `there` 69, `up` 68, `than` 53, `could` 48,
+`more` 47, `very` 46, `one` 45, `two` 44, `many` 43), and the other 1 627
 have every word in a table and a structure level 1 does not read. Of
-those 1 727, 812 read with one word taken out, and the word says what
-blocks. THE LARGEST GAP IS NOW AN ADJECTIVE WITH A COMPLEMENT OR AFTER
-ITS NOUN: 159 read with a word that is an adjective's alone taken out,
-and 38 more with a word that is an adjective's or a noun's (`A decision
-unfavorable to the opposition.`, `Guerrillas unequipped for a pitched
-battle.`, `The movie is unsuitable for children.`). Then the passive and
-the copula before a participle (86 with `is`, `are`, `was`, `were`, `be`
-or `been` taken out: `The film was shot on location.`, `They were driven
-from the marketplace.`), an adverb before an adjective or a participle
-(95, and 12 more with a word that is an adverb's or an adjective's: `Her
-voice is superbly disciplined.`, `His carefully knotted necktie.`), `of`
-before a bare singular noun (45: `The incarnation of evil.`, `The passage
-of time was enough.`), `to` before an infinitive (26: `Glad to help.`),
-`out` (26), `all` (20). `the` taken out reads 40, most of them a command
-whose verb no table has as a verb, read as a compound once `the` is out
-(`Tar the roads.`, `Weed the garden.`: about 20), and `the` before a name
-(14: `the Great Salt Lake`). A noun taken out reads 19 (138 at 1.86.0).
-Through 1.80.0 the largest gap was the noun phrase alone,
+those 1 627, 758 read with one word taken out, and the word says what
+blocks. A word that is an adjective's still reads the most (125, and 36
+more with a word that is an adjective's or a noun's; 197 at 1.87.0), but
+of four shapes: an adjective after its noun with an adposition phrase
+(43 by a probe that cuts the phrase: `A calyx adnate to the ovary.`), an
+adjective with a capital letter (40 read lowered: `The Guyanese
+capital.`, `A Gallic shrug.`), an adjective that completes an object
+(about 50: `They considered colonialism immoral.`), a copula verb other
+than `be` (13 read with `is` or `was` in its place: `He remained
+faithful to his wife.`). THE LARGEST GAP OF ONE SHAPE IS NOW AN ADVERB
+BEFORE AN ADJECTIVE: 103 read with an adverb's word taken out and 6 more
+with a word that is an adverb's or an adjective's, most of them before
+an adjective or a participle (`She was incurably optimistic.`, `A
+perfectly natural explanation.`, `Her voice is superbly disciplined.`),
+the rest between the subject and the verb (`The detective carefully
+lifted some fingerprints from the table.`). Then `of` before a bare
+singular noun (43: `The incarnation of evil.`), `to` before an infinitive
+(26: `Glad to help.`, `Strawberries are hardy and easy to grow.`), `out`
+(26), `all` (21), the passive's words (39 with `is`, `are`, `was`,
+`were` or `be` taken out; 86 at 1.87.0). `the` taken out reads 46, most
+of them a command whose verb no table has as a verb (`Tar the roads.`)
+and `the` before a name (19: `the Great Salt Lake`). Through 1.80.0 the largest gap was the noun phrase alone,
 2 130 sentences of the 4 451 with every word known (`A heavy coat.`),
 which 1.81.0 reads; then the commands, 397 read with `You` before them
 (`Construct a proof.`), which 1.82.0 reads; then the noun phrase with an
@@ -53,7 +57,9 @@ which 1.84.0 reads (282); then a verb with no subject, 107 read with `He`
 before them (`Took the joke well.`), which 1.86.0 reads (94); then a noun
 before a noun, 138 read with a noun taken out and 79 more with a word
 that is a noun's or a verb's (`Black leather jackets.`), which 1.87.0
-reads (205).
+reads (205); then an adjective with an adposition phrase, 159 read with
+an adjective's word taken out (`The movie is unsuitable for children.`),
+of which 1.88.0 reads the copula's (103).
 
 Cocolog into English goes two ways: the translator's round trip for the
 logic form (`logic_write/3`), and since 1.80.0 the explainer for a
@@ -219,6 +225,7 @@ group); test/logic.pl's `measure` holds the counts to the last row.
 | 1.84.0 | 225 | of 239: 94.1 % | 231 | the other prepositions: 11 sentences more, all right and kept -- a predicate of two as in/2 is, round the atom (`He slept during the storm.` is past(during(is_sleep(he), the(storm)))), after `is` (`The book is at the station.` at(the(book), the(station))) or inside a constant (a(for(large(turnout), the(meeting)))); 14 misses, 1.80.0's |
 | 1.86.0 | 235 | of 249: 94.4 % | 241 | a clause with no subject: 10 sentences of lexicon/prose.txt more, all right and kept -- its subject the constant someone (`Took the joke well.` is past(well(take(someone, the(joke))))), said back as `Someone took the joke well.`; 14 misses, 1.80.0's |
 | 1.87.0 | 245 | of 259: 94.6 % | 251 | a noun before a noun: 10 sentences of lexicon/prose.txt more, all right and kept -- the predicate nn(Modifier, Thing) of the thing's term, and nn(M, X) inside a term (`A treasure hunter.` is hunter(a(nn(treasure, hunter))), nn(treasure, a(nn(treasure, hunter))); `The patient is on life support.` on(the(patient), nn(life, support))), said back as the compound; 14 misses, 1.80.0's |
+| 1.88.0 | 255 | of 269: 94.8 % | 261 | an adjective with an adposition phrase: 10 sentences of lexicon/prose.txt more, all right and kept -- the adjective's atom inside the phrase, as a clause's adjunct is round its verb's (`The book was full of errors.` is error(a(pl(error))), past(of(full(the(book)), a(pl(error)))); `All men are equal before the law.` before(equal(X), the(law)) :- man(X)); 14 misses, 1.80.0's |
 
 **The 8 000 sentences of the first measure into Cocolog**
 (`tools/logic/prose.pl`): read into level 1, then a logic form, then
@@ -242,6 +249,7 @@ meaning in another form (`the bed's edge` for `the edge of the bed`).
 | 1.84.0 | 3 550 | 3 550 (3 234) | 3 415 (42.7 %) |
 | 1.86.0 | 3 644 | 3 644 (3 327) | 3 508 (43.9 %) |
 | 1.87.0 | 3 849 | 3 849 (3 518) | 3 704 (46.3 %) |
+| 1.88.0 | 3 952 | 3 952 (3 602) | 3 789 (47.4 %) |
 
 | version | translated | of 8 000 | the first reasons of the others read into level 1 |
 |---|---|---|---|
@@ -261,6 +269,7 @@ meaning in another form (`the bed's edge` for `the edge of the bed`).
 | 1.84.0 | 3 415 | 42.7 % | an IR shape with no rule 34 (a coordination where a constant stands 25, a relative clause in a role 9), `this` 17, a noun of relation with an adjective 14, a predicate with no rule 10, `no` 9, a phrase with a relative clause 9, `that` 6, a negation 5. Level 1 reads 282 sentences more, every one with an English preposition that had no row (38 rows more: `for` 104 of the sentences, `at` 32, `into` 30, `by` 21, `over` and `against` 11, `onto`, `between` and `about` 9; `towards` a second word of `toward`; `out of` and `instead of` two words), and 260 of them go into Cocolog, each preposition a predicate of two as in/2 is. One old reading changed, for the better (`All mammals except monotremes and marsupials are placental mammals.`: except a preposition, where it was a verb); no sentence lost. No row for `up`, `down` and `off`: with them 19 sentences more read, and most made a verb's particle a preposition and the verb's object its noun phrase (`Fold up the newspaper.`); nor for `past`, a tense's name in Cocolog. 43 rows made the gap check of an adposition phrase walk them all, English 10 % more inferences: it asks the text's adpositions now (`ty_adp_ahead/2`), and English is 0.6 % cheaper than at 1.83.0. In a sample of 40 of the new ones 5 are wrong, every one by an older class: a noun before a noun (`They played at home last night.`), an infinitive (`The end managed to hold onto the pass.`), a participle read as a verb (`A flight destined for New York.`) |
 | 1.86.0 | 3 508 | 43.9 % | an IR shape with no rule 34, `this` 17, a noun of relation with an adjective 14, a predicate with no rule 10, `no` 9, a phrase with a relative clause 9, `that` 6, a negation 5, a generic object 5. Level 1 reads 94 sentences more, every one a clause with no subject (`Took the joke well.`: its subject pron(3, sg, zero), someone the text does not name, where the English template has `ty_subject_unsaid(english, 3)`), and 93 of them go into Cocolog, the subject the constant someone. No sentence lost or changed. Tried after the command; refused where the words read as a clause with a subject (`Dogs sleep.` is no clause of someone who dogs sleep) and, with no object, where the past verb's word is an adjective's and the verb takes an object in every sense (`Interested in sports.`, a passive: the first cut read 23 of them, and refused 9 active verbs with it, `Fell into a profound sleep.`, until WordNet's verbs that may take no object, lexicon/vi.txt, a new row `ty_verb_list(english, no_object, vi)`, kept them). Spanish, Italian and Persian write it with the subject dropped (`Durmió.`). In a sample of 47 of the new ones about 5 are wrong: a passive whose verb may take no object (4: `Caught by a couple of alert cops.`, `Worried by the worsening storm.`), a noun read as a verb (`Experiences new to him.`) |
 | 1.87.0 | 3 704 | 46.3 % | an IR shape with no rule 35, `this` 17, a noun of relation with an adjective 14, a predicate with no rule 12, a phrase with a relative clause 10, `no` 9, `that` 7, a generic object 6, a negation 5. Level 1 reads 205 sentences more, every one with a noun before a noun (`Black leather jackets.`: np(jacket, pl, indef, [black, n(leather)]), where the English template has `ty_noun_modifier(english, before)`), and 196 of them go into Cocolog, the predicate nn(Modifier, Thing) and, inside a term, nn(M, X) (`a(pl(black(nn(leather, jacket))))`). No sentence lost or changed: level 1 reads a sentence again with the modifier only where it reads nothing without it and two nouns stand in a row (one pass changed 40 readings of 1.86.0). Refused: a modifier whose word is an adjective's (`black leather` is no two nouns), and a bare noun after `to`, an infinitive (`to raise money`, `ty_infinitive_mark(english, [to])`: the first cut read 6 of them as an adposition phrase). Spanish and French write it after the noun with `de` (`Chaquetas negras de pellejo.`), Italian with `di`, German as one word (`Ein großes Hundhaus.`, with no linking letter yet, and not read), Persian with the ezafe (read back as a possessor). Two modifiers do not say their bracketing (nn(day, nn(care, program))). In a sample of 40 of the new ones about 8 are wrong, most for another shape of the sentence that the compound lets level 1 read wrong: a verb read as a noun (`Ream oranges.`, `Pole climbing plants like beans.`), a gerund subject (`Drinking alcohol is a health hazard.`, `Mixing sounds.`), `have` with a participle (`He had the gem set.`) |
+| 1.88.0 | 3 789 | 47.4 % | an IR shape with no rule 39, `this` 19, a noun of relation with an adjective 14, a phrase with a relative clause 12, a predicate with no rule 12, `no` 10, `that` 10, a negation 8, a generic object 6. Level 1 reads 103 sentences more, every one a copula's adjective with an adposition phrase (`He was aware of the danger.`: adj([ap(aware, pp(of, np(danger, sg, def, [])))]), where the English template has `ty_adjective_complement(english, after)`), and 85 of them go into Cocolog, the adjective's atom inside the phrase (past(of(aware(he), the(danger)))). No sentence lost or changed: the phrase is read only where the plain predicate is not. `of` begins such a phrase and no other: an adposition row in each language (`de`, `di`, `von`, `از`) that a possessor never takes. Spanish, Italian and French write the phrase after the adjective (`Él era consciente del peligro.`), German and Persian before (`Der Hund ist im Haus groß.`). 60 of the 103 are a passive or a progressive whose participle has an adjective's row (`They were driven from the marketplace.`, `He was suffering from museum fatigue.`), as level 1 read such a participle without a phrase before; 3 read an infinitive after `to` as a phrase (`He is sure to win.`), which the words do not tell from `He is superior to fear.`. Back from Cocolog a name that is a noun too is read as a possessed in a tense (`John was proud of Mary.` is said back `Mary's proud john is past.`), and a word that is a verb which may take no object is the verb first inside a phrase (`in(live(john), paris)` is `John lives in Paris.`: the first cut said `John es vivo en Paris.`). An adjective after its noun (`A calyx adnate to the ovary.`) is not read yet. Cost: English's round trips 0.17 % more inferences, French's 0.49 % (the first cut, a switch set in every noun phrase, 1.30 %) |
 
 ## What "parked" means
 

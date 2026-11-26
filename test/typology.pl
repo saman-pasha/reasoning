@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2128,6 +2128,44 @@ noun_modifiers :-
     forall(member(L4, [english, spanish, italian, persian, french, german]),
            ( typology_check(L4, M4), atomic_list_concat([L4, ': its row is one the check takes'], Label4), check(Label4, M4, []) )).
 
+%% 1.88.0: an adjective with an adposition phrase, ap(A, pp(Prep, NP)), an
+%% item of a copula's predicate's adjectives, the phrase where
+%% ty_adjective_complement/2 puts it; read where the plain predicate is
+%% not. `of' is an adposition in that phrase alone: a possessor keeps it.
+adjective_phrases :-
+    section('an adjective with an adposition phrase'),
+    forall(member(T-Want, [
+               'The movie is unsuitable for children.'-copula(present, pos, np(movie, sg, def, []), adj([ap(unsuitable, pp(for, np(child, pl, indef, [])))])),
+               'He was aware of the danger.'-copula(past, pos, pron(3, sg, m), adj([ap(aware, pp(of, np(danger, sg, def, [])))])),
+               'He is small and proud of his son.'-copula(present, pos, pron(3, sg, m), adj([small, ap(proud, pp(of, of(pron(3, sg, m), np(son, sg, def, []))))])),
+               'The dog is big.'-copula(present, pos, np(dog, sg, def, []), adj([big])),
+               'The edge of the bed is red.'-copula(present, pos, of(np(bed, sg, def, []), np(edge, sg, def, [])), adj([red])),
+               'The boy sees the edge of the bed.'-clause(see, present, pos, np(boy, sg, def, []), of(np(bed, sg, def, []), np(edge, sg, def, []))) ]),
+           ( ( typology_read(english, T, R) -> true ; R = none ),
+             atomic_list_concat(['English: ', T, ', the first reading'], Label),
+             check(Label, R, Want) )),
+    IR2 = copula(present, pos, np(dog, sg, def, []), adj([ap(big, pp(in, np(house, sg, def, [])))])),
+    Ws2 = [english-'The dog is big in the house.', spanish-'El perro es grande en la casa.',
+           italian-'Il cane è grande nella casa.', french-'Le chien est grand dans la maison.',
+           german-'Der Hund ist im Haus groß.', persian-'سگ در خانه بزرگ است.'],
+    forall(member(L2-Want2, Ws2),
+           ( ( typology_write(L2, IR2, W2) -> true ; W2 = none ),
+             atomic_list_concat([L2, ': ', Want2], Label2),
+             check(Label2, W2, Want2) )),
+    forall(member(L3-T3, Ws2),
+           ( ( typology_read(L3, T3, R3) -> true ; R3 = none ),
+             atomic_list_concat([L3, ' reads it back: ', T3], Label3),
+             check(Label3, R3, IR2) )),
+    IR4 = copula(past, pos, pron(3, sg, m), adj([ap(aware, pp(of, np(danger, sg, def, [])))])),
+    forall(member(L4-Want4, [spanish-'Él era consciente del peligro.', italian-'Lui era consapevole del pericolo.']),
+           ( ( typology_write(L4, IR4, W4) -> true ; W4 = none ),
+             atomic_list_concat([L4, ', `of\': ', Want4], Label4),
+             check(Label4, W4, Want4) )),
+    ( typology_write(english, phrase(np(dog, sg, indef, [ap(big, pp(in, np(house, sg, def, [])))])), W5) -> true ; W5 = none ),
+    check('a noun phrase\'s adjectives have no phrase yet', W5, none),
+    forall(member(L6, [english, spanish, italian, persian, french, german]),
+           ( typology_check(L6, M6), atomic_list_concat([L6, ': its row is one the check takes'], Label6), check(Label6, M6, []) )).
+
 %% 1.64.0: the bare singular noun. np(M, sg, mass, []): a singular noun
 %% with no article, read after the other readings, written with none;
 %% Persian, whose definite noun has none either, writes it as def.
@@ -2461,8 +2499,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 3849 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 3 849 sentences read at 1.87.0 are read', R1, yes),
+    ( K >= 3952 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 3 952 sentences read at 1.88.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 
@@ -2822,4 +2860,4 @@ blank_template :-
     include([X4]>>( X4 = bad(_) ), M4, Bad4),
     check('every row of code of templates/template.pl is a row the check takes', Bad4, []),
     length(Rows, NR4),
-    check('the rows of code of the choices', NR4, 90).
+    check('the rows of code of the choices', NR4, 92).

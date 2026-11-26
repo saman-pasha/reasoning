@@ -53,6 +53,7 @@ main :-
     prepositions,
     unsaid_subjects,
     noun_modifiers,
+    adjective_phrases,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -350,6 +351,14 @@ noun_modifiers :-
     must('a rule', C1, 'expensive(A) :-\n    jacket(A),\n    nn(leather, A).\n'),
     logic_translate(english, cocolog, 'The patient is on life support.', C2),
     must('a constant', C2, 'on(the(patient), nn(life, support)).\n').
+
+%% 24. AN ADJECTIVE WITH AN ADPOSITION PHRASE is the adjective's atom
+%% inside the phrase, as a clause's adjunct is round its verb's.
+adjective_phrases :-
+    logic_translate(english, cocolog, 'He was aware of the danger.', C1),
+    must('in the past', C1, 'past(of(aware(he), the(danger))).\n'),
+    logic_translate(cocolog, english, C1, E2),
+    must('back into English', E2, 'He was aware of the danger.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

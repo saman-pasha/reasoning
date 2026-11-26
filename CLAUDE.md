@@ -24,8 +24,8 @@ red) and lesson 01 pin the shape of the answer, deliberately not the number.
 The reasoning library translates ALL 8 000 sentences of `lexicon/prose.txt`
 from English into the IR, and ALL of that IR into Cocolog. Every step
 moves one of the two counts and reports both (`tools/logic/prose.pl`;
-STATUS.md keeps them): at 1.87.0, 3 849 into the IR, 3 704 of them into
-Cocolog (1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
+STATUS.md keeps them): at 1.88.0, 3 952 into the IR, 3 789 of them into
+Cocolog (1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
 count says so. **Measure what blocks the rest before choosing a step**:
 at 1.80.0 the words no table has looked like the gap, and 5 115 of the
 8 000 had none -- 2 130 of them a noun phrase alone, which one rule read.
@@ -607,6 +607,33 @@ nb_setarg/3, and on cocolog 3.78.15 a read of another global after it
 gave `<?>` (`memberchk(class, <?>)` in the logic case): a fault in the
 copies a machine keeps of ground globals (since cocolog 1.12.1), fixed in
 3.78.16, where that cut is green too.
+**An adjective with an adposition phrase since 1.88.0** (`The movie is
+unsuitable for children.`) is an item `ap(A, pp(Prep, NP))` of a
+copula's predicate's adjectives; the template's row
+`ty_adjective_complement(L, P)` puts the phrase after the adjective
+(English, Spanish, Italian, French) or before it (German `Der Hund ist im
+Haus groß.`, Persian). It is a second clause of `ty_adjs//3`, the
+predicate's own entry, read where the plain predicate is not and the text
+has an adjective's word before an adposition's (`'$ty_ap'`,
+`ty_ap_flag/2`); a noun phrase's adjectives (`ty_adjs//5`) have none. The
+first cut was a clause of `ty_adjs//5` with a switch set in every noun
+phrase, and cost English's round trips 1.3 % more inferences, where this
+costs 0.17 %. **`of` has an adposition row in every language** (`de`,
+`di`, `von`, `از`) that this phrase alone may use (`'$ty_of_ok'`,
+`ty_pp_of/1`): elsewhere `of` is the possessor's word, and
+`ty_adp_flag/2` leaves a word whose rows are `of`'s alone out of the
+text's adpositions. Level 2: the adjective's atom inside the phrase, as a
+clause's adjunct is round its verb's (`for(unsuitable(the(movie)),
+a(pl(child)))`). `lg_det_term/1` takes `of(F(X), P)` for an atom where F
+is an adjective and X no noun (`lg_ap_atom/1`:
+`past(of(aware(he), the(danger)))` is a tense; a name that is a noun too,
+`john`, is still read as the possessed), and back from Cocolog a word
+that is a verb which may take no object is the verb first inside a
+phrase (vi.txt: `in(live(john), paris)` is `John lives in Paris.`, where
+`live` is a common adjective too). 60 of the 103 new readings are a
+passive or a progressive whose participle has an adjective's row (`They
+were driven from the marketplace.`), as level 1 read such a participle
+without a phrase before.
 **The blank template copies the row descriptions of typology.pl's head**:
 a changed description is `typology_import(template)` again, or the
 `reproduced` section is red.

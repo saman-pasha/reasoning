@@ -218,6 +218,13 @@
 %%                                     a noun begins a phrase with no
 %%                                     article after them (`to raise money'
 %%                                     is no money of raising)
+%%     ty_adjective_complement(L, Place)
+%%                                     an adjective's adposition phrase,
+%%                                     ap(A, pp(Prep, NP)) in the IR's
+%%                                     adjectives (since 1.88.0): after the
+%%                                     adjective (after: `unsuitable for
+%%                                     children') or before it (before:
+%%                                     `im Haus groß')
 %%     ty_adposition(L, Meaning, Words)
 %%                                     a preposition or a postposition, by
 %%                                     the pp level's order
@@ -770,7 +777,7 @@
            ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
            ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
            ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-           ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_noun_modifier/2, ty_infinitive_mark/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
+           ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
            ty_answer_echo/3, ty_kind/2, ty_adjective_before/2, ty_pronoun_gender/2,
            ty_inversion/3, ty_wh_tonic/3,
            ty_tense_form/5, ty_participle/3, ty_participle_like/3,
@@ -796,7 +803,7 @@
                  ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
                  ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
                  ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-                 ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_noun_modifier/2, ty_infinitive_mark/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
+                 ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
                  ty_answer_echo/3, ty_adjective_before/2, ty_pronoun_gender/2,
                  ty_inversion/3, ty_wh_tonic/3,
                  ty_tense_form/5, ty_participle/3, ty_participle_like/3,
@@ -1095,7 +1102,7 @@ ty_template_group('forms chosen by sound, and contractions', [ty_ending, ty_lett
                                                                ty_linked, ty_contraction]).
 ty_template_group('roles, marks and cases', [ty_mark, ty_case, ty_case_after, ty_article_case,
                                              ty_noun_case, ty_declension, ty_adjective_ending]).
-ty_template_group('adjuncts and complements', [ty_adjunct, ty_noun_adposition, ty_noun_modifier, ty_infinitive_mark, ty_adjunct_front, ty_object_front,
+ty_template_group('adjuncts and complements', [ty_adjunct, ty_noun_adposition, ty_noun_modifier, ty_infinitive_mark, ty_adjective_complement, ty_adjunct_front, ty_object_front,
                                                ty_bare_topic, ty_adposition_topic, ty_complement]).
 ty_template_group('questions and answers', [ty_question, ty_inversion, ty_question_form,
                                             ty_question_mark, ty_wh, ty_wh_word, ty_wh_tonic, ty_wh_case,
@@ -1125,6 +1132,7 @@ ty_template_choice(ty_adjunct, Name, 'keep one', Rows) :-
 ty_template_choice(ty_noun_adposition, Name, 'keep it where a noun phrase\'s adposition phrase stands after it, or delete it', [row(ty_noun_adposition(Name, after))]).
 ty_template_choice(ty_noun_modifier, Name, 'keep one, or none: a noun before a noun before it, joined to it, or after it with words', [row(ty_noun_modifier(Name, before)), row(ty_noun_modifier(Name, compound)), text("ty_noun_modifier(~q, after([of])).", [Name])]).
 ty_template_choice(ty_infinitive_mark, Name, 'keep it with the words that begin an infinitive, or delete it', [text("ty_infinitive_mark(~q, [to]).", [Name])]).
+ty_template_choice(ty_adjective_complement, Name, 'keep one, or none: an adjective\'s adposition phrase after it or before it', [row(ty_adjective_complement(Name, after)), row(ty_adjective_complement(Name, before))]).
 ty_template_choice(ty_question, Name, 'one row or more a kind and level; a particle needs its words', Rows) :-
     findall(R, ( ty_values(question_kind, Ks), member(K, Ks),
                  ty_values(question_level, Ls), member(Lv, Ls),
@@ -1652,6 +1660,9 @@ ty_missing(L, bad(ty_noun_modifier(L, P))) :-
 ty_missing(L, bad(ty_infinitive_mark(L, Ws))) :-
     ty_infinitive_mark(L, Ws),
     \+ ( is_list(Ws), Ws = [_|_] ).
+ty_missing(L, bad(ty_adjective_complement(L, P))) :-
+    ty_adjective_complement(L, P),
+    \+ ( P == after ; P == before ).
 ty_missing(L, bad(ty_clitic(L, R))) :-
     ty_clitic(L, R),
     R \== o.
@@ -1881,6 +1892,7 @@ ty_read_bases(L, Surface, Topics, Mood, IR0, C) :-
     ty_qp_flag(L, Bases),
     ty_subord_flag(L, Bases),
     ty_adp_flag(L, Bases),
+    ty_ap_flag(L, Bases),
     ty_parse_reset(L),
     ty_mood(Mood, L, IR0, C, Goal),
     ty_nn_passes(L, Bases, Goal).
@@ -1941,6 +1953,7 @@ typology_write(L, IR, Text, Topics) :-
     ty_mood(Mood, L, IR0, _, Goal),
     b_setval('$ty_context', none),
     b_setval('$ty_nn', on),
+    b_setval('$ty_ap', on),
     ty_parse_reset(L),
     phrase(Goal, Tokens0),
     ty_reads_as(Mood, L, IR0, Tokens0, Topics), !,
@@ -1997,6 +2010,7 @@ ty_reads_as(Mood, L, IR0, Tokens, Topics) :-
     ty_new_context(Tokens, Topics, Context),
     \+ \+ ( b_setval('$ty_context', Context),
            b_setval('$ty_nn', on),
+           b_setval('$ty_ap', on),
            ty_parse_reset(L),
            b_setval('$ty_rel_open', f([])),
            ty_poss_flag(L, Tokens),
@@ -4491,8 +4505,9 @@ ty_pp_parts([P|Ps], L, Prep, NP) --> ty_pp_part(P, L, Prep, NP), ty_pp_parts(Ps,
 
 ty_pp_part(p, L, Prep, NP) -->
     (   { ty_gap_moved_from(NP, AWs) }
-    ->  { ty_adposition(L, Prep, AWs) }
+    ->  { ty_adposition(L, Prep, AWs), Prep \== of }
     ;   ty_words(1, 3, Ws, ty_pp_words(L, Prep, NP, Ws)),
+        { ty_pp_of(Prep) },
         ty_meant(L, adposition(Prep), Ws),
         { ty_case_after_words(L, Ws) }
     ).
@@ -4573,8 +4588,13 @@ ty_pp_tail(L, open(NP0), H) -->
 %% its words hold ('$ty_adp'), as the subordinators'.
 ty_adp_flag(L, Words) :-
     findall(W, ( ty_adposition(L, _, [W|_]), memberchk(W, Words) ), Ws0),
-    sort(Ws0, Ws),
+    sort(Ws0, Ws1),
+    exclude(ty_of_word(L), Ws1, Ws),
     b_setval('$ty_adp', f(Ws)).
+
+%% A word whose rows are `of''s alone (English `of'; Spanish `de' is
+%% `from' too) opens no adposition phrase of a noun.
+ty_of_word(L, W) :- ty_adposition(L, of, [W|_]), \+ ( ty_adposition(L, M, [W|_]), M \== of ).
 
 ty_adp_next(S, S) :-
     (   var(S) -> true
@@ -6289,6 +6309,8 @@ ty_feats_make(L) :-
     retractall('$ty_cased'(L)), retractall('$ty_declines'(L)),
     retractall('$ty_kein_lang'(L)), retractall('$ty_sub_used'(L)), retractall('$ty_commands'(L)),
     retractall('$ty_noun_pp'(L)), retractall('$ty_unsaid'(L)), retractall('$ty_nmod'(L, _)),
+    retractall('$ty_apc'(L, _)),
+    ( ty_adjective_complement(L, ApP) -> assertz('$ty_apc'(L, ApP)) ; true ),
     ( ty_noun_adposition(L, after) -> assertz('$ty_noun_pp'(L)) ; true ),
     ( ty_subject_unsaid(L, 3) -> assertz('$ty_unsaid'(L)) ; true ),
     ( ty_noun_modifier(L, NmP) -> assertz('$ty_nmod'(L, NmP)) ; true ),
@@ -6372,6 +6394,7 @@ ty_feats_make(L) :-
 :- dynamic('$ty_noun_pp'/1).
 :- dynamic('$ty_unsaid'/1).
 :- dynamic('$ty_nmod'/2).
+:- dynamic('$ty_apc'/2).
 :- dynamic('$ty_lexw'/2).
 :- dynamic('$ty_lexw_read'/1).
 :- dynamic('$ty_art_words'/4).
@@ -6661,7 +6684,11 @@ ty_case_words(L, Def, C, Ws) :-
     ;   findall(W, '$ty_art_words'(L, Def, C, W), Ws)
     ).
 
+%% A copula's predicate's adjectives (ty_adjs//3 is the predicate's alone),
+%% one of them (each item of a joined pair is read alone) with an
+%% adposition phrase since 1.88.0 (ty_ap//5).
 ty_adjs(L, As, Rows) --> ty_adjs(L, As, Rows, none, plain).
+ty_adjs(L, [ap(A, pp(P, NP))], [R]) --> ty_ap(L, A, P, NP, R).
 
 %% What a joined adjective's or adverb's slot may hold, reading (unbound:
 %% and, then or) or writing.
@@ -6731,6 +6758,65 @@ ty_adjs(L, [n(X)|As], Rows, End, D, S0, S) :-
     '$ty_nmod'(L, P),
     ty_nmod_item(P, L, X, As, End, S0, S1),
     ty_nmods(L, As, Rows, End, D, S1, S).
+
+%% AN ADJECTIVE WITH AN ADPOSITION PHRASE (since 1.88.0): ap(A, pp(Prep,
+%% NP)), an item of a copula's predicate's adjectives, the phrase
+%% where ty_adjective_complement/2 says: `The movie is unsuitable for
+%% children.', German `Der Hund ist im Haus groß.'. The adjective
+%% is one plain adjective (ty_adjs//5 has no ap: a noun phrase's adjectives
+%% have none), agreeing as any does, and the phrase's case is put back
+%% after it (a noun phrase in it sets it). Read where the plain predicate
+%% is not, and the text has an adjective's word and an adposition's
+%% ('$ty_ap', ty_ap_flag/2); written always. The phrase may be of `of'
+%% (ty_pp_of/1).
+ty_ap(L, A, P, NP, R, S0, S) :-
+    nb_current('$ty_ap', on),
+    '$ty_apc'(L, Place),
+    ( nb_current('$ty_case', C0) -> true ; C0 = '$none' ),
+    ty_ap_parts(Place, L, A, P, NP, R, C0, S0, S),
+    atom(A).
+
+ty_ap_parts(after, L, A, P, NP, R, C0) -->
+    ty_adjs(L, [A], [R], none, plain),
+    { b_setval('$ty_of_ok', yes) }, ty_pp(L, P, NP),
+    { ty_ap_back(C0) }.
+ty_ap_parts(before, L, A, P, NP, R, C0) -->
+    { b_setval('$ty_of_ok', yes) }, ty_pp(L, P, NP),
+    { ty_ap_back(C0) },
+    ty_adjs(L, [A], [R], none, plain).
+
+ty_ap_back(C0) :-
+    b_setval('$ty_of_ok', no),
+    ( C0 == '$none' -> true ; b_setval('$ty_case', C0) ).
+
+%% THE ADPOSITION `of' (since 1.88.0) begins only an adjective's phrase
+%% (`proud of his son', Spanish `orgulloso de su hijo'): its rows are no
+%% phrase anywhere else, where a possessor says `of' ('$ty_of_ok', set
+%% before the phrase and taken as its words are read, so a phrase inside
+%% it is no `of' either).
+ty_pp_of(Prep) :-
+    (   Prep == of
+    ->  nb_current('$ty_of_ok', yes), b_setval('$ty_of_ok', no)
+    ;   b_setval('$ty_of_ok', no)
+    ).
+
+%% A TEXT'S ADJECTIVE PHRASES: '$ty_ap' on where the language has the row
+%% and the text an adjective's word and an adposition's (`$ty_adp'), with
+%% the adposition's right after an adjective's where the phrase stands
+%% after it.
+ty_ap_flag(L, Bases) :-
+    (   '$ty_apc'(L, Place),
+        nb_current('$ty_adp', f(Ps0)),
+        findall(W, ( ty_adposition(L, of, [W|_]), memberchk(W, Bases) ), Os),
+        append(Ps0, Os, Ps), Ps = [_|_],
+        (   Place == after
+        ->  append(_, [W, P|_], Bases), atom(W), memberchk(P, Ps),
+            once(ty_adjective(L, _, _, _, W))
+        ;   member(W, Bases), atom(W), once(ty_adjective(L, _, _, _, W))
+        )
+    ->  b_setval('$ty_ap', on)
+    ;   b_setval('$ty_ap', off)
+    ).
 
 %% After a noun before a noun, only another.
 ty_nmods(_, [], [], _, _) --> [].

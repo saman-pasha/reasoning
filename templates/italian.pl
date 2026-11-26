@@ -191,6 +191,9 @@ ty_adjunct(italian, end).
 ty_noun_adposition(italian, after).
 %% A noun before a noun (since 1.87.0): `giacche nere di pelle'.
 ty_noun_modifier(italian, after([di])).
+%% An adjective's adposition phrase after it (since 1.88.0).
+ty_adjective_complement(italian, after).
+ty_adposition(italian, of, [di]).
 ty_adposition(italian, in, [in]).
 ty_adposition(italian, on, [su]).
 ty_adposition(italian, with, [con]).

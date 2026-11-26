@@ -288,3 +288,13 @@ His father signed his report card.	past(sign(of(father, he), of(nn(report, card)
 He menaced the bank manager with a stick.	stick(a(stick)). past(with(menace(he, the(nn(bank, manager))), a(stick))).
 The patient is on life support.	on(the(patient), nn(life, support)).
 Wedding cake.	cake(nn(wedding, cake)). nn(wedding, nn(wedding, cake)).
+Something is wrong with the engine.	with(wrong(something), the(engine)).
+The book was full of errors.	error(a(pl(error))). past(of(full(the(book)), a(pl(error)))).
+The bartender was chummy with the regular customers.	past(with(chummy(the(bartender)), the(pl(regular(customer))))).
+The town is responsible for snow removal.	for(responsible(the(town)), nn(snow, removal)).
+He is superior to fear.	to(superior(he), fear).
+All men are equal before the law.	before(equal(X), the(law)) :- man(X).
+The room was abuzz over the latest scandal.	past(over(abuzz(the(room)), the(latest(scandal)))).
+He is alone in the field of microbiology.	in(alone(he), of(field, microbiology)).
+He was late for chapel.	past(for(late(he), chapel)).
+The theater is dark on Mondays.	on(dark(the(theater)), mondays).
