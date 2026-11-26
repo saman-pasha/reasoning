@@ -329,12 +329,41 @@ lg_distinct([U|Us], [U|Ds]) :-
     exclude(==(U), Us, Rest),
     lg_distinct(Rest, Ds).
 
-logic_from_ir(IR, utterance(Intent, Items)) :-
-    catch(lg_utterance(IR, Intent, Items0), lg_no(_), fail),
+logic_from_ir(IR0, utterance(Intent, Items)) :-
+    catch(( lg_active(IR0, IR), lg_utterance(IR, Intent, Items0) ), lg_no(_), fail),
     maplist(lg_number, Items0, Items).
 
-logic_why(IR, Why) :-
-    catch(( lg_utterance(IR, _, _) -> fail ; Why = shape(IR) ), lg_no(Why), true).
+logic_why(IR0, Why) :-
+    catch(( lg_active(IR0, IR), lg_utterance(IR, _, _) -> fail ; Why = shape(IR0) ), lg_no(Why), true).
+
+%% THE PASSIVE (since 1.98.0) is its active: clause(V, pass(T), P, S,
+%% none, Js) is clause(V, T, P, Agent, S, Js1), the agent the NP of the
+%% first adjunct pp(by, NP), wherever it stands, else someone the text
+%% does not name, pron(3, sg, zero), as a clause's with no subject (`The
+%% pass was fumbled.' is past(fumble(someone, the(pass))), `The house was
+%% built by the workers.' past(build(the(pl(worker)), the(house))), `He had
+%% been trained rigorously by the monks.' pluperfect(rigorously(train(
+%% the(pl(monk)), he)))). A passive's infinitive object is the patient's,
+%% as an object's infinitive is (`The auditor was required to produce his
+%% working papers.' is past(require(someone, to(produce(the(auditor),
+%% ...))))). A passive with another object (`He was given a book.') has
+%% none.
+lg_active(X, X) :- var(X), !.
+lg_active(clause(V, T, P, S, O), C) :- nonvar(T), T = pass(_), !,
+    lg_active(clause(V, T, P, S, O, []), C).
+lg_active(clause(V, pass(T), P, S, O0, Js0), C) :- !,
+    lg_active(S, S1),
+    (   O0 == none -> O = S1
+    ;   nonvar(O0), ( O0 = inf(V2, O2) -> Js3 = [] ; O0 = inf(V2, O2, Js3) )
+    ->  lg_active(O2, O3), maplist(lg_active, Js3, Js4),
+        ( Js4 == [] -> O = clause(V2, infinitive, pos, S1, O3) ; O = clause(V2, infinitive, pos, S1, O3, Js4) )
+    ;   lg_no(passive(object))
+    ),
+    (   select(J, Js0, Js2), nonvar(J), J = pp(by, A0) -> true ; A0 = pron(3, sg, zero), Js2 = Js0 ),
+    lg_active(A0, A), maplist(lg_active, Js2, Js),
+    ( Js == [] -> C = clause(V, T, P, A, O) ; C = clause(V, T, P, A, O, Js) ).
+lg_active(X, Y) :- compound(X), !, X =.. [F|As], maplist(lg_active, As, Bs), Y =.. [F|Bs].
+lg_active(X, X).
 
 lg_no(Why) :- throw(lg_no(Why)).
 

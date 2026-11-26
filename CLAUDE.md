@@ -24,8 +24,8 @@ red) and lesson 01 pin the shape of the answer, deliberately not the number.
 The reasoning library translates ALL 8 000 sentences of `lexicon/prose.txt`
 from English into the IR, and ALL of that IR into Cocolog. Every step
 moves one of the two counts and reports both (`tools/logic/prose.pl`;
-STATUS.md keeps them): at 1.96.0 and 1.97.0, 4 295 into the IR, 4 111 of them into
-Cocolog (1.95.0: 4 243 and 4 063; 1.94.0: 4 218 and 4 040; 1.93.0: 4 167 and 3 990; 1.92.0: 4 129 and 3 954; 1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
+STATUS.md keeps them): at 1.98.0, 4 325 into the IR, 4 141 of them into
+Cocolog (1.96.0 and 1.97.0: 4 295 and 4 111; 1.95.0: 4 243 and 4 063; 1.94.0: 4 218 and 4 040; 1.93.0: 4 167 and 3 990; 1.92.0: 4 129 and 3 954; 1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
 count says so. **Measure what blocks the rest before choosing a step**:
 at 1.80.0 the words no table has looked like the gap, and 5 115 of the
 8 000 had none -- 2 130 of them a noun phrase alone, which one rule read.
@@ -790,6 +790,29 @@ possessor's test had bound, and 16 English readings were lost. An
 infinitive's clause is never split (`ty_verb_split`, `ty_split_kept`): a
 German verb second does not move it. `ty_missing/2` asks no infinitive of
 each number. Cost: 0.10 % (Persian) to 0.50 % (Italian) more inferences.
+
+**The passive since 1.98.0** is a clause in a tense pass(T)
+(clause(fumble, pass(past), pos, np(pass, ...), none)): its subject the
+verb's patient, its object none or, after a verb of
+`ty_object_infinitive/2`, an infinitive; its words a `ty_tense_form/5` row
+of pass(T) (English [was, participle], 22 rows; the check takes pass(T)
+of a tense value); an agent an adjunct pp(by, NP). **It is read after
+every other reading** (`ty_passive//2`, the last clause of `ty_sentence//2`
+and of `ty_statement//2`): `'$ty_pass'` is on only while its clause is read
+or written, and only then is a pass(T) pattern taken (`ty_imperative_ok/1`)
+or are its first words (`is`, `was`) a tense's first words
+(`ty_vfirst_make/1`). **A verb's patterns tried with the tense unbound are
+the active ones** (`ty_tense_pattern_now/6`, `'$ty_tact'/6`): through the
+first cut every `do not` read walked the 22 passive rows too, English's
+round trips 1.58 % dearer, now 0.21 %. A passive is tried only where a word
+ahead is one its participle follows (`ty_pass_ahead//1`, `'$ty_pword'/2`),
+asked there and after its IR, not of each text read: the writer reads each
+text back with its own IR. A copula's adjective with a `by` phrase whose
+word is a verb's participle is no reading (`ty_passive_ap/2`): the passive
+is. At level 2 the passive is its active (`lg_active/2`, at
+`logic_from_ir/2`): the agent the first pp(by, NP) wherever it stands,
+else pron(3, sg, zero), someone; Cocolog back into English is the active.
+No other template has a passive row yet.
 **The blank template copies the row descriptions of typology.pl's head**:
 a changed description is `typology_import(template)` again, or the
 `reproduced` section is red.

@@ -365,7 +365,11 @@ ty_purpose_bare(xx).
 %%                                     form(present, pl)]), and since 1.95.0
 %%                                     the infinitive's, read as a verb's
 %%                                     object (English [to, form(present,
-%%                                     pl)])
+%%                                     pl)]), and since 1.98.0 the
+%%                                     passive's, Tense pass(T) of a tense
+%%                                     T, its subject the verb's patient
+%%                                     (English pass(past) [was,
+%%                                     participle])
 %% ty_tense_form(xx, Tense, Number, Polarity, Pattern).
 %%   e.g. ty_tense_form(english, future, any, pos, [will, form(present, pl)]).
 

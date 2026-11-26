@@ -63,6 +63,7 @@ main :-
     infinitives,
     infinitive_places,
     infinitive_languages,
+    passive,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -447,6 +448,20 @@ infinitive_languages :-
     must('Spanish into Cocolog', C1, 'want(the(boy), to(see(the(boy), the(dog)))).\n'),
     logic_translate(cocolog, english, C1, E2),
     must('and into English', E2, 'The boy wants to see the dog.').
+
+%% 34. THE PASSIVE (1.98.0) is its active: the agent `by NP' its subject,
+%% else someone the text does not name, and an object's infinitive the
+%% patient's. Back into English it is the active.
+passive :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'The pass was fumbled.', C1),
+    must('the passive into Cocolog', C1, 'past(fumble(someone, the(pass))).\n'),
+    logic_translate(english, cocolog, 'The house was built by the workers.', C2),
+    must('with its agent', C2, 'past(build(the(pl(worker)), the(house))).\n'),
+    logic_translate(cocolog, english, C2, E2),
+    must('and into English', E2, 'The workers built the house.'),
+    logic_translate(english, cocolog, 'He was asked to leave the room.', C3),
+    must('an object\'s infinitive', C3, 'past(ask(someone, to(leave(he, the(room))))).\n').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

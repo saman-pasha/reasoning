@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2438,6 +2438,35 @@ infinitive_languages :-
     ( ty_verb(spanish, want, infinitive, sg, pos, W6) -> true ; W6 = none ),
     check('Spanish: the import\'s infinitive of a verb', W6, [querer]).
 
+%% 1.98.0: the passive. A clause in a tense pass(T), its subject the verb's
+%% patient, its words a ty_tense_form/5 row of pass(T) (English [was,
+%% participle]); an agent is an adjunct pp(by, NP). Read after every other
+%% reading: `He was killed.' is the copula and the adjective first. After a
+%% verb whose object may take an infinitive, the infinitive is the object.
+%% No other template has a passive's row yet.
+passive :-
+    section('the passive'),
+    forall(member(T-Want, [
+               'The pass was fumbled.'-[clause(fumble, pass(past), pos, np(pass, sg, def, []), none)],
+               'The passes were fumbled.'-[clause(fumble, pass(past), pos, np(pass, pl, def, []), none)],
+               'The game was interrupted by a brief shower.'-[clause(interrupt, pass(past), pos, np(game, sg, def, []), none, [pp(by, np(shower, sg, indef, [brief]))])],
+               'He was killed.'-[copula(past, pos, pron(3, sg, m), adj([killed])), clause(kill, pass(past), pos, pron(3, sg, m), none)],
+               'He was asked to leave the room.'-[clause(ask, pass(past), pos, pron(3, sg, m), inf(leave, np(room, sg, def, []))),
+                                                  clause(ask, pass(past), pos, pron(3, sg, m), none, [inf(leave, np(room, sg, def, []))])] ]),
+           ( findall(R, typology_read(english, T, R), Rs),
+             atomic_list_concat(['English: ', T], Label),
+             check(Label, Rs, Want) )),
+    forall(member(T2-P2-W2, [present-pos-'The pass is fumbled.', past-neg-'The pass was not fumbled.',
+                             future-pos-'The pass will be fumbled.', perfect-neg-'The pass has not been fumbled.',
+                             pluperfect-pos-'The pass had been fumbled.', conditional-pos-'The pass would be fumbled.']),
+           ( ( typology_write(english, clause(fumble, pass(T2), P2, np(pass, sg, def, []), none), W3) -> true ; W3 = none ),
+             atomic_list_concat(['written in the tense ', T2, ', ', P2], Label2),
+             check(Label2, W3, W2) )),
+    forall(member(L4, [spanish, persian]),
+           ( ( typology_write(L4, clause(fumble, pass(past), pos, np(pass, sg, def, []), none), W4) -> true ; W4 = none ),
+             atomic_list_concat([L4, ' has no passive row yet'], Label4),
+             check(Label4, W4, none) )).
+
 %% 1.64.0: the bare singular noun. np(M, sg, mass, []): a singular noun
 %% with no article, read after the other readings, written with none;
 %% Persian, whose definite noun has none either, writes it as def.
@@ -2773,8 +2802,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 4295 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 4 295 sentences read at 1.96.0 are read', R1, yes),
+    ( K >= 4325 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 4 325 sentences read at 1.98.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

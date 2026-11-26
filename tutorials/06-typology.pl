@@ -158,6 +158,7 @@ main :-
     infinitives,
     infinitive_places,
     infinitive_languages,
+    passive,
     format("~ndone~n", []).
 
 
@@ -1085,6 +1086,21 @@ infinitive_languages :-
     must('German, zu and the verb last', W3, 'Der Junge versucht den Hund zu sehen.'),
     typology_write(italian, clause(sleep, present, pos, np(boy, sg, def, []), none, [inf(see, np(dog, sg, def, []))]), W4),
     must('Italian, of purpose', W4, 'Il ragazzo dorme per vedere il cane.').
+
+%% 67. THE PASSIVE (1.98.0): a clause in a tense pass(T), its subject the
+%% verb's patient and its words a ty_tense_form/5 row of pass(T) (English
+%% [was, participle], [will, be, participle], [has, been, participle]); an
+%% agent `by NP' is an adjunct. It is read after every other reading, so
+%% `He was killed.' stays the copula and the adjective first.
+passive :-
+    typology_read(english, 'The pass was fumbled.', IR1),
+    must('the passive', IR1, clause(fumble, pass(past), pos, np(pass, sg, def, []), none)),
+    typology_read(english, 'The game was interrupted by a brief shower.', IR2),
+    must('with its agent', IR2, clause(interrupt, pass(past), pos, np(game, sg, def, []), none, [pp(by, np(shower, sg, indef, [brief]))])),
+    typology_write(english, clause(fumble, pass(perfect), neg, np(pass, pl, def, []), none), W3),
+    must('written in another tense', W3, 'The passes have not been fumbled.'),
+    typology_read(english, 'He was killed.', IR4),
+    must('the copula first', IR4, copula(past, pos, pron(3, sg, m), adj([killed]))).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

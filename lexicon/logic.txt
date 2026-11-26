@@ -368,3 +368,13 @@ She was quick to point out my errors.	past(quick(she, to(point_out(she, of(pl(er
 He made a motion to adjourn.	motion(a(to(motion, adjourn(someone)))). past(make(he, a(to(motion, adjourn(someone))))).
 A flaw caused the crystal to shatter.	flaw(a(flaw)). past(cause(a(flaw), to(shatter(the(crystal))))).
 A foursquare refusal to yield.	refusal(a(to(foursquare(refusal), yield(someone)))). foursquare(a(to(foursquare(refusal), yield(someone)))).
+The pass was fumbled.	past(fumble(someone, the(pass))).
+The game was interrupted by a brief shower.	shower(a(brief(shower))). brief(a(brief(shower))). past(interrupt(a(brief(shower)), the(game))).
+She was afflicted by the death of her parents.	past(afflict(of(death, of(pl(parent), she)), she)).
+He had been trained rigorously by the monks.	pluperfect(rigorously(train(the(pl(monk)), he))).
+The auditor was required to produce his working papers.	past(require(someone, to(produce(the(auditor), of(working(papers), he))))).
+He was licensed to carry a weapon.	past(license(someone, to(carry(he, a(weapon))))).
+The saint's bones were enshrined in the cathedral.	past(in(enshrine(someone, of(pl(bone), the(saint))), the(cathedral))).
+The thief's identification was followed quickly by his arrest.	past(quickly(follow(of(arrest, he), of(identification, the(thief))))).
+Their appeal was denied in the superior court.	past(in(deny(someone, of(appeal, they)), the(superior(court)))).
+The shoes are priced reasonably.	reasonably(price(someone, the(pl(shoe)))).

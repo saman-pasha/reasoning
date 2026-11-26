@@ -158,7 +158,11 @@
 %%                                     form(present, pl)]), and since 1.95.0
 %%                                     the infinitive's, read as a verb's
 %%                                     object (English [to, form(present,
-%%                                     pl)])
+%%                                     pl)]), and since 1.98.0 the
+%%                                     passive's, Tense pass(T) of a tense
+%%                                     T, its subject the verb's patient
+%%                                     (English pass(past) [was,
+%%                                     participle])
 %%     ty_definite_like(L, Def, As)    the language writes the definiteness
 %%                                     Def as As, and never reads Def
 %%                                     (since 1.64.0: Persian writes mass
@@ -1794,7 +1798,7 @@ ty_missing(L, bad(ty_wh_tonic(L, M, Ws))) :-
     \+ ( is_list(Ws), Ws \== [], ty_wh_word(L, M, _) ).
 ty_missing(L, bad(ty_tense_form(L, T, N, P, Ws))) :-
     ty_tense_form(L, T, N, P, Ws),
-    \+ ( ty_values(tense, Ts), memberchk(T, Ts),
+    \+ ( ty_values(tense, Ts), ( nonvar(T), T = pass(T0) -> memberchk(T0, Ts) ; memberchk(T, Ts) ),
          ( N == any ; ty_values(agreement, As), memberchk(N, As) ),
          memberchk(P, [pos, neg]), is_list(Ws), Ws \== [] ).
 ty_missing(L, bad(ty_negative_article_roles(L, Rs))) :-
@@ -3700,6 +3704,9 @@ ty_sentence(L, C) -->
       \+ ty_unsaid_participle(L, C),
       \+ ty_said_subject(Rd, L, S0, S) }.
 
+%% A passive (since 1.98.0, ty_passive//2), after every other reading.
+ty_sentence(L, C) --> ty_passive(L, C).
+
 %% Reading (the words given before the rule began, not made by it), no
 %% clause with no subject where the words are a clause with one: `Dogs
 %% sleep.' is no clause of someone who dogs sleep.
@@ -3798,6 +3805,7 @@ ty_has_imperative(X) :-
 ty_imperative_ok(T) :-
     (   T == imperative -> nb_current('$ty_command', c(_))
     ;   T == infinitive -> nb_current('$ty_command', i(_))
+    ;   T = pass(_) -> nb_current('$ty_pass', on)
     ;   true
     ).
 
@@ -3862,6 +3870,50 @@ ty_ir_features(_, _, [_, _, _, _]).
 
 ty_statement(L, C) --> ty_clause(L, C), { ty_wh_count(C, yes_no) }.
 ty_statement(L, C) --> ty_copula_clause(L, C), { ty_wh_count(C, yes_no) }.
+ty_statement(L, C) --> ty_passive(L, C).
+
+%% THE PASSIVE (since 1.98.0): a clause in a tense pass(T), its subject the
+%% verb's patient and its object none, the verb's words a ty_tense_form/5
+%% row of pass(T) (English pass(past) [was, participle]: `The pass was
+%% fumbled.' is clause(fumble, pass(past), pos, np(pass, sg, def, []),
+%% none)); an agent `by NP' is an adjunct, pp(by, NP), which level 2 makes
+%% the active's subject. After a verb whose object may take an infinitive
+%% (ty_object_infinitive/2) the infinitive is the object, the patient's
+%% own (`The auditor was required to produce his working papers.' is
+%% clause(require, pass(past), pos, np(auditor, ...), inf(produce, ...))),
+%% read before an infinitive of purpose. '$ty_pass' is on while the
+%% clause is read or written, the only time a pass(T) pattern is tried
+%% (ty_imperative_ok/1, and its first words, `was', `is', are a tense's
+%% first words only then: ty_vfirst_make/1), so a passive is read after
+%% every other reading of a sentence and of a statement: `He was killed.'
+%% stays the copula and the adjective `killed'.
+ty_passive(L, C) -->
+    { C = clause(V, pass(_), _, _, O, _), '$ty_pass_made'(L) },
+    ty_pass_ahead(L),
+    { ( O = inf(_, _, _) ; O = none ),
+      ( nb_current('$ty_pass', Old) -> true ; Old = off ),
+      b_setval('$ty_pass', on) },
+    ty_clause(L, C),
+    { b_setval('$ty_pass', Old), ty_wh_count(C, yes_no),
+      ( O == none -> true ; ty_object_infinitive(L, V) ) }.
+
+%% Reading, a passive is tried only where a word ahead is one its
+%% participle follows ('$ty_pword'/2: English `was', `been'). Asked here,
+%% not of every text read (ty_poss_flag/2): the writer reads each text back
+%% with its IR, which a passive's reading of another IR never is.
+ty_pass_ahead(L, S0, S0) :-
+    (   var(S0) -> true
+    ;   member(X, S0), atom(X), '$ty_pword'(X, L) -> true
+    ).
+
+%% No copula's adjective with an agent's phrase where the adjective is a
+%% verb's participle, in a language with a passive (since 1.98.0): `She
+%% was afflicted by the death of her parents.' is the passive of afflict,
+%% not afflicted(she) by the death.
+ty_passive_ap(L, adj(As)) :-
+    '$ty_pass_made'(L),
+    member(A, As), nonvar(A), A = ap(M, X), nonvar(X), X = pp(by, _),
+    ty_adjective(L, M, _, _, W), ty_participle_word(L, _, W), !.
 
 ty_coord_clauses(IR, K, C1, C2) :-
     (   var(IR) -> member(K, [and, or, but]), IR =.. [K, [C1, C2]]
@@ -4522,6 +4574,13 @@ ty_object(L, V, clause(V2, infinitive, pos, NP, O2, Js2), oinf) -->
     ty_role(L, o, NP),
     ty_infinitive_ahead(L),
     ty_infinitive(L, V2, O2, Js2).
+%% A passive's infinitive object (since 1.98.0, ty_passive//2), of a verb
+%% whose object may take one.
+ty_object(L, V, inf(V2, O2, Js2), pinf) -->
+    { nb_current('$ty_pass', on), nonvar(V), ty_object_infinitive(L, V),
+      \+ ty_verb_of(L, infinitive, V) },
+    ty_infinitive_ahead(L),
+    ty_infinitive(L, V2, O2, Js2).
 
 %% The words a verb says before its infinitive object (since 1.97.0:
 %% Spanish `Empieza a correr.'), none where ty_infinitive_after/3 says none.
@@ -4706,9 +4765,11 @@ ty_inf_not_noun(L, V, O, Js) :-
 %% culprit started to run.' is the infinitive, inf(run, none), not
 %% pp(to, np(run, sg, mass, [])) (since 1.96.0), but after a verb
 %% ty_verb_list(L, to_noun, Base) names it is either (`The ball came to
-%% rest.').
+%% rest.'). A passive with no object takes one (since 1.98.0: `A program
+%% is needed to create new jobs.').
 ty_purpose_ok(L, V, none, Js) :- !,
     (   Js == [] -> true
+    ;   nb_current('$ty_pass', on) -> true
     ;   \+ ( is_list(Js), ty_to_infinitive_item(L, V, Js), ty_verb_of(L, infinitive, V) )
     ).
 ty_purpose_ok(L, V, O, Js) :-
@@ -5479,7 +5540,8 @@ ty_copula_clause(L, C) -->
     ty_copula_parts(Order, L, C, Features, Rows),
     { Features = [_, N, _, G],
       ty_predicate_ok(Pred, Rows, G, N),
-      ty_kein_ok(L) }.
+      ty_kein_ok(L),
+      \+ ty_passive_ap(L, Pred) }.
 
 ty_copula_parts([], _, _, _, _) --> [].
 ty_copula_parts([P|Ps], L, C, F, R) --> ty_copula_part(P, L, C, F, R), ty_copula_parts(Ps, L, C, F, R).
@@ -5811,7 +5873,7 @@ ty_verb_plain(L, V, T, P, N, Words) :-
     ty_verb_row(L, V, T, N, P, Words).
 ty_verb_plain(L, V, T, P, N, Words) :-
     ty_tense_may(L, Words),
-    ty_tense_pattern(L, T, N0, P, Pattern, C),
+    ty_tense_pattern_now(L, T, N0, P, Pattern, C),
     ty_imperative_ok(T),
     ty_values(agreement, Ns), member(N, Ns), ty_fits(N0, N),
     ty_tense_words(Pattern, L, V, Words),
@@ -5832,6 +5894,17 @@ ty_tense_may(L, Words) :-
     (   '$ty_vfirst_made'(L), nonvar(Words), Words = [W|_], atom(W)
     ->  ( '$ty_tfirst'(W, L) -> true ; '$ty_tfirst'('$any', L) )
     ;   Words \== []
+    ).
+
+%% A pattern a clause may take now: with its tense unbound and no passive
+%% being read, of a language with a passive, an active one
+%% ('$ty_tact'/6, made with the verb tables: English `do not' read beside
+%% the 22 passive rows cost `The boys do not see the dogs.' 1 303
+%% inferences more, 1.98.0's first cut).
+ty_tense_pattern_now(L, T, N0, P, Pattern, C) :-
+    (   var(T), '$ty_pass_made'(L), \+ nb_current('$ty_pass', on)
+    ->  '$ty_tact'(L, T, N0, P, Pattern, C)
+    ;   ty_tense_pattern(L, T, N0, P, Pattern, C)
     ).
 
 ty_tense_pattern(L, T, N0, P, Pattern, none) :- ty_tense_form(L, T, N0, P, Pattern).
@@ -5971,6 +6044,16 @@ ty_verb_row(L, V, T, N, P, Words) :-
 %% word (English `to', German `zu'); a text with one may hold an infinitive
 %% (`$ty_pinf').
 :- dynamic('$ty_vinf'/2).
+%% A language with a passive's ty_tense_form/5 row (since 1.98.0), whose
+%% clauses ty_passive//2 tries.
+:- dynamic('$ty_pass_made'/1).
+%% The words a passive's participle follows in its patterns (English `is',
+%% `was', `be', `been'); a text with one ahead may hold a passive
+%% (ty_pass_ahead//1).
+:- dynamic('$ty_pword'/2).
+%% A language's active tense patterns, where it has a passive
+%% (ty_tense_pattern_now/6).
+:- dynamic('$ty_tact'/6).
 :- dynamic('$ty_particle'/2).
 
 %% Each particle of L's phrasal rows, once.
@@ -5997,6 +6080,9 @@ ty_vfirst_make(L) :-
     retractall('$ty_particle'(_, L)),
     retractall('$ty_inf_made'(L)),
     retractall('$ty_vinf'(_, L)),
+    retractall('$ty_pass_made'(L)),
+    retractall('$ty_pword'(_, L)),
+    retractall('$ty_tact'(L, _, _, _, _, _)),
     ( ty_phrasal(L, _, _, _, _) -> assertz('$ty_phrasal_made'(L)) ; true ),
     forall(ty_particle_of(L, Pt), assertz('$ty_particle'(Pt, L))),
     forall(ty_verb(L, M, T, N, P, Fs),
@@ -6010,12 +6096,24 @@ ty_vfirst_make(L) :-
            assertz('$ty_vinf'(I, L))),
     ( ty_infinitive_mark(L, _) -> assertz('$ty_inf_made'(L)) ; true ),
     findall(F, ( ty_tense_pattern(L, T, _, _, [I|_], _),
-                 (   atom(I) -> F = I
+                 (   atom(I), nonvar(T), T = pass(_) -> F = pass(I)
+                 ;   atom(I) -> F = I
                  ;   T == imperative -> F = '$imperative'
                  ;   F = '$any'
                  ) ), Fs0),
     sort(Fs0, Fs1),
-    forall(( member(F, Fs1), F \== '$imperative' ), assertz('$ty_tfirst'(F, L))),
+    forall(( member(F, Fs1), F \== '$imperative', F \= pass(_) ), assertz('$ty_tfirst'(F, L))),
+    forall(( member(pass(F), Fs1), \+ memberchk(F, Fs1) ),
+           assertz(('$ty_tfirst'(F, L) :- nb_current('$ty_pass', on)))),
+    ( memberchk(pass(_), Fs1) -> assertz('$ty_pass_made'(L)) ; true ),
+    forall(( ty_tense_form(L, T2, _, _, Ws2), nonvar(T2), T2 = pass(_),
+             append(_, [W2, participle|_], Ws2), atom(W2), \+ '$ty_pword'(W2, L) ),
+           assertz('$ty_pword'(W2, L))),
+    (   '$ty_pass_made'(L)
+    ->  forall(( ty_tense_pattern(L, T3, N3, P3, Pt3, C3), \+ ( nonvar(T3), T3 = pass(_) ) ),
+               assertz('$ty_tact'(L, T3, N3, P3, Pt3, C3)))
+    ;   true
+    ),
     (   memberchk('$imperative', Fs1), \+ memberchk('$any', Fs1)
     ->  assertz(('$ty_tfirst'('$any', L) :- nb_current('$ty_command', c(_))))
     ;   true

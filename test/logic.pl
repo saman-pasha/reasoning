@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -263,11 +263,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 339),
-    ( R >= 325 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 325 right', VR, ok),
-    ( K >= 331 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 331 kept', VK, ok).
+    check('the second measure: its sentences', N, 349),
+    ( R >= 335 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 335 right', VR, ok),
+    ( K >= 341 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 341 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -971,6 +971,23 @@ infinitive_languages :-
              ( logic_translate(L, cocolog, T, C) -> true ; C = none ),
              one_line([L, ' into Cocolog: ', T], Label),
              check(Label, C, Want) )).
+
+%% 1.98.0: the passive is its active, the agent `by NP' its subject, else
+%% someone; an object's infinitive is the patient's. Back into English it
+%% is the active.
+passive :-
+    section('the passive'),
+    typology_load(english),
+    forall(member(T-Want, [
+               'The pass was fumbled.'-'past(fumble(someone, the(pass))).\n',
+               'The house was built by the workers.'-'past(build(the(pl(worker)), the(house))).\n',
+               'He had been trained rigorously by the monks.'-'pluperfect(rigorously(train(the(pl(monk)), he))).\n',
+               'He was asked to leave the room.'-'past(ask(someone, to(leave(he, the(room))))).\n' ]),
+           ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
+             one_line(['into Cocolog: ', T], Label),
+             check(Label, C, Want) )),
+    ( logic_translate(cocolog, english, 'past(build(the(pl(worker)), the(house))).\n', E) -> true ; E = none ),
+    check('back into English, the active', E, 'The workers built the house.').
 
 %% Each clause of a Cocolog text asserted.
 assert_text(P) :-

@@ -520,6 +520,31 @@ ty_tense_form(english, imperative, pl, neg, [do, not, form(present, pl)]).
 %% An infinitive (since 1.95.0) is `to' and the present's plural form, a
 %% verb's object (`He tried to catch her eye.').
 ty_tense_form(english, infinitive, any, pos, [to, form(present, pl)]).
+%% The passive (since 1.98.0): a form of `be' and the participle, its
+%% subject the verb's patient (`The pass was fumbled.', `The house will be
+%% built.', `It has not been paid.').
+ty_tense_form(english, pass(present), sg, pos, [is, participle]).
+ty_tense_form(english, pass(present), pl, pos, [are, participle]).
+ty_tense_form(english, pass(present), sg(1), pos, [am, participle]).
+ty_tense_form(english, pass(present), sg, neg, [is, not, participle]).
+ty_tense_form(english, pass(present), pl, neg, [are, not, participle]).
+ty_tense_form(english, pass(present), sg(1), neg, [am, not, participle]).
+ty_tense_form(english, pass(past), sg, pos, [was, participle]).
+ty_tense_form(english, pass(past), pl, pos, [were, participle]).
+ty_tense_form(english, pass(past), sg(1), pos, [was, participle]).
+ty_tense_form(english, pass(past), sg, neg, [was, not, participle]).
+ty_tense_form(english, pass(past), pl, neg, [were, not, participle]).
+ty_tense_form(english, pass(past), sg(1), neg, [was, not, participle]).
+ty_tense_form(english, pass(future), any, pos, [will, be, participle]).
+ty_tense_form(english, pass(future), any, neg, [will, not, be, participle]).
+ty_tense_form(english, pass(perfect), sg, pos, [has, been, participle]).
+ty_tense_form(english, pass(perfect), pl, pos, [have, been, participle]).
+ty_tense_form(english, pass(perfect), sg, neg, [has, not, been, participle]).
+ty_tense_form(english, pass(perfect), pl, neg, [have, not, been, participle]).
+ty_tense_form(english, pass(pluperfect), any, pos, [had, been, participle]).
+ty_tense_form(english, pass(pluperfect), any, neg, [had, not, been, participle]).
+ty_tense_form(english, pass(conditional), any, pos, [would, be, participle]).
+ty_tense_form(english, pass(conditional), any, neg, [would, not, be, participle]).
 
 %% `a' is `an' before a vowel sound: spelled with a vowel, but not `uni',
 %% `use', `eu', `one'; and before the silent h of `hour' and `honest'.
