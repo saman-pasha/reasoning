@@ -163,22 +163,38 @@ logic_readings(L, Text, Us) :-
 %% name or a definite noun phrase as it is, an indefinite one its
 %% individual (a(dog)). The utterance is the sentences' items in order, a
 %% question if every sentence is one.
+%% Since 1.89.0 the sentences are read in turn, each with the logic forms
+%% of the ones before it: a pronoun of an indefinite noun phrase whose
+%% sentence was a rule is generic too (`A dog barks. It sleeps.' is two
+%% rules of every dog; through 1.88.0 the second was a fact of one dog),
+%% else the individual that sentence named; and a new individual of a
+%% sentence is named apart from an earlier one of the same name
+%% (lg_new_inds/4: `Something is red. Something is blue.' is
+%% red(something), blue(something_2); `John sees a dog. Mary sees a dog.'
+%% a(dog) and a(dog, 2); through 1.88.0 one thing and one dog). A
+%% referent's constant is marked ref(C) until its sentence's new
+%% individuals are named.
 lg_text_read(L, Ss, utterance(Intent, Items)) :-
     typology_read_text(L, Ss, IRs),
-    lg_resolve(IRs, [], IRs1),
-    maplist(logic_from_ir, IRs1, Us),
+    lg_text_items(IRs, [], [], Us),
     findall(I, member(utterance(I, _), Us), Is),
     ( forall(member(I, Is), I == question) -> Intent = question ; Intent = assertion ),
     findall(It, ( member(utterance(_, Its), Us), member(It, Its) ), Items).
 
-lg_resolve([], _, []).
-lg_resolve([IR|IRs], Prev, [IR1|Out]) :-
+lg_text_items([], _, _, []).
+lg_text_items([IR|IRs], Prev, Seen0, [U|Us]) :-
     lg_subst_refs(IR, Prev, IR1),
-    lg_resolve(IRs, [IR|Prev], Out).
+    logic_from_ir(IR1, U0),
+    lg_new_inds(U0, Seen0, Seen, U),
+    lg_text_items(IRs, [IR-U|Prev], Seen, Us).
 
+%% A sentence with no subject (pron(3, sg, zero)) in a text is the text's
+%% one someone, never a new one: the text goes on about whom it has not
+%% named.
 lg_subst_refs(T, _, T) :- var(T), !.
 lg_subst_refs(pron(_, _, K), Prev, NP) :- nonvar(K), K = ref(X), !,
     ( lg_antecedent(X, Prev, NP) -> true ; NP = pron(3, _, unresolved) ).
+lg_subst_refs(pron(3, N, K), _, '$const'(ref(someone))) :- K == zero, N == sg, !.
 lg_subst_refs(T, Prev, T1) :- compound(T), !,
     T =.. [F|As], maplist(lg_subst_arg(Prev), As, As1), T1 =.. [F|As1].
 lg_subst_refs(T, _, T).
@@ -188,12 +204,101 @@ lg_subst_arg(Prev, A, A1) :- lg_subst_refs(A, Prev, A1).
 %% The noun phrase a pronoun's referent X names, in the nearest earlier
 %% sentence that has one.
 lg_antecedent(name(W), Prev, name(W)) :- !,
-    member(IR, Prev), lg_np_in(IR, name(W1)), W1 == W, !.
+    member(IR-_, Prev), lg_np_in(IR, name(W1)), W1 == W, !.
 lg_antecedent(M, Prev, NP) :-
-    member(IR, Prev), lg_np_in(IR, np(M1, Num, D, As)), M1 == M, !,
+    member(IR-U, Prev), lg_np_in(IR, np(M1, Num, D, As)), M1 == M, !,
     (   memberchk(D, [def, mass]) -> NP = np(M, Num, D, As)
-    ;   D == indef -> catch(lg_np_term(M, Num, As, T), lg_no(_), fail), NP = '$const'(a(T))
+    ;   D == indef, lg_generic_for(U, M) -> ( Num == pl -> Q = all ; Q = every ), NP = np(M, Num, Q, As)
+    ;   D == indef, lg_ind_of(U, M, C) -> NP = '$const'(ref(C))
+    ;   D == indef -> catch(lg_np_term(M, Num, As, T), lg_no(_), fail), NP = '$const'(ref(a(T)))
     ).
+
+%% A sentence's logic form is a rule of the noun M's things.
+lg_generic_for(utterance(_, Items), M) :-
+    member(rule(_, B), Items),
+    ( B = and(Bs) -> member(C, Bs) ; C = B ),
+    C = pred(M1, [var(_)]), M1 == M, !.
+
+%% The individual of the noun M a sentence's logic form names.
+lg_ind_of(utterance(_, Items), M, C) :-
+    member(fact(pred(M1, [const(C)])), Items), M1 == M,
+    lg_ind_shape(C, S), lg_shape_head(S, M2), M2 == M, !.
+
+%% AN INDIVIDUAL'S TERM: a(Shape), or a(Shape, K) for the K-th of that
+%% shape in a text (since 1.89.0).
+lg_ind_shape(C, S) :- compound(C), ( C = a(S) -> true ; C = a(S, K), integer(K) ).
+
+%% something_2's word and number, read back (since 1.89.0).
+lg_numbered(C, W) :-
+    atomic_list_concat([W, N], '_', C), atom_number(N, K), integer(K), K > 1.
+
+%% A SENTENCE'S NEW INDIVIDUALS in a text (since 1.89.0): every a(Shape),
+%% something and someone its logic form names, but a referent's (ref(C)),
+%% each named apart where an earlier sentence named one so: the sentence's
+%% K-th of a name (a(Shape) the first, a(Shape, K) since its object took a
+%% name its subject had) is the text's C+K-th, C the earlier sentences'
+%% count (a(Shape, C+K), something_C+K), and the referents' marks taken
+%% off. Seen and the names are Name-K pairs, Name a shape or something or
+%% someone.
+lg_new_inds(utterance(I, Items0), Seen0, Seen, utterance(I, Items)) :-
+    lg_inds_named(Items0, [], Ns),
+    lg_ind_seen(Ns, Seen0, Seen0, Seen),
+    lg_ind_rename(Items0, Seen0, Items).
+
+lg_inds_named(T, Ns, Ns) :- var(T), !.
+lg_inds_named(ref(_), Ns, Ns) :- !.
+lg_inds_named(T, Ns0, Ns) :-
+    atom(T), !,
+    ( memberchk(T, [something, someone]) -> lg_ind_add(T-1, Ns0, Ns) ; Ns = Ns0 ).
+lg_inds_named(T, Ns0, Ns) :-
+    compound(T), !,
+    T =.. [_|As], foldl(lg_inds_named, As, Ns0, Ns1),
+    (   T = a(S) -> lg_ind_add(S-1, Ns1, Ns)
+    ;   T = a(S, K), integer(K) -> lg_ind_add(S-K, Ns1, Ns)
+    ;   Ns = Ns1
+    ).
+lg_inds_named(_, Ns, Ns).
+
+lg_ind_add(S-K, Ns0, Ns) :- ( member(S1-K1, Ns0), S1 == S, K1 == K -> Ns = Ns0 ; Ns = [S-K|Ns0] ).
+
+%% A name's count in the text after a sentence: its count before it (in
+%% Seen0) and the highest K the sentence gives it.
+lg_ind_seen([], _, Seen, Seen).
+lg_ind_seen([S-K|Ns], Seen0, SeenA, Seen) :-
+    lg_ind_count(S, Seen0, C), N is C + K,
+    (   select(S1-N0, SeenA, Rest), S1 == S
+    ->  N1 is max(N0, N), SeenB = [S-N1|Rest]
+    ;   SeenB = [S-N|SeenA]
+    ),
+    lg_ind_seen(Ns, Seen0, SeenB, Seen).
+
+lg_ind_count(S, Seen, C) :- ( member(S1-C0, Seen), S1 == S -> C = C0 ; C = 0 ).
+
+lg_ind_named_as(S, K, Seen, T) :-
+    lg_ind_count(S, Seen, C), N is C + K,
+    (   atom(S), memberchk(S, [something, someone])
+    ->  ( N =:= 1 -> T = S ; atomic_list_concat([S, '_', N], T) )
+    ;   ( N =:= 1 -> T = a(S) ; T = a(S, N) )
+    ).
+
+lg_ind_rename(T, _, T) :- var(T), !.
+lg_ind_rename(ref(C), _, C) :- !.
+lg_ind_rename(T, Seen, T1) :-
+    atom(T), !,
+    ( memberchk(T, [something, someone]) -> lg_ind_named_as(T, 1, Seen, T1) ; T1 = T ).
+lg_ind_rename(T, Seen, T1) :-
+    compound(T), !,
+    T =.. [F|As], maplist([A, A1]>>lg_ind_rename(A, Seen, A1), As, As1), T2 =.. [F|As1],
+    (   T = a(S) -> T2 = a(S2), lg_ind_named_as(S, 1, Seen, T3), lg_ind_inner(T3, S2, T1)
+    ;   T = a(S, K), integer(K) -> T2 = a(S2, _), lg_ind_named_as(S, K, Seen, T3), lg_ind_inner(T3, S2, T1)
+    ;   T1 = T2
+    ).
+lg_ind_rename(T, _, T).
+
+%% The text's name of an individual, its shape's inner names the text's
+%% too.
+lg_ind_inner(a(_), S2, a(S2)).
+lg_ind_inner(a(_, N), S2, a(S2, N)).
 
 %% The noun phrases of an IR; an indefinite possessed is no referent of its
 %% own (its individual is a(of(...)), lg_possessed/4).
@@ -383,7 +488,8 @@ lg_rule(A, _, [], fact(A)) :- !.
 lg_rule(A, _, Conds, rule(A, B)) :- lg_body(Conds, B).
 
 lg_facts(Conds, Atoms, Items) :-
-    lg_obj_facts(Atoms, Plain, OFacts),
+    lg_inds_named(Conds, [], Used),
+    lg_obj_facts(Atoms, Used, Plain, OFacts),
     append([Conds, OFacts, Plain], As),
     findall(fact(A), member(A, As), Items).
 
@@ -518,12 +624,24 @@ lg_split_objs([], [], []).
 lg_split_objs([O|As], Ps, [O|Os]) :- O = '$obj'(_, _, _, _), !, lg_split_objs(As, Ps, Os).
 lg_split_objs([A|As], [A|Ps], Os) :- lg_split_objs(As, Ps, Os).
 
-lg_obj_facts([], [], []).
-lg_obj_facts(['$obj'(S, V, R, Cs)|As], Ps, Fs) :- !,
-    R = a(S), V = const(R),
-    lg_obj_facts(As, Ps, Fs0),
+%% An object's individual is named apart from the ones its sentence named
+%% before it (since 1.89.0: `A dog sees a dog.' is see(a(dog), a(dog, 2));
+%% through 1.88.0 a dog that sees itself). Used holds Shape-K pairs.
+lg_obj_facts([], _, [], []).
+lg_obj_facts(['$obj'(S, V, R, Cs)|As], Used, Ps, Fs) :- !,
+    (   var(R)
+    ->  lg_ind_free(S, Used, 1, K),
+        ( K =:= 1 -> R = a(S) ; R = a(S, K) ),
+        Used1 = [S-K|Used]
+    ;   Used1 = Used
+    ),
+    V = const(R),
+    lg_obj_facts(As, Used1, Ps, Fs0),
     append(Cs, Fs0, Fs).
-lg_obj_facts([A|As], [A|Ps], Fs) :- lg_obj_facts(As, Ps, Fs).
+lg_obj_facts([A|As], Used, [A|Ps], Fs) :- lg_obj_facts(As, Used, Ps, Fs).
+
+lg_ind_free(S, Used, K0, K) :-
+    (   member(S1-K0, Used), S1 =@= S -> K1 is K0 + 1, lg_ind_free(S, Used, K1, K) ; K = K0 ).
 
 lg_obj_conds([], [], []).
 lg_obj_conds(['$obj'(_, V, R, Cs)|As], Ps, Fs) :- !,
@@ -970,6 +1088,7 @@ lg_det_term(T) :-
     compound(T), ground(T),
     (   T = the(X) -> ( lg_np_shape(X) -> true ; lg_pp_shape(X) )
     ;   T = a(X) -> ( X = of(Y, P) -> lg_np_shape(Y), lg_poss_term(P) ; lg_np_shape(X) -> true ; lg_pp_shape(X) )
+    ;   T = a(X, K) -> integer(K), K > 1, lg_det_term(a(X))
     ;   T = of(X, P) -> lg_np_shape(X), \+ lg_ap_atom(X), lg_poss_term(P)
     ).
 
@@ -1143,24 +1262,25 @@ lg_phrase_group([F|Is], G, Rest) :-
     F = fact(pred(_, [const(C)])), nonvar(C),
     lg_term_facts(C, G),
     append(G, Rest, [F|Is]),
-    \+ ( C = a(_), member(I, Rest), lg_names_in(C, I) ).
+    \+ ( lg_ind_shape(C, _), member(I, Rest), lg_names_in(C, I) ).
 
 %% The facts a noun phrase alone says of its term (as lg_phrase/2 makes
 %% them): its noun's, its adjectives' (the first the outermost), and an
 %% indefinite possessor's own after them.
 lg_term_facts(a(S), Fs) :- !, lg_shape_facts(S, const(a(S)), Fs).
+lg_term_facts(a(S, K), Fs) :- integer(K), !, lg_shape_facts(S, const(a(S, K)), Fs).
 lg_term_facts(the(T), Fs) :- !, lg_shape_facts(T, const(the(T)), Fs).
 lg_term_facts(of(T, P), Fs) :- !, lg_shape_facts(of(T, P), const(of(T, P)), Fs).
 lg_term_facts(T, Fs) :- lg_shape_facts(T, const(T), Fs).
 
 lg_shape_facts(of(T, P), K, Fs) :- !,
     lg_np_facts(T, K, Fs0),
-    (   nonvar(P), P = a(_) -> lg_term_facts(P, Fs1) ; Fs1 = [] ),
+    (   nonvar(P), lg_ind_shape(P, _) -> lg_term_facts(P, Fs1) ; Fs1 = [] ),
     append(Fs0, Fs1, Fs).
 lg_shape_facts(S, K, Fs) :- lg_pp_term(S), !,
     S =.. [_, T, X],
     lg_shape_facts(T, K, Fs0),
-    (   nonvar(X), X = a(_) -> lg_term_facts(X, Fs1) ; Fs1 = [] ),
+    (   nonvar(X), lg_ind_shape(X, _) -> lg_term_facts(X, Fs1) ; Fs1 = [] ),
     append(Fs0, Fs1, Fs).
 lg_shape_facts(T, K, Fs) :- lg_np_facts(T, K, Fs).
 
@@ -1178,13 +1298,13 @@ lg_np_facts(T, K, [fact(pred(N, [K]))|AFs]) :-
 lg_term_individuals(C, Cs) :- lg_term_inds(C, Cs, []).
 
 lg_term_inds(X, Cs, Cs) :- \+ compound(X), !.
-lg_term_inds(X, [X|Cs0], Cs) :- X = a(_), !, X =.. [_|As], lg_term_inds_list(As, Cs0, Cs).
+lg_term_inds(X, [X|Cs0], Cs) :- lg_ind_shape(X, _), !, X =.. [_|As], lg_term_inds_list(As, Cs0, Cs).
 lg_term_inds(X, Cs0, Cs) :- X =.. [_|As], lg_term_inds_list(As, Cs0, Cs).
 
 lg_term_inds_list([], Cs, Cs).
 lg_term_inds_list([A|As], Cs0, Cs) :- lg_term_inds(A, Cs0, Cs1), lg_term_inds_list(As, Cs1, Cs).
 
-lg_individual_fact(fact(pred(N, [const(C)])), N, C) :- nonvar(C), C = a(S), lg_shape_head(S, N1), N1 == N.
+lg_individual_fact(fact(pred(N, [const(C)])), N, C) :- nonvar(C), lg_ind_shape(C, S), lg_shape_head(S, N1), N1 == N.
 
 %% The noun an individual's shape is of: book of pl(book) and of
 %% of(large(book), a(pl(stamp))).
@@ -1230,9 +1350,23 @@ lg_say(L, Group, S, How) :-
     ;   lg_general(Group, S), How = general
     ).
 
+%% A sentence is read alone, so a text's numbered individual (a(dog, 2),
+%% something_2) reads back as its sentence numbers it: the two are compared
+%% with no numbers (since 1.89.0).
 lg_reads_back(L, S, Group) :-
     catch(logic_readings(L, S, Us), _, fail),
-    member(utterance(_, Is), Us), Is == Group, !.
+    lg_unnumbered(Group, Group1),
+    member(utterance(_, Is), Us), lg_unnumbered(Is, Is1), Is1 == Group1, !.
+
+lg_unnumbered(T, T) :- var(T), !.
+lg_unnumbered(T, B) :-
+    atom(T), !,
+    ( lg_numbered(T, B0), memberchk(B0, [something, someone]) -> B = B0 ; B = T ).
+lg_unnumbered(T, T1) :-
+    compound(T), !,
+    T =.. [F|As], maplist(lg_unnumbered, As, As1), T2 =.. [F|As1],
+    ( T2 = a(S, K), integer(K) -> T1 = a(S) ; T1 = T2 ).
+lg_unnumbered(T, T).
 
 %% A group's level-1 IRs, the likeliest first: a noun phrase alone first
 %% where the group is its facts (`The past year.', not `The past year is
@@ -1525,12 +1659,14 @@ lg_const_np(_, Cs, C, NP) :- member(sub(C1, NP0), Cs), C1 == C, !, NP = NP0.
 lg_const_np(_, _, C, P) :- atom(C), lg_pron_np(C, P).
 lg_const_np(_, _, something, qp(some, thing)).
 lg_const_np(_, _, someone, qp(some, person)).
+lg_const_np(_, _, C, qp(some, K)) :- atom(C), lg_numbered(C, W), memberchk(W-K, [something-thing, someone-person]), !.
 lg_const_np(L, Cs, the(T), np_pp(np(N, Num, def, As), pp(P, XNP))) :-
     lg_pp_term(T), T =.. [P, T0, X], typology_meaning(L, adposition, P), !,
     lg_np_of_term(L, T0, N, Num, As),
     lg_const_np(L, Cs, X, XNP).
 lg_const_np(L, _, the(T), np(N, Num, def, As)) :- !, lg_np_of_term(L, T, N, Num, As).
 lg_const_np(L, Cs, a(S), NP) :- !, memberchk(a(S), Cs), lg_indef_np(L, Cs, S, NP).
+lg_const_np(L, Cs, a(S, K), NP) :- integer(K), !, memberchk(a(S, K), Cs), lg_indef_np(L, Cs, S, NP).
 lg_const_np(L, Cs, of(T, P), of(PNP, np(N, Num, def, As))) :- !,
     lg_np_of_term(L, T, N, Num, As),
     lg_const_np(L, Cs, P, PNP).

@@ -634,6 +634,26 @@ phrase (vi.txt: `in(live(john), paris)` is `John lives in Paris.`, where
 passive or a progressive whose participle has an adjective's row (`They
 were driven from the marketplace.`), as level 1 read such a participle
 without a phrase before.
+**A text's individuals are each its own since 1.89.0** (the 2026-11
+review's Priority 1, meaning before coverage). `lg_text_read/3` reads the
+sentences in turn (`lg_text_items/4`), each with the IRs and the logic
+forms before it: a pronoun of an indefinite noun phrase is `every`'s (or
+`all`'s) where that sentence was a rule (`lg_generic_for/2`: `A dog
+barks. It sleeps.` is two rules; through 1.88.0 the second was a fact of
+`a(dog)`), else the individual that sentence named (`lg_ind_of/3`), and
+its constant is marked `ref(C)` until its own sentence is named.
+`lg_new_inds/4` then names a sentence's new individuals after the
+earlier sentences' count of each name: `something`, `something_2`;
+`a(dog)`, `a(dog, 2)` (`lg_ind_shape/2` is either: **a new reader of an
+individual's term asks it**, never `a(_)`). Inside a sentence an
+object's individual is named apart from its subject's (`lg_obj_facts/4`,
+`lg_ind_free/4`: `A dog sees a dog.` is `see(a(dog), a(dog, 2))`). A
+sentence with no subject is the text's one `someone` (`ref(someone)`).
+Back from Cocolog a written sentence is read alone, so the read-back
+check compares with no numbers (`lg_unnumbered/2`). No sentence of the
+8 000 changed: none says one indefinite name twice. "Something ... it"
+in an if clause stays a rule (the controlled reading, Attempto's), and
+`meanings_apart` in test/logic.pl holds the two readings apart.
 **The blank template copies the row descriptions of typology.pl's head**:
 a changed description is `typology_import(template)` again, or the
 `reproduced` section is red.

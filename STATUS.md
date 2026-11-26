@@ -74,6 +74,25 @@ arguments `library(tensor_expr)`'s 17 mode comments name are all
 inferred as the comments say, with the comments unread. 1.85.0 adds no
 sentence to either count of the goal.
 
+**Meaning before coverage** (1.89.0, after the review of 2026-11: "make
+the pipeline semantically trustworthy"): a count translated is not a
+count right, so a step may correct meanings and add no sentence. 1.89.0
+does: a text's individuals are each its own (`Something is red.
+Something is blue.` is red(something), blue(something_2); `John sees a
+dog. Mary sees a dog.` two dogs, a(dog) and a(dog, 2); `A dog sees a
+dog.` see(a(dog), a(dog, 2)); through 1.88.0 one thing, one dog, and a
+dog that sees itself), and a pronoun after a generic sentence is generic
+too (`A dog barks. It sleeps.` two rules of every dog; through 1.88.0 a
+rule and a fact of one dog). No sentence of the 8 000 changed (none says
+one indefinite name twice); test/logic.pl's `meanings_apart` holds twelve
+texts that look alike and mean apart. The review's quantifier example is
+right as it stands: `Something is mortal.` is a fact of one thing,
+mortal(something), and `Something is mortal if it is human.` a rule, as
+the controlled reading (Attempto's) makes `something ... it` in an if
+clause any thing. Still open: negation, `no` and `this` at level 2 (8,
+10 and 19 sentences of the reasons below), and the Cocolog reader keeps
+no variable names or places yet (TRANSLATOR-PLAN.md).
+
 ## The first goal: English, all of it
 
 **The goal** (the owner, 2026-11-23): English as one complete template,
@@ -250,6 +269,7 @@ meaning in another form (`the bed's edge` for `the edge of the bed`).
 | 1.86.0 | 3 644 | 3 644 (3 327) | 3 508 (43.9 %) |
 | 1.87.0 | 3 849 | 3 849 (3 518) | 3 704 (46.3 %) |
 | 1.88.0 | 3 952 | 3 952 (3 602) | 3 789 (47.4 %) |
+| 1.89.0 | 3 952 | 3 952 (3 602) | 3 789 (47.4 %) |
 
 | version | translated | of 8 000 | the first reasons of the others read into level 1 |
 |---|---|---|---|

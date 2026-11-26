@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -811,6 +811,40 @@ adjective_phrases :-
           utterance(assertion, [fact(modified(pp(in, const(the(house))), pred(big, [const(the(dog))])))])),
     ( logic_translate(cocolog, english, 'past(of(big(dog), he)).', E3) -> true ; E3 = none ),
     check('of(big(dog), he) is still his big dog', E3, 'His big dog is past.').
+
+%% 1.89.0: sentences alike in their words and apart in their meanings
+%% stay apart. A rule of every thing and a fact of one thing are not the
+%% same; in an if clause `something ... it' is any thing (the controlled
+%% reading, Attempto's), and alone one thing. A text's individuals are each
+%% its own (something_2, a(dog, 2)), an object's apart from its subject's,
+%% and a pronoun after a generic sentence is generic too. A sentence with
+%% no subject in a text is the text's one someone.
+meanings_apart :-
+    section('sentences alike and apart in meaning'),
+    forall(member(T-Want-Back, [
+               'Every human is mortal.'-'mortal(A) :-\n    human(A).\n'-'Every human is mortal.',
+               'Something is mortal.'-'mortal(something).\n'-'Something is mortal.',
+               'Something is mortal if it is human.'-'mortal(A) :-\n    human(A).\n'-'Every human is mortal.',
+               'A human was mortal.'-'human(a(human)).\npast(mortal(a(human))).\n'-'A human was mortal.',
+               'Something is red. Something is blue.'-'red(something).\nblue(something_2).\n'-'Something is red. Something is blue.',
+               'Someone sleeps. Someone sings.'-'is_sleep(someone).\nsing(someone_2).\n'-'Someone sleeps. Someone sings.',
+               'John sees a dog. Mary sees a dog.'-'dog(a(dog)).\nsee(john, a(dog)).\ndog(a(dog, 2)).\nsee(mary, a(dog, 2)).\n'-'John sees a dog. Mary sees a dog.',
+               'A dog sees a dog.'-'dog(a(dog)).\ndog(a(dog, 2)).\nsee(a(dog), a(dog, 2)).\n'-'A dog sees a dog.',
+               'A dog barked. A dog slept. It sang.'-'dog(a(dog)).\npast(bark(a(dog))).\ndog(a(dog, 2)).\npast(is_sleep(a(dog, 2))).\npast(sing(a(dog, 2))).\n'-'A dog barked. A dog slept. It sang.',
+               'A dog barks. It sleeps.'-'bark(A) :-\n    dog(A).\nis_sleep(A) :-\n    dog(A).\n'-'Every dog barks. Every dog sleeps.',
+               'A dog barked. It slept.'-'dog(a(dog)).\npast(bark(a(dog))).\npast(is_sleep(a(dog))).\n'-'A dog barked. It slept.',
+               'Took the joke well. Took the money.'-'past(well(take(someone, the(joke)))).\npast(take(someone, the(money))).\n'-'Someone took the joke well. Someone took the money.' ]),
+           ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
+             ( C \== none, logic_translate(cocolog, english, C, E) -> true ; E = none ),
+             one_line(['into Cocolog and back: ', T], Label),
+             check(Label, C-E, Want-Back) )),
+    logic_readings(english, 'A human is mortal.', Us2),
+    length(Us2, N2),
+    check('a generic subject has a rule and an individual: two readings', N2, 2),
+    once(logic_readings(english, 'Every human is mortal.', [U3|_])),
+    once(logic_readings(english, 'Something is mortal.', [U4|_])),
+    ( U3 == U4 -> R5 = same ; R5 = apart ),
+    check('every human and something: two meanings', R5, apart).
 
 %% Each clause of a Cocolog text asserted.
 assert_text(P) :-

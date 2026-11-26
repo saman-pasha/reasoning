@@ -94,8 +94,9 @@ the phrase, as a clause's adjunct is: `The dog is big in the house.` is
 `fact(modified(pp(in, const(the(house))), pred(big,
 [const(the(dog))])))`.
 
-A variable's name in a source is a source detail and is kept apart
-(`read_term/3`'s `variable_names`). Two IRs are the same when they are
+A variable's name in a source is a source detail and is to be kept apart
+(`read_term/3`'s `variable_names`; not yet: the reader numbers a variable
+by its first use, below). Two IRs are the same when they are
 variants (`=@=/2`).
 
 What level 2 makes from level 1, for the first milestone:
@@ -141,9 +142,15 @@ tagger, a model).
   builtin that is not ISO takes it over. The template keeps a list of
   the reserved names and gives each a name of its own (`is_number/1`),
   or the writer refuses it with a diagnostic.
-- **The reader** is Cocolog's own: `read_term/3` with `variable_names`,
-  `term_position` and `subterm_positions`, so the source places come with
-  each clause. No new tokenizer.
+- **The reader** is Cocolog's own reading of a term, and no new
+  tokenizer: the text cut into clauses at a full stop before layout,
+  outside a quoted atom or string and a comment, each clause read by
+  `term_string/2` (logic.pl's `cocolog_read/2`). Not yet done (the 2026-11
+  review's Priority 4): `read_term/3` with `variable_names`,
+  `term_position` and `subterm_positions`, so that a variable keeps its
+  source name and a diagnostic names the clause's line. Until then a
+  variable is numbered by its first use and a refusal names the clause's
+  text.
 - **The writer** makes a term from level 2 and writes it with
   `portray_clause/1`, which puts the operators and the brackets.
 

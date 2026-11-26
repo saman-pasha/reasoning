@@ -54,6 +54,7 @@ main :-
     unsaid_subjects,
     noun_modifiers,
     adjective_phrases,
+    text_individuals,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -359,6 +360,15 @@ adjective_phrases :-
     must('in the past', C1, 'past(of(aware(he), the(danger))).\n'),
     logic_translate(cocolog, english, C1, E2),
     must('back into English', E2, 'He was aware of the danger.').
+
+%% 25. A TEXT'S INDIVIDUALS are each its own: a second `something' or `a
+%% dog' is another one (something_2, a(dog, 2)), and a pronoun after a
+%% generic sentence is generic too.
+text_individuals :-
+    logic_translate(english, cocolog, 'Something is red. Something is blue.', C1),
+    must('two things', C1, 'red(something).\nblue(something_2).\n'),
+    logic_translate(english, cocolog, 'A dog barks. It sleeps.', C2),
+    must('every dog, twice', C2, 'bark(A) :-\n    dog(A).\nis_sleep(A) :-\n    dog(A).\n').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
