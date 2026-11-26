@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2270,6 +2270,27 @@ capital_adjectives :-
     check('a word small elsewhere has none: polish is a verb', P, none),
     typology_check(english, M6), check('English: its rows are ones the check takes', M6, []).
 
+%% 1.93.0: A BARE NOUN AFTER A POSSESSOR'S WORD may be one whose word is an
+%% adjective's too (`evil', `quality', `air'), in a pass after the plain
+%% one: a sentence with a plain reading keeps it, and a predicate's
+%% adjective stays an adjective.
+of_bare_nouns :-
+    section('a bare noun after of'),
+    forall(member(T-Want, [
+               'The incarnation of evil.'-phrase(of(np(evil, sg, mass, []), np(incarnation, sg, def, []))),
+               'A man of quality.'-phrase(of(np(quality, sg, mass, []), np(man, sg, indef, []))),
+               'He felt a stream of air.'-clause(feel, past, pos, pron(3, sg, m), of(np(air, sg, mass, []), np(stream, sg, indef, []))),
+               'A room of smiling faces.'-phrase(of(np(face, pl, indef, [smiling]), np(room, sg, indef, []))),
+               'The big dog is red.'-copula(present, pos, np(dog, sg, def, [big]), adj([red])) ]),
+           ( ( typology_read(english, T, R) -> true ; R = none ),
+             atomic_list_concat(['English: ', T, ', the first reading'], Label),
+             check(Label, R, Want) )),
+    IR2 = phrase(of(np(evil, sg, mass, []), np(incarnation, sg, def, []))),
+    forall(member(L2-Want2, [english-'The incarnation of evil.', spanish-'La encarnación de mal.', italian-'L\'incarnazione di male.']),
+           ( ( typology_write(L2, IR2, W2) -> true ; W2 = none ),
+             atomic_list_concat([L2, ': ', Want2], Label2),
+             check(Label2, W2, Want2) )).
+
 %% 1.64.0: the bare singular noun. np(M, sg, mass, []): a singular noun
 %% with no article, read after the other readings, written with none;
 %% Persian, whose definite noun has none either, writes it as def.
@@ -2605,8 +2626,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 4129 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 4 129 sentences read at 1.92.0 are read', R1, yes),
+    ( K >= 4167 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 4 167 sentences read at 1.93.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

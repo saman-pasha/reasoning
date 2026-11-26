@@ -58,6 +58,7 @@ main :-
     graded_adjectives,
     adjectives_after_noun,
     capital_adjectives,
+    of_bare_nouns,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -397,6 +398,14 @@ capital_adjectives :-
     must('the small atom', C1, 'capital(the(guyanese(capital))).\nguyanese(the(guyanese(capital))).\n'),
     logic_translate(cocolog, english, C1, E2),
     must('back into English, the capital', E2, 'The Guyanese capital.').
+
+%% 29. A BARE NOUN AFTER `of' is a constant of its own, inside the
+%% possessed's term.
+of_bare_nouns :-
+    logic_translate(english, cocolog, 'He felt a stream of air.', C1),
+    must('the air a constant', C1, 'stream(a(of(stream, air))).\npast(feel(he, a(of(stream, air)))).\n'),
+    logic_translate(cocolog, english, C1, E2),
+    must('back into English', E2, 'He felt a stream of air.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

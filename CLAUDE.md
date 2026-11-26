@@ -24,8 +24,8 @@ red) and lesson 01 pin the shape of the answer, deliberately not the number.
 The reasoning library translates ALL 8 000 sentences of `lexicon/prose.txt`
 from English into the IR, and ALL of that IR into Cocolog. Every step
 moves one of the two counts and reports both (`tools/logic/prose.pl`;
-STATUS.md keeps them): at 1.92.0, 4 129 into the IR, 3 954 of them into
-Cocolog (1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
+STATUS.md keeps them): at 1.93.0, 4 167 into the IR, 3 990 of them into
+Cocolog (1.92.0: 4 129 and 3 954; 1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
 count says so. **Measure what blocks the rest before choosing a step**:
 at 1.80.0 the words no table has looked like the gap, and 5 115 of the
 8 000 had none -- 2 130 of them a noun phrase alone, which one rule read.
@@ -718,6 +718,15 @@ into DIR, and at 1.91.0 it gave the five files byte for byte. A row lowers
 its word everywhere, so `typology_read/4` reads the words again, with an
 adjective's capital word as written (`ty_surface_kept/2`), where they read
 nothing lowered: `He speaks French after a fashion.` keeps the name.
+**A bare noun after a possessor's word since 1.93.0** (`The incarnation
+of evil.`) may be one whose word is an adjective's too: `ty_mass_ok/2`
+asks `'$ty_mass_adj'`, which `ty_poss_part//10` sets around the
+possessor alone where the language has possessor's words (`of`, `de`),
+in its own pass (`'$ty_massp'`, the second of `ty_nn_passes/3`'s four).
+**A relaxation of a word class goes in a pass of its own**, as 1.87.0's
+nouns and 1.91.0's phrases do: in the plain pass the relaxed noun let a
+subject end before a verb (`A room of smiling faces.` a clause), and the
+plain reading, found later in the same pass, lost.
 **The blank template copies the row descriptions of typology.pl's head**:
 a changed description is `typology_import(template)` again, or the
 `reproduced` section is red.

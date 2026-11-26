@@ -1952,15 +1952,26 @@ ty_read_bases(L, Surface, Topics, Mood, IR0, C) :-
 %% an adjective's phrase ('$ty_ap'): `a special kind of paint' keeps its
 %% adjective and its noun, never the noun special and kind of paint, and
 %% `a diet high in protein' is the diet's phrase, never a noun diet high.
+%% A BARE NOUN AFTER A POSSESSOR'S WORD whose word is an adjective's too
+%% (since 1.93.0: `The incarnation of evil.') has the first pass after the
+%% plain one ('$ty_massp' on, where the text has such a word), and the
+%% later passes keep it: in the plain pass `A room of smiling faces.' was a
+%% clause, smiling a noun and faces its verb.
 ty_nn_passes(L, Bases, Goal) :-
-    (   b_setval('$ty_nn', off), b_setval('$ty_apnp', off), phrase(Goal, Bases)
+    (   b_setval('$ty_nn', off), b_setval('$ty_apnp', off), b_setval('$ty_massp', off), phrase(Goal, Bases)
+    *-> true
+    ;   ty_massp_ahead(L, Bases),
+        b_setval('$ty_massp', on), phrase(Goal, Bases)
     *-> true
     ;   nb_current('$ty_ap', on), '$ty_apn'(L, _),
-        b_setval('$ty_apnp', on), phrase(Goal, Bases)
+        b_setval('$ty_massp', on), b_setval('$ty_apnp', on), phrase(Goal, Bases)
     *-> true
     ;   ty_nn_ahead(L, Bases),
-        b_setval('$ty_nn', on), b_setval('$ty_apnp', on), phrase(Goal, Bases)
+        b_setval('$ty_massp', on), b_setval('$ty_nn', on), b_setval('$ty_apnp', on), phrase(Goal, Bases)
     ).
+
+ty_massp_ahead(L, Bases) :-
+    once(( ty_possessive(L, _, [P|_], _), memberchk(P, Bases) )).
 
 ty_nn_ahead(L, Bases) :-
     '$ty_nmod'(L, P),
@@ -2007,6 +2018,7 @@ typology_write(L, IR, Text, Topics) :-
     b_setval('$ty_nn', on),
     b_setval('$ty_ap', on),
     b_setval('$ty_apnp', off),
+    b_setval('$ty_massp', on),
     b_setval('$ty_av', on),
     ty_parse_reset(L),
     phrase(Goal, Tokens0),
@@ -2066,6 +2078,7 @@ ty_reads_as(Mood, L, IR0, Tokens, Topics) :-
            b_setval('$ty_nn', on),
            b_setval('$ty_ap', on),
            b_setval('$ty_apnp', off),
+           b_setval('$ty_massp', on),
            b_setval('$ty_av', on),
            ty_parse_reset(L),
            b_setval('$ty_rel_open', f([])),
@@ -4855,9 +4868,11 @@ ty_poss_part(h, Ps, L, _, NP, F, _, art(Art, C0), Outer, _) -->
       b_setval('$ty_case', C0) },
     ty_np(L, NP, F, Next).
 ty_poss_part(p, _, _, _, _, _, PWs, _, _, _) --> ty_tokens(PWs).
-ty_poss_part(g, Ps, L, G, _, _, _, _, Outer, Depth) -->
-    { ty_poss_next(Ps, h, Outer, Next), ty_role_case(L, g) },
-    ty_possessor(L, G, Next, Depth).
+ty_poss_part(g, Ps, L, G, _, _, PWs, _, Outer, Depth) -->
+    { ty_poss_next(Ps, h, Outer, Next), ty_role_case(L, g),
+      ( PWs \== [], nb_current('$ty_massp', on) -> b_setval('$ty_mass_adj', yes) ; true ) },
+    ty_possessor(L, G, Next, Depth),
+    { b_setval('$ty_mass_adj', no) }.
 
 %% The class a part's last word links to: the next part's, where that part
 %% is the one named; the phrase's own Next for its last part.
@@ -6801,11 +6816,15 @@ ty_det_word(L, Def, GN, W) :-
 %% its word is no adjective (`small', `mortal') and no other noun's plural
 %% (`times'): no table says which nouns are mass nouns, and with any noun
 %% `Boy sees the dog.' read and `vexed and troubled times' was a singular.
+%% AFTER A POSSESSOR'S WORD (since 1.93.0: `of', `de', `di'), where no
+%% adjective stands alone, its word may be an adjective's too ('$ty_mass_adj',
+%% set around the possessor alone): `The incarnation of evil.', `A man of
+%% quality.', `A pocket of air.'.
 ty_mass_ok(L, M) :-
     nonvar(M),
     once(ty_noun(L, M, _, A, Sg, _)),
     \+ memberchk(A, [person, animate]),
-    \+ ty_word_class(L, adjective, Sg),
+    ( nb_current('$ty_mass_adj', yes) -> true ; \+ ty_word_class(L, adjective, Sg) ),
     \+ ( ty_noun(L, M2, _, _, _, Sg), M2 \== M ).
 
 %% The definiteness values an article word has: its rows', and indef for a

@@ -328,3 +328,13 @@ The Hindu faith.	faith(the(hindu(faith))). hindu(the(hindu(faith))).
 The Syrian government.	government(the(syrian(government))). syrian(the(syrian(government))).
 The Greek ethos.	ethos(the(greek(ethos))). greek(the(greek(ethos))).
 The American dream.	dream(the(american(dream))). american(the(american(dream))).
+The incarnation of evil.	incarnation(of(incarnation, evil)).
+A man of quality.	man(a(of(man, quality))).
+He felt a stream of air.	stream(a(of(stream, air))). past(feel(he, a(of(stream, air)))).
+Great affairs of state.	affair(a(of(pl(great(affair)), state))). great(a(of(pl(great(affair)), state))).
+A dress of traditional cut.	dress(a(of(dress, traditional(cut)))).
+He knew the rules of chess.	past(know(he, of(pl(rule), chess))).
+He stood in a pool of light.	pool(a(of(pool, light))). past(in(stand(he), a(of(pool, light)))).
+The conquest of space.	conquest(of(conquest, space)).
+The place had an aura of romance.	aura(a(of(aura, romance))). past(have(the(place), a(of(aura, romance)))).
+A person of hot blood.	person(a(of(person, hot(blood)))).

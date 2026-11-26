@@ -153,6 +153,7 @@ main :-
     graded_adjectives,
     adjectives_after_noun,
     capital_adjectives,
+    of_bare_nouns,
     format("~ndone~n", []).
 
 
@@ -1016,6 +1017,15 @@ capital_adjectives :-
     must('written with its capital', W2, 'The Guyanese capital.'),
     typology_write(spanish, IR1, W3),
     must('and in Spanish with none', W3, 'La capital guyanesa.').
+
+%% 62. A BARE NOUN AFTER A POSSESSOR'S WORD (1.93.0) may be one whose word
+%% is an adjective's too, where the words have no reading without it: no
+%% adjective stands alone after `of'.
+of_bare_nouns :-
+    typology_read(english, 'The incarnation of evil.', IR1),
+    must('read', IR1, phrase(of(np(evil, sg, mass, []), np(incarnation, sg, def, [])))),
+    typology_read(english, 'The big dog is red.', IR2),
+    must('a predicate adjective stays one', IR2, copula(present, pos, np(dog, sg, def, [big]), adj([red]))).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

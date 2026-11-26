@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -263,11 +263,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 299),
-    ( R >= 285 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 285 right', VR, ok),
-    ( K >= 291 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 291 kept', VK, ok).
+    check('the second measure: its sentences', N, 309),
+    ( R >= 295 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 295 right', VR, ok),
+    ( K >= 301 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 301 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -889,6 +889,19 @@ capital_adjectives :-
                'The Guyanese capital.'-'capital(the(guyanese(capital))).\nguyanese(the(guyanese(capital))).\n'-'The Guyanese capital.',
                'American cars are big.'-'big(A) :-\n    car(A),\n    american(A).\n'-'A car is big if it is American.',
                'He left an indelible mark on the American theater.'-'mark(a(indelible(mark))).\nindelible(a(indelible(mark))).\npast(on(leave(he, a(indelible(mark))), the(american(theater)))).\n'-'He left an indelible mark on the American theater.' ]),
+           ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
+             ( C \== none, logic_translate(cocolog, english, C, E) -> true ; E = none ),
+             one_line(['into Cocolog and back: ', T], Label),
+             check(Label, C-E, Want-Back) )).
+
+%% 1.93.0: A BARE NOUN AFTER `of' is a constant of its own, as any bare
+%% noun is, and the possessed's term holds it.
+of_bare_nouns :-
+    section('a bare noun after of'),
+    forall(member(T-Want-Back, [
+               'The incarnation of evil.'-'incarnation(of(incarnation, evil)).\n'-'The incarnation of evil.',
+               'He felt a stream of air.'-'stream(a(of(stream, air))).\npast(feel(he, a(of(stream, air)))).\n'-'He felt a stream of air.',
+               'A man of quality.'-'man(a(of(man, quality))).\n'-'A man of quality.' ]),
            ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
              ( C \== none, logic_translate(cocolog, english, C, E) -> true ; E = none ),
              one_line(['into Cocolog and back: ', T], Label),
