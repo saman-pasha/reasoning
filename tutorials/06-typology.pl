@@ -155,6 +155,7 @@ main :-
     capital_adjectives,
     of_bare_nouns,
     phrasal_verbs,
+    infinitives,
     format("~ndone~n", []).
 
 
@@ -1038,6 +1039,15 @@ phrasal_verbs :-
     must('written in any tense', W2, 'He will not throw out the ball.'),
     typology_read(english, 'The dog sat on the mat.', IR3),
     must('a preposition stays one', IR3, clause(sit, past, pos, np(dog, sg, def, []), none, [pp(on, np(mat, sg, def, []))])).
+
+%% 64. AN INFINITIVE AS A VERB'S OBJECT (1.95.0): `to' and the verb, its
+%% object and adjuncts, after a verb that may take one (WordNet's frame
+%% `Somebody ----s to INFINITIVE'); no words say its subject.
+infinitives :-
+    typology_read(english, 'He tried to catch her eye.', IR1),
+    must('read', IR1, clause(try, past, pos, pron(3, sg, m), inf(catch, of(pron(3, sg, f), np(eye, sg, def, []))))),
+    typology_write(english, clause(want, present, pos, np(boy, sg, def, []), inf(see, np(dog, sg, def, []))), W2),
+    must('written', W2, 'The boy wants to see the dog.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

@@ -348,3 +348,13 @@ The explosive devices went off.	past(go_off(the(pl(explosive(device))))).
 He had filled out the form completely.	pluperfect(completely(fill_out(he, the(form)))).
 Fold up the newspaper.	imperative(fold_up(you, the(newspaper))).
 He blends in with the crowd.	with(blend_in(he), the(crowd)).
+He tried to catch her eye.	past(try(he, to(catch(he, of(eye, she))))).
+He wants to reconstruct the original text.	want(he, to(reconstruct(he, the(original(text))))).
+He seems to have ample ready money.	seem(he, to(have(he, ample(ready(money))))).
+You have to face the music.	have(you, to(face(you, the(music)))).
+The mining company wants to excavate the hillside.	want(the(mining(company)), to(excavate(the(mining(company)), the(hillside)))).
+The company tried to project an altruistic image.	past(try(the(company), to(project(the(company), a(altruistic(image)))))).
+He tried to strangle his opponent.	past(try(he, to(strangle(he, of(opponent, he))))).
+Our plans began to take shape.	past(begin(of(pl(plan), we), to(take(of(pl(plan), we), shape)))).
+They had to consolidate their operations.	past(have(they, to(consolidate(they, of(operations, they))))).
+He tried to find out by indirection.	past(by(try(he, to(find_out(he))), indirection)).

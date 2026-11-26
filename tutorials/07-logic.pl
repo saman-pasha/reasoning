@@ -60,6 +60,7 @@ main :-
     capital_adjectives,
     of_bare_nouns,
     phrasal_verbs,
+    infinitives,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -414,6 +415,14 @@ phrasal_verbs :-
     must('the predicate throw_out', C1, 'past(throw_out(the(mayor), the(first(ball)))).\n'),
     logic_translate(cocolog, english, C1, E2),
     must('back into English, the particle after the verb', E2, 'The mayor threw out the first ball.').
+
+%% 31. AN INFINITIVE AS A VERB'S OBJECT is the term to(Atom), said of the
+%% clause's own subject.
+infinitives :-
+    logic_translate(english, cocolog, 'He tried to catch her eye.', C1),
+    must('the term to(...)', C1, 'past(try(he, to(catch(he, of(eye, she))))).\n'),
+    logic_translate(cocolog, english, C1, E2),
+    must('back into English', E2, 'He tried to catch her eye.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

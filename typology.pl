@@ -102,7 +102,10 @@
 %%                                     participle-seen])
 %%     ty_verb_list(L, Kind, Base)     the verbs of lexicon/Base.txt are of
 %%                                     Kind (no_object: one that may take
-%%                                     no object; since 1.86.0)
+%%                                     no object; since 1.86.0; infinitive:
+%%                                     one whose object may be an infinitive,
+%%                                     since 1.95.0), or Base is a list of
+%%                                     verbs (since 1.95.0)
 %%     ty_phrasal(L, Meaning, Verb, Particle, Object)
 %%                                     Meaning is Verb's words and Particle
 %%                                     after them, before the object (since
@@ -119,7 +122,10 @@
 %%                                     since 1.82.0 the imperative's rows
 %%                                     are the language's commands (English
 %%                                     [form(present, pl)], [do, not,
-%%                                     form(present, pl)])
+%%                                     form(present, pl)]), and since 1.95.0
+%%                                     the infinitive's, read as a verb's
+%%                                     object (English [to, form(present,
+%%                                     pl)])
 %%     ty_definite_like(L, Def, As)    the language writes the definiteness
 %%                                     Def as As, and never reads Def
 %%                                     (since 1.64.0: Persian writes mass
@@ -850,7 +856,7 @@ ty_level(pp, [p, x]).
 ty_level(rel, [h, m, c]).
 ty_level(poss, [h, p, g]).
 
-ty_values(tense, [present, past, future, perfect, imperfect, conditional, pluperfect, imperative]).
+ty_values(tense, [present, past, future, perfect, imperfect, conditional, pluperfect, imperative, infinitive]).
 %% The tenses every verb and every copula has; a template gives the others
 %% where it has them, or writes one as another (ty_tense_like/4);
 %% typology_check/2 asks the whole of a tense where a verb or the copula
@@ -2182,6 +2188,10 @@ ty_ir_map(out, clause(V, T, P, S, O, []), clause(V, T, P, S1, O1)) :- !,
 ty_ir_map(D, clause(V, T, P, S, O, Js), clause(V, T, P, S1, O1, Js1)) :- !,
     ty_ir_map(D, S, S1), ty_ir_map(D, O, O1),
     maplist(ty_ir_map(D), Js, Js1).
+ty_ir_map(in, inf(V, O), inf(V, O1, [])) :- !, ty_ir_map(in, O, O1).
+ty_ir_map(out, inf(V, O, []), inf(V, O1)) :- !, ty_ir_map(out, O, O1).
+ty_ir_map(D, inf(V, O, Js), inf(V, O1, Js1)) :- !,
+    ty_ir_map(D, O, O1), maplist(ty_ir_map(D), Js, Js1).
 ty_ir_map(D, question(C), question(C1)) :- !, ty_ir_map(D, C, C1).
 ty_ir_map(D, copula(T, P, S, Pred), copula(T, P, S1, Pred1)) :- !,
     ty_ir_map(D, S, S1), ty_ir_map(D, Pred, Pred1).
@@ -2367,6 +2377,12 @@ ty_ir_meaning(rel(NP, C), M) :-
 ty_ir_meaning(of(G, NP), M) :-
     (   ty_ir_meaning(G, M)
     ;   ty_ir_meaning(NP, M)
+    ).
+ty_ir_meaning(inf(V, O), M) :- ty_ir_meaning(inf(V, O, []), M).
+ty_ir_meaning(inf(V, O, Js), M) :-
+    (   atom(V), M = V
+    ;   ty_ir_meaning(O, M)
+    ;   member(J, Js), ty_ir_meaning(J, M)
     ).
 ty_ir_meaning(np_pp(NP, P), M) :-
     (   ty_ir_meaning(NP, M)
@@ -3652,8 +3668,9 @@ ty_unsaid_participle(L, clause(V, past, _, _, O, _)) :-
 %% where `Interested in sports.' is a participle).
 ty_verb_of(L, Kind, V) :-
     ty_verb_list(L, Kind, Base),
-    ty_lex_base_read(Base),
-    '$ty_lexw'(Base, V), !.
+    (   is_list(Base) -> memberchk(V, Base)
+    ;   ty_lex_base_read(Base), '$ty_lexw'(Base, V)
+    ), !.
 
 ty_lex_base_read(Base) :-
     (   '$ty_lexw_read'(Base) -> true
@@ -3697,7 +3714,7 @@ ty_command_adjective(L, clause(V, _, _, _, O, _)) :-
     ty_word_class(L, adjective, W).
 
 ty_command_subject(Pr) :-
-    nb_current('$ty_command', X), ( X = c(C) -> true ; X = z(C) ), arg(4, C, S), S == Pr.
+    nb_current('$ty_command', X), ( X = c(C) -> true ; X = z(C) -> true ; X = i(C) ), arg(4, C, S), S == Pr.
 
 %% Only a command's own clause is in the imperative (a clause inside it,
 %% `the goal that you see', is not). Asked of the command once it is read:
@@ -3713,7 +3730,10 @@ ty_has_imperative(X) :-
     ), !.
 
 ty_imperative_ok(T) :-
-    (   T == imperative -> nb_current('$ty_command', c(_)) ; true ).
+    (   T == imperative -> nb_current('$ty_command', c(_))
+    ;   T == infinitive -> nb_current('$ty_command', i(_))
+    ;   true
+    ).
 
 ty_subord_kind(K) :- ( var(K) -> ty_values(subordinator, Ks), member(K, Ks) ; true ).
 
@@ -4408,6 +4428,32 @@ ty_object(L, V, O, plain) -->
 ty_object(L, V, O, comp(Ws)) -->
     { ty_complement_words(L, V, Ws) },
     ty_comp_phrase(L, Ws, O).
+ty_object(L, V, inf(V2, O2, Js2), inf) -->
+    ty_infinitive_ahead(L),
+    { nonvar(V), ty_verb_of(L, infinitive, V) },
+    ty_infinitive(L, V2, O2, Js2).
+
+%% AN INFINITIVE AS A VERB'S OBJECT (since 1.95.0: `He tried to catch her
+%% eye.' is clause(try, past, pos, pron(3, sg, m), inf(catch, of(pron(3,
+%% sg, f), np(eye, sg, def, [])))): of a verb ty_verb_list(L, infinitive,
+%% Base) names (English: WordNet's `Somebody ----s to INFINITIVE',
+%% lexicon/vinf.txt, and the hand template's list), the clause of its
+%% verb, object and adjuncts in the infinitive (ty_tense_form/5: English
+%% [to, form(present, pl)]), whose subject no words say: `$ty_command'
+%% holds i(Clause) while it is read or written, as it holds a command's
+%% (ty_command_subject/1), and only that clause takes the tense
+%% (ty_imperative_ok/1). Tried after a noun phrase and a complement, where
+%% the next words are an infinitive's mark (ty_infinitive_mark/2). The
+%% infinitive's subject is the clause's own subject at level 2.
+ty_infinitive_ahead(L, S0, S0) :-
+    (   var(S0) -> true ; ty_infinitive_mark(L, Ws), append(Ws, _, S0) ).
+
+ty_infinitive(L, V, O, Js) -->
+    { C = clause(V, infinitive, pos, pron(3, sg, zero), O, Js),
+      ( nb_current('$ty_command', X0) -> true ; X0 = none ),
+      b_setval('$ty_command', i(C)) },
+    ty_clause(L, C),
+    { b_setval('$ty_command', X0) }.
 
 %% The head of an object whose relative clause stands after the verb
 %% (ty_extraposed//5): its noun phrase in the linked form a relative clause

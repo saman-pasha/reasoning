@@ -3,6 +3,7 @@
 %%     ./cocolog -s lexicon/build.pl -- --wordnet DIR [--out DIR] [--cap CLASS=N]...
 %%     ./cocolog -s lexicon/build.pl -- --capitals --wordnet DIR [--out DIR]
 %%     ./cocolog -s lexicon/build.pl -- --phrasal --wordnet DIR [--out DIR]
+%%     ./cocolog -s lexicon/build.pl -- --infinitive --wordnet DIR [--out DIR]
 %%     sh tools/lexicon/build.sh                         the same, from this repository's root
 %%
 %% THE LEXICON IS DATA, NOT SOURCE. library(reasoning/normalise) generates
@@ -83,6 +84,18 @@ main :-
     lx_write(Out, phrasal, Rows),
     length(Rows, N), lx_take(6, Rows, First),
     format("   phrasal ~w  ~w~nwrote ~w/phrasal.txt~n", [N, First, Out]).
+%% --infinitive writes vinf.txt alone (since reasoning 1.95.0): the verbs
+%% WordNet gives the frame `Somebody ----s to INFINITIVE', from data.verb.
+main :-
+    current_prolog_flag(argv, [_|Args0]),
+    select('--infinitive', Args0, Args), !,
+    lx_options(Args, '/usr/share/wordnet', WN, 'lexicon', Out, [], _),
+    lx_verb_frames(WN, Frames),
+    assoc_to_keys(Frames, Verbs),
+    findall(V, ( member(V, Verbs), lx_frames(V, Frames, Fs), memberchk(28, Fs) ), Vs),
+    lx_write(Out, vinf, Vs),
+    length(Vs, N), lx_take(6, Vs, First),
+    format("   vinf ~w  ~w~nwrote ~w/vinf.txt~n", [N, First, Out]).
 main :-
     current_prolog_flag(argv, [_|Args]),
     lx_options(Args, '/usr/share/wordnet', WN, 'lexicon', Out, [], Caps),

@@ -13,44 +13,44 @@ them, and the steps. Change it as the work moves.
 **The reasoning library translates all 8 000 sentences of
 `lexicon/prose.txt` from English into the IR, and all of that IR into
 Cocolog.** Every step is measured against it, both counts
-(`tools/logic/prose.pl`, the tables below). At 1.94.0: 4 218 of the 8 000
-read into the IR (52.7 %), 4 040 of those 4 218 into Cocolog (95.8 %);
-at 1.93.0 4 167 and 3 990, at 1.92.0 4 129 and 3 954, at 1.91.0 4 108 and 3 933, at 1.90.0 4 055 and 3 884, at 1.88.0 and 1.89.0 3 952 and 3 789, at 1.87.0 3 849 and 3 704, at 1.86.0 3 644 and 3 508, at 1.84.0 and 1.85.0 3 550 and 3 415, at 1.83.0 3 268 and 3 155, at 1.82.0 3 118 and 3 015, at 1.81.0 2 813 and 2 723, at 1.80.0 678 and 609. The two goals below are its two halves: the first
+(`tools/logic/prose.pl`, the tables below). At 1.95.0: 4 243 of the 8 000
+read into the IR (53.0 %), 4 063 of those 4 243 into Cocolog (95.8 %);
+at 1.94.0 4 218 and 4 040, at 1.93.0 4 167 and 3 990, at 1.92.0 4 129 and 3 954, at 1.91.0 4 108 and 3 933, at 1.90.0 4 055 and 3 884, at 1.88.0 and 1.89.0 3 952 and 3 789, at 1.87.0 3 849 and 3 704, at 1.86.0 3 644 and 3 508, at 1.84.0 and 1.85.0 3 550 and 3 415, at 1.83.0 3 268 and 3 155, at 1.82.0 3 118 and 3 015, at 1.81.0 2 813 and 2 723, at 1.80.0 678 and 609. The two goals below are its two halves: the first
 the IR, the second Cocolog.
 
-**What blocks the rest** (measured at 1.94.0, `typology_coverage/4`'s
-words and probes that change each sentence a known way): of the 3 782
-sentences not read, 2 317 have a word no table has (at 1.86.0 the
+**What blocks the rest** (measured at 1.95.0, `typology_coverage/4`'s
+words and probes that change each sentence a known way): of the 3 757
+sentences not read, 2 316 have a word no table has (at 1.86.0 the
 commonest were `as` 126, `there` 69, `up` 68, `than` 53, `could` 48,
 `more` 47, `very` 46, `one` 45, `two` 44, `many` 43; `very` is a word of
 every template since 1.90.0, `up` a particle since 1.94.0), and the other
-1 465 have every word in a table and a structure level 1 does not read.
-Of those 1 465, 643 read with one word taken out, and the word says what
+1 441 have every word in a table and a structure level 1 does not read.
+Of those 1 441, 634 read with one word taken out, and the word says what
 blocks. THE LARGEST SHAPE IS STILL A WORD THAT IS AN ADJECTIVE'S: taken
-out it reads 77, and 23 more with a word that is an adjective's or a
-noun's (98 at 1.93.0), of four shapes in the 100, counted by their words:
+out it reads 78, and 24 more with a word that is an adjective's or a
+noun's (100 at 1.94.0), of four shapes in the 102, counted by their words:
 an adjective that completes an object (15: `They considered colonialism
 immoral.`, `She made her wishes explicit.`), a copula verb other than
 `be` (15: `The situation became ugly.`, `He remained faithful to his
-wife.`; 21 of all the sentences not read are read with the verb made
-`was` or `is`), an adjective with a capital letter that WordNet has in
-small letters too, or that is a name (13: `A gorgeous Victorian gown.`),
-and `still`, `only` or `just` (11: `The building is still unfinished.`).
-The adverb reads 35, and 7 more with a word that is an adverb's or an
-adjective's: 16 of the 42 between the subject and a verb that ends in -ed
-or -s (`The detective carefully lifted some fingerprints from the
-table.`), the rest after the verb (`She was crying quietly.`) or before an
-adposition phrase (`She was madly in love.`). A word that is a verb's
-reads 39, a noun's or a verb's 32, a noun's 24. The other words of
-grammar (382): `the` 49, `to` 27 (before an infinitive: `Glad to help.`),
-`all` 22, `of` 19 (`His declaration of innocence.`, where `The
-declaration of innocence.` reads), the passive's words (45 with `is`,
-`are`, `was`, `were` or `be` taken out; of all the sentences not read, 268
-have a form of `be` before a participle, and 16 read with the participle
-made an adjective), and the particles left, `out` 7 and `up` 8 (26 and
-none at 1.93.0): a verb with no row of it (`The music surged up.`), a
-particle after the object (`They moved the meeting date up.`) or a
-passive (`Knocked out by doped wine.`). Through 1.80.0 the largest gap was the noun phrase alone,
+wife.`; 25 of all the sentences not read at 1.94.0 are read with the verb
+made `was` or `is`), an adjective with a capital letter that WordNet has
+in small letters too, or that is a name (13: `A gorgeous Victorian
+gown.`), and `still`, `only` or `just` (11: `The building is still
+unfinished.`; 40 of all the sentences not read at 1.94.0 are read with
+one of twelve such adverbs taken out). The adverb reads 36, and 8 more
+with a word that is an adverb's or an adjective's: 16 of the 44 between
+the subject and a verb that ends in -ed or -s (`The detective carefully
+lifted some fingerprints from the table.`), the rest after the verb (`She
+was crying quietly.`) or before an adposition phrase (`She was madly in
+love.`). A word that is a verb's reads 27, a noun's or a verb's 27, a
+noun's 24. The other words of grammar (389): `the` 50, `all` 24, `to` 24
+(27 at 1.94.0: the infinitive after a noun, `He made a bid to gain
+attention.`, or an adjective, `Glad to help.`), `of` 19 (`His
+declaration of innocence.`), the passive's words (47 with `is`, `are`,
+`was`, `were` or `be` taken out), and the particles left, `up` 8 and
+`out` 7: a verb with no row of it (`The music surged up.`), a particle
+after the object (`They moved the meeting date up.`) or a passive
+(`Knocked out by doped wine.`). Through 1.80.0 the largest gap was the noun phrase alone,
 2 130 sentences of the 4 451 with every word known (`A heavy coat.`),
 which 1.81.0 reads; then the commands, 397 read with `You` before them
 (`Construct a proof.`), which 1.82.0 reads; then the noun phrase with an
@@ -74,7 +74,10 @@ Guyanese capital.`), which 1.92.0 reads (21); then `of` before a noun
 with no article, 45 read with `of` taken out (`The incarnation of
 evil.`), which 1.93.0 reads (38); then a verb with a particle, 59 read
 with the particle taken out (`The mayor threw out the first ball.`, `Set
-up an experiment.`), which 1.94.0 reads (51).
+up an experiment.`), which 1.94.0 reads (51); then the infinitive, 167
+read with `to`, its verb and the words after them taken out, some 75 of
+them a verb's object (`He tried to catch her eye.`), which 1.95.0 reads
+(25: the rest have another block inside the infinitive).
 
 Cocolog into English goes two ways: the translator's round trip for the
 logic form (`logic_write/3`), and since 1.80.0 the explainer for a
@@ -265,6 +268,7 @@ group); test/logic.pl's `measure` holds the counts to the last row.
 | 1.92.0 | 285 | of 299: 95.3 % | 291 | an adjective with a capital letter: 10 sentences of lexicon/prose.txt more, all right and kept -- the adjective's atom the small word, as any adjective's (`The Guyanese capital.` is capital(the(guyanese(capital))), guyanese(the(guyanese(capital)))), and the English template puts its capital back (`He left an indelible mark on the American theater.`); 14 misses, 1.80.0's |
 | 1.93.0 | 295 | of 309: 95.5 % | 301 | a bare noun after `of` whose word is an adjective's too: 10 sentences of lexicon/prose.txt more, all right and kept -- the noun a constant of its own inside the possessed's term, as any bare noun is (`The incarnation of evil.` is incarnation(of(incarnation, evil)); `He felt a stream of air.` stream(a(of(stream, air))), past(feel(he, a(of(stream, air))))); 14 misses, 1.80.0's |
 | 1.94.0 | 305 | of 319: 95.6 % | 311 | a verb with a particle: 10 sentences of lexicon/prose.txt more, all right and kept -- the verb one predicate, named by its meaning (`The mayor threw out the first ball.` is past(throw_out(the(mayor), the(first(ball)))); `An opportunity opened up.` opportunity(a(opportunity)), past(open_up(a(opportunity)))); 14 misses, 1.80.0's |
+| 1.95.0 | 315 | of 329: 95.7 % | 321 | an infinitive as a verb's object: 10 sentences of lexicon/prose.txt more, all right and kept -- the infinitive a term to(Atom), its atom said of the clause's own subject (`He tried to catch her eye.` is past(try(he, to(catch(he, of(eye, she))))); `The company tried to project an altruistic image.` past(try(the(company), to(project(the(company), a(altruistic(image)))))), the image a term and no fact); 14 misses, 1.80.0's |
 
 **The 8 000 sentences of the first measure into Cocolog**
 (`tools/logic/prose.pl`): read into level 1, then a logic form, then
@@ -295,6 +299,7 @@ meaning in another form (`the bed's edge` for `the edge of the bed`).
 | 1.92.0 | 4 129 | 4 129 (3 764) | 3 954 (49.4 %) |
 | 1.93.0 | 4 167 | 4 167 (3 802) | 3 990 (49.9 %) |
 | 1.94.0 | 4 218 | 4 218 (3 850) | 4 040 (50.5 %) |
+| 1.95.0 | 4 243 | 4 243 (3 873) | 4 063 (50.8 %) |
 
 | version | translated | of 8 000 | the first reasons of the others read into level 1 |
 |---|---|---|---|
@@ -320,6 +325,7 @@ meaning in another form (`the bed's edge` for `the edge of the bed`).
 | 1.92.0 | 3 954 | 49.4 % | an IR shape with no rule 42, `this` 21, a predicate with no rule 15, a phrase with a relative clause 14, a noun of relation with an adjective 14, `no` 10, `that` 10, a negation 8, a generic object 6, an object of `some` 5. Level 1 reads 21 sentences more, each with an adjective written with a capital (`The Guyanese capital.`, `A Gallic shrug.`, `The Hindu faith.`), and all 21 go into Cocolog. The capitals are data, not grammar: lexicon/capital.txt holds WordNet's one-word adjectives written ONLY with a capital (629: no lemma of any part of speech has the word in small letters, so `Polish`, a verb's `polish`, and `Victorian`, an adjective's `victorian` too, are not there), from WordNet 3.1's data files (the `wordnet-db` package of npm, `lexicon/build.pl -- --capitals`), and the English import makes each a `ty_capital/3` row, the row `I` and the months had: read from the capital wherever it stands and written with it. Not a word that is a name too (15: `Julian`, `Norman`, `Burundi`) or the vocabularies' own meaning (`Neapolitan`, `Corsican`, whose Italian and Spanish words are of that meaning): 612 rows. A row lowers the word wherever it stands, so where the words read nothing so, they are read again with such a word as written (`ty_surface_kept/2`): the first cut lost 4 readings of a language as a name (`He speaks French after a fashion.`, `A working knowledge of Spanish.`), which this keeps. No sentence lost or changed. The other 10 of the 31: an adjective WordNet has in small letters too (`A gorgeous Victorian gown.`, `Bohemian`, `Allied`, `Confederate`, `Eastern`), a name (`German`), or a word no table has (`Pyrrhic`). The meaning is the small word, so Spanish writes `La capital guyanesa.`. Cost: the round trips 0.01 % to 0.03 % more inferences |
 | 1.93.0 | 3 990 | 49.9 % | an IR shape with no rule 42, `this` 22, a phrase with a relative clause 15, a predicate with no rule 15, a noun of relation with an adjective 14, `no` 10, `that` 10, a negation 8, a generic object 6, an object of `some` 5. Level 1 reads 38 sentences more, each with a bare noun after `of` whose word is an adjective's too (`The incarnation of evil.`, `A man of quality.`, `A pocket of air.`), and 36 of them go into Cocolog. A bare singular noun stays refused where its word is an adjective's (1.64.0's rule, so `The big dog is red.` keeps its adjective), but not after a possessor's word (`of`, `de`, `di`), where no adjective stands alone: `'$ty_mass_adj'`, set around the possessor alone (`ty_poss_part//10`, `ty_mass_ok/2`). It has a pass of its own, after the plain one and before the others (`'$ty_massp'`, where the text has a possessor's word; `ty_nn_passes/3`): in the plain pass `A room of smiling faces.` was a clause, smiling a noun and faces its verb, and 5 right readings changed so. 2 readings of 1.92.0 change, each a language after `of`, now its noun where it was a name (`A working knowledge of Spanish.`: np(spanish, sg, mass, []) for name('Spanish')), the Cocolog the same. Of the 38 about 3 are wrong (`His theory is the antithesis of mine.`, mine a noun; two coordinations: `A woman of breeding and refinement.`). Measured and left out: the same for an adposition's object (`dressed in red`) reads 26 sentences more, 20 into Cocolog, but `to meet` and `to spread` become a noun after `to`, `while` a noun, and 2 adjective phrases of 1.91.0 become clauses, the pass coming before theirs. And a bare constant that is a name too reads back as the name (`An unbloody transfer of power.` is said back `... of Power.`, a name row's: 1.76.0's order). Cost: the round trips 0.02 % to 0.12 % more inferences |
 | 1.94.0 | 4 040 | 50.5 % | an IR shape with no rule 42, `this` 22, a phrase with a relative clause 15, a predicate with no rule 15, a noun of relation with an adjective 14, `that` 11, `no` 10, a negation 8, a generic object 6, an object of `some` 5. Level 1 reads 51 sentences more, each with a verb and a particle (`The mayor threw out the first ball.`, `Set up an experiment.`, `An opportunity opened up.`, `The plane touched down at noon.`), and 50 of them go into Cocolog, the verb one predicate named by its meaning (past(throw_out(the(mayor), the(first(ball))))). The meanings are WordNet's: `lexicon/build.pl --phrasal` writes lexicon/phrasal.txt from data.verb, 1 725 lemmas of a verb and a particle with what object their frames take (849 one, 454 none, 422 either), and the English import makes a ty_phrasal/5 row of each whose verb it has, 1 398. The particle is read after the verb's words, before the object, in the verb group's last clause (`ty_verb_group//8`), so the plain verb is read first and a preposition after a verb stays one (`The dog sat on the mat.`): no reading of 1.93.0 changes, and no particle is read where a relative clause's gap moved the same adposition to its front (`The boy sees the house in which the dog sleeps in.` stays refused, not sleep_in). Of the 51 about 3 are wrong: `Came up the lightless stairs.` (come_up with an object, where `up` is the stairs' preposition; WordNet lets come_up take one), `It worked up to right now.`, and `The culprit started to run and the cop took off in pursuit.`, whose `to run` an older rule reads as a noun. Not read: the particle after the object (`He threw it out.`, `threw the ball out`), and so a pronoun object, which the writer refuses after the particle; a question; and a phrasal verb in the other languages, which have no row. Cost: as the verb's own read, the particle asked of every verb, the round trips cost 0.5 % to 2.4 % more inferences, a language with no row the most (read with the meaning unbound where the IR gave it, English 129 %); as the verb group's last clause, in a language with rows (`'$ty_phrasal_made'/1`) and a sentence with a particle's word (`'$ty_pparticle'`), English 0.48 % and the others 0.08 % to 0.13 % |
+| 1.95.0 | 4 063 | 50.8 % | an IR shape with no rule 44, `this` 22, a phrase with a relative clause 15, a predicate with no rule 15, a noun of relation with an adjective 14, `that` 11, `no` 10, a negation 8, a generic object 6, an object of `some` 5. Level 1 reads 25 sentences more, each with an infinitive as a verb's object (`He tried to catch her eye.`, `He wants to reconstruct the original text.`, `You have to face the music.`, `He seems to have ample ready money.`), and 23 of them go into Cocolog. The IR is inf(Verb, Object[, Adjuncts]) where a verb's object stands (clause(try, past, pos, pron(3, sg, m), inf(catch, of(pron(3, sg, f), np(eye, sg, def, []))))), read as a clause in a new tense, `infinitive` (English ty_tense_form/5 [to, form(present, pl)]), whose subject no words say (`'$ty_command'` holds i(Clause) as it holds a command's), and only after a verb that may take one: ty_verb_list(L, infinitive, Base), English WordNet's frame `Somebody ----s to INFINITIVE` (lexicon/vinf.txt, `lexicon/build.pl --infinitive`, 159 verbs) and a list in the hand template of what the frames leave out (`have`, `hope`, `need`, `decide` ...; ty_verb_list/3's Base may be a list since 1.95.0). At level 2 the infinitive is a term, to(Atom), its atom said of the clause's own subject (past(try(he, to(catch(he, of(eye, she)))))), and `Demographers try to predict social fluidity.` a rule, try(A, to(predict(A, social(fluidity)))) :- demographer(A); an indefinite noun phrase in it is a term a(Shape) and no fact, the thing tried for need not be. No reading of 1.94.0 changes. Of the 25 about 2 are wrong: `The Canadian government scrapped plans to tax ...` reads `plans` as the verb, and `Attempts to explain the origin of evil in the world.` a clause with no subject, where it is a noun phrase. Not read: an infinitive after a noun (`an attempt to defraud`, `in order to`), an adjective (`Glad to help.`) or as a purpose (`He used pressure to stop the bleeding.`), one after an object (`He hired someone to answer his fan mail.`), and the other languages' infinitives, which have no row. Cost: the round trips 0.00 % to 0.23 % more inferences, English the most: a verb read tries one more tense pattern |
 
 ## What "parked" means
 

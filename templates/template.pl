@@ -289,7 +289,10 @@ ty_conjunct_marks(xx).
 
 %%     ty_verb_list(L, Kind, Base)     the verbs of lexicon/Base.txt are of
 %%                                     Kind (no_object: one that may take
-%%                                     no object; since 1.86.0)
+%%                                     no object; since 1.86.0; infinitive:
+%%                                     one whose object may be an infinitive,
+%%                                     since 1.95.0), or Base is a list of
+%%                                     verbs (since 1.95.0)
 %% ty_verb_list(xx, Kind, Base).
 %%   e.g. ty_verb_list(english, no_object, vi).
 
@@ -311,7 +314,10 @@ ty_conjunct_marks(xx).
 %%                                     since 1.82.0 the imperative's rows
 %%                                     are the language's commands (English
 %%                                     [form(present, pl)], [do, not,
-%%                                     form(present, pl)])
+%%                                     form(present, pl)]), and since 1.95.0
+%%                                     the infinitive's, read as a verb's
+%%                                     object (English [to, form(present,
+%%                                     pl)])
 %% ty_tense_form(xx, Tense, Number, Polarity, Pattern).
 %%   e.g. ty_tense_form(english, future, any, pos, [will, form(present, pl)]).
 

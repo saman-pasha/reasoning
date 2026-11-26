@@ -517,6 +517,9 @@ ty_participle_like(english, past, sg).
 %% inside a command was lost (ty_person_form/5 takes a key's own rows first).
 ty_tense_form(english, imperative, pl, pos, [form(present, pl)]).
 ty_tense_form(english, imperative, pl, neg, [do, not, form(present, pl)]).
+%% An infinitive (since 1.95.0) is `to' and the present's plural form, a
+%% verb's object (`He tried to catch her eye.').
+ty_tense_form(english, infinitive, any, pos, [to, form(present, pl)]).
 
 %% `a' is `an' before a vowel sound: spelled with a vowel, but not `uni',
 %% `use', `eu', `one'; and before the silent h of `hour' and `honest'.
@@ -559,6 +562,11 @@ ty_adjective_phrase_noun(english, after).
 ty_subject_unsaid(english, 3).
 %% The verbs that may take no object: WordNet's, lexicon/vi.txt (since 1.86.0).
 ty_verb_list(english, no_object, vi).
+%% The verbs whose object may be an infinitive (since 1.95.0): WordNet's,
+%% lexicon/vinf.txt, and those its frames leave out (`He had to sell his
+%% car.', `I hope to win.').
+ty_verb_list(english, infinitive, vinf).
+ty_verb_list(english, infinitive, [have, hope, need, prefer, decide, hate, remember, deserve]).
 ty_adposition(english, in, [in]).
 ty_adposition(english, on, [on]).
 ty_adposition(english, with, [with]).

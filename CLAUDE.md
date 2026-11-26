@@ -24,8 +24,8 @@ red) and lesson 01 pin the shape of the answer, deliberately not the number.
 The reasoning library translates ALL 8 000 sentences of `lexicon/prose.txt`
 from English into the IR, and ALL of that IR into Cocolog. Every step
 moves one of the two counts and reports both (`tools/logic/prose.pl`;
-STATUS.md keeps them): at 1.94.0, 4 218 into the IR, 4 040 of them into
-Cocolog (1.93.0: 4 167 and 3 990; 1.92.0: 4 129 and 3 954; 1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
+STATUS.md keeps them): at 1.95.0, 4 243 into the IR, 4 063 of them into
+Cocolog (1.94.0: 4 218 and 4 040; 1.93.0: 4 167 and 3 990; 1.92.0: 4 129 and 3 954; 1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
 count says so. **Measure what blocks the rest before choosing a step**:
 at 1.80.0 the words no table has looked like the gap, and 5 115 of the
 8 000 had none -- 2 130 of them a noun phrase alone, which one rule read.
@@ -738,6 +738,16 @@ with a particle's word (`'$ty_pparticle'`, set by `ty_poss_flag/2`).
 no row too**: asked as the verb's own read, the round trips cost 0.5 % to
 2.4 %, and read with the meaning unbound where the IR gave it, English
 129 %; last and gated, 0.08 % to 0.48 %.
+**An infinitive as a verb's object since 1.95.0** (`He tried to catch
+her eye.`) is inf(Verb, Object[, Adjuncts]): `ty_object//4`'s last clause,
+after a verb `ty_verb_of(L, infinitive, V)` names (lexicon/vinf.txt,
+`lexicon/build.pl --infinitive`, and the hand template's list), read by
+`ty_infinitive//4` as a clause in the tense `infinitive` whose subject
+no words say (`'$ty_command'` holds i(Clause); ty_imperative_ok/1 lets
+only that clause take the tense). At level 2 it is the term to(Atom),
+the atom said of the clause's own subject (`lg_fun_of_atom/2`,
+`lg_atom_of_fun/2`); an indefinite noun phrase in it is a term and no
+fact, read back through `inds(Is, How)` in `lg_arg_np/4`.
 **The blank template copies the row descriptions of typology.pl's head**:
 a changed description is `typology_import(template)` again, or the
 `reproduced` section is red.

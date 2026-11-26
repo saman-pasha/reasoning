@@ -715,8 +715,57 @@ lg_atoms_(copula(_, _, _, _), T, pp(P, NP), [pred(P, [T, To])|Os]) :- atom(P), !
     lg_arg(object, NP, To, _, Os).
 lg_atoms_(copula(_, _, _, _), _, Pred, _) :- !, lg_no(predicate(Pred)).
 lg_atoms_(_, T, verb(V, none), [pred(V, [T])]) :- !.
+%% AN INFINITIVE AS A VERB'S OBJECT (since 1.95.0) is a term, to(Atom), its
+%% atom the infinitive's verb said of the clause's own subject, with its
+%% object and adjuncts: `He tried to catch her eye.' is pred(try,
+%% [const(he), fun(to, [fun(catch, [const(he), const(of(eye, she))])])]),
+%% Cocolog past(try(he, to(catch(he, of(eye, she))))). An indefinite noun
+%% phrase in it is the term a(Shape) and no fact: the thing tried for
+%% need not be (`The company tried to project an altruistic image.' is
+%% past(try(the(company), to(project(the(company),
+%% a(altruistic(image)))))), and no image(...) fact).
+lg_atoms_(_, T, verb(V, Inf), [pred(V, [T, fun(to, [F])])]) :-
+    lg_inf_parts(Inf, V2, O2, Js2), !,
+    lg_atoms(clause(V2, present, pos, none, O2, Js2), T, verb(V2, O2), [A2|Objs]),
+    ( maplist(lg_inf_obj, Objs) -> true ; lg_no(object(infinitive)) ),
+    lg_fun_of_atom(A2, F).
+
+lg_inf_obj('$obj'(S, const(a(S)), a(S), _)).
 lg_atoms_(_, T, verb(V, O), [pred(V, [T, To])|Os]) :-
     lg_arg(object, O, To, _, Os).
+
+lg_inf_how(How, F, How2) :-
+    findall(I, lg_fun_ind(F, I), Is),
+    ( Is == [] -> How2 = How ; How2 = inds(Is, How) ).
+
+lg_fun_ind(const(C), C) :- nonvar(C), ( C = a(_) ; C = a(_, _) ).
+lg_fun_ind(fun(_, As), I) :- member(A, As), lg_fun_ind(A, I).
+
+lg_inf_parts(Inf, V, O, Js) :-
+    nonvar(Inf),
+    (   Inf = inf(V, O) -> Js = [] ; Inf = inf(V, O, Js) ).
+
+%% An atom as the term Cocolog writes inside another's argument: a
+%% predicate the term of its name and arguments, an adjunct's the term
+%% round the atom's, as lg_out_atom/4 writes them; and back.
+lg_fun_of_atom(pred(N, As), fun(N1, As)) :- !,
+    length(As, Ar), lg_code_pred_name(N, Ar, N1).
+lg_fun_of_atom(modified(pp(P, T), A), fun(N1, [F, T])) :- !,
+    lg_fun_of_atom(A, F), lg_code_pred_name(P, 2, N1).
+lg_fun_of_atom(modified(adv(M), A), fun(N1, [F])) :- !,
+    lg_fun_of_atom(A, F), lg_code_pred_name(M, 1, N1).
+lg_fun_of_atom(A, _) :- lg_no(infinitive(A)).
+
+lg_atom_of_fun(fun(N1, [F, T]), modified(pp(P, T), A)) :-
+    nonvar(F), F = fun(_, _),
+    lg_code_meaning(N1, 2, P), typology_meaning(english, adposition, P), !,
+    lg_atom_of_fun(F, A).
+lg_atom_of_fun(fun(N1, [F]), modified(adv(M), A)) :-
+    nonvar(F), F = fun(_, _),
+    lg_code_meaning(N1, 1, M), typology_meaning(english, adverb, M), !,
+    lg_atom_of_fun(F, A).
+lg_atom_of_fun(fun(N1, As), pred(N, As)) :-
+    length(As, Ar), lg_code_meaning(N1, Ar, N).
 
 %% AN ADJECTIVE WITH AN ADPOSITION PHRASE (since 1.88.0), ap(A, pp(Prep,
 %% NP)) in a copula's predicate, is the adjective's atom inside the
@@ -1615,6 +1664,20 @@ lg_atom_ir(L, modified(J, A), How, IR) :- !,
 lg_atom_ir(L, pred(P, [A]), How, IR) :-
     lg_arg_np(L, How, A, S),
     lg_unary_ir(L, P, S, IR).
+%% An infinitive (since 1.95.0): to(Atom) where a verb's object stands, the
+%% atom said of the clause's own subject, is inf(Verb, Object, Adjuncts);
+%% an individual a(Shape) in it, which no fact names, is said as one there.
+lg_atom_ir(L, pred(P, [A, fun(to, [F])]), How, clause(P, present, pos, S, Inf)) :-
+    catch(typology_meaning(L, verb, P), _, fail),
+    lg_arg_np(L, How, A, S),
+    lg_atom_of_fun(F, A2),
+    lg_inf_how(How, F, How2),
+    lg_atom_ir(L, A2, How2, IR2),
+    (   IR2 = clause(V2, present, pos, S2, O2) -> Js2 = []
+    ;   IR2 = clause(V2, present, pos, S2, O2, Js2)
+    ),
+    S2 = S,
+    ( Js2 == [] -> Inf = inf(V2, O2) ; Inf = inf(V2, O2, Js2) ).
 lg_atom_ir(L, pred(P, [A, B]), How, IR) :-
     lg_binary_classes(L, P, Cs),
     lg_arg_np(L, How, A, S),
@@ -1747,6 +1810,8 @@ lg_arg_np(L, How, fun(of, [T, P]), of(PNP, np(N, Num, def, As))) :- !,
     lg_fun_shape(T, S),
     lg_np_of_term(L, S, N, Num, As),
     lg_arg_np(L, How, P, PNP).
+lg_arg_np(L, inds(Is, How), T, NP) :- !,
+    (   T = const(C), nonvar(C), memberchk(C, Is) -> lg_const_np(L, Is, C, NP) ; lg_arg_np(L, How, T, NP) ).
 lg_arg_np(L, vmap(Map, How), T, NP) :- !,
     ( T = var(K), memberchk(K-NP0, Map) -> NP = NP0 ; lg_arg_np(L, How, T, NP) ).
 lg_arg_np(L, map(Cs), const(C), NP) :- !, lg_const_np(L, Cs, C, NP).
