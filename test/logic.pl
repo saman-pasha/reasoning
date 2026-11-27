@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -262,11 +262,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 470),
-    ( R >= 456 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 456 right', VR, ok),
-    ( K >= 462 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 462 kept', VK, ok).
+    check('the second measure: its sentences', N, 480),
+    ( R >= 466 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 466 right', VR, ok),
+    ( K >= 472 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 472 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -1156,6 +1156,18 @@ negation :-
 
 %% 1.111.0: a noun phrase's existence, in the present the phrase alone, in
 %% another tense the clause of exist.
+%% 1.114.0: an operator's name is a reserved name, written with is_.
+operator_names :-
+    section('an operator\'s name'),
+    typology_load(english),
+    ( logic_translate(english, cocolog, 'Meek as a mouse.', C1) -> true ; C1 = none ),
+    check('as/2 is is_as/2', C1, 'mouse(a(mouse)).\nis_as(meek(something), a(mouse)).\n'),
+    ( logic_translate(cocolog, english, C1, E1) -> true ; E1 = none ),
+    check('and back into English', E1, 'Something is meek as a mouse.'),
+    ( logic_translate(english, cocolog, 'The application of indexes to tables of data.', C2) -> true ; C2 = none ),
+    ( sub_atom(C2, _, _, _, 'is_table(a(of(pl(table), data)))') -> V2 = yes ; V2 = C2 ),
+    check('table/1 is is_table/1', V2, yes).
+
 %% 1.113.0: an adjective phrase alone is said of something; a person's bare
 %% noun alone as a mass noun's.
 adjective_alone :-

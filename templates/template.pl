@@ -178,9 +178,10 @@ ty_capital_nouns(xx).
 %%   e.g. ty_definite_like(persian, mass, def).
 
 %%     ty_subordinator(L, Kind, Words) the words that begin a subordinate
-%%                                     clause of Kind if, when or because
-%%                                     (since 1.65.0: `if', `si', `wenn',
-%%                                     `parce que')
+%%                                     clause of Kind if, when, because or
+%%                                     as (since 1.65.0: `if', `si',
+%%                                     `wenn', `parce que'; as since
+%%                                     1.114.0, English `as')
 %% ty_subordinator(xx, Kind, Words).
 %%   e.g. ty_subordinator(english, if, [if]).
 

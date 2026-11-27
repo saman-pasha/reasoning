@@ -104,7 +104,7 @@
 %% its own tense (`John slept when Mary sang.': when(past(sleep(john)),
 %% past(sing(mary)))).
 %%
-%% WHAT HAS NO LOGIC FORM YET: a negation of several atoms, `because', a pronoun whose gender is not known, an indefinite noun
+%% WHAT HAS NO LOGIC FORM YET: a negation of several atoms, `because' and `as', a pronoun whose gender is not known, an indefinite noun
 %% phrase in a rule's conclusion, a generic subject with a possessor in
 %% the present (`Lilies of the valley are racemose.'), a noun phrase of
 %% `every' or `some' that is no subject, a noun of relation with an
@@ -1303,6 +1303,13 @@ lg_code_pred_name(N, Ar, N1) :-
     (   lg_reserved(N0, Ar) -> lg_code_reserved_prefix(cocolog, P), atom_concat(P, N0, N1) ; N1 = N0 ).
 
 lg_reserved(N, Ar) :- functor(H, N, Ar), predicate_property(H, imported_from(_)), !.
+%% So is an operator's name of the arity its operator takes (since
+%% 1.114.0): written as it is, as(meek(something), a(mouse)) was
+%% `meek(something)as a(mouse)' and table(a(...)) `table a(...)'.
+lg_reserved(N, Ar) :- atom(N), current_op(_, T, N), lg_op_arity(T, Ar), !.
+
+lg_op_arity(T, 2) :- memberchk(T, [xfx, xfy, yfx]).
+lg_op_arity(T, 1) :- memberchk(T, [fx, fy, xf, yf]).
 
 %% READING: the text cut into clauses outside quotes and comments, each read
 %% as a term; its variables var(1), var(2) by their first use.

@@ -173,6 +173,7 @@ main :-
     existential,
     modified_mass,
     more_phrases,
+    as_words,
     format("~ndone~n", []).
 
 
@@ -1276,6 +1277,13 @@ more_phrases :-
     must('an adjective phrase alone', IR1, phrase(adj([adv(potentially, useful)]))),
     typology_read(english, 'Tragic hero.', IR2),
     must('a person\'s bare noun in a phrase alone', IR2, phrase(np(hero, sg, mass, [tragic]))).
+
+%% 82. `AS' (1.114.0) is an adposition (`Meek as a mouse.') and a word
+%% before a clause, sub(as, Main, Clause).
+as_words :-
+    typology_load(english),
+    typology_read(english, 'Meek as a mouse.', IR1),
+    must('as before a noun phrase', IR1, phrase(adj([ap(meek, pp(as, np(mouse, sg, indef, [])))]))).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

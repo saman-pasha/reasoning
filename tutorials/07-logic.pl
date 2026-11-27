@@ -76,6 +76,7 @@ main :-
     modals,
     negation,
     adjective_alone,
+    operator_names,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -596,6 +597,15 @@ adjective_alone :-
     must('an adjective phrase alone', C1, 'potentially(useful(something)).\n'),
     logic_translate(cocolog, english, C1, E1),
     must('and into English', E1, 'Something is potentially useful.').
+
+%% 47. AN OPERATOR'S NAME (1.114.0) is reserved, as a builtin's is: as/2
+%% is written is_as/2, and read back without its prefix.
+operator_names :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'Meek as a mouse.', C1),
+    must('as/2 written is_as/2', C1, 'mouse(a(mouse)).\nis_as(meek(something), a(mouse)).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and into English', E1, 'Something is meek as a mouse.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

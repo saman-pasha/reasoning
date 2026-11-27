@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2734,6 +2734,19 @@ modified_mass :-
     findall(R3, typology_read(english, 'The air is cold.', copula(_, _, _, R3)), Rs3),
     check('no such noun is a copula\'s predicate', Rs3, [adj([cold])]).
 
+%% 1.114.0: `as' before a noun phrase (an adposition) and before a clause
+%% (a subordinator).
+as_words :-
+    section('as'),
+    ( typology_read(english, 'They used umbrellas as shades.', clause(use, past, pos, _, _, Js)) -> Js1 = Js ; Js1 = none ),
+    check('a role a noun phrase is in, the first reading', Js1, [pp(as, np(shade, pl, indef, []))]),
+    ( typology_read(english, 'Meek as a mouse.', R2) -> true ; R2 = none ),
+    check('after an adjective', R2, phrase(adj([ap(meek, pp(as, np(mouse, sg, indef, [])))]))),
+    ( typology_read(english, 'She felt no discomfort as the dentist drilled her deadened tooth.', R3) -> functor(R3, F3, _), arg(1, R3, K3) ; F3 = none, K3 = none ),
+    check('before a clause', F3-K3, sub-as),
+    ( typology_write(english, phrase(adj([ap(meek, pp(as, np(mouse, sg, indef, [])))])), W4) -> true ; W4 = none ),
+    check('written', W4, 'Meek as a mouse.').
+
 %% 1.113.0: an adjective phrase alone, after every other reading; a
 %% person's or an animal's bare noun with a modifier, in a phrase alone.
 more_phrases :-
@@ -3089,8 +3102,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 4880 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 4 880 sentences read at 1.113.0 are read', R1, yes),
+    ( K >= 4917 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 4 917 sentences read at 1.114.0 within 2 000 000 inferences each are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

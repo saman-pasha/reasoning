@@ -499,3 +499,13 @@ Receptive to the proposals.	to(receptive(something), the(pl(proposal))).
 Afraid for his life.	for(afraid(something), of(life, he)).
 Tragic hero.	hero(tragic(hero)). tragic(tragic(hero)).
 Domestic servant.	servant(domestic(servant)). domestic(domestic(servant)).
+Meek as a mouse.	mouse(a(mouse)). is_as(meek(something), a(mouse)).
+Active as a gazelle.	gazelle(a(gazelle)). is_as(active(something), a(gazelle)).
+They used umbrellas as shades.	umbrella(a(pl(umbrella))). shade(a(pl(shade))). past(is_as(use(they, a(pl(umbrella))), a(pl(shade)))).
+His concluding words came as a surprise.	surprise(a(surprise)). past(is_as(come(of(concluding(words), he)), a(surprise))).
+Constant as the northern star.	is_as(constant(something), the(northern(star))).
+Wild rice was served as an accompaniment to the main dish.	accompaniment(a(accompaniment)). past(to(is_as(serve(someone, wild(rice)), a(accompaniment)), the(main(dish)))).
+Pretty girls like plain friends as foils.	girl(a(pl(pretty(girl)))). pretty(a(pl(pretty(girl)))). friend(a(pl(plain(friend)))). plain(a(pl(plain(friend)))). foil(a(pl(foil))). is_as(like(a(pl(pretty(girl))), a(pl(plain(friend)))), a(pl(foil))).
+The application of indexes to tables of data.	application(to(of(application, a(pl(index))), a(of(pl(table), data)))). index(a(pl(index))). is_table(a(of(pl(table), data))).
+A petticoated table.	is_table(a(petticoated(table))). petticoated(a(petticoated(table))).
+A dull unoiled table.	is_table(a(dull(unoiled(table)))). dull(a(dull(unoiled(table)))). unoiled(a(dull(unoiled(table)))).

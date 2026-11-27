@@ -472,9 +472,10 @@
 %%     ty_capital(L, Word, Written)    a word always written with its
 %%                                     capital (English `I')
 %%     ty_subordinator(L, Kind, Words) the words that begin a subordinate
-%%                                     clause of Kind if, when or because
-%%                                     (since 1.65.0: `if', `si', `wenn',
-%%                                     `parce que')
+%%                                     clause of Kind if, when, because or
+%%                                     as (since 1.65.0: `if', `si',
+%%                                     `wenn', `parce que'; as since
+%%                                     1.114.0, English `as')
 %%     ty_subordinate_first(L)         a subordinate clause may stand before
 %%                                     its main clause, a comma after it
 %%                                     (`If it sleeps, the dog is small.');
@@ -973,7 +974,7 @@ ty_values(definiteness, [def, indef, which, every, each, all, some, no, any, thi
 ty_values(quantifier, [some, every, no, any, this, that]).
 ty_values(quantifier_kind, [thing, person]).
 %% A subordinate clause's kind (since 1.65.0).
-ty_values(subordinator, [if, when, because]).
+ty_values(subordinator, [if, when, because, as]).
 ty_values(animacy, [person, animate, inanimate, unknown]).
 ty_values(place, [before, after]).
 ty_values(role, [s, o]).

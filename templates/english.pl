@@ -517,6 +517,9 @@ ty_quantifier_pronoun(english, that, thing, [that]).
 ty_subordinator(english, if, [if]).
 ty_subordinator(english, when, [when]).
 ty_subordinator(english, because, [because]).
+%% `as' before a clause (since 1.114.0: `She felt no discomfort as the
+%% dentist drilled her deadened tooth.'); level 2 has no form of it yet.
+ty_subordinator(english, as, [as]).
 ty_subordinate_first(english).
 
 %% The negative: `does not', `do not', `did not' before the base, which is
@@ -749,6 +752,10 @@ ty_adposition(english, outside, [outside]).
 ty_adposition(english, throughout, [throughout]).
 ty_adposition(english, upon, [upon]).
 ty_adposition(english, within, [within]).
+%% `as' (since 1.114.0): a role a noun phrase is in (`They used umbrellas
+%% as shades.', `Meek as a mouse.'); its Cocolog name is is_as, as/2 being
+%% an operator's.
+ty_adposition(english, as, [as]).
 ty_adposition(english, until, [until]).
 ty_adposition(english, despite, [despite]).
 ty_adposition(english, except, [except]).
