@@ -495,6 +495,10 @@ ty_tense_form(italian, pass(present), sg, pos, ['è', participle(subject)]).
 ty_tense_form(italian, pass(present), pl, pos, [sono, participle(subject)]).
 ty_tense_form(italian, pass(past), sg, pos, [fu, participle(subject)]).
 ty_tense_form(italian, pass(past), pl, pos, [furono, participle(subject)]).
+%% The perfect passive (since 1.106.0): essere, `stato' and the participle,
+%% both agreeing with the subject (`La ragazza è stata vista.').
+ty_tense_form(italian, pass(perfect), sg, pos, ['è', agree(stato), participle(subject)]).
+ty_tense_form(italian, pass(perfect), pl, pos, [sono, agree(stato), participle(subject)]).
 ty_class_tense_form(italian, essere, pluperfect, sg, pos, [era, participle(subject)]).
 ty_class_tense_form(italian, essere, pluperfect, pl, pos, [erano, participle(subject)]).
 ty_class_tense_form(italian, essere, pluperfect, sg(1), pos, [ero, participle(subject)]).

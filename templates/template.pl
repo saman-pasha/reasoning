@@ -438,7 +438,10 @@ ty_participle_agrees(xx, clitic).
 %%                                     such a pattern, its item
 %%                                     participle(subject) a participle that
 %%                                     agrees with the subject (`è andata',
-%%                                     `sont allées')
+%%                                     `sont allées'), and since 1.106.0
+%%                                     agree(Word) a word that agrees as a
+%%                                     participle does (Italian agree(stato):
+%%                                     `è stata vista')
 %% ty_class_tense_form(xx, Class, Tense, Number, Polarity, Pattern).
 %%   e.g. ty_class_tense_form(italian, essere, perfect, sg, pos, [è, participle(subject)]).
 

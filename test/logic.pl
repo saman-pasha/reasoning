@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -1077,6 +1077,19 @@ adjunct_first :-
              check(Label, C, Want) )),
     ( logic_translate(cocolog, english, 'past(suddenly(bark(the(dog)))).\n', E) -> true ; E = none ),
     check('back into English, the adverb at the end', E, 'The dog barked suddenly.').
+
+%% 1.106.0: the Italian and the German perfect passive are the active's
+%% perfect at level 2, as English's is.
+passive_perfect :-
+    section('the perfect passive in Italian and German'),
+    typology_load(german),
+    forall(member(L-T-Want, [
+               italian-'La ragazza è stata vista dal ragazzo.'-'perfect(see(the(boy), the(girl))).\n',
+               german-'Das Mädchen ist vom Jungen gesehen worden.'-'perfect(see(the(boy), the(girl))).\n',
+               english-'The girl has been seen by the boy.'-'perfect(see(the(boy), the(girl))).\n' ]),
+           ( ( logic_translate(L, cocolog, T, C) -> true ; C = none ),
+             one_line(['into Cocolog: ', T], Label),
+             check(Label, C, Want) )).
 
 %% Each clause of a Cocolog text asserted.
 assert_text(P) :-

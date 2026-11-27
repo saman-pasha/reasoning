@@ -166,6 +166,7 @@ main :-
     progressive_passive,
     pp_phrase,
     adjunct_first,
+    perfect_passive,
     format("~ndone~n", []).
 
 
@@ -1196,6 +1197,20 @@ adjunct_first :-
     must('read', IR1, clause(sleep, past, pos, np(dog, sg, def, []), none, [pp(in, np(house, sg, def, [])), pp(after, np(game, sg, def, []))])),
     typology_write(english, IR1, W1),
     must('written at the end', W1, 'The dog slept in the house after the game.').
+
+%% 75. THE PERFECT PASSIVE IN ITALIAN AND GERMAN (1.106.0): Italian's rows
+%% have a word that agrees with the subject as a participle does,
+%% agree(stato); German's verb of three puts its two last words at the
+%% clause's end, or before the auxiliary where the verb is last.
+perfect_passive :-
+    typology_load(italian),
+    typology_write(italian, clause(see, pass(perfect), pos, np(girl, pl, def, []), none), W1),
+    must('Italian, stato agreeing', W1, 'Le ragazze sono state viste.'),
+    typology_load(german),
+    typology_write(german, clause(see, pass(perfect), pos, np(girl, sg, def, []), none, [pp(by, np(boy, sg, def, []))]), W2),
+    must('German, the two last words at the end', W2, 'Das Mädchen ist vom Jungen gesehen worden.'),
+    typology_write(german, clause(see, present, pos, np(girl, sg, def, []), rel(np(dog, sg, def, []), clause(see, pass(perfect), pos, gap, none))), W3),
+    must('and in a relative clause', W3, 'Das Mädchen sieht den Hund, der gesehen worden ist.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

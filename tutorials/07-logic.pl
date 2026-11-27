@@ -71,6 +71,7 @@ main :-
     complement_terms,
     pp_phrase,
     adjunct_first,
+    perfect_passive,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -545,6 +546,13 @@ adjunct_first :-
     must('the adverb round the atom', C1, 'past(suddenly(bark(the(dog)))).\n'),
     logic_translate(cocolog, english, C1, E1),
     must('and into English', E1, 'The dog barked suddenly.').
+
+%% 42. THE PERFECT PASSIVE OF GERMAN (1.106.0) is the active's perfect, as
+%% English's is.
+perfect_passive :-
+    typology_load(german),
+    logic_translate(german, cocolog, 'Das Mädchen ist vom Jungen gesehen worden.', C1),
+    must('the active perfect', C1, 'perfect(see(the(boy), the(girl))).\n').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

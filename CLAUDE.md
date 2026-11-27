@@ -24,7 +24,7 @@ red) and lesson 01 pin the shape of the answer, deliberately not the number.
 The reasoning library translates ALL 8 000 sentences of `lexicon/prose.txt`
 from English into the IR, and ALL of that IR into Cocolog. Every step
 moves one of the two counts and reports both (`tools/logic/prose.pl`;
-STATUS.md keeps them): at 1.105.0, 4 479 into the IR, 4 275 of them into
+STATUS.md keeps them): at 1.105.0 and 1.106.0, 4 479 into the IR, 4 275 of them into
 Cocolog (1.104.0: 4 456 and 4 256; 1.103.0: 4 405 and 4 209; 1.102.0: 4 405 and 4 206; 1.100.0 and 1.101.0: 4 377 and 4 179; 1.99.0: 4 358 and 4 165; 1.98.0: 4 325 and 4 141; 1.96.0 and 1.97.0: 4 295 and 4 111; 1.95.0: 4 243 and 4 063; 1.94.0: 4 218 and 4 040; 1.93.0: 4 167 and 3 990; 1.92.0: 4 129 and 3 954; 1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
 count says so. **Measure what blocks the rest before choosing a step**:
 at 1.80.0 the words no table has looked like the gap, and 5 115 of the
@@ -819,6 +819,18 @@ names `participle` (`'$ty_pword'/2`, `ty_tense_participle/2`) names
 it is asked of**: asked of pass(_) it bound pass(present), and German's
 `wurde gesehen` never read; ask it under `\+ \+` where the tense is only
 being tested. Persian has none (no participle row).
+**The perfect passive since 1.106.0** in Italian has a pattern word
+`agree(Word)`, a fixed word that agrees with the subject as
+`participle(subject)` does (`è stata vista`), and in German a verb of
+three words: **the split puts every word after the first of a verb of
+three at the end** (`ty_split_parts/4`: `ist ... gesehen worden`, and
+verb-last `gesehen worden ist`), and reading takes a last part of two
+words only where the second is a row's last word (`'$ty_rest2'/2`,
+`worden`), held to the writer's shape where the first part has two words
+(a unification test, which costs no step when it fails: a check asked of
+every split cost German 1.8 %). A passive row's gate word is the word
+after its participle where it has one (`ty_pword_of/2`: `worden`; `ist`
+would send every German copula through the passive).
 
 **The progressive since 1.102.0** is a clause in a tense prog(T), read as
 the passive is: after every other reading (`ty_progressive//2`, after

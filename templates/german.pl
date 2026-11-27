@@ -565,6 +565,11 @@ ty_tense_form(german, pass(present), sg, pos, [wird, participle]).
 ty_tense_form(german, pass(present), pl, pos, [werden, participle]).
 ty_tense_form(german, pass(past), sg, pos, [wurde, participle]).
 ty_tense_form(german, pass(past), pl, pos, [wurden, participle]).
+%% The perfect passive (since 1.106.0): sein, the participle and `worden',
+%% the two last at the clause's end (`Das Mädchen ist vom Jungen gesehen
+%% worden.', `das Mädchen, das gesehen worden ist').
+ty_tense_form(german, pass(perfect), sg, pos, [ist, participle, worden]).
+ty_tense_form(german, pass(perfect), pl, pos, [sind, participle, worden]).
 ty_class_tense_form(german, sein, pluperfect, sg, pos, [war, participle]).
 ty_class_tense_form(german, sein, pluperfect, pl, pos, [waren, participle]).
 ty_class_tense_form(german, sein, pluperfect, sg(1), pos, [war, participle]).

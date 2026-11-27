@@ -211,7 +211,10 @@
 %%                                     such a pattern, its item
 %%                                     participle(subject) a participle that
 %%                                     agrees with the subject (`è andata',
-%%                                     `sont allées')
+%%                                     `sont allées'), and since 1.106.0
+%%                                     agree(Word) a word that agrees as a
+%%                                     participle does (Italian agree(stato):
+%%                                     `è stata vista')
 %%     ty_article(L, Definiteness, Gender, Number, Word)
 %%                                     def or indef, or which (the article
 %%                                     of a question: `which dog'); a
@@ -4523,7 +4526,7 @@ ty_split_first(sp(First, Rest), L, C, Q) -->
 ty_split_take(First, Rest, L, C, Q, S0, S) :-
     (   var(S0)
     ->  ty_split_verb(L, C, Q, Full),
-        append(First, Rest, Full), Rest = [_],
+        ty_split_parts(L, Full, First, Rest),
         append(First, S, S0)
     ;   between(1, 3, K), length(First, K), append(First, S, S0),
         (   nonvar(Rest)
@@ -4536,13 +4539,46 @@ ty_split_take(First, Rest, L, C, Q, S0, S) :-
 %% second holds the two to a verb.
 ty_split_rest(sp(First, Rest), L, C, Q, S0, S) :-
     (   var(S0)
-    ->  Rest = [_], append(Rest, S, S0)
-    ;   S0 = [W|S], Rest = [W],
+    ->  (   nonvar(Rest) -> true
+        ;   '$ty_rest2'(L, _) -> ( Rest = [_] ; Rest = [_, _] )
+        ;   Rest = [_]
+        ),
+        append(Rest, S, S0)
+    ;   S0 = [W|S1],
+        (   Rest = [W], S = S1
+        ;   S1 = [W2|S], '$ty_rest2'(L, W2), Rest = [W, W2]
+        ),
         (   var(First)
         ->  true
         ;   append(First, Rest, Full),
-            ty_split_verb(L, C, Q, Full)
+            ty_split_verb(L, C, Q, Full),
+            (   First = [_, _|_], Rest = [_] -> \+ '$ty_rest2'(L, _) ; true )
         )
+    ).
+%% Reading, a verb of three is split as the writer splits it: `ist' and
+%% `gesehen worden', never `ist gesehen' and `worden' (each reading came
+%% twice). The tests on the words' shape cost no step where they fail;
+%% asked of every split, the check cost English 0.07 % and German 1.8 %
+%% more (1.106.0's first cut).
+
+%% A passive row's word a text with a passive has ahead: the word after the
+%% participle where the row has one (since 1.106.0: German `worden', as
+%% `ist' is no passive's word alone), else the word before it.
+ty_pword_of(Ws, W) :-
+    append(_, [P, W0|_], Ws), ty_pattern_participle(P), atom(W0), !, W = W0.
+ty_pword_of(Ws, W) :-
+    append(_, [W, P|_], Ws), ty_pattern_participle(P), atom(W).
+
+ty_pattern_participle(P) :- ( P == participle ; P == participle(subject) ).
+
+%% Writing, the words a split puts last: the verb's last word; where the
+%% template puts the last part at the clause's end, every word after the
+%% first of a verb of three (since 1.106.0: German `ist ... gesehen
+%% worden').
+ty_split_parts(L, Full, First, Rest) :-
+    (   ty_split_place(L, end), Full = [F1, _, _|_]
+    ->  First = [F1], Full = [_|Rest]
+    ;   append(First, Rest, Full), Rest = [_]
     ).
 
 ty_split_verb(L, copula(T, P, Subj, Pred), Q, Full) :- !,
@@ -6310,6 +6346,8 @@ ty_tense_words([I|Is], L, V, Words) :-
         ->  ty_part_base(L, W, W0), ty_participle_word(L, V, W0), ty_subject_part(L, W0, W)
         ;   ty_participle_word(L, V, W0), ty_subject_part(L, W0, W)
         )
+    ;   I = agree(A)
+    ->  Words = [W|Rest], ty_subject_part(L, A, W)
     ;   Words = [I|Rest]
     ),
     ty_tense_words(Is, L, V, Rest).
@@ -6436,6 +6474,10 @@ ty_verb_row(L, V, T, N, P, Words) :-
 %% `was', `be', `been'); a text with one ahead may hold a passive
 %% (ty_pass_ahead//1).
 :- dynamic('$ty_pword'/2).
+%% A language whose verb's last part may be two words (since 1.106.0:
+%% German `gesehen worden'), the last word of such a pattern, which
+%% ty_split_rest//5 then reads after the participle.
+:- dynamic('$ty_rest2'/2).
 %% A language's active tense patterns, where it has a passive
 %% (ty_tense_pattern_now/6).
 :- dynamic('$ty_tact'/6).
@@ -6522,9 +6564,12 @@ ty_vfirst_make(L) :-
              append(_, [W4, ing|_], Ws4), atom(W4), \+ '$ty_ingw'(W4, L) ),
            assertz('$ty_ingw'(W4, L))),
     forall(( ty_tense_form(L, T2, _, _, Ws2), nonvar(T2), T2 = pass(_),
-             append(_, [W2, PT2|_], Ws2), ( PT2 == participle ; PT2 == participle(subject) ),
-             atom(W2), \+ '$ty_pword'(W2, L) ),
+             ty_pword_of(Ws2, W2), \+ '$ty_pword'(W2, L) ),
            assertz('$ty_pword'(W2, L))),
+    retractall('$ty_rest2'(L, _)),
+    forall(( ty_split_place(L, end), ty_tense_pattern(L, _, _, _, Ws3, _), Ws3 = [_, _, _|_],
+             last(Ws3, W3), atom(W3), \+ '$ty_rest2'(L, W3) ),
+           assertz('$ty_rest2'(L, W3))),
     (   '$ty_pass_made'(L)
     ->  forall(( ty_tense_pattern(L, T3, N3, P3, Pt3, C3), \+ ( nonvar(T3), ( T3 = pass(_) ; T3 = prog(_) ) ) ),
                assertz('$ty_tact'(L, T3, N3, P3, Pt3, C3)))
