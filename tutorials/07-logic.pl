@@ -74,6 +74,7 @@ main :-
     perfect_passive,
     count_words,
     modals,
+    negation,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -111,9 +112,9 @@ questions :-
 
 %% 4. NO GUESS. What has no logic form yet says why, and is not made one.
 why :-
-    once(typology_read(english, 'The boy does not see the dog.', IR1)),
+    once(typology_read(english, 'The dog is not big and black.', IR1)),
     logic_why(IR1, W1),
-    must('a negation', W1, negation),
+    must('a negation of two atoms', W1, negation),
     once(typology_read(english, 'Every boy sees a dog.', IR2)),
     logic_why(IR2, W2),
     must('an object that is no constant', W2, object(generic)).
@@ -576,6 +577,15 @@ modals :-
     must('and into English', E1, 'You must follow suit in bridge.'),
     logic_translate(english, cocolog, 'The dog would sleep.', C2),
     must('the conditional', C2, 'conditional(is_sleep(the(dog))).\n').
+
+%% 45. A NEGATION (1.109.0) is said round the clause's one atom, outside
+%% its tense; not/1 is Cocolog's, so its name is is_not.
+negation :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'John did not sleep.', C1),
+    must('a negation', C1, 'is_not(past(is_sleep(john))).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and into English', E1, 'John did not sleep.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

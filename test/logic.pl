@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -82,7 +82,7 @@ joined :-
 diagnostics :-
     section('what has no logic form yet'),
     forall(member(T-Want, [
-               'The boy does not sleep.'-negation,
+               'The dog is not big and black.'-negation,
                'Every boy sees a dog.'-object(generic),
                'The boy sleeps because the dog sleeps.'-subordinate(because),
                'He received this letter.'-determiner(this),
@@ -262,11 +262,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 422),
-    ( R >= 408 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 408 right', VR, ok),
-    ( K >= 414 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 414 kept', VK, ok).
+    check('the second measure: its sentences', N, 432),
+    ( R >= 418 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 418 right', VR, ok),
+    ( K >= 424 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 424 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -703,9 +703,10 @@ commands :-
     ( cocolog_read('imperative(mince(you, the(garlic))).', U3) -> true ; U3 = none ),
     check('imperative read: the tense of its atom', U3,
           utterance(assertion, [fact(at(imperative, pred(mince, [const(you), const(the(garlic))])))])),
-    once(typology_read(english, 'Do not open the door.', IR4)),
-    logic_why(IR4, W4),
-    check('a command not to has no form yet', W4, negation),
+    ( logic_translate(english, cocolog, 'Do not open the door.', C4) -> true ; C4 = none ),
+    check('a command not to: its negation (since 1.109.0)', C4, 'is_not(imperative(open(you, the(door)))).\n'),
+    ( logic_translate(cocolog, english, C4, E4) -> true ; E4 = none ),
+    check('and back into English', E4, 'Do not open the door.'),
     forall(member(T5, ['Mince the garlic.', 'Bottle the mineral water.']),
            ( logic_translate(english, cocolog, T5, P5), assert_text(P5) )),
     findall(A, imperative(A), As),
@@ -1129,6 +1130,29 @@ modals :-
            ( ( logic_translate(cocolog, english, C2, E2) -> true ; E2 = none ),
              one_line(['back into English: ', Want2], Label2),
              check(Label2, E2, Want2) )).
+
+%% 1.109.0: a negation round the clause's one atom and its tense.
+negation :-
+    section('a negation'),
+    typology_load(english),
+    forall(member(T-Want, [
+               'John did not sleep.'-'is_not(past(is_sleep(john))).\n',
+               'The priest could not reveal her confidences.'-'is_not(could(reveal(the(priest), of(pl(confidence), she)))).\n',
+               'If John does not sleep Mary sings.'-'sing(mary) :-\n    is_not(is_sleep(john)).\n',
+               'He could not suppress a yawn.'-'yawn(a(yawn)).\nis_not(could(suppress(he, a(yawn)))).\n',
+               'They didn\'t follow our lead.'-'is_not(past(follow(they, of(lead, we)))).\n' ]),
+           ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
+             one_line(['into Cocolog: ', T], Label),
+             check(Label, C, Want) )),
+    forall(member(C2-Want2, [
+               'is_not(past(is_sleep(john))).\n'-'John did not sleep.',
+               'is_not(could(reveal(the(priest), of(pl(confidence), she)))).\n'-'The priest could not reveal her confidences.',
+               'is_not(append(a, b, c)).\n'-'It is not so that append holds for a, b and c.' ]),
+           ( ( logic_translate(cocolog, english, C2, E2) -> true ; E2 = none ),
+             one_line(['back into English: ', Want2], Label2),
+             check(Label2, E2, Want2) )),
+    ( cocolog_read('is_not(the(war)).', U3) -> true ; U3 = none ),
+    check('is_not of no compound term is a predicate', U3, utterance(assertion, [fact(pred(not, [const(the(war))]))])).
 
 %% Each clause of a Cocolog text asserted.
 assert_text(P) :-

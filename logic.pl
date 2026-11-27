@@ -16,6 +16,12 @@
 %%                                 present: past, future, perfect,
 %%                                 pluperfect, imperfect (since 1.70.0;
 %%                                 Cocolog past(Atom))
+%%     not(Atom)                   an atom its clause denies (since
+%%                                 1.109.0), round the clause's one atom
+%%                                 and its tense: `John did not sleep.'
+%%                                 is not(at(past, pred(sleep,
+%%                                 [const(john)]))), Cocolog
+%%                                 is_not(past(is_sleep(john)))
 %%     modified(Adjunct, Atom)     an atom with an adjunct of its clause
 %%                                 (since 1.71.0): pp(Prep, Term), an
 %%                                 adposition phrase, or adv(Meaning), an
@@ -98,7 +104,7 @@
 %% its own tense (`John slept when Mary sang.': when(past(sleep(john)),
 %% past(sing(mary)))).
 %%
-%% WHAT HAS NO LOGIC FORM YET: a negation, `because', a pronoun whose gender is not known, an indefinite noun
+%% WHAT HAS NO LOGIC FORM YET: a negation of several atoms, `because', a pronoun whose gender is not known, an indefinite noun
 %% phrase in a rule's conclusion, a generic subject with a possessor in
 %% the present (`Lilies of the valley are racemose.'), a noun phrase of
 %% `every' or `some' that is no subject, a noun of relation with an
@@ -661,7 +667,7 @@ lg_parts(C, _, _) :- lg_no(shape(C)).
 
 lg_present(T, P) :-
     ( lg_tense(T) -> true ; lg_no(tense(T)) ),
-    ( P == pos -> true ; lg_no(negation) ).
+    ( memberchk(P, [pos, neg]) -> true ; lg_no(negation) ).
 
 %% Since 1.82.0 the imperative too: a command is its atoms in it, its
 %% subject you (`Construct a proof.' is imperative(construct(you,
@@ -694,7 +700,22 @@ lg_atoms(C, T, Pred, Atoms) :-
     lg_adjuncted(Js, Atoms0, Atoms1),
     lg_clause_tense(C, Tn),
     lg_tensed(Tn, Atoms1, Atoms2),
-    append([Atoms2, Objs, JObjs], Atoms).
+    lg_clause_polarity(C, Pol),
+    lg_negated(Pol, Atoms2, Atoms3),
+    append([Atoms3, Objs, JObjs], Atoms).
+
+%% A NEGATION (since 1.109.0) is said round the clause's one atom, outside
+%% its tense: `John did not sleep.' is not(at(past, sleep(john))), Cocolog
+%% is_not(past(is_sleep(john))) (not/1 is Cocolog's). A clause of several
+%% atoms denied has none (`The dog is not big and black.': not both, or
+%% neither?).
+lg_negated(pos, As, As) :- !.
+lg_negated(neg, [A], [not(A)]) :- !.
+lg_negated(_, _, _) :- lg_no(negation).
+
+lg_clause_polarity(copula(_, P, _, _), P).
+lg_clause_polarity(clause(_, _, P, _, _), P).
+lg_clause_polarity(clause(_, _, P, _, _, _), P).
 
 %% AN INDEFINITE NOUN PHRASE THAT IS NO SUBJECT (an object since 1.74.0;
 %% an adjunct's, a possessor and a possessed since 1.77.0) is a variable
@@ -1223,6 +1244,10 @@ lg_out_body(and([B]), M0, M, B1) :- !, lg_out_body(B, M0, M, B1).
 lg_out_body(and([B|Bs]), M0, M, (B1, Bs1)) :- !, lg_out_body(B, M0, M1, B1), lg_out_body(and(Bs), M1, M, Bs1).
 lg_out_body(A, M0, M, A1) :- lg_out_atom(A, M0, M, A1).
 
+lg_out_atom(not(P), M0, M, A) :- !,
+    lg_out_atom(P, M0, M, P1),
+    lg_code_pred_name(not, 1, W),
+    A =.. [W, P1].
 lg_out_atom(at(T, P), M0, M, A) :- !,
     lg_out_atom(P, M0, M, P1),
     lg_code_tense(cocolog, T, W),
@@ -1291,6 +1316,10 @@ lg_in_body((A, B), and([A1|Bs])) :- !, lg_in_atom(A, A1), lg_in_body(B, B0), ( B
 lg_in_body(A, A1) :- lg_in_atom(A, A1).
 
 lg_in_atom(A, _) :- \+ callable(A), !, lg_no(term(A)).
+lg_in_atom(A, not(P)) :-
+    compound(A), A =.. [W, Inner], compound(Inner), \+ lg_det_term(Inner),
+    lg_code_meaning(W, 1, not), !,
+    lg_in_atom(Inner, P).
 lg_in_atom(A, at(T, P)) :-
     compound(A), A =.. [W, Inner], compound(Inner), \+ lg_det_term(Inner),
     lg_code_tense(cocolog, T, W), !,
@@ -1842,6 +1871,9 @@ lg_pronoun(L, N, P) :-
 %% An atom's level-1 clause. How a term is said: SUB names one constant's
 %% noun phrase (sub(C, NP)), var1(NP) var(1)'s; `every' says a variable of a
 %% fact (`Everything is mortal.'), wh a query's (`Who is human?').
+lg_atom_ir(L, not(A), How, IR) :- !,
+    lg_atom_ir(L, A, How, IR0),
+    lg_ir_polarity(IR0, neg, IR).
 lg_atom_ir(L, at(T, A), How, IR) :- !,
     lg_atom_ir(L, A, How, IR0),
     lg_ir_tense(IR0, T, IR).
@@ -1990,6 +2022,10 @@ lg_binary_shape(noun, P, How, S, O, copula(present, pos, S, of(O, np(P, Num, D, 
 lg_relation_det(var1(_), [indef, def]) :- !.
 lg_relation_det(vmap(_, H), Ds) :- !, lg_relation_det(H, Ds).
 lg_relation_det(_, [def, indef]).
+
+lg_ir_polarity(copula(T, _, S, Pr), P, copula(T, P, S, Pr)).
+lg_ir_polarity(clause(V, T, _, S, O), P, clause(V, T, P, S, O)).
+lg_ir_polarity(clause(V, T, _, S, O, Js), P, clause(V, T, P, S, O, Js)).
 
 lg_ir_tense(copula(_, P, S, Pr), T, copula(T, P, S, Pr)).
 lg_ir_tense(clause(V, _, P, S, O), T, clause(V, T, P, S, O)).
@@ -2276,6 +2312,9 @@ lg_general_item(query(B), S) :-
     ),
     lg_sentence(T, '?', S).
 
+lg_holds(not(A), T) :- !,
+    lg_holds(A, T0),
+    format(atom(T), 'it is not so that ~w', [T0]).
 lg_holds(at(Tn, A), T) :- !,
     lg_holds(A, T0),
     lg_holds_tense(Tn, T0, T).

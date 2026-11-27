@@ -451,3 +451,13 @@ The punishment ought to be proportional to the crime.	ought(to(proportional(the(
 You must respect the confidentiality of your client's communications.	must(respect(you, of(pl(communication), of(confidentiality, of(client, you))))).
 Our ideas must be substantiated into actions.	action(a(pl(action))). must(into(substantiate(someone, of(pl(idea), we)), a(pl(action)))).
 They could still receive the sound but the picture was gone.	could(still(receive(they, the(sound)))). past(gone(the(picture))).
+They didn't follow our lead.	is_not(past(follow(they, of(lead, we)))).
+He could not conceal his hostility.	is_not(could(conceal(he, of(hostility, he)))).
+His slide didn't stop until the bottom of the hill.	is_not(past(until(stop(of(slide, he)), of(bottom, the(hill))))).
+The priest could not reveal her confidences.	is_not(could(reveal(the(priest), of(pl(confidence), she)))).
+She didn't want to know the sex of the foetus.	is_not(past(want(she, to(know(she, of(sex, the(foetus))))))).
+Meanwhile I will not think about the problem.	is_not(future(meanwhile(think(i, the(problem))))).
+The oversight was not imputable to him.	is_not(past(to(imputable(the(oversight)), he))).
+Squandered money cannot be replaced.	is_not(can(replace(someone, squandered(money)))).
+They didn't have to use coercion.	is_not(past(have(they, to(use(they, coercion))))).
+Happily he was not injured.	is_not(past(happily(injure(someone, he)))).
