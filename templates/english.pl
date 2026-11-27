@@ -520,6 +520,10 @@ ty_subordinator(english, because, [because]).
 %% `as' before a clause (since 1.114.0: `She felt no discomfort as the
 %% dentist drilled her deadened tooth.'); level 2 has no form of it yet.
 ty_subordinator(english, as, [as]).
+%% `all' before a definite noun phrase (since 1.118.0: `all the wildlife',
+%% `all his creditors'); before a bare noun it is the determiner (`All dogs
+%% bark.').
+ty_predeterminer(english, all, [all]).
 ty_subordinate_first(english).
 
 %% The negative: `does not', `do not', `did not' before the base, which is

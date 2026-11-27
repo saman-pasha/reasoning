@@ -504,6 +504,7 @@ lg_phrase_aps(np(N, Num, D, As0), np(N, Num, D, As), As0, As, Ms) :- lg_has_ap(A
 lg_phrase_aps(X, X, As, As, []).
 lg_phrase_noun(of(_, NP), N, As) :- nonvar(NP), lg_phrase_noun(NP, N, As).
 lg_phrase_noun(np_pp(H, _), N, As) :- nonvar(H), lg_phrase_noun(H, N, As).
+lg_phrase_noun(all(NP), N, As) :- nonvar(NP), lg_phrase_noun(NP, N, As).
 
 %% An atom in a tense, its when clause round it or not.
 lg_in_tense(at(_, _)) :- !.
@@ -1042,6 +1043,13 @@ lg_entity(qp(some, _), ent(_, [], some), []) :- !.
 lg_entity(wh(_), ent(_, [], wh), []) :- !.
 lg_entity('$const'(C), ent(const(C), [], const), []) :- !.
 lg_entity(of(P, NP), E, Ms) :- !, lg_possessed(P, NP, E, Ms).
+%% ALL BEFORE A DEFINITE NOUN PHRASE (since 1.118.0) is the whole group the
+%% noun phrase names, the constant all(T) round its term: `Chemicals could
+%% kill all the wildlife.' says all(the(wildlife)), `He paid all his bills.'
+%% past(pay(he, all(of(pl(bill), he)))).
+lg_entity(all(NP), ent(const(all(C)), [], const), Ms) :- !,
+    lg_entity(NP, ent(T, Conds, Q), Ms),
+    ( Q == const, T = const(C), Conds == [] -> true ; lg_no(determiner(all)) ).
 lg_entity(np_pp(H, pp(P, X)), E, Ms) :- !, lg_np_pp(H, P, X, E, Ms).
 %% A NOUN AND ITS INFINITIVE (since 1.96.0) is a term as a noun and its
 %% adposition phrase is, to(T, Atom), the atom said of someone: `A knowing
@@ -1414,7 +1422,8 @@ lg_adjunct_inner(T) :- compound(T), \+ is_list(T), \+ T = [_|_], \+ lg_det_term(
 %% A CONSTANT'S TERM in Cocolog (since 1.76.0): the(T), a(Noun), of(T,
 %% Possessor) and, where the English template is loaded, a bare noun with
 %% an adjective (apparent(motion)); T a noun inside adjectives and pl.
-%% the, a, of and pl name terms, never predicates, so past(the(dog)) is
+%% the, a, of, pl and (since 1.118.0) all round the(T) or of(T, P) name
+%% terms, never predicates, so past(the(dog)) is
 %% the predicate past of the dog, not the tense of the(dog). A tense's and
 %% an adjunct's atom is told from these alone (lg_det_term/1): a bare noun
 %% with an adjective is a term only as an argument, as live(john) in
@@ -1441,6 +1450,7 @@ lg_det_term(T) :-
     ;   T = a(X) -> ( X = of(Y, P) -> lg_np_shape(Y), lg_poss_term(P) ; lg_np_shape(X) -> true ; lg_pp_shape(X) -> true ; lg_to_shape(X) )
     ;   T = a(X, K) -> integer(K), K > 1, lg_det_term(a(X))
     ;   T = of(X, P) -> lg_np_shape(X), \+ lg_ap_atom(X), lg_poss_term(P)
+    ;   T = all(X) -> lg_det_term(X), X \= a(_), X \= a(_, _)
     ).
 
 %% An adjective's atom of a pronoun or of a name that is no noun is no
@@ -1659,6 +1669,10 @@ lg_term_facts(a(S), Fs) :- !, lg_shape_facts(S, const(a(S)), Fs).
 lg_term_facts(a(S, K), Fs) :- integer(K), !, lg_shape_facts(S, const(a(S, K)), Fs).
 lg_term_facts(the(T), Fs) :- !, lg_shape_facts(T, const(the(T)), Fs).
 lg_term_facts(of(T, P), Fs) :- !, lg_shape_facts(of(T, P), const(of(T, P)), Fs).
+lg_term_facts(all(X), Fs) :- nonvar(X), !,
+    (   X = the(T) -> lg_shape_facts(T, const(all(X)), Fs)
+    ;   X = of(T, P) -> lg_shape_facts(of(T, P), const(all(X)), Fs)
+    ).
 lg_term_facts(T, Fs) :- lg_shape_facts(T, const(T), Fs).
 
 lg_shape_facts(of(T, P), K, Fs) :- !,
@@ -2204,6 +2218,7 @@ lg_const_np(L, Cs, the(T), np_pp(np(N, Num, def, As), pp(P, XNP))) :-
 lg_const_np(L, Cs, the(T), np(N, Num, def, As)) :- !, lg_np_of_term(L, Cs, T, N, Num, As).
 lg_const_np(L, Cs, a(S), NP) :- !, memberchk(a(S), Cs), lg_indef_np(L, Cs, S, NP).
 lg_const_np(L, Cs, a(S, K), NP) :- integer(K), !, memberchk(a(S, K), Cs), lg_indef_np(L, Cs, S, NP).
+lg_const_np(L, Cs, all(T), all(NP)) :- nonvar(T), compound(T), !, lg_const_np(L, Cs, T, NP).
 %% A possessor someone is the person no words name (since 1.115.0):
 %% of(breath, someone) is `one's breath'.
 lg_const_np(L, Cs, of(T, P), of(PNP, np(N, Num, def, As))) :- !,

@@ -80,6 +80,7 @@ main :-
     ones,
     article_names,
     two_objects,
+    predeterminers,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -636,6 +637,17 @@ two_objects :-
     must('give/3', C1, 'give(john, mary, the(book)).\n'),
     logic_translate(cocolog, english, C1, E1),
     must('and into English', E1, 'John gives Mary the book.').
+
+%% 51. ALL BEFORE A DEFINITE NOUN PHRASE (1.118.0) is the whole group the
+%% noun phrase names, a constant all(T); before a bare noun, a rule.
+predeterminers :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'All the dogs bark.', C1),
+    must('the whole group', C1, 'bark(all(the(pl(dog)))).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and into English', E1, 'All the dogs bark.'),
+    logic_translate(english, cocolog, 'All dogs bark.', C2),
+    must('every dog', C2, 'bark(A) :-\n    dog(A).\n').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

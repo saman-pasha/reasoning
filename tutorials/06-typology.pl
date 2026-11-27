@@ -177,6 +177,7 @@ main :-
     ones,
     article_names,
     two_objects,
+    predeterminers,
     format("~ndone~n", []).
 
 
@@ -1311,6 +1312,16 @@ two_objects :-
     must('two objects', IR1, clause(give, past, pos, pron(3, sg, m), io(np(customer, sg, def, []), np(demonstration, sg, indef, [])))),
     typology_write(english, clause(give, present, pos, name('John'), io(name('Mary'), np(book, sg, def, []))), W2),
     must('written', W2, 'John gives Mary the book.').
+
+%% 86. ALL BEFORE A DEFINITE NOUN PHRASE (1.118.0): all(NP), the words of the
+%% template's ty_predeterminer(L, all, Words) row before the noun phrase;
+%% before a bare noun `all' is still the determiner.
+predeterminers :-
+    typology_load(english),
+    typology_read(english, 'All the dogs bark.', IR1),
+    must('all the dogs', IR1, clause(bark, present, pos, all(np(dog, pl, def, [])), none)),
+    typology_read(english, 'All dogs bark.', IR2),
+    must('all dogs', IR2, clause(bark, present, pos, np(dog, pl, all, []), none)).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

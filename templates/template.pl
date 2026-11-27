@@ -170,6 +170,13 @@ ty_capital_nouns(xx).
 %% ty_quantifier_pronoun(xx, Quantifier, Kind, Words).
 %%   e.g. ty_quantifier_pronoun(english, some, thing, [something]).
 
+%%     ty_predeterminer(L, Kind, Words)
+%%                                     the words before a definite noun
+%%                                     phrase of Kind all (since 1.118.0:
+%%                                     English `all the wildlife')
+%% ty_predeterminer(xx, Kind, Words).
+%%   e.g. ty_predeterminer(english, all, [all]).
+
 %%     ty_definite_like(L, Def, As)    the language writes the definiteness
 %%                                     Def as As, and never reads Def
 %%                                     (since 1.64.0: Persian writes mass

@@ -529,3 +529,13 @@ They took the VCR on approval.	past(on(take(they, the_vcr), approval)).
 The colonies revolted against the Crown.	past(against(revolt(the(pl(colony))), the_crown)).
 It was the dawn of the Roman Empire.	past(dawn(it, the_roman_empire)).
 The North Pole and the South Pole are antipodes.	antipode(the_north_pole). antipode(the_south_pole).
+He gave the customer a demonstration.	demonstration(a(demonstration)). past(give(he, the(customer), a(demonstration))).
+She gave him a level look.	look(a(level(look))). level(a(level(look))). past(give(she, he, a(level(look)))).
+They gave the chairman a vote of confidence.	vote(a(of(vote, confidence))). past(give(they, the(chairman), a(of(vote, confidence)))).
+An amazed audience gave the magician a standing ovation.	audience(a(amazed(audience))). amazed(a(amazed(audience))). ovation(a(standing(ovation))). standing(a(standing(ovation))). past(give(a(amazed(audience)), the(magician), a(standing(ovation)))).
+The own goal cost them the game.	past(cost(the(own(goal)), they, the(game))).
+Chemicals could kill all the wildlife.	chemical(a(pl(chemical))). could(kill(a(pl(chemical)), all(the(wildlife)))).
+He believed all the Marxist dogma.	past(believe(he, all(the(marxist(dogma))))).
+He made all the obligatory apologies.	past(make(he, all(the(pl(obligatory(apology)))))).
+She took all his criticism in stride.	past(in(take(she, all(of(criticism, he))), stride)).
+All the world loves a lover.	lover(a(lover)). love(all(the(world)), a(lover)).
