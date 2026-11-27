@@ -99,6 +99,7 @@ main :-
     but_words,
     joined_terms,
     relatives,
+    more_grammar_words,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -846,6 +847,25 @@ relatives :-
     must('the horse that won the race', C1, 'past(win(the(horse), the(race))).\nstayer(the(horse)).\ngood(the(horse)).\n'),
     logic_translate(english, cocolog, 'Every man who is wise is happy.', C2),
     must('every man who is wise', C2, 'happy(A) :-\n    man(A),\n    wise(A).\n').
+
+
+%% 70. MORE GRAMMAR WORDS (1.137.0): a subordinate clause of though,
+%% since, until, while, unless, before or after is its kind's atom over
+%% the main clause's and its own, K(Main, Clause); the copula's
+%% infinitive is to(P(Subject)); a gerund is the constant ing(Atom), its
+%% atom said of someone.
+more_grammar_words :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'Combustion grew until revolt was unavoidable.', C1),
+    must('until', C1, 'until(past(grow(combustion)), past(unavoidable(revolt))).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and back', E1, 'Combustion grew until revolt was unavoidable.'),
+    logic_translate(english, cocolog, 'The patient appeared to be in distress.', C2),
+    must('to be in distress', C2, 'past(appear(the(patient), to(in(the(patient), distress)))).\n'),
+    logic_translate(english, cocolog, 'Swimming is fun.', C3),
+    must('swimming', C3, 'fun(ing(swim(someone))).\n'),
+    logic_translate(cocolog, english, C3, E3),
+    must('and back', E3, 'Swimming is fun.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

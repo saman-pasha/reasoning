@@ -193,6 +193,7 @@ main :-
     unsaid_copula,
     small_words,
     but_words,
+    more_grammar_words,
     format("~ndone~n", []).
 
 
@@ -1537,6 +1538,27 @@ but_words :-
     typology_read(english, 'Don\'t overload the car.', IR3),
     typology_write(english, IR3, W3),
     must('don\'t, written', W3, 'Do not overload the car.').
+
+
+%% 104. MORE GRAMMAR WORDS (1.137.0): `there' an adverb; though, since,
+%% until, while, unless, before and after subordinators, sub(K, Main,
+%% Clause), as `when' and `if'; the copula's infinitive, inf(be,
+%% Predicate); `less' grading an adjective; and the gerund, ger(V, O, Js),
+%% a subject where it begins the sentence or a sentence alone. A gerund is
+%% read only where the words read nothing without one, so `Appalling
+%% conditions.' stays a noun phrase.
+more_grammar_words :-
+    typology_load(english),
+    typology_read(english, 'Combustion grew until revolt was unavoidable.', IR1),
+    must('until', IR1, sub(until, clause(grow, past, pos, np(combustion, sg, mass, []), none), copula(past, pos, np(revolt, sg, mass, []), adj([unavoidable])))),
+    typology_read(english, 'Her performance proved to be unsatisfactory.', IR2),
+    must('to be', IR2, clause(prove, past, pos, of(pron(3, sg, f), np(performance, sg, def, [])), inf(be, adj([unsatisfactory])))),
+    typology_read(english, 'Swimming is fun.', IR3),
+    must('a gerund subject', IR3, copula(present, pos, ger(swim, none, []), adj([fun]))),
+    typology_write(english, IR3, W3),
+    must('and written', W3, 'Swimming is fun.'),
+    typology_read(english, 'Appalling conditions.', IR4),
+    must('a noun phrase still', IR4, phrase(np(condition, pl, indef, [appalling]))).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

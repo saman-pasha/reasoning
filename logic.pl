@@ -494,6 +494,7 @@ lg_statement(sub(K, Main, Cond), Items) :- !,
     ;   K == when, lg_clause_tense(Main, present), lg_clause_tense(Cond, present)
     ->  lg_conditional(Main, Cond, Items)
     ;   K == when -> lg_when(Main, Cond, Items)
+    ;   lg_sub_kind(K) -> lg_when(K, Main, Cond, Items)
     ;   lg_no(subordinate(K))
     ).
 lg_statement(phrase(X), Items) :- !, lg_phrase(X, Items).
@@ -522,6 +523,12 @@ lg_someone(thing, something).
 %% (phrase(Kind)).
 lg_phrase(X, _) :- var(X), !, lg_no(phrase(X)).
 lg_phrase(and(Xs), Items) :- !, lg_phrases(Xs, Items).
+%% A GERUND ALONE (since 1.137.0) is its clause in the progressive, of
+%% someone: `Editing a prolix manuscript.' is progressive(edit(someone,
+%% a(prolix(manuscript)))), back into English `Someone is editing a
+%% prolix manuscript.'
+lg_phrase(ger(V, O, Js), Items) :- !,
+    lg_statement(clause(V, prog(present), pos, pron(3, sg, zero), O, Js), Items).
 %% AN ADPOSITION PHRASE ALONE (since 1.104.0) is said of something, as a
 %% copula's adposition phrase is of its subject: `In direct sunlight.' is
 %% in(something, direct(sunlight)), `With dry eyes.' eye(a(pl(dry(eye)))),
@@ -565,6 +572,7 @@ lg_phrase_noun(all(NP), N, As) :- nonvar(NP), lg_phrase_noun(NP, N, As).
 lg_in_tense(at(_, _)) :- !.
 % cocolint: X3 -- when/1 here is a term of the logic form, a when clause's atom, not SWI's when/2
 lg_in_tense(modified(when(_), A)) :- lg_in_tense(A).
+lg_in_tense(modified(sub(_, _), A)) :- lg_in_tense(A).
 
 %% A clause of a joined subject or object (`John and Mary sleep.') is a
 %% clause of each item.
@@ -669,7 +677,16 @@ lg_individual(S, _, _) :- lg_no(determiner(S)).
 %% when(past(buckle(the(saw))), past(hit(the(saw), a(knot)))). A pronoun
 %% subject of the when clause is the main subject where it agrees with it
 %% (`it' the saw; `they' not the house), else a constant of its own.
-lg_when(Main, Cond, Items) :-
+%% THE OTHER SUBORDINATE CLAUSES (since 1.137.0): `though', `since',
+%% `until', `while', `unless', `before' and `after' link each atom of the
+%% main clause to the subordinate clause's one atom, as a when clause in a
+%% tense does, modified(sub(Kind, B), A), Cocolog Kind(A, B): `He remained
+%% uncorrupted though his associates were dishonest.' is
+%% though(past(uncorrupted(he)), past(dishonest(of(pl(associate), he)))).
+lg_sub_kind(K) :- memberchk(K, [though, since, until, while, unless, before, after]).
+
+lg_when(Main, Cond, Items) :- lg_when(when, Main, Cond, Items).
+lg_when(K, Main, Cond, Items) :-
     lg_parts(Main, S, Pred),
     lg_entity(S, ent(T, Conds, Q), SMs),
     lg_atoms(Main, T, Pred, Atoms0),
@@ -679,16 +696,17 @@ lg_when(Main, Cond, Items) :-
     ),
     lg_atoms(Cond, T2, Pred2, Atoms20),
     lg_split_objs(Atoms20, Bs, BObjs),
-    ( Bs = [B] -> true ; lg_no(subordinate(when)) ),
+    ( Bs = [B] -> true ; lg_no(subordinate(K)) ),
     lg_split_objs(Atoms0, As, AObjs),
-    maplist(lg_wrap_when(B), As, Ws),
+    maplist(lg_wrap_when(K, B), As, Ws),
     partition(lg_is_ind, SMs, Inds, SObjs),
     exclude(lg_is_ind, SMs2, SObjs2),
     append([Ws, AObjs, SObjs, BObjs, SObjs2], Atoms),
     lg_assert(Q, T, Conds, Atoms, S, Inds, Items).
 
 % cocolint: X3 -- when/1 here is a term of the logic form, a when clause's atom, not SWI's when/2
-lg_wrap_when(B, A, modified(when(B), A)).
+lg_wrap_when(when, B, A, modified(when(B), A)) :- !.
+lg_wrap_when(K, B, A, modified(sub(K, B), A)).
 
 %% A pronoun of the third person agrees with a noun phrase of its number
 %% and its kind: `it' with a thing's, `he' and `she' with a person's or a
@@ -979,6 +997,13 @@ lg_fun_ind(fun(_, As), I) :- member(A, As), lg_fun_ind(A, I).
 
 %% An infinitive's term: its atom said of S, an indefinite noun phrase in it
 %% a term and no fact.
+%% The copula's infinitive (since 1.137.0), inf(be, Predicate): its
+%% predicate's one atom said of S (`Migrants are likely to be poor.' says
+%% likely(a(pl(migrant)), to(poor(a(pl(migrant)))))).
+lg_inf_fun(S, be, P, _, F) :- !,
+    lg_atoms(copula(present, pos, none, P), S, P, [A2|Objs]),
+    ( maplist(lg_inf_obj, Objs) -> true ; lg_no(object(infinitive)) ),
+    lg_fun_of_atom(A2, F).
 lg_inf_fun(S, V2, O2, Js2, F) :-
     lg_atoms(clause(V2, present, pos, none, O2, Js2), S, verb(V2, O2), [A2|Objs]),
     ( maplist(lg_inf_obj, Objs) -> true ; lg_no(object(infinitive)) ),
@@ -1194,6 +1219,14 @@ lg_entity(np_pp(H, pp(P, X)), E, Ms) :- !, lg_np_pp(H, P, X, E, Ms).
 %% adposition phrase is, to(T, Atom), the atom said of someone: `A knowing
 %% attempt to defraud.' is the individual a(to(knowing(attempt),
 %% defraud(someone))).
+%% A GERUND (since 1.137.0), ger(V, O, Js), is the constant ing(Atom), its
+%% atom said of someone as an infinitive's is: `Grading papers is a
+%% thankless task.' says task(ing(grade(someone, a(pl(paper))))) and
+%% thankless(...).
+lg_entity(ger(V2, O2, Js2), ent(const(ing(Xc)), [], const), []) :- !,
+    lg_inf_fun(const(someone), V2, O2, Js2, F),
+    lg_out_term(F, [], _, Xc),
+    ( ground(Xc) -> true ; lg_no(shape(ger(V2, O2, Js2))) ).
 lg_entity(np_pp(H, Inf), E, Ms) :- lg_inf_parts(Inf, V2, O2, Js2), !,
     lg_inf_fun(const(someone), V2, O2, Js2, F),
     lg_out_term(F, [], _, Xc),
@@ -1505,6 +1538,11 @@ lg_out_atom(modified(when(B), At), M0, M, A) :- !,
     lg_out_atom(B, M1, M, B1),
     lg_code_pred_name(when, 2, N),
     A =.. [N, At1, B1].
+lg_out_atom(modified(sub(K, B), At), M0, M, A) :- !,
+    lg_out_atom(At, M0, M1, At1),
+    lg_out_atom(B, M1, M, B1),
+    lg_code_pred_name(K, 2, N),
+    A =.. [N, At1, B1].
 lg_out_atom(modified(pp(P, T), At), M0, M, A) :- !,
     lg_out_atom(At, M0, M1, At1),
     lg_out_term(T, M1, M, T1),
@@ -1582,6 +1620,17 @@ lg_in_atom(A, at(T, P)) :-
 lg_in_atom(A, modified(when(B), At)) :-
     compound(A), A =.. [N, Inner, Sub], lg_adjunct_inner(Inner), lg_adjunct_inner(Sub),
     lg_code_meaning(N, 2, when), !,
+    lg_in_atom(Inner, At),
+    lg_in_atom(Sub, B).
+%% A subordinate clause's atom (since 1.137.0) where its second argument
+%% is no constant's term: before(Atom, the(war)) is an adposition's. A
+%% tense's atom is a clause's whatever its words (`past' is an adjective
+%% too, so past(unavoidable(revolt)) read as a constant, `past unavoidable
+%% revolt').
+lg_in_atom(A, modified(sub(K, B), At)) :-
+    compound(A), A =.. [N, Inner, Sub], lg_adjunct_inner(Inner), lg_adjunct_inner(Sub),
+    (   compound(Sub), functor(Sub, T, 1), lg_tense(T) -> true ; \+ lg_const_term(Sub) ),
+    lg_code_meaning(N, 2, K), lg_sub_kind(K), !,
     lg_in_atom(Inner, At),
     lg_in_atom(Sub, B).
 lg_in_atom(A, modified(pp(P, T), At)) :-
@@ -1682,6 +1731,7 @@ lg_det_term(T) :-
     ;   T = of(X, P) -> lg_np_shape(X), \+ lg_ap_atom(X), lg_poss_term(P)
     ;   T = all(X) -> lg_det_term(X), X \= a(_), X \= a(_, _)
     ;   T = only(X) -> lg_det_term(X)
+    ;   T = ing(X) -> lg_inf_shape(X)
     ).
 
 %% An adjective's atom of a pronoun or of a name that is no noun is no
@@ -1734,9 +1784,16 @@ lg_inf_shape(Z) :-
 
 %% An infinitive's atom read as a term (since 1.96.0): never a constant,
 %% the atom an adjunct is round an atom too, so by(find_out(he),
-%% indirection) is no noun phrase `he find_out by indirection'.
+%% indirection) is no noun phrase `he find_out by indirection'. An
+%% adposition's first argument that is a determiner's term is no atom
+%% (since 1.137.0): to(in(the(patient), distress)) is the copula's
+%% adposition phrase, `to be in distress'. A determiner's alone: `meet' is
+%% an adjective too, so in(meet(someone), chicago) is a constant's term,
+%% and the infinitive `to meet in Chicago' was lost; an adverb's argument
+%% is an atom whatever it is (badly(shaken(she))).
 lg_in_atom_term(X, fun(N, [F1|Ts])) :-
     X =.. [N, X1|Xs], compound(X1), length(Xs, K), K =< 1,
+    \+ ( K =:= 1, lg_det_term(X1) ),
     Ar is K + 1, lg_code_meaning(N, Ar, M), lg_round_word(K, M), !,
     lg_in_atom_term(X1, F1),
     maplist(lg_in_term, Xs, Ts).
@@ -2166,6 +2223,9 @@ lg_atom_ir(L, at(T, A), How, IR) :- !,
 lg_atom_ir(L, modified(when(B), A), How, sub(when, IR1, IR2)) :- !,
     lg_atom_ir(L, A, How, IR1),
     lg_atom_ir(L, B, How, IR2).
+lg_atom_ir(L, modified(sub(K, B), A), How, sub(K, IR1, IR2)) :- !,
+    lg_atom_ir(L, A, How, IR1),
+    lg_atom_ir(L, B, How, IR2).
 %% Inside an adposition phrase a word that is a verb which may take no
 %% object (vi.txt) is the verb first, an adjective's phrase after (since
 %% 1.88.0: in(live(john), paris) is `John lives in Paris.', where `live' is
@@ -2235,7 +2295,8 @@ lg_inf_ir(L, How, F, V2, S2, O2, Js2) :-
     ;   lg_atom_ir(L, A2, How2, IR2)
     ),
     (   IR2 = clause(V2, present, pos, S2, O2) -> Js2 = []
-    ;   IR2 = clause(V2, present, pos, S2, O2, Js2)
+    ;   IR2 = clause(V2, present, pos, S2, O2, Js2) -> true
+    ;   IR2 = copula(present, pos, S2, O2) -> V2 = be, Js2 = []
     ).
 %% The adjuncts round an infinitive's atom, the innermost first: a verb of
 %% one place inside them is the verb (`He tried to find out by
@@ -2506,6 +2567,7 @@ lg_const_np(L, Cs, a(S), NP) :- !, memberchk(a(S), Cs), lg_indef_np(L, Cs, S, NP
 lg_const_np(L, Cs, a(S, K), NP) :- integer(K), !, memberchk(a(S, K), Cs), lg_indef_np(L, Cs, S, NP).
 lg_const_np(L, Cs, all(T), all(NP)) :- nonvar(T), compound(T), !, lg_const_np(L, Cs, T, NP).
 lg_const_np(L, Cs, only(T), only(NP)) :- nonvar(T), !, lg_const_np(L, Cs, T, NP).
+lg_const_np(L, _, ing(X), ger(V, O, Js)) :- nonvar(X), lg_inf_term(L, X, Inf), !, lg_inf_parts(Inf, V, O, Js).
 lg_const_np(L, Cs, T, NP) :-
     compound(T), T =.. [J|Ts], memberchk(J, [and, or]), Ts = [_, _|_], !,
     maplist(lg_const_np(L, Cs), Ts, NPs), NP =.. [J, NPs].
@@ -2697,6 +2759,9 @@ lg_holds(at(Tn, A), T) :- !,
 lg_holds(modified(when(B), A), T) :- !,
     lg_holds(A, T1), lg_holds(B, T2),
     format(atom(T), '~w when ~w', [T1, T2]).
+lg_holds(modified(sub(K, B), A), T) :- !,
+    lg_holds(A, T1), lg_holds(B, T2),
+    format(atom(T), '~w ~w ~w', [T1, K, T2]).
 lg_holds(modified(pp(P, Tm), A), T) :- !,
     lg_holds(A, T0), lg_term_words(Tm, W),
     format(atom(T), '~w ~w ~w', [T0, P, W]).

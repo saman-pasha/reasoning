@@ -515,7 +515,10 @@
 %%                                     clause of Kind if, when, because or
 %%                                     as (since 1.65.0: `if', `si',
 %%                                     `wenn', `parce que'; as since
-%%                                     1.114.0, English `as')
+%%                                     1.114.0, English `as'), and since
+%%                                     1.137.0 though, since, until,
+%%                                     while, unless, before or after
+%%                                     (English `though', `although')
 %%     ty_predeterminer(L, Kind, Words)
 %%                                     the words before a definite noun
 %%                                     phrase of Kind all (since 1.118.0:
@@ -1036,7 +1039,7 @@ ty_values(definiteness, [def, indef, which, every, each, all, some, no, any, thi
 ty_values(quantifier, [some, every, no, any, this, that]).
 ty_values(quantifier_kind, [thing, person]).
 %% A subordinate clause's kind (since 1.65.0).
-ty_values(subordinator, [if, when, because, as]).
+ty_values(subordinator, [if, when, because, as, though, since, until, while, unless, before, after]).
 ty_values(predeterminer, [all, such, only]).
 ty_values(animacy, [person, animate, inanimate, unknown]).
 ty_values(place, [before, after]).
@@ -1957,11 +1960,14 @@ ty_missing(L, inversion) :-
 ty_missing(L, bad(ty_wh_tonic(L, M, Ws))) :-
     ty_wh_tonic(L, M, Ws),
     \+ ( is_list(Ws), Ws \== [], ty_wh_word(L, M, _) ).
+%% The gerund's row (since 1.137.0) is a tense form of no tense the
+%% template's other rows ask for: ty_tense_form(L, gerund, any, pos, [ing]).
 ty_missing(L, bad(ty_tense_form(L, T, N, P, Ws))) :-
     ty_tense_form(L, T, N, P, Ws),
     \+ ( ty_values(tense, Ts),
          (   nonvar(T), ( T = pass(T1) ; T = prog(T1) )
          ->  ( nonvar(T1), T = pass(_), T1 = prog(T0) -> true ; T0 = T1 ), memberchk(T0, Ts)
+         ;   T == gerund -> true
          ;   memberchk(T, Ts)
          ),
          ( N == any ; ty_values(agreement, As), memberchk(N, As) ),
@@ -2251,8 +2257,21 @@ ty_read_one(L, Text, IR, Topics) :-
     *-> true
     ;   ty_surface_small(L, Lowered, Small), Small \== Lowered,
         ty_read_words(L, Text, Written, Small, Topics, Mood, IR1)
+    *-> true
+    ;   ty_ger_chance(L, Lowered),
+        b_setval('$ty_ger', on),
+        ty_read_words(L, Text, Written, Lowered, Topics, Mood, IR1),
+        b_setval('$ty_ger', off)
     ),
     ty_ir_out(IR1, IR).
+
+%% THE GERUND'S CHANCE (since 1.137.0), the fourth: a gerund is read only
+%% where the words read nothing without one ('$ty_ger' on), so `Appalling
+%% conditions.' stays a noun phrase, `Teaching history gave him a special
+%% point of view.' a noun before a noun.
+ty_ger_chance(L, Ws) :-
+    '$ty_ger_made'(L),
+    once(( member(W, Ws), atom(W), atom_concat(_, ing, W) )).
 
 ty_read_words(L, Text, Written, Surface0, Topics, Mood, IR1) :-
     ty_first_written(L, Written, Surface0, Surface),
@@ -2570,6 +2589,7 @@ ty_reads_as(Mood, L, IR0, Tokens, Topics, Massr) :-
            b_setval('$ty_massr', Massr),
            b_setval('$ty_av', on),
            b_setval('$ty_cmp', on),
+           ( ty_ir_ger(IR0) -> b_setval('$ty_ger', on), b_setval('$ty_words', Tokens) ; b_setval('$ty_ger', off) ),
            ty_parse_reset(L),
            b_setval('$ty_rel_open', f([])),
            ty_poss_flag(L, Tokens),
@@ -2583,6 +2603,15 @@ ty_reads_as(Mood, L, IR0, Tokens, Topics, Massr) :-
                 ty_ir_senses(IR0, Ms),
                 ty_mood(Mood, L, IR2, C2, G2), phrase(G2, Tokens), C2 < C1,
                 ty_ir_senses(IR2, Ms) ) ).
+
+%% An IR holds a gerund (since 1.137.0): its words are read back with the
+%% gerund's chance on ('$ty_ger', ty_read_one/7's fourth chance), as the
+%% reader read them.
+ty_ir_ger(T) :-
+    compound(T),
+    (   T = ger(_, _, _) -> true
+    ;   T =.. [_|As], member(A, As), ty_ir_ger(A)
+    ), !.
 
 %% A statement is ty_sentence//2, at cost 0; a question ty_ask//3.
 ty_mood(statement, L, IR, 0, ty_sentence(L, IR)).
@@ -3966,6 +3995,7 @@ ty_subject_number(np(_, N, _, _), N).
 ty_subject_number(Nm, sg) :- nonvar(Nm), Nm = name(_).
 ty_subject_number(Qp, sg) :- nonvar(Qp), Qp = qp(_, _).
 ty_subject_number(W, sg) :- nonvar(W), W = wh(_).
+ty_subject_number(G, sg) :- nonvar(G), G = ger(_, _, _).
 ty_subject_number(G, N) :- nonvar(G), G = gap(H, _, _), ty_subject_number(H, N).
 ty_subject_number(rel(np(_, N, _, _), _), N).
 ty_subject_number(of(_, np(_, N, _, _)), N).
@@ -4154,6 +4184,13 @@ ty_sentence(L, phrase(inf(V, O, Js))) -->
     { nonvar(S0) -> ty_infinitive_mark(L, Ws), append(Ws, _, S0) ; true },
     ty_infinitive(L, V, O, Js),
     { ty_inf_not_noun(L, V, O, Js) }.
+%% A GERUND ALONE (since 1.137.0): phrase(ger(V, O, Js)), read after the
+%% infinitive alone (`Doing a brisk business.', `Editing a prolix
+%% manuscript.').
+ty_sentence(L, phrase(ger(V, O, Js))) -->
+    { '$ty_ger_made'(L) },
+    ty_ger_ahead(L),
+    ty_gerund(L, V, O, Js).
 
 %% A COMMAND (since 1.82.0): a clause in the imperative, a tense whose verb
 %% forms the language's ty_tense_form/5 rows give (English: the present's
@@ -4328,7 +4365,7 @@ ty_command_adjective(L, clause(V, _, _, _, O, _)) :-
     ty_word_class(L, adjective, W).
 
 ty_command_subject(Pr) :-
-    nb_current('$ty_command', X), ( X = c(C) -> true ; X = z(C) -> true ; X = i(C) ),
+    nb_current('$ty_command', X), ( X = c(C) -> true ; X = z(C) -> true ; X = i(C) -> true ; X = g(C) ),
     ( C = copula(_, _, S, _) -> true ; arg(4, C, S) ), S == Pr.
 
 %% Only a command's own clause is in the imperative (a clause inside it,
@@ -4347,6 +4384,7 @@ ty_has_imperative(X) :-
 ty_imperative_ok(T) :-
     (   T == imperative -> nb_current('$ty_command', c(_))
     ;   T == infinitive -> nb_current('$ty_command', i(_))
+    ;   T == gerund -> nb_current('$ty_command', g(_))
     ;   T = pass(T0) -> nb_current('$ty_pass', on), ( T0 == infinitive -> nb_current('$ty_command', i(_)) ; true )
     ;   T = prog(_) -> nb_current('$ty_prog', on)
     ;   true
@@ -4411,6 +4449,7 @@ ty_ir_features(L, only(NP), F) :- !, ty_ir_features(L, NP, F).
 ty_ir_features(L, refl(Pr), F) :- !, ty_ir_features(L, Pr, F).
 ty_ir_features(L, emph(NP, _), F) :- !, ty_ir_features(L, NP, F).
 ty_ir_features(_, group(_), [D, pl, unknown, _]) :- !, ty_def_feature(def, D).
+ty_ir_features(_, ger(_, _, _), [D, sg, unknown, _]) :- !, ty_def_feature(def, D).
 ty_ir_features(L, C, F) :-
     ty_coord_np(C, K, Xs), !,
     findall(F1, ( member(X, Xs), ty_ir_features(L, X, F1) ), Fs),
@@ -5482,6 +5521,40 @@ ty_infinitive_ahead(L, S0, S0) :-
 %% Where a subordinate clause's verb is last (ty_verb_last(L, rel)), so is
 %% an infinitive's, never split at its first word (since 1.97.0: German
 %% `Der Junge versucht den Hund zu sehen.').
+%% A GERUND (since 1.137.0): ger(Verb, Object, Adjuncts), the clause of
+%% its verb in the tense gerund (ty_tense_form/5: English [ing], the verb's
+%% form in -ing), whose subject no words say, as an infinitive's: a
+%% subject (ty_role//4: `Grading papers is a thankless task.') and a
+%% phrase alone (`Doing a brisk business.'). Reading, only where the first
+%% word ends as a form in -ing does ('$ty_ger_made'/1, ty_ger_ahead//1).
+ty_gerund(L, V, O, Js) -->
+    { C = clause(V, gerund, pos, pron(3, sg, zero), O, Js),
+      ( nb_current('$ty_command', X0) -> true ; X0 = none ),
+      b_setval('$ty_command', g(C)) },
+    (   { ty_verb_last(L, rel) } -> ty_sub(ty_clause(L, C)) ; ty_clause(L, C) ),
+    { b_setval('$ty_command', X0) }.
+
+ty_ger_first(S0, S0) :-
+    (   var(S0) -> true ; nb_current('$ty_words', W), S0 == W ).
+
+ty_ger_ahead(L, S0, S0) :-
+    (   var(S0) -> '$ty_ger_made'(L)
+    ;   nb_current('$ty_ger', on), S0 = [W|_], atom(W), atom_concat(_, ing, W)
+    ).
+
+%% THE COPULA'S INFINITIVE (since 1.137.0): inf(be, Predicate), the
+%% copula of no subject in the tense infinitive (ty_copula/6: English [to,
+%% be]) and its predicate, wherever an infinitive stands: `Migrants are
+%% likely to be poor.', `It turned out to be a trojan horse.', `To be of
+%% any use.'. Tried after a verb's infinitive.
+ty_infinitive(L, be, P, Js) -->
+    { Js = [], '$ty_inf_be'(L),
+      C = copula(infinitive, pos, pron(3, sg, zero), P),
+      ( nb_current('$ty_command', X0) -> true ; X0 = none ),
+      b_setval('$ty_command', i(C)) },
+    (   { ty_verb_last(L, rel) } -> ty_sub(ty_copula_clause(L, C)) ; ty_copula_clause(L, C) ),
+    ty_infinitive_end(L),
+    { b_setval('$ty_command', X0) }.
 ty_infinitive(L, V, O, Js) -->
     { C = clause(V, infinitive, pos, pron(3, sg, zero), O, Js),
       ( nb_current('$ty_command', X0) -> true ; X0 = none ),
@@ -6672,7 +6745,8 @@ ty_copula_part(c, L, copula(T, P, S, Pred), _, _) -->
       b_setval('$ty_csubj', S),
       ty_copula_kind(L, Pred, K),
       ty_copula_polarity(L, P, CP) },
-    ty_copula_words(L, K, T, N, CP).
+    ty_copula_words(L, K, T, N, CP),
+    { T \== infinitive -> true ; nb_current('$ty_command', i(_)) }.
 ty_copula_part(n(Ws), _, _, _, _) --> ty_tokens(Ws).
 ty_copula_part(vf(R), L, C, _, _) --> ty_split_first(R, L, C, none).
 ty_copula_part(vr(R), L, C, _, _) --> ty_split_rest(R, L, C, none).
@@ -7166,6 +7240,10 @@ ty_tense_whole(L, T) :-
                     ( X == participle -> true
                     ; nonvar(X), X = form(T1, _), ty_values(core_tense, Cs), memberchk(T1, Cs) ) ) )).
 
+%% A pattern's item that is a word (ing and participle are slots: a
+%% gerund's pattern is [ing], since 1.137.0).
+ty_pattern_word(W) :- atom(W), W \== ing, W \== participle.
+
 ty_pattern_kind(T, pprog) :- ty_pass_prog(T), !.
 ty_pattern_kind(T, pass) :- nonvar(T), T = pass(_), !.
 ty_pattern_kind(T, prog) :- nonvar(T), T = prog(_), !.
@@ -7335,6 +7413,8 @@ ty_verb_row(L, V, T, N, P, Words) :-
 %% German `den Hund zu sehen') reads one as a verb's object and after
 %% ty_purpose_mark/2's words (since 1.97.0), never in those places.
 :- dynamic('$ty_inf_made'/1).
+:- dynamic('$ty_inf_be'/1).
+:- dynamic('$ty_ger_made'/1).
 %% The first words of a language's infinitives (since 1.97.0): its
 %% ty_verb/6 rows of the tense infinitive, its ty_tense_form/5 row's first
 %% word (English `to', German `zu'); a text with one may hold an infinitive
@@ -7431,6 +7511,8 @@ ty_vfirst_make(L) :-
              forall(retract((ty_noun_form(L, _, _, _, _, BW) :- !, fail)), true) )),
     retractall('$ty_both'(_, L)),
     retractall('$ty_inf_made'(L)),
+    retractall('$ty_inf_be'(L)),
+    retractall('$ty_ger_made'(L)),
     retractall('$ty_vinf'(_, L)),
     retractall('$ty_pass_made'(L)),
     retractall('$ty_prog_made'(L)),
@@ -7507,15 +7589,24 @@ ty_vfirst_make(L) :-
     forall(( ty_tense_form(L, infinitive, _, pos, [I|_]), atom(I), \+ '$ty_vinf'(I, L) ),
            assertz('$ty_vinf'(I, L))),
     ( ty_infinitive_mark(L, _) -> assertz('$ty_inf_made'(L)) ; true ),
+    ( once(ty_copula(L, _, infinitive, _, _, _)) -> assertz('$ty_inf_be'(L)) ; true ),
+    ( once(ty_tense_form(L, gerund, _, _, _)) -> assertz('$ty_ger_made'(L)) ; true ),
     findall(F, ( ty_tense_pattern(L, T, _, _, [I|_], _),
                  (   atom(I), nonvar(T), T = pass(_) -> F = pass(I)
                  ;   atom(I), nonvar(T), T = prog(_) -> F = prog(I)
+                 ;   I == ing -> F = '$ing'
                  ;   atom(I) -> F = I
                  ;   T == imperative -> F = '$imperative'
                  ;   F = '$any'
                  ) ), Fs0),
     sort(Fs0, Fs1),
-    forall(( member(F, Fs1), F \== '$imperative', F \= pass(_), F \= prog(_) ), assertz('$ty_tfirst'(F, L))),
+    forall(( member(F, Fs1), F \== '$imperative', F \== '$ing', F \= pass(_), F \= prog(_) ), assertz('$ty_tfirst'(F, L))),
+    %% A pattern that begins with the form in -ing (a gerund's, since
+    %% 1.137.0): any word in -ing, while a gerund is read.
+    (   memberchk('$ing', Fs1)
+    ->  assertz(('$ty_tfirst'(W, L) :- nb_current('$ty_command', g(_)), atom(W), atom_concat(_, ing, W)))
+    ;   true
+    ),
     forall(( member(pass(F), Fs1), \+ memberchk(F, Fs1) ),
            (   memberchk(prog(F), Fs1)
            ->  assertz(('$ty_tfirst'(F, L) :- ( nb_current('$ty_pass', on) -> true ; nb_current('$ty_prog', on) )))
@@ -7555,10 +7646,10 @@ ty_vfirst_make(L) :-
     ;   true
     ),
     findall(T9-N9-P9-Pt9-C9, ty_tense_pattern(L, T9, N9, P9, Pt9, C9), Rows9),
-    findall(W9, ( member(_-_-_-[W9|_]-_, Rows9), atom(W9) ), Ws90), sort(Ws90, Ws9),
+    findall(W9, ( member(_-_-_-[W9|_]-_, Rows9), ty_pattern_word(W9) ), Ws90), sort(Ws90, Ws9),
     forall(member(W9, Ws9), assertz('$ty_tpk'(W9, L))),
     forall(( member(K9, ['$none'|Ws9]), member(T9-N9-P9-Pt9-C9, Rows9),
-             ( Pt9 = [F9|_], atom(F9) -> F9 == K9 ; true ) ),
+             ( Pt9 = [F9|_], ty_pattern_word(F9) -> F9 == K9 ; true ) ),
            ( ty_pattern_kind(T9, Kd9), assertz('$ty_tpw'(L, K9, Kd9, T9, N9, P9, Pt9, C9)) )),
     assertz('$ty_tpw_made'(L)),
     forall(( ty_values(tense, Ts10), member(T10, Ts10), T10 \== infinitive,
@@ -7671,6 +7762,22 @@ ty_role(L, Role, Qp, Features) -->
 %% row is English's, whose roles take no marks (a language whose roles do
 %% has no row yet).
 ty_role(L, s, group(A), F) --> ty_group_words(L, A, F, no).
+%% A GERUND AS A SUBJECT (since 1.137.0), ger(V, O, Js), singular: read
+%% only where it begins the sentence (ty_ger_first//0, the parse's words,
+%% '$ty_words'), as `Grading papers is a thankless task.'; asked in every
+%% clause, `a period of fence mending to substantive changes' read a
+%% relative clause whose subject was `mending to substantive'. A language
+%% with no gerund row fails the clause at its first goal ('$ty_ger_made'/1),
+%% one inference a subject: the gerund's own test cost every subject three,
+%% and a Spanish reading passed test/typology.pl's 20 000.
+ty_role(L, s, G, F) -->
+    { '$ty_ger_made'(L) },
+    ty_ger_ahead(L),
+    ty_ger_first,
+    { var(G) -> true ; G = ger(_, _, _) },
+    { G = ger(V, O, Js) },
+    ty_gerund(L, V, O, Js),
+    { ty_ir_features(L, G, F) }.
 ty_role(L, o, group(A), F) --> { ty_group_gate(A) }, ty_group_words(L, A, F, yes).
 
 %% A personal pronoun in its role; an object clitic's words stood in the

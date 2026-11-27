@@ -236,7 +236,10 @@ ty_capital_nouns(xx).
 %%                                     clause of Kind if, when, because or
 %%                                     as (since 1.65.0: `if', `si',
 %%                                     `wenn', `parce que'; as since
-%%                                     1.114.0, English `as')
+%%                                     1.114.0, English `as'), and since
+%%                                     1.137.0 though, since, until,
+%%                                     while, unless, before or after
+%%                                     (English `though', `although')
 %% ty_subordinator(xx, Kind, Words).
 %%   e.g. ty_subordinator(english, if, [if]).
 

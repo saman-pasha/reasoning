@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words, but_words,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words, but_words, more_grammar_words,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2668,7 +2668,7 @@ modals :-
     findall(W4, ( member(W4, [sees|Ws3]),
                   findall(T4-N4-P4-Pt4, ty_tense_pattern_at(english, [W4, x], T4, N4, P4, Pt4, _), A4),
                   findall(T5-N5-P5-Pt5, ( ty_tense_pattern_now(english, T5, N5, P5, Pt5, _),
-                                          ( Pt5 = [F5|_], atom(F5) -> F5 == W4 ; true ) ), A5),
+                                          ( Pt5 = [F5|_], ty_pattern_word(F5) -> F5 == W4 ; true ) ), A5),
                   A4 \== A5 ), Bad4),
     check('the patterns by their first word are the walk\'s, in its order', Bad4, []),
     findall(T6, '$ty_tcheck'(T6, english), Ts6),
@@ -2793,6 +2793,46 @@ but_words :-
              ( IR3 =@= IR -> V3 = yes ; V3 = IR3 ),
              atomic_list_concat([L, ', read back: ', Want3], Label4),
              check(Label4, V3, yes) )).
+
+%% 1.137.0: `there' as an adverb; though, since, until, while, unless,
+%% before and after as subordinators (sub(K, Main, Clause)); the copula's
+%% infinitive `to be' (inf(be, Predicate)); `less' grading an adjective;
+%% and the gerund (ger(V, O, Js)) as a subject at the start of a sentence
+%% and as a sentence alone, read only where the words read nothing without
+%% one (the fourth chance), so a noun phrase stays one.
+more_grammar_words :-
+    section('there, the other subordinators, to be, less, and the gerund'),
+    forall(member(T-Want-W0, [
+               'The smart set goes there.'-clause(go, present, pos, np(set, sg, def, [smart]), none, [adv(there)])-same,
+               'Though his associates were dishonest, he remained uncorrupted.'-sub(though, clause(remain, past, pos, pron(3, sg, m), sc(adj([uncorrupted]))), copula(past, pos, of(pron(3, sg, m), np(associate, pl, def, [])), adj([dishonest])))-'He remained uncorrupted though his associates were dishonest.',
+               'A bird will not learn its song unless it hears it at an early age.'-sub(unless, clause(learn, future, neg, np(bird, sg, indef, []), of(pron(3, sg, n), np(song, sg, def, []))), clause(hear, present, pos, pron(3, sg, n), pron(3, sg, n), [pp(at, np(age, sg, indef, [early]))]))-same,
+               'Combustion grew until revolt was unavoidable.'-sub(until, clause(grow, past, pos, np(combustion, sg, mass, []), none), copula(past, pos, np(revolt, sg, mass, []), adj([unavoidable])))-same,
+               'Someone stole his wallet while he was in a drunken stupor.'-sub(while, clause(steal, past, pos, qp(some, person), of(pron(3, sg, m), np(wallet, sg, def, []))), copula(past, pos, pron(3, sg, m), pp(in, np(stupor, sg, indef, [drunken]))))-same,
+               'We had the last laugh after the votes were counted.'-sub(after, clause(have, past, pos, pron(1, pl, _), np(laugh, sg, def, [last])), clause(count, pass(past), pos, np(vote, pl, def, []), none))-same,
+               'She has been able to live comfortably since her husband died.'-sub(since, copula(perfect, pos, pron(3, sg, f), adj([ap(able, inf(live, none, [adv(comfortably)]))])), clause(die, past, pos, of(pron(3, sg, f), np(husband, sg, def, [])), none))-same,
+               'Her performance proved to be unsatisfactory.'-clause(prove, past, pos, of(pron(3, sg, f), np(performance, sg, def, [])), inf(be, adj([unsatisfactory])))-same,
+               'The patient appeared to be in distress.'-clause(appear, past, pos, np(patient, sg, def, []), inf(be, pp(in, np(distress, sg, mass, []))))-same,
+               'They snobbishly excluded their less wealthy friends from the party.'-clause(exclude, past, pos, pron(3, pl, _), of(pron(3, pl, _), np(friend, pl, def, [adv(less, wealthy)])), [adv(snobbishly), pp(from, np(party, sg, def, []))])-'They excluded their less wealthy friends snobbishly from the party.',
+               'Swimming is fun.'-copula(present, pos, ger(swim, none, []), adj([fun]))-same,
+               'Jogging works off my excess energy.'-clause(work_off, present, pos, ger(jog, none, []), of(pron(1, sg, _), np(energy, sg, def, [excess])))-same,
+               'Editing a prolix manuscript.'-phrase(ger(edit, np(manuscript, sg, indef, [prolix]), []))-same,
+               'Appalling conditions.'-phrase(np(condition, pl, indef, [appalling]))-same,
+               'Sputtering engines.'-phrase(np(engine, pl, indef, [n(sputtering)]))-same ]),
+           ( ( once(typology_read(english, T, R)) -> true ; R = none ),
+             ( R = Want -> V = yes ; V = R ),
+             atomic_list_concat(['English, the first reading: ', T], Label),
+             check(Label, V, yes),
+             ( W0 == same -> Want2 = T ; Want2 = W0 ),
+             ( R \== none, typology_write(english, R, W) -> true ; W = none ),
+             atomic_list_concat(['English, written: ', Want2], Label2),
+             check(Label2, W, Want2) )),
+    ( once(typology_read(english, 'They moved forward from a period of fence mending to substantive changes in the country.', R3)) -> true ; R3 = none ),
+    ( t_has_ger(R3) -> V3 = R3 ; V3 = no ),
+    check('a gerund subject begins the sentence: none inside a relative clause', V3, no).
+
+t_has_ger(T) :-
+    compound(T),
+    (   T = ger(_, _, _) -> true ; T =.. [_|As], member(A, As), t_has_ger(A) ), !.
 
 %% 1.133.0: a capital word inside a sentence is read in small letters
 %% where nothing else reads.
@@ -3512,8 +3552,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 6253 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 6 253 sentences read at 1.134.0 within 2 000 000 inferences each are read', R1, yes),
+    ( K >= 6318 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 6 318 sentences read at 1.137.0 within 2 000 000 inferences each are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

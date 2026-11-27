@@ -620,3 +620,13 @@ Parasitic vines that strangle the trees.	vine(a(pl(parasitic(vine)))). parasitic
 Terrorist acts that shocked the civilized world.	act(a(pl(terrorist(act)))). terrorist(a(pl(terrorist(act)))). past(shock(a(pl(terrorist(act))), the(civilized(world)))).
 A favor that cannot be paid back.	favor(a(favor)). is_not(can(back(pay(someone, a(favor))))).
 Our neighbor was very kind about the window our son broke.	past(break(of(son, we), the(window))). past(about(very(kind(of(neighbor, we))), the(window))).
+Though his associates were dishonest, he remained uncorrupted.	though(past(remain(he, uncorrupted(he))), past(dishonest(of(pl(associate), he)))).
+Combustion grew until revolt was unavoidable.	until(past(grow(combustion)), past(unavoidable(revolt))).
+We had the last laugh after the votes were counted.	after(past(have(we, the(last(laugh)))), past(count(someone, the(pl(vote))))).
+Her performance proved to be unsatisfactory.	past(prove(of(performance, she), to(unsatisfactory(of(performance, she))))).
+The patient appeared to be in distress.	past(appear(the(patient), to(in(the(patient), distress)))).
+Swimming is fun.	fun(ing(swim(someone))).
+Getting that job was definitely fluky.	past(definitely(fluky(ing(get(someone, that(job)))))).
+Jogging works off my excess energy.	work_off(ing(jog(someone)), of(excess(energy), i)).
+The smart set goes there.	there(go(the(smart(set)))).
+They snobbishly excluded their less wealthy friends from the party.	past(from(snobbishly(exclude(they, of(pl(less(wealthy(friend))), they))), the(party))).

@@ -523,6 +523,19 @@ ty_subordinator(english, because, [because]).
 %% `as' before a clause (since 1.114.0: `She felt no discomfort as the
 %% dentist drilled her deadened tooth.'); level 2 has no form of it yet.
 ty_subordinator(english, as, [as]).
+%% Since 1.137.0: `though' (`although' and `even though' read as it,
+%% `though' written), `since', `until', `while', `unless', `before' and
+%% `after' before a clause; before a noun phrase the last four are
+%% adpositions.
+ty_subordinator(english, though, [though]).
+ty_subordinator(english, though, [although]).
+ty_subordinator(english, though, [even, though]).
+ty_subordinator(english, since, [since]).
+ty_subordinator(english, until, [until]).
+ty_subordinator(english, while, [while]).
+ty_subordinator(english, unless, [unless]).
+ty_subordinator(english, before, [before]).
+ty_subordinator(english, after, [after]).
 %% `all' before a definite noun phrase (since 1.118.0: `all the wildlife',
 %% `all his creditors'); before a bare noun it is the determiner (`All dogs
 %% bark.').
@@ -572,6 +585,10 @@ ty_tense_form(english, imperative, pl, neg, ['don''t', form(present, pl)]).
 %% An infinitive (since 1.95.0) is `to' and the present's plural form, a
 %% verb's object (`He tried to catch her eye.').
 ty_tense_form(english, infinitive, any, pos, [to, form(present, pl)]).
+%% A gerund (since 1.137.0) is the verb's form in -ing, read and written
+%% only inside its own phrase (ty_gerund//4): `Grading papers is a
+%% thankless task.', `Doing a brisk business.'.
+ty_tense_form(english, gerund, any, pos, [ing]).
 %% The passive (since 1.98.0): a form of `be' and the participle, its
 %% subject the verb's patient (`The pass was fumbled.', `The house will be
 %% built.', `It has not been paid.').
@@ -658,6 +675,14 @@ ty_copula(english, any, past, sg, pos, [was]).
 ty_copula(english, any, past, pl, pos, [were]).
 ty_copula(english, any, past, sg, neg, [was, not]).
 ty_copula(english, any, past, pl, neg, [were, not]).
+%% The copula's infinitive (since 1.137.0), read and written only inside
+%% an infinitive (ty_infinitive//4): `likely to be poor'. Its every
+%% number and polarity, as the template's check asks (the reader takes the
+%% positive one alone).
+ty_copula(english, any, infinitive, sg, pos, [to, be]).
+ty_copula(english, any, infinitive, pl, pos, [to, be]).
+ty_copula(english, any, infinitive, sg, neg, [not, to, be]).
+ty_copula(english, any, infinitive, pl, neg, [not, to, be]).
 
 %% Prepositions before their noun phrase; the adjuncts at the clause's end.
 ty_order(english, pp, [p, x]).
@@ -831,12 +856,18 @@ ty_adverb(english, quickly, quickly).
 ty_adverb(english, slowly, slowly).
 ty_adverb(english, today, today).
 ty_adverb(english, here, here).
+%% `there' an adverb of place (since 1.137.0: `He went there.'); `There
+%% is' stays the existential, read first.
+ty_adverb(english, there, there).
 ty_adverb(english, very, very).
 %% `more' grades an adjective as its comparative (since 1.120.0); a short
 %% adjective's comparative is one word (ty_comparative/4: `taller',
 %% `happier', `bigger', `larger'), a few of their own (`better').
 ty_adverb(english, more, more).
 ty_adverb(english, most, most).
+%% `less' before an adjective or an adverb (since 1.137.0: `less
+%% important', `less quickly').
+ty_adverb(english, less, less).
 %% The adverbs of grammar (since 1.107.0): words ty_closed/2 keeps from the
 %% import, read where an adverb stands, inside or before the verb's words
 %% (`They always raise the audio for commercials.'), before an adjective

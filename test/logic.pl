@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words, but_words, joined_terms, relatives]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words, but_words, joined_terms, relatives, more_grammar_words]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -262,11 +262,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 591),
-    ( R >= 579 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 579 right', VR, ok),
-    ( K >= 585 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 585 kept', VK, ok).
+    check('the second measure: its sentences', N, 601),
+    ( R >= 592 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 592 right', VR, ok),
+    ( K >= 595 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 595 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -1184,6 +1184,38 @@ reflexives :-
     once(typology_read(english, 'Perfectly poised and sure of himself.', IR)),
     ( logic_from_ir(IR, _) -> W = read ; logic_why(IR, W) ),
     check('a reflexive with no subject has no logic form', W, pronoun(reflexive)).
+
+%% 1.137.0: a subordinate clause of though, since, until, while, unless,
+%% before or after is its kind's atom over the main clause's and its own,
+%% K(Main, Clause), each in its tense; a tense's atom is a clause's after
+%% a subordinator though `past' is an adjective too; the copula's
+%% infinitive is to(P(Subject)), an adposition phrase to(in(Subject,
+%% Term)); a gerund is the constant ing(Atom), its atom said of someone,
+%% and a gerund alone the progressive of someone's atom; `there' and
+%% `less' are an adverb's atom.
+more_grammar_words :-
+    section('there, the other subordinators, to be, less, and the gerund'),
+    typology_load(english),
+    forall(member(S-Want-Back, [
+               'Though his associates were dishonest, he remained uncorrupted.'-'though(past(remain(he, uncorrupted(he))), past(dishonest(of(pl(associate), he)))).\n'-'He remained uncorrupted though his associates were dishonest.',
+               'Combustion grew until revolt was unavoidable.'-'until(past(grow(combustion)), past(unavoidable(revolt))).\n'-same,
+               'Her performance proved to be unsatisfactory.'-'past(prove(of(performance, she), to(unsatisfactory(of(performance, she))))).\n'-same,
+               'The patient appeared to be in distress.'-'past(appear(the(patient), to(in(the(patient), distress)))).\n'-same,
+               'Swimming is fun.'-'fun(ing(swim(someone))).\n'-same,
+               'Getting that job was definitely fluky.'-'past(definitely(fluky(ing(get(someone, that(job)))))).\n'-same,
+               'Jogging works off my excess energy.'-'work_off(ing(jog(someone)), of(excess(energy), i)).\n'-same,
+               'Grading papers is a thankless task.'-'task(ing(grade(someone, a(pl(paper))))).\nthankless(ing(grade(someone, a(pl(paper))))).\n'-'Grading papers is a task. Grading papers is thankless.',
+               'Editing a prolix manuscript.'-'manuscript(a(prolix(manuscript))).\nprolix(a(prolix(manuscript))).\nprogressive(edit(someone, a(prolix(manuscript)))).\n'-'Someone is editing a prolix manuscript.',
+               'The smart set goes there.'-'there(go(the(smart(set)))).\n'-same,
+               'They snobbishly excluded their less wealthy friends from the party.'-'past(from(snobbishly(exclude(they, of(pl(less(wealthy(friend))), they))), the(party))).\n'-'They excluded their less wealthy friends snobbishly from the party.' ]),
+           ( ( logic_translate(english, cocolog, S, C) -> true ; C = none ),
+             check(S, C, Want),
+             ( C \== none, logic_translate(cocolog, english, C, E) -> true ; E = none ),
+             ( Back == same -> Back1 = S ; Back1 = Back ),
+             atomic_list_concat(['and back: ', S], Label),
+             check(Label, E, Back1) )),
+    ( logic_translate(cocolog, english, 'past(before(arrive(he), the(war))).\n', E2) -> true ; E2 = none ),
+    check('before a constant is the adposition', E2, 'He arrived before the war.').
 
 %% 1.136.0: a noun phrase with a relative clause is its head's entity,
 %% the clause's atoms said of the head's term: a constant's or an
