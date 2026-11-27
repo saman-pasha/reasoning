@@ -519,6 +519,12 @@
 %%                                     plural, as a subject (since 1.127.0:
 %%                                     English `The poor knew themselves.'),
 %%                                     group(A)
+%%     ty_hyphen_word(L, Part)         a hyphenated word no table has takes
+%%                                     its class from its Part, last (since
+%%                                     1.129.0: English `well-wired' an
+%%                                     adjective, `fortune-teller' a noun of
+%%                                     a person), rows made for it as a text
+%%                                     or an IR first has it
 %%     ty_subordinate_first(L)         a subordinate clause may stand before
 %%                                     its main clause, a comma after it
 %%                                     (`If it sleeps, the dog is small.');
@@ -939,7 +945,7 @@
            ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
            ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
            ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-           ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_adjective_list/3, ty_noun_list/3, ty_purpose_mark/2, ty_purpose_bare/1, ty_adverb_inside/1, ty_infinitive_after/3, ty_phrasal/5, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_predeterminer/3, ty_adjective_group/2, ty_comparative/4, ty_irregular_comparative/3, ty_subordinate_first/1, ty_subordinate_comma/1,
+           ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_adjective_list/3, ty_noun_list/3, ty_purpose_mark/2, ty_purpose_bare/1, ty_adverb_inside/1, ty_infinitive_after/3, ty_phrasal/5, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_predeterminer/3, ty_adjective_group/2, ty_hyphen_word/2, ty_comparative/4, ty_irregular_comparative/3, ty_subordinate_first/1, ty_subordinate_comma/1,
            ty_answer_echo/3, ty_kind/2, ty_adjective_before/2, ty_pronoun_gender/2,
            ty_inversion/3, ty_wh_tonic/3,
            ty_tense_form/5, ty_participle/3, ty_participle_like/3, ty_existential/2,
@@ -965,7 +971,7 @@
                  ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
                  ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
                  ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-                 ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_adjective_list/3, ty_noun_list/3, ty_purpose_mark/2, ty_purpose_bare/1, ty_adverb_inside/1, ty_infinitive_after/3, ty_phrasal/5, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_predeterminer/3, ty_adjective_group/2, ty_comparative/4, ty_irregular_comparative/3, ty_subordinate_first/1, ty_subordinate_comma/1,
+                 ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_adjective_list/3, ty_noun_list/3, ty_purpose_mark/2, ty_purpose_bare/1, ty_adverb_inside/1, ty_infinitive_after/3, ty_phrasal/5, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_predeterminer/3, ty_adjective_group/2, ty_hyphen_word/2, ty_comparative/4, ty_irregular_comparative/3, ty_subordinate_first/1, ty_subordinate_comma/1,
                  ty_answer_echo/3, ty_adjective_before/2, ty_pronoun_gender/2,
                  ty_inversion/3, ty_wh_tonic/3,
                  ty_tense_form/5, ty_participle/3, ty_participle_like/3,
@@ -1025,6 +1031,7 @@ ty_values(role, [s, o]).
 ty_values(adjunct_place, [start, end, before(v), after(s)]).
 ty_values(predicate, [adj, np, pp]).
 ty_values(question_kind, [yes_no, wh]).
+ty_values(hyphen_part, [last]).
 ty_values(question_level, [clause, copula]).
 ty_values(wh_place, [front, in_place, after(s), all_front]).
 ty_values(wh, [who, what, where, when]).
@@ -1262,7 +1269,7 @@ ty_tdoc_more(Ls, [], Ls).
 %% section blank_template holds them to the header's slots).
 ty_template_group('the orders of the levels', [ty_order]).
 ty_template_group('words', [ty_noun_class, ty_class_when, ty_noun_in, ty_noun, ty_adjective, ty_adjective_before, ty_article, ty_adposition,
-                            ty_adverb, ty_capital, ty_capital_nouns, ty_name, ty_quantifier_pronoun, ty_predeterminer, ty_adjective_group, ty_comparative, ty_irregular_comparative, ty_definite_like, ty_subordinator, ty_subordinate_first, ty_subordinate_comma, ty_and, ty_conjunction, ty_serial_comma,
+                            ty_adverb, ty_capital, ty_capital_nouns, ty_name, ty_quantifier_pronoun, ty_predeterminer, ty_adjective_group, ty_hyphen_word, ty_comparative, ty_irregular_comparative, ty_definite_like, ty_subordinator, ty_subordinate_first, ty_subordinate_comma, ty_and, ty_conjunction, ty_serial_comma,
                             ty_conjunct_marks, ty_clause_comma, ty_comma, ty_sense, ty_closed]).
 ty_template_group('verbs and tenses', [ty_conjugation, ty_verb_in, ty_irregular_verb, ty_verb, ty_verb_list, ty_adjective_list, ty_noun_list, ty_purpose_mark, ty_purpose_bare, ty_adverb_inside, ty_infinitive_after, ty_phrasal, ty_tense_form, ty_tense_like, ty_participle,
                                        ty_participle_like, ty_participle_ending, ty_participle_agrees,
@@ -1407,6 +1414,7 @@ ty_row_shape('ty_name(L, Meaning, Written, Gender, Animacy).').
 ty_row_shape('ty_quantifier_pronoun(L, Quantifier, Kind, Words).').
 ty_row_shape('ty_predeterminer(L, Kind, Words).').
 ty_row_shape('ty_adjective_group(L, Definiteness).').
+ty_row_shape('ty_hyphen_word(L, Part).').
 ty_row_shape('ty_comparative(L, Adverb, Short, Endings).').
 ty_row_shape('ty_irregular_comparative(L, Adjective, Word).').
 ty_row_shape('ty_subordinator(L, Kind, Words).').
@@ -1897,6 +1905,9 @@ ty_missing(L, bad(ty_comparative(L, M, Sh, Es))) :-
 ty_missing(L, bad(ty_irregular_comparative(L, A, W))) :-
     ty_irregular_comparative(L, A, W),
     \+ ( atom(A), atom(W) ).
+ty_missing(L, bad(ty_hyphen_word(L, P))) :-
+    ty_hyphen_word(L, P),
+    \+ ( ty_values(hyphen_part, Ps), memberchk(P, Ps) ).
 ty_missing(L, bad(ty_adjective_group(L, D))) :-
     ty_adjective_group(L, D),
     \+ ( ty_values(definiteness, Ds), memberchk(D, Ds) ).
@@ -2092,11 +2103,134 @@ typology_read(L, Text, IR) :-
     typology_read(L, Text, IR, []).
 
 typology_read(L, Text, IR, Topics) :-
+    ty_dash_split(Text, T1, T2), !,
+    typology_read(L, T1, IR1, Topics),
+    typology_read(L, T2, IR2, Topics),
+    IR = dash(IR1, IR2).
+typology_read(L, Text, IR, Topics) :-
     must_be(atom, L),
     must_be(list, Topics),
+    ty_read_one(L, Text, IR, Topics).
+
+%% TWO HYPHENS, A DASH (since 1.129.0), join two sentences of one text: the
+%% words before the dash a sentence of their own, a statement, and the
+%% words after it a sentence with the text's end mark, dash(IR1, IR2)
+%% (`Stay a bit longer--the day is still young.', `That intangible
+%% thing--the soul.'). Each part reads as it would alone; writing, the
+%% first part has no full stop and the second no capital the writer gave
+%% it, the dash with no space either side.
+ty_dash_split(Text, T1, T2) :-
+    sub_atom(Text, _, 2, _, '--'), !,
+    atom_string(A, Text),
+    sub_atom(A, B, 2, After, '--'), !,
+    sub_atom(A, 0, B, _, P10),
+    B2 is B + 2,
+    sub_atom(A, B2, After, 0, P20),
+    split_string(P10, "", " ", [S1]), atom_string(P1, S1),
+    split_string(P20, "", " ", [S2]), atom_string(P2, S2),
+    P1 \== '', P2 \== '',
+    \+ sub_atom(P2, 0, 1, _, '-'),
+    atom_concat(P1, '.', T1),
+    T2 = P2.
+
+%% A HYPHENATED WORD NO TABLE HAS (since 1.129.0), in a language with the
+%% row ty_hyphen_word(L, last), has the class of its last part, and rows
+%% made for it the first time a text has it or an IR has its meaning
+%% ('$ty_hyph_done'/2), so that it reads and writes as a word of the
+%% tables: an adjective, its meaning the word, where the last part is an
+%% adjective's word (`non-violent'), a participle (`well-wired',
+%% `lesser-known'), a word of -ed or -d after a noun's or a verb's
+%% (`short-necked', `broad-nibbed', `rough-edged') or a verb's word of
+%% -ing (`current-carrying', `Severe-looking'); a noun where the last part
+%% is a noun's word, its forms the last part's after the parts before it,
+%% its gender and animacy the last part's (`fortune-teller', plural
+%% `fortune-tellers', a person; `five-speed', `income-tax'); both where
+%% both hold, and a word of -ing is a noun too, a gerund's (`story-telling',
+%% `heel-clicking'). Each part is letters; a part with a capital first
+%% (`Atlanta-based', `African-American') makes the rows of the word
+%% lowered and a ty_capital/3 row, so that the word reads as the lowered
+%% one and is written with its capitals, as `American' is.
+ty_hyph_each([], _, []).
+ty_hyph_each([W0|Ws0], L, [W|Ws]) :-
+    (   atom(W0), sub_atom(W0, _, 1, _, '-')
+    ->  (   ty_az_word(W0) -> ty_hyph_word(L, W0), W = W0
+        ;   ty_capital(L, W1, W0) -> W = W1
+        ;   ty_hyph_capital(W0), downcase_atom(W0, Wl), ty_az_word(Wl),
+            \+ '$ty_hyph_done'(L, Wl), \+ ty_hyph_known(L, Wl),
+            ty_hyph_word(L, Wl), ty_hyph_known(L, Wl)
+        ->  assertz(ty_capital(L, Wl, W0)), W = Wl
+        ;   W = W0
+        )
+    ;   W = W0
+    ),
+    ty_hyph_each(Ws0, L, Ws).
+
+%% Each part a letter, a capital or not, and letters after it.
+ty_hyph_capital(W) :-
+    atomic_list_concat(Ps, '-', W),
+    forall(member(P, Ps), ( atom_codes(P, [C|Cs]), ( ty_az_code(C) ; C >= 0'A, C =< 0'Z ), atom_codes(R, Cs), ( R == '' -> true ; ty_az_word(R) ) )).
+
+ty_hyph_word(L, W) :-
+    (   '$ty_hyph_done'(L, W) -> true
+    ;   assertz('$ty_hyph_done'(L, W)),
+        (   ty_az_word(W),
+            atomic_list_concat(Ps, '-', W), Ps = [_, _|_],
+            \+ memberchk('', Ps),
+            \+ ty_hyph_known(L, W)
+        ->  append(Hs, [Last], Ps),
+            atomic_list_concat(Hs, '-', Head),
+            (   ty_hyph_adjective(L, Last) -> assertz(ty_adjective(L, W, any, any, W)), nb_setval('$ty_hyph_new', yes) ; true ),
+            (   once(( ty_noun(L, _, G, A, Last, LP), LS = Last
+                     ; ty_noun(L, _, G, A, LS, Last), atom(LS), LP = Last )),
+                atom(LS), atom(LP)
+            ->  atomic_list_concat([Head, '-', LS], Sg),
+                atomic_list_concat([Head, '-', LP], Pl),
+                (   ty_noun(L, Sg, _, _, _, _) -> true ; assertz(ty_noun(L, Sg, G, A, Sg, Pl)), nb_setval('$ty_hyph_new', yes) )
+            ;   atom_concat(_, ing, Last), once(ty_ing_word(L, _, Last))
+            ->  atom_concat(W, s, Pl),
+                assertz(ty_noun(L, W, none, unknown, W, Pl)), nb_setval('$ty_hyph_new', yes)
+            ;   true
+            )
+        ;   true
+        )
+    ).
+
+ty_hyph_known(L, W) :-
+    (   member(C, [noun, adjective, verb, adverb, adposition]), ty_word_class(L, C, W) -> true
+    ;   ty_noun(L, W, _, _, _, _) -> true
+    ;   once(ty_adjective(L, W, _, _, _))
+    ).
+
+ty_hyph_adjective(L, Last) :-
+    (   once(ty_adjective(L, _, _, _, Last)) -> true
+    ;   once(ty_participle_word(L, _, Last)) -> true
+    ;   atom_concat(S, ed, Last), ty_hyph_ed_stem(L, S) -> true
+    ;   atom_concat(S, d, Last), atom_concat(_, e, S), ty_hyph_stem(L, S) -> true
+    ;   atom_concat(_, ing, Last), once(ty_ing_word(L, _, Last))
+    ).
+
+ty_hyph_ed_stem(L, S) :-
+    (   ty_hyph_stem(L, S) -> true
+    ;   atom_codes(S, Cs), append(F, [C, C], Cs), F \== [], append(F, [C], Bs), atom_codes(B, Bs), ty_hyph_stem(L, B)
+    ).
+
+ty_hyph_stem(L, S) :- ( ty_word_class(L, noun, S) -> true ; ty_word_class(L, verb, S) ).
+
+%% The hyphenated meanings of an IR, writing: each atom with a hyphen.
+ty_hyph_ir(L, X) :-
+    (   atom(X) -> ( sub_atom(X, _, 1, _, '-') -> ty_hyph_word(L, X) ; true )
+    ;   compound(X) -> X =.. [_|As], ty_hyph_ir_args(As, L)
+    ;   true
+    ).
+
+ty_hyph_ir_args([], _).
+ty_hyph_ir_args([X|Xs], L) :- ty_hyph_ir(L, X), ty_hyph_ir_args(Xs, L).
+
+ty_read_one(L, Text, IR, Topics) :-
     ty_surface_written(Text, Mood, Open, Close, Written),
     ty_marks_fit(L, Mood, Open, Close),
-    ty_surface_lower(Written, Lowered),
+    ty_surface_lower(Written, Lowered0),
+    (   '$ty_hyph_made'(L), sub_atom(Text, _, 1, _, '-') -> ty_hyph_each(Lowered0, L, Lowered) ; Lowered = Lowered0 ),
     (   ty_read_words(L, Text, Written, Lowered, Topics, Mood, IR1)
     *-> true
     ;   ty_surface_kept(Written, Kept), Kept \== Lowered,
@@ -2236,9 +2370,35 @@ typology_write(L, IR, Text) :-
 
 %% The first way to write the IR whose words, read in their context, give
 %% the IR back.
+typology_write(L, dash(A, B), Text, Topics) :- !,
+    must_be(atom, L),
+    must_be(list, Topics),
+    ty_write_any(L, A, Topics, statement, Ts1),
+    ty_text(L, statement, Ts1, Text1),
+    sub_atom(Text1, 0, _, 1, P1),
+    ty_write_any(L, B, Topics, Mood2, Ts2),
+    ty_text_on(L, Mood2, Ts2, Text2),
+    atomic_list_concat([P1, '--', Text2], Text).
 typology_write(L, IR, Text, Topics) :-
     must_be(atom, L),
     must_be(list, Topics),
+    ty_write_any(L, IR, Topics, Mood, Tokens),
+    ty_text(L, Mood, Tokens, Text).
+
+%% The tokens of an IR written; where none are, and the IR has a
+%% hyphenated meaning no table had, again with the rows made for it.
+ty_write_any(L, IR, Topics, Mood, Tokens) :-
+    (   ty_write_parts(L, IR, Topics, Mood, Tokens) -> true
+    ;   '$ty_hyph_made'(L),
+        nb_setval('$ty_hyph_new', no),
+        ty_hyph_ir(L, IR),
+        nb_current('$ty_hyph_new', yes),
+        ty_write_parts(L, IR, Topics, Mood, Tokens)
+    ).
+
+%% The tokens of the first way to write the IR whose words, read in their
+%% context, give the IR back, and its mood.
+ty_write_parts(L, IR, Topics, Mood, Tokens) :-
     ty_ir_in(IR, IR00),
     ty_ir_tenses(L, IR00, IR0),
     ( IR0 = question(_) -> Mood = question ; Mood = statement ),
@@ -2255,8 +2415,7 @@ typology_write(L, IR, Text, Topics) :-
     b_setval('$ty_massr', Massr),
     phrase(Goal, Tokens0),
     ty_reads_as(Mood, L, IR0, Tokens0, Topics, Massr), !,
-    ty_write_tokens(L, Tokens0, Tokens),
-    ty_text(L, Mood, Tokens, Text).
+    ty_write_tokens(L, Tokens0, Tokens).
 
 %% A TENSE WRITTEN AS ANOTHER (ty_tense_like/4): each clause's and each
 %% copula's tense the language has no form of becomes the tense it is
@@ -2929,6 +3088,17 @@ ty_text(L, Mood, Tokens, Text) :-
     ;   Open = '', Close = '.'
     ),
     atomic_list_concat([Open, U, R, Close], Text).
+
+%% A sentence after a dash: its first word as the tables write it, no
+%% capital the sentence's first place gives it.
+ty_text_on(L, Mood, Tokens, Text) :-
+    maplist(ty_capital_word(L), Tokens, Tokens1),
+    atomic_list_concat(Tokens1, ' ', Body),
+    (   Mood == question
+    ->  ty_question_marks(L, Open, Close)
+    ;   Open = '', Close = '.'
+    ),
+    atomic_list_concat([Open, Body, Close], Text).
 
 %% ---- the meaning of a word with several -----------------------------------------
 %%
@@ -4847,6 +5017,10 @@ ty_np_animacy(L, rel(NP, _), A) :- NP = np(_, _, _, _), ty_np_animacy(L, NP, A).
 ty_np_animacy(L, gap(NP, _, _), A) :- ty_np_animacy(L, NP, A).
 ty_np_animacy(L, of(_, NP), A) :- NP = np(_, _, _, _), ty_np_animacy(L, NP, A).
 ty_np_animacy(L, np_pp(NP, _), A) :- nonvar(NP), ty_np_animacy(L, NP, A).
+%% An emphatic reflexive's noun phrase's (since 1.129.0: `The boy himself
+%% saw the dog.'); a group's is unknown, which fits (`The poor slept.').
+ty_np_animacy(L, emph(NP, _), A) :- nonvar(NP), ty_np_animacy(L, NP, A).
+ty_np_animacy(_, group(_), _).
 ty_np_animacy(L, C, A) :- ty_coord_np(C, _, Xs), forall(member(X, Xs), ty_np_animacy(L, X, A)).
 ty_np_animacy(L, S, A) :- S == same, ty_same_subject(S1), ty_np_animacy(L, S1, A).
 ty_np_animacy(L, pron(_, _, K), A) :-
@@ -4972,10 +5146,11 @@ ty_clause_part(v, L, clause(V, T, P, S, O, Js), _) -->
 %% set back as each parse starts, ty_parse_reset/1). Asked with ty_here//1
 %% and nonvar/1 before the global, the part cost Spanish's round trips
 %% 0.14 % more inferences, the global alone 0.07 %.
-ty_clause_part(j, L, clause(_, _, _, _, _, Js), _) -->
+ty_clause_part(j, L, clause(V, _, _, _, O, Js), _) -->
     { nb_current('$ty_vadv', v(J0, A)), J0 == Js }, !,
     { Js = [A|Js1], b_setval('$ty_vadv', none) },
-    ty_adjuncts(L, Js1).
+    ty_verb_adjuncts(L, V, O, Js1).
+ty_clause_part(j, L, clause(V, _, _, _, O, Js), _) --> { atom(V), '$ty_ofv'(V, L, K), ty_of_fits(K, O) }, !, ty_of_adjuncts(L, Js).
 ty_clause_part(j, L, clause(_, _, _, _, _, Js), _) --> ty_adjuncts(L, Js).
 %% An adjunct before the subject (since 1.105.0, ty_front_order/4): jf(F)
 %% reads it and a comma after it or none, jl(F) the others, F the last.
@@ -4998,6 +5173,27 @@ ty_clause_part(oh(X), L, clause(V, _, _, _, O, _), How) --> ty_object_head(L, V,
 ty_clause_part(ot(X), L, _, _) --> ty_rel_tail(L, X).
 ty_clause_part(sh(X), L, clause(_, _, _, S, _, _), _) --> ty_subject_head(L, S, X).
 ty_clause_part(st(X), L, _, _) --> ty_rel_tail(L, X).
+
+%% `OF' AFTER A VERB (since 1.129.0): a verb of the language's
+%% ty_verb_list(L, of_adjunct, Base) row takes an adposition phrase of
+%% `of' among its adjuncts where it has no object (`The letter consisted
+%% of three short lines.', `My aunt doesn't approve of my miniskirts.',
+%% `Their neighbors spoke well of them.'), and one of its ty_verb_list(L,
+%% of_object, Base) row with an object or none (`The sleekness of his
+%% appearance reminded me of his financial successes.', `They accused the
+%% paper of biased coverage.'): the first adposition phrase read
+%% ('$ty_of_ok', as an adjective's phrase takes it). Of an object, `of' is
+%% the object's (`He can hear the snap of a twig.').
+ty_verb_adjuncts(L, V, O, Js) -->
+    (   { atom(V), '$ty_ofv'(V, L, K), ty_of_fits(K, O) } -> ty_of_adjuncts(L, Js) ; ty_adjuncts(L, Js) ).
+
+ty_of_fits(object, _).
+ty_of_fits(adjunct, O) :- O == none.
+
+ty_of_adjuncts(L, Js) -->
+    { ( nb_current('$ty_of_ok', Old) -> true ; Old = no ), b_setval('$ty_of_ok', yes) },
+    ty_adjuncts(L, Js),
+    { b_setval('$ty_of_ok', Old) }.
 
 %% An adjunct before the subject is an adposition phrase or an adverb.
 ty_front_item(L, pp(Prep, NP)) --> ty_pp(L, Prep, NP).
@@ -5480,6 +5676,8 @@ ty_np_phrase(L, R, F) --> { ty_rel_slot(R) }, ty_rel(L, none, R, F).
 ty_np_phrase(L, P0, F) --> { ty_poss_tail_slot(L, P0, P, T) }, ty_poss(L, P, F), ty_pp_tail(L, T, P).
 ty_np_phrase(L, Nm, F) --> ty_name_here, { ty_name_slot(Nm) }, ty_name_words(L, Nm, F).
 ty_np_phrase(L, Qp, F) --> ty_qp_here, { ty_qp_slot(Qp) }, ty_qp_words(L, Qp, F).
+%% A group after an adposition (since 1.129.0: `for the poor and disabled').
+ty_np_phrase(L, group(A), F) --> { ty_group_gate(A) }, ty_group_words(L, A, F, yes).
 %% A reflexive pronoun after an adposition (since 1.126.0: `in itself', `for
 %% ourselves'), its words the language's ty_pronoun(L, r, Words, _) rows.
 ty_np_phrase(L, refl(Pr), F) -->
@@ -5508,6 +5706,13 @@ ty_np_phrase(L, Pr, F) -->
 %% noun phrases), and the group ends its noun phrase: the word after it is
 %% no noun's and no adjective's (`the poor man'), nor a conjunction before
 %% one (`the poor and disabled': adjectives joined, not done).
+%% A group's article and a listed adjective's word after it, in the words.
+ty_group_in([W, AW|Ws], L) :-
+    (   atom(AW), '$ty_group_listed'(L, AW), atom(W), '$ty_group_article'(L, W)
+    ->  true
+    ;   ty_group_in([AW|Ws], L)
+    ).
+
 ty_group_end(L, S, S) :-
     (   nonvar(S)
     ->  ty_np_ends(L, S),
@@ -5515,10 +5720,36 @@ ty_group_end(L, S, S) :-
     ;   true
     ).
 
-ty_group_words(L, A, F) -->
-    [W], { '$ty_group_article'(L, W) }, [AW],
-    { once(ty_adjective(L, A, _, _, AW)), atom(A), \+ ty_word_class(L, noun, AW), ty_ir_features(L, group(A), F) },
+%% Since 1.129.0 the adjectives may be joined, group(and(As)) (`the poor
+%% and disabled'), and an adjective of the language's ty_adjective_list(L,
+%% group, Base) row is a group's though it is a noun's word too (`The
+%% living knew themselves.'); after an adposition and as an object
+%% (ty_np_phrase//3, ty_role//4) only such an adjective is (`for the poor
+%% and disabled', `between the old and the new'), and only where the text
+%% has a group's article before one ('$ty_pgrp', ty_poss_flag/2).
+ty_group_words(L, A, F, Lst) -->
+    [W], { '$ty_group_article'(L, W) },
+    { ( nonvar(A), A = and(As0) -> As = As0 ; nonvar(A) -> As = [A] ; true ) },
+    ty_group_seq(L, As, Lst),
+    { ( As = [A1] -> A = A1 ; A = and(As) ), ty_ir_features(L, group(A), F) },
     ty_group_end(L).
+
+ty_group_seq(L, [A|As], Lst) --> ty_group_adj(L, A, Lst), ty_group_more(L, As, Lst).
+
+ty_group_more(_, [], _) --> [].
+ty_group_more(L, [A|As], Lst) --> ty_and_words(L), ty_group_adj(L, A, Lst), ty_group_more(L, As, Lst).
+
+ty_group_adj(L, A, Lst) -->
+    [AW],
+    { once(ty_adjective(L, A, _, _, AW)), atom(A),
+      (   Lst == no, \+ ty_word_class(L, noun, AW) -> true
+      ;   ty_adjective_of(L, group, A)
+      ) }.
+
+%% A group where an object or an adposition's noun phrase stands: writing,
+%% the IR's (its adjective A given); reading, where the text has a group's
+%% listed adjective.
+ty_group_gate(A) :- ( nonvar(A) -> true ; nb_current('$ty_pgrp', f(yes)) ).
 
 %% Coordinated noun phrases with no marks (since 1.59.0: `with mines and
 %% traps').
@@ -6163,7 +6394,7 @@ ty_poss_words_in(L, PWs, Words) :-
 %% (`$ty_pinf', asked by the infinitive after a noun, an adjective, an
 %% object and of purpose).
 ty_poss_flag(L, Words) :-
-    (   nb_current('$ty_poss_memo', memo(L0, Words0, Count, W, P, PP, PT, PI, PV, PR)), L0 == L, Words0 == Words
+    (   nb_current('$ty_poss_memo', memo(L0, Words0, Count, W, P, PP, PT, PI, PV, PR, PG)), L0 == L, Words0 == Words
     ->  true
     ;   ty_poss_counts(L, Words, Count, W, P),
         ( ty_ppron_in(L, Words) -> PP = yes ; PP = no ),
@@ -6171,9 +6402,11 @@ ty_poss_flag(L, Words) :-
         ( '$ty_phrasal_made'(L), member(X, Words), atom(X), '$ty_particle'(X, L) -> PT = yes ; PT = no ),
         ( ty_inf_in(L, Words) -> PI = yes ; PI = no ),
         ( ty_adverb_inside(L), member(X2, Words), atom(X2), ty_adverb(L, _, X2) -> PV = yes ; PV = no ),
-        nb_setval('$ty_poss_memo', memo(L, Words, Count, W, P, PP, PT, PI, PV, PR))
+        ( '$ty_group_made'(L), ty_group_in(Words, L) -> PG = yes ; PG = no ),
+        nb_setval('$ty_poss_memo', memo(L, Words, Count, W, P, PP, PT, PI, PV, PR, PG))
     ),
     b_setval('$ty_prefl', f(PR)),
+    b_setval('$ty_pgrp', f(PG)),
     b_setval('$ty_poss', f(Count)),
     b_setval('$ty_whose', f(W)),
     b_setval('$ty_pron', f(P)),
@@ -6943,6 +7176,14 @@ ty_verb_row(L, V, T, N, P, Words) :-
 %% A language with a ty_adjective_group/2 row (since 1.127.0), and the
 %% article words of its definiteness of a plural.
 :- dynamic('$ty_group_made'/1).
+%% A language with a ty_hyphen_word/2 row (since 1.129.0), and the
+%% hyphenated words whose rows were made.
+:- dynamic('$ty_hyph_made'/1).
+%% The words of a language's group adjectives (ty_adjective_list(L, group,
+%% Base)), and the verbs of its of_adjunct and of_object lists.
+:- dynamic('$ty_group_listed'/2).
+:- dynamic('$ty_ofv'/3).
+:- dynamic('$ty_hyph_done'/2).
 :- dynamic('$ty_group_article'/2).
 %% A language with a ty_comparative/4 row (since 1.120.0), its endings'
 %% words and its irregular comparatives' words.
@@ -7025,6 +7266,10 @@ ty_vfirst_make(L) :-
     retractall('$ty_pron_rowf'(L, _, _)),
     retractall('$ty_count_word'(L, _, _, _)),
     retractall('$ty_group_made'(L)),
+    retractall('$ty_hyph_made'(L)),
+    retractall('$ty_group_listed'(L, _)),
+    retractall('$ty_ofv'(_, L, _)),
+    retractall('$ty_hyph_done'(L, _)),
     retractall('$ty_group_article'(L, _)),
     retractall('$ty_cmp_made'(L)),
     retractall('$ty_cmp_end'(_, L)),
@@ -7061,6 +7306,13 @@ ty_vfirst_make(L) :-
     forall(( ty_article(L, CD, _, CN, CW), ty_count_det(CD), atom(CW), \+ sub_atom(CW, _, _, _, ' '), \+ '$ty_count_word'(L, CW, CD, CN) ),
            assertz('$ty_count_word'(L, CW, CD, CN))),
     ( ty_adjective_group(L, _) -> assertz('$ty_group_made'(L)) ; true ),
+    ( ty_hyphen_word(L, last) -> assertz('$ty_hyph_made'(L)) ; true ),
+    forall(( ty_adjective_list(L, group, GB), ( is_list(GB) -> member(GA, GB) ; ty_lex_base_read(GB), '$ty_lexw'(GB, GA) ),
+             once(ty_adjective(L, GA, _, _, GAW)), atom(GAW), \+ '$ty_group_listed'(L, GAW) ),
+           assertz('$ty_group_listed'(L, GAW))),
+    forall(( member(OK-OKind, [adjunct-of_adjunct, object-of_object]),
+             ty_verb_list(L, OKind, OB), ( is_list(OB) -> member(OV, OB) ; ty_lex_base_read(OB), '$ty_lexw'(OB, OV) ), \+ '$ty_ofv'(OV, L, _) ),
+           assertz('$ty_ofv'(OV, L, OK))),
     forall(( ty_adjective_group(L, GD), ty_article(L, GD, _, GN, GW), ty_fits(GN, pl), atom(GW), \+ '$ty_group_article'(L, GW) ),
            assertz('$ty_group_article'(L, GW))),
     ( ty_comparative(L, _, _, _) -> assertz('$ty_cmp_made'(L)) ; true ),
@@ -7252,7 +7504,8 @@ ty_role(L, Role, Qp, Features) -->
 %% An adjective as a group, a subject (since 1.127.0), its words alone: the
 %% row is English's, whose roles take no marks (a language whose roles do
 %% has no row yet).
-ty_role(L, s, group(A), F) --> ty_group_words(L, A, F).
+ty_role(L, s, group(A), F) --> ty_group_words(L, A, F, no).
+ty_role(L, o, group(A), F) --> { ty_group_gate(A) }, ty_group_words(L, A, F, yes).
 
 %% A personal pronoun in its role; an object clitic's words stood in the
 %% verb's (ty_verb_group//8), which bound it before the object's place.

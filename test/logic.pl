@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -262,11 +262,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 551),
-    ( R >= 539 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 539 right', VR, ok),
-    ( K >= 545 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 545 kept', VK, ok).
+    check('the second measure: its sentences', N, 556),
+    ( R >= 544 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 544 right', VR, ok),
+    ( K >= 550 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 550 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -1184,6 +1184,22 @@ reflexives :-
     once(typology_read(english, 'Perfectly poised and sure of himself.', IR)),
     ( logic_from_ir(IR, _) -> W = read ; logic_why(IR, W) ),
     check('a reflexive with no subject has no logic form', W, pronoun(reflexive)).
+
+%% 1.129.0: a dash is its two sentences' items; a joined group is
+%% the(group(and(A, B))); `of' after a verb an adposition's predicate.
+dash_words :-
+    section('a dash, joined groups, of after a verb'),
+    typology_load(english),
+    forall(member(S-Want-Back, [
+               'That intangible thing--the soul.'-'thing(that(intangible(thing))).\nintangible(that(intangible(thing))).\nsoul(the(soul)).\n'-'That intangible thing. The soul.',
+               'The poor and disabled knew themselves.'-'past(know(the(group(and(poor, disabled))), the(group(and(poor, disabled))))).\n'-'The poor and disabled knew themselves.',
+               'This passage smells of plagiarism.'-'of(smell(this(passage)), plagiarism).\n'-'This passage smells of plagiarism.',
+               'A well-wired house.'-'house(a(\'well-wired\'(house))).\n\'well-wired\'(a(\'well-wired\'(house))).\n'-'A well-wired house.' ]),
+           ( ( logic_translate(english, cocolog, S, C) -> true ; C = none ),
+             check(S, C, Want),
+             ( C \== none, logic_translate(cocolog, english, C, E) -> true ; E = none ),
+             atomic_list_concat(['and back: ', S], Label),
+             check(Label, E, Back) )).
 
 %% 1.128.0: a hyphenated word is a quoted atom in Cocolog.
 hyphen_words :-

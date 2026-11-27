@@ -187,6 +187,7 @@ main :-
     reflexives,
     numbers_and_groups,
     hyphen_words,
+    dash_words,
     format("~ndone~n", []).
 
 
@@ -1416,6 +1417,31 @@ hyphen_words :-
     typology_load(english),
     typology_read(english, 'A low-level job.', IR1),
     must('low-level', IR1, phrase(np(job, sg, indef, ['low-level']))).
+
+
+%% 96. A DASH (1.129.0) joins two sentences, dash(IR1, IR2): the words
+%% before it a statement, the words after it a sentence; written with no
+%% space either side and no capital after it.
+%% 97. A HYPHENATED WORD NO TABLE HAS (1.129.0) has the class of its last
+%% part, by the template's ty_hyphen_word(L, last) row: an adjective after
+%% an adjective's, a participle's or a word of -ed (`well-wired'), a noun
+%% after a noun's (`fortune-teller').
+%% 98. A GROUP (1.129.0) may join its adjectives (group(and(As))), and an
+%% adjective of the ty_adjective_list(L, group, Base) row is one after an
+%% adposition and as an object too (`for the poor and disabled'). A verb
+%% of the ty_verb_list(L, of_adjunct, Base) row takes `of' where it has no
+%% object (`consist of'), one of the of_object row after its object too
+%% (`accuse the paper of').
+dash_words :-
+    typology_load(english),
+    typology_read(english, 'That intangible thing--the soul.', IR1),
+    must('a dash', IR1, dash(phrase(np(thing, sg, that, [intangible])), phrase(np(soul, sg, def, [])))),
+    typology_read(english, 'A well-wired house.', IR2),
+    must('well-wired', IR2, phrase(np(house, sg, indef, ['well-wired']))),
+    typology_read(english, 'The zakat is earmarked for the poor and disabled.', IR3),
+    must('the poor and disabled', IR3, clause(earmark, pass(present), pos, np(zakat, sg, def, []), none, [pp(for, group(and([poor, disabled])))])),
+    typology_read(english, 'The letter consisted of three short lines.', IR4),
+    must('consist of', IR4, clause(consist, past, pos, np(letter, sg, def, []), none, [pp(of, np(line, pl, three, [short]))])).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

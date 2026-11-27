@@ -190,6 +190,15 @@ ty_capital_nouns(xx).
 %% ty_adjective_group(xx, Definiteness).
 %%   e.g. ty_adjective_group(english, def).
 
+%%     ty_hyphen_word(L, Part)         a hyphenated word no table has takes
+%%                                     its class from its Part, last (since
+%%                                     1.129.0: English `well-wired' an
+%%                                     adjective, `fortune-teller' a noun of
+%%                                     a person), rows made for it as a text
+%%                                     or an IR first has it
+%% ty_hyphen_word(xx, Part).
+%%   e.g. ty_hyphen_word(english, last).
+
 %%     ty_comparative(L, Adverb, Short, Endings)
 %%                                     the adverb (ty_adverb/3's meaning)
 %%                                     that grades an adjective as its

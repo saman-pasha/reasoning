@@ -91,6 +91,7 @@ main :-
     reflexives,
     numbers_and_groups,
     hyphen_words,
+    dash_words,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -743,6 +744,18 @@ hyphen_words :-
     typology_load(english),
     logic_translate(english, cocolog, 'He is self-conscious.', C1),
     must('\'self-conscious\'(he)', C1, '\'self-conscious\'(he).\n').
+
+
+%% 62. A DASH (1.129.0) is its two sentences' items, back in English as two
+%% sentences; `of' after a verb is an adposition's predicate.
+dash_words :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'That intangible thing--the soul.', C1),
+    must('a dash', C1, 'thing(that(intangible(thing))).\nintangible(that(intangible(thing))).\nsoul(the(soul)).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and back', E1, 'That intangible thing. The soul.'),
+    logic_translate(english, cocolog, 'This passage smells of plagiarism.', C2),
+    must('smells of', C2, 'of(smell(this(passage)), plagiarism).\n').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

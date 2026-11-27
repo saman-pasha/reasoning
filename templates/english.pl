@@ -530,6 +530,7 @@ ty_predeterminer(english, such, [such]).
 %% An adjective after `the' alone (since 1.127.0), as a subject, is the
 %% people or things it describes: `The poor knew themselves.'
 ty_adjective_group(english, def).
+ty_hyphen_word(english, last).
 ty_subordinate_first(english).
 
 %% The negative: `does not', `do not', `did not' before the base, which is
@@ -693,6 +694,12 @@ ty_verb_list(english, object_infinitive, vtinf).
 %% object's own, more than one whose subject the object is (since 1.96.0:
 %% `He used pressure to stop the bleeding.', `Make arrangements to
 %% leave.'); WordNet's frame gives them for senses the corpus seldom says.
+%% The verbs that take an adposition phrase of `of' with no object (since
+%% 1.129.0: `consist of', `approve of', `speak well of'), and the ones that
+%% take it after an object too (`remind me of', `accuse the paper of'); of
+%% no other verb is `of' an adjunct.
+ty_verb_list(english, of_adjunct, [approve, beware, boast, complain, consist, despair, die, disapprove, dispose, dream, hear, know, partake, reek, repent, smack, smell, speak, stink, talk, taste, think, tire, weary]).
+ty_verb_list(english, of_object, [accuse, acquit, assure, convict, convince, cure, deprive, inform, remind, rid, rob, strip, suspect, warn]).
 ty_verb_list(english, object_purpose, [apply, can, clear, commit, condemn, consecrate, dedicate, devote, displace, dismiss, employ, evaluate, fall, feel, find, fire, get, give, have, hold, involve, learn, light, make, need, pass, rededicate, reduce, sack, say, schedule, see, specify, squeeze, take, terminate, thrust, tip, turn, use, utilise, utilize, witness]).
 %% The verbs whose `to' with a bare noun that is a verb too may be an
 %% adposition phrase, though an infinitive may be their object (since
@@ -719,6 +726,10 @@ ty_verb_list(english, complement, [adjudge, appoint, believe, brand, call, color
 %% (since 1.96.0: `able to walk', `glad to help'); WordNet gives
 %% adjectives no frames.
 ty_adjective_list(english, infinitive, [able, unable, glad, eager, willing, unwilling, ready, likely, unlikely, liable, welcome, quick, slow, happy, sorry, afraid, careful, free, sure, certain, apt, prone, keen, anxious, determined, prepared, reluctant, inclined, due, bound, content, proud, ashamed, fit, unfit, careless]).
+%% The adjectives a group's may be where an object or an adposition's noun
+%% phrase stands, and though they are nouns' words too (since 1.129.0: `for
+%% the poor', `The living knew themselves.').
+ty_adjective_list(english, group, [poor, rich, living, dead, young, old, new, elderly, sick, wounded, injured, blind, deaf, disabled, unemployed, homeless, hungry, weak, strong, innocent, guilty, brave, accused, deceased, needy, wealthy, meek, faithful, righteous, wicked, unborn, privileged, underprivileged, mighty, lame, halt, maimed, damned, dying, unknown, supernatural, impossible]).
 %% The nouns an infinitive may follow, its subject the one the noun's act
 %% is of (since 1.96.0: `a bid to gain attention', `the right to vote');
 %% after them an infinitive is the noun's, never one of purpose. WordNet

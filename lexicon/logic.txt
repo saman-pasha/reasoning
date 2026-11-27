@@ -580,3 +580,8 @@ He bundled up his few possessions.	past(bundle_up(he, of(pl(few(possession)), he
 A low-level job.	job(a('low-level'(job))). 'low-level'(a('low-level'(job))).
 The river runs cross-country.	'cross-country'(run(the(river))).
 The quarrel ended in a punch-up.	'punch-up'(a('punch-up')). past(in(end(the(quarrel)), a('punch-up'))).
+That intangible thing--the soul.	thing(that(intangible(thing))). intangible(that(intangible(thing))). soul(the(soul)).
+This passage smells of plagiarism.	of(smell(this(passage)), plagiarism).
+A well-wired house.	house(a('well-wired'(house))). 'well-wired'(a('well-wired'(house))).
+The coup disposed of the dictator bloodlessly.	past(bloodlessly(of(dispose(the(coup)), the(dictator)))).
+The zakat is earmarked for the poor and disabled.	for(earmark(someone, the(zakat)), the(group(and(poor, disabled)))).

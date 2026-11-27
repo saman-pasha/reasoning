@@ -335,10 +335,22 @@ lg_distinct([U|Us], [U|Ds]) :-
     exclude(==(U), Us, Rest),
     lg_distinct(Rest, Ds).
 
+%% A DASH (since 1.129.0) joins two sentences of one text, dash(IR1,
+%% IR2): the utterance is the two sentences' items in order, as a text of
+%% the two is read (lg_text_items/4: a new individual of the second named
+%% apart from one of the first), a question if both are.
+logic_from_ir(IR, U) :- nonvar(IR), IR = dash(A, B), !,
+    lg_text_items([A, B], [], [], Us),
+    findall(I, member(utterance(I, _), Us), Is),
+    ( forall(member(I, Is), I == question) -> Intent = question ; Intent = assertion ),
+    findall(It, ( member(utterance(_, Its), Us), member(It, Its) ), Items),
+    U = utterance(Intent, Items).
 logic_from_ir(IR0, utterance(Intent, Items)) :-
     catch(( lg_active(IR0, IR1), lg_refl(IR1, IR), lg_utterance(IR, Intent, Items0) ), lg_no(_), fail),
     maplist(lg_number, Items0, Items).
 
+logic_why(IR, Why) :- nonvar(IR), IR = dash(A, B), !,
+    ( logic_why(A, Why) -> true ; logic_why(B, Why) ).
 logic_why(IR0, Why) :-
     catch(( lg_active(IR0, IR1), lg_refl(IR1, IR), lg_utterance(IR, _, _) -> fail ; Why = shape(IR0) ), lg_no(Why), true).
 
@@ -1129,7 +1141,12 @@ lg_entity(refl(_), _, _) :- !, lg_no(pronoun(reflexive)).
 lg_entity(emph(NP, _), E, Ms) :- !, lg_entity(NP, E, Ms).
 %% AN ADJECTIVE AS A GROUP (since 1.127.0): the constant the(group(A)),
 %% the people or things A describes (`The living knew themselves.').
-lg_entity(group(A), ent(const(the(group(A))), [], const), []) :- !, atom(A).
+lg_entity(group(A), ent(const(the(group(T))), [], const), []) :- !, lg_group_term(A, T).
+
+%% A group's adjective, or its adjectives joined (since 1.129.0: `the poor
+%% and disabled' is the(group(and(poor, disabled))), a term of no list).
+lg_group_term(A, A) :- atom(A), !.
+lg_group_term(and(As), T) :- is_list(As), As = [_, _|_], forall(member(A, As), atom(A)), T =.. [and|As].
 lg_entity(all(NP), ent(const(all(C)), [], const), Ms) :- !,
     lg_entity(NP, ent(T, Conds, Q), Ms),
     ( Q == const, T = const(C), Conds == [] -> true ; lg_no(determiner(all)) ).
@@ -1626,6 +1643,7 @@ lg_np_shape(X) :- atom(X), !.
 lg_np_shape(pl(X)) :- !, lg_np_shape(X).
 lg_np_shape(nn(M, X)) :- !, atom(M), lg_np_shape(X).
 lg_np_shape(X) :- lg_ap_shape(X), !.
+lg_np_shape(group(T)) :- compound(T), T =.. [and|As], As = [_, _|_], forall(member(A, As), atom(A)), !.
 lg_np_shape(X) :- compound(X), X =.. [A, Y], atom(A), \+ memberchk(A, [the, a, of]), lg_np_shape(Y).
 
 %% A name read back: the prefix off where the rest is a reserved name of
@@ -2357,7 +2375,11 @@ lg_const_np(_, _, C, P) :- atom(C), lg_pron_np(C, P).
 lg_const_np(_, _, something, qp(some, thing)).
 lg_const_np(_, _, someone, qp(some, person)).
 lg_const_np(_, _, C, qp(some, K)) :- atom(C), lg_numbered(C, W), memberchk(W-K, [something-thing, someone-person]), !.
-lg_const_np(L, _, the(group(A)), group(A)) :- !, atom(A), typology_meaning(L, adjective, A).
+lg_const_np(L, _, the(group(T)), group(A)) :- !,
+    (   atom(T) -> A = T, typology_meaning(L, adjective, A)
+    ;   compound(T), T =.. [and|As], As = [_, _|_], forall(member(A1, As), ( atom(A1), typology_meaning(L, adjective, A1) )),
+        A = and(As)
+    ).
 lg_const_np(L, _, the(T), np_pp(np(N, Num, def, As), Inf)) :-
     nonvar(T), T = to(T0, X), lg_inf_term(L, X, Inf), !,
     lg_np_of_term(L, T0, N, Num, As).

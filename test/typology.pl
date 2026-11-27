@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2752,6 +2752,39 @@ article_names :-
     check('no article before a small word is a name\'s', Rs3, [clause(sleep, present, pos, np(dog, sg, def, []), none)]).
 
 %% 1.128.0: WordNet's hyphenated lemmas, a word of the every_* files.
+%% 1.129.0: a dash between two sentences (dash(IR1, IR2)), a hyphenated
+%% word no table has (the class of its last part), a group after an
+%% adposition and as an object, its adjectives joined, an emphatic subject
+%% of a verb that asks an animate one, `of' after a verb of the
+%% of_adjunct list (with no object) or of the of_object list.
+dash_words :-
+    section('a dash, unknown hyphenated words, more groups, of after a verb'),
+    forall(member(T-Want, [
+               'That intangible thing--the soul.'-dash(phrase(np(thing, sg, that, [intangible])), phrase(np(soul, sg, def, []))),
+               'A well-wired house.'-phrase(np(house, sg, indef, ['well-wired'])),
+               'A fortune-teller.'-phrase(np('fortune-teller', sg, indef, [])),
+               'An Atlanta-based company.'-phrase(np(company, sg, indef, ['atlanta-based'])),
+               'A five-speed gearbox.'-phrase(np(gearbox, sg, indef, [n('five-speed')])),
+               'The zakat is earmarked for the poor and disabled.'-clause(earmark, pass(present), pos, np(zakat, sg, def, []), none, [pp(for, group(and([poor, disabled])))]),
+               'The living knew themselves.'-clause(know, past, pos, group(living), refl(pron(3, pl, _))),
+               'They helped the poor.'-clause(help, past, pos, pron(3, pl, _), group(poor)),
+               'The boy himself saw the dog.'-clause(see, past, pos, emph(np(boy, sg, def, []), pron(3, sg, m)), np(dog, sg, def, [])),
+               'The letter consisted of three short lines.'-clause(consist, past, pos, np(letter, sg, def, []), none, [pp(of, np(line, pl, three, [short]))]),
+               'Their neighbors spoke well of them.'-clause(speak, past, pos, of(pron(3, pl, _), np(neighbor, pl, def, [])), none, [adv(well), pp(of, pron(3, pl, _))]),
+               'They accused the paper of biased coverage.'-clause(accuse, past, pos, pron(3, pl, _), np(paper, sg, def, []), [pp(of, np(coverage, sg, mass, [biased]))]),
+               'He can hear the snap of a twig.'-clause(hear, modal(can), pos, pron(3, sg, m), of(np(twig, sg, indef, []), np(snap, sg, def, []))) ]),
+           ( ( once(typology_read(english, T, R)) -> true ; R = none ),
+             ( R = Want -> V = yes ; V = R ),
+             atomic_list_concat(['English, the first reading: ', T], Label),
+             check(Label, V, yes) )),
+    ( typology_read(english, 'The dog slept of the house.', clause(sleep, _, _, _, _, [pp(of, _)])) -> V2 = read ; V2 = none ),
+    check('of after a verb of no list', V2, none),
+    forall(member(IR-Want2, [ dash(phrase(np(thing, sg, that, [intangible])), phrase(np(soul, sg, def, [])))-'That intangible thing--the soul.',
+                              phrase(np(pen, sg, indef, ['broad-nibbed']))-'A broad-nibbed pen.',
+                              clause(know, past, pos, group(and([poor, disabled])), refl(pron(3, pl, _)))-'The poor and disabled knew themselves.' ]),
+           ( ( typology_write(english, IR, W) -> true ; W = none ),
+             check('written', W, Want2) )).
+
 hyphen_words :-
     section('hyphenated words'),
     forall(member(T-Want, [
@@ -3343,8 +3376,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 6070 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 6 070 sentences read at 1.128.0 within 2 000 000 inferences each are read', R1, yes),
+    ( K >= 6127 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 6 127 sentences read at 1.129.0 within 2 000 000 inferences each are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 
