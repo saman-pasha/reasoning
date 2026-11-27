@@ -78,6 +78,7 @@ main :-
     adjective_alone,
     operator_names,
     ones,
+    article_names,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -616,6 +617,15 @@ ones :-
     must('one\'s', C1, 'imperative(catch(you, of(breath, someone))).\n'),
     logic_translate(cocolog, english, C1, E1),
     must('and into English', E1, 'Catch one\'s breath.').
+
+%% 49. A NAME WITH ITS ARTICLE (1.116.0) is a constant the_Name, and back
+%% in English its article is small.
+article_names :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'The Missouri feeds into the Mississippi.', C1),
+    must('the_missouri, the_mississippi', C1, 'into(feed(the_missouri), the_mississippi).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and into English', E1, 'The Missouri feeds into the Mississippi.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

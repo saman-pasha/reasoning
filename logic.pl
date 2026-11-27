@@ -2287,9 +2287,13 @@ lg_np_parts(T, N, [A|As]) :- compound(T), T =.. [A, X], atom(A), lg_np_parts(X, 
 
 %% A name's constant written: each word with a capital (john_smith is
 %% `John Smith').
+%% A name's article stays small (since 1.116.0: the_rhone is `the Rhone').
 lg_name_written(C, W) :-
     atomic_list_concat(Ps, '_', C),
-    maplist(lg_capital, Ps, Ws),
+    (   Ps = [the, P|Ps1]
+    ->  maplist(lg_capital, [P|Ps1], Ws1), Ws = [the|Ws1]
+    ;   maplist(lg_capital, Ps, Ws)
+    ),
     atomic_list_concat(Ws, ' ', W).
 
 lg_capital(W, C) :-

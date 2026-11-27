@@ -175,6 +175,7 @@ main :-
     more_phrases,
     as_words,
     ones,
+    article_names,
     format("~ndone~n", []).
 
 
@@ -1292,6 +1293,13 @@ ones :-
     typology_load(english),
     typology_read(english, 'One\'s native language.', IR1),
     must('one\'s', IR1, phrase(of(pron(3, sg, zero), np(language, sg, def, [native])))).
+
+%% 84. A NAME WITH ITS ARTICLE (1.116.0): the article of no gender before a
+%% name's words is the name's.
+article_names :-
+    typology_load(english),
+    typology_read(english, 'The Earth is an ellipsoid.', IR1),
+    must('the Earth', IR1, copula(present, pos, name('the Earth'), np(ellipsoid, sg, indef, []))).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

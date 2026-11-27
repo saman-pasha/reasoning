@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2734,6 +2734,23 @@ modified_mass :-
     findall(R3, typology_read(english, 'The air is cold.', copula(_, _, _, R3)), Rs3),
     check('no such noun is a copula\'s predicate', Rs3, [adj([cold])]).
 
+%% 1.116.0: a name with its article, `the Rhone', name('the Rhone').
+article_names :-
+    section('a name with its article'),
+    forall(member(T-Want, [
+               'The Earth is an ellipsoid.'-copula(present, pos, name('the Earth'), np(ellipsoid, sg, indef, [])),
+               'The valley of the Rhone.'-phrase(of(name('the Rhone'), np(valley, sg, def, []))),
+               'The Missouri feeds into the Mississippi.'-clause(feed, present, pos, name('the Missouri'), none, [pp(into, name('the Mississippi'))]) ]),
+           ( ( typology_read(english, T, R) -> true ; R = none ),
+             atomic_list_concat(['English, the first reading: ', T], Label),
+             check(Label, R, Want) )),
+    ( typology_write(english, copula(present, pos, name('the Earth'), np(ellipsoid, sg, indef, [])), W1) -> true ; W1 = none ),
+    check('written, its article capital where the sentence begins', W1, 'The Earth is an ellipsoid.'),
+    ( typology_write(english, clause(see, past, pos, pron(3, sg, m), name('the Pope')), W2) -> true ; W2 = none ),
+    check('and small after it', W2, 'He saw the Pope.'),
+    findall(R3, typology_read(english, 'The dog sleeps.', R3), Rs3),
+    check('no article before a small word is a name\'s', Rs3, [clause(sleep, present, pos, np(dog, sg, def, []), none)]).
+
 %% 1.115.0: `one's', the possessive of the person no words name.
 ones :-
     section('one\'s'),
@@ -3110,8 +3127,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 4931 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 4 931 sentences read at 1.115.0 within 2 000 000 inferences each are read', R1, yes),
+    ( K >= 4976 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 4 976 sentences read at 1.116.0 within 2 000 000 inferences each are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

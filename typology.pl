@@ -5497,8 +5497,20 @@ ty_name_words(L, name(Nm), F) -->
     ;   [W1], { ty_name_token(L, W1) }, ty_name_more(L, Ws),
         { atomic_list_concat([W1|Ws], ' ', W),
           ( once(ty_name(L, M, W, _, _)) -> Nm = M ; Nm = W ) }
+    ;   [A], { ty_name_article(L, A) }, [W1], { ty_name_token(L, W1) }, ty_name_more(L, Ws),
+        { \+ ( Ws == [], ty_person_name(L, W1) ),
+          atomic_list_concat([A, W1|Ws], ' ', Nm) }
     ),
     { ty_name_features(L, Nm, F) }.
+
+%% A NAME WITH ITS ARTICLE (since 1.116.0): the definite article of no
+%% gender before a name's words is the name's (`the Rhone', `the Senate',
+%% `the Middle Ages': name('the Rhone')), in a language whose definite
+%% article has no gender (English). A person's given name alone takes
+%% none (`the John' is no name; `the Roman Empire' is one).
+ty_name_article(L, A) :- once(ty_article(L, def, any, _, A)).
+
+ty_person_name(L, W) :- once(ty_name(L, _, W, _, person)).
 
 ty_name_more(L, [W|Ws]) --> [W], { ty_name_token(L, W) }, ty_name_more(L, Ws).
 ty_name_more(_, []) --> [].
@@ -5691,7 +5703,16 @@ ty_name_linked(L, name(Nm), Next) -->
     ).
 
 ty_name_tokens_linked(L, _, no, [W|Ws]) --> [W], { ty_name_token(L, W) }, ty_name_more(L, Ws).
+ty_name_tokens_linked(L, C2, Linked, [A|Ws]) -->
+    [A], { ty_name_article(L, A) }, ty_name_tokens_linked_(L, C2, Linked, Ws),
+    { \+ ( Ws = [W1], ty_person_name(L, W1) ) }.
 ty_name_tokens_linked(L, C2, yes, Ws) -->
+    ty_name_more(L, Ws0), [T],
+    { ty_unlinked(L, n, C2, T, T0), T0 \== T, ty_name_token(L, T0), append(Ws0, [T0], Ws) }.
+
+%% A name's tokens after its article (since 1.116.0), none of them one.
+ty_name_tokens_linked_(L, _, no, [W|Ws]) --> [W], { ty_name_token(L, W) }, ty_name_more(L, Ws).
+ty_name_tokens_linked_(L, C2, yes, Ws) -->
     ty_name_more(L, Ws0), [T],
     { ty_unlinked(L, n, C2, T, T0), T0 \== T, ty_name_token(L, T0), append(Ws0, [T0], Ws) }.
 

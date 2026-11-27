@@ -519,3 +519,13 @@ One's native language.	language(of(native(language), someone)). native(of(native
 Carve one's name into the bark.	imperative(into(carve(you, of(name, someone)), the(bark))).
 The necessary consequences of one's actions.	consequence(of(pl(necessary(consequence)), of(pl(action), someone))). necessary(of(pl(necessary(consequence)), of(pl(action), someone))).
 Judicious use of one's money.	use(of(judicious(use), of(money, someone))). judicious(of(judicious(use), of(money, someone))).
+The Earth is an ellipsoid.	ellipsoid(the_earth).
+The Missouri feeds into the Mississippi.	into(feed(the_missouri), the_mississippi).
+The basin of the Great Salt Lake.	basin(of(basin, the_great_salt_lake)).
+The nomadic habits of the Bedouins.	habit(of(pl(nomadic(habit)), the_bedouins)). nomadic(of(pl(nomadic(habit)), the_bedouins)).
+Spy for the Russians.	imperative(for(spy(you), the_russians)).
+The candidate stumped the Northeast.	past(stump(the(candidate), the_northeast)).
+They took the VCR on approval.	past(on(take(they, the_vcr), approval)).
+The colonies revolted against the Crown.	past(against(revolt(the(pl(colony))), the_crown)).
+It was the dawn of the Roman Empire.	past(dawn(it, the_roman_empire)).
+The North Pole and the South Pole are antipodes.	antipode(the_north_pole). antipode(the_south_pole).
