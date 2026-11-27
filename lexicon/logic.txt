@@ -461,3 +461,11 @@ The oversight was not imputable to him.	is_not(past(to(imputable(the(oversight))
 Squandered money cannot be replaced.	is_not(can(replace(someone, squandered(money)))).
 They didn't have to use coercion.	is_not(past(have(they, to(use(they, coercion))))).
 Happily he was not injured.	is_not(past(happily(injure(someone, he)))).
+It's a shambolic system.	system(it). shambolic(it).
+He's family.	family(he).
+He's a master of the business deal.	master(he, the(business(deal))).
+You'll find it in the hardware department.	future(in(find(you, it), the(nn(hardware, department)))).
+She's really together.	really(together(she)).
+We're now quits.	now(quits(we)).
+He's a blasted idiot.	idiot(he). blasted(he).
+Last, I'll discuss family values.	value(a(pl(family(value)))). family(a(pl(family(value)))). future(last(discuss(i, a(pl(family(value)))))).

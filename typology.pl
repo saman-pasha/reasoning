@@ -239,6 +239,11 @@
 %%                                     Spanish `a' before an animate one
 %%     ty_contraction(L, Words, Word)  two words written as one (`a el' is
 %%                                     `al'), and read back as two
+%%     ty_short_form(L, Words, Word)   a word read as Words and never
+%%                                     written (since 1.110.0: English
+%%                                     `he's' is [he, is],
+%%                                     `I'm' [i, am]); the words are
+%%                                     written
 %%     ty_negation(L, Tense, Number, Words, Form)
 %%                                     a negative the template does not list
 %%                                     is Words before a positive form: the
@@ -874,7 +879,7 @@
 :- dynamic ty_order/3, ty_noun/6, ty_noun_class/3, ty_noun_in/6, ty_closed/2,
            ty_conjugation/3, ty_class_when/4, ty_verb_in/4, ty_irregular_verb/5,
            ty_adjective/5, ty_verb/6, ty_article/5,
-           ty_mark/5, ty_contraction/3, ty_negation/5, ty_ending/4,
+           ty_mark/5, ty_contraction/3, ty_short_form/3, ty_negation/5, ty_ending/4,
            ty_letters/3, ty_before/5, ty_linked/5, ty_copula/6, ty_adposition/3,
            ty_adverb/3, ty_adjunct/2, ty_noun_adposition/2, ty_sense/5, ty_topic/2, ty_question/4,
            ty_question_form/5, ty_wh/2, ty_wh_word/3, ty_question_mark/3,
@@ -899,7 +904,7 @@
 :- discontiguous ty_order/3, ty_noun/6, ty_noun_class/3, ty_noun_in/6, ty_closed/2,
                  ty_conjugation/3, ty_class_when/4, ty_verb_in/4, ty_irregular_verb/5,
                  ty_adjective/5, ty_verb/6,
-                 ty_article/5, ty_mark/5, ty_contraction/3, ty_negation/5,
+                 ty_article/5, ty_mark/5, ty_contraction/3, ty_short_form/3, ty_negation/5,
                  ty_ending/4, ty_letters/3, ty_before/5, ty_linked/5, ty_copula/6,
                  ty_adposition/3, ty_adverb/3, ty_adjunct/2, ty_noun_adposition/2, ty_sense/5,
                  ty_question/4, ty_question_form/5, ty_wh/2, ty_wh_word/3,
@@ -1215,7 +1220,7 @@ ty_template_group('the negation', [ty_negation, ty_negation_place, ty_copula_neg
                                    ty_negative_article, ty_negative_article_roles,
                                    ty_negative_article_keeps]).
 ty_template_group('forms chosen by sound, and contractions', [ty_ending, ty_letters, ty_before,
-                                                               ty_linked, ty_contraction]).
+                                                               ty_linked, ty_contraction, ty_short_form]).
 ty_template_group('roles, marks and cases', [ty_mark, ty_case, ty_case_after, ty_article_case,
                                              ty_noun_case, ty_declension, ty_adjective_ending]).
 ty_template_group('adjuncts and complements', [ty_adjunct, ty_noun_adposition, ty_noun_modifier, ty_infinitive_mark, ty_adjective_complement, ty_adjective_adverb, ty_adjective_phrase_noun, ty_adjunct_front, ty_object_front,
@@ -1313,6 +1318,7 @@ ty_row_shape('ty_irregular_verb(L, Meaning, Base, Class, Parts).').
 ty_row_shape('ty_article(L, Definiteness, Gender, Number, Word).').
 ty_row_shape('ty_mark(L, Role, Place, Word, Conditions).').
 ty_row_shape('ty_contraction(L, Words, Word).').
+ty_row_shape('ty_short_form(L, Words, Word).').
 ty_row_shape('ty_negation(L, Tense, Number, Words, Form).').
 ty_row_shape('ty_ending(L, Feature, From, To).').
 ty_row_shape('ty_letters(L, Class, Letters).').
@@ -2027,10 +2033,11 @@ ty_read_words(L, Text, Written, Surface0, Topics, Mood, IR1) :-
     ty_first_written(L, Written, Surface0, Surface),
     ty_live_topics(L, Text, Surface),
     (   Mood == question
-    ->  findall(C-IR0, ty_read_bases(L, Surface, Topics, Mood, IR0, C), All),
+    ->  findall(C-IR0, ( ty_unshort(L, Surface, Surface1), ty_read_bases(L, Surface1, Topics, Mood, IR0, C) ), All),
         ty_least(All, IRs),
         member(IR1, IRs)
-    ;   ty_read_bases(L, Surface, Topics, Mood, IR1, _)
+    ;   ty_unshort(L, Surface, Surface1),
+        ty_read_bases(L, Surface1, Topics, Mood, IR1, _)
     ).
 
 %% A WORD A CAPITAL ROW LOWERS (since 1.92.0) that is an adjective's is
@@ -2718,6 +2725,25 @@ ty_joinable0(L, C) :-
     last(Parts, P),
     ty_before(L, _, _, P, joined).
 
+%% A SHORT FORM (since 1.110.0, ty_short_form/3) opened before anything,
+%% each of its rows a reading, so the sound is checked against the words it
+%% stands for, which the writer writes (`He's family.' is read as `He is
+%% family.'); a word of no row as it is.
+%% The language and its words are tables made with the verb tables
+%% ('$ty_short_made'/1, '$ty_shortw'/2 keyed by the word): asked of
+%% ty_short_form/3, whose rows are all one language's, each read walked
+%% them, 80 inferences in German, which has none.
+ty_unshort(L, Ws, Out) :-
+    (   '$ty_short_made'(L) -> ty_unshort_(Ws, L, Out) ; Out = Ws ).
+
+ty_unshort_([], _, []).
+ty_unshort_([W|Ws], L, Out) :-
+    (   atom(W), '$ty_shortw'(W, L)
+    ->  ty_short_form(L, Parts, W), append(Parts, Rest, Out)
+    ;   Out = [W|Rest]
+    ),
+    ty_unshort_(Ws, L, Rest).
+
 %% A contraction opened, or the word as it is.
 ty_uncontract(_, [], []).
 ty_uncontract(L, [T|Ts], Out) :-
@@ -3040,7 +3066,8 @@ ty_known_words(L, Surface) :-
     forall(member(W, Surface), ty_known_token(L, W)).
 
 ty_known_token(L, W) :-
-    ty_unjoin(L, [W], T1),
+    ty_unshort(L, [W], T0),
+    ty_unjoin(L, T0, T1),
     ty_uncontract(L, T1, T2),
     ty_unsound(L, T2, Bs),
     forall(member(B, Bs), ty_known_base(L, B)), !.
@@ -6559,7 +6586,7 @@ ty_verb_row(L, V, T, N, P, Words) :-
 ty_particle_of(L, Pt) :- setof(Pt0, ty_phrasal_particle(L, Pt0), Pts), member(Pt, Pts).
 ty_phrasal_particle(L, Pt) :- ty_phrasal(L, _, _, Pt, _).
 :- dynamic('$ty_tfirst'/2).
-:- dynamic('$ty_tpw'/8), dynamic('$ty_tpk'/2), dynamic('$ty_tpw_made'/1), dynamic('$ty_tcheck'/2).
+:- dynamic('$ty_tpw'/8), dynamic('$ty_tpk'/2), dynamic('$ty_tpw_made'/1), dynamic('$ty_tcheck'/2), dynamic('$ty_short_made'/1), dynamic('$ty_shortw'/2).
 
 %% Whether a verb's form may begin with W (the words around a word with
 %% several meanings).
@@ -6595,6 +6622,10 @@ ty_vfirst_make(L) :-
     retractall('$ty_tpk'(_, L)),
     retractall('$ty_tpw_made'(L)),
     retractall('$ty_tcheck'(_, L)),
+    retractall('$ty_short_made'(L)),
+    retractall('$ty_shortw'(_, L)),
+    forall(( ty_short_form(L, _, SW), \+ '$ty_shortw'(SW, L) ), assertz('$ty_shortw'(SW, L))),
+    ( once(ty_short_form(L, _, _)) -> assertz('$ty_short_made'(L)) ; true ),
     ( ty_phrasal(L, _, _, _, _) -> assertz('$ty_phrasal_made'(L)) ; true ),
     forall(( ty_verb_list(L, complement, _), ty_verb(L, OcV, _, _, _, _), \+ '$ty_ocv'(OcV, L),
              ty_verb_of(L, complement, OcV) ),

@@ -588,6 +588,14 @@ ty_verb_last(xx, rel).
 %% ty_contraction(xx, Words, Word).
 %%   e.g. ty_contraction(spanish, [a, el], al).
 
+%%     ty_short_form(L, Words, Word)   a word read as Words and never
+%%                                     written (since 1.110.0: English
+%%                                     `he's' is [he, is],
+%%                                     `I'm' [i, am]); the words are
+%%                                     written
+%% ty_short_form(xx, Words, Word).
+%%   e.g. ty_short_form(english, [he, is], 'he\'s').
+
 %% ==== roles, marks and cases ====
 
 %%     ty_mark(L, Role, Place, Word, Conditions)

@@ -169,6 +169,7 @@ main :-
     perfect_passive,
     grammar_words,
     modals,
+    short_forms,
     format("~ndone~n", []).
 
 
@@ -1235,6 +1236,16 @@ modals :-
     must('a short form of not', IR2, clause(see, modal(could), neg, pron(3, sg, m), np(dog, sg, def, []))),
     typology_write(english, IR2, W2),
     must('written in full', W2, 'He could not see the dog.').
+
+%% 78. THE SHORT FORMS OF A PRONOUN AND A VERB (1.110.0): ty_short_form/3
+%% rows, each read as its words before anything and never written (`he's'
+%% is [he, is]).
+short_forms :-
+    typology_load(english),
+    typology_read(english, 'He\'s family.', IR1),
+    must('a short form', IR1, copula(present, pos, pron(3, sg, m), adj([family]))),
+    typology_write(english, IR1, W1),
+    must('written in full', W1, 'He is family.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

@@ -1042,6 +1042,42 @@ ty_copula(english, any, modal(ought), pl, pos, [ought, to, be]).
 ty_copula(english, any, modal(ought), sg, neg, [ought, not, to, be]).
 ty_copula(english, any, modal(ought), pl, neg, [ought, not, to, be]).
 ty_tense_form(english, pass(modal(ought)), any, pos, [ought, to, be, participle]).
+%% THE SHORT FORMS OF A PRONOUN AND A VERB (since 1.110.0): `he's', `I'm',
+%% `let's', each read as its words and never written; `'s' is is, `'d' would:
+%% as has and had they took a main verb's place (`He's a principal actor in
+%% this affair.' read as he has an actor), where they are auxiliaries alone.
+ty_short_form(english, [he, is], 'he''s').
+ty_short_form(english, [she, is], 'she''s').
+ty_short_form(english, [it, is], 'it''s').
+ty_short_form(english, [that, is], 'that''s').
+ty_short_form(english, [what, is], 'what''s').
+ty_short_form(english, [who, is], 'who''s').
+ty_short_form(english, [let, us], 'let''s').
+ty_short_form(english, [i, am], 'i''m').
+ty_short_form(english, [i, have], 'i''ve').
+ty_short_form(english, [i, will], 'i''ll').
+ty_short_form(english, [i, would], 'i''d').
+ty_short_form(english, [i, am], 'I''m').
+ty_short_form(english, [i, have], 'I''ve').
+ty_short_form(english, [i, will], 'I''ll').
+ty_short_form(english, [i, would], 'I''d').
+ty_short_form(english, [you, are], 'you''re').
+ty_short_form(english, [you, have], 'you''ve').
+ty_short_form(english, [we, are], 'we''re').
+ty_short_form(english, [we, have], 'we''ve').
+ty_short_form(english, [they, are], 'they''re').
+ty_short_form(english, [they, have], 'they''ve').
+ty_short_form(english, [you, will], 'you''ll').
+ty_short_form(english, [he, will], 'he''ll').
+ty_short_form(english, [she, will], 'she''ll').
+ty_short_form(english, [it, will], 'it''ll').
+ty_short_form(english, [we, will], 'we''ll').
+ty_short_form(english, [they, will], 'they''ll').
+ty_short_form(english, [you, would], 'you''d').
+ty_short_form(english, [he, would], 'he''d').
+ty_short_form(english, [she, would], 'she''d').
+ty_short_form(english, [we, would], 'we''d').
+ty_short_form(english, [they, would], 'they''d').
 
 %% The word before the last item of a list: a predicate's adjectives
 %% (`small and black'), noun phrases (`the boy and the girl'), clauses.
