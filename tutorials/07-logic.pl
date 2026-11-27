@@ -97,6 +97,7 @@ main :-
     unsaid_copula,
     small_words,
     but_words,
+    joined_terms,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -818,6 +819,21 @@ but_words :-
     must('slow but accurate', C1, 'past(slow(of(shooting, he))).\npast(accurate(of(shooting, he))).\n'),
     logic_translate(english, cocolog, 'Don\'t overload the car.', C2),
     must('don\'t', C2, 'is_not(imperative(overload(you, the(car)))).\n').
+
+
+%% 68. NOUN PHRASES JOINED WHERE A TERM STANDS (1.135.0) are one constant,
+%% and(T1, ..., Tn): the group, a pair `between' needs whole. A joined
+%% subject or object is a clause of each item still. `or' makes or(T1, ...,
+%% Tn) of constants, never of an indefinite one, which `or' never says is
+%% there.
+joined_terms :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'The city pulsated with music and excitement.', C1),
+    must('with music and excitement', C1, 'past(with(pulsate(the(city)), and(music, excitement))).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and back', E1, 'The city pulsated with music and excitement.'),
+    logic_translate(english, cocolog, 'John or Mary sleeps.', C2),
+    must('john or mary', C2, 'is_sleep(or(john, mary)).\n').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

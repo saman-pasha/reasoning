@@ -610,3 +610,8 @@ His shooting was slow but accurate.	past(slow(of(shooting, he))). past(accurate(
 Inexpert but conscientious efforts.	effort(a(pl(inexpert(conscientious(effort))))). inexpert(a(pl(inexpert(conscientious(effort))))). conscientious(a(pl(inexpert(conscientious(effort))))).
 Don't overload the car.	is_not(imperative(overload(you, the(car)))).
 Don't outstay your welcome.	is_not(imperative(outstay(you, of(welcome, you)))).
+The city pulsated with music and excitement.	past(with(pulsate(the(city)), and(music, excitement))).
+He suffered from fatigue and emotional tension.	past(from(suffer(he), and(fatigue, emotional(tension)))).
+The area was poor in timber and coal.	past(in(poor(the(area)), and(timber, coal))).
+Heckle hemp or flax.	imperative(heckle(you, or(hemp, flax))).
+Water or electricity came on again after the earthquake.	past(after(again(come_on(or(water, electricity))), the(earthquake))).

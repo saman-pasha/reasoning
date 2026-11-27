@@ -1156,6 +1156,9 @@ lg_entity(all(NP), ent(const(all(C)), [], const), Ms) :- !,
 lg_entity(only(NP), ent(const(only(C)), [], const), Ms) :- !,
     lg_entity(NP, ent(T, Conds, Q), Ms),
     ( Q == const, T = const(C), Conds == [] -> true ; lg_no(determiner(only)) ).
+lg_entity(or(Xs), ent(const(T), [], const), Ms) :- is_list(Xs), Xs = [_, _|_], !,
+    lg_or_items(Xs, Cs, Ms),
+    ( Cs \== none -> T =.. [or|Cs] ; lg_no(shape(or(Xs))) ).
 lg_entity(np_pp(H, pp(P, X)), E, Ms) :- !, lg_np_pp(H, P, X, E, Ms).
 %% A NOUN AND ITS INFINITIVE (since 1.96.0) is a term as a noun and its
 %% adposition phrase is, to(T, Atom), the atom said of someone: `A knowing
@@ -1181,6 +1184,22 @@ lg_entity(X, _, _) :- lg_no(shape(X)).
 %% the one individual a subject of them is (since 1.99.0: `The critics
 %% praised someone.' is past(praise(the(pl(critic)), someone)), which a
 %% passive's agent with its patient unsaid says).
+%% NOUN PHRASES JOINED WHERE A TERM STANDS (since 1.135.0): one constant,
+%% and(T1, ..., Tn), the group of the items' terms, each item made as an
+%% argument is (a constant, or an indefinite one's individual): `The city
+%% pulsated with music and excitement.' past(with(pulsate(the(city)),
+%% and(music, excitement))), `a line between sanity and insanity'
+%% between(a(line), and(sanity, insanity)), a pair no item is said alone.
+%% A joined subject or object is a clause of each item still (lg_joined/2).
+%% Joined by `or' (since 1.135.0), the constant or(T1, ..., Tn) of
+%% constants alone (lg_entity/3), wherever a term stands, a subject too:
+%% `Vultures usually feed on carrion or roadkill.' says on(usually(feed(A)),
+%% or(carrion, roadkill)), `John or Mary sleeps.' is_sleep(or(john, mary));
+%% an indefinite item would be said to be there, which `or' never says.
+lg_arg(K, X, const(T), T, Ms) :-
+    nonvar(X), X = and(Xs), is_list(Xs), Xs = [_, _|_], !,
+    lg_args_joined(Xs, K, Raws, Ms),
+    T =.. [and|Raws].
 lg_arg(K, X, V, Raw, Ms) :-
     lg_entity(X, ent(T, Conds, Q), Ms0),
     (   Q == const
@@ -1191,6 +1210,20 @@ lg_arg(K, X, V, Raw, Ms) :-
     ->  V = V0, Ms = ['$obj'(Shape, V, Raw, Conds)|Rest]
     ;   Why =.. [K, Q], lg_no(Why)
     ).
+
+lg_or_items([], [], []).
+lg_or_items([X|Xs], Cs, Ms) :-
+    lg_entity(X, ent(T, Conds, Q), Ms1),
+    (   Q == const, T = const(C), Conds == []
+    ->  lg_or_items(Xs, Cs1, Ms2),
+        ( Cs1 == none -> Cs = none ; Cs = [C|Cs1] ),
+        append(Ms1, Ms2, Ms)
+    ;   Cs = none, Ms = []
+    ).
+
+lg_args_joined([], _, [], []).
+lg_args_joined([X|Xs], K, [R|Rs], Ms) :-
+    lg_arg(K, X, _, R, Ms1), lg_args_joined(Xs, K, Rs, Ms2), append(Ms1, Ms2, Ms).
 
 lg_noun_conds(N, As, V, Cs) :-
     lg_adjectives(As, Ms),
@@ -1570,6 +1603,10 @@ lg_const_term(T) :-
 lg_const_term(T) :- ground(T), lg_ap_shape(T).
 %% A bare noun with a noun before it (since 1.87.0): nn(life, support).
 lg_const_term(nn(M, X)) :- ground(X), atom(M), lg_np_shape(X).
+%% Noun phrases joined (since 1.135.0): and(music, excitement), each item
+%% a constant's term.
+lg_const_term(T) :-
+    compound(T), ground(T), T =.. [J|Ts], memberchk(J, [and, or]), Ts = [_, _|_], forall(member(X, Ts), lg_poss_term(X)).
 
 lg_det_term(T) :-
     compound(T), ground(T),
@@ -2406,6 +2443,9 @@ lg_const_np(L, Cs, a(S), NP) :- !, memberchk(a(S), Cs), lg_indef_np(L, Cs, S, NP
 lg_const_np(L, Cs, a(S, K), NP) :- integer(K), !, memberchk(a(S, K), Cs), lg_indef_np(L, Cs, S, NP).
 lg_const_np(L, Cs, all(T), all(NP)) :- nonvar(T), compound(T), !, lg_const_np(L, Cs, T, NP).
 lg_const_np(L, Cs, only(T), only(NP)) :- nonvar(T), !, lg_const_np(L, Cs, T, NP).
+lg_const_np(L, Cs, T, NP) :-
+    compound(T), T =.. [J|Ts], memberchk(J, [and, or]), Ts = [_, _|_], !,
+    maplist(lg_const_np(L, Cs), Ts, NPs), NP =.. [J, NPs].
 %% A possessor someone is the person no words name (since 1.115.0):
 %% of(breath, someone) is `one's breath'.
 lg_const_np(L, Cs, of(T, P), of(PNP, of(Pr, np(N, Num, def, As)))) :-
