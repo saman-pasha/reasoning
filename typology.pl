@@ -4106,9 +4106,19 @@ ty_sentence(L, phrase(NP)) -->
 %% adposition phrase (an adposition's first word or a contraction).
 ty_sentence(L, phrase(pp(Prep, NP))) -->
     ty_here(S0),
-    { ty_pp_first(L, S0), b_setval('$ty_phrase', yes) },
+    { ty_pp_first(L, S0), b_setval('$ty_phrase', yes), ty_of_first(L, Prep, S0) },
     ty_pp(L, Prep, NP),
     { b_setval('$ty_phrase', no), \+ ty_is_asked(NP) }.
+
+%% AN INFINITIVE ALONE (since 1.132.0): phrase(inf(V, O, Js)), a sentence
+%% that says only an infinitive's clause (`To face a problem squarely.',
+%% WordNet's examples of a verb), read after the adposition phrase alone,
+%% and only where the first words are the infinitive's mark.
+ty_sentence(L, phrase(inf(V, O, Js))) -->
+    ty_here(S0),
+    { nonvar(S0) -> ty_infinitive_mark(L, Ws), append(Ws, _, S0) ; true },
+    ty_infinitive(L, V, O, Js),
+    { ty_inf_not_noun(L, V, O, Js) }.
 
 %% A COMMAND (since 1.82.0): a clause in the imperative, a tense whose verb
 %% forms the language's ty_tense_form/5 rows give (English: the present's
@@ -4165,6 +4175,14 @@ ty_sentence(L, C) -->
     ty_here(S),
     { b_setval('$ty_command', none),
       \+ ty_said_passive(Rd, L, S0, S) }.
+%% A COPULA WITH NO SUBJECT (since 1.132.0: `Was quick to make friends.',
+%% `Was red-faced with anger.'), its subject someone the text does not
+%% name, as a clause's with no subject: after the passive with none.
+ty_sentence(L, C) -->
+    { '$ty_unsaid'(L), C = copula(T, _, pron(3, sg, zero), _),
+      b_setval('$ty_command', z(C)) },
+    ty_copula_clause(L, C),
+    { b_setval('$ty_command', none), T \== imperative }.
 %% AN ADJECTIVE PHRASE ALONE (since 1.113.0): phrase(adj(As)), a sentence
 %% that says no clause and no noun (`Potentially useful.', `Short in
 %% stature.', `Unaware of the newborn hope.'), the adjectives a copula's
@@ -4275,7 +4293,8 @@ ty_command_adjective(L, clause(V, _, _, _, O, _)) :-
     ty_word_class(L, adjective, W).
 
 ty_command_subject(Pr) :-
-    nb_current('$ty_command', X), ( X = c(C) -> true ; X = z(C) -> true ; X = i(C) ), arg(4, C, S), S == Pr.
+    nb_current('$ty_command', X), ( X = c(C) -> true ; X = z(C) -> true ; X = i(C) ),
+    ( C = copula(_, _, S, _) -> true ; arg(4, C, S) ), S == Pr.
 
 %% Only a command's own clause is in the imperative (a clause inside it,
 %% `the goal that you see', is not). Asked of the command once it is read:
@@ -6764,7 +6783,7 @@ ty_predicate_in(L, such(NP), []) -->
     { ty_such_np(NP) }.
 ty_predicate_in(L, R, []) --> { ty_rel_slot(R) }, ty_rel(L, none, R, _).
 ty_predicate_in(L, P, []) --> { ty_poss_slot(P) }, ty_poss(L, P, _).
-ty_predicate_in(L, pp(Prep, NP), []) --> ty_pp(L, Prep, NP).
+ty_predicate_in(L, pp(Prep, NP), []) --> ty_here(S0), { ty_of_first(L, Prep, S0) }, ty_pp(L, Prep, NP).
 ty_predicate_in(L, W, []) --> { nonvar(W), W = wh(M) }, ty_wh_words(L, M).
 
 ty_predicate_ok(adj(_), Rows, G, N) :- !,
@@ -9061,6 +9080,18 @@ ty_pp_of(Prep) :-
     ;   Prep == than
     ->  nb_current('$ty_than_ok', yes), b_setval('$ty_than_ok', no), b_setval('$ty_of_ok', no)
     ;   b_setval('$ty_of_ok', no)
+    ).
+
+%% `OF' FIRST (since 1.132.0): an adposition phrase alone or a copula's
+%% predicate whose first word is the adposition `of' is one (`Of noble
+%% birth.', `The ceremony was of short duration.'), as in an adjective's
+%% phrase ('$ty_of_ok', ty_pp_of/1).
+ty_of_first(L, Prep, S0) :-
+    (   (   nonvar(S0) -> S0 = [W|_], atom(W), ty_adposition(L, of, [W|_])
+        ;   Prep == of
+        )
+    ->  b_setval('$ty_of_ok', yes)
+    ;   true
     ).
 
 %% A TEXT'S ADJECTIVE PHRASES: '$ty_ap' on where the language has the row

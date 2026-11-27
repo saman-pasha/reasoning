@@ -190,6 +190,7 @@ main :-
     dash_words,
     particles,
     grading_words,
+    unsaid_copula,
     format("~ndone~n", []).
 
 
@@ -1487,6 +1488,24 @@ grading_words :-
     must('only a crumb', IR3, clause(give, past, pos, pron(3, sg, m), only(np(crumb, sg, indef, [])))),
     typology_read(english, 'The only child slept.', IR4),
     must('the only child', IR4, clause(sleep, past, pos, np(child, sg, def, [only]), none)).
+
+
+%% 101. A COPULA WITH NO SUBJECT (1.132.0) is a clause's with none, its
+%% subject pron(3, sg, zero) (`Was quick to make friends.'). `Of' first in
+%% an adposition phrase alone or in a copula's predicate is the adposition
+%% (`Of noble birth.', `The ceremony was of short duration.'), where it is
+%% the possessor's word elsewhere. An infinitive alone is phrase(inf(V, O,
+%% Js)) (`To face a problem squarely.').
+unsaid_copula :-
+    typology_load(english),
+    typology_read(english, 'Was quick to make friends.', IR1),
+    must('was quick', IR1, copula(past, pos, pron(3, sg, zero), adj([ap(quick, inf(make, np(friend, pl, indef, [])))]))),
+    typology_read(english, 'Of noble birth.', IR2),
+    must('of noble birth', IR2, phrase(pp(of, np(birth, sg, mass, [noble])))),
+    typology_read(english, 'The ceremony was of short duration.', IR3),
+    must('was of short duration', IR3, copula(past, pos, np(ceremony, sg, def, []), pp(of, np(duration, sg, mass, [short])))),
+    typology_read(english, 'To face a problem squarely.', IR4),
+    must('to face a problem', IR4, phrase(inf(face, np(problem, sg, indef, []), [adv(squarely)]))).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

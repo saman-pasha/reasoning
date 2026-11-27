@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2345,7 +2345,8 @@ phrasal_verbs :-
 %% 1.95.0: AN INFINITIVE AS A VERB'S OBJECT, inf(Verb, Object[, Adjuncts]),
 %% of a verb whose object may be one (ty_verb_list(L, infinitive, Base):
 %% English WordNet's lexicon/vinf.txt and a list), its subject said by no
-%% words, its tense only an infinitive's own.
+%% words, its tense only an infinitive's own. An infinitive alone is a
+%% phrase since 1.132.0.
 infinitives :-
     section('an infinitive as a verb\'s object'),
     forall(member(T-Want, [
@@ -2354,7 +2355,7 @@ infinitives :-
                'He tried to find out by indirection.'-clause(try, past, pos, pron(3, sg, m), inf(find_out, none, [pp(by, np(indirection, sg, mass, []))])),
                'He slept to see the dog.'-clause(sleep, past, pos, pron(3, sg, m), none, [inf(see, np(dog, sg, def, []))]),
                'He to see the dog.'-none,
-               'To see the dog.'-none ]),
+               'To see the dog.'-phrase(inf(see, np(dog, sg, def, []))) ]),
            ( ( typology_read(english, T, R) -> true ; R = none ),
              atomic_list_concat(['English: ', T, ', the first reading'], Label),
              check(Label, R, Want) )),
@@ -2757,6 +2758,29 @@ article_names :-
 %% adposition and as an object, its adjectives joined, an emphatic subject
 %% of a verb that asks an animate one, `of' after a verb of the
 %% of_adjunct list (with no object) or of the of_object list.
+%% 1.132.0: a copula with no subject, `of' first in an adposition phrase
+%% alone and in a copula's predicate, an infinitive alone.
+unsaid_copula :-
+    section('a copula with no subject, of first, an infinitive alone'),
+    forall(member(T-Want, [
+               'Was quick to make friends.'-copula(past, pos, pron(3, sg, zero), adj([ap(quick, inf(make, np(friend, pl, indef, [])))])),
+               'Was a big tipper.'-copula(past, pos, pron(3, sg, zero), np(tipper, sg, indef, [big])),
+               'Of noble birth.'-phrase(pp(of, np(birth, sg, mass, [noble]))),
+               'The ceremony was of short duration.'-copula(past, pos, np(ceremony, sg, def, []), pp(of, np(duration, sg, mass, [short]))),
+               'To face a problem squarely.'-phrase(inf(face, np(problem, sg, indef, []), [adv(squarely)])),
+               'He is proud of his son.'-copula(present, pos, pron(3, sg, m), adj([ap(proud, pp(of, of(pron(3, sg, m), np(son, sg, def, []))))])),
+               'The book of the boy.'-phrase(of(np(boy, sg, def, []), np(book, sg, def, []))) ]),
+           ( ( once(typology_read(english, T, R)) -> true ; R = none ),
+             ( R = Want -> V = yes ; V = R ),
+             atomic_list_concat(['English, the first reading: ', T], Label),
+             check(Label, V, yes) )),
+    forall(member(IR-Want2, [ copula(past, pos, pron(3, sg, zero), adj([ap(quick, inf(make, np(friend, pl, indef, [])))]))-'Was quick to make friends.',
+                              phrase(pp(of, np(birth, sg, mass, [noble])))-'Of noble birth.',
+                              copula(past, pos, np(ceremony, sg, def, []), pp(of, np(duration, sg, mass, [short])))-'The ceremony was of short duration.',
+                              phrase(inf(face, np(problem, sg, indef, []), [adv(squarely)]))-'To face a problem squarely.' ]),
+           ( ( typology_write(english, IR, W) -> true ; W = none ),
+             check('written', W, Want2) )).
+
 %% 1.131.0: an adjective's word of the grading list grades an adjective
 %% (`still', `only'), `most' grades one, and `only' stands before a noun
 %% phrase.
@@ -3430,8 +3454,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 6171 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 6 171 sentences read at 1.131.0 within 2 000 000 inferences each are read', R1, yes),
+    ( K >= 6200 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 6 200 sentences read at 1.132.0 within 2 000 000 inferences each are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

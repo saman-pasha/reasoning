@@ -595,3 +595,8 @@ Our lawsuit is still undetermined.	still(undetermined(of(lawsuit, we))).
 The University suspended the most recalcitrant demonstrators.	past(suspend(the_university, the(pl(most(recalcitrant(demonstrator)))))).
 Performed the most challenging task without a mistake.	mistake(a(mistake)). past(without(perform(someone, the(most(challenging(task)))), a(mistake))).
 Her beauty is only skin-deep.	only('skin-deep'(of(beauty, she))).
+Was quick to make friends.	past(quick(someone, to(make(someone, a(pl(friend)))))).
+Was stupid from fatigue.	past(from(stupid(someone), fatigue)).
+The islands are of strategic importance.	of(the(pl(island)), strategic(importance)).
+The main doors were of solid glass.	past(of(the(pl(main(door))), solid(glass))).
+Was hot for her.	past(for(hot(someone), she)).

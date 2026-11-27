@@ -94,6 +94,7 @@ main :-
     dash_words,
     particles,
     grading_words,
+    unsaid_copula,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -785,6 +786,18 @@ grading_words :-
     must('and back', E1, 'The building is still unfinished.'),
     logic_translate(english, cocolog, 'He saw only his mother.', C2),
     must('only his mother', C2, 'past(see(he, only(of(mother, he)))).\n').
+
+
+%% 65. A COPULA WITH NO SUBJECT (1.132.0) is said of someone, as a clause
+%% with none is; `of' first is the adposition's predicate.
+unsaid_copula :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'Was stupid from fatigue.', C1),
+    must('was stupid from fatigue', C1, 'past(from(stupid(someone), fatigue)).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and back', E1, 'Someone was stupid from fatigue.'),
+    logic_translate(english, cocolog, 'The ceremony was of short duration.', C2),
+    must('of short duration', C2, 'past(of(the(ceremony), short(duration))).\n').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
