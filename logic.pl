@@ -1042,6 +1042,13 @@ lg_entity(np(N, Num, D, As0), E, Ms) :- lg_has_ap(As0), !,
 lg_entity(name(N), ent(const(C), [], const), []) :- !, lg_name_atom(N, C).
 lg_entity(np(N, Num, def, As), ent(const(the(T)), [], const), []) :- memberchk(Num, [sg, pl]), !,
     lg_np_term(N, Num, As, T).
+%% A NOUN PHRASE WITH A DEMONSTRATIVE (since 1.121.0) is a constant as a
+%% definite one is, its determiner round its term: `This job doesn't match
+%% my dreams.' this(job), `These apples are good eaters.' this(pl(apple)),
+%% `That question' that(question).
+lg_entity(np(N, Num, D, As), ent(const(DT), [], const), []) :-
+    memberchk(D, [this, that]), memberchk(Num, [sg, pl]), !,
+    lg_np_term(N, Num, As, T), DT =.. [D, T].
 lg_entity(np(N, _, mass, As), ent(const(T), [], const), []) :- !,
     lg_np_term(N, sg, As, T).
 lg_entity(np(N, _, D, As), ent(V, Conds, every), []) :- memberchk(D, [every, each, all]), !,
@@ -1171,7 +1178,9 @@ lg_possessed(P, NP, E, Ms) :-
 lg_possessed(P, NP, E, Ms) :-
     lg_arg(possessor, P, _, Pc, PMs),
     ( nonvar(NP), NP = np(N, Num, D, As) -> true ; lg_no(shape(NP)) ),
-    (   D == def
+    (   memberchk(D, [this, that])
+    ->  lg_np_term(N, Num, As, T), DT =.. [D, of(T, Pc)], E = ent(const(DT), [], const), Ms = PMs
+    ;   D == def
     ->  lg_np_term(N, Num, As, T), E = ent(const(of(T, Pc)), [], const), Ms = PMs
     ;   D == mass
     ->  lg_np_term(N, sg, As, T), E = ent(const(of(T, Pc)), [], const), Ms = PMs
@@ -1474,6 +1483,8 @@ lg_const_term(nn(M, X)) :- ground(X), atom(M), lg_np_shape(X).
 lg_det_term(T) :-
     compound(T), ground(T),
     (   T = the(X) -> ( lg_np_shape(X) -> true ; lg_pp_shape(X) -> true ; lg_to_shape(X) )
+    ;   T = this(X) -> lg_dem_shape(X)
+    ;   T = that(X) -> lg_dem_shape(X)
     ;   T = a(X) -> ( X = of(Y, P) -> lg_np_shape(Y), lg_poss_term(P) ; lg_np_shape(X) -> true ; lg_pp_shape(X) -> true ; lg_to_shape(X) )
     ;   T = a(X, K) -> integer(K), K > 1, lg_det_term(a(X))
     ;   T = of(of(X, P0), P) -> lg_np_shape(X), atom(P0), lg_poss_term(P)
@@ -1494,6 +1505,11 @@ lg_ap_atom(X) :-
     \+ catch(typology_meaning(english, noun, Y), _, fail).
 
 lg_poss_term(P) :- ( atom(P) -> true ; lg_const_term(P) ).
+
+%% A demonstrative's term (since 1.121.0): a noun's, or a possessed one's
+%% (`this style of shoe' this(of(style, shoe))).
+lg_dem_shape(X) :- lg_np_shape(X), !.
+lg_dem_shape(of(Y, P)) :- lg_np_shape(Y), lg_poss_term(P).
 
 %% A noun's term with an adjective's adposition phrase (since 1.91.0):
 %% A(T, Prep, X), A an adjective of the English template, Prep an
@@ -1696,6 +1712,8 @@ lg_phrase_group([F|Is], G, Rest) :-
 lg_term_facts(a(S), Fs) :- !, lg_shape_facts(S, const(a(S)), Fs).
 lg_term_facts(a(S, K), Fs) :- integer(K), !, lg_shape_facts(S, const(a(S, K)), Fs).
 lg_term_facts(the(T), Fs) :- !, lg_shape_facts(T, const(the(T)), Fs).
+lg_term_facts(this(T), Fs) :- !, lg_shape_facts(T, const(this(T)), Fs).
+lg_term_facts(that(T), Fs) :- !, lg_shape_facts(T, const(that(T)), Fs).
 lg_term_facts(of(T, P), Fs) :- !, lg_shape_facts(of(T, P), const(of(T, P)), Fs).
 lg_term_facts(all(X), Fs) :- nonvar(X), !,
     (   X = the(T) -> lg_shape_facts(T, const(all(X)), Fs)
@@ -2257,6 +2275,12 @@ lg_const_np(L, Cs, the(T), np_pp(np(N, Num, def, As), pp(P, XNP))) :-
     lg_np_of_term(L, T0, N, Num, As),
     lg_const_np(L, Cs, X, XNP).
 lg_const_np(L, Cs, the(T), np(N, Num, def, As)) :- !, lg_np_of_term(L, Cs, T, N, Num, As).
+lg_const_np(L, Cs, DT, NP) :-
+    compound(DT), DT =.. [D, T], memberchk(D, [this, that]), !,
+    (   nonvar(T), T = of(T0, P), lg_poss_term(P)
+    ->  lg_np_of_term(L, T0, N, Num, As), NP = of(PNP, np(N, Num, D, As)), lg_const_np(L, Cs, P, PNP)
+    ;   lg_np_of_term(L, Cs, T, N, Num, As), NP = np(N, Num, D, As)
+    ).
 lg_const_np(L, Cs, a(S), NP) :- !, memberchk(a(S), Cs), lg_indef_np(L, Cs, S, NP).
 lg_const_np(L, Cs, a(S, K), NP) :- integer(K), !, memberchk(a(S, K), Cs), lg_indef_np(L, Cs, S, NP).
 lg_const_np(L, Cs, all(T), all(NP)) :- nonvar(T), compound(T), !, lg_const_np(L, Cs, T, NP).

@@ -549,3 +549,8 @@ If you gum the tape it is stronger.	stronger(it) :- gum(you, the(tape)).
 The water is colder.	colder(the(water)).
 Their modified stand made the issue more acceptable.	past(make(of(modified(stand), they), the(issue), more_acceptable(the(issue)))).
 More wasteful than the squandering of time.	more_wasteful(something, of(squandering, time)).
+This matrix is idempotent.	idempotent(this(matrix)).
+He was familiar with those roads.	past(with(familiar(he), that(pl(road)))).
+Scratch that remark.	imperative(scratch(you, that(remark))).
+That hat is my property.	property(that(hat), i).
+This contract is not executable.	is_not(executable(this(contract))).

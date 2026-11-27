@@ -83,6 +83,7 @@ main :-
     predeterminers,
     possessed_heads,
     comparatives,
+    demonstratives,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -670,6 +671,15 @@ comparatives :-
     must('and into English', E1, 'John is taller than Mary.'),
     logic_translate(english, cocolog, 'The tales are more approachable than the novels.', C2),
     must('a long adjective', C2, 'more_approachable(the(pl(tale)), the(pl(novel))).\n').
+
+%% 54. A NOUN PHRASE WITH A DEMONSTRATIVE (1.121.0) is a constant, the
+%% determiner round its term as `the' is.
+demonstratives :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'Park your bag in this locker.', C1),
+    must('this(locker)', C1, 'imperative(in(park(you, of(bag, you)), this(locker))).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and into English', E1, 'Park your bag in this locker.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
