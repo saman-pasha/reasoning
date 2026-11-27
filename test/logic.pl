@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -82,7 +82,6 @@ joined :-
 diagnostics :-
     section('what has no logic form yet'),
     forall(member(T-Want, [
-               'The boy would see the dog.'-tense(conditional),
                'The boy does not sleep.'-negation,
                'Every boy sees a dog.'-object(generic),
                'The boy sleeps because the dog sleeps.'-subordinate(because),
@@ -263,11 +262,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 412),
-    ( R >= 398 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 398 right', VR, ok),
-    ( K >= 404 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 404 kept', VK, ok).
+    check('the second measure: its sentences', N, 422),
+    ( R >= 408 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 408 right', VR, ok),
+    ( K >= 414 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 414 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -305,12 +304,17 @@ tenses :-
     check('a tense into Spanish', S4, 'John durmió.'),
     ( logic_translate(cocolog, english, 'past(append(a, b, c)).', E5) -> true ; E5 = none ),
     check('a tense in a general sentence', E5, 'Append holds for a, b and c in the past.'),
+    ( logic_translate(cocolog, english, 'can(append(a, b, c)).', E5a) -> true ; E5a = none ),
+    check('a modal in a general sentence', E5a, 'It can be that append holds for a, b and c.'),
+    ( logic_translate(cocolog, english, 'conditional(append(a, b, c)).', E5b) -> true ; E5b = none ),
+    check('the conditional in a general sentence', E5b, 'It would be that append holds for a, b and c.'),
     ( cocolog_read('past(the(war)).', U6) -> true ; U6 = none ),
     check('a tense\'s name before no compound term is a predicate', U6,
           utterance(assertion, [fact(pred(past, [const(the(war))]))])),
-    once(typology_read(english, 'John would sleep.', IR7)),
-    logic_why(IR7, W7),
-    check('the conditional has no logic form yet', W7, tense(conditional)).
+    ( logic_translate(english, cocolog, 'John would sleep.', C7) -> true ; C7 = none ),
+    check('the conditional has its logic form (since 1.108.0)', C7, 'conditional(is_sleep(john)).\n'),
+    ( logic_why(clause(sleep, infinitive, pos, name('John'), none), W8) -> true ; W8 = none ),
+    check('an infinitive alone has no logic form', W8, tense(infinitive)).
 
 %% 1.71.0: AN ADJUNCT is said of each atom its clause says, inside the
 %% tense, the first adjunct the innermost; an adposition phrase as a
@@ -1104,6 +1108,27 @@ count_words :-
              check(Label, C, Want) )),
     ( logic_translate(cocolog, english, 'member(a(pl(seven(member)))).\nseven(a(pl(seven(member)))).\nhave(the(board), a(pl(seven(member)))).\n', E) -> true ; E = none ),
     check('back into English, the determiner', E, 'The board has seven members.').
+
+%% 1.108.0: the conditional and the modals, each its own name in Cocolog,
+%% read back into its tense.
+modals :-
+    section('the conditional and the modals'),
+    typology_load(english),
+    forall(member(T-Want, [
+               'He can hear the snap of a twig.'-'twig(a(twig)).\ncan(hear(he, of(snap, a(twig)))).\n',
+               'The dog would sleep.'-'conditional(is_sleep(the(dog))).\n',
+               'In bridge you must follow suit.'-'must(in(follow(you, suit), bridge)).\n',
+               'Our ideas must be substantiated into actions.'-'action(a(pl(action))).\nmust(into(substantiate(someone, of(pl(idea), we)), a(pl(action)))).\n' ]),
+           ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
+             one_line(['into Cocolog: ', T], Label),
+             check(Label, C, Want) )),
+    forall(member(C2-Want2, [
+               'can(hear(he, the(dog))).\n'-'He can hear the dog.',
+               'conditional(is_sleep(the(dog))).\n'-'The dog would sleep.',
+               'should(happy(the(dog))).\n'-'The dog should be happy.' ]),
+           ( ( logic_translate(cocolog, english, C2, E2) -> true ; E2 = none ),
+             one_line(['back into English: ', Want2], Label2),
+             check(Label2, E2, Want2) )).
 
 %% Each clause of a Cocolog text asserted.
 assert_text(P) :-

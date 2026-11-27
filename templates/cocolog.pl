@@ -48,6 +48,18 @@ lg_code_tense(cocolog, prog(past), past_progressive).
 lg_code_tense(cocolog, prog(future), future_progressive).
 lg_code_tense(cocolog, prog(perfect), perfect_progressive).
 lg_code_tense(cocolog, prog(pluperfect), pluperfect_progressive).
+%% The conditional and the modals (since 1.108.0): `The dog would sleep.'
+%% is conditional(sleep(the(dog))), `He can hear the snap of a twig.'
+%% can(hear(he, of(the(snap), a(twig)))).
+lg_code_tense(cocolog, conditional, conditional).
+lg_code_tense(cocolog, modal(can), can).
+lg_code_tense(cocolog, modal(could), could).
+lg_code_tense(cocolog, modal(may), may).
+lg_code_tense(cocolog, modal(might), might).
+lg_code_tense(cocolog, modal(must), must).
+lg_code_tense(cocolog, modal(ought), ought).
+lg_code_tense(cocolog, modal(shall), shall).
+lg_code_tense(cocolog, modal(should), should).
 
 %% The verbs of an animal's sound: each a noun too (the bark of a tree, a
 %% roar), and no list of lexicon/ says which a dog's bark is.

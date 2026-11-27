@@ -98,7 +98,7 @@
 %% its own tense (`John slept when Mary sang.': when(past(sleep(john)),
 %% past(sing(mary)))).
 %%
-%% WHAT HAS NO LOGIC FORM YET: the conditional, a negation, `because', a pronoun whose gender is not known, an indefinite noun
+%% WHAT HAS NO LOGIC FORM YET: a negation, `because', a pronoun whose gender is not known, an indefinite noun
 %% phrase in a rule's conclusion, a generic subject with a possessor in
 %% the present (`Lilies of the valley are racemose.'), a noun phrase of
 %% `every' or `some' that is no subject, a noun of relation with an
@@ -119,7 +119,7 @@
 %%                                     word, or a name and a bare noun,
 %%                                     give one form twice)
 %%     logic_why(+IR, -Why)            why an IR has no logic form:
-%%                                     tense(conditional), negation, adjunct,
+%%                                     tense(T), negation, adjunct,
 %%                                     object(Q), subordinate(K), pronoun,
 %%                                     determiner(D), predicate(P),
 %%                                     shape(IR)
@@ -668,8 +668,12 @@ lg_present(T, P) :-
 %% a(proof)))).
 %% The progressive of a tense (since 1.102.0), prog(T): `The engine is
 %% idling.' is progressive(idle(the(engine))).
-lg_tense(T) :- atom(T), memberchk(T, [present, past, future, perfect, pluperfect, imperfect, imperative]).
+%% The conditional and the modals (since 1.108.0): `The dog would sleep.'
+%% is conditional(sleep(the(dog))), `No one can live forever.'
+%% can(forever(live(nobody))), each modal(M) its own name M.
+lg_tense(T) :- atom(T), memberchk(T, [present, past, future, perfect, pluperfect, imperfect, imperative, conditional]).
 lg_tense(prog(T)) :- atom(T), memberchk(T, [present, past, future, perfect, pluperfect]).
+lg_tense(modal(M)) :- atom(M), memberchk(M, [can, could, may, might, must, ought, shall, should]).
 
 %% A clause's tense, and its atoms in it: present as they are, any other
 %% each at(Tense, Atom).
@@ -2274,8 +2278,7 @@ lg_general_item(query(B), S) :-
 
 lg_holds(at(Tn, A), T) :- !,
     lg_holds(A, T0),
-    ( memberchk(Tn, [future]) -> W = 'in the future' ; W = 'in the past' ),
-    format(atom(T), '~w ~w', [T0, W]).
+    lg_holds_tense(Tn, T0, T).
 % cocolint: X3 -- when/1 here is a term of the logic form, a when clause's atom, not SWI's when/2
 lg_holds(modified(when(B), A), T) :- !,
     lg_holds(A, T1), lg_holds(B, T2),
@@ -2290,6 +2293,15 @@ lg_holds(pred(P, []), T) :- !, format(atom(T), '~w holds', [P]).
 lg_holds(pred(P, Args), T) :-
     maplist(lg_term_words, Args, Ws), lg_and(Ws, W),
     format(atom(T), '~w holds for ~w', [P, W]).
+
+%% A tense's words round a general sentence: a modal and the conditional
+%% (since 1.108.0) say what may be (`It can be that append holds for a, b
+%% and c.'), through 1.107.0 `in the past' as any tense but the future.
+lg_holds_tense(future, T0, T) :- !, format(atom(T), '~w in the future', [T0]).
+lg_holds_tense(conditional, T0, T) :- !, format(atom(T), 'it would be that ~w', [T0]).
+lg_holds_tense(modal(ought), T0, T) :- !, format(atom(T), 'it ought to be that ~w', [T0]).
+lg_holds_tense(modal(M), T0, T) :- !, format(atom(T), 'it ~w be that ~w', [M, T0]).
+lg_holds_tense(_, T0, T) :- format(atom(T), '~w in the past', [T0]).
 
 lg_and([W], W) :- !.
 lg_and(Ws, T) :-

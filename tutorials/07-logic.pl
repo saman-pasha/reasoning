@@ -73,6 +73,7 @@ main :-
     adjunct_first,
     perfect_passive,
     count_words,
+    modals,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -110,9 +111,9 @@ questions :-
 
 %% 4. NO GUESS. What has no logic form yet says why, and is not made one.
 why :-
-    once(typology_read(english, 'The boy would see the dog.', IR1)),
+    once(typology_read(english, 'The boy does not see the dog.', IR1)),
     logic_why(IR1, W1),
-    must('the conditional', W1, tense(conditional)),
+    must('a negation', W1, negation),
     once(typology_read(english, 'Every boy sees a dog.', IR2)),
     logic_why(IR2, W2),
     must('an object that is no constant', W2, object(generic)).
@@ -564,6 +565,17 @@ count_words :-
     must('the group', C1, 'dog(a(pl(two(dog)))).\ntwo(a(pl(two(dog)))).\npast(is_sleep(a(pl(two(dog))))).\n'),
     logic_translate(cocolog, english, C1, E1),
     must('and into English', E1, 'Two dogs slept.').
+
+%% 44. THE CONDITIONAL AND THE MODALS (1.108.0) are tenses, each its own
+%% name in Cocolog, as past is.
+modals :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'In bridge you must follow suit.', C1),
+    must('a modal', C1, 'must(in(follow(you, suit), bridge)).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and into English', E1, 'You must follow suit in bridge.'),
+    logic_translate(english, cocolog, 'The dog would sleep.', C2),
+    must('the conditional', C2, 'conditional(is_sleep(the(dog))).\n').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

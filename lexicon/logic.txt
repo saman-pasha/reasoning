@@ -441,3 +441,13 @@ The board has seven members.	member(a(pl(seven(member)))). seven(a(pl(seven(memb
 Three years elapsed.	year(a(pl(three(year)))). three(a(pl(three(year)))). past(elapse(a(pl(three(year))))).
 The cleat had two horns.	horn(a(pl(two(horn)))). two(a(pl(two(horn)))). past(have(the(cleat), a(pl(two(horn))))).
 They reduced the price on many items.	item(a(pl(many(item)))). many(a(pl(many(item)))). past(on(reduce(they, the(price)), a(pl(many(item))))).
+He can hear the snap of a twig.	twig(a(twig)). can(hear(he, of(snap, a(twig)))).
+In bridge you must follow suit.	must(in(follow(you, suit), bridge)).
+A tub should sit on its own base.	tub(a(tub)). should(on(sit(a(tub)), of(own(base), it))).
+First we must consider the garter snake.	must(first(consider(we, the(nn(garter, snake))))).
+Early detection can often lead to a cure.	cure(a(cure)). can(to(often(lead(early(detection))), a(cure))).
+He can roam the neighborhood at will.	can(at(roam(he, the(neighborhood)), will)).
+The punishment ought to be proportional to the crime.	ought(to(proportional(the(punishment)), the(crime))).
+You must respect the confidentiality of your client's communications.	must(respect(you, of(pl(communication), of(confidentiality, of(client, you))))).
+Our ideas must be substantiated into actions.	action(a(pl(action))). must(into(substantiate(someone, of(pl(idea), we)), a(pl(action)))).
+They could still receive the sound but the picture was gone.	could(still(receive(they, the(sound)))). past(gone(the(picture))).

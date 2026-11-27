@@ -181,7 +181,15 @@
 %%                                     1.103.0 the progressive passive's,
 %%                                     Tense pass(prog(T)) (English
 %%                                     pass(prog(present)) [is, being,
-%%                                     participle])
+%%                                     participle]), and since 1.108.0 a
+%%                                     modal's, Tense modal(M) of a modal M
+%%                                     of the tense values (English
+%%                                     modal(can) [can, form(present, pl)],
+%%                                     pass(modal(can)) [can, be,
+%%                                     participle]); a row after another of
+%%                                     the same tense is read and never
+%%                                     written (English [can, not, ...]
+%%                                     after [cannot, ...], `couldn't')
 %%     ty_definite_like(L, Def, As)    the language writes the definiteness
 %%                                     Def as As, and never reads Def
 %%                                     (since 1.64.0: Persian writes mass
@@ -930,7 +938,9 @@ ty_level(pp, [p, x]).
 ty_level(rel, [h, m, c]).
 ty_level(poss, [h, p, g]).
 
-ty_values(tense, [present, past, future, perfect, imperfect, conditional, pluperfect, imperative, infinitive]).
+%% Since 1.108.0 the modals, each modal(M), M its English word (a tense of
+%% English's alone yet: `can see', `ought to see').
+ty_values(tense, [present, past, future, perfect, imperfect, conditional, pluperfect, imperative, infinitive, modal(can), modal(could), modal(may), modal(might), modal(must), modal(ought), modal(shall), modal(should)]).
 %% The tenses every verb and every copula has; a template gives the others
 %% where it has them, or writes one as another (ty_tense_like/4);
 %% typology_check/2 asks the whole of a tense where a verb or the copula
@@ -1603,9 +1613,18 @@ ty_missing(L, not_an_order(Level, Order)) :-
     \+ ( ty_level(Level, Parts), permutation(Parts, Order) ).
 %% An infinitive's one form, which its subject's number never changes, is
 %% not asked of each number (since 1.97.0: Spanish `ver').
+%% The tenses asked ('$ty_tcheck'/2, made with the verb tables, in the
+%% values' order): a core tense, and one the language has a row or a
+%% pattern of, unless its every pattern is of any agreement, both
+%% polarities, and made of words and a core tense's form or the participle,
+%% no verb's to lack (English's future, conditional, pluperfect and
+%% modals). Each tense asked of each verb, the modals of 1.108.0 doubled
+%% English's check of 15 million inferences and cost the others' 15 %.
 ty_missing(L, verb_form(V, T, N, P)) :-
     ty_verb_meaning(L, V),
-    ty_values(tense, Ts), member(T, Ts), T \== infinitive,
+    (   '$ty_vfirst_made'(L) -> '$ty_tcheck'(T, L)
+    ;   ty_values(tense, Ts), member(T, Ts), T \== infinitive
+    ),
     ty_tense_asked(L, V, T),
     ty_values(number, Ns), member(N, Ns),
     ty_values(polarity, Ps), member(P, Ps),
@@ -6280,7 +6299,7 @@ ty_verb_plain(L, V, T, P, N, Words) :-
     ty_verb_row(L, V, T, N, P, Words).
 ty_verb_plain(L, V, T, P, N, Words) :-
     ty_tense_may(L, Words),
-    ty_tense_pattern_now(L, T, N0, P, Pattern, C),
+    ty_tense_pattern_at(L, Words, T, N0, P, Pattern, C),
     ty_imperative_ok(T),
     ty_values(agreement, Ns), member(N, Ns), ty_fits(N0, N),
     ty_tense_words(Pattern, L, V, Words),
@@ -6322,6 +6341,48 @@ ty_tense_pattern_now(L, T, N0, P, Pattern, C) :-
     ).
 
 ty_pass_prog(T) :- nonvar(T), T = pass(T1), nonvar(T1), T1 = prog(_).
+
+%% Reading, the patterns whose first word is the words' first, and those
+%% that begin with a form, in their order (since 1.108.0: '$ty_tpw'/8,
+%% made with the verb tables, its kind act, pass, prog or pprog for the
+%% gates of ty_tense_pattern_now/6). Each pattern is tried for each
+%% agreement before its words: walked whole, the modals' 40 rows cost `The
+%% steady state theory has been abandoned in favor of the big bang
+%% theory.' 36 % more (1.108.0's first cut). Words of a known count whose
+%% first is not known yet (a question's moved verb, read leniently) take
+%% no pattern of more items than words, as each item is a word at least:
+%% the modals' patterns cost the repair of `Sees the boy the dog?' three
+%% times its inferences.
+ty_tense_pattern_at(L, Words, T, N0, P, Pattern, C) :-
+    (   '$ty_tpw_made'(L), nonvar(Words), Words = [W|_], atom(W)
+    ->  ( '$ty_tpk'(W, L) -> K = W ; K = '$none' ),
+        (   var(T), '$ty_pass_made'(L), \+ nb_current('$ty_pass', on), \+ nb_current('$ty_prog', on)
+        ->  '$ty_tpw'(L, K, act, T, N0, P, Pattern, C)
+        ;   '$ty_pprog_made'(L), nb_current('$ty_pprog', off), ( var(T) -> true ; T = pass(T1), var(T1) )
+        ->  '$ty_tpw'(L, K, Kind, T, N0, P, Pattern, C), Kind \== pprog
+        ;   '$ty_tpw'(L, K, _, T, N0, P, Pattern, C)
+        )
+    ;   is_list(Words)
+    ->  length(Words, NW),
+        ty_tense_pattern_now(L, T, N0, P, Pattern, C),
+        length(Pattern, NP), NP =< NW
+    ;   ty_tense_pattern_now(L, T, N0, P, Pattern, C)
+    ).
+
+ty_tense_whole(L, T) :-
+    \+ ty_verb(L, _, T, _, _, _),
+    \+ ty_class_tense_form(L, _, T, _, _, _),
+    ty_tense_form(L, T, _, pos, _), ty_tense_form(L, T, _, neg, _),
+    forall(ty_tense_form(L, T, N, _, Ws),
+           ( N == any,
+             forall(( member(X, Ws), \+ atom(X) ),
+                    ( X == participle -> true
+                    ; nonvar(X), X = form(T1, _), ty_values(core_tense, Cs), memberchk(T1, Cs) ) ) )).
+
+ty_pattern_kind(T, pprog) :- ty_pass_prog(T), !.
+ty_pattern_kind(T, pass) :- nonvar(T), T = pass(_), !.
+ty_pattern_kind(T, prog) :- nonvar(T), T = prog(_), !.
+ty_pattern_kind(_, act).
 
 ty_tense_pattern(L, T, N0, P, Pattern, none) :- ty_tense_form(L, T, N0, P, Pattern).
 ty_tense_pattern(L, T, N0, P, Pattern, C) :- ty_class_tense_form(L, C, T, N0, P, Pattern).
@@ -6498,6 +6559,7 @@ ty_verb_row(L, V, T, N, P, Words) :-
 ty_particle_of(L, Pt) :- setof(Pt0, ty_phrasal_particle(L, Pt0), Pts), member(Pt, Pts).
 ty_phrasal_particle(L, Pt) :- ty_phrasal(L, _, _, Pt, _).
 :- dynamic('$ty_tfirst'/2).
+:- dynamic('$ty_tpw'/8), dynamic('$ty_tpk'/2), dynamic('$ty_tpw_made'/1), dynamic('$ty_tcheck'/2).
 
 %% Whether a verb's form may begin with W (the words around a word with
 %% several meanings).
@@ -6529,6 +6591,10 @@ ty_vfirst_make(L) :-
     retractall('$ty_pprog_made'(L)),
     retractall('$ty_tnpp'(L, _, _, _, _, _)),
     retractall('$ty_pprw'(_, L)),
+    retractall('$ty_tpw'(L, _, _, _, _, _, _, _)),
+    retractall('$ty_tpk'(_, L)),
+    retractall('$ty_tpw_made'(L)),
+    retractall('$ty_tcheck'(_, L)),
     ( ty_phrasal(L, _, _, _, _) -> assertz('$ty_phrasal_made'(L)) ; true ),
     forall(( ty_verb_list(L, complement, _), ty_verb(L, OcV, _, _, _, _), \+ '$ty_ocv'(OcV, L),
              ty_verb_of(L, complement, OcV) ),
@@ -6594,6 +6660,19 @@ ty_vfirst_make(L) :-
     ->  assertz(('$ty_tfirst'('$any', L) :- nb_current('$ty_command', c(_))))
     ;   true
     ),
+    findall(T9-N9-P9-Pt9-C9, ty_tense_pattern(L, T9, N9, P9, Pt9, C9), Rows9),
+    findall(W9, ( member(_-_-_-[W9|_]-_, Rows9), atom(W9) ), Ws90), sort(Ws90, Ws9),
+    forall(member(W9, Ws9), assertz('$ty_tpk'(W9, L))),
+    forall(( member(K9, ['$none'|Ws9]), member(T9-N9-P9-Pt9-C9, Rows9),
+             ( Pt9 = [F9|_], atom(F9) -> F9 == K9 ; true ) ),
+           ( ty_pattern_kind(T9, Kd9), assertz('$ty_tpw'(L, K9, Kd9, T9, N9, P9, Pt9, C9)) )),
+    assertz('$ty_tpw_made'(L)),
+    forall(( ty_values(tense, Ts10), member(T10, Ts10), T10 \== infinitive,
+             (   ty_values(core_tense, Cs10), memberchk(T10, Cs10) -> true
+             ;   once(( ty_verb(L, _, T10, _, _, _) ; ty_tense_pattern(L, T10, _, _, _, _) )),
+                 \+ ty_tense_whole(L, T10)
+             ) ),
+           assertz('$ty_tcheck'(T10, L))),
     assertz('$ty_vfirst_made'(L)).
 
 %% ---- the person -------------------------------------------------------------------
@@ -6633,6 +6712,9 @@ ty_person_form(L, T, N, Form, Words) :-
             ty_fits(T0, T),
             (   ty_last_given(Words)
             ->  ty_person_ending(Ws0, From, To, Words), call(Form, Base, Ws0)
+            ;   is_list(Words)
+            ->  length(Words, Len), length(Ws0, Len),
+                call(Form, Base, Ws0), ty_person_ending(Ws0, From, To, Words)
             ;   call(Form, Base, Ws0), ty_person_ending(Ws0, From, To, Words)
             )
         )
@@ -6640,7 +6722,11 @@ ty_person_form(L, T, N, Form, Words) :-
     ).
 
 %% Reading, the last word is given: the rule's ending is taken back from
-%% it.
+%% it. Words of a known count whose last is not known yet (a question's
+%% moved verb, read leniently) make the base's form of as many words, as
+%% the ending changes no count (since 1.108.0): made of no words, every
+%% verb's form of each negation row and each modal's pattern was made, and
+%% the repair of `Sees the boy the dog?' took three times its inferences.
 ty_last_given(Ws) :- is_list(Ws), last(Ws, W), atom(W).
 
 ty_person_ending(Ws0, From, To, Ws) :-
@@ -8189,6 +8275,7 @@ ty_fits(X, X).
 ty_tense_fit(T0, T) :-
     (   T0 == any
     ->  (   nonvar(T), T = pass(T1) -> ty_values(tense, Ts), memberchk(T1, Ts)
+        ;   nonvar(T) -> ty_values(tense, Ts), memberchk(T, Ts)
         ;   ty_values(tense, Ts), member(T, Ts)
         )
     ;   T = T0

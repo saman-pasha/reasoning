@@ -391,7 +391,15 @@ ty_adverb_inside(xx).
 %%                                     1.103.0 the progressive passive's,
 %%                                     Tense pass(prog(T)) (English
 %%                                     pass(prog(present)) [is, being,
-%%                                     participle])
+%%                                     participle]), and since 1.108.0 a
+%%                                     modal's, Tense modal(M) of a modal M
+%%                                     of the tense values (English
+%%                                     modal(can) [can, form(present, pl)],
+%%                                     pass(modal(can)) [can, be,
+%%                                     participle]); a row after another of
+%%                                     the same tense is read and never
+%%                                     written (English [can, not, ...]
+%%                                     after [cannot, ...], `couldn't')
 %% ty_tense_form(xx, Tense, Number, Polarity, Pattern).
 %%   e.g. ty_tense_form(english, future, any, pos, [will, form(present, pl)]).
 

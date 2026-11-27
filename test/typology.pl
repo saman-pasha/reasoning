@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2632,6 +2632,42 @@ grammar_words :-
              atomic_list_concat(['written: ', Want2], Label2),
              check(Label2, W2, Want2) )).
 
+%% 1.108.0: the modals, the tense modal(M), and the short forms of `not'
+%% (`doesn't', `couldn't'), read and never written; the tense patterns read
+%% by their first word, in the order a walk of them gives.
+modals :-
+    section('the modals and the short forms of not'),
+    forall(member(T-Want, [
+               'He can hear the snap of a twig.'-[clause(hear, modal(can), pos, pron(3, sg, m), of(np(twig, sg, indef, []), np(snap, sg, def, [])))],
+               'Cluster bombs cannot be targeted precisely.'-[clause(target, pass(modal(can)), neg, np(bomb, pl, indef, [n(cluster)]), none, [adv(precisely)])],
+               'Guards must be good blockers.'-[copula(modal(must), pos, np(guard, pl, indef, []), np(blocker, pl, indef, [good]))],
+               'The punishment ought to be proportional to the crime.'-[copula(modal(ought), pos, np(punishment, sg, def, []), adj([ap(proportional, pp(to, np(crime, sg, def, [])))]))],
+               'Can the dog sleep?'-[question(clause(sleep, modal(can), pos, np(dog, sg, def, []), none))],
+               'He doesn\'t sleep.'-[clause(sleep, present, neg, pron(3, sg, m), none)],
+               'He couldn\'t see the dog.'-[clause(see, modal(could), neg, pron(3, sg, m), np(dog, sg, def, []))],
+               'He isn\'t happy.'-[copula(present, neg, pron(3, sg, m), adj([happy]))],
+               'The dog won\'t sleep.'-[clause(sleep, future, neg, np(dog, sg, def, []), none)] ]),
+           ( findall(R, typology_read(english, T, R), Rs0), ( Rs0 = [R0|_] -> Rs = [R0] ; Rs = [] ),
+             atomic_list_concat(['English, the first reading: ', T], Label),
+             check(Label, Rs, Want) )),
+    forall(member(IR2-Want2, [
+               clause(sleep, modal(can), neg, np(dog, sg, def, []), none)-'The dog cannot sleep.',
+               copula(modal(should), pos, np(dog, sg, def, []), adj([happy]))-'The dog should be happy.',
+               clause(see, pass(modal(might)), pos, np(dog, sg, def, []), none)-'The dog might be seen.',
+               clause(sleep, present, neg, pron(3, sg, m), none)-'He does not sleep.' ]),
+           ( ( typology_write(english, IR2, W2) -> true ; W2 = none ),
+             atomic_list_concat(['written: ', Want2], Label2),
+             check(Label2, W2, Want2) )),
+    findall(W3, ( ty_tense_pattern(english, _, _, _, [W3|_], _), atom(W3) ), Ws30), sort(Ws30, Ws3),
+    findall(W4, ( member(W4, [sees|Ws3]),
+                  findall(T4-N4-P4-Pt4, ty_tense_pattern_at(english, [W4, x], T4, N4, P4, Pt4, _), A4),
+                  findall(T5-N5-P5-Pt5, ( ty_tense_pattern_now(english, T5, N5, P5, Pt5, _),
+                                          ( Pt5 = [F5|_], atom(F5) -> F5 == W4 ; true ) ), A5),
+                  A4 \== A5 ), Bad4),
+    check('the patterns by their first word are the walk\'s, in its order', Bad4, []),
+    findall(T6, '$ty_tcheck'(T6, english), Ts6),
+    check('the completeness check asks no tense a verb cannot lack', Ts6, [present, past, perfect, imperative]).
+
 %% 1.64.0: the bare singular noun. np(M, sg, mass, []): a singular noun
 %% with no article, read after the other readings, written with none;
 %% Persian, whose definite noun has none either, writes it as def.
@@ -2967,8 +3003,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 4580 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 4 580 sentences read at 1.107.0 are read', R1, yes),
+    ( K >= 4640 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 4 640 sentences read at 1.108.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

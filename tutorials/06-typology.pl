@@ -168,6 +168,7 @@ main :-
     adjunct_first,
     perfect_passive,
     grammar_words,
+    modals,
     format("~ndone~n", []).
 
 
@@ -1222,6 +1223,18 @@ grammar_words :-
     must('an adverb of grammar', IR1, clause(sleep, present, pos, np(dog, sg, def, []), none, [adv(always)])),
     typology_read(english, 'The board has seven members.', IR2),
     must('a number', IR2, clause(have, present, pos, np(board, sg, def, []), np(member, pl, seven, []))).
+
+%% 77. THE MODALS (1.108.0) are tenses, modal(M), words before the base as
+%% `will' is; the short forms of `not' (`doesn't', `couldn't') are rows
+%% read after the long forms' and never written.
+modals :-
+    typology_load(english),
+    typology_read(english, 'He can hear the snap of a twig.', IR1),
+    must('a modal', IR1, clause(hear, modal(can), pos, pron(3, sg, m), of(np(twig, sg, indef, []), np(snap, sg, def, [])))),
+    typology_read(english, 'He couldn\'t see the dog.', IR2),
+    must('a short form of not', IR2, clause(see, modal(could), neg, pron(3, sg, m), np(dog, sg, def, []))),
+    typology_write(english, IR2, W2),
+    must('written in full', W2, 'He could not see the dog.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

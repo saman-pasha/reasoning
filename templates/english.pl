@@ -524,6 +524,10 @@ ty_subordinate_first(english).
 ty_negation(english, present, sg, [does, not], form(present, pl)).
 ty_negation(english, present, pl, [do, not], form(present, pl)).
 ty_negation(english, past, any, [did, not], form(present, pl)).
+%% Their short forms (since 1.108.0), read and never written.
+ty_negation(english, present, sg, ['doesn''t'], form(present, pl)).
+ty_negation(english, present, pl, ['don''t'], form(present, pl)).
+ty_negation(english, past, any, ['didn''t'], form(present, pl)).
 
 %% The future and the perfect: words before another form, for every verb
 %% (`will see', `will not see', `has seen', `have not seen'; `I have
@@ -924,6 +928,120 @@ ty_copula(english, any, pluperfect, sg, pos, [had, been]).
 ty_copula(english, any, pluperfect, sg, neg, [had, not, been]).
 ty_copula(english, any, pluperfect, pl, pos, [had, been]).
 ty_copula(english, any, pluperfect, pl, neg, [had, not, been]).
+%% THE MODALS (since 1.108.0): a modal before the base, the tense modal(M)
+%% of each (`can see', `cannot see', `could not see'); the copula's (`can
+%% be') and the passive's (`can be seen').
+ty_tense_form(english, modal(can), any, pos, [can, form(present, pl)]).
+ty_tense_form(english, modal(can), any, neg, [cannot, form(present, pl)]).
+ty_tense_form(english, modal(can), any, neg, [can, not, form(present, pl)]).
+ty_tense_form(english, modal(could), any, pos, [could, form(present, pl)]).
+ty_tense_form(english, modal(could), any, neg, [could, not, form(present, pl)]).
+ty_tense_form(english, modal(may), any, pos, [may, form(present, pl)]).
+ty_tense_form(english, modal(may), any, neg, [may, not, form(present, pl)]).
+ty_tense_form(english, modal(might), any, pos, [might, form(present, pl)]).
+ty_tense_form(english, modal(might), any, neg, [might, not, form(present, pl)]).
+ty_tense_form(english, modal(must), any, pos, [must, form(present, pl)]).
+ty_tense_form(english, modal(must), any, neg, [must, not, form(present, pl)]).
+ty_tense_form(english, modal(shall), any, pos, [shall, form(present, pl)]).
+ty_tense_form(english, modal(shall), any, neg, [shall, not, form(present, pl)]).
+ty_tense_form(english, modal(should), any, pos, [should, form(present, pl)]).
+ty_tense_form(english, modal(should), any, neg, [should, not, form(present, pl)]).
+ty_copula(english, any, modal(can), sg, pos, [can, be]).
+ty_copula(english, any, modal(can), sg, neg, [cannot, be]).
+ty_copula(english, any, modal(can), sg, neg, [can, not, be]).
+ty_copula(english, any, modal(can), pl, pos, [can, be]).
+ty_copula(english, any, modal(can), pl, neg, [cannot, be]).
+ty_copula(english, any, modal(can), pl, neg, [can, not, be]).
+ty_copula(english, any, modal(could), sg, pos, [could, be]).
+ty_copula(english, any, modal(could), sg, neg, [could, not, be]).
+ty_copula(english, any, modal(could), pl, pos, [could, be]).
+ty_copula(english, any, modal(could), pl, neg, [could, not, be]).
+ty_copula(english, any, modal(may), sg, pos, [may, be]).
+ty_copula(english, any, modal(may), sg, neg, [may, not, be]).
+ty_copula(english, any, modal(may), pl, pos, [may, be]).
+ty_copula(english, any, modal(may), pl, neg, [may, not, be]).
+ty_copula(english, any, modal(might), sg, pos, [might, be]).
+ty_copula(english, any, modal(might), sg, neg, [might, not, be]).
+ty_copula(english, any, modal(might), pl, pos, [might, be]).
+ty_copula(english, any, modal(might), pl, neg, [might, not, be]).
+ty_copula(english, any, modal(must), sg, pos, [must, be]).
+ty_copula(english, any, modal(must), sg, neg, [must, not, be]).
+ty_copula(english, any, modal(must), pl, pos, [must, be]).
+ty_copula(english, any, modal(must), pl, neg, [must, not, be]).
+ty_copula(english, any, modal(shall), sg, pos, [shall, be]).
+ty_copula(english, any, modal(shall), sg, neg, [shall, not, be]).
+ty_copula(english, any, modal(shall), pl, pos, [shall, be]).
+ty_copula(english, any, modal(shall), pl, neg, [shall, not, be]).
+ty_copula(english, any, modal(should), sg, pos, [should, be]).
+ty_copula(english, any, modal(should), sg, neg, [should, not, be]).
+ty_copula(english, any, modal(should), pl, pos, [should, be]).
+ty_copula(english, any, modal(should), pl, neg, [should, not, be]).
+ty_tense_form(english, pass(modal(can)), any, pos, [can, be, participle]).
+ty_tense_form(english, pass(modal(can)), any, neg, [cannot, be, participle]).
+ty_tense_form(english, pass(modal(can)), any, neg, [can, not, be, participle]).
+ty_tense_form(english, pass(modal(could)), any, pos, [could, be, participle]).
+ty_tense_form(english, pass(modal(could)), any, neg, [could, not, be, participle]).
+ty_tense_form(english, pass(modal(may)), any, pos, [may, be, participle]).
+ty_tense_form(english, pass(modal(may)), any, neg, [may, not, be, participle]).
+ty_tense_form(english, pass(modal(might)), any, pos, [might, be, participle]).
+ty_tense_form(english, pass(modal(might)), any, neg, [might, not, be, participle]).
+ty_tense_form(english, pass(modal(must)), any, pos, [must, be, participle]).
+ty_tense_form(english, pass(modal(must)), any, neg, [must, not, be, participle]).
+ty_tense_form(english, pass(modal(shall)), any, pos, [shall, be, participle]).
+ty_tense_form(english, pass(modal(shall)), any, neg, [shall, not, be, participle]).
+ty_tense_form(english, pass(modal(should)), any, pos, [should, be, participle]).
+ty_tense_form(english, pass(modal(should)), any, neg, [should, not, be, participle]).
+%% THE SHORT FORMS OF not (since 1.108.0): `don't', `isn't', `couldn't',
+%% each a row after its long form's, so it is read and the long form is
+%% written (`He doesn't sleep.' is written `He does not sleep.').
+ty_copula(english, any, present, sg, neg, ['isn''t']).
+ty_copula(english, any, present, pl, neg, ['aren''t']).
+ty_copula(english, any, past, sg, neg, ['wasn''t']).
+ty_copula(english, any, past, pl, neg, ['weren''t']).
+ty_copula(english, any, past, sg(1), neg, ['wasn''t']).
+ty_copula(english, any, future, sg, neg, ['won''t', be]).
+ty_copula(english, any, future, pl, neg, ['won''t', be]).
+ty_copula(english, any, conditional, sg, neg, ['wouldn''t', be]).
+ty_copula(english, any, conditional, pl, neg, ['wouldn''t', be]).
+ty_copula(english, any, perfect, sg, neg, ['hasn''t', been]).
+ty_copula(english, any, perfect, pl, neg, ['haven''t', been]).
+ty_copula(english, any, pluperfect, sg, neg, ['hadn''t', been]).
+ty_copula(english, any, pluperfect, pl, neg, ['hadn''t', been]).
+ty_tense_form(english, future, any, neg, ['won''t', form(present, pl)]).
+ty_tense_form(english, conditional, any, neg, ['wouldn''t', form(present, pl)]).
+ty_tense_form(english, perfect, sg, neg, ['hasn''t', participle]).
+ty_tense_form(english, perfect, pl, neg, ['haven''t', participle]).
+ty_tense_form(english, pluperfect, any, neg, ['hadn''t', participle]).
+ty_tense_form(english, pass(present), sg, neg, ['isn''t', participle]).
+ty_tense_form(english, pass(present), pl, neg, ['aren''t', participle]).
+ty_tense_form(english, pass(past), sg, neg, ['wasn''t', participle]).
+ty_tense_form(english, pass(past), pl, neg, ['weren''t', participle]).
+ty_tense_form(english, pass(past), sg(1), neg, ['wasn''t', participle]).
+ty_tense_form(english, pass(future), any, neg, ['won''t', be, participle]).
+ty_tense_form(english, pass(conditional), any, neg, ['wouldn''t', be, participle]).
+ty_tense_form(english, modal(can), any, neg, ['can''t', form(present, pl)]).
+ty_copula(english, any, modal(can), sg, neg, ['can''t', be]).
+ty_copula(english, any, modal(can), pl, neg, ['can''t', be]).
+ty_tense_form(english, pass(modal(can)), any, neg, ['can''t', be, participle]).
+ty_tense_form(english, modal(could), any, neg, ['couldn''t', form(present, pl)]).
+ty_copula(english, any, modal(could), sg, neg, ['couldn''t', be]).
+ty_copula(english, any, modal(could), pl, neg, ['couldn''t', be]).
+ty_tense_form(english, pass(modal(could)), any, neg, ['couldn''t', be, participle]).
+ty_tense_form(english, modal(must), any, neg, ['mustn''t', form(present, pl)]).
+ty_copula(english, any, modal(must), sg, neg, ['mustn''t', be]).
+ty_copula(english, any, modal(must), pl, neg, ['mustn''t', be]).
+ty_tense_form(english, pass(modal(must)), any, neg, ['mustn''t', be, participle]).
+ty_tense_form(english, modal(should), any, neg, ['shouldn''t', form(present, pl)]).
+ty_copula(english, any, modal(should), sg, neg, ['shouldn''t', be]).
+ty_copula(english, any, modal(should), pl, neg, ['shouldn''t', be]).
+ty_tense_form(english, pass(modal(should)), any, neg, ['shouldn''t', be, participle]).
+ty_tense_form(english, modal(ought), any, pos, [ought, to, form(present, pl)]).
+ty_tense_form(english, modal(ought), any, neg, [ought, not, to, form(present, pl)]).
+ty_copula(english, any, modal(ought), sg, pos, [ought, to, be]).
+ty_copula(english, any, modal(ought), pl, pos, [ought, to, be]).
+ty_copula(english, any, modal(ought), sg, neg, [ought, not, to, be]).
+ty_copula(english, any, modal(ought), pl, neg, [ought, not, to, be]).
+ty_tense_form(english, pass(modal(ought)), any, pos, [ought, to, be, participle]).
 
 %% The word before the last item of a list: a predicate's adjectives
 %% (`small and black'), noun phrases (`the boy and the girl'), clauses.
