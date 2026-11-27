@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2751,6 +2751,22 @@ article_names :-
     findall(R3, typology_read(english, 'The dog sleeps.', R3), Rs3),
     check('no article before a small word is a name\'s', Rs3, [clause(sleep, present, pos, np(dog, sg, def, []), none)]).
 
+%% 1.124.0: every adjective WordNet's index names too, and words of any
+%% length (lexicon/build.pl's word filter stops at twelve letters).
+long_words :-
+    section('every adjective, and words of any length'),
+    forall(member(T-Want, [
+               'Uncompromising honesty.'-phrase(np(honesty, sg, mass, [uncompromising])),
+               'It grew geometrically.'-clause(grow, past, pos, pron(3, sg, n), none, [adv(geometrically)]),
+               'A mammoth multinational corporation.'-phrase(np(corporation, sg, indef, [mammoth, multinational])) ]),
+           ( ( typology_read(english, T, R) -> true ; R = none ),
+             atomic_list_concat(['English, the first reading: ', T], Label),
+             check(Label, R, Want) )),
+    forall(member(C-W-Want2, [adjective-unsympathetic-yes, adverb-unfortunately-yes, noun-professionalization-yes]),
+           ( ( typology_meaning(english, C, W) -> R2 = yes ; R2 = no ),
+             atomic_list_concat(['a ', C, ' ', W], Label2),
+             check(Label2, R2, Want2) )).
+
 %% 1.123.0: every noun, verb and adverb WordNet's index names is an English
 %% word where no other file and no vocabulary has the word (lexicon/every_*.txt),
 %% never a name the data files write only with a capital (socrates), and
@@ -3250,8 +3266,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 5631 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 5 631 sentences read at 1.123.0 within 2 000 000 inferences each are read', R1, yes),
+    ( K >= 5812 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 5 812 sentences read at 1.124.0 within 2 000 000 inferences each are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

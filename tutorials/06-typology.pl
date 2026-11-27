@@ -182,6 +182,7 @@ main :-
     comparatives,
     linking_verbs,
     every_words,
+    long_words,
     format("~ndone~n", []).
 
 
@@ -1363,6 +1364,13 @@ every_words :-
     typology_load(english),
     typology_read(english, 'The cancer had metastasized.', IR1),
     must('metastasize, a verb SemCor never counted', IR1, clause(metastasize, pluperfect, pos, np(cancer, sg, def, []), none)).
+
+%% 91. EVERY ADJECTIVE, AND WORDS OF ANY LENGTH (1.124.0): lexicon/
+%% every_adjective.txt, and no cap of twelve letters on the every_* files.
+long_words :-
+    typology_load(english),
+    typology_read(english, 'Uncompromising honesty.', IR1),
+    must('an adjective of fourteen letters', IR1, phrase(np(honesty, sg, mass, [uncompromising]))).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

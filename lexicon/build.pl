@@ -101,10 +101,13 @@ main :-
              length(Vs, N), lx_take(6, Vs, First),
              format("   ~w ~w  ~w~nwrote ~w/~w.txt~n", [Name, N, First, Out, Name]) )).
 %% --every writes every_noun.txt, every_verb.txt, every_adverb.txt and
-%% every_vi.txt alone (since reasoning 1.123.0): every lemma index.noun,
-%% index.verb and index.adv name under this file's word filter, the
-%% SemCor-counted ones first (known_noun's, known_verb's and
-%% known_adverb's order) and the rest in hash order, and every verb with
+%% every_vi.txt alone (since reasoning 1.123.0), and every_adjective.txt
+%% (since 1.124.0): every lemma index.noun, index.verb, index.adv and
+%% index.adj name, of letters a to z and three letters or more, of any
+%% length since 1.124.0 (unsympathetic, uncompromising; this file's word
+%% filter stops at twelve), the SemCor-counted ones first (known_noun's,
+%% known_verb's, known_adj's and known_adverb's order) and the rest in
+%% hash order, and every verb with
 %% the frame "Something ----s" or "Somebody ----s" (1, 2), vi.txt's
 %% order uncapped. They are the typology's words, never the judge's: the
 %% known_* files stay SemCor's (lx_classes/7 says why). An uncounted lemma
@@ -120,9 +123,11 @@ main :-
     findall(W, ( member(F, ['data.adj', 'data.noun', 'data.verb', 'data.adv']),
                  lx_data_word(WN, F, W), \+ lx_capital_form(W) ), Low0),
     sort(Low0, Low1), findall(W-1, member(W, Low1), LowPairs), list_to_assoc(LowPairs, Low),
-    forall(member(Name-T-File-P, [every_noun-1-'index.noun'-noun, every_verb-2-'index.verb'-verb, every_adverb-4-'index.adv'-adverb]),
-           ( findall(NC-W, ( member(g(W, T, _, C), Groups), NC is -C ), K0), lx_rank_unique(K0, Counted),
-             lx_index_lemmas(WN, File, Lemmas),
+    forall(member(Name-Ts-File-P, [every_noun-[1]-'index.noun'-noun, every_verb-[2]-'index.verb'-verb,
+                                   every_adjective-[3, 5]-'index.adj'-adj, every_adverb-[4]-'index.adv'-adverb]),
+           ( findall(NC-W, ( member(g(W, T, _, C), Groups), memberchk(T, Ts), NC is -C ), K0), lx_rank_unique(K0, Counted),
+             lx_index_words(WN, File, Lemmas0),
+             include(lx_every_word, Lemmas0, Lemmas),
              lx_uncounted(Lemmas, Counted, Rest0),
              include(lx_every_keep(Forms, All, Low, P), Rest0, Rest),
              append(Counted, Rest, Words),
@@ -189,6 +194,10 @@ lx_index_words(WN, File, Words) :-
                  atom_string(W, LemS), atom_codes(W, Cs),
                  forall(member(C, Cs), ( C >= 0'a, C =< 0'z )) ), Ws),
     sort(Ws, Words).
+
+%% a word of an every_* file: three letters or more (since 1.124.0 of any
+%% length).
+lx_every_word(W) :- atom_length(W, N), N >= 3.
 
 lx_group_pairs([], []).
 lx_group_pairs([F-B|Ps], [F-[B|Bs]|Gs]) :- lx_same_form(F, Ps, Bs, Rest), lx_group_pairs(Rest, Gs).

@@ -9324,7 +9324,9 @@ ty_english_row(ty_verb_in(english, B, B, C)) :-
 %% vt, vi and vpp; the adjectives known_adj and adj, the adverbs
 %% known_adverb and adverb (since 1.58.0). Since 1.123.0, after them, every
 %% noun, verb and adverb WordNet's index names (every_noun, every_verb,
-%% every_adverb: `lexicon/build.pl -- --every'), of a word no file before
+%% every_adverb: `lexicon/build.pl -- --every'), and since 1.124.0 every
+%% adjective (every_adjective) and words of any length (unsympathetic), of
+%% a word no file before
 %% them and no vocabulary has (tyi_every/1 marks the words they gave): a
 %% word with no class takes WordNet's, and a known word no rare one (`see'
 %% is no noun, `small' no adverb, `mouse' no verb: each of the three cost
@@ -9337,7 +9339,7 @@ ty_read_lexicon(L) :-
                                    adjective-known_adj-unknown, adjective-adj-unknown,
                                    adverb-known_adverb-unknown, adverb-adverb-unknown]),
            ty_read_lexicon_file(Kind, Base, Anim, Closed, plain)),
-    forall(member(Kind-Base, [noun-every_noun, verb-every_verb, adverb-every_adverb]),
+    forall(member(Kind-Base, [noun-every_noun, verb-every_verb, adjective-every_adjective, adverb-every_adverb]),
            ty_read_lexicon_file(Kind, Base, unknown, Closed, every)).
 
 ty_read_lexicon_file(Kind, Base, Anim, Closed, How) :-

@@ -86,6 +86,7 @@ main :-
     demonstratives,
     linking_verbs,
     every_words,
+    long_words,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -700,6 +701,14 @@ every_words :-
     must('scald(you, the(milk))', C1, 'imperative(scald(you, the(milk))).\n'),
     logic_translate(cocolog, english, C1, E1),
     must('and into English', E1, 'Scald the milk.').
+
+%% 57. A LONG WORD (1.124.0) is a word of Cocolog as any is.
+long_words :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'It grew geometrically.', C1),
+    must('geometrically(grow(it))', C1, 'past(geometrically(grow(it))).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and into English', E1, 'It grew geometrically.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

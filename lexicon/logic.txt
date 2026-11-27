@@ -564,3 +564,8 @@ Unstring my guitar.	imperative(unstring(you, of(guitar, i))).
 They worked arduously.	past(arduously(work(they))).
 Glaciers move tardily.	tardily(move(X)) :- glacier(X).
 Music is a good relaxer.	relaxer(music). good(music).
+It grew geometrically.	past(geometrically(grow(it))).
+The errors increased multiplicatively.	past(multiplicatively(increase(the(pl(error))))).
+His suspiciousness destroyed his marriage.	past(destroy(of(suspiciousness, he), of(marriage, he))).
+He was convicted circumstantially.	past(circumstantially(convict(someone, he))).
+An inextinguishable flame.	flame(a(inextinguishable(flame))). inextinguishable(a(inextinguishable(flame))).
