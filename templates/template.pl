@@ -707,11 +707,16 @@ ty_adjective_adverb(xx, after).
 ty_adjective_phrase_noun(xx, after).
 ty_adjective_phrase_noun(xx, with).
 
-%%     ty_adjunct_front(L, v2)         a statement read with an adjunct first
-%%                                     and the verb before the subject
-%%                                     (German `Heute schläft der Hund.')
-%%   (keep it where the language does this, else delete it)
+%%     ty_adjunct_front(L, Kind)       a statement read with an adjunct first:
+%%                                     v2, the verb before the subject
+%%                                     (German `Heute schläft der Hund.'),
+%%                                     or first (since 1.105.0), the order
+%%                                     otherwise the template's (English
+%%                                     `In England they call a fender a
+%%                                     wing.')
+%%   (keep one where a statement may begin with an adjunct, or none)
 ty_adjunct_front(xx, v2).
+ty_adjunct_front(xx, first).
 
 %%     ty_object_front(L, v2)          a statement read with its object first
 %%                                     and the verb before the subject, where

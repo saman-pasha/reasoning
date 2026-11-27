@@ -557,9 +557,13 @@
 %%                                     who acc [wen])
 %%     ty_comma(L, Mark)               the language's comma (Persian `،'),
 %%                                     `,' where it names none
-%%     ty_adjunct_front(L, v2)         a statement read with an adjunct first
-%%                                     and the verb before the subject
-%%                                     (German `Heute schläft der Hund.')
+%%     ty_adjunct_front(L, Kind)       a statement read with an adjunct first:
+%%                                     v2, the verb before the subject
+%%                                     (German `Heute schläft der Hund.'),
+%%                                     or first (since 1.105.0), the order
+%%                                     otherwise the template's (English
+%%                                     `In England they call a fender a
+%%                                     wing.')
 %%     ty_object_front(L, v2)          a statement read with its object first
 %%                                     and the verb before the subject, where
 %%                                     the first word cannot begin a subject
@@ -910,6 +914,9 @@
 
 %% The next token, read and left (unbound writing).
 ty_peek(W, S, S) :- ( nonvar(S), S = [W0|_] -> W = W0 ; true ).
+%% The next token and the words from it (since 1.105.0, for a clause that
+%% may begin with its adjunct: ty_clause_adjuncts/5).
+ty_peek_at(W, S, S, S) :- ( nonvar(S), S = [W0|_] -> W = W0 ; true ).
 
 %% ---- the levels and the values a slot takes -----------------------------------
 
@@ -1255,6 +1262,8 @@ ty_template_choice(ty_pro_drop, Name, 'keep the persons whose subject may be no 
 ty_template_choice(ty_subject_unsaid, Name, 'keep it where a clause may say no subject, or delete it', [row(ty_subject_unsaid(Name, 3))]).
 ty_template_choice(ty_negative_article_roles, Name, 'only with ty_negative_article/5 rows; keep the roles that take it', [text("ty_negative_article_roles(~q, [s, o, p]).", [Name])]).
 ty_template_choice(ty_negative_article_keeps, Name, 'only with ty_negative_article/5 rows', [text("ty_negative_article_keeps(~q).", [Name])]).
+ty_template_choice(ty_adjunct_front, Name, 'keep one where a statement may begin with an adjunct, or none', Rows) :-
+    findall(row(ty_adjunct_front(Name, K)), member(K, [v2, first]), Rows).
 ty_template_choice(Slot, Name, 'keep it where the language does this, else delete it', [row(T)]) :-
     ty_template_flag(Slot, Name, T).
 
@@ -1269,7 +1278,6 @@ ty_template_flag(ty_subordinate_first, Name, ty_subordinate_first(Name)).
 ty_template_flag(ty_subordinate_comma, Name, ty_subordinate_comma(Name)).
 ty_template_flag(ty_relative_comma, Name, ty_relative_comma(Name)).
 ty_template_flag(ty_capital_nouns, Name, ty_capital_nouns(Name)).
-ty_template_flag(ty_adjunct_front, Name, ty_adjunct_front(Name, v2)).
 ty_template_flag(ty_object_front, Name, ty_object_front(Name, v2)).
 ty_template_flag(ty_serial_comma, Name, ty_serial_comma(Name)).
 ty_template_flag(ty_conjunct_marks, Name, ty_conjunct_marks(Name)).
@@ -1834,7 +1842,7 @@ ty_missing(L, bad(ty_negative_article_roles(L, Rs))) :-
     \+ ( is_list(Rs), Rs \== [], forall(member(R, Rs), memberchk(R, [s, o, p])),
          once(ty_negative_article(L, _, _, _, _)) ).
 ty_missing(L, bad(ty_adjunct_front(L, K))) :-
-    ty_adjunct_front(L, K), K \== v2.
+    ty_adjunct_front(L, K), \+ memberchk(K, [v2, first]).
 ty_missing(L, bad(ty_object_front(L, K))) :-
     ty_object_front(L, K), K \== v2.
 ty_missing(L, bad(ty_and(L, Ws))) :-
@@ -2022,6 +2030,7 @@ ty_read_bases(L, Surface, Topics, Mood, IR0, C) :-
     ty_sound_ok(L, Bases, Surface),
     ty_new_context(Bases, Topics, Context),
     b_setval('$ty_context', Context),
+    b_setval('$ty_words', Bases),
     b_setval('$ty_rel_open', f([])),
     ty_poss_flag(L, Bases),
     ty_coord_flag(L, Bases),
@@ -4313,11 +4322,11 @@ ty_meaning_kind(M, K) :-
 %% A verb clause: its order of s, v and o, with the adjuncts (j) put where
 %% the template says (ty_adjunct/2); a language with no such row has none.
 ty_clause(L, C) -->
-    ty_peek(First),
+    ty_peek_at(First, S0),
     { C = clause(_, _, P, S, O, Js),
       ty_order_at(L, clause, Order0),
       ty_valency(Order0, O, Order1),
-      ty_clause_adjuncts(L, First, Order1, Js, Order2),
+      ty_clause_adjuncts(L, f(First, S0), Order1, Js, Order2),
       ty_clause_object_front(L, First, Order2, Order2o),
       ty_neg_clause(L, C, Order2o, Order3a),
       ty_verb_final(L, v, Order3a, Order3b),
@@ -4634,14 +4643,38 @@ ty_adjunct_order(L, Order0, Js, Order) :-
 %% beside the template's own place, which the writer keeps (`Der Hund
 %% schläft heute.'), in a main clause only, and where the clause's first word may
 %% begin an adjunct (`$ty_jfirst'/2, made at load: an adverb, an
-%% adposition's first word, a contraction).
+%% adposition's first word, a contraction). AN ADJUNCT BEFORE THE SUBJECT
+%% (ty_adjunct_front(L, first), since 1.105.0: English `In England they
+%% call a fender a wing.'): one adjunct first (jf(F)), a comma after it or
+%% not, the order otherwise the template's, the others at the template's
+%% place (jl(F)), and the first one the LAST of the clause's adjuncts, so
+%% the writer puts it at the end: `They call a fender a wing in England.'
+%% It is tried only in the clause that begins the sentence (its words are
+%% the parse's own, '$ty_words'): asked of every clause whose first word
+%% is an adposition's, `to' among them, an infinitive's clause read its
+%% own infinitive as its first adjunct for ever, and the round trips cost
+%% 5 % more (1.105.0's first cut). Nor in a command or a clause with no
+%% subject ('$ty_command' set): 7 of lexicon/prose.txt's sentences read so
+%% were false, an adverb before a participle (`Chemically related.') or a
+%% clause read as its object (`Before a woman gives birth her waters
+%% break.').
 ty_clause_adjuncts(L, _, O1, Js, O2) :- ty_adjunct_order(L, O1, Js, O2).
-ty_clause_adjuncts(L, First, O1, Js, O2) :-
-    atom(First), '$ty_jfirst'(L, First),
-    \+ nb_current('$ty_sub', yes),
+ty_clause_adjuncts(L, f(First, S0), O1, Js, O2) :-
+    atom(First), '$ty_jfirst'(L, First, K),
+    ty_front_ok(K, S0),
     var(Js), Js = [_|_],
-    selectchk(v, O1, R),
-    O2 = [j, v|R].
+    ty_front_order(K, L, O1, O2).
+
+ty_front_ok(v2, _) :- \+ nb_current('$ty_sub', yes).
+ty_front_ok(first, S0) :-
+    nb_current('$ty_words', W), S0 == W,
+    \+ ( nb_current('$ty_command', X), X \== none ).
+
+ty_front_order(v2, _, O1, [j, v|R]) :- selectchk(v, O1, R).
+ty_front_order(first, L, O1, [jf(F)|O3]) :-
+    ty_adjunct(L, Place), ty_place_j(Place, O1, O2),
+    append(A, [j|B], O2), !,
+    append(A, [jl(F)|B], O3).
 
 %% A STATEMENT'S OBJECT FIRST, THE VERB SECOND (ty_object_front(L, v2):
 %% German `Den Hund sieht der Junge.'), in a main clause only, where the
@@ -4702,6 +4735,20 @@ ty_clause_part(j, L, clause(_, _, _, _, _, Js), _) -->
     { Js = [A|Js1], b_setval('$ty_vadv', none) },
     ty_adjuncts(L, Js1).
 ty_clause_part(j, L, clause(_, _, _, _, _, Js), _) --> ty_adjuncts(L, Js).
+%% An adjunct before the subject (since 1.105.0, ty_front_order/4): jf(F)
+%% reads it and a comma after it or none, jl(F) the others, F the last.
+ty_clause_part(jf(F), L, _, _) -->
+    ty_front_item(L, F),
+    { ty_comma_mark(L, M) },
+    ( [M] ; [] ).
+ty_clause_part(jl(F), L, clause(_, _, _, _, _, Js), _) -->
+    { nb_current('$ty_vadv', v(J0, A)), J0 == Js }, !,
+    { Js = [A|Js1], b_setval('$ty_vadv', none) },
+    ty_adjuncts(L, R),
+    { append(R, [F], Js1) }.
+ty_clause_part(jl(F), L, clause(_, _, _, _, _, Js), _) -->
+    ty_adjuncts(L, R),
+    { append(R, [F], Js) }.
 ty_clause_part(n(Ws), _, _, _) --> ty_tokens(Ws).
 ty_clause_part(vf(R), L, C, _) --> ty_split_first(R, L, C, none).
 ty_clause_part(vr(R), L, C, _) --> ty_split_rest(R, L, C, none).
@@ -4709,6 +4756,10 @@ ty_clause_part(oh(X), L, clause(V, _, _, _, O, _), How) --> ty_object_head(L, V,
 ty_clause_part(ot(X), L, _, _) --> ty_rel_tail(L, X).
 ty_clause_part(sh(X), L, clause(_, _, _, S, _, _), _) --> ty_subject_head(L, S, X).
 ty_clause_part(st(X), L, _, _) --> ty_rel_tail(L, X).
+
+%% An adjunct before the subject is an adposition phrase or an adverb.
+ty_front_item(L, pp(Prep, NP)) --> ty_pp(L, Prep, NP).
+ty_front_item(L, adv(M)) --> [W], { ty_adverb(L, M, W) }, ty_meant(L, adverb(M), [W]).
 
 %% ---- a verb's complement --------------------------------------------------------
 %%
@@ -7263,10 +7314,10 @@ ty_feats_make(L) :-
     retractall('$ty_ppw'(L, _, _)),
     forall(( ty_possessive_pronoun(L, Ws1, _, _), Ws1 = [W1|_] ),
            ( '$ty_ppw'(L, W1, Ws1) -> true ; assertz('$ty_ppw'(L, W1, Ws1)) )),
-    retractall('$ty_jfirst'(L, _)),
-    (   ty_adjunct_front(L, v2)
+    retractall('$ty_jfirst'(L, _, _)),
+    (   ty_adjunct_front(L, Kj)
     ->  forall(( ty_adverb(L, _, W2) ; ty_adposition(L, _, [W2|_]) ; ty_contraction(L, _, W2) ),
-               ( '$ty_jfirst'(L, W2) -> true ; assertz('$ty_jfirst'(L, W2)) ))
+               ( '$ty_jfirst'(L, W2, _) -> true ; assertz('$ty_jfirst'(L, W2, Kj)) ))
     ;   true
     ),
     retractall('$ty_ofirst'(L, _)),
@@ -7324,7 +7375,7 @@ ty_feats_make(L) :-
 :- dynamic('$ty_crow'/6).
 :- dynamic('$ty_cword'/3).
 :- dynamic('$ty_bare'/2).
-:- dynamic('$ty_jfirst'/2).
+:- dynamic('$ty_jfirst'/3).
 :- dynamic('$ty_ofirst'/2).
 :- dynamic('$ty_ppw'/3).
 :- dynamic('$ty_ptopic'/1).

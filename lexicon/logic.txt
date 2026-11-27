@@ -421,3 +421,13 @@ On the job.	on(something, the(job)).
 Beyond my ken.	beyond(something, of(ken, i)).
 In the midst of the crowd.	in(something, of(midst, the(crowd))).
 On active duty.	on(something, active(duty)).
+In Britain they call a fender a wing.	fender(a(fender)). in(is_call(they, a(fender), wing(a(fender))), britain).
+Inwardly, she was raging.	past_progressive(inwardly(rage(she))).
+Gingerly I raised the edge of the blanket.	past(gingerly(raise(i, of(edge, the(blanket))))).
+At the last minute the government changed the rules.	past(at(change(the(government), the(pl(rule))), the(last(minute)))).
+Stealthily they advanced upstream.	past(stealthily(upstream(advance(they)))).
+After a noticeable pause the lecturer continued.	pause(a(noticeable(pause))). noticeable(a(noticeable(pause))). past(after(continue(the(lecturer)), a(noticeable(pause)))).
+From the hill he took a seaward course.	course(a(seaward(course))). seaward(a(seaward(course))). past(from(take(he, a(seaward(course))), the(hill))).
+Currently they live in Connecticut.	currently(in(live(they), connecticut)).
+Suddenly she felt a sharp pain in her side.	pain(a(sharp(pain))). sharp(a(sharp(pain))). past(suddenly(in(feel(she, a(sharp(pain))), of(side, she)))).
+After an ominous caesura the preacher continued.	caesura(a(ominous(caesura))). ominous(a(ominous(caesura))). past(after(continue(the(preacher)), a(ominous(caesura)))).

@@ -70,6 +70,7 @@ main :-
     progressive,
     complement_terms,
     pp_phrase,
+    adjunct_first,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -535,6 +536,15 @@ pp_phrase :-
     must('the phrase said of something', C1, 'in(something, direct(sunlight)).\n'),
     logic_translate(cocolog, english, C1, E1),
     must('and into English', E1, 'Something is in direct sunlight.').
+
+%% 41. AN ADJUNCT BEFORE THE SUBJECT (1.105.0) is the clause's adjunct as
+%% any is, round its atom; back into English it stands at the end.
+adjunct_first :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'Suddenly the dog barked.', C1),
+    must('the adverb round the atom', C1, 'past(suddenly(bark(the(dog)))).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and into English', E1, 'The dog barked suddenly.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

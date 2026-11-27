@@ -165,6 +165,7 @@ main :-
     progressive,
     progressive_passive,
     pp_phrase,
+    adjunct_first,
     format("~ndone~n", []).
 
 
@@ -749,7 +750,7 @@ blank_template :-
     split_string(S, "\n", "", Lines),
     include([L]>>sub_string(L, 0, _, _, 'ty_'), Lines, Choices),
     length(Choices, N1),
-    must('the choices, each a row of code', N1, 98),
+    must('the choices, each a row of code', N1, 99),
     ( member(L2, Lines), sub_string(L2, 0, _, _, '%% ty_noun(klingon, Meaning, Gender') -> R2 = shape ; R2 = none ),
     must('a slot of words, its shape', R2, shape),
     ( member(L3, Lines), sub_string(L3, 0, _, _, '%%   e.g. ty_noun_in(english, dog,') -> R3 = example ; R3 = none ),
@@ -1184,6 +1185,17 @@ pp_phrase :-
     typology_load(german),
     typology_write(german, phrase(pp(in, np(house, sg, def, [big]))), W2),
     must('in German, the contraction', W2, 'Im großen Haus.').
+
+%% 74. AN ADJUNCT BEFORE THE SUBJECT (1.105.0): ty_adjunct_front(english,
+%% first), one adposition phrase or adverb first in the clause that begins
+%% the sentence, the order otherwise the template's; it is the last of the
+%% clause's adjuncts, so the writer puts it at the end. German's v2 puts
+%% the verb second after it.
+adjunct_first :-
+    typology_read(english, 'After the game the dog slept in the house.', IR1),
+    must('read', IR1, clause(sleep, past, pos, np(dog, sg, def, []), none, [pp(in, np(house, sg, def, [])), pp(after, np(game, sg, def, []))])),
+    typology_write(english, IR1, W1),
+    must('written at the end', W1, 'The dog slept in the house after the game.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

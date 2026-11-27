@@ -610,6 +610,11 @@ ty_copula(english, any, past, pl, neg, [were, not]).
 %% Prepositions before their noun phrase; the adjuncts at the clause's end.
 ty_order(english, pp, [p, x]).
 ty_adjunct(english, end).
+%% An adjunct before the subject (since 1.105.0): one adposition phrase or
+%% adverb first, a comma after it or not, the order otherwise the
+%% template's (`In England they call a fender a wing.', `Suddenly she felt
+%% a sharp pain in her side.'); written at the clause's end.
+ty_adjunct_front(english, first).
 %% A noun phrase's adposition phrase stands after it (since 1.83.0).
 ty_noun_adposition(english, after).
 %% A noun before a noun (since 1.87.0): `black leather jackets'; none

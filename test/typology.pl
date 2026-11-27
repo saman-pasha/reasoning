@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2586,6 +2586,26 @@ progressive :-
              atomic_list_concat(['written: ', Want4], Label4),
              check(Label4, W4, Want4) )).
 
+%% 1.105.0: an adjunct before the subject (ty_adjunct_front(english,
+%% first)): an adposition phrase or an adverb first, a comma after it or
+%% none, the last of the clause's adjuncts; only in the clause that begins
+%% the sentence; written at the clause's end.
+adjunct_first :-
+    section('an adjunct before the subject'),
+    forall(member(T-Want, [
+               'In England the boys call a fender a wing.'-[clause(call, present, pos, np(boy, pl, def, []), oc(np(fender, sg, indef, []), np(wing, sg, indef, [])), [pp(in, name('England'))])],
+               'Suddenly the dog barked.'-[clause(bark, past, pos, np(dog, sg, def, []), none, [adv(suddenly)])],
+               'After the game the dog slept in the house.'-[clause(sleep, past, pos, np(dog, sg, def, []), none, [pp(in, np(house, sg, def, [])), pp(after, np(game, sg, def, []))])],
+               'In the morning, the boy sees the dog.'-[clause(see, present, pos, np(boy, sg, def, []), np(dog, sg, def, []), [pp(in, np(morning, sg, def, []))])],
+               'The boy wants to see the dog.'-[clause(want, present, pos, np(boy, sg, def, []), inf(see, np(dog, sg, def, [])))] ]),
+           ( findall(R, typology_read(english, T, R), Rs),
+             atomic_list_concat(['English: ', T], Label),
+             check(Label, Rs, Want) )),
+    ( typology_write(english, clause(sleep, past, pos, np(dog, sg, def, []), none, [pp(in, np(house, sg, def, [])), pp(after, np(game, sg, def, []))]), W1) -> true ; W1 = none ),
+    check('written at the end, the first one last', W1, 'The dog slept in the house after the game.'),
+    ( typology_read(german, 'Im Haus schläft der Hund.', IR2) -> true ; IR2 = none ),
+    check('German still puts the verb second', IR2, clause(sleep, present, pos, np(dog, sg, def, []), none, [pp(in, np(house, sg, def, []))])).
+
 %% 1.64.0: the bare singular noun. np(M, sg, mass, []): a singular noun
 %% with no article, read after the other readings, written with none;
 %% Persian, whose definite noun has none either, writes it as def.
@@ -2921,8 +2941,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 4456 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 4 456 sentences read at 1.104.0 are read', R1, yes),
+    ( K >= 4479 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 4 479 sentences read at 1.105.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 
@@ -3282,4 +3302,4 @@ blank_template :-
     include([X4]>>( X4 = bad(_) ), M4, Bad4),
     check('every row of code of templates/template.pl is a row the check takes', Bad4, []),
     length(Rows, NR4),
-    check('the rows of code of the choices', NR4, 98).
+    check('the rows of code of the choices', NR4, 99).
