@@ -183,6 +183,7 @@ main :-
     linking_verbs,
     every_words,
     long_words,
+    such_words,
     format("~ndone~n", []).
 
 
@@ -1371,6 +1372,14 @@ long_words :-
     typology_load(english),
     typology_read(english, 'Uncompromising honesty.', IR1),
     must('an adjective of fourteen letters', IR1, phrase(np(honesty, sg, mass, [uncompromising]))).
+
+%% 92. SUCH (1.125.0): such(NP) before an indefinite noun phrase, the
+%% template's ty_predeterminer(english, such, [such]) row; `such as' an
+%% adposition of two words.
+such_words :-
+    typology_load(english),
+    typology_read(english, 'He is such a baby.', IR1),
+    must('such a baby', IR1, copula(present, pos, pron(3, sg, m), such(np(baby, sg, indef, [])))).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

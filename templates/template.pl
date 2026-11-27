@@ -173,7 +173,10 @@ ty_capital_nouns(xx).
 %%     ty_predeterminer(L, Kind, Words)
 %%                                     the words before a definite noun
 %%                                     phrase of Kind all (since 1.118.0:
-%%                                     English `all the wildlife')
+%%                                     English `all the wildlife'), or
+%%                                     before an indefinite one of Kind
+%%                                     such (since 1.125.0: `such a
+%%                                     baby', `such problems')
 %% ty_predeterminer(xx, Kind, Words).
 %%   e.g. ty_predeterminer(english, all, [all]).
 

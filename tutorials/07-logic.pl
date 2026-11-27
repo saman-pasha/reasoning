@@ -87,6 +87,7 @@ main :-
     linking_verbs,
     every_words,
     long_words,
+    such_words,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -709,6 +710,12 @@ long_words :-
     must('geometrically(grow(it))', C1, 'past(geometrically(grow(it))).\n'),
     logic_translate(cocolog, english, C1, E1),
     must('and into English', E1, 'It grew geometrically.').
+
+%% 58. SUCH AS (1.125.0) is an adposition's predicate, such_as(T, X).
+such_words :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'A professional field such as law.', C1),
+    must('such_as(professional(field), law)', C1, 'field(a(such_as(professional(field), law))).\nprofessional(a(such_as(professional(field), law))).\n').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words, such_words,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2751,6 +2751,24 @@ article_names :-
     findall(R3, typology_read(english, 'The dog sleeps.', R3), Rs3),
     check('no article before a small word is a name\'s', Rs3, [clause(sleep, present, pos, np(dog, sg, def, []), none)]).
 
+%% 1.125.0: such before an indefinite noun phrase, such(NP), and the
+%% adposition such_as.
+such_words :-
+    section('such and such as'),
+    forall(member(T-Want, [
+               'He is such a baby.'-copula(present, pos, pron(3, sg, m), such(np(baby, sg, indef, []))),
+               'Graduates well equipped to handle such problems.'-clause(equip, past, pos, np(graduate, pl, indef, []), none, [adv(well), inf(handle, such(np(problem, pl, indef, [])))]),
+               'A professional field such as law.'-phrase(np_pp(np(field, sg, indef, [professional]), pp(such_as, np(law, sg, mass, [])))),
+               'Such the dog sleeps.'-none ]),
+           ( ( typology_read(english, T, R) -> true ; R = none ),
+             atomic_list_concat(['English, the first reading: ', T], Label),
+             check(Label, R, Want) )),
+    ( typology_write(english, clause(see, present, pos, np(dog, sg, def, []), such(np(cat, sg, indef, [big]))), W2) -> true ; W2 = none ),
+    check('such written', W2, 'The dog sees such a big cat.'),
+    typology_check(english, M3),
+    findall(B3, ( member(B3, M3), B3 = bad(ty_predeterminer(_, _, _)) ), Bs3),
+    check('the English predeterminer rows are good ones', Bs3, []).
+
 %% 1.124.0: every adjective WordNet's index names too, and words of any
 %% length (lexicon/build.pl's word filter stops at twelve letters).
 long_words :-
@@ -3266,8 +3284,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 5812 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 5 812 sentences read at 1.124.0 within 2 000 000 inferences each are read', R1, yes),
+    ( K >= 5827 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 5 827 sentences read at 1.125.0 within 2 000 000 inferences each are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

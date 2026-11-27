@@ -503,7 +503,10 @@
 %%     ty_predeterminer(L, Kind, Words)
 %%                                     the words before a definite noun
 %%                                     phrase of Kind all (since 1.118.0:
-%%                                     English `all the wildlife')
+%%                                     English `all the wildlife'), or
+%%                                     before an indefinite one of Kind
+%%                                     such (since 1.125.0: `such a
+%%                                     baby', `such problems')
 %%     ty_subordinate_first(L)         a subordinate clause may stand before
 %%                                     its main clause, a comma after it
 %%                                     (`If it sleeps, the dog is small.');
@@ -1003,7 +1006,7 @@ ty_values(quantifier, [some, every, no, any, this, that]).
 ty_values(quantifier_kind, [thing, person]).
 %% A subordinate clause's kind (since 1.65.0).
 ty_values(subordinator, [if, when, because, as]).
-ty_values(predeterminer, [all]).
+ty_values(predeterminer, [all, such]).
 ty_values(animacy, [person, animate, inanimate, unknown]).
 ty_values(place, [before, after]).
 ty_values(role, [s, o]).
@@ -3713,6 +3716,7 @@ ty_subject_number(pron(P, N0, _), N) :- ty_agreement(P, N0, N).
 ty_subject_number(C, N) :- ty_coord_np(C, K, Xs), ty_coord_number(K, Xs, N).
 ty_subject_number(S, N) :- S == same, ty_same_subject(S1), ty_subject_number(S1, N).
 ty_subject_number(A, N) :- nonvar(A), A = all(NP), nonvar(NP), ty_subject_number(NP, N).
+ty_subject_number(A, N) :- nonvar(A), A = such(NP), nonvar(NP), ty_subject_number(NP, N).
 ty_subject_number(of(_, P), N) :- nonvar(P), P = of(_, _), ty_subject_number(P, N).
 
 ty_coord_number(and, Xs, N) :-
@@ -4115,6 +4119,7 @@ ty_ir_features(L, of(_, NP), F) :- !, ty_ir_features(L, NP, F).
 ty_ir_features(L, rel(NP, _), F) :- !, ty_ir_features(L, NP, F).
 ty_ir_features(L, np_pp(NP, _), F) :- !, ty_ir_features(L, NP, F).
 ty_ir_features(L, all(NP), F) :- !, ty_ir_features(L, NP, F).
+ty_ir_features(L, such(NP), F) :- !, ty_ir_features(L, NP, F).
 ty_ir_features(L, C, F) :-
     ty_coord_np(C, K, Xs), !,
     findall(F1, ( member(X, Xs), ty_ir_features(L, X, F1) ), Fs),
@@ -5473,6 +5478,15 @@ ty_np_phrase(L, all(NP), F) -->
     ty_predet_words(L, all),
     ty_np_phrase(L, NP, F),
     { ty_all_np(NP) }.
+%% Such before a noun phrase with no marks (since 1.125.0: `Such weeping.'),
+%% as in a role.
+ty_np_phrase(L, such(NP), F) -->
+    { '$ty_predet_made'(L) },
+    ty_here(S0),
+    { ty_predet_ahead(L, S0) },
+    ty_predet_words(L, such),
+    ty_np_phrase(L, NP, F),
+    { ty_such_np(NP) }.
 
 %% A NOUN PHRASE WITH AN ADPOSITION PHRASE AFTER IT (since 1.83.0):
 %% np_pp(NP, pp(Prep, X)), in a language that keeps the phrase after its
@@ -6185,7 +6199,7 @@ ty_copula_part(s, L, copula(_, _, S, _), Features, _) --> ty_role(L, s, S, Featu
 ty_copula_part(c, L, copula(T, P, S, Pred), _, _) -->
     { ty_subject_number(S, N),
       b_setval('$ty_csubj', S),
-      ty_predicate_kind(Pred, K),
+      ty_copula_kind(L, Pred, K),
       ty_copula_polarity(L, P, CP) },
     ty_copula_words(L, K, T, N, CP).
 ty_copula_part(n(Ws), _, _, _, _) --> ty_tokens(Ws).
@@ -6226,6 +6240,15 @@ ty_predicate_kind(adj(_), adj).
 ty_predicate_kind(np(_, _, _, _), np).
 ty_predicate_kind(rel(_, _), np).
 ty_predicate_kind(of(_, _), np).
+%% such (since 1.125.0) is a noun phrase's kind.
+ty_predicate_kind(W, np) :- nonvar(W), W = such(_).
+
+%% The kind a copula's words are read for: a predicate's, and reading, such
+%% last, only in a language with a ty_predeterminer(L, such, Words) row (a
+%% kind for it in every language cost Spanish's round trips 0.8 % more
+%% inferences, its copula's words read once more).
+ty_copula_kind(_, Pred, K) :- ty_predicate_kind(Pred, K).
+ty_copula_kind(L, Pred, np) :- var(Pred), '$ty_predet_made'(L), ty_predeterminer(L, such, _), Pred = such(_).
 ty_predicate_kind(pp(_, _), pp).
 ty_predicate_kind(W, K) :- nonvar(W), W = wh(M), ty_wh_kind(M, K).
 
@@ -6315,6 +6338,14 @@ ty_predicate_in(L, np(M, N, D, A), []) -->
     ty_np(L, np(M, N, D, A), _),
     { D == mass, A == [], nonvar(W0) -> \+ ty_word_class(L, adjective, W0) ; true },
     { \+ ( D == mass, nb_current('$ty_massr', on), ty_mass_relaxed(L, M) ) }.
+%% Such before a copula's noun phrase (since 1.125.0: `He is such a baby.').
+ty_predicate_in(L, such(NP), []) -->
+    { '$ty_predet_made'(L) },
+    ty_here(S0),
+    { ty_predet_ahead(L, S0) },
+    ty_predet_words(L, such),
+    ty_predicate_in(L, NP, []),
+    { ty_such_np(NP) }.
 ty_predicate_in(L, R, []) --> { ty_rel_slot(R) }, ty_rel(L, none, R, _).
 ty_predicate_in(L, P, []) --> { ty_poss_slot(P) }, ty_poss(L, P, _).
 ty_predicate_in(L, pp(Prep, NP), []) --> ty_pp(L, Prep, NP).
@@ -7155,6 +7186,19 @@ ty_role(L, Role, all(NP), Features) -->
     ty_role(L, Role, NP, Features),
     { ty_all_np(NP) }.
 
+%% SUCH BEFORE A NOUN PHRASE (since 1.125.0): such(NP) where a noun phrase
+%% stands, NP an indefinite one, a bare one or one with `a' (`Such
+%% doctrines would be fatal.', `He is such a baby.', `in such a
+%% situation'), the words of a ty_predeterminer(L, such, Words) row before
+%% it. Asked only where the next word is one.
+ty_role(L, Role, such(NP), Features) -->
+    { '$ty_predet_made'(L) },
+    ty_here(S0),
+    { ty_predet_ahead(L, S0) },
+    ty_predet_words(L, such),
+    ty_role(L, Role, NP, Features),
+    { ty_such_np(NP) }.
+
 %% The subject of a coordination's second clause that says none (since
 %% 1.60.0): same, with the first clause's subject's features.
 ty_role(L, s, S, F) -->
@@ -7176,6 +7220,16 @@ ty_all_np(NP) :-
     ;   NP = of(_, _) -> true
     ;   NP = rel(H, _) -> ty_all_np(H)
     ;   NP = np_pp(H, _) -> ty_all_np(H)
+    ).
+
+%% What such may stand before: an indefinite noun phrase or a bare one,
+%% and either with a relative clause or an adposition phrase after its
+%% noun.
+ty_such_np(NP) :-
+    nonvar(NP),
+    (   NP = np(_, _, D, _) -> nonvar(D), memberchk(D, [indef, mass])
+    ;   NP = rel(H, _) -> ty_such_np(H)
+    ;   NP = np_pp(H, _) -> ty_such_np(H)
     ).
 
 %% What a coordination's slot may hold, reading (unbound: and, then or)

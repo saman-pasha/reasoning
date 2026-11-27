@@ -524,6 +524,9 @@ ty_subordinator(english, as, [as]).
 %% `all his creditors'); before a bare noun it is the determiner (`All dogs
 %% bark.').
 ty_predeterminer(english, all, [all]).
+%% `such' before an indefinite noun phrase (since 1.125.0: `such a baby',
+%% `such problems'); level 2 has no form of it yet.
+ty_predeterminer(english, such, [such]).
 ty_subordinate_first(english).
 
 %% The negative: `does not', `do not', `did not' before the base, which is
@@ -774,6 +777,9 @@ ty_adposition(english, despite, [despite]).
 ty_adposition(english, except, [except]).
 ty_adposition(english, out_of, [out, of]).
 ty_adposition(english, instead_of, [instead, of]).
+%% `such as' (since 1.125.0): an example of a noun phrase (`Perishable
+%% foods such as butter and fruit.').
+ty_adposition(english, such_as, [such, as]).
 %% `of' is an adposition only in an adjective's phrase (since 1.88.0:
 %% `proud of his son'); elsewhere it is the possessor's word.
 ty_adposition(english, of, [of]).

@@ -569,3 +569,6 @@ The errors increased multiplicatively.	past(multiplicatively(increase(the(pl(err
 His suspiciousness destroyed his marriage.	past(destroy(of(suspiciousness, he), of(marriage, he))).
 He was convicted circumstantially.	past(circumstantially(convict(someone, he))).
 An inextinguishable flame.	flame(a(inextinguishable(flame))). inextinguishable(a(inextinguishable(flame))).
+A professional field such as law.	field(a(such_as(professional(field), law))). professional(a(such_as(professional(field), law))).
+Renewable energy such as solar energy is theoretically inexhaustible.	theoretically(inexhaustible(such_as(renewable(energy), solar(energy)))).
+Small aerial creatures such as butterflies.	creature(a(such_as(pl(small(aerial(creature))), a(pl(butterfly))))). small(a(such_as(pl(small(aerial(creature))), a(pl(butterfly))))). aerial(a(such_as(pl(small(aerial(creature))), a(pl(butterfly))))). butterfly(a(pl(butterfly))).

@@ -830,6 +830,7 @@ lg_atoms_(copula(_, _, _, _), T, of(P, NP), [pred(N, [T, Pc])|Ms]) :-
     lg_arg(possessor, P, Pc, _, Ms).
 lg_atoms_(copula(_, _, _, _), T, pp(P, NP), [pred(P, [T, To])|Os]) :- atom(P), !,
     lg_arg(object, NP, To, _, Os).
+lg_atoms_(copula(_, _, _, _), _, Pred, _) :- nonvar(Pred), Pred = such(_), !, lg_no(determiner(such)).
 lg_atoms_(copula(_, _, _, _), _, Pred, _) :- !, lg_no(predicate(Pred)).
 lg_atoms_(_, T, verb(V, none), [pred(V, [T])]) :- !.
 %% AN INFINITIVE AS A VERB'S OBJECT (since 1.95.0) is a term, to(Atom), its
@@ -1079,6 +1080,7 @@ lg_entity(of(P, NP), E, Ms) :- !, lg_possessed(P, NP, E, Ms).
 %% noun phrase names, the constant all(T) round its term: `Chemicals could
 %% kill all the wildlife.' says all(the(wildlife)), `He paid all his bills.'
 %% past(pay(he, all(of(pl(bill), he)))).
+lg_entity(such(_), _, _) :- !, lg_no(determiner(such)).
 lg_entity(all(NP), ent(const(all(C)), [], const), Ms) :- !,
     lg_entity(NP, ent(T, Conds, Q), Ms),
     ( Q == const, T = const(C), Conds == [] -> true ; lg_no(determiner(all)) ).

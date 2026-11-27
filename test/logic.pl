@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives, linking_verbs, every_words, long_words]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives, linking_verbs, every_words, long_words, such_words]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -262,11 +262,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 540),
-    ( R >= 528 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 528 right', VR, ok),
-    ( K >= 534 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 534 kept', VK, ok).
+    check('the second measure: its sentences', N, 543),
+    ( R >= 531 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 531 right', VR, ok),
+    ( K >= 537 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 537 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -1170,6 +1170,19 @@ article_names :-
              ( logic_translate(cocolog, english, C, E) -> true ; E = none ),
              one_line(['and back into English: ', T], Label2),
              check(Label2, E, T) )).
+
+%% 1.125.0: such_as is an adposition's predicate; such before a noun phrase
+%% has no form at level 2 yet.
+such_words :-
+    section('such and such as'),
+    typology_load(english),
+    ( logic_translate(english, cocolog, 'A professional field such as law.', C1) -> true ; C1 = none ),
+    check('such as, into Cocolog', C1, 'field(a(such_as(professional(field), law))).\nprofessional(a(such_as(professional(field), law))).\n'),
+    ( logic_translate(cocolog, english, C1, E1) -> true ; E1 = none ),
+    check('and back into English', E1, 'A professional field such as law.'),
+    once(typology_read(english, 'He is such a baby.', IR2)),
+    ( logic_from_ir(IR2, _) -> W2 = read ; logic_why(IR2, W2) ),
+    check('such before a noun phrase has no logic form yet', W2, determiner(such)).
 
 %% 1.124.0: a long word is a word of Cocolog as any is.
 long_words :-
