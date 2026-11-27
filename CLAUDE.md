@@ -24,8 +24,8 @@ red) and lesson 01 pin the shape of the answer, deliberately not the number.
 The reasoning library translates ALL 8 000 sentences of `lexicon/prose.txt`
 from English into the IR, and ALL of that IR into Cocolog. Every step
 moves one of the two counts and reports both (`tools/logic/prose.pl`;
-STATUS.md keeps them): at 1.111.0, 4 677 into the IR, 4 437 of them into
-Cocolog (1.110.0: 4 652 and 4 422; 1.109.0: 4 640 and 4 413; 1.108.0: 4 640 and 4 389; 1.107.0: 4 580 and 4 360; 1.105.0 and 1.106.0: 4 479 and 4 275; 1.104.0: 4 456 and 4 256; 1.103.0: 4 405 and 4 209; 1.102.0: 4 405 and 4 206; 1.100.0 and 1.101.0: 4 377 and 4 179; 1.99.0: 4 358 and 4 165; 1.98.0: 4 325 and 4 141; 1.96.0 and 1.97.0: 4 295 and 4 111; 1.95.0: 4 243 and 4 063; 1.94.0: 4 218 and 4 040; 1.93.0: 4 167 and 3 990; 1.92.0: 4 129 and 3 954; 1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
+STATUS.md keeps them): at 1.112.0, 4 771 into the IR, 4 525 of them into
+Cocolog (1.111.0: 4 677 and 4 437; 1.110.0: 4 652 and 4 422; 1.109.0: 4 640 and 4 413; 1.108.0: 4 640 and 4 389; 1.107.0: 4 580 and 4 360; 1.105.0 and 1.106.0: 4 479 and 4 275; 1.104.0: 4 456 and 4 256; 1.103.0: 4 405 and 4 209; 1.102.0: 4 405 and 4 206; 1.100.0 and 1.101.0: 4 377 and 4 179; 1.99.0: 4 358 and 4 165; 1.98.0: 4 325 and 4 141; 1.96.0 and 1.97.0: 4 295 and 4 111; 1.95.0: 4 243 and 4 063; 1.94.0: 4 218 and 4 040; 1.93.0: 4 167 and 3 990; 1.92.0: 4 129 and 3 954; 1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
 count says so. **Measure what blocks the rest before choosing a step**:
 at 1.80.0 the words no table has looked like the gap, and 5 115 of the
 8 000 had none -- 2 130 of them a noun phrase alone, which one rule read.
@@ -879,6 +879,23 @@ whose first word is an adposition's, an infinitive's clause (`to`) read
 its own infinitive as its adjunct for ever. Not in a command or a clause
 with no subject (`'$ty_command'` set). `'$ty_jfirst'/3` carries the
 kind, v2 or first, so no language asks a second table.
+
+**A bare noun with a modifier before it since 1.112.0** may be a word
+that is an adjective's too (`Humid air.`, `Gin game.`, `Artists like
+north light.`), in a pass of its own after every other (`'$ty_massr'` on,
+`ty_nn_passes/3`, only in a language whose adjective stands before its
+noun and where two words in a row could be an adjective or a noun and
+then an adjective and a noun: `ty_massr_ahead/2`; in Spanish `perro rojo`
+asked it of every round trip, 7.6 % more inferences): an adjective with
+an adposition phrase after the noun is no such modifier, and in that pass
+no such noun is a copula's predicate (`ty_mass_relaxed/2`). **The writer
+sets the flag itself, as the reader's passes do** (`ty_write_massr/3`:
+off first, on only for an IR that holds such a noun, `ty_ir_massr/2`, and
+`ty_reads_as/6` reads the words back under the same flag): the first cut
+read whatever flag the last reading had left, so the Cocolog of `Humid
+air.` came back only after a reading of the pass, and with the flag
+always on the writer wrote `Pure air's benign influence.` for `The benign
+influence of pure air.`.
 
 **A noun phrase's existence since 1.111.0** is `exist(T, P, NP)`, the
 words of `ty_existential/2` (English `[there]`), the copula that agrees

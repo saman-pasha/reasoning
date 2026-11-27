@@ -2103,7 +2103,8 @@ ty_read_bases(L, Surface, Topics, Mood, IR0, C) :-
 %% later passes keep it: in the plain pass `A room of smiling faces.' was a
 %% clause, smiling a noun and faces its verb.
 ty_nn_passes(L, Bases, Goal) :-
-    (   b_setval('$ty_nn', off), b_setval('$ty_apnp', off), b_setval('$ty_massp', off), phrase(Goal, Bases)
+    (   b_setval('$ty_nn', off), b_setval('$ty_apnp', off), b_setval('$ty_massp', off), b_setval('$ty_massr', off),
+        phrase(Goal, Bases)
     *-> true
     ;   ty_massp_ahead(L, Bases),
         b_setval('$ty_massp', on), phrase(Goal, Bases)
@@ -2113,7 +2114,22 @@ ty_nn_passes(L, Bases, Goal) :-
     *-> true
     ;   ty_nn_ahead(L, Bases),
         b_setval('$ty_massp', on), b_setval('$ty_nn', on), b_setval('$ty_apnp', on), phrase(Goal, Bases)
+    *-> true
+    ;   ty_massr_ahead(L, Bases),
+        b_setval('$ty_massr', on), b_setval('$ty_massp', on), b_setval('$ty_nn', on), b_setval('$ty_apnp', on),
+        phrase(Goal, Bases)
     ).
+
+%% A word that is a noun's and an adjective's after a word that is an
+%% adjective's or a noun's: the last pass's bare noun (ty_mass_ok/3), in a
+%% language whose adjective stands before its noun (ty_order/3 of np: in
+%% Spanish `perro rojo' asked the pass of every round trip that read no
+%% other way at first, 7.6 % more inferences).
+ty_massr_ahead(L, Bases) :-
+    ty_order(L, np, O), append(_, [a|T], O), memberchk(n, T),
+    append(_, [W1, W2|_], Bases), atom(W1), atom(W2),
+    ty_word_class(L, adjective, W2), once(ty_noun(L, _, _, _, W2, _)),
+    ( ty_word_class(L, adjective, W1) -> true ; once(ty_noun(L, _, _, _, W1, _)) ), !.
 
 ty_massp_ahead(L, Bases) :-
     once(( ty_possessive(L, _, [P|_], _), memberchk(P, Bases) )).
@@ -2166,8 +2182,10 @@ typology_write(L, IR, Text, Topics) :-
     b_setval('$ty_massp', on),
     b_setval('$ty_av', on),
     ty_parse_reset(L),
+    ty_write_massr(L, IR0, Massr),
+    b_setval('$ty_massr', Massr),
     phrase(Goal, Tokens0),
-    ty_reads_as(Mood, L, IR0, Tokens0, Topics), !,
+    ty_reads_as(Mood, L, IR0, Tokens0, Topics, Massr), !,
     ty_write_tokens(L, Tokens0, Tokens),
     ty_text(L, Mood, Tokens, Text).
 
@@ -2214,16 +2232,40 @@ ty_ir_tw_list(Js, L, Js1) :-
 ty_tense_as(L, Level, T, T1) :-
     (   atom(T), '$ty_tlike'(L, Level, T, T2) -> T1 = T2 ; T1 = T ).
 
+%% As the reader does (since 1.112.0), the writer writes a bare noun whose
+%% word is an adjective's too after a modifier before it ('$ty_massr' on)
+%% only where the IR holds such a noun (ty_ir_massr/2) and no wording reads
+%% back without it, and reads the words back the same way: `The benign
+%% influence of pure air.' stays written so, not `Pure air's benign
+%% influence.'.
+ty_write_massr(L, IR, M) :-
+    (   M = off
+    ;   ty_ir_massr(L, IR), M = on
+    ).
+
+%% An IR holds a bare noun only a modifier before it lets be read.
+ty_ir_massr(L, T) :-
+    compound(T),
+    (   T = np(M, N, D, As), N == sg, D == mass, nonvar(M), is_list(As), As \== [],
+        ty_mass_relaxed(L, M)
+    ->  true
+    ;   T =.. [_|Args], member(A, Args), ty_ir_massr(L, A)
+    ), !.
+
 %% The words give the IR back, at a cost no other reading of them is under
 %% (`Chi vide la ragazza?' is who saw the girl, so whom the girl saw is
-%% written another way).
-ty_reads_as(Mood, L, IR0, Tokens, Topics) :-
+%% written another way), with the flags of the reader's pass the writer
+%% wrote under (a bare noun's modifier before it, '$ty_massr', with that
+%% pass's '$ty_apnp').
+ty_reads_as(Mood, L, IR0, Tokens, Topics, Massr) :-
     ty_new_context(Tokens, Topics, Context),
+    ( Massr == on -> APNP = on ; APNP = off ),
     \+ \+ ( b_setval('$ty_context', Context),
            b_setval('$ty_nn', on),
            b_setval('$ty_ap', on),
-           b_setval('$ty_apnp', off),
+           b_setval('$ty_apnp', APNP),
            b_setval('$ty_massp', on),
+           b_setval('$ty_massr', Massr),
            b_setval('$ty_av', on),
            ty_parse_reset(L),
            b_setval('$ty_rel_open', f([])),
@@ -6104,7 +6146,8 @@ ty_and_words(L, S0, S) :- ty_and(L, Ws), append(Ws, S, S0).
 ty_predicate_in(L, np(M, N, D, A), []) -->
     ty_peek(W0),
     ty_np(L, np(M, N, D, A), _),
-    { D == mass, A == [], nonvar(W0) -> \+ ty_word_class(L, adjective, W0) ; true }.
+    { D == mass, A == [], nonvar(W0) -> \+ ty_word_class(L, adjective, W0) ; true },
+    { \+ ( D == mass, nb_current('$ty_massr', on), ty_mass_relaxed(L, M) ) }.
 ty_predicate_in(L, R, []) --> { ty_rel_slot(R) }, ty_rel(L, none, R, _).
 ty_predicate_in(L, P, []) --> { ty_poss_slot(P) }, ty_poss(L, P, _).
 ty_predicate_in(L, pp(Prep, NP), []) --> ty_pp(L, Prep, NP).
@@ -7908,12 +7951,35 @@ ty_det_word(L, Def, GN, W) :-
 %% adjective stands alone, its word may be an adjective's too ('$ty_mass_adj',
 %% set around the possessor alone): `The incarnation of evil.', `A man of
 %% quality.', `A pocket of air.'.
-ty_mass_ok(L, M) :-
+%% WITH A MODIFIER BEFORE IT (since 1.112.0: an adjective or a noun) the
+%% noun's word may be an adjective's too, as it stands where only the noun
+%% does (`Humid air.', `Gin game.'), in a pass of its own after every other
+%% ('$ty_massr' on, ty_nn_passes/3): in the plain pass `Cast anxious
+%% glances behind her.' was anxious glancing. An adjective with an
+%% adposition phrase stands after the noun and is no modifier before it
+%% (`Country full of sand.'), and in that pass no such noun is a copula's
+%% predicate (ty_mass_relaxed/2: `The device is small enough to wear on
+%% your wrist.', `He was bent double with pain.': 6 of the 7 such of the
+%% first cut wrong). The pass is asked only in a language whose adjective
+%% stands before its noun (ty_massr_ahead/2). The writer writes with the
+%% flag only for an IR that holds such a noun and only where no wording
+%% reads back without it, and reads its words back under the same flag
+%% (ty_write_massr/3, ty_reads_as/6).
+ty_mass_ok(L, M, As) :-
     nonvar(M),
     once(ty_noun(L, M, _, A, Sg, _)),
     \+ memberchk(A, [person, animate]),
-    ( nb_current('$ty_mass_adj', yes) -> true ; \+ ty_word_class(L, adjective, Sg) ),
+    (   nb_current('$ty_mass_adj', yes) -> true
+    ;   nb_current('$ty_massr', on), member(X, As), \+ ( compound(X), X = ap(_, _) ) -> true
+    ;   \+ ty_word_class(L, adjective, Sg)
+    ),
     \+ ( ty_noun(L, M2, _, _, _, Sg), M2 \== M ).
+
+%% A bare noun only the pass of a modifier before it reads: its word an
+%% adjective's too.
+ty_mass_relaxed(L, M) :-
+    once(ty_noun(L, M, _, _, Sg, _)),
+    ty_word_class(L, adjective, Sg).
 
 %% The definiteness values an article word has: its rows', and indef for a
 %% negative article, made at load for a language with cases or a negative
@@ -8284,7 +8350,7 @@ ty_np_ok(L, NP, Det, Noun, Rows, Anim, Next) :-
 
 %% The article's own rows give the definiteness (since 1.63.0: asked of
 %% each of the eleven values, a reading cost the benchmark 16 % to 49 % more).
-ty_np_agrees(L, np(M, N, Def, _), Det, noun(G, Anim), Rows, Anim, Next) :-
+ty_np_agrees(L, np(M, N, Def, As), Det, noun(G, Anim), Rows, Anim, Next) :-
     forall(member(adj(RG, RN), Rows), ( ty_fits(RG, G), ty_fits(RN, N) )),
     (   Det = art(W)
     ->  (   ( '$ty_cased'(L) ; '$ty_kein_lang'(L), ty_kein_np )
@@ -8293,7 +8359,7 @@ ty_np_agrees(L, np(M, N, Def, _), Det, noun(G, Anim), Rows, Anim, Next) :-
         ;   ty_article(L, Def, AG, AN, W), ty_fits(AG, G), ty_fits(AN, N)
         )
     ;   member(Def, [def, indef, mass]),
-        ( Def == mass -> N == sg, \+ ty_definite_like(L, mass, _), ty_mass_ok(L, M) ; true ),
+        ( Def == mass -> N == sg, \+ ty_definite_like(L, mass, _), ty_mass_ok(L, M, As) ; true ),
         (   Next == none
         ->  (   Def == def, nonvar(M), '$ty_bare'(L, M) -> true ; \+ ty_article_fits(L, Def, G, N, _) )
         ;   Next = bare(_)

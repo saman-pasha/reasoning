@@ -262,11 +262,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 450),
-    ( R >= 436 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 436 right', VR, ok),
-    ( K >= 442 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 442 kept', VK, ok).
+    check('the second measure: its sentences', N, 460),
+    ( R >= 446 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 446 right', VR, ok),
+    ( K >= 452 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 452 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it

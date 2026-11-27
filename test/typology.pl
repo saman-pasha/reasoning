@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2493,7 +2493,9 @@ passive_places :-
                'The area is well populated.'-[clause(populate, pass(present), pos, np(area, sg, def, []), none, [adv(well)])],
                'He promptly forgot the address.'-[clause(forget, past, pos, pron(3, sg, m), np(address, sg, def, []), [adv(promptly)])],
                'Chemically related.'-[],
-               'The catcher made a good throw to second base.'-[] ]),
+               %% read since 1.112.0, `second base' a bare noun after its modifier
+               'The catcher made a good throw to second base.'-[clause(make, past, pos, np(catcher, sg, def, []), np(throw, sg, indef, [good]), [pp(to, np(base, sg, mass, [second]))]),
+                                                                  clause(make, past, pos, np(catcher, sg, def, []), np_pp(np(throw, sg, indef, [good]), pp(to, np(base, sg, mass, [second]))))] ]),
            ( findall(R, typology_read(english, T, R), Rs),
              atomic_list_concat(['English: ', T], Label),
              check(Label, Rs, Want) )),
@@ -2711,6 +2713,23 @@ existential :-
              check(Label3, W3, Want3) )),
     ( typology_write(spanish, exist(present, pos, np(dog, sg, indef, [])), W4) -> true ; W4 = none ),
     check('a language with no words of existence writes none', W4, none).
+
+%% 1.112.0: a bare noun with a modifier before it, its word an adjective's
+%% too, in a pass of its own after every other.
+modified_mass :-
+    section('a bare noun with a modifier before it'),
+    forall(member(T-Want, [
+               'Humid air.'-[phrase(np(air, sg, mass, [humid]))],
+               'Gin game.'-[phrase(np(game, sg, mass, [n(gin)]))],
+               'Artists like north light.'-[clause(like, present, pos, np(artist, pl, indef, []), np(light, sg, mass, [north]))],
+               'Cast anxious glances behind her.'-[phrase(np_pp(np(glance, pl, indef, [cast, anxious]), pp(behind, pron(3, sg, f))))] ]),
+           ( findall(R, typology_read(english, T, R), Rs0), ( Rs0 = [R0|_] -> Rs = [R0] ; Rs = [] ),
+             atomic_list_concat(['English, the first reading: ', T], Label),
+             check(Label, Rs, Want) )),
+    findall(R2, typology_read(english, 'Light.', R2), Rs2),
+    check('with no modifier a bare noun is no adjective\'s word', Rs2, []),
+    findall(R3, typology_read(english, 'The air is cold.', copula(_, _, _, R3)), Rs3),
+    check('no such noun is a copula\'s predicate', Rs3, [adj([cold])]).
 
 %% 1.64.0: the bare singular noun. np(M, sg, mass, []): a singular noun
 %% with no article, read after the other readings, written with none;
@@ -3047,8 +3066,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 4677 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 4 677 sentences read at 1.111.0 are read', R1, yes),
+    ( K >= 4771 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 4 771 sentences read at 1.112.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

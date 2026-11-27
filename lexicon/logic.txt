@@ -479,3 +479,13 @@ There are laboratories for commercial testing.	laboratory(a(for(pl(laboratory), 
 There were many demands on his time.	demand(a(on(pl(many(demand)), of(time, he)))). many(a(on(pl(many(demand)), of(time, he)))). past(exist(a(on(pl(many(demand)), of(time, he))))).
 There was a break in the action when a player was hurt.	break(a(in(break, the(action)))). player(a(player)). when(past(exist(a(in(break, the(action))))), past(hurt(someone, a(player)))).
 There were four notches in the handle of his revolver.	notch(a(in(pl(four(notch)), of(handle, of(revolver, he))))). four(a(in(pl(four(notch)), of(handle, of(revolver, he))))). past(exist(a(in(pl(four(notch)), of(handle, of(revolver, he)))))).
+Humid air.	air(humid(air)). humid(humid(air)).
+Grim rainy weather.	weather(grim(rainy(weather))). grim(grim(rainy(weather))). rainy(grim(rainy(weather))).
+Artists like north light.	like(A, north(light)) :- artist(A).
+The runner slid headlong into third base.	past(into(headlong(slide(the(runner))), third(base))).
+In hot weather they dined in their shirtsleeves.	past(in(in(dine(they), of(shirtsleeves, they)), hot(weather))).
+The ship made its run in record time.	past(in(make(the(ship), of(run, it)), record(time))).
+They gave little warning of their arrival.	past(give(they, of(little(warning), of(arrival, they)))).
+They performed with great polish.	past(with(perform(they), great(polish))).
+It has just enough salt.	have(it, just(enough(salt))).
+Information is updated in real time.	in(update(someone, information), real(time)).

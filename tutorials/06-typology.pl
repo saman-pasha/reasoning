@@ -171,6 +171,7 @@ main :-
     modals,
     short_forms,
     existential,
+    modified_mass,
     format("~ndone~n", []).
 
 
@@ -1257,6 +1258,13 @@ existential :-
     must('there is', IR1, exist(past, pos, of(np(fly, pl, indef, []), np(million, pl, indef, [])))),
     typology_write(english, exist(future, pos, np(dog, sg, indef, [])), W2),
     must('written in a tense', W2, 'There will be a dog.').
+
+%% 80. A BARE NOUN WITH A MODIFIER BEFORE IT (1.112.0) may be a word that
+%% is an adjective's too, in a pass of its own after every other.
+modified_mass :-
+    typology_load(english),
+    typology_read(english, 'Humid air.', IR1),
+    must('a bare noun after an adjective', IR1, phrase(np(air, sg, mass, [humid]))).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
