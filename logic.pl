@@ -867,6 +867,16 @@ lg_inf_obj('$obj'(S, const(a(S)), a(S), _)).
 %% a(manned(nn(earth, satellite))), a(necessary(nn(research, step))))),
 %% the satellite's facts beside it. Any other complement of several atoms
 %% (rich and famous) has no form yet (complement(Pred)).
+%% A VERB WITH TWO OBJECTS (since 1.117.0): a predicate of three, the
+%% subject, the one the thing goes to and the thing, each object's facts
+%% beside it: `John gives Mary the book.' is give(john, mary, the(book)),
+%% `He gave the customer a demonstration.' past(give(he, the(customer),
+%% a(demonstration))) and demonstration(a(demonstration)).
+lg_atoms_(_, T, verb(V, IO2), [pred(V, [T, Ti, Td])|Os]) :-
+    nonvar(IO2), IO2 = io(IO, DO), !,
+    lg_arg(object, IO, Ti, _, Os1),
+    lg_arg(object, DO, Td, _, Os2),
+    append(Os1, Os2, Os).
 lg_atoms_(_, T, verb(V, OC), [pred(V, [T, To, F])|Os]) :-
     nonvar(OC), OC = oc(NP, Pred), !,
     lg_arg(object, NP, To, _, Os),
@@ -2006,6 +2016,16 @@ lg_atom_ir(L, pred(P, [A, B, F]), How, IR) :-
     lg_arg_np(L, How2, F, Pred),
     ( Pred = np(_, _, _, _) ; Pred = of(_, _) ; Pred = np_pp(_, _) ), !,
     IR = clause(P, present, pos, S, oc(O, Pred)).
+%% Two objects (since 1.117.0): the three arguments of a verb that may
+%% take two, the subject and the two objects (give(john, mary, the(book))
+%% `John gives Mary the book.').
+lg_atom_ir(L, pred(P, [A, B, C]), How, IR) :-
+    \+ ( nonvar(C), C = fun(_, _) ),
+    catch(ty_verb_of(L, two_objects, P), _, fail),
+    lg_arg_np(L, How, A, S),
+    lg_arg_np(L, How, B, IO),
+    lg_arg_np(L, How, C, DO), !,
+    IR = clause(P, present, pos, S, io(IO, DO)).
 lg_atom_ir(L, pred(P, [A, B]), How, IR) :-
     lg_binary_classes(L, P, Cs),
     lg_arg_np(L, How, A, S),

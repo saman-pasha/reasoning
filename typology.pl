@@ -119,7 +119,10 @@
 %%                                     since 1.100.0; ing_double: one whose
 %%                                     last consonant doubles before -ing
 %%                                     though it has two syllables, since
-%%                                     1.102.0), or Base is a list of verbs
+%%                                     1.102.0; two_objects: one that may
+%%                                     take two objects, the one a thing
+%%                                     goes to and the thing, since
+%%                                     1.117.0), or Base is a list of verbs
 %%                                     (since 1.95.0)
 %%     ty_adjective_list(L, Kind, Base)
 %%                                     the adjectives of lexicon/Base.txt,
@@ -5021,6 +5024,33 @@ ty_object(L, V, O, How) -->
         ty_role(L, o, NP),
         ty_ocomp_pred(L, NP, Pred)
     ).
+%% A VERB WITH TWO OBJECTS (since 1.117.0: `He gave the customer a
+%% demonstration.' is clause(give, past, pos, pron(3, sg, m),
+%% io(np(customer, sg, def, []), np(demonstration, sg, indef, [])))):
+%% after a verb ty_verb_list(L, two_objects, Base) names, the one a thing
+%% goes to and the thing, io(Indirect, Direct), each a role's noun phrase.
+%% The last reading of an object, tried where the plain object's do not
+%% read the clause, asking a fact the verb tables made ('$ty_iov'/2).
+ty_object(L, V, io(IO, DO), io) -->
+    { nonvar(V), '$ty_iov'(V, L) },
+    ty_role(L, o, IO),
+    ty_role(L, o, DO),
+    { ty_io_ok(IO, DO) }.
+
+%% Two objects, the second no bare noun after a noun's (`He got an
+%% estimate from the car repair shop.' is one compound noun, `a limited
+%% edition of Bach recordings' one after `of'; after a pronoun or a name
+%% it may be: `Wished him luck.') and no `a' with a unit (`three square
+%% meals a day' is a rate, lexicon/unit.txt); the first no noun with a
+%% relative clause, which would end before the second (`The professor
+%% wrote the text that he assigned students to buy.').
+ty_io_ok(IO, DO) :-
+    \+ ( nonvar(IO), IO = rel(_, _) ),
+    \+ ( nonvar(DO), DO = np(_, Num, D, As), As == [],
+         ( D == mass ; D == indef, Num == pl ),
+         \+ ( nonvar(IO), ( IO = pron(_, _, _) ; IO = name(_) ) ) ),
+    \+ ( nonvar(DO), DO = np(N, sg, indef, As2), As2 == [], atom(N),
+         ty_lex_base_read(unit), '$ty_lexw'(unit, N) ).
 
 %% An object's complement: a copula's predicate that is an adjective's or
 %% a noun phrase's, never an adposition phrase (`She made a graceful
@@ -5247,9 +5277,12 @@ ty_purpose_ok(L, V, O, Js) :-
 ty_noun_inf_item(_, inf(_, _, _)) :- !.
 ty_noun_inf_item(L, pp(P, NP)) :- ty_to_verb_noun(L, P, NP).
 
-%% An object's head noun: its own, or a possessed one's.
+%% An object's head noun: its own, or a possessed one's, or (since 1.117.0)
+%% the second of two objects' (`The holiday gave us the opportunity to
+%% visit Washington.').
 ty_head_noun(np(N, _, _, _), N).
 ty_head_noun(of(_, np(N, _, _, _)), N).
+ty_head_noun(io(_, DO), N) :- nonvar(DO), ty_head_noun(DO, N).
 
 ty_object_infinitive(L, V) :-
     ty_verb_of(L, object_infinitive, V), \+ ty_verb_of(L, object_purpose, V).
@@ -6684,6 +6717,9 @@ ty_verb_row(L, V, T, N, P, Words) :-
 %% object ty_object//4 may read with its complement.
 :- dynamic('$ty_ocv'/2).
 :- dynamic('$ty_ocpw'/2).
+%% A verb of a ty_verb_list(L, two_objects, Base) row (since 1.117.0),
+%% whose objects ty_object//4 may read as two.
+:- dynamic('$ty_iov'/2).
 :- dynamic('$ty_vg_more'/1).
 %% The words a passive's participle follows in its patterns (English `is',
 %% `was', `be', `been'); a text with one ahead may hold a passive
@@ -6735,6 +6771,7 @@ ty_vfirst_make(L) :-
     retractall('$ty_ingw'(_, L)),
     retractall('$ty_ocv'(_, L)),
     retractall('$ty_ocpw'(_, L)),
+    retractall('$ty_iov'(_, L)),
     retractall('$ty_pword'(_, L)),
     retractall('$ty_tact'(L, _, _, _, _, _)),
     retractall('$ty_pprog_made'(L)),
@@ -6754,6 +6791,9 @@ ty_vfirst_make(L) :-
            assertz('$ty_ocv'(OcV, L))),
     forall(( '$ty_ocv'(OcV2, L), ty_participle_word(L, OcV2, OcW), \+ '$ty_ocpw'(OcW, L) ),
            assertz('$ty_ocpw'(OcW, L))),
+    forall(( ty_verb_list(L, two_objects, _), ty_verb(L, IoV, _, _, _, _), \+ '$ty_iov'(IoV, L),
+             ty_verb_of(L, two_objects, IoV) ),
+           assertz('$ty_iov'(IoV, L))),
     ( ( ty_phrasal(L, _, _, _, _) ; ty_adverb_inside(L) ) -> assertz('$ty_vg_more'(L)) ; true ),
     forall(ty_particle_of(L, Pt), assertz('$ty_particle'(Pt, L))),
     forall(ty_verb(L, M, T, N, P, Fs),

@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2751,6 +2751,29 @@ article_names :-
     findall(R3, typology_read(english, 'The dog sleeps.', R3), Rs3),
     check('no article before a small word is a name\'s', Rs3, [clause(sleep, present, pos, np(dog, sg, def, []), none)]).
 
+%% 1.117.0: a verb with two objects, io(Indirect, Direct), after a verb of
+%% the two_objects list; the second no bare noun after a noun, no `a' with
+%% a unit, and the first no noun with a relative clause.
+two_objects :-
+    section('a verb with two objects'),
+    forall(member(T-Want, [
+               'He gave the customer a demonstration.'-clause(give, past, pos, pron(3, sg, m), io(np(customer, sg, def, []), np(demonstration, sg, indef, []))),
+               'She gave him a level look.'-clause(give, past, pos, pron(3, sg, f), io(pron(3, sg, m), np(look, sg, indef, [level]))),
+               'He gave the book to Mary.'-clause(give, past, pos, pron(3, sg, m), np(book, sg, def, []), [pp(to, name('Mary'))]),
+               'He got an estimate from the car repair shop.'-clause(get, past, pos, pron(3, sg, m), np(estimate, sg, indef, []), [pp(from, np(shop, sg, def, [car, n(repair)]))]),
+               'The holiday gave us the opportunity to visit Washington.'-clause(give, past, pos, np(holiday, sg, def, []), io(pron(1, pl, _), np_pp(np(opportunity, sg, def, []), inf(visit, name('Washington'), [])))) ]),
+           ( ( typology_read(english, T, R) -> true ; R = none ),
+             atomic_list_concat(['English, the first reading: ', T], Label),
+             ( R = Want -> R1 = Want ; R1 = R ),
+             check(Label, R1, Want) )),
+    forall(member(T2, ['He saw the man a dog.', 'He seldom got three square meals a day.', 'The professor wrote the text that he assigned students to buy.']),
+           ( findall(R2, typology_read(english, T2, R2), Rs2),
+             ( member(R3, Rs2), R3 =.. [clause, _, _, _, _, O3|_], nonvar(O3), O3 = io(_, _) -> V2 = R3 ; V2 = none ),
+             atomic_list_concat(['no two objects: ', T2], Label2),
+             check(Label2, V2, none) )),
+    ( typology_write(english, clause(give, present, pos, name('John'), io(name('Mary'), np(book, sg, def, []))), W1) -> true ; W1 = none ),
+    check('written, the one the thing goes to first', W1, 'John gives Mary the book.').
+
 %% 1.115.0: `one's', the possessive of the person no words name.
 ones :-
     section('one\'s'),
@@ -3127,8 +3150,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 4976 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 4 976 sentences read at 1.116.0 within 2 000 000 inferences each are read', R1, yes),
+    ( K >= 5001 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 5 001 sentences read at 1.117.0 within 2 000 000 inferences each are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

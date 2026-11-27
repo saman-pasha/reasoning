@@ -176,6 +176,7 @@ main :-
     as_words,
     ones,
     article_names,
+    two_objects,
     format("~ndone~n", []).
 
 
@@ -1300,6 +1301,16 @@ article_names :-
     typology_load(english),
     typology_read(english, 'The Earth is an ellipsoid.', IR1),
     must('the Earth', IR1, copula(present, pos, name('the Earth'), np(ellipsoid, sg, indef, []))).
+
+%% 85. A VERB WITH TWO OBJECTS (1.117.0): after a verb of the template's
+%% ty_verb_list(L, two_objects, Base), io(Indirect, Direct), the one a thing
+%% goes to first.
+two_objects :-
+    typology_load(english),
+    typology_read(english, 'He gave the customer a demonstration.', IR1),
+    must('two objects', IR1, clause(give, past, pos, pron(3, sg, m), io(np(customer, sg, def, []), np(demonstration, sg, indef, [])))),
+    typology_write(english, clause(give, present, pos, name('John'), io(name('Mary'), np(book, sg, def, []))), W2),
+    must('written', W2, 'John gives Mary the book.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

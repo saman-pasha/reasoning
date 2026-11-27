@@ -79,6 +79,7 @@ main :-
     operator_names,
     ones,
     article_names,
+    two_objects,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -626,6 +627,15 @@ article_names :-
     must('the_missouri, the_mississippi', C1, 'into(feed(the_missouri), the_mississippi).\n'),
     logic_translate(cocolog, english, C1, E1),
     must('and into English', E1, 'The Missouri feeds into the Mississippi.').
+
+%% 50. A VERB WITH TWO OBJECTS (1.117.0) is a predicate of three: the
+%% subject, the one the thing goes to and the thing.
+two_objects :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'John gives Mary the book.', C1),
+    must('give/3', C1, 'give(john, mary, the(book)).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and into English', E1, 'John gives Mary the book.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

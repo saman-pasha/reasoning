@@ -307,7 +307,10 @@ ty_conjunct_marks(xx).
 %%                                     since 1.100.0; ing_double: one whose
 %%                                     last consonant doubles before -ing
 %%                                     though it has two syllables, since
-%%                                     1.102.0), or Base is a list of verbs
+%%                                     1.102.0; two_objects: one that may
+%%                                     take two objects, the one a thing
+%%                                     goes to and the thing, since
+%%                                     1.117.0), or Base is a list of verbs
 %%                                     (since 1.95.0)
 %% ty_verb_list(xx, Kind, Base).
 %%   e.g. ty_verb_list(english, no_object, vi).

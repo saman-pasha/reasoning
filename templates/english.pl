@@ -695,6 +695,10 @@ ty_verb_list(english, to_noun, [come, get, run]).
 %% The verbs whose last consonant doubles before -ing though they have two
 %% syllables (since 1.102.0: `beginning', `preferring').
 ty_verb_list(english, ing_double, [abhor, acquit, admit, allot, begin, commit, compel, concur, confer, control, defer, deter, emit, equip, excel, expel, forget, incur, infer, occur, omit, outwit, patrol, permit, prefer, propel, rebel, recur, refer, regret, submit, transfer, transmit, upset]).
+%% The verbs that may take two objects, the one a thing goes to and the
+%% thing (since 1.117.0: `He gave the customer a demonstration.'): the
+%% verbs of giving, sending and telling, none of the complement list's.
+ty_verb_list(english, two_objects, [allow, ask, assign, award, bring, buy, cook, cost, deny, earn, envy, feed, fetch, forgive, get, give, grant, guarantee, hand, issue, lend, loan, mail, offer, owe, pass, pay, pour, promise, read, refuse, sell, send, serve, show, sing, spare, teach, tell, throw, toss, wish, write]).
 ty_verb_list(english, complement, [adjudge, appoint, believe, brand, call, color, consider, crown, declare, deem, dub, dye, elect, feel, find, hold, judge, keep, label, leave, make, name, nominate, paint, proclaim, pronounce, prove, reckon, regard, render, rule, set, term, think, turn]).
 %% The adjectives an infinitive may follow, its subject the adjective's own
 %% (since 1.96.0: `able to walk', `glad to help'); WordNet gives
