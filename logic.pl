@@ -887,6 +887,17 @@ lg_atoms_(_, T, verb(V, OC), [pred(V, [T, To, F])|Os]) :-
     ->  true
     ;   lg_no(complement(Pred))
     ).
+%% A LINKING VERB'S COMPLEMENT (since 1.122.0): a predicate of two, the
+%% subject and the atom a copula would make of the subject: `The situation
+%% became ugly.' is past(become(the(situation), ugly(the(situation)))).
+lg_atoms_(_, T, verb(V, SC), [pred(V, [T, F])]) :-
+    nonvar(SC), SC = sc(Pred), !,
+    (   catch(lg_atoms_(copula(present, pos, none, Pred), T, Pred, [A]), lg_no(_), fail)
+    ->  lg_fun_of_atom(A, F)
+    ;   lg_oc_term(Pred, F)
+    ->  true
+    ;   lg_no(complement(Pred))
+    ).
 lg_atoms_(_, T, verb(V, O), [pred(V, [T, To])|Os]) :-
     lg_arg(object, O, To, _, Os).
 
@@ -1431,13 +1442,19 @@ lg_in_atom(A, modified(adv(M), At)) :-
 %% (since 1.100.0), an atom, not a constant's term: consider(they,
 %% colonialism, immoral(colonialism)) has immoral(colonialism) as
 %% a(fair(trial)) has fair(trial), and leave(the(accident), she,
-%% badly(shaken(she))) an adverb round it.
+%% badly(shaken(she))) an adverb round it. So (since 1.122.0) is a
+%% linking verb's second argument said of its first: become(he,
+%% faithful(he)) has the atom faithful(he), not the term of a bare noun.
 lg_in_atom(A, pred(N, As1)) :-
     A =.. [N1|As], length(As, Ar),
     lg_code_meaning(N1, Ar, N),
     (   As = [X, Y, Z], compound(Z), lg_atom_subject(Z, S2), S2 == Y
     ->  lg_in_term(X, T1), lg_in_term(Y, T2), lg_in_atom_term(Z, T3),
         As1 = [T1, T2, T3]
+    ;   As = [X, Y], compound(Y), lg_atom_subject(Y, S3), S3 == X,
+        catch(ty_verb_of(english, linking, N), _, fail)
+    ->  lg_in_term(X, T1), lg_in_atom_term(Y, T2),
+        As1 = [T1, T2]
     ;   maplist(lg_in_term, As, As1)
     ).
 
@@ -2099,6 +2116,27 @@ lg_atom_ir(L, pred(P, [A, B, C]), How, IR) :-
     lg_arg_np(L, How, B, IO),
     lg_arg_np(L, How, C, DO), !,
     IR = clause(P, present, pos, S, io(IO, DO)).
+%% A linking verb's complement (since 1.122.0): a verb's second argument,
+%% an atom whose first argument is the subject, is the copula's predicate
+%% it makes of the subject, sc(Predicate): become(the(situation),
+%% ugly(the(situation))) is `The situation became ugly.'.
+lg_atom_ir(L, pred(P, [A, F]), How, IR) :-
+    nonvar(F), F = fun(_, [B2|_]),
+    catch(ty_verb_of(L, linking, P), _, fail),
+    lg_arg_np(L, How, A, S),
+    lg_atom_of_fun(F, A2),
+    (   A2 = modified(adv(M), A3), B2 = fun(_, [B3|_]), B3 == A,
+        lg_atom_ir(L, A3, How, copula(present, pos, _, adj([Ad]))), atom(Ad)
+    ->  Pred = adj([adv(M, Ad)])
+    ;   lg_fun_first(F, B4), B4 == A,
+        lg_atom_ir(L, A2, How, IR2),
+        IR2 = copula(present, pos, _, Pred)
+    ), !,
+    IR = clause(P, present, pos, S, sc(Pred)).
+
+%% The innermost first argument of an atom's term: unaware(someone) inside
+%% of(unaware(someone), the(scrutiny)).
+lg_fun_first(fun(_, [Y|_]), X) :- ( nonvar(Y), Y = fun(_, _) -> lg_fun_first(Y, X) ; X = Y ).
 lg_atom_ir(L, pred(P, [A, B]), How, IR) :-
     lg_binary_classes(L, P, Cs),
     lg_arg_np(L, How, A, S),

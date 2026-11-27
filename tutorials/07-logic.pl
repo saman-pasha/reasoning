@@ -84,6 +84,7 @@ main :-
     possessed_heads,
     comparatives,
     demonstratives,
+    linking_verbs,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -680,6 +681,15 @@ demonstratives :-
     must('this(locker)', C1, 'imperative(in(park(you, of(bag, you)), this(locker))).\n'),
     logic_translate(cocolog, english, C1, E1),
     must('and into English', E1, 'Park your bag in this locker.').
+
+%% 55. A LINKING VERB'S COMPLEMENT (1.122.0) is the verb's second argument,
+%% the atom a copula would make of the subject.
+linking_verbs :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'The witness remained silent.', C1),
+    must('remain(W, silent(W))', C1, 'past(remain(the(witness), silent(the(witness)))).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and into English', E1, 'The witness remained silent.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

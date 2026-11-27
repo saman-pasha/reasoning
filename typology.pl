@@ -122,7 +122,10 @@
 %%                                     1.102.0; two_objects: one that may
 %%                                     take two objects, the one a thing
 %%                                     goes to and the thing, since
-%%                                     1.117.0), or Base is a list of verbs
+%%                                     1.117.0; linking: one whose
+%%                                     complement is a predicate said of
+%%                                     its subject, since 1.122.0), or
+%%                                     Base is a list of verbs
 %%                                     (since 1.95.0)
 %%     ty_adjective_list(L, Kind, Base)
 %%                                     the adjectives of lexicon/Base.txt,
@@ -5081,6 +5084,16 @@ ty_object(L, V, io(IO, DO), io) -->
     ty_role(L, o, IO),
     ty_role(L, o, DO),
     { ty_io_ok(IO, DO) }.
+%% A LINKING VERB'S COMPLEMENT (since 1.122.0: `The situation became
+%% ugly.' is clause(become, past, pos, np(situation, sg, def, []),
+%% sc(adj([ugly])))): after a verb ty_verb_list(L, linking, Base) names,
+%% a predicate said of the subject, an adjective's or a noun phrase's as a
+%% copula's is (ty_ocomp_pred//3), sc(Predicate). The last reading of an
+%% object, tried where the plain object's do not read the clause, asking
+%% a fact the verb tables made ('$ty_scv'/2).
+ty_object(L, V, sc(Pred), sc) -->
+    { nonvar(V), '$ty_scv'(V, L) },
+    ty_ocomp_pred(L, none, Pred).
 
 %% Two objects, the second no bare noun after a noun's (`He got an
 %% estimate from the car repair shop.' is one compound noun, `a limited
@@ -6806,6 +6819,9 @@ ty_verb_row(L, V, T, N, P, Words) :-
 %% A verb of a ty_verb_list(L, two_objects, Base) row (since 1.117.0),
 %% whose objects ty_object//4 may read as two.
 :- dynamic('$ty_iov'/2).
+%% A verb of a ty_verb_list(L, linking, Base) row (since 1.122.0), whose
+%% complement ty_object//4 may read as a predicate of its subject.
+:- dynamic('$ty_scv'/2).
 :- dynamic('$ty_vg_more'/1).
 %% The words a passive's participle follows in its patterns (English `is',
 %% `was', `be', `been'); a text with one ahead may hold a passive
@@ -6862,6 +6878,7 @@ ty_vfirst_make(L) :-
     retractall('$ty_ocv'(_, L)),
     retractall('$ty_ocpw'(_, L)),
     retractall('$ty_iov'(_, L)),
+    retractall('$ty_scv'(_, L)),
     retractall('$ty_pword'(_, L)),
     retractall('$ty_tact'(L, _, _, _, _, _)),
     retractall('$ty_pprog_made'(L)),
@@ -6888,6 +6905,9 @@ ty_vfirst_make(L) :-
     forall(( ty_verb_list(L, two_objects, _), ty_verb(L, IoV, _, _, _, _), \+ '$ty_iov'(IoV, L),
              ty_verb_of(L, two_objects, IoV) ),
            assertz('$ty_iov'(IoV, L))),
+    forall(( ty_verb_list(L, linking, _), ty_verb(L, ScV, _, _, _, _), \+ '$ty_scv'(ScV, L),
+             ty_verb_of(L, linking, ScV) ),
+           assertz('$ty_scv'(ScV, L))),
     ( ( ty_phrasal(L, _, _, _, _) ; ty_adverb_inside(L) ) -> assertz('$ty_vg_more'(L)) ; true ),
     forall(ty_particle_of(L, Pt), assertz('$ty_particle'(Pt, L))),
     forall(ty_verb(L, M, T, N, P, Fs),

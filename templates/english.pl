@@ -702,6 +702,10 @@ ty_verb_list(english, ing_double, [abhor, acquit, admit, allot, begin, commit, c
 %% The verbs that may take two objects, the one a thing goes to and the
 %% thing (since 1.117.0: `He gave the customer a demonstration.'): the
 %% verbs of giving, sending and telling, none of the complement list's.
+%% A linking verb (since 1.122.0): its complement is a copula's predicate
+%% said of its subject (`The situation became ugly.', `He remained
+%% faithful to his wife.').
+ty_verb_list(english, linking, [appear, become, feel, get, go, grow, look, prove, remain, seem, smell, sound, stay, taste, turn]).
 ty_verb_list(english, two_objects, [allow, ask, assign, award, bring, buy, cook, cost, deny, earn, envy, feed, fetch, forgive, get, give, grant, guarantee, hand, issue, lend, loan, mail, offer, owe, pass, pay, pour, promise, read, refuse, sell, send, serve, show, sing, spare, teach, tell, throw, toss, wish, write]).
 ty_verb_list(english, complement, [adjudge, appoint, believe, brand, call, color, consider, crown, declare, deem, dub, dye, elect, feel, find, hold, judge, keep, label, leave, make, name, nominate, paint, proclaim, pronounce, prove, reckon, regard, render, rule, set, term, think, turn]).
 %% The adjectives an infinitive may follow, its subject the adjective's own

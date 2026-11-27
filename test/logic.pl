@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives, linking_verbs]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -262,11 +262,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 525),
-    ( R >= 513 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 513 right', VR, ok),
-    ( K >= 519 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 519 kept', VK, ok).
+    check('the second measure: its sentences', N, 530),
+    ( R >= 518 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 518 right', VR, ok),
+    ( K >= 524 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 524 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -1170,6 +1170,25 @@ article_names :-
              ( logic_translate(cocolog, english, C, E) -> true ; E = none ),
              one_line(['and back into English: ', T], Label2),
              check(Label2, E, T) )).
+
+%% 1.122.0: a linking verb's complement is the verb's second argument, the
+%% atom a copula would make of the subject.
+linking_verbs :-
+    section('a linking verb and its complement'),
+    typology_load(english),
+    forall(member(T-Want, [
+               'The situation became ugly.'-'past(become(the(situation), ugly(the(situation)))).\n',
+               'He remained faithful to his wife.'-'past(to(remain(he, faithful(he)), of(wife, he))).\n',
+               'The dog seems very old.'-'seem(the(dog), very(old(the(dog)))).\n',
+               'Get ready.'-'imperative(get(you, ready(you))).\n' ]),
+           ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
+             one_line(['into Cocolog: ', T], Label),
+             check(Label, C, Want),
+             ( logic_translate(cocolog, english, C, E) -> true ; E = none ),
+             one_line(['and back into English: ', T], Label2),
+             check(Label2, E, T) )),
+    ( logic_translate(english, cocolog, 'Dogs become old.', C3) -> true ; C3 = none ),
+    check('a rule with a linking verb', C3, 'become(A, old(A)) :-\n    dog(A).\n').
 
 %% 1.121.0: a noun phrase with a demonstrative is a constant this(T) or
 %% that(T), a possessed one's this(of(T, P)).

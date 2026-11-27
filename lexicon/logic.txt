@@ -554,3 +554,8 @@ He was familiar with those roads.	past(with(familiar(he), that(pl(road)))).
 Scratch that remark.	imperative(scratch(you, that(remark))).
 That hat is my property.	property(that(hat), i).
 This contract is not executable.	is_not(executable(this(contract))).
+The witness remained silent.	past(remain(the(witness), silent(the(witness)))).
+The situation became ugly.	past(become(the(situation), ugly(the(situation)))).
+His speech remained unimpaired.	past(remain(of(speech, he), unimpaired(of(speech, he)))).
+He remained faithful to his wife.	past(to(remain(he, faithful(he)), of(wife, he))).
+On paper the candidate seems promising.	on(seem(the(candidate), promising(the(candidate))), paper).

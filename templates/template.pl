@@ -341,7 +341,10 @@ ty_conjunct_marks(xx).
 %%                                     1.102.0; two_objects: one that may
 %%                                     take two objects, the one a thing
 %%                                     goes to and the thing, since
-%%                                     1.117.0), or Base is a list of verbs
+%%                                     1.117.0; linking: one whose
+%%                                     complement is a predicate said of
+%%                                     its subject, since 1.122.0), or
+%%                                     Base is a list of verbs
 %%                                     (since 1.95.0)
 %% ty_verb_list(xx, Kind, Base).
 %%   e.g. ty_verb_list(english, no_object, vi).

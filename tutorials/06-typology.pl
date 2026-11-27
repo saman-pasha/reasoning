@@ -180,6 +180,7 @@ main :-
     predeterminers,
     possessed_heads,
     comparatives,
+    linking_verbs,
     format("~ndone~n", []).
 
 
@@ -1343,6 +1344,16 @@ comparatives :-
     must('taller than Mary', IR1, copula(present, pos, name('John'), adj([ap(adv(more, tall), pp(than, name('Mary')))]))),
     typology_write(english, copula(present, pos, name('John'), adj([adv(more, approachable)])), W2),
     must('a long adjective', W2, 'John is more approachable.').
+
+%% 89. A LINKING VERB (1.122.0): after a verb of the template's
+%% ty_verb_list(L, linking, Base) row, a predicate said of the subject as a
+%% copula's is, sc(Predicate), read where no plain object reads.
+linking_verbs :-
+    typology_load(english),
+    typology_read(english, 'The witness remained silent.', IR1),
+    must('remained silent', IR1, clause(remain, past, pos, np(witness, sg, def, []), sc(adj([silent])))),
+    typology_write(english, clause(seem, present, pos, np(dog, sg, def, []), sc(adj([old]))), W2),
+    must('and written', W2, 'The dog seems old.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
