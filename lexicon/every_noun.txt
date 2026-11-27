@@ -8920,6 +8920,7 @@ garpike
 auspex
 rondeau
 hematite
+self-effacement
 oreo
 maraca
 beneficiation
@@ -8943,6 +8944,7 @@ koppie
 dankness
 filibusterer
 papillon
+no-brainer
 regularization
 temporalty
 keloid
@@ -8959,6 +8961,7 @@ dalliance
 digger
 marang
 grubby
+thirty-something
 arbor
 mercifulness
 generalissimo
@@ -8975,6 +8978,7 @@ portent
 shutout
 isopod
 exponentiation
+one-sixth
 receptivity
 bitchiness
 fecula
@@ -8991,6 +8995,7 @@ lychee
 semitone
 cephaloglycin
 quicklime
+whipper-in
 tourism
 sogginess
 appendicitis
@@ -8999,6 +9004,7 @@ oryx
 diminutiveness
 bhang
 pemican
+volt-ampere
 hustler
 orzo
 holloware
@@ -9012,6 +9018,7 @@ signification
 dustcloth
 schorl
 fixity
+vice-presidency
 oestrus
 lobworm
 tights
@@ -9036,10 +9043,13 @@ hawkishness
 razorbill
 prodigal
 underline
+ice-skater
 gipsy
+floating-moss
 flintstone
 oriental
 audiocassette
+mezzo-soprano
 brachiation
 thwarter
 unicorn
@@ -9053,6 +9063,7 @@ menage
 millrace
 acquittal
 amphictyony
+tongue-lashing
 subkingdom
 phenolic
 skycap
@@ -9102,6 +9113,7 @@ facula
 footfall
 dependableness
 rickets
+muscle-builder
 semiotics
 update
 carrousel
@@ -9116,6 +9128,7 @@ arioso
 counterpunch
 sunburn
 subtracter
+in-joke
 grapheme
 frivolity
 stickiness
@@ -9130,6 +9143,7 @@ basilisk
 mural
 commonality
 zoril
+jackknife-fish
 discontinuation
 misbeliever
 dideoxyinosine
@@ -9166,12 +9180,14 @@ redaction
 multiprogramming
 transitoriness
 eyrir
+sailing-race
 precondition
 collyrium
 mahuang
 paperknife
 buxomness
 dysaphia
+self-protection
 dendrobium
 inaptitude
 derangement
@@ -9190,7 +9206,9 @@ cohort
 cytogenetics
 scatology
 cohosh
+co-occurrence
 idiocy
+in-basket
 antepenult
 rarity
 manana
@@ -9210,6 +9228,7 @@ mesophyron
 gangway
 carotin
 specialisation
+cocky-leeky
 disinflation
 meteortropism
 albuminuria
@@ -9219,8 +9238,10 @@ ferrite
 liftoff
 waltzer
 metasequoia
+by-and-by
 celoma
 bobfloat
+snow-in-summer
 palaeogeography
 bookstore
 supercomputer
@@ -9302,6 +9323,7 @@ heartbreak
 intelligibility
 lanyard
 plunderage
+mid-water
 atenolol
 lefthander
 unrelatedness
@@ -9451,6 +9473,7 @@ whipsaw
 manhole
 defalcator
 allegement
+no-account
 pervasion
 sawbuck
 clearcutness
@@ -9458,6 +9481,7 @@ lichee
 greengage
 andromeda
 rumormonger
+light-of-love
 curie
 cyprinid
 neutron
@@ -9500,6 +9524,7 @@ invalidation
 huffiness
 tern
 curry
+watt-hour
 auxesis
 turbidity
 postponer
@@ -9545,6 +9570,7 @@ gubbins
 wingstem
 grandiosity
 bractlet
+self-annihilation
 cankerworm
 tanager
 bonito
@@ -9580,6 +9606,7 @@ sarcolemma
 visualization
 capiz
 panacea
+felo-de-se
 benison
 lorry
 humaneness
@@ -9589,13 +9616,16 @@ trichopteran
 cahoot
 firebrick
 macedoine
+comb-plate
 panache
 trample
+bed-wetting
 squealer
 hypostatization
 incorruptness
 woodhewer
 mastopexy
+left-winger
 craw
 minefield
 saucer
@@ -9614,6 +9644,7 @@ camash
 logion
 speculum
 sambur
+three-hitter
 exaction
 disseminator
 boldface
@@ -9635,6 +9666,7 @@ spokeswoman
 supermodel
 caput
 potherb
+money-spinner
 globosity
 stoneface
 merrymaker
@@ -9665,6 +9697,7 @@ biosystematy
 ozena
 ketorolac
 gastronome
+time-ball
 peag
 pean
 peat
@@ -9687,10 +9720,12 @@ peek
 peel
 peen
 peep
+crown-of-the-field
 crux
 condescendingness
 leukocytosis
 loosestrife
+leave-taking
 theism
 theist
 subdeacon
@@ -9702,6 +9737,7 @@ deductible
 demisemiquaver
 sporophore
 waistcoat
+serjeant-at-arms
 volcanism
 foram
 foray
@@ -9756,6 +9792,7 @@ perk
 perm
 drydock
 barite
+cross-index
 tribadism
 peso
 pest
@@ -9773,6 +9810,7 @@ gliricidia
 prorogation
 flageolet
 flavoursomeness
+roll-on
 sambuca
 epikeratophakia
 refill
@@ -9781,11 +9819,14 @@ prosthetics
 hypoblast
 privateersman
 arriviste
+coati-mundi
 candela
 makomako
+foster-mother
 clerihew
 desynchronization
 goatsfoot
+foster-daughter
 hazelnut
 forth
 stob
@@ -9793,6 +9834,7 @@ cologne
 heedfulness
 forum
 snakeblenny
+bust-up
 opisthorchiasis
 cecropia
 kingmaker
@@ -9821,6 +9863,7 @@ exceedance
 illuminant
 nutritiveness
 sultanate
+lie-abed
 flashiness
 redeployment
 pureblood
@@ -9860,6 +9903,7 @@ victimiser
 rhinotomy
 insincerity
 hyponatremia
+self-renunciation
 perineotomy
 workmanship
 covariation
@@ -9867,6 +9911,7 @@ featheredge
 arcadian
 remilitarisation
 ribier
+self-condemnation
 impiousness
 chlorosis
 catoptrics
@@ -9905,6 +9950,7 @@ overspill
 andryala
 bureaucratism
 headphone
+linsey-woolsey
 hyperbola
 hyperbole
 lifework
@@ -9917,6 +9963,8 @@ photoelectricity
 astigmatism
 taekwondo
 banian
+text-matching
+self-aggrandisement
 concentration
 cryptogram
 cervicitis
@@ -9936,6 +9984,7 @@ lech
 redbrush
 minibar
 gambist
+front-runner
 exodontist
 sorcerer
 decantation
@@ -9948,6 +9997,7 @@ nephrotomy
 proteinase
 ratafee
 hypoglycaemia
+off-day
 antinode
 suaveness
 ashbin
@@ -9958,14 +10008,17 @@ stodge
 nothingness
 periodontitis
 flawlessness
+soft-cover
 ratafia
 intercession
 counterstain
+tick-tack-toe
 ununhexium
 pocketcomb
 intranet
 enthronization
 equatorial
+stretcher-bearer
 poser
 cryometer
 basophilia
@@ -10001,6 +10054,7 @@ ardeb
 musketeer
 mincer
 vulgarisation
+half-cock
 noncitizen
 serve
 marcel
@@ -10025,6 +10079,7 @@ aphakia
 aphakic
 jailbird
 hydrothorax
+drop-seed
 langbeinite
 immunology
 swanneck
@@ -10044,16 +10099,20 @@ strobile
 tachogram
 shipper
 meekness
+able-bodiedism
 protoanthropology
 koudou
 pesantran
 freebee
+pen-tail
 bastardisation
 roundabout
+bunji-bunji
 anuran
 trachoma
 dairymaid
 misalliance
+gamma-interferon
 ketamine
 determinateness
 waterman
@@ -10096,17 +10155,21 @@ stereophony
 antivenin
 resinoid
 pandemic
+stair-rod
 waterworks
 nobelium
+hell-kite
 bootlicker
 incurable
 mandrill
+self-gratification
 rhytidectomy
 sutra
 outrider
 epiphyllum
 wuss
 rabies
+re-echo
 chancroid
 xylophonist
 gawkiness
@@ -10116,6 +10179,7 @@ camber
 reactionism
 halcyon
 leghorn
+tri-iodothyronine
 filigree
 coagulum
 froghopper
@@ -10169,6 +10233,7 @@ hexagram
 seabed
 radiogram
 femtometer
+five-hitter
 vandyke
 bismuth
 gasconade
@@ -10194,6 +10259,7 @@ cuspidor
 looker
 boatbill
 songster
+cross-reference
 actinomycin
 cockfight
 synchronizer
@@ -10203,6 +10269,7 @@ cirio
 airhead
 lynchpin
 wiggler
+twenty-six
 vociferator
 thunderhead
 copulative
@@ -10235,6 +10302,7 @@ poulet
 chlamys
 chemoimmunology
 polygraph
+self-reproof
 streptokinase
 homesickness
 mousse
@@ -10252,7 +10320,9 @@ steenbok
 heth
 pinchgut
 planeness
+single-leaf
 brahman
+time-out
 ileitis
 biosphere
 seventieth
@@ -10294,6 +10364,7 @@ osteologist
 sissu
 kindergartener
 sissy
+ex-president
 sugi
 flibbertigibbet
 nowness
@@ -10347,10 +10418,12 @@ filagree
 knowingness
 pilosity
 palaeobiology
+ring-a-rosy
 marge
 physicalism
 mantispid
 terahertz
+kitten-tails
 brigantine
 twinkle
 physicality
@@ -10368,10 +10441,13 @@ suttee
 workflow
 canalisation
 jerkin
+rave-up
 pillager
 credence
 prechlorination
 astrogator
+hocus-pocus
+long-suffering
 nephrology
 downspin
 anecdotist
@@ -10384,6 +10460,7 @@ anadiplosis
 borshch
 physiotherapy
 deco
+pet-food
 flagellant
 scleritis
 despite
@@ -10411,6 +10488,7 @@ falseness
 jabiru
 headscarf
 sleepyhead
+six-shooter
 cadaster
 flagellate
 benzocaine
@@ -10446,6 +10524,7 @@ imperfectness
 lacework
 ashcan
 salubriousness
+piss-up
 histoincompatibility
 ranker
 oxytone
@@ -10461,6 +10540,7 @@ photometrician
 minicab
 bunkum
 minicar
+self-sufficiency
 provenience
 psychotherapeutics
 derv
@@ -10468,6 +10548,7 @@ tumulus
 seclusion
 missy
 scolion
+rent-rebate
 oracle
 oenophile
 canthus
@@ -10478,8 +10559,10 @@ wisent
 lallation
 dazzle
 moonlighter
+two-step
 kneel
 creel
+forty-niner
 nonstop
 blastomycosis
 sovietism
@@ -10506,6 +10589,8 @@ eriogonum
 dubnium
 knell
 wireman
+love-potion
+come-on
 dogtooth
 sprachgefuhl
 prejudgement
@@ -10527,6 +10612,7 @@ meniscectomy
 carabineer
 crepe
 pomatum
+self-defence
 preemie
 affright
 areca
@@ -10549,7 +10635,9 @@ cutin
 cutis
 bisexual
 unjustness
+self-reliance
 agamete
+snow-blindness
 cryptographer
 huamachil
 liothyronine
@@ -10566,10 +10654,12 @@ threnody
 angiocarp
 bathyscape
 bloodsucker
+crap-shooter
 clinocephaly
 typescript
 capitulum
 theft
+call-in
 entoparasite
 pieplant
 spirochete
@@ -10580,9 +10670,12 @@ dacite
 tendonitis
 abstainer
 decennium
+right-handedness
 sepsis
 springer
 weaverbird
+double-dealer
+self-defense
 hypospadias
 nominalism
 arere
@@ -10684,6 +10777,7 @@ handlock
 consolidation
 tensimeter
 enema
+noble-mindedness
 susurration
 rheum
 windtalker
@@ -10710,9 +10804,11 @@ pipeful
 cisco
 foaminess
 sketcher
+auto-da-fe
 nutmeg
 alumnus
 cymatium
+daughter-in-law
 paleographer
 vanilla
 forthrightness
@@ -10720,8 +10816,10 @@ laxation
 massicot
 catabolism
 seedcake
+home-builder
 rapeseed
 derogation
+fixer-upper
 photoengraving
 nonconductor
 magnetite
@@ -10780,6 +10878,7 @@ quintette
 sulfanilamide
 inhumaneness
 shahadah
+twenty-two
 triskelion
 dewlap
 febricity
@@ -10797,6 +10896,7 @@ squab
 squaw
 monorchism
 acantha
+wet-nurse
 housewrecker
 tamarack
 unconventionality
@@ -10866,6 +10966,7 @@ committal
 fritter
 exponent
 defenestration
+in-law
 palmistry
 memorialization
 millstone
@@ -10875,6 +10976,7 @@ gesso
 selsyn
 piccalilli
 maser
+tra-la-la
 superphylum
 settle
 mandatary
@@ -10890,6 +10992,7 @@ underreckoning
 tortricid
 sniveler
 tradespeople
+climb-down
 systematisation
 atrazine
 cosmologist
@@ -10914,6 +11017,7 @@ euthenics
 whitlavia
 exoticism
 anglophobe
+self-command
 cutter
 pentangle
 obduracy
@@ -10928,6 +11032,7 @@ unoriginality
 affusion
 claustrum
 pulpiness
+four-spot
 miter
 brickfield
 pediculosis
@@ -10952,6 +11057,8 @@ rankness
 kraurosis
 nonsuch
 teetotum
+self-assertiveness
+self-hypnosis
 percussor
 bookseller
 aperea
@@ -10995,11 +11102,13 @@ stylisation
 heathenism
 diaphoresis
 guff
+cover-up
 hymnody
 pharmacopoeia
 unwellness
 tefillin
 chapati
+moor-bird
 avaram
 kittee
 ethnicity
@@ -11010,6 +11119,7 @@ tonometer
 chancery
 octette
 ophiolatry
+hell-rooster
 spaghettini
 autogiro
 benzine
@@ -11019,6 +11129,7 @@ cymene
 gula
 woofer
 gull
+pe-tsai
 vaticinator
 townee
 towner
@@ -11033,6 +11144,8 @@ tacker
 skulker
 proclivity
 entelechy
+finger-pointing
+good-temperedness
 catsup
 obeah
 hectometer
@@ -11046,6 +11159,7 @@ phaeochromocytoma
 wagoner
 lateralisation
 sclerite
+might-have-been
 reallotment
 nervure
 nonworker
@@ -11065,6 +11179,7 @@ viremia
 hygienics
 fishpaste
 instrumentation
+show-off
 headshaking
 yottabyte
 biliousness
@@ -11099,6 +11214,7 @@ subsidization
 modality
 contradictoriness
 kickshaw
+assay-mark
 intermediation
 redisposition
 veronal
@@ -11106,6 +11222,7 @@ mariticide
 overweight
 ovum
 lighterage
+bull-snake
 thumbtack
 trifurcation
 kestrel
@@ -11117,6 +11234,7 @@ thus
 instructorship
 zymosis
 ectozoan
+volte-face
 golliwogg
 busyness
 studiousness
@@ -11155,12 +11273,15 @@ docker
 docket
 hairnet
 ostracod
+porte-cochere
 kinsfolk
 pyknosis
 ingenuity
+force-out
 insecurity
 spruce
 unemployed
+jack-a-lantern
 hosepipe
 stenosis
 decorativeness
@@ -11170,6 +11291,7 @@ curandero
 caecum
 splendour
 ectozoon
+sword-cut
 brouhaha
 roughleg
 entrails
@@ -11184,6 +11306,7 @@ loupe
 metic
 decahedron
 kaliuresis
+ripple-grass
 stridor
 argyrodite
 inosine
@@ -11206,6 +11329,7 @@ organist
 stronghold
 invective
 egress
+beta-carotene
 teraflop
 tweezer
 anthropometry
@@ -11228,6 +11352,7 @@ circumference
 mulishness
 nightwork
 wanton
+topsy-turvyness
 requisiteness
 trimer
 grader
@@ -11249,6 +11374,7 @@ equid
 actuator
 scholium
 erotic
+pull-off
 industrialism
 splasher
 industrialist
@@ -11258,6 +11384,7 @@ arista
 cull
 culm
 transmitter
+heart-leaf
 spyglass
 faultiness
 kittiwake
@@ -11268,6 +11395,7 @@ chalaza
 overwork
 catling
 playsuit
+flip-flop
 cunt
 hairiness
 filler
@@ -11276,6 +11404,8 @@ zygospore
 heliogravure
 malacca
 mandrel
+pro-lifer
+purplish-red
 pounce
 mastalgia
 plowboy
@@ -11285,6 +11415,7 @@ cardigan
 musophobia
 usufructuary
 courgette
+tete-a-tete
 represser
 curd
 fishworm
@@ -11332,17 +11463,21 @@ satyr
 houri
 refulgence
 refulgency
+merry-go-round
 linecut
 waterwheel
+city-state
 repressor
 episperm
 onomatomania
 swab
+barley-sugar
 swap
 swat
 hypnagogue
 mobster
 electrologist
+dapple-gray
 reflexive
 phot
 brutalisation
@@ -11359,9 +11494,11 @@ scrambler
 telegnosis
 beeswax
 ballistocardiograph
+dapple-grey
 shofar
 trisyllable
 courante
+self-education
 reclassification
 bridoon
 schnauzer
@@ -11399,6 +11536,7 @@ feller
 yobibit
 amalgam
 elastase
+call-out
 metastability
 assertiveness
 annexa
@@ -11407,6 +11545,7 @@ kibibit
 ethene
 whitener
 roundsman
+hoo-hah
 angiohemophilia
 enterobacteria
 reflux
@@ -11417,6 +11556,8 @@ gladiolus
 magniloquence
 doula
 agitprop
+jump-start
+kuri-chiku
 mater
 prolificacy
 campground
@@ -11427,6 +11568,7 @@ ceilidh
 pyemia
 getup
 freedwoman
+tom-tom
 sidestroke
 saddlebow
 fulmar
@@ -11438,6 +11580,7 @@ hotspur
 weatherstrip
 kameez
 nobleness
+by-product
 pycnosis
 doura
 contemporaneity
@@ -11445,11 +11588,13 @@ hosanna
 cornhusking
 gunwale
 likeliness
+thigh-slapper
 emollient
 devitalization
 secretiveness
 heartleaf
 flabbiness
+pooh-bah
 salter
 lyricality
 escolar
@@ -11458,6 +11603,7 @@ inwardness
 cesarean
 drollery
 dogleg
+pom-pom
 souvlaki
 openhandedness
 feedstock
@@ -11480,11 +11626,13 @@ peeler
 tarmacadam
 miltomate
 sequenator
+ad-lib
 retreatant
 blockhouse
 indenture
 baptism
 breviary
+snuff-color
 boule
 sightlessness
 curbstone
@@ -11498,12 +11646,16 @@ sarcodinian
 paraphilia
 kilter
 legionnaire
+half-term
+phase-out
 deckle
 glossitis
 spotter
+watered-silk
 paramnesia
 applemint
 fallal
+vol-au-vent
 pearlfish
 flapcake
 outsize
@@ -11516,9 +11668,11 @@ jambosa
 dumpsite
 beanball
 essayist
+boo-boo
 alienor
 faller
 banting
+spot-welder
 decanter
 naphtha
 incidental
@@ -11528,6 +11682,7 @@ ladyfish
 maraschino
 greyhen
 transept
+stay-at-home
 ergot
 anthropocentrism
 programmer
@@ -11554,6 +11709,7 @@ registrar
 quandang
 materialization
 crepuscule
+ground-shaker
 immunosuppression
 fallow
 headman
@@ -11568,6 +11724,7 @@ coltan
 zinnia
 battleship
 hypercapnia
+peacock-throne
 benedick
 misapprehension
 benedict
@@ -11586,6 +11743,7 @@ instrumentalist
 miasma
 almanac
 downer
+chance-medley
 hemodynamics
 instrumentality
 urethritis
@@ -11611,9 +11769,11 @@ pedantry
 desmid
 tier
 arranger
+blood-twig
 springbuck
 inerrancy
 demyelination
+self-love
 tiff
 crotchetiness
 slaveholding
@@ -11626,6 +11786,7 @@ germicide
 dockhand
 kelter
 dissimilitude
+frame-up
 tourney
 wagtail
 shuttle
@@ -11645,6 +11806,7 @@ matador
 hebetude
 till
 tilt
+evening-snow
 urarthritis
 desipramine
 vernacular
@@ -11654,6 +11816,7 @@ solute
 wishbone
 churchwarden
 palatability
+raree-show
 candyweed
 pregnancy
 faubourg
@@ -11693,6 +11856,7 @@ spearfish
 oophorosalpingectomy
 conniption
 thermogram
+co-beneficiary
 argus
 larcenist
 longicorn
@@ -11707,6 +11871,8 @@ clonidine
 immoderateness
 docudrama
 untimeliness
+groom-to-be
+patty-pan
 epacris
 canvasser
 dipteran
@@ -11719,6 +11885,7 @@ dustman
 jaggary
 anaplasia
 cabbageworm
+z-axis
 nitrocotton
 flunitrazepan
 suppresser
@@ -11741,6 +11908,7 @@ hymnal
 yogurt
 morgen
 nonintervention
+say-so
 compsognathus
 cupule
 naloxone
@@ -11761,6 +11929,7 @@ analgesic
 pyinma
 overlayer
 broccoli
+rose-root
 strikeout
 rheumatic
 amphimixis
@@ -11768,6 +11937,7 @@ muffin
 crapulence
 suppressor
 dipteron
+ear-shell
 scarecrow
 mildness
 palpebra
@@ -11777,6 +11947,7 @@ habergeon
 acciaccatura
 couscous
 muffle
+tit-tat-toe
 ladybird
 rosinweed
 prolegomenon
@@ -11812,6 +11983,7 @@ sylvan
 agamogenesis
 intestine
 garbanzo
+baby-sitter
 stillroom
 factorisation
 drudgery
@@ -11873,6 +12045,7 @@ comfit
 guitarist
 wright
 acanthoma
+sum-up
 organza
 unguis
 sculler
@@ -11891,11 +12064,13 @@ laryngostenosis
 fovea
 cougar
 fortification
+garment-worker
 crabbedness
 haploid
 trumpetwood
 holidaymaker
 paroxytone
+know-how
 ping
 pint
 truffle
@@ -11925,6 +12100,7 @@ eldest
 grogginess
 dodecahedron
 gewgaw
+check-in
 synonymousness
 lorgnette
 physiography
@@ -11932,6 +12108,7 @@ continuant
 vower
 heterotroph
 troubadour
+self-preservation
 redmaids
 speeder
 romanticization
@@ -12005,6 +12182,7 @@ dhak
 dhal
 allopathy
 bovid
+self-analysis
 shrimper
 nightspot
 unassertiveness
@@ -12036,10 +12214,12 @@ floater
 consuetudinal
 potholder
 payola
+push-bike
 theocracy
 sagamore
 valence
 valency
+in-fighting
 rowel
 rower
 viniculture
@@ -12111,6 +12291,7 @@ albedo
 weirdness
 chitchat
 lily
+ash-bin
 totara
 digitalization
 knocker
@@ -12155,6 +12336,7 @@ balsamroot
 pulverisation
 strongbox
 madwoman
+shape-up
 executability
 northeastward
 googol
@@ -12196,6 +12378,7 @@ keratinisation
 planarian
 hagiography
 barrowful
+man-eater
 choppiness
 waver
 variola
@@ -12222,6 +12405,7 @@ jennet
 alarmist
 arsehole
 conservator
+dog-ear
 shopaholic
 staghead
 denizen
@@ -12233,17 +12417,20 @@ lower
 gusher
 gauze
 anklebone
+gallows-tree
 dehumanization
 workbook
 kremlin
 ampleness
 disambiguation
 firestone
+stone-root
 headpiece
 iridescence
 sundrops
 dinoflagellate
 gunfight
+self-realisation
 inconsequence
 nonessential
 noticeability
@@ -12259,10 +12446,12 @@ poppycock
 hairpin
 oriel
 polyandry
+gres-gris
 piecework
 hematology
 fingermark
 plenipotentiary
+hock-joint
 matriculation
 frostwort
 potterer
@@ -12280,10 +12469,12 @@ acetylcholine
 viscose
 wrongfulness
 valance
+end-plate
 washer
 fissiped
 whizbang
 stiletto
+tail-flower
 woodenness
 categorisation
 unsavoriness
@@ -12295,8 +12486,10 @@ silvex
 theophany
 stonefly
 infructescence
+co-pilot
 nudeness
 retardant
+love-in-a-mist
 draftsman
 outrageousness
 crottal
@@ -12304,19 +12497,24 @@ thenar
 frightfulness
 hick
 agouti
+shoot-down
 holdall
 nycturia
 roundworm
+lamb-chop
 noctambulism
 noctambulist
 triode
+self-possession
 causa
 civet
 dissolver
 veterinary
+four-pounder
 treater
 glazier
 monthly
+vice-regent
 symbolization
 zooflagellate
 savin
@@ -12330,6 +12528,8 @@ nephroangiosclerosis
 aniseikonia
 countersuit
 maffia
+spear-point
+pudding-face
 godfather
 circumnavigation
 southerly
@@ -12374,7 +12574,9 @@ manger
 savvy
 moorhen
 yielder
+sea-ear
 unctuousness
+back-blast
 spellbinder
 squint
 smegma
@@ -12385,6 +12587,7 @@ protozoology
 wheatfield
 tetany
 cohune
+winding-sheet
 duckling
 handoff
 chancellery
@@ -12398,6 +12601,7 @@ decrepitude
 krill
 uptime
 affiant
+fore-and-after
 osteophyte
 clivers
 unpermissiveness
@@ -12415,6 +12619,7 @@ recrimination
 spadework
 chloramphenicol
 underestimate
+heebie-jeebies
 flaxseed
 chooser
 harmonium
@@ -12470,8 +12675,10 @@ nighthawk
 porridge
 breadfruit
 ancestress
+walkie-talkie
 syph
 orpiment
+fore-topsail
 bendability
 canoeist
 oculism
@@ -12482,6 +12689,7 @@ floridity
 spatula
 piracy
 actinozoan
+lateen-rig
 bennet
 overhaul
 triennial
@@ -12529,12 +12737,14 @@ dowse
 affectedness
 endocardium
 pirana
+calcium-cyanamide
 ultima
 wharfage
 avidness
 knacker
 grime
 salver
+counter-revolutionist
 grind
 hydremia
 prancer
@@ -12549,6 +12759,7 @@ abattoir
 hogback
 dibs
 litany
+deck-house
 microeconomics
 shorthorn
 dick
@@ -12569,6 +12780,7 @@ phonebook
 dacryocystitis
 tweediness
 speedometer
+double-dealing
 salvor
 anthropomorphism
 spikenard
@@ -12587,6 +12799,7 @@ promontory
 peculator
 animalcule
 rolypoliness
+beta-adrenoceptor
 dink
 dint
 onomasticon
@@ -12646,7 +12859,9 @@ hobbyhorse
 mediation
 lomatia
 valour
+chin-wagging
 progesterone
+fare-thee-well
 laryngitis
 dotard
 crimp
@@ -12666,6 +12881,7 @@ esparcet
 marchpane
 sillabub
 ergocalciferol
+cock-a-leekie
 lawyerbush
 phenylacetamide
 propenal
@@ -12700,6 +12916,7 @@ hordeolum
 panetela
 congeries
 kelvin
+mid-fifties
 acromion
 macadamia
 onager
@@ -12719,6 +12936,7 @@ carnality
 strafer
 propyl
 doorstop
+six-gun
 pondweed
 pallidum
 abatis
@@ -12726,6 +12944,7 @@ inion
 microbiology
 twinkler
 antidepressant
+egg-and-dart
 soapstone
 downdraft
 valsartan
@@ -12763,7 +12982,9 @@ homophobe
 panderer
 flatbrod
 goatsucker
+mezzo-relievo
 pisanosaurus
+wagon-lit
 thickhead
 parang
 traducement
@@ -12818,6 +13039,7 @@ japonica
 semiology
 baccalaureate
 menhir
+pug-dog
 greenbrier
 oscillogram
 panatela
@@ -12858,16 +13080,20 @@ presupposition
 fireguard
 looper
 uplift
+water-skiing
 uvulopalatopharyngoplasty
 espadrille
 cavum
 sawwort
+chain-smoker
 honoree
 fumewort
 euphonium
 avaritia
+price-fixing
 falsifier
 shrillness
+yes-man
 rivalry
 determiner
 nemertine
@@ -12886,6 +13112,7 @@ uplink
 consuetudinary
 polluter
 tripos
+pay-station
 scuppernong
 incivility
 selflessness
@@ -12903,9 +13130,11 @@ tetracycline
 fibromyositis
 hungriness
 silkweed
+go-ahead
 armourer
 titmouse
 trivium
+fore-wing
 psittacosaurus
 fling
 teletypewriter
@@ -12932,6 +13161,7 @@ appetiser
 oxyacid
 anima
 anime
+chucker-out
 entombment
 lepidopterologist
 somite
@@ -12953,8 +13183,10 @@ auriscope
 blender
 forelady
 interpenetration
+drive-in
 propanol
 asynergy
+teach-in
 pennyworth
 aiguilette
 sixth
@@ -12969,20 +13201,25 @@ ricochet
 prepotency
 kainogenesis
 sultana
+whiz-kid
 stepbrother
 portiere
 powerboat
 diddley
 sequoia
+self-satisfaction
 malpractice
+half-intensity
 corruptibility
 systematism
 systematist
 coltsfoot
 obloquy
 steerageway
+ex-mayor
 tonsilla
 morosoph
+touch-me-not
 lobsterback
 exotism
 sleekness
@@ -12993,10 +13230,12 @@ superbug
 rapprochement
 palingenesis
 vindictiveness
+self-criticism
 potsherd
 rusticism
 navigability
 tornillo
+witch-hunt
 lasciviousness
 memoriser
 pelvimeter
@@ -13006,6 +13245,7 @@ desideratum
 sandglass
 numbat
 jugale
+cockle-bur
 introspectiveness
 treasurership
 unseasonableness
@@ -13032,6 +13272,9 @@ crampbark
 knightliness
 mineralocorticoid
 bling
+pea-souper
+self-regard
+tailor-made
 salwar
 hermaphroditism
 predestination
@@ -13095,6 +13338,7 @@ inconsideration
 perishableness
 playlist
 chloropicrin
+hotel-casino
 encryption
 haleness
 frothiness
@@ -13119,6 +13363,7 @@ cheddar
 alikeness
 metoprolol
 catholicity
+tutti-frutti
 actinomycosis
 seriocomedy
 tameness
@@ -13126,6 +13371,7 @@ frontstall
 micromillimetre
 hyperbetalipoproteinemia
 bedesman
+horse-cart
 pyuria
 tomfool
 surrebutter
@@ -13140,6 +13386,7 @@ salicylate
 retronym
 acrylic
 depolarisation
+half-truth
 sextant
 internship
 stridulation
@@ -13153,6 +13400,7 @@ tympanum
 stephanotis
 tamarillo
 ideologue
+ampere-minute
 basalt
 wonderment
 notoriety
@@ -13161,6 +13409,7 @@ grandnephew
 paroquet
 wiseacre
 tetranychid
+cross-dresser
 paraboloid
 documentation
 uxoricide
@@ -13171,6 +13420,7 @@ topiary
 aeciospore
 bioarm
 headpin
+left-handedness
 doyenne
 satinet
 sallowness
@@ -13186,6 +13436,7 @@ courthouse
 icterus
 tribologist
 bullnose
+cine-film
 horseleech
 diastasis
 hornstone
@@ -13252,6 +13503,7 @@ mastocyte
 briard
 defensiveness
 locomotive
+beam-ends
 pyrophosphate
 horticulture
 bathometer
@@ -13281,6 +13533,7 @@ tapioca
 peasantry
 pistachio
 winemaking
+rope-a-dope
 samiel
 reindeer
 baptistry
@@ -13300,6 +13553,7 @@ falangist
 overexertion
 gnathion
 backdown
+silver-worker
 freethinker
 telephotograph
 apostleship
@@ -13307,6 +13561,7 @@ heliotropism
 gloominess
 weathercock
 thanatophobia
+hop-picker
 arnica
 lawfulness
 subnormal
@@ -13334,17 +13589,20 @@ vascularisation
 mechanisation
 vivacity
 preceptorship
+pudden-head
 meninx
 samite
 neurolysin
 dashboard
 heterocycle
 tombola
+two-dimensionality
 drumbeater
 cytophotometer
 ouzel
 hoarder
 giantess
+skunk-weed
 pictorial
 haricot
 plumbism
@@ -13362,6 +13620,8 @@ trinity
 steeplejack
 herbal
 phospholipid
+throw-in
+sea-poose
 waterer
 refrigeration
 oreide
@@ -13422,10 +13682,12 @@ regimen
 tuberosity
 thyreophoran
 isomerase
+tub-thumper
 monorail
 dropline
 recall
 rissole
+dry-gulching
 butterball
 silents
 palliative
@@ -13462,6 +13724,7 @@ sprinkler
 denticle
 thirstiness
 inductee
+re-introduction
 nakedwood
 disownment
 plus
@@ -13531,6 +13794,7 @@ sufferance
 gibibit
 requiescat
 paraquat
+glass-cutter
 herbicide
 inspectorship
 litchi
@@ -13543,6 +13807,7 @@ overshoot
 paraquet
 subculture
 ferociousness
+end-all
 obliterator
 cesarian
 deamination
@@ -13559,11 +13824,13 @@ shelver
 pilewort
 brachydactylia
 peeper
+concert-goer
 horizontal
 counteroffensive
 authenticator
 chinquapin
 windiness
+work-clothes
 rhinosporidiosis
 extemporisation
 lycaenid
@@ -13578,11 +13845,13 @@ aragonite
 chiromancer
 unpleasingness
 minelaying
+how-do-you-do
 vocative
 sepulture
 couvade
 centriole
 pabulum
+self-concern
 granulocyte
 greylag
 pericardium
@@ -13643,6 +13912,7 @@ thalweg
 proturan
 cosmographer
 pimozide
+armor-bearer
 prokaryote
 coulisse
 contradance
@@ -13657,6 +13927,7 @@ encolure
 segregation
 menstruation
 whoredom
+taste-maker
 paramilitary
 timelessness
 tussah
@@ -13704,6 +13975,7 @@ galactose
 puissance
 pincer
 tussle
+re-experiencing
 trusty
 siriasis
 swordsmanship
@@ -13733,14 +14005,17 @@ glutethimide
 viaticus
 skipper
 bubbler
+higher-up
 cryptogam
 fibrillation
+agar-agar
 guiltlessness
 bloodbath
 cofounder
 faineance
 somatosense
 popularization
+half-pint
 panhysterectomy
 decentralisation
 expiation
@@ -13752,10 +14027,12 @@ photoconductivity
 fingerbreadth
 gneiss
 meritocracy
+tin-plating
 benzoate
 histrion
 viticulture
 stannite
+looker-on
 vivification
 oesophagoscope
 scantling
@@ -13771,6 +14048,7 @@ fossilization
 racialism
 strapless
 racialist
+three-decker
 mispickel
 diarthrosis
 ragwort
@@ -13865,6 +14143,7 @@ avifauna
 subconsciousness
 adventitia
 megahit
+life-of-man
 miscarriage
 thaneship
 rapacity
@@ -13891,6 +14170,7 @@ unnoticeableness
 solemness
 sexagenarian
 patella
+mangold-wurzel
 insensibility
 agnosticism
 bluffer
@@ -13931,9 +14211,11 @@ breadwinner
 dogmatism
 dogmatist
 inhaler
+half-life
 aphesis
 contriteness
 straphanger
+good-for-nothing
 hemothorax
 courageousness
 pomologist
@@ -13953,6 +14235,7 @@ spectrophotometer
 triteness
 tetrahalide
 weeness
+rewa-rewa
 improver
 nucleole
 numdah
@@ -13980,6 +14263,7 @@ kilderkin
 cornetist
 nonperformance
 chronicle
+footsteps-of-spring
 thingmajig
 menopause
 dallisgrass
@@ -14003,11 +14287,13 @@ abstractedness
 enslavement
 tanbark
 polymorphism
+self-deception
 lepidocrocite
 injudiciousness
 mizen
 miconazole
 maiolica
+e-commerce
 proration
 solidness
 piroxicam
@@ -14026,6 +14312,7 @@ candlemaker
 prolapse
 scleroderma
 temporary
+self-portrait
 chiseler
 mournfulness
 rabidity
@@ -14079,11 +14366,13 @@ ommastrephes
 palindrome
 upholsterer
 cogency
+gravity-assist
 prebend
 sandbagger
 fructification
 lawgiver
 secateurs
+flowers-of-an-hour
 joyride
 galingale
 chenille
@@ -14116,6 +14405,7 @@ idiolect
 lyricism
 gaywings
 simmpleness
+cheap-jack
 kaluresis
 harvestfish
 paraphysis
@@ -14160,6 +14450,7 @@ thresher
 alexia
 alexic
 farmstead
+gun-sight
 analphabet
 carport
 ridiculer
@@ -14184,18 +14475,22 @@ ataractic
 torchbearer
 markup
 megalosaurus
+rough-and-tumble
 synecdoche
 hematoidin
 neritina
+forte-piano
 toponomy
 airforce
 arrowworm
+mid-twenties
 downtick
 chalazion
 thumbnut
 dustrag
 gizmo
 remotion
+sweep-second
 tassel
 tasset
 interjection
@@ -14222,6 +14517,7 @@ cleistogamy
 magnetohydrodynamics
 daybook
 astigmia
+divi-divi
 telemetry
 constitutional
 semipro
@@ -14243,6 +14539,7 @@ nabumetone
 praetor
 hilltop
 chloroplast
+twenty-nine
 subeditor
 coxcomb
 colpocystocele
@@ -14250,10 +14547,12 @@ bursar
 awlwort
 lysogenicity
 lymphedema
+brother-in-law
 blowhard
 gasket
 cassava
 thrasher
+lost-and-found
 comatulid
 autocoid
 grummet
@@ -14282,6 +14581,7 @@ fraternisation
 venerableness
 tubeless
 periarteritis
+fly-by-night
 washwoman
 provirus
 antimacassar
@@ -14300,6 +14600,7 @@ diaphone
 forestage
 herder
 hautbois
+go-between
 infliximab
 nautilus
 dossel
@@ -14325,6 +14626,7 @@ snugness
 cremation
 millilitre
 behemoth
+ring-binder
 handsaw
 foresightedness
 culturati
@@ -14342,6 +14644,7 @@ photocathode
 bombilation
 handset
 housefather
+self-seeker
 panencephalitis
 gatekeeper
 orthogonality
@@ -14394,12 +14697,15 @@ clothespin
 toastrack
 brandyball
 aliyah
+lights-out
+dog-iron
 pierid
 interoperability
 aftersensation
 matchbox
 humdinger
 lymphangiogram
+phone-in
 pyroxene
 mytilid
 stoutness
@@ -14468,6 +14774,7 @@ niacin
 tsatske
 outsole
 hyperlipoproteinemia
+grouse-berry
 viatication
 placental
 wickup
@@ -14484,10 +14791,12 @@ formulary
 crookneck
 bowery
 bunsen
+one-quadrillionth
 ontogeny
 gambrel
 autoregulation
 echinococcosis
+right-winger
 dichromatism
 effectiveness
 channelization
@@ -14495,8 +14804,10 @@ pitahaya
 numismatist
 plugger
 columnea
+charley-horse
 aridness
 probation
+rat-catcher
 paregmenon
 neomycin
 postcode
@@ -14515,6 +14826,7 @@ toluene
 appliance
 metralgia
 bryophyte
+button-quail
 etymologist
 vassalage
 bitchery
@@ -14562,10 +14874,12 @@ kingship
 smiler
 smiley
 toby
+recruiting-sergeant
 waterlessness
 phentolamine
 cardsharper
 grindstone
+bric-a-brac
 lavalava
 testis
 loathsomeness
@@ -14578,12 +14892,14 @@ yack
 enragement
 toea
 tollgatherer
+lend-lease
 reclamation
 toff
 tofu
 toga
 infotainment
 armet
+pi-meson
 crosspiece
 backache
 bitartrate
@@ -14616,6 +14932,7 @@ achillea
 pushover
 chiaroscuro
 bonsai
+skinny-dip
 hypoglycemia
 chokehold
 paramountcy
@@ -14641,6 +14958,7 @@ centimetre
 autacoid
 ovariectomy
 overstrain
+plug-in
 liposuction
 gudgeon
 neighborliness
@@ -14650,6 +14968,7 @@ tosh
 summit
 yarn
 buttinsky
+crow-bait
 psilophyte
 spiciness
 paleography
@@ -14678,6 +14997,7 @@ windward
 larcenous
 profoundness
 convulsion
+foot-ton
 tollkeeper
 chondrite
 bobtail
@@ -14715,8 +15035,10 @@ esoterica
 silvervine
 wristwatch
 anticlimax
+twenty-five
 perverseness
 munificence
+trend-setter
 pellucidity
 paediatrics
 distinctiveness
@@ -14736,9 +15058,11 @@ tesseract
 thortveitite
 transcriptase
 ectoparasite
+maple-leaf
 monarchy
 highlife
 synergy
+moon-ray
 pearly
 nettle
 andesite
@@ -14752,6 +15076,7 @@ bedrock
 decapitation
 fitment
 lividity
+roly-poly
 forestry
 trailhead
 sensitisation
@@ -14759,6 +15084,7 @@ firedog
 godlessness
 fimbria
 borrelia
+argy-bargy
 bicentenary
 osteopetrosis
 renegade
@@ -14768,17 +15094,20 @@ hardtop
 altruist
 shillalah
 pothook
+earth-ball
 amyloid
 looter
 securer
 bedroll
 longhorn
+spin-off
 aspergillosis
 attempter
 clarion
 disfiguration
 emancipator
 crayfish
+stand-down
 polyhedron
 grammar
 tipsiness
@@ -14791,6 +15120,7 @@ washroom
 daintiness
 projectionist
 rootstock
+lyre-flower
 highflier
 cardamom
 cardamon
@@ -14798,8 +15128,10 @@ triton
 herrerasaurus
 sporophyll
 heterometabolism
+gosan-chiku
 cytotoxin
 pock
+baa-lamb
 scrounger
 asynclitism
 undulation
@@ -14844,6 +15176,7 @@ tzetze
 narcotic
 asthenia
 heresy
+kilovolt-ampere
 requester
 crawfish
 chatelaine
@@ -14894,6 +15227,7 @@ caruncula
 hypertonus
 maliciousness
 upholder
+horsepower-hour
 bollard
 pahoehoe
 pouf
@@ -14909,6 +15243,7 @@ scilla
 veloute
 isocarboxazid
 forebrain
+self-feeder
 actinia
 squirrelfish
 choler
@@ -14925,6 +15260,7 @@ tamarind
 airpost
 hareem
 strenuosity
+papier-mache
 digitization
 suprarenalectomy
 zonula
@@ -14940,10 +15276,12 @@ actinon
 unsanitariness
 cerulean
 renter
+cross-examination
 immodesty
 antonymy
 annalist
 ecdysis
+one-hitter
 servosystem
 cholla
 palaeencephalon
@@ -14961,6 +15299,7 @@ broodmare
 ommatidium
 ovipositor
 neolithic
+quarter-tone
 misdirection
 muralist
 diestrum
@@ -14968,6 +15307,7 @@ diestrus
 exbibyte
 knickers
 vinylbenzene
+taste-tester
 reputability
 bowfin
 terpene
@@ -14985,6 +15325,7 @@ stoolie
 archduchess
 viscount
 broomstick
+free-reed
 synonymist
 callosity
 phrenologist
@@ -14995,6 +15336,7 @@ synonymity
 tambourine
 fetter
 gaoler
+organ-grinder
 victorian
 sternocleidomastoid
 penicillinase
@@ -15040,6 +15382,7 @@ kilometre
 denouncement
 quatercentennial
 ovoid
+signal-to-noise
 semiotician
 shiftiness
 pungency
@@ -15062,11 +15405,13 @@ ashlar
 studhorse
 pinnace
 musicality
+horse-trail
 loam
 compactness
 plosion
 conchologist
 ranter
+blockade-runner
 mujahidin
 loch
 bullfrog
@@ -15102,10 +15447,12 @@ outdoorsman
 seigniory
 enchantress
 selvedge
+break-in
 barmaid
 calycle
 jacklight
 airlock
+whizz-kid
 heartsease
 undependability
 imperialist
@@ -15121,17 +15468,20 @@ megalocardia
 abcoulomb
 dyeweed
 contestation
+one-fifth
 ordination
 triclinium
 philistine
 ergodicity
 cynicism
+long-legs
 quittance
 caparison
 saleroom
 wordsmith
 lory
 cholecystitis
+by-blow
 panelist
 connecter
 frailty
@@ -15144,12 +15494,14 @@ calcination
 palliasse
 bonhomie
 matrisib
+self-organization
 chlorofluorocarbon
 lout
 internode
 stocker
 chesterfield
 truckler
+hollow-back
 cabstand
 marguerite
 huitre
@@ -15164,10 +15516,12 @@ disparagement
 mountaineer
 paviour
 swain
+oxidation-reduction
 cascara
 regent
 epistasis
 shrinkage
+card-house
 swale
 marlstone
 protagonism
@@ -15183,6 +15537,7 @@ nougat
 pheochromocytoma
 sarcenet
 marmot
+caller-out
 hypnotic
 understructure
 whimsy
@@ -15240,6 +15595,7 @@ chalice
 welwitschia
 timothy
 dangleberry
+gri-gri
 earache
 chimpanzee
 counterplan
@@ -15249,6 +15605,7 @@ caladenia
 exaltation
 metronymic
 azote
+quarter-century
 solidus
 earthling
 columella
@@ -15283,6 +15640,7 @@ polytonalism
 hunchback
 generalcy
 polytonality
+man-at-arms
 telfer
 unevenness
 hoar
@@ -15292,6 +15650,7 @@ dudeen
 hobo
 mujahedin
 maar
+merchant-venturer
 intemperateness
 massasauga
 ceramicist
@@ -15322,9 +15681,11 @@ puffin
 ignobleness
 eardrop
 bergall
+deaf-muteness
 litigiousness
 advisement
 dysplasia
+adam-and-eve
 carapace
 crossover
 anaclisis
@@ -15332,6 +15693,7 @@ holy
 scalar
 mako
 coelom
+bottom-feeder
 sulfacetamide
 sirenian
 homo
@@ -15351,12 +15713,15 @@ caribou
 untypicality
 eardrum
 tannery
+half-relief
+rent-a-car
 scaler
 imperishableness
 foredeck
 barter
 bikers
 dibucaine
+crown-beard
 insolubility
 petcock
 witchgrass
@@ -15365,6 +15730,7 @@ roundhead
 autobus
 aesthetician
 cerastes
+one-sixteenth
 hose
 airmail
 mara
@@ -15378,6 +15744,7 @@ antielectron
 enterolithiasis
 hessonite
 ozonide
+home-farm
 rondelet
 masquerader
 manilla
@@ -15395,10 +15762,12 @@ hoya
 maxi
 solitary
 bioattack
+he-man
 mayo
 alkaloid
 preemption
 recent
+stem-winder
 handicraft
 stenopterygius
 lipectomy
@@ -15479,6 +15848,7 @@ trochanter
 myringa
 ameloblast
 cerivastatin
+top-up
 washstand
 ignobility
 sheikha
@@ -15487,6 +15857,7 @@ prescript
 patrimony
 cohabitation
 cotenant
+cross-classification
 fluorspar
 lapful
 hedgefund
@@ -15522,6 +15893,7 @@ labourer
 assimilator
 quibble
 pongee
+comb-out
 dodo
 groupie
 teleportation
@@ -15543,6 +15915,7 @@ goalpost
 grout
 savarin
 leiomyosarcoma
+record-keeper
 pongid
 cherimoya
 stacker
@@ -15639,6 +16012,7 @@ catheterization
 severance
 demagoguery
 anemography
+toss-up
 whiner
 sociometry
 crore
@@ -15679,6 +16053,7 @@ paleomammalogy
 porbeagle
 disjointedness
 whinny
+quarter-hour
 cottonseed
 chaulmugra
 vitrine
@@ -15701,6 +16076,7 @@ electrodeposition
 saluter
 demographic
 actinoid
+second-stringer
 combustibility
 pinger
 parget
@@ -15778,9 +16154,11 @@ saltpeter
 allotropy
 plover
 duplicability
+love-song
 craniologist
 hardcover
 carrefour
+multi-billionaire
 cenogenesis
 lectin
 anticipant
@@ -15792,9 +16170,11 @@ penology
 damourite
 incrustation
 firefly
+diesel-hydraulic
 cudweed
 rubel
 trauma
+flag-waver
 chaplain
 nitrochloroform
 connexion
@@ -15821,6 +16201,7 @@ disgustingness
 reedbird
 lambskin
 recusal
+alpha-interferon
 nainsook
 toyshop
 trivet
@@ -15848,6 +16229,7 @@ insurrectionism
 insurrectionist
 sumptuosity
 acrimony
+soft-shoe
 triphosphopyridine
 multifariousness
 yuppie
@@ -15855,6 +16237,7 @@ sialolith
 ungainliness
 speculativeness
 bulginess
+never-never
 gramma
 gramme
 snooze
@@ -15889,6 +16272,7 @@ dilapidation
 multitudinousness
 aurochs
 disillusionment
+co-option
 religious
 stableman
 gringo
@@ -15906,6 +16290,7 @@ flowage
 stotinka
 flora
 ichthyosaur
+pin-up
 fiberoptics
 biochemist
 scampi
@@ -15917,9 +16302,11 @@ mazzard
 propylthiouracil
 anole
 antisemitism
+self-starter
 bloodiness
 bookmaker
 ungratefulness
+egg-and-anchor
 earner
 exoneration
 bioscope
@@ -15980,6 +16367,7 @@ gasohol
 ligule
 twitterer
 sidekick
+dining-hall
 quaternion
 neopallium
 spacecraft
@@ -15998,6 +16386,7 @@ catalexis
 myringoplasty
 bugaboo
 monody
+foster-sister
 quaternity
 nonoccurrence
 informality
@@ -16017,13 +16406,16 @@ periodontia
 sienna
 runway
 automatism
+deuce-ace
 ridgepole
 professionalization
 ejaculator
 meronymy
+red-header
 bestiality
 dunghill
 concreteness
+toad-in-the-hole
 bounder
 locule
 slanguage
@@ -16034,6 +16426,7 @@ glycosuria
 parlourmaid
 fabricator
 albinism
+beta-lipoprotein
 associableness
 cloudiness
 pugilism
@@ -16069,6 +16462,7 @@ prisonbreak
 savant
 brachydactyly
 hubby
+shrink-wrap
 deracination
 helpmate
 neckwear
@@ -16083,6 +16477,7 @@ alanine
 tooshie
 cheekiness
 diplotene
+share-out
 dissembler
 tailfin
 noncombatant
@@ -16098,6 +16493,7 @@ mustachio
 flavone
 pyrectic
 sourdine
+press-up
 fungicide
 taillight
 tableware
@@ -16107,6 +16503,7 @@ monkeypod
 coati
 murphy
 cryptograph
+nanny-goat
 bitterroot
 superclass
 scepter
@@ -16131,8 +16528,10 @@ sceptic
 campaigner
 reggae
 atonicity
+about-face
 cockateel
 gummite
+goal-kick
 picometer
 rudderstock
 tram
@@ -16143,6 +16542,7 @@ sternness
 sonata
 exclusive
 defalcation
+cure-all
 joggle
 cosmetician
 hellhole
@@ -16178,9 +16578,11 @@ croaker
 parapet
 activator
 indigence
+butt-weld
 nightlife
 libeler
 southwestern
+high-rise
 brookweed
 feculence
 purine
@@ -16198,8 +16600,10 @@ vigorish
 quadripara
 reorganization
 troy
+do-si-do
 dhoti
 matinee
+long-sufferance
 strikebreaking
 curacy
 lovesickness
@@ -16228,6 +16632,7 @@ goldbrick
 true
 bichloride
 saxophonist
+washing-up
 lutist
 dactyl
 resection
@@ -16273,6 +16678,8 @@ anesthesiology
 malevolence
 preindication
 termagant
+counselor-at-law
+trade-last
 mariner
 octane
 octant
@@ -16325,6 +16732,7 @@ xerophthalmus
 jigger
 slagheap
 metallurgist
+record-breaker
 arsenical
 leatherwood
 plethora
@@ -16382,9 +16790,11 @@ nevirapine
 protectorship
 hypercalcinuria
 polymerase
+tip-off
 leach
 unsteadiness
 indulgence
+loan-blend
 inconsiderateness
 sportiveness
 nonacceptance
@@ -16425,6 +16835,7 @@ endemic
 pumpernickel
 dinnerware
 diocesan
+no-hitter
 communisation
 grosbeak
 rheology
@@ -16485,6 +16896,7 @@ overreckoning
 euthanasia
 aardwolf
 calumniation
+serious-mindedness
 unprotectedness
 ametria
 spiderflower
@@ -16531,10 +16943,13 @@ meningioma
 peevishness
 cacodyl
 limestone
+self-restraint
 magnetization
 legionary
 advowson
+silver-bush
 petchary
+winding-clothes
 teetotaller
 preservationist
 waterbird
@@ -16550,6 +16965,7 @@ windlessness
 breaststroker
 kickstand
 brashness
+off-roader
 breechloader
 lucre
 posterboard
@@ -16654,11 +17070,13 @@ abort
 inhomogeneity
 cobra
 saturnalia
+tap-off
 unease
 kibitzer
 mikado
 chlorophyl
 immortal
+ash-key
 metatarsus
 fatwah
 containment
@@ -16666,6 +17084,7 @@ babiroussa
 headway
 mycotoxin
 trilobite
+mangel-wurzel
 above
 marbleization
 telemarketing
@@ -16692,6 +17111,7 @@ dialectology
 bibliomania
 spindleshanks
 tsar
+tea-strainer
 libel
 evangelicalism
 orientalism
@@ -16710,11 +17130,13 @@ astrology
 cowbell
 cheiloschisis
 phenylamine
+smash-up
 dickhead
 valerian
 antistrophe
 phototherapy
 putrescence
+load-shedding
 permafrost
 paycheck
 specialism
@@ -16722,6 +17144,7 @@ pericarp
 upsurge
 speciality
 hypochondriasis
+fish-worship
 meritoriousness
 directiveness
 septicemia
@@ -16731,6 +17154,7 @@ stalemate
 licentiate
 beano
 afibrinogenemia
+cock-a-doodle-doo
 ducat
 herniation
 prematurity
@@ -16741,6 +17165,7 @@ ateleiosis
 recessive
 doorplate
 lespedeza
+wood-creeper
 haymaking
 oxyphenbutazone
 pariah
@@ -16751,6 +17176,7 @@ billfish
 exiguity
 fucus
 crankcase
+half-century
 hydroplane
 heinousness
 protrusion
@@ -16777,6 +17203,7 @@ disentangler
 annulet
 sylvite
 bandolier
+co-worker
 daphne
 contraband
 putridness
@@ -16790,6 +17217,7 @@ velvetleaf
 inadmissibility
 adnoun
 goaltender
+forty-five
 cannonball
 cortisone
 pinion
@@ -16828,8 +17256,10 @@ motionlessness
 windflower
 cephalohematoma
 carotene
+cush-cush
 jewelry
 voidance
+midsummer-men
 innards
 crampfish
 internuncio
@@ -16862,6 +17292,7 @@ redhead
 inefficacy
 plowman
 pyrimidine
+lying-in
 jocosity
 workpiece
 camosh
@@ -16885,6 +17316,7 @@ bludgeoner
 maxillary
 ecru
 subverter
+good-neighbourliness
 crotaphion
 allamanda
 republicanism
@@ -16911,6 +17343,7 @@ ytterbium
 fibre
 carboniferous
 homeotherm
+high-five
 revitalization
 burgess
 birthwort
@@ -16927,11 +17360,13 @@ humorousness
 blastula
 infraction
 barrenness
+touch-typist
 chauvinism
 chauvinist
 absorptivity
 swagger
 shakedown
+make-believe
 zygotene
 vernonia
 scrappiness
@@ -16951,6 +17386,7 @@ javelin
 tical
 taboo
 tabor
+send-off
 primipara
 thuggery
 monosaccharose
@@ -16980,6 +17416,7 @@ schoolbook
 ascot
 thurifer
 chinchillon
+cockle-burr
 aristocrat
 prehistory
 yodel
@@ -16991,6 +17428,7 @@ genuflexion
 alkane
 bugology
 neuroblastoma
+plum-yew
 stemmatics
 outdoorswoman
 ascus
@@ -17007,6 +17445,7 @@ disparity
 radiograph
 hypermarket
 boysenberry
+dickey-bird
 chemisorption
 atorvastatin
 keurboom
@@ -17041,6 +17480,7 @@ paleodendrology
 stooper
 samovar
 chargeman
+swan-flower
 threonine
 rachis
 scleredema
@@ -17087,6 +17527,7 @@ scrimshanker
 canard
 echolalia
 rhodomontade
+silver-tip
 eisegesis
 pichi
 guardhouse
@@ -17131,6 +17572,7 @@ acyl
 clanswoman
 idle
 inattentiveness
+wicket-keeper
 candlewood
 accidental
 pricelessness
@@ -17151,10 +17593,12 @@ aboulia
 cocoa
 psephologist
 ingeniousness
+hurdy-gurdy
 brierwood
 debit
 blighter
 deliverable
+match-up
 foetology
 processional
 mediatrix
@@ -17186,6 +17630,7 @@ pesticide
 polytheism
 polytheist
 gymslip
+put-down
 bulrush
 redoubt
 kolkhoznik
@@ -17226,6 +17671,8 @@ dolphin
 rematch
 abetalipoproteinemia
 taxonomist
+foster-nurse
+navel-gazing
 kalemia
 discreteness
 counterattraction
@@ -17258,6 +17705,7 @@ eurhythmics
 pullulation
 superfluity
 butterfish
+yakety-yak
 gastrolobium
 myxobacteria
 itchiness
@@ -17280,9 +17728,12 @@ miscue
 metformin
 nifedipine
 patness
+back-number
+half-mast
 rebound
 pecan
 sustentation
+half-hour
 camphorweed
 faultfinder
 mayapple
@@ -17304,6 +17755,7 @@ recto
 columbary
 malabsorption
 falchion
+bread-bin
 tarnish
 digitiser
 budge
@@ -17312,6 +17764,7 @@ pointer
 kaleidoscope
 modal
 apheresis
+second-in-command
 fluorosis
 mescal
 dioxin
@@ -17319,7 +17772,9 @@ grabber
 antilog
 calcification
 withdrawer
+leg-pulling
 shivaree
+house-builder
 minuscule
 countermand
 rinderpest
@@ -17330,6 +17785,7 @@ eddy
 plastron
 practician
 quiche
+work-shirt
 vapidity
 snorer
 modem
@@ -17360,7 +17816,9 @@ scurry
 quadrillion
 trematode
 peeress
+farm-place
 carboy
+seven-spot
 evanescence
 pleochroism
 saurel
@@ -17434,6 +17892,7 @@ grappa
 demigod
 somatotrophin
 iambic
+rip-off
 fibroadenoma
 grinder
 balmoral
@@ -17508,6 +17967,7 @@ counselorship
 malodorousness
 spiegeleisen
 sundew
+battery-acid
 judicature
 appetizingness
 conglobation
@@ -17523,6 +17983,7 @@ leaseholder
 perleche
 frankincense
 thyroglobulin
+three-dimensionality
 boundlessness
 crumhorn
 entree
@@ -17531,6 +17992,7 @@ protectionist
 hymenopteron
 agiotage
 piastre
+self-discipline
 razzle
 equipoise
 conviviality
@@ -17557,6 +18019,7 @@ parapodium
 paresis
 changeling
 kahikatea
+pea-chick
 dichlorodiphenyltrichloroethane
 bassarisk
 claudication
@@ -17620,6 +18083,7 @@ remoteness
 capableness
 federalization
 feces
+codlins-and-cream
 burrfish
 argentine
 overplus
@@ -17632,6 +18096,7 @@ headshake
 gynoecium
 immotility
 lauhala
+lip-gloss
 nacho
 officiant
 brickyard
@@ -17661,6 +18126,7 @@ macebearer
 nonparticipation
 airstream
 distrustfulness
+hub-and-spoke
 metheglin
 sticktight
 myrmidon
@@ -17675,11 +18141,13 @@ flatulence
 flatulency
 terseness
 rumrunner
+twin-prop
 dissolubility
 nacre
 grandad
 neutrino
 senility
+self-reproach
 plywood
 grenadine
 soiree
@@ -17690,6 +18158,8 @@ patroness
 coreligionist
 lacer
 keelboat
+hoof-mark
+four-wheeler
 moralization
 grandee
 codon
@@ -17710,6 +18180,7 @@ strongman
 chipotle
 polypore
 barbican
+forget-me-not
 ixodid
 perchloromethane
 shapeliness
@@ -17718,6 +18189,7 @@ miscellany
 pappoose
 commandant
 motorization
+goody-goody
 footwear
 deaminization
 ostentation
@@ -17750,6 +18222,7 @@ territorialisation
 grandpa
 gipsywort
 sanitariness
+single-spacing
 snakewood
 metalhead
 musicology
@@ -17776,6 +18249,7 @@ fascist
 reversioner
 logorrhea
 sternwheeler
+ill-breeding
 polyphone
 andrenid
 polyphony
@@ -17852,6 +18326,7 @@ stereoscopy
 pyridine
 redox
 tinplate
+self-direction
 dichroism
 turtler
 pedal
@@ -17878,6 +18353,7 @@ hawksbill
 barnacle
 resettlement
 echinoderm
+twenty-four
 pyrrhic
 cobber
 batrachian
@@ -17889,6 +18365,7 @@ fleawort
 usufruct
 sherbet
 volvulus
+kiss-me-over-the-garden-gate
 counterdemonstrator
 handedness
 pasqueflower
@@ -17914,6 +18391,8 @@ wattmeter
 zoophyte
 tourtiere
 criminologist
+heir-at-law
+high-muck-a-muck
 devastation
 pipette
 hooligan
@@ -17926,9 +18405,11 @@ blarney
 linalool
 gratuity
 afflatus
+leaf-cutter
 mapmaking
 dacha
 theurgy
+tax-increase
 kilovolt
 doorlock
 psycholinguist
@@ -17945,11 +18426,13 @@ crumpet
 forecourt
 swizzle
 didanosine
+drop-leaf
 chicness
 thereness
 hypermastigote
 hallucinosis
 blowpipe
+kilogram-meter
 nombril
 skein
 disceptation
@@ -17971,6 +18454,7 @@ pleximeter
 bacca
 baccy
 transmigrante
+write-down
 tamponage
 construal
 arsenopyrite
@@ -17990,6 +18474,7 @@ peliosis
 artwork
 intifadah
 serration
+gumbo-limbo
 pinetum
 construct
 impossibility
@@ -18010,9 +18495,11 @@ slopseller
 phycology
 bedcover
 romanticist
+word-painter
 carditis
 raggedness
 naturalization
+cross-questioner
 cenobite
 puka
 syllogism
@@ -18058,6 +18545,7 @@ baryta
 chronograph
 sendup
 amblygonite
+cross-pollination
 weakling
 radix
 positivity
@@ -18066,6 +18554,7 @@ putt
 putz
 cognomen
 changelessness
+dock-walloper
 kingwood
 ecumenicalism
 barleycorn
@@ -18073,6 +18562,7 @@ leveller
 operon
 bookie
 cephalothin
+side-wheeler
 lockbox
 xvii
 nictation
@@ -18086,6 +18576,7 @@ interchangeableness
 feijoa
 radon
 orrery
+in-migration
 alcapton
 haematocyturia
 bunchberry
@@ -18107,6 +18598,7 @@ luffa
 tenpounder
 limpidity
 overstatement
+eye-beaming
 greisen
 adermin
 ventriloquism
@@ -18127,6 +18619,7 @@ linuron
 interrupt
 ruckus
 parametritis
+self-stimulation
 nonentity
 amphidiploid
 unthoughtfulness
@@ -18180,6 +18673,7 @@ monarchism
 monarchist
 helpmeet
 intermixture
+fiddle-faddle
 menorrhagia
 jadestone
 padre
@@ -18189,6 +18683,7 @@ harelip
 meatpacking
 toller
 degenerate
+pull-in
 autoplasty
 carefulness
 newness
@@ -18212,6 +18707,7 @@ handrail
 superslasher
 astronavigation
 ununquadium
+short-grass
 rhymer
 fetometry
 commonweal
@@ -18220,6 +18716,7 @@ bonyness
 equalitarianism
 endodontist
 tollon
+co-defendant
 agnation
 leafage
 tenebrionid
@@ -18231,6 +18728,7 @@ amidopyrine
 ovule
 schnozzle
 tenability
+pull-up
 exteriorization
 banyan
 apophthegm
@@ -18261,6 +18759,7 @@ erythrocytolysin
 ambivalence
 gyroscope
 ambivalency
+finger-roll
 capriccio
 officialese
 reliever
@@ -18274,11 +18773,13 @@ stumblebum
 ornithischian
 agalactosis
 crybaby
+finger-root
 inoculant
 ladle
 kenogenesis
 foreclosure
 mutilator
+self-doubt
 grevillea
 axseed
 worthlessness
@@ -18308,6 +18809,7 @@ lush
 toothpowder
 lute
 pailful
+ward-heeler
 teleconferencing
 cefuroxime
 soundman
@@ -18372,6 +18874,7 @@ ragtime
 introjection
 foulness
 geophysics
+stalking-horse
 enucleation
 sorceress
 arccos
@@ -18431,6 +18934,7 @@ cephalalgia
 crackerberry
 rampion
 cassiri
+sixth-former
 rugby
 waster
 tidemark
@@ -18445,6 +18949,7 @@ needy
 disambiguator
 solidification
 enteroceptor
+radio-gramophone
 teller
 ballista
 grosgrain
@@ -18469,6 +18974,7 @@ inquietude
 hearthrug
 incertitude
 neencephalon
+polyvinyl-formaldehyde
 abrogator
 diazonium
 huff
@@ -18481,6 +18987,7 @@ conveyance
 conspecific
 demitasse
 arsenal
+tree-worship
 audition
 closer
 perfectibility
@@ -18494,6 +19001,7 @@ cliffhanger
 scarab
 dominant
 hump
+relative-in-law
 fascista
 quadrille
 coiffeuse
@@ -18527,6 +19035,7 @@ synchrocyclotron
 bilaterality
 lithographer
 snuff
+great-uncle
 coreid
 shrewdness
 distiller
@@ -18553,6 +19062,7 @@ gamesmanship
 tuppence
 otherworldliness
 phalacrosis
+razor-fish
 misstep
 grandaunt
 yatobyo
@@ -18564,6 +19074,7 @@ nitpicker
 souslik
 agammaglobulinemia
 roomer
+barrow-boy
 crucible
 greaser
 midiron
@@ -18630,6 +19141,7 @@ racker
 hereditament
 cuneus
 gruel
+one-thirty-second
 venturer
 dissolvent
 bellyache
@@ -18677,6 +19189,7 @@ siesta
 carnauba
 baldness
 solicitousness
+self-accusation
 serologist
 cetchup
 musicologist
@@ -18732,6 +19245,7 @@ afterdamp
 dribble
 persuader
 coconspirator
+self-suggestion
 accompanyist
 filature
 dura
@@ -18767,6 +19281,7 @@ teratogen
 windburn
 conformation
 druthers
+ezo-yama-hagi
 abashment
 oxytocic
 oxytocin
@@ -18777,6 +19292,7 @@ epanodos
 endocervicitis
 plush
 sluicegate
+mischief-making
 vincristine
 existentialism
 existentialist
@@ -18786,6 +19302,7 @@ atopognosis
 crumb
 cereal
 kaolinite
+sunshine-roof
 araucaria
 twat
 dextrose
@@ -18805,6 +19322,8 @@ pipefish
 ectoproct
 smithy
 onycholysis
+yo-yo
+broker-dealer
 whitey
 complainer
 priestess
@@ -18825,10 +19344,13 @@ diphenylhydantoin
 minter
 crotch
 marten
+one-sixty-fourth
 charabanc
 strawman
+macho-man
 goldstone
 chemosorption
+radio-phonograph
 twit
 parabola
 minisub
@@ -18926,6 +19448,7 @@ yeomanry
 sideropenia
 thermion
 hydrate
+love-token
 abseil
 advancement
 rutherford
@@ -18978,13 +19501,16 @@ transsexual
 matchlock
 pterodactyl
 cleanliness
+soixante-neuf
 imputation
 meditativeness
 mimicker
 peptide
 demonetisation
 intemperance
+value-system
 slouch
+self-torment
 conveyancer
 slobberer
 usher
@@ -18997,6 +19523,7 @@ mentum
 hawkbill
 mogul
 sexuality
+rood-tree
 slough
 thatcher
 stomatopod
@@ -19007,6 +19534,8 @@ tripletail
 vernation
 normalcy
 tetrahedron
+arms-runner
+ski-plane
 cryobiology
 anovulation
 spandex
@@ -19016,6 +19545,7 @@ intensiveness
 tribromomethane
 sunstroke
 farfalle
+run-time
 barbarization
 salvager
 hermit
@@ -19031,6 +19561,7 @@ punnet
 vigil
 mythologist
 cerussite
+daisy-bush
 sorgho
 beguine
 fluke
@@ -19048,25 +19579,32 @@ flunk
 ringworm
 chamberlain
 ironware
+cheval-de-frise
 fluor
 dopamine
 sordidness
 angiogram
 cellulite
+ticket-of-leave
 shindig
 majorette
+honky-tonk
 mantid
 compressibility
 mantis
+pass-through
 sheatfish
+lion-hunter
 cyanuramide
 wistfulness
 lateral
 hospitableness
 kabbala
 spitefulness
+one-liner
 thumbhole
 partiality
+one-ninth
 oxaprozin
 sequel
 proconsulship
@@ -19111,11 +19649,13 @@ moonseed
 shepherdess
 councilorship
 meningitis
+one-tenth
 quislingism
 sadomasochism
 sadomasochist
 knockwurst
 weeknight
+hip-hop
 ribbonwood
 inrush
 lazaret
@@ -19128,10 +19668,12 @@ shyness
 dacryon
 sparkleberry
 xxvi
+life-time
 steradian
 cephalitis
 argent
 gumminess
+self-government
 brunch
 grubstake
 deerhound
@@ -19163,6 +19705,7 @@ inclementness
 galere
 blush
 liparis
+three-bagger
 vulcanite
 simplism
 pyrochemistry
@@ -19216,6 +19759,7 @@ pietism
 solstice
 orthophosphate
 pyrola
+process-server
 translator
 forcefulness
 vegan
@@ -19224,11 +19768,13 @@ chickenpox
 nasopharynx
 obligato
 prescriptivism
+robe-de-chambre
 hornet
 eunuch
 toxicity
 shareholding
 pendragon
+standard-bearer
 slumberer
 boilerplate
 osmoreceptor
@@ -19257,7 +19803,9 @@ encephalon
 garboard
 granger
 parroquet
+x-axis
 hackney
+ash-pan
 schizothymia
 tyiyn
 capuchin
@@ -19309,6 +19857,7 @@ itinerary
 cayuse
 moneygrubber
 serger
+lady-of-the-night
 bluejacket
 abbreviator
 biquadrate
@@ -19333,6 +19882,7 @@ dahlia
 pablum
 cocktail
 swift
+self-torture
 iodopsin
 endosperm
 isomorphism
@@ -19363,6 +19913,7 @@ sandstorm
 candlepower
 nonpartisanship
 wurtzite
+co-ed
 mandolin
 marumi
 insistency
@@ -19387,6 +19938,7 @@ chinchilla
 dysomia
 neuralgia
 pinner
+house-raising
 amadavat
 swish
 triceps
@@ -19398,6 +19950,7 @@ valuelessness
 springtide
 perisher
 hematocolpometra
+co-op
 toponymy
 dyscrasia
 everyman
@@ -19432,6 +19985,7 @@ neurogenesis
 vulgariser
 transactor
 orthopter
+nutmeg-yew
 fluoridisation
 cornerstone
 chetrum
@@ -19440,6 +19994,8 @@ deprecation
 doppelzentner
 progressivism
 gnetum
+nosey-parker
+flower-of-an-hour
 indestructibility
 colorist
 lustrelessness
@@ -19461,6 +20017,7 @@ homeostasis
 simulator
 rubefacient
 trafficator
+start-off
 winterberry
 excavator
 abducens
@@ -19501,6 +20058,7 @@ groundsman
 chartist
 scaliness
 reductase
+test-cross
 vestryman
 acidemia
 twosome
@@ -19509,10 +20067,13 @@ foeman
 pannier
 haloalkane
 appeaser
+bio-assay
 solitudinarian
 intensive
+dye-works
 doomsday
 highjacker
+cha-cha-cha
 holdout
 diffuser
 ninepence
@@ -19523,6 +20084,7 @@ angiotensin
 echovirus
 hydrometer
 lamination
+hee-haw
 mime
 swivel
 swivet
@@ -19558,6 +20120,7 @@ digit
 precava
 anagoge
 poacher
+gee-gee
 barrelfish
 miso
 mitt
@@ -19568,6 +20131,7 @@ casebook
 centerfold
 diffusor
 supposition
+hi-fi
 harbourage
 zygote
 unilateralism
@@ -19580,7 +20144,10 @@ zabaglione
 spaghetti
 scabbard
 schnecken
+chit-chat
 edelweiss
+calc-tufa
+map-reader
 venogram
 diflunisal
 sunhat
@@ -19616,6 +20183,7 @@ turtlehead
 shearer
 kyphosis
 doormat
+mid-forties
 shortener
 plethysmograph
 haemogenesis
@@ -19629,6 +20197,7 @@ incoordination
 meconium
 egger
 tracery
+moon-curser
 guarani
 sphenion
 poikilotherm
@@ -19640,12 +20209,14 @@ chough
 blepharitis
 immunisation
 sphacelus
+beggar-my-neighbor
 cognition
 addlehead
 radioimmunoassay
 asininity
 parathyroid
 mischance
+eye-lotion
 virologist
 knothole
 marasmus
@@ -19657,6 +20228,8 @@ sporulation
 fishhook
 propenonitrile
 glaciation
+pousse-cafe
+two-piece
 redetermination
 cockspur
 cheapskate
@@ -19665,9 +20238,12 @@ etagere
 velveteen
 congruity
 jobholder
+slave-maker
 micrometry
+world-weariness
 balletomania
 arsenate
+free-for-all
 embryologist
 principality
 aggressiveness
@@ -19685,6 +20261,7 @@ underexposure
 merozoite
 pichiciego
 mainspring
+skin-dive
 glassful
 blastocytoma
 armband
@@ -19726,10 +20303,12 @@ philanderer
 magnesia
 electroscope
 vichyssoise
+grant-in-aid
 personableness
 macrotus
 peripetia
 elopement
+get-go
 cruiser
 lipfern
 tirolean
@@ -19742,6 +20321,7 @@ gorgonzola
 seismologist
 lagan
 degas
+horse-brier
 lawsuit
 outerwear
 averment
@@ -19778,10 +20358,12 @@ blatherskite
 arenavirus
 tenseness
 cryptography
+needle-bush
 hypoesthesia
 duellist
 aggro
 felwort
+re-establishment
 petticoat
 systole
 apolemia
@@ -19805,6 +20387,7 @@ congou
 hypernym
 oregano
 ruthenium
+self-expression
 guanaco
 polymastigote
 officiation
@@ -19814,6 +20397,7 @@ trigeminus
 chrysomelid
 gravida
 hencoop
+wheat-grass
 gothic
 levodopa
 breaststroke
@@ -19829,6 +20413,7 @@ forlornness
 quadruped
 homozygosity
 wheatworm
+time-fuse
 ghatti
 divination
 cinnabar
@@ -19882,6 +20467,7 @@ stopgap
 nitride
 incubator
 nonpareil
+jack-in-the-box
 hemicrania
 estrone
 quagga
@@ -19930,6 +20516,7 @@ counsellorship
 gondola
 haemoglobinopathy
 lemonwood
+self-distrust
 nitrite
 foxhole
 oldtimer
@@ -19941,12 +20528,14 @@ gladsomeness
 crossbench
 stratification
 bluethroat
+dicky-bird
 mucoviscidosis
 saucepot
 prosciutto
 antique
 flogger
 somebody
+co-optation
 chariness
 hologram
 peccadillo
@@ -19996,6 +20585,7 @@ cytogeny
 cunnilingus
 dekaliter
 skier
+trade-off
 billyoh
 hardihood
 osteosarcoma
@@ -20010,6 +20600,8 @@ entellus
 indexer
 directness
 panfish
+sixty-fourth
+ha-ha
 schwa
 bloodroot
 towpath
@@ -20087,6 +20679,7 @@ occult
 translucency
 appositeness
 chevalier
+doodly-squat
 dolichocephalic
 forelock
 nympholept
@@ -20100,6 +20693,7 @@ defacement
 eyeshade
 detour
 breathalyser
+left-hander
 ecdysiast
 samizdat
 autochthony
@@ -20163,6 +20757,7 @@ demythologisation
 onionskin
 electrotherapist
 ampicillin
+night-sight
 caffre
 repast
 embalmment
@@ -20171,6 +20766,7 @@ rakishness
 doctrinaire
 muteness
 ringhals
+rat-tat
 abdominousness
 hawala
 highlighter
@@ -20207,7 +20803,9 @@ inharmoniousness
 tyrannosaur
 ferritin
 guestroom
+bed-ground
 underlip
+square-bashing
 pachisi
 feverfew
 diamondback
@@ -20259,11 +20857,13 @@ prodrome
 minivan
 dolour
 handrest
+mock-up
 ichor
 rigour
 rigout
 hyperope
 inculpability
+face-off
 packsaddle
 sanctitude
 chenfish
@@ -20283,6 +20883,7 @@ eelworm
 costalgia
 telecommuting
 albuca
+whip-scorpion
 ophthalmia
 harlotry
 starship
@@ -20311,9 +20912,12 @@ pedagogue
 galactagogue
 teiid
 oilfish
+step-in
 cubbyhole
 effectuation
 ylem
+double-u
+up-bow
 tonnage
 paunchiness
 splice
@@ -20336,6 +20940,7 @@ fumitory
 synthesist
 scammer
 goalmouth
+cross-fertilisation
 breadbox
 seriph
 scribe
@@ -20347,11 +20952,13 @@ tappet
 xenotransplantation
 haemodialysis
 asthenopia
+step-up
 demineralisation
 fiduciary
 spline
 dystopia
 splint
+choo-choo
 conurbation
 sprawler
 caviler
@@ -20359,6 +20966,7 @@ foremast
 doliolum
 booklouse
 briony
+deaf-aid
 wantonness
 battlesight
 highboy
@@ -20368,6 +20976,7 @@ bootboys
 palmyra
 rhombencephalon
 clayware
+shell-flower
 woodcut
 suffixation
 layover
@@ -20384,6 +20993,7 @@ menagerie
 oarfish
 canvasback
 impetuosity
+mid-off
 machinator
 zaire
 impermeableness
@@ -20402,8 +21012,10 @@ agribusiness
 gigantism
 calfskin
 benchmark
+tongue-fish
 tchotchkeleh
 reportage
+snake-head
 schistosomiasis
 acephaly
 glycine
@@ -20411,6 +21023,7 @@ accouchement
 curium
 altogether
 succulent
+rat-a-tat-tat
 nihilist
 felspar
 diacetylmorphine
@@ -20433,10 +21046,12 @@ deprivation
 bagnio
 tactician
 thrower
+third-rater
 lobefin
 catalyst
 creamery
 bonavist
+slow-wittedness
 toucan
 downturn
 tomboy
@@ -20445,6 +21060,7 @@ slingback
 cedarbird
 wapiti
 vamper
+bridal-wreath
 trillionth
 parentage
 intermittence
@@ -20453,6 +21069,7 @@ jointer
 intermittency
 carhop
 salmonberry
+ex-gambler
 vegetarianism
 civics
 directorship
@@ -20464,6 +21081,7 @@ mensuration
 civies
 marionette
 chitlings
+slip-on
 surrenderer
 crabmeat
 abdominocentesis
@@ -20478,6 +21096,7 @@ comeupance
 graver
 unseemliness
 caryopsis
+bow-tie
 regularisation
 sucrose
 arsine
@@ -20491,6 +21110,7 @@ fibrinopeptide
 lameness
 parthenocarpy
 glossarist
+slip-up
 urochesia
 polymer
 hyperon
@@ -20498,6 +21118,7 @@ elastance
 musjid
 syllogiser
 superstring
+play-box
 naumachia
 bitumen
 herpes
@@ -20565,7 +21186,9 @@ cutwork
 cutworm
 jocote
 pyromania
+over-crowding
 disfigurement
+hay-scented
 taira
 otoscope
 terpsichorean
@@ -20573,14 +21196,17 @@ incontinence
 mystification
 incontinency
 ulna
+kala-azar
 skewer
 encephalogram
 flathead
 outlawry
 bungler
+one-hundred-thousandth
 falanga
 haemophiliac
 seniti
+gay-feather
 floppy
 balkline
 sphinx
@@ -20597,10 +21223,12 @@ dissimulator
 kerion
 fenland
 bagpiper
+silver-lace
 mullion
 mishmash
 crystallisation
 ferricyanide
+four-in-hand
 bouffant
 implausibility
 benedictine
@@ -20614,13 +21242,16 @@ hendiadys
 woodbine
 blowfly
 nightcap
+throw-weight
 standpipe
 coastguard
 pettifogger
 mantelpiece
+full-of-the-moon
 meaningfulness
 harper
 gearbox
+mid-eighties
 snowfield
 invigilator
 liberalization
@@ -20637,6 +21268,7 @@ oxygenase
 topgallant
 mongolism
 sanies
+place-kicker
 fragrancy
 canafistola
 pyrophobia
@@ -20665,6 +21297,7 @@ endoneurium
 naiad
 cinematography
 recombinant
+drunk-and-disorderly
 supervention
 huisache
 eschar
@@ -20696,6 +21329,7 @@ nogging
 psychonomics
 olympian
 scatophagy
+mischief-maker
 thorite
 monocline
 auspiciousness
@@ -20730,6 +21364,7 @@ stepsister
 isomorphy
 subclass
 humerus
+wood-rat
 naira
 battlewagon
 dyne
@@ -20750,6 +21385,7 @@ handbreadth
 redact
 inattention
 decimal
+walky-talky
 abecedarian
 electrocutioner
 scrooge
@@ -20796,6 +21432,7 @@ deist
 trifoliata
 shamanism
 imperfectibility
+work-board
 sauceboat
 reincarnation
 farandole
@@ -20808,6 +21445,7 @@ enteroptosis
 beige
 provincial
 disengagement
+pocket-handkerchief
 plateau
 bowsprit
 wordiness
@@ -20815,6 +21453,7 @@ harmonization
 hogweed
 amobarbital
 bullfight
+fur-piece
 autotomy
 twiddler
 mollymawk
@@ -20855,6 +21494,7 @@ caroller
 archer
 villainy
 adactylism
+horse-pistol
 haick
 separate
 stitcher
@@ -20888,6 +21528,7 @@ cerium
 andiron
 thyme
 cunctator
+brain-fag
 winemaker
 stylite
 chophouse
@@ -20937,6 +21578,7 @@ unadaptability
 wrecker
 caries
 platitudinarian
+lash-up
 blazonry
 voluminousness
 attainableness
@@ -20956,7 +21598,9 @@ jumpstart
 sapsago
 stonechat
 viceroyalty
+son-in-law
 circumscription
+no-trump
 manageability
 dissuasion
 microsurgery
@@ -20979,9 +21623,11 @@ hymenopter
 ammine
 nybble
 printer
+lean-to
 harebell
 einsteinium
 hypercellularity
+fire-wheel
 timework
 loadstone
 pedophile
@@ -20996,7 +21642,9 @@ sunporch
 hydrologist
 numerosity
 gastropod
+half-caste
 imperfect
+she-oak
 kindness
 immovableness
 douche
@@ -21030,6 +21678,7 @@ archeologist
 vanadate
 antiphrasis
 physa
+on-license
 entrancement
 barilla
 pearler
@@ -21054,6 +21703,7 @@ ponderousness
 inpouring
 wheelwright
 asker
+kind-heartedness
 carillon
 vendetta
 pearlwort
@@ -21061,6 +21711,7 @@ tutsan
 lambda
 pyrographer
 sgraffito
+give-and-take
 somerset
 lucidness
 interleukin
@@ -21089,6 +21740,7 @@ sporangiophore
 curatorship
 baisa
 polynya
+hemming-stitch
 lentigo
 pascal
 dentistry
@@ -21097,6 +21749,7 @@ cringle
 drumfire
 strophanthin
 corrosion
+dappled-gray
 drumfish
 episiotomy
 universalism
@@ -21116,10 +21769,12 @@ gnawer
 straitjacket
 enation
 diagonal
+dappled-grey
 baiza
 hypostatisation
 baize
 almandine
+rub-a-dub
 dactylomegaly
 acephalism
 indirectness
@@ -21135,6 +21790,7 @@ schnorchel
 earreach
 ulemorrhagia
 soubrette
+foster-child
 bibliophile
 bijou
 concatenation
@@ -21179,7 +21835,9 @@ oscitance
 akee
 pseudohermaphrodite
 oscitancy
+no-show
 melanosis
+pop-fly
 polystyrene
 dysgenics
 dastard
@@ -21197,9 +21855,11 @@ heedlessness
 mizzle
 piperazine
 canine
+one-hundredth
 megillah
 julep
 thrombocytosis
+high-mindedness
 panchayat
 neuron
 paddlewheel
@@ -21221,6 +21881,7 @@ impersonation
 analogist
 civilisation
 cannulisation
+doo-wop
 howdah
 trillion
 sluggard
@@ -21248,9 +21909,12 @@ dotrel
 hyperlink
 nosedive
 magilp
+hunter-gatherer
+click-clack
 wholeness
 condescension
 solan
+gentleman-at-arms
 unraveller
 newsagent
 protocol
@@ -21277,7 +21941,10 @@ protoavis
 crepitation
 tintinnabulation
 presenter
+grease-gun
+gum-lac
 fistmele
+seventy-eight
 axletree
 nightclothes
 shoveler
@@ -21285,6 +21952,7 @@ carcinogen
 ramipril
 naysayer
 sabicu
+half-brother
 corselet
 solon
 minyan
@@ -21305,6 +21973,7 @@ cytosine
 ortygan
 anisometropia
 aeromechanics
+make-peace
 obsolescence
 redbud
 redbug
@@ -21321,10 +21990,13 @@ acquirement
 theremin
 zakat
 nordic
+lotus-eater
+flame-flower
 cockleshell
 millinery
 toecap
 dextrality
+fire-on-the-mountain
 dynamism
 plebeian
 leftism
@@ -21343,6 +22015,7 @@ aba
 verdin
 anapest
 psychogenesis
+slop-seller
 add
 genuineness
 somnambulism
@@ -21377,6 +22050,7 @@ scauper
 bilimbi
 pekan
 monogynist
+dickey-seat
 locoism
 alienator
 peregrination
@@ -21387,7 +22061,9 @@ exchangeability
 fiddleneck
 alb
 nursemaid
+pitter-patter
 consomme
+iron-gray
 subheading
 dulse
 anteriority
@@ -21399,6 +22075,7 @@ gustation
 hiker
 ani
 nibble
+beggar-my-neighbour
 gopherwood
 sinker
 yachtswoman
@@ -21408,7 +22085,9 @@ elan
 quattrocento
 columbite
 unhelpfulness
+iron-grey
 molar
+fan-jet
 stringency
 bondman
 moustache
@@ -21426,6 +22105,7 @@ deification
 blowhole
 tummy
 bulla
+sea-coast
 cuirass
 sorbate
 sensitiser
@@ -21446,12 +22126,14 @@ lymph
 pekoe
 hyaluronidase
 resuscitation
+soul-searching
 misalignment
 cosignatory
 rumba
 electrosleep
 zinfandel
 poodle
+call-board
 depressant
 guitarfish
 quadruplet
@@ -21470,6 +22152,7 @@ introitus
 ergonomics
 ionosphere
 corrasion
+tread-softly
 pseudohermaphroditism
 aphanite
 decadence
@@ -21486,6 +22169,7 @@ suntrap
 entomologist
 chinchona
 prearrangement
+six-footer
 muslin
 dosemeter
 melilotus
@@ -21525,6 +22209,7 @@ decarboxylation
 hymie
 polyoma
 topminnow
+tumble-dryer
 takin
 plutocrat
 counterspy
@@ -21535,7 +22220,9 @@ sonorousness
 taichi
 linguica
 secretase
+pick-off
 penalization
+youth-on-age
 lepidopterist
 villa
 floret
@@ -21548,6 +22235,7 @@ colloid
 polyose
 unconnectedness
 arcdegree
+switch-hitter
 poolroom
 redpoll
 florin
@@ -21570,8 +22258,10 @@ vender
 titillation
 discord
 jejunostomy
+eco-warfare
 fencer
 hagbut
+chute-the-chute
 linguine
 linguini
 moldboard
@@ -21583,6 +22273,7 @@ argasid
 nepotism
 gramicidin
 nepotist
+goose-tansy
 dairying
 unsuitability
 archaeology
@@ -21605,16 +22296,21 @@ sourpuss
 recapitulation
 lauder
 soapbox
+gold-worker
 turbofan
 peacekeeper
 devolvement
 fosterling
 lumpsucker
 mushiness
+self-fulfillment
+sun-worship
 barcarole
 fingerpaint
+self-assertion
 toolshed
 vasculitis
+nin-sin
 walker
 mortgager
 introit
@@ -21636,6 +22332,7 @@ cataloger
 blusher
 diploidy
 alar
+bain-marie
 butterweed
 byssus
 botulinum
@@ -21647,7 +22344,9 @@ asylum
 helleri
 estrogen
 sialadenitis
+nine-spot
 necrophilism
+foster-father
 spirillum
 calamus
 criticalness
@@ -21656,6 +22355,7 @@ harrow
 mortgagor
 polydactyly
 relinquishment
+go-kart
 weigela
 aliterate
 oscheocoele
@@ -21690,9 +22390,11 @@ neonatology
 hypnoanalysis
 widgeon
 drainpipe
+stock-taker
 macroeconomist
 fundus
 hipflask
+body-build
 imam
 seborrhea
 coaxer
@@ -21725,6 +22427,7 @@ alum
 neurodermatitis
 hoodoo
 agglutinogen
+word-painting
 tribalization
 perineurium
 labetalol
@@ -21766,17 +22469,21 @@ ventriculus
 toxicognath
 calvary
 granuloma
+counter-sabotage
 chubbiness
 oocyte
 terabit
 tebibit
 cytokine
 euphuism
+love-philter
 abysm
 dekko
+no-see-um
 bellicoseness
 ammonoid
 congruousness
+crack-up
 reversion
 fructose
 turacou
@@ -21798,6 +22505,7 @@ gallinacean
 apperception
 telco
 elegist
+self-awareness
 europium
 electrochemistry
 placer
@@ -21823,6 +22531,7 @@ dumdum
 yodh
 landscaper
 bifurcation
+love-philtre
 jaggedness
 endocrinology
 rubdown
@@ -21842,12 +22551,14 @@ precentor
 sirocco
 striptease
 infrigidation
+off-licence
 czarina
 prevarication
 puffiness
 flavonoid
 prognosticator
 yolk
+pip-squeak
 econometrician
 perennation
 hindfoot
@@ -21863,6 +22574,7 @@ neuropteron
 confederation
 hybrid
 pulpwood
+bachelor-at-arms
 bam
 bap
 moniker
@@ -21877,6 +22589,7 @@ eurythmics
 bbl
 moolah
 leiomyoma
+trente-et-quarante
 yore
 hominoid
 parsec
@@ -21901,6 +22614,7 @@ laughingstock
 khanate
 gnatcatcher
 alumroot
+cruet-stand
 dummy
 cobalamin
 talapoin
@@ -21924,6 +22638,7 @@ abstinence
 nephrite
 entertainment
 willet
+shoe-shop
 caspase
 tranquillity
 ricrac
@@ -21943,6 +22658,7 @@ leflunomide
 meerkat
 surrejoinder
 enormousness
+long-windedness
 boa
 bob
 boo
@@ -21968,6 +22684,7 @@ enjoinment
 attestator
 fakir
 guayule
+polo-neck
 folacin
 antialiasing
 bougainvillea
@@ -21987,6 +22704,7 @@ ackee
 bassoon
 tailwind
 tetartanopia
+half-length
 inheritrix
 emir
 chandler
@@ -22005,6 +22723,7 @@ quotability
 paintball
 claptrap
 peshmerga
+fuss-budget
 butene
 empowerment
 thermoplastic
@@ -22026,6 +22745,7 @@ hypovolemia
 copycat
 hilus
 fortissimo
+k-meson
 brochure
 momot
 carioca
@@ -22034,6 +22754,7 @@ diehard
 liberalist
 raindrop
 blogger
+caddis-fly
 paramedical
 autolatry
 helvella
@@ -22050,6 +22771,7 @@ bluecoat
 peptization
 greyback
 stressor
+auto-changer
 carnage
 tomboyishness
 billionaire
@@ -22066,6 +22788,7 @@ determent
 polyptoton
 meninges
 dogcart
+bow-wow
 salmonid
 luxuriance
 vinery
@@ -22075,6 +22798,7 @@ forefront
 celluloid
 chabazite
 contaminant
+dash-pot
 valse
 tercentenary
 jassid
@@ -22119,6 +22843,7 @@ vacuousness
 phaeton
 traditionality
 venturi
+low-spiritedness
 supertax
 campana
 lockjaw
@@ -22172,6 +22897,7 @@ cadency
 airsickness
 perishability
 atheroma
+mound-bird
 reprobation
 zarf
 pentose
@@ -22179,6 +22905,7 @@ valvula
 valvule
 crinion
 pullout
+paper-mache
 leukocyte
 jello
 billy
@@ -22190,6 +22917,7 @@ counterexample
 diverticulum
 valuableness
 pebibyte
+go-cart
 roentgenoscope
 stovepiping
 exobiology
@@ -22224,6 +22952,7 @@ amah
 improperness
 jaboncillo
 tarweed
+self-loader
 plainclothesman
 warrigal
 ambo
@@ -22234,6 +22963,7 @@ dyspepsia
 helix
 peacefulness
 sobralia
+hand-me-down
 misestimation
 psychosurgery
 psaltery
@@ -22262,6 +22992,7 @@ perimysium
 impreciseness
 polenta
 junco
+pike-perch
 decampment
 coruscation
 radioisotope
@@ -22271,12 +23002,15 @@ girasol
 peacekeeping
 palsy
 bigram
+down-bow
 marchioness
 radioprotection
+laurel-tree
 decomposition
 sarcostyle
 accidence
 buster
+horse-head
 helve
 backrest
 squatness
@@ -22306,6 +23040,7 @@ stewardship
 foreshore
 achromia
 rhenium
+self-fertilization
 clavicle
 telecom
 screwbean
@@ -22314,6 +23049,7 @@ prazosin
 meralgia
 fandom
 amyl
+hire-purchase
 chittamwood
 ectoderm
 gesneria
@@ -22362,6 +23098,7 @@ noesis
 horsefish
 mucilage
 liman
+one-thousandth
 reddle
 propitiousness
 radiotherapist
@@ -22389,6 +23126,7 @@ qoph
 archeobacteria
 habiliment
 arbitrator
+high-spiritedness
 backblast
 personal
 shopwindow
@@ -22404,14 +23142,18 @@ experimentalism
 thyroiditis
 shirker
 underfelt
+living-room
 filaree
 idolater
+well-wisher
 buyback
 theogony
 tricker
+self-consciousness
 woodiness
 altarpiece
 townspeople
+aleph-zero
 loader
 filaria
 zaman
@@ -22429,6 +23171,7 @@ charcuterie
 cranium
 dunce
 vaccinator
+shad-flower
 convener
 hexachlorophene
 contemptibility
@@ -22456,15 +23199,18 @@ freezer
 spheroid
 remit
 vesicatory
+tone-beginning
 stainless
 idolatry
 spoilation
+live-forever
 infinite
 infinity
 monilia
 sightreader
 towhead
 sciolism
+wax-chandler
 sciolist
 edacity
 hansom
@@ -22591,6 +23337,7 @@ ependyma
 gaudery
 leptomeningitis
 carfare
+high-handedness
 waxwing
 cancroid
 competitiveness
@@ -22643,6 +23390,7 @@ baccarat
 tamer
 mono
 baldy
+non-discrimination
 ceftazidime
 representation
 moot
@@ -22657,6 +23405,7 @@ sapience
 autoerotism
 hyoid
 bister
+follow-through
 anemometer
 lepton
 blucher
@@ -22720,6 +23469,7 @@ anemometry
 shellfish
 lockring
 epicureanism
+alpha-tocopheral
 paralytic
 bootee
 quesadilla
@@ -22753,9 +23503,12 @@ thrush
 bimli
 panamiga
 pledger
+baby-walker
 jemmy
 entremets
 hydrangea
+walk-in
+self-abasement
 subtitle
 cataract
 toaster
@@ -22764,12 +23517,15 @@ gonif
 orthodonture
 brontosaur
 botfly
+rest-harrow
 blowjob
 suspender
 bullbat
+ready-made
 basketry
 galley
 homebody
+walk-on
 adoration
 increment
 fertilization
@@ -22791,11 +23547,14 @@ larvicide
 caliper
 impregnability
 glazer
+waste-yard
 wooer
+walk-up
 birchbark
 floatation
 optative
 immutability
+micro-organism
 jewfish
 dayfly
 onomastics
@@ -22804,6 +23563,7 @@ hibiscus
 particularization
 anil
 whitebait
+water-mint
 velleity
 predomination
 hoofer
@@ -22905,6 +23665,7 @@ housekeeper
 plessimeter
 acumen
 cremains
+good-naturedness
 heterogeneity
 curettage
 prepuberty
@@ -22913,6 +23674,7 @@ nard
 nark
 bedder
 ironmonger
+sheep-tick
 iota
 crosspatch
 gemmule
@@ -22920,6 +23682,7 @@ trafficker
 inquirer
 biotin
 nibbler
+time-switch
 cheerleader
 eyepatch
 conto
@@ -22940,6 +23703,8 @@ reticle
 polemist
 catenary
 unlikelihood
+tar-wood
+bitter-bark
 tench
 conidiophore
 drawstring
@@ -22979,6 +23744,7 @@ cazique
 narcoleptic
 lowerclassman
 wirehair
+by-election
 exoticness
 neuroplasty
 stash
@@ -23014,9 +23780,12 @@ verger
 anaphor
 nonesuch
 sparsity
+thick-knee
+pudding-wife
 egocentric
 compression
 cerement
+needle-wood
 applecart
 dag
 dah
@@ -23060,6 +23829,7 @@ baddie
 vasotomy
 foetoscope
 foetoscopy
+ill-usage
 discombobulation
 dkg
 dkl
@@ -23105,12 +23875,15 @@ exchequer
 dry
 mooch
 footlocker
+window-washing
 centerpiece
+arc-boutant
 baleen
 oblongness
 moody
 myotomy
 waterside
+main-topsail
 dub
 duo
 stretcher
@@ -23136,6 +23909,7 @@ sonography
 damar
 persimmon
 newsreel
+change-of-pace
 obliger
 ostomy
 finch
@@ -23195,11 +23969,14 @@ quantifier
 eclectic
 penult
 dinar
+title-holder
 hospitalisation
+lay-by
 cummings
 spruceness
 thermogravimetry
 apomict
+four-flusher
 spindleberry
 ephemeral
 poorhouse
@@ -23209,6 +23986,7 @@ anxiousness
 diner
 backbeat
 diddlyshit
+self-digestion
 deflator
 tanga
 hypha
@@ -23228,6 +24006,7 @@ rachitis
 prawn
 pusher
 pochard
+high-up
 oxycephaly
 epicranium
 frontispiece
@@ -23264,6 +24043,7 @@ arariba
 spawl
 spawn
 soapiness
+aldehyde-alcohol
 rector
 whortleberry
 deposer
@@ -23289,6 +24069,7 @@ biophysics
 crinkle
 cunner
 binge
+lay-up
 bingo
 evisceration
 promptitude
@@ -23301,6 +24082,7 @@ rectum
 rectus
 rigamarole
 minstrelsy
+g-force
 behest
 steelworker
 lingonberry
@@ -23352,6 +24134,7 @@ glassware
 nucleotide
 weigher
 bollworm
+ring-around-the-rosy
 hydrochlorofluorocarbon
 eudiometer
 polytechnic
@@ -23362,10 +24145,12 @@ connoisseurship
 digestibleness
 busywork
 bullhead
+funeral-residence
 dodecagon
 fado
 hyperpigmentation
 examen
+re-formation
 destructibility
 smidgeon
 bitternut
@@ -23401,6 +24186,7 @@ fang
 indefatigability
 oxbow
 sannup
+club-head
 debasement
 circumvolution
 vardenafil
@@ -23412,6 +24198,7 @@ schoolwork
 fart
 drainplug
 catostomid
+hen-of-the-woods
 pentecostal
 propanediol
 postmodernism
@@ -23422,6 +24209,7 @@ nanna
 faun
 nanny
 personation
+self-depreciation
 demerit
 harrier
 spurner
@@ -23436,6 +24224,7 @@ yarmelke
 scammonyroot
 meddler
 millerite
+cha-cha
 tragicomedy
 rickettsia
 zoolatry
@@ -23443,6 +24232,7 @@ purpleness
 savory
 airfare
 transfiguration
+alms-giving
 bletia
 basuco
 nanus
@@ -23453,6 +24243,7 @@ inaptness
 chlamydospore
 peafowl
 faquir
+poet-singer
 oilpaper
 denim
 octopod
@@ -23462,6 +24253,7 @@ capturer
 romanticisation
 unknowing
 anthroposophy
+ass-kisser
 symphonist
 slash
 electorate
@@ -23504,9 +24296,11 @@ chiliast
 combustible
 scrotum
 nympholepsy
+proto-oncogene
 snakefly
 diastema
 hemorrhoidectomy
+post-horse
 garrotter
 archivist
 acanthocyte
@@ -23521,6 +24315,7 @@ vaquita
 friability
 drake
 safehold
+hoo-ha
 beanbag
 habituation
 nightcrawler
@@ -23558,15 +24353,18 @@ clothespress
 ebb
 averageness
 anonym
+pepper-and-salt
 hailstorm
 arsonist
 dreadlock
 obturator
 baba
 babu
+up-to-dateness
 quango
 brail
 geometer
+choc-ice
 noumenon
 camcorder
 factualness
@@ -23581,6 +24379,7 @@ villainousness
 sempstress
 parvis
 melamine
+he-huckleberry
 stonework
 scroll
 stonewort
@@ -23679,6 +24478,7 @@ rectorate
 cutlery
 scoke
 hugger
+self-interest
 puppeteer
 baya
 acromegalia
@@ -23702,6 +24502,7 @@ agglomerator
 shank
 absolver
 haulier
+squint-eye
 antineoplastic
 equipage
 endaemonism
@@ -23726,12 +24527,15 @@ nonalignment
 millwork
 flypast
 pinocle
+ball-breaker
 gumption
 shave
+cease-fire
 prologue
 surprint
 kopje
 shawm
+toe-in
 hamadryad
 motorcycle
 chasteness
@@ -23743,7 +24547,9 @@ diode
 oolong
 quadrillionth
 buttery
+play-actor
 mastigophore
+after-shave
 horniness
 filename
 jazzman
@@ -23754,7 +24560,9 @@ deformity
 expedience
 expediency
 fishgig
+tri-iodomethane
 disgorgement
+two-timer
 manifest
 hyphenation
 proboscidian
@@ -23764,6 +24572,7 @@ theosophism
 theosophist
 pinkness
 cowage
+triple-decker
 cheekpiece
 chromolithography
 dehumanisation
@@ -23781,7 +24590,9 @@ nativity
 mistflower
 sternutation
 pedology
+star-glory
 consumptive
+harum-scarum
 banns
 dioon
 leadplant
@@ -23796,6 +24607,7 @@ fishplate
 preparedness
 entourage
 mouthpart
+diddly-shit
 wheelbarrow
 coenzyme
 hypermenorrhea
@@ -23841,6 +24653,7 @@ biont
 infeasibility
 myopia
 plantain
+prie-dieu
 cautery
 brandish
 shirtdress
@@ -23871,6 +24684,7 @@ apar
 semiweekly
 eland
 outboard
+heart-to-heart
 ridgel
 canafistula
 lumpectomy
@@ -23903,8 +24717,10 @@ condylion
 pluralisation
 eucalyptus
 overappraisal
+major-general
 lancewood
 bulldog
+tie-in
 wainscot
 cisterna
 hydrogel
@@ -23956,11 +24772,14 @@ clasp
 clast
 demeanour
 driblet
+vicar-general
+tie-up
 blowtube
 archegonium
 riflebird
 pyrolusite
 transudation
+vis-a-vis
 petabit
 aminopyrine
 rheumatologist
@@ -23971,6 +24790,7 @@ fictionalisation
 panocha
 panoche
 demesne
+once-over
 pipul
 forager
 earmuff
@@ -24029,7 +24849,10 @@ tepee
 crabgrass
 burster
 branchiopod
+man-of-the-earth
 cabman
+sub-test
+trumpet-wood
 unprofitableness
 glossodynia
 rosemaling
@@ -24054,6 +24877,7 @@ benefactress
 logwood
 calabash
 erythrolysin
+tune-up
 xenotransplant
 greasiness
 rodomontade
@@ -24081,6 +24905,7 @@ diathermy
 cookery
 annotator
 pokeweed
+loud-hailer
 hafnium
 macrocosm
 lumberjack
@@ -24088,12 +24913,14 @@ wonderberry
 deoxythymidine
 dendrite
 psyllium
+sub-interval
 liquidness
 pastorship
 plague
 caustic
 rassling
 virtuousness
+red-berry
 procyclidine
 dichotomization
 coontie
@@ -24176,6 +25003,7 @@ informer
 breeziness
 kirpan
 lychnis
+lie-in
 volubility
 greenery
 fug
@@ -24205,6 +25033,7 @@ reprehensibility
 consumerism
 triggerfish
 annualry
+jack-by-the-hedge
 duodecimal
 precocity
 pseudoephedrine
@@ -24264,6 +25093,8 @@ pageboy
 bluestone
 bilestone
 cumquat
+acre-foot
+barrow-man
 signalization
 pennoncelle
 schizanthus
@@ -24314,6 +25145,8 @@ biped
 ethmoid
 mansard
 esophagoscope
+lantern-fly
+tall-grass
 eclogue
 hygrometer
 peripateticism
@@ -24322,6 +25155,7 @@ greenhood
 misbehaviour
 berretta
 puerility
+acrylonitrile-butadiene-styrene
 methodology
 electrification
 raphe
@@ -24335,9 +25169,11 @@ smarminess
 exurbia
 dishful
 shandygaff
+one-dimensionality
 excerption
 parturiency
 greenhorn
+shove-halfpenny
 decalitre
 barytes
 occiput
@@ -24383,6 +25219,7 @@ funicular
 permutableness
 hiddenness
 minginess
+half-sister
 flimflam
 colonnade
 watercraft
@@ -24457,11 +25294,13 @@ benignity
 pliability
 pedicab
 ornithology
+cut-and-thrust
 funiculus
 towline
 encyclopedism
 encyclopedist
 zodiac
+dicky-seat
 casava
 ethanediol
 incorporation
@@ -24528,6 +25367,7 @@ abomination
 frigate
 tompion
 cuboid
+know-it-all
 enalapril
 endameba
 sorgo
@@ -24593,6 +25433,7 @@ semantics
 dilater
 bookend
 homomorphy
+ex-spouse
 nerveroot
 myelogram
 ventriloquy
@@ -24611,6 +25452,7 @@ epigraph
 sesamoid
 liturgiology
 nucleoprotein
+office-bearer
 elocutionist
 concourse
 surrey
@@ -24638,6 +25480,7 @@ excision
 spongioblast
 arteritis
 percoidean
+gold-beater
 hogshead
 peridot
 tarsier
@@ -24652,14 +25495,17 @@ woollen
 furze
 gel
 get
+half-moon
 cabaret
 badger
 nonstarter
 nitrobacterium
 overestimation
+self-justification
 agnate
 kasbah
 stopper
+bolt-hole
 demiurge
 postfix
 tomalley
@@ -24682,6 +25528,7 @@ rhinoscopy
 flatbed
 converse
 durra
+tread-wheel
 penoncel
 funniness
 funambulism
@@ -24722,6 +25569,7 @@ muckheap
 simulcast
 utiliser
 cytochrome
+fer-de-lance
 burka
 cathartic
 cathartid
@@ -24741,6 +25589,7 @@ radiophoto
 knucks
 knotgrass
 shoreline
+not-for-profit
 indoctrination
 oceanfront
 frijolito
@@ -24751,10 +25600,12 @@ burqa
 globin
 characterization
 voyeurism
+rock-and-roll
 garfish
 countermove
 lyssa
 burro
+wood-fern
 secant
 sympatry
 bursa
@@ -24782,20 +25633,26 @@ enchanter
 entoblast
 carpus
 lunchtime
+foster-brother
 subcontract
+self-praise
 msec
+two-hitter
 lampoon
 calender
 bookbinding
 trichloromethane
 leeward
+leaf-miner
 batiste
 shibah
 remitment
 reed
+one-sixtieth
 reek
 indistinguishability
 nanism
+take-in
 backwater
 nitramine
 postlude
@@ -24834,6 +25691,7 @@ cryptobiosis
 antisepsis
 metathesis
 isothiocyanate
+take-up
 resh
 masturbator
 proconvertin
@@ -24861,6 +25719,7 @@ chiasm
 chlamydia
 intoxication
 corncrib
+make-work
 conchology
 capitol
 stockpile
@@ -24932,6 +25791,7 @@ arak
 numismatologist
 margate
 dimity
+twin-propeller-plane
 millivoltmeter
 oropharynx
 gasolene
@@ -24962,6 +25822,7 @@ sirrah
 photopigment
 comedienne
 erythroderma
+eleven-plus
 perdition
 qabala
 pizzaz
@@ -25012,6 +25873,7 @@ dossier
 ruggedisation
 pudendum
 fanion
+knife-handle
 activation
 laryngismus
 mediacy
@@ -25023,6 +25885,7 @@ caffeinism
 pancarditis
 bearwood
 sparkler
+snow-on-the-mountain
 narcolepsy
 dioxide
 jerkiness
@@ -25056,6 +25919,7 @@ steep
 steer
 ballpoint
 fastnacht
+good-humoredness
 mediant
 pinkeye
 unemotionality
@@ -25075,6 +25939,7 @@ hilliness
 newt
 plaice
 thermoacidophile
+swan-neck
 technicality
 hawkshaw
 terce
@@ -25087,6 +25952,7 @@ verst
 conferee
 rumination
 teres
+ilang-ilang
 stela
 stele
 vertu
@@ -25107,11 +25973,13 @@ cachexy
 obstinacy
 oilseed
 snobbism
+double-decker
 woodlet
 goldworker
 bugbear
 systemiser
 fusilier
+right-hander
 antilogarithm
 plaint
 woodwaxen
@@ -25139,6 +26007,7 @@ assuagement
 distich
 radial
 radian
+sea-rocket
 pyrogen
 paralogism
 conferva
@@ -25167,9 +26036,11 @@ corncrake
 nitweed
 interoceptor
 cannonade
+year-end
 flatcar
 shudra
 gamble
+flannel-cake
 crowfoot
 hin
 joewood
@@ -25192,6 +26063,7 @@ chamfron
 tutee
 assailability
 sentimentalisation
+cross-division
 pinyon
 bellyband
 amplification
@@ -25209,11 +26081,13 @@ hog
 judgement
 hoy
 scarabaean
+law-breaking
 asyndeton
 paleoanthropology
 haplotype
 quarryman
 scrag
+custom-made
 enanthema
 jean
 outturn
@@ -25259,9 +26133,12 @@ cappelletti
 hegira
 tailwort
 perry
+oyster-fish
+pull-through
 toleration
 barbitone
 sheikdom
+pearl-fish
 synset
 phaius
 paleostriatum
@@ -25269,6 +26146,7 @@ novillada
 embouchure
 scholiast
 grillroom
+in-tray
 scrod
 sanctimony
 blackfish
@@ -25316,6 +26194,7 @@ rugelach
 crossbar
 vanadium
 erythema
+kyo-chiku
 pyxidium
 elapid
 chainsaw
@@ -25323,6 +26202,7 @@ endgame
 biretta
 deception
 cuckoldom
+coati-mondi
 bellwether
 acknowledgment
 spikelet
@@ -25414,6 +26294,7 @@ pharyngeal
 jerky
 spoilsport
 galantine
+jack-o-lantern
 egret
 picador
 uterus
@@ -25428,6 +26309,7 @@ voracity
 lexicalisation
 quatercentenary
 endomorphy
+yellow-blindness
 deoxycytidine
 astrolatry
 substructure
@@ -25457,6 +26339,7 @@ beadwork
 topognosis
 blowout
 birthmark
+soup-fin
 opepe
 fieriness
 flamboyant
@@ -25477,6 +26360,7 @@ silverwork
 lithomancy
 catarrhine
 heron
+knee-hi
 stacte
 autobiography
 eosin
@@ -25484,6 +26368,7 @@ civvies
 vicegerent
 naumachy
 propinquity
+pony-trekking
 shillelagh
 phytochemistry
 microphotometer
@@ -25498,6 +26383,7 @@ interrupter
 lifestyle
 hyponymy
 disconsolateness
+ten-strike
 tyrannicide
 contraindication
 hertz
@@ -25533,6 +26419,7 @@ meltwater
 touristry
 intermarriage
 terpsichore
+fuddy-duddy
 cosec
 sleet
 ailurophobia
@@ -25540,13 +26427,16 @@ iterative
 eudaemon
 groundling
 fermi
+one-upmanship
 seaside
 chebab
 lithograph
 feud
 alder
 hexenbesen
+twenty-eight
 cytologist
+back-formation
 fetidness
 hutch
 derby
@@ -25562,6 +26452,7 @@ ferrocerium
 ferry
 cyclopropane
 litterateur
+earth-god
 cultism
 dysgraphia
 panorama
@@ -25569,6 +26460,7 @@ xanthosis
 insalubrity
 ultramarine
 cyberculture
+walk-through
 piste
 coelacanth
 asbestos
@@ -25599,6 +26491,7 @@ mineworker
 cytopenia
 milkcap
 gaillardia
+blue-belly
 koodoo
 reimbursement
 huddler
@@ -25609,6 +26502,7 @@ immorality
 madrilene
 optometrist
 costa
+no-goal
 nonproliferation
 wonderfulness
 frequence
@@ -25618,14 +26512,17 @@ derma
 pinnule
 vespertilionid
 metical
+egg-and-tongue
 quid
 quip
+velvet-leaf
 wolfman
 sweatsuit
 postulant
 lobsterman
 anisogamete
 defoliation
+second-rater
 cryoanesthesia
 infiniteness
 quercitron
@@ -25679,10 +26576,13 @@ antecedency
 diastrophism
 synchronisation
 traitorousness
+earth-closet
 imperfective
 climatology
 futon
 pumpkinseed
+self-esteem
+cross-eye
 kalantas
 eubacterium
 laryngectomy
@@ -25695,6 +26595,7 @@ cynodont
 bream
 acromicria
 olein
+side-glance
 fabian
 preeminence
 diction
@@ -25712,6 +26613,7 @@ diatribe
 cathouse
 hematocoele
 ampoule
+ampere-second
 birdfeeder
 ovotestis
 irreversibility
@@ -25723,6 +26625,7 @@ countinghouse
 favoritism
 fibreglass
 consideration
+country-dance
 lusciousness
 beck
 cinnamon
@@ -25735,6 +26638,7 @@ sporran
 bimester
 lakefront
 sigmoidoscope
+bent-grass
 sigmoidoscopy
 beep
 beet
@@ -25794,6 +26698,7 @@ inflexibility
 breve
 ira
 zigzag
+mother-of-thousands
 pooler
 sarcosine
 crenation
@@ -25812,10 +26717,13 @@ traducer
 illogicalness
 iva
 sheen
+place-worship
 crosscurrent
 omentum
 milometer
 companionability
+wing-nut
+cross-question
 excitableness
 frugalness
 testiere
@@ -25847,6 +26755,7 @@ devilwood
 muck
 ammeter
 southland
+high-low-jack
 strongroom
 incendiarism
 butyl
@@ -26004,6 +26913,7 @@ myotic
 bison
 fossilist
 stypsis
+foot-pound
 elegy
 extremeness
 moneron
@@ -26014,6 +26924,7 @@ sledge
 cookhouse
 cablegram
 dethronement
+pond-skater
 bowerbird
 prickliness
 phonophobia
@@ -26021,6 +26932,7 @@ cholangitis
 coalescency
 clozapine
 titty
+water-shield
 excuser
 casserole
 paseo
@@ -26035,16 +26947,19 @@ elemi
 atar
 pasha
 ununtrium
+dot-com
 tailspin
 commensal
 clear
 microfiche
+leaf-book
 addax
 exarch
 flatmate
 madcap
 harikari
 flyleaf
+c-note
 worthwhileness
 hematemesis
 orchiopexy
@@ -26053,6 +26968,7 @@ centile
 unproductiveness
 fluidness
 homonym
+narco-state
 centime
 centimo
 laureate
@@ -26074,8 +26990,10 @@ porkholt
 hectoliter
 splayfoot
 diagonalisation
+pre-emption
 phantasm
 benthos
+self-mortification
 catamenia
 bouillon
 weeder
@@ -26087,15 +27005,19 @@ despicability
 advertence
 advertency
 beloved
+clock-watching
 divulgement
 chlorination
 doorjamb
 electromagnetism
 cotan
+water-rate
+fish-fly
 stupefaction
 chromosome
 strikingness
 emancipation
+savoir-faire
 digoxin
 vapidness
 photogravure
@@ -26107,6 +27029,7 @@ haematemesis
 voraciousness
 antiphonal
 ratchet
+loop-the-loop
 dysthymia
 disesteem
 tortoise
@@ -26114,6 +27037,7 @@ nephrolithiasis
 syndactyly
 piton
 complementary
+double-crossing
 medical
 hectolitre
 coccyx
@@ -26125,6 +27049,7 @@ vetch
 parallelogram
 teleprinter
 fairlead
+brand-newness
 niter
 inglenook
 amoxicillin
@@ -26136,6 +27061,7 @@ synovitis
 laser
 portulaca
 respectability
+goggle-eye
 incisiveness
 subset
 yanquapin
@@ -26174,6 +27100,7 @@ inaudibleness
 stingray
 efficaciousness
 quantification
+odds-maker
 litas
 endlessness
 jaguarundi
@@ -26191,6 +27118,7 @@ vulcanology
 nitre
 grantor
 vanillin
+rain-wash
 bossism
 instar
 lasso
@@ -26239,6 +27167,7 @@ rareness
 gerardia
 midweek
 edification
+paddle-wheeler
 addressee
 domestication
 bishopric
@@ -26275,11 +27204,14 @@ gravure
 turnstone
 liquorice
 blusterer
+cross-link
+boogie-woogie
 deerstalker
 symmetricalness
 anthelmintic
 quadrate
 jag
+three-fourths
 jay
 limekiln
 emigrant
@@ -26352,7 +27284,10 @@ curtsy
 malnutrition
 brassard
 confusedness
+free-lance
 shakiness
+world-beater
+animal-worship
 tagalong
 balker
 portraiture
@@ -26432,6 +27367,7 @@ yardarm
 papaverine
 gibbousness
 aftertaste
+out-tray
 baedeker
 ijtihad
 pruner
@@ -26439,6 +27375,7 @@ tailcoat
 bonesetter
 appellant
 thingumabob
+pince-nez
 letch
 shagginess
 tettigoniid
@@ -26518,6 +27455,7 @@ offset
 rhabdovirus
 daikon
 swingletree
+pen-and-ink
 seltzer
 ratel
 transaminase
@@ -26639,6 +27577,7 @@ acculturation
 magnifico
 hypocorism
 splashiness
+pine-weed
 reflectiveness
 natal
 idolization
@@ -26680,6 +27619,8 @@ methenamine
 billet
 foundress
 abseiler
+out-basket
+loup-garou
 lightheartedness
 adept
 inexpensiveness
@@ -26690,6 +27631,7 @@ chemiluminescence
 tastebud
 invariable
 retrieval
+five-finger
 cottager
 barbasco
 upsetter
@@ -26737,6 +27679,8 @@ lathi
 calligraphist
 scratchpad
 arborolatry
+night-robe
+litter-bearer
 sheeny
 kentan
 destitution
@@ -26797,6 +27741,7 @@ acetylene
 ankylosaur
 visa
 vise
+pay-phone
 allele
 sarsaparilla
 lymphadenoma
@@ -26815,6 +27760,7 @@ cofactor
 scaremonger
 unfamiliarity
 garganey
+nitty-gritty
 arcsec
 scarfpin
 hatch
@@ -26830,6 +27776,7 @@ genlisea
 backflow
 taximeter
 workload
+three-d
 plankton
 vervain
 cacodemon
@@ -26850,6 +27797,7 @@ playbox
 playboy
 handcart
 jezebel
+lock-gate
 urinator
 blunderbuss
 proscription
@@ -26870,6 +27818,7 @@ spillage
 acarid
 enquirer
 festschrift
+save-all
 anomaly
 astronautics
 monitor
@@ -26907,11 +27856,14 @@ nationhood
 even
 cystolith
 otosclerosis
+riyal-omani
+self-abuse
 acarus
 scuff
 dovekie
 shelduck
 nutshell
+knife-edge
 chadar
 turncoat
 zigadene
@@ -26921,6 +27873,7 @@ blazer
 praisworthiness
 bicentennial
 turncock
+anti-inflammatory
 actin
 phalsa
 contumacy
@@ -26930,6 +27883,7 @@ fatso
 sneerer
 rootlet
 sluttishness
+self-organisation
 indene
 indent
 muckhill
@@ -26958,9 +27912,11 @@ hirsutism
 substantialness
 graffito
 weightlessness
+do-gooder
 blazon
 riel
 ballup
+self-knowledge
 lithography
 riff
 acetaldol
@@ -26974,11 +27930,14 @@ creese
 sericulture
 preterist
 teriyaki
+rabbit-weed
 rill
 cental
+die-sinker
 centas
 gouger
 laelia
+splash-guard
 palanquin
 rima
 hydroxyzine
@@ -26991,6 +27950,7 @@ rink
 chatterer
 becomingness
 pigman
+mix-up
 homecoming
 edaphosaurus
 apologetics
@@ -26999,6 +27959,7 @@ spillover
 xviii
 achromatin
 easiness
+b-meson
 gunlock
 batik
 finisher
@@ -27013,6 +27974,7 @@ crawdad
 ritz
 organelle
 parrakeet
+self-control
 choriomeningitis
 earthball
 gendarme
@@ -27021,6 +27983,7 @@ squelch
 eavesdropper
 tauon
 phlebotomus
+self-indulgence
 palpability
 portcullis
 taupe
@@ -27036,8 +27999,10 @@ thallium
 thalassaemia
 jejunoileitis
 neighbour
+doctor-fish
 flounder
 obtrusiveness
+self-insurance
 embolism
 farmyard
 uxor
@@ -27062,11 +28027,13 @@ launch
 blastoderm
 milliammeter
 haranguer
+quarter-vine
 sportsmanship
 archosaur
 agueweed
 psychoneurosis
 obstetrics
+balls-up
 meantime
 depilation
 workbag
@@ -27096,6 +28063,7 @@ jacaranda
 incompatibility
 underclass
 catbird
+hotei-chiku
 apanage
 carbide
 shipside
@@ -27142,6 +28110,7 @@ monochromatism
 butterwort
 elastic
 elastin
+rent-roll
 internment
 tussock
 collagen
@@ -27155,7 +28124,9 @@ pedagog
 shunter
 nice
 nick
+go-slow
 immune
+wine-coloured
 tailstock
 bedwetter
 bootmaker
@@ -27179,6 +28150,7 @@ comprehension
 pivot
 deadbeat
 comeliness
+dilly-dallier
 floweret
 paleoecology
 rhizopodan
@@ -27204,13 +28176,16 @@ placekicker
 foramen
 comprehensive
 bedlam
+nosh-up
 denationalisation
 lacrimator
 repulse
 viroid
 hobnail
+father-figure
 needlebush
 tussore
+ack-ack
 pacifier
 nipa
 cockloft
@@ -27230,6 +28205,7 @@ sower
 anchovy
 prestidigitation
 alcoholic
+skin-diver
 ectoplasm
 spartan
 faithlessness
@@ -27244,6 +28220,8 @@ accoucheuse
 restfulness
 nonperson
 semasiology
+alpha-lipoprotein
+four-poster
 trombonist
 flickertail
 tolazoline
@@ -27265,6 +28243,7 @@ mediety
 inadvertency
 retaliator
 serialization
+semi-climber
 server
 hypersplenism
 pennyweight
@@ -27306,6 +28285,7 @@ currajong
 unabridged
 macadam
 backpacker
+buck-and-wing
 notepaper
 tonicity
 arctan
@@ -27336,10 +28316,12 @@ marijuana
 neurasthenia
 neurasthenic
 pediculicide
+casino-hotel
 ballistics
 trier
 cryptorchidy
 algarobilla
+hold-down
 seraglio
 disrespect
 husbandman
@@ -27353,6 +28335,7 @@ ceruse
 smacker
 crawlspace
 hoopskirt
+water-color
 pacemaker
 lcm
 cicero
@@ -27428,13 +28411,16 @@ phillipsite
 lux
 batfish
 fauld
+hop-step-and-jump
 vesicopapule
 potage
 lingerer
+hubble-bubble
 inflammation
 washerwoman
 fauna
 pushball
+razzle-dazzle
 delphinium
 lxx
 harridan
@@ -27454,6 +28440,7 @@ buncombe
 hipbone
 fixative
 lingerie
+mess-up
 zithern
 theorisation
 camelpox
@@ -27471,6 +28458,7 @@ omphaloskepsis
 jinx
 nylghai
 nylghau
+sleep-learning
 tumefaction
 whipcord
 costochondritis
@@ -27478,6 +28466,7 @@ fluidram
 buckleya
 reinstatement
 plumcot
+pica-pica
 parrotfish
 intricacy
 inguen
@@ -27492,11 +28481,13 @@ jird
 zoospore
 homospory
 orthoepy
+omnium-gatherum
 disputant
 lygaeid
 krigia
 spiel
 manipulability
+ground-berry
 dipsomania
 prima
 primo
@@ -27528,8 +28519,10 @@ inoculum
 depressor
 kegful
 chaeta
+part-singing
 fishnet
 gerfalcon
+cuckoo-bumblebee
 fumigation
 novillero
 prism
@@ -27537,12 +28530,14 @@ levee
 clyster
 spile
 spill
+handle-bars
 bloodworm
 bloodwort
 managership
 nevus
 inexplicitness
 lightship
+shake-up
 corvee
 orphanage
 rattlebox
@@ -27550,6 +28545,7 @@ regression
 clypeus
 vagrant
 barretter
+tic-tac-toe
 hydroxybenzene
 comptroller
 panellist
@@ -27558,13 +28554,17 @@ jigaboo
 mithan
 yardgrass
 alecost
+mono-iodotyrosine
 variedness
+creole-fish
 spirt
+twice-pinnate
 audiology
 isoagglutination
 baulk
 spitz
 foreordination
+priest-doctor
 plasmacyte
 postulation
 lumpfish
@@ -27603,6 +28603,7 @@ separatism
 separatist
 medfly
 myelinisation
+trip-up
 divvy
 enuresis
 spirula
@@ -27628,6 +28629,7 @@ psychoneurotic
 overpressure
 stiffener
 cocozelle
+kappa-meson
 hypertension
 lysosome
 tympan
@@ -27641,6 +28643,7 @@ disconnect
 didacticism
 shanghai
 backsheesh
+wire-puller
 arguer
 conscript
 brooder
@@ -27662,6 +28665,7 @@ acetal
 seafaring
 hypertensive
 chaffweed
+live-bearer
 tautness
 frontierswoman
 unholiness
@@ -27679,6 +28683,7 @@ loggerhead
 clementine
 doings
 enflurane
+diddly-squat
 monopolizer
 fusain
 humblebee
@@ -27690,6 +28695,7 @@ breakstone
 infolding
 pentameter
 worthiness
+broad-bean
 fief
 sericulturist
 wordbook
@@ -27712,7 +28718,9 @@ tarwood
 buffoonery
 backroom
 lilliputian
+also-ran
 escudo
+rabble-rouser
 fils
 differentiation
 handwear
@@ -27725,6 +28733,7 @@ kidnaper
 graininess
 purchaser
 fontanel
+line-shooting
 leucocytosis
 awol
 dockworker
@@ -27733,6 +28742,7 @@ kishke
 fink
 phylogenesis
 dislodgement
+ex-serviceman
 inverter
 knockoff
 backwash
@@ -27754,6 +28764,7 @@ maguey
 phenol
 zipper
 trudger
+ready-mix
 priory
 trophy
 duenna
@@ -27775,6 +28786,7 @@ fizz
 methyl
 laver
 lithiasis
+green-blindness
 frier
 conscientiousness
 conceiver
@@ -27799,6 +28811,8 @@ taenia
 countermarch
 weathervane
 chelation
+great-niece
+foster-parent
 hepatomegaly
 mutism
 polyester
@@ -27808,9 +28822,11 @@ gooseflesh
 frill
 romaic
 umbrage
+roller-skater
 hexane
 topsail
 shakeup
+high-low
 curtailment
 kinsperson
 minestrone
@@ -27869,6 +28885,7 @@ grumbler
 cervid
 cervix
 sodomite
+drop-off
 frizz
 columbarium
 lavabo
@@ -27877,7 +28894,9 @@ immunodeficiency
 ferryboat
 drill
 pipage
+great-nephew
 squinch
+games-mistress
 deflation
 loaner
 dorsiflexion
@@ -27885,10 +28904,12 @@ honeycomb
 exuviae
 downgrade
 rouble
+mezzo-rilievo
 limewater
 suspiration
 briar
 lavage
+record-holder
 althea
 larceny
 thyromegaly
@@ -27908,6 +28929,7 @@ mcg
 militarisation
 breadroot
 polack
+fire-worship
 meg
 mei
 osteopath
@@ -27985,6 +29007,7 @@ carver
 reveler
 pewit
 shoplifter
+ship-breaker
 biennial
 slowpoke
 uricaciduria
@@ -28011,6 +29034,7 @@ tetraskele
 homoeroticism
 homozygote
 autofocus
+pye-dog
 tintack
 midget
 zapper
@@ -28026,12 +29050,15 @@ fibroid
 myg
 mym
 histiocyte
+peach-wood
 farmplace
 erection
+front-stall
 candelilla
 gadabout
 umpire
 syntagm
+loop-line
 newel
 reposition
 quincentenary
@@ -28039,6 +29066,7 @@ fibroma
 headsail
 illegitimate
 crockery
+brain-stem
 shill
 meclofenamate
 pancytopenia
@@ -28046,6 +29074,7 @@ macula
 macule
 potboy
 exon
+love-lies-bleeding
 favus
 sandarach
 thunderbird
@@ -28054,12 +29083,14 @@ punchball
 alimentation
 ripper
 threescore
+thirty-second
 concavity
 sorrowfulness
 sixsome
 davit
 snowberry
 tuatara
+two-baser
 shifter
 impeachability
 backswimmer
@@ -28071,6 +29102,7 @@ urolith
 primrose
 reorganisation
 testate
+teeter-totter
 lumper
 drifter
 disfavour
@@ -28082,6 +29114,7 @@ davallia
 rubella
 cheerio
 penultimate
+low-down
 scunner
 lagophthalmos
 shiva
@@ -28100,10 +29133,12 @@ vixen
 alphabet
 achiever
 tracklayer
+de-iodinase
 penknife
 myna
 baulker
 algidity
+marble-wood
 kneeler
 peacenik
 modernisation
@@ -28127,6 +29162,7 @@ necromancer
 transposability
 avowal
 sertularian
+passe-partout
 chigoe
 glide
 pilaff
@@ -28148,13 +29184,16 @@ sulphate
 avower
 synthetism
 factoid
+wren-tit
 merbromine
 lavishness
+fore-topmast
 underboss
 linage
 grubbiness
 fulsomeness
 saleratus
+out-migration
 tawse
 tidiness
 gangplank
@@ -28165,6 +29204,7 @@ forename
 goldbeater
 gerontology
 hermaphrodism
+sing-kwa
 birdcage
 cherimolla
 manliness
@@ -28220,6 +29260,7 @@ subvention
 workday
 pressor
 zebibyte
+mid-on
 discrimination
 synthesiser
 newbie
@@ -28239,7 +29280,9 @@ schooltime
 garboil
 pomegranate
 teeoff
+pork-barreling
 prosthodontist
+co-discoverer
 deterrence
 dimout
 lubrication
@@ -28302,6 +29345,8 @@ encyclopaedism
 encyclopaedist
 homiletics
 coscoroba
+mixed-blood
+rubber-necking
 hoopla
 alias
 hemagglutination
@@ -28351,6 +29396,7 @@ tetanus
 athetosis
 dumper
 patricide
+shoo-in
 foglamp
 newsworthiness
 archduchy
@@ -28384,6 +29430,7 @@ butterflower
 titlark
 polychete
 verticillium
+tax-exempt
 carpetweed
 socialisation
 realness
@@ -28400,6 +29447,7 @@ cosine
 steatopygia
 slyboots
 predestinarian
+x-ray
 agglomeration
 halitosis
 stovepipe
@@ -28418,8 +29466,10 @@ territorial
 runniness
 tailboard
 prayerbook
+kok-sagyz
 clarinet
 matins
+by-line
 cocoswood
 ethylene
 limnology
@@ -28467,6 +29517,7 @@ postman
 buspirone
 outbuilding
 bigamist
+paper-pusher
 virilization
 bestowment
 jurywoman
@@ -28475,10 +29526,12 @@ nan
 trainband
 familiar
 reorientation
+games-master
 haemorrhoidectomy
 tsuris
 rascality
 bowdleriser
+get-up-and-go
 viricide
 workaholism
 oophoritis
@@ -28496,6 +29549,7 @@ secondo
 cephalochordate
 enquiry
 drugget
+good-neighborliness
 ipsedixitism
 nib
 nim
@@ -28565,12 +29619,14 @@ foothill
 chirp
 horologer
 lamenter
+sit-down
 underperformer
 inconceivableness
 inevitableness
 newssheet
 thrombasthenia
 piculet
+pie-dog
 thumbprint
 dawah
 hornfels
@@ -28594,6 +29650,7 @@ quaestor
 advertiser
 glossina
 blister
+iron-tree
 industriousness
 cartographer
 hysteroscopy
@@ -28636,6 +29693,7 @@ taipan
 melagra
 succeeder
 strapper
+strong-armer
 unregularity
 oblique
 cylindricality
@@ -28643,6 +29701,7 @@ oboist
 momentousness
 taxer
 valvotomy
+well-wishing
 bawdy
 thromboembolism
 balderdash
@@ -28653,6 +29712,7 @@ nexus
 thrombophlebitis
 clarence
 viscus
+make-do
 mujahid
 coatdress
 parchesi
@@ -28685,6 +29745,7 @@ solubleness
 goujon
 wellbeing
 taxon
+go-getter
 claustrophobia
 homoiotherm
 milium
@@ -28703,9 +29764,11 @@ underdevelopment
 dicoumarol
 pillwort
 aminoaciduria
+cliff-brake
 nephroptosia
 horsewhip
 nephroptosis
+two-by-four
 responsiveness
 trotline
 multivitamin
@@ -28716,11 +29779,14 @@ biteplate
 materiality
 teleostan
 helicon
+make-up
+self-examination
 sailmaker
 lazarette
 lazaretto
 guillotine
 dabbler
+wall-paperer
 cesium
 sleight
 recalculation
@@ -28734,12 +29800,14 @@ microsporophyll
 dimple
 riyal
 abnegator
+stick-in-the-mud
 changefulness
 hatbox
 carcajou
 hexad
 hypocalcaemia
 catchment
+add-in
 sermoniser
 multiplex
 sleigh
@@ -28765,6 +29833,7 @@ pipewort
 pedant
 coralwort
 ayah
+add-on
 luckiness
 eolith
 growler
@@ -28774,11 +29843,13 @@ nagami
 naboom
 slowdown
 bowdlerization
+stand-in
 spinster
 forfeiture
 syncope
 plural
 aesthete
+single-mindedness
 sesquicentennial
 dartboard
 internationalization
@@ -28791,7 +29862,9 @@ revitalisation
 exorbitance
 fugaciousness
 legality
+tittle-tattle
 bumbler
+radio-opacity
 ayin
 hairweaving
 lingenberry
@@ -28827,6 +29900,7 @@ chorioretinitis
 blaster
 peristalsis
 policyholder
+noli-me-tangere
 leipoa
 erythrocyte
 blowtorch
@@ -28839,22 +29913,27 @@ divorcement
 malice
 ceremoniousness
 mantlepiece
+court-martial
 exportation
 bullhorn
 freewheel
+one-eighth
 counteroffer
 midstream
 milcher
 markhoor
 hastiness
+self-aggrandizement
 cleavage
 weakener
 pollenation
+jiggery-pokery
 sporozoite
 lowlife
 elitism
 elitist
 roadman
+ill-being
 loadstar
 bauble
 durmast
@@ -28879,6 +29958,7 @@ pontifex
 panhandle
 matcher
 matchet
+ex-husband
 coypu
 perceiver
 autocatalysis
@@ -28892,6 +29972,7 @@ swordtail
 sizzle
 cotinga
 investiture
+speed-reading
 atresia
 styler
 stylet
@@ -28900,6 +29981,7 @@ padauk
 eradicator
 bombie
 allergology
+vase-fine
 cystoplegia
 disinheritance
 sourness
@@ -28955,11 +30037,13 @@ platter
 anapsid
 shoeshine
 ephemeropteran
+self-disgust
 pothouse
 cartilaginification
 stylus
 woodsia
 concaveness
+wine-colored
 abrachia
 waviness
 batholite
@@ -28971,6 +30055,7 @@ salubrity
 dealfish
 cartography
 intubation
+double-prop
 onomancer
 alternator
 dichromatopsia
@@ -29020,6 +30105,7 @@ topicalization
 orderer
 coralbells
 falsification
+tongue-flower
 oka
 neanderthal
 allegoriser
@@ -29036,6 +30122,7 @@ hydraulics
 takeout
 contortionist
 ceratosaur
+man-child
 infertility
 carburetor
 whicker
@@ -29080,6 +30167,7 @@ housebuilder
 jacksmelt
 diversionist
 gripsack
+love-in-idleness
 dragger
 scorper
 theologizer
@@ -29102,7 +30190,9 @@ sinopia
 sinopis
 schlock
 cheetah
+stingaree-bush
 sulfate
+elephant-tusk
 starling
 splat
 splay
@@ -29112,6 +30202,7 @@ dosshouse
 tachycardia
 thorax
 klystron
+trade-in
 druggist
 spindlelegs
 hydrography
@@ -29139,6 +30230,7 @@ psychopharmacology
 residual
 inkstand
 urination
+thing-in-itself
 litchee
 allergist
 totalisator
@@ -29155,6 +30247,7 @@ trousseau
 surbase
 exhilaration
 oximeter
+argle-bargle
 smoker
 phytohormone
 funicle
@@ -29234,11 +30327,14 @@ annunciator
 medina
 neocon
 cryptophyte
+clip-on
 hygiene
+topsy-turvydom
 theoriser
 dybbuk
 waterleaf
 suslik
+one-fourth
 geranium
 huskiness
 muazzin
@@ -29247,6 +30343,7 @@ appeasement
 succory
 noradrenaline
 toxoplasmosis
+de-escalation
 properness
 hartebeest
 blastodisc
@@ -29265,6 +30362,7 @@ epididymitis
 thermotropism
 erbium
 habitableness
+sang-froid
 scorzonera
 solarisation
 siderocyte
@@ -29277,8 +30375,10 @@ hysterosalpingogram
 payer
 distressingness
 collimator
+gall-berry
 affability
 whacker
+island-dweller
 appellative
 advertisement
 chincherinchee
@@ -29312,6 +30412,7 @@ phylactery
 shredder
 nailbrush
 flex
+cloud-cuckoo-land
 sycophancy
 cameraman
 purveyance
@@ -29345,6 +30446,7 @@ funrun
 acetophenetidin
 bullbrier
 spokeshave
+go-around
 bamboo
 fasces
 phenothiazine
@@ -29370,6 +30472,7 @@ availableness
 preemptor
 microbiologist
 fortnight
+one-hundred-millionth
 submersible
 flub
 blandishment
@@ -29401,7 +30504,9 @@ bedpan
 violoncellist
 prefabrication
 bargainer
+rattle-top
 promenade
+good-king-henry
 narrow
 rivetter
 disbeliever
@@ -29442,6 +30547,7 @@ sarcoma
 airburst
 alkyd
 alkyl
+ding-dong
 scattergood
 cyclops
 conventionalization
@@ -29451,6 +30557,7 @@ deconstructivism
 sacrilegiousness
 layup
 concessioner
+half-light
 petroleum
 exarchate
 relaxant
@@ -29471,6 +30578,7 @@ tiercel
 sodbuster
 anaphylaxis
 traitress
+owner-occupier
 whitewash
 wainwright
 gutlessness
@@ -29479,6 +30587,8 @@ grumpiness
 pennycress
 dobbin
 positiveness
+father-in-law
+tortoiseshell-cat
 underseal
 federalisation
 nanogram
@@ -29487,6 +30597,7 @@ deviant
 viceroy
 surfboarder
 quantifiability
+runner-up
 epigraphy
 follicle
 ferroconcrete
@@ -29499,10 +30610,12 @@ superposition
 sulindac
 ginseng
 cookout
+chin-up
 ferret
 assassination
 deviate
 pax
+ape-man
 specification
 antiparticle
 prochlorperazine
@@ -29522,6 +30635,7 @@ avionics
 ectotherm
 polder
 xylene
+brittle-star
 shingler
 changer
 bleu
@@ -29552,6 +30666,7 @@ dysphoria
 affirmativeness
 compare
 pyaemia
+ten-thousandth
 repertoire
 parsnip
 antiredeposition
@@ -29583,6 +30698,7 @@ venison
 pud
 pug
 put
+butter-flower
 shlep
 encroacher
 freelancer
@@ -29591,11 +30707,14 @@ zillion
 proctology
 pya
 eclipsis
+bell-bottoms
 pyx
 heliozoan
 rofecoxib
 flugelhorn
+mist-flower
 sterileness
+gill-over-the-ground
 billabong
 lepidopterology
 villein
@@ -29624,6 +30743,7 @@ mulligatawny
 cecity
 teliospore
 redraft
+ylang-ylang
 groundsheet
 proportionality
 longroot
@@ -29635,6 +30755,7 @@ untouchable
 lymphocytopenia
 checkrein
 rubeola
+cusk-eel
 gastroenteritis
 backstairs
 extinction
@@ -29642,6 +30763,7 @@ ergotamine
 farrow
 opsonization
 bayat
+self-rule
 encyclopaedia
 bettong
 devotedness
@@ -29695,6 +30817,7 @@ shikse
 generalship
 stochasticity
 impressment
+change-up
 bayou
 larder
 chiasmus
@@ -29816,6 +30939,7 @@ centiliter
 philologue
 puddle
 myometrium
+orb-weaver
 restrainer
 reformatory
 odontoglossum
@@ -29838,14 +30962,18 @@ starveling
 geophysicist
 logomania
 revetement
+line-shooter
 circularity
 pluton
 mujahedeen
+low-warp-loom
 roughrider
 shigella
+spend-all
 euphorbium
 philatelist
 shearwater
+air-intake
 mesosphere
 microgametophyte
 opulence
@@ -29855,6 +30983,7 @@ centilitre
 orbiter
 seasickness
 valentine
+sea-purse
 jackfruit
 gauntness
 disbandment
@@ -29868,9 +30997,11 @@ laminectomy
 fluxmeter
 drosky
 iceberg
+pearl-weed
 serigraphy
 impulsion
 crotalaria
+sea-puss
 dickybird
 packsack
 crawdaddy
@@ -29886,6 +31017,7 @@ alloy
 blastogenesis
 pewter
 endplate
+honey-flower
 impassiveness
 seemliness
 assailant
@@ -29895,6 +31027,7 @@ hacienda
 landau
 umpirage
 airscrew
+all-rounder
 detritus
 crystallography
 cacodaemon
@@ -29902,6 +31035,7 @@ solicitor
 dictostylium
 gangdom
 asseverator
+work-in
 void
 deviltry
 cyclopia
@@ -29920,6 +31054,7 @@ vole
 volt
 psychometry
 millimetre
+flare-up
 lateralization
 gossamer
 titanium
@@ -29963,6 +31098,7 @@ hazan
 mujahadein
 cassiterite
 condiment
+feather-foil
 turnery
 cummerbund
 chorizo
@@ -29974,6 +31110,7 @@ hazel
 fanweed
 backseat
 innumerableness
+read-out
 copiousness
 qat
 taxonomer
@@ -29985,6 +31122,7 @@ skirret
 twitter
 autobahn
 customshouse
+self-incrimination
 shitwork
 supertonic
 pauperisation
@@ -30027,6 +31165,7 @@ tiramisu
 piston
 burdock
 quarrier
+woman-worship
 nephoscope
 affricate
 mephenytoin
@@ -30073,6 +31212,7 @@ bubbliness
 rattan
 subsidiarity
 clingfish
+soap-rock
 quietism
 quietist
 bragger
@@ -30097,6 +31237,7 @@ ratter
 pintado
 sainthood
 blackseed
+free-liver
 shipworm
 assemblywoman
 acervulus
@@ -30118,10 +31259,13 @@ millet
 shootout
 spondylarthritis
 lucubration
+foot-lambert
+switch-ivy
 rosiness
 bazar
 kneepan
 newsprint
+harvest-lice
 pestle
 waif
 vetchling
@@ -30137,6 +31281,7 @@ stippler
 cuckoo
 monetisation
 boycott
+corbie-step
 marauder
 obolus
 wanderlust
@@ -30148,6 +31293,7 @@ wank
 homespun
 pyelonephritis
 curiousness
+bobby-socker
 thermochemistry
 sandiness
 keratoscleritis
@@ -30155,6 +31301,7 @@ taboret
 kiloliter
 dander
 scansion
+half-pay
 ingenue
 phonologist
 antitype
@@ -30185,6 +31332,7 @@ nadolol
 rubbernecker
 kicker
 berkelium
+self-seeking
 coastland
 crossbeam
 sandwort
@@ -30215,6 +31363,7 @@ differentia
 gingerroot
 hydrosphere
 paster
+you-drive
 bannock
 medulla
 ingrate
@@ -30312,6 +31461,7 @@ quahaug
 recalcitrance
 recalcitrancy
 epicurean
+part-owner
 fumigator
 vasoconstriction
 democratisation
@@ -30320,6 +31470,7 @@ presidio
 mammalogy
 excitation
 lanternfish
+hundred-percenter
 angiography
 solicitorship
 dragonhead
@@ -30370,6 +31521,7 @@ salp
 distributer
 labdanum
 throughput
+wave-off
 cholelithotomy
 apoapsis
 autofluorescence
@@ -30378,6 +31530,7 @@ smolder
 newsvendor
 promiser
 snipefish
+jerry-building
 anchusa
 stoat
 nationalist
@@ -30417,6 +31570,7 @@ misadventure
 sawm
 encephalography
 drupelet
+rope-maker
 promisor
 trochlear
 virgule
@@ -30466,12 +31620,15 @@ roundness
 defloration
 symbiosis
 extraneousness
+part-timer
 amniocentesis
 vroom
 holothurian
 adventurousness
 barytone
 kopiyka
+sub-assembly
+fox-trot
 precentorship
 sauerbraten
 meatloaf
@@ -30507,6 +31664,7 @@ zeugma
 fistula
 twain
 adjutant
+one-quintillionth
 ref
 rep
 rev
@@ -30541,14 +31699,18 @@ immunogen
 encainide
 argumentation
 multiplier
+half-and-half
 sicklepod
+bicycle-built-for-two
 cistron
 eldorado
 photalgia
 amaurosis
+water-target
 bettor
 gourmand
 anesthesia
+fail-safe
 myxoma
 descensus
 troth
@@ -30562,9 +31724,11 @@ parodist
 tuffet
 gaussmeter
 trove
+t-scope
 gnomon
 carnosaur
 coagulant
+sea-duty
 stemma
 tapster
 sphagnum
@@ -30577,6 +31741,7 @@ silversmith
 loquat
 uncreativeness
 tapotement
+wash-and-wear
 effusiveness
 nastiness
 fivesome
@@ -30596,6 +31761,7 @@ newsperson
 rum
 carcase
 delectability
+put-on
 militance
 participle
 militancy
@@ -30625,6 +31791,7 @@ streptothricin
 geezerhood
 ploughland
 pancreatitis
+prickle-weed
 propagator
 fogginess
 inutility
@@ -30638,6 +31805,7 @@ tablespoonful
 shallu
 symphysion
 deoxyadenosine
+man-about-town
 relapse
 absorbate
 batten
@@ -30673,6 +31841,8 @@ philosophiser
 spoil
 maltster
 culpableness
+self-will
+old-man-of-the-woods
 dishrag
 trainbearer
 curtsey
@@ -30709,7 +31879,9 @@ shareholder
 educationist
 battue
 granulocytopenia
+love-in-winter
 slattern
+skinny-dipper
 suppliant
 stuffiness
 diesis
@@ -30786,7 +31958,9 @@ anticatalyst
 timekeeping
 central
 prospicience
+one-off
 prater
+sagittate-leaf
 chinaberry
 inspirer
 gourmandizer
@@ -30811,6 +31985,7 @@ launderette
 fakeer
 foal
 azadirachtin
+y-axis
 phosphorescence
 comradery
 goalie
@@ -30842,16 +32017,20 @@ capercaillie
 chachalaca
 fohn
 madrepore
+vingt-et-un
 basketeer
 morbidness
 hornbill
 polonaise
 fantan
+fly-by
 servitor
 kail
+man-of-war
 faintness
 grandmaster
 kaki
+brain-teaser
 kali
 backgrounder
 eupnea
@@ -30881,6 +32060,7 @@ protactinium
 justiciar
 macumba
 popgun
+tri-chad
 magnolia
 louver
 khalif
@@ -30951,12 +32131,15 @@ groundcover
 paleozoology
 louvre
 recapture
+tick-weed
 tiffin
 shocker
 fastener
 megabucks
 featherbed
 pacesetter
+passer-by
+de-iodination
 arthropathy
 sloth
 lanolin
@@ -30964,6 +32147,7 @@ upstart
 vinblastine
 sulfadiazine
 platan
+look-over
 drouth
 bedsit
 spinel
@@ -30992,6 +32176,7 @@ toady
 sconce
 swoosh
 pulverization
+alpha-adrenoceptor
 sandspur
 tetrahydrocannabinol
 pibgorn
@@ -31024,6 +32209,7 @@ retraction
 glueyness
 hornist
 broad
+self-inductance
 warmonger
 curacao
 keratinization
@@ -31032,6 +32218,7 @@ chunga
 vervet
 combretum
 gossiper
+pop-up
 hyperboloid
 roach
 sac
@@ -31068,6 +32255,7 @@ oxtant
 cardholder
 plasticiser
 brome
+coral-wood
 sib
 cubicle
 naupathia
@@ -31078,6 +32266,7 @@ gammon
 cuticula
 boil
 camomile
+lady-slipper
 testifier
 curacoa
 respondent
@@ -31085,8 +32274,10 @@ guava
 reproducer
 praline
 domicile
+off-white
 grassfinch
 weightlifter
+self-realization
 sootiness
 glutinousness
 bola
@@ -31114,8 +32305,10 @@ conodont
 spa
 bong
 mugwort
+moose-wood
 gamp
 irreligionist
+auto-mechanic
 boob
 boor
 bafflement
@@ -31129,11 +32322,13 @@ shoat
 centrefold
 gaol
 paleencephalon
+soup-strainer
 prodigy
 exanthema
 pother
 coriander
 acceptableness
+hang-up
 nephelite
 willies
 pineweed
@@ -31150,6 +32345,7 @@ smack
 upper
 outback
 pectus
+non-engagement
 shoehorn
 cumfrey
 playroom
@@ -31168,6 +32364,7 @@ bulkiness
 gaur
 lutanist
 clubhead
+tetrabromo-phenolsulfonephthalein
 duffle
 thunderbolt
 unsociableness
@@ -31176,6 +32373,7 @@ vaginitis
 pharmacokinetics
 insobriety
 strafe
+cross-purpose
 juryman
 gawk
 obit
@@ -31186,9 +32384,11 @@ excrescence
 paragrapher
 discouragement
 lusterware
+good-for-naught
 riposte
 isoniazid
 bozo
+side-look
 bankroll
 sneezer
 cultivar
@@ -31196,6 +32396,7 @@ leveler
 roguery
 anglerfish
 longyi
+turn-on
 pothos
 humanitarian
 oxidoreduction
@@ -31206,6 +32407,7 @@ laceration
 antinomian
 shoot
 oboe
+self-determination
 minoxidil
 pellitory
 foursquare
@@ -31217,11 +32419,14 @@ acrylate
 reefer
 sphecoid
 monoculture
+going-over
 catechism
 catechist
 tolbutamide
 smarm
 smart
+single-foot
+self-contradiction
 authentication
 decoder
 shindy
@@ -31252,9 +32457,11 @@ loach
 pillbox
 suprematism
 suprematist
+beta-lactamase
 fiddlestick
 elective
 marsupium
+foul-up
 primordium
 keystone
 mustard
@@ -31274,6 +32481,7 @@ pantechnicon
 bicuspid
 hyperhidrosis
 treponema
+sedative-hypnotic
 bloodberry
 nosher
 incorporeality
@@ -31299,6 +32507,7 @@ samisen
 perversion
 wiener
 karyolymph
+car-ferry
 sprain
 loasa
 heliometer
@@ -31321,7 +32530,9 @@ debugger
 whoosh
 notability
 archduke
+do-nothing
 gentleness
+head-shrinker
 tergiversator
 falsehood
 joystick
@@ -31336,6 +32547,7 @@ disembarkment
 bunchgrass
 bluetongue
 brasserie
+caddice-fly
 stemmer
 earthtongue
 caff
@@ -31371,8 +32583,11 @@ partizan
 microtubule
 cygnet
 waterline
+heads-up
 criminalism
+spot-weld
 forgivingness
+old-fashionedness
 leadwort
 capo
 puckishness
@@ -31414,6 +32629,7 @@ privet
 cascarilla
 hoover
 kbit
+snarl-up
 tetterwort
 nelfinavir
 revisal
@@ -31455,6 +32671,7 @@ linkman
 charwoman
 trowel
 indicative
+kitty-cat
 rickrack
 banknote
 feudalism
@@ -31462,6 +32679,7 @@ colorlessness
 blancmange
 responsibility
 reconciler
+coach-and-four
 masculine
 pignolia
 stammel
@@ -31487,6 +32705,7 @@ fjord
 polyplacophore
 quassia
 dioptre
+nouveau-riche
 benefactor
 sensitive
 expectoration
@@ -31538,6 +32757,7 @@ perithecium
 pamperer
 woodcock
 monomania
+beta-interferon
 bigarade
 pennoncel
 transamination
@@ -31551,6 +32771,7 @@ imbibition
 gradualness
 saphead
 criollo
+eye-drop
 nationalisation
 guacamole
 rebroadcast
@@ -31577,9 +32798,11 @@ cryptocoryne
 touchiness
 cuirassier
 odour
+beggar-ticks
 maisonette
 dingle
 aluminium
+write-off
 vasodilative
 favorableness
 captaincy
@@ -31615,8 +32838,10 @@ presidium
 amoebiasis
 photoretinitis
 keratectasia
+safe-deposit
 passivism
 neurotoxin
+nurse-midwife
 lamella
 pyrosis
 gloxinia
@@ -31629,11 +32854,13 @@ robin
 orthopteron
 kiaat
 physiotherapist
+self-worth
 keratoacanthoma
 militiaman
 firefighter
 corneum
 hyperglycemia
+cross-examiner
 roble
 umbel
 umber
@@ -31659,6 +32886,7 @@ compere
 thimbleful
 monoplane
 satang
+self-centeredness
 waybill
 recursion
 spongillafly
@@ -31677,6 +32905,7 @@ clinic
 clinid
 gosling
 tripoli
+three-quarters
 coaction
 rationalist
 encirclement
@@ -31692,6 +32921,7 @@ kiang
 artefact
 quintuplet
 lassitude
+hair-raiser
 blastopore
 sawpit
 crewman
@@ -31707,6 +32937,7 @@ lyrist
 matriarchate
 harmoniser
 bladdernose
+wood-frog
 cubeb
 histologist
 shandy
@@ -31736,6 +32967,7 @@ fatherland
 footmark
 headship
 pneumatics
+fall-board
 involuntariness
 potion
 loveseat
@@ -31746,6 +32978,7 @@ attendee
 attender
 slammer
 refuter
+aleph-null
 tyrannid
 forgiver
 licenser
@@ -31776,6 +33009,7 @@ felafel
 speedwell
 candidature
 anasarca
+self-reformation
 ravehook
 babyhood
 nebula
@@ -31784,6 +33018,7 @@ cockiness
 carbamate
 maidenhead
 ditchmoss
+two-thirds
 vaporing
 augmentation
 charitableness
@@ -31795,9 +33030,11 @@ corrugation
 deletion
 goofball
 digester
+step-down
 statesmanship
 repetitiousness
 agrapha
+self-pollination
 arcsecant
 sucre
 appro
@@ -31833,6 +33070,7 @@ subsidizer
 neckpiece
 preachment
 capsicum
+crop-dusting
 pharynx
 micropenis
 silage
@@ -31850,6 +33088,7 @@ nagger
 pederast
 clench
 apoptosis
+hot-rod
 paleopathology
 vaccinia
 quester
@@ -31926,11 +33165,13 @@ sandblaster
 eroticism
 asseveration
 pikestaff
+seven-up
 uniformness
 mistrial
 heftiness
 straight
 narwal
+life-style
 redneck
 republication
 carancha
@@ -31967,6 +33208,7 @@ durian
 coaster
 torsion
 sibyl
+sugar-bush
 earthenware
 lovemaking
 dachsie
@@ -32019,6 +33261,7 @@ stria
 squanderer
 clematis
 mantiger
+demi-glaze
 hairsbreadth
 errancy
 durion
@@ -32026,6 +33269,7 @@ gorgonian
 brocket
 parallax
 sagitta
+ice-wagon
 bobby
 salaah
 salaam
@@ -32034,7 +33278,9 @@ ballcock
 dobra
 simperer
 smother
+shrimp-fish
 obelion
+post-menopause
 sturdiness
 arteriolosclerosis
 nonallele
@@ -32046,6 +33292,7 @@ shelterbelt
 undecagon
 whinberry
 bromeosin
+hide-and-seek
 monoblast
 cerebration
 sensitiveness
@@ -32079,6 +33326,7 @@ aetiologist
 ember
 roisterer
 complexness
+break-axe
 migrant
 risklessness
 salami
@@ -32101,11 +33349,13 @@ onychosis
 smallmouth
 haircloth
 divide
+bye-election
 railroader
 telsontail
 hierolatry
 colchicine
 backside
+follow-on
 bankbook
 bowdlerizer
 vulvectomy
@@ -32127,8 +33377,10 @@ tripper
 upcast
 ultraconservative
 echinocactus
+follow-up
 hagberry
 cease
+milk-vetch
 vinegarishness
 tablemate
 everydayness
@@ -32162,6 +33414,8 @@ anticonvulsant
 intervenor
 anathema
 overprotection
+co-respondent
+show-stopper
 allemande
 painkiller
 hostler
@@ -32206,6 +33460,7 @@ peripeteia
 cocotte
 abrocome
 ambit
+semi-abstraction
 squareness
 shlimazel
 cataloguer
@@ -32219,6 +33474,7 @@ interstate
 oblate
 demurral
 advertizer
+soap-weed
 screecher
 archbishopric
 amble
@@ -32265,6 +33521,7 @@ earshot
 impeller
 chanty
 weka
+self-cultivation
 weld
 welt
 aardvark
@@ -32393,6 +33650,7 @@ fray
 lizardfish
 strophe
 whittler
+hole-in-the-wall
 remount
 ventilator
 substantiation
@@ -32414,6 +33672,7 @@ osteostracan
 soothsaying
 populariser
 colossus
+cross-stitch
 antipyretic
 exogamy
 logginess
@@ -32461,6 +33720,7 @@ plagiarist
 fermion
 mudra
 seek
+self-denial
 tektite
 expansivity
 bookstall
@@ -32470,6 +33730,7 @@ mangold
 rectangularity
 viscosimetry
 levitation
+trou-de-loup
 lenity
 adactyly
 propman
@@ -32482,6 +33743,7 @@ mutableness
 antibaryon
 balibago
 beagle
+deaf-mutism
 powderiness
 sunrise
 sell
@@ -32570,10 +33832,12 @@ fingerboard
 calaba
 homoeopath
 dideoxycytosine
+eye-catcher
 overlip
 stanhope
 sulcus
 symboliser
+pre-eclampsia
 relocation
 arboriculture
 chunnel
@@ -32601,6 +33865,7 @@ ternion
 speediness
 architeuthis
 childlessness
+air-sleeve
 waterscape
 tweak
 superabundance
@@ -32670,6 +33935,7 @@ vii
 vim
 satisfactoriness
 promycelium
+fender-bender
 buggery
 vagina
 noseband
@@ -32694,9 +33960,11 @@ smotherer
 secpar
 twerp
 incisor
+blackberry-lily
 decentralization
 withstander
 sexploitation
+self-assurance
 racquet
 hopefulness
 vow
@@ -32776,6 +34044,7 @@ isthmus
 asynchronism
 quibbler
 centurion
+out-and-outer
 lurker
 standoff
 chiropteran
@@ -32785,6 +34054,7 @@ pallidity
 smorgasbord
 wyvern
 aerodontalgia
+namby-pamby
 recitalist
 chromaticity
 materiel
@@ -32794,6 +34064,7 @@ citrulline
 grogram
 halide
 openness
+death-roll
 wacko
 luxuria
 pheniramine
@@ -32844,6 +34115,7 @@ electroretinogram
 toolmaker
 pyrography
 pawnshop
+wish-wash
 intron
 seagrass
 soupspoon
@@ -32863,12 +34135,14 @@ paraphrasis
 mainmast
 abradant
 illegibility
+out-of-doors
 neurologist
 harpullia
 theorizer
 doldrums
 chlorinity
 necrology
+banning-order
 quern
 vesuvian
 saboteur
@@ -32942,8 +34216,10 @@ gastrula
 keep
 nontricyclic
 opacification
+third-dimensionality
 semicoma
 drawback
+jerk-off
 tragopan
 inelasticity
 mandala
@@ -32953,6 +34229,7 @@ prophetess
 donjon
 gregariousness
 hyperlipidemia
+hula-hoop
 muskrat
 emancipationist
 unfaithfulness
@@ -32962,6 +34239,7 @@ barbarousness
 pocketbook
 inamorata
 inamorato
+pot-au-feu
 gaminess
 keno
 anesthyl
@@ -32994,6 +34272,7 @@ stepladder
 olivenite
 libido
 chlorobenzylidenemalononitrile
+aide-memoire
 neuroticism
 impedimenta
 wheatflake
@@ -33002,6 +34281,7 @@ palladium
 greenishness
 bioclimatology
 cheeseburger
+ready-to-wear
 colorimetry
 destalinization
 santims
@@ -33033,6 +34313,7 @@ gastroscopy
 recommendation
 sandhopper
 moronity
+star-thistle
 esprit
 lipoidemia
 interment
@@ -33045,6 +34326,7 @@ defroster
 estazolam
 callisthenics
 perfect
+half-staff
 elytron
 environmentalism
 environmentalist
@@ -33081,10 +34363,12 @@ inessentiality
 friedcake
 scorer
 gameness
+mumblety-peg
 salmagundi
 tenableness
 sylvanite
 disunion
+she-goat
 transcriber
 tetrasaccharide
 taxability
@@ -33102,6 +34386,7 @@ digression
 scoria
 advertorial
 malefactor
+leaf-roller
 rotisserie
 molindone
 antipruritic
@@ -33125,9 +34410,12 @@ mousepad
 abominator
 midge
 clockwork
+jerry-builder
 eversion
 decoction
+write-in
 maidhood
+ampere-hour
 shabbiness
 vaporiser
 sightseer
@@ -33182,9 +34470,11 @@ plasmablast
 wiz
 achlorhydria
 cordgrass
+beta-naphthol
 polymerization
 transposon
 sedge
+non-issue
 defile
 cecum
 palatopharyngoplasty
@@ -33231,6 +34521,7 @@ ruction
 gypsywort
 tumbleweed
 creditworthiness
+re-uptake
 deixis
 lindane
 labial
@@ -33261,6 +34552,7 @@ groupware
 aquifer
 ruralism
 ruralist
+paste-up
 dibranch
 caryatid
 rurality
@@ -33277,7 +34569,9 @@ extra
 applique
 polarography
 rosehip
+knee-high
 flotsam
+lords-and-ladies
 speleologist
 hoodlum
 ruff
@@ -33309,15 +34603,18 @@ digenesis
 uppityness
 labium
 retrial
+stock-take
 runt
 caterwaul
 salpinx
 decorousness
 hadith
+fence-sitter
 signior
 gibber
 sonograph
 supination
+addle-head
 terbium
 dexterity
 aesthesia
@@ -33328,6 +34625,7 @@ commissar
 antiknock
 eyecup
 ununpentium
+twenty-seven
 rusk
 rust
 morphine
@@ -33356,6 +34654,7 @@ erythrina
 ciderpress
 incapacity
 gibbon
+straight-arm
 horologe
 phlebogram
 horology
@@ -33366,6 +34665,7 @@ facial
 procurance
 medic
 geyser
+double-bogey
 vestrywoman
 frisson
 heraldry
@@ -33382,6 +34682,7 @@ misreckoning
 ipecac
 chamosite
 sixpence
+self-flagellation
 keratomalacia
 sacque
 riskiness
@@ -33447,6 +34748,7 @@ superfamily
 verdancy
 unsatisfactoriness
 colpitis
+bottom-dweller
 lazuline
 rhythmicity
 snowplough
@@ -33478,17 +34780,22 @@ kisser
 cloakroom
 flophouse
 unsociability
+custom-built
 ingrowth
 numerologist
 gargoylism
 immoderation
+clip-clop
 beechnut
 griddle
 gyroplane
+co-star
 landlubber
 broncobuster
 jocundity
+fleur-de-lis
 penalisation
+non-resistant
 unpersuasiveness
 conciliator
 heckler
@@ -33497,10 +34804,12 @@ chinook
 organisation
 freestone
 bastille
+mill-girl
 misconception
 interspersal
 horsehair
 whitewater
+safe-conduct
 barracouta
 underclothes
 mihrab
@@ -33517,6 +34826,7 @@ dressmaking
 mutter
 misogyny
 inequity
+bun-fight
 afterthought
 incurableness
 mufti
@@ -33531,16 +34841,19 @@ pythoness
 shortbread
 nuke
 precipitant
+bore-hole
 diencephalon
 ungulate
 dramaturgy
 null
 sparid
+sun-ray
 clusia
 inheritress
 tarradiddle
 brusqueness
 collectable
+fleur-de-lys
 caduceus
 spittoon
 indelicacy
@@ -33558,12 +34871,15 @@ emissary
 omerta
 eelblenny
 detriment
+self-improvement
 moistener
 antiphony
 avalanche
 sibling
 opsonin
+one-spot
 surfriding
+snuff-colour
 toothwort
 coition
 gabble
@@ -33620,10 +34936,12 @@ grapeshot
 predication
 minimisation
 shellflower
+butter-and-eggs
 anchylosis
 godliness
 playoff
 concentricity
+sergeant-at-law
 naivete
 naivety
 dulcimer
@@ -33646,6 +34964,7 @@ haematogenesis
 jejunity
 stencil
 symbololatry
+foot-poundal
 amphibolite
 duologue
 waddler
@@ -33654,6 +34973,7 @@ achondrite
 workstation
 modernist
 neuroscience
+able-bodism
 intractableness
 freshener
 highboard
@@ -33716,6 +35036,8 @@ tribesman
 clipper
 hangnail
 hireling
+twenty-twenty
+one-and-one
 cuneiform
 comptrollership
 maravilla
@@ -33751,12 +35073,14 @@ synezesis
 shtik
 dolichocephaly
 unattractiveness
+fire-bush
 chanoyu
 juke
 midrib
 trompillo
 prude
 generality
+lung-power
 geophyte
 sharia
 jump
@@ -33833,6 +35157,7 @@ goldthread
 diagnostician
 spunk
 fucker
+clover-root
 spelldown
 nasalization
 pteropogon
@@ -33869,18 +35194,22 @@ dasyurid
 mycobacterium
 fibrousness
 beggarwoman
+pulley-block
 ethology
 spiritualty
 chrestomathy
 centreboard
+half-wit
 hindlimb
 hairsplitting
 apparatchik
 diamine
 suggester
 millionth
+flick-knife
 pepsinogen
 thoracotomy
+tent-fly
 myodynia
 extortion
 functionary
@@ -33922,6 +35251,7 @@ cornhusk
 extradition
 aspirator
 sociableness
+bird-on-the-wing
 flypaper
 tippler
 weatherglass
@@ -33953,6 +35283,7 @@ jargoon
 koinonia
 treacle
 trousering
+safety-deposit
 exoskeleton
 fuck
 flapjack
@@ -33968,6 +35299,7 @@ lacepod
 cassia
 cassie
 bemusement
+one-half
 lymphangiectasia
 lymphangiectasis
 interlanguage
@@ -33978,18 +35310,23 @@ presentiment
 pharmacologist
 gynecology
 throughway
+put-put
+self-worship
 dementia
 pragmatism
 pragmatist
 discernment
+e-mail
 fuji
 syneresis
 creaminess
 cytomembrane
 tellurian
 munjeet
+jewels-of-opar
 beltway
 lifeboat
+one-twelfth
 full
 hornbook
 assignor
@@ -34031,6 +35368,7 @@ hangman
 necker
 anaemia
 cholesterin
+thought-image
 flavivirus
 myelography
 accession
@@ -34039,12 +35377,14 @@ anatoxin
 shiv
 dehiscence
 prosthodontia
+manic-depressive
 loxapine
 cuddle
 acuteness
 astereognosis
 metagenesis
 immunotherapy
+vent-hole
 creationism
 apprisal
 qintar
@@ -34057,6 +35397,7 @@ antiphonary
 qurush
 disheartenment
 downcast
+mumble-the-peg
 ancientness
 dateline
 bedclothes
@@ -34070,6 +35411,8 @@ dissipation
 gametoecium
 turnip
 blolly
+butter-print
+so-and-so
 airship
 megalohepatia
 tallgrass
@@ -34101,14 +35444,17 @@ shwa
 teleology
 goniometer
 tarmac
+side-whiskers
 diatomite
 cherub
 recruiter
 angelique
 supercharger
 imperviousness
+mu-meson
 trustfulness
 scotch
+u-drive
 deodorant
 mayfly
 turnup
@@ -34153,6 +35499,7 @@ noctuid
 aminobenzine
 ribavirin
 dysosmia
+arm-twisting
 pressmark
 neritid
 oxyopia
@@ -34162,6 +35509,7 @@ yak
 yam
 yap
 vaginocele
+broad-mindedness
 saltbush
 teazel
 cardhouse
@@ -34175,6 +35523,7 @@ gamelan
 neurogliacyte
 climber
 amoeba
+self-fertilisation
 bubo
 plentifulness
 nutsedge
@@ -34188,6 +35537,7 @@ restorer
 traverse
 impenetrableness
 uropathy
+moon-worship
 malarkey
 currawong
 vicarship
@@ -34220,6 +35570,7 @@ vulgarity
 mugwump
 chapatti
 romaine
+has-been
 invigilation
 disinterment
 macaque
@@ -34252,6 +35603,7 @@ unicycle
 aetiology
 pogge
 cumulonimbus
+run-through
 myiasis
 rapporteur
 burg
@@ -34263,6 +35615,7 @@ nonviolence
 condominium
 bust
 flattop
+to-do
 warrantee
 pliancy
 warranter
@@ -34323,6 +35676,7 @@ bricole
 cresol
 northernness
 coleus
+cross-linkage
 zealot
 sectarianism
 cootie
@@ -34356,6 +35710,7 @@ pogonion
 champaign
 nonsmoker
 libertarianism
+self-sacrifice
 coldheartedness
 patronymic
 wilt
@@ -34424,9 +35779,11 @@ holography
 bolograph
 kvetch
 hyperbilirubinemia
+fig-bird
 glume
 halothane
 hallux
+bye-bye
 bystander
 cessation
 slyness
@@ -34438,6 +35795,7 @@ perilune
 gluon
 hyperadrenalism
 calefaction
+aye-aye
 misconstrual
 specialiser
 clamber
@@ -34476,6 +35834,7 @@ jailer
 formalization
 statin
 transvestite
+self-pride
 osmund
 caimito
 morceau
@@ -34519,14 +35878,19 @@ distortionist
 overreaction
 anemone
 interestingness
+sauce-alone
 castor
 redistribution
 choragus
 goiter
 brodiaea
 eubstance
+two-bagger
 molestation
+goof-off
 bedspread
+quack-quack
+whip-snake
 raunch
 senescence
 fogey
@@ -34534,6 +35898,7 @@ sigma
 sabbatia
 clunk
 sial
+haw-haw
 perspicuity
 slander
 douroucouli
@@ -34550,7 +35915,10 @@ monocyte
 dermis
 superinfection
 doughboy
+rail-splitter
 tuberose
+belles-lettres
+punch-up
 crosswalk
 tutelage
 volaille
@@ -34626,11 +35994,13 @@ rechauffe
 dentifrice
 subrogation
 azithromycin
+agent-in-place
 asterion
 lordolatry
 unlawfulness
 elastomer
 stearin
+sit-in
 indigestibleness
 mafia
 eudemonism
@@ -34654,6 +36024,7 @@ mantilla
 particularisation
 calabura
 malleus
+ill-treatment
 grouse
 arteriectasia
 currycomb
@@ -34664,6 +36035,7 @@ chancellor
 tablature
 parkway
 versant
+small-arm
 candlestick
 gurgle
 gaffsail
@@ -34681,12 +36053,14 @@ tonality
 changeableness
 fervidness
 litotes
+clickety-clack
 slater
 succourer
 commissure
 periwig
 laparocele
 rocambole
+sit-up
 caravansary
 cornucopia
 boliviano
@@ -34697,6 +36071,7 @@ magneto
 cruelness
 maildrop
 angioma
+dik-dik
 paymaster
 eightieth
 incumbent
@@ -34750,6 +36125,7 @@ waxycap
 wintergreen
 xylose
 waveform
+tam-tam
 attractor
 hydrocolloid
 associability
@@ -34795,6 +36171,7 @@ quintillion
 keyboardist
 enantiomorphism
 fleabane
+self-abnegation
 constellation
 churl
 churn
@@ -34807,10 +36184,12 @@ cholestasis
 exogen
 propenoate
 costiasis
+set-to
 nonpartisan
 segue
 nefariousness
 crossbones
+bib-and-tucker
 whaleboat
 omphalus
 prankster
@@ -34827,6 +36206,7 @@ chickweed
 swordplay
 impregnation
 walloper
+cut-in
 distomatosis
 humankind
 narcoterrorism
@@ -34835,6 +36215,7 @@ gorger
 gorget
 villoma
 superpower
+olive-green
 fissiparity
 allopurinol
 fawner
@@ -34848,6 +36229,7 @@ truant
 bradawl
 estaminet
 howitzer
+church-state
 protistan
 nosegay
 buyout
@@ -34857,6 +36239,7 @@ inanity
 chimneysweep
 flashcard
 melasma
+one-trillionth
 quiescence
 quiescency
 chirrup
@@ -34874,6 +36257,7 @@ woodsiness
 epauliere
 tongueflower
 whalebone
+brier-wood
 mastitis
 scaphocephaly
 usurpation
@@ -34884,9 +36268,11 @@ constitutionalist
 eyetooth
 chasse
 fruiterer
+red-blindness
 acroanaesthesia
 mantelet
 mulatto
+cut-up
 lohan
 galbanum
 metacarpus
@@ -34916,6 +36302,8 @@ crosstie
 expressionism
 peridinian
 expressionist
+lemon-wood
+self-drive
 flirtation
 gunnysack
 eyeful
@@ -34951,6 +36339,7 @@ hodman
 photographer
 gigue
 hinterland
+one-millionth
 tannoy
 illiteracy
 trichotillomania
@@ -35078,6 +36467,7 @@ postdoctoral
 iceboat
 aerospace
 ineluctability
+mid-calf
 hellebore
 permutability
 perihelion
@@ -35104,6 +36494,8 @@ horripilation
 gibberish
 craniometry
 langset
+narrow-body
+one-quarter
 ornamental
 tombstone
 reamer
@@ -35173,10 +36565,12 @@ voile
 headword
 rosilla
 musculus
+knock-knee
 shedder
 attestant
 micrometeoroid
 mayhem
+government-in-exile
 laminitis
 bioengineering
 rapidness
@@ -35191,6 +36585,7 @@ hexose
 blackwood
 boulevardier
 gaseousness
+plank-bed
 effluence
 oleaster
 turnoff
@@ -35213,6 +36608,7 @@ darnel
 darner
 cartwright
 flywheel
+owner-driver
 folksong
 waistcloth
 omelette
@@ -35238,6 +36634,7 @@ belvedere
 recusancy
 stuffer
 patois
+dancing-master
 purifier
 talentlessness
 paracentesis
@@ -35309,8 +36706,11 @@ hierarch
 cyclooxygenase
 carboxyl
 phosphine
+thread-fish
+stair-carpet
 stevia
 fanwort
+poison-berry
 overutilization
 siphon
 trebucket
@@ -35326,6 +36726,7 @@ cornerback
 xenotime
 essentialness
 gimp
+mingle-mangle
 bisexuality
 relativism
 variometer
@@ -35345,14 +36746,17 @@ cardinalate
 shopfront
 palimpsest
 polysemy
+four-hitter
 powderpuff
 riverbed
 unitisation
 creosol
+short-stop
 giro
 flinch
 upside
 catgut
+gene-splicing
 gist
 peignoir
 harmonizer
@@ -35369,6 +36773,7 @@ osteoclasis
 jacquard
 isohel
 uppercase
+alpha-naphthol
 brontosaurus
 financier
 imperative
@@ -35391,11 +36796,13 @@ acetylation
 yahoo
 oleomargarine
 shivah
+self-absorption
 autotelism
 tracheid
 zymogen
 smirk
 devoir
+ladder-back
 unavoidability
 manslaughter
 kieserite
@@ -35441,6 +36848,7 @@ folktale
 adulteration
 shirtmaker
 leatherette
+crinkle-root
 cristal
 centroid
 pasteurization
@@ -35452,6 +36860,7 @@ haemoglobin
 eudemon
 eagre
 rubicelle
+self-complacency
 keister
 vicereine
 repatriate
@@ -35461,6 +36870,7 @@ cager
 foresail
 nicknack
 disaffirmation
+dickie-seat
 broody
 oligodactyly
 herbage
@@ -35491,6 +36901,7 @@ outwardness
 mycophagist
 boothose
 remora
+shut-in
 sexism
 sexist
 entailment
@@ -35542,11 +36953,13 @@ triage
 backtalk
 amphetamine
 sahib
+eight-spot
 andradite
 scopolamine
 insufficiency
 withdrawnness
 precognition
+six-pack
 hypercholesterolemia
 bezant
 joist
@@ -35554,6 +36967,8 @@ energid
 freakishness
 rewriter
 sandlot
+self-respect
+fire-swallower
 pleasantness
 laudableness
 ctenophore
@@ -35562,6 +36977,7 @@ popper
 poppet
 absurdness
 cornhusker
+elk-wood
 penuchle
 moviemaking
 carambola
@@ -35574,6 +36990,7 @@ malacology
 lechery
 gatehouse
 shaheed
+ampere-turn
 horsehead
 cite
 airdrome
@@ -35657,6 +37074,7 @@ fenestra
 lanthanum
 condolence
 ignominiousness
+six-spot
 impracticality
 skid
 skim
@@ -35665,12 +37083,14 @@ rockrose
 overcall
 headwater
 homograft
+one-step
 spavin
 byname
 episcleritis
 sunrose
 golfcart
 humate
+five-spot
 dekameter
 fandango
 defiler
@@ -35691,8 +37111,10 @@ androgyny
 asphyxiator
 furtiveness
 mulberry
+golf-club
 apricot
 lumpenproletariat
+knight-errant
 cytosmear
 supersymmetry
 orangeade
@@ -35750,6 +37172,7 @@ microcephaly
 weird
 oceanographer
 portmanteau
+symbol-worship
 abridger
 pertainym
 subtopia
@@ -35778,10 +37201,12 @@ expressage
 tailplane
 faithfulness
 duramen
+half-breed
 unmindfulness
 overrun
 cirrostratus
 taleteller
+major-domo
 fantasm
 fantast
 gallinule
@@ -35796,8 +37221,11 @@ impossibleness
 shuttlecock
 braveness
 heartburn
+flash-forward
 gravedigger
 naphthalene
+avant-garde
+mid-sixties
 asthmatic
 sarcoidosis
 bimillenary
@@ -35834,10 +37262,12 @@ runtiness
 depopulation
 millionairess
 strumpet
+night-light
 tryst
 lepidoptery
 cocuswood
 weaver
+by-catch
 arthromere
 histogram
 amphisbaena
@@ -35861,6 +37291,7 @@ illustriousness
 entozoan
 undershrub
 raftman
+first-rater
 cardcastle
 rottenness
 pepper
@@ -35872,6 +37303,7 @@ algebra
 teleworking
 stardust
 okeh
+monkey-wrench
 okey
 elecampane
 abjurer
@@ -35893,6 +37325,7 @@ adduct
 miserliness
 reconditeness
 serology
+she-devil
 bloodstock
 carbamide
 briefness
@@ -35905,6 +37338,7 @@ causerie
 suppuration
 chondrichthian
 herbarium
+stock-in-trade
 funfair
 cascabel
 theridiid
@@ -35959,6 +37393,7 @@ ensign
 guanabana
 macroglossia
 impress
+gutta-percha
 irredenta
 eyewitness
 mutualness
@@ -35972,6 +37407,7 @@ divagation
 cladistics
 bubblejet
 myriametre
+u-turn
 beguilement
 vomitive
 unwariness
@@ -35997,6 +37433,8 @@ chiropodist
 aggrandisement
 victimization
 pansinusitis
+bed-and-breakfast
+di-iodotyrosine
 regionalism
 weightiness
 firedrake
@@ -36015,6 +37453,7 @@ ineptitude
 bimetallist
 mestiza
 mestizo
+pheno-safranine
 roughage
 longbowman
 cognoscente
@@ -36031,6 +37470,7 @@ crematorium
 cowardliness
 sandman
 assessee
+finger-flower
 hatpin
 megacolon
 slenderness
@@ -36052,10 +37492,12 @@ pappus
 silviculture
 symbology
 moistness
+self-importance
 momism
 paleness
 bagascosis
 fumeroot
+name-dropping
 mezereon
 chiropody
 saiga
@@ -36072,9 +37514,11 @@ martial
 circlet
 historiographer
 dermatome
+lease-lend
 squirearchy
 goatskin
 phencyclidine
+franc-tireur
 subnormality
 clevis
 masdevallia
@@ -36096,15 +37540,18 @@ spearpoint
 schemer
 headlamp
 erotism
+whistle-blower
 cravat
 viridity
 gyromitra
 regimentals
 impoundment
 fiberboard
+stone-face
 popularizer
 sustainer
 mainframe
+hula-hula
 paspalum
 euphemism
 isoclinal
@@ -36116,11 +37563,13 @@ journeyer
 tollbooth
 ductulus
 countercurrent
+bread-stick
 piroplasm
 conversationist
 robalo
 weewee
 comparative
+used-car
 chokepoint
 archaeologist
 tropopause
@@ -36130,6 +37579,7 @@ declassification
 anatomist
 hypersecretion
 radicchio
+bottle-tree
 goniff
 supermolecule
 oxidisation
@@ -36144,6 +37594,7 @@ phobia
 convexness
 indemnity
 ricketiness
+double-crosser
 wilderness
 accordionist
 copier
@@ -36181,13 +37632,16 @@ buckler
 hedgehog
 sisterhood
 craniology
+old-timer
 euglenoid
 tantalum
+aide-de-camp
 estradiol
 katamorphism
 archipallium
 immunoglobulin
 chalkstone
+half-holiday
 submergence
 interestedness
 fryer
@@ -36218,6 +37672,7 @@ cadger
 sanyasi
 niblick
 individualisation
+club-moss
 filicide
 oneiromancer
 lockstep
@@ -36243,6 +37698,7 @@ quarterstaff
 clammyweed
 astronomer
 iridotomy
+rest-cure
 encasement
 handbarrow
 fallacy
@@ -36272,9 +37728,12 @@ loginess
 keratin
 makeover
 ceibo
+word-splitting
 whitecup
 archaeornis
+bottle-grass
 transgressor
+good-humouredness
 horridness
 lacertid
 jerboa
@@ -36282,6 +37741,7 @@ fencesitter
 refreshment
 onomatopoeia
 leoncita
+columbite-tantalite
 programma
 sylva
 cedilla
@@ -36305,10 +37765,12 @@ hibernation
 lysinemia
 tetanilla
 chirology
+at-bat
 telecast
 riband
 kunzite
 maize
+ball-buster
 rockfoil
 spadefoot
 blackcock
@@ -36317,6 +37779,7 @@ treble
 chloroform
 indigestibility
 sugarberry
+leg-pull
 margrave
 asparagine
 commelina
@@ -36337,6 +37800,7 @@ faceplate
 cardiologist
 businesspeople
 archaeozoic
+off-season
 prolactin
 endorphin
 grapefruit
@@ -36391,6 +37855,7 @@ dittany
 bleeder
 thulium
 immediateness
+mock-heroic
 buccaneer
 byte
 foresightfulness
@@ -36423,6 +37888,7 @@ pneumonoconiosis
 redundance
 conservatory
 rancidness
+pre-emptor
 quarterfinal
 olla
 millisecond
@@ -36477,6 +37943,7 @@ knawel
 millime
 reassignment
 schist
+post-maturity
 mousetrap
 desertification
 signora
@@ -36488,6 +37955,7 @@ inapplicability
 spandril
 greenbottle
 resolvent
+plug-ugly
 pericarditis
 rotogravure
 fricative
@@ -36502,6 +37970,8 @@ amicableness
 humanitarianism
 conferral
 diffidence
+tv-antenna
+fare-stage
 counteraction
 putrefaction
 nursling
@@ -36515,6 +37985,7 @@ chinaware
 uranology
 lattice
 imipramine
+have-not
 astrakhan
 thrombopenia
 mistreatment
@@ -36579,6 +38050,7 @@ lavalliere
 saxhorn
 horsefly
 stanchion
+baulk-line
 practicality
 tricot
 lorchel
@@ -36607,6 +38079,8 @@ acariosis
 resurrection
 leitmotif
 hyphema
+weed-whacker
+mother-of-pearl
 diorama
 impasto
 benjamin
@@ -36623,6 +38097,7 @@ guesser
 saquinavir
 understudy
 misfire
+re-creation
 defamer
 logomachist
 neuroethics
@@ -36655,6 +38130,7 @@ gouache
 chewer
 reductivism
 probabilism
+pick-me-up
 occlusive
 screenwriter
 cylix
@@ -36679,6 +38155,8 @@ imperceptibility
 succussion
 sternpost
 nightstick
+call-back
+tucker-bag
 peppermint
 pratfall
 pettifoggery
@@ -36690,8 +38168,10 @@ moneybag
 whinstone
 innovator
 endometrium
+thought-reader
 transportation
 lascar
+sister-in-law
 seamstress
 dramatization
 immenseness
@@ -36702,6 +38182,7 @@ territorialization
 antivenene
 mayfish
 diplegia
+moo-cow
 semolina
 dredger
 possibleness
@@ -36709,6 +38190,7 @@ twopence
 malposition
 gynaecologist
 suzerainty
+brain-worker
 phrontistery
 kimberlite
 ticktock
@@ -36721,6 +38203,7 @@ rummage
 lutfisk
 latticework
 finalization
+law-makers
 tambour
 bullheadedness
 velcro
@@ -36728,9 +38211,11 @@ rightfulness
 groyne
 mustiness
 tracheitis
+one-billionth
 whitewood
 quidnunc
 brierpatch
+re-sentencing
 mismanagement
 sousaphone
 sutler
@@ -36747,19 +38232,24 @@ tranylcypromine
 anabolism
 gulag
 quellung
+non-involvement
 hoarseness
 watermeal
+hanger-on
 agranulosis
 variorum
 gulch
 polyarteritis
 unmercifulness
+long-beard
 aerophilately
+self-service
 preoccupancy
 repletion
 rabbinate
 podiatrist
 ricebird
+anti-intellectual
 normalisation
 sowbane
 profitability
@@ -36775,12 +38265,14 @@ graniteware
 poisonberry
 winker
 millepede
+diesel-electric
 legislatorship
 reptilian
 mahimahi
 inkblot
 demureness
 gracilariid
+work-clothing
 astrobiology
 sportscast
 oddity
@@ -36799,8 +38291,10 @@ druidism
 hypervolemia
 winkle
 stomatitis
+prison-breaking
 jejuneness
 coulomb
+self-hatred
 copartner
 glen
 straightener
@@ -36821,12 +38315,14 @@ fungibility
 blanquillo
 theoterrorism
 jobber
+mill-hand
 compote
 figurer
 katharsis
 decalcomania
 chyle
 croupier
+he-goat
 poler
 bergenia
 pentastomid
@@ -36854,6 +38350,7 @@ steaminess
 toilette
 exteroceptor
 lempira
+non-proliferation
 mezuzah
 proteomics
 orthomyxovirus
@@ -36861,9 +38358,12 @@ dosimeter
 antibiosis
 iproclozide
 harvester
+sixty-nine
 blacksnake
 cheilosis
 rectory
+post-mortem
+blue-blindness
 yellowtail
 schlepper
 panetella
@@ -36931,6 +38431,7 @@ arithmetician
 bubbly
 prepuce
 abstracter
+paddle-box
 redroot
 bandyleg
 hepadnavirus
@@ -36945,15 +38446,18 @@ superordination
 econometrist
 corticotropin
 giardia
+night-stop
 radiologist
 atrociousness
 tympanoplasty
 sempiternity
 infarction
+lead-in
 frangibleness
 propositus
 rabbet
 gunnery
+star-duckweed
 planography
 deviousness
 lolly
@@ -36961,11 +38465,13 @@ pleaser
 testacean
 defamation
 coenobite
+tree-frog
 abstractor
 chervil
 thiopental
 whirlpool
 tracer
+obsessive-compulsive
 picturesqueness
 shuffler
 jamboree
@@ -36977,6 +38483,7 @@ lithium
 bezzant
 flamethrower
 phenotype
+hug-me-tight
 bactericide
 pettiness
 suborder
@@ -36994,10 +38501,13 @@ deinonychus
 lychgate
 chopstick
 pitsaw
+pork-fish
 weepiness
 curassow
 jejunitis
 amphiuma
+self-heal
+rush-grass
 thundercloud
 dysuria
 eohippus
@@ -37036,10 +38546,12 @@ synchroniser
 gummosis
 chronicler
 consanguinity
+space-time
 pointsman
 klaxon
 tetrodotoxin
 hygroscope
+self-help
 thunderclap
 politburo
 minisubmarine
@@ -37054,6 +38566,7 @@ duckboard
 lymphopenia
 handover
 clog
+fairy-slipper
 coarctation
 clop
 watchtower
@@ -37063,6 +38576,8 @@ tonsil
 crossbencher
 abfarad
 demonstration
+square-rigger
+narrow-mindedness
 bobber
 apiculturist
 runabout
@@ -37076,14 +38591,18 @@ silex
 hollo
 holly
 stricture
+ten-spot
 cocksfoot
 vassal
 cattail
 bobbin
+up-tick
 acetamide
 farawayness
 snoopiness
 demonstrative
+rum-blossom
+mother-in-law
 marveller
 recessional
 intussusception
@@ -37138,6 +38657,7 @@ silva
 snit
 blennioid
 whitetail
+two-seater
 armoury
 kumis
 satanophobia
@@ -37208,6 +38728,7 @@ circularization
 fluorouracil
 escallop
 occidentalism
+sky-blue
 jabber
 downside
 tourmaline
@@ -37243,16 +38764,19 @@ handcuff
 gumbo
 tarboosh
 jewelweed
+light-mindedness
 surmisal
 noncandidate
 sponginess
 vaunter
 taskmistress
+mid-thirties
 arbiter
 chlorenchyma
 gruffness
 welsh
 chigger
+frost-weed
 illogicality
 immobilization
 halogeton
@@ -37306,6 +38830,8 @@ entreaty
 germination
 semiautomatic
 carrageenan
+light-year
+loving-kindness
 isomerization
 flannelbush
 provincialism
@@ -37334,6 +38860,7 @@ indusium
 holdover
 anorgasmia
 capillarity
+whip-round
 woodscrew
 appendicectomy
 chrysarobin
@@ -37349,6 +38876,7 @@ pycnodysostosis
 streusel
 cholecystectomy
 unprofitability
+tub-cart
 paddler
 preventive
 sensibleness
@@ -37357,15 +38885,18 @@ roominess
 subroutine
 adapter
 carryall
+pre-empt
 pottage
 crepuscle
 bannister
 begonia
+mid-seventies
 dreadnought
 pluperfect
 dumpiness
 backbench
 heritor
+bride-gift
 anesthetist
 kernite
 cotyledon
@@ -37375,9 +38906,11 @@ verbaliser
 utilitarianism
 zoonosis
 arugula
+litter-basket
 biosynthesis
 mozzarella
 birder
+pall-mall
 waggery
 electrocution
 needlecraft
@@ -37409,8 +38942,10 @@ ophthalmoplegia
 thalamus
 hashmark
 manipulator
+boys-and-girls
 saltwort
 portage
+slant-eye
 vesture
 mandibula
 quintessence
@@ -37438,14 +38973,17 @@ toolhouse
 cradlesong
 attainder
 proprietress
+split-pea
 undesirable
 aviator
 hesitator
 nucleoplasm
 disincentive
 phobophobia
+caller-up
 onus
 ammonia
+look-alike
 muumuu
 definiteness
 automaton
@@ -37485,6 +39023,7 @@ byproduct
 totalitarianism
 doctorspeak
 stevedore
+self-punishment
 dyarchy
 sunberry
 anaphora
@@ -37539,10 +39078,13 @@ trichloroethane
 calpack
 syndication
 probable
+ex-wife
 hypopigmentation
 apomorphine
+tort-feasor
 smoothbore
 sidesaddle
+master-at-arms
 valvulotomy
 crackleware
 scrapie
@@ -37579,6 +39121,7 @@ externality
 bareboating
 twofer
 salmi
+fire-eater
 laetrile
 tichodrome
 rhinolaryngologist
@@ -37614,6 +39157,7 @@ metempsychosis
 internalization
 taffrail
 accommodation
+word-worship
 ghrelin
 sportswear
 phoebe
@@ -37626,8 +39170,11 @@ headspring
 munja
 rockweed
 verdolagas
+earth-goddess
 quamash
+pellitory-of-the-wall
 sounder
+ring-around-a-rosy
 snooker
 pyocyanin
 arccotangent
@@ -37637,6 +39184,7 @@ noddle
 pigeonhole
 stitchery
 adulator
+ex-boyfriend
 minesweeping
 chlorhexidine
 aerology
@@ -37672,6 +39220,7 @@ raftsman
 homopteran
 impuissance
 paregoric
+photo-offset
 butterflyfish
 gangsaw
 stinker
@@ -37680,6 +39229,7 @@ counterpoison
 soja
 anatotitan
 labyrinthodont
+billy-ho
 jeerer
 intensification
 flashbulb
@@ -37784,8 +39334,10 @@ dieback
 tonic
 accomplishment
 particularism
+hara-kiri
 boudoir
 patten
+broom-weed
 endogamy
 particularity
 conidiospore
@@ -37795,6 +39347,7 @@ motherwort
 dogtrot
 nester
 walkingstick
+shall-flower
 yeoman
 palaeology
 labyrinthitis
@@ -37816,6 +39369,7 @@ abarticulation
 pigwash
 wearable
 mimic
+alpha-blocker
 nonpayment
 gallery
 kalif
@@ -37830,6 +39384,7 @@ thimblerig
 lacewing
 roneo
 podsol
+self-discovery
 beanstalk
 cockfighting
 theropod
@@ -37850,10 +39405,12 @@ seaborgium
 labiodental
 garlic
 metalware
+carry-forward
 lontar
 celom
 resonator
 eggbeater
+bird-scarer
 hoarfrost
 paralepsis
 auklet
@@ -37868,10 +39425,13 @@ barbarity
 trigonometry
 mummer
 semen
+self-confidence
+kok-saghyz
 haematology
 armature
 nanotube
 midafternoon
+try-on
 swimmeret
 hepatic
 plasmapheresis
@@ -37886,6 +39446,7 @@ beetleweed
 ponce
 backstop
 poundage
+double-magnum
 emersion
 readout
 redbone
@@ -37926,13 +39487,17 @@ tach
 tack
 taco
 silicle
+warm-up
 elaphure
 napery
+jack-in-the-pulpit
 tael
+scrub-bird
 framboesia
 galea
 alluvium
 welsher
+brush-off
 tortuousness
 officeholder
 bargello
@@ -37949,6 +39514,7 @@ take
 injunction
 furtherance
 emperor
+wide-body
 tala
 talc
 tall
@@ -37958,6 +39524,7 @@ homotherm
 pillock
 tamp
 decussation
+pen-friend
 mapquest
 eyelet
 malacologist
@@ -37997,6 +39564,7 @@ gimel
 midinette
 halfpenny
 imbauba
+flame-out
 altostratus
 hadron
 methyldopa
@@ -38017,14 +39585,17 @@ bartonia
 stipendiary
 footer
 brickkiln
+mind-set
 forgery
 wingspan
 loner
 pillory
 pushiness
 nymphomania
+earth-tongue
 rattrap
 butterscotch
+hack-driver
 estragon
 agronomist
 genitor
@@ -38065,6 +39636,7 @@ shadiness
 signalman
 lyceum
 convalescence
+carry-over
 obstreperousness
 illiberality
 daminozide
@@ -38077,6 +39649,7 @@ dumbwaiter
 tantra
 philomath
 fester
+half-slip
 antechamber
 thrombolysis
 exabyte
@@ -38089,12 +39662,14 @@ specializer
 ergosterol
 spadeful
 saman
+clippety-clop
 samba
 chatroom
 cantonment
 pockmark
 loofah
 staidness
+self-renewal
 actuary
 alumna
 quote
@@ -38123,12 +39698,15 @@ pusillanimity
 bandelet
 ostiole
 trifle
+harlequin-snake
 pushpin
 fenoprofen
+well-being
 younker
 alveolitis
 perspicuousness
 koan
+dining-room
 zooid
 kobo
 denturist
@@ -38140,9 +39718,11 @@ matchbush
 eimeria
 sublimate
 denudation
+quick-wittedness
 dispassion
 paca
 pycnogonid
+snake-fish
 dowdiness
 sinew
 semibreve
@@ -38170,6 +39750,7 @@ oblateness
 mackintosh
 anestrum
 anestrus
+man-on-a-horse
 damselfish
 earldom
 rootstalk
@@ -38191,6 +39772,7 @@ washables
 kook
 terrorisation
 spam
+bug-hunter
 hatefulness
 grapnel
 chokedamp
@@ -38226,6 +39808,7 @@ cocklebur
 spiv
 popcorn
 pave
+mailing-card
 pawl
 pawn
 hushpuppy
@@ -38245,6 +39828,7 @@ donee
 nonchalance
 overcompensation
 committedness
+falcon-gentil
 propulsion
 sequela
 postulator
@@ -38264,6 +39848,7 @@ ultimate
 kinesthesis
 mistrust
 elaborateness
+falcon-gentle
 paraleipsis
 cellaret
 egomaniac
@@ -38337,8 +39922,10 @@ flatfish
 brisling
 revocation
 energiser
+bride-to-be
 mince
 swearer
+aleph-nought
 tempter
 quagmire
 gallfly
@@ -38351,6 +39938,7 @@ praetorium
 contentedness
 diplococcus
 mantissa
+curly-heads
 exterminator
 cloister
 discontentment
@@ -38367,6 +39955,7 @@ amniote
 scolder
 metaproterenol
 dobson
+miracle-worship
 warner
 sesquipedalia
 listeria
@@ -38413,6 +40002,7 @@ goer
 ovary
 winnow
 laterality
+quarter-circle
 butterfly
 calliope
 minus
@@ -38437,6 +40027,7 @@ netherworld
 trespasser
 fluoridization
 bargeman
+foster-son
 monohybrid
 bigheartedness
 towhee
@@ -38444,6 +40035,7 @@ nymphalid
 gong
 tabulator
 lama
+moss-trooper
 carrycot
 faultlessness
 senna
@@ -38507,6 +40099,7 @@ terrorism
 nonmetal
 positron
 schnapps
+run-in
 jarful
 aphagia
 copybook
@@ -38516,6 +40109,7 @@ subservientness
 mercilessness
 stroma
 meatman
+willow-pattern
 coldcream
 actomyosin
 poove
@@ -38532,6 +40126,7 @@ harvestman
 capriciousness
 lagend
 hindgut
+ku-chiku
 haemangioma
 thallus
 virology
@@ -38548,6 +40143,7 @@ inclosure
 princedom
 molasses
 herbivore
+run-up
 accruement
 maharajah
 profiterole
@@ -38569,6 +40165,7 @@ tenderloin
 heathen
 heather
 ductileness
+chin-wag
 snicker
 loofa
 harbinger
@@ -38590,6 +40187,7 @@ profitableness
 antiestablishmentism
 embroidery
 parquetry
+witch-hunter
 habitability
 crankiness
 iconoscope
@@ -38603,6 +40201,7 @@ megakaryocyte
 camel
 cameo
 trammel
+nosy-parker
 echidna
 oarlock
 coreopsis
@@ -38612,6 +40211,7 @@ scheduler
 papule
 magnetosphere
 manageableness
+set-back
 perithelium
 helicopter
 catalase
@@ -38685,6 +40285,7 @@ densification
 riffle
 neotony
 liebfraumilch
+twenty-three
 haik
 hooch
 coke
@@ -38701,13 +40302,16 @@ comp
 hooey
 hale
 halm
+bark-louse
 abhorrence
 alkalizer
 conk
 behaviour
 tugger
 cony
+serjeant-at-law
 piddock
+self-deceit
 lachrymator
 cool
 androecium
@@ -38720,6 +40324,7 @@ peludo
 siderite
 ringer
 trigon
+twenty-one
 kraal
 vocalizer
 corm
@@ -38752,6 +40357,7 @@ squama
 have
 catachresis
 annexation
+live-and-die
 coxa
 transposition
 scandium
@@ -38768,7 +40374,9 @@ freestyle
 krait
 signatory
 hortensia
+tug-of-war
 culvert
+know-all
 cozy
 syncopation
 nandrolone
@@ -38794,11 +40402,13 @@ erythroblast
 insecticide
 catchall
 squawk
+self-pity
 teamwork
 liftman
 cymbalist
 bladderwort
 horseplay
+snail-flower
 binful
 femtochemistry
 handsomeness
@@ -38808,7 +40418,9 @@ genet
 crosswind
 disinclination
 taxistand
+self-contemplation
 sukiyaki
+devil-worship
 variableness
 soybean
 chasuble
@@ -38825,6 +40437,7 @@ haemophile
 airbrush
 handgun
 bulkhead
+hard-on
 eponym
 treasonist
 dumpcart
@@ -38888,6 +40501,7 @@ crapshooter
 catabiosis
 poltroonery
 toper
+lady-in-waiting
 ecumenism
 echocardiography
 mesotron
@@ -38913,7 +40527,9 @@ trophozoite
 cutoff
 grand
 kanaf
+mid-nineties
 imbrication
+great-aunt
 septette
 bungee
 heavyweight
@@ -38929,6 +40545,7 @@ dada
 dado
 tetragon
 headmastership
+clickety-click
 satinette
 grasp
 manta
@@ -38938,6 +40555,7 @@ toggle
 raffia
 holometabolism
 champerty
+first-nighter
 topos
 manul
 myxobacter
@@ -38960,11 +40578,13 @@ gastritis
 freshwater
 mistranslation
 roper
+car-mechanic
 catnap
 garner
 garnet
 heifer
 mineralogist
+down-and-out
 demobilisation
 naphthol
 revivification
@@ -38979,6 +40599,7 @@ preterition
 rophy
 exorciser
 jackknife
+main-topmast
 plage
 guildhall
 subtraction
@@ -38989,6 +40610,7 @@ ranger
 tempura
 hydration
 overanxiety
+serpent-worship
 thousandth
 unsusceptibility
 plaid
@@ -39021,9 +40643,11 @@ caragana
 unitard
 persecutor
 trembler
+squaw-bush
 diaphysis
 neurohormone
 unperson
+pied-a-terre
 furbelow
 ahimsa
 onomancy
@@ -39048,6 +40672,7 @@ implementation
 footfault
 platy
 grimace
+deaf-mute
 epicentre
 neuroanatomy
 adequateness
@@ -39060,6 +40685,7 @@ glyceride
 potoroo
 pelycosaur
 collocation
+self-destruction
 adaption
 totterer
 kiosk
@@ -39076,10 +40702,12 @@ intrusiveness
 hydrolith
 incredibleness
 boffin
+re-afforestation
 bathysphere
 chickenfeed
 nopal
 cittern
+hubbly-bubbly
 harpist
 oceanography
 metonymy
@@ -39123,12 +40751,14 @@ wren
 bookshop
 mannitol
 platypus
+derring-do
 baronage
 amora
 glycerite
 motivator
 enjambement
 truism
+scene-stealer
 spongefly
 hydrocortisone
 nudger
@@ -39138,9 +40768,11 @@ llama
 perianth
 engrossment
 thane
+booze-up
 meatball
 llano
 subpopulation
+rat-a-tat
 vomitory
 hairgrip
 fustian
@@ -39220,6 +40852,7 @@ wickiup
 viticulturist
 sanguinity
 anthropophagy
+water-colour
 neologism
 neologist
 ureterocele
@@ -39233,6 +40866,7 @@ gadolinium
 globetrotter
 pseudobulb
 canoe
+spell-checker
 flamefish
 candidiasis
 tintometer
@@ -39250,6 +40884,7 @@ shortsightedness
 poultryman
 metaphysis
 morass
+dangle-berry
 discomposure
 canto
 sweetie
@@ -39257,6 +40892,7 @@ enate
 jumpiness
 gleaner
 analecta
+cousin-german
 analects
 demythologization
 tablespoon
@@ -39285,6 +40921,7 @@ ashtray
 contemplation
 regeneration
 schizocarp
+fair-mindedness
 respirator
 sapota
 conformance
@@ -39293,6 +40930,7 @@ cauterization
 upland
 velvetweed
 incalescence
+give-and-go
 grimness
 bibliographer
 jangle
@@ -39318,6 +40956,7 @@ urochord
 archine
 superintendence
 groenendael
+one-seventh
 tomograph
 kerbstone
 harpsichord
@@ -39357,9 +40996,11 @@ mediastinum
 antihypertensive
 mishegaas
 tagger
+fill-in
 equilibration
 moonshine
 housedog
+night-line
 rescission
 ptyalism
 bumptiousness
@@ -39381,11 +41022,13 @@ signboard
 trouper
 sudoku
 boathouse
+tra-la
 cataphyll
 moaner
 straightness
 prototherian
 nutcase
+sharp-sightedness
 demotic
 quitter
 grapple
@@ -39423,6 +41066,7 @@ linesman
 nonconformity
 bandbox
 copout
+rake-off
 formalwear
 gonorrhoea
 hatmaker
@@ -39438,6 +41082,7 @@ rhodochrosite
 spinelessness
 foulmart
 paternity
+cine-camera
 annoyer
 inexactness
 firebomb
@@ -39458,7 +41103,9 @@ lxxviii
 idolatress
 milliner
 losings
+soldier-fish
 harpsichordist
+one-third
 pretzel
 aquaculture
 backstroke
@@ -39485,6 +41132,7 @@ sensualism
 sensualist
 indapamide
 rhizopod
+cross-fertilization
 billystick
 jackhammer
 solitaire
@@ -39493,6 +41141,7 @@ downheartedness
 thiotepa
 seismosaur
 regurgitation
+auto-suggestion
 syrup
 secretaryship
 bedevilment
@@ -39523,7 +41172,10 @@ newmarket
 criminalness
 granddad
 vambrace
+self-induction
+wake-robin
 biquadratic
+one-ten-thousandth
 revise
 impoliteness
 flimsiness
@@ -39555,13 +41207,17 @@ pangolin
 bandanna
 decolletage
 sodomy
+hugger-mugger
 armory
 honeymooner
 plateletpheresis
 aminotransferase
+fire-raising
 benzene
 microbe
 bangle
+cyber-terrorism
+cyber-terrorist
 armour
 bacteriacide
 trinitrotoluene

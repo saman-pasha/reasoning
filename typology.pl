@@ -9623,9 +9623,17 @@ ty_lexicon_file(Base, File) :-
     atomic_list_concat(['lexicon/', Base, '.txt'], Rel),
     catch(absolute_file_name(library(reasoning/Rel), File, [access(read)]), _, fail).
 
+%% A lexicon file's word: letters a to z, and since 1.128.0 a hyphen
+%% between two letters (WordNet's low-level, self-conscious).
 ty_az_word(W) :-
-    atom_codes(W, Cs),
-    forall(member(C, Cs), ( C >= 0'a, C =< 0'z )).
+    atom_codes(W, [C|Cs]),
+    ty_az_code(C), ty_az_rest(Cs).
+
+ty_az_rest([]).
+ty_az_rest([C|Cs]) :- ty_az_code(C), !, ty_az_rest(Cs).
+ty_az_rest([0'-, C|Cs]) :- ty_az_code(C), ty_az_rest(Cs).
+
+ty_az_code(C) :- C >= 0'a, C =< 0'z.
 
 %% THE NAMES OF lexicon/ (the English import, since 1.62.0), as
 %% tyi_pname(Name, Gender, Animacy): proper.txt's first names, the 1 500

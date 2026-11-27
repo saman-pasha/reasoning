@@ -577,3 +577,6 @@ Exert oneself.	imperative(exert(you, you)).
 Glue the two parts together.	imperative(together(glue(you, the(pl(two(part)))))).
 The law itself was unclear on that point.	past(on(unclear(the(law)), that(point))).
 He bundled up his few possessions.	past(bundle_up(he, of(pl(few(possession)), he))).
+A low-level job.	job(a('low-level'(job))). 'low-level'(a('low-level'(job))).
+The river runs cross-country.	'cross-country'(run(the(river))).
+The quarrel ended in a punch-up.	'punch-up'(a('punch-up')). past(in(end(the(quarrel)), a('punch-up'))).

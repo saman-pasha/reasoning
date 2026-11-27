@@ -90,6 +90,7 @@ main :-
     such_words,
     reflexives,
     numbers_and_groups,
+    hyphen_words,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -736,6 +737,12 @@ numbers_and_groups :-
     typology_load(english),
     logic_translate(english, cocolog, 'The poor knew themselves.', C1),
     must('the(group(poor))', C1, 'past(know(the(group(poor)), the(group(poor)))).\n').
+
+%% 61. A HYPHENATED WORD (1.128.0) is a quoted atom in Cocolog.
+hyphen_words :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'He is self-conscious.', C1),
+    must('\'self-conscious\'(he)', C1, '\'self-conscious\'(he).\n').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

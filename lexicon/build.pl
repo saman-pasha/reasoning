@@ -103,7 +103,8 @@ main :-
 %% --every writes every_noun.txt, every_verb.txt, every_adverb.txt and
 %% every_vi.txt alone (since reasoning 1.123.0), and every_adjective.txt
 %% (since 1.124.0): every lemma index.noun, index.verb, index.adv and
-%% index.adj name, of letters a to z and three letters or more, of any
+%% index.adj name, of letters a to z (and since 1.128.0 a hyphen between
+%% two letters: low-level) and three letters or more, of any
 %% length since 1.124.0 (unsympathetic, uncompromising; this file's word
 %% filter stops at twelve), the SemCor-counted ones first (known_noun's,
 %% known_verb's, known_adj's and known_adverb's order) and the rest in
@@ -186,14 +187,23 @@ lx_inflected(WN, Forms, All) :-
                    lx_index_words(WN, File2, Ls2), member(W, Ls2) ), Ws0),
     sort(Ws0, Ws), list_to_assoc(Ws, All).
 
-%% every lemma of an index of letters a to z alone, whatever its length.
+%% every lemma of an index of letters a to z alone, whatever its length,
+%% and since reasoning 1.128.0 a hyphen between two letters (low-level,
+%% self-conscious, tongue-in-cheek: 7 028 lemmas of the four indexes).
 lx_index_words(WN, File, Words) :-
     lx_lines(WN, File, Lines),
     findall(W, ( member(L, Lines), \+ sub_string(L, 0, 1, _, ' '),
                  split_string(L, [32], [32], [LemS|_]), LemS \== "",
                  atom_string(W, LemS), atom_codes(W, Cs),
-                 forall(member(C, Cs), ( C >= 0'a, C =< 0'z )) ), Ws),
+                 lx_index_codes(Cs) ), Ws),
     sort(Ws, Words).
+
+lx_index_codes([C|Cs]) :- lx_az(C), lx_index_rest(Cs).
+lx_index_rest([]).
+lx_index_rest([C|Cs]) :- lx_az(C), !, lx_index_rest(Cs).
+lx_index_rest([0'-, C|Cs]) :- lx_az(C), lx_index_rest(Cs).
+
+lx_az(C) :- C >= 0'a, C =< 0'z.
 
 %% a word of an every_* file: three letters or more (since 1.124.0 of any
 %% length).

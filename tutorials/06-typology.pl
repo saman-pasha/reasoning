@@ -186,6 +186,7 @@ main :-
     such_words,
     reflexives,
     numbers_and_groups,
+    hyphen_words,
     format("~ndone~n", []).
 
 
@@ -1407,6 +1408,14 @@ numbers_and_groups :-
     must('the poor', W2, 'The poor knew themselves.'),
     typology_read(english, 'The law itself was unclear.', IR3),
     must('the law itself', IR3, copula(past, pos, emph(np(law, sg, def, []), pron(3, sg, n)), adj([unclear]))).
+
+%% 95. A HYPHENATED WORD (1.128.0): WordNet's hyphenated lemmas are words
+%% of the every_* files (lexicon/build.pl -- --every), a word of its class
+%% like any other, its meaning the word itself.
+hyphen_words :-
+    typology_load(english),
+    typology_read(english, 'A low-level job.', IR1),
+    must('low-level', IR1, phrase(np(job, sg, indef, ['low-level']))).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

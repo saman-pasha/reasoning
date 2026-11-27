@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2751,6 +2751,20 @@ article_names :-
     findall(R3, typology_read(english, 'The dog sleeps.', R3), Rs3),
     check('no article before a small word is a name\'s', Rs3, [clause(sleep, present, pos, np(dog, sg, def, []), none)]).
 
+%% 1.128.0: WordNet's hyphenated lemmas, a word of the every_* files.
+hyphen_words :-
+    section('hyphenated words'),
+    forall(member(T-Want, [
+               'A low-level job.'-phrase(np(job, sg, indef, ['low-level'])),
+               'He is self-conscious.'-copula(present, pos, pron(3, sg, m), adj(['self-conscious'])),
+               'Substitute regular milk with fat-free milk.'-clause(substitute, imperative, pos, pron(2, sg, _), np(milk, sg, mass, [regular]), [pp(with, np(milk, sg, mass, ['fat-free']))]) ]),
+           ( ( once(typology_read(english, T, R)) -> true ; R = none ),
+             ( R = Want -> V = yes ; V = R ),
+             atomic_list_concat(['English, the first reading: ', T], Label),
+             check(Label, V, yes) )),
+    ( typology_write(english, phrase(np(child, pl, indef, ['empty-bellied'])), W) -> true ; W = none ),
+    check('a hyphenated adjective written', W, 'Empty-bellied children.').
+
 %% 1.127.0: `oneself', an emphatic reflexive (emph(NP, Pronoun)), `of'
 %% before a pronoun, a number after a definite determiner, an adjective as
 %% a group (group(A)).
@@ -3329,8 +3343,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 5852 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 5 852 sentences read at 1.127.0 within 2 000 000 inferences each are read', R1, yes),
+    ( K >= 6070 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 6 070 sentences read at 1.128.0 within 2 000 000 inferences each are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

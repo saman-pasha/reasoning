@@ -1160,6 +1160,7 @@ synergistically
 meanly
 funnily
 noncompetitively
+end-to-end
 nonverbally
 patronisingly
 discouragingly
@@ -1210,10 +1211,13 @@ outspokenly
 pathetically
 sublimely
 faultlessly
+light-headedly
 defenceless
+post-haste
 uncannily
 sloppily
 submissively
+off-the-clock
 therapeutically
 smarmily
 giddily
@@ -1238,6 +1242,7 @@ unimaginably
 beastly
 chronically
 unceremoniously
+shoulder-to-shoulder
 wonderingly
 dirtily
 gloatingly
@@ -1266,8 +1271,10 @@ importunately
 licentiously
 thermostatically
 anarchically
+light-heartedly
 seasonably
 instantaneously
+north-northwest
 spinally
 frighteningly
 forthright
@@ -1302,6 +1309,7 @@ eccentrically
 hotly
 anyways
 palmately
+pig-headedly
 colloidally
 sensually
 unconventionally
@@ -1337,6 +1345,7 @@ undisputedly
 forthrightly
 immorally
 prosaically
+flip-flap
 unconditionally
 wrongfully
 dependably
@@ -1382,6 +1391,7 @@ problematically
 wondrous
 flippantly
 unreadably
+south-east
 indigenously
 illogically
 quixotically
@@ -1404,6 +1414,7 @@ perkily
 chivalrously
 histologically
 provincially
+hell-for-leather
 wastefully
 glissando
 volubly
@@ -1428,6 +1439,7 @@ extravagantly
 blessedly
 imploringly
 monthly
+half-heartedly
 southerly
 hydraulically
 unrestrainedly
@@ -1435,12 +1447,14 @@ artlessly
 neglectfully
 faultily
 sensationally
+wafer-thin
 laterally
 ungratefully
 poignantly
 snidely
 boisterously
 appreciatively
+baby-wise
 categorically
 momently
 symmetrically
@@ -1456,12 +1470,14 @@ questionably
 uninterruptedly
 torturously
 kinaesthetically
+self-conceitedly
 poutingly
 cheekily
 demeaningly
 twofold
 southeastwardly
 unambiguously
+up-country
 nothing
 profitlessly
 linguistically
@@ -1498,6 +1514,7 @@ melodramatically
 shaggily
 moonily
 disbelievingly
+thousand-fold
 implausibly
 entreatingly
 idolatrously
@@ -1534,6 +1551,7 @@ injuriously
 psychologically
 penitently
 inimitably
+half-time
 pinnately
 sturdily
 loftily
@@ -1543,6 +1561,7 @@ hourly
 unromantically
 lengthways
 joyously
+narrow-mindedly
 infrequently
 precariously
 enterprisingly
@@ -1612,6 +1631,7 @@ stagily
 talkatively
 thoughtlessly
 improbably
+face-to-face
 puritanically
 virulently
 perspicuously
@@ -1623,6 +1643,7 @@ ingeniously
 underarm
 craftily
 heatedly
+small-mindedly
 ashamedly
 productively
 fixedly
@@ -1630,6 +1651,7 @@ territorially
 prematurely
 anticlockwise
 plentifully
+first-rate
 severally
 resourcefully
 refreshingly
@@ -1660,6 +1682,7 @@ pressingly
 quizzically
 downhill
 unremarkably
+tongue-in-cheek
 raggedly
 inappropriately
 consolingly
@@ -1670,12 +1693,14 @@ unlawfully
 pleasurably
 medicinally
 journalistically
+breast-deep
 riotously
 nationwide
 uxoriously
 professorially
 snobbishly
 basely
+slam-bang
 uninstructively
 suavely
 pruriently
@@ -1685,6 +1710,7 @@ offhanded
 feasibly
 beforehand
 pettishly
+single-handed
 federally
 willingly
 passably
@@ -1693,6 +1719,7 @@ sociolinguistically
 communally
 spasmodically
 lackadaisically
+single-mindedly
 mischievously
 erroneously
 seasonally
@@ -1807,6 +1834,7 @@ toughly
 involuntarily
 appallingly
 yeah
+half-yearly
 everlastingly
 fiendishly
 uninvitedly
@@ -1823,6 +1851,7 @@ condescendingly
 tastily
 forevermore
 unassailably
+breast-high
 honourably
 unctuously
 coincidentally
@@ -1840,6 +1869,7 @@ endearingly
 adulterously
 unqualifiedly
 disdainfully
+high-mindedly
 inexpediently
 abortively
 interminably
@@ -1862,6 +1892,7 @@ phonemic
 northerly
 mystically
 conversationally
+person-to-person
 ecclesiastically
 systematically
 allowably
@@ -1884,12 +1915,14 @@ palatably
 anonymously
 insipidly
 pointedly
+straight-backed
 rhapsodically
 forcefully
 overly
 aboveboard
 menially
 telegraphically
+self-evidently
 administratively
 dichotomously
 erotically
@@ -1926,11 +1959,13 @@ languidly
 preposterously
 meanspiritedly
 horseback
+drop-dead
 ultrasonically
 inconsequently
 screamingly
 animatedly
 unrecognizably
+pit-a-pat
 witheringly
 untruly
 frenetically
@@ -1955,6 +1990,7 @@ plump
 plunk
 genteelly
 barbarously
+slap-bang
 nonspecifically
 vengefully
 nighest
@@ -1965,8 +2001,12 @@ favourably
 humanly
 henceforward
 truthfully
+so-so
+one-sidedly
+off-hand
 obsessionally
 amorously
+tip-top
 possessively
 nocturnally
 crosstown
@@ -1980,6 +2020,7 @@ langsyne
 obliquely
 impalpably
 headfirst
+cap-a-pie
 light
 respectfully
 sparely
@@ -2000,6 +2041,7 @@ pianissimo
 underneath
 balmily
 appositively
+long-windedly
 gratis
 vivace
 fecklessly
@@ -2028,6 +2070,7 @@ belligerently
 arithmetically
 bestially
 contumaciously
+sky-high
 theologically
 impiously
 closest
@@ -2054,6 +2097,7 @@ unfashionably
 unarguably
 nastily
 confusingly
+point-blank
 vicariously
 cozily
 synchronously
@@ -2074,11 +2118,13 @@ constructively
 criminally
 dishonourably
 buxomly
+all-fired
 transitionally
 repetitively
 undeniably
 adorably
 unwontedly
+chock-a-block
 polyphonically
 plaguily
 pneumatically
@@ -2087,6 +2133,7 @@ poisonously
 nefariously
 pluckily
 gloweringly
+baby-like
 sensuously
 scientifically
 telescopically
@@ -2095,12 +2142,14 @@ mawkishly
 metaphysically
 lastingly
 please
+north-east
 bluntly
 dynamically
 valiantly
 inhospitably
 quickest
 icily
+self-consciously
 dumbly
 reprehensibly
 logarithmically
@@ -2128,6 +2177,7 @@ regrettably
 adjectivally
 tactfully
 culpably
+pre-eminently
 confusedly
 peremptorily
 monolingually
@@ -2141,6 +2191,7 @@ sequentially
 incontrovertibly
 jeeringly
 terminally
+south-southeast
 judicially
 harmfully
 inconveniently
@@ -2152,6 +2203,7 @@ stingily
 unambitiously
 lyrically
 thankfully
+pitter-patter
 transversally
 gratefully
 incisively
@@ -2159,6 +2211,8 @@ coquettishly
 molto
 signally
 cognitively
+full-time
+post-free
 unco
 viscidly
 toppingly
@@ -2178,6 +2232,7 @@ irrevocably
 popishly
 coastward
 heinously
+well-nigh
 unattractively
 incessantly
 illegitimately
@@ -2296,11 +2351,13 @@ balefully
 inveterate
 stark
 touchily
+red-handed
 leniently
 industriously
 deadly
 uncritically
 ventrally
+pitty-patty
 due
 unbecomingly
 tirelessly
@@ -2358,6 +2415,7 @@ vigilantly
 ideographically
 algebraically
 unoriginally
+harum-scarum
 despondently
 compatibly
 dashingly
@@ -2370,6 +2428,7 @@ semiweekly
 promisingly
 pardonably
 insistently
+vis-a-vis
 inflexibly
 amicably
 perseveringly
@@ -2387,6 +2446,7 @@ verily
 conservatively
 pretentiously
 steady
+head-to-head
 humorlessly
 simultaneously
 scandalously
@@ -2408,8 +2468,11 @@ kinesthetically
 trustingly
 endways
 playfully
+round-arm
+north-northeast
 improvidently
 lineally
+pig-a-back
 unselfconsciously
 ecologically
 innocently
@@ -2463,6 +2526,7 @@ sweepingly
 hereinbefore
 perceptibly
 impracticably
+second-best
 spiritedly
 imposingly
 daringly
@@ -2483,6 +2547,7 @@ talkily
 demurely
 unthinkingly
 biyearly
+cold-bloodedly
 harmonically
 repentantly
 weightily
@@ -2505,6 +2570,7 @@ informatively
 delusively
 unrealistically
 energetically
+right-down
 sarcastically
 large
 largo
@@ -2585,6 +2651,7 @@ unclearly
 heroically
 cannily
 desolately
+skew-whiff
 reproachfully
 meaningfully
 inequitably
@@ -2649,10 +2716,12 @@ vexatiously
 bawdily
 glowingly
 fantastically
+stock-still
 topologically
 sketchily
 conjointly
 munificently
+post-paid
 herewith
 solitarily
 indubitably
@@ -2663,6 +2732,7 @@ bimonthly
 forrard
 abreast
 gutturally
+one-on-one
 morphologically
 teasingly
 unintelligently
@@ -2691,6 +2761,7 @@ outlandishly
 skyward
 deviously
 pacifistically
+south-west
 squeamishly
 tangentially
 unwantedly
@@ -2780,6 +2851,7 @@ stuffily
 anyplace
 dejectedly
 quarterly
+topsy-turvy
 decoratively
 forrad
 rhetorically
@@ -2802,6 +2874,7 @@ trickily
 fearsomely
 topically
 stiltedly
+rent-free
 guardedly
 cagily
 despicably
@@ -2821,6 +2894,7 @@ infernally
 elegantly
 gruesomely
 terrestrially
+cross-linguistically
 tandem
 longways
 slapdash
@@ -2861,6 +2935,7 @@ indolently
 emulously
 presumptively
 impromptu
+part-time
 ruinously
 extempore
 breadthwise
@@ -2893,14 +2968,17 @@ bitingly
 wittily
 significantly
 palely
+higgledy-piggledy
 unblushingly
 invisibly
+self-righteously
 askance
 fastidiously
 preternaturally
 conically
 currishly
 hectically
+half-and-half
 municipally
 nasally
 slimly
@@ -2953,6 +3031,7 @@ injudiciously
 agonizingly
 immoderately
 servilely
+knee-deep
 aloft
 stochastically
 surgically
@@ -3006,10 +3085,12 @@ sixthly
 digitately
 sportingly
 unconsciously
+waist-deep
 ruthlessly
 staunchly
 inwards
 connubial
+chop-chop
 inefficaciously
 felicitously
 behindhand
@@ -3023,6 +3104,7 @@ affirmatively
 sententiously
 maliciously
 tediously
+single-handedly
 cordially
 indescribably
 irately
@@ -3102,6 +3184,7 @@ laboriously
 outwards
 grammatically
 finitely
+toe-to-toe
 satisfyingly
 sapiently
 uncommonly
@@ -3111,12 +3194,16 @@ fearlessly
 venomously
 pertinaciously
 immunologically
+helter-skelter
+topsy-turvily
 simperingly
 decorously
 excruciatingly
 crisscross
+cross-country
 obstructively
 extra
+knee-high
 unconstitutionally
 tardily
 nutritionally
@@ -3151,6 +3238,7 @@ southwestward
 contradictorily
 avidly
 ideologically
+waist-high
 longwise
 multiply
 nonviolently
@@ -3162,6 +3250,7 @@ bounteously
 sleeplessly
 vauntingly
 enthrallingly
+high-handedly
 somnolently
 unnoticeably
 vocally
@@ -3217,8 +3306,10 @@ ironically
 unintentionally
 questioningly
 skeptically
+pitty-pat
 superlatively
 disloyally
+non-verbally
 automatically
 controversially
 disproportionately
@@ -3255,6 +3346,7 @@ longest
 intramuscularly
 equivocally
 frumpishly
+half-hourly
 justifiedly
 ruggedly
 substantially
@@ -3318,6 +3410,7 @@ bloody
 ununderstandably
 affectionately
 underhand
+pell-mell
 painstakingly
 knavishly
 macroscopically
@@ -3371,6 +3464,7 @@ biochemically
 feetfirst
 opulently
 disagreeably
+self-indulgently
 hereunder
 fitfully
 characteristically
@@ -3378,6 +3472,7 @@ usefully
 forgivingly
 hydraulicly
 precious
+man-to-man
 verbatim
 astronomically
 erstwhile
@@ -3410,11 +3505,13 @@ vapidly
 wishfully
 drably
 jolly
+broad-mindedly
 chorally
 validly
 prepositionally
 unalterably
 anachronistically
+north-west
 disgustingly
 lowest
 dolce
@@ -3440,6 +3537,7 @@ sidearm
 lexically
 voraciously
 unforgettably
+half-price
 receptively
 undesirably
 waggishly
@@ -3461,6 +3559,7 @@ diametrically
 constrainedly
 picturesquely
 superficially
+south-southwest
 firstly
 southeastward
 dauntlessly
@@ -3470,6 +3569,7 @@ starkly
 scantily
 conspicuously
 polemically
+cross-legged
 gorgeously
 garishly
 individualistically
@@ -3491,6 +3591,7 @@ stupendously
 reputedly
 creakily
 abundantly
+light-handedly
 impulsively
 irreversibly
 perfunctorily
@@ -3515,6 +3616,7 @@ laconically
 soonest
 retentively
 disreputably
+good-naturedly
 pathogenically
 gravitationally
 inquiringly
@@ -3531,6 +3633,7 @@ loyally
 remorsefully
 sparingly
 morbidly
+willy-nilly
 northwestward
 searchingly
 incredulously
@@ -3565,6 +3668,7 @@ advantageously
 jocular
 unjustly
 lightsomely
+head-on
 magnificently
 multiplicatively
 northeast
@@ -3598,7 +3702,9 @@ frontward
 advertently
 biradially
 scrappily
+well-timed
 dishonestly
 languorously
+hugger-mugger
 inalienably
 orad

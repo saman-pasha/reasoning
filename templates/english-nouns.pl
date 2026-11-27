@@ -79,6 +79,8 @@ ty_noun_in(english, ablactation, none, unknown, ablactation, regular).
 ty_noun_in(english, ablation, none, unknown, ablation, regular).
 ty_noun_in(english, ablative, none, unknown, ablative, regular).
 ty_noun_in(english, ablaut, none, unknown, ablaut, regular).
+ty_noun_in(english, 'able-bodiedism', none, unknown, 'able-bodiedism', regular).
+ty_noun_in(english, 'able-bodism', none, unknown, 'able-bodism', regular).
 ty_noun_in(english, ableism, none, unknown, ableism, regular).
 ty_noun_in(english, ablepharia, none, unknown, ablepharia, regular).
 ty_noun_in(english, ablism, none, unknown, ablism, regular).
@@ -108,6 +110,7 @@ ty_noun_in(english, abortion, none, unknown, abortion, regular).
 ty_noun_in(english, abortionist, none, unknown, abortionist, regular).
 ty_noun_in(english, abortus, none, unknown, abortus, regular).
 ty_noun_in(english, aboulia, none, unknown, aboulia, regular).
+ty_noun_in(english, 'about-face', none, unknown, 'about-face', regular).
 ty_noun_in(english, abracadabra, none, unknown, abracadabra, regular).
 ty_noun_in(english, abrachia, none, unknown, abrachia, regular).
 ty_noun_in(english, abradant, none, unknown, abradant, regular).
@@ -341,6 +344,7 @@ ty_noun_in(english, acidophilus, none, unknown, acidophilus, regular).
 ty_noun_in(english, acidosis, none, unknown, acidosis, regular).
 ty_noun_in(english, acidulousness, none, unknown, acidulousness, regular).
 ty_noun_in(english, acinus, none, unknown, acinus, regular).
+ty_noun_in(english, 'ack-ack', none, unknown, 'ack-ack', regular).
 ty_noun_in(english, ackee, none, unknown, ackee, regular).
 ty_noun_in(english, acknowledgement, none, unknown, acknowledgement, regular).
 ty_noun_in(english, acknowledgment, none, unknown, acknowledgment, regular).
@@ -367,6 +371,7 @@ ty_noun_in(english, acquisitiveness, none, unknown, acquisitiveness, regular).
 ty_noun_in(english, acquittal, none, unknown, acquittal, regular).
 ty_noun_in(english, acquittance, none, unknown, acquittance, regular).
 ty_noun_in(english, acre, none, unknown, acre, regular).
+ty_noun_in(english, 'acre-foot', none, unknown, 'acre-foot', regular).
 ty_noun_in(english, acreage, none, unknown, acreage, regular).
 ty_noun_in(english, acres, none, unknown, acres, regular).
 ty_noun_in(english, acridid, none, unknown, acridid, regular).
@@ -402,6 +407,7 @@ ty_noun_in(english, acrylamide, none, unknown, acrylamide, regular).
 ty_noun_in(english, acrylate, none, unknown, acrylate, regular).
 ty_noun_in(english, acrylic, none, unknown, acrylic, regular).
 ty_noun_in(english, acrylonitrile, none, unknown, acrylonitrile, regular).
+ty_noun_in(english, 'acrylonitrile-butadiene-styrene', none, unknown, 'acrylonitrile-butadiene-styrene', regular).
 ty_noun_in(english, act, none, unknown, act, regular).
 ty_noun_in(english, actaea, none, unknown, actaea, regular).
 ty_noun_in(english, actias, none, unknown, actias, regular).
@@ -457,11 +463,13 @@ ty_noun_in(english, acyl, none, unknown, acyl, regular).
 ty_noun_in(english, acylation, none, unknown, acylation, regular).
 ty_noun_in(english, acylglycerol, none, unknown, acylglycerol, regular).
 ty_noun_in(english, ad, none, unknown, ad, regular).
+ty_noun_in(english, 'ad-lib', none, unknown, 'ad-lib', regular).
 ty_noun_in(english, adactylia, none, unknown, adactylia, regular).
 ty_noun_in(english, adactylism, none, unknown, adactylism, regular).
 ty_noun_in(english, adactyly, none, unknown, adactyly, regular).
 ty_noun_in(english, adage, none, unknown, adage, regular).
 ty_noun_in(english, adam, none, unknown, adam, regular).
+ty_noun_in(english, 'adam-and-eve', none, unknown, 'adam-and-eve', regular).
 ty_noun_in(english, adamance, none, unknown, adamance, regular).
 ty_noun_in(english, adansonia, none, unknown, adansonia, regular).
 ty_noun_in(english, adapid, none, unknown, adapid, regular).
@@ -471,6 +479,8 @@ ty_noun_in(english, adaptation, none, unknown, adaptation, regular).
 ty_noun_in(english, adapter, none, unknown, adapter, regular).
 ty_noun_in(english, adaption, none, unknown, adaption, regular).
 ty_noun_in(english, adaptor, none, unknown, adaptor, regular).
+ty_noun_in(english, 'add-in', none, unknown, 'add-in', regular).
+ty_noun_in(english, 'add-on', none, unknown, 'add-on', regular).
 ty_noun_in(english, addax, none, unknown, addax, regular).
 ty_noun_in(english, addend, none, unknown, addend, regular).
 ty_noun_in(english, addendum, none, unknown, addendum, regular).
@@ -479,6 +489,7 @@ ty_noun_in(english, addict, none, unknown, addict, regular).
 ty_noun_in(english, addiction, none, unknown, addiction, regular).
 ty_noun_in(english, addition, none, unknown, addition, regular).
 ty_noun_in(english, additive, none, unknown, additive, regular).
+ty_noun_in(english, 'addle-head', none, unknown, 'addle-head', regular).
 ty_noun_in(english, addlehead, none, unknown, addlehead, regular).
 ty_noun_in(english, address, none, unknown, address, regular).
 ty_noun_in(english, addressee, none, unknown, addressee, regular).
@@ -731,6 +742,7 @@ ty_noun_in(english, africanism, none, unknown, africanism, regular).
 ty_noun_in(english, afrikaner, none, unknown, afrikaner, regular).
 ty_noun_in(english, afrocarpus, none, unknown, afrocarpus, regular).
 ty_noun_in(english, afropavo, none, unknown, afropavo, regular).
+ty_noun_in(english, 'after-shave', none, unknown, 'after-shave', regular).
 ty_noun_in(english, afterbirth, none, unknown, afterbirth, regular).
 ty_noun_in(english, afterburner, none, unknown, afterburner, regular).
 ty_noun_in(english, aftercare, none, unknown, aftercare, regular).
@@ -761,6 +773,7 @@ ty_noun_in(english, agammaglobulinemia, none, unknown, agammaglobulinemia, regul
 ty_noun_in(english, agamogenesis, none, unknown, agamogenesis, regular).
 ty_noun_in(english, agapanthus, none, unknown, agapanthus, regular).
 ty_noun_in(english, agar, none, unknown, agar, regular).
+ty_noun_in(english, 'agar-agar', none, unknown, 'agar-agar', regular).
 ty_noun_in(english, agaric, none, unknown, agaric, regular).
 ty_noun_in(english, agaricus, none, unknown, agaricus, regular).
 ty_noun_in(english, agate, none, unknown, agate, regular).
@@ -778,6 +791,7 @@ ty_noun_in(english, agendum, none, unknown, agendum, regular).
 ty_noun_in(english, agenesia, none, unknown, agenesia, regular).
 ty_noun_in(english, agenesis, none, unknown, agenesis, regular).
 ty_noun_in(english, agent, none, person, agent, regular).
+ty_noun_in(english, 'agent-in-place', none, unknown, 'agent-in-place', regular).
 ty_noun_in(english, agerasia, none, unknown, agerasia, regular).
 ty_noun_in(english, ageratum, none, unknown, ageratum, regular).
 ty_noun_in(english, agglomerate, none, unknown, agglomerate, regular).
@@ -851,6 +865,8 @@ ty_noun_in(english, ahimsa, none, unknown, ahimsa, regular).
 ty_noun_in(english, ahuehuete, none, unknown, ahuehuete, regular).
 ty_noun_in(english, aid, none, unknown, aid, regular).
 ty_noun_in(english, aide, none, person, aide, regular).
+ty_noun_in(english, 'aide-de-camp', none, unknown, 'aide-de-camp', regular).
+ty_noun_in(english, 'aide-memoire', none, unknown, 'aide-memoire', regular).
 ty_noun_in(english, aiglet, none, unknown, aiglet, regular).
 ty_noun_in(english, aigret, none, unknown, aigret, regular).
 ty_noun_in(english, aigrette, none, unknown, aigrette, regular).
@@ -866,6 +882,8 @@ ty_noun_in(english, aim, none, unknown, aim, regular).
 ty_noun_in(english, aimlessness, none, unknown, aimlessness, regular).
 ty_noun_in(english, aioli, none, unknown, aioli, regular).
 ty_noun_in(english, air, none, unknown, air, regular).
+ty_noun_in(english, 'air-intake', none, unknown, 'air-intake', regular).
+ty_noun_in(english, 'air-sleeve', none, unknown, 'air-sleeve', regular).
 ty_noun_in(english, airbrake, none, unknown, airbrake, regular).
 ty_noun_in(english, airbrush, none, unknown, airbrush, regular).
 ty_noun_in(english, airburst, none, unknown, airburst, regular).
@@ -967,6 +985,7 @@ ty_noun_in(english, alcohol, none, unknown, alcohol, regular).
 ty_noun_in(english, alcoholism, none, unknown, alcoholism, regular).
 ty_noun_in(english, alcove, none, unknown, alcove, regular).
 ty_noun_in(english, aldehyde, none, unknown, aldehyde, regular).
+ty_noun_in(english, 'aldehyde-alcohol', none, unknown, 'aldehyde-alcohol', regular).
 ty_noun_in(english, alder, none, unknown, alder, regular).
 ty_noun_in(english, alderfly, none, unknown, alderfly, regular).
 ty_noun_in(english, alderman, none, person, alderman, regular).
@@ -986,6 +1005,9 @@ ty_noun_in(english, alehouse, none, unknown, alehouse, regular).
 ty_noun_in(english, alembic, none, unknown, alembic, regular).
 ty_noun_in(english, alendronate, none, unknown, alendronate, regular).
 ty_noun_in(english, aleph, none, unknown, aleph, regular).
+ty_noun_in(english, 'aleph-nought', none, unknown, 'aleph-nought', regular).
+ty_noun_in(english, 'aleph-null', none, unknown, 'aleph-null', regular).
+ty_noun_in(english, 'aleph-zero', none, unknown, 'aleph-zero', regular).
 ty_noun_in(english, alepisaurus, none, unknown, alepisaurus, regular).
 ty_noun_in(english, alert, none, unknown, alert, regular).
 ty_noun_in(english, alerting, none, unknown, alerting, regular).
@@ -1064,6 +1086,7 @@ ty_noun_in(english, alkyl, none, unknown, alkyl, regular).
 ty_noun_in(english, alkylbenzene, none, unknown, alkylbenzene, regular).
 ty_noun_in(english, alkylbenzenesulfonate, none, unknown, alkylbenzenesulfonate, regular).
 ty_noun_in(english, alkyne, none, unknown, alkyne, regular).
+ty_noun_in(english, 'all-rounder', none, unknown, 'all-rounder', regular).
 ty_noun_in(english, allamanda, none, unknown, allamanda, regular).
 ty_noun_in(english, allantois, none, unknown, allantois, regular).
 ty_noun_in(english, allayer, none, unknown, allayer, regular).
@@ -1134,6 +1157,7 @@ ty_noun_in(english, almond, none, unknown, almond, regular).
 ty_noun_in(english, almoner, none, unknown, almoner, regular).
 ty_noun_in(english, almoravid, none, person, almoravid, regular).
 ty_noun_in(english, alms, none, unknown, alms, regular).
+ty_noun_in(english, 'alms-giving', none, unknown, 'alms-giving', regular).
 ty_noun_in(english, almsgiver, none, person, almsgiver, regular).
 ty_noun_in(english, almsgiving, none, unknown, almsgiving, regular).
 ty_noun_in(english, alocasia, none, unknown, alocasia, regular).
@@ -1147,6 +1171,12 @@ ty_noun_in(english, alouatta, none, unknown, alouatta, regular).
 ty_noun_in(english, alpaca, none, unknown, alpaca, regular).
 ty_noun_in(english, alpenstock, none, unknown, alpenstock, regular).
 ty_noun_in(english, alpha, none, unknown, alpha, regular).
+ty_noun_in(english, 'alpha-adrenoceptor', none, unknown, 'alpha-adrenoceptor', regular).
+ty_noun_in(english, 'alpha-blocker', none, unknown, 'alpha-blocker', regular).
+ty_noun_in(english, 'alpha-interferon', none, unknown, 'alpha-interferon', regular).
+ty_noun_in(english, 'alpha-lipoprotein', none, unknown, 'alpha-lipoprotein', regular).
+ty_noun_in(english, 'alpha-naphthol', none, unknown, 'alpha-naphthol', regular).
+ty_noun_in(english, 'alpha-tocopheral', none, unknown, 'alpha-tocopheral', regular).
 ty_noun_in(english, alphabet, none, unknown, alphabet, regular).
 ty_noun_in(english, alphabetisation, none, unknown, alphabetisation, regular).
 ty_noun_in(english, alphabetiser, none, unknown, alphabetiser, regular).
@@ -1157,6 +1187,7 @@ ty_noun_in(english, alphavirus, none, unknown, alphavirus, regular).
 ty_noun_in(english, alpinist, none, unknown, alpinist, regular).
 ty_noun_in(english, alprazolam, none, unknown, alprazolam, regular).
 ty_noun_in(english, alsatian, none, person, alsatian, regular).
+ty_noun_in(english, 'also-ran', none, unknown, 'also-ran', regular).
 ty_noun_in(english, alstroemeria, none, unknown, alstroemeria, regular).
 ty_noun_in(english, altar, none, unknown, altar, regular).
 ty_noun_in(english, altarpiece, none, unknown, altarpiece, regular).
@@ -1345,6 +1376,10 @@ ty_noun_in(english, amp, none, unknown, amp, regular).
 ty_noun_in(english, ampelography, none, unknown, ampelography, regular).
 ty_noun_in(english, amperage, none, unknown, amperage, regular).
 ty_noun_in(english, ampere, none, unknown, ampere, regular).
+ty_noun_in(english, 'ampere-hour', none, unknown, 'ampere-hour', regular).
+ty_noun_in(english, 'ampere-minute', none, unknown, 'ampere-minute', regular).
+ty_noun_in(english, 'ampere-second', none, unknown, 'ampere-second', regular).
+ty_noun_in(english, 'ampere-turn', none, unknown, 'ampere-turn', regular).
 ty_noun_in(english, amperometry, none, unknown, amperometry, regular).
 ty_noun_in(english, ampersand, none, unknown, ampersand, regular).
 ty_noun_in(english, amphetamine, none, unknown, amphetamine, regular).
@@ -1609,6 +1644,7 @@ ty_noun_in(english, anil, none, unknown, anil, regular).
 ty_noun_in(english, aniline, none, unknown, aniline, regular).
 ty_noun_in(english, animadversion, none, unknown, animadversion, regular).
 ty_noun_in(english, animal, none, unknown, animal, regular).
+ty_noun_in(english, 'animal-worship', none, unknown, 'animal-worship', regular).
 ty_noun_in(english, animalcule, none, unknown, animalcule, regular).
 ty_noun_in(english, animalculum, none, unknown, animalculum, regular).
 ty_noun_in(english, animalisation, none, unknown, animalisation, regular).
@@ -1773,6 +1809,8 @@ ty_noun_in(english, anthropophagus, none, unknown, anthropophagus, regular).
 ty_noun_in(english, anthropophagy, none, unknown, anthropophagy, regular).
 ty_noun_in(english, anthroposophy, none, unknown, anthroposophy, regular).
 ty_noun_in(english, anthurium, none, unknown, anthurium, regular).
+ty_noun_in(english, 'anti-inflammatory', none, unknown, 'anti-inflammatory', regular).
+ty_noun_in(english, 'anti-intellectual', none, unknown, 'anti-intellectual', regular).
 ty_noun_in(english, antiabortionist, none, unknown, antiabortionist, regular).
 ty_noun_in(english, antiacid, none, unknown, antiacid, regular).
 ty_noun_in(english, antialiasing, none, unknown, antialiasing, regular).
@@ -1909,6 +1947,7 @@ ty_noun_in(english, apatite, none, unknown, apatite, regular).
 ty_noun_in(english, apatosaur, none, unknown, apatosaur, regular).
 ty_noun_in(english, apatosaurus, none, unknown, apatosaurus, regular).
 ty_noun_in(english, ape, none, animate, ape, regular).
+ty_noun_in(english, 'ape-man', none, unknown, 'ape-man', regular).
 ty_noun_in(english, aper, none, unknown, aper, regular).
 ty_noun_in(english, apercu, none, unknown, apercu, regular).
 ty_noun_in(english, aperea, none, unknown, aperea, regular).
@@ -2134,6 +2173,7 @@ ty_noun_in(english, arbour, none, unknown, arbour, regular).
 ty_noun_in(english, arbovirus, none, unknown, arbovirus, regular).
 ty_noun_in(english, arbutus, none, unknown, arbutus, regular).
 ty_noun_in(english, arc, none, unknown, arc, regular).
+ty_noun_in(english, 'arc-boutant', none, unknown, 'arc-boutant', regular).
 ty_noun_in(english, arcade, none, unknown, arcade, regular).
 ty_noun_in(english, arcadian, none, person, arcadian, regular).
 ty_noun_in(english, arcane, none, unknown, arcane, regular).
@@ -2237,6 +2277,7 @@ ty_noun_in(english, argentite, none, unknown, argentite, regular).
 ty_noun_in(english, argil, none, unknown, argil, regular).
 ty_noun_in(english, argillite, none, unknown, argillite, regular).
 ty_noun_in(english, arginine, none, unknown, arginine, regular).
+ty_noun_in(english, 'argle-bargle', none, unknown, 'argle-bargle', regular).
 ty_noun_in(english, argon, none, unknown, argon, regular).
 ty_noun_in(english, argonaut, none, unknown, argonaut, regular).
 ty_noun_in(english, argonautidae, none, unknown, argonautidae, regular).
@@ -2247,6 +2288,7 @@ ty_noun_in(english, arguer, none, unknown, arguer, regular).
 ty_noun_in(english, argument, none, unknown, argument, regular).
 ty_noun_in(english, argumentation, none, unknown, argumentation, regular).
 ty_noun_in(english, argus, none, person, argus, regular).
+ty_noun_in(english, 'argy-bargy', none, unknown, 'argy-bargy', regular).
 ty_noun_in(english, argyle, none, unknown, argyle, regular).
 ty_noun_in(english, argyll, none, unknown, argyll, regular).
 ty_noun_in(english, argynnis, none, unknown, argynnis, regular).
@@ -2277,6 +2319,7 @@ ty_noun_in(english, ark, none, unknown, ark, regular).
 ty_noun_in(english, arkansas, none, unknown, arkansas, regular).
 ty_noun_in(english, arles, none, unknown, arles, regular).
 ty_noun_in(english, arm, none, unknown, arm, regular).
+ty_noun_in(english, 'arm-twisting', none, unknown, 'arm-twisting', regular).
 ty_noun_in(english, armada, none, unknown, armada, regular).
 ty_noun_in(english, armadillo, none, unknown, armadillo, regular).
 ty_noun_in(english, armament, none, unknown, armament, regular).
@@ -2295,6 +2338,7 @@ ty_noun_in(english, armistice, none, unknown, armistice, regular).
 ty_noun_in(english, armlet, none, unknown, armlet, regular).
 ty_noun_in(english, armoire, none, unknown, armoire, regular).
 ty_noun_in(english, armor, none, unknown, armor, regular).
+ty_noun_in(english, 'armor-bearer', none, unknown, 'armor-bearer', regular).
 ty_noun_in(english, armoracia, none, unknown, armoracia, regular).
 ty_noun_in(english, armorer, none, unknown, armorer, regular).
 ty_noun_in(english, armory, none, unknown, armory, regular).
@@ -2304,6 +2348,7 @@ ty_noun_in(english, armoury, none, unknown, armoury, regular).
 ty_noun_in(english, armpit, none, unknown, armpit, regular).
 ty_noun_in(english, armrest, none, unknown, armrest, regular).
 ty_noun_in(english, arms, none, unknown, arms, regular).
+ty_noun_in(english, 'arms-runner', none, unknown, 'arms-runner', regular).
 ty_noun_in(english, army, none, unknown, army, regular).
 ty_noun_in(english, armyworm, none, unknown, armyworm, regular).
 ty_noun_in(english, arnica, none, unknown, arnica, regular).
@@ -2441,6 +2486,9 @@ ty_noun_in(english, asdic, none, unknown, asdic, regular).
 ty_noun_in(english, asepsis, none, unknown, asepsis, regular).
 ty_noun_in(english, asexuality, none, unknown, asexuality, regular).
 ty_noun_in(english, ash, none, unknown, ash, regular).
+ty_noun_in(english, 'ash-bin', none, unknown, 'ash-bin', regular).
+ty_noun_in(english, 'ash-key', none, unknown, 'ash-key', regular).
+ty_noun_in(english, 'ash-pan', none, unknown, 'ash-pan', regular).
 ty_noun_in(english, ashbin, none, unknown, ashbin, regular).
 ty_noun_in(english, ashcake, none, unknown, ashcake, regular).
 ty_noun_in(english, ashcan, none, unknown, ashcan, regular).
@@ -2482,6 +2530,7 @@ ty_noun_in(english, aspirator, none, unknown, aspirator, regular).
 ty_noun_in(english, aspirer, none, unknown, aspirer, regular).
 ty_noun_in(english, aspirin, none, unknown, aspirin, regular).
 ty_noun_in(english, ass, none, unknown, ass, regular).
+ty_noun_in(english, 'ass-kisser', none, unknown, 'ass-kisser', regular).
 ty_noun_in(english, assagai, none, unknown, assagai, regular).
 ty_noun_in(english, assailability, none, unknown, assailability, regular).
 ty_noun_in(english, assailant, none, person, assailant, regular).
@@ -2491,6 +2540,7 @@ ty_noun_in(english, assassinator, none, unknown, assassinator, regular).
 ty_noun_in(english, assault, none, unknown, assault, regular).
 ty_noun_in(english, assaulter, none, unknown, assaulter, regular).
 ty_noun_in(english, assay, none, unknown, assay, regular).
+ty_noun_in(english, 'assay-mark', none, unknown, 'assay-mark', regular).
 ty_noun_in(english, assayer, none, unknown, assayer, regular).
 ty_noun_in(english, assemblage, none, unknown, assemblage, regular).
 ty_noun_in(english, assembler, none, unknown, assembler, regular).
@@ -2597,6 +2647,7 @@ ty_noun_in(english, asyndeton, none, unknown, asyndeton, regular).
 ty_noun_in(english, asynergia, none, unknown, asynergia, regular).
 ty_noun_in(english, asynergy, none, unknown, asynergy, regular).
 ty_noun_in(english, asystole, none, unknown, asystole, regular).
+ty_noun_in(english, 'at-bat', none, unknown, 'at-bat', regular).
 ty_noun_in(english, atabrine, none, unknown, atabrine, regular).
 ty_noun_in(english, atar, none, unknown, atar, regular).
 ty_noun_in(english, ataractic, none, unknown, ataractic, regular).
@@ -2791,6 +2842,10 @@ ty_noun_in(english, authorship, none, unknown, authorship, regular).
 ty_noun_in(english, autism, none, unknown, autism, regular).
 ty_noun_in(english, autistic, none, person, autistic, regular).
 ty_noun_in(english, auto, none, unknown, auto, regular).
+ty_noun_in(english, 'auto-changer', none, unknown, 'auto-changer', regular).
+ty_noun_in(english, 'auto-da-fe', none, unknown, 'auto-da-fe', regular).
+ty_noun_in(english, 'auto-mechanic', none, unknown, 'auto-mechanic', regular).
+ty_noun_in(english, 'auto-suggestion', none, unknown, 'auto-suggestion', regular).
 ty_noun_in(english, autoantibody, none, unknown, autoantibody, regular).
 ty_noun_in(english, autobahn, none, unknown, autobahn, regular).
 ty_noun_in(english, autobiographer, none, unknown, autobiographer, regular).
@@ -2862,6 +2917,7 @@ ty_noun_in(english, avail, none, unknown, avail, regular).
 ty_noun_in(english, availability, none, unknown, availability, regular).
 ty_noun_in(english, availableness, none, unknown, availableness, regular).
 ty_noun_in(english, avalanche, none, unknown, avalanche, regular).
+ty_noun_in(english, 'avant-garde', none, unknown, 'avant-garde', regular).
 ty_noun_in(english, avantgardism, none, unknown, avantgardism, regular).
 ty_noun_in(english, avantgardist, none, unknown, avantgardist, regular).
 ty_noun_in(english, avaram, none, unknown, avaram, regular).
@@ -2926,6 +2982,7 @@ ty_noun_in(english, axseed, none, unknown, axseed, regular).
 ty_noun_in(english, ayah, none, unknown, ayah, regular).
 ty_noun_in(english, ayapana, none, unknown, ayapana, regular).
 ty_noun_in(english, ayatollah, none, unknown, ayatollah, regular).
+ty_noun_in(english, 'aye-aye', none, unknown, 'aye-aye', regular).
 ty_noun_in(english, ayin, none, unknown, ayin, regular).
 ty_noun_in(english, aythya, none, unknown, aythya, regular).
 ty_noun_in(english, azadirachtin, none, unknown, azadirachtin, regular).
@@ -2945,6 +3002,8 @@ ty_noun_in(english, aztec, none, unknown, aztec, regular).
 ty_noun_in(english, aztreonam, none, unknown, aztreonam, regular).
 ty_noun_in(english, azurite, none, unknown, azurite, regular).
 ty_noun_in(english, azymia, none, unknown, azymia, regular).
+ty_noun_in(english, 'b-meson', none, unknown, 'b-meson', regular).
+ty_noun_in(english, 'baa-lamb', none, unknown, 'baa-lamb', regular).
 ty_noun_in(english, babassu, none, unknown, babassu, regular).
 ty_noun_in(english, babbiting, none, unknown, babbiting, regular).
 ty_noun_in(english, babbitt, none, unknown, babbitt, regular).
@@ -2960,6 +3019,8 @@ ty_noun_in(english, baboon, none, unknown, baboon, regular).
 ty_noun_in(english, babu, none, unknown, babu, regular).
 ty_noun_in(english, babushka, none, unknown, babushka, regular).
 ty_noun_in(english, baby, none, person, baby, regular).
+ty_noun_in(english, 'baby-sitter', none, unknown, 'baby-sitter', regular).
+ty_noun_in(english, 'baby-walker', none, unknown, 'baby-walker', regular).
 ty_noun_in(english, babyhood, none, unknown, babyhood, regular).
 ty_noun_in(english, babylonian, none, person, babylonian, regular).
 ty_noun_in(english, babyminder, none, person, babyminder, regular).
@@ -2975,11 +3036,15 @@ ty_noun_in(english, baccharis, none, unknown, baccharis, regular).
 ty_noun_in(english, baccy, none, unknown, baccy, regular).
 ty_noun_in(english, bach, none, unknown, bach, regular).
 ty_noun_in(english, bachelor, none, person, bachelor, regular).
+ty_noun_in(english, 'bachelor-at-arms', none, unknown, 'bachelor-at-arms', regular).
 ty_noun_in(english, bachelorette, none, unknown, bachelorette, regular).
 ty_noun_in(english, bachelorhood, none, unknown, bachelorhood, regular).
 ty_noun_in(english, bacillus, none, unknown, bacillus, regular).
 ty_noun_in(english, bacitracin, none, unknown, bacitracin, regular).
 ty_noun_in(english, back, none, unknown, back, regular).
+ty_noun_in(english, 'back-blast', none, unknown, 'back-blast', regular).
+ty_noun_in(english, 'back-formation', none, unknown, 'back-formation', regular).
+ty_noun_in(english, 'back-number', none, unknown, 'back-number', regular).
 ty_noun_in(english, backache, none, unknown, backache, regular).
 ty_noun_in(english, backband, none, unknown, backband, regular).
 ty_noun_in(english, backbeat, none, unknown, backbeat, regular).
@@ -3094,6 +3159,7 @@ ty_noun_in(english, bailiwick, none, unknown, bailiwick, regular).
 ty_noun_in(english, bailment, none, unknown, bailment, regular).
 ty_noun_in(english, bailor, none, unknown, bailor, regular).
 ty_noun_in(english, bailout, none, unknown, bailout, regular).
+ty_noun_in(english, 'bain-marie', none, unknown, 'bain-marie', regular).
 ty_noun_in(english, bairn, none, unknown, bairn, regular).
 ty_noun_in(english, baisa, none, unknown, baisa, regular).
 ty_noun_in(english, bait, none, unknown, bait, regular).
@@ -3142,6 +3208,8 @@ ty_noun_in(english, balker, none, unknown, balker, regular).
 ty_noun_in(english, balkiness, none, unknown, balkiness, regular).
 ty_noun_in(english, balkline, none, unknown, balkline, regular).
 ty_noun_in(english, ball, none, unknown, ball, regular).
+ty_noun_in(english, 'ball-breaker', none, unknown, 'ball-breaker', regular).
+ty_noun_in(english, 'ball-buster', none, unknown, 'ball-buster', regular).
 ty_noun_in(english, ballad, none, unknown, ballad, regular).
 ty_noun_in(english, ballade, none, unknown, ballade, regular).
 ty_noun_in(english, balladeer, none, unknown, balladeer, regular).
@@ -3169,6 +3237,7 @@ ty_noun_in(english, ballpen, none, unknown, ballpen, regular).
 ty_noun_in(english, ballplayer, none, person, ballplayer, regular).
 ty_noun_in(english, ballpoint, none, unknown, ballpoint, regular).
 ty_noun_in(english, ballroom, none, unknown, ballroom, regular).
+ty_noun_in(english, 'balls-up', none, unknown, 'balls-up', regular).
 ty_noun_in(english, ballup, none, unknown, ballup, regular).
 ty_noun_in(english, ballyhoo, none, unknown, ballyhoo, regular).
 ty_noun_in(english, balm, none, unknown, balm, regular).
@@ -3239,6 +3308,7 @@ ty_noun_in(english, bankruptcy, none, unknown, bankruptcy, regular).
 ty_noun_in(english, banksia, none, unknown, banksia, regular).
 ty_noun_in(english, banner, none, unknown, banner, regular).
 ty_noun_in(english, banneret, none, person, banneret, regular).
+ty_noun_in(english, 'banning-order', none, unknown, 'banning-order', regular).
 ty_noun_in(english, bannister, none, unknown, bannister, regular).
 ty_noun_in(english, bannock, none, unknown, bannock, regular).
 ty_noun_in(english, banns, none, unknown, banns, regular).
@@ -3304,10 +3374,12 @@ ty_noun_in(english, barite, none, unknown, barite, regular).
 ty_noun_in(english, baritone, none, unknown, baritone, regular).
 ty_noun_in(english, barium, none, unknown, barium, regular).
 ty_noun_in(english, bark, none, unknown, bark, regular).
+ty_noun_in(english, 'bark-louse', none, unknown, 'bark-louse', regular).
 ty_noun_in(english, barkeep, none, person, barkeep, regular).
 ty_noun_in(english, barkeeper, none, unknown, barkeeper, regular).
 ty_noun_in(english, barker, none, person, barker, regular).
 ty_noun_in(english, barley, none, unknown, barley, regular).
+ty_noun_in(english, 'barley-sugar', none, unknown, 'barley-sugar', regular).
 ty_noun_in(english, barleycorn, none, unknown, barleycorn, regular).
 ty_noun_in(english, barm, none, unknown, barm, regular).
 ty_noun_in(english, barmaid, none, unknown, barmaid, regular).
@@ -3361,6 +3433,8 @@ ty_noun_in(english, barrier, none, unknown, barrier, regular).
 ty_noun_in(english, barrister, none, unknown, barrister, regular).
 ty_noun_in(english, barroom, none, unknown, barroom, regular).
 ty_noun_in(english, barrow, none, unknown, barrow, regular).
+ty_noun_in(english, 'barrow-boy', none, unknown, 'barrow-boy', regular).
+ty_noun_in(english, 'barrow-man', none, unknown, 'barrow-man', regular).
 ty_noun_in(english, barrowful, none, unknown, barrowful, regular).
 ty_noun_in(english, bartender, none, person, bartender, regular).
 ty_noun_in(english, barter, none, unknown, barter, regular).
@@ -3465,6 +3539,7 @@ ty_noun_in(english, batten, none, unknown, batten, regular).
 ty_noun_in(english, batter, none, person, batter, regular).
 ty_noun_in(english, battercake, none, unknown, battercake, regular).
 ty_noun_in(english, battery, none, unknown, battery, regular).
+ty_noun_in(english, 'battery-acid', none, unknown, 'battery-acid', regular).
 ty_noun_in(english, batting, none, unknown, batting, regular).
 ty_noun_in(english, battle, none, unknown, battle, regular).
 ty_noun_in(english, battledore, none, unknown, battledore, regular).
@@ -3481,6 +3556,7 @@ ty_noun_in(english, batwing, none, unknown, batwing, regular).
 ty_noun_in(english, bauble, none, unknown, bauble, regular).
 ty_noun_in(english, baud, none, unknown, baud, regular).
 ty_noun_in(english, baulk, none, unknown, baulk, regular).
+ty_noun_in(english, 'baulk-line', none, unknown, 'baulk-line', regular).
 ty_noun_in(english, baulker, none, unknown, baulker, regular).
 ty_noun_in(english, bauxite, none, unknown, bauxite, regular).
 ty_noun_in(english, bavaria, none, unknown, bavaria, regular).
@@ -3518,6 +3594,7 @@ ty_noun_in(english, beagling, none, unknown, beagling, regular).
 ty_noun_in(english, beak, none, unknown, beak, regular).
 ty_noun_in(english, beaker, none, unknown, beaker, regular).
 ty_noun_in(english, beam, none, unknown, beam, regular).
+ty_noun_in(english, 'beam-ends', none, unknown, 'beam-ends', regular).
 ty_noun_in(english, bean, none, unknown, bean, regular).
 ty_noun_in(english, beanbag, none, unknown, beanbag, regular).
 ty_noun_in(english, beanball, none, unknown, beanball, regular).
@@ -3558,6 +3635,9 @@ ty_noun_in(english, becket, none, unknown, becket, regular).
 ty_noun_in(english, becomingness, none, unknown, becomingness, regular).
 ty_noun_in(english, becquerel, none, unknown, becquerel, regular).
 ty_noun_in(english, bed, none, unknown, bed, regular).
+ty_noun_in(english, 'bed-and-breakfast', none, unknown, 'bed-and-breakfast', regular).
+ty_noun_in(english, 'bed-ground', none, unknown, 'bed-ground', regular).
+ty_noun_in(english, 'bed-wetting', none, unknown, 'bed-wetting', regular).
 ty_noun_in(english, bedbug, none, unknown, bedbug, regular).
 ty_noun_in(english, bedchamber, none, unknown, bedchamber, regular).
 ty_noun_in(english, bedclothes, none, unknown, bedclothes, regular).
@@ -3618,6 +3698,9 @@ ty_noun_in(english, befoulment, none, unknown, befoulment, regular).
 ty_noun_in(english, befuddlement, none, unknown, befuddlement, regular).
 ty_noun_in(english, begetter, none, unknown, begetter, regular).
 ty_noun_in(english, beggar, none, person, beggar, regular).
+ty_noun_in(english, 'beggar-my-neighbor', none, unknown, 'beggar-my-neighbor', regular).
+ty_noun_in(english, 'beggar-my-neighbour', none, unknown, 'beggar-my-neighbour', regular).
+ty_noun_in(english, 'beggar-ticks', none, unknown, 'beggar-ticks', regular).
 ty_noun_in(english, beggarman, none, unknown, beggarman, regular).
 ty_noun_in(english, beggarweed, none, unknown, beggarweed, regular).
 ty_noun_in(english, beggarwoman, none, unknown, beggarwoman, regular).
@@ -3654,11 +3737,13 @@ ty_noun_in(english, belief, none, unknown, belief, regular).
 ty_noun_in(english, believability, none, unknown, believability, regular).
 ty_noun_in(english, believer, none, person, believer, regular).
 ty_noun_in(english, bell, none, unknown, bell, regular).
+ty_noun_in(english, 'bell-bottoms', none, unknown, 'bell-bottoms', regular).
 ty_noun_in(english, belladonna, none, unknown, belladonna, regular).
 ty_noun_in(english, bellarmine, none, unknown, bellarmine, regular).
 ty_noun_in(english, bellbird, none, unknown, bellbird, regular).
 ty_noun_in(english, bellboy, none, unknown, bellboy, regular).
 ty_noun_in(english, belle, none, person, belle, regular).
+ty_noun_in(english, 'belles-lettres', none, unknown, 'belles-lettres', regular).
 ty_noun_in(english, bellflower, none, unknown, bellflower, regular).
 ty_noun_in(english, bellhop, none, person, bellhop, regular).
 ty_noun_in(english, bellicoseness, none, unknown, bellicoseness, regular).
@@ -3717,6 +3802,7 @@ ty_noun_in(english, bennie, none, unknown, bennie, regular).
 ty_noun_in(english, bennington, none, unknown, bennington, regular).
 ty_noun_in(english, benniseed, none, unknown, benniseed, regular).
 ty_noun_in(english, bent, none, unknown, bent, regular).
+ty_noun_in(english, 'bent-grass', none, unknown, 'bent-grass', regular).
 ty_noun_in(english, benthos, none, unknown, benthos, regular).
 ty_noun_in(english, bentonite, none, unknown, bentonite, regular).
 ty_noun_in(english, bentwood, none, unknown, bentwood, regular).
@@ -3770,6 +3856,12 @@ ty_noun_in(english, bestowment, none, unknown, bestowment, regular).
 ty_noun_in(english, bestseller, none, unknown, bestseller, regular).
 ty_noun_in(english, bet, none, unknown, bet, regular).
 ty_noun_in(english, beta, none, unknown, beta, regular).
+ty_noun_in(english, 'beta-adrenoceptor', none, unknown, 'beta-adrenoceptor', regular).
+ty_noun_in(english, 'beta-carotene', none, unknown, 'beta-carotene', regular).
+ty_noun_in(english, 'beta-interferon', none, unknown, 'beta-interferon', regular).
+ty_noun_in(english, 'beta-lactamase', none, unknown, 'beta-lactamase', regular).
+ty_noun_in(english, 'beta-lipoprotein', none, unknown, 'beta-lipoprotein', regular).
+ty_noun_in(english, 'beta-naphthol', none, unknown, 'beta-naphthol', regular).
 ty_noun_in(english, betacism, none, unknown, betacism, regular).
 ty_noun_in(english, betaine, none, unknown, betaine, regular).
 ty_noun_in(english, betatron, none, unknown, betatron, regular).
@@ -3804,6 +3896,7 @@ ty_noun_in(english, bialy, none, unknown, bialy, regular).
 ty_noun_in(english, bialystoker, none, unknown, bialystoker, regular).
 ty_noun_in(english, bias, none, unknown, bias, regular).
 ty_noun_in(english, bib, none, unknown, bib, regular).
+ty_noun_in(english, 'bib-and-tucker', none, unknown, 'bib-and-tucker', regular).
 ty_noun_in(english, bible, none, unknown, bible, regular).
 ty_noun_in(english, bibliographer, none, unknown, bibliographer, regular).
 ty_noun_in(english, bibliography, none, unknown, bibliography, regular).
@@ -3827,6 +3920,7 @@ ty_noun_in(english, bichloride, none, unknown, bichloride, regular).
 ty_noun_in(english, bichromate, none, unknown, bichromate, regular).
 ty_noun_in(english, bickering, none, unknown, bickering, regular).
 ty_noun_in(english, bicycle, none, unknown, bicycle, regular).
+ty_noun_in(english, 'bicycle-built-for-two', none, unknown, 'bicycle-built-for-two', regular).
 ty_noun_in(english, bicycler, none, unknown, bicycler, regular).
 ty_noun_in(english, bicyclist, none, person, bicyclist, regular).
 ty_noun_in(english, bid, none, unknown, bid, regular).
@@ -3888,6 +3982,7 @@ ty_noun_in(english, billion, none, unknown, billion, regular).
 ty_noun_in(english, billionaire, none, unknown, billionaire, regular).
 ty_noun_in(english, billposting, none, unknown, billposting, regular).
 ty_noun_in(english, billy, none, unknown, billy, regular).
+ty_noun_in(english, 'billy-ho', none, unknown, 'billy-ho', regular).
 ty_noun_in(english, billyo, none, unknown, billyo, regular).
 ty_noun_in(english, billyoh, none, unknown, billyoh, regular).
 ty_noun_in(english, billystick, none, unknown, billystick, regular).
@@ -3914,6 +4009,7 @@ ty_noun_in(english, binnacle, none, unknown, binnacle, regular).
 ty_noun_in(english, binoculars, none, unknown, binoculars, regular).
 ty_noun_in(english, binomial, none, unknown, binomial, regular).
 ty_noun_in(english, binturong, none, unknown, binturong, regular).
+ty_noun_in(english, 'bio-assay', none, unknown, 'bio-assay', regular).
 ty_noun_in(english, bioaccumulation, none, unknown, bioaccumulation, regular).
 ty_noun_in(english, bioarm, none, unknown, bioarm, regular).
 ty_noun_in(english, bioassay, none, unknown, bioassay, regular).
@@ -3989,6 +4085,8 @@ ty_noun_in(english, biquadrate, none, unknown, biquadrate, regular).
 ty_noun_in(english, birch, none, unknown, birch, regular).
 ty_noun_in(english, birchbark, none, unknown, birchbark, regular).
 ty_noun_in(english, bird, none, animate, bird, regular).
+ty_noun_in(english, 'bird-on-the-wing', none, unknown, 'bird-on-the-wing', regular).
+ty_noun_in(english, 'bird-scarer', none, unknown, 'bird-scarer', regular).
 ty_noun_in(english, birdbath, none, unknown, birdbath, regular).
 ty_noun_in(english, birdbrain, none, unknown, birdbrain, regular).
 ty_noun_in(english, birdcage, none, unknown, birdcage, regular).
@@ -4045,6 +4143,7 @@ ty_noun_in(english, bitmap, none, unknown, bitmap, regular).
 ty_noun_in(english, bitok, none, unknown, bitok, regular).
 ty_noun_in(english, bitstock, none, unknown, bitstock, regular).
 ty_noun_in(english, bitt, none, unknown, bitt, regular).
+ty_noun_in(english, 'bitter-bark', none, unknown, 'bitter-bark', regular).
 ty_noun_in(english, bittercress, none, unknown, bittercress, regular).
 ty_noun_in(english, bittern, none, unknown, bittern, regular).
 ty_noun_in(english, bitterness, none, unknown, bitterness, regular).
@@ -4067,6 +4166,7 @@ ty_noun_in(english, blackamoor, none, unknown, blackamoor, regular).
 ty_noun_in(english, blackball, none, unknown, blackball, regular).
 ty_noun_in(english, blackbeetle, none, unknown, blackbeetle, regular).
 ty_noun_in(english, blackberry, none, unknown, blackberry, regular).
+ty_noun_in(english, 'blackberry-lily', none, unknown, 'blackberry-lily', regular).
 ty_noun_in(english, blackbird, none, unknown, blackbird, regular).
 ty_noun_in(english, blackboard, none, unknown, blackboard, regular).
 ty_noun_in(english, blackbody, none, unknown, blackbody, regular).
@@ -4204,6 +4304,7 @@ ty_noun_in(english, blob, none, unknown, blob, regular).
 ty_noun_in(english, bloc, none, unknown, bloc, regular).
 ty_noun_in(english, block, none, unknown, block, regular).
 ty_noun_in(english, blockade, none, unknown, blockade, regular).
+ty_noun_in(english, 'blockade-runner', none, unknown, 'blockade-runner', regular).
 ty_noun_in(english, blockage, none, unknown, blockage, regular).
 ty_noun_in(english, blockbuster, none, unknown, blockbuster, regular).
 ty_noun_in(english, blocker, none, unknown, blocker, regular).
@@ -4218,6 +4319,7 @@ ty_noun_in(english, blolly, none, unknown, blolly, regular).
 ty_noun_in(english, blonde, none, person, blonde, regular).
 ty_noun_in(english, blondness, none, unknown, blondness, regular).
 ty_noun_in(english, blood, none, unknown, blood, regular).
+ty_noun_in(english, 'blood-twig', none, unknown, 'blood-twig', regular).
 ty_noun_in(english, bloodbath, none, unknown, bloodbath, regular).
 ty_noun_in(english, bloodberry, none, unknown, bloodberry, regular).
 ty_noun_in(english, bloodguilt, none, unknown, bloodguilt, regular).
@@ -4268,6 +4370,8 @@ ty_noun_in(english, blucher, none, unknown, blucher, regular).
 ty_noun_in(english, bludgeon, none, unknown, bludgeon, regular).
 ty_noun_in(english, bludgeoner, none, unknown, bludgeoner, regular).
 ty_noun_in(english, blue, none, unknown, blue, regular).
+ty_noun_in(english, 'blue-belly', none, unknown, 'blue-belly', regular).
+ty_noun_in(english, 'blue-blindness', none, unknown, 'blue-blindness', regular).
 ty_noun_in(english, bluebell, none, unknown, bluebell, regular).
 ty_noun_in(english, blueberry, none, unknown, blueberry, regular).
 ty_noun_in(english, bluebill, none, unknown, bluebill, regular).
@@ -4336,6 +4440,7 @@ ty_noun_in(english, bobber, none, unknown, bobber, regular).
 ty_noun_in(english, bobbin, none, unknown, bobbin, regular).
 ty_noun_in(english, bobble, none, unknown, bobble, regular).
 ty_noun_in(english, bobby, none, unknown, bobby, regular).
+ty_noun_in(english, 'bobby-socker', none, unknown, 'bobby-socker', regular).
 ty_noun_in(english, bobbysoxer, none, person, bobbysoxer, regular).
 ty_noun_in(english, bobcat, none, unknown, bobcat, regular).
 ty_noun_in(english, bobfloat, none, unknown, bobfloat, regular).
@@ -4349,6 +4454,7 @@ ty_noun_in(english, bock, none, unknown, bock, regular).
 ty_noun_in(english, bodice, none, unknown, bodice, regular).
 ty_noun_in(english, bodkin, none, unknown, bodkin, regular).
 ty_noun_in(english, body, none, unknown, body, regular).
+ty_noun_in(english, 'body-build', none, unknown, 'body-build', regular).
 ty_noun_in(english, bodybuilder, none, person, bodybuilder, regular).
 ty_noun_in(english, bodybuilding, none, unknown, bodybuilding, regular).
 ty_noun_in(english, bodyguard, none, person, bodyguard, regular).
@@ -4398,6 +4504,7 @@ ty_noun_in(english, bolshevist, none, person, bolshevist, regular).
 ty_noun_in(english, bolshie, none, person, bolshie, regular).
 ty_noun_in(english, bolster, none, unknown, bolster, regular).
 ty_noun_in(english, bolt, none, unknown, bolt, regular).
+ty_noun_in(english, 'bolt-hole', none, unknown, 'bolt-hole', regular).
 ty_noun_in(english, bolti, none, unknown, bolti, regular).
 ty_noun_in(english, bolus, none, unknown, bolus, regular).
 ty_noun_in(english, bomarea, none, unknown, bomarea, regular).
@@ -4464,6 +4571,7 @@ ty_noun_in(english, bonxie, none, unknown, bonxie, regular).
 ty_noun_in(english, bonyness, none, unknown, bonyness, regular).
 ty_noun_in(english, bonze, none, unknown, bonze, regular).
 ty_noun_in(english, boo, none, unknown, boo, regular).
+ty_noun_in(english, 'boo-boo', none, unknown, 'boo-boo', regular).
 ty_noun_in(english, boob, none, unknown, boob, regular).
 ty_noun_in(english, booboisie, none, unknown, booboisie, regular).
 ty_noun_in(english, booby, none, person, booby, regular).
@@ -4471,6 +4579,7 @@ ty_noun_in(english, boodle, none, unknown, boodle, regular).
 ty_noun_in(english, booger, none, unknown, booger, regular).
 ty_noun_in(english, boogeyman, none, unknown, boogeyman, regular).
 ty_noun_in(english, boogie, none, unknown, boogie, regular).
+ty_noun_in(english, 'boogie-woogie', none, unknown, 'boogie-woogie', regular).
 ty_noun_in(english, bookbinder, none, person, bookbinder, regular).
 ty_noun_in(english, bookbindery, none, unknown, bookbindery, regular).
 ty_noun_in(english, bookbinding, none, unknown, bookbinding, regular).
@@ -4526,6 +4635,7 @@ ty_noun_in(english, bootstrap, none, unknown, bootstrap, regular).
 ty_noun_in(english, booty, none, unknown, booty, regular).
 ty_noun_in(english, booyong, none, unknown, booyong, regular).
 ty_noun_in(english, booze, none, unknown, booze, regular).
+ty_noun_in(english, 'booze-up', none, unknown, 'booze-up', regular).
 ty_noun_in(english, boozer, none, unknown, boozer, regular).
 ty_noun_in(english, bop, none, unknown, bop, regular).
 ty_noun_in(english, bopeep, none, unknown, bopeep, regular).
@@ -4538,6 +4648,7 @@ ty_noun_in(english, bordello, none, unknown, bordello, regular).
 ty_noun_in(english, border, none, unknown, border, regular).
 ty_noun_in(english, borderer, none, unknown, borderer, regular).
 ty_noun_in(english, borderland, none, unknown, borderland, regular).
+ty_noun_in(english, 'bore-hole', none, unknown, 'bore-hole', regular).
 ty_noun_in(english, boreas, none, unknown, boreas, regular).
 ty_noun_in(english, borecole, none, unknown, borecole, regular).
 ty_noun_in(english, boredom, none, unknown, boredom, regular).
@@ -4578,6 +4689,8 @@ ty_noun_in(english, botfly, none, unknown, botfly, regular).
 ty_noun_in(english, botheration, none, unknown, botheration, regular).
 ty_noun_in(english, bothrops, none, unknown, bothrops, regular).
 ty_noun_in(english, bottle, none, unknown, bottle, regular).
+ty_noun_in(english, 'bottle-grass', none, unknown, 'bottle-grass', regular).
+ty_noun_in(english, 'bottle-tree', none, unknown, 'bottle-tree', regular).
 ty_noun_in(english, bottlebrush, none, unknown, bottlebrush, regular).
 ty_noun_in(english, bottlecap, none, unknown, bottlecap, regular).
 ty_noun_in(english, bottleful, none, unknown, bottleful, regular).
@@ -4586,6 +4699,8 @@ ty_noun_in(english, bottlenose, none, unknown, bottlenose, regular).
 ty_noun_in(english, bottler, none, unknown, bottler, regular).
 ty_noun_in(english, bottling, none, unknown, bottling, regular).
 ty_noun_in(english, bottom, none, unknown, bottom, regular).
+ty_noun_in(english, 'bottom-dweller', none, unknown, 'bottom-dweller', regular).
+ty_noun_in(english, 'bottom-feeder', none, unknown, 'bottom-feeder', regular).
 ty_noun_in(english, bottomland, none, unknown, bottomland, regular).
 ty_noun_in(english, bottomlessness, none, unknown, bottomlessness, regular).
 ty_noun_in(english, botulin, none, unknown, botulin, regular).
@@ -4636,6 +4751,8 @@ ty_noun_in(english, bovine, none, unknown, bovine, regular).
 ty_noun_in(english, bovini, none, unknown, bovini, regular).
 ty_noun_in(english, bovril, none, unknown, bovril, regular).
 ty_noun_in(english, bow, none, unknown, bow, regular).
+ty_noun_in(english, 'bow-tie', none, unknown, 'bow-tie', regular).
+ty_noun_in(english, 'bow-wow', none, unknown, 'bow-wow', regular).
 ty_noun_in(english, bowdlerisation, none, unknown, bowdlerisation, regular).
 ty_noun_in(english, bowdleriser, none, unknown, bowdleriser, regular).
 ty_noun_in(english, bowdlerization, none, unknown, bowdlerization, regular).
@@ -4671,6 +4788,7 @@ ty_noun_in(english, boycott, none, unknown, boycott, regular).
 ty_noun_in(english, boyfriend, none, unknown, boyfriend, regular).
 ty_noun_in(english, boyhood, none, unknown, boyhood, regular).
 ty_noun_in(english, boyishness, none, unknown, boyishness, regular).
+ty_noun_in(english, 'boys-and-girls', none, unknown, 'boys-and-girls', regular).
 ty_noun_in(english, boysenberry, none, unknown, boysenberry, regular).
 ty_noun_in(english, bozo, none, unknown, bozo, regular).
 ty_noun_in(english, bpi, none, unknown, bpi, regular).
@@ -4713,6 +4831,10 @@ ty_noun_in(english, braid, none, unknown, braid, regular).
 ty_noun_in(english, brail, none, unknown, brail, regular).
 ty_noun_in(english, braille, none, unknown, braille, regular).
 ty_noun_in(english, brain, none, unknown, brain, regular).
+ty_noun_in(english, 'brain-fag', none, unknown, 'brain-fag', regular).
+ty_noun_in(english, 'brain-stem', none, unknown, 'brain-stem', regular).
+ty_noun_in(english, 'brain-teaser', none, unknown, 'brain-teaser', regular).
+ty_noun_in(english, 'brain-worker', none, unknown, 'brain-worker', regular).
 ty_noun_in(english, braincase, none, unknown, braincase, regular).
 ty_noun_in(english, brainchild, none, unknown, brainchild, regular).
 ty_noun_in(english, brainiac, none, unknown, brainiac, regular).
@@ -4736,6 +4858,7 @@ ty_noun_in(english, branchiopoda, none, unknown, branchiopoda, regular).
 ty_noun_in(english, branchiopodan, none, unknown, branchiopodan, regular).
 ty_noun_in(english, branchlet, none, unknown, branchlet, regular).
 ty_noun_in(english, brand, none, unknown, brand, regular).
+ty_noun_in(english, 'brand-newness', none, unknown, 'brand-newness', regular).
 ty_noun_in(english, branding, none, unknown, branding, regular).
 ty_noun_in(english, brandy, none, unknown, brandy, regular).
 ty_noun_in(english, brandyball, none, unknown, brandyball, regular).
@@ -4769,6 +4892,8 @@ ty_noun_in(english, brazilian, none, unknown, brazilian, regular).
 ty_noun_in(english, brazilwood, none, unknown, brazilwood, regular).
 ty_noun_in(english, breach, none, unknown, breach, regular).
 ty_noun_in(english, bread, none, unknown, bread, regular).
+ty_noun_in(english, 'bread-bin', none, unknown, 'bread-bin', regular).
+ty_noun_in(english, 'bread-stick', none, unknown, 'bread-stick', regular).
 ty_noun_in(english, breadbasket, none, unknown, breadbasket, regular).
 ty_noun_in(english, breadboard, none, unknown, breadboard, regular).
 ty_noun_in(english, breadbox, none, unknown, breadbox, regular).
@@ -4781,6 +4906,8 @@ ty_noun_in(english, breadstuff, none, unknown, breadstuff, regular).
 ty_noun_in(english, breadth, none, unknown, breadth, regular).
 ty_noun_in(english, breadwinner, none, unknown, breadwinner, regular).
 ty_noun_in(english, break, none, unknown, break, regular).
+ty_noun_in(english, 'break-axe', none, unknown, 'break-axe', regular).
+ty_noun_in(english, 'break-in', none, unknown, 'break-in', regular).
 ty_noun_in(english, breakability, none, unknown, breakability, regular).
 ty_noun_in(english, breakable, none, unknown, breakable, regular).
 ty_noun_in(english, breakableness, none, unknown, breakableness, regular).
@@ -4843,6 +4970,7 @@ ty_noun_in(english, briarwood, none, unknown, briarwood, regular).
 ty_noun_in(english, bribe, none, unknown, bribe, regular).
 ty_noun_in(english, briber, none, person, briber, regular).
 ty_noun_in(english, bribery, none, unknown, bribery, regular).
+ty_noun_in(english, 'bric-a-brac', none, unknown, 'bric-a-brac', regular).
 ty_noun_in(english, brick, none, unknown, brick, regular).
 ty_noun_in(english, brickbat, none, unknown, brickbat, regular).
 ty_noun_in(english, brickfield, none, unknown, brickfield, regular).
@@ -4852,7 +4980,10 @@ ty_noun_in(english, bricklaying, none, unknown, bricklaying, regular).
 ty_noun_in(english, brickwork, none, unknown, brickwork, regular).
 ty_noun_in(english, brickyard, none, unknown, brickyard, regular).
 ty_noun_in(english, bricole, none, unknown, bricole, regular).
+ty_noun_in(english, 'bridal-wreath', none, unknown, 'bridal-wreath', regular).
 ty_noun_in(english, bride, none, person, bride, regular).
+ty_noun_in(english, 'bride-gift', none, unknown, 'bride-gift', regular).
+ty_noun_in(english, 'bride-to-be', none, unknown, 'bride-to-be', regular).
 ty_noun_in(english, bridecake, none, unknown, bridecake, regular).
 ty_noun_in(english, bridegroom, none, person, bridegroom, regular).
 ty_noun_in(english, bridesmaid, none, unknown, bridesmaid, regular).
@@ -4867,6 +4998,7 @@ ty_noun_in(english, briefing, none, unknown, briefing, regular).
 ty_noun_in(english, briefness, none, unknown, briefness, regular).
 ty_noun_in(english, briefs, none, unknown, briefs, regular).
 ty_noun_in(english, brier, none, unknown, brier, regular).
+ty_noun_in(english, 'brier-wood', none, unknown, 'brier-wood', regular).
 ty_noun_in(english, brierpatch, none, unknown, brierpatch, regular).
 ty_noun_in(english, brierwood, none, unknown, brierwood, regular).
 ty_noun_in(english, brig, none, unknown, brig, regular).
@@ -4907,10 +5039,13 @@ ty_noun_in(english, british, none, person, british, regular).
 ty_noun_in(english, briton, none, unknown, briton, regular).
 ty_noun_in(english, britt, none, unknown, britt, regular).
 ty_noun_in(english, brittle, none, unknown, brittle, regular).
+ty_noun_in(english, 'brittle-star', none, unknown, 'brittle-star', regular).
 ty_noun_in(english, brittlebush, none, unknown, brittlebush, regular).
 ty_noun_in(english, brittleness, none, unknown, brittleness, regular).
 ty_noun_in(english, broach, none, unknown, broach, regular).
 ty_noun_in(english, broaching, none, unknown, broaching, regular).
+ty_noun_in(english, 'broad-bean', none, unknown, 'broad-bean', regular).
+ty_noun_in(english, 'broad-mindedness', none, unknown, 'broad-mindedness', regular).
 ty_noun_in(english, broadax, none, unknown, broadax, regular).
 ty_noun_in(english, broadaxe, none, unknown, broadaxe, regular).
 ty_noun_in(english, broadbill, none, unknown, broadbill, regular).
@@ -4936,6 +5071,7 @@ ty_noun_in(english, brogue, none, unknown, brogue, regular).
 ty_noun_in(english, broiler, none, unknown, broiler, regular).
 ty_noun_in(english, brokenheartedness, none, unknown, brokenheartedness, regular).
 ty_noun_in(english, broker, none, person, broker, regular).
+ty_noun_in(english, 'broker-dealer', none, unknown, 'broker-dealer', regular).
 ty_noun_in(english, brokerage, none, unknown, brokerage, regular).
 ty_noun_in(english, brolly, none, unknown, brolly, regular).
 ty_noun_in(english, brome, none, unknown, brome, regular).
@@ -4969,12 +5105,14 @@ ty_noun_in(english, brooklime, none, unknown, brooklime, regular).
 ty_noun_in(english, brooklyn, none, unknown, brooklyn, regular).
 ty_noun_in(english, brookweed, none, unknown, brookweed, regular).
 ty_noun_in(english, broom, none, unknown, broom, regular).
+ty_noun_in(english, 'broom-weed', none, unknown, 'broom-weed', regular).
 ty_noun_in(english, broomcorn, none, unknown, broomcorn, regular).
 ty_noun_in(english, broomstick, none, unknown, broomstick, regular).
 ty_noun_in(english, broomweed, none, unknown, broomweed, regular).
 ty_noun_in(english, broth, none, unknown, broth, regular).
 ty_noun_in(english, brothel, none, unknown, brothel, regular).
 ty_noun_in(english, brother, none, person, brother, regular).
+ty_noun_in(english, 'brother-in-law', none, unknown, 'brother-in-law', regular).
 ty_noun_in(english, brotherhood, none, unknown, brotherhood, regular).
 ty_noun_in(english, brotula, none, unknown, brotula, regular).
 ty_noun_in(english, brougham, none, unknown, brougham, regular).
@@ -4999,6 +5137,7 @@ ty_noun_in(english, brunch, none, unknown, brunch, regular).
 ty_noun_in(english, brunfelsia, none, unknown, brunfelsia, regular).
 ty_noun_in(english, brunt, none, unknown, brunt, regular).
 ty_noun_in(english, brush, none, unknown, brush, regular).
+ty_noun_in(english, 'brush-off', none, unknown, 'brush-off', regular).
 ty_noun_in(english, brushing, none, unknown, brushing, regular).
 ty_noun_in(english, brushstroke, none, unknown, brushstroke, regular).
 ty_noun_in(english, brushup, none, unknown, brushup, regular).
@@ -5028,6 +5167,7 @@ ty_noun_in(english, buccaneer, none, unknown, buccaneer, regular).
 ty_noun_in(english, buccula, none, unknown, buccula, regular).
 ty_noun_in(english, buchloe, none, unknown, buchloe, regular).
 ty_noun_in(english, buck, none, unknown, buck, regular).
+ty_noun_in(english, 'buck-and-wing', none, unknown, 'buck-and-wing', regular).
 ty_noun_in(english, buckaroo, none, person, buckaroo, regular).
 ty_noun_in(english, buckbean, none, unknown, buckbean, regular).
 ty_noun_in(english, buckboard, none, unknown, buckboard, regular).
@@ -5068,6 +5208,7 @@ ty_noun_in(english, buffoon, none, person, buffoon, regular).
 ty_noun_in(english, buffoonery, none, unknown, buffoonery, regular).
 ty_noun_in(english, bufo, none, unknown, bufo, regular).
 ty_noun_in(english, bug, none, unknown, bug, regular).
+ty_noun_in(english, 'bug-hunter', none, unknown, 'bug-hunter', regular).
 ty_noun_in(english, bugaboo, none, unknown, bugaboo, regular).
 ty_noun_in(english, bugbane, none, unknown, bugbane, regular).
 ty_noun_in(english, bugbear, none, unknown, bugbear, regular).
@@ -5101,6 +5242,7 @@ ty_noun_in(english, bulk, none, unknown, bulk, regular).
 ty_noun_in(english, bulkhead, none, unknown, bulkhead, regular).
 ty_noun_in(english, bulkiness, none, unknown, bulkiness, regular).
 ty_noun_in(english, bull, none, animate, bull, regular).
+ty_noun_in(english, 'bull-snake', none, unknown, 'bull-snake', regular).
 ty_noun_in(english, bulla, none, unknown, bulla, regular).
 ty_noun_in(english, bullace, none, unknown, bullace, regular).
 ty_noun_in(english, bullbat, none, unknown, bullbat, regular).
@@ -5144,6 +5286,7 @@ ty_noun_in(english, bumpiness, none, unknown, bumpiness, regular).
 ty_noun_in(english, bumpkin, none, person, bumpkin, regular).
 ty_noun_in(english, bumptiousness, none, unknown, bumptiousness, regular).
 ty_noun_in(english, bun, none, unknown, bun, regular).
+ty_noun_in(english, 'bun-fight', none, unknown, 'bun-fight', regular).
 ty_noun_in(english, buna, none, unknown, buna, regular).
 ty_noun_in(english, bunce, none, unknown, bunce, regular).
 ty_noun_in(english, bunch, none, unknown, bunch, regular).
@@ -5161,6 +5304,7 @@ ty_noun_in(english, bunghole, none, unknown, bunghole, regular).
 ty_noun_in(english, bungle, none, unknown, bungle, regular).
 ty_noun_in(english, bungler, none, unknown, bungler, regular).
 ty_noun_in(english, bunion, none, unknown, bunion, regular).
+ty_noun_in(english, 'bunji-bunji', none, unknown, 'bunji-bunji', regular).
 ty_noun_in(english, bunk, none, unknown, bunk, regular).
 ty_noun_in(english, bunker, none, unknown, bunker, regular).
 ty_noun_in(english, bunkhouse, none, unknown, bunkhouse, regular).
@@ -5260,6 +5404,7 @@ ty_noun_in(english, busload, none, unknown, busload, regular).
 ty_noun_in(english, busman, none, unknown, busman, regular).
 ty_noun_in(english, buspirone, none, unknown, buspirone, regular).
 ty_noun_in(english, bust, none, unknown, bust, regular).
+ty_noun_in(english, 'bust-up', none, unknown, 'bust-up', regular).
 ty_noun_in(english, bustard, none, unknown, bustard, regular).
 ty_noun_in(english, buster, none, unknown, buster, regular).
 ty_noun_in(english, bustier, none, unknown, bustier, regular).
@@ -5278,7 +5423,11 @@ ty_noun_in(english, butchery, none, unknown, butchery, regular).
 ty_noun_in(english, butene, none, unknown, butene, regular).
 ty_noun_in(english, butler, none, person, butler, regular).
 ty_noun_in(english, butt, none, unknown, butt, regular).
+ty_noun_in(english, 'butt-weld', none, unknown, 'butt-weld', regular).
 ty_noun_in(english, butter, none, animate, butter, regular).
+ty_noun_in(english, 'butter-and-eggs', none, unknown, 'butter-and-eggs', regular).
+ty_noun_in(english, 'butter-flower', none, unknown, 'butter-flower', regular).
+ty_noun_in(english, 'butter-print', none, unknown, 'butter-print', regular).
 ty_noun_in(english, butterball, none, unknown, butterball, regular).
 ty_noun_in(english, butterbean, none, unknown, butterbean, regular).
 ty_noun_in(english, butterbur, none, unknown, butterbur, regular).
@@ -5299,6 +5448,7 @@ ty_noun_in(english, buttinsky, none, unknown, buttinsky, regular).
 ty_noun_in(english, buttock, none, unknown, buttock, regular).
 ty_noun_in(english, buttocks, none, unknown, buttocks, regular).
 ty_noun_in(english, button, none, unknown, button, regular).
+ty_noun_in(english, 'button-quail', none, unknown, 'button-quail', regular).
 ty_noun_in(english, buttonhole, none, unknown, buttonhole, regular).
 ty_noun_in(english, buttonhook, none, unknown, buttonhook, regular).
 ty_noun_in(english, buttonwood, none, unknown, buttonwood, regular).
@@ -5318,9 +5468,16 @@ ty_noun_in(english, buzz, none, unknown, buzz, regular).
 ty_noun_in(english, buzzard, none, unknown, buzzard, regular).
 ty_noun_in(english, buzzer, none, unknown, buzzer, regular).
 ty_noun_in(english, buzzword, none, unknown, buzzword, regular).
+ty_noun_in(english, 'by-and-by', none, unknown, 'by-and-by', regular).
+ty_noun_in(english, 'by-blow', none, unknown, 'by-blow', regular).
+ty_noun_in(english, 'by-catch', none, unknown, 'by-catch', regular).
+ty_noun_in(english, 'by-election', none, unknown, 'by-election', regular).
+ty_noun_in(english, 'by-line', none, unknown, 'by-line', regular).
 ty_noun_in(english, 'by-product', none, unknown, 'by-product', regular).
 ty_noun_in(english, bycatch, none, unknown, bycatch, regular).
 ty_noun_in(english, bye, none, unknown, bye, regular).
+ty_noun_in(english, 'bye-bye', none, unknown, 'bye-bye', regular).
+ty_noun_in(english, 'bye-election', none, unknown, 'bye-election', regular).
 ty_noun_in(english, byelorussian, none, unknown, byelorussian, regular).
 ty_noun_in(english, bygone, none, unknown, bygone, regular).
 ty_noun_in(english, bylaw, none, unknown, bylaw, regular).
@@ -5340,6 +5497,7 @@ ty_noun_in(english, byway, none, unknown, byway, regular).
 ty_noun_in(english, byword, none, unknown, byword, regular).
 ty_noun_in(english, byzant, none, unknown, byzant, regular).
 ty_noun_in(english, byzantism, none, unknown, byzantism, regular).
+ty_noun_in(english, 'c-note', none, unknown, 'c-note', regular).
 ty_noun_in(english, cab, none, unknown, cab, regular).
 ty_noun_in(english, cabal, none, unknown, cabal, regular).
 ty_noun_in(english, cabala, none, unknown, cabala, regular).
@@ -5397,6 +5555,8 @@ ty_noun_in(english, cadaster, none, unknown, cadaster, regular).
 ty_noun_in(english, cadastre, none, unknown, cadastre, regular).
 ty_noun_in(english, cadaver, none, unknown, cadaver, regular).
 ty_noun_in(english, cadaverine, none, unknown, cadaverine, regular).
+ty_noun_in(english, 'caddice-fly', none, unknown, 'caddice-fly', regular).
+ty_noun_in(english, 'caddis-fly', none, unknown, 'caddis-fly', regular).
 ty_noun_in(english, caddisworm, none, unknown, caddisworm, regular).
 ty_noun_in(english, cadence, none, unknown, cadence, regular).
 ty_noun_in(english, cadency, none, unknown, cadency, regular).
@@ -5455,6 +5615,7 @@ ty_noun_in(english, calamity, none, unknown, calamity, regular).
 ty_noun_in(english, calamus, none, unknown, calamus, regular).
 ty_noun_in(english, calanthe, none, unknown, calanthe, regular).
 ty_noun_in(english, calash, none, unknown, calash, regular).
+ty_noun_in(english, 'calc-tufa', none, unknown, 'calc-tufa', regular).
 ty_noun_in(english, calcaneum, none, unknown, calcaneum, regular).
 ty_noun_in(english, calcaneus, none, unknown, calcaneus, regular).
 ty_noun_in(english, calcedony, none, unknown, calcedony, regular).
@@ -5467,6 +5628,7 @@ ty_noun_in(english, calcination, none, unknown, calcination, regular).
 ty_noun_in(english, calcite, none, unknown, calcite, regular).
 ty_noun_in(english, calcitonin, none, unknown, calcitonin, regular).
 ty_noun_in(english, calcium, none, unknown, calcium, regular).
+ty_noun_in(english, 'calcium-cyanamide', none, unknown, 'calcium-cyanamide', regular).
 ty_noun_in(english, calculation, none, unknown, calculation, regular).
 ty_noun_in(english, calculator, none, unknown, calculator, regular).
 ty_noun_in(english, calculus, none, unknown, calculus, regular).
@@ -5496,9 +5658,15 @@ ty_noun_in(english, calisthenics, none, unknown, calisthenics, regular).
 ty_noun_in(english, calk, none, unknown, calk, regular).
 ty_noun_in(english, calkin, none, unknown, calkin, regular).
 ty_noun_in(english, call, none, unknown, call, regular).
+ty_noun_in(english, 'call-back', none, unknown, 'call-back', regular).
+ty_noun_in(english, 'call-board', none, unknown, 'call-board', regular).
+ty_noun_in(english, 'call-in', none, unknown, 'call-in', regular).
+ty_noun_in(english, 'call-out', none, unknown, 'call-out', regular).
 ty_noun_in(english, callathump, none, unknown, callathump, regular).
 ty_noun_in(english, callback, none, unknown, callback, regular).
 ty_noun_in(english, caller, none, person, caller, regular).
+ty_noun_in(english, 'caller-out', none, unknown, 'caller-out', regular).
+ty_noun_in(english, 'caller-up', none, unknown, 'caller-up', regular).
 ty_noun_in(english, calliandra, none, unknown, calliandra, regular).
 ty_noun_in(english, calligrapher, none, unknown, calligrapher, regular).
 ty_noun_in(english, calligraphist, none, unknown, calligraphist, regular).
@@ -5773,6 +5941,8 @@ ty_noun_in(english, capulin, none, unknown, capulin, regular).
 ty_noun_in(english, caput, none, unknown, caput, regular).
 ty_noun_in(english, capybara, none, unknown, capybara, regular).
 ty_noun_in(english, car, none, unknown, car, regular).
+ty_noun_in(english, 'car-ferry', none, unknown, 'car-ferry', regular).
+ty_noun_in(english, 'car-mechanic', none, unknown, 'car-mechanic', regular).
 ty_noun_in(english, carabao, none, unknown, carabao, regular).
 ty_noun_in(english, carabineer, none, person, carabineer, regular).
 ty_noun_in(english, carabiner, none, unknown, carabiner, regular).
@@ -5826,6 +5996,7 @@ ty_noun_in(english, carcinoid, none, unknown, carcinoid, regular).
 ty_noun_in(english, carcinoma, none, unknown, carcinoma, regular).
 ty_noun_in(english, carcinosarcoma, none, unknown, carcinosarcoma, regular).
 ty_noun_in(english, card, none, unknown, card, regular).
+ty_noun_in(english, 'card-house', none, unknown, 'card-house', regular).
 ty_noun_in(english, cardamom, none, unknown, cardamom, regular).
 ty_noun_in(english, cardamon, none, unknown, cardamon, regular).
 ty_noun_in(english, cardamum, none, unknown, cardamum, regular).
@@ -5947,6 +6118,8 @@ ty_noun_in(english, carrot, none, unknown, carrot, regular).
 ty_noun_in(english, carrottop, none, unknown, carrottop, regular).
 ty_noun_in(english, carrousel, none, unknown, carrousel, regular).
 ty_noun_in(english, carry, none, unknown, carry, regular).
+ty_noun_in(english, 'carry-forward', none, unknown, 'carry-forward', regular).
+ty_noun_in(english, 'carry-over', none, unknown, 'carry-over', regular).
 ty_noun_in(english, carryall, none, unknown, carryall, regular).
 ty_noun_in(english, carrycot, none, unknown, carrycot, regular).
 ty_noun_in(english, cart, none, unknown, cart, regular).
@@ -6001,6 +6174,7 @@ ty_noun_in(english, cashew, none, unknown, cashew, regular).
 ty_noun_in(english, cashier, none, unknown, cashier, regular).
 ty_noun_in(english, cashmere, none, unknown, cashmere, regular).
 ty_noun_in(english, casino, none, unknown, casino, regular).
+ty_noun_in(english, 'casino-hotel', none, unknown, 'casino-hotel', regular).
 ty_noun_in(english, cask, none, unknown, cask, regular).
 ty_noun_in(english, casket, none, unknown, casket, regular).
 ty_noun_in(english, caskful, none, unknown, caskful, regular).
@@ -6202,6 +6376,7 @@ ty_noun_in(english, cayenne, none, unknown, cayenne, regular).
 ty_noun_in(english, cayman, none, unknown, cayman, regular).
 ty_noun_in(english, cayuse, none, unknown, cayuse, regular).
 ty_noun_in(english, cazique, none, unknown, cazique, regular).
+ty_noun_in(english, 'cease-fire', none, unknown, 'cease-fire', regular).
 ty_noun_in(english, ceaselessness, none, unknown, ceaselessness, regular).
 ty_noun_in(english, cecity, none, unknown, cecity, regular).
 ty_noun_in(english, cecropia, none, unknown, cecropia, regular).
@@ -6408,6 +6583,8 @@ ty_noun_in(english, cetrimide, none, unknown, cetrimide, regular).
 ty_noun_in(english, ceviche, none, unknown, ceviche, regular).
 ty_noun_in(english, ceylon, none, unknown, ceylon, regular).
 ty_noun_in(english, cgs, none, unknown, cgs, regular).
+ty_noun_in(english, 'cha-cha', none, unknown, 'cha-cha', regular).
+ty_noun_in(english, 'cha-cha-cha', none, unknown, 'cha-cha-cha', regular).
 ty_noun_in(english, chabasite, none, unknown, chabasite, regular).
 ty_noun_in(english, chabazite, none, unknown, chabazite, regular).
 ty_noun_in(english, chachalaca, none, unknown, chachalaca, regular).
@@ -6429,6 +6606,7 @@ ty_noun_in(english, chaffinch, none, unknown, chaffinch, regular).
 ty_noun_in(english, chaffweed, none, unknown, chaffweed, regular).
 ty_noun_in(english, chagrin, none, unknown, chagrin, regular).
 ty_noun_in(english, chain, none, unknown, chain, regular).
+ty_noun_in(english, 'chain-smoker', none, unknown, 'chain-smoker', regular).
 ty_noun_in(english, chaining, none, unknown, chaining, regular).
 ty_noun_in(english, chainsaw, none, unknown, chainsaw, regular).
 ty_noun_in(english, chair, none, unknown, chair, regular).
@@ -6485,6 +6663,7 @@ ty_noun_in(english, championship, none, unknown, championship, regular).
 ty_noun_in(english, chanal, none, unknown, chanal, regular).
 ty_noun_in(english, chanar, none, unknown, chanar, regular).
 ty_noun_in(english, chance, none, unknown, chance, regular).
+ty_noun_in(english, 'chance-medley', none, unknown, 'chance-medley', regular).
 ty_noun_in(english, chancel, none, unknown, chancel, regular).
 ty_noun_in(english, chancellery, none, unknown, chancellery, regular).
 ty_noun_in(english, chancellor, none, unknown, chancellor, regular).
@@ -6497,6 +6676,8 @@ ty_noun_in(english, chandler, none, unknown, chandler, regular).
 ty_noun_in(english, chandlery, none, unknown, chandlery, regular).
 ty_noun_in(english, chanfron, none, unknown, chanfron, regular).
 ty_noun_in(english, change, none, unknown, change, regular).
+ty_noun_in(english, 'change-of-pace', none, unknown, 'change-of-pace', regular).
+ty_noun_in(english, 'change-up', none, unknown, 'change-up', regular).
 ty_noun_in(english, changeability, none, unknown, changeability, regular).
 ty_noun_in(english, changeableness, none, unknown, changeableness, regular).
 ty_noun_in(english, changefulness, none, unknown, changefulness, regular).
@@ -6558,6 +6739,7 @@ ty_noun_in(english, charivari, none, unknown, charivari, regular).
 ty_noun_in(english, charlatan, none, person, charlatan, regular).
 ty_noun_in(english, charlatanism, none, unknown, charlatanism, regular).
 ty_noun_in(english, charleston, none, unknown, charleston, regular).
+ty_noun_in(english, 'charley-horse', none, unknown, 'charley-horse', regular).
 ty_noun_in(english, charlock, none, unknown, charlock, regular).
 ty_noun_in(english, charlotte, none, unknown, charlotte, regular).
 ty_noun_in(english, charm, none, unknown, charm, regular).
@@ -6599,6 +6781,7 @@ ty_noun_in(english, chauvinism, none, unknown, chauvinism, regular).
 ty_noun_in(english, chauvinist, none, unknown, chauvinist, regular).
 ty_noun_in(english, chaw, none, unknown, chaw, regular).
 ty_noun_in(english, chawbacon, none, unknown, chawbacon, regular).
+ty_noun_in(english, 'cheap-jack', none, unknown, 'cheap-jack', regular).
 ty_noun_in(english, cheapening, none, unknown, cheapening, regular).
 ty_noun_in(english, cheapness, none, unknown, cheapness, regular).
 ty_noun_in(english, cheapskate, none, unknown, cheapskate, regular).
@@ -6608,6 +6791,7 @@ ty_noun_in(english, cheatgrass, none, unknown, cheatgrass, regular).
 ty_noun_in(english, chebab, none, unknown, chebab, regular).
 ty_noun_in(english, chechen, none, person, chechen, regular).
 ty_noun_in(english, check, none, unknown, check, regular).
+ty_noun_in(english, 'check-in', none, unknown, 'check-in', regular).
 ty_noun_in(english, checkbook, none, unknown, checkbook, regular).
 ty_noun_in(english, checker, none, person, checker, regular).
 ty_noun_in(english, checkerberry, none, unknown, checkerberry, regular).
@@ -6695,6 +6879,7 @@ ty_noun_in(english, chesterfield, none, unknown, chesterfield, regular).
 ty_noun_in(english, chestnut, none, unknown, chestnut, regular).
 ty_noun_in(english, chetah, none, unknown, chetah, regular).
 ty_noun_in(english, chetrum, none, unknown, chetrum, regular).
+ty_noun_in(english, 'cheval-de-frise', none, unknown, 'cheval-de-frise', regular).
 ty_noun_in(english, chevalier, none, unknown, chevalier, regular).
 ty_noun_in(english, chevre, none, unknown, chevre, regular).
 ty_noun_in(english, chevron, none, unknown, chevron, regular).
@@ -6764,6 +6949,9 @@ ty_noun_in(english, chimonanthus, none, unknown, chimonanthus, regular).
 ty_noun_in(english, chimp, none, unknown, chimp, regular).
 ty_noun_in(english, chimpanzee, none, animate, chimpanzee, regular).
 ty_noun_in(english, chin, none, unknown, chin, regular).
+ty_noun_in(english, 'chin-up', none, unknown, 'chin-up', regular).
+ty_noun_in(english, 'chin-wag', none, unknown, 'chin-wag', regular).
+ty_noun_in(english, 'chin-wagging', none, unknown, 'chin-wagging', regular).
 ty_noun_in(english, china, none, unknown, china, regular).
 ty_noun_in(english, chinaberry, none, unknown, chinaberry, regular).
 ty_noun_in(english, chinaware, none, unknown, chinaware, regular).
@@ -6805,6 +6993,7 @@ ty_noun_in(english, chisel, none, unknown, chisel, regular).
 ty_noun_in(english, chiseler, none, unknown, chiseler, regular).
 ty_noun_in(english, chiseller, none, unknown, chiseller, regular).
 ty_noun_in(english, chit, none, unknown, chit, regular).
+ty_noun_in(english, 'chit-chat', none, unknown, 'chit-chat', regular).
 ty_noun_in(english, chitchat, none, unknown, chitchat, regular).
 ty_noun_in(english, chitin, none, unknown, chitin, regular).
 ty_noun_in(english, chitlings, none, unknown, chitlings, regular).
@@ -6858,6 +7047,7 @@ ty_noun_in(english, chlortetracycline, none, unknown, chlortetracycline, regular
 ty_noun_in(english, chlorthalidone, none, unknown, chlorthalidone, regular).
 ty_noun_in(english, choanocyte, none, unknown, choanocyte, regular).
 ty_noun_in(english, choc, none, unknown, choc, regular).
+ty_noun_in(english, 'choc-ice', none, unknown, 'choc-ice', regular).
 ty_noun_in(english, chock, none, unknown, chock, regular).
 ty_noun_in(english, chocolate, none, unknown, chocolate, regular).
 ty_noun_in(english, choice, none, unknown, choice, regular).
@@ -6898,6 +7088,7 @@ ty_noun_in(english, chondrodystrophy, none, unknown, chondrodystrophy, regular).
 ty_noun_in(english, chondroma, none, unknown, chondroma, regular).
 ty_noun_in(english, chondrosarcoma, none, unknown, chondrosarcoma, regular).
 ty_noun_in(english, chondrule, none, unknown, chondrule, regular).
+ty_noun_in(english, 'choo-choo', none, unknown, 'choo-choo', regular).
 ty_noun_in(english, chooser, none, person, chooser, regular).
 ty_noun_in(english, chop, none, unknown, chop, regular).
 ty_noun_in(english, chophouse, none, unknown, chophouse, regular).
@@ -6987,6 +7178,7 @@ ty_noun_in(english, chrysotile, none, unknown, chrysotile, regular).
 ty_noun_in(english, chub, none, unknown, chub, regular).
 ty_noun_in(english, chubbiness, none, unknown, chubbiness, regular).
 ty_noun_in(english, chuck, none, unknown, chuck, regular).
+ty_noun_in(english, 'chucker-out', none, unknown, 'chucker-out', regular).
 ty_noun_in(english, chuckhole, none, unknown, chuckhole, regular).
 ty_noun_in(english, chuckle, none, unknown, chuckle, regular).
 ty_noun_in(english, chuckwalla, none, unknown, chuckwalla, regular).
@@ -7001,6 +7193,7 @@ ty_noun_in(english, chunga, none, unknown, chunga, regular).
 ty_noun_in(english, chunk, none, unknown, chunk, regular).
 ty_noun_in(english, chunnel, none, unknown, chunnel, regular).
 ty_noun_in(english, church, none, unknown, church, regular).
+ty_noun_in(english, 'church-state', none, unknown, 'church-state', regular).
 ty_noun_in(english, churchgoer, none, person, churchgoer, regular).
 ty_noun_in(english, churchman, none, person, churchman, regular).
 ty_noun_in(english, churchwarden, none, person, churchwarden, regular).
@@ -7009,6 +7202,7 @@ ty_noun_in(english, churidars, none, unknown, churidars, regular).
 ty_noun_in(english, churl, none, unknown, churl, regular).
 ty_noun_in(english, churn, none, unknown, churn, regular).
 ty_noun_in(english, chute, none, unknown, chute, regular).
+ty_noun_in(english, 'chute-the-chute', none, unknown, 'chute-the-chute', regular).
 ty_noun_in(english, chutney, none, unknown, chutney, regular).
 ty_noun_in(english, chutzpa, none, unknown, chutzpa, regular).
 ty_noun_in(english, chutzpah, none, unknown, chutzpah, regular).
@@ -7049,6 +7243,8 @@ ty_noun_in(english, cincinnati, none, unknown, cincinnati, regular).
 ty_noun_in(english, cincture, none, unknown, cincture, regular).
 ty_noun_in(english, cinder, none, unknown, cinder, regular).
 ty_noun_in(english, cinderella, none, person, cinderella, regular).
+ty_noun_in(english, 'cine-camera', none, unknown, 'cine-camera', regular).
+ty_noun_in(english, 'cine-film', none, unknown, 'cine-film', regular).
 ty_noun_in(english, cinema, none, unknown, cinema, regular).
 ty_noun_in(english, cinematographer, none, unknown, cinematographer, regular).
 ty_noun_in(english, cinematography, none, unknown, cinematography, regular).
@@ -7115,6 +7311,7 @@ ty_noun_in(english, citrulline, none, unknown, citrulline, regular).
 ty_noun_in(english, citrus, none, unknown, citrus, regular).
 ty_noun_in(english, cittern, none, unknown, cittern, regular).
 ty_noun_in(english, city, none, unknown, city, regular).
+ty_noun_in(english, 'city-state', none, unknown, 'city-state', regular).
 ty_noun_in(english, cityscape, none, unknown, cityscape, regular).
 ty_noun_in(english, cive, none, unknown, cive, regular).
 ty_noun_in(english, civet, none, unknown, civet, regular).
@@ -7261,17 +7458,22 @@ ty_noun_in(english, clevis, none, unknown, clevis, regular).
 ty_noun_in(english, clianthus, none, unknown, clianthus, regular).
 ty_noun_in(english, cliche, none, unknown, cliche, regular).
 ty_noun_in(english, click, none, unknown, click, regular).
+ty_noun_in(english, 'click-clack', none, unknown, 'click-clack', regular).
+ty_noun_in(english, 'clickety-clack', none, unknown, 'clickety-clack', regular).
+ty_noun_in(english, 'clickety-click', none, unknown, 'clickety-click', regular).
 ty_noun_in(english, client, none, person, client, regular).
 ty_noun_in(english, clientage, none, unknown, clientage, regular).
 ty_noun_in(english, clientele, none, unknown, clientele, regular).
 ty_noun_in(english, clientelism, none, unknown, clientelism, regular).
 ty_noun_in(english, cliff, none, unknown, cliff, regular).
+ty_noun_in(english, 'cliff-brake', none, unknown, 'cliff-brake', regular).
 ty_noun_in(english, cliffhanger, none, unknown, cliffhanger, regular).
 ty_noun_in(english, climacteric, none, unknown, climacteric, regular).
 ty_noun_in(english, climate, none, unknown, climate, regular).
 ty_noun_in(english, climatologist, none, unknown, climatologist, regular).
 ty_noun_in(english, climatology, none, unknown, climatology, regular).
 ty_noun_in(english, climax, none, unknown, climax, regular).
+ty_noun_in(english, 'climb-down', none, unknown, 'climb-down', regular).
 ty_noun_in(english, climber, none, unknown, climber, regular).
 ty_noun_in(english, climbing, none, unknown, climbing, regular).
 ty_noun_in(english, clime, none, unknown, clime, regular).
@@ -7292,8 +7494,11 @@ ty_noun_in(english, clinometer, none, unknown, clinometer, regular).
 ty_noun_in(english, clinoril, none, unknown, clinoril, regular).
 ty_noun_in(english, clintonia, none, unknown, clintonia, regular).
 ty_noun_in(english, clip, none, unknown, clip, regular).
+ty_noun_in(english, 'clip-clop', none, unknown, 'clip-clop', regular).
+ty_noun_in(english, 'clip-on', none, unknown, 'clip-on', regular).
 ty_noun_in(english, clipboard, none, unknown, clipboard, regular).
 ty_noun_in(english, clipper, none, unknown, clipper, regular).
+ty_noun_in(english, 'clippety-clop', none, unknown, 'clippety-clop', regular).
 ty_noun_in(english, clique, none, unknown, clique, regular).
 ty_noun_in(english, cliquishness, none, unknown, cliquishness, regular).
 ty_noun_in(english, clit, none, unknown, clit, regular).
@@ -7308,6 +7513,7 @@ ty_noun_in(english, cloakroom, none, unknown, cloakroom, regular).
 ty_noun_in(english, clobber, none, unknown, clobber, regular).
 ty_noun_in(english, cloche, none, unknown, cloche, regular).
 ty_noun_in(english, clock, none, unknown, clock, regular).
+ty_noun_in(english, 'clock-watching', none, unknown, 'clock-watching', regular).
 ty_noun_in(english, clocking, none, unknown, clocking, regular).
 ty_noun_in(english, clockmaker, none, person, clockmaker, regular).
 ty_noun_in(english, clocks, none, unknown, clocks, regular).
@@ -7349,12 +7555,14 @@ ty_noun_in(english, clothier, none, unknown, clothier, regular).
 ty_noun_in(english, clothing, none, unknown, clothing, regular).
 ty_noun_in(english, cloture, none, unknown, cloture, regular).
 ty_noun_in(english, cloud, none, unknown, cloud, regular).
+ty_noun_in(english, 'cloud-cuckoo-land', none, unknown, 'cloud-cuckoo-land', regular).
 ty_noun_in(english, cloudberry, none, unknown, cloudberry, regular).
 ty_noun_in(english, cloudburst, none, unknown, cloudburst, regular).
 ty_noun_in(english, cloudiness, none, unknown, cloudiness, regular).
 ty_noun_in(english, cloudlessness, none, unknown, cloudlessness, regular).
 ty_noun_in(english, clout, none, unknown, clout, regular).
 ty_noun_in(english, clover, none, unknown, clover, regular).
+ty_noun_in(english, 'clover-root', none, unknown, 'clover-root', regular).
 ty_noun_in(english, cloverleaf, none, unknown, cloverleaf, regular).
 ty_noun_in(english, cloveroot, none, unknown, cloveroot, regular).
 ty_noun_in(english, clowder, none, unknown, clowder, regular).
@@ -7362,6 +7570,8 @@ ty_noun_in(english, clown, none, person, clown, regular).
 ty_noun_in(english, clowning, none, unknown, clowning, regular).
 ty_noun_in(english, clozapine, none, unknown, clozapine, regular).
 ty_noun_in(english, club, none, unknown, club, regular).
+ty_noun_in(english, 'club-head', none, unknown, 'club-head', regular).
+ty_noun_in(english, 'club-moss', none, unknown, 'club-moss', regular).
 ty_noun_in(english, clubfoot, none, unknown, clubfoot, regular).
 ty_noun_in(english, clubhead, none, unknown, clubhead, regular).
 ty_noun_in(english, clubhouse, none, unknown, clubhouse, regular).
@@ -7383,7 +7593,20 @@ ty_noun_in(english, clypeus, none, unknown, clypeus, regular).
 ty_noun_in(english, clyster, none, unknown, clyster, regular).
 ty_noun_in(english, cm, none, unknown, cm, regular).
 ty_noun_in(english, cnidarian, none, unknown, cnidarian, regular).
+ty_noun_in(english, 'co-beneficiary', none, unknown, 'co-beneficiary', regular).
+ty_noun_in(english, 'co-defendant', none, unknown, 'co-defendant', regular).
+ty_noun_in(english, 'co-discoverer', none, unknown, 'co-discoverer', regular).
+ty_noun_in(english, 'co-ed', none, unknown, 'co-ed', regular).
+ty_noun_in(english, 'co-occurrence', none, unknown, 'co-occurrence', regular).
+ty_noun_in(english, 'co-op', none, unknown, 'co-op', regular).
+ty_noun_in(english, 'co-optation', none, unknown, 'co-optation', regular).
+ty_noun_in(english, 'co-option', none, unknown, 'co-option', regular).
+ty_noun_in(english, 'co-pilot', none, unknown, 'co-pilot', regular).
+ty_noun_in(english, 'co-respondent', none, unknown, 'co-respondent', regular).
+ty_noun_in(english, 'co-star', none, unknown, 'co-star', regular).
+ty_noun_in(english, 'co-worker', none, unknown, 'co-worker', regular).
 ty_noun_in(english, coach, none, person, coach, regular).
+ty_noun_in(english, 'coach-and-four', none, unknown, 'coach-and-four', regular).
 ty_noun_in(english, coachbuilder, none, unknown, coachbuilder, regular).
 ty_noun_in(english, coaching, none, unknown, coaching, regular).
 ty_noun_in(english, coachman, none, unknown, coachman, regular).
@@ -7419,6 +7642,8 @@ ty_noun_in(english, coat, none, unknown, coat, regular).
 ty_noun_in(english, coatdress, none, unknown, coatdress, regular).
 ty_noun_in(english, coatee, none, unknown, coatee, regular).
 ty_noun_in(english, coati, none, unknown, coati, regular).
+ty_noun_in(english, 'coati-mondi', none, unknown, 'coati-mondi', regular).
+ty_noun_in(english, 'coati-mundi', none, unknown, 'coati-mundi', regular).
 ty_noun_in(english, coating, none, unknown, coating, regular).
 ty_noun_in(english, coatrack, none, unknown, coatrack, regular).
 ty_noun_in(english, coatroom, none, unknown, coatroom, regular).
@@ -7452,6 +7677,8 @@ ty_noun_in(english, cochin, none, unknown, cochin, regular).
 ty_noun_in(english, cochineal, none, unknown, cochineal, regular).
 ty_noun_in(english, cochlea, none, unknown, cochlea, regular).
 ty_noun_in(english, cock, none, animate, cock, regular).
+ty_noun_in(english, 'cock-a-doodle-doo', none, unknown, 'cock-a-doodle-doo', regular).
+ty_noun_in(english, 'cock-a-leekie', none, unknown, 'cock-a-leekie', regular).
 ty_noun_in(english, cockade, none, unknown, cockade, regular).
 ty_noun_in(english, cockateel, none, unknown, cockateel, regular).
 ty_noun_in(english, cockatiel, none, unknown, cockatiel, regular).
@@ -7466,6 +7693,8 @@ ty_noun_in(english, cockfighting, none, unknown, cockfighting, regular).
 ty_noun_in(english, cockhorse, none, unknown, cockhorse, regular).
 ty_noun_in(english, cockiness, none, unknown, cockiness, regular).
 ty_noun_in(english, cockle, none, unknown, cockle, regular).
+ty_noun_in(english, 'cockle-bur', none, unknown, 'cockle-bur', regular).
+ty_noun_in(english, 'cockle-burr', none, unknown, 'cockle-burr', regular).
 ty_noun_in(english, cocklebur, none, unknown, cocklebur, regular).
 ty_noun_in(english, cockleburr, none, unknown, cockleburr, regular).
 ty_noun_in(english, cockleshell, none, unknown, cockleshell, regular).
@@ -7479,6 +7708,7 @@ ty_noun_in(english, cocksucker, none, unknown, cocksucker, regular).
 ty_noun_in(english, cocksureness, none, unknown, cocksureness, regular).
 ty_noun_in(english, cocktail, none, unknown, cocktail, regular).
 ty_noun_in(english, cockup, none, unknown, cockup, regular).
+ty_noun_in(english, 'cocky-leeky', none, unknown, 'cocky-leeky', regular).
 ty_noun_in(english, cocoa, none, unknown, cocoa, regular).
 ty_noun_in(english, cocoanut, none, unknown, cocoanut, regular).
 ty_noun_in(english, cocobolo, none, unknown, cocobolo, regular).
@@ -7506,6 +7736,7 @@ ty_noun_in(english, codicil, none, unknown, codicil, regular).
 ty_noun_in(english, codification, none, unknown, codification, regular).
 ty_noun_in(english, coding, none, unknown, coding, regular).
 ty_noun_in(english, codling, none, unknown, codling, regular).
+ty_noun_in(english, 'codlins-and-cream', none, unknown, 'codlins-and-cream', regular).
 ty_noun_in(english, codon, none, unknown, codon, regular).
 ty_noun_in(english, codpiece, none, unknown, codpiece, regular).
 ty_noun_in(english, codswallop, none, unknown, codswallop, regular).
@@ -7701,6 +7932,7 @@ ty_noun_in(english, columbary, none, unknown, columbary, regular).
 ty_noun_in(english, columbidae, none, unknown, columbidae, regular).
 ty_noun_in(english, columbine, none, unknown, columbine, regular).
 ty_noun_in(english, columbite, none, unknown, columbite, regular).
+ty_noun_in(english, 'columbite-tantalite', none, unknown, 'columbite-tantalite', regular).
 ty_noun_in(english, columbium, none, unknown, columbium, regular).
 ty_noun_in(english, columbo, none, unknown, columbo, regular).
 ty_noun_in(english, columbus, none, unknown, columbus, regular).
@@ -7715,6 +7947,8 @@ ty_noun_in(english, comarca, none, unknown, comarca, regular).
 ty_noun_in(english, comatoseness, none, unknown, comatoseness, regular).
 ty_noun_in(english, comatulid, none, unknown, comatulid, regular).
 ty_noun_in(english, comb, none, unknown, comb, regular).
+ty_noun_in(english, 'comb-out', none, unknown, 'comb-out', regular).
+ty_noun_in(english, 'comb-plate', none, unknown, 'comb-plate', regular).
 ty_noun_in(english, combat, none, unknown, combat, regular).
 ty_noun_in(english, combativeness, none, unknown, combativeness, regular).
 ty_noun_in(english, comber, none, person, comber, regular).
@@ -7727,6 +7961,7 @@ ty_noun_in(english, combretum, none, unknown, combretum, regular).
 ty_noun_in(english, combustibility, none, unknown, combustibility, regular).
 ty_noun_in(english, combustibleness, none, unknown, combustibleness, regular).
 ty_noun_in(english, combustion, none, unknown, combustion, regular).
+ty_noun_in(english, 'come-on', none, unknown, 'come-on', regular).
 ty_noun_in(english, comeback, none, unknown, comeback, regular).
 ty_noun_in(english, comedian, none, person, comedian, regular).
 ty_noun_in(english, comedienne, none, unknown, comedienne, regular).
@@ -7947,6 +8182,7 @@ ty_noun_in(english, conceptualization, none, unknown, conceptualization, regular
 ty_noun_in(english, conceptus, none, unknown, conceptus, regular).
 ty_noun_in(english, concern, none, unknown, concern, regular).
 ty_noun_in(english, concert, none, unknown, concert, regular).
+ty_noun_in(english, 'concert-goer', none, unknown, 'concert-goer', regular).
 ty_noun_in(english, concertation, none, unknown, concertation, regular).
 ty_noun_in(english, concertina, none, unknown, concertina, regular).
 ty_noun_in(english, concertmaster, none, unknown, concertmaster, regular).
@@ -8454,6 +8690,7 @@ ty_noun_in(english, coracle, none, unknown, coracle, regular).
 ty_noun_in(english, coragyps, none, unknown, coragyps, regular).
 ty_noun_in(english, corakan, none, unknown, corakan, regular).
 ty_noun_in(english, coral, none, unknown, coral, regular).
+ty_noun_in(english, 'coral-wood', none, unknown, 'coral-wood', regular).
 ty_noun_in(english, coralbells, none, unknown, coralbells, regular).
 ty_noun_in(english, coralberry, none, unknown, coralberry, regular).
 ty_noun_in(english, corallorhiza, none, unknown, corallorhiza, regular).
@@ -8461,6 +8698,7 @@ ty_noun_in(english, coralroot, none, unknown, coralroot, regular).
 ty_noun_in(english, coralwood, none, unknown, coralwood, regular).
 ty_noun_in(english, coralwort, none, unknown, coralwort, regular).
 ty_noun_in(english, corbel, none, unknown, corbel, regular).
+ty_noun_in(english, 'corbie-step', none, unknown, 'corbie-step', regular).
 ty_noun_in(english, corbiestep, none, unknown, corbiestep, regular).
 ty_noun_in(english, corbina, none, unknown, corbina, regular).
 ty_noun_in(english, corchorus, none, unknown, corchorus, regular).
@@ -8689,11 +8927,14 @@ ty_noun_in(english, counseling, none, unknown, counseling, regular).
 ty_noun_in(english, counsellor, none, unknown, counsellor, regular).
 ty_noun_in(english, counsellorship, none, unknown, counsellorship, regular).
 ty_noun_in(english, counselor, none, person, counselor, regular).
+ty_noun_in(english, 'counselor-at-law', none, unknown, 'counselor-at-law', regular).
 ty_noun_in(english, counselorship, none, unknown, counselorship, regular).
 ty_noun_in(english, count, none, unknown, count, regular).
 ty_noun_in(english, countdown, none, unknown, countdown, regular).
 ty_noun_in(english, countenance, none, unknown, countenance, regular).
 ty_noun_in(english, counter, none, unknown, counter, regular).
+ty_noun_in(english, 'counter-revolutionist', none, unknown, 'counter-revolutionist', regular).
+ty_noun_in(english, 'counter-sabotage', none, unknown, 'counter-sabotage', regular).
 ty_noun_in(english, counteraction, none, unknown, counteraction, regular).
 ty_noun_in(english, counteranalysis, none, unknown, counteranalysis, regular).
 ty_noun_in(english, counterargument, none, unknown, counterargument, regular).
@@ -8771,6 +9012,7 @@ ty_noun_in(english, counting, none, unknown, counting, regular).
 ty_noun_in(english, countinghouse, none, unknown, countinghouse, regular).
 ty_noun_in(english, countlessness, none, unknown, countlessness, regular).
 ty_noun_in(english, country, none, unknown, country, regular).
+ty_noun_in(english, 'country-dance', none, unknown, 'country-dance', regular).
 ty_noun_in(english, countryfolk, none, unknown, countryfolk, regular).
 ty_noun_in(english, countryman, none, person, countryman, regular).
 ty_noun_in(english, countryseat, none, unknown, countryseat, regular).
@@ -8794,6 +9036,7 @@ ty_noun_in(english, course, none, person, course, regular).
 ty_noun_in(english, courser, none, unknown, courser, regular).
 ty_noun_in(english, coursework, none, unknown, coursework, regular).
 ty_noun_in(english, court, none, unknown, court, regular).
+ty_noun_in(english, 'court-martial', none, unknown, 'court-martial', regular).
 ty_noun_in(english, courtesan, none, unknown, courtesan, regular).
 ty_noun_in(english, courtesy, none, unknown, courtesy, regular).
 ty_noun_in(english, courthouse, none, unknown, courthouse, regular).
@@ -8804,6 +9047,7 @@ ty_noun_in(english, courtship, none, unknown, courtship, regular).
 ty_noun_in(english, courtyard, none, unknown, courtyard, regular).
 ty_noun_in(english, couscous, none, unknown, couscous, regular).
 ty_noun_in(english, cousin, none, person, cousin, regular).
+ty_noun_in(english, 'cousin-german', none, unknown, 'cousin-german', regular).
 ty_noun_in(english, couture, none, unknown, couture, regular).
 ty_noun_in(english, couturier, none, unknown, couturier, regular).
 ty_noun_in(english, couvade, none, unknown, couvade, regular).
@@ -8816,6 +9060,7 @@ ty_noun_in(english, cove, none, unknown, cove, regular).
 ty_noun_in(english, coven, none, unknown, coven, regular).
 ty_noun_in(english, covenant, none, unknown, covenant, regular).
 ty_noun_in(english, cover, none, unknown, cover, regular).
+ty_noun_in(english, 'cover-up', none, unknown, 'cover-up', regular).
 ty_noun_in(english, coverage, none, unknown, coverage, regular).
 ty_noun_in(english, coverall, none, unknown, coverall, regular).
 ty_noun_in(english, covering, none, unknown, covering, regular).
@@ -8876,6 +9121,7 @@ ty_noun_in(english, crabbiness, none, unknown, crabbiness, regular).
 ty_noun_in(english, crabgrass, none, unknown, crabgrass, regular).
 ty_noun_in(english, crabmeat, none, unknown, crabmeat, regular).
 ty_noun_in(english, crack, none, unknown, crack, regular).
+ty_noun_in(english, 'crack-up', none, unknown, 'crack-up', regular).
 ty_noun_in(english, crackdown, none, unknown, crackdown, regular).
 ty_noun_in(english, cracker, none, unknown, cracker, regular).
 ty_noun_in(english, crackerberry, none, unknown, crackerberry, regular).
@@ -8921,6 +9167,7 @@ ty_noun_in(english, crankcase, none, unknown, crankcase, regular).
 ty_noun_in(english, crankiness, none, unknown, crankiness, regular).
 ty_noun_in(english, crankshaft, none, unknown, crankshaft, regular).
 ty_noun_in(english, cranny, none, unknown, cranny, regular).
+ty_noun_in(english, 'crap-shooter', none, unknown, 'crap-shooter', regular).
 ty_noun_in(english, crapaud, none, unknown, crapaud, regular).
 ty_noun_in(english, crapette, none, unknown, crapette, regular).
 ty_noun_in(english, crapper, none, unknown, crapper, regular).
@@ -9002,6 +9249,7 @@ ty_noun_in(english, crenelation, none, unknown, crenelation, regular).
 ty_noun_in(english, crenellation, none, unknown, crenellation, regular).
 ty_noun_in(english, crenelle, none, unknown, crenelle, regular).
 ty_noun_in(english, creole, none, unknown, creole, regular).
+ty_noun_in(english, 'creole-fish', none, unknown, 'creole-fish', regular).
 ty_noun_in(english, creosol, none, unknown, creosol, regular).
 ty_noun_in(english, creosote, none, unknown, creosote, regular).
 ty_noun_in(english, crepe, none, unknown, crepe, regular).
@@ -9047,6 +9295,7 @@ ty_noun_in(english, crimson, none, unknown, crimson, regular).
 ty_noun_in(english, cringle, none, unknown, cringle, regular).
 ty_noun_in(english, crinion, none, unknown, crinion, regular).
 ty_noun_in(english, crinkle, none, unknown, crinkle, regular).
+ty_noun_in(english, 'crinkle-root', none, unknown, 'crinkle-root', regular).
 ty_noun_in(english, crinkleroot, none, unknown, crinkleroot, regular).
 ty_noun_in(english, crinoline, none, unknown, crinoline, regular).
 ty_noun_in(english, cripple, none, person, cripple, regular).
@@ -9091,12 +9340,30 @@ ty_noun_in(english, crookedness, none, unknown, crookedness, regular).
 ty_noun_in(english, crookneck, none, unknown, crookneck, regular).
 ty_noun_in(english, crooner, none, unknown, crooner, regular).
 ty_noun_in(english, crop, none, unknown, crop, regular).
+ty_noun_in(english, 'crop-dusting', none, unknown, 'crop-dusting', regular).
 ty_noun_in(english, cropper, none, person, cropper, regular).
 ty_noun_in(english, croquet, none, unknown, croquet, regular).
 ty_noun_in(english, croquette, none, unknown, croquette, regular).
 ty_noun_in(english, crore, none, unknown, crore, regular).
 ty_noun_in(english, crosier, none, unknown, crosier, regular).
 ty_noun_in(english, cross, none, unknown, cross, regular).
+ty_noun_in(english, 'cross-classification', none, unknown, 'cross-classification', regular).
+ty_noun_in(english, 'cross-division', none, unknown, 'cross-division', regular).
+ty_noun_in(english, 'cross-dresser', none, unknown, 'cross-dresser', regular).
+ty_noun_in(english, 'cross-examination', none, unknown, 'cross-examination', regular).
+ty_noun_in(english, 'cross-examiner', none, unknown, 'cross-examiner', regular).
+ty_noun_in(english, 'cross-eye', none, unknown, 'cross-eye', regular).
+ty_noun_in(english, 'cross-fertilisation', none, unknown, 'cross-fertilisation', regular).
+ty_noun_in(english, 'cross-fertilization', none, unknown, 'cross-fertilization', regular).
+ty_noun_in(english, 'cross-index', none, unknown, 'cross-index', regular).
+ty_noun_in(english, 'cross-link', none, unknown, 'cross-link', regular).
+ty_noun_in(english, 'cross-linkage', none, unknown, 'cross-linkage', regular).
+ty_noun_in(english, 'cross-pollination', none, unknown, 'cross-pollination', regular).
+ty_noun_in(english, 'cross-purpose', none, unknown, 'cross-purpose', regular).
+ty_noun_in(english, 'cross-question', none, unknown, 'cross-question', regular).
+ty_noun_in(english, 'cross-questioner', none, unknown, 'cross-questioner', regular).
+ty_noun_in(english, 'cross-reference', none, unknown, 'cross-reference', regular).
+ty_noun_in(english, 'cross-stitch', none, unknown, 'cross-stitch', regular).
 ty_noun_in(english, crossbar, none, unknown, crossbar, regular).
 ty_noun_in(english, crossbeam, none, unknown, crossbeam, regular).
 ty_noun_in(english, crossbench, none, unknown, crossbench, regular).
@@ -9142,6 +9409,7 @@ ty_noun_in(english, crouch, none, unknown, crouch, regular).
 ty_noun_in(english, croupier, none, unknown, croupier, regular).
 ty_noun_in(english, crouton, none, unknown, crouton, regular).
 ty_noun_in(english, crow, none, animate, crow, regular).
+ty_noun_in(english, 'crow-bait', none, unknown, 'crow-bait', regular).
 ty_noun_in(english, crowbait, none, unknown, crowbait, regular).
 ty_noun_in(english, crowbar, none, unknown, crowbar, regular).
 ty_noun_in(english, crowberry, none, unknown, crowberry, regular).
@@ -9149,6 +9417,8 @@ ty_noun_in(english, crowd, none, unknown, crowd, regular).
 ty_noun_in(english, crowding, none, unknown, crowding, regular).
 ty_noun_in(english, crowfoot, none, unknown, crowfoot, regular).
 ty_noun_in(english, crown, none, unknown, crown, regular).
+ty_noun_in(english, 'crown-beard', none, unknown, 'crown-beard', regular).
+ty_noun_in(english, 'crown-of-the-field', none, unknown, 'crown-of-the-field', regular).
 ty_noun_in(english, crownbeard, none, unknown, crownbeard, regular).
 ty_noun_in(english, crownwork, none, unknown, crownwork, regular).
 ty_noun_in(english, crozier, none, unknown, crozier, regular).
@@ -9164,6 +9434,7 @@ ty_noun_in(english, crudity, none, unknown, crudity, regular).
 ty_noun_in(english, cruelness, none, unknown, cruelness, regular).
 ty_noun_in(english, cruelty, none, unknown, cruelty, regular).
 ty_noun_in(english, cruet, none, unknown, cruet, regular).
+ty_noun_in(english, 'cruet-stand', none, unknown, 'cruet-stand', regular).
 ty_noun_in(english, cruise, none, unknown, cruise, regular).
 ty_noun_in(english, cruiser, none, unknown, cruiser, regular).
 ty_noun_in(english, cruiserweight, none, unknown, cruiserweight, regular).
@@ -9248,6 +9519,7 @@ ty_noun_in(english, cuckold, none, unknown, cuckold, regular).
 ty_noun_in(english, cuckoldom, none, unknown, cuckoldom, regular).
 ty_noun_in(english, cuckoldry, none, unknown, cuckoldry, regular).
 ty_noun_in(english, cuckoo, none, unknown, cuckoo, regular).
+ty_noun_in(english, 'cuckoo-bumblebee', none, unknown, 'cuckoo-bumblebee', regular).
 ty_noun_in(english, cuckooflower, none, unknown, cuckooflower, regular).
 ty_noun_in(english, cuckoopint, none, unknown, cuckoopint, regular).
 ty_noun_in(english, cuculidae, none, unknown, cuculidae, regular).
@@ -9346,6 +9618,7 @@ ty_noun_in(english, curbside, none, unknown, curbside, regular).
 ty_noun_in(english, curbstone, none, unknown, curbstone, regular).
 ty_noun_in(english, curd, none, unknown, curd, regular).
 ty_noun_in(english, cure, none, unknown, cure, regular).
+ty_noun_in(english, 'cure-all', none, unknown, 'cure-all', regular).
 ty_noun_in(english, curet, none, unknown, curet, regular).
 ty_noun_in(english, curettage, none, unknown, curettage, regular).
 ty_noun_in(english, curette, none, unknown, curette, regular).
@@ -9364,6 +9637,7 @@ ty_noun_in(english, curlew, none, unknown, curlew, regular).
 ty_noun_in(english, curlicue, none, unknown, curlicue, regular).
 ty_noun_in(english, curliness, none, unknown, curliness, regular).
 ty_noun_in(english, curling, none, unknown, curling, regular).
+ty_noun_in(english, 'curly-heads', none, unknown, 'curly-heads', regular).
 ty_noun_in(english, curmudgeon, none, unknown, curmudgeon, regular).
 ty_noun_in(english, currajong, none, unknown, currajong, regular).
 ty_noun_in(english, currant, none, unknown, currant, regular).
@@ -9389,11 +9663,13 @@ ty_noun_in(english, curve, none, unknown, curve, regular).
 ty_noun_in(english, curvet, none, unknown, curvet, regular).
 ty_noun_in(english, cuscus, none, unknown, cuscus, regular).
 ty_noun_in(english, cuscuta, none, unknown, cuscuta, regular).
+ty_noun_in(english, 'cush-cush', none, unknown, 'cush-cush', regular).
 ty_noun_in(english, cushat, none, unknown, cushat, regular).
 ty_noun_in(english, cushaw, none, unknown, cushaw, regular).
 ty_noun_in(english, cushion, none, unknown, cushion, regular).
 ty_noun_in(english, cushioning, none, unknown, cushioning, regular).
 ty_noun_in(english, cusk, none, unknown, cusk, regular).
+ty_noun_in(english, 'cusk-eel', none, unknown, 'cusk-eel', regular).
 ty_noun_in(english, cusp, none, unknown, cusp, regular).
 ty_noun_in(english, cuspid, none, unknown, cuspid, regular).
 ty_noun_in(english, cuspidation, none, unknown, cuspidation, regular).
@@ -9405,11 +9681,16 @@ ty_noun_in(english, custodian, none, person, custodian, regular).
 ty_noun_in(english, custodianship, none, unknown, custodianship, regular).
 ty_noun_in(english, custody, none, unknown, custody, regular).
 ty_noun_in(english, custom, none, unknown, custom, regular).
+ty_noun_in(english, 'custom-built', none, unknown, 'custom-built', regular).
+ty_noun_in(english, 'custom-made', none, unknown, 'custom-made', regular).
 ty_noun_in(english, customer, none, person, customer, regular).
 ty_noun_in(english, customhouse, none, unknown, customhouse, regular).
 ty_noun_in(english, customs, none, unknown, customs, regular).
 ty_noun_in(english, customshouse, none, unknown, customshouse, regular).
 ty_noun_in(english, cut, none, unknown, cut, regular).
+ty_noun_in(english, 'cut-and-thrust', none, unknown, 'cut-and-thrust', regular).
+ty_noun_in(english, 'cut-in', none, unknown, 'cut-in', regular).
+ty_noun_in(english, 'cut-up', none, unknown, 'cut-up', regular).
 ty_noun_in(english, cutaway, none, unknown, cutaway, regular).
 ty_noun_in(english, cutback, none, unknown, cutback, regular).
 ty_noun_in(english, cutch, none, unknown, cutch, regular).
@@ -9446,6 +9727,8 @@ ty_noun_in(english, cyanohydrin, none, unknown, cyanohydrin, regular).
 ty_noun_in(english, cyanophyta, none, unknown, cyanophyta, regular).
 ty_noun_in(english, cyanosis, none, unknown, cyanosis, regular).
 ty_noun_in(english, cyanuramide, none, unknown, cyanuramide, regular).
+ty_noun_in(english, 'cyber-terrorism', none, unknown, 'cyber-terrorism', regular).
+ty_noun_in(english, 'cyber-terrorist', none, unknown, 'cyber-terrorist', regular).
 ty_noun_in(english, cyberart, none, unknown, cyberart, regular).
 ty_noun_in(english, cybercafe, none, unknown, cybercafe, regular).
 ty_noun_in(english, cybercrime, none, unknown, cybercrime, regular).
@@ -9625,6 +9908,7 @@ ty_noun_in(english, dairyman, none, person, dairyman, regular).
 ty_noun_in(english, dais, none, unknown, dais, regular).
 ty_noun_in(english, daishiki, none, unknown, daishiki, regular).
 ty_noun_in(english, daisy, none, unknown, daisy, regular).
+ty_noun_in(english, 'daisy-bush', none, unknown, 'daisy-bush', regular).
 ty_noun_in(english, daisybush, none, unknown, daisybush, regular).
 ty_noun_in(english, dak, none, unknown, dak, regular).
 ty_noun_in(english, dakoit, none, person, dakoit, regular).
@@ -9666,6 +9950,7 @@ ty_noun_in(english, danaid, none, unknown, danaid, regular).
 ty_noun_in(english, dance, none, unknown, dance, regular).
 ty_noun_in(english, dancer, none, person, dancer, regular).
 ty_noun_in(english, dancing, none, unknown, dancing, regular).
+ty_noun_in(english, 'dancing-master', none, unknown, 'dancing-master', regular).
 ty_noun_in(english, dandelion, none, unknown, dandelion, regular).
 ty_noun_in(english, dander, none, unknown, dander, regular).
 ty_noun_in(english, dandruff, none, unknown, dandruff, regular).
@@ -9675,6 +9960,7 @@ ty_noun_in(english, dane, none, person, dane, regular).
 ty_noun_in(english, danewort, none, unknown, danewort, regular).
 ty_noun_in(english, danger, none, unknown, danger, regular).
 ty_noun_in(english, dangerousness, none, unknown, dangerousness, regular).
+ty_noun_in(english, 'dangle-berry', none, unknown, 'dangle-berry', regular).
 ty_noun_in(english, dangleberry, none, unknown, dangleberry, regular).
 ty_noun_in(english, danish, none, unknown, danish, regular).
 ty_noun_in(english, dankness, none, unknown, dankness, regular).
@@ -9685,6 +9971,10 @@ ty_noun_in(english, daphne, none, unknown, daphne, regular).
 ty_noun_in(english, daphnia, none, unknown, daphnia, regular).
 ty_noun_in(english, dapperness, none, unknown, dapperness, regular).
 ty_noun_in(english, dapple, none, unknown, dapple, regular).
+ty_noun_in(english, 'dapple-gray', none, unknown, 'dapple-gray', regular).
+ty_noun_in(english, 'dapple-grey', none, unknown, 'dapple-grey', regular).
+ty_noun_in(english, 'dappled-gray', none, unknown, 'dappled-gray', regular).
+ty_noun_in(english, 'dappled-grey', none, unknown, 'dappled-grey', regular).
 ty_noun_in(english, dapsone, none, unknown, dapsone, regular).
 ty_noun_in(english, daraf, none, unknown, daraf, regular).
 ty_noun_in(english, dardanian, none, person, dardanian, regular).
@@ -9709,6 +9999,7 @@ ty_noun_in(english, darter, none, unknown, darter, regular).
 ty_noun_in(english, darwin, none, unknown, darwin, regular).
 ty_noun_in(english, darwinism, none, unknown, darwinism, regular).
 ty_noun_in(english, dash, none, unknown, dash, regular).
+ty_noun_in(english, 'dash-pot', none, unknown, 'dash-pot', regular).
 ty_noun_in(english, dashboard, none, unknown, dashboard, regular).
 ty_noun_in(english, dasheen, none, unknown, dasheen, regular).
 ty_noun_in(english, dashiki, none, unknown, dashiki, regular).
@@ -9728,6 +10019,7 @@ ty_noun_in(english, datum, none, unknown, datum, regular).
 ty_noun_in(english, daub, none, unknown, daub, regular).
 ty_noun_in(english, dauber, none, unknown, dauber, regular).
 ty_noun_in(english, daughter, none, person, daughter, regular).
+ty_noun_in(english, 'daughter-in-law', none, unknown, 'daughter-in-law', regular).
 ty_noun_in(english, dauntlessness, none, unknown, dauntlessness, regular).
 ty_noun_in(english, dauphin, none, unknown, dauphin, regular).
 ty_noun_in(english, davallia, none, unknown, davallia, regular).
@@ -9756,6 +10048,9 @@ ty_noun_in(english, dayspring, none, unknown, dayspring, regular).
 ty_noun_in(english, daystar, none, unknown, daystar, regular).
 ty_noun_in(english, daytime, none, unknown, daytime, regular).
 ty_noun_in(english, daze, none, unknown, daze, regular).
+ty_noun_in(english, 'de-escalation', none, unknown, 'de-escalation', regular).
+ty_noun_in(english, 'de-iodinase', none, unknown, 'de-iodinase', regular).
+ty_noun_in(english, 'de-iodination', none, unknown, 'de-iodination', regular).
 ty_noun_in(english, deacon, none, person, deacon, regular).
 ty_noun_in(english, deaconess, none, unknown, deaconess, regular).
 ty_noun_in(english, deactivation, none, unknown, deactivation, regular).
@@ -9771,6 +10066,10 @@ ty_noun_in(english, deadlock, none, unknown, deadlock, regular).
 ty_noun_in(english, deadness, none, unknown, deadness, regular).
 ty_noun_in(english, deadwood, none, unknown, deadwood, regular).
 ty_noun_in(english, deaf, none, unknown, deaf, regular).
+ty_noun_in(english, 'deaf-aid', none, unknown, 'deaf-aid', regular).
+ty_noun_in(english, 'deaf-mute', none, unknown, 'deaf-mute', regular).
+ty_noun_in(english, 'deaf-muteness', none, unknown, 'deaf-muteness', regular).
+ty_noun_in(english, 'deaf-mutism', none, unknown, 'deaf-mutism', regular).
 ty_noun_in(english, deafness, none, unknown, deafness, regular).
 ty_noun_in(english, deal, none, unknown, deal, regular).
 ty_noun_in(english, dealer, none, person, dealer, regular).
@@ -9789,6 +10088,7 @@ ty_noun_in(english, dearest, none, unknown, dearest, regular).
 ty_noun_in(english, dearness, none, unknown, dearness, regular).
 ty_noun_in(english, dearth, none, unknown, dearth, regular).
 ty_noun_in(english, death, none, unknown, death, regular).
+ty_noun_in(english, 'death-roll', none, unknown, 'death-roll', regular).
 ty_noun_in(english, deathbed, none, unknown, deathbed, regular).
 ty_noun_in(english, deathblow, none, unknown, deathblow, regular).
 ty_noun_in(english, deathrate, none, unknown, deathrate, regular).
@@ -9879,6 +10179,7 @@ ty_noun_in(english, decipherment, none, unknown, decipherment, regular).
 ty_noun_in(english, decision, none, unknown, decision, regular).
 ty_noun_in(english, decisiveness, none, unknown, decisiveness, regular).
 ty_noun_in(english, deck, none, unknown, deck, regular).
+ty_noun_in(english, 'deck-house', none, unknown, 'deck-house', regular).
 ty_noun_in(english, decker, none, unknown, decker, regular).
 ty_noun_in(english, deckhand, none, unknown, deckhand, regular).
 ty_noun_in(english, decking, none, unknown, decking, regular).
@@ -10102,6 +10403,7 @@ ty_noun_in(english, dementia, none, unknown, dementia, regular).
 ty_noun_in(english, demerara, none, unknown, demerara, regular).
 ty_noun_in(english, demerit, none, unknown, demerit, regular).
 ty_noun_in(english, demesne, none, unknown, demesne, regular).
+ty_noun_in(english, 'demi-glaze', none, unknown, 'demi-glaze', regular).
 ty_noun_in(english, demiglace, none, unknown, demiglace, regular).
 ty_noun_in(english, demigod, none, unknown, demigod, regular).
 ty_noun_in(english, demijohn, none, unknown, demijohn, regular).
@@ -10285,6 +10587,7 @@ ty_noun_in(english, dermis, none, unknown, dermis, regular).
 ty_noun_in(english, derogation, none, unknown, derogation, regular).
 ty_noun_in(english, derrick, none, unknown, derrick, regular).
 ty_noun_in(english, derriere, none, unknown, derriere, regular).
+ty_noun_in(english, 'derring-do', none, unknown, 'derring-do', regular).
 ty_noun_in(english, derringer, none, unknown, derringer, regular).
 ty_noun_in(english, derris, none, unknown, derris, regular).
 ty_noun_in(english, derv, none, unknown, derv, regular).
@@ -10418,6 +10721,7 @@ ty_noun_in(english, detritus, none, unknown, detritus, regular).
 ty_noun_in(english, detroit, none, unknown, detroit, regular).
 ty_noun_in(english, detumescence, none, unknown, detumescence, regular).
 ty_noun_in(english, deuce, none, unknown, deuce, regular).
+ty_noun_in(english, 'deuce-ace', none, unknown, 'deuce-ace', regular).
 ty_noun_in(english, deuteranopia, none, unknown, deuteranopia, regular).
 ty_noun_in(english, deuterium, none, unknown, deuterium, regular).
 ty_noun_in(english, deuteron, none, unknown, deuteron, regular).
@@ -10433,6 +10737,7 @@ ty_noun_in(english, deviationism, none, unknown, deviationism, regular).
 ty_noun_in(english, deviationist, none, person, deviationist, regular).
 ty_noun_in(english, device, none, unknown, device, regular).
 ty_noun_in(english, devil, none, unknown, devil, regular).
+ty_noun_in(english, 'devil-worship', none, unknown, 'devil-worship', regular).
 ty_noun_in(english, devilfish, none, unknown, devilfish, regular).
 ty_noun_in(english, devilment, none, unknown, devilment, regular).
 ty_noun_in(english, devilry, none, unknown, devilry, regular).
@@ -10473,6 +10778,7 @@ ty_noun_in(english, dhawa, none, unknown, dhawa, regular).
 ty_noun_in(english, dhole, none, unknown, dhole, regular).
 ty_noun_in(english, dhoti, none, unknown, dhoti, regular).
 ty_noun_in(english, dhow, none, unknown, dhow, regular).
+ty_noun_in(english, 'di-iodotyrosine', none, unknown, 'di-iodotyrosine', regular).
 ty_noun_in(english, diabeta, none, unknown, diabeta, regular).
 ty_noun_in(english, diabetes, none, unknown, diabetes, regular).
 ty_noun_in(english, diabetic, none, person, diabetic, regular).
@@ -10574,10 +10880,15 @@ ty_noun_in(english, dichromia, none, unknown, dichromia, regular).
 ty_noun_in(english, dick, none, person, dick, regular).
 ty_noun_in(english, dickens, none, unknown, dickens, regular).
 ty_noun_in(english, dickey, none, unknown, dickey, regular).
+ty_noun_in(english, 'dickey-bird', none, unknown, 'dickey-bird', regular).
+ty_noun_in(english, 'dickey-seat', none, unknown, 'dickey-seat', regular).
 ty_noun_in(english, dickeybird, none, unknown, dickeybird, regular).
 ty_noun_in(english, dickhead, none, unknown, dickhead, regular).
 ty_noun_in(english, dickie, none, unknown, dickie, regular).
+ty_noun_in(english, 'dickie-seat', none, unknown, 'dickie-seat', regular).
 ty_noun_in(english, dicksonia, none, unknown, dicksonia, regular).
+ty_noun_in(english, 'dicky-bird', none, unknown, 'dicky-bird', regular).
+ty_noun_in(english, 'dicky-seat', none, unknown, 'dicky-seat', regular).
 ty_noun_in(english, dickybird, none, unknown, dickybird, regular).
 ty_noun_in(english, dicloxacillin, none, unknown, dicloxacillin, regular).
 ty_noun_in(english, dicot, none, unknown, dicot, regular).
@@ -10601,11 +10912,14 @@ ty_noun_in(english, didactics, none, unknown, didactics, regular).
 ty_noun_in(english, didanosine, none, unknown, didanosine, regular).
 ty_noun_in(english, diddley, none, unknown, diddley, regular).
 ty_noun_in(english, diddly, none, unknown, diddly, regular).
+ty_noun_in(english, 'diddly-shit', none, unknown, 'diddly-shit', regular).
+ty_noun_in(english, 'diddly-squat', none, unknown, 'diddly-squat', regular).
 ty_noun_in(english, diddlyshit, none, unknown, diddlyshit, regular).
 ty_noun_in(english, diddlysquat, none, unknown, diddlysquat, regular).
 ty_noun_in(english, dideoxycytosine, none, unknown, dideoxycytosine, regular).
 ty_noun_in(english, dideoxyinosine, none, unknown, dideoxyinosine, regular).
 ty_noun_in(english, die, none, unknown, die, regular).
+ty_noun_in(english, 'die-sinker', none, unknown, 'die-sinker', regular).
 ty_noun_in(english, dieback, none, unknown, dieback, regular).
 ty_noun_in(english, diehard, none, unknown, diehard, regular).
 ty_noun_in(english, dielectric, none, unknown, dielectric, regular).
@@ -10614,6 +10928,8 @@ ty_noun_in(english, diemaker, none, unknown, diemaker, regular).
 ty_noun_in(english, diencephalon, none, unknown, diencephalon, regular).
 ty_noun_in(english, dieresis, none, unknown, dieresis, regular).
 ty_noun_in(english, diesel, none, unknown, diesel, regular).
+ty_noun_in(english, 'diesel-electric', none, unknown, 'diesel-electric', regular).
+ty_noun_in(english, 'diesel-hydraulic', none, unknown, 'diesel-hydraulic', regular).
 ty_noun_in(english, diesinker, none, unknown, diesinker, regular).
 ty_noun_in(english, diesis, none, unknown, diesis, regular).
 ty_noun_in(english, diestock, none, unknown, diestock, regular).
@@ -10672,6 +10988,7 @@ ty_noun_in(english, digs, none, unknown, digs, regular).
 ty_noun_in(english, dihybrid, none, unknown, dihybrid, regular).
 ty_noun_in(english, dihydrostreptomycin, none, unknown, dihydrostreptomycin, regular).
 ty_noun_in(english, dihydroxyphenylalanine, none, unknown, dihydroxyphenylalanine, regular).
+ty_noun_in(english, 'dik-dik', none, unknown, 'dik-dik', regular).
 ty_noun_in(english, dika, none, unknown, dika, regular).
 ty_noun_in(english, dike, none, person, dike, regular).
 ty_noun_in(english, dilapidation, none, unknown, dilapidation, regular).
@@ -10686,6 +11003,7 @@ ty_noun_in(english, diligence, none, unknown, diligence, regular).
 ty_noun_in(english, dill, none, unknown, dill, regular).
 ty_noun_in(english, dillenia, none, unknown, dillenia, regular).
 ty_noun_in(english, dilleniidae, none, unknown, dilleniidae, regular).
+ty_noun_in(english, 'dilly-dallier', none, unknown, 'dilly-dallier', regular).
 ty_noun_in(english, dillydallier, none, person, dillydallier, regular).
 ty_noun_in(english, diltiazem, none, unknown, diltiazem, regular).
 ty_noun_in(english, diluent, none, unknown, diluent, regular).
@@ -10712,11 +11030,14 @@ ty_noun_in(english, din, none, unknown, din, regular).
 ty_noun_in(english, dinar, none, unknown, dinar, regular).
 ty_noun_in(english, diner, none, unknown, diner, regular).
 ty_noun_in(english, dinette, none, unknown, dinette, regular).
+ty_noun_in(english, 'ding-dong', none, unknown, 'ding-dong', regular).
 ty_noun_in(english, dingbat, none, unknown, dingbat, regular).
 ty_noun_in(english, dinghy, none, unknown, dinghy, regular).
 ty_noun_in(english, dinginess, none, unknown, dinginess, regular).
 ty_noun_in(english, dingle, none, unknown, dingle, regular).
 ty_noun_in(english, dingo, none, unknown, dingo, regular).
+ty_noun_in(english, 'dining-hall', none, unknown, 'dining-hall', regular).
+ty_noun_in(english, 'dining-room', none, unknown, 'dining-room', regular).
 ty_noun_in(english, dink, none, unknown, dink, regular).
 ty_noun_in(english, dinkey, none, unknown, dinkey, regular).
 ty_noun_in(english, dinner, none, unknown, dinner, regular).
@@ -11096,6 +11417,7 @@ ty_noun_in(english, diverticulosis, none, unknown, diverticulosis, regular).
 ty_noun_in(english, diverticulum, none, unknown, diverticulum, regular).
 ty_noun_in(english, divertimento, none, unknown, divertimento, regular).
 ty_noun_in(english, divestiture, none, unknown, divestiture, regular).
+ty_noun_in(english, 'divi-divi', none, unknown, 'divi-divi', regular).
 ty_noun_in(english, dividend, none, unknown, dividend, regular).
 ty_noun_in(english, divider, none, unknown, divider, regular).
 ty_noun_in(english, divination, none, unknown, divination, regular).
@@ -11121,6 +11443,9 @@ ty_noun_in(english, djinny, none, person, djinny, regular).
 ty_noun_in(english, dkg, none, unknown, dkg, regular).
 ty_noun_in(english, dkl, none, unknown, dkl, regular).
 ty_noun_in(english, dkm, none, unknown, dkm, regular).
+ty_noun_in(english, 'do-gooder', none, unknown, 'do-gooder', regular).
+ty_noun_in(english, 'do-nothing', none, unknown, 'do-nothing', regular).
+ty_noun_in(english, 'do-si-do', none, unknown, 'do-si-do', regular).
 ty_noun_in(english, dobbin, none, unknown, dobbin, regular).
 ty_noun_in(english, dobra, none, unknown, dobra, regular).
 ty_noun_in(english, dobson, none, unknown, dobson, regular).
@@ -11129,6 +11454,7 @@ ty_noun_in(english, doc, none, unknown, doc, regular).
 ty_noun_in(english, docent, none, person, docent, regular).
 ty_noun_in(english, docility, none, unknown, docility, regular).
 ty_noun_in(english, dock, none, unknown, dock, regular).
+ty_noun_in(english, 'dock-walloper', none, unknown, 'dock-walloper', regular).
 ty_noun_in(english, dockage, none, unknown, dockage, regular).
 ty_noun_in(english, docker, none, person, docker, regular).
 ty_noun_in(english, dockhand, none, person, dockhand, regular).
@@ -11136,6 +11462,7 @@ ty_noun_in(english, dockside, none, unknown, dockside, regular).
 ty_noun_in(english, dockworker, none, unknown, dockworker, regular).
 ty_noun_in(english, dockyard, none, unknown, dockyard, regular).
 ty_noun_in(english, doctor, none, person, doctor, regular).
+ty_noun_in(english, 'doctor-fish', none, unknown, 'doctor-fish', regular).
 ty_noun_in(english, doctorate, none, unknown, doctorate, regular).
 ty_noun_in(english, doctorfish, none, unknown, doctorfish, regular).
 ty_noun_in(english, doctorspeak, none, unknown, doctorspeak, regular).
@@ -11157,6 +11484,8 @@ ty_noun_in(english, dodging, none, unknown, dodging, regular).
 ty_noun_in(english, dodo, none, unknown, dodo, regular).
 ty_noun_in(english, doer, none, unknown, doer, regular).
 ty_noun_in(english, doeskin, none, unknown, doeskin, regular).
+ty_noun_in(english, 'dog-ear', none, unknown, 'dog-ear', regular).
+ty_noun_in(english, 'dog-iron', none, unknown, 'dog-iron', regular).
 ty_noun_in(english, dogbane, none, unknown, dogbane, regular).
 ty_noun_in(english, dogcart, none, unknown, dogcart, regular).
 ty_noun_in(english, dogfight, none, unknown, dogfight, regular).
@@ -11230,11 +11559,13 @@ ty_noun_in(english, donkey, none, animate, donkey, regular).
 ty_noun_in(english, donkeywork, none, unknown, donkeywork, regular).
 ty_noun_in(english, donor, none, person, donor, regular).
 ty_noun_in(english, donut, none, unknown, donut, regular).
+ty_noun_in(english, 'doo-wop', none, unknown, 'doo-wop', regular).
 ty_noun_in(english, doob, none, unknown, doob, regular).
 ty_noun_in(english, doodad, none, unknown, doodad, regular).
 ty_noun_in(english, doodia, none, unknown, doodia, regular).
 ty_noun_in(english, doodle, none, unknown, doodle, regular).
 ty_noun_in(english, doodlebug, none, unknown, doodlebug, regular).
+ty_noun_in(english, 'doodly-squat', none, unknown, 'doodly-squat', regular).
 ty_noun_in(english, doofus, none, unknown, doofus, regular).
 ty_noun_in(english, doohickey, none, unknown, doohickey, regular).
 ty_noun_in(english, doojigger, none, unknown, doojigger, regular).
@@ -11289,12 +11620,22 @@ ty_noun_in(english, dosser, none, unknown, dosser, regular).
 ty_noun_in(english, dosshouse, none, unknown, dosshouse, regular).
 ty_noun_in(english, dossier, none, unknown, dossier, regular).
 ty_noun_in(english, dot, none, unknown, dot, regular).
+ty_noun_in(english, 'dot-com', none, unknown, 'dot-com', regular).
 ty_noun_in(english, dotage, none, unknown, dotage, regular).
 ty_noun_in(english, dotard, none, person, dotard, regular).
 ty_noun_in(english, dotrel, none, unknown, dotrel, regular).
 ty_noun_in(english, dotterel, none, unknown, dotterel, regular).
 ty_noun_in(english, dottle, none, unknown, dottle, regular).
 ty_noun_in(english, double, none, unknown, double, regular).
+ty_noun_in(english, 'double-bogey', none, unknown, 'double-bogey', regular).
+ty_noun_in(english, 'double-crosser', none, unknown, 'double-crosser', regular).
+ty_noun_in(english, 'double-crossing', none, unknown, 'double-crossing', regular).
+ty_noun_in(english, 'double-dealer', none, unknown, 'double-dealer', regular).
+ty_noun_in(english, 'double-dealing', none, unknown, 'double-dealing', regular).
+ty_noun_in(english, 'double-decker', none, unknown, 'double-decker', regular).
+ty_noun_in(english, 'double-magnum', none, unknown, 'double-magnum', regular).
+ty_noun_in(english, 'double-prop', none, unknown, 'double-prop', regular).
+ty_noun_in(english, 'double-u', none, unknown, 'double-u', regular).
 ty_noun_in(english, doubleheader, none, unknown, doubleheader, regular).
 ty_noun_in(english, doubler, none, unknown, doubler, regular).
 ty_noun_in(english, doublespeak, none, unknown, doublespeak, regular).
@@ -11327,6 +11668,8 @@ ty_noun_in(english, doweling, none, unknown, doweling, regular).
 ty_noun_in(english, dower, none, unknown, dower, regular).
 ty_noun_in(english, dowery, none, unknown, dowery, regular).
 ty_noun_in(english, dowitcher, none, unknown, dowitcher, regular).
+ty_noun_in(english, 'down-and-out', none, unknown, 'down-and-out', regular).
+ty_noun_in(english, 'down-bow', none, unknown, 'down-bow', regular).
 ty_noun_in(english, downbeat, none, unknown, downbeat, regular).
 ty_noun_in(english, downdraft, none, unknown, downdraft, regular).
 ty_noun_in(english, downer, none, unknown, downer, regular).
@@ -11470,6 +11813,7 @@ ty_noun_in(english, dripping, none, unknown, dripping, regular).
 ty_noun_in(english, drippings, none, unknown, drippings, regular).
 ty_noun_in(english, dripstone, none, unknown, dripstone, regular).
 ty_noun_in(english, drive, none, unknown, drive, regular).
+ty_noun_in(english, 'drive-in', none, unknown, 'drive-in', regular).
 ty_noun_in(english, drivel, none, unknown, drivel, regular).
 ty_noun_in(english, driveller, none, unknown, driveller, regular).
 ty_noun_in(english, driver, none, person, driver, regular).
@@ -11487,6 +11831,9 @@ ty_noun_in(english, drone, none, unknown, drone, regular).
 ty_noun_in(english, drool, none, unknown, drool, regular).
 ty_noun_in(english, drooler, none, unknown, drooler, regular).
 ty_noun_in(english, drop, none, unknown, drop, regular).
+ty_noun_in(english, 'drop-leaf', none, unknown, 'drop-leaf', regular).
+ty_noun_in(english, 'drop-off', none, unknown, 'drop-off', regular).
+ty_noun_in(english, 'drop-seed', none, unknown, 'drop-seed', regular).
 ty_noun_in(english, dropkick, none, unknown, dropkick, regular).
 ty_noun_in(english, dropkicker, none, unknown, dropkicker, regular).
 ty_noun_in(english, droplet, none, unknown, droplet, regular).
@@ -11523,12 +11870,14 @@ ty_noun_in(english, drumlin, none, unknown, drumlin, regular).
 ty_noun_in(english, drummer, none, person, drummer, regular).
 ty_noun_in(english, drumstick, none, unknown, drumstick, regular).
 ty_noun_in(english, drunk, none, person, drunk, regular).
+ty_noun_in(english, 'drunk-and-disorderly', none, unknown, 'drunk-and-disorderly', regular).
 ty_noun_in(english, drunkard, none, person, drunkard, regular).
 ty_noun_in(english, drunkenness, none, unknown, drunkenness, regular).
 ty_noun_in(english, drupe, none, unknown, drupe, regular).
 ty_noun_in(english, drupelet, none, unknown, drupelet, regular).
 ty_noun_in(english, drusen, none, unknown, drusen, regular).
 ty_noun_in(english, druthers, none, unknown, druthers, regular).
+ty_noun_in(english, 'dry-gulching', none, unknown, 'dry-gulching', regular).
 ty_noun_in(english, dryad, none, unknown, dryad, regular).
 ty_noun_in(english, drydock, none, unknown, drydock, regular).
 ty_noun_in(english, dryer, none, unknown, dryer, regular).
@@ -11668,6 +12017,7 @@ ty_noun_in(english, dyad, none, unknown, dyad, regular).
 ty_noun_in(english, dyarchy, none, unknown, dyarchy, regular).
 ty_noun_in(english, dybbuk, none, unknown, dybbuk, regular).
 ty_noun_in(english, dye, none, unknown, dye, regular).
+ty_noun_in(english, 'dye-works', none, unknown, 'dye-works', regular).
 ty_noun_in(english, dyeing, none, unknown, dyeing, regular).
 ty_noun_in(english, dyer, none, unknown, dyer, regular).
 ty_noun_in(english, dyestuff, none, unknown, dyestuff, regular).
@@ -11718,11 +12068,14 @@ ty_noun_in(english, dystopia, none, unknown, dystopia, regular).
 ty_noun_in(english, dystrophy, none, unknown, dystrophy, regular).
 ty_noun_in(english, dysuria, none, unknown, dysuria, regular).
 ty_noun_in(english, dziggetai, none, unknown, dziggetai, regular).
+ty_noun_in(english, 'e-commerce', none, unknown, 'e-commerce', regular).
+ty_noun_in(english, 'e-mail', none, unknown, 'e-mail', regular).
 ty_noun_in(english, eagerness, none, unknown, eagerness, regular).
 ty_noun_in(english, eagle, none, animate, eagle, regular).
 ty_noun_in(english, eaglet, none, unknown, eaglet, regular).
 ty_noun_in(english, eagre, none, unknown, eagre, regular).
 ty_noun_in(english, ear, none, unknown, ear, regular).
+ty_noun_in(english, 'ear-shell', none, unknown, 'ear-shell', regular).
 ty_noun_in(english, earache, none, unknown, earache, regular).
 ty_noun_in(english, eardrop, none, unknown, eardrop, regular).
 ty_noun_in(english, eardrum, none, unknown, eardrum, regular).
@@ -11746,6 +12099,11 @@ ty_noun_in(english, earreach, none, unknown, earreach, regular).
 ty_noun_in(english, earring, none, unknown, earring, regular).
 ty_noun_in(english, earshot, none, unknown, earshot, regular).
 ty_noun_in(english, earth, none, unknown, earth, regular).
+ty_noun_in(english, 'earth-ball', none, unknown, 'earth-ball', regular).
+ty_noun_in(english, 'earth-closet', none, unknown, 'earth-closet', regular).
+ty_noun_in(english, 'earth-god', none, unknown, 'earth-god', regular).
+ty_noun_in(english, 'earth-goddess', none, unknown, 'earth-goddess', regular).
+ty_noun_in(english, 'earth-tongue', none, unknown, 'earth-tongue', regular).
 ty_noun_in(english, earthball, none, unknown, earthball, regular).
 ty_noun_in(english, earthenware, none, unknown, earthenware, regular).
 ty_noun_in(english, earthling, none, unknown, earthling, regular).
@@ -11824,6 +12182,7 @@ ty_noun_in(english, eclipse, none, unknown, eclipse, regular).
 ty_noun_in(english, eclipsis, none, unknown, eclipsis, regular).
 ty_noun_in(english, ecliptic, none, unknown, ecliptic, regular).
 ty_noun_in(english, eclogue, none, unknown, eclogue, regular).
+ty_noun_in(english, 'eco-warfare', none, unknown, 'eco-warfare', regular).
 ty_noun_in(english, ecobabble, none, unknown, ecobabble, regular).
 ty_noun_in(english, ecologist, none, unknown, ecologist, regular).
 ty_noun_in(english, ecology, none, unknown, ecology, regular).
@@ -11935,6 +12294,9 @@ ty_noun_in(english, egalite, none, unknown, egalite, regular).
 ty_noun_in(english, egality, none, unknown, egality, regular).
 ty_noun_in(english, egeria, none, unknown, egeria, regular).
 ty_noun_in(english, egg, none, unknown, egg, regular).
+ty_noun_in(english, 'egg-and-anchor', none, unknown, 'egg-and-anchor', regular).
+ty_noun_in(english, 'egg-and-dart', none, unknown, 'egg-and-dart', regular).
+ty_noun_in(english, 'egg-and-tongue', none, unknown, 'egg-and-tongue', regular).
 ty_noun_in(english, eggar, none, unknown, eggar, regular).
 ty_noun_in(english, eggbeater, none, unknown, eggbeater, regular).
 ty_noun_in(english, eggcup, none, unknown, eggcup, regular).
@@ -11969,6 +12331,7 @@ ty_noun_in(english, eider, none, unknown, eider, regular).
 ty_noun_in(english, eiderdown, none, unknown, eiderdown, regular).
 ty_noun_in(english, eidos, none, unknown, eidos, regular).
 ty_noun_in(english, eigenvalue, none, unknown, eigenvalue, regular).
+ty_noun_in(english, 'eight-spot', none, unknown, 'eight-spot', regular).
 ty_noun_in(english, eighter, none, unknown, eighter, regular).
 ty_noun_in(english, 'eighth-final', none, unknown, 'eighth-final', regular).
 ty_noun_in(english, eightpence, none, unknown, eightpence, regular).
@@ -12068,9 +12431,11 @@ ty_noun_in(english, elegy, none, unknown, elegy, regular).
 ty_noun_in(english, element, none, unknown, element, regular).
 ty_noun_in(english, elemi, none, unknown, elemi, regular).
 ty_noun_in(english, elephant, none, animate, elephant, regular).
+ty_noun_in(english, 'elephant-tusk', none, unknown, 'elephant-tusk', regular).
 ty_noun_in(english, elephantiasis, none, unknown, elephantiasis, regular).
 ty_noun_in(english, elevation, none, unknown, elevation, regular).
 ty_noun_in(english, elevator, none, unknown, elevator, regular).
+ty_noun_in(english, 'eleven-plus', none, unknown, 'eleven-plus', regular).
 ty_noun_in(english, elf, none, unknown, elf, regular).
 ty_noun_in(english, elicitation, none, unknown, elicitation, regular).
 ty_noun_in(english, eligibility, none, unknown, eligibility, regular).
@@ -12083,6 +12448,7 @@ ty_noun_in(english, elitist, none, unknown, elitist, regular).
 ty_noun_in(english, elixir, none, unknown, elixir, regular).
 ty_noun_in(english, elizabethan, none, person, elizabethan, regular).
 ty_noun_in(english, elk, none, unknown, elk, regular).
+ty_noun_in(english, 'elk-wood', none, unknown, 'elk-wood', regular).
 ty_noun_in(english, elkhound, none, unknown, elkhound, regular).
 ty_noun_in(english, elkwood, none, unknown, elkwood, regular).
 ty_noun_in(english, ell, none, unknown, ell, regular).
@@ -12269,6 +12635,8 @@ ty_noun_in(english, encyclopedia, none, unknown, encyclopedia, regular).
 ty_noun_in(english, encyclopedism, none, unknown, encyclopedism, regular).
 ty_noun_in(english, encyclopedist, none, unknown, encyclopedist, regular).
 ty_noun_in(english, end, none, unknown, end, regular).
+ty_noun_in(english, 'end-all', none, unknown, 'end-all', regular).
+ty_noun_in(english, 'end-plate', none, unknown, 'end-plate', regular).
 ty_noun_in(english, endaemonism, none, unknown, endaemonism, regular).
 ty_noun_in(english, endameba, none, unknown, endameba, regular).
 ty_noun_in(english, endangerment, none, unknown, endangerment, regular).
@@ -12924,6 +13292,7 @@ ty_noun_in(english, evasiveness, none, unknown, evasiveness, regular).
 ty_noun_in(english, eve, none, unknown, eve, regular).
 ty_noun_in(english, evenfall, none, unknown, evenfall, regular).
 ty_noun_in(english, evening, none, unknown, evening, regular).
+ty_noun_in(english, 'evening-snow', none, unknown, 'evening-snow', regular).
 ty_noun_in(english, eveningwear, none, unknown, eveningwear, regular).
 ty_noun_in(english, evenk, none, person, evenk, regular).
 ty_noun_in(english, evenness, none, unknown, evenness, regular).
@@ -12949,6 +13318,14 @@ ty_noun_in(english, evolution, none, unknown, evolution, regular).
 ty_noun_in(english, evolutionism, none, unknown, evolutionism, regular).
 ty_noun_in(english, evolutionist, none, unknown, evolutionist, regular).
 ty_noun_in(english, ewer, none, unknown, ewer, regular).
+ty_noun_in(english, 'ex-boyfriend', none, unknown, 'ex-boyfriend', regular).
+ty_noun_in(english, 'ex-gambler', none, unknown, 'ex-gambler', regular).
+ty_noun_in(english, 'ex-husband', none, unknown, 'ex-husband', regular).
+ty_noun_in(english, 'ex-mayor', none, unknown, 'ex-mayor', regular).
+ty_noun_in(english, 'ex-president', none, unknown, 'ex-president', regular).
+ty_noun_in(english, 'ex-serviceman', none, unknown, 'ex-serviceman', regular).
+ty_noun_in(english, 'ex-spouse', none, unknown, 'ex-spouse', regular).
+ty_noun_in(english, 'ex-wife', none, unknown, 'ex-wife', regular).
 ty_noun_in(english, exabit, none, unknown, exabit, regular).
 ty_noun_in(english, exabyte, none, unknown, exabyte, regular).
 ty_noun_in(english, exacerbation, none, unknown, exacerbation, regular).
@@ -13216,6 +13593,10 @@ ty_noun_in(english, exurbia, none, unknown, exurbia, regular).
 ty_noun_in(english, exuviae, none, unknown, exuviae, regular).
 ty_noun_in(english, eyas, none, unknown, eyas, regular).
 ty_noun_in(english, eye, none, unknown, eye, regular).
+ty_noun_in(english, 'eye-beaming', none, unknown, 'eye-beaming', regular).
+ty_noun_in(english, 'eye-catcher', none, unknown, 'eye-catcher', regular).
+ty_noun_in(english, 'eye-drop', none, unknown, 'eye-drop', regular).
+ty_noun_in(english, 'eye-lotion', none, unknown, 'eye-lotion', regular).
 ty_noun_in(english, eyeball, none, unknown, eyeball, regular).
 ty_noun_in(english, eyebath, none, unknown, eyebath, regular).
 ty_noun_in(english, eyebrow, none, unknown, eyebrow, regular).
@@ -13246,6 +13627,7 @@ ty_noun_in(english, eyra, none, unknown, eyra, regular).
 ty_noun_in(english, eyrie, none, unknown, eyrie, regular).
 ty_noun_in(english, eyrir, none, unknown, eyrir, regular).
 ty_noun_in(english, ezed, none, unknown, ezed, regular).
+ty_noun_in(english, 'ezo-yama-hagi', none, unknown, 'ezo-yama-hagi', regular).
 ty_noun_in(english, fabaceae, none, unknown, fabaceae, regular).
 ty_noun_in(english, fabiana, none, unknown, fabiana, regular).
 ty_noun_in(english, fable, none, unknown, fable, regular).
@@ -13256,6 +13638,7 @@ ty_noun_in(english, fabulation, none, unknown, fabulation, regular).
 ty_noun_in(english, fabulist, none, unknown, fabulist, regular).
 ty_noun_in(english, facade, none, unknown, facade, regular).
 ty_noun_in(english, face, none, unknown, face, regular).
+ty_noun_in(english, 'face-off', none, unknown, 'face-off', regular).
 ty_noun_in(english, facelift, none, unknown, facelift, regular).
 ty_noun_in(english, faceplate, none, unknown, faceplate, regular).
 ty_noun_in(english, facer, none, unknown, facer, regular).
@@ -13292,6 +13675,7 @@ ty_noun_in(english, faggot, none, unknown, faggot, regular).
 ty_noun_in(english, faggoting, none, unknown, faggoting, regular).
 ty_noun_in(english, fagopyrum, none, unknown, fagopyrum, regular).
 ty_noun_in(english, faience, none, unknown, faience, regular).
+ty_noun_in(english, 'fail-safe', none, unknown, 'fail-safe', regular).
 ty_noun_in(english, faille, none, unknown, faille, regular).
 ty_noun_in(english, failure, none, unknown, failure, regular).
 ty_noun_in(english, faineance, none, unknown, faineance, regular).
@@ -13299,11 +13683,13 @@ ty_noun_in(english, faintheartedness, none, unknown, faintheartedness, regular).
 ty_noun_in(english, fainting, none, unknown, fainting, regular).
 ty_noun_in(english, faintness, none, unknown, faintness, regular).
 ty_noun_in(english, fair, none, unknown, fair, regular).
+ty_noun_in(english, 'fair-mindedness', none, unknown, 'fair-mindedness', regular).
 ty_noun_in(english, fairground, none, unknown, fairground, regular).
 ty_noun_in(english, fairlead, none, unknown, fairlead, regular).
 ty_noun_in(english, fairness, none, unknown, fairness, regular).
 ty_noun_in(english, fairway, none, unknown, fairway, regular).
 ty_noun_in(english, fairy, none, person, fairy, regular).
+ty_noun_in(english, 'fairy-slipper', none, unknown, 'fairy-slipper', regular).
 ty_noun_in(english, fairyland, none, unknown, fairyland, regular).
 ty_noun_in(english, fairytale, none, unknown, fairytale, regular).
 ty_noun_in(english, faith, none, unknown, faith, regular).
@@ -13320,11 +13706,14 @@ ty_noun_in(english, falanga, none, unknown, falanga, regular).
 ty_noun_in(english, falangist, none, unknown, falangist, regular).
 ty_noun_in(english, falchion, none, unknown, falchion, regular).
 ty_noun_in(english, falcon, none, unknown, falcon, regular).
+ty_noun_in(english, 'falcon-gentil', none, unknown, 'falcon-gentil', regular).
+ty_noun_in(english, 'falcon-gentle', none, unknown, 'falcon-gentle', regular).
 ty_noun_in(english, falconer, none, person, falconer, regular).
 ty_noun_in(english, falconidae, none, unknown, falconidae, regular).
 ty_noun_in(english, falconry, none, unknown, falconry, regular).
 ty_noun_in(english, falderol, none, unknown, falderol, regular).
 ty_noun_in(english, fall, none, unknown, fall, regular).
+ty_noun_in(english, 'fall-board', none, unknown, 'fall-board', regular).
 ty_noun_in(english, fallaciousness, none, unknown, fallaciousness, regular).
 ty_noun_in(english, fallacy, none, unknown, fallacy, regular).
 ty_noun_in(english, fallal, none, unknown, fallal, regular).
@@ -13353,6 +13742,7 @@ ty_noun_in(english, famishment, none, unknown, famishment, regular).
 ty_noun_in(english, famotidine, none, unknown, famotidine, regular).
 ty_noun_in(english, famulus, none, unknown, famulus, regular).
 ty_noun_in(english, fan, none, unknown, fan, regular).
+ty_noun_in(english, 'fan-jet', none, unknown, 'fan-jet', regular).
 ty_noun_in(english, fanaloka, none, unknown, fanaloka, regular).
 ty_noun_in(english, fanatic, none, person, fanatic, regular).
 ty_noun_in(english, fanaticism, none, unknown, fanaticism, regular).
@@ -13386,10 +13776,13 @@ ty_noun_in(english, farawayness, none, unknown, farawayness, regular).
 ty_noun_in(english, farce, none, unknown, farce, regular).
 ty_noun_in(english, fardel, none, unknown, fardel, regular).
 ty_noun_in(english, fare, none, unknown, fare, regular).
+ty_noun_in(english, 'fare-stage', none, unknown, 'fare-stage', regular).
+ty_noun_in(english, 'fare-thee-well', none, unknown, 'fare-thee-well', regular).
 ty_noun_in(english, farewell, none, unknown, farewell, regular).
 ty_noun_in(english, farfalle, none, unknown, farfalle, regular).
 ty_noun_in(english, farkleberry, none, unknown, farkleberry, regular).
 ty_noun_in(english, farm, none, unknown, farm, regular).
+ty_noun_in(english, 'farm-place', none, unknown, 'farm-place', regular).
 ty_noun_in(english, farmer, none, person, farmer, regular).
 ty_noun_in(english, farmerette, none, unknown, farmerette, regular).
 ty_noun_in(english, farmhand, none, unknown, farmhand, regular).
@@ -13438,6 +13831,8 @@ ty_noun_in(english, fatback, none, unknown, fatback, regular).
 ty_noun_in(english, fate, none, unknown, fate, regular).
 ty_noun_in(english, fathead, none, unknown, fathead, regular).
 ty_noun_in(english, father, none, person, father, regular).
+ty_noun_in(english, 'father-figure', none, unknown, 'father-figure', regular).
+ty_noun_in(english, 'father-in-law', none, unknown, 'father-in-law', regular).
 ty_noun_in(english, fatherhood, none, unknown, fatherhood, regular).
 ty_noun_in(english, fatherland, none, unknown, fatherland, regular).
 ty_noun_in(english, fatherliness, none, unknown, fatherliness, regular).
@@ -13492,6 +13887,7 @@ ty_noun_in(english, feasibleness, none, unknown, feasibleness, regular).
 ty_noun_in(english, feast, none, unknown, feast, regular).
 ty_noun_in(english, feat, none, unknown, feat, regular).
 ty_noun_in(english, feather, none, unknown, feather, regular).
+ty_noun_in(english, 'feather-foil', none, unknown, 'feather-foil', regular).
 ty_noun_in(english, featherbed, none, unknown, featherbed, regular).
 ty_noun_in(english, featheredge, none, unknown, featheredge, regular).
 ty_noun_in(english, featherfoil, none, unknown, featherfoil, regular).
@@ -13552,6 +13948,7 @@ ty_noun_in(english, felloe, none, unknown, felloe, regular).
 ty_noun_in(english, fellow, none, person, fellow, regular).
 ty_noun_in(english, fellowship, none, unknown, fellowship, regular).
 ty_noun_in(english, felly, none, unknown, felly, regular).
+ty_noun_in(english, 'felo-de-se', none, unknown, 'felo-de-se', regular).
 ty_noun_in(english, felon, none, person, felon, regular).
 ty_noun_in(english, felony, none, unknown, felony, regular).
 ty_noun_in(english, felspar, none, unknown, felspar, regular).
@@ -13575,10 +13972,12 @@ ty_noun_in(english, femtovolt, none, unknown, femtovolt, regular).
 ty_noun_in(english, femur, none, unknown, femur, regular).
 ty_noun_in(english, fen, none, unknown, fen, regular).
 ty_noun_in(english, fence, none, unknown, fence, regular).
+ty_noun_in(english, 'fence-sitter', none, unknown, 'fence-sitter', regular).
 ty_noun_in(english, fencer, none, unknown, fencer, regular).
 ty_noun_in(english, fencesitter, none, unknown, fencesitter, regular).
 ty_noun_in(english, fencing, none, unknown, fencing, regular).
 ty_noun_in(english, fender, none, unknown, fender, regular).
+ty_noun_in(english, 'fender-bender', none, unknown, 'fender-bender', regular).
 ty_noun_in(english, fenestella, none, unknown, fenestella, regular).
 ty_noun_in(english, fenestra, none, unknown, fenestra, regular).
 ty_noun_in(english, fenestration, none, unknown, fenestration, regular).
@@ -13587,6 +13986,7 @@ ty_noun_in(english, fennel, none, unknown, fennel, regular).
 ty_noun_in(english, fenoprofen, none, unknown, fenoprofen, regular).
 ty_noun_in(english, fenugreek, none, unknown, fenugreek, regular).
 ty_noun_in(english, feoff, none, unknown, feoff, regular).
+ty_noun_in(english, 'fer-de-lance', none, unknown, 'fer-de-lance', regular).
 ty_noun_in(english, fergusonite, none, unknown, fergusonite, regular).
 ty_noun_in(english, ferment, none, unknown, ferment, regular).
 ty_noun_in(english, fermentation, none, unknown, fermentation, regular).
@@ -13699,6 +14099,7 @@ ty_noun_in(english, fictionalisation, none, unknown, fictionalisation, regular).
 ty_noun_in(english, fictionalization, none, unknown, fictionalization, regular).
 ty_noun_in(english, ficus, none, unknown, ficus, regular).
 ty_noun_in(english, fiddle, none, unknown, fiddle, regular).
+ty_noun_in(english, 'fiddle-faddle', none, unknown, 'fiddle-faddle', regular).
 ty_noun_in(english, fiddlehead, none, unknown, fiddlehead, regular).
 ty_noun_in(english, fiddleneck, none, unknown, fiddleneck, regular).
 ty_noun_in(english, fiddler, none, person, fiddler, regular).
@@ -13725,6 +14126,7 @@ ty_noun_in(english, fifteen, none, unknown, fifteen, regular).
 ty_noun_in(english, fifth, none, unknown, fifth, regular).
 ty_noun_in(english, fifties, none, unknown, fifties, regular).
 ty_noun_in(english, fig, none, unknown, fig, regular).
+ty_noun_in(english, 'fig-bird', none, unknown, 'fig-bird', regular).
 ty_noun_in(english, figeater, none, unknown, figeater, regular).
 ty_noun_in(english, fight, none, unknown, fight, regular).
 ty_noun_in(english, fighter, none, person, fighter, regular).
@@ -13760,6 +14162,7 @@ ty_noun_in(english, filigree, none, unknown, filigree, regular).
 ty_noun_in(english, filing, none, unknown, filing, regular).
 ty_noun_in(english, filipino, none, person, filipino, regular).
 ty_noun_in(english, fill, none, unknown, fill, regular).
+ty_noun_in(english, 'fill-in', none, unknown, 'fill-in', regular).
 ty_noun_in(english, fillagree, none, unknown, fillagree, regular).
 ty_noun_in(english, filler, none, unknown, filler, regular).
 ty_noun_in(english, fillet, none, unknown, fillet, regular).
@@ -13802,6 +14205,10 @@ ty_noun_in(english, fineness, none, unknown, fineness, regular).
 ty_noun_in(english, finery, none, unknown, finery, regular).
 ty_noun_in(english, finesse, none, unknown, finesse, regular).
 ty_noun_in(english, finger, none, unknown, finger, regular).
+ty_noun_in(english, 'finger-flower', none, unknown, 'finger-flower', regular).
+ty_noun_in(english, 'finger-pointing', none, unknown, 'finger-pointing', regular).
+ty_noun_in(english, 'finger-roll', none, unknown, 'finger-roll', regular).
+ty_noun_in(english, 'finger-root', none, unknown, 'finger-root', regular).
 ty_noun_in(english, fingerboard, none, unknown, fingerboard, regular).
 ty_noun_in(english, fingerbreadth, none, unknown, fingerbreadth, regular).
 ty_noun_in(english, fingerflower, none, unknown, fingerflower, regular).
@@ -13829,6 +14236,13 @@ ty_noun_in(english, fiord, none, unknown, fiord, regular).
 ty_noun_in(english, fipple, none, unknown, fipple, regular).
 ty_noun_in(english, fir, none, unknown, fir, regular).
 ty_noun_in(english, fire, none, unknown, fire, regular).
+ty_noun_in(english, 'fire-bush', none, unknown, 'fire-bush', regular).
+ty_noun_in(english, 'fire-eater', none, unknown, 'fire-eater', regular).
+ty_noun_in(english, 'fire-on-the-mountain', none, unknown, 'fire-on-the-mountain', regular).
+ty_noun_in(english, 'fire-raising', none, unknown, 'fire-raising', regular).
+ty_noun_in(english, 'fire-swallower', none, unknown, 'fire-swallower', regular).
+ty_noun_in(english, 'fire-wheel', none, unknown, 'fire-wheel', regular).
+ty_noun_in(english, 'fire-worship', none, unknown, 'fire-worship', regular).
 ty_noun_in(english, firearm, none, unknown, firearm, regular).
 ty_noun_in(english, fireball, none, unknown, fireball, regular).
 ty_noun_in(english, firebase, none, unknown, firebase, regular).
@@ -13877,8 +14291,12 @@ ty_noun_in(english, firmness, none, unknown, firmness, regular).
 ty_noun_in(english, firmware, none, unknown, firmware, regular).
 ty_noun_in(english, firn, none, unknown, firn, regular).
 ty_noun_in(english, first, none, unknown, first, regular).
+ty_noun_in(english, 'first-nighter', none, unknown, 'first-nighter', regular).
+ty_noun_in(english, 'first-rater', none, unknown, 'first-rater', regular).
 ty_noun_in(english, firth, none, unknown, firth, regular).
 ty_noun_in(english, fisc, none, unknown, fisc, regular).
+ty_noun_in(english, 'fish-fly', none, unknown, 'fish-fly', regular).
+ty_noun_in(english, 'fish-worship', none, unknown, 'fish-worship', regular).
 ty_noun_in(english, fishbone, none, unknown, fishbone, regular).
 ty_noun_in(english, fishbowl, none, unknown, fishbowl, regular).
 ty_noun_in(english, fisher, none, person, fisher, regular).
@@ -13914,6 +14332,9 @@ ty_noun_in(english, fitment, none, unknown, fitment, regular).
 ty_noun_in(english, fitness, none, unknown, fitness, regular).
 ty_noun_in(english, fitter, none, unknown, fitter, regular).
 ty_noun_in(english, fittingness, none, unknown, fittingness, regular).
+ty_noun_in(english, 'five-finger', none, unknown, 'five-finger', regular).
+ty_noun_in(english, 'five-hitter', none, unknown, 'five-hitter', regular).
+ty_noun_in(english, 'five-spot', none, unknown, 'five-spot', regular).
 ty_noun_in(english, fivepence, none, unknown, fivepence, regular).
 ty_noun_in(english, fiver, none, unknown, fiver, regular).
 ty_noun_in(english, fivesome, none, unknown, fivesome, regular).
@@ -13922,6 +14343,7 @@ ty_noun_in(english, fixation, none, unknown, fixation, regular).
 ty_noun_in(english, fixative, none, unknown, fixative, regular).
 ty_noun_in(english, fixedness, none, unknown, fixedness, regular).
 ty_noun_in(english, fixer, none, person, fixer, regular).
+ty_noun_in(english, 'fixer-upper', none, unknown, 'fixer-upper', regular).
 ty_noun_in(english, fixing, none, unknown, fixing, regular).
 ty_noun_in(english, fixity, none, unknown, fixity, regular).
 ty_noun_in(english, fixture, none, unknown, fixture, regular).
@@ -13934,6 +14356,7 @@ ty_noun_in(english, flaccidity, none, unknown, flaccidity, regular).
 ty_noun_in(english, flack, none, unknown, flack, regular).
 ty_noun_in(english, flacourtia, none, unknown, flacourtia, regular).
 ty_noun_in(english, flag, none, unknown, flag, regular).
+ty_noun_in(english, 'flag-waver', none, unknown, 'flag-waver', regular).
 ty_noun_in(english, flagellant, none, person, flagellant, regular).
 ty_noun_in(english, flagellata, none, unknown, flagellata, regular).
 ty_noun_in(english, flagellate, none, unknown, flagellate, regular).
@@ -13954,6 +14377,8 @@ ty_noun_in(english, flakiness, none, unknown, flakiness, regular).
 ty_noun_in(english, flambeau, none, unknown, flambeau, regular).
 ty_noun_in(english, flamboyance, none, unknown, flamboyance, regular).
 ty_noun_in(english, flame, none, unknown, flame, regular).
+ty_noun_in(english, 'flame-flower', none, unknown, 'flame-flower', regular).
+ty_noun_in(english, 'flame-out', none, unknown, 'flame-out', regular).
 ty_noun_in(english, flamefish, none, unknown, flamefish, regular).
 ty_noun_in(english, flameflower, none, unknown, flameflower, regular).
 ty_noun_in(english, flamen, none, unknown, flamen, regular).
@@ -13966,6 +14391,7 @@ ty_noun_in(english, flange, none, unknown, flange, regular).
 ty_noun_in(english, flank, none, unknown, flank, regular).
 ty_noun_in(english, flanker, none, unknown, flanker, regular).
 ty_noun_in(english, flannel, none, unknown, flannel, regular).
+ty_noun_in(english, 'flannel-cake', none, unknown, 'flannel-cake', regular).
 ty_noun_in(english, flannelbush, none, unknown, flannelbush, regular).
 ty_noun_in(english, flannelette, none, unknown, flannelette, regular).
 ty_noun_in(english, flap, none, unknown, flap, regular).
@@ -13973,7 +14399,9 @@ ty_noun_in(english, flapcake, none, unknown, flapcake, regular).
 ty_noun_in(english, flapjack, none, unknown, flapjack, regular).
 ty_noun_in(english, flapper, none, person, flapper, regular).
 ty_noun_in(english, flare, none, unknown, flare, regular).
+ty_noun_in(english, 'flare-up', none, unknown, 'flare-up', regular).
 ty_noun_in(english, flash, none, unknown, flash, regular).
+ty_noun_in(english, 'flash-forward', none, unknown, 'flash-forward', regular).
 ty_noun_in(english, flashback, none, unknown, flashback, regular).
 ty_noun_in(english, flashboard, none, unknown, flashboard, regular).
 ty_noun_in(english, flashboarding, none, unknown, flashboarding, regular).
@@ -14047,6 +14475,8 @@ ty_noun_in(english, fleetness, none, unknown, fleetness, regular).
 ty_noun_in(english, flemish, none, unknown, flemish, regular).
 ty_noun_in(english, flesh, none, unknown, flesh, regular).
 ty_noun_in(english, fleshiness, none, unknown, fleshiness, regular).
+ty_noun_in(english, 'fleur-de-lis', none, unknown, 'fleur-de-lis', regular).
+ty_noun_in(english, 'fleur-de-lys', none, unknown, 'fleur-de-lys', regular).
 ty_noun_in(english, flexibility, none, unknown, flexibility, regular).
 ty_noun_in(english, flexibleness, none, unknown, flexibleness, regular).
 ty_noun_in(english, flexion, none, unknown, flexion, regular).
@@ -14054,6 +14484,7 @@ ty_noun_in(english, flexor, none, unknown, flexor, regular).
 ty_noun_in(english, flexure, none, unknown, flexure, regular).
 ty_noun_in(english, flibbertigibbet, none, unknown, flibbertigibbet, regular).
 ty_noun_in(english, flick, none, unknown, flick, regular).
+ty_noun_in(english, 'flick-knife', none, unknown, 'flick-knife', regular).
 ty_noun_in(english, flickertail, none, unknown, flickertail, regular).
 ty_noun_in(english, flier, none, person, flier, regular).
 ty_noun_in(english, flight, none, unknown, flight, regular).
@@ -14068,6 +14499,7 @@ ty_noun_in(english, flinthead, none, unknown, flinthead, regular).
 ty_noun_in(english, flintlock, none, unknown, flintlock, regular).
 ty_noun_in(english, flintstone, none, unknown, flintstone, regular).
 ty_noun_in(english, flip, none, unknown, flip, regular).
+ty_noun_in(english, 'flip-flop', none, unknown, 'flip-flop', regular).
 ty_noun_in(english, flippancy, none, unknown, flippancy, regular).
 ty_noun_in(english, flipper, none, unknown, flipper, regular).
 ty_noun_in(english, flirt, none, person, flirt, regular).
@@ -14076,6 +14508,7 @@ ty_noun_in(english, flitch, none, unknown, flitch, regular).
 ty_noun_in(english, float, none, unknown, float, regular).
 ty_noun_in(english, floatation, none, unknown, floatation, regular).
 ty_noun_in(english, floater, none, unknown, floater, regular).
+ty_noun_in(english, 'floating-moss', none, unknown, 'floating-moss', regular).
 ty_noun_in(english, floatplane, none, unknown, floatplane, regular).
 ty_noun_in(english, floc, none, unknown, floc, regular).
 ty_noun_in(english, flocculation, none, unknown, flocculation, regular).
@@ -14120,10 +14553,12 @@ ty_noun_in(english, flow, none, unknown, flow, regular).
 ty_noun_in(english, flowage, none, unknown, flowage, regular).
 ty_noun_in(english, flowchart, none, unknown, flowchart, regular).
 ty_noun_in(english, flower, none, unknown, flower, regular).
+ty_noun_in(english, 'flower-of-an-hour', none, unknown, 'flower-of-an-hour', regular).
 ty_noun_in(english, flowerbed, none, unknown, flowerbed, regular).
 ty_noun_in(english, floweret, none, unknown, floweret, regular).
 ty_noun_in(english, flowering, none, unknown, flowering, regular).
 ty_noun_in(english, flowerpot, none, unknown, flowerpot, regular).
+ty_noun_in(english, 'flowers-of-an-hour', none, unknown, 'flowers-of-an-hour', regular).
 ty_noun_in(english, flowing, none, unknown, flowing, regular).
 ty_noun_in(english, floxuridine, none, unknown, floxuridine, regular).
 ty_noun_in(english, flu, none, unknown, flu, regular).
@@ -14179,6 +14614,8 @@ ty_noun_in(english, flux, none, unknown, flux, regular).
 ty_noun_in(english, fluxion, none, unknown, fluxion, regular).
 ty_noun_in(english, fluxmeter, none, unknown, fluxmeter, regular).
 ty_noun_in(english, fly, none, animate, fly, regular).
+ty_noun_in(english, 'fly-by', none, unknown, 'fly-by', regular).
+ty_noun_in(english, 'fly-by-night', none, unknown, 'fly-by-night', regular).
 ty_noun_in(english, flybridge, none, unknown, flybridge, regular).
 ty_noun_in(english, flycatcher, none, unknown, flycatcher, regular).
 ty_noun_in(english, flyer, none, unknown, flyer, regular).
@@ -14245,6 +14682,9 @@ ty_noun_in(english, folksong, none, unknown, folksong, regular).
 ty_noun_in(english, folktale, none, unknown, folktale, regular).
 ty_noun_in(english, follicle, none, unknown, follicle, regular).
 ty_noun_in(english, folliculitis, none, unknown, folliculitis, regular).
+ty_noun_in(english, 'follow-on', none, unknown, 'follow-on', regular).
+ty_noun_in(english, 'follow-through', none, unknown, 'follow-through', regular).
+ty_noun_in(english, 'follow-up', none, unknown, 'follow-up', regular).
 ty_noun_in(english, follower, none, person, follower, regular).
 ty_noun_in(english, following, none, unknown, following, regular).
 ty_noun_in(english, followup, none, unknown, followup, regular).
@@ -14268,6 +14708,10 @@ ty_noun_in(english, foolhardiness, none, unknown, foolhardiness, regular).
 ty_noun_in(english, foolishness, none, unknown, foolishness, regular).
 ty_noun_in(english, foolscap, none, unknown, foolscap, regular).
 ty_noun_in(english, foosball, none, unknown, foosball, regular).
+ty_noun_in(english, 'foot-lambert', none, unknown, 'foot-lambert', regular).
+ty_noun_in(english, 'foot-pound', none, unknown, 'foot-pound', regular).
+ty_noun_in(english, 'foot-poundal', none, unknown, 'foot-poundal', regular).
+ty_noun_in(english, 'foot-ton', none, unknown, 'foot-ton', regular).
 ty_noun_in(english, footage, none, unknown, footage, regular).
 ty_noun_in(english, football, none, unknown, football, regular).
 ty_noun_in(english, footballer, none, unknown, footballer, regular).
@@ -14298,6 +14742,7 @@ ty_noun_in(english, footrest, none, unknown, footrest, regular).
 ty_noun_in(english, footslogger, none, person, footslogger, regular).
 ty_noun_in(english, footstall, none, unknown, footstall, regular).
 ty_noun_in(english, footstep, none, unknown, footstep, regular).
+ty_noun_in(english, 'footsteps-of-spring', none, unknown, 'footsteps-of-spring', regular).
 ty_noun_in(english, footstool, none, unknown, footstool, regular).
 ty_noun_in(english, footwall, none, unknown, footwall, regular).
 ty_noun_in(english, footwear, none, unknown, footwear, regular).
@@ -14315,11 +14760,16 @@ ty_noun_in(english, forbear, none, unknown, forbear, regular).
 ty_noun_in(english, forbearance, none, unknown, forbearance, regular).
 ty_noun_in(english, forbiddance, none, unknown, forbiddance, regular).
 ty_noun_in(english, force, none, unknown, force, regular).
+ty_noun_in(english, 'force-out', none, unknown, 'force-out', regular).
 ty_noun_in(english, forcefulness, none, unknown, forcefulness, regular).
 ty_noun_in(english, forcemeat, none, unknown, forcemeat, regular).
 ty_noun_in(english, forceps, none, unknown, forceps, regular).
 ty_noun_in(english, forcing, none, unknown, forcing, regular).
 ty_noun_in(english, ford, none, unknown, ford, regular).
+ty_noun_in(english, 'fore-and-after', none, unknown, 'fore-and-after', regular).
+ty_noun_in(english, 'fore-topmast', none, unknown, 'fore-topmast', regular).
+ty_noun_in(english, 'fore-topsail', none, unknown, 'fore-topsail', regular).
+ty_noun_in(english, 'fore-wing', none, unknown, 'fore-wing', regular).
 ty_noun_in(english, forearm, none, unknown, forearm, regular).
 ty_noun_in(english, foreboding, none, unknown, foreboding, regular).
 ty_noun_in(english, forebrain, none, unknown, forebrain, regular).
@@ -14385,6 +14835,7 @@ ty_noun_in(english, forfeiture, none, unknown, forfeiture, regular).
 ty_noun_in(english, forge, none, unknown, forge, regular).
 ty_noun_in(english, forger, none, unknown, forger, regular).
 ty_noun_in(english, forgery, none, unknown, forgery, regular).
+ty_noun_in(english, 'forget-me-not', none, unknown, 'forget-me-not', regular).
 ty_noun_in(english, forgetfulness, none, unknown, forgetfulness, regular).
 ty_noun_in(english, forging, none, unknown, forging, regular).
 ty_noun_in(english, forgiveness, none, unknown, forgiveness, regular).
@@ -14424,6 +14875,7 @@ ty_noun_in(english, fornix, none, unknown, fornix, regular).
 ty_noun_in(english, forsythia, none, unknown, forsythia, regular).
 ty_noun_in(english, fort, none, unknown, fort, regular).
 ty_noun_in(english, forte, none, unknown, forte, regular).
+ty_noun_in(english, 'forte-piano', none, unknown, 'forte-piano', regular).
 ty_noun_in(english, forthcomingness, none, unknown, forthcomingness, regular).
 ty_noun_in(english, forthrightness, none, unknown, forthrightness, regular).
 ty_noun_in(english, forties, none, unknown, forties, regular).
@@ -14437,6 +14889,8 @@ ty_noun_in(english, fortune, none, unknown, fortune, regular).
 ty_noun_in(english, fortunella, none, unknown, fortunella, regular).
 ty_noun_in(english, fortuneteller, none, unknown, fortuneteller, regular).
 ty_noun_in(english, fortunetelling, none, unknown, fortunetelling, regular).
+ty_noun_in(english, 'forty-five', none, unknown, 'forty-five', regular).
+ty_noun_in(english, 'forty-niner', none, unknown, 'forty-niner', regular).
 ty_noun_in(english, forum, none, unknown, forum, regular).
 ty_noun_in(english, forward, none, person, forward, regular).
 ty_noun_in(english, forwarding, none, unknown, forwarding, regular).
@@ -14449,11 +14903,21 @@ ty_noun_in(english, fossilisation, none, unknown, fossilisation, regular).
 ty_noun_in(english, fossilist, none, unknown, fossilist, regular).
 ty_noun_in(english, fossilization, none, unknown, fossilization, regular).
 ty_noun_in(english, fossilology, none, unknown, fossilology, regular).
+ty_noun_in(english, 'foster-brother', none, unknown, 'foster-brother', regular).
+ty_noun_in(english, 'foster-child', none, unknown, 'foster-child', regular).
+ty_noun_in(english, 'foster-daughter', none, unknown, 'foster-daughter', regular).
+ty_noun_in(english, 'foster-father', none, unknown, 'foster-father', regular).
+ty_noun_in(english, 'foster-mother', none, unknown, 'foster-mother', regular).
+ty_noun_in(english, 'foster-nurse', none, unknown, 'foster-nurse', regular).
+ty_noun_in(english, 'foster-parent', none, unknown, 'foster-parent', regular).
+ty_noun_in(english, 'foster-sister', none, unknown, 'foster-sister', regular).
+ty_noun_in(english, 'foster-son', none, unknown, 'foster-son', regular).
 ty_noun_in(english, fosterage, none, unknown, fosterage, regular).
 ty_noun_in(english, fostering, none, unknown, fostering, regular).
 ty_noun_in(english, fosterling, none, unknown, fosterling, regular).
 ty_noun_in(english, fothergilla, none, unknown, fothergilla, regular).
 ty_noun_in(english, foul, none, unknown, foul, regular).
+ty_noun_in(english, 'foul-up', none, unknown, 'foul-up', regular).
 ty_noun_in(english, foulard, none, unknown, foulard, regular).
 ty_noun_in(english, foulmart, none, unknown, foulmart, regular).
 ty_noun_in(english, foulness, none, unknown, foulness, regular).
@@ -14468,6 +14932,13 @@ ty_noun_in(english, foundry, none, unknown, foundry, regular).
 ty_noun_in(english, fount, none, unknown, fount, regular).
 ty_noun_in(english, fountain, none, unknown, fountain, regular).
 ty_noun_in(english, fountainhead, none, unknown, fountainhead, regular).
+ty_noun_in(english, 'four-flusher', none, unknown, 'four-flusher', regular).
+ty_noun_in(english, 'four-hitter', none, unknown, 'four-hitter', regular).
+ty_noun_in(english, 'four-in-hand', none, unknown, 'four-in-hand', regular).
+ty_noun_in(english, 'four-poster', none, unknown, 'four-poster', regular).
+ty_noun_in(english, 'four-pounder', none, unknown, 'four-pounder', regular).
+ty_noun_in(english, 'four-spot', none, unknown, 'four-spot', regular).
+ty_noun_in(english, 'four-wheeler', none, unknown, 'four-wheeler', regular).
 ty_noun_in(english, fourpence, none, unknown, fourpence, regular).
 ty_noun_in(english, foursome, none, unknown, foursome, regular).
 ty_noun_in(english, fourteen, none, unknown, fourteen, regular).
@@ -14476,6 +14947,7 @@ ty_noun_in(english, fovea, none, unknown, fovea, regular).
 ty_noun_in(english, fowl, none, animate, fowl, regular).
 ty_noun_in(english, fowler, none, unknown, fowler, regular).
 ty_noun_in(english, fox, none, animate, fox, regular).
+ty_noun_in(english, 'fox-trot', none, unknown, 'fox-trot', regular).
 ty_noun_in(english, foxberry, none, unknown, foxberry, regular).
 ty_noun_in(english, foxglove, none, unknown, foxglove, regular).
 ty_noun_in(english, foxhole, none, unknown, foxhole, regular).
@@ -14506,10 +14978,12 @@ ty_noun_in(english, frambesia, none, unknown, frambesia, regular).
 ty_noun_in(english, framboesia, none, unknown, framboesia, regular).
 ty_noun_in(english, framboise, none, unknown, framboise, regular).
 ty_noun_in(english, frame, none, unknown, frame, regular).
+ty_noun_in(english, 'frame-up', none, unknown, 'frame-up', regular).
 ty_noun_in(english, framer, none, unknown, framer, regular).
 ty_noun_in(english, framework, none, unknown, framework, regular).
 ty_noun_in(english, framing, none, unknown, framing, regular).
 ty_noun_in(english, franc, none, unknown, franc, regular).
+ty_noun_in(english, 'franc-tireur', none, unknown, 'franc-tireur', regular).
 ty_noun_in(english, france, none, unknown, france, regular).
 ty_noun_in(english, franchise, none, unknown, franchise, regular).
 ty_noun_in(english, francium, none, unknown, francium, regular).
@@ -14540,6 +15014,10 @@ ty_noun_in(english, freakishness, none, unknown, freakishness, regular).
 ty_noun_in(english, frechman, none, unknown, frechman, regular).
 ty_noun_in(english, frechwoman, none, unknown, frechwoman, regular).
 ty_noun_in(english, freckle, none, unknown, freckle, regular).
+ty_noun_in(english, 'free-for-all', none, unknown, 'free-for-all', regular).
+ty_noun_in(english, 'free-lance', none, unknown, 'free-lance', regular).
+ty_noun_in(english, 'free-liver', none, unknown, 'free-liver', regular).
+ty_noun_in(english, 'free-reed', none, unknown, 'free-reed', regular).
 ty_noun_in(english, freebee, none, unknown, freebee, regular).
 ty_noun_in(english, freebie, none, unknown, freebie, regular).
 ty_noun_in(english, freebooter, none, unknown, freebooter, regular).
@@ -14639,6 +15117,8 @@ ty_noun_in(english, frolic, none, unknown, frolic, regular).
 ty_noun_in(english, frolicsomeness, none, unknown, frolicsomeness, regular).
 ty_noun_in(english, frond, none, unknown, frond, regular).
 ty_noun_in(english, front, none, unknown, front, regular).
+ty_noun_in(english, 'front-runner', none, unknown, 'front-runner', regular).
+ty_noun_in(english, 'front-stall', none, unknown, 'front-stall', regular).
 ty_noun_in(english, frontage, none, unknown, frontage, regular).
 ty_noun_in(english, frontbencher, none, unknown, frontbencher, regular).
 ty_noun_in(english, frontier, none, unknown, frontier, regular).
@@ -14649,6 +15129,7 @@ ty_noun_in(english, frontlet, none, unknown, frontlet, regular).
 ty_noun_in(english, fronton, none, unknown, fronton, regular).
 ty_noun_in(english, frontstall, none, unknown, frontstall, regular).
 ty_noun_in(english, frost, none, unknown, frost, regular).
+ty_noun_in(english, 'frost-weed', none, unknown, 'frost-weed', regular).
 ty_noun_in(english, frostbite, none, unknown, frostbite, regular).
 ty_noun_in(english, frostiness, none, unknown, frostiness, regular).
 ty_noun_in(english, frosting, none, unknown, frosting, regular).
@@ -14688,6 +15169,7 @@ ty_noun_in(english, fuckup, none, unknown, fuckup, regular).
 ty_noun_in(english, fucoid, none, unknown, fucoid, regular).
 ty_noun_in(english, fucus, none, unknown, fucus, regular).
 ty_noun_in(english, fuddle, none, unknown, fuddle, regular).
+ty_noun_in(english, 'fuddy-duddy', none, unknown, 'fuddy-duddy', regular).
 ty_noun_in(english, fudge, none, unknown, fudge, regular).
 ty_noun_in(english, fuel, none, unknown, fuel, regular).
 ty_noun_in(english, fug, none, unknown, fug, regular).
@@ -14700,6 +15182,7 @@ ty_noun_in(english, fulcrum, none, unknown, fulcrum, regular).
 ty_noun_in(english, fulfillment, none, unknown, fulfillment, regular).
 ty_noun_in(english, fulfilment, none, unknown, fulfilment, regular).
 ty_noun_in(english, fulica, none, unknown, fulica, regular).
+ty_noun_in(english, 'full-of-the-moon', none, unknown, 'full-of-the-moon', regular).
 ty_noun_in(english, fullback, none, person, fullback, regular).
 ty_noun_in(english, fuller, none, unknown, fuller, regular).
 ty_noun_in(english, fullerene, none, unknown, fullerene, regular).
@@ -14735,6 +15218,7 @@ ty_noun_in(english, fundraiser, none, unknown, fundraiser, regular).
 ty_noun_in(english, funds, none, unknown, funds, regular).
 ty_noun_in(english, fundus, none, unknown, fundus, regular).
 ty_noun_in(english, funeral, none, unknown, funeral, regular).
+ty_noun_in(english, 'funeral-residence', none, unknown, 'funeral-residence', regular).
 ty_noun_in(english, funfair, none, unknown, funfair, regular).
 ty_noun_in(english, fungibility, none, unknown, fungibility, regular).
 ty_noun_in(english, fungicide, none, unknown, fungicide, regular).
@@ -14748,6 +15232,7 @@ ty_noun_in(english, funnel, none, unknown, funnel, regular).
 ty_noun_in(english, funniness, none, unknown, funniness, regular).
 ty_noun_in(english, funrun, none, unknown, funrun, regular).
 ty_noun_in(english, fur, none, unknown, fur, regular).
+ty_noun_in(english, 'fur-piece', none, unknown, 'fur-piece', regular).
 ty_noun_in(english, furbelow, none, unknown, furbelow, regular).
 ty_noun_in(english, furcation, none, unknown, furcation, regular).
 ty_noun_in(english, furfural, none, unknown, furfural, regular).
@@ -14777,6 +15262,7 @@ ty_noun_in(english, fusilier, none, unknown, fusilier, regular).
 ty_noun_in(english, fusillade, none, unknown, fusillade, regular).
 ty_noun_in(english, fusion, none, unknown, fusion, regular).
 ty_noun_in(english, fuss, none, unknown, fuss, regular).
+ty_noun_in(english, 'fuss-budget', none, unknown, 'fuss-budget', regular).
 ty_noun_in(english, fussiness, none, unknown, fussiness, regular).
 ty_noun_in(english, fusspot, none, unknown, fusspot, regular).
 ty_noun_in(english, fustian, none, unknown, fustian, regular).
@@ -14791,6 +15277,7 @@ ty_noun_in(english, futurity, none, unknown, futurity, regular).
 ty_noun_in(english, futurology, none, unknown, futurology, regular).
 ty_noun_in(english, fuzz, none, unknown, fuzz, regular).
 ty_noun_in(english, fuzziness, none, unknown, fuzziness, regular).
+ty_noun_in(english, 'g-force', none, unknown, 'g-force', regular).
 ty_noun_in(english, gab, none, unknown, gab, regular).
 ty_noun_in(english, gabapentin, none, unknown, gabapentin, regular).
 ty_noun_in(english, gabardine, none, unknown, gabardine, regular).
@@ -14845,6 +15332,7 @@ ty_noun_in(english, galere, none, unknown, galere, regular).
 ty_noun_in(english, galician, none, unknown, galician, regular).
 ty_noun_in(english, galingale, none, unknown, galingale, regular).
 ty_noun_in(english, gall, none, unknown, gall, regular).
+ty_noun_in(english, 'gall-berry', none, unknown, 'gall-berry', regular).
 ty_noun_in(english, gallamine, none, unknown, gallamine, regular).
 ty_noun_in(english, gallant, none, person, gallant, regular).
 ty_noun_in(english, gallantry, none, unknown, gallantry, regular).
@@ -14865,6 +15353,7 @@ ty_noun_in(english, gallon, none, unknown, gallon, regular).
 ty_noun_in(english, gallop, none, unknown, gallop, regular).
 ty_noun_in(english, gallous, none, unknown, gallous, regular).
 ty_noun_in(english, gallows, none, unknown, gallows, regular).
+ty_noun_in(english, 'gallows-tree', none, unknown, 'gallows-tree', regular).
 ty_noun_in(english, gallstone, none, unknown, gallstone, regular).
 ty_noun_in(english, gallus, none, unknown, gallus, regular).
 ty_noun_in(english, galoot, none, unknown, galoot, regular).
@@ -14894,6 +15383,8 @@ ty_noun_in(english, gamecock, none, unknown, gamecock, regular).
 ty_noun_in(english, gamekeeper, none, unknown, gamekeeper, regular).
 ty_noun_in(english, gamelan, none, unknown, gamelan, regular).
 ty_noun_in(english, gameness, none, unknown, gameness, regular).
+ty_noun_in(english, 'games-master', none, unknown, 'games-master', regular).
+ty_noun_in(english, 'games-mistress', none, unknown, 'games-mistress', regular).
 ty_noun_in(english, gamesmanship, none, unknown, gamesmanship, regular).
 ty_noun_in(english, gametangium, none, unknown, gametangium, regular).
 ty_noun_in(english, gamete, none, unknown, gamete, regular).
@@ -14905,6 +15396,7 @@ ty_noun_in(english, gametophyte, none, unknown, gametophyte, regular).
 ty_noun_in(english, gamin, none, person, gamin, regular).
 ty_noun_in(english, gaminess, none, unknown, gaminess, regular).
 ty_noun_in(english, gamma, none, unknown, gamma, regular).
+ty_noun_in(english, 'gamma-interferon', none, unknown, 'gamma-interferon', regular).
 ty_noun_in(english, gammaglobulin, none, unknown, gammaglobulin, regular).
 ty_noun_in(english, gammagraphy, none, unknown, gammagraphy, regular).
 ty_noun_in(english, gammon, none, unknown, gammon, regular).
@@ -14965,6 +15457,7 @@ ty_noun_in(english, garishness, none, unknown, garishness, regular).
 ty_noun_in(english, garland, none, unknown, garland, regular).
 ty_noun_in(english, garlic, none, unknown, garlic, regular).
 ty_noun_in(english, garment, none, unknown, garment, regular).
+ty_noun_in(english, 'garment-worker', none, unknown, 'garment-worker', regular).
 ty_noun_in(english, garmentmaker, none, unknown, garmentmaker, regular).
 ty_noun_in(english, garnet, none, unknown, garnet, regular).
 ty_noun_in(english, garnierite, none, unknown, garnierite, regular).
@@ -15060,6 +15553,7 @@ ty_noun_in(english, gavotte, none, unknown, gavotte, regular).
 ty_noun_in(english, gawker, none, unknown, gawker, regular).
 ty_noun_in(english, gawkiness, none, unknown, gawkiness, regular).
 ty_noun_in(english, gay, none, unknown, gay, regular).
+ty_noun_in(english, 'gay-feather', none, unknown, 'gay-feather', regular).
 ty_noun_in(english, gayal, none, unknown, gayal, regular).
 ty_noun_in(english, gayfeather, none, unknown, gayfeather, regular).
 ty_noun_in(english, gayness, none, unknown, gayness, regular).
@@ -15083,6 +15577,7 @@ ty_noun_in(english, geartrain, none, unknown, geartrain, regular).
 ty_noun_in(english, geastraceae, none, unknown, geastraceae, regular).
 ty_noun_in(english, gecko, none, unknown, gecko, regular).
 ty_noun_in(english, gee, none, unknown, gee, regular).
+ty_noun_in(english, 'gee-gee', none, unknown, 'gee-gee', regular).
 ty_noun_in(english, geebung, none, unknown, geebung, regular).
 ty_noun_in(english, geek, none, unknown, geek, regular).
 ty_noun_in(english, geezer, none, unknown, geezer, regular).
@@ -15116,6 +15611,7 @@ ty_noun_in(english, gemstone, none, unknown, gemstone, regular).
 ty_noun_in(english, gendarme, none, unknown, gendarme, regular).
 ty_noun_in(english, gender, none, unknown, gender, regular).
 ty_noun_in(english, gene, none, unknown, gene, regular).
+ty_noun_in(english, 'gene-splicing', none, unknown, 'gene-splicing', regular).
 ty_noun_in(english, genealogist, none, unknown, genealogist, regular).
 ty_noun_in(english, genealogy, none, unknown, genealogy, regular).
 ty_noun_in(english, general, none, person, general, regular).
@@ -15164,6 +15660,7 @@ ty_noun_in(english, gentilic, none, unknown, gentilic, regular).
 ty_noun_in(english, gentility, none, unknown, gentility, regular).
 ty_noun_in(english, gentlefolk, none, unknown, gentlefolk, regular).
 ty_noun_in(english, gentleman, none, person, gentleman, regular).
+ty_noun_in(english, 'gentleman-at-arms', none, unknown, 'gentleman-at-arms', regular).
 ty_noun_in(english, gentleness, none, unknown, gentleness, regular).
 ty_noun_in(english, gentlewoman, none, unknown, gentlewoman, regular).
 ty_noun_in(english, gentrification, none, unknown, gentrification, regular).
@@ -15247,6 +15744,8 @@ ty_noun_in(english, gestalt, none, unknown, gestalt, regular).
 ty_noun_in(english, gestation, none, unknown, gestation, regular).
 ty_noun_in(english, gesticulation, none, unknown, gesticulation, regular).
 ty_noun_in(english, gesture, none, unknown, gesture, regular).
+ty_noun_in(english, 'get-go', none, unknown, 'get-go', regular).
+ty_noun_in(english, 'get-up-and-go', none, unknown, 'get-up-and-go', regular).
 ty_noun_in(english, geta, none, unknown, geta, regular).
 ty_noun_in(english, getaway, none, unknown, getaway, regular).
 ty_noun_in(english, getup, none, unknown, getup, regular).
@@ -15303,6 +15802,7 @@ ty_noun_in(english, gilder, none, unknown, gilder, regular).
 ty_noun_in(english, gildhall, none, unknown, gildhall, regular).
 ty_noun_in(english, gilding, none, unknown, gilding, regular).
 ty_noun_in(english, gill, none, unknown, gill, regular).
+ty_noun_in(english, 'gill-over-the-ground', none, unknown, 'gill-over-the-ground', regular).
 ty_noun_in(english, gillie, none, unknown, gillie, regular).
 ty_noun_in(english, gillyflower, none, unknown, gillyflower, regular).
 ty_noun_in(english, gimbal, none, unknown, gimbal, regular).
@@ -15346,6 +15846,8 @@ ty_noun_in(english, gist, none, unknown, gist, regular).
 ty_noun_in(english, git, none, unknown, git, regular).
 ty_noun_in(english, gittern, none, unknown, gittern, regular).
 ty_noun_in(english, give, none, unknown, give, regular).
+ty_noun_in(english, 'give-and-go', none, unknown, 'give-and-go', regular).
+ty_noun_in(english, 'give-and-take', none, unknown, 'give-and-take', regular).
 ty_noun_in(english, giveaway, none, unknown, giveaway, regular).
 ty_noun_in(english, given, none, unknown, given, regular).
 ty_noun_in(english, givenness, none, unknown, givenness, regular).
@@ -15378,6 +15880,7 @@ ty_noun_in(english, glare, none, unknown, glare, regular).
 ty_noun_in(english, glareole, none, unknown, glareole, regular).
 ty_noun_in(english, glasnost, none, unknown, glasnost, regular).
 ty_noun_in(english, glass, none, unknown, glass, regular).
+ty_noun_in(english, 'glass-cutter', none, unknown, 'glass-cutter', regular).
 ty_noun_in(english, glassblower, none, unknown, glassblower, regular).
 ty_noun_in(english, glasses, none, unknown, glasses, regular).
 ty_noun_in(english, glassful, none, unknown, glassful, regular).
@@ -15525,8 +16028,16 @@ ty_noun_in(english, gnomon, none, unknown, gnomon, regular).
 ty_noun_in(english, gnosis, none, unknown, gnosis, regular).
 ty_noun_in(english, gnp, none, unknown, gnp, regular).
 ty_noun_in(english, gnu, none, unknown, gnu, regular).
+ty_noun_in(english, 'go-ahead', none, unknown, 'go-ahead', regular).
+ty_noun_in(english, 'go-around', none, unknown, 'go-around', regular).
+ty_noun_in(english, 'go-between', none, unknown, 'go-between', regular).
+ty_noun_in(english, 'go-cart', none, unknown, 'go-cart', regular).
+ty_noun_in(english, 'go-getter', none, unknown, 'go-getter', regular).
+ty_noun_in(english, 'go-kart', none, unknown, 'go-kart', regular).
+ty_noun_in(english, 'go-slow', none, unknown, 'go-slow', regular).
 ty_noun_in(english, goad, none, unknown, goad, regular).
 ty_noun_in(english, goal, none, unknown, goal, regular).
+ty_noun_in(english, 'goal-kick', none, unknown, 'goal-kick', regular).
 ty_noun_in(english, goalie, none, unknown, goalie, regular).
 ty_noun_in(english, goalkeeper, none, person, goalkeeper, regular).
 ty_noun_in(english, goalmouth, none, unknown, goalmouth, regular).
@@ -15564,12 +16075,16 @@ ty_noun_in(english, goer, none, unknown, goer, regular).
 ty_noun_in(english, goethite, none, unknown, goethite, regular).
 ty_noun_in(english, gofer, none, unknown, gofer, regular).
 ty_noun_in(english, goffer, none, unknown, goffer, regular).
+ty_noun_in(english, 'goggle-eye', none, unknown, 'goggle-eye', regular).
 ty_noun_in(english, goggles, none, unknown, goggles, regular).
 ty_noun_in(english, going, none, unknown, going, regular).
+ty_noun_in(english, 'going-over', none, unknown, 'going-over', regular).
 ty_noun_in(english, goiter, none, unknown, goiter, regular).
 ty_noun_in(english, goitre, none, unknown, goitre, regular).
 ty_noun_in(english, goitrogen, none, unknown, goitrogen, regular).
 ty_noun_in(english, gold, none, unknown, gold, regular).
+ty_noun_in(english, 'gold-beater', none, unknown, 'gold-beater', regular).
+ty_noun_in(english, 'gold-worker', none, unknown, 'gold-worker', regular).
 ty_noun_in(english, goldbeater, none, unknown, goldbeater, regular).
 ty_noun_in(english, goldbrick, none, unknown, goldbrick, regular).
 ty_noun_in(english, goldcrest, none, unknown, goldcrest, regular).
@@ -15589,6 +16104,7 @@ ty_noun_in(english, goldthread, none, unknown, goldthread, regular).
 ty_noun_in(english, goldworker, none, unknown, goldworker, regular).
 ty_noun_in(english, golem, none, unknown, golem, regular).
 ty_noun_in(english, golf, none, unknown, golf, regular).
+ty_noun_in(english, 'golf-club', none, unknown, 'golf-club', regular).
 ty_noun_in(english, golfcart, none, unknown, golfcart, regular).
 ty_noun_in(english, golfer, none, person, golfer, regular).
 ty_noun_in(english, golfing, none, unknown, golfing, regular).
@@ -15617,11 +16133,22 @@ ty_noun_in(english, gonorrhoea, none, unknown, gonorrhoea, regular).
 ty_noun_in(english, goo, none, unknown, goo, regular).
 ty_noun_in(english, goober, none, unknown, goober, regular).
 ty_noun_in(english, good, none, unknown, good, regular).
+ty_noun_in(english, 'good-for-naught', none, unknown, 'good-for-naught', regular).
+ty_noun_in(english, 'good-for-nothing', none, unknown, 'good-for-nothing', regular).
+ty_noun_in(english, 'good-humoredness', none, unknown, 'good-humoredness', regular).
+ty_noun_in(english, 'good-humouredness', none, unknown, 'good-humouredness', regular).
+ty_noun_in(english, 'good-king-henry', none, unknown, 'good-king-henry', regular).
+ty_noun_in(english, 'good-naturedness', none, unknown, 'good-naturedness', regular).
+ty_noun_in(english, 'good-neighborliness', none, unknown, 'good-neighborliness', regular).
+ty_noun_in(english, 'good-neighbourliness', none, unknown, 'good-neighbourliness', regular).
+ty_noun_in(english, 'good-temperedness', none, unknown, 'good-temperedness', regular).
 ty_noun_in(english, goodbye, none, unknown, goodbye, regular).
 ty_noun_in(english, goodness, none, unknown, goodness, regular).
 ty_noun_in(english, goods, none, unknown, goods, regular).
 ty_noun_in(english, goodwill, none, unknown, goodwill, regular).
 ty_noun_in(english, goody, none, unknown, goody, regular).
+ty_noun_in(english, 'goody-goody', none, unknown, 'goody-goody', regular).
+ty_noun_in(english, 'goof-off', none, unknown, 'goof-off', regular).
 ty_noun_in(english, goofball, none, unknown, goofball, regular).
 ty_noun_in(english, google, none, unknown, google, regular).
 ty_noun_in(english, googly, none, unknown, googly, regular).
@@ -15633,6 +16160,7 @@ ty_noun_in(english, gooney, none, unknown, gooney, regular).
 ty_noun_in(english, goonie, none, unknown, goonie, regular).
 ty_noun_in(english, goop, none, unknown, goop, regular).
 ty_noun_in(english, goosander, none, unknown, goosander, regular).
+ty_noun_in(english, 'goose-tansy', none, unknown, 'goose-tansy', regular).
 ty_noun_in(english, gooseberry, none, unknown, gooseberry, regular).
 ty_noun_in(english, goosebump, none, unknown, goosebump, regular).
 ty_noun_in(english, goosefish, none, unknown, goosefish, regular).
@@ -15653,6 +16181,7 @@ ty_noun_in(english, gorgonzola, none, unknown, gorgonzola, regular).
 ty_noun_in(english, gorilla, none, animate, gorilla, regular).
 ty_noun_in(english, goring, none, unknown, goring, regular).
 ty_noun_in(english, gorse, none, unknown, gorse, regular).
+ty_noun_in(english, 'gosan-chiku', none, unknown, 'gosan-chiku', regular).
 ty_noun_in(english, goshawk, none, unknown, goshawk, regular).
 ty_noun_in(english, gosling, none, unknown, gosling, regular).
 ty_noun_in(english, gosmore, none, unknown, gosmore, regular).
@@ -15681,6 +16210,7 @@ ty_noun_in(english, governance, none, unknown, governance, regular).
 ty_noun_in(english, governed, none, unknown, governed, regular).
 ty_noun_in(english, governess, none, person, governess, regular).
 ty_noun_in(english, government, none, unknown, government, regular).
+ty_noun_in(english, 'government-in-exile', none, unknown, 'government-in-exile', regular).
 ty_noun_in(english, governor, none, person, governor, regular).
 ty_noun_in(english, governorship, none, unknown, governorship, regular).
 ty_noun_in(english, gown, none, unknown, gown, regular).
@@ -15763,6 +16293,7 @@ ty_noun_in(english, granny, none, person, granny, regular).
 ty_noun_in(english, granodiorite, none, unknown, granodiorite, regular).
 ty_noun_in(english, granola, none, unknown, granola, regular).
 ty_noun_in(english, grant, none, unknown, grant, regular).
+ty_noun_in(english, 'grant-in-aid', none, unknown, 'grant-in-aid', regular).
 ty_noun_in(english, grantee, none, unknown, grantee, regular).
 ty_noun_in(english, granter, none, unknown, granter, regular).
 ty_noun_in(english, granting, none, unknown, granting, regular).
@@ -15823,6 +16354,7 @@ ty_noun_in(english, gravitas, none, unknown, gravitas, regular).
 ty_noun_in(english, gravitation, none, unknown, gravitation, regular).
 ty_noun_in(english, graviton, none, unknown, graviton, regular).
 ty_noun_in(english, gravity, none, unknown, gravity, regular).
+ty_noun_in(english, 'gravity-assist', none, unknown, 'gravity-assist', regular).
 ty_noun_in(english, gravure, none, unknown, gravure, regular).
 ty_noun_in(english, gravy, none, unknown, gravy, regular).
 ty_noun_in(english, gray, none, unknown, gray, regular).
@@ -15833,12 +16365,17 @@ ty_noun_in(english, graylag, none, unknown, graylag, regular).
 ty_noun_in(english, grayness, none, unknown, grayness, regular).
 ty_noun_in(english, grazier, none, unknown, grazier, regular).
 ty_noun_in(english, grease, none, unknown, grease, regular).
+ty_noun_in(english, 'grease-gun', none, unknown, 'grease-gun', regular).
 ty_noun_in(english, greaseball, none, unknown, greaseball, regular).
 ty_noun_in(english, greasepaint, none, unknown, greasepaint, regular).
 ty_noun_in(english, greaser, none, unknown, greaser, regular).
 ty_noun_in(english, greasewood, none, unknown, greasewood, regular).
 ty_noun_in(english, greasiness, none, unknown, greasiness, regular).
 ty_noun_in(english, great, none, person, great, regular).
+ty_noun_in(english, 'great-aunt', none, unknown, 'great-aunt', regular).
+ty_noun_in(english, 'great-nephew', none, unknown, 'great-nephew', regular).
+ty_noun_in(english, 'great-niece', none, unknown, 'great-niece', regular).
+ty_noun_in(english, 'great-uncle', none, unknown, 'great-uncle', regular).
 ty_noun_in(english, greatcoat, none, unknown, greatcoat, regular).
 ty_noun_in(english, greatness, none, unknown, greatness, regular).
 ty_noun_in(english, greave, none, unknown, greave, regular).
@@ -15850,6 +16387,7 @@ ty_noun_in(english, greedy, none, unknown, greedy, regular).
 ty_noun_in(english, greegree, none, unknown, greegree, regular).
 ty_noun_in(english, greek, none, unknown, greek, regular).
 ty_noun_in(english, green, none, unknown, green, regular).
+ty_noun_in(english, 'green-blindness', none, unknown, 'green-blindness', regular).
 ty_noun_in(english, greenback, none, unknown, greenback, regular).
 ty_noun_in(english, greenbelt, none, unknown, greenbelt, regular).
 ty_noun_in(english, greenbottle, none, unknown, greenbottle, regular).
@@ -15892,6 +16430,7 @@ ty_noun_in(english, gremlin, none, unknown, gremlin, regular).
 ty_noun_in(english, grenade, none, unknown, grenade, regular).
 ty_noun_in(english, grenadier, none, unknown, grenadier, regular).
 ty_noun_in(english, grenadine, none, unknown, grenadine, regular).
+ty_noun_in(english, 'gres-gris', none, unknown, 'gres-gris', regular).
 ty_noun_in(english, grevillea, none, unknown, grevillea, regular).
 ty_noun_in(english, grey, none, unknown, grey, regular).
 ty_noun_in(english, greyback, none, unknown, greyback, regular).
@@ -15900,6 +16439,7 @@ ty_noun_in(english, greyhen, none, unknown, greyhen, regular).
 ty_noun_in(english, greyhound, none, unknown, greyhound, regular).
 ty_noun_in(english, greylag, none, unknown, greylag, regular).
 ty_noun_in(english, greyness, none, unknown, greyness, regular).
+ty_noun_in(english, 'gri-gri', none, unknown, 'gri-gri', regular).
 ty_noun_in(english, grias, none, unknown, grias, regular).
 ty_noun_in(english, grid, none, unknown, grid, regular).
 ty_noun_in(english, griddle, none, unknown, griddle, regular).
@@ -15964,6 +16504,7 @@ ty_noun_in(english, groin, none, unknown, groin, regular).
 ty_noun_in(english, grommet, none, unknown, grommet, regular).
 ty_noun_in(english, gromwell, none, unknown, gromwell, regular).
 ty_noun_in(english, groom, none, person, groom, regular).
+ty_noun_in(english, 'groom-to-be', none, unknown, 'groom-to-be', regular).
 ty_noun_in(english, groomsman, none, unknown, groomsman, regular).
 ty_noun_in(english, groove, none, unknown, groove, regular).
 ty_noun_in(english, groover, none, unknown, groover, regular).
@@ -15979,6 +16520,8 @@ ty_noun_in(english, grotesqueness, none, unknown, grotesqueness, regular).
 ty_noun_in(english, grotto, none, unknown, grotto, regular).
 ty_noun_in(english, grouch, none, unknown, grouch, regular).
 ty_noun_in(english, ground, none, unknown, ground, regular).
+ty_noun_in(english, 'ground-berry', none, unknown, 'ground-berry', regular).
+ty_noun_in(english, 'ground-shaker', none, unknown, 'ground-shaker', regular).
 ty_noun_in(english, groundball, none, unknown, groundball, regular).
 ty_noun_in(english, groundberry, none, unknown, groundberry, regular).
 ty_noun_in(english, groundbreaker, none, unknown, groundbreaker, regular).
@@ -16006,6 +16549,7 @@ ty_noun_in(english, grouping, none, unknown, grouping, regular).
 ty_noun_in(english, groupthink, none, unknown, groupthink, regular).
 ty_noun_in(english, groupware, none, unknown, groupware, regular).
 ty_noun_in(english, grouse, none, unknown, grouse, regular).
+ty_noun_in(english, 'grouse-berry', none, unknown, 'grouse-berry', regular).
 ty_noun_in(english, grouseberry, none, unknown, grouseberry, regular).
 ty_noun_in(english, grout, none, unknown, grout, regular).
 ty_noun_in(english, grove, none, unknown, grove, regular).
@@ -16130,7 +16674,9 @@ ty_noun_in(english, gulper, none, unknown, gulper, regular).
 ty_noun_in(english, gulping, none, unknown, gulping, regular).
 ty_noun_in(english, gulyas, none, unknown, gulyas, regular).
 ty_noun_in(english, gum, none, unknown, gum, regular).
+ty_noun_in(english, 'gum-lac', none, unknown, 'gum-lac', regular).
 ty_noun_in(english, gumbo, none, unknown, gumbo, regular).
+ty_noun_in(english, 'gumbo-limbo', none, unknown, 'gumbo-limbo', regular).
 ty_noun_in(english, gumboil, none, unknown, gumboil, regular).
 ty_noun_in(english, gumdrop, none, unknown, gumdrop, regular).
 ty_noun_in(english, gumma, none, unknown, gumma, regular).
@@ -16143,6 +16689,7 @@ ty_noun_in(english, gumshoe, none, unknown, gumshoe, regular).
 ty_noun_in(english, gumweed, none, unknown, gumweed, regular).
 ty_noun_in(english, gumwood, none, unknown, gumwood, regular).
 ty_noun_in(english, gun, none, unknown, gun, regular).
+ty_noun_in(english, 'gun-sight', none, unknown, 'gun-sight', regular).
 ty_noun_in(english, gunboat, none, unknown, gunboat, regular).
 ty_noun_in(english, guncotton, none, unknown, guncotton, regular).
 ty_noun_in(english, gunfight, none, unknown, gunfight, regular).
@@ -16182,6 +16729,7 @@ ty_noun_in(english, gut, none, unknown, gut, regular).
 ty_noun_in(english, gutlessness, none, unknown, gutlessness, regular).
 ty_noun_in(english, guts, none, unknown, guts, regular).
 ty_noun_in(english, gutsiness, none, unknown, gutsiness, regular).
+ty_noun_in(english, 'gutta-percha', none, unknown, 'gutta-percha', regular).
 ty_noun_in(english, gutter, none, unknown, gutter, regular).
 ty_noun_in(english, guttersnipe, none, person, guttersnipe, regular).
 ty_noun_in(english, guttiferae, none, unknown, guttiferae, regular).
@@ -16235,6 +16783,7 @@ ty_noun_in(english, gyroscope, none, unknown, gyroscope, regular).
 ty_noun_in(english, gyrostabiliser, none, unknown, gyrostabiliser, regular).
 ty_noun_in(english, gyrostabilizer, none, unknown, gyrostabilizer, regular).
 ty_noun_in(english, gyrus, none, unknown, gyrus, regular).
+ty_noun_in(english, 'ha-ha', none, unknown, 'ha-ha', regular).
 ty_noun_in(english, haart, none, unknown, haart, regular).
 ty_noun_in(english, habanera, none, unknown, habanera, regular).
 ty_noun_in(english, haberdasher, none, person, haberdasher, regular).
@@ -16255,6 +16804,7 @@ ty_noun_in(english, habitus, none, unknown, habitus, regular).
 ty_noun_in(english, hacek, none, unknown, hacek, regular).
 ty_noun_in(english, hachure, none, unknown, hachure, regular).
 ty_noun_in(english, hack, none, person, hack, regular).
+ty_noun_in(english, 'hack-driver', none, unknown, 'hack-driver', regular).
 ty_noun_in(english, hackamore, none, unknown, hackamore, regular).
 ty_noun_in(english, hackberry, none, unknown, hackberry, regular).
 ty_noun_in(english, hackbut, none, unknown, hackbut, regular).
@@ -16344,6 +16894,7 @@ ty_noun_in(english, hail, none, unknown, hail, regular).
 ty_noun_in(english, hailstone, none, unknown, hailstone, regular).
 ty_noun_in(english, hailstorm, none, unknown, hailstorm, regular).
 ty_noun_in(english, hair, none, unknown, hair, regular).
+ty_noun_in(english, 'hair-raiser', none, unknown, 'hair-raiser', regular).
 ty_noun_in(english, hairball, none, unknown, hairball, regular).
 ty_noun_in(english, hairbrush, none, unknown, hairbrush, regular).
 ty_noun_in(english, haircare, none, unknown, haircare, regular).
@@ -16381,7 +16932,29 @@ ty_noun_in(english, halberd, none, unknown, halberd, regular).
 ty_noun_in(english, halberdier, none, unknown, halberdier, regular).
 ty_noun_in(english, haleness, none, unknown, haleness, regular).
 ty_noun_in(english, haler, none, unknown, haler, regular).
+ty_noun_in(english, 'half-and-half', none, unknown, 'half-and-half', regular).
+ty_noun_in(english, 'half-breed', none, unknown, 'half-breed', regular).
+ty_noun_in(english, 'half-brother', none, unknown, 'half-brother', regular).
+ty_noun_in(english, 'half-caste', none, unknown, 'half-caste', regular).
+ty_noun_in(english, 'half-century', none, unknown, 'half-century', regular).
+ty_noun_in(english, 'half-cock', none, unknown, 'half-cock', regular).
+ty_noun_in(english, 'half-holiday', none, unknown, 'half-holiday', regular).
+ty_noun_in(english, 'half-hour', none, unknown, 'half-hour', regular).
+ty_noun_in(english, 'half-intensity', none, unknown, 'half-intensity', regular).
+ty_noun_in(english, 'half-length', none, unknown, 'half-length', regular).
+ty_noun_in(english, 'half-life', none, unknown, 'half-life', regular).
+ty_noun_in(english, 'half-light', none, unknown, 'half-light', regular).
+ty_noun_in(english, 'half-mast', none, unknown, 'half-mast', regular).
+ty_noun_in(english, 'half-moon', none, unknown, 'half-moon', regular).
+ty_noun_in(english, 'half-pay', none, unknown, 'half-pay', regular).
+ty_noun_in(english, 'half-pint', none, unknown, 'half-pint', regular).
 ty_noun_in(english, 'half-relief', none, unknown, 'half-relief', regular).
+ty_noun_in(english, 'half-sister', none, unknown, 'half-sister', regular).
+ty_noun_in(english, 'half-slip', none, unknown, 'half-slip', regular).
+ty_noun_in(english, 'half-staff', none, unknown, 'half-staff', regular).
+ty_noun_in(english, 'half-term', none, unknown, 'half-term', regular).
+ty_noun_in(english, 'half-truth', none, unknown, 'half-truth', regular).
+ty_noun_in(english, 'half-wit', none, unknown, 'half-wit', regular).
 ty_noun_in(english, halfback, none, person, halfback, regular).
 ty_noun_in(english, halfbeak, none, unknown, halfbeak, regular).
 ty_noun_in(english, halfpenny, none, unknown, halfpenny, regular).
@@ -16444,6 +17017,7 @@ ty_noun_in(english, hamper, none, unknown, hamper, regular).
 ty_noun_in(english, hamster, none, unknown, hamster, regular).
 ty_noun_in(english, hamstring, none, unknown, hamstring, regular).
 ty_noun_in(english, hand, none, unknown, hand, regular).
+ty_noun_in(english, 'hand-me-down', none, unknown, 'hand-me-down', regular).
 ty_noun_in(english, handbag, none, unknown, handbag, regular).
 ty_noun_in(english, handball, none, unknown, handball, regular).
 ty_noun_in(english, handbarrow, none, unknown, handbarrow, regular).
@@ -16474,6 +17048,7 @@ ty_noun_in(english, handiness, none, unknown, handiness, regular).
 ty_noun_in(english, handiwork, none, unknown, handiwork, regular).
 ty_noun_in(english, handkerchief, none, unknown, handkerchief, regular).
 ty_noun_in(english, handle, none, unknown, handle, regular).
+ty_noun_in(english, 'handle-bars', none, unknown, 'handle-bars', regular).
 ty_noun_in(english, handlebar, none, unknown, handlebar, regular).
 ty_noun_in(english, handler, none, person, handler, regular).
 ty_noun_in(english, handline, none, unknown, handline, regular).
@@ -16503,9 +17078,11 @@ ty_noun_in(english, handwheel, none, unknown, handwheel, regular).
 ty_noun_in(english, handwork, none, unknown, handwork, regular).
 ty_noun_in(english, handwriting, none, unknown, handwriting, regular).
 ty_noun_in(english, handyman, none, person, handyman, regular).
+ty_noun_in(english, 'hang-up', none, unknown, 'hang-up', regular).
 ty_noun_in(english, hangar, none, unknown, hangar, regular).
 ty_noun_in(english, hangbird, none, unknown, hangbird, regular).
 ty_noun_in(english, hanger, none, unknown, hanger, regular).
+ty_noun_in(english, 'hanger-on', none, unknown, 'hanger-on', regular).
 ty_noun_in(english, hangman, none, unknown, hangman, regular).
 ty_noun_in(english, hangnail, none, unknown, hangnail, regular).
 ty_noun_in(english, hangout, none, unknown, hangout, regular).
@@ -16527,6 +17104,7 @@ ty_noun_in(english, happening, none, unknown, happening, regular).
 ty_noun_in(english, happenstance, none, unknown, happenstance, regular).
 ty_noun_in(english, happiness, none, unknown, happiness, regular).
 ty_noun_in(english, haptoglobin, none, unknown, haptoglobin, regular).
+ty_noun_in(english, 'hara-kiri', none, unknown, 'hara-kiri', regular).
 ty_noun_in(english, harakiri, none, unknown, harakiri, regular).
 ty_noun_in(english, harangue, none, unknown, harangue, regular).
 ty_noun_in(english, haranguer, none, unknown, haranguer, regular).
@@ -16537,6 +17115,7 @@ ty_noun_in(english, harbor, none, unknown, harbor, regular).
 ty_noun_in(english, harborage, none, unknown, harborage, regular).
 ty_noun_in(english, harbour, none, unknown, harbour, regular).
 ty_noun_in(english, harbourage, none, unknown, harbourage, regular).
+ty_noun_in(english, 'hard-on', none, unknown, 'hard-on', regular).
 ty_noun_in(english, hardbake, none, unknown, hardbake, regular).
 ty_noun_in(english, hardball, none, unknown, hardball, regular).
 ty_noun_in(english, hardboard, none, unknown, hardboard, regular).
@@ -16565,6 +17144,7 @@ ty_noun_in(english, haricot, none, unknown, haricot, regular).
 ty_noun_in(english, harikari, none, unknown, harikari, regular).
 ty_noun_in(english, harlem, none, unknown, harlem, regular).
 ty_noun_in(english, harlequin, none, unknown, harlequin, regular).
+ty_noun_in(english, 'harlequin-snake', none, unknown, 'harlequin-snake', regular).
 ty_noun_in(english, harlequinade, none, unknown, harlequinade, regular).
 ty_noun_in(english, harlot, none, unknown, harlot, regular).
 ty_noun_in(english, harlotry, none, unknown, harlotry, regular).
@@ -16596,12 +17176,15 @@ ty_noun_in(english, harridan, none, unknown, harridan, regular).
 ty_noun_in(english, harrier, none, unknown, harrier, regular).
 ty_noun_in(english, harshness, none, unknown, harshness, regular).
 ty_noun_in(english, hartebeest, none, unknown, hartebeest, regular).
+ty_noun_in(english, 'harum-scarum', none, unknown, 'harum-scarum', regular).
 ty_noun_in(english, haruspex, none, unknown, haruspex, regular).
 ty_noun_in(english, harvard, none, unknown, harvard, regular).
 ty_noun_in(english, harvest, none, unknown, harvest, regular).
+ty_noun_in(english, 'harvest-lice', none, unknown, 'harvest-lice', regular).
 ty_noun_in(english, harvester, none, unknown, harvester, regular).
 ty_noun_in(english, harvestfish, none, unknown, harvestfish, regular).
 ty_noun_in(english, harvestman, none, unknown, harvestman, regular).
+ty_noun_in(english, 'has-been', none, unknown, 'has-been', regular).
 ty_noun_in(english, haschisch, none, unknown, haschisch, regular).
 ty_noun_in(english, hash, none, unknown, hash, regular).
 ty_noun_in(english, hasheesh, none, unknown, hasheesh, regular).
@@ -16650,11 +17233,13 @@ ty_noun_in(english, haustorium, none, unknown, haustorium, regular).
 ty_noun_in(english, hautbois, none, unknown, hautbois, regular).
 ty_noun_in(english, hautboy, none, unknown, hautboy, regular).
 ty_noun_in(english, hauteur, none, unknown, hauteur, regular).
+ty_noun_in(english, 'have-not', none, unknown, 'have-not', regular).
 ty_noun_in(english, havelock, none, unknown, havelock, regular).
 ty_noun_in(english, haven, none, unknown, haven, regular).
 ty_noun_in(english, haversack, none, unknown, haversack, regular).
 ty_noun_in(english, havoc, none, unknown, havoc, regular).
 ty_noun_in(english, haw, none, unknown, haw, regular).
+ty_noun_in(english, 'haw-haw', none, unknown, 'haw-haw', regular).
 ty_noun_in(english, hawaii, none, unknown, hawaii, regular).
 ty_noun_in(english, hawaiian, none, unknown, hawaiian, regular).
 ty_noun_in(english, hawala, none, unknown, hawala, regular).
@@ -16673,6 +17258,7 @@ ty_noun_in(english, hawsehole, none, unknown, hawsehole, regular).
 ty_noun_in(english, hawsepipe, none, unknown, hawsepipe, regular).
 ty_noun_in(english, hawser, none, unknown, hawser, regular).
 ty_noun_in(english, hay, none, unknown, hay, regular).
+ty_noun_in(english, 'hay-scented', none, unknown, 'hay-scented', regular).
 ty_noun_in(english, haycock, none, unknown, haycock, regular).
 ty_noun_in(english, hayfield, none, unknown, hayfield, regular).
 ty_noun_in(english, hayfork, none, unknown, hayfork, regular).
@@ -16694,7 +17280,11 @@ ty_noun_in(english, hazel, none, unknown, hazel, regular).
 ty_noun_in(english, hazelnut, none, unknown, hazelnut, regular).
 ty_noun_in(english, hazelwood, none, unknown, hazelwood, regular).
 ty_noun_in(english, haziness, none, unknown, haziness, regular).
+ty_noun_in(english, 'he-goat', none, unknown, 'he-goat', regular).
+ty_noun_in(english, 'he-huckleberry', none, unknown, 'he-huckleberry', regular).
+ty_noun_in(english, 'he-man', none, unknown, 'he-man', regular).
 ty_noun_in(english, head, none, unknown, head, regular).
+ty_noun_in(english, 'head-shrinker', none, unknown, 'head-shrinker', regular).
 ty_noun_in(english, headache, none, unknown, headache, regular).
 ty_noun_in(english, headband, none, unknown, headband, regular).
 ty_noun_in(english, headboard, none, unknown, headboard, regular).
@@ -16729,6 +17319,7 @@ ty_noun_in(english, headquarters, none, unknown, headquarters, regular).
 ty_noun_in(english, headrace, none, unknown, headrace, regular).
 ty_noun_in(english, headrest, none, unknown, headrest, regular).
 ty_noun_in(english, headroom, none, unknown, headroom, regular).
+ty_noun_in(english, 'heads-up', none, unknown, 'heads-up', regular).
 ty_noun_in(english, headsail, none, unknown, headsail, regular).
 ty_noun_in(english, headscarf, none, unknown, headscarf, regular).
 ty_noun_in(english, headset, none, unknown, headset, regular).
@@ -16761,6 +17352,8 @@ ty_noun_in(english, hearer, none, person, hearer, regular).
 ty_noun_in(english, hearing, none, unknown, hearing, regular).
 ty_noun_in(english, hearse, none, unknown, hearse, regular).
 ty_noun_in(english, heart, none, unknown, heart, regular).
+ty_noun_in(english, 'heart-leaf', none, unknown, 'heart-leaf', regular).
+ty_noun_in(english, 'heart-to-heart', none, unknown, 'heart-to-heart', regular).
 ty_noun_in(english, heartache, none, unknown, heartache, regular).
 ty_noun_in(english, heartbeat, none, unknown, heartbeat, regular).
 ty_noun_in(english, heartbreak, none, unknown, heartbreak, regular).
@@ -16822,6 +17415,8 @@ ty_noun_in(english, hedging, none, unknown, hedging, regular).
 ty_noun_in(english, hediondilla, none, unknown, hediondilla, regular).
 ty_noun_in(english, hedonism, none, unknown, hedonism, regular).
 ty_noun_in(english, hedonist, none, person, hedonist, regular).
+ty_noun_in(english, 'hee-haw', none, unknown, 'hee-haw', regular).
+ty_noun_in(english, 'heebie-jeebies', none, unknown, 'heebie-jeebies', regular).
 ty_noun_in(english, heed, none, unknown, heed, regular).
 ty_noun_in(english, heedfulness, none, unknown, heedfulness, regular).
 ty_noun_in(english, heedlessness, none, unknown, heedlessness, regular).
@@ -16838,6 +17433,7 @@ ty_noun_in(english, height, none, unknown, height, regular).
 ty_noun_in(english, heights, none, unknown, heights, regular).
 ty_noun_in(english, heinousness, none, unknown, heinousness, regular).
 ty_noun_in(english, heir, none, person, heir, regular).
+ty_noun_in(english, 'heir-at-law', none, unknown, 'heir-at-law', regular).
 ty_noun_in(english, heiress, none, person, heiress, regular).
 ty_noun_in(english, heirloom, none, unknown, heirloom, regular).
 ty_noun_in(english, hejira, none, unknown, hejira, regular).
@@ -16867,6 +17463,8 @@ ty_noun_in(english, heliport, none, unknown, heliport, regular).
 ty_noun_in(english, helium, none, unknown, helium, regular).
 ty_noun_in(english, helix, none, unknown, helix, regular).
 ty_noun_in(english, hell, none, unknown, hell, regular).
+ty_noun_in(english, 'hell-kite', none, unknown, 'hell-kite', regular).
+ty_noun_in(english, 'hell-rooster', none, unknown, 'hell-rooster', regular).
 ty_noun_in(english, hellbender, none, unknown, hellbender, regular).
 ty_noun_in(english, hellcat, none, unknown, hellcat, regular).
 ty_noun_in(english, hellebore, none, unknown, hellebore, regular).
@@ -16952,6 +17550,7 @@ ty_noun_in(english, hemisphere, none, unknown, hemisphere, regular).
 ty_noun_in(english, hemistich, none, unknown, hemistich, regular).
 ty_noun_in(english, hemline, none, unknown, hemline, regular).
 ty_noun_in(english, hemlock, none, unknown, hemlock, regular).
+ty_noun_in(english, 'hemming-stitch', none, unknown, 'hemming-stitch', regular).
 ty_noun_in(english, hemochromatosis, none, unknown, hemochromatosis, regular).
 ty_noun_in(english, hemodialysis, none, unknown, hemodialysis, regular).
 ty_noun_in(english, hemodialyzer, none, unknown, hemodialyzer, regular).
@@ -16984,6 +17583,7 @@ ty_noun_in(english, hemothorax, none, unknown, hemothorax, regular).
 ty_noun_in(english, hemp, none, unknown, hemp, regular).
 ty_noun_in(english, hemstitch, none, unknown, hemstitch, regular).
 ty_noun_in(english, hen, none, animate, hen, regular).
+ty_noun_in(english, 'hen-of-the-woods', none, unknown, 'hen-of-the-woods', regular).
 ty_noun_in(english, henbane, none, unknown, henbane, regular).
 ty_noun_in(english, henbit, none, unknown, henbit, regular).
 ty_noun_in(english, henchman, none, unknown, henchman, regular).
@@ -17107,6 +17707,7 @@ ty_noun_in(english, hexenbesen, none, unknown, hexenbesen, regular).
 ty_noun_in(english, hexestrol, none, unknown, hexestrol, regular).
 ty_noun_in(english, hexose, none, unknown, hexose, regular).
 ty_noun_in(english, heyday, none, unknown, heyday, regular).
+ty_noun_in(english, 'hi-fi', none, unknown, 'hi-fi', regular).
 ty_noun_in(english, hiatus, none, unknown, hiatus, regular).
 ty_noun_in(english, hibachi, none, unknown, hibachi, regular).
 ty_noun_in(english, hibbertia, none, unknown, hibbertia, regular).
@@ -17120,6 +17721,7 @@ ty_noun_in(english, hickory, none, unknown, hickory, regular).
 ty_noun_in(english, hiddenite, none, unknown, hiddenite, regular).
 ty_noun_in(english, hiddenness, none, unknown, hiddenness, regular).
 ty_noun_in(english, hide, none, unknown, hide, regular).
+ty_noun_in(english, 'hide-and-seek', none, unknown, 'hide-and-seek', regular).
 ty_noun_in(english, hideaway, none, unknown, hideaway, regular).
 ty_noun_in(english, hideousness, none, unknown, hideousness, regular).
 ty_noun_in(english, hideout, none, unknown, hideout, regular).
@@ -17132,11 +17734,21 @@ ty_noun_in(english, hierocracy, none, unknown, hierocracy, regular).
 ty_noun_in(english, hieroglyph, none, unknown, hieroglyph, regular).
 ty_noun_in(english, hierolatry, none, unknown, hierolatry, regular).
 ty_noun_in(english, high, none, unknown, high, regular).
+ty_noun_in(english, 'high-five', none, unknown, 'high-five', regular).
+ty_noun_in(english, 'high-handedness', none, unknown, 'high-handedness', regular).
+ty_noun_in(english, 'high-low', none, unknown, 'high-low', regular).
+ty_noun_in(english, 'high-low-jack', none, unknown, 'high-low-jack', regular).
+ty_noun_in(english, 'high-mindedness', none, unknown, 'high-mindedness', regular).
+ty_noun_in(english, 'high-muck-a-muck', none, unknown, 'high-muck-a-muck', regular).
+ty_noun_in(english, 'high-rise', none, unknown, 'high-rise', regular).
+ty_noun_in(english, 'high-spiritedness', none, unknown, 'high-spiritedness', regular).
+ty_noun_in(english, 'high-up', none, unknown, 'high-up', regular).
 ty_noun_in(english, highball, none, unknown, highball, regular).
 ty_noun_in(english, highbinder, none, unknown, highbinder, regular).
 ty_noun_in(english, highboard, none, unknown, highboard, regular).
 ty_noun_in(english, highboy, none, unknown, highboy, regular).
 ty_noun_in(english, highchair, none, unknown, highchair, regular).
+ty_noun_in(english, 'higher-up', none, unknown, 'higher-up', regular).
 ty_noun_in(english, highflier, none, unknown, highflier, regular).
 ty_noun_in(english, highflyer, none, unknown, highflyer, regular).
 ty_noun_in(english, highjack, none, unknown, highjack, regular).
@@ -17184,6 +17796,7 @@ ty_noun_in(english, hinny, none, unknown, hinny, regular).
 ty_noun_in(english, hint, none, unknown, hint, regular).
 ty_noun_in(english, hinterland, none, unknown, hinterland, regular).
 ty_noun_in(english, hip, none, unknown, hip, regular).
+ty_noun_in(english, 'hip-hop', none, unknown, 'hip-hop', regular).
 ty_noun_in(english, hipbone, none, unknown, hipbone, regular).
 ty_noun_in(english, hipflask, none, unknown, hipflask, regular).
 ty_noun_in(english, hipline, none, unknown, hipline, regular).
@@ -17196,6 +17809,7 @@ ty_noun_in(english, hippocrepis, none, unknown, hippocrepis, regular).
 ty_noun_in(english, hippodrome, none, unknown, hippodrome, regular).
 ty_noun_in(english, hippopotamus, none, animate, hippopotamus, regular).
 ty_noun_in(english, hire, none, person, hire, regular).
+ty_noun_in(english, 'hire-purchase', none, unknown, 'hire-purchase', regular).
 ty_noun_in(english, hireling, none, unknown, hireling, regular).
 ty_noun_in(english, hirer, none, unknown, hirer, regular).
 ty_noun_in(english, hirsuteness, none, unknown, hirsuteness, regular).
@@ -17260,7 +17874,9 @@ ty_noun_in(english, hobgoblin, none, unknown, hobgoblin, regular).
 ty_noun_in(english, hobnail, none, unknown, hobnail, regular).
 ty_noun_in(english, hobo, none, unknown, hobo, regular).
 ty_noun_in(english, hock, none, unknown, hock, regular).
+ty_noun_in(english, 'hock-joint', none, unknown, 'hock-joint', regular).
 ty_noun_in(english, hockey, none, unknown, hockey, regular).
+ty_noun_in(english, 'hocus-pocus', none, unknown, 'hocus-pocus', regular).
 ty_noun_in(english, hod, none, unknown, hod, regular).
 ty_noun_in(english, hodgepodge, none, unknown, hodgepodge, regular).
 ty_noun_in(english, hodman, none, unknown, hodman, regular).
@@ -17284,6 +17900,7 @@ ty_noun_in(english, hokan, none, unknown, hokan, regular).
 ty_noun_in(english, hokum, none, unknown, hokum, regular).
 ty_noun_in(english, holbrookia, none, unknown, holbrookia, regular).
 ty_noun_in(english, hold, none, unknown, hold, regular).
+ty_noun_in(english, 'hold-down', none, unknown, 'hold-down', regular).
 ty_noun_in(english, holdall, none, unknown, holdall, regular).
 ty_noun_in(english, holder, none, unknown, holder, regular).
 ty_noun_in(english, holdfast, none, unknown, holdfast, regular).
@@ -17292,6 +17909,7 @@ ty_noun_in(english, holdout, none, unknown, holdout, regular).
 ty_noun_in(english, holdover, none, unknown, holdover, regular).
 ty_noun_in(english, holdup, none, unknown, holdup, regular).
 ty_noun_in(english, hole, none, unknown, hole, regular).
+ty_noun_in(english, 'hole-in-the-wall', none, unknown, 'hole-in-the-wall', regular).
 ty_noun_in(english, holibut, none, unknown, holibut, regular).
 ty_noun_in(english, holiday, none, unknown, holiday, regular).
 ty_noun_in(english, holidaymaker, none, person, holidaymaker, regular).
@@ -17305,6 +17923,7 @@ ty_noun_in(english, hollering, none, unknown, hollering, regular).
 ty_noun_in(english, hollo, none, unknown, hollo, regular).
 ty_noun_in(english, holloa, none, unknown, holloa, regular).
 ty_noun_in(english, hollow, none, unknown, hollow, regular).
+ty_noun_in(english, 'hollow-back', none, unknown, 'hollow-back', regular).
 ty_noun_in(english, holloware, none, unknown, holloware, regular).
 ty_noun_in(english, hollowness, none, unknown, hollowness, regular).
 ty_noun_in(english, hollowware, none, unknown, hollowware, regular).
@@ -17335,6 +17954,8 @@ ty_noun_in(english, homage, none, unknown, homage, regular).
 ty_noun_in(english, homarus, none, unknown, homarus, regular).
 ty_noun_in(english, homburg, none, unknown, homburg, regular).
 ty_noun_in(english, home, none, unknown, home, regular).
+ty_noun_in(english, 'home-builder', none, unknown, 'home-builder', regular).
+ty_noun_in(english, 'home-farm', none, unknown, 'home-farm', regular).
 ty_noun_in(english, homebody, none, unknown, homebody, regular).
 ty_noun_in(english, homebound, none, unknown, homebound, regular).
 ty_noun_in(english, homeboy, none, unknown, homeboy, regular).
@@ -17414,6 +18035,7 @@ ty_noun_in(english, hone, none, unknown, hone, regular).
 ty_noun_in(english, honestness, none, unknown, honestness, regular).
 ty_noun_in(english, honesty, none, unknown, honesty, regular).
 ty_noun_in(english, honey, none, unknown, honey, regular).
+ty_noun_in(english, 'honey-flower', none, unknown, 'honey-flower', regular).
 ty_noun_in(english, honeybee, none, unknown, honeybee, regular).
 ty_noun_in(english, honeybells, none, unknown, honeybells, regular).
 ty_noun_in(english, honeycomb, none, unknown, honeycomb, regular).
@@ -17428,6 +18050,7 @@ ty_noun_in(english, honeysuckle, none, unknown, honeysuckle, regular).
 ty_noun_in(english, honk, none, unknown, honk, regular).
 ty_noun_in(english, honker, none, unknown, honker, regular).
 ty_noun_in(english, honkey, none, unknown, honkey, regular).
+ty_noun_in(english, 'honky-tonk', none, unknown, 'honky-tonk', regular).
 ty_noun_in(english, honkytonk, none, unknown, honkytonk, regular).
 ty_noun_in(english, honolulu, none, unknown, honolulu, regular).
 ty_noun_in(english, honor, none, unknown, honor, regular).
@@ -17437,6 +18060,8 @@ ty_noun_in(english, honoree, none, person, honoree, regular).
 ty_noun_in(english, honour, none, unknown, honour, regular).
 ty_noun_in(english, honourableness, none, unknown, honourableness, regular).
 ty_noun_in(english, honourary, none, unknown, honourary, regular).
+ty_noun_in(english, 'hoo-ha', none, unknown, 'hoo-ha', regular).
+ty_noun_in(english, 'hoo-hah', none, unknown, 'hoo-hah', regular).
 ty_noun_in(english, hooch, none, unknown, hooch, regular).
 ty_noun_in(english, hood, none, person, hood, regular).
 ty_noun_in(english, hoodlum, none, unknown, hoodlum, regular).
@@ -17446,6 +18071,7 @@ ty_noun_in(english, hoodoo, none, unknown, hoodoo, regular).
 ty_noun_in(english, hoodooism, none, unknown, hoodooism, regular).
 ty_noun_in(english, hooey, none, unknown, hooey, regular).
 ty_noun_in(english, hoof, none, unknown, hoof, regular).
+ty_noun_in(english, 'hoof-mark', none, unknown, 'hoof-mark', regular).
 ty_noun_in(english, hoofer, none, unknown, hoofer, regular).
 ty_noun_in(english, hoofmark, none, unknown, hoofmark, regular).
 ty_noun_in(english, hoofprint, none, unknown, hoofprint, regular).
@@ -17471,6 +18097,8 @@ ty_noun_in(english, hootch, none, unknown, hootch, regular).
 ty_noun_in(english, hooter, none, unknown, hooter, regular).
 ty_noun_in(english, hoover, none, unknown, hoover, regular).
 ty_noun_in(english, hop, none, unknown, hop, regular).
+ty_noun_in(english, 'hop-picker', none, unknown, 'hop-picker', regular).
+ty_noun_in(english, 'hop-step-and-jump', none, unknown, 'hop-step-and-jump', regular).
 ty_noun_in(english, hope, none, unknown, hope, regular).
 ty_noun_in(english, hopefulness, none, unknown, hopefulness, regular).
 ty_noun_in(english, hopelessness, none, unknown, hopelessness, regular).
@@ -17511,6 +18139,11 @@ ty_noun_in(english, horridness, none, unknown, horridness, regular).
 ty_noun_in(english, horripilation, none, unknown, horripilation, regular).
 ty_noun_in(english, horror, none, unknown, horror, regular).
 ty_noun_in(english, horse, none, animate, horse, regular).
+ty_noun_in(english, 'horse-brier', none, unknown, 'horse-brier', regular).
+ty_noun_in(english, 'horse-cart', none, unknown, 'horse-cart', regular).
+ty_noun_in(english, 'horse-head', none, unknown, 'horse-head', regular).
+ty_noun_in(english, 'horse-pistol', none, unknown, 'horse-pistol', regular).
+ty_noun_in(english, 'horse-trail', none, unknown, 'horse-trail', regular).
 ty_noun_in(english, horseback, none, unknown, horseback, regular).
 ty_noun_in(english, horsebean, none, unknown, horsebean, regular).
 ty_noun_in(english, horsebox, none, unknown, horsebox, regular).
@@ -17531,6 +18164,7 @@ ty_noun_in(english, horsemint, none, unknown, horsemint, regular).
 ty_noun_in(english, horseplay, none, unknown, horseplay, regular).
 ty_noun_in(english, horsepond, none, unknown, horsepond, regular).
 ty_noun_in(english, horsepower, none, unknown, horsepower, regular).
+ty_noun_in(english, 'horsepower-hour', none, unknown, 'horsepower-hour', regular).
 ty_noun_in(english, horseradish, none, unknown, horseradish, regular).
 ty_noun_in(english, horseshit, none, unknown, horseshit, regular).
 ty_noun_in(english, horseshoe, none, unknown, horseshoe, regular).
@@ -17564,12 +18198,15 @@ ty_noun_in(english, hostelry, none, unknown, hostelry, regular).
 ty_noun_in(english, hostess, none, person, hostess, regular).
 ty_noun_in(english, hostility, none, unknown, hostility, regular).
 ty_noun_in(english, hostler, none, unknown, hostler, regular).
+ty_noun_in(english, 'hot-rod', none, unknown, 'hot-rod', regular).
 ty_noun_in(english, hotbed, none, unknown, hotbed, regular).
 ty_noun_in(english, hotbox, none, unknown, hotbox, regular).
 ty_noun_in(english, hotcake, none, unknown, hotcake, regular).
 ty_noun_in(english, hotchpotch, none, unknown, hotchpotch, regular).
 ty_noun_in(english, hotdog, none, unknown, hotdog, regular).
+ty_noun_in(english, 'hotei-chiku', none, unknown, 'hotei-chiku', regular).
 ty_noun_in(english, hotel, none, unknown, hotel, regular).
+ty_noun_in(english, 'hotel-casino', none, unknown, 'hotel-casino', regular).
 ty_noun_in(english, hotelier, none, unknown, hotelier, regular).
 ty_noun_in(english, hotelkeeper, none, person, hotelkeeper, regular).
 ty_noun_in(english, hotelman, none, person, hotelman, regular).
@@ -17591,6 +18228,8 @@ ty_noun_in(english, hourglass, none, unknown, hourglass, regular).
 ty_noun_in(english, houri, none, person, houri, regular).
 ty_noun_in(english, hours, none, unknown, hours, regular).
 ty_noun_in(english, house, none, unknown, house, regular).
+ty_noun_in(english, 'house-builder', none, unknown, 'house-builder', regular).
+ty_noun_in(english, 'house-raising', none, unknown, 'house-raising', regular).
 ty_noun_in(english, houseboat, none, unknown, houseboat, regular).
 ty_noun_in(english, housebreaker, none, person, housebreaker, regular).
 ty_noun_in(english, housebuilder, none, unknown, housebuilder, regular).
@@ -17626,6 +18265,7 @@ ty_noun_in(english, houston, none, unknown, houston, regular).
 ty_noun_in(english, hovea, none, unknown, hovea, regular).
 ty_noun_in(english, hovel, none, unknown, hovel, regular).
 ty_noun_in(english, hovercraft, none, unknown, hovercraft, regular).
+ty_noun_in(english, 'how-do-you-do', none, unknown, 'how-do-you-do', regular).
 ty_noun_in(english, howdah, none, unknown, howdah, regular).
 ty_noun_in(english, howdy, none, unknown, howdy, regular).
 ty_noun_in(english, howitzer, none, unknown, howitzer, regular).
@@ -17643,6 +18283,9 @@ ty_noun_in(english, hualapai, none, person, hualapai, regular).
 ty_noun_in(english, hualpai, none, person, hualpai, regular).
 ty_noun_in(english, huamachil, none, unknown, huamachil, regular).
 ty_noun_in(english, hub, none, unknown, hub, regular).
+ty_noun_in(english, 'hub-and-spoke', none, unknown, 'hub-and-spoke', regular).
+ty_noun_in(english, 'hubble-bubble', none, unknown, 'hubble-bubble', regular).
+ty_noun_in(english, 'hubbly-bubbly', none, unknown, 'hubbly-bubbly', regular).
 ty_noun_in(english, hubbub, none, unknown, hubbub, regular).
 ty_noun_in(english, hubby, none, unknown, hubby, regular).
 ty_noun_in(english, hubcap, none, unknown, hubcap, regular).
@@ -17661,11 +18304,15 @@ ty_noun_in(english, hue, none, unknown, hue, regular).
 ty_noun_in(english, huff, none, unknown, huff, regular).
 ty_noun_in(english, huffiness, none, unknown, huffiness, regular).
 ty_noun_in(english, huffishness, none, unknown, huffishness, regular).
+ty_noun_in(english, 'hug-me-tight', none, unknown, 'hug-me-tight', regular).
 ty_noun_in(english, hugger, none, unknown, hugger, regular).
+ty_noun_in(english, 'hugger-mugger', none, unknown, 'hugger-mugger', regular).
 ty_noun_in(english, hugging, none, unknown, hugging, regular).
 ty_noun_in(english, huisache, none, unknown, huisache, regular).
 ty_noun_in(english, huitre, none, unknown, huitre, regular).
 ty_noun_in(english, hula, none, unknown, hula, regular).
+ty_noun_in(english, 'hula-hoop', none, unknown, 'hula-hoop', regular).
+ty_noun_in(english, 'hula-hula', none, unknown, 'hula-hula', regular).
 ty_noun_in(english, hulk, none, person, hulk, regular).
 ty_noun_in(english, hull, none, unknown, hull, regular).
 ty_noun_in(english, hullabaloo, none, unknown, hullabaloo, regular).
@@ -17714,6 +18361,7 @@ ty_noun_in(english, hun, none, person, hun, regular).
 ty_noun_in(english, hunch, none, unknown, hunch, regular).
 ty_noun_in(english, hunchback, none, unknown, hunchback, regular).
 ty_noun_in(english, hundred, none, unknown, hundred, regular).
+ty_noun_in(english, 'hundred-percenter', none, unknown, 'hundred-percenter', regular).
 ty_noun_in(english, hundredweight, none, unknown, hundredweight, regular).
 ty_noun_in(english, hungary, none, unknown, hungary, regular).
 ty_noun_in(english, hunger, none, unknown, hunger, regular).
@@ -17721,11 +18369,13 @@ ty_noun_in(english, hungriness, none, unknown, hungriness, regular).
 ty_noun_in(english, hunk, none, unknown, hunk, regular).
 ty_noun_in(english, hunnemannia, none, unknown, hunnemannia, regular).
 ty_noun_in(english, hunter, none, person, hunter, regular).
+ty_noun_in(english, 'hunter-gatherer', none, unknown, 'hunter-gatherer', regular).
 ty_noun_in(english, hunting, none, unknown, hunting, regular).
 ty_noun_in(english, huntress, none, person, huntress, regular).
 ty_noun_in(english, huntsman, none, unknown, huntsman, regular).
 ty_noun_in(english, hurdle, none, unknown, hurdle, regular).
 ty_noun_in(english, hurdler, none, unknown, hurdler, regular).
+ty_noun_in(english, 'hurdy-gurdy', none, unknown, 'hurdy-gurdy', regular).
 ty_noun_in(english, hurler, none, person, hurler, regular).
 ty_noun_in(english, hurrah, none, unknown, hurrah, regular).
 ty_noun_in(english, hurricane, none, unknown, hurricane, regular).
@@ -18060,6 +18710,8 @@ ty_noun_in(english, ibuprofen, none, unknown, ibuprofen, regular).
 ty_noun_in(english, icaco, none, unknown, icaco, regular).
 ty_noun_in(english, icbm, none, unknown, icbm, regular).
 ty_noun_in(english, ice, none, unknown, ice, regular).
+ty_noun_in(english, 'ice-skater', none, unknown, 'ice-skater', regular).
+ty_noun_in(english, 'ice-wagon', none, unknown, 'ice-wagon', regular).
 ty_noun_in(english, iceberg, none, unknown, iceberg, regular).
 ty_noun_in(english, iceboat, none, unknown, iceboat, regular).
 ty_noun_in(english, icebox, none, unknown, icebox, regular).
@@ -18157,6 +18809,7 @@ ty_noun_in(english, ikastola, none, unknown, ikastola, regular).
 ty_noun_in(english, ikon, none, unknown, ikon, regular).
 ty_noun_in(english, ikurrina, none, unknown, ikurrina, regular).
 ty_noun_in(english, ilama, none, unknown, ilama, regular).
+ty_noun_in(english, 'ilang-ilang', none, unknown, 'ilang-ilang', regular).
 ty_noun_in(english, ileitis, none, unknown, ileitis, regular).
 ty_noun_in(english, ileostomy, none, unknown, ileostomy, regular).
 ty_noun_in(english, ileum, none, unknown, ileum, regular).
@@ -18165,6 +18818,10 @@ ty_noun_in(english, iliad, none, unknown, iliad, regular).
 ty_noun_in(english, ilium, none, unknown, ilium, regular).
 ty_noun_in(english, ilk, none, unknown, ilk, regular).
 ty_noun_in(english, ill, none, unknown, ill, regular).
+ty_noun_in(english, 'ill-being', none, unknown, 'ill-being', regular).
+ty_noun_in(english, 'ill-breeding', none, unknown, 'ill-breeding', regular).
+ty_noun_in(english, 'ill-treatment', none, unknown, 'ill-treatment', regular).
+ty_noun_in(english, 'ill-usage', none, unknown, 'ill-usage', regular).
 ty_noun_in(english, illation, none, unknown, illation, regular).
 ty_noun_in(english, illegality, none, unknown, illegality, regular).
 ty_noun_in(english, illegibility, none, unknown, illegibility, regular).
@@ -18394,6 +19051,12 @@ ty_noun_in(english, impunity, none, unknown, impunity, regular).
 ty_noun_in(english, impureness, none, unknown, impureness, regular).
 ty_noun_in(english, impurity, none, unknown, impurity, regular).
 ty_noun_in(english, imputation, none, unknown, imputation, regular).
+ty_noun_in(english, 'in-basket', none, unknown, 'in-basket', regular).
+ty_noun_in(english, 'in-fighting', none, unknown, 'in-fighting', regular).
+ty_noun_in(english, 'in-joke', none, unknown, 'in-joke', regular).
+ty_noun_in(english, 'in-law', none, unknown, 'in-law', regular).
+ty_noun_in(english, 'in-migration', none, unknown, 'in-migration', regular).
+ty_noun_in(english, 'in-tray', none, unknown, 'in-tray', regular).
 ty_noun_in(english, inability, none, unknown, inability, regular).
 ty_noun_in(english, inaccessibility, none, unknown, inaccessibility, regular).
 ty_noun_in(english, inaccuracy, none, unknown, inaccuracy, regular).
@@ -19243,6 +19906,9 @@ ty_noun_in(english, irish, none, person, irish, regular).
 ty_noun_in(english, irishman, none, person, irishman, regular).
 ty_noun_in(english, iritis, none, unknown, iritis, regular).
 ty_noun_in(english, iron, none, unknown, iron, regular).
+ty_noun_in(english, 'iron-gray', none, unknown, 'iron-gray', regular).
+ty_noun_in(english, 'iron-grey', none, unknown, 'iron-grey', regular).
+ty_noun_in(english, 'iron-tree', none, unknown, 'iron-tree', regular).
 ty_noun_in(english, ironist, none, unknown, ironist, regular).
 ty_noun_in(english, ironman, none, unknown, ironman, regular).
 ty_noun_in(english, ironmonger, none, unknown, ironmonger, regular).
@@ -19292,6 +19958,7 @@ ty_noun_in(english, ischium, none, unknown, ischium, regular).
 ty_noun_in(english, isinglass, none, unknown, isinglass, regular).
 ty_noun_in(english, islamist, none, unknown, islamist, regular).
 ty_noun_in(english, island, none, unknown, island, regular).
+ty_noun_in(english, 'island-dweller', none, unknown, 'island-dweller', regular).
 ty_noun_in(english, islander, none, unknown, islander, regular).
 ty_noun_in(english, islay, none, unknown, islay, regular).
 ty_noun_in(english, isle, none, unknown, isle, regular).
@@ -19381,6 +20048,11 @@ ty_noun_in(english, jaboticaba, none, unknown, jaboticaba, regular).
 ty_noun_in(english, jacamar, none, unknown, jacamar, regular).
 ty_noun_in(english, jacaranda, none, unknown, jacaranda, regular).
 ty_noun_in(english, jacinth, none, unknown, jacinth, regular).
+ty_noun_in(english, 'jack-a-lantern', none, unknown, 'jack-a-lantern', regular).
+ty_noun_in(english, 'jack-by-the-hedge', none, unknown, 'jack-by-the-hedge', regular).
+ty_noun_in(english, 'jack-in-the-box', none, unknown, 'jack-in-the-box', regular).
+ty_noun_in(english, 'jack-in-the-pulpit', none, unknown, 'jack-in-the-pulpit', regular).
+ty_noun_in(english, 'jack-o-lantern', none, unknown, 'jack-o-lantern', regular).
 ty_noun_in(english, jackal, none, unknown, jackal, regular).
 ty_noun_in(english, jackanapes, none, unknown, jackanapes, regular).
 ty_noun_in(english, jackass, none, person, jackass, regular).
@@ -19390,6 +20062,7 @@ ty_noun_in(english, jacket, none, unknown, jacket, regular).
 ty_noun_in(english, jackfruit, none, unknown, jackfruit, regular).
 ty_noun_in(english, jackhammer, none, unknown, jackhammer, regular).
 ty_noun_in(english, jackknife, none, unknown, jackknife, regular).
+ty_noun_in(english, 'jackknife-fish', none, unknown, 'jackknife-fish', regular).
 ty_noun_in(english, jacklight, none, unknown, jacklight, regular).
 ty_noun_in(english, jackpot, none, unknown, jackpot, regular).
 ty_noun_in(english, jackrabbit, none, unknown, jackrabbit, regular).
@@ -19501,11 +20174,14 @@ ty_noun_in(english, jeopardy, none, unknown, jeopardy, regular).
 ty_noun_in(english, jerboa, none, unknown, jerboa, regular).
 ty_noun_in(english, jeremiad, none, unknown, jeremiad, regular).
 ty_noun_in(english, jerk, none, person, jerk, regular).
+ty_noun_in(english, 'jerk-off', none, unknown, 'jerk-off', regular).
 ty_noun_in(english, jerker, none, person, jerker, regular).
 ty_noun_in(english, jerkin, none, unknown, jerkin, regular).
 ty_noun_in(english, jerkiness, none, unknown, jerkiness, regular).
 ty_noun_in(english, jerking, none, unknown, jerking, regular).
 ty_noun_in(english, jeroboam, none, unknown, jeroboam, regular).
+ty_noun_in(english, 'jerry-builder', none, unknown, 'jerry-builder', regular).
+ty_noun_in(english, 'jerry-building', none, unknown, 'jerry-building', regular).
 ty_noun_in(english, jerrycan, none, unknown, jerrycan, regular).
 ty_noun_in(english, jersey, none, unknown, jersey, regular).
 ty_noun_in(english, jerusalem, none, unknown, jerusalem, regular).
@@ -19525,6 +20201,7 @@ ty_noun_in(english, jewelery, none, unknown, jewelery, regular).
 ty_noun_in(english, jeweller, none, unknown, jeweller, regular).
 ty_noun_in(english, jewellery, none, unknown, jewellery, regular).
 ty_noun_in(english, jewelry, none, unknown, jewelry, regular).
+ty_noun_in(english, 'jewels-of-opar', none, unknown, 'jewels-of-opar', regular).
 ty_noun_in(english, jewelweed, none, unknown, jewelweed, regular).
 ty_noun_in(english, jewfish, none, unknown, jewfish, regular).
 ty_noun_in(english, jezebel, none, unknown, jezebel, regular).
@@ -19535,6 +20212,7 @@ ty_noun_in(english, jiffy, none, unknown, jiffy, regular).
 ty_noun_in(english, jigaboo, none, unknown, jigaboo, regular).
 ty_noun_in(english, jigger, none, unknown, jigger, regular).
 ty_noun_in(english, jiggermast, none, unknown, jiggermast, regular).
+ty_noun_in(english, 'jiggery-pokery', none, unknown, 'jiggery-pokery', regular).
 ty_noun_in(english, jiggle, none, unknown, jiggle, regular).
 ty_noun_in(english, jigsaw, none, unknown, jigsaw, regular).
 ty_noun_in(english, jihad, none, unknown, jihad, regular).
@@ -19661,6 +20339,7 @@ ty_noun_in(english, jumbo, none, unknown, jumbo, regular).
 ty_noun_in(english, jumbojet, none, unknown, jumbojet, regular).
 ty_noun_in(english, jument, none, unknown, jument, regular).
 ty_noun_in(english, jump, none, unknown, jump, regular).
+ty_noun_in(english, 'jump-start', none, unknown, 'jump-start', regular).
 ty_noun_in(english, jumper, none, unknown, jumper, regular).
 ty_noun_in(english, jumpiness, none, unknown, jumpiness, regular).
 ty_noun_in(english, jumpstart, none, unknown, jumpstart, regular).
@@ -19697,6 +20376,7 @@ ty_noun_in(english, juvenescence, none, unknown, juvenescence, regular).
 ty_noun_in(english, juvenile, none, person, juvenile, regular).
 ty_noun_in(english, juvenility, none, unknown, juvenility, regular).
 ty_noun_in(english, juxtaposition, none, unknown, juxtaposition, regular).
+ty_noun_in(english, 'k-meson', none, unknown, 'k-meson', regular).
 ty_noun_in(english, kabala, none, unknown, kabala, regular).
 ty_noun_in(english, kabbala, none, unknown, kabbala, regular).
 ty_noun_in(english, kabbalah, none, unknown, kabbalah, regular).
@@ -19714,6 +20394,7 @@ ty_noun_in(english, kainite, none, unknown, kainite, regular).
 ty_noun_in(english, kainogenesis, none, unknown, kainogenesis, regular).
 ty_noun_in(english, kaiser, none, unknown, kaiser, regular).
 ty_noun_in(english, kaki, none, unknown, kaki, regular).
+ty_noun_in(english, 'kala-azar', none, unknown, 'kala-azar', regular).
 ty_noun_in(english, kalansuwa, none, unknown, kalansuwa, regular).
 ty_noun_in(english, kalantas, none, unknown, kalantas, regular).
 ty_noun_in(english, kalapooia, none, person, kalapooia, regular).
@@ -19751,6 +20432,7 @@ ty_noun_in(english, kapeika, none, unknown, kapeika, regular).
 ty_noun_in(english, kaph, none, unknown, kaph, regular).
 ty_noun_in(english, kapok, none, unknown, kapok, regular).
 ty_noun_in(english, kappa, none, unknown, kappa, regular).
+ty_noun_in(english, 'kappa-meson', none, unknown, 'kappa-meson', regular).
 ty_noun_in(english, kapuka, none, unknown, kapuka, regular).
 ty_noun_in(english, karabiner, none, unknown, karabiner, regular).
 ty_noun_in(english, karakul, none, unknown, karakul, regular).
@@ -19949,6 +20631,7 @@ ty_noun_in(english, kilocalorie, none, unknown, kilocalorie, regular).
 ty_noun_in(english, kilocalory, none, unknown, kilocalory, regular).
 ty_noun_in(english, kilocycle, none, unknown, kilocycle, regular).
 ty_noun_in(english, kilogram, none, unknown, kilogram, regular).
+ty_noun_in(english, 'kilogram-meter', none, unknown, 'kilogram-meter', regular).
 ty_noun_in(english, kilogramme, none, unknown, kilogramme, regular).
 ty_noun_in(english, kilohertz, none, unknown, kilohertz, regular).
 ty_noun_in(english, kiloliter, none, unknown, kiloliter, regular).
@@ -19958,6 +20641,7 @@ ty_noun_in(english, kilometre, none, unknown, kilometre, regular).
 ty_noun_in(english, kilopond, none, unknown, kilopond, regular).
 ty_noun_in(english, kiloton, none, unknown, kiloton, regular).
 ty_noun_in(english, kilovolt, none, unknown, kilovolt, regular).
+ty_noun_in(english, 'kilovolt-ampere', none, unknown, 'kilovolt-ampere', regular).
 ty_noun_in(english, kilowatt, none, unknown, kilowatt, regular).
 ty_noun_in(english, kilt, none, unknown, kilt, regular).
 ty_noun_in(english, kilter, none, unknown, kilter, regular).
@@ -19969,6 +20653,7 @@ ty_noun_in(english, kinaesthesis, none, unknown, kinaesthesis, regular).
 ty_noun_in(english, kinanesthesia, none, unknown, kinanesthesia, regular).
 ty_noun_in(english, kinase, none, unknown, kinase, regular).
 ty_noun_in(english, kind, none, unknown, kind, regular).
+ty_noun_in(english, 'kind-heartedness', none, unknown, 'kind-heartedness', regular).
 ty_noun_in(english, kindergarten, none, unknown, kindergarten, regular).
 ty_noun_in(english, kindergartener, none, unknown, kindergartener, regular).
 ty_noun_in(english, kindergartner, none, unknown, kindergartner, regular).
@@ -20021,6 +20706,7 @@ ty_noun_in(english, kishke, none, unknown, kishke, regular).
 ty_noun_in(english, kismat, none, unknown, kismat, regular).
 ty_noun_in(english, kismet, none, unknown, kismet, regular).
 ty_noun_in(english, kiss, none, unknown, kiss, regular).
+ty_noun_in(english, 'kiss-me-over-the-garden-gate', none, unknown, 'kiss-me-over-the-garden-gate', regular).
 ty_noun_in(english, kisser, none, unknown, kisser, regular).
 ty_noun_in(english, kissing, none, unknown, kissing, regular).
 ty_noun_in(english, kit, none, unknown, kit, regular).
@@ -20035,9 +20721,11 @@ ty_noun_in(english, kith, none, unknown, kith, regular).
 ty_noun_in(english, kitsch, none, unknown, kitsch, regular).
 ty_noun_in(english, kittee, none, unknown, kittee, regular).
 ty_noun_in(english, kitten, none, animate, kitten, regular).
+ty_noun_in(english, 'kitten-tails', none, unknown, 'kitten-tails', regular).
 ty_noun_in(english, kittiwake, none, unknown, kittiwake, regular).
 ty_noun_in(english, kittul, none, unknown, kittul, regular).
 ty_noun_in(english, kitty, none, unknown, kitty, regular).
+ty_noun_in(english, 'kitty-cat', none, unknown, 'kitty-cat', regular).
 ty_noun_in(english, kitul, none, unknown, kitul, regular).
 ty_noun_in(english, kiwi, none, unknown, kiwi, regular).
 ty_noun_in(english, kiwifruit, none, unknown, kiwifruit, regular).
@@ -20064,6 +20752,8 @@ ty_noun_in(english, knavery, none, unknown, knavery, regular).
 ty_noun_in(english, knawe, none, unknown, knawe, regular).
 ty_noun_in(english, knawel, none, unknown, knawel, regular).
 ty_noun_in(english, knee, none, unknown, knee, regular).
+ty_noun_in(english, 'knee-hi', none, unknown, 'knee-hi', regular).
+ty_noun_in(english, 'knee-high', none, unknown, 'knee-high', regular).
 ty_noun_in(english, kneecap, none, unknown, kneecap, regular).
 ty_noun_in(english, kneeler, none, unknown, kneeler, regular).
 ty_noun_in(english, kneepad, none, unknown, kneepad, regular).
@@ -20074,7 +20764,10 @@ ty_noun_in(english, knickers, none, unknown, knickers, regular).
 ty_noun_in(english, knickknack, none, unknown, knickknack, regular).
 ty_noun_in(english, knickknackery, none, unknown, knickknackery, regular).
 ty_noun_in(english, knickknacks, none, unknown, knickknacks, regular).
+ty_noun_in(english, 'knife-edge', none, unknown, 'knife-edge', regular).
+ty_noun_in(english, 'knife-handle', none, unknown, 'knife-handle', regular).
 ty_noun_in(english, knight, none, person, knight, regular).
+ty_noun_in(english, 'knight-errant', none, unknown, 'knight-errant', regular).
 ty_noun_in(english, knighthood, none, unknown, knighthood, regular).
 ty_noun_in(english, knightliness, none, unknown, knightliness, regular).
 ty_noun_in(english, kniphofia, none, unknown, kniphofia, regular).
@@ -20086,6 +20779,7 @@ ty_noun_in(english, knitwork, none, unknown, knitwork, regular).
 ty_noun_in(english, knob, none, unknown, knob, regular).
 ty_noun_in(english, knobble, none, unknown, knobble, regular).
 ty_noun_in(english, knock, none, unknown, knock, regular).
+ty_noun_in(english, 'knock-knee', none, unknown, 'knock-knee', regular).
 ty_noun_in(english, knocker, none, person, knocker, regular).
 ty_noun_in(english, knocking, none, unknown, knocking, regular).
 ty_noun_in(english, knockoff, none, unknown, knockoff, regular).
@@ -20096,6 +20790,9 @@ ty_noun_in(english, knotgrass, none, unknown, knotgrass, regular).
 ty_noun_in(english, knothole, none, unknown, knothole, regular).
 ty_noun_in(english, knottiness, none, unknown, knottiness, regular).
 ty_noun_in(english, knout, none, unknown, knout, regular).
+ty_noun_in(english, 'know-all', none, unknown, 'know-all', regular).
+ty_noun_in(english, 'know-how', none, unknown, 'know-how', regular).
+ty_noun_in(english, 'know-it-all', none, unknown, 'know-it-all', regular).
 ty_noun_in(english, knower, none, unknown, knower, regular).
 ty_noun_in(english, knowingness, none, unknown, knowingness, regular).
 ty_noun_in(english, knowledge, none, unknown, knowledge, regular).
@@ -20116,6 +20813,8 @@ ty_noun_in(english, kohleria, none, unknown, kohleria, regular).
 ty_noun_in(english, kohlrabi, none, unknown, kohlrabi, regular).
 ty_noun_in(english, koine, none, unknown, koine, regular).
 ty_noun_in(english, koinonia, none, unknown, koinonia, regular).
+ty_noun_in(english, 'kok-saghyz', none, unknown, 'kok-saghyz', regular).
+ty_noun_in(english, 'kok-sagyz', none, unknown, 'kok-sagyz', regular).
 ty_noun_in(english, kola, none, unknown, kola, regular).
 ty_noun_in(english, kolkhoz, none, unknown, kolkhoz, regular).
 ty_noun_in(english, kolkhoznik, none, unknown, kolkhoznik, regular).
@@ -20158,6 +20857,7 @@ ty_noun_in(english, kroon, none, unknown, kroon, regular).
 ty_noun_in(english, krubi, none, unknown, krubi, regular).
 ty_noun_in(english, krummhorn, none, unknown, krummhorn, regular).
 ty_noun_in(english, krypton, none, unknown, krypton, regular).
+ty_noun_in(english, 'ku-chiku', none, unknown, 'ku-chiku', regular).
 ty_noun_in(english, kudos, none, unknown, kudos, regular).
 ty_noun_in(english, kudu, none, unknown, kudu, regular).
 ty_noun_in(english, kudzu, none, unknown, kudzu, regular).
@@ -20169,6 +20869,7 @@ ty_noun_in(english, kurakkan, none, unknown, kurakkan, regular).
 ty_noun_in(english, kurchee, none, unknown, kurchee, regular).
 ty_noun_in(english, kurchi, none, unknown, kurchi, regular).
 ty_noun_in(english, kurd, none, person, kurd, regular).
+ty_noun_in(english, 'kuri-chiku', none, unknown, 'kuri-chiku', regular).
 ty_noun_in(english, kurrajong, none, unknown, kurrajong, regular).
 ty_noun_in(english, kurrat, none, unknown, kurrat, regular).
 ty_noun_in(english, kurta, none, unknown, kurta, regular).
@@ -20190,6 +20891,7 @@ ty_noun_in(english, kyat, none, unknown, kyat, regular).
 ty_noun_in(english, kylie, none, unknown, kylie, regular).
 ty_noun_in(english, kylix, none, unknown, kylix, regular).
 ty_noun_in(english, kymograph, none, unknown, kymograph, regular).
+ty_noun_in(english, 'kyo-chiku', none, unknown, 'kyo-chiku', regular).
 ty_noun_in(english, kyphosidae, none, unknown, kyphosidae, regular).
 ty_noun_in(english, kyphosis, none, unknown, kyphosis, regular).
 ty_noun_in(english, laager, none, unknown, laager, regular).
@@ -20248,10 +20950,14 @@ ty_noun_in(english, lacuna, none, unknown, lacuna, regular).
 ty_noun_in(english, lad, none, person, lad, regular).
 ty_noun_in(english, ladanum, none, unknown, ladanum, regular).
 ty_noun_in(english, ladder, none, unknown, ladder, regular).
+ty_noun_in(english, 'ladder-back', none, unknown, 'ladder-back', regular).
 ty_noun_in(english, laddie, none, unknown, laddie, regular).
 ty_noun_in(english, ladino, none, unknown, ladino, regular).
 ty_noun_in(english, ladle, none, unknown, ladle, regular).
 ty_noun_in(english, lady, none, person, lady, regular).
+ty_noun_in(english, 'lady-in-waiting', none, unknown, 'lady-in-waiting', regular).
+ty_noun_in(english, 'lady-of-the-night', none, unknown, 'lady-of-the-night', regular).
+ty_noun_in(english, 'lady-slipper', none, unknown, 'lady-slipper', regular).
 ty_noun_in(english, ladybeetle, none, unknown, ladybeetle, regular).
 ty_noun_in(english, ladybird, none, animate, ladybird, regular).
 ty_noun_in(english, ladybug, none, unknown, ladybug, regular).
@@ -20296,6 +21002,7 @@ ty_noun_in(english, lally, none, unknown, lally, regular).
 ty_noun_in(english, lamarckism, none, unknown, lamarckism, regular).
 ty_noun_in(english, lamasery, none, unknown, lamasery, regular).
 ty_noun_in(english, lamb, none, animate, lamb, regular).
+ty_noun_in(english, 'lamb-chop', none, unknown, 'lamb-chop', regular).
 ty_noun_in(english, lambchop, none, unknown, lambchop, regular).
 ty_noun_in(english, lambda, none, unknown, lambda, regular).
 ty_noun_in(english, lambdacism, none, unknown, lambdacism, regular).
@@ -20388,6 +21095,7 @@ ty_noun_in(english, lanset, none, unknown, lanset, regular).
 ty_noun_in(english, lansoprazole, none, unknown, lansoprazole, regular).
 ty_noun_in(english, lantana, none, unknown, lantana, regular).
 ty_noun_in(english, lantern, none, unknown, lantern, regular).
+ty_noun_in(english, 'lantern-fly', none, unknown, 'lantern-fly', regular).
 ty_noun_in(english, lanternfish, none, unknown, lanternfish, regular).
 ty_noun_in(english, lanthanide, none, unknown, lanthanide, regular).
 ty_noun_in(english, lanthanoid, none, unknown, lanthanoid, regular).
@@ -20453,6 +21161,7 @@ ty_noun_in(english, lasagne, none, unknown, lasagne, regular).
 ty_noun_in(english, lascar, none, unknown, lascar, regular).
 ty_noun_in(english, lasciviousness, none, unknown, lasciviousness, regular).
 ty_noun_in(english, laser, none, unknown, laser, regular).
+ty_noun_in(english, 'lash-up', none, unknown, 'lash-up', regular).
 ty_noun_in(english, lasher, none, person, lasher, regular).
 ty_noun_in(english, lashing, none, unknown, lashing, regular).
 ty_noun_in(english, lasiocampid, none, unknown, lasiocampid, regular).
@@ -20471,6 +21180,7 @@ ty_noun_in(english, latchkey, none, unknown, latchkey, regular).
 ty_noun_in(english, latchstring, none, unknown, latchstring, regular).
 ty_noun_in(english, latecomer, none, person, latecomer, regular).
 ty_noun_in(english, lateen, none, unknown, lateen, regular).
+ty_noun_in(english, 'lateen-rig', none, unknown, 'lateen-rig', regular).
 ty_noun_in(english, latency, none, unknown, latency, regular).
 ty_noun_in(english, lateness, none, unknown, lateness, regular).
 ty_noun_in(english, lateralisation, none, unknown, lateralisation, regular).
@@ -20520,6 +21230,7 @@ ty_noun_in(english, laundry, none, unknown, laundry, regular).
 ty_noun_in(english, laundryman, none, person, laundryman, regular).
 ty_noun_in(english, laundrywoman, none, unknown, laundrywoman, regular).
 ty_noun_in(english, laurel, none, unknown, laurel, regular).
+ty_noun_in(english, 'laurel-tree', none, unknown, 'laurel-tree', regular).
 ty_noun_in(english, laurels, none, unknown, laurels, regular).
 ty_noun_in(english, laurelwood, none, unknown, laurelwood, regular).
 ty_noun_in(english, lava, none, unknown, lava, regular).
@@ -20533,6 +21244,8 @@ ty_noun_in(english, lavender, none, unknown, lavender, regular).
 ty_noun_in(english, laver, none, unknown, laver, regular).
 ty_noun_in(english, lavishness, none, unknown, lavishness, regular).
 ty_noun_in(english, law, none, unknown, law, regular).
+ty_noun_in(english, 'law-breaking', none, unknown, 'law-breaking', regular).
+ty_noun_in(english, 'law-makers', none, unknown, 'law-makers', regular).
 ty_noun_in(english, lawbreaker, none, unknown, lawbreaker, regular).
 ty_noun_in(english, lawcourt, none, unknown, lawcourt, regular).
 ty_noun_in(english, lawfulness, none, unknown, lawfulness, regular).
@@ -20550,6 +21263,8 @@ ty_noun_in(english, laxation, none, unknown, laxation, regular).
 ty_noun_in(english, laxative, none, unknown, laxative, regular).
 ty_noun_in(english, laxity, none, unknown, laxity, regular).
 ty_noun_in(english, laxness, none, unknown, laxness, regular).
+ty_noun_in(english, 'lay-by', none, unknown, 'lay-by', regular).
+ty_noun_in(english, 'lay-up', none, unknown, 'lay-up', regular).
 ty_noun_in(english, layabout, none, person, layabout, regular).
 ty_noun_in(english, layby, none, unknown, layby, regular).
 ty_noun_in(english, layer, none, unknown, layer, regular).
@@ -20576,12 +21291,17 @@ ty_noun_in(english, lea, none, unknown, lea, regular).
 ty_noun_in(english, leach, none, unknown, leach, regular).
 ty_noun_in(english, leaching, none, unknown, leaching, regular).
 ty_noun_in(english, lead, none, unknown, lead, regular).
+ty_noun_in(english, 'lead-in', none, unknown, 'lead-in', regular).
 ty_noun_in(english, leader, none, person, leader, regular).
 ty_noun_in(english, leaders, none, unknown, leaders, regular).
 ty_noun_in(english, leadership, none, unknown, leadership, regular).
 ty_noun_in(english, leading, none, unknown, leading, regular).
 ty_noun_in(english, leadplant, none, unknown, leadplant, regular).
 ty_noun_in(english, leadwort, none, unknown, leadwort, regular).
+ty_noun_in(english, 'leaf-book', none, unknown, 'leaf-book', regular).
+ty_noun_in(english, 'leaf-cutter', none, unknown, 'leaf-cutter', regular).
+ty_noun_in(english, 'leaf-miner', none, unknown, 'leaf-miner', regular).
+ty_noun_in(english, 'leaf-roller', none, unknown, 'leaf-roller', regular).
 ty_noun_in(english, leafage, none, unknown, leafage, regular).
 ty_noun_in(english, leafhopper, none, unknown, leafhopper, regular).
 ty_noun_in(english, leaflet, none, unknown, leaflet, regular).
@@ -20591,6 +21311,7 @@ ty_noun_in(english, leak, none, unknown, leak, regular).
 ty_noun_in(english, leakage, none, unknown, leakage, regular).
 ty_noun_in(english, leaker, none, unknown, leaker, regular).
 ty_noun_in(english, leakiness, none, unknown, leakiness, regular).
+ty_noun_in(english, 'lean-to', none, unknown, 'lean-to', regular).
 ty_noun_in(english, leaner, none, unknown, leaner, regular).
 ty_noun_in(english, leanness, none, unknown, leanness, regular).
 ty_noun_in(english, leap, none, unknown, leap, regular).
@@ -20601,6 +21322,7 @@ ty_noun_in(english, learnedness, none, unknown, learnedness, regular).
 ty_noun_in(english, learner, none, person, learner, regular).
 ty_noun_in(english, learning, none, unknown, learning, regular).
 ty_noun_in(english, lease, none, unknown, lease, regular).
+ty_noun_in(english, 'lease-lend', none, unknown, 'lease-lend', regular).
 ty_noun_in(english, leasehold, none, unknown, leasehold, regular).
 ty_noun_in(english, leaseholder, none, unknown, leaseholder, regular).
 ty_noun_in(english, leash, none, unknown, leash, regular).
@@ -20615,6 +21337,7 @@ ty_noun_in(english, leatherneck, none, unknown, leatherneck, regular).
 ty_noun_in(english, leatherwood, none, unknown, leatherwood, regular).
 ty_noun_in(english, leatherwork, none, unknown, leatherwork, regular).
 ty_noun_in(english, leave, none, unknown, leave, regular).
+ty_noun_in(english, 'leave-taking', none, unknown, 'leave-taking', regular).
 ty_noun_in(english, leaven, none, unknown, leaven, regular).
 ty_noun_in(english, leavening, none, unknown, leavening, regular).
 ty_noun_in(english, leaver, none, unknown, leaver, regular).
@@ -20649,12 +21372,17 @@ ty_noun_in(english, leeward, none, unknown, leeward, regular).
 ty_noun_in(english, leeway, none, unknown, leeway, regular).
 ty_noun_in(english, leflunomide, none, unknown, leflunomide, regular).
 ty_noun_in(english, left, none, unknown, left, regular).
+ty_noun_in(english, 'left-handedness', none, unknown, 'left-handedness', regular).
+ty_noun_in(english, 'left-hander', none, unknown, 'left-hander', regular).
+ty_noun_in(english, 'left-winger', none, unknown, 'left-winger', regular).
 ty_noun_in(english, leftfield, none, unknown, leftfield, regular).
 ty_noun_in(english, lefthander, none, person, lefthander, regular).
 ty_noun_in(english, leftism, none, unknown, leftism, regular).
 ty_noun_in(english, leftover, none, unknown, leftover, regular).
 ty_noun_in(english, lefty, none, person, lefty, regular).
 ty_noun_in(english, leg, none, unknown, leg, regular).
+ty_noun_in(english, 'leg-pull', none, unknown, 'leg-pull', regular).
+ty_noun_in(english, 'leg-pulling', none, unknown, 'leg-pulling', regular).
 ty_noun_in(english, legacy, none, unknown, legacy, regular).
 ty_noun_in(english, legalese, none, unknown, legalese, regular).
 ty_noun_in(english, legalisation, none, unknown, legalisation, regular).
@@ -20703,11 +21431,13 @@ ty_noun_in(english, lemma, none, unknown, lemma, regular).
 ty_noun_in(english, lemming, none, unknown, lemming, regular).
 ty_noun_in(english, lemniscus, none, unknown, lemniscus, regular).
 ty_noun_in(english, lemon, none, unknown, lemon, regular).
+ty_noun_in(english, 'lemon-wood', none, unknown, 'lemon-wood', regular).
 ty_noun_in(english, lemonade, none, unknown, lemonade, regular).
 ty_noun_in(english, lemongrass, none, unknown, lemongrass, regular).
 ty_noun_in(english, lemonwood, none, unknown, lemonwood, regular).
 ty_noun_in(english, lempira, none, unknown, lempira, regular).
 ty_noun_in(english, lemur, none, unknown, lemur, regular).
+ty_noun_in(english, 'lend-lease', none, unknown, 'lend-lease', regular).
 ty_noun_in(english, lender, none, unknown, lender, regular).
 ty_noun_in(english, lending, none, unknown, lending, regular).
 ty_noun_in(english, length, none, unknown, length, regular).
@@ -20903,12 +21633,17 @@ ty_noun_in(english, lid, none, unknown, lid, regular).
 ty_noun_in(english, lidar, none, unknown, lidar, regular).
 ty_noun_in(english, lido, none, unknown, lido, regular).
 ty_noun_in(english, lie, none, unknown, lie, regular).
+ty_noun_in(english, 'lie-abed', none, unknown, 'lie-abed', regular).
+ty_noun_in(english, 'lie-in', none, unknown, 'lie-in', regular).
 ty_noun_in(english, liebfraumilch, none, unknown, liebfraumilch, regular).
 ty_noun_in(english, liegeman, none, unknown, liegeman, regular).
 ty_noun_in(english, lien, none, unknown, lien, regular).
 ty_noun_in(english, lieu, none, unknown, lieu, regular).
 ty_noun_in(english, lieutenancy, none, unknown, lieutenancy, regular).
 ty_noun_in(english, lieutenant, none, person, lieutenant, regular).
+ty_noun_in(english, 'life-of-man', none, unknown, 'life-of-man', regular).
+ty_noun_in(english, 'life-style', none, unknown, 'life-style', regular).
+ty_noun_in(english, 'life-time', none, unknown, 'life-time', regular).
 ty_noun_in(english, lifeblood, none, unknown, lifeblood, regular).
 ty_noun_in(english, lifeboat, none, unknown, lifeboat, regular).
 ty_noun_in(english, lifeguard, none, unknown, lifeguard, regular).
@@ -20933,6 +21668,9 @@ ty_noun_in(english, ligation, none, unknown, ligation, regular).
 ty_noun_in(english, ligature, none, unknown, ligature, regular).
 ty_noun_in(english, liger, none, unknown, liger, regular).
 ty_noun_in(english, light, none, unknown, light, regular).
+ty_noun_in(english, 'light-mindedness', none, unknown, 'light-mindedness', regular).
+ty_noun_in(english, 'light-of-love', none, unknown, 'light-of-love', regular).
+ty_noun_in(english, 'light-year', none, unknown, 'light-year', regular).
 ty_noun_in(english, lightbulb, none, unknown, lightbulb, regular).
 ty_noun_in(english, lightening, none, unknown, lightening, regular).
 ty_noun_in(english, lighter, none, unknown, lighter, regular).
@@ -20945,6 +21683,7 @@ ty_noun_in(english, lighting, none, unknown, lighting, regular).
 ty_noun_in(english, lightlessness, none, unknown, lightlessness, regular).
 ty_noun_in(english, lightness, none, unknown, lightness, regular).
 ty_noun_in(english, lightning, none, unknown, lightning, regular).
+ty_noun_in(english, 'lights-out', none, unknown, 'lights-out', regular).
 ty_noun_in(english, lightship, none, unknown, lightship, regular).
 ty_noun_in(english, lightsomeness, none, unknown, lightsomeness, regular).
 ty_noun_in(english, lightweight, none, person, lightweight, regular).
@@ -21013,6 +21752,8 @@ ty_noun_in(english, lindane, none, unknown, lindane, regular).
 ty_noun_in(english, linden, none, unknown, linden, regular).
 ty_noun_in(english, lindy, none, unknown, lindy, regular).
 ty_noun_in(english, line, none, unknown, line, regular).
+ty_noun_in(english, 'line-shooter', none, unknown, 'line-shooter', regular).
+ty_noun_in(english, 'line-shooting', none, unknown, 'line-shooting', regular).
 ty_noun_in(english, lineage, none, unknown, lineage, regular).
 ty_noun_in(english, lineament, none, unknown, lineament, regular).
 ty_noun_in(english, linearity, none, unknown, linearity, regular).
@@ -21054,6 +21795,7 @@ ty_noun_in(english, linnet, none, unknown, linnet, regular).
 ty_noun_in(english, linocut, none, unknown, linocut, regular).
 ty_noun_in(english, linoleum, none, unknown, linoleum, regular).
 ty_noun_in(english, linseed, none, unknown, linseed, regular).
+ty_noun_in(english, 'linsey-woolsey', none, unknown, 'linsey-woolsey', regular).
 ty_noun_in(english, linstock, none, unknown, linstock, regular).
 ty_noun_in(english, lint, none, unknown, lint, regular).
 ty_noun_in(english, lintel, none, unknown, lintel, regular).
@@ -21061,11 +21803,13 @@ ty_noun_in(english, lintwhite, none, unknown, lintwhite, regular).
 ty_noun_in(english, linuron, none, unknown, linuron, regular).
 ty_noun_in(english, liomys, none, unknown, liomys, regular).
 ty_noun_in(english, lion, none, animate, lion, regular).
+ty_noun_in(english, 'lion-hunter', none, unknown, 'lion-hunter', regular).
 ty_noun_in(english, lioness, none, unknown, lioness, regular).
 ty_noun_in(english, lionet, none, unknown, lionet, regular).
 ty_noun_in(english, lionfish, none, unknown, lionfish, regular).
 ty_noun_in(english, liothyronine, none, unknown, liothyronine, regular).
 ty_noun_in(english, lip, none, unknown, lip, regular).
+ty_noun_in(english, 'lip-gloss', none, unknown, 'lip-gloss', regular).
 ty_noun_in(english, lipaemia, none, unknown, lipaemia, regular).
 ty_noun_in(english, liparis, none, unknown, liparis, regular).
 ty_noun_in(english, lipase, none, unknown, lipase, regular).
@@ -21152,6 +21896,8 @@ ty_noun_in(english, litmus, none, unknown, litmus, regular).
 ty_noun_in(english, litotes, none, unknown, litotes, regular).
 ty_noun_in(english, litre, none, unknown, litre, regular).
 ty_noun_in(english, litter, none, unknown, litter, regular).
+ty_noun_in(english, 'litter-basket', none, unknown, 'litter-basket', regular).
+ty_noun_in(english, 'litter-bearer', none, unknown, 'litter-bearer', regular).
 ty_noun_in(english, litterateur, none, unknown, litterateur, regular).
 ty_noun_in(english, litterbin, none, unknown, litterbin, regular).
 ty_noun_in(english, litterbug, none, person, litterbug, regular).
@@ -21164,6 +21910,9 @@ ty_noun_in(english, liturgics, none, unknown, liturgics, regular).
 ty_noun_in(english, liturgiology, none, unknown, liturgiology, regular).
 ty_noun_in(english, liturgist, none, unknown, liturgist, regular).
 ty_noun_in(english, liturgy, none, unknown, liturgy, regular).
+ty_noun_in(english, 'live-and-die', none, unknown, 'live-and-die', regular).
+ty_noun_in(english, 'live-bearer', none, unknown, 'live-bearer', regular).
+ty_noun_in(english, 'live-forever', none, unknown, 'live-forever', regular).
 ty_noun_in(english, livedo, none, unknown, livedo, regular).
 ty_noun_in(english, livelihood, none, unknown, livelihood, regular).
 ty_noun_in(english, liveliness, none, unknown, liveliness, regular).
@@ -21178,12 +21927,14 @@ ty_noun_in(english, livestock, none, unknown, livestock, regular).
 ty_noun_in(english, lividity, none, unknown, lividity, regular).
 ty_noun_in(english, lividness, none, unknown, lividness, regular).
 ty_noun_in(english, living, none, unknown, living, regular).
+ty_noun_in(english, 'living-room', none, unknown, 'living-room', regular).
 ty_noun_in(english, liza, none, unknown, liza, regular).
 ty_noun_in(english, lizard, none, animate, lizard, regular).
 ty_noun_in(english, lizardfish, none, unknown, lizardfish, regular).
 ty_noun_in(english, llama, none, unknown, llama, regular).
 ty_noun_in(english, loach, none, unknown, loach, regular).
 ty_noun_in(english, load, none, unknown, load, regular).
+ty_noun_in(english, 'load-shedding', none, unknown, 'load-shedding', regular).
 ty_noun_in(english, loader, none, unknown, loader, regular).
 ty_noun_in(english, loading, none, unknown, loading, regular).
 ty_noun_in(english, loadstar, none, unknown, loadstar, regular).
@@ -21191,6 +21942,7 @@ ty_noun_in(english, loadstone, none, unknown, loadstone, regular).
 ty_noun_in(english, loafer, none, unknown, loafer, regular).
 ty_noun_in(english, loam, none, unknown, loam, regular).
 ty_noun_in(english, loan, none, unknown, loan, regular).
+ty_noun_in(english, 'loan-blend', none, unknown, 'loan-blend', regular).
 ty_noun_in(english, loanblend, none, unknown, loanblend, regular).
 ty_noun_in(english, loaner, none, unknown, loaner, regular).
 ty_noun_in(english, loanword, none, unknown, loanword, regular).
@@ -21231,6 +21983,7 @@ ty_noun_in(english, locator, none, person, locator, regular).
 ty_noun_in(english, loch, none, unknown, loch, regular).
 ty_noun_in(english, lochia, none, unknown, lochia, regular).
 ty_noun_in(english, lock, none, unknown, lock, regular).
+ty_noun_in(english, 'lock-gate', none, unknown, 'lock-gate', regular).
 ty_noun_in(english, lockage, none, unknown, lockage, regular).
 ty_noun_in(english, lockbox, none, unknown, lockbox, regular).
 ty_noun_in(english, lockdown, none, unknown, lockdown, regular).
@@ -21324,6 +22077,11 @@ ty_noun_in(english, loneliness, none, unknown, loneliness, regular).
 ty_noun_in(english, loner, none, unknown, loner, regular).
 ty_noun_in(english, lonesomeness, none, unknown, lonesomeness, regular).
 ty_noun_in(english, long, none, unknown, long, regular).
+ty_noun_in(english, 'long-beard', none, unknown, 'long-beard', regular).
+ty_noun_in(english, 'long-legs', none, unknown, 'long-legs', regular).
+ty_noun_in(english, 'long-sufferance', none, unknown, 'long-sufferance', regular).
+ty_noun_in(english, 'long-suffering', none, unknown, 'long-suffering', regular).
+ty_noun_in(english, 'long-windedness', none, unknown, 'long-windedness', regular).
 ty_noun_in(english, longan, none, unknown, longan, regular).
 ty_noun_in(english, longanberry, none, unknown, longanberry, regular).
 ty_noun_in(english, longanimity, none, unknown, longanimity, regular).
@@ -21351,8 +22109,11 @@ ty_noun_in(english, lontar, none, unknown, lontar, regular).
 ty_noun_in(english, loofa, none, unknown, loofa, regular).
 ty_noun_in(english, loofah, none, unknown, loofah, regular).
 ty_noun_in(english, look, none, unknown, look, regular).
+ty_noun_in(english, 'look-alike', none, unknown, 'look-alike', regular).
+ty_noun_in(english, 'look-over', none, unknown, 'look-over', regular).
 ty_noun_in(english, lookdown, none, unknown, lookdown, regular).
 ty_noun_in(english, looker, none, person, looker, regular).
+ty_noun_in(english, 'looker-on', none, unknown, 'looker-on', regular).
 ty_noun_in(english, looking, none, unknown, looking, regular).
 ty_noun_in(english, lookout, none, unknown, lookout, regular).
 ty_noun_in(english, lookup, none, unknown, lookup, regular).
@@ -21361,6 +22122,8 @@ ty_noun_in(english, loon, none, person, loon, regular).
 ty_noun_in(english, looney, none, person, looney, regular).
 ty_noun_in(english, loonie, none, unknown, loonie, regular).
 ty_noun_in(english, loop, none, unknown, loop, regular).
+ty_noun_in(english, 'loop-line', none, unknown, 'loop-line', regular).
+ty_noun_in(english, 'loop-the-loop', none, unknown, 'loop-the-loop', regular).
 ty_noun_in(english, looper, none, unknown, looper, regular).
 ty_noun_in(english, loophole, none, unknown, loophole, regular).
 ty_noun_in(english, looseness, none, unknown, looseness, regular).
@@ -21381,6 +22144,7 @@ ty_noun_in(english, lord, none, person, lord, regular).
 ty_noun_in(english, lordliness, none, unknown, lordliness, regular).
 ty_noun_in(english, lordolatry, none, unknown, lordolatry, regular).
 ty_noun_in(english, lordosis, none, unknown, lordosis, regular).
+ty_noun_in(english, 'lords-and-ladies', none, unknown, 'lords-and-ladies', regular).
 ty_noun_in(english, lordship, none, unknown, lordship, regular).
 ty_noun_in(english, lore, none, unknown, lore, regular).
 ty_noun_in(english, lorelei, none, unknown, lorelei, regular).
@@ -21396,6 +22160,7 @@ ty_noun_in(english, losings, none, unknown, losings, regular).
 ty_noun_in(english, loss, none, unknown, loss, regular).
 ty_noun_in(english, losses, none, unknown, losses, regular).
 ty_noun_in(english, lost, none, unknown, lost, regular).
+ty_noun_in(english, 'lost-and-found', none, unknown, 'lost-and-found', regular).
 ty_noun_in(english, lot, none, unknown, lot, regular).
 ty_noun_in(english, lota, none, unknown, lota, regular).
 ty_noun_in(english, loti, none, unknown, loti, regular).
@@ -21404,7 +22169,9 @@ ty_noun_in(english, lots, none, unknown, lots, regular).
 ty_noun_in(english, lotte, none, unknown, lotte, regular).
 ty_noun_in(english, lottery, none, unknown, lottery, regular).
 ty_noun_in(english, lotus, none, unknown, lotus, regular).
+ty_noun_in(english, 'lotus-eater', none, unknown, 'lotus-eater', regular).
 ty_noun_in(english, lotusland, none, unknown, lotusland, regular).
+ty_noun_in(english, 'loud-hailer', none, unknown, 'loud-hailer', regular).
 ty_noun_in(english, loudmouth, none, unknown, loudmouth, regular).
 ty_noun_in(english, loudness, none, unknown, loudness, regular).
 ty_noun_in(english, loudspeaker, none, unknown, loudspeaker, regular).
@@ -21413,6 +22180,7 @@ ty_noun_in(english, louisiana, none, unknown, louisiana, regular).
 ty_noun_in(english, louisianan, none, person, louisianan, regular).
 ty_noun_in(english, lounger, none, person, lounger, regular).
 ty_noun_in(english, loungewear, none, unknown, loungewear, regular).
+ty_noun_in(english, 'loup-garou', none, unknown, 'loup-garou', regular).
 ty_noun_in(english, loupe, none, unknown, loupe, regular).
 ty_noun_in(english, lousiness, none, unknown, lousiness, regular).
 ty_noun_in(english, lout, none, unknown, lout, regular).
@@ -21422,14 +22190,27 @@ ty_noun_in(english, louvre, none, unknown, louvre, regular).
 ty_noun_in(english, lovage, none, unknown, lovage, regular).
 ty_noun_in(english, lovastatin, none, unknown, lovastatin, regular).
 ty_noun_in(english, love, none, unknown, love, regular).
+ty_noun_in(english, 'love-in-a-mist', none, unknown, 'love-in-a-mist', regular).
+ty_noun_in(english, 'love-in-idleness', none, unknown, 'love-in-idleness', regular).
+ty_noun_in(english, 'love-in-winter', none, unknown, 'love-in-winter', regular).
+ty_noun_in(english, 'love-lies-bleeding', none, unknown, 'love-lies-bleeding', regular).
+ty_noun_in(english, 'love-philter', none, unknown, 'love-philter', regular).
+ty_noun_in(english, 'love-philtre', none, unknown, 'love-philtre', regular).
+ty_noun_in(english, 'love-potion', none, unknown, 'love-potion', regular).
+ty_noun_in(english, 'love-song', none, unknown, 'love-song', regular).
+ty_noun_in(english, 'love-token', none, unknown, 'love-token', regular).
 ty_noun_in(english, lovebird, none, unknown, lovebird, regular).
 ty_noun_in(english, loveliness, none, unknown, loveliness, regular).
 ty_noun_in(english, lovemaking, none, unknown, lovemaking, regular).
 ty_noun_in(english, lover, none, person, lover, regular).
 ty_noun_in(english, loveseat, none, unknown, loveseat, regular).
 ty_noun_in(english, lovesickness, none, unknown, lovesickness, regular).
+ty_noun_in(english, 'loving-kindness', none, unknown, 'loving-kindness', regular).
 ty_noun_in(english, lovingness, none, unknown, lovingness, regular).
 ty_noun_in(english, lovoa, none, unknown, lovoa, regular).
+ty_noun_in(english, 'low-down', none, unknown, 'low-down', regular).
+ty_noun_in(english, 'low-spiritedness', none, unknown, 'low-spiritedness', regular).
+ty_noun_in(english, 'low-warp-loom', none, unknown, 'low-warp-loom', regular).
 ty_noun_in(english, lowan, none, unknown, lowan, regular).
 ty_noun_in(english, lowboy, none, unknown, lowboy, regular).
 ty_noun_in(english, lower, none, unknown, lower, regular).
@@ -21514,6 +22295,7 @@ ty_noun_in(english, lunchtime, none, unknown, lunchtime, regular).
 ty_noun_in(english, lune, none, unknown, lune, regular).
 ty_noun_in(english, lunette, none, unknown, lunette, regular).
 ty_noun_in(english, lung, none, unknown, lung, regular).
+ty_noun_in(english, 'lung-power', none, unknown, 'lung-power', regular).
 ty_noun_in(english, lunge, none, unknown, lunge, regular).
 ty_noun_in(english, lungen, none, unknown, lungen, regular).
 ty_noun_in(english, lunger, none, unknown, lunger, regular).
@@ -21582,6 +22364,7 @@ ty_noun_in(english, lycopodium, none, unknown, lycopodium, regular).
 ty_noun_in(english, lycosa, none, unknown, lycosa, regular).
 ty_noun_in(english, lye, none, unknown, lye, regular).
 ty_noun_in(english, lygaeid, none, unknown, lygaeid, regular).
+ty_noun_in(english, 'lying-in', none, unknown, 'lying-in', regular).
 ty_noun_in(english, lymantriid, none, unknown, lymantriid, regular).
 ty_noun_in(english, lymph, none, unknown, lymph, regular).
 ty_noun_in(english, lymphadenitis, none, unknown, lymphadenitis, regular).
@@ -21613,6 +22396,7 @@ ty_noun_in(english, lyophilisation, none, unknown, lyophilisation, regular).
 ty_noun_in(english, lyophilization, none, unknown, lyophilization, regular).
 ty_noun_in(english, lypressin, none, unknown, lypressin, regular).
 ty_noun_in(english, lyre, none, unknown, lyre, regular).
+ty_noun_in(english, 'lyre-flower', none, unknown, 'lyre-flower', regular).
 ty_noun_in(english, lyrebird, none, unknown, lyrebird, regular).
 ty_noun_in(english, lyreflower, none, unknown, lyreflower, regular).
 ty_noun_in(english, lyric, none, unknown, lyric, regular).
@@ -21655,6 +22439,7 @@ ty_noun_in(english, machinery, none, unknown, machinery, regular).
 ty_noun_in(english, machinist, none, person, machinist, regular).
 ty_noun_in(english, machismo, none, unknown, machismo, regular).
 ty_noun_in(english, machmeter, none, unknown, machmeter, regular).
+ty_noun_in(english, 'macho-man', none, unknown, 'macho-man', regular).
 ty_noun_in(english, macintosh, none, unknown, macintosh, regular).
 ty_noun_in(english, mack, none, unknown, mack, regular).
 ty_noun_in(english, mackerel, none, unknown, mackerel, regular).
@@ -21799,11 +22584,14 @@ ty_noun_in(english, mailboat, none, unknown, mailboat, regular).
 ty_noun_in(english, mailbox, none, unknown, mailbox, regular).
 ty_noun_in(english, maildrop, none, unknown, maildrop, regular).
 ty_noun_in(english, mailer, none, unknown, mailer, regular).
+ty_noun_in(english, 'mailing-card', none, unknown, 'mailing-card', regular).
 ty_noun_in(english, mailman, none, person, mailman, regular).
 ty_noun_in(english, mailsorter, none, unknown, mailsorter, regular).
 ty_noun_in(english, maimed, none, unknown, maimed, regular).
 ty_noun_in(english, maimer, none, unknown, maimer, regular).
 ty_noun_in(english, main, none, unknown, main, regular).
+ty_noun_in(english, 'main-topmast', none, unknown, 'main-topmast', regular).
+ty_noun_in(english, 'main-topsail', none, unknown, 'main-topsail', regular).
 ty_noun_in(english, maine, none, unknown, maine, regular).
 ty_noun_in(english, mainframe, none, unknown, mainframe, regular).
 ty_noun_in(english, mainland, none, unknown, mainland, regular).
@@ -21825,12 +22613,19 @@ ty_noun_in(english, majesty, none, unknown, majesty, regular).
 ty_noun_in(english, majidae, none, unknown, majidae, regular).
 ty_noun_in(english, majolica, none, unknown, majolica, regular).
 ty_noun_in(english, major, none, person, major, regular).
+ty_noun_in(english, 'major-domo', none, unknown, 'major-domo', regular).
+ty_noun_in(english, 'major-general', none, unknown, 'major-general', regular).
 ty_noun_in(english, majorcan, none, unknown, majorcan, regular).
 ty_noun_in(english, majordomo, none, unknown, majordomo, regular).
 ty_noun_in(english, majorette, none, unknown, majorette, regular).
 ty_noun_in(english, majority, none, person, majority, regular).
 ty_noun_in(english, majors, none, unknown, majors, regular).
 ty_noun_in(english, make, none, unknown, make, regular).
+ty_noun_in(english, 'make-believe', none, unknown, 'make-believe', regular).
+ty_noun_in(english, 'make-do', none, unknown, 'make-do', regular).
+ty_noun_in(english, 'make-peace', none, unknown, 'make-peace', regular).
+ty_noun_in(english, 'make-up', none, unknown, 'make-up', regular).
+ty_noun_in(english, 'make-work', none, unknown, 'make-work', regular).
 ty_noun_in(english, makeover, none, unknown, makeover, regular).
 ty_noun_in(english, maker, none, person, maker, regular).
 ty_noun_in(english, makeready, none, unknown, makeready, regular).
@@ -21941,6 +22736,13 @@ ty_noun_in(english, mammothermography, none, unknown, mammothermography, regular
 ty_noun_in(english, mammy, none, unknown, mammy, regular).
 ty_noun_in(english, mamo, none, unknown, mamo, regular).
 ty_noun_in(english, mamoncillo, none, unknown, mamoncillo, regular).
+ty_noun_in(english, 'man-about-town', none, unknown, 'man-about-town', regular).
+ty_noun_in(english, 'man-at-arms', none, unknown, 'man-at-arms', regular).
+ty_noun_in(english, 'man-child', none, unknown, 'man-child', regular).
+ty_noun_in(english, 'man-eater', none, unknown, 'man-eater', regular).
+ty_noun_in(english, 'man-of-the-earth', none, unknown, 'man-of-the-earth', regular).
+ty_noun_in(english, 'man-of-war', none, unknown, 'man-of-war', regular).
+ty_noun_in(english, 'man-on-a-horse', none, unknown, 'man-on-a-horse', regular).
 ty_noun_in(english, manacle, none, unknown, manacle, regular).
 ty_noun_in(english, manacles, none, person, manacles, regular).
 ty_noun_in(english, manageability, none, unknown, manageability, regular).
@@ -21986,6 +22788,7 @@ ty_noun_in(english, manganate, none, unknown, manganate, regular).
 ty_noun_in(english, manganese, none, unknown, manganese, regular).
 ty_noun_in(english, manganite, none, unknown, manganite, regular).
 ty_noun_in(english, mange, none, unknown, mange, regular).
+ty_noun_in(english, 'mangel-wurzel', none, unknown, 'mangel-wurzel', regular).
 ty_noun_in(english, manger, none, unknown, manger, regular).
 ty_noun_in(english, manginess, none, unknown, manginess, regular).
 ty_noun_in(english, mangle, none, unknown, mangle, regular).
@@ -21993,6 +22796,7 @@ ty_noun_in(english, mangler, none, unknown, mangler, regular).
 ty_noun_in(english, manglietia, none, unknown, manglietia, regular).
 ty_noun_in(english, mango, none, unknown, mango, regular).
 ty_noun_in(english, mangold, none, unknown, mangold, regular).
+ty_noun_in(english, 'mangold-wurzel', none, unknown, 'mangold-wurzel', regular).
 ty_noun_in(english, mangonel, none, unknown, mangonel, regular).
 ty_noun_in(english, mangosteen, none, unknown, mangosteen, regular).
 ty_noun_in(english, mangrove, none, unknown, mangrove, regular).
@@ -22002,6 +22806,7 @@ ty_noun_in(english, manhood, none, unknown, manhood, regular).
 ty_noun_in(english, manhunt, none, unknown, manhunt, regular).
 ty_noun_in(english, mania, none, unknown, mania, regular).
 ty_noun_in(english, maniac, none, person, maniac, regular).
+ty_noun_in(english, 'manic-depressive', none, unknown, 'manic-depressive', regular).
 ty_noun_in(english, manichean, none, person, manichean, regular).
 ty_noun_in(english, manicotti, none, unknown, manicotti, regular).
 ty_noun_in(english, manicure, none, unknown, manicure, regular).
@@ -22078,8 +22883,10 @@ ty_noun_in(english, manzanita, none, unknown, manzanita, regular).
 ty_noun_in(english, maoi, none, unknown, maoi, regular).
 ty_noun_in(english, maoism, none, unknown, maoism, regular).
 ty_noun_in(english, map, none, unknown, map, regular).
+ty_noun_in(english, 'map-reader', none, unknown, 'map-reader', regular).
 ty_noun_in(english, mapinguari, none, unknown, mapinguari, regular).
 ty_noun_in(english, maple, none, unknown, maple, regular).
+ty_noun_in(english, 'maple-leaf', none, unknown, 'maple-leaf', regular).
 ty_noun_in(english, mapmaking, none, unknown, mapmaking, regular).
 ty_noun_in(english, mapper, none, unknown, mapper, regular).
 ty_noun_in(english, mapping, none, unknown, mapping, regular).
@@ -22103,6 +22910,7 @@ ty_noun_in(english, marathoner, none, unknown, marathoner, regular).
 ty_noun_in(english, maraud, none, unknown, maraud, regular).
 ty_noun_in(english, marauder, none, unknown, marauder, regular).
 ty_noun_in(english, marble, none, unknown, marble, regular).
+ty_noun_in(english, 'marble-wood', none, unknown, 'marble-wood', regular).
 ty_noun_in(english, marbleisation, none, unknown, marbleisation, regular).
 ty_noun_in(english, marbleization, none, unknown, marbleization, regular).
 ty_noun_in(english, marbleizing, none, unknown, marbleizing, regular).
@@ -22261,6 +23069,7 @@ ty_noun_in(english, mastabah, none, unknown, mastabah, regular).
 ty_noun_in(english, mastalgia, none, unknown, mastalgia, regular).
 ty_noun_in(english, mastectomy, none, unknown, mastectomy, regular).
 ty_noun_in(english, master, none, person, master, regular).
+ty_noun_in(english, 'master-at-arms', none, unknown, 'master-at-arms', regular).
 ty_noun_in(english, mastermind, none, unknown, mastermind, regular).
 ty_noun_in(english, masterpiece, none, unknown, masterpiece, regular).
 ty_noun_in(english, mastership, none, unknown, mastership, regular).
@@ -22288,6 +23097,7 @@ ty_noun_in(english, mat, none, unknown, mat, regular).
 ty_noun_in(english, matador, none, person, matador, regular).
 ty_noun_in(english, matai, none, unknown, matai, regular).
 ty_noun_in(english, match, none, unknown, match, regular).
+ty_noun_in(english, 'match-up', none, unknown, 'match-up', regular).
 ty_noun_in(english, matchboard, none, unknown, matchboard, regular).
 ty_noun_in(english, matchbook, none, unknown, matchbook, regular).
 ty_noun_in(english, matchbox, none, unknown, matchbox, regular).
@@ -22669,6 +23479,7 @@ ty_noun_in(english, mercer, none, person, mercer, regular).
 ty_noun_in(english, merchandise, none, unknown, merchandise, regular).
 ty_noun_in(english, merchandiser, none, unknown, merchandiser, regular).
 ty_noun_in(english, merchant, none, person, merchant, regular).
+ty_noun_in(english, 'merchant-venturer', none, unknown, 'merchant-venturer', regular).
 ty_noun_in(english, merchantability, none, unknown, merchantability, regular).
 ty_noun_in(english, merchantman, none, unknown, merchantman, regular).
 ty_noun_in(english, mercifulness, none, unknown, mercifulness, regular).
@@ -22705,6 +23516,7 @@ ty_noun_in(english, merovingian, none, person, merovingian, regular).
 ty_noun_in(english, merozoite, none, unknown, merozoite, regular).
 ty_noun_in(english, merriment, none, unknown, merriment, regular).
 ty_noun_in(english, merriness, none, unknown, merriness, regular).
+ty_noun_in(english, 'merry-go-round', none, unknown, 'merry-go-round', regular).
 ty_noun_in(english, merrymaker, none, person, merrymaker, regular).
 ty_noun_in(english, merrymaking, none, unknown, merrymaking, regular).
 ty_noun_in(english, mesalliance, none, unknown, mesalliance, regular).
@@ -22738,6 +23550,7 @@ ty_noun_in(english, mesotherapy, none, unknown, mesotherapy, regular).
 ty_noun_in(english, mesotron, none, unknown, mesotron, regular).
 ty_noun_in(english, mesquite, none, unknown, mesquite, regular).
 ty_noun_in(english, mess, none, unknown, mess, regular).
+ty_noun_in(english, 'mess-up', none, unknown, 'mess-up', regular).
 ty_noun_in(english, message, none, unknown, message, regular).
 ty_noun_in(english, messenger, none, person, messenger, regular).
 ty_noun_in(english, messiah, none, unknown, messiah, regular).
@@ -22867,6 +23680,9 @@ ty_noun_in(english, mezereum, none, unknown, mezereum, regular).
 ty_noun_in(english, mezuza, none, unknown, mezuza, regular).
 ty_noun_in(english, mezuzah, none, unknown, mezuzah, regular).
 ty_noun_in(english, mezzanine, none, unknown, mezzanine, regular).
+ty_noun_in(english, 'mezzo-relievo', none, unknown, 'mezzo-relievo', regular).
+ty_noun_in(english, 'mezzo-rilievo', none, unknown, 'mezzo-rilievo', regular).
+ty_noun_in(english, 'mezzo-soprano', none, unknown, 'mezzo-soprano', regular).
 ty_noun_in(english, mezzotint, none, unknown, mezzotint, regular).
 ty_noun_in(english, mflop, none, unknown, mflop, regular).
 ty_noun_in(english, mho, none, unknown, mho, regular).
@@ -22880,6 +23696,7 @@ ty_noun_in(english, micelle, none, unknown, micelle, regular).
 ty_noun_in(english, michigan, none, unknown, michigan, regular).
 ty_noun_in(english, mickle, none, unknown, mickle, regular).
 ty_noun_in(english, miconazole, none, unknown, miconazole, regular).
+ty_noun_in(english, 'micro-organism', none, unknown, 'micro-organism', regular).
 ty_noun_in(english, microbalance, none, unknown, microbalance, regular).
 ty_noun_in(english, microbar, none, unknown, microbar, regular).
 ty_noun_in(english, microbat, none, unknown, microbat, regular).
@@ -22967,6 +23784,18 @@ ty_noun_in(english, microvolt, none, unknown, microvolt, regular).
 ty_noun_in(english, microwave, none, unknown, microwave, regular).
 ty_noun_in(english, microworld, none, unknown, microworld, regular).
 ty_noun_in(english, micturition, none, unknown, micturition, regular).
+ty_noun_in(english, 'mid-calf', none, unknown, 'mid-calf', regular).
+ty_noun_in(english, 'mid-eighties', none, unknown, 'mid-eighties', regular).
+ty_noun_in(english, 'mid-fifties', none, unknown, 'mid-fifties', regular).
+ty_noun_in(english, 'mid-forties', none, unknown, 'mid-forties', regular).
+ty_noun_in(english, 'mid-nineties', none, unknown, 'mid-nineties', regular).
+ty_noun_in(english, 'mid-off', none, unknown, 'mid-off', regular).
+ty_noun_in(english, 'mid-on', none, unknown, 'mid-on', regular).
+ty_noun_in(english, 'mid-seventies', none, unknown, 'mid-seventies', regular).
+ty_noun_in(english, 'mid-sixties', none, unknown, 'mid-sixties', regular).
+ty_noun_in(english, 'mid-thirties', none, unknown, 'mid-thirties', regular).
+ty_noun_in(english, 'mid-twenties', none, unknown, 'mid-twenties', regular).
+ty_noun_in(english, 'mid-water', none, unknown, 'mid-water', regular).
 ty_noun_in(english, midafternoon, none, unknown, midafternoon, regular).
 ty_noun_in(english, midair, none, unknown, midair, regular).
 ty_noun_in(english, midazolam, none, unknown, midazolam, regular).
@@ -22996,6 +23825,7 @@ ty_noun_in(english, midshipman, none, person, midshipman, regular).
 ty_noun_in(english, midst, none, unknown, midst, regular).
 ty_noun_in(english, midstream, none, unknown, midstream, regular).
 ty_noun_in(english, midsummer, none, unknown, midsummer, regular).
+ty_noun_in(english, 'midsummer-men', none, unknown, 'midsummer-men', regular).
 ty_noun_in(english, midterm, none, unknown, midterm, regular).
 ty_noun_in(english, midvein, none, unknown, midvein, regular).
 ty_noun_in(english, midwatch, none, unknown, midwatch, regular).
@@ -23007,6 +23837,7 @@ ty_noun_in(english, mien, none, unknown, mien, regular).
 ty_noun_in(english, mierkat, none, unknown, mierkat, regular).
 ty_noun_in(english, mifepristone, none, unknown, mifepristone, regular).
 ty_noun_in(english, miff, none, unknown, miff, regular).
+ty_noun_in(english, 'might-have-been', none, unknown, 'might-have-been', regular).
 ty_noun_in(english, mightiness, none, unknown, mightiness, regular).
 ty_noun_in(english, mignonette, none, unknown, mignonette, regular).
 ty_noun_in(english, migraine, none, unknown, migraine, regular).
@@ -23045,6 +23876,7 @@ ty_noun_in(english, militia, none, unknown, militia, regular).
 ty_noun_in(english, militiaman, none, unknown, militiaman, regular).
 ty_noun_in(english, milium, none, unknown, milium, regular).
 ty_noun_in(english, milk, none, unknown, milk, regular).
+ty_noun_in(english, 'milk-vetch', none, unknown, 'milk-vetch', regular).
 ty_noun_in(english, milkcap, none, unknown, milkcap, regular).
 ty_noun_in(english, milker, none, unknown, milker, regular).
 ty_noun_in(english, milking, none, unknown, milking, regular).
@@ -23056,6 +23888,8 @@ ty_noun_in(english, milkwagon, none, unknown, milkwagon, regular).
 ty_noun_in(english, milkweed, none, unknown, milkweed, regular).
 ty_noun_in(english, milkwort, none, unknown, milkwort, regular).
 ty_noun_in(english, mill, none, unknown, mill, regular).
+ty_noun_in(english, 'mill-girl', none, unknown, 'mill-girl', regular).
+ty_noun_in(english, 'mill-hand', none, unknown, 'mill-hand', regular).
 ty_noun_in(english, millboard, none, unknown, millboard, regular).
 ty_noun_in(english, milldam, none, unknown, milldam, regular).
 ty_noun_in(english, millenarianism, none, unknown, millenarianism, regular).
@@ -23127,6 +23961,7 @@ ty_noun_in(english, minaret, none, unknown, minaret, regular).
 ty_noun_in(english, mincemeat, none, unknown, mincemeat, regular).
 ty_noun_in(english, mincer, none, unknown, mincer, regular).
 ty_noun_in(english, mind, none, unknown, mind, regular).
+ty_noun_in(english, 'mind-set', none, unknown, 'mind-set', regular).
 ty_noun_in(english, minder, none, person, minder, regular).
 ty_noun_in(english, mindfulness, none, unknown, mindfulness, regular).
 ty_noun_in(english, mindlessness, none, unknown, mindlessness, regular).
@@ -23147,6 +23982,7 @@ ty_noun_in(english, minesweeper, none, unknown, minesweeper, regular).
 ty_noun_in(english, minesweeping, none, unknown, minesweeping, regular).
 ty_noun_in(english, mineworker, none, unknown, mineworker, regular).
 ty_noun_in(english, minginess, none, unknown, minginess, regular).
+ty_noun_in(english, 'mingle-mangle', none, unknown, 'mingle-mangle', regular).
 ty_noun_in(english, mingling, none, unknown, mingling, regular).
 ty_noun_in(english, miniature, none, unknown, miniature, regular).
 ty_noun_in(english, miniaturisation, none, unknown, miniaturisation, regular).
@@ -23210,6 +24046,7 @@ ty_noun_in(english, miosis, none, unknown, miosis, regular).
 ty_noun_in(english, mips, none, unknown, mips, regular).
 ty_noun_in(english, mirabilite, none, unknown, mirabilite, regular).
 ty_noun_in(english, miracle, none, unknown, miracle, regular).
+ty_noun_in(english, 'miracle-worship', none, unknown, 'miracle-worship', regular).
 ty_noun_in(english, mirage, none, unknown, mirage, regular).
 ty_noun_in(english, mirasol, none, unknown, mirasol, regular).
 ty_noun_in(english, mire, none, unknown, mire, regular).
@@ -23238,6 +24075,8 @@ ty_noun_in(english, miscellanea, none, unknown, miscellanea, regular).
 ty_noun_in(english, miscellany, none, unknown, miscellany, regular).
 ty_noun_in(english, mischance, none, unknown, mischance, regular).
 ty_noun_in(english, mischief, none, unknown, mischief, regular).
+ty_noun_in(english, 'mischief-maker', none, unknown, 'mischief-maker', regular).
+ty_noun_in(english, 'mischief-making', none, unknown, 'mischief-making', regular).
 ty_noun_in(english, mischievousness, none, unknown, mischievousness, regular).
 ty_noun_in(english, misconception, none, unknown, misconception, regular).
 ty_noun_in(english, misconduct, none, unknown, misconduct, regular).
@@ -23309,6 +24148,7 @@ ty_noun_in(english, misstep, none, unknown, misstep, regular).
 ty_noun_in(english, missus, none, unknown, missus, regular).
 ty_noun_in(english, missy, none, person, missy, regular).
 ty_noun_in(english, mist, none, unknown, mist, regular).
+ty_noun_in(english, 'mist-flower', none, unknown, 'mist-flower', regular).
 ty_noun_in(english, mistake, none, unknown, mistake, regular).
 ty_noun_in(english, mistaking, none, unknown, mistaking, regular).
 ty_noun_in(english, mister, none, unknown, mister, regular).
@@ -23346,6 +24186,8 @@ ty_noun_in(english, mittens, none, unknown, mittens, regular).
 ty_noun_in(english, mitzvah, none, unknown, mitzvah, regular).
 ty_noun_in(english, miwok, none, person, miwok, regular).
 ty_noun_in(english, mix, none, unknown, mix, regular).
+ty_noun_in(english, 'mix-up', none, unknown, 'mix-up', regular).
+ty_noun_in(english, 'mixed-blood', none, unknown, 'mixed-blood', regular).
 ty_noun_in(english, mixer, none, unknown, mixer, regular).
 ty_noun_in(english, mixing, none, unknown, mixing, regular).
 ty_noun_in(english, mixologist, none, unknown, mixologist, regular).
@@ -23375,6 +24217,8 @@ ty_noun_in(english, mocassin, none, unknown, mocassin, regular).
 ty_noun_in(english, moccasin, none, unknown, moccasin, regular).
 ty_noun_in(english, moccasins, none, unknown, moccasins, regular).
 ty_noun_in(english, mocha, none, unknown, mocha, regular).
+ty_noun_in(english, 'mock-heroic', none, unknown, 'mock-heroic', regular).
+ty_noun_in(english, 'mock-up', none, unknown, 'mock-up', regular).
 ty_noun_in(english, mocker, none, person, mocker, regular).
 ty_noun_in(english, mockernut, none, unknown, mockernut, regular).
 ty_noun_in(english, mockery, none, person, mockery, regular).
@@ -23496,6 +24340,7 @@ ty_noun_in(english, monetarist, none, unknown, monetarist, regular).
 ty_noun_in(english, monetisation, none, unknown, monetisation, regular).
 ty_noun_in(english, monetization, none, unknown, monetization, regular).
 ty_noun_in(english, money, none, unknown, money, regular).
+ty_noun_in(english, 'money-spinner', none, unknown, 'money-spinner', regular).
 ty_noun_in(english, moneybag, none, unknown, moneybag, regular).
 ty_noun_in(english, moneyer, none, unknown, moneyer, regular).
 ty_noun_in(english, moneygrubber, none, unknown, moneygrubber, regular).
@@ -23523,9 +24368,11 @@ ty_noun_in(english, monitoring, none, unknown, monitoring, regular).
 ty_noun_in(english, monitrice, none, person, monitrice, regular).
 ty_noun_in(english, monk, none, person, monk, regular).
 ty_noun_in(english, monkey, none, animate, monkey, regular).
+ty_noun_in(english, 'monkey-wrench', none, unknown, 'monkey-wrench', regular).
 ty_noun_in(english, monkeypod, none, unknown, monkeypod, regular).
 ty_noun_in(english, monkfish, none, unknown, monkfish, regular).
 ty_noun_in(english, monkshood, none, unknown, monkshood, regular).
+ty_noun_in(english, 'mono-iodotyrosine', none, unknown, 'mono-iodotyrosine', regular).
 ty_noun_in(english, monoamine, none, unknown, monoamine, regular).
 ty_noun_in(english, monoblast, none, unknown, monoblast, regular).
 ty_noun_in(english, monocanthus, none, unknown, monocanthus, regular).
@@ -23606,12 +24453,16 @@ ty_noun_in(english, month, none, unknown, month, regular).
 ty_noun_in(english, montreal, none, unknown, montreal, regular).
 ty_noun_in(english, monument, none, unknown, monument, regular).
 ty_noun_in(english, moo, none, unknown, moo, regular).
+ty_noun_in(english, 'moo-cow', none, unknown, 'moo-cow', regular).
 ty_noun_in(english, mooch, none, unknown, mooch, regular).
 ty_noun_in(english, moocher, none, unknown, moocher, regular).
 ty_noun_in(english, mood, none, unknown, mood, regular).
 ty_noun_in(english, moodiness, none, unknown, moodiness, regular).
 ty_noun_in(english, moolah, none, unknown, moolah, regular).
 ty_noun_in(english, moon, none, unknown, moon, regular).
+ty_noun_in(english, 'moon-curser', none, unknown, 'moon-curser', regular).
+ty_noun_in(english, 'moon-ray', none, unknown, 'moon-ray', regular).
+ty_noun_in(english, 'moon-worship', none, unknown, 'moon-worship', regular).
 ty_noun_in(english, moonbeam, none, unknown, moonbeam, regular).
 ty_noun_in(english, mooncurser, none, unknown, mooncurser, regular).
 ty_noun_in(english, mooneye, none, unknown, mooneye, regular).
@@ -23628,6 +24479,7 @@ ty_noun_in(english, moonstone, none, unknown, moonstone, regular).
 ty_noun_in(english, moonwalk, none, unknown, moonwalk, regular).
 ty_noun_in(english, moonwort, none, unknown, moonwort, regular).
 ty_noun_in(english, moor, none, unknown, moor, regular).
+ty_noun_in(english, 'moor-bird', none, unknown, 'moor-bird', regular).
 ty_noun_in(english, moorage, none, unknown, moorage, regular).
 ty_noun_in(english, moorbird, none, unknown, moorbird, regular).
 ty_noun_in(english, moorcock, none, unknown, moorcock, regular).
@@ -23636,6 +24488,7 @@ ty_noun_in(english, moorgame, none, unknown, moorgame, regular).
 ty_noun_in(english, moorhen, none, unknown, moorhen, regular).
 ty_noun_in(english, moorland, none, unknown, moorland, regular).
 ty_noun_in(english, moorwort, none, unknown, moorwort, regular).
+ty_noun_in(english, 'moose-wood', none, unknown, 'moose-wood', regular).
 ty_noun_in(english, moosewood, none, unknown, moosewood, regular).
 ty_noun_in(english, mop, none, unknown, mop, regular).
 ty_noun_in(english, mopboard, none, unknown, mopboard, regular).
@@ -23716,6 +24569,7 @@ ty_noun_in(english, mosque, none, unknown, mosque, regular).
 ty_noun_in(english, mosquito, none, animate, mosquito, regular).
 ty_noun_in(english, mosquitofish, none, unknown, mosquitofish, regular).
 ty_noun_in(english, moss, none, unknown, moss, regular).
+ty_noun_in(english, 'moss-trooper', none, unknown, 'moss-trooper', regular).
 ty_noun_in(english, mossback, none, person, mossback, regular).
 ty_noun_in(english, mostaccioli, none, unknown, mostaccioli, regular).
 ty_noun_in(english, motel, none, unknown, motel, regular).
@@ -23723,6 +24577,9 @@ ty_noun_in(english, motet, none, unknown, motet, regular).
 ty_noun_in(english, moth, none, animate, moth, regular).
 ty_noun_in(english, mothball, none, unknown, mothball, regular).
 ty_noun_in(english, mother, none, person, mother, regular).
+ty_noun_in(english, 'mother-in-law', none, unknown, 'mother-in-law', regular).
+ty_noun_in(english, 'mother-of-pearl', none, unknown, 'mother-of-pearl', regular).
+ty_noun_in(english, 'mother-of-thousands', none, unknown, 'mother-of-thousands', regular).
 ty_noun_in(english, motherese, none, unknown, motherese, regular).
 ty_noun_in(english, motherfucker, none, unknown, motherfucker, regular).
 ty_noun_in(english, motherhood, none, unknown, motherhood, regular).
@@ -23768,6 +24625,7 @@ ty_noun_in(english, mouldboard, none, unknown, mouldboard, regular).
 ty_noun_in(english, moult, none, unknown, moult, regular).
 ty_noun_in(english, moulter, none, unknown, moulter, regular).
 ty_noun_in(english, mound, none, unknown, mound, regular).
+ty_noun_in(english, 'mound-bird', none, unknown, 'mound-bird', regular).
 ty_noun_in(english, mount, none, unknown, mount, regular).
 ty_noun_in(english, mountain, none, unknown, mountain, regular).
 ty_noun_in(english, mountaineer, none, unknown, mountaineer, regular).
@@ -23812,6 +24670,7 @@ ty_noun_in(english, mrs, none, unknown, mrs, regular).
 ty_noun_in(english, msasa, none, unknown, msasa, regular).
 ty_noun_in(english, msec, none, unknown, msec, regular).
 ty_noun_in(english, mtorolite, none, unknown, mtorolite, regular).
+ty_noun_in(english, 'mu-meson', none, unknown, 'mu-meson', regular).
 ty_noun_in(english, muadhdhin, none, unknown, muadhdhin, regular).
 ty_noun_in(english, muazzin, none, unknown, muazzin, regular).
 ty_noun_in(english, muchness, none, unknown, muchness, regular).
@@ -23887,6 +24746,7 @@ ty_noun_in(english, mulligan, none, unknown, mulligan, regular).
 ty_noun_in(english, mulligatawny, none, unknown, mulligatawny, regular).
 ty_noun_in(english, mullion, none, unknown, mullion, regular).
 ty_noun_in(english, mulloway, none, unknown, mulloway, regular).
+ty_noun_in(english, 'multi-billionaire', none, unknown, 'multi-billionaire', regular).
 ty_noun_in(english, multicollinearity, none, unknown, multicollinearity, regular).
 ty_noun_in(english, multiculturalism, none, unknown, multiculturalism, regular).
 ty_noun_in(english, multifariousness, none, unknown, multifariousness, regular).
@@ -23913,7 +24773,9 @@ ty_noun_in(english, multiverse, none, unknown, multiverse, regular).
 ty_noun_in(english, multiversity, none, unknown, multiversity, regular).
 ty_noun_in(english, multivitamin, none, unknown, multivitamin, regular).
 ty_noun_in(english, mum, none, person, mum, regular).
+ty_noun_in(english, 'mumble-the-peg', none, unknown, 'mumble-the-peg', regular).
 ty_noun_in(english, mumbler, none, unknown, mumbler, regular).
+ty_noun_in(english, 'mumblety-peg', none, unknown, 'mumblety-peg', regular).
 ty_noun_in(english, mumbling, none, unknown, mumbling, regular).
 ty_noun_in(english, mummer, none, unknown, mummer, regular).
 ty_noun_in(english, mummery, none, unknown, mummery, regular).
@@ -23965,6 +24827,7 @@ ty_noun_in(english, muscat, none, unknown, muscat, regular).
 ty_noun_in(english, muscatel, none, unknown, muscatel, regular).
 ty_noun_in(english, musci, none, unknown, musci, regular).
 ty_noun_in(english, muscle, none, unknown, muscle, regular).
+ty_noun_in(english, 'muscle-builder', none, unknown, 'muscle-builder', regular).
 ty_noun_in(english, musclebuilder, none, unknown, musclebuilder, regular).
 ty_noun_in(english, musclebuilding, none, unknown, musclebuilding, regular).
 ty_noun_in(english, muscleman, none, person, muscleman, regular).
@@ -24195,7 +25058,9 @@ ty_noun_in(english, nakedwood, none, unknown, nakedwood, regular).
 ty_noun_in(english, nalorphine, none, unknown, nalorphine, regular).
 ty_noun_in(english, naloxone, none, unknown, naloxone, regular).
 ty_noun_in(english, naltrexone, none, unknown, naltrexone, regular).
+ty_noun_in(english, 'namby-pamby', none, unknown, 'namby-pamby', regular).
 ty_noun_in(english, name, none, unknown, name, regular).
+ty_noun_in(english, 'name-dropping', none, unknown, 'name-dropping', regular).
 ty_noun_in(english, nameko, none, unknown, nameko, regular).
 ty_noun_in(english, namelessness, none, unknown, namelessness, regular).
 ty_noun_in(english, nameplate, none, unknown, nameplate, regular).
@@ -24210,6 +25075,7 @@ ty_noun_in(english, nanism, none, unknown, nanism, regular).
 ty_noun_in(english, nankeen, none, unknown, nankeen, regular).
 ty_noun_in(english, nanna, none, unknown, nanna, regular).
 ty_noun_in(english, nanny, none, unknown, nanny, regular).
+ty_noun_in(english, 'nanny-goat', none, unknown, 'nanny-goat', regular).
 ty_noun_in(english, nanocephaly, none, unknown, nanocephaly, regular).
 ty_noun_in(english, nanogram, none, unknown, nanogram, regular).
 ty_noun_in(english, nanomaterial, none, unknown, nanomaterial, regular).
@@ -24244,6 +25110,7 @@ ty_noun_in(english, narcissism, none, unknown, narcissism, regular).
 ty_noun_in(english, narcissist, none, person, narcissist, regular).
 ty_noun_in(english, narcissus, none, unknown, narcissus, regular).
 ty_noun_in(english, narcist, none, unknown, narcist, regular).
+ty_noun_in(english, 'narco-state', none, unknown, 'narco-state', regular).
 ty_noun_in(english, narcolepsy, none, unknown, narcolepsy, regular).
 ty_noun_in(english, narcosis, none, unknown, narcosis, regular).
 ty_noun_in(english, narcoterrorism, none, unknown, narcoterrorism, regular).
@@ -24259,6 +25126,8 @@ ty_noun_in(english, nark, none, unknown, nark, regular).
 ty_noun_in(english, narration, none, unknown, narration, regular).
 ty_noun_in(english, narrative, none, unknown, narrative, regular).
 ty_noun_in(english, narrator, none, unknown, narrator, regular).
+ty_noun_in(english, 'narrow-body', none, unknown, 'narrow-body', regular).
+ty_noun_in(english, 'narrow-mindedness', none, unknown, 'narrow-mindedness', regular).
 ty_noun_in(english, narrowboat, none, unknown, narrowboat, regular).
 ty_noun_in(english, narrowing, none, unknown, narrowing, regular).
 ty_noun_in(english, narrowness, none, unknown, narrowness, regular).
@@ -24323,6 +25192,7 @@ ty_noun_in(english, nautch, none, unknown, nautch, regular).
 ty_noun_in(english, nautilus, none, unknown, nautilus, regular).
 ty_noun_in(english, nave, none, unknown, nave, regular).
 ty_noun_in(english, navel, none, unknown, navel, regular).
+ty_noun_in(english, 'navel-gazing', none, unknown, 'navel-gazing', regular).
 ty_noun_in(english, navigability, none, unknown, navigability, regular).
 ty_noun_in(english, navigation, none, unknown, navigation, regular).
 ty_noun_in(english, navigator, none, person, navigator, regular).
@@ -24381,6 +25251,8 @@ ty_noun_in(english, need, none, unknown, need, regular).
 ty_noun_in(english, needer, none, unknown, needer, regular).
 ty_noun_in(english, neediness, none, unknown, neediness, regular).
 ty_noun_in(english, needle, none, unknown, needle, regular).
+ty_noun_in(english, 'needle-bush', none, unknown, 'needle-bush', regular).
+ty_noun_in(english, 'needle-wood', none, unknown, 'needle-wood', regular).
 ty_noun_in(english, needlebush, none, unknown, needlebush, regular).
 ty_noun_in(english, needlecraft, none, unknown, needlecraft, regular).
 ty_noun_in(english, needlefish, none, unknown, needlefish, regular).
@@ -24588,6 +25460,7 @@ ty_noun_in(english, neutrino, none, unknown, neutrino, regular).
 ty_noun_in(english, neutron, none, unknown, neutron, regular).
 ty_noun_in(english, neutropenia, none, unknown, neutropenia, regular).
 ty_noun_in(english, neutrophil, none, unknown, neutrophil, regular).
+ty_noun_in(english, 'never-never', none, unknown, 'never-never', regular).
 ty_noun_in(english, nevirapine, none, unknown, nevirapine, regular).
 ty_noun_in(english, nevus, none, unknown, nevus, regular).
 ty_noun_in(english, newbie, none, unknown, newbie, regular).
@@ -24668,6 +25541,11 @@ ty_noun_in(english, niggardness, none, unknown, niggardness, regular).
 ty_noun_in(english, nigger, none, person, nigger, regular).
 ty_noun_in(english, niggler, none, unknown, niggler, regular).
 ty_noun_in(english, night, none, unknown, night, regular).
+ty_noun_in(english, 'night-light', none, unknown, 'night-light', regular).
+ty_noun_in(english, 'night-line', none, unknown, 'night-line', regular).
+ty_noun_in(english, 'night-robe', none, unknown, 'night-robe', regular).
+ty_noun_in(english, 'night-sight', none, unknown, 'night-sight', regular).
+ty_noun_in(english, 'night-stop', none, unknown, 'night-stop', regular).
 ty_noun_in(english, nightbird, none, unknown, nightbird, regular).
 ty_noun_in(english, nightcap, none, unknown, nightcap, regular).
 ty_noun_in(english, nightclothes, none, unknown, nightclothes, regular).
@@ -24704,7 +25582,9 @@ ty_noun_in(english, nimblewill, none, unknown, nimblewill, regular).
 ty_noun_in(english, nimbus, none, unknown, nimbus, regular).
 ty_noun_in(english, nimiety, none, unknown, nimiety, regular).
 ty_noun_in(english, nimravus, none, unknown, nimravus, regular).
+ty_noun_in(english, 'nin-sin', none, unknown, 'nin-sin', regular).
 ty_noun_in(english, nincompoop, none, unknown, nincompoop, regular).
+ty_noun_in(english, 'nine-spot', none, unknown, 'nine-spot', regular).
 ty_noun_in(english, ninepence, none, unknown, ninepence, regular).
 ty_noun_in(english, ninepin, none, unknown, ninepin, regular).
 ty_noun_in(english, niner, none, unknown, niner, regular).
@@ -24752,13 +25632,22 @@ ty_noun_in(english, nitrogen, none, unknown, nitrogen, regular).
 ty_noun_in(english, nitrogenase, none, unknown, nitrogenase, regular).
 ty_noun_in(english, nitroglycerine, none, unknown, nitroglycerine, regular).
 ty_noun_in(english, nitrosobacteria, none, unknown, nitrosobacteria, regular).
+ty_noun_in(english, 'nitty-gritty', none, unknown, 'nitty-gritty', regular).
 ty_noun_in(english, nitweed, none, unknown, nitweed, regular).
 ty_noun_in(english, nitwit, none, unknown, nitwit, regular).
 ty_noun_in(english, nix, none, unknown, nix, regular).
+ty_noun_in(english, 'no-account', none, unknown, 'no-account', regular).
+ty_noun_in(english, 'no-brainer', none, unknown, 'no-brainer', regular).
+ty_noun_in(english, 'no-goal', none, unknown, 'no-goal', regular).
+ty_noun_in(english, 'no-hitter', none, unknown, 'no-hitter', regular).
+ty_noun_in(english, 'no-see-um', none, unknown, 'no-see-um', regular).
+ty_noun_in(english, 'no-show', none, unknown, 'no-show', regular).
+ty_noun_in(english, 'no-trump', none, unknown, 'no-trump', regular).
 ty_noun_in(english, nob, none, unknown, nob, regular).
 ty_noun_in(english, nobelist, none, person, nobelist, regular).
 ty_noun_in(english, nobelium, none, unknown, nobelium, regular).
 ty_noun_in(english, nobility, none, unknown, nobility, regular).
+ty_noun_in(english, 'noble-mindedness', none, unknown, 'noble-mindedness', regular).
 ty_noun_in(english, nobleman, none, unknown, nobleman, regular).
 ty_noun_in(english, nobleness, none, unknown, nobleness, regular).
 ty_noun_in(english, noblesse, none, unknown, noblesse, regular).
@@ -24783,6 +25672,7 @@ ty_noun_in(english, noiselessness, none, unknown, noiselessness, regular).
 ty_noun_in(english, noisemaker, none, unknown, noisemaker, regular).
 ty_noun_in(english, noisiness, none, unknown, noisiness, regular).
 ty_noun_in(english, noisomeness, none, unknown, noisomeness, regular).
+ty_noun_in(english, 'noli-me-tangere', none, unknown, 'noli-me-tangere', regular).
 ty_noun_in(english, nolina, none, unknown, nolina, regular).
 ty_noun_in(english, noma, none, unknown, noma, regular).
 ty_noun_in(english, nomad, none, unknown, nomad, regular).
@@ -24798,7 +25688,13 @@ ty_noun_in(english, nominator, none, unknown, nominator, regular).
 ty_noun_in(english, nominee, none, person, nominee, regular).
 ty_noun_in(english, nomogram, none, unknown, nomogram, regular).
 ty_noun_in(english, nomograph, none, unknown, nomograph, regular).
+ty_noun_in(english, 'non-discrimination', none, unknown, 'non-discrimination', regular).
+ty_noun_in(english, 'non-engagement', none, unknown, 'non-engagement', regular).
+ty_noun_in(english, 'non-involvement', none, unknown, 'non-involvement', regular).
+ty_noun_in(english, 'non-issue', none, unknown, 'non-issue', regular).
+ty_noun_in(english, 'non-proliferation', none, unknown, 'non-proliferation', regular).
 ty_noun_in(english, 'non-resident', none, unknown, 'non-resident', regular).
+ty_noun_in(english, 'non-resistant', none, unknown, 'non-resistant', regular).
 ty_noun_in(english, nonabsorbency, none, unknown, nonabsorbency, regular).
 ty_noun_in(english, nonacceptance, none, unknown, nonacceptance, regular).
 ty_noun_in(english, nonaccomplishment, none, unknown, nonaccomplishment, regular).
@@ -24915,7 +25811,9 @@ ty_noun_in(english, nosedive, none, unknown, nosedive, regular).
 ty_noun_in(english, nosegay, none, unknown, nosegay, regular).
 ty_noun_in(english, nosepiece, none, unknown, nosepiece, regular).
 ty_noun_in(english, nosewheel, none, unknown, nosewheel, regular).
+ty_noun_in(english, 'nosey-parker', none, unknown, 'nosey-parker', regular).
 ty_noun_in(english, nosh, none, unknown, nosh, regular).
+ty_noun_in(english, 'nosh-up', none, unknown, 'nosh-up', regular).
 ty_noun_in(english, nosher, none, unknown, nosher, regular).
 ty_noun_in(english, nosiness, none, unknown, nosiness, regular).
 ty_noun_in(english, nosing, none, unknown, nosing, regular).
@@ -24925,6 +25823,8 @@ ty_noun_in(english, nostoc, none, unknown, nostoc, regular).
 ty_noun_in(english, nostril, none, unknown, nostril, regular).
 ty_noun_in(english, nostrils, none, unknown, nostrils, regular).
 ty_noun_in(english, nostrum, none, unknown, nostrum, regular).
+ty_noun_in(english, 'nosy-parker', none, unknown, 'nosy-parker', regular).
+ty_noun_in(english, 'not-for-profit', none, unknown, 'not-for-profit', regular).
 ty_noun_in(english, notability, none, unknown, notability, regular).
 ty_noun_in(english, notable, none, person, notable, regular).
 ty_noun_in(english, notary, none, unknown, notary, regular).
@@ -24957,6 +25857,7 @@ ty_noun_in(english, noumenon, none, unknown, noumenon, regular).
 ty_noun_in(english, noun, none, unknown, noun, regular).
 ty_noun_in(english, nourishment, none, unknown, nourishment, regular).
 ty_noun_in(english, nous, none, unknown, nous, regular).
+ty_noun_in(english, 'nouveau-riche', none, unknown, 'nouveau-riche', regular).
 ty_noun_in(english, nov, none, unknown, nov, regular).
 ty_noun_in(english, nova, none, unknown, nova, regular).
 ty_noun_in(english, novation, none, unknown, novation, regular).
@@ -25046,6 +25947,7 @@ ty_noun_in(english, nunnery, none, unknown, nunnery, regular).
 ty_noun_in(english, nuprin, none, unknown, nuprin, regular).
 ty_noun_in(english, nuptials, none, unknown, nuptials, regular).
 ty_noun_in(english, nurse, none, person, nurse, regular).
+ty_noun_in(english, 'nurse-midwife', none, unknown, 'nurse-midwife', regular).
 ty_noun_in(english, nurseling, none, unknown, nurseling, regular).
 ty_noun_in(english, nursemaid, none, unknown, nursemaid, regular).
 ty_noun_in(english, nurser, none, unknown, nurser, regular).
@@ -25063,6 +25965,7 @@ ty_noun_in(english, nuthatch, none, unknown, nuthatch, regular).
 ty_noun_in(english, nuthouse, none, unknown, nuthouse, regular).
 ty_noun_in(english, nutlet, none, unknown, nutlet, regular).
 ty_noun_in(english, nutmeg, none, unknown, nutmeg, regular).
+ty_noun_in(english, 'nutmeg-yew', none, unknown, 'nutmeg-yew', regular).
 ty_noun_in(english, nutria, none, unknown, nutria, regular).
 ty_noun_in(english, nutrient, none, unknown, nutrient, regular).
 ty_noun_in(english, nutriment, none, unknown, nutriment, regular).
@@ -25163,6 +26066,7 @@ ty_noun_in(english, observation, none, unknown, observation, regular).
 ty_noun_in(english, observatory, none, unknown, observatory, regular).
 ty_noun_in(english, observer, none, person, observer, regular).
 ty_noun_in(english, obsession, none, unknown, obsession, regular).
+ty_noun_in(english, 'obsessive-compulsive', none, unknown, 'obsessive-compulsive', regular).
 ty_noun_in(english, obsessiveness, none, unknown, obsessiveness, regular).
 ty_noun_in(english, obsessivity, none, unknown, obsessivity, regular).
 ty_noun_in(english, obsidian, none, unknown, obsidian, regular).
@@ -25248,6 +26152,7 @@ ty_noun_in(english, oddity, none, unknown, oddity, regular).
 ty_noun_in(english, oddment, none, unknown, oddment, regular).
 ty_noun_in(english, oddness, none, unknown, oddness, regular).
 ty_noun_in(english, odds, none, unknown, odds, regular).
+ty_noun_in(english, 'odds-maker', none, unknown, 'odds-maker', regular).
 ty_noun_in(english, ode, none, unknown, ode, regular).
 ty_noun_in(english, odeon, none, unknown, odeon, regular).
 ty_noun_in(english, odessa, none, unknown, odessa, regular).
@@ -25284,6 +26189,11 @@ ty_noun_in(english, oestrogen, none, unknown, oestrogen, regular).
 ty_noun_in(english, oestrone, none, unknown, oestrone, regular).
 ty_noun_in(english, oestrus, none, unknown, oestrus, regular).
 ty_noun_in(english, oeuvre, none, unknown, oeuvre, regular).
+ty_noun_in(english, 'off-day', none, unknown, 'off-day', regular).
+ty_noun_in(english, 'off-licence', none, unknown, 'off-licence', regular).
+ty_noun_in(english, 'off-roader', none, unknown, 'off-roader', regular).
+ty_noun_in(english, 'off-season', none, unknown, 'off-season', regular).
+ty_noun_in(english, 'off-white', none, unknown, 'off-white', regular).
 ty_noun_in(english, offal, none, unknown, offal, regular).
 ty_noun_in(english, offence, none, unknown, offence, regular).
 ty_noun_in(english, offender, none, person, offender, regular).
@@ -25296,6 +26206,7 @@ ty_noun_in(english, offering, none, unknown, offering, regular).
 ty_noun_in(english, offeror, none, unknown, offeror, regular).
 ty_noun_in(english, offertory, none, unknown, offertory, regular).
 ty_noun_in(english, office, none, unknown, office, regular).
+ty_noun_in(english, 'office-bearer', none, unknown, 'office-bearer', regular).
 ty_noun_in(english, officeholder, none, unknown, officeholder, regular).
 ty_noun_in(english, officer, none, person, officer, regular).
 ty_noun_in(english, official, none, person, official, regular).
@@ -25345,6 +26256,9 @@ ty_noun_in(english, okey, none, unknown, okey, regular).
 ty_noun_in(english, oklahoma, none, unknown, oklahoma, regular).
 ty_noun_in(english, okra, none, unknown, okra, regular).
 ty_noun_in(english, oktoberfest, none, unknown, oktoberfest, regular).
+ty_noun_in(english, 'old-fashionedness', none, unknown, 'old-fashionedness', regular).
+ty_noun_in(english, 'old-man-of-the-woods', none, unknown, 'old-man-of-the-woods', regular).
+ty_noun_in(english, 'old-timer', none, unknown, 'old-timer', regular).
 ty_noun_in(english, oldie, none, unknown, oldie, regular).
 ty_noun_in(english, oldness, none, unknown, oldness, regular).
 ty_noun_in(english, oldster, none, person, oldster, regular).
@@ -25377,6 +26291,7 @@ ty_noun_in(english, oligosaccharide, none, unknown, oligosaccharide, regular).
 ty_noun_in(english, oligospermia, none, unknown, oligospermia, regular).
 ty_noun_in(english, oliguria, none, unknown, oliguria, regular).
 ty_noun_in(english, olive, none, unknown, olive, regular).
+ty_noun_in(english, 'olive-green', none, unknown, 'olive-green', regular).
 ty_noun_in(english, olivenite, none, unknown, olivenite, regular).
 ty_noun_in(english, olivine, none, unknown, olivine, regular).
 ty_noun_in(english, olm, none, unknown, olm, regular).
@@ -25401,15 +26316,18 @@ ty_noun_in(english, omnipotence, none, unknown, omnipotence, regular).
 ty_noun_in(english, omnipresence, none, unknown, omnipresence, regular).
 ty_noun_in(english, omnirange, none, unknown, omnirange, regular).
 ty_noun_in(english, omniscience, none, unknown, omniscience, regular).
+ty_noun_in(english, 'omnium-gatherum', none, unknown, 'omnium-gatherum', regular).
 ty_noun_in(english, omnivore, none, unknown, omnivore, regular).
 ty_noun_in(english, omophagia, none, unknown, omophagia, regular).
 ty_noun_in(english, omphalocele, none, unknown, omphalocele, regular).
 ty_noun_in(english, omphalos, none, unknown, omphalos, regular).
 ty_noun_in(english, omphaloskepsis, none, unknown, omphaloskepsis, regular).
 ty_noun_in(english, omphalus, none, unknown, omphalus, regular).
+ty_noun_in(english, 'on-license', none, unknown, 'on-license', regular).
 ty_noun_in(english, onager, none, unknown, onager, regular).
 ty_noun_in(english, onanism, none, unknown, onanism, regular).
 ty_noun_in(english, onanist, none, unknown, onanist, regular).
+ty_noun_in(english, 'once-over', none, unknown, 'once-over', regular).
 ty_noun_in(english, onchocerciasis, none, unknown, onchocerciasis, regular).
 ty_noun_in(english, oncidium, none, unknown, oncidium, regular).
 ty_noun_in(english, oncogene, none, unknown, oncogene, regular).
@@ -25418,6 +26336,39 @@ ty_noun_in(english, oncology, none, unknown, oncology, regular).
 ty_noun_in(english, oncorhynchus, none, unknown, oncorhynchus, regular).
 ty_noun_in(english, oncovin, none, unknown, oncovin, regular).
 ty_noun_in(english, ondatra, none, unknown, ondatra, regular).
+ty_noun_in(english, 'one-and-one', none, unknown, 'one-and-one', regular).
+ty_noun_in(english, 'one-billionth', none, unknown, 'one-billionth', regular).
+ty_noun_in(english, 'one-dimensionality', none, unknown, 'one-dimensionality', regular).
+ty_noun_in(english, 'one-eighth', none, unknown, 'one-eighth', regular).
+ty_noun_in(english, 'one-fifth', none, unknown, 'one-fifth', regular).
+ty_noun_in(english, 'one-fourth', none, unknown, 'one-fourth', regular).
+ty_noun_in(english, 'one-half', none, unknown, 'one-half', regular).
+ty_noun_in(english, 'one-hitter', none, unknown, 'one-hitter', regular).
+ty_noun_in(english, 'one-hundred-millionth', none, unknown, 'one-hundred-millionth', regular).
+ty_noun_in(english, 'one-hundred-thousandth', none, unknown, 'one-hundred-thousandth', regular).
+ty_noun_in(english, 'one-hundredth', none, unknown, 'one-hundredth', regular).
+ty_noun_in(english, 'one-liner', none, unknown, 'one-liner', regular).
+ty_noun_in(english, 'one-millionth', none, unknown, 'one-millionth', regular).
+ty_noun_in(english, 'one-ninth', none, unknown, 'one-ninth', regular).
+ty_noun_in(english, 'one-off', none, unknown, 'one-off', regular).
+ty_noun_in(english, 'one-quadrillionth', none, unknown, 'one-quadrillionth', regular).
+ty_noun_in(english, 'one-quarter', none, unknown, 'one-quarter', regular).
+ty_noun_in(english, 'one-quintillionth', none, unknown, 'one-quintillionth', regular).
+ty_noun_in(english, 'one-seventh', none, unknown, 'one-seventh', regular).
+ty_noun_in(english, 'one-sixteenth', none, unknown, 'one-sixteenth', regular).
+ty_noun_in(english, 'one-sixth', none, unknown, 'one-sixth', regular).
+ty_noun_in(english, 'one-sixtieth', none, unknown, 'one-sixtieth', regular).
+ty_noun_in(english, 'one-sixty-fourth', none, unknown, 'one-sixty-fourth', regular).
+ty_noun_in(english, 'one-spot', none, unknown, 'one-spot', regular).
+ty_noun_in(english, 'one-step', none, unknown, 'one-step', regular).
+ty_noun_in(english, 'one-ten-thousandth', none, unknown, 'one-ten-thousandth', regular).
+ty_noun_in(english, 'one-tenth', none, unknown, 'one-tenth', regular).
+ty_noun_in(english, 'one-third', none, unknown, 'one-third', regular).
+ty_noun_in(english, 'one-thirty-second', none, unknown, 'one-thirty-second', regular).
+ty_noun_in(english, 'one-thousandth', none, unknown, 'one-thousandth', regular).
+ty_noun_in(english, 'one-trillionth', none, unknown, 'one-trillionth', regular).
+ty_noun_in(english, 'one-twelfth', none, unknown, 'one-twelfth', regular).
+ty_noun_in(english, 'one-upmanship', none, unknown, 'one-upmanship', regular).
 ty_noun_in(english, oneirism, none, unknown, oneirism, regular).
 ty_noun_in(english, oneiromancer, none, unknown, oneiromancer, regular).
 ty_noun_in(english, oneiromancy, none, unknown, oneiromancy, regular).
@@ -25554,6 +26505,7 @@ ty_noun_in(english, orator, none, person, orator, regular).
 ty_noun_in(english, oratorio, none, unknown, oratorio, regular).
 ty_noun_in(english, oratory, none, unknown, oratory, regular).
 ty_noun_in(english, orb, none, unknown, orb, regular).
+ty_noun_in(english, 'orb-weaver', none, unknown, 'orb-weaver', regular).
 ty_noun_in(english, orbit, none, unknown, orbit, regular).
 ty_noun_in(english, orbiter, none, unknown, orbiter, regular).
 ty_noun_in(english, orc, none, unknown, orc, regular).
@@ -25598,6 +26550,7 @@ ty_noun_in(english, oregon, none, unknown, oregon, regular).
 ty_noun_in(english, oreide, none, unknown, oreide, regular).
 ty_noun_in(english, oreo, none, unknown, oreo, regular).
 ty_noun_in(english, organ, none, unknown, organ, regular).
+ty_noun_in(english, 'organ-grinder', none, unknown, 'organ-grinder', regular).
 ty_noun_in(english, organdy, none, unknown, organdy, regular).
 ty_noun_in(english, organelle, none, unknown, organelle, regular).
 ty_noun_in(english, organicism, none, unknown, organicism, regular).
@@ -25800,6 +26753,11 @@ ty_noun_in(english, ouguiya, none, unknown, ouguiya, regular).
 ty_noun_in(english, ounce, none, unknown, ounce, regular).
 ty_noun_in(english, ousel, none, unknown, ousel, regular).
 ty_noun_in(english, ouster, none, unknown, ouster, regular).
+ty_noun_in(english, 'out-and-outer', none, unknown, 'out-and-outer', regular).
+ty_noun_in(english, 'out-basket', none, unknown, 'out-basket', regular).
+ty_noun_in(english, 'out-migration', none, unknown, 'out-migration', regular).
+ty_noun_in(english, 'out-of-doors', none, unknown, 'out-of-doors', regular).
+ty_noun_in(english, 'out-tray', none, unknown, 'out-tray', regular).
 ty_noun_in(english, outage, none, unknown, outage, regular).
 ty_noun_in(english, outbreak, none, unknown, outbreak, regular).
 ty_noun_in(english, outbuilding, none, unknown, outbuilding, regular).
@@ -25869,6 +26827,7 @@ ty_noun_in(english, ovation, none, unknown, ovation, regular).
 ty_noun_in(english, oven, none, unknown, oven, regular).
 ty_noun_in(english, ovenbird, none, unknown, ovenbird, regular).
 ty_noun_in(english, ovenware, none, unknown, ovenware, regular).
+ty_noun_in(english, 'over-crowding', none, unknown, 'over-crowding', regular).
 ty_noun_in(english, overabundance, none, unknown, overabundance, regular).
 ty_noun_in(english, overachievement, none, unknown, overachievement, regular).
 ty_noun_in(english, overachiever, none, person, overachiever, regular).
@@ -25973,6 +26932,8 @@ ty_noun_in(english, owl, none, animate, owl, regular).
 ty_noun_in(english, owlclaws, none, unknown, owlclaws, regular).
 ty_noun_in(english, owlet, none, unknown, owlet, regular).
 ty_noun_in(english, owner, none, person, owner, regular).
+ty_noun_in(english, 'owner-driver', none, unknown, 'owner-driver', regular).
+ty_noun_in(english, 'owner-occupier', none, unknown, 'owner-occupier', regular).
 ty_noun_in(english, ownership, none, unknown, ownership, regular).
 ty_noun_in(english, oxacillin, none, unknown, oxacillin, regular).
 ty_noun_in(english, oxalacetate, none, unknown, oxalacetate, regular).
@@ -25991,6 +26952,7 @@ ty_noun_in(english, oxheart, none, unknown, oxheart, regular).
 ty_noun_in(english, oxidant, none, unknown, oxidant, regular).
 ty_noun_in(english, oxidase, none, unknown, oxidase, regular).
 ty_noun_in(english, oxidation, none, unknown, oxidation, regular).
+ty_noun_in(english, 'oxidation-reduction', none, unknown, 'oxidation-reduction', regular).
 ty_noun_in(english, oxide, none, unknown, oxide, regular).
 ty_noun_in(english, oxidisation, none, unknown, oxidisation, regular).
 ty_noun_in(english, oxidiser, none, unknown, oxidiser, regular).
@@ -26026,6 +26988,7 @@ ty_noun_in(english, oxytropis, none, unknown, oxytropis, regular).
 ty_noun_in(english, oxyuranus, none, unknown, oxyuranus, regular).
 ty_noun_in(english, oyabun, none, person, oyabun, regular).
 ty_noun_in(english, oyster, none, animate, oyster, regular).
+ty_noun_in(english, 'oyster-fish', none, unknown, 'oyster-fish', regular).
 ty_noun_in(english, oystercatcher, none, unknown, oystercatcher, regular).
 ty_noun_in(english, oysterfish, none, unknown, oysterfish, regular).
 ty_noun_in(english, ozaena, none, unknown, ozaena, regular).
@@ -26080,6 +27043,8 @@ ty_noun_in(english, pact, none, unknown, pact, regular).
 ty_noun_in(english, pad, none, unknown, pad, regular).
 ty_noun_in(english, padauk, none, unknown, padauk, regular).
 ty_noun_in(english, padder, none, unknown, padder, regular).
+ty_noun_in(english, 'paddle-box', none, unknown, 'paddle-box', regular).
+ty_noun_in(english, 'paddle-wheeler', none, unknown, 'paddle-wheeler', regular).
 ty_noun_in(english, paddlefish, none, unknown, paddlefish, regular).
 ty_noun_in(english, paddler, none, unknown, paddler, regular).
 ty_noun_in(english, paddlewheel, none, unknown, paddlewheel, regular).
@@ -26210,6 +27175,7 @@ ty_noun_in(english, palindrome, none, unknown, palindrome, regular).
 ty_noun_in(english, palingenesis, none, unknown, palingenesis, regular).
 ty_noun_in(english, palinuridae, none, unknown, palinuridae, regular).
 ty_noun_in(english, palisade, none, unknown, palisade, regular).
+ty_noun_in(english, 'pall-mall', none, unknown, 'pall-mall', regular).
 ty_noun_in(english, palladium, none, unknown, palladium, regular).
 ty_noun_in(english, pallasite, none, unknown, pallasite, regular).
 ty_noun_in(english, pallbearer, none, unknown, pallbearer, regular).
@@ -26340,6 +27306,8 @@ ty_noun_in(english, papaverine, none, unknown, papaverine, regular).
 ty_noun_in(english, papaw, none, unknown, papaw, regular).
 ty_noun_in(english, papaya, none, unknown, papaya, regular).
 ty_noun_in(english, paper, none, unknown, paper, regular).
+ty_noun_in(english, 'paper-mache', none, unknown, 'paper-mache', regular).
+ty_noun_in(english, 'paper-pusher', none, unknown, 'paper-pusher', regular).
 ty_noun_in(english, paperback, none, unknown, paperback, regular).
 ty_noun_in(english, paperboard, none, unknown, paperboard, regular).
 ty_noun_in(english, paperboy, none, unknown, paperboy, regular).
@@ -26352,6 +27320,7 @@ ty_noun_in(english, papermaking, none, unknown, papermaking, regular).
 ty_noun_in(english, papers, none, unknown, papers, regular).
 ty_noun_in(english, paperweight, none, unknown, paperweight, regular).
 ty_noun_in(english, paperwork, none, unknown, paperwork, regular).
+ty_noun_in(english, 'papier-mache', none, unknown, 'papier-mache', regular).
 ty_noun_in(english, papilla, none, unknown, papilla, regular).
 ty_noun_in(english, papilledema, none, unknown, papilledema, regular).
 ty_noun_in(english, papilloma, none, unknown, papilloma, regular).
@@ -26552,6 +27521,9 @@ ty_noun_in(english, parsnip, none, unknown, parsnip, regular).
 ty_noun_in(english, parson, none, person, parson, regular).
 ty_noun_in(english, parsonage, none, unknown, parsonage, regular).
 ty_noun_in(english, part, none, unknown, part, regular).
+ty_noun_in(english, 'part-owner', none, unknown, 'part-owner', regular).
+ty_noun_in(english, 'part-singing', none, unknown, 'part-singing', regular).
+ty_noun_in(english, 'part-timer', none, unknown, 'part-timer', regular).
 ty_noun_in(english, partaker, none, unknown, partaker, regular).
 ty_noun_in(english, parterre, none, unknown, parterre, regular).
 ty_noun_in(english, parthenocarpy, none, unknown, parthenocarpy, regular).
@@ -26594,14 +27566,17 @@ ty_noun_in(english, paspalum, none, unknown, paspalum, regular).
 ty_noun_in(english, pasqueflower, none, unknown, pasqueflower, regular).
 ty_noun_in(english, pasquinade, none, unknown, pasquinade, regular).
 ty_noun_in(english, pass, none, unknown, pass, regular).
+ty_noun_in(english, 'pass-through', none, unknown, 'pass-through', regular).
 ty_noun_in(english, passado, none, unknown, passado, regular).
 ty_noun_in(english, passage, none, unknown, passage, regular).
 ty_noun_in(english, passageway, none, unknown, passageway, regular).
 ty_noun_in(english, passamaquody, none, person, passamaquody, regular).
 ty_noun_in(english, passbook, none, unknown, passbook, regular).
+ty_noun_in(english, 'passe-partout', none, unknown, 'passe-partout', regular).
 ty_noun_in(english, passel, none, unknown, passel, regular).
 ty_noun_in(english, passementerie, none, unknown, passementerie, regular).
 ty_noun_in(english, passenger, none, person, passenger, regular).
+ty_noun_in(english, 'passer-by', none, unknown, 'passer-by', regular).
 ty_noun_in(english, passerby, none, person, passerby, regular).
 ty_noun_in(english, passeridae, none, unknown, passeridae, regular).
 ty_noun_in(english, passing, none, unknown, passing, regular).
@@ -26619,6 +27594,7 @@ ty_noun_in(english, password, none, unknown, password, regular).
 ty_noun_in(english, past, none, unknown, past, regular).
 ty_noun_in(english, pasta, none, unknown, pasta, regular).
 ty_noun_in(english, paste, none, unknown, paste, regular).
+ty_noun_in(english, 'paste-up', none, unknown, 'paste-up', regular).
 ty_noun_in(english, pasteboard, none, unknown, pasteboard, regular).
 ty_noun_in(english, pastel, none, unknown, pastel, regular).
 ty_noun_in(english, paster, none, unknown, paster, regular).
@@ -26702,6 +27678,7 @@ ty_noun_in(english, patter, none, unknown, patter, regular).
 ty_noun_in(english, pattern, none, unknown, pattern, regular).
 ty_noun_in(english, patternmaker, none, person, patternmaker, regular).
 ty_noun_in(english, patty, none, unknown, patty, regular).
+ty_noun_in(english, 'patty-pan', none, unknown, 'patty-pan', regular).
 ty_noun_in(english, patzer, none, person, patzer, regular).
 ty_noun_in(english, paucity, none, unknown, paucity, regular).
 ty_noun_in(english, paunch, none, unknown, paunch, regular).
@@ -26730,6 +27707,8 @@ ty_noun_in(english, pawnshop, none, unknown, pawnshop, regular).
 ty_noun_in(english, pawpaw, none, unknown, pawpaw, regular).
 ty_noun_in(english, pax, none, unknown, pax, regular).
 ty_noun_in(english, pay, none, unknown, pay, regular).
+ty_noun_in(english, 'pay-phone', none, unknown, 'pay-phone', regular).
+ty_noun_in(english, 'pay-station', none, unknown, 'pay-station', regular).
 ty_noun_in(english, payback, none, unknown, payback, regular).
 ty_noun_in(english, paycheck, none, unknown, paycheck, regular).
 ty_noun_in(english, payday, none, unknown, payday, regular).
@@ -26749,7 +27728,10 @@ ty_noun_in(english, pc, none, unknown, pc, regular).
 ty_noun_in(english, pct, none, unknown, pct, regular).
 ty_noun_in(english, pdf, none, unknown, pdf, regular).
 ty_noun_in(english, pdl, none, unknown, pdl, regular).
+ty_noun_in(english, 'pe-tsai', none, unknown, 'pe-tsai', regular).
 ty_noun_in(english, pea, none, unknown, pea, regular).
+ty_noun_in(english, 'pea-chick', none, unknown, 'pea-chick', regular).
+ty_noun_in(english, 'pea-souper', none, unknown, 'pea-souper', regular).
 ty_noun_in(english, peace, none, unknown, peace, regular).
 ty_noun_in(english, peaceableness, none, unknown, peaceableness, regular).
 ty_noun_in(english, peacefulness, none, unknown, peacefulness, regular).
@@ -26758,10 +27740,12 @@ ty_noun_in(english, peacemaker, none, unknown, peacemaker, regular).
 ty_noun_in(english, peacenik, none, unknown, peacenik, regular).
 ty_noun_in(english, peacetime, none, unknown, peacetime, regular).
 ty_noun_in(english, peach, none, unknown, peach, regular).
+ty_noun_in(english, 'peach-wood', none, unknown, 'peach-wood', regular).
 ty_noun_in(english, peachick, none, unknown, peachick, regular).
 ty_noun_in(english, peachwood, none, unknown, peachwood, regular).
 ty_noun_in(english, peacoat, none, unknown, peacoat, regular).
 ty_noun_in(english, peacock, none, animate, peacock, regular).
+ty_noun_in(english, 'peacock-throne', none, unknown, 'peacock-throne', regular).
 ty_noun_in(english, peafowl, none, unknown, peafowl, regular).
 ty_noun_in(english, peag, none, unknown, peag, regular).
 ty_noun_in(english, peahen, none, unknown, peahen, regular).
@@ -26772,6 +27756,8 @@ ty_noun_in(english, pean, none, unknown, pean, regular).
 ty_noun_in(english, peanut, none, unknown, peanut, regular).
 ty_noun_in(english, pear, none, unknown, pear, regular).
 ty_noun_in(english, pearl, none, unknown, pearl, regular).
+ty_noun_in(english, 'pearl-fish', none, unknown, 'pearl-fish', regular).
+ty_noun_in(english, 'pearl-weed', none, unknown, 'pearl-weed', regular).
 ty_noun_in(english, pearler, none, unknown, pearler, regular).
 ty_noun_in(english, pearlfish, none, unknown, pearlfish, regular).
 ty_noun_in(english, pearlite, none, unknown, pearlite, regular).
@@ -26875,6 +27861,7 @@ ty_noun_in(english, pellet, none, unknown, pellet, regular).
 ty_noun_in(english, pellicle, none, unknown, pellicle, regular).
 ty_noun_in(english, pellicularia, none, unknown, pellicularia, regular).
 ty_noun_in(english, pellitory, none, unknown, pellitory, regular).
+ty_noun_in(english, 'pellitory-of-the-wall', none, unknown, 'pellitory-of-the-wall', regular).
 ty_noun_in(english, pellucidity, none, unknown, pellucidity, regular).
 ty_noun_in(english, pellucidness, none, unknown, pellucidness, regular).
 ty_noun_in(english, pelmet, none, unknown, pelmet, regular).
@@ -26889,6 +27876,9 @@ ty_noun_in(english, pemican, none, unknown, pemican, regular).
 ty_noun_in(english, pemmican, none, unknown, pemmican, regular).
 ty_noun_in(english, pemphigus, none, unknown, pemphigus, regular).
 ty_noun_in(english, pen, none, unknown, pen, regular).
+ty_noun_in(english, 'pen-and-ink', none, unknown, 'pen-and-ink', regular).
+ty_noun_in(english, 'pen-friend', none, unknown, 'pen-friend', regular).
+ty_noun_in(english, 'pen-tail', none, unknown, 'pen-tail', regular).
 ty_noun_in(english, penalisation, none, unknown, penalisation, regular).
 ty_noun_in(english, penalization, none, unknown, penalization, regular).
 ty_noun_in(english, penalty, none, unknown, penalty, regular).
@@ -26986,6 +27976,7 @@ ty_noun_in(english, peplos, none, unknown, peplos, regular).
 ty_noun_in(english, peplum, none, unknown, peplum, regular).
 ty_noun_in(english, peplus, none, unknown, peplus, regular).
 ty_noun_in(english, pepper, none, unknown, pepper, regular).
+ty_noun_in(english, 'pepper-and-salt', none, unknown, 'pepper-and-salt', regular).
 ty_noun_in(english, peppercorn, none, unknown, peppercorn, regular).
 ty_noun_in(english, pepperidge, none, unknown, pepperidge, regular).
 ty_noun_in(english, pepperiness, none, unknown, pepperiness, regular).
@@ -27234,6 +28225,7 @@ ty_noun_in(english, pestis, none, unknown, pestis, regular).
 ty_noun_in(english, pestle, none, unknown, pestle, regular).
 ty_noun_in(english, pesto, none, unknown, pesto, regular).
 ty_noun_in(english, pet, none, unknown, pet, regular).
+ty_noun_in(english, 'pet-food', none, unknown, 'pet-food', regular).
 ty_noun_in(english, petabit, none, unknown, petabit, regular).
 ty_noun_in(english, petabyte, none, unknown, petabyte, regular).
 ty_noun_in(english, petal, none, unknown, petal, regular).
@@ -27330,6 +28322,7 @@ ty_noun_in(english, pharos, none, unknown, pharos, regular).
 ty_noun_in(english, pharyngitis, none, unknown, pharyngitis, regular).
 ty_noun_in(english, pharynx, none, unknown, pharynx, regular).
 ty_noun_in(english, phase, none, unknown, phase, regular).
+ty_noun_in(english, 'phase-out', none, unknown, 'phase-out', regular).
 ty_noun_in(english, phasianid, none, unknown, phasianid, regular).
 ty_noun_in(english, phasmatodea, none, unknown, phasmatodea, regular).
 ty_noun_in(english, phasmid, none, unknown, phasmid, regular).
@@ -27344,6 +28337,7 @@ ty_noun_in(english, phenelzine, none, unknown, phenelzine, regular).
 ty_noun_in(english, phenergan, none, unknown, phenergan, regular).
 ty_noun_in(english, phenetics, none, unknown, phenetics, regular).
 ty_noun_in(english, pheniramine, none, unknown, pheniramine, regular).
+ty_noun_in(english, 'pheno-safranine', none, unknown, 'pheno-safranine', regular).
 ty_noun_in(english, phenobarbital, none, unknown, phenobarbital, regular).
 ty_noun_in(english, phenobarbitone, none, unknown, phenobarbitone, regular).
 ty_noun_in(english, phenol, none, unknown, phenol, regular).
@@ -27432,6 +28426,7 @@ ty_noun_in(english, pholis, none, unknown, pholis, regular).
 ty_noun_in(english, phon, none, unknown, phon, regular).
 ty_noun_in(english, phonation, none, unknown, phonation, regular).
 ty_noun_in(english, phone, none, unknown, phone, regular).
+ty_noun_in(english, 'phone-in', none, unknown, 'phone-in', regular).
 ty_noun_in(english, phonebook, none, unknown, phonebook, regular).
 ty_noun_in(english, phoneme, none, unknown, phoneme, regular).
 ty_noun_in(english, phonemics, none, unknown, phonemics, regular).
@@ -27462,6 +28457,7 @@ ty_noun_in(english, phosphorylation, none, unknown, phosphorylation, regular).
 ty_noun_in(english, phot, none, unknown, phot, regular).
 ty_noun_in(english, photalgia, none, unknown, photalgia, regular).
 ty_noun_in(english, photo, none, unknown, photo, regular).
+ty_noun_in(english, 'photo-offset', none, unknown, 'photo-offset', regular).
 ty_noun_in(english, photocathode, none, unknown, photocathode, regular).
 ty_noun_in(english, photocell, none, unknown, photocell, regular).
 ty_noun_in(english, photochemistry, none, unknown, photochemistry, regular).
@@ -27575,6 +28571,7 @@ ty_noun_in(english, phytoplankton, none, unknown, phytoplankton, regular).
 ty_noun_in(english, phytosociology, none, unknown, phytosociology, regular).
 ty_noun_in(english, phytotherapy, none, unknown, phytotherapy, regular).
 ty_noun_in(english, phytotoxin, none, unknown, phytotoxin, regular).
+ty_noun_in(english, 'pi-meson', none, unknown, 'pi-meson', regular).
 ty_noun_in(english, pia, none, unknown, pia, regular).
 ty_noun_in(english, piaffe, none, unknown, piaffe, regular).
 ty_noun_in(english, pianism, none, unknown, pianism, regular).
@@ -27589,6 +28586,7 @@ ty_noun_in(english, pibgorn, none, unknown, pibgorn, regular).
 ty_noun_in(english, pibit, none, unknown, pibit, regular).
 ty_noun_in(english, pibroch, none, unknown, pibroch, regular).
 ty_noun_in(english, pic, none, unknown, pic, regular).
+ty_noun_in(english, 'pica-pica', none, unknown, 'pica-pica', regular).
 ty_noun_in(english, picador, none, unknown, picador, regular).
 ty_noun_in(english, picaninny, none, unknown, picaninny, regular).
 ty_noun_in(english, picasso, none, unknown, picasso, regular).
@@ -27599,6 +28597,8 @@ ty_noun_in(english, pichi, none, unknown, pichi, regular).
 ty_noun_in(english, pichiciago, none, unknown, pichiciago, regular).
 ty_noun_in(english, pichiciego, none, unknown, pichiciego, regular).
 ty_noun_in(english, pick, none, unknown, pick, regular).
+ty_noun_in(english, 'pick-me-up', none, unknown, 'pick-me-up', regular).
+ty_noun_in(english, 'pick-off', none, unknown, 'pick-off', regular).
 ty_noun_in(english, pickaninny, none, unknown, pickaninny, regular).
 ty_noun_in(english, pickaxe, none, unknown, pickaxe, regular).
 ty_noun_in(english, pickelhaube, none, unknown, pickelhaube, regular).
@@ -27633,8 +28633,10 @@ ty_noun_in(english, piddle, none, unknown, piddle, regular).
 ty_noun_in(english, piddock, none, unknown, piddock, regular).
 ty_noun_in(english, pidgin, none, unknown, pidgin, regular).
 ty_noun_in(english, pie, none, unknown, pie, regular).
+ty_noun_in(english, 'pie-dog', none, unknown, 'pie-dog', regular).
 ty_noun_in(english, piece, none, unknown, piece, regular).
 ty_noun_in(english, piecework, none, unknown, piecework, regular).
+ty_noun_in(english, 'pied-a-terre', none, unknown, 'pied-a-terre', regular).
 ty_noun_in(english, piedmont, none, unknown, piedmont, regular).
 ty_noun_in(english, piedmontese, none, unknown, piedmontese, regular).
 ty_noun_in(english, pieplant, none, unknown, pieplant, regular).
@@ -27674,6 +28676,7 @@ ty_noun_in(english, pigwash, none, unknown, pigwash, regular).
 ty_noun_in(english, pigweed, none, unknown, pigweed, regular).
 ty_noun_in(english, pika, none, unknown, pika, regular).
 ty_noun_in(english, pike, none, unknown, pike, regular).
+ty_noun_in(english, 'pike-perch', none, unknown, 'pike-perch', regular).
 ty_noun_in(english, pikeblenny, none, unknown, pikeblenny, regular).
 ty_noun_in(english, pikestaff, none, unknown, pikestaff, regular).
 ty_noun_in(english, pilaf, none, unknown, pilaf, regular).
@@ -27717,9 +28720,11 @@ ty_noun_in(english, pimpernel, none, unknown, pimpernel, regular).
 ty_noun_in(english, pimpinella, none, unknown, pimpinella, regular).
 ty_noun_in(english, pimple, none, unknown, pimple, regular).
 ty_noun_in(english, pin, none, unknown, pin, regular).
+ty_noun_in(english, 'pin-up', none, unknown, 'pin-up', regular).
 ty_noun_in(english, pinafore, none, unknown, pinafore, regular).
 ty_noun_in(english, pinata, none, unknown, pinata, regular).
 ty_noun_in(english, pinball, none, unknown, pinball, regular).
+ty_noun_in(english, 'pince-nez', none, unknown, 'pince-nez', regular).
 ty_noun_in(english, pincer, none, unknown, pincer, regular).
 ty_noun_in(english, pinch, none, unknown, pinch, regular).
 ty_noun_in(english, pinche, none, unknown, pinche, regular).
@@ -27727,6 +28732,7 @@ ty_noun_in(english, pinchgut, none, person, pinchgut, regular).
 ty_noun_in(english, pincushion, none, unknown, pincushion, regular).
 ty_noun_in(english, pindolol, none, unknown, pindolol, regular).
 ty_noun_in(english, pine, none, unknown, pine, regular).
+ty_noun_in(english, 'pine-weed', none, unknown, 'pine-weed', regular).
 ty_noun_in(english, pinealoma, none, unknown, pinealoma, regular).
 ty_noun_in(english, pineapple, none, unknown, pineapple, regular).
 ty_noun_in(english, pinecone, none, unknown, pinecone, regular).
@@ -27778,6 +28784,7 @@ ty_noun_in(english, piolet, none, unknown, piolet, regular).
 ty_noun_in(english, pion, none, unknown, pion, regular).
 ty_noun_in(english, pioneer, none, person, pioneer, regular).
 ty_noun_in(english, piousness, none, unknown, piousness, regular).
+ty_noun_in(english, 'pip-squeak', none, unknown, 'pip-squeak', regular).
 ty_noun_in(english, pipa, none, unknown, pipa, regular).
 ty_noun_in(english, pipage, none, unknown, pipage, regular).
 ty_noun_in(english, pipal, none, unknown, pipal, regular).
@@ -27828,6 +28835,7 @@ ty_noun_in(english, pisiform, none, unknown, pisiform, regular).
 ty_noun_in(english, pismire, none, unknown, pismire, regular).
 ty_noun_in(english, pisonia, none, unknown, pisonia, regular).
 ty_noun_in(english, piss, none, unknown, piss, regular).
+ty_noun_in(english, 'piss-up', none, unknown, 'piss-up', regular).
 ty_noun_in(english, pisser, none, unknown, pisser, regular).
 ty_noun_in(english, pistachio, none, unknown, pistachio, regular).
 ty_noun_in(english, piste, none, unknown, piste, regular).
@@ -27860,6 +28868,7 @@ ty_noun_in(english, pitprop, none, unknown, pitprop, regular).
 ty_noun_in(english, pitsaw, none, unknown, pitsaw, regular).
 ty_noun_in(english, pitta, none, unknown, pitta, regular).
 ty_noun_in(english, pittance, none, unknown, pittance, regular).
+ty_noun_in(english, 'pitter-patter', none, unknown, 'pitter-patter', regular).
 ty_noun_in(english, pittsburgh, none, unknown, pittsburgh, regular).
 ty_noun_in(english, pituitary, none, unknown, pituitary, regular).
 ty_noun_in(english, pity, none, unknown, pity, regular).
@@ -27877,6 +28886,8 @@ ty_noun_in(english, pizzeria, none, unknown, pizzeria, regular).
 ty_noun_in(english, placard, none, unknown, placard, regular).
 ty_noun_in(english, placation, none, unknown, placation, regular).
 ty_noun_in(english, place, none, unknown, place, regular).
+ty_noun_in(english, 'place-kicker', none, unknown, 'place-kicker', regular).
+ty_noun_in(english, 'place-worship', none, unknown, 'place-worship', regular).
 ty_noun_in(english, placebo, none, unknown, placebo, regular).
 ty_noun_in(english, placeholder, none, unknown, placeholder, regular).
 ty_noun_in(english, placekicker, none, unknown, placekicker, regular).
@@ -27935,6 +28946,7 @@ ty_noun_in(english, planimetry, none, unknown, planimetry, regular).
 ty_noun_in(english, planing, none, unknown, planing, regular).
 ty_noun_in(english, planisphere, none, unknown, planisphere, regular).
 ty_noun_in(english, plank, none, unknown, plank, regular).
+ty_noun_in(english, 'plank-bed', none, unknown, 'plank-bed', regular).
 ty_noun_in(english, plankton, none, unknown, plankton, regular).
 ty_noun_in(english, planner, none, person, planner, regular).
 ty_noun_in(english, planning, none, unknown, planning, regular).
@@ -28006,6 +29018,8 @@ ty_noun_in(english, platysma, none, unknown, platysma, regular).
 ty_noun_in(english, plausibility, none, unknown, plausibility, regular).
 ty_noun_in(english, plausibleness, none, unknown, plausibleness, regular).
 ty_noun_in(english, play, none, unknown, play, regular).
+ty_noun_in(english, 'play-actor', none, unknown, 'play-actor', regular).
+ty_noun_in(english, 'play-box', none, unknown, 'play-box', regular).
 ty_noun_in(english, playacting, none, unknown, playacting, regular).
 ty_noun_in(english, playactor, none, unknown, playactor, regular).
 ty_noun_in(english, playback, none, unknown, playback, regular).
@@ -28127,10 +29141,13 @@ ty_noun_in(english, ploy, none, unknown, ploy, regular).
 ty_noun_in(english, pluck, none, unknown, pluck, regular).
 ty_noun_in(english, pluckiness, none, unknown, pluckiness, regular).
 ty_noun_in(english, plug, none, unknown, plug, regular).
+ty_noun_in(english, 'plug-in', none, unknown, 'plug-in', regular).
+ty_noun_in(english, 'plug-ugly', none, unknown, 'plug-ugly', regular).
 ty_noun_in(english, plugboard, none, unknown, plugboard, regular).
 ty_noun_in(english, plugger, none, unknown, plugger, regular).
 ty_noun_in(english, plughole, none, unknown, plughole, regular).
 ty_noun_in(english, plum, none, unknown, plum, regular).
+ty_noun_in(english, 'plum-yew', none, unknown, 'plum-yew', regular).
 ty_noun_in(english, plumage, none, unknown, plumage, regular).
 ty_noun_in(english, plumbago, none, unknown, plumbago, regular).
 ty_noun_in(english, plumber, none, person, plumber, regular).
@@ -28185,6 +29202,7 @@ ty_noun_in(english, pochard, none, unknown, pochard, regular).
 ty_noun_in(english, pochette, none, unknown, pochette, regular).
 ty_noun_in(english, pock, none, unknown, pock, regular).
 ty_noun_in(english, pocket, none, unknown, pocket, regular).
+ty_noun_in(english, 'pocket-handkerchief', none, unknown, 'pocket-handkerchief', regular).
 ty_noun_in(english, pocketbook, none, unknown, pocketbook, regular).
 ty_noun_in(english, pocketcomb, none, unknown, pocketcomb, regular).
 ty_noun_in(english, pocketful, none, unknown, pocketful, regular).
@@ -28209,6 +29227,7 @@ ty_noun_in(english, poenology, none, unknown, poenology, regular).
 ty_noun_in(english, poephila, none, unknown, poephila, regular).
 ty_noun_in(english, poesy, none, unknown, poesy, regular).
 ty_noun_in(english, poet, none, person, poet, regular).
+ty_noun_in(english, 'poet-singer', none, unknown, 'poet-singer', regular).
 ty_noun_in(english, poetess, none, unknown, poetess, regular).
 ty_noun_in(english, poetics, none, unknown, poetics, regular).
 ty_noun_in(english, poetiser, none, unknown, poetiser, regular).
@@ -28239,6 +29258,7 @@ ty_noun_in(english, pointrel, none, unknown, pointrel, regular).
 ty_noun_in(english, pointsman, none, unknown, pointsman, regular).
 ty_noun_in(english, poise, none, unknown, poise, regular).
 ty_noun_in(english, poison, none, unknown, poison, regular).
+ty_noun_in(english, 'poison-berry', none, unknown, 'poison-berry', regular).
 ty_noun_in(english, poisonberry, none, unknown, poisonberry, regular).
 ty_noun_in(english, poisoner, none, unknown, poisoner, regular).
 ty_noun_in(english, poisoning, none, unknown, poisoning, regular).
@@ -28308,6 +29328,7 @@ ty_noun_in(english, polluter, none, person, polluter, regular).
 ty_noun_in(english, pollution, none, unknown, pollution, regular).
 ty_noun_in(english, pollyfish, none, unknown, pollyfish, regular).
 ty_noun_in(english, pollywog, none, unknown, pollywog, regular).
+ty_noun_in(english, 'polo-neck', none, unknown, 'polo-neck', regular).
 ty_noun_in(english, polonaise, none, unknown, polonaise, regular).
 ty_noun_in(english, polonium, none, unknown, polonium, regular).
 ty_noun_in(english, polony, none, unknown, polony, regular).
@@ -28398,7 +29419,9 @@ ty_noun_in(english, polyurethane, none, unknown, polyurethane, regular).
 ty_noun_in(english, polyuria, none, unknown, polyuria, regular).
 ty_noun_in(english, polyvalence, none, unknown, polyvalence, regular).
 ty_noun_in(english, polyvalency, none, unknown, polyvalency, regular).
+ty_noun_in(english, 'polyvinyl-formaldehyde', none, unknown, 'polyvinyl-formaldehyde', regular).
 ty_noun_in(english, polyzoan, none, unknown, polyzoan, regular).
+ty_noun_in(english, 'pom-pom', none, unknown, 'pom-pom', regular).
 ty_noun_in(english, pomacentrus, none, unknown, pomacentrus, regular).
 ty_noun_in(english, pomade, none, unknown, pomade, regular).
 ty_noun_in(english, pomatomidae, none, unknown, pomatomidae, regular).
@@ -28422,6 +29445,7 @@ ty_noun_in(english, pompousness, none, unknown, pompousness, regular).
 ty_noun_in(english, ponce, none, unknown, ponce, regular).
 ty_noun_in(english, poncho, none, unknown, poncho, regular).
 ty_noun_in(english, pond, none, unknown, pond, regular).
+ty_noun_in(english, 'pond-skater', none, unknown, 'pond-skater', regular).
 ty_noun_in(english, ponderer, none, unknown, ponderer, regular).
 ty_noun_in(english, ponderosa, none, unknown, ponderosa, regular).
 ty_noun_in(english, ponderosity, none, unknown, ponderosity, regular).
@@ -28440,11 +29464,13 @@ ty_noun_in(english, pontiff, none, person, pontiff, regular).
 ty_noun_in(english, pontificate, none, unknown, pontificate, regular).
 ty_noun_in(english, pontoon, none, unknown, pontoon, regular).
 ty_noun_in(english, pony, none, animate, pony, regular).
+ty_noun_in(english, 'pony-trekking', none, unknown, 'pony-trekking', regular).
 ty_noun_in(english, ponycart, none, unknown, ponycart, regular).
 ty_noun_in(english, ponytail, none, unknown, ponytail, regular).
 ty_noun_in(english, pood, none, unknown, pood, regular).
 ty_noun_in(english, poodle, none, unknown, poodle, regular).
 ty_noun_in(english, poof, none, unknown, poof, regular).
+ty_noun_in(english, 'pooh-bah', none, unknown, 'pooh-bah', regular).
 ty_noun_in(english, pool, none, person, pool, regular).
 ty_noun_in(english, pooler, none, unknown, pooler, regular).
 ty_noun_in(english, poolroom, none, unknown, poolroom, regular).
@@ -28455,6 +29481,8 @@ ty_noun_in(english, poorness, none, unknown, poorness, regular).
 ty_noun_in(english, poorwill, none, unknown, poorwill, regular).
 ty_noun_in(english, poove, none, unknown, poove, regular).
 ty_noun_in(english, pop, none, person, pop, regular).
+ty_noun_in(english, 'pop-fly', none, unknown, 'pop-fly', regular).
+ty_noun_in(english, 'pop-up', none, unknown, 'pop-up', regular).
 ty_noun_in(english, popcorn, none, unknown, popcorn, regular).
 ty_noun_in(english, pope, none, person, pope, regular).
 ty_noun_in(english, popery, none, unknown, popery, regular).
@@ -28489,6 +29517,8 @@ ty_noun_in(english, pore, none, unknown, pore, regular).
 ty_noun_in(english, porgy, none, unknown, porgy, regular).
 ty_noun_in(english, poriferan, none, unknown, poriferan, regular).
 ty_noun_in(english, pork, none, animate, pork, regular).
+ty_noun_in(english, 'pork-barreling', none, unknown, 'pork-barreling', regular).
+ty_noun_in(english, 'pork-fish', none, unknown, 'pork-fish', regular).
 ty_noun_in(english, porkchop, none, unknown, porkchop, regular).
 ty_noun_in(english, porker, none, unknown, porker, regular).
 ty_noun_in(english, porkfish, none, unknown, porkfish, regular).
@@ -28516,6 +29546,7 @@ ty_noun_in(english, portable, none, unknown, portable, regular).
 ty_noun_in(english, portage, none, unknown, portage, regular).
 ty_noun_in(english, portal, none, unknown, portal, regular).
 ty_noun_in(english, portcullis, none, unknown, portcullis, regular).
+ty_noun_in(english, 'porte-cochere', none, unknown, 'porte-cochere', regular).
 ty_noun_in(english, portent, none, unknown, portent, regular).
 ty_noun_in(english, porter, none, person, porter, regular).
 ty_noun_in(english, porterage, none, unknown, porterage, regular).
@@ -28564,6 +29595,10 @@ ty_noun_in(english, possibleness, none, unknown, possibleness, regular).
 ty_noun_in(english, possum, none, unknown, possum, regular).
 ty_noun_in(english, possumwood, none, unknown, possumwood, regular).
 ty_noun_in(english, post, none, unknown, post, regular).
+ty_noun_in(english, 'post-horse', none, unknown, 'post-horse', regular).
+ty_noun_in(english, 'post-maturity', none, unknown, 'post-maturity', regular).
+ty_noun_in(english, 'post-menopause', none, unknown, 'post-menopause', regular).
+ty_noun_in(english, 'post-mortem', none, unknown, 'post-mortem', regular).
 ty_noun_in(english, postage, none, unknown, postage, regular).
 ty_noun_in(english, postbag, none, unknown, postbag, regular).
 ty_noun_in(english, postbox, none, unknown, postbox, regular).
@@ -28607,6 +29642,7 @@ ty_noun_in(english, posture, none, unknown, posture, regular).
 ty_noun_in(english, posturer, none, unknown, posturer, regular).
 ty_noun_in(english, posy, none, unknown, posy, regular).
 ty_noun_in(english, pot, none, unknown, pot, regular).
+ty_noun_in(english, 'pot-au-feu', none, unknown, 'pot-au-feu', regular).
 ty_noun_in(english, potable, none, unknown, potable, regular).
 ty_noun_in(english, potage, none, unknown, potage, regular).
 ty_noun_in(english, potamogale, none, unknown, potamogale, regular).
@@ -28674,6 +29710,7 @@ ty_noun_in(english, poundal, none, unknown, poundal, regular).
 ty_noun_in(english, pounder, none, unknown, pounder, regular).
 ty_noun_in(english, pounding, none, unknown, pounding, regular).
 ty_noun_in(english, pourboire, none, unknown, pourboire, regular).
+ty_noun_in(english, 'pousse-cafe', none, unknown, 'pousse-cafe', regular).
 ty_noun_in(english, pout, none, unknown, pout, regular).
 ty_noun_in(english, pouter, none, unknown, pouter, regular).
 ty_noun_in(english, poverty, none, unknown, poverty, regular).
@@ -28732,6 +29769,10 @@ ty_noun_in(english, praya, none, unknown, praya, regular).
 ty_noun_in(english, prayer, none, unknown, prayer, regular).
 ty_noun_in(english, prayerbook, none, unknown, prayerbook, regular).
 ty_noun_in(english, prazosin, none, unknown, prazosin, regular).
+ty_noun_in(english, 'pre-eclampsia', none, unknown, 'pre-eclampsia', regular).
+ty_noun_in(english, 'pre-empt', none, unknown, 'pre-empt', regular).
+ty_noun_in(english, 'pre-emption', none, unknown, 'pre-emption', regular).
+ty_noun_in(english, 'pre-emptor', none, unknown, 'pre-emptor', regular).
 ty_noun_in(english, preacher, none, person, preacher, regular).
 ty_noun_in(english, preachification, none, unknown, preachification, regular).
 ty_noun_in(english, preaching, none, unknown, preaching, regular).
@@ -28889,6 +29930,7 @@ ty_noun_in(english, presidentialist, none, unknown, presidentialist, regular).
 ty_noun_in(english, presidentship, none, unknown, presidentship, regular).
 ty_noun_in(english, presidium, none, unknown, presidium, regular).
 ty_noun_in(english, press, none, unknown, press, regular).
+ty_noun_in(english, 'press-up', none, unknown, 'press-up', regular).
 ty_noun_in(english, pressing, none, unknown, pressing, regular).
 ty_noun_in(english, pressman, none, unknown, pressman, regular).
 ty_noun_in(english, pressmark, none, unknown, pressmark, regular).
@@ -28927,18 +29969,22 @@ ty_noun_in(english, prey, none, person, prey, regular).
 ty_noun_in(english, priacanthus, none, unknown, priacanthus, regular).
 ty_noun_in(english, priapism, none, unknown, priapism, regular).
 ty_noun_in(english, price, none, unknown, price, regular).
+ty_noun_in(english, 'price-fixing', none, unknown, 'price-fixing', regular).
 ty_noun_in(english, pricelessness, none, unknown, pricelessness, regular).
 ty_noun_in(english, pricing, none, unknown, pricing, regular).
 ty_noun_in(english, prick, none, person, prick, regular).
 ty_noun_in(english, pricker, none, unknown, pricker, regular).
 ty_noun_in(english, pricket, none, unknown, pricket, regular).
 ty_noun_in(english, prickle, none, unknown, prickle, regular).
+ty_noun_in(english, 'prickle-weed', none, unknown, 'prickle-weed', regular).
 ty_noun_in(english, prickleback, none, unknown, prickleback, regular).
 ty_noun_in(english, prickliness, none, unknown, prickliness, regular).
 ty_noun_in(english, prickteaser, none, unknown, prickteaser, regular).
 ty_noun_in(english, pride, none, unknown, pride, regular).
 ty_noun_in(english, pridefulness, none, unknown, pridefulness, regular).
+ty_noun_in(english, 'prie-dieu', none, unknown, 'prie-dieu', regular).
 ty_noun_in(english, priest, none, person, priest, regular).
+ty_noun_in(english, 'priest-doctor', none, unknown, 'priest-doctor', regular).
 ty_noun_in(english, priestcraft, none, unknown, priestcraft, regular).
 ty_noun_in(english, priestess, none, unknown, priestess, regular).
 ty_noun_in(english, priesthood, none, unknown, priesthood, regular).
@@ -28995,6 +30041,7 @@ ty_noun_in(english, prism, none, unknown, prism, regular).
 ty_noun_in(english, prismatoid, none, unknown, prismatoid, regular).
 ty_noun_in(english, prismoid, none, unknown, prismoid, regular).
 ty_noun_in(english, prison, none, unknown, prison, regular).
+ty_noun_in(english, 'prison-breaking', none, unknown, 'prison-breaking', regular).
 ty_noun_in(english, prisonbreak, none, unknown, prisonbreak, regular).
 ty_noun_in(english, prisoner, none, person, prisoner, regular).
 ty_noun_in(english, pritzelago, none, unknown, pritzelago, regular).
@@ -29014,6 +30061,7 @@ ty_noun_in(english, prize, none, unknown, prize, regular).
 ty_noun_in(english, prizefight, none, unknown, prizefight, regular).
 ty_noun_in(english, prizefighter, none, unknown, prizefighter, regular).
 ty_noun_in(english, pro, none, person, pro, regular).
+ty_noun_in(english, 'pro-lifer', none, unknown, 'pro-lifer', regular).
 ty_noun_in(english, proaccelerin, none, unknown, proaccelerin, regular).
 ty_noun_in(english, probabilism, none, unknown, probabilism, regular).
 ty_noun_in(english, probability, none, unknown, probability, regular).
@@ -29039,6 +30087,7 @@ ty_noun_in(english, proceedings, none, unknown, proceedings, regular).
 ty_noun_in(english, proceeds, none, unknown, proceeds, regular).
 ty_noun_in(english, procellaria, none, unknown, procellaria, regular).
 ty_noun_in(english, process, none, unknown, process, regular).
+ty_noun_in(english, 'process-server', none, unknown, 'process-server', regular).
 ty_noun_in(english, processing, none, unknown, processing, regular).
 ty_noun_in(english, procession, none, unknown, procession, regular).
 ty_noun_in(english, processor, none, unknown, processor, regular).
@@ -29326,6 +30375,7 @@ ty_noun_in(english, protist, none, unknown, protist, regular).
 ty_noun_in(english, protista, none, unknown, protista, regular).
 ty_noun_in(english, protistan, none, unknown, protistan, regular).
 ty_noun_in(english, protium, none, unknown, protium, regular).
+ty_noun_in(english, 'proto-oncogene', none, unknown, 'proto-oncogene', regular).
 ty_noun_in(english, protoactinium, none, unknown, protoactinium, regular).
 ty_noun_in(english, protoanthropology, none, unknown, protoanthropology, regular).
 ty_noun_in(english, protoarchaeology, none, unknown, protoarchaeology, regular).
@@ -29536,7 +30586,10 @@ ty_noun_in(english, pucker, none, unknown, pucker, regular).
 ty_noun_in(english, puckerbush, none, unknown, puckerbush, regular).
 ty_noun_in(english, puckishness, none, unknown, puckishness, regular).
 ty_noun_in(english, pud, none, unknown, pud, regular).
+ty_noun_in(english, 'pudden-head', none, unknown, 'pudden-head', regular).
 ty_noun_in(english, pudding, none, unknown, pudding, regular).
+ty_noun_in(english, 'pudding-face', none, unknown, 'pudding-face', regular).
+ty_noun_in(english, 'pudding-wife', none, unknown, 'pudding-wife', regular).
 ty_noun_in(english, puddingwife, none, unknown, puddingwife, regular).
 ty_noun_in(english, puddle, none, unknown, puddle, regular).
 ty_noun_in(english, puddler, none, unknown, puddler, regular).
@@ -29555,6 +30608,7 @@ ty_noun_in(english, puffery, none, unknown, puffery, regular).
 ty_noun_in(english, puffin, none, unknown, puffin, regular).
 ty_noun_in(english, puffiness, none, unknown, puffiness, regular).
 ty_noun_in(english, pug, none, unknown, pug, regular).
+ty_noun_in(english, 'pug-dog', none, unknown, 'pug-dog', regular).
 ty_noun_in(english, pugilism, none, unknown, pugilism, regular).
 ty_noun_in(english, pugilist, none, unknown, pugilist, regular).
 ty_noun_in(english, pugnacity, none, unknown, pugnacity, regular).
@@ -29569,10 +30623,15 @@ ty_noun_in(english, pulassan, none, unknown, pulassan, regular).
 ty_noun_in(english, pulchritude, none, unknown, pulchritude, regular).
 ty_noun_in(english, pulicidae, none, unknown, pulicidae, regular).
 ty_noun_in(english, pull, none, unknown, pull, regular).
+ty_noun_in(english, 'pull-in', none, unknown, 'pull-in', regular).
+ty_noun_in(english, 'pull-off', none, unknown, 'pull-off', regular).
+ty_noun_in(english, 'pull-through', none, unknown, 'pull-through', regular).
+ty_noun_in(english, 'pull-up', none, unknown, 'pull-up', regular).
 ty_noun_in(english, pullback, none, unknown, pullback, regular).
 ty_noun_in(english, puller, none, unknown, puller, regular).
 ty_noun_in(english, pullet, none, unknown, pullet, regular).
 ty_noun_in(english, pulley, none, unknown, pulley, regular).
+ty_noun_in(english, 'pulley-block', none, unknown, 'pulley-block', regular).
 ty_noun_in(english, pulling, none, unknown, pulling, regular).
 ty_noun_in(english, pullout, none, unknown, pullout, regular).
 ty_noun_in(english, pullover, none, unknown, pullover, regular).
@@ -29598,6 +30657,7 @@ ty_noun_in(english, pumpkinseed, none, unknown, pumpkinseed, regular).
 ty_noun_in(english, pumps, none, unknown, pumps, regular).
 ty_noun_in(english, pun, none, unknown, pun, regular).
 ty_noun_in(english, punch, none, unknown, punch, regular).
+ty_noun_in(english, 'punch-up', none, unknown, 'punch-up', regular).
 ty_noun_in(english, punchayet, none, unknown, punchayet, regular).
 ty_noun_in(english, punchball, none, unknown, punchball, regular).
 ty_noun_in(english, punchboard, none, unknown, punchboard, regular).
@@ -29654,6 +30714,7 @@ ty_noun_in(english, purlieu, none, unknown, purlieu, regular).
 ty_noun_in(english, purloo, none, unknown, purloo, regular).
 ty_noun_in(english, purple, none, unknown, purple, regular).
 ty_noun_in(english, purpleness, none, unknown, purpleness, regular).
+ty_noun_in(english, 'purplish-red', none, unknown, 'purplish-red', regular).
 ty_noun_in(english, purpose, none, unknown, purpose, regular).
 ty_noun_in(english, purposefulness, none, unknown, purposefulness, regular).
 ty_noun_in(english, purposelessness, none, unknown, purposelessness, regular).
@@ -29674,6 +30735,7 @@ ty_noun_in(english, purveyor, none, person, purveyor, regular).
 ty_noun_in(english, purview, none, unknown, purview, regular).
 ty_noun_in(english, pus, none, unknown, pus, regular).
 ty_noun_in(english, push, none, unknown, push, regular).
+ty_noun_in(english, 'push-bike', none, unknown, 'push-bike', regular).
 ty_noun_in(english, pushball, none, unknown, pushball, regular).
 ty_noun_in(english, pushcart, none, unknown, pushcart, regular).
 ty_noun_in(english, pushchair, none, unknown, pushchair, regular).
@@ -29692,6 +30754,9 @@ ty_noun_in(english, pussy, none, unknown, pussy, regular).
 ty_noun_in(english, pussycat, none, unknown, pussycat, regular).
 ty_noun_in(english, pussytoes, none, unknown, pussytoes, regular).
 ty_noun_in(english, pustule, none, unknown, pustule, regular).
+ty_noun_in(english, 'put-down', none, unknown, 'put-down', regular).
+ty_noun_in(english, 'put-on', none, unknown, 'put-on', regular).
+ty_noun_in(english, 'put-put', none, unknown, 'put-put', regular).
 ty_noun_in(english, putamen, none, unknown, putamen, regular).
 ty_noun_in(english, putoff, none, unknown, putoff, regular).
 ty_noun_in(english, putout, none, unknown, putout, regular).
@@ -29716,6 +30781,7 @@ ty_noun_in(english, pycnidium, none, unknown, pycnidium, regular).
 ty_noun_in(english, pycnodysostosis, none, unknown, pycnodysostosis, regular).
 ty_noun_in(english, pycnogonid, none, unknown, pycnogonid, regular).
 ty_noun_in(english, pycnosis, none, unknown, pycnosis, regular).
+ty_noun_in(english, 'pye-dog', none, unknown, 'pye-dog', regular).
 ty_noun_in(english, pyelitis, none, unknown, pyelitis, regular).
 ty_noun_in(english, pyelogram, none, unknown, pyelogram, regular).
 ty_noun_in(english, pyelography, none, unknown, pyelography, regular).
@@ -29801,6 +30867,7 @@ ty_noun_in(english, qindarka, none, unknown, qindarka, regular).
 ty_noun_in(english, qintar, none, unknown, qintar, regular).
 ty_noun_in(english, qoph, none, unknown, qoph, regular).
 ty_noun_in(english, quack, none, person, quack, regular).
+ty_noun_in(english, 'quack-quack', none, unknown, 'quack-quack', regular).
 ty_noun_in(english, quackery, none, unknown, quackery, regular).
 ty_noun_in(english, quackgrass, none, unknown, quackgrass, regular).
 ty_noun_in(english, quad, none, unknown, quad, regular).
@@ -29868,6 +30935,11 @@ ty_noun_in(english, quarry, none, unknown, quarry, regular).
 ty_noun_in(english, quarryman, none, unknown, quarryman, regular).
 ty_noun_in(english, quart, none, unknown, quart, regular).
 ty_noun_in(english, quarter, none, unknown, quarter, regular).
+ty_noun_in(english, 'quarter-century', none, unknown, 'quarter-century', regular).
+ty_noun_in(english, 'quarter-circle', none, unknown, 'quarter-circle', regular).
+ty_noun_in(english, 'quarter-hour', none, unknown, 'quarter-hour', regular).
+ty_noun_in(english, 'quarter-tone', none, unknown, 'quarter-tone', regular).
+ty_noun_in(english, 'quarter-vine', none, unknown, 'quarter-vine', regular).
 ty_noun_in(english, quarterback, none, person, quarterback, regular).
 ty_noun_in(english, quarterdeck, none, unknown, quarterdeck, regular).
 ty_noun_in(english, quarterfinal, none, unknown, quarterfinal, regular).
@@ -29922,6 +30994,7 @@ ty_noun_in(english, quiaquia, none, unknown, quiaquia, regular).
 ty_noun_in(english, quibble, none, unknown, quibble, regular).
 ty_noun_in(english, quibbler, none, unknown, quibbler, regular).
 ty_noun_in(english, quiche, none, unknown, quiche, regular).
+ty_noun_in(english, 'quick-wittedness', none, unknown, 'quick-wittedness', regular).
 ty_noun_in(english, quickener, none, unknown, quickener, regular).
 ty_noun_in(english, quickening, none, unknown, quickening, regular).
 ty_noun_in(english, quickie, none, unknown, quickie, regular).
@@ -29994,11 +31067,13 @@ ty_noun_in(english, rabbet, none, unknown, rabbet, regular).
 ty_noun_in(english, rabbi, none, person, rabbi, regular).
 ty_noun_in(english, rabbinate, none, unknown, rabbinate, regular).
 ty_noun_in(english, rabbit, none, animate, rabbit, regular).
+ty_noun_in(english, 'rabbit-weed', none, unknown, 'rabbit-weed', regular).
 ty_noun_in(english, rabbiteye, none, unknown, rabbiteye, regular).
 ty_noun_in(english, rabbitfish, none, unknown, rabbitfish, regular).
 ty_noun_in(english, rabbitweed, none, unknown, rabbitweed, regular).
 ty_noun_in(english, rabbitwood, none, unknown, rabbitwood, regular).
 ty_noun_in(english, rabble, none, unknown, rabble, regular).
+ty_noun_in(english, 'rabble-rouser', none, unknown, 'rabble-rouser', regular).
 ty_noun_in(english, rabidity, none, unknown, rabidity, regular).
 ty_noun_in(english, rabidness, none, unknown, rabidness, regular).
 ty_noun_in(english, rabies, none, unknown, rabies, regular).
@@ -30049,6 +31124,9 @@ ty_noun_in(english, radicchio, none, unknown, radicchio, regular).
 ty_noun_in(english, radicle, none, unknown, radicle, regular).
 ty_noun_in(english, radiculitis, none, unknown, radiculitis, regular).
 ty_noun_in(english, radio, none, unknown, radio, regular).
+ty_noun_in(english, 'radio-gramophone', none, unknown, 'radio-gramophone', regular).
+ty_noun_in(english, 'radio-opacity', none, unknown, 'radio-opacity', regular).
+ty_noun_in(english, 'radio-phonograph', none, unknown, 'radio-phonograph', regular).
 ty_noun_in(english, radioactivity, none, unknown, radioactivity, regular).
 ty_noun_in(english, radiobiologist, none, unknown, radiobiologist, regular).
 ty_noun_in(english, radiobiology, none, unknown, radiobiology, regular).
@@ -30119,6 +31197,7 @@ ty_noun_in(english, ragwort, none, unknown, ragwort, regular).
 ty_noun_in(english, raid, none, unknown, raid, regular).
 ty_noun_in(english, raider, none, unknown, raider, regular).
 ty_noun_in(english, rail, none, unknown, rail, regular).
+ty_noun_in(english, 'rail-splitter', none, unknown, 'rail-splitter', regular).
 ty_noun_in(english, railbird, none, unknown, railbird, regular).
 ty_noun_in(english, railcar, none, unknown, railcar, regular).
 ty_noun_in(english, railhead, none, unknown, railhead, regular).
@@ -30131,6 +31210,7 @@ ty_noun_in(english, railwayman, none, unknown, railwayman, regular).
 ty_noun_in(english, railyard, none, unknown, railyard, regular).
 ty_noun_in(english, raiment, none, unknown, raiment, regular).
 ty_noun_in(english, rain, none, unknown, rain, regular).
+ty_noun_in(english, 'rain-wash', none, unknown, 'rain-wash', regular).
 ty_noun_in(english, rainbow, none, unknown, rainbow, regular).
 ty_noun_in(english, raincoat, none, unknown, raincoat, regular).
 ty_noun_in(english, raindrop, none, unknown, raindrop, regular).
@@ -30153,6 +31233,7 @@ ty_noun_in(english, raja, none, unknown, raja, regular).
 ty_noun_in(english, rajah, none, person, rajah, regular).
 ty_noun_in(english, rajanya, none, unknown, rajanya, regular).
 ty_noun_in(english, rake, none, unknown, rake, regular).
+ty_noun_in(english, 'rake-off', none, unknown, 'rake-off', regular).
 ty_noun_in(english, rakehell, none, unknown, rakehell, regular).
 ty_noun_in(english, rakishness, none, unknown, rakishness, regular).
 ty_noun_in(english, rale, none, unknown, rale, regular).
@@ -30237,6 +31318,7 @@ ty_noun_in(english, rapscallion, none, person, rapscallion, regular).
 ty_noun_in(english, rapture, none, unknown, rapture, regular).
 ty_noun_in(english, raptus, none, unknown, raptus, regular).
 ty_noun_in(english, rarebit, none, unknown, rarebit, regular).
+ty_noun_in(english, 'raree-show', none, unknown, 'raree-show', regular).
 ty_noun_in(english, rarefaction, none, unknown, rarefaction, regular).
 ty_noun_in(english, rareness, none, unknown, rareness, regular).
 ty_noun_in(english, rariora, none, unknown, rariora, regular).
@@ -30250,6 +31332,10 @@ ty_noun_in(english, raspberry, none, unknown, raspberry, regular).
 ty_noun_in(english, rassling, none, unknown, rassling, regular).
 ty_noun_in(english, raster, none, unknown, raster, regular).
 ty_noun_in(english, rat, none, animate, rat, regular).
+ty_noun_in(english, 'rat-a-tat', none, unknown, 'rat-a-tat', regular).
+ty_noun_in(english, 'rat-a-tat-tat', none, unknown, 'rat-a-tat-tat', regular).
+ty_noun_in(english, 'rat-catcher', none, unknown, 'rat-catcher', regular).
+ty_noun_in(english, 'rat-tat', none, unknown, 'rat-tat', regular).
 ty_noun_in(english, ratability, none, unknown, ratability, regular).
 ty_noun_in(english, ratables, none, unknown, ratables, regular).
 ty_noun_in(english, ratafee, none, unknown, ratafee, regular).
@@ -30288,6 +31374,7 @@ ty_noun_in(english, rattail, none, unknown, rattail, regular).
 ty_noun_in(english, rattan, none, unknown, rattan, regular).
 ty_noun_in(english, ratter, none, unknown, ratter, regular).
 ty_noun_in(english, rattle, none, unknown, rattle, regular).
+ty_noun_in(english, 'rattle-top', none, unknown, 'rattle-top', regular).
 ty_noun_in(english, rattlebox, none, unknown, rattlebox, regular).
 ty_noun_in(english, rattler, none, unknown, rattler, regular).
 ty_noun_in(english, rattlesnake, none, unknown, rattlesnake, regular).
@@ -30298,6 +31385,7 @@ ty_noun_in(english, rauvolfia, none, unknown, rauvolfia, regular).
 ty_noun_in(english, rauwolfia, none, unknown, rauwolfia, regular).
 ty_noun_in(english, ravage, none, unknown, ravage, regular).
 ty_noun_in(english, rave, none, unknown, rave, regular).
+ty_noun_in(english, 'rave-up', none, unknown, 'rave-up', regular).
 ty_noun_in(english, ravehook, none, unknown, ravehook, regular).
 ty_noun_in(english, ravel, none, unknown, ravel, regular).
 ty_noun_in(english, raven, none, animate, raven, regular).
@@ -30316,13 +31404,23 @@ ty_noun_in(english, ray, none, unknown, ray, regular).
 ty_noun_in(english, razbliuto, none, unknown, razbliuto, regular).
 ty_noun_in(english, razmataz, none, unknown, razmataz, regular).
 ty_noun_in(english, razor, none, unknown, razor, regular).
+ty_noun_in(english, 'razor-fish', none, unknown, 'razor-fish', regular).
 ty_noun_in(english, razorbill, none, unknown, razorbill, regular).
 ty_noun_in(english, razorblade, none, unknown, razorblade, regular).
 ty_noun_in(english, razz, none, unknown, razz, regular).
 ty_noun_in(english, razzle, none, unknown, razzle, regular).
+ty_noun_in(english, 'razzle-dazzle', none, unknown, 'razzle-dazzle', regular).
 ty_noun_in(english, razzmatazz, none, unknown, razzmatazz, regular).
 ty_noun_in(english, rbi, none, unknown, rbi, regular).
+ty_noun_in(english, 're-afforestation', none, unknown, 're-afforestation', regular).
+ty_noun_in(english, 're-creation', none, unknown, 're-creation', regular).
+ty_noun_in(english, 're-echo', none, unknown, 're-echo', regular).
 ty_noun_in(english, 're-establishment', none, unknown, 're-establishment', regular).
+ty_noun_in(english, 're-experiencing', none, unknown, 're-experiencing', regular).
+ty_noun_in(english, 're-formation', none, unknown, 're-formation', regular).
+ty_noun_in(english, 're-introduction', none, unknown, 're-introduction', regular).
+ty_noun_in(english, 're-sentencing', none, unknown, 're-sentencing', regular).
+ty_noun_in(english, 're-uptake', none, unknown, 're-uptake', regular).
 ty_noun_in(english, reabsorption, none, unknown, reabsorption, regular).
 ty_noun_in(english, reach, none, unknown, reach, regular).
 ty_noun_in(english, reactance, none, unknown, reactance, regular).
@@ -30333,6 +31431,7 @@ ty_noun_in(english, reactionism, none, unknown, reactionism, regular).
 ty_noun_in(english, reactivation, none, unknown, reactivation, regular).
 ty_noun_in(english, reactivity, none, unknown, reactivity, regular).
 ty_noun_in(english, reactor, none, unknown, reactor, regular).
+ty_noun_in(english, 'read-out', none, unknown, 'read-out', regular).
 ty_noun_in(english, readability, none, unknown, readability, regular).
 ty_noun_in(english, reader, none, person, reader, regular).
 ty_noun_in(english, readership, none, person, readership, regular).
@@ -30342,6 +31441,9 @@ ty_noun_in(english, readjustment, none, unknown, readjustment, regular).
 ty_noun_in(english, readmission, none, unknown, readmission, regular).
 ty_noun_in(english, readout, none, unknown, readout, regular).
 ty_noun_in(english, ready, none, unknown, ready, regular).
+ty_noun_in(english, 'ready-made', none, unknown, 'ready-made', regular).
+ty_noun_in(english, 'ready-mix', none, unknown, 'ready-mix', regular).
+ty_noun_in(english, 'ready-to-wear', none, unknown, 'ready-to-wear', regular).
 ty_noun_in(english, reaffiliation, none, unknown, reaffiliation, regular).
 ty_noun_in(english, reaffirmation, none, unknown, reaffirmation, regular).
 ty_noun_in(english, reafforestation, none, unknown, reafforestation, regular).
@@ -30470,6 +31572,9 @@ ty_noun_in(english, reconsideration, none, unknown, reconsideration, regular).
 ty_noun_in(english, reconstruction, none, unknown, reconstruction, regular).
 ty_noun_in(english, reconversion, none, unknown, reconversion, regular).
 ty_noun_in(english, record, none, unknown, record, regular).
+ty_noun_in(english, 'record-breaker', none, unknown, 'record-breaker', regular).
+ty_noun_in(english, 'record-holder', none, unknown, 'record-holder', regular).
+ty_noun_in(english, 'record-keeper', none, unknown, 'record-keeper', regular).
 ty_noun_in(english, recordbook, none, unknown, recordbook, regular).
 ty_noun_in(english, recorder, none, unknown, recorder, regular).
 ty_noun_in(english, recording, none, unknown, recording, regular).
@@ -30482,6 +31587,7 @@ ty_noun_in(english, recrimination, none, unknown, recrimination, regular).
 ty_noun_in(english, recrudescence, none, unknown, recrudescence, regular).
 ty_noun_in(english, recruit, none, person, recruit, regular).
 ty_noun_in(english, recruiter, none, unknown, recruiter, regular).
+ty_noun_in(english, 'recruiting-sergeant', none, unknown, 'recruiting-sergeant', regular).
 ty_noun_in(english, recruitment, none, unknown, recruitment, regular).
 ty_noun_in(english, rectangle, none, unknown, rectangle, regular).
 ty_noun_in(english, rectangularity, none, unknown, rectangularity, regular).
@@ -30505,6 +31611,9 @@ ty_noun_in(english, recusant, none, person, recusant, regular).
 ty_noun_in(english, recusation, none, unknown, recusation, regular).
 ty_noun_in(english, recycling, none, unknown, recycling, regular).
 ty_noun_in(english, red, none, unknown, red, regular).
+ty_noun_in(english, 'red-berry', none, unknown, 'red-berry', regular).
+ty_noun_in(english, 'red-blindness', none, unknown, 'red-blindness', regular).
+ty_noun_in(english, 'red-header', none, unknown, 'red-header', regular).
 ty_noun_in(english, redact, none, unknown, redact, regular).
 ty_noun_in(english, redaction, none, unknown, redaction, regular).
 ty_noun_in(english, redbelly, none, unknown, redbelly, regular).
@@ -30718,6 +31827,7 @@ ty_noun_in(english, relation, none, unknown, relation, regular).
 ty_noun_in(english, relations, none, unknown, relations, regular).
 ty_noun_in(english, relationship, none, unknown, relationship, regular).
 ty_noun_in(english, relative, none, person, relative, regular).
+ty_noun_in(english, 'relative-in-law', none, unknown, 'relative-in-law', regular).
 ty_noun_in(english, relativism, none, unknown, relativism, regular).
 ty_noun_in(english, relativity, none, unknown, relativity, regular).
 ty_noun_in(english, relatum, none, unknown, relatum, regular).
@@ -30801,6 +31911,9 @@ ty_noun_in(english, renovator, none, person, renovator, regular).
 ty_noun_in(english, renown, none, unknown, renown, regular).
 ty_noun_in(english, rensselaerite, none, unknown, rensselaerite, regular).
 ty_noun_in(english, rent, none, person, rent, regular).
+ty_noun_in(english, 'rent-a-car', none, unknown, 'rent-a-car', regular).
+ty_noun_in(english, 'rent-rebate', none, unknown, 'rent-rebate', regular).
+ty_noun_in(english, 'rent-roll', none, unknown, 'rent-roll', regular).
 ty_noun_in(english, rental, none, person, rental, regular).
 ty_noun_in(english, renter, none, unknown, renter, regular).
 ty_noun_in(english, rentier, none, unknown, rentier, regular).
@@ -30972,6 +32085,8 @@ ty_noun_in(english, responsibleness, none, unknown, responsibleness, regular).
 ty_noun_in(english, responsiveness, none, unknown, responsiveness, regular).
 ty_noun_in(english, responsory, none, unknown, responsory, regular).
 ty_noun_in(english, rest, none, unknown, rest, regular).
+ty_noun_in(english, 'rest-cure', none, unknown, 'rest-cure', regular).
+ty_noun_in(english, 'rest-harrow', none, unknown, 'rest-harrow', regular).
 ty_noun_in(english, restatement, none, unknown, restatement, regular).
 ty_noun_in(english, restaurant, none, unknown, restaurant, regular).
 ty_noun_in(english, restauranter, none, person, restauranter, regular).
@@ -31112,6 +32227,7 @@ ty_noun_in(english, revolutionist, none, unknown, revolutionist, regular).
 ty_noun_in(english, revolver, none, unknown, revolver, regular).
 ty_noun_in(english, revue, none, unknown, revue, regular).
 ty_noun_in(english, revulsion, none, unknown, revulsion, regular).
+ty_noun_in(english, 'rewa-rewa', none, unknown, 'rewa-rewa', regular).
 ty_noun_in(english, reward, none, unknown, reward, regular).
 ty_noun_in(english, rewind, none, unknown, rewind, regular).
 ty_noun_in(english, reworking, none, unknown, reworking, regular).
@@ -31279,6 +32395,9 @@ ty_noun_in(english, rigatoni, none, unknown, rigatoni, regular).
 ty_noun_in(english, rigger, none, person, rigger, regular).
 ty_noun_in(english, rigging, none, unknown, rigging, regular).
 ty_noun_in(english, right, none, unknown, right, regular).
+ty_noun_in(english, 'right-handedness', none, unknown, 'right-handedness', regular).
+ty_noun_in(english, 'right-hander', none, unknown, 'right-hander', regular).
+ty_noun_in(english, 'right-winger', none, unknown, 'right-winger', regular).
 ty_noun_in(english, righteousness, none, unknown, righteousness, regular).
 ty_noun_in(english, rightfield, none, unknown, rightfield, regular).
 ty_noun_in(english, rightfulness, none, unknown, rightfulness, regular).
@@ -31305,6 +32424,10 @@ ty_noun_in(english, rimu, none, unknown, rimu, regular).
 ty_noun_in(english, rind, none, unknown, rind, regular).
 ty_noun_in(english, rinderpest, none, unknown, rinderpest, regular).
 ty_noun_in(english, ring, none, unknown, ring, regular).
+ty_noun_in(english, 'ring-a-rosy', none, unknown, 'ring-a-rosy', regular).
+ty_noun_in(english, 'ring-around-a-rosy', none, unknown, 'ring-around-a-rosy', regular).
+ty_noun_in(english, 'ring-around-the-rosy', none, unknown, 'ring-around-the-rosy', regular).
+ty_noun_in(english, 'ring-binder', none, unknown, 'ring-binder', regular).
 ty_noun_in(english, ringdove, none, unknown, ringdove, regular).
 ty_noun_in(english, ringer, none, unknown, ringer, regular).
 ty_noun_in(english, ringgit, none, unknown, ringgit, regular).
@@ -31322,6 +32445,7 @@ ty_noun_in(english, rinkhals, none, unknown, rinkhals, regular).
 ty_noun_in(english, rinse, none, unknown, rinse, regular).
 ty_noun_in(english, riot, none, unknown, riot, regular).
 ty_noun_in(english, rioter, none, unknown, rioter, regular).
+ty_noun_in(english, 'rip-off', none, unknown, 'rip-off', regular).
 ty_noun_in(english, riparia, none, unknown, riparia, regular).
 ty_noun_in(english, ripcord, none, unknown, ripcord, regular).
 ty_noun_in(english, ripeness, none, unknown, ripeness, regular).
@@ -31329,6 +32453,7 @@ ty_noun_in(english, ripening, none, unknown, ripening, regular).
 ty_noun_in(english, riposte, none, unknown, riposte, regular).
 ty_noun_in(english, ripper, none, unknown, ripper, regular).
 ty_noun_in(english, ripple, none, unknown, ripple, regular).
+ty_noun_in(english, 'ripple-grass', none, unknown, 'ripple-grass', regular).
 ty_noun_in(english, ripsaw, none, unknown, ripsaw, regular).
 ty_noun_in(english, riptide, none, unknown, riptide, regular).
 ty_noun_in(english, rise, none, unknown, rise, regular).
@@ -31358,6 +32483,7 @@ ty_noun_in(english, rivetter, none, unknown, rivetter, regular).
 ty_noun_in(english, rivulet, none, unknown, rivulet, regular).
 ty_noun_in(english, rivulus, none, unknown, rivulus, regular).
 ty_noun_in(english, riyal, none, unknown, riyal, regular).
+ty_noun_in(english, 'riyal-omani', none, unknown, 'riyal-omani', regular).
 ty_noun_in(english, roach, none, unknown, roach, regular).
 ty_noun_in(english, road, none, unknown, road, regular).
 ty_noun_in(english, roadbed, none, unknown, roadbed, regular).
@@ -31382,6 +32508,7 @@ ty_noun_in(english, robalo, none, unknown, robalo, regular).
 ty_noun_in(english, robber, none, person, robber, regular).
 ty_noun_in(english, robbery, none, unknown, robbery, regular).
 ty_noun_in(english, robe, none, unknown, robe, regular).
+ty_noun_in(english, 'robe-de-chambre', none, unknown, 'robe-de-chambre', regular).
 ty_noun_in(english, robin, none, unknown, robin, regular).
 ty_noun_in(english, robot, none, unknown, robot, regular).
 ty_noun_in(english, robotics, none, unknown, robotics, regular).
@@ -31392,6 +32519,7 @@ ty_noun_in(english, roccella, none, unknown, roccella, regular).
 ty_noun_in(english, roccus, none, unknown, roccus, regular).
 ty_noun_in(english, rocephin, none, unknown, rocephin, regular).
 ty_noun_in(english, rock, none, unknown, rock, regular).
+ty_noun_in(english, 'rock-and-roll', none, unknown, 'rock-and-roll', regular).
 ty_noun_in(english, rockabilly, none, unknown, rockabilly, regular).
 ty_noun_in(english, rockchuck, none, unknown, rockchuck, regular).
 ty_noun_in(english, rockcress, none, unknown, rockcress, regular).
@@ -31425,13 +32553,16 @@ ty_noun_in(english, roisterer, none, unknown, roisterer, regular).
 ty_noun_in(english, role, none, unknown, role, regular).
 ty_noun_in(english, roleplaying, none, unknown, roleplaying, regular).
 ty_noun_in(english, roll, none, unknown, roll, regular).
+ty_noun_in(english, 'roll-on', none, unknown, 'roll-on', regular).
 ty_noun_in(english, rollback, none, unknown, rollback, regular).
 ty_noun_in(english, roller, none, unknown, roller, regular).
+ty_noun_in(english, 'roller-skater', none, unknown, 'roller-skater', regular).
 ty_noun_in(english, rollerblade, none, unknown, rollerblade, regular).
 ty_noun_in(english, rollerblader, none, unknown, rollerblader, regular).
 ty_noun_in(english, rolling, none, unknown, rolling, regular).
 ty_noun_in(english, rollmops, none, unknown, rollmops, regular).
 ty_noun_in(english, rollover, none, unknown, rollover, regular).
+ty_noun_in(english, 'roly-poly', none, unknown, 'roly-poly', regular).
 ty_noun_in(english, rolypoliness, none, unknown, rolypoliness, regular).
 ty_noun_in(english, romaine, none, unknown, romaine, regular).
 ty_noun_in(english, roman, none, person, roman, regular).
@@ -31451,6 +32582,7 @@ ty_noun_in(english, rondelet, none, unknown, rondelet, regular).
 ty_noun_in(english, rondo, none, unknown, rondo, regular).
 ty_noun_in(english, roneo, none, unknown, roneo, regular).
 ty_noun_in(english, rood, none, unknown, rood, regular).
+ty_noun_in(english, 'rood-tree', none, unknown, 'rood-tree', regular).
 ty_noun_in(english, roof, none, unknown, roof, regular).
 ty_noun_in(english, roofer, none, person, roofer, regular).
 ty_noun_in(english, roofing, none, unknown, roofing, regular).
@@ -31478,6 +32610,8 @@ ty_noun_in(english, rootlet, none, unknown, rootlet, regular).
 ty_noun_in(english, rootstalk, none, unknown, rootstalk, regular).
 ty_noun_in(english, rootstock, none, unknown, rootstock, regular).
 ty_noun_in(english, rope, none, unknown, rope, regular).
+ty_noun_in(english, 'rope-a-dope', none, unknown, 'rope-a-dope', regular).
+ty_noun_in(english, 'rope-maker', none, unknown, 'rope-maker', regular).
 ty_noun_in(english, ropebark, none, unknown, ropebark, regular).
 ty_noun_in(english, ropedancer, none, unknown, ropedancer, regular).
 ty_noun_in(english, ropemaker, none, unknown, ropemaker, regular).
@@ -31493,6 +32627,7 @@ ty_noun_in(english, roridula, none, unknown, roridula, regular).
 ty_noun_in(english, rorqual, none, unknown, rorqual, regular).
 ty_noun_in(english, rosary, none, unknown, rosary, regular).
 ty_noun_in(english, rose, none, unknown, rose, regular).
+ty_noun_in(english, 'rose-root', none, unknown, 'rose-root', regular).
 ty_noun_in(english, rosebay, none, unknown, rosebay, regular).
 ty_noun_in(english, rosebud, none, unknown, rosebud, regular).
 ty_noun_in(english, rosebush, none, unknown, rosebush, regular).
@@ -31534,6 +32669,7 @@ ty_noun_in(english, rouble, none, unknown, rouble, regular).
 ty_noun_in(english, roue, none, unknown, roue, regular).
 ty_noun_in(english, rouge, none, unknown, rouge, regular).
 ty_noun_in(english, rougeberry, none, unknown, rougeberry, regular).
+ty_noun_in(english, 'rough-and-tumble', none, unknown, 'rough-and-tumble', regular).
 ty_noun_in(english, roughage, none, unknown, roughage, regular).
 ty_noun_in(english, roughcast, none, unknown, roughcast, regular).
 ty_noun_in(english, roughleg, none, unknown, roughleg, regular).
@@ -31582,8 +32718,10 @@ ty_noun_in(english, royalist, none, unknown, royalist, regular).
 ty_noun_in(english, royalty, none, unknown, royalty, regular).
 ty_noun_in(english, rozelle, none, unknown, rozelle, regular).
 ty_noun_in(english, rpm, none, unknown, rpm, regular).
+ty_noun_in(english, 'rub-a-dub', none, unknown, 'rub-a-dub', regular).
 ty_noun_in(english, rubato, none, unknown, rubato, regular).
 ty_noun_in(english, rubber, none, unknown, rubber, regular).
+ty_noun_in(english, 'rubber-necking', none, unknown, 'rubber-necking', regular).
 ty_noun_in(english, rubberneck, none, unknown, rubberneck, regular).
 ty_noun_in(english, rubbernecker, none, unknown, rubbernecker, regular).
 ty_noun_in(english, rubbish, none, unknown, rubbish, regular).
@@ -31637,6 +32775,7 @@ ty_noun_in(english, ruler, none, person, ruler, regular).
 ty_noun_in(english, rulership, none, unknown, rulership, regular).
 ty_noun_in(english, ruling, none, unknown, ruling, regular).
 ty_noun_in(english, rum, none, unknown, rum, regular).
+ty_noun_in(english, 'rum-blossom', none, unknown, 'rum-blossom', regular).
 ty_noun_in(english, rumanian, none, unknown, rumanian, regular).
 ty_noun_in(english, rumba, none, unknown, rumba, regular).
 ty_noun_in(english, rumble, none, unknown, rumble, regular).
@@ -31654,6 +32793,10 @@ ty_noun_in(english, rump, none, unknown, rump, regular).
 ty_noun_in(english, rumpus, none, unknown, rumpus, regular).
 ty_noun_in(english, rumrunner, none, unknown, rumrunner, regular).
 ty_noun_in(english, run, none, unknown, run, regular).
+ty_noun_in(english, 'run-in', none, unknown, 'run-in', regular).
+ty_noun_in(english, 'run-through', none, unknown, 'run-through', regular).
+ty_noun_in(english, 'run-time', none, unknown, 'run-time', regular).
+ty_noun_in(english, 'run-up', none, unknown, 'run-up', regular).
 ty_noun_in(english, runabout, none, unknown, runabout, regular).
 ty_noun_in(english, runaway, none, unknown, runaway, regular).
 ty_noun_in(english, runch, none, unknown, runch, regular).
@@ -31661,6 +32804,7 @@ ty_noun_in(english, rundle, none, unknown, rundle, regular).
 ty_noun_in(english, rundown, none, unknown, rundown, regular).
 ty_noun_in(english, runnel, none, unknown, runnel, regular).
 ty_noun_in(english, runner, none, person, runner, regular).
+ty_noun_in(english, 'runner-up', none, unknown, 'runner-up', regular).
 ty_noun_in(english, runniness, none, unknown, runniness, regular).
 ty_noun_in(english, running, none, unknown, running, regular).
 ty_noun_in(english, runoff, none, unknown, runoff, regular).
@@ -31677,6 +32821,7 @@ ty_noun_in(english, ruralist, none, unknown, ruralist, regular).
 ty_noun_in(english, rurality, none, unknown, rurality, regular).
 ty_noun_in(english, ruscus, none, unknown, ruscus, regular).
 ty_noun_in(english, rush, none, unknown, rush, regular).
+ty_noun_in(english, 'rush-grass', none, unknown, 'rush-grass', regular).
 ty_noun_in(english, rusher, none, unknown, rusher, regular).
 ty_noun_in(english, rushing, none, unknown, rushing, regular).
 ty_noun_in(english, rushlight, none, unknown, rushlight, regular).
@@ -31772,6 +32917,8 @@ ty_noun_in(english, sadomasochism, none, unknown, sadomasochism, regular).
 ty_noun_in(english, sadomasochist, none, unknown, sadomasochist, regular).
 ty_noun_in(english, safari, none, unknown, safari, regular).
 ty_noun_in(english, safe, none, unknown, safe, regular).
+ty_noun_in(english, 'safe-conduct', none, unknown, 'safe-conduct', regular).
+ty_noun_in(english, 'safe-deposit', none, unknown, 'safe-deposit', regular).
 ty_noun_in(english, safebreaker, none, person, safebreaker, regular).
 ty_noun_in(english, safecracker, none, unknown, safecracker, regular).
 ty_noun_in(english, safeguard, none, unknown, safeguard, regular).
@@ -31779,6 +32926,7 @@ ty_noun_in(english, safehold, none, unknown, safehold, regular).
 ty_noun_in(english, safekeeping, none, unknown, safekeeping, regular).
 ty_noun_in(english, safeness, none, unknown, safeness, regular).
 ty_noun_in(english, safety, none, unknown, safety, regular).
+ty_noun_in(english, 'safety-deposit', none, unknown, 'safety-deposit', regular).
 ty_noun_in(english, safflower, none, unknown, safflower, regular).
 ty_noun_in(english, saffranine, none, unknown, saffranine, regular).
 ty_noun_in(english, saffron, none, unknown, saffron, regular).
@@ -31789,6 +32937,7 @@ ty_noun_in(english, sagamore, none, person, sagamore, regular).
 ty_noun_in(english, sage, none, person, sage, regular).
 ty_noun_in(english, sagebrush, none, unknown, sagebrush, regular).
 ty_noun_in(english, sagitta, none, unknown, sagitta, regular).
+ty_noun_in(english, 'sagittate-leaf', none, unknown, 'sagittate-leaf', regular).
 ty_noun_in(english, sago, none, unknown, sago, regular).
 ty_noun_in(english, saguaro, none, unknown, saguaro, regular).
 ty_noun_in(english, sahib, none, unknown, sahib, regular).
@@ -31799,6 +32948,7 @@ ty_noun_in(english, sailboat, none, unknown, sailboat, regular).
 ty_noun_in(english, sailcloth, none, unknown, sailcloth, regular).
 ty_noun_in(english, sailfish, none, unknown, sailfish, regular).
 ty_noun_in(english, sailing, none, unknown, sailing, regular).
+ty_noun_in(english, 'sailing-race', none, unknown, 'sailing-race', regular).
 ty_noun_in(english, sailmaker, none, unknown, sailmaker, regular).
 ty_noun_in(english, sailor, none, person, sailor, regular).
 ty_noun_in(english, sailplane, none, unknown, sailplane, regular).
@@ -31974,6 +33124,7 @@ ty_noun_in(english, sandwichman, none, unknown, sandwichman, regular).
 ty_noun_in(english, sandwort, none, unknown, sandwort, regular).
 ty_noun_in(english, saneness, none, unknown, saneness, regular).
 ty_noun_in(english, sanfoin, none, unknown, sanfoin, regular).
+ty_noun_in(english, 'sang-froid', none, unknown, 'sang-froid', regular).
 ty_noun_in(english, sangapenum, none, unknown, sangapenum, regular).
 ty_noun_in(english, sangaree, none, unknown, sangaree, regular).
 ty_noun_in(english, sangoma, none, unknown, sangoma, regular).
@@ -32112,6 +33263,7 @@ ty_noun_in(english, saturnism, none, unknown, saturnism, regular).
 ty_noun_in(english, satyr, none, person, satyr, regular).
 ty_noun_in(english, satyriasis, none, unknown, satyriasis, regular).
 ty_noun_in(english, sauce, none, unknown, sauce, regular).
+ty_noun_in(english, 'sauce-alone', none, unknown, 'sauce-alone', regular).
 ty_noun_in(english, sauceboat, none, unknown, sauceboat, regular).
 ty_noun_in(english, saucepan, none, unknown, saucepan, regular).
 ty_noun_in(english, saucepot, none, unknown, saucepot, regular).
@@ -32139,6 +33291,7 @@ ty_noun_in(english, savanna, none, unknown, savanna, regular).
 ty_noun_in(english, savannah, none, unknown, savannah, regular).
 ty_noun_in(english, savant, none, unknown, savant, regular).
 ty_noun_in(english, savarin, none, unknown, savarin, regular).
+ty_noun_in(english, 'save-all', none, unknown, 'save-all', regular).
 ty_noun_in(english, saveloy, none, unknown, saveloy, regular).
 ty_noun_in(english, saver, none, person, saver, regular).
 ty_noun_in(english, savin, none, unknown, savin, regular).
@@ -32146,6 +33299,7 @@ ty_noun_in(english, saving, none, unknown, saving, regular).
 ty_noun_in(english, savings, none, unknown, savings, regular).
 ty_noun_in(english, savior, none, unknown, savior, regular).
 ty_noun_in(english, saviour, none, unknown, saviour, regular).
+ty_noun_in(english, 'savoir-faire', none, unknown, 'savoir-faire', regular).
 ty_noun_in(english, savoriness, none, unknown, savoriness, regular).
 ty_noun_in(english, savorlessness, none, unknown, savorlessness, regular).
 ty_noun_in(english, savour, none, unknown, savour, regular).
@@ -32173,6 +33327,7 @@ ty_noun_in(english, saxitoxin, none, unknown, saxitoxin, regular).
 ty_noun_in(english, saxon, none, unknown, saxon, regular).
 ty_noun_in(english, saxophone, none, unknown, saxophone, regular).
 ty_noun_in(english, saxophonist, none, unknown, saxophonist, regular).
+ty_noun_in(english, 'say-so', none, unknown, 'say-so', regular).
 ty_noun_in(english, sayeret, none, unknown, sayeret, regular).
 ty_noun_in(english, saying, none, unknown, saying, regular).
 ty_noun_in(english, sayonara, none, unknown, sayonara, regular).
@@ -32267,6 +33422,7 @@ ty_noun_in(english, scavenger, none, unknown, scavenger, regular).
 ty_noun_in(english, scenario, none, unknown, scenario, regular).
 ty_noun_in(english, scenarist, none, person, scenarist, regular).
 ty_noun_in(english, scene, none, unknown, scene, regular).
+ty_noun_in(english, 'scene-stealer', none, unknown, 'scene-stealer', regular).
 ty_noun_in(english, scenery, none, unknown, scenery, regular).
 ty_noun_in(english, sceneshifter, none, unknown, sceneshifter, regular).
 ty_noun_in(english, scenography, none, unknown, scenography, regular).
@@ -32527,6 +33683,7 @@ ty_noun_in(english, scrooge, none, person, scrooge, regular).
 ty_noun_in(english, scrotum, none, unknown, scrotum, regular).
 ty_noun_in(english, scrounger, none, unknown, scrounger, regular).
 ty_noun_in(english, scrub, none, unknown, scrub, regular).
+ty_noun_in(english, 'scrub-bird', none, unknown, 'scrub-bird', regular).
 ty_noun_in(english, scrubber, none, unknown, scrubber, regular).
 ty_noun_in(english, scrubbiness, none, unknown, scrubbiness, regular).
 ty_noun_in(english, scrubbing, none, unknown, scrubbing, regular).
@@ -32574,6 +33731,13 @@ ty_noun_in(english, scyphozoan, none, unknown, scyphozoan, regular).
 ty_noun_in(english, scyphus, none, unknown, scyphus, regular).
 ty_noun_in(english, scythe, none, unknown, scythe, regular).
 ty_noun_in(english, sea, none, unknown, sea, regular).
+ty_noun_in(english, 'sea-coast', none, unknown, 'sea-coast', regular).
+ty_noun_in(english, 'sea-duty', none, unknown, 'sea-duty', regular).
+ty_noun_in(english, 'sea-ear', none, unknown, 'sea-ear', regular).
+ty_noun_in(english, 'sea-poose', none, unknown, 'sea-poose', regular).
+ty_noun_in(english, 'sea-purse', none, unknown, 'sea-purse', regular).
+ty_noun_in(english, 'sea-puss', none, unknown, 'sea-puss', regular).
+ty_noun_in(english, 'sea-rocket', none, unknown, 'sea-rocket', regular).
 ty_noun_in(english, seabag, none, unknown, seabag, regular).
 ty_noun_in(english, seabed, none, unknown, seabed, regular).
 ty_noun_in(english, seabird, none, unknown, seabird, regular).
@@ -32638,6 +33802,9 @@ ty_noun_in(english, seckel, none, unknown, seckel, regular).
 ty_noun_in(english, seclusion, none, unknown, seclusion, regular).
 ty_noun_in(english, secobarbital, none, unknown, secobarbital, regular).
 ty_noun_in(english, second, none, unknown, second, regular).
+ty_noun_in(english, 'second-in-command', none, unknown, 'second-in-command', regular).
+ty_noun_in(english, 'second-rater', none, unknown, 'second-rater', regular).
+ty_noun_in(english, 'second-stringer', none, unknown, 'second-stringer', regular).
 ty_noun_in(english, seconder, none, unknown, seconder, regular).
 ty_noun_in(english, secondment, none, unknown, secondment, regular).
 ty_noun_in(english, secotiales, none, unknown, secotiales, regular).
@@ -32677,6 +33844,7 @@ ty_noun_in(english, sedan, none, unknown, sedan, regular).
 ty_noun_in(english, sedateness, none, unknown, sedateness, regular).
 ty_noun_in(english, sedation, none, unknown, sedation, regular).
 ty_noun_in(english, sedative, none, unknown, sedative, regular).
+ty_noun_in(english, 'sedative-hypnotic', none, unknown, 'sedative-hypnotic', regular).
 ty_noun_in(english, sedentarism, none, unknown, sedentarism, regular).
 ty_noun_in(english, sedge, none, unknown, sedge, regular).
 ty_noun_in(english, sediment, none, unknown, sediment, regular).
@@ -32744,8 +33912,114 @@ ty_noun_in(english, selenite, none, unknown, selenite, regular).
 ty_noun_in(english, selenium, none, unknown, selenium, regular).
 ty_noun_in(english, selenolatry, none, unknown, selenolatry, regular).
 ty_noun_in(english, selenology, none, unknown, selenology, regular).
+ty_noun_in(english, 'self-abasement', none, unknown, 'self-abasement', regular).
+ty_noun_in(english, 'self-abnegation', none, unknown, 'self-abnegation', regular).
+ty_noun_in(english, 'self-absorption', none, unknown, 'self-absorption', regular).
+ty_noun_in(english, 'self-abuse', none, unknown, 'self-abuse', regular).
+ty_noun_in(english, 'self-accusation', none, unknown, 'self-accusation', regular).
+ty_noun_in(english, 'self-aggrandisement', none, unknown, 'self-aggrandisement', regular).
+ty_noun_in(english, 'self-aggrandizement', none, unknown, 'self-aggrandizement', regular).
+ty_noun_in(english, 'self-analysis', none, unknown, 'self-analysis', regular).
+ty_noun_in(english, 'self-annihilation', none, unknown, 'self-annihilation', regular).
+ty_noun_in(english, 'self-assertion', none, unknown, 'self-assertion', regular).
+ty_noun_in(english, 'self-assertiveness', none, unknown, 'self-assertiveness', regular).
+ty_noun_in(english, 'self-assurance', none, unknown, 'self-assurance', regular).
+ty_noun_in(english, 'self-awareness', none, unknown, 'self-awareness', regular).
+ty_noun_in(english, 'self-centeredness', none, unknown, 'self-centeredness', regular).
+ty_noun_in(english, 'self-command', none, unknown, 'self-command', regular).
+ty_noun_in(english, 'self-complacency', none, unknown, 'self-complacency', regular).
+ty_noun_in(english, 'self-concern', none, unknown, 'self-concern', regular).
+ty_noun_in(english, 'self-condemnation', none, unknown, 'self-condemnation', regular).
+ty_noun_in(english, 'self-confidence', none, unknown, 'self-confidence', regular).
+ty_noun_in(english, 'self-consciousness', none, unknown, 'self-consciousness', regular).
+ty_noun_in(english, 'self-contemplation', none, unknown, 'self-contemplation', regular).
+ty_noun_in(english, 'self-contradiction', none, unknown, 'self-contradiction', regular).
+ty_noun_in(english, 'self-control', none, unknown, 'self-control', regular).
 ty_noun_in(english, 'self-criticism', none, unknown, 'self-criticism', regular).
+ty_noun_in(english, 'self-cultivation', none, unknown, 'self-cultivation', regular).
+ty_noun_in(english, 'self-deceit', none, unknown, 'self-deceit', regular).
+ty_noun_in(english, 'self-deception', none, unknown, 'self-deception', regular).
+ty_noun_in(english, 'self-defence', none, unknown, 'self-defence', regular).
+ty_noun_in(english, 'self-defense', none, unknown, 'self-defense', regular).
+ty_noun_in(english, 'self-denial', none, unknown, 'self-denial', regular).
+ty_noun_in(english, 'self-depreciation', none, unknown, 'self-depreciation', regular).
+ty_noun_in(english, 'self-destruction', none, unknown, 'self-destruction', regular).
+ty_noun_in(english, 'self-determination', none, unknown, 'self-determination', regular).
+ty_noun_in(english, 'self-digestion', none, unknown, 'self-digestion', regular).
+ty_noun_in(english, 'self-direction', none, unknown, 'self-direction', regular).
+ty_noun_in(english, 'self-discipline', none, unknown, 'self-discipline', regular).
+ty_noun_in(english, 'self-discovery', none, unknown, 'self-discovery', regular).
+ty_noun_in(english, 'self-disgust', none, unknown, 'self-disgust', regular).
+ty_noun_in(english, 'self-distrust', none, unknown, 'self-distrust', regular).
+ty_noun_in(english, 'self-doubt', none, unknown, 'self-doubt', regular).
+ty_noun_in(english, 'self-drive', none, unknown, 'self-drive', regular).
+ty_noun_in(english, 'self-education', none, unknown, 'self-education', regular).
+ty_noun_in(english, 'self-effacement', none, unknown, 'self-effacement', regular).
+ty_noun_in(english, 'self-esteem', none, unknown, 'self-esteem', regular).
+ty_noun_in(english, 'self-examination', none, unknown, 'self-examination', regular).
+ty_noun_in(english, 'self-expression', none, unknown, 'self-expression', regular).
+ty_noun_in(english, 'self-feeder', none, unknown, 'self-feeder', regular).
+ty_noun_in(english, 'self-fertilisation', none, unknown, 'self-fertilisation', regular).
+ty_noun_in(english, 'self-fertilization', none, unknown, 'self-fertilization', regular).
+ty_noun_in(english, 'self-flagellation', none, unknown, 'self-flagellation', regular).
+ty_noun_in(english, 'self-fulfillment', none, unknown, 'self-fulfillment', regular).
+ty_noun_in(english, 'self-government', none, unknown, 'self-government', regular).
+ty_noun_in(english, 'self-gratification', none, unknown, 'self-gratification', regular).
+ty_noun_in(english, 'self-hatred', none, unknown, 'self-hatred', regular).
+ty_noun_in(english, 'self-heal', none, unknown, 'self-heal', regular).
+ty_noun_in(english, 'self-help', none, unknown, 'self-help', regular).
+ty_noun_in(english, 'self-hypnosis', none, unknown, 'self-hypnosis', regular).
+ty_noun_in(english, 'self-importance', none, unknown, 'self-importance', regular).
+ty_noun_in(english, 'self-improvement', none, unknown, 'self-improvement', regular).
+ty_noun_in(english, 'self-incrimination', none, unknown, 'self-incrimination', regular).
+ty_noun_in(english, 'self-inductance', none, unknown, 'self-inductance', regular).
+ty_noun_in(english, 'self-induction', none, unknown, 'self-induction', regular).
+ty_noun_in(english, 'self-indulgence', none, unknown, 'self-indulgence', regular).
+ty_noun_in(english, 'self-insurance', none, unknown, 'self-insurance', regular).
+ty_noun_in(english, 'self-interest', none, unknown, 'self-interest', regular).
+ty_noun_in(english, 'self-justification', none, unknown, 'self-justification', regular).
+ty_noun_in(english, 'self-knowledge', none, unknown, 'self-knowledge', regular).
+ty_noun_in(english, 'self-loader', none, unknown, 'self-loader', regular).
+ty_noun_in(english, 'self-love', none, unknown, 'self-love', regular).
+ty_noun_in(english, 'self-mortification', none, unknown, 'self-mortification', regular).
+ty_noun_in(english, 'self-organisation', none, unknown, 'self-organisation', regular).
+ty_noun_in(english, 'self-organization', none, unknown, 'self-organization', regular).
+ty_noun_in(english, 'self-pity', none, unknown, 'self-pity', regular).
+ty_noun_in(english, 'self-pollination', none, unknown, 'self-pollination', regular).
+ty_noun_in(english, 'self-portrait', none, unknown, 'self-portrait', regular).
+ty_noun_in(english, 'self-possession', none, unknown, 'self-possession', regular).
+ty_noun_in(english, 'self-praise', none, unknown, 'self-praise', regular).
+ty_noun_in(english, 'self-preservation', none, unknown, 'self-preservation', regular).
+ty_noun_in(english, 'self-pride', none, unknown, 'self-pride', regular).
+ty_noun_in(english, 'self-protection', none, unknown, 'self-protection', regular).
+ty_noun_in(english, 'self-punishment', none, unknown, 'self-punishment', regular).
+ty_noun_in(english, 'self-realisation', none, unknown, 'self-realisation', regular).
+ty_noun_in(english, 'self-realization', none, unknown, 'self-realization', regular).
+ty_noun_in(english, 'self-reformation', none, unknown, 'self-reformation', regular).
+ty_noun_in(english, 'self-regard', none, unknown, 'self-regard', regular).
 ty_noun_in(english, 'self-regulation', none, unknown, 'self-regulation', regular).
+ty_noun_in(english, 'self-reliance', none, unknown, 'self-reliance', regular).
+ty_noun_in(english, 'self-renewal', none, unknown, 'self-renewal', regular).
+ty_noun_in(english, 'self-renunciation', none, unknown, 'self-renunciation', regular).
+ty_noun_in(english, 'self-reproach', none, unknown, 'self-reproach', regular).
+ty_noun_in(english, 'self-reproof', none, unknown, 'self-reproof', regular).
+ty_noun_in(english, 'self-respect', none, unknown, 'self-respect', regular).
+ty_noun_in(english, 'self-restraint', none, unknown, 'self-restraint', regular).
+ty_noun_in(english, 'self-rule', none, unknown, 'self-rule', regular).
+ty_noun_in(english, 'self-sacrifice', none, unknown, 'self-sacrifice', regular).
+ty_noun_in(english, 'self-satisfaction', none, unknown, 'self-satisfaction', regular).
+ty_noun_in(english, 'self-seeker', none, unknown, 'self-seeker', regular).
+ty_noun_in(english, 'self-seeking', none, unknown, 'self-seeking', regular).
+ty_noun_in(english, 'self-service', none, unknown, 'self-service', regular).
+ty_noun_in(english, 'self-starter', none, unknown, 'self-starter', regular).
+ty_noun_in(english, 'self-stimulation', none, unknown, 'self-stimulation', regular).
+ty_noun_in(english, 'self-sufficiency', none, unknown, 'self-sufficiency', regular).
+ty_noun_in(english, 'self-suggestion', none, unknown, 'self-suggestion', regular).
+ty_noun_in(english, 'self-torment', none, unknown, 'self-torment', regular).
+ty_noun_in(english, 'self-torture', none, unknown, 'self-torture', regular).
+ty_noun_in(english, 'self-will', none, unknown, 'self-will', regular).
+ty_noun_in(english, 'self-worship', none, unknown, 'self-worship', regular).
+ty_noun_in(english, 'self-worth', none, unknown, 'self-worth', regular).
 ty_noun_in(english, selfishness, none, unknown, selfishness, regular).
 ty_noun_in(english, selflessness, none, unknown, selflessness, regular).
 ty_noun_in(english, selfsameness, none, unknown, selfsameness, regular).
@@ -32767,6 +34041,8 @@ ty_noun_in(english, semblance, none, unknown, semblance, regular).
 ty_noun_in(english, semen, none, unknown, semen, regular).
 ty_noun_in(english, semence, none, unknown, semence, regular).
 ty_noun_in(english, semester, none, unknown, semester, regular).
+ty_noun_in(english, 'semi-abstraction', none, unknown, 'semi-abstraction', regular).
+ty_noun_in(english, 'semi-climber', none, unknown, 'semi-climber', regular).
 ty_noun_in(english, semiautomatic, none, unknown, semiautomatic, regular).
 ty_noun_in(english, semibreve, none, unknown, semibreve, regular).
 ty_noun_in(english, semicentenary, none, unknown, semicentenary, regular).
@@ -32812,6 +34088,7 @@ ty_noun_in(english, sen, none, unknown, sen, regular).
 ty_noun_in(english, senate, none, unknown, senate, regular).
 ty_noun_in(english, senator, none, person, senator, regular).
 ty_noun_in(english, senatorship, none, unknown, senatorship, regular).
+ty_noun_in(english, 'send-off', none, unknown, 'send-off', regular).
 ty_noun_in(english, sendee, none, unknown, sendee, regular).
 ty_noun_in(english, sender, none, unknown, sender, regular).
 ty_noun_in(english, sending, none, unknown, sending, regular).
@@ -32913,6 +34190,7 @@ ty_noun_in(english, serfdom, none, unknown, serfdom, regular).
 ty_noun_in(english, serfhood, none, unknown, serfhood, regular).
 ty_noun_in(english, serge, none, unknown, serge, regular).
 ty_noun_in(english, sergeant, none, person, sergeant, regular).
+ty_noun_in(english, 'sergeant-at-law', none, unknown, 'sergeant-at-law', regular).
 ty_noun_in(english, serger, none, unknown, serger, regular).
 ty_noun_in(english, serial, none, unknown, serial, regular).
 ty_noun_in(english, serialisation, none, unknown, serialisation, regular).
@@ -32928,9 +34206,12 @@ ty_noun_in(english, serigraph, none, unknown, serigraph, regular).
 ty_noun_in(english, serigraphy, none, unknown, serigraphy, regular).
 ty_noun_in(english, serin, none, unknown, serin, regular).
 ty_noun_in(english, seriocomedy, none, unknown, seriocomedy, regular).
+ty_noun_in(english, 'serious-mindedness', none, unknown, 'serious-mindedness', regular).
 ty_noun_in(english, seriousness, none, unknown, seriousness, regular).
 ty_noun_in(english, seriph, none, unknown, seriph, regular).
 ty_noun_in(english, serjeant, none, unknown, serjeant, regular).
+ty_noun_in(english, 'serjeant-at-arms', none, unknown, 'serjeant-at-arms', regular).
+ty_noun_in(english, 'serjeant-at-law', none, unknown, 'serjeant-at-law', regular).
 ty_noun_in(english, sermon, none, unknown, sermon, regular).
 ty_noun_in(english, sermoniser, none, unknown, sermoniser, regular).
 ty_noun_in(english, sermonizer, none, unknown, sermonizer, regular).
@@ -32942,6 +34223,7 @@ ty_noun_in(english, serotine, none, unknown, serotine, regular).
 ty_noun_in(english, serotonin, none, unknown, serotonin, regular).
 ty_noun_in(english, serow, none, unknown, serow, regular).
 ty_noun_in(english, serpent, none, unknown, serpent, regular).
+ty_noun_in(english, 'serpent-worship', none, unknown, 'serpent-worship', regular).
 ty_noun_in(english, serpentes, none, unknown, serpentes, regular).
 ty_noun_in(english, serpentine, none, unknown, serpentine, regular).
 ty_noun_in(english, serranid, none, unknown, serranid, regular).
@@ -32980,6 +34262,8 @@ ty_noun_in(english, session, none, unknown, session, regular).
 ty_noun_in(english, sesterce, none, unknown, sesterce, regular).
 ty_noun_in(english, sestet, none, unknown, sestet, regular).
 ty_noun_in(english, set, none, unknown, set, regular).
+ty_noun_in(english, 'set-back', none, unknown, 'set-back', regular).
+ty_noun_in(english, 'set-to', none, unknown, 'set-to', regular).
 ty_noun_in(english, setback, none, unknown, setback, regular).
 ty_noun_in(english, setline, none, unknown, setline, regular).
 ty_noun_in(english, setoff, none, unknown, setoff, regular).
@@ -32994,8 +34278,11 @@ ty_noun_in(english, settlement, none, unknown, settlement, regular).
 ty_noun_in(english, settler, none, person, settler, regular).
 ty_noun_in(english, settlor, none, unknown, settlor, regular).
 ty_noun_in(english, setup, none, unknown, setup, regular).
+ty_noun_in(english, 'seven-spot', none, unknown, 'seven-spot', regular).
+ty_noun_in(english, 'seven-up', none, unknown, 'seven-up', regular).
 ty_noun_in(english, sevener, none, unknown, sevener, regular).
 ty_noun_in(english, sevensome, none, unknown, sevensome, regular).
+ty_noun_in(english, 'seventy-eight', none, unknown, 'seventy-eight', regular).
 ty_noun_in(english, severalty, none, unknown, severalty, regular).
 ty_noun_in(english, severance, none, unknown, severance, regular).
 ty_noun_in(english, severeness, none, unknown, severeness, regular).
@@ -33029,6 +34316,7 @@ ty_noun_in(english, shabbiness, none, unknown, shabbiness, regular).
 ty_noun_in(english, shabu, none, unknown, shabu, regular).
 ty_noun_in(english, shack, none, unknown, shack, regular).
 ty_noun_in(english, shackle, none, unknown, shackle, regular).
+ty_noun_in(english, 'shad-flower', none, unknown, 'shad-flower', regular).
 ty_noun_in(english, shadberry, none, unknown, shadberry, regular).
 ty_noun_in(english, shadblow, none, unknown, shadblow, regular).
 ty_noun_in(english, shadbush, none, unknown, shadbush, regular).
@@ -33051,6 +34339,7 @@ ty_noun_in(english, shahadah, none, unknown, shahadah, regular).
 ty_noun_in(english, shaheed, none, unknown, shaheed, regular).
 ty_noun_in(english, shaitan, none, unknown, shaitan, regular).
 ty_noun_in(english, shake, none, unknown, shake, regular).
+ty_noun_in(english, 'shake-up', none, unknown, 'shake-up', regular).
 ty_noun_in(english, shakeout, none, unknown, shakeout, regular).
 ty_noun_in(english, shakespeare, none, unknown, shakespeare, regular).
 ty_noun_in(english, shakeup, none, unknown, shakeup, regular).
@@ -33058,6 +34347,7 @@ ty_noun_in(english, shakiness, none, unknown, shakiness, regular).
 ty_noun_in(english, shaking, none, unknown, shaking, regular).
 ty_noun_in(english, shako, none, unknown, shako, regular).
 ty_noun_in(english, shale, none, unknown, shale, regular).
+ty_noun_in(english, 'shall-flower', none, unknown, 'shall-flower', regular).
 ty_noun_in(english, shallon, none, unknown, shallon, regular).
 ty_noun_in(english, shallot, none, unknown, shallot, regular).
 ty_noun_in(english, shallowness, none, unknown, shallowness, regular).
@@ -33086,12 +34376,14 @@ ty_noun_in(english, shantung, none, unknown, shantung, regular).
 ty_noun_in(english, shanty, none, unknown, shanty, regular).
 ty_noun_in(english, shantytown, none, unknown, shantytown, regular).
 ty_noun_in(english, shape, none, unknown, shape, regular).
+ty_noun_in(english, 'shape-up', none, unknown, 'shape-up', regular).
 ty_noun_in(english, shapelessness, none, unknown, shapelessness, regular).
 ty_noun_in(english, shapeliness, none, unknown, shapeliness, regular).
 ty_noun_in(english, shaper, none, unknown, shaper, regular).
 ty_noun_in(english, shaping, none, unknown, shaping, regular).
 ty_noun_in(english, shard, none, unknown, shard, regular).
 ty_noun_in(english, share, none, unknown, share, regular).
+ty_noun_in(english, 'share-out', none, unknown, 'share-out', regular).
 ty_noun_in(english, sharecropper, none, unknown, sharecropper, regular).
 ty_noun_in(english, shareholder, none, person, shareholder, regular).
 ty_noun_in(english, shareholders, none, unknown, shareholders, regular).
@@ -33105,6 +34397,7 @@ ty_noun_in(english, sharing, none, unknown, sharing, regular).
 ty_noun_in(english, shark, none, animate, shark, regular).
 ty_noun_in(english, sharkskin, none, unknown, sharkskin, regular).
 ty_noun_in(english, sharksucker, none, unknown, sharksucker, regular).
+ty_noun_in(english, 'sharp-sightedness', none, unknown, 'sharp-sightedness', regular).
 ty_noun_in(english, sharpener, none, unknown, sharpener, regular).
 ty_noun_in(english, sharper, none, unknown, sharper, regular).
 ty_noun_in(english, sharpness, none, unknown, sharpness, regular).
@@ -33116,6 +34409,9 @@ ty_noun_in(english, shawm, none, unknown, shawm, regular).
 ty_noun_in(english, shawny, none, unknown, shawny, regular).
 ty_noun_in(english, shay, none, unknown, shay, regular).
 ty_noun_in(english, shaytan, none, unknown, shaytan, regular).
+ty_noun_in(english, 'she-devil', none, unknown, 'she-devil', regular).
+ty_noun_in(english, 'she-goat', none, unknown, 'she-goat', regular).
+ty_noun_in(english, 'she-oak', none, unknown, 'she-oak', regular).
 ty_noun_in(english, shear, none, unknown, shear, regular).
 ty_noun_in(english, shearer, none, unknown, shearer, regular).
 ty_noun_in(english, shearing, none, unknown, shearing, regular).
@@ -33129,6 +34425,7 @@ ty_noun_in(english, shed, none, unknown, shed, regular).
 ty_noun_in(english, shedder, none, unknown, shedder, regular).
 ty_noun_in(english, shedding, none, unknown, shedding, regular).
 ty_noun_in(english, sheen, none, unknown, sheen, regular).
+ty_noun_in(english, 'sheep-tick', none, unknown, 'sheep-tick', regular).
 ty_noun_in(english, sheepcote, none, unknown, sheepcote, regular).
 ty_noun_in(english, sheepdog, none, unknown, sheepdog, regular).
 ty_noun_in(english, sheepfold, none, unknown, sheepfold, regular).
@@ -33155,6 +34452,7 @@ ty_noun_in(english, sheldrake, none, unknown, sheldrake, regular).
 ty_noun_in(english, shelduck, none, unknown, shelduck, regular).
 ty_noun_in(english, shelfful, none, unknown, shelfful, regular).
 ty_noun_in(english, shell, none, unknown, shell, regular).
+ty_noun_in(english, 'shell-flower', none, unknown, 'shell-flower', regular).
 ty_noun_in(english, shellac, none, unknown, shellac, regular).
 ty_noun_in(english, shellbark, none, unknown, shellbark, regular).
 ty_noun_in(english, sheller, none, unknown, sheller, regular).
@@ -33213,6 +34511,7 @@ ty_noun_in(english, shinny, none, unknown, shinny, regular).
 ty_noun_in(english, shinpad, none, unknown, shinpad, regular).
 ty_noun_in(english, shinplaster, none, unknown, shinplaster, regular).
 ty_noun_in(english, ship, none, unknown, ship, regular).
+ty_noun_in(english, 'ship-breaker', none, unknown, 'ship-breaker', regular).
 ty_noun_in(english, shipbuilder, none, unknown, shipbuilder, regular).
 ty_noun_in(english, shipbuilding, none, unknown, shipbuilding, regular).
 ty_noun_in(english, shipload, none, unknown, shipload, regular).
@@ -33276,6 +34575,7 @@ ty_noun_in(english, shock, none, unknown, shock, regular).
 ty_noun_in(english, shocker, none, unknown, shocker, regular).
 ty_noun_in(english, shoddiness, none, unknown, shoddiness, regular).
 ty_noun_in(english, shoe, none, unknown, shoe, regular).
+ty_noun_in(english, 'shoe-shop', none, unknown, 'shoe-shop', regular).
 ty_noun_in(english, shoebill, none, unknown, shoebill, regular).
 ty_noun_in(english, shoebird, none, unknown, shoebird, regular).
 ty_noun_in(english, shoeblack, none, person, shoeblack, regular).
@@ -33294,8 +34594,10 @@ ty_noun_in(english, shogi, none, unknown, shogi, regular).
 ty_noun_in(english, shogun, none, person, shogun, regular).
 ty_noun_in(english, shogunate, none, unknown, shogunate, regular).
 ty_noun_in(english, shoji, none, unknown, shoji, regular).
+ty_noun_in(english, 'shoo-in', none, unknown, 'shoo-in', regular).
 ty_noun_in(english, shoofly, none, unknown, shoofly, regular).
 ty_noun_in(english, shoot, none, unknown, shoot, regular).
+ty_noun_in(english, 'shoot-down', none, unknown, 'shoot-down', regular).
 ty_noun_in(english, shooter, none, unknown, shooter, regular).
 ty_noun_in(english, shooting, none, unknown, shooting, regular).
 ty_noun_in(english, shootout, none, unknown, shootout, regular).
@@ -33313,6 +34615,8 @@ ty_noun_in(english, shore, none, unknown, shore, regular).
 ty_noun_in(english, shorebird, none, unknown, shorebird, regular).
 ty_noun_in(english, shoreline, none, unknown, shoreline, regular).
 ty_noun_in(english, short, none, unknown, short, regular).
+ty_noun_in(english, 'short-grass', none, unknown, 'short-grass', regular).
+ty_noun_in(english, 'short-stop', none, unknown, 'short-stop', regular).
 ty_noun_in(english, shortage, none, unknown, shortage, regular).
 ty_noun_in(english, shortbread, none, unknown, shortbread, regular).
 ty_noun_in(english, shortcake, none, unknown, shortcake, regular).
@@ -33336,6 +34640,7 @@ ty_noun_in(english, shoulder, none, unknown, shoulder, regular).
 ty_noun_in(english, shout, none, unknown, shout, regular).
 ty_noun_in(english, shouter, none, unknown, shouter, regular).
 ty_noun_in(english, shouting, none, unknown, shouting, regular).
+ty_noun_in(english, 'shove-halfpenny', none, unknown, 'shove-halfpenny', regular).
 ty_noun_in(english, shovel, none, person, shovel, regular).
 ty_noun_in(english, shovelboard, none, unknown, shovelboard, regular).
 ty_noun_in(english, shoveler, none, unknown, shoveler, regular).
@@ -33344,6 +34649,8 @@ ty_noun_in(english, shovelhead, none, unknown, shovelhead, regular).
 ty_noun_in(english, shoveller, none, person, shoveller, regular).
 ty_noun_in(english, shover, none, unknown, shover, regular).
 ty_noun_in(english, show, none, unknown, show, regular).
+ty_noun_in(english, 'show-off', none, unknown, 'show-off', regular).
+ty_noun_in(english, 'show-stopper', none, unknown, 'show-stopper', regular).
 ty_noun_in(english, showboat, none, unknown, showboat, regular).
 ty_noun_in(english, showcase, none, unknown, showcase, regular).
 ty_noun_in(english, showdown, none, unknown, showdown, regular).
@@ -33373,9 +34680,11 @@ ty_noun_in(english, shrift, none, unknown, shrift, regular).
 ty_noun_in(english, shrike, none, unknown, shrike, regular).
 ty_noun_in(english, shrillness, none, unknown, shrillness, regular).
 ty_noun_in(english, shrimp, none, unknown, shrimp, regular).
+ty_noun_in(english, 'shrimp-fish', none, unknown, 'shrimp-fish', regular).
 ty_noun_in(english, shrimper, none, unknown, shrimper, regular).
 ty_noun_in(english, shrimpfish, none, unknown, shrimpfish, regular).
 ty_noun_in(english, shrine, none, unknown, shrine, regular).
+ty_noun_in(english, 'shrink-wrap', none, unknown, 'shrink-wrap', regular).
 ty_noun_in(english, shrinkage, none, unknown, shrinkage, regular).
 ty_noun_in(english, shrinking, none, unknown, shrinking, regular).
 ty_noun_in(english, shroud, none, unknown, shroud, regular).
@@ -33398,6 +34707,7 @@ ty_noun_in(english, shufti, none, unknown, shufti, regular).
 ty_noun_in(english, shumac, none, unknown, shumac, regular).
 ty_noun_in(english, shunt, none, unknown, shunt, regular).
 ty_noun_in(english, shunter, none, unknown, shunter, regular).
+ty_noun_in(english, 'shut-in', none, unknown, 'shut-in', regular).
 ty_noun_in(english, shutdown, none, unknown, shutdown, regular).
 ty_noun_in(english, shuteye, none, unknown, shuteye, regular).
 ty_noun_in(english, shutout, none, unknown, shutout, regular).
@@ -33435,6 +34745,10 @@ ty_noun_in(english, sicklepod, none, unknown, sicklepod, regular).
 ty_noun_in(english, sickness, none, unknown, sickness, regular).
 ty_noun_in(english, sickroom, none, unknown, sickroom, regular).
 ty_noun_in(english, side, none, unknown, side, regular).
+ty_noun_in(english, 'side-glance', none, unknown, 'side-glance', regular).
+ty_noun_in(english, 'side-look', none, unknown, 'side-look', regular).
+ty_noun_in(english, 'side-wheeler', none, unknown, 'side-wheeler', regular).
+ty_noun_in(english, 'side-whiskers', none, unknown, 'side-whiskers', regular).
 ty_noun_in(english, sidebar, none, unknown, sidebar, regular).
 ty_noun_in(english, sideboard, none, unknown, sideboard, regular).
 ty_noun_in(english, sideburn, none, unknown, sideburn, regular).
@@ -33485,6 +34799,7 @@ ty_noun_in(english, sigmoidoscopy, none, unknown, sigmoidoscopy, regular).
 ty_noun_in(english, sign, none, unknown, sign, regular).
 ty_noun_in(english, signage, none, unknown, signage, regular).
 ty_noun_in(english, signal, none, unknown, signal, regular).
+ty_noun_in(english, 'signal-to-noise', none, unknown, 'signal-to-noise', regular).
 ty_noun_in(english, signaler, none, unknown, signaler, regular).
 ty_noun_in(english, signaling, none, unknown, signaling, regular).
 ty_noun_in(english, signalisation, none, unknown, signalisation, regular).
@@ -33546,6 +34861,10 @@ ty_noun_in(english, silurus, none, unknown, silurus, regular).
 ty_noun_in(english, silva, none, unknown, silva, regular).
 ty_noun_in(english, silvan, none, person, silvan, regular).
 ty_noun_in(english, silver, none, unknown, silver, regular).
+ty_noun_in(english, 'silver-bush', none, unknown, 'silver-bush', regular).
+ty_noun_in(english, 'silver-lace', none, unknown, 'silver-lace', regular).
+ty_noun_in(english, 'silver-tip', none, unknown, 'silver-tip', regular).
+ty_noun_in(english, 'silver-worker', none, unknown, 'silver-worker', regular).
 ty_noun_in(english, silverback, none, unknown, silverback, regular).
 ty_noun_in(english, silverberry, none, unknown, silverberry, regular).
 ty_noun_in(english, silverbush, none, unknown, silverbush, regular).
@@ -33601,11 +34920,16 @@ ty_noun_in(english, sinciput, none, unknown, sinciput, regular).
 ty_noun_in(english, sinecure, none, unknown, sinecure, regular).
 ty_noun_in(english, sinew, none, unknown, sinew, regular).
 ty_noun_in(english, sinfulness, none, unknown, sinfulness, regular).
+ty_noun_in(english, 'sing-kwa', none, unknown, 'sing-kwa', regular).
 ty_noun_in(english, singalong, none, unknown, singalong, regular).
 ty_noun_in(english, singer, none, person, singer, regular).
 ty_noun_in(english, 'singer-songwriter', none, person, 'singer-songwriter', regular).
 ty_noun_in(english, singing, none, unknown, singing, regular).
 ty_noun_in(english, single, none, unknown, single, regular).
+ty_noun_in(english, 'single-foot', none, unknown, 'single-foot', regular).
+ty_noun_in(english, 'single-leaf', none, unknown, 'single-leaf', regular).
+ty_noun_in(english, 'single-mindedness', none, unknown, 'single-mindedness', regular).
+ty_noun_in(english, 'single-spacing', none, unknown, 'single-spacing', regular).
 ty_noun_in(english, singleness, none, unknown, singleness, regular).
 ty_noun_in(english, singlestick, none, unknown, singlestick, regular).
 ty_noun_in(english, singlet, none, unknown, singlet, regular).
@@ -33660,9 +34984,13 @@ ty_noun_in(english, sissoo, none, unknown, sissoo, regular).
 ty_noun_in(english, sissu, none, unknown, sissu, regular).
 ty_noun_in(english, sissy, none, person, sissy, regular).
 ty_noun_in(english, sister, none, person, sister, regular).
+ty_noun_in(english, 'sister-in-law', none, unknown, 'sister-in-law', regular).
 ty_noun_in(english, sisterhood, none, unknown, sisterhood, regular).
 ty_noun_in(english, sistership, none, unknown, sistership, regular).
 ty_noun_in(english, sisyrinchium, none, unknown, sisyrinchium, regular).
+ty_noun_in(english, 'sit-down', none, unknown, 'sit-down', regular).
+ty_noun_in(english, 'sit-in', none, unknown, 'sit-in', regular).
+ty_noun_in(english, 'sit-up', none, unknown, 'sit-up', regular).
 ty_noun_in(english, sitar, none, unknown, sitar, regular).
 ty_noun_in(english, sitcom, none, unknown, sitcom, regular).
 ty_noun_in(english, site, none, unknown, site, regular).
@@ -33672,12 +35000,20 @@ ty_noun_in(english, sitter, none, unknown, sitter, regular).
 ty_noun_in(english, sittidae, none, unknown, sittidae, regular).
 ty_noun_in(english, sitting, none, unknown, sitting, regular).
 ty_noun_in(english, situation, none, unknown, situation, regular).
+ty_noun_in(english, 'six-footer', none, unknown, 'six-footer', regular).
+ty_noun_in(english, 'six-gun', none, unknown, 'six-gun', regular).
+ty_noun_in(english, 'six-pack', none, unknown, 'six-pack', regular).
+ty_noun_in(english, 'six-shooter', none, unknown, 'six-shooter', regular).
+ty_noun_in(english, 'six-spot', none, unknown, 'six-spot', regular).
 ty_noun_in(english, sixer, none, unknown, sixer, regular).
 ty_noun_in(english, sixpack, none, unknown, sixpack, regular).
 ty_noun_in(english, sixpence, none, unknown, sixpence, regular).
 ty_noun_in(english, sixsome, none, unknown, sixsome, regular).
 ty_noun_in(english, sixth, none, unknown, sixth, regular).
+ty_noun_in(english, 'sixth-former', none, unknown, 'sixth-former', regular).
 ty_noun_in(english, sixties, none, unknown, sixties, regular).
+ty_noun_in(english, 'sixty-fourth', none, unknown, 'sixty-fourth', regular).
+ty_noun_in(english, 'sixty-nine', none, unknown, 'sixty-nine', regular).
 ty_noun_in(english, size, none, unknown, size, regular).
 ty_noun_in(english, sizeableness, none, unknown, sizeableness, regular).
 ty_noun_in(english, skag, none, unknown, skag, regular).
@@ -33703,6 +35039,7 @@ ty_noun_in(english, sketchiness, none, unknown, sketchiness, regular).
 ty_noun_in(english, skewer, none, unknown, skewer, regular).
 ty_noun_in(english, skewness, none, unknown, skewness, regular).
 ty_noun_in(english, ski, none, unknown, ski, regular).
+ty_noun_in(english, 'ski-plane', none, unknown, 'ski-plane', regular).
 ty_noun_in(english, skiagram, none, unknown, skiagram, regular).
 ty_noun_in(english, skiagraph, none, unknown, skiagraph, regular).
 ty_noun_in(english, skiagraphy, none, unknown, skiagraphy, regular).
@@ -33722,12 +35059,16 @@ ty_noun_in(english, skilly, none, unknown, skilly, regular).
 ty_noun_in(english, skimmer, none, unknown, skimmer, regular).
 ty_noun_in(english, skimming, none, unknown, skimming, regular).
 ty_noun_in(english, skin, none, unknown, skin, regular).
+ty_noun_in(english, 'skin-dive', none, unknown, 'skin-dive', regular).
+ty_noun_in(english, 'skin-diver', none, unknown, 'skin-diver', regular).
 ty_noun_in(english, skincare, none, unknown, skincare, regular).
 ty_noun_in(english, skinflint, none, unknown, skinflint, regular).
 ty_noun_in(english, skinful, none, unknown, skinful, regular).
 ty_noun_in(english, skink, none, unknown, skink, regular).
 ty_noun_in(english, skinner, none, unknown, skinner, regular).
 ty_noun_in(english, skinniness, none, unknown, skinniness, regular).
+ty_noun_in(english, 'skinny-dip', none, unknown, 'skinny-dip', regular).
+ty_noun_in(english, 'skinny-dipper', none, unknown, 'skinny-dipper', regular).
 ty_noun_in(english, skipjack, none, unknown, skipjack, regular).
 ty_noun_in(english, skipper, none, unknown, skipper, regular).
 ty_noun_in(english, skirl, none, unknown, skirl, regular).
@@ -33746,9 +35087,11 @@ ty_noun_in(english, skull, none, unknown, skull, regular).
 ty_noun_in(english, skullcap, none, unknown, skullcap, regular).
 ty_noun_in(english, skullduggery, none, unknown, skullduggery, regular).
 ty_noun_in(english, skunk, none, person, skunk, regular).
+ty_noun_in(english, 'skunk-weed', none, unknown, 'skunk-weed', regular).
 ty_noun_in(english, skunkbush, none, unknown, skunkbush, regular).
 ty_noun_in(english, skunkweed, none, unknown, skunkweed, regular).
 ty_noun_in(english, sky, none, unknown, sky, regular).
+ty_noun_in(english, 'sky-blue', none, unknown, 'sky-blue', regular).
 ty_noun_in(english, skybox, none, unknown, skybox, regular).
 ty_noun_in(english, skycap, none, person, skycap, regular).
 ty_noun_in(english, skydiver, none, unknown, skydiver, regular).
@@ -33778,6 +35121,7 @@ ty_noun_in(english, slang, none, unknown, slang, regular).
 ty_noun_in(english, slanginess, none, unknown, slanginess, regular).
 ty_noun_in(english, slanguage, none, unknown, slanguage, regular).
 ty_noun_in(english, slant, none, unknown, slant, regular).
+ty_noun_in(english, 'slant-eye', none, unknown, 'slant-eye', regular).
 ty_noun_in(english, slap, none, unknown, slap, regular).
 ty_noun_in(english, slapper, none, unknown, slapper, regular).
 ty_noun_in(english, slapshot, none, unknown, slapshot, regular).
@@ -33794,6 +35138,7 @@ ty_noun_in(english, slaughterer, none, unknown, slaughterer, regular).
 ty_noun_in(english, slaughterhouse, none, unknown, slaughterhouse, regular).
 ty_noun_in(english, slaughtering, none, unknown, slaughtering, regular).
 ty_noun_in(english, slave, none, person, slave, regular).
+ty_noun_in(english, 'slave-maker', none, unknown, 'slave-maker', regular).
 ty_noun_in(english, slaveholder, none, person, slaveholder, regular).
 ty_noun_in(english, slavery, none, unknown, slavery, regular).
 ty_noun_in(english, slavey, none, unknown, slavey, regular).
@@ -33808,6 +35153,7 @@ ty_noun_in(english, sledge, none, unknown, sledge, regular).
 ty_noun_in(english, sledgehammer, none, unknown, sledgehammer, regular).
 ty_noun_in(english, sleekness, none, unknown, sleekness, regular).
 ty_noun_in(english, sleep, none, unknown, sleep, regular).
+ty_noun_in(english, 'sleep-learning', none, unknown, 'sleep-learning', regular).
 ty_noun_in(english, sleeper, none, person, sleeper, regular).
 ty_noun_in(english, sleepiness, none, unknown, sleepiness, regular).
 ty_noun_in(english, sleeping, none, unknown, sleeping, regular).
@@ -33842,6 +35188,8 @@ ty_noun_in(english, slinger, none, unknown, slinger, regular).
 ty_noun_in(english, slinging, none, unknown, slinging, regular).
 ty_noun_in(english, slingshot, none, unknown, slingshot, regular).
 ty_noun_in(english, slip, none, unknown, slip, regular).
+ty_noun_in(english, 'slip-on', none, unknown, 'slip-on', regular).
+ty_noun_in(english, 'slip-up', none, unknown, 'slip-up', regular).
 ty_noun_in(english, slipcover, none, unknown, slipcover, regular).
 ty_noun_in(english, slipknot, none, unknown, slipknot, regular).
 ty_noun_in(english, slipover, none, unknown, slipover, regular).
@@ -33866,6 +35214,7 @@ ty_noun_in(english, sloganeering, none, unknown, sloganeering, regular).
 ty_noun_in(english, slogger, none, person, slogger, regular).
 ty_noun_in(english, sloop, none, unknown, sloop, regular).
 ty_noun_in(english, slop, none, unknown, slop, regular).
+ty_noun_in(english, 'slop-seller', none, unknown, 'slop-seller', regular).
 ty_noun_in(english, slope, none, unknown, slope, regular).
 ty_noun_in(english, sloppiness, none, unknown, sloppiness, regular).
 ty_noun_in(english, slopseller, none, unknown, slopseller, regular).
@@ -33878,6 +35227,7 @@ ty_noun_in(english, sloucher, none, unknown, sloucher, regular).
 ty_noun_in(english, slough, none, unknown, slough, regular).
 ty_noun_in(english, slovak, none, unknown, slovak, regular).
 ty_noun_in(english, slovenliness, none, unknown, slovenliness, regular).
+ty_noun_in(english, 'slow-wittedness', none, unknown, 'slow-wittedness', regular).
 ty_noun_in(english, slowcoach, none, unknown, slowcoach, regular).
 ty_noun_in(english, slowdown, none, unknown, slowdown, regular).
 ty_noun_in(english, slowing, none, unknown, slowing, regular).
@@ -33909,6 +35259,7 @@ ty_noun_in(english, slyboots, none, unknown, slyboots, regular).
 ty_noun_in(english, slyness, none, unknown, slyness, regular).
 ty_noun_in(english, smacker, none, unknown, smacker, regular).
 ty_noun_in(english, small, none, unknown, small, regular).
+ty_noun_in(english, 'small-arm', none, unknown, 'small-arm', regular).
 ty_noun_in(english, smallholder, none, unknown, smallholder, regular).
 ty_noun_in(english, smallholding, none, unknown, smallholding, regular).
 ty_noun_in(english, smallmouth, none, unknown, smallmouth, regular).
@@ -33921,6 +35272,7 @@ ty_noun_in(english, smarta, none, unknown, smarta, regular).
 ty_noun_in(english, smartness, none, unknown, smartness, regular).
 ty_noun_in(english, smartphone, none, unknown, smartphone, regular).
 ty_noun_in(english, smash, none, unknown, smash, regular).
+ty_noun_in(english, 'smash-up', none, unknown, 'smash-up', regular).
 ty_noun_in(english, smasher, none, unknown, smasher, regular).
 ty_noun_in(english, smegma, none, unknown, smegma, regular).
 ty_noun_in(english, smell, none, unknown, smell, regular).
@@ -33971,9 +35323,12 @@ ty_noun_in(english, snack, none, unknown, snack, regular).
 ty_noun_in(english, snacker, none, unknown, snacker, regular).
 ty_noun_in(english, snaffle, none, unknown, snaffle, regular).
 ty_noun_in(english, snail, none, animate, snail, regular).
+ty_noun_in(english, 'snail-flower', none, unknown, 'snail-flower', regular).
 ty_noun_in(english, snailfish, none, unknown, snailfish, regular).
 ty_noun_in(english, snailflower, none, unknown, snailflower, regular).
 ty_noun_in(english, snake, none, animate, snake, regular).
+ty_noun_in(english, 'snake-fish', none, unknown, 'snake-fish', regular).
+ty_noun_in(english, 'snake-head', none, unknown, 'snake-head', regular).
 ty_noun_in(english, snakeberry, none, unknown, snakeberry, regular).
 ty_noun_in(english, snakebird, none, unknown, snakebird, regular).
 ty_noun_in(english, snakebite, none, unknown, snakebite, regular).
@@ -33993,6 +35348,7 @@ ty_noun_in(english, snapshot, none, unknown, snapshot, regular).
 ty_noun_in(english, snare, none, unknown, snare, regular).
 ty_noun_in(english, snarer, none, unknown, snarer, regular).
 ty_noun_in(english, snarl, none, unknown, snarl, regular).
+ty_noun_in(english, 'snarl-up', none, unknown, 'snarl-up', regular).
 ty_noun_in(english, snatcher, none, unknown, snatcher, regular).
 ty_noun_in(english, sneak, none, person, sneak, regular).
 ty_noun_in(english, sneaker, none, unknown, sneaker, regular).
@@ -34043,6 +35399,9 @@ ty_noun_in(english, snorter, none, unknown, snorter, regular).
 ty_noun_in(english, snot, none, unknown, snot, regular).
 ty_noun_in(english, snout, none, unknown, snout, regular).
 ty_noun_in(english, snow, none, unknown, snow, regular).
+ty_noun_in(english, 'snow-blindness', none, unknown, 'snow-blindness', regular).
+ty_noun_in(english, 'snow-in-summer', none, unknown, 'snow-in-summer', regular).
+ty_noun_in(english, 'snow-on-the-mountain', none, unknown, 'snow-on-the-mountain', regular).
 ty_noun_in(english, snowball, none, unknown, snowball, regular).
 ty_noun_in(english, snowbank, none, unknown, snowbank, regular).
 ty_noun_in(english, snowbell, none, unknown, snowbell, regular).
@@ -34066,16 +35425,21 @@ ty_noun_in(english, snowshoe, none, unknown, snowshoe, regular).
 ty_noun_in(english, snowstorm, none, unknown, snowstorm, regular).
 ty_noun_in(english, snowsuit, none, unknown, snowsuit, regular).
 ty_noun_in(english, snub, none, unknown, snub, regular).
+ty_noun_in(english, 'snuff-color', none, unknown, 'snuff-color', regular).
+ty_noun_in(english, 'snuff-colour', none, unknown, 'snuff-colour', regular).
 ty_noun_in(english, snuffbox, none, unknown, snuffbox, regular).
 ty_noun_in(english, snuffer, none, unknown, snuffer, regular).
 ty_noun_in(english, snuffle, none, unknown, snuffle, regular).
 ty_noun_in(english, snuffler, none, unknown, snuffler, regular).
 ty_noun_in(english, snuggery, none, unknown, snuggery, regular).
 ty_noun_in(english, snugness, none, unknown, snugness, regular).
+ty_noun_in(english, 'so-and-so', none, unknown, 'so-and-so', regular).
 ty_noun_in(english, soakage, none, unknown, soakage, regular).
 ty_noun_in(english, soaker, none, unknown, soaker, regular).
 ty_noun_in(english, soaking, none, unknown, soaking, regular).
 ty_noun_in(english, soap, none, unknown, soap, regular).
+ty_noun_in(english, 'soap-rock', none, unknown, 'soap-rock', regular).
+ty_noun_in(english, 'soap-weed', none, unknown, 'soap-weed', regular).
 ty_noun_in(english, soapberry, none, unknown, soapberry, regular).
 ty_noun_in(english, soapbox, none, unknown, soapbox, regular).
 ty_noun_in(english, soapfish, none, unknown, soapfish, regular).
@@ -34134,6 +35498,8 @@ ty_noun_in(english, sodomite, none, unknown, sodomite, regular).
 ty_noun_in(english, sodomy, none, unknown, sodomy, regular).
 ty_noun_in(english, sofa, none, unknown, sofa, regular).
 ty_noun_in(english, soffit, none, unknown, soffit, regular).
+ty_noun_in(english, 'soft-cover', none, unknown, 'soft-cover', regular).
+ty_noun_in(english, 'soft-shoe', none, unknown, 'soft-shoe', regular).
 ty_noun_in(english, softback, none, unknown, softback, regular).
 ty_noun_in(english, softball, none, unknown, softball, regular).
 ty_noun_in(english, softener, none, unknown, softener, regular).
@@ -34147,6 +35513,7 @@ ty_noun_in(english, soh, none, unknown, soh, regular).
 ty_noun_in(english, soil, none, unknown, soil, regular).
 ty_noun_in(english, soilure, none, unknown, soilure, regular).
 ty_noun_in(english, soiree, none, unknown, soiree, regular).
+ty_noun_in(english, 'soixante-neuf', none, unknown, 'soixante-neuf', regular).
 ty_noun_in(english, sojourn, none, unknown, sojourn, regular).
 ty_noun_in(english, sojourner, none, person, sojourner, regular).
 ty_noun_in(english, solace, none, unknown, solace, regular).
@@ -34157,6 +35524,7 @@ ty_noun_in(english, solarium, none, unknown, solarium, regular).
 ty_noun_in(english, solarization, none, unknown, solarization, regular).
 ty_noun_in(english, solderer, none, unknown, solderer, regular).
 ty_noun_in(english, soldier, none, person, soldier, regular).
+ty_noun_in(english, 'soldier-fish', none, unknown, 'soldier-fish', regular).
 ty_noun_in(english, soldierfish, none, unknown, soldierfish, regular).
 ty_noun_in(english, soldiering, none, unknown, soldiering, regular).
 ty_noun_in(english, soldiership, none, unknown, soldiership, regular).
@@ -34241,6 +35609,7 @@ ty_noun_in(english, somniloquist, none, unknown, somniloquist, regular).
 ty_noun_in(english, somniloquy, none, unknown, somniloquy, regular).
 ty_noun_in(english, somnolence, none, unknown, somnolence, regular).
 ty_noun_in(english, son, none, person, son, regular).
+ty_noun_in(english, 'son-in-law', none, unknown, 'son-in-law', regular).
 ty_noun_in(english, sonar, none, unknown, sonar, regular).
 ty_noun_in(english, sonata, none, unknown, sonata, regular).
 ty_noun_in(english, sonatina, none, unknown, sonatina, regular).
@@ -34314,6 +35683,7 @@ ty_noun_in(english, souchong, none, unknown, souchong, regular).
 ty_noun_in(english, souffle, none, unknown, souffle, regular).
 ty_noun_in(english, souk, none, unknown, souk, regular).
 ty_noun_in(english, soul, none, person, soul, regular).
+ty_noun_in(english, 'soul-searching', none, unknown, 'soul-searching', regular).
 ty_noun_in(english, soulfulness, none, unknown, soulfulness, regular).
 ty_noun_in(english, sound, none, unknown, sound, regular).
 ty_noun_in(english, soundboard, none, unknown, soundboard, regular).
@@ -34325,6 +35695,8 @@ ty_noun_in(english, soundness, none, unknown, soundness, regular).
 ty_noun_in(english, soundproofing, none, unknown, soundproofing, regular).
 ty_noun_in(english, soundtrack, none, unknown, soundtrack, regular).
 ty_noun_in(english, soup, none, unknown, soup, regular).
+ty_noun_in(english, 'soup-fin', none, unknown, 'soup-fin', regular).
+ty_noun_in(english, 'soup-strainer', none, unknown, 'soup-strainer', regular).
 ty_noun_in(english, soupcon, none, unknown, soupcon, regular).
 ty_noun_in(english, soupfin, none, unknown, soupfin, regular).
 ty_noun_in(english, soupiness, none, unknown, soupiness, regular).
@@ -34373,6 +35745,7 @@ ty_noun_in(english, soybean, none, unknown, soybean, regular).
 ty_noun_in(english, soymilk, none, unknown, soymilk, regular).
 ty_noun_in(english, spa, none, unknown, spa, regular).
 ty_noun_in(english, space, none, unknown, space, regular).
+ty_noun_in(english, 'space-time', none, unknown, 'space-time', regular).
 ty_noun_in(english, spacecraft, none, unknown, spacecraft, regular).
 ty_noun_in(english, spacefaring, none, unknown, spacefaring, regular).
 ty_noun_in(english, spaceflight, none, unknown, spaceflight, regular).
@@ -34447,6 +35820,7 @@ ty_noun_in(english, speakerphone, none, unknown, speakerphone, regular).
 ty_noun_in(english, speakership, none, unknown, speakership, regular).
 ty_noun_in(english, speaking, none, unknown, speaking, regular).
 ty_noun_in(english, spear, none, unknown, spear, regular).
+ty_noun_in(english, 'spear-point', none, unknown, 'spear-point', regular).
 ty_noun_in(english, spearfish, none, unknown, spearfish, regular).
 ty_noun_in(english, spearmint, none, unknown, spearmint, regular).
 ty_noun_in(english, spearpoint, none, unknown, spearpoint, regular).
@@ -34495,6 +35869,7 @@ ty_noun_in(english, speechmaker, none, unknown, speechmaker, regular).
 ty_noun_in(english, speechmaking, none, unknown, speechmaking, regular).
 ty_noun_in(english, speechwriter, none, unknown, speechwriter, regular).
 ty_noun_in(english, speed, none, unknown, speed, regular).
+ty_noun_in(english, 'speed-reading', none, unknown, 'speed-reading', regular).
 ty_noun_in(english, speedboat, none, unknown, speedboat, regular).
 ty_noun_in(english, speeder, none, person, speeder, regular).
 ty_noun_in(english, speediness, none, unknown, speediness, regular).
@@ -34508,6 +35883,7 @@ ty_noun_in(english, spelaeology, none, unknown, spelaeology, regular).
 ty_noun_in(english, speleologist, none, unknown, speleologist, regular).
 ty_noun_in(english, speleology, none, unknown, speleology, regular).
 ty_noun_in(english, spell, none, unknown, spell, regular).
+ty_noun_in(english, 'spell-checker', none, unknown, 'spell-checker', regular).
 ty_noun_in(english, spellbinder, none, person, spellbinder, regular).
 ty_noun_in(english, spelldown, none, unknown, spelldown, regular).
 ty_noun_in(english, speller, none, unknown, speller, regular).
@@ -34515,6 +35891,7 @@ ty_noun_in(english, spelling, none, unknown, spelling, regular).
 ty_noun_in(english, spelt, none, unknown, spelt, regular).
 ty_noun_in(english, spelter, none, unknown, spelter, regular).
 ty_noun_in(english, spelunker, none, unknown, spelunker, regular).
+ty_noun_in(english, 'spend-all', none, unknown, 'spend-all', regular).
 ty_noun_in(english, spender, none, unknown, spender, regular).
 ty_noun_in(english, spending, none, unknown, spending, regular).
 ty_noun_in(english, spergula, none, unknown, spergula, regular).
@@ -34646,6 +36023,7 @@ ty_noun_in(english, spitz, none, unknown, spitz, regular).
 ty_noun_in(english, spiv, none, unknown, spiv, regular).
 ty_noun_in(english, spizella, none, unknown, spizella, regular).
 ty_noun_in(english, splash, none, unknown, splash, regular).
+ty_noun_in(english, 'splash-guard', none, unknown, 'splash-guard', regular).
 ty_noun_in(english, splashboard, none, unknown, splashboard, regular).
 ty_noun_in(english, splashdown, none, unknown, splashdown, regular).
 ty_noun_in(english, splasher, none, unknown, splasher, regular).
@@ -34668,6 +36046,7 @@ ty_noun_in(english, splint, none, unknown, splint, regular).
 ty_noun_in(english, splinter, none, unknown, splinter, regular).
 ty_noun_in(english, splinters, none, unknown, splinters, regular).
 ty_noun_in(english, split, none, unknown, split, regular).
+ty_noun_in(english, 'split-pea', none, unknown, 'split-pea', regular).
 ty_noun_in(english, splitsaw, none, unknown, splitsaw, regular).
 ty_noun_in(english, splitsville, none, unknown, splitsville, regular).
 ty_noun_in(english, splitter, none, unknown, splitter, regular).
@@ -34739,6 +36118,8 @@ ty_noun_in(english, sportswoman, none, person, sportswoman, regular).
 ty_noun_in(english, sportswriter, none, unknown, sportswriter, regular).
 ty_noun_in(english, sporulation, none, unknown, sporulation, regular).
 ty_noun_in(english, spot, none, unknown, spot, regular).
+ty_noun_in(english, 'spot-weld', none, unknown, 'spot-weld', regular).
+ty_noun_in(english, 'spot-welder', none, unknown, 'spot-welder', regular).
 ty_noun_in(english, spotlessness, none, unknown, spotlessness, regular).
 ty_noun_in(english, spotlight, none, unknown, spotlight, regular).
 ty_noun_in(english, spotter, none, person, spotter, regular).
@@ -34818,6 +36199,8 @@ ty_noun_in(english, squanderer, none, unknown, squanderer, regular).
 ty_noun_in(english, squandering, none, unknown, squandering, regular).
 ty_noun_in(english, squandermania, none, unknown, squandermania, regular).
 ty_noun_in(english, square, none, unknown, square, regular).
+ty_noun_in(english, 'square-bashing', none, unknown, 'square-bashing', regular).
+ty_noun_in(english, 'square-rigger', none, unknown, 'square-rigger', regular).
 ty_noun_in(english, squareness, none, unknown, squareness, regular).
 ty_noun_in(english, squaretail, none, unknown, squaretail, regular).
 ty_noun_in(english, squark, none, unknown, squark, regular).
@@ -34827,6 +36210,7 @@ ty_noun_in(english, squatness, none, unknown, squatness, regular).
 ty_noun_in(english, squattiness, none, unknown, squattiness, regular).
 ty_noun_in(english, squatting, none, unknown, squatting, regular).
 ty_noun_in(english, squaw, none, person, squaw, regular).
+ty_noun_in(english, 'squaw-bush', none, unknown, 'squaw-bush', regular).
 ty_noun_in(english, squawbush, none, unknown, squawbush, regular).
 ty_noun_in(english, squawker, none, unknown, squawker, regular).
 ty_noun_in(english, squawroot, none, unknown, squawroot, regular).
@@ -34846,6 +36230,7 @@ ty_noun_in(english, squiggle, none, unknown, squiggle, regular).
 ty_noun_in(english, squill, none, unknown, squill, regular).
 ty_noun_in(english, squilla, none, unknown, squilla, regular).
 ty_noun_in(english, squinch, none, unknown, squinch, regular).
+ty_noun_in(english, 'squint-eye', none, unknown, 'squint-eye', regular).
 ty_noun_in(english, squinter, none, unknown, squinter, regular).
 ty_noun_in(english, squire, none, person, squire, regular).
 ty_noun_in(english, squirearchy, none, unknown, squirearchy, regular).
@@ -34899,6 +36284,8 @@ ty_noun_in(english, stainability, none, unknown, stainability, regular).
 ty_noun_in(english, stainer, none, unknown, stainer, regular).
 ty_noun_in(english, staining, none, unknown, staining, regular).
 ty_noun_in(english, stair, none, unknown, stair, regular).
+ty_noun_in(english, 'stair-carpet', none, unknown, 'stair-carpet', regular).
+ty_noun_in(english, 'stair-rod', none, unknown, 'stair-rod', regular).
 ty_noun_in(english, staircase, none, unknown, staircase, regular).
 ty_noun_in(english, stairhead, none, unknown, stairhead, regular).
 ty_noun_in(english, stairs, none, unknown, stairs, regular).
@@ -34913,6 +36300,7 @@ ty_noun_in(english, stalemate, none, unknown, stalemate, regular).
 ty_noun_in(english, staleness, none, unknown, staleness, regular).
 ty_noun_in(english, stalin, none, unknown, stalin, regular).
 ty_noun_in(english, stalker, none, unknown, stalker, regular).
+ty_noun_in(english, 'stalking-horse', none, unknown, 'stalking-horse', regular).
 ty_noun_in(english, stall, none, unknown, stall, regular).
 ty_noun_in(english, stalling, none, unknown, stalling, regular).
 ty_noun_in(english, stallion, none, unknown, stallion, regular).
@@ -34929,7 +36317,10 @@ ty_noun_in(english, stamping, none, unknown, stamping, regular).
 ty_noun_in(english, stance, none, unknown, stance, regular).
 ty_noun_in(english, stanchion, none, unknown, stanchion, regular).
 ty_noun_in(english, stand, none, unknown, stand, regular).
+ty_noun_in(english, 'stand-down', none, unknown, 'stand-down', regular).
+ty_noun_in(english, 'stand-in', none, unknown, 'stand-in', regular).
 ty_noun_in(english, standard, none, unknown, standard, regular).
+ty_noun_in(english, 'standard-bearer', none, unknown, 'standard-bearer', regular).
 ty_noun_in(english, standardisation, none, unknown, standardisation, regular).
 ty_noun_in(english, standardiser, none, unknown, standardiser, regular).
 ty_noun_in(english, standardization, none, unknown, standardization, regular).
@@ -34959,6 +36350,9 @@ ty_noun_in(english, staple, none, unknown, staple, regular).
 ty_noun_in(english, staplegun, none, unknown, staplegun, regular).
 ty_noun_in(english, stapler, none, unknown, stapler, regular).
 ty_noun_in(english, star, none, unknown, star, regular).
+ty_noun_in(english, 'star-duckweed', none, unknown, 'star-duckweed', regular).
+ty_noun_in(english, 'star-glory', none, unknown, 'star-glory', regular).
+ty_noun_in(english, 'star-thistle', none, unknown, 'star-thistle', regular).
 ty_noun_in(english, starboard, none, unknown, starboard, regular).
 ty_noun_in(english, starch, none, unknown, starch, regular).
 ty_noun_in(english, stardom, none, unknown, stardom, regular).
@@ -34975,6 +36369,7 @@ ty_noun_in(english, starlight, none, unknown, starlight, regular).
 ty_noun_in(english, starling, none, unknown, starling, regular).
 ty_noun_in(english, starship, none, unknown, starship, regular).
 ty_noun_in(english, start, none, unknown, start, regular).
+ty_noun_in(english, 'start-off', none, unknown, 'start-off', regular).
 ty_noun_in(english, starter, none, unknown, starter, regular).
 ty_noun_in(english, starting, none, unknown, starting, regular).
 ty_noun_in(english, startup, none, unknown, startup, regular).
@@ -35016,6 +36411,7 @@ ty_noun_in(english, staurikosaur, none, unknown, staurikosaur, regular).
 ty_noun_in(english, staurikosaurus, none, unknown, staurikosaurus, regular).
 ty_noun_in(english, stave, none, unknown, stave, regular).
 ty_noun_in(english, stay, none, unknown, stay, regular).
+ty_noun_in(english, 'stay-at-home', none, unknown, 'stay-at-home', regular).
 ty_noun_in(english, stayer, none, unknown, stayer, regular).
 ty_noun_in(english, staysail, none, unknown, staysail, regular).
 ty_noun_in(english, stead, none, unknown, stead, regular).
@@ -35066,6 +36462,7 @@ ty_noun_in(english, steinbok, none, unknown, steinbok, regular).
 ty_noun_in(english, stela, none, unknown, stela, regular).
 ty_noun_in(english, stelis, none, unknown, stelis, regular).
 ty_noun_in(english, stem, none, unknown, stem, regular).
+ty_noun_in(english, 'stem-winder', none, unknown, 'stem-winder', regular).
 ty_noun_in(english, stemma, none, unknown, stemma, regular).
 ty_noun_in(english, stemmatics, none, unknown, stemmatics, regular).
 ty_noun_in(english, stemmatology, none, unknown, stemmatology, regular).
@@ -35083,6 +36480,9 @@ ty_noun_in(english, stenotus, none, unknown, stenotus, regular).
 ty_noun_in(english, stent, none, unknown, stent, regular).
 ty_noun_in(english, stentor, none, person, stentor, regular).
 ty_noun_in(english, step, none, unknown, step, regular).
+ty_noun_in(english, 'step-down', none, unknown, 'step-down', regular).
+ty_noun_in(english, 'step-in', none, unknown, 'step-in', regular).
+ty_noun_in(english, 'step-up', none, unknown, 'step-up', regular).
 ty_noun_in(english, stepbrother, none, person, stepbrother, regular).
 ty_noun_in(english, stepchild, none, person, stepchild, regular).
 ty_noun_in(english, stepdaughter, none, unknown, stepdaughter, regular).
@@ -35142,6 +36542,7 @@ ty_noun_in(english, sthene, none, unknown, sthene, regular).
 ty_noun_in(english, stibnite, none, unknown, stibnite, regular).
 ty_noun_in(english, stichaeidae, none, unknown, stichaeidae, regular).
 ty_noun_in(english, stick, none, unknown, stick, regular).
+ty_noun_in(english, 'stick-in-the-mud', none, unknown, 'stick-in-the-mud', regular).
 ty_noun_in(english, stickball, none, unknown, stickball, regular).
 ty_noun_in(english, sticker, none, unknown, sticker, regular).
 ty_noun_in(english, stickiness, none, unknown, stickiness, regular).
@@ -35173,6 +36574,7 @@ ty_noun_in(english, stiltbird, none, unknown, stiltbird, regular).
 ty_noun_in(english, stimulant, none, unknown, stimulant, regular).
 ty_noun_in(english, stimulation, none, unknown, stimulation, regular).
 ty_noun_in(english, sting, none, unknown, sting, regular).
+ty_noun_in(english, 'stingaree-bush', none, unknown, 'stingaree-bush', regular).
 ty_noun_in(english, stinger, none, unknown, stinger, regular).
 ty_noun_in(english, stinginess, none, unknown, stinginess, regular).
 ty_noun_in(english, stingray, none, unknown, stingray, regular).
@@ -35205,6 +36607,9 @@ ty_noun_in(english, stoat, none, unknown, stoat, regular).
 ty_noun_in(english, stob, none, unknown, stob, regular).
 ty_noun_in(english, stochasticity, none, unknown, stochasticity, regular).
 ty_noun_in(english, stock, none, unknown, stock, regular).
+ty_noun_in(english, 'stock-in-trade', none, unknown, 'stock-in-trade', regular).
+ty_noun_in(english, 'stock-take', none, unknown, 'stock-take', regular).
+ty_noun_in(english, 'stock-taker', none, unknown, 'stock-taker', regular).
 ty_noun_in(english, stockade, none, unknown, stockade, regular).
 ty_noun_in(english, stockbroker, none, person, stockbroker, regular).
 ty_noun_in(english, stockcar, none, unknown, stockcar, regular).
@@ -35249,6 +36654,8 @@ ty_noun_in(english, stomatitis, none, unknown, stomatitis, regular).
 ty_noun_in(english, stomatopod, none, unknown, stomatopod, regular).
 ty_noun_in(english, stomper, none, unknown, stomper, regular).
 ty_noun_in(english, stone, none, unknown, stone, regular).
+ty_noun_in(english, 'stone-face', none, unknown, 'stone-face', regular).
+ty_noun_in(english, 'stone-root', none, unknown, 'stone-root', regular).
 ty_noun_in(english, stonechat, none, unknown, stonechat, regular).
 ty_noun_in(english, stonecress, none, unknown, stonecress, regular).
 ty_noun_in(english, stonecrop, none, unknown, stonecrop, regular).
@@ -35311,6 +36718,7 @@ ty_noun_in(english, strabotomy, none, unknown, strabotomy, regular).
 ty_noun_in(english, stradivarius, none, unknown, stradivarius, regular).
 ty_noun_in(english, strafer, none, person, strafer, regular).
 ty_noun_in(english, straggler, none, person, straggler, regular).
+ty_noun_in(english, 'straight-arm', none, unknown, 'straight-arm', regular).
 ty_noun_in(english, straightaway, none, unknown, straightaway, regular).
 ty_noun_in(english, straightedge, none, unknown, straightedge, regular).
 ty_noun_in(english, straightener, none, unknown, straightener, regular).
@@ -35388,6 +36796,7 @@ ty_noun_in(english, stressor, none, unknown, stressor, regular).
 ty_noun_in(english, stretch, none, unknown, stretch, regular).
 ty_noun_in(english, stretchability, none, unknown, stretchability, regular).
 ty_noun_in(english, stretcher, none, unknown, stretcher, regular).
+ty_noun_in(english, 'stretcher-bearer', none, unknown, 'stretcher-bearer', regular).
 ty_noun_in(english, stretchiness, none, unknown, stretchiness, regular).
 ty_noun_in(english, stretching, none, unknown, stretching, regular).
 ty_noun_in(english, streusel, none, unknown, streusel, regular).
@@ -35434,6 +36843,7 @@ ty_noun_in(english, stroma, none, unknown, stroma, regular).
 ty_noun_in(english, stromateid, none, unknown, stromateid, regular).
 ty_noun_in(english, stromateidae, none, unknown, stromateidae, regular).
 ty_noun_in(english, strombidae, none, unknown, strombidae, regular).
+ty_noun_in(english, 'strong-armer', none, unknown, 'strong-armer', regular).
 ty_noun_in(english, strongbox, none, unknown, strongbox, regular).
 ty_noun_in(english, stronghold, none, unknown, stronghold, regular).
 ty_noun_in(english, strongman, none, unknown, strongman, regular).
@@ -35521,6 +36931,9 @@ ty_noun_in(english, suasion, none, unknown, suasion, regular).
 ty_noun_in(english, suaveness, none, unknown, suaveness, regular).
 ty_noun_in(english, suaviloquence, none, unknown, suaviloquence, regular).
 ty_noun_in(english, suavity, none, unknown, suavity, regular).
+ty_noun_in(english, 'sub-assembly', none, unknown, 'sub-assembly', regular).
+ty_noun_in(english, 'sub-interval', none, unknown, 'sub-interval', regular).
+ty_noun_in(english, 'sub-test', none, unknown, 'sub-test', regular).
 ty_noun_in(english, subaddress, none, unknown, subaddress, regular).
 ty_noun_in(english, subarea, none, unknown, subarea, regular).
 ty_noun_in(english, subauction, none, unknown, subauction, regular).
@@ -35721,6 +37134,7 @@ ty_noun_in(english, suffusion, none, unknown, suffusion, regular).
 ty_noun_in(english, sufi, none, person, sufi, regular).
 ty_noun_in(english, sufism, none, unknown, sufism, regular).
 ty_noun_in(english, sugar, none, unknown, sugar, regular).
+ty_noun_in(english, 'sugar-bush', none, unknown, 'sugar-bush', regular).
 ty_noun_in(english, sugarberry, none, unknown, sugarberry, regular).
 ty_noun_in(english, sugarcane, none, unknown, sugarcane, regular).
 ty_noun_in(english, sugariness, none, unknown, sugariness, regular).
@@ -35772,6 +37186,7 @@ ty_noun_in(english, sultana, none, unknown, sultana, regular).
 ty_noun_in(english, sultanate, none, unknown, sultanate, regular).
 ty_noun_in(english, sultriness, none, unknown, sultriness, regular).
 ty_noun_in(english, sum, none, unknown, sum, regular).
+ty_noun_in(english, 'sum-up', none, unknown, 'sum-up', regular).
 ty_noun_in(english, sumac, none, unknown, sumac, regular).
 ty_noun_in(english, sumach, none, unknown, sumach, regular).
 ty_noun_in(english, sumatra, none, unknown, sumatra, regular).
@@ -35792,6 +37207,8 @@ ty_noun_in(english, sumpter, none, unknown, sumpter, regular).
 ty_noun_in(english, sumptuosity, none, unknown, sumptuosity, regular).
 ty_noun_in(english, sumptuousness, none, unknown, sumptuousness, regular).
 ty_noun_in(english, sun, none, unknown, sun, regular).
+ty_noun_in(english, 'sun-ray', none, unknown, 'sun-ray', regular).
+ty_noun_in(english, 'sun-worship', none, unknown, 'sun-worship', regular).
 ty_noun_in(english, sunbather, none, unknown, sunbather, regular).
 ty_noun_in(english, sunbeam, none, unknown, sunbeam, regular).
 ty_noun_in(english, sunberry, none, unknown, sunberry, regular).
@@ -35827,6 +37244,7 @@ ty_noun_in(english, sunscreen, none, unknown, sunscreen, regular).
 ty_noun_in(english, sunset, none, unknown, sunset, regular).
 ty_noun_in(english, sunshade, none, unknown, sunshade, regular).
 ty_noun_in(english, sunshine, none, unknown, sunshine, regular).
+ty_noun_in(english, 'sunshine-roof', none, unknown, 'sunshine-roof', regular).
 ty_noun_in(english, sunspot, none, unknown, sunspot, regular).
 ty_noun_in(english, sunstone, none, unknown, sunstone, regular).
 ty_noun_in(english, sunstroke, none, unknown, sunstroke, regular).
@@ -36050,6 +37468,8 @@ ty_noun_in(english, swamp, none, unknown, swamp, regular).
 ty_noun_in(english, swamphen, none, unknown, swamphen, regular).
 ty_noun_in(english, swampland, none, unknown, swampland, regular).
 ty_noun_in(english, swan, none, animate, swan, regular).
+ty_noun_in(english, 'swan-flower', none, unknown, 'swan-flower', regular).
+ty_noun_in(english, 'swan-neck', none, unknown, 'swan-neck', regular).
 ty_noun_in(english, swanflower, none, unknown, swanflower, regular).
 ty_noun_in(english, swanneck, none, unknown, swanneck, regular).
 ty_noun_in(english, swap, none, unknown, swap, regular).
@@ -36081,6 +37501,7 @@ ty_noun_in(english, sweatsuit, none, unknown, sweatsuit, regular).
 ty_noun_in(english, swede, none, person, swede, regular).
 ty_noun_in(english, sweden, none, unknown, sweden, regular).
 ty_noun_in(english, sweep, none, unknown, sweep, regular).
+ty_noun_in(english, 'sweep-second', none, unknown, 'sweep-second', regular).
 ty_noun_in(english, sweeper, none, unknown, sweeper, regular).
 ty_noun_in(english, sweeping, none, unknown, sweeping, regular).
 ty_noun_in(english, sweepstakes, none, unknown, sweepstakes, regular).
@@ -36121,6 +37542,8 @@ ty_noun_in(english, swipe, none, unknown, swipe, regular).
 ty_noun_in(english, swirl, none, unknown, swirl, regular).
 ty_noun_in(english, swiss, none, person, swiss, regular).
 ty_noun_in(english, switch, none, unknown, switch, regular).
+ty_noun_in(english, 'switch-hitter', none, unknown, 'switch-hitter', regular).
+ty_noun_in(english, 'switch-ivy', none, unknown, 'switch-ivy', regular).
 ty_noun_in(english, switchblade, none, unknown, switchblade, regular).
 ty_noun_in(english, switchboard, none, unknown, switchboard, regular).
 ty_noun_in(english, switcher, none, unknown, switcher, regular).
@@ -36136,6 +37559,7 @@ ty_noun_in(english, swob, none, unknown, swob, regular).
 ty_noun_in(english, swoop, none, unknown, swoop, regular).
 ty_noun_in(english, swoosh, none, unknown, swoosh, regular).
 ty_noun_in(english, sword, none, unknown, sword, regular).
+ty_noun_in(english, 'sword-cut', none, unknown, 'sword-cut', regular).
 ty_noun_in(english, swordfish, none, unknown, swordfish, regular).
 ty_noun_in(english, swordplay, none, unknown, swordplay, regular).
 ty_noun_in(english, swordsman, none, unknown, swordsman, regular).
@@ -36168,6 +37592,7 @@ ty_noun_in(english, sylvine, none, unknown, sylvine, regular).
 ty_noun_in(english, sylvite, none, unknown, sylvite, regular).
 ty_noun_in(english, symbiosis, none, unknown, symbiosis, regular).
 ty_noun_in(english, symbol, none, unknown, symbol, regular).
+ty_noun_in(english, 'symbol-worship', none, unknown, 'symbol-worship', regular).
 ty_noun_in(english, symbolatry, none, unknown, symbolatry, regular).
 ty_noun_in(english, symbolisation, none, unknown, symbolisation, regular).
 ty_noun_in(english, symboliser, none, unknown, symboliser, regular).
@@ -36286,6 +37711,7 @@ ty_noun_in(english, systemizer, none, unknown, systemizer, regular).
 ty_noun_in(english, systole, none, unknown, systole, regular).
 ty_noun_in(english, syzygium, none, unknown, syzygium, regular).
 ty_noun_in(english, syzygy, none, unknown, syzygy, regular).
+ty_noun_in(english, 't-scope', none, unknown, 't-scope', regular).
 ty_noun_in(english, tab, none, unknown, tab, regular).
 ty_noun_in(english, tabanidae, none, unknown, tabanidae, regular).
 ty_noun_in(english, tabard, none, unknown, tabard, regular).
@@ -36362,6 +37788,7 @@ ty_noun_in(english, tahiti, none, unknown, tahiti, regular).
 ty_noun_in(english, taichi, none, unknown, taichi, regular).
 ty_noun_in(english, taichichuan, none, unknown, taichichuan, regular).
 ty_noun_in(english, tail, none, unknown, tail, regular).
+ty_noun_in(english, 'tail-flower', none, unknown, 'tail-flower', regular).
 ty_noun_in(english, tailback, none, person, tailback, regular).
 ty_noun_in(english, tailboard, none, unknown, tailboard, regular).
 ty_noun_in(english, tailcoat, none, unknown, tailcoat, regular).
@@ -36372,6 +37799,7 @@ ty_noun_in(english, tailgater, none, unknown, tailgater, regular).
 ty_noun_in(english, tailings, none, unknown, tailings, regular).
 ty_noun_in(english, taillight, none, unknown, taillight, regular).
 ty_noun_in(english, tailor, none, unknown, tailor, regular).
+ty_noun_in(english, 'tailor-made', none, unknown, 'tailor-made', regular).
 ty_noun_in(english, tailorbird, none, unknown, tailorbird, regular).
 ty_noun_in(english, tailpiece, none, unknown, tailpiece, regular).
 ty_noun_in(english, tailpipe, none, unknown, tailpipe, regular).
@@ -36388,6 +37816,8 @@ ty_noun_in(english, taiwan, none, unknown, taiwan, regular).
 ty_noun_in(english, taiwanese, none, person, taiwanese, regular).
 ty_noun_in(english, taka, none, unknown, taka, regular).
 ty_noun_in(english, takahe, none, unknown, takahe, regular).
+ty_noun_in(english, 'take-in', none, unknown, 'take-in', regular).
+ty_noun_in(english, 'take-up', none, unknown, 'take-up', regular).
 ty_noun_in(english, takeaway, none, unknown, takeaway, regular).
 ty_noun_in(english, takedown, none, unknown, takedown, regular).
 ty_noun_in(english, takeoff, none, unknown, takeoff, regular).
@@ -36418,6 +37848,7 @@ ty_noun_in(english, talkie, none, unknown, talkie, regular).
 ty_noun_in(english, talking, none, unknown, talking, regular).
 ty_noun_in(english, talks, none, unknown, talks, regular).
 ty_noun_in(english, tall, none, unknown, tall, regular).
+ty_noun_in(english, 'tall-grass', none, unknown, 'tall-grass', regular).
 ty_noun_in(english, tallboy, none, unknown, tallboy, regular).
 ty_noun_in(english, tallgrass, none, unknown, tallgrass, regular).
 ty_noun_in(english, tallis, none, unknown, tallis, regular).
@@ -36428,6 +37859,7 @@ ty_noun_in(english, tally, none, unknown, tally, regular).
 ty_noun_in(english, tallyman, none, person, tallyman, regular).
 ty_noun_in(english, talon, none, unknown, talon, regular).
 ty_noun_in(english, talus, none, unknown, talus, regular).
+ty_noun_in(english, 'tam-tam', none, unknown, 'tam-tam', regular).
 ty_noun_in(english, tamale, none, unknown, tamale, regular).
 ty_noun_in(english, tamandu, none, unknown, tamandu, regular).
 ty_noun_in(english, tamandua, none, unknown, tamandua, regular).
@@ -36498,6 +37930,7 @@ ty_noun_in(english, taoiseach, none, unknown, taoiseach, regular).
 ty_noun_in(english, taoism, none, unknown, taoism, regular).
 ty_noun_in(english, taoist, none, person, taoist, regular).
 ty_noun_in(english, tap, none, unknown, tap, regular).
+ty_noun_in(english, 'tap-off', none, unknown, 'tap-off', regular).
 ty_noun_in(english, tape, none, unknown, tape, regular).
 ty_noun_in(english, tapeline, none, unknown, tapeline, regular).
 ty_noun_in(english, tapenade, none, unknown, tapenade, regular).
@@ -36518,6 +37951,7 @@ ty_noun_in(english, taproom, none, unknown, taproom, regular).
 ty_noun_in(english, taproot, none, unknown, taproot, regular).
 ty_noun_in(english, tapster, none, unknown, tapster, regular).
 ty_noun_in(english, tar, none, unknown, tar, regular).
+ty_noun_in(english, 'tar-wood', none, unknown, 'tar-wood', regular).
 ty_noun_in(english, taradiddle, none, unknown, taradiddle, regular).
 ty_noun_in(english, taraktagenos, none, unknown, taraktagenos, regular).
 ty_noun_in(english, tarantella, none, unknown, tarantella, regular).
@@ -36561,6 +37995,8 @@ ty_noun_in(english, tasse, none, unknown, tasse, regular).
 ty_noun_in(english, tassel, none, unknown, tassel, regular).
 ty_noun_in(english, tasset, none, unknown, tasset, regular).
 ty_noun_in(english, taste, none, unknown, taste, regular).
+ty_noun_in(english, 'taste-maker', none, unknown, 'taste-maker', regular).
+ty_noun_in(english, 'taste-tester', none, unknown, 'taste-tester', regular).
 ty_noun_in(english, tastebud, none, unknown, tastebud, regular).
 ty_noun_in(english, tastefulness, none, unknown, tastefulness, regular).
 ty_noun_in(english, tastelessness, none, unknown, tastelessness, regular).
@@ -36590,6 +38026,8 @@ ty_noun_in(english, tawdriness, none, unknown, tawdriness, regular).
 ty_noun_in(english, tawniness, none, unknown, tawniness, regular).
 ty_noun_in(english, tawse, none, unknown, tawse, regular).
 ty_noun_in(english, tax, none, unknown, tax, regular).
+ty_noun_in(english, 'tax-exempt', none, unknown, 'tax-exempt', regular).
+ty_noun_in(english, 'tax-increase', none, unknown, 'tax-increase', regular).
 ty_noun_in(english, taxability, none, unknown, taxability, regular).
 ty_noun_in(english, taxales, none, unknown, taxales, regular).
 ty_noun_in(english, taxation, none, unknown, taxation, regular).
@@ -36614,9 +38052,11 @@ ty_noun_in(english, tchotchke, none, unknown, tchotchke, regular).
 ty_noun_in(english, tchotchkeleh, none, unknown, tchotchkeleh, regular).
 ty_noun_in(english, tdt, none, unknown, tdt, regular).
 ty_noun_in(english, tea, none, unknown, tea, regular).
+ty_noun_in(english, 'tea-strainer', none, unknown, 'tea-strainer', regular).
 ty_noun_in(english, teaberry, none, unknown, teaberry, regular).
 ty_noun_in(english, teacake, none, unknown, teacake, regular).
 ty_noun_in(english, teacart, none, unknown, teacart, regular).
+ty_noun_in(english, 'teach-in', none, unknown, 'teach-in', regular).
 ty_noun_in(english, teacher, none, person, teacher, regular).
 ty_noun_in(english, teachership, none, unknown, teachership, regular).
 ty_noun_in(english, teaching, none, unknown, teaching, regular).
@@ -36681,6 +38121,7 @@ ty_noun_in(english, teenager, none, person, teenager, regular).
 ty_noun_in(english, teens, none, unknown, teens, regular).
 ty_noun_in(english, teeoff, none, unknown, teeoff, regular).
 ty_noun_in(english, teepee, none, unknown, teepee, regular).
+ty_noun_in(english, 'teeter-totter', none, unknown, 'teeter-totter', regular).
 ty_noun_in(english, teeterboard, none, unknown, teeterboard, regular).
 ty_noun_in(english, teetertotter, none, unknown, teetertotter, regular).
 ty_noun_in(english, teetotaler, none, person, teetotaler, regular).
@@ -36794,6 +38235,9 @@ ty_noun_in(english, temptingness, none, unknown, temptingness, regular).
 ty_noun_in(english, temptress, none, unknown, temptress, regular).
 ty_noun_in(english, tempura, none, unknown, tempura, regular).
 ty_noun_in(english, ten, none, unknown, ten, regular).
+ty_noun_in(english, 'ten-spot', none, unknown, 'ten-spot', regular).
+ty_noun_in(english, 'ten-strike', none, unknown, 'ten-strike', regular).
+ty_noun_in(english, 'ten-thousandth', none, unknown, 'ten-thousandth', regular).
 ty_noun_in(english, tenability, none, unknown, tenability, regular).
 ty_noun_in(english, tenableness, none, unknown, tenableness, regular).
 ty_noun_in(english, tenaciousness, none, unknown, tenaciousness, regular).
@@ -36848,6 +38292,7 @@ ty_noun_in(english, tension, none, unknown, tension, regular).
 ty_noun_in(english, tensity, none, unknown, tensity, regular).
 ty_noun_in(english, tensor, none, unknown, tensor, regular).
 ty_noun_in(english, tent, none, unknown, tent, regular).
+ty_noun_in(english, 'tent-fly', none, unknown, 'tent-fly', regular).
 ty_noun_in(english, tentacle, none, unknown, tentacle, regular).
 ty_noun_in(english, tenter, none, unknown, tenter, regular).
 ty_noun_in(english, tenterhook, none, unknown, tenterhook, regular).
@@ -36936,6 +38381,7 @@ ty_noun_in(english, tessellation, none, unknown, tessellation, regular).
 ty_noun_in(english, tesseract, none, unknown, tesseract, regular).
 ty_noun_in(english, tessitura, none, unknown, tessitura, regular).
 ty_noun_in(english, test, none, unknown, test, regular).
+ty_noun_in(english, 'test-cross', none, unknown, 'test-cross', regular).
 ty_noun_in(english, testacean, none, unknown, testacean, regular).
 ty_noun_in(english, testament, none, unknown, testament, regular).
 ty_noun_in(english, testator, none, unknown, testator, regular).
@@ -36958,10 +38404,12 @@ ty_noun_in(english, tetanus, none, unknown, tetanus, regular).
 ty_noun_in(english, tetany, none, unknown, tetany, regular).
 ty_noun_in(english, tetartanopia, none, unknown, tetartanopia, regular).
 ty_noun_in(english, tetchiness, none, unknown, tetchiness, regular).
+ty_noun_in(english, 'tete-a-tete', none, unknown, 'tete-a-tete', regular).
 ty_noun_in(english, teth, none, unknown, teth, regular).
 ty_noun_in(english, tether, none, unknown, tether, regular).
 ty_noun_in(english, tetherball, none, unknown, tetherball, regular).
 ty_noun_in(english, tetra, none, unknown, tetra, regular).
+ty_noun_in(english, 'tetrabromo-phenolsulfonephthalein', none, unknown, 'tetrabromo-phenolsulfonephthalein', regular).
 ty_noun_in(english, tetracaine, none, unknown, tetracaine, regular).
 ty_noun_in(english, tetrachlorethylene, none, unknown, tetrachlorethylene, regular).
 ty_noun_in(english, tetrachloride, none, unknown, tetrachloride, regular).
@@ -37004,6 +38452,7 @@ ty_noun_in(english, teutonic, none, unknown, teutonic, regular).
 ty_noun_in(english, texan, none, person, texan, regular).
 ty_noun_in(english, texas, none, unknown, texas, regular).
 ty_noun_in(english, text, none, unknown, text, regular).
+ty_noun_in(english, 'text-matching', none, unknown, 'text-matching', regular).
 ty_noun_in(english, textile, none, unknown, textile, regular).
 ty_noun_in(english, texture, none, unknown, texture, regular).
 ty_noun_in(english, thai, none, person, thai, regular).
@@ -37130,6 +38579,7 @@ ty_noun_in(english, thiamin, none, unknown, thiamin, regular).
 ty_noun_in(english, thiazide, none, unknown, thiazide, regular).
 ty_noun_in(english, thiazine, none, unknown, thiazine, regular).
 ty_noun_in(english, thick, none, unknown, thick, regular).
+ty_noun_in(english, 'thick-knee', none, unknown, 'thick-knee', regular).
 ty_noun_in(english, thickener, none, unknown, thickener, regular).
 ty_noun_in(english, thickening, none, unknown, thickening, regular).
 ty_noun_in(english, thicket, none, unknown, thicket, regular).
@@ -37139,6 +38589,7 @@ ty_noun_in(english, thievery, none, unknown, thievery, regular).
 ty_noun_in(english, thieving, none, unknown, thieving, regular).
 ty_noun_in(english, thievishness, none, unknown, thievishness, regular).
 ty_noun_in(english, thigh, none, unknown, thigh, regular).
+ty_noun_in(english, 'thigh-slapper', none, unknown, 'thigh-slapper', regular).
 ty_noun_in(english, thighbone, none, unknown, thighbone, regular).
 ty_noun_in(english, thill, none, unknown, thill, regular).
 ty_noun_in(english, thimble, none, unknown, thimble, regular).
@@ -37148,6 +38599,7 @@ ty_noun_in(english, thimblerig, none, unknown, thimblerig, regular).
 ty_noun_in(english, thimbleweed, none, unknown, thimbleweed, regular).
 ty_noun_in(english, thimerosal, none, unknown, thimerosal, regular).
 ty_noun_in(english, thing, none, unknown, thing, regular).
+ty_noun_in(english, 'thing-in-itself', none, unknown, 'thing-in-itself', regular).
 ty_noun_in(english, thingamabob, none, unknown, thingamabob, regular).
 ty_noun_in(english, thingamajig, none, unknown, thingamajig, regular).
 ty_noun_in(english, thingmabob, none, unknown, thingmabob, regular).
@@ -37170,11 +38622,15 @@ ty_noun_in(english, thiotepa, none, unknown, thiotepa, regular).
 ty_noun_in(english, thiothixene, none, unknown, thiothixene, regular).
 ty_noun_in(english, thiouracil, none, unknown, thiouracil, regular).
 ty_noun_in(english, third, none, unknown, third, regular).
+ty_noun_in(english, 'third-dimensionality', none, unknown, 'third-dimensionality', regular).
+ty_noun_in(english, 'third-rater', none, unknown, 'third-rater', regular).
 ty_noun_in(english, thirst, none, unknown, thirst, regular).
 ty_noun_in(english, thirster, none, unknown, thirster, regular).
 ty_noun_in(english, thirstiness, none, unknown, thirstiness, regular).
 ty_noun_in(english, thirteen, none, unknown, thirteen, regular).
 ty_noun_in(english, thirties, none, unknown, thirties, regular).
+ty_noun_in(english, 'thirty-second', none, unknown, 'thirty-second', regular).
+ty_noun_in(english, 'thirty-something', none, unknown, 'thirty-something', regular).
 ty_noun_in(english, thistle, none, unknown, thistle, regular).
 ty_noun_in(english, thistledown, none, unknown, thistledown, regular).
 ty_noun_in(english, thixotropy, none, unknown, thixotropy, regular).
@@ -37200,6 +38656,8 @@ ty_noun_in(english, thoroughwort, none, unknown, thoroughwort, regular).
 ty_noun_in(english, thortveitite, none, unknown, thortveitite, regular).
 ty_noun_in(english, thou, none, unknown, thou, regular).
 ty_noun_in(english, thought, none, unknown, thought, regular).
+ty_noun_in(english, 'thought-image', none, unknown, 'thought-image', regular).
+ty_noun_in(english, 'thought-reader', none, unknown, 'thought-reader', regular).
 ty_noun_in(english, thoughtfulness, none, unknown, thoughtfulness, regular).
 ty_noun_in(english, thoughtlessness, none, unknown, thoughtlessness, regular).
 ty_noun_in(english, thousand, none, unknown, thousand, regular).
@@ -37208,12 +38666,20 @@ ty_noun_in(english, thrall, none, unknown, thrall, regular).
 ty_noun_in(english, thralldom, none, unknown, thralldom, regular).
 ty_noun_in(english, thrasher, none, unknown, thrasher, regular).
 ty_noun_in(english, thread, none, unknown, thread, regular).
+ty_noun_in(english, 'thread-fish', none, unknown, 'thread-fish', regular).
 ty_noun_in(english, threader, none, unknown, threader, regular).
 ty_noun_in(english, threadfin, none, unknown, threadfin, regular).
 ty_noun_in(english, threadfish, none, unknown, threadfish, regular).
 ty_noun_in(english, threadworm, none, unknown, threadworm, regular).
 ty_noun_in(english, threat, none, unknown, threat, regular).
+ty_noun_in(english, 'three-bagger', none, unknown, 'three-bagger', regular).
+ty_noun_in(english, 'three-d', none, unknown, 'three-d', regular).
+ty_noun_in(english, 'three-decker', none, unknown, 'three-decker', regular).
+ty_noun_in(english, 'three-dimensionality', none, unknown, 'three-dimensionality', regular).
+ty_noun_in(english, 'three-fourths', none, unknown, 'three-fourths', regular).
+ty_noun_in(english, 'three-hitter', none, unknown, 'three-hitter', regular).
 ty_noun_in(english, 'three-pointer', none, unknown, 'three-pointer', regular).
+ty_noun_in(english, 'three-quarters', none, unknown, 'three-quarters', regular).
 ty_noun_in(english, threepence, none, unknown, threepence, regular).
 ty_noun_in(english, threesome, none, unknown, threesome, regular).
 ty_noun_in(english, threnody, none, unknown, threnody, regular).
@@ -37257,6 +38723,8 @@ ty_noun_in(english, throttler, none, person, throttler, regular).
 ty_noun_in(english, throughput, none, unknown, throughput, regular).
 ty_noun_in(english, throughway, none, unknown, throughway, regular).
 ty_noun_in(english, throw, none, unknown, throw, regular).
+ty_noun_in(english, 'throw-in', none, unknown, 'throw-in', regular).
+ty_noun_in(english, 'throw-weight', none, unknown, 'throw-weight', regular).
 ty_noun_in(english, throwaway, none, person, throwaway, regular).
 ty_noun_in(english, thrower, none, unknown, thrower, regular).
 ty_noun_in(english, throwster, none, unknown, throwster, regular).
@@ -37334,11 +38802,15 @@ ty_noun_in(english, tibia, none, unknown, tibia, regular).
 ty_noun_in(english, tibialis, none, unknown, tibialis, regular).
 ty_noun_in(english, tibit, none, unknown, tibit, regular).
 ty_noun_in(english, tic, none, unknown, tic, regular).
+ty_noun_in(english, 'tic-tac-toe', none, unknown, 'tic-tac-toe', regular).
 ty_noun_in(english, tical, none, unknown, tical, regular).
 ty_noun_in(english, tichodrome, none, unknown, tichodrome, regular).
 ty_noun_in(english, tick, none, unknown, tick, regular).
+ty_noun_in(english, 'tick-tack-toe', none, unknown, 'tick-tack-toe', regular).
+ty_noun_in(english, 'tick-weed', none, unknown, 'tick-weed', regular).
 ty_noun_in(english, ticker, none, unknown, ticker, regular).
 ty_noun_in(english, ticket, none, unknown, ticket, regular).
+ty_noun_in(english, 'ticket-of-leave', none, unknown, 'ticket-of-leave', regular).
 ty_noun_in(english, tickle, none, unknown, tickle, regular).
 ty_noun_in(english, tickler, none, unknown, tickler, regular).
 ty_noun_in(english, tickling, none, unknown, tickling, regular).
@@ -37362,6 +38834,8 @@ ty_noun_in(english, tidings, none, unknown, tidings, regular).
 ty_noun_in(english, tidy, none, unknown, tidy, regular).
 ty_noun_in(english, tidytips, none, unknown, tidytips, regular).
 ty_noun_in(english, tie, none, unknown, tie, regular).
+ty_noun_in(english, 'tie-in', none, unknown, 'tie-in', regular).
+ty_noun_in(english, 'tie-up', none, unknown, 'tie-up', regular).
 ty_noun_in(english, tieback, none, unknown, tieback, regular).
 ty_noun_in(english, tiebreaker, none, unknown, tiebreaker, regular).
 ty_noun_in(english, tiepin, none, unknown, tiepin, regular).
@@ -37405,6 +38879,10 @@ ty_noun_in(english, timberman, none, person, timberman, regular).
 ty_noun_in(english, timbre, none, unknown, timbre, regular).
 ty_noun_in(english, timbrel, none, unknown, timbrel, regular).
 ty_noun_in(english, time, none, unknown, time, regular).
+ty_noun_in(english, 'time-ball', none, unknown, 'time-ball', regular).
+ty_noun_in(english, 'time-fuse', none, unknown, 'time-fuse', regular).
+ty_noun_in(english, 'time-out', none, unknown, 'time-out', regular).
+ty_noun_in(english, 'time-switch', none, unknown, 'time-switch', regular).
 ty_noun_in(english, timecard, none, unknown, timecard, regular).
 ty_noun_in(english, timekeeper, none, unknown, timekeeper, regular).
 ty_noun_in(english, timekeeping, none, unknown, timekeeping, regular).
@@ -37427,6 +38905,7 @@ ty_noun_in(english, timpani, none, unknown, timpani, regular).
 ty_noun_in(english, timpanist, none, unknown, timpanist, regular).
 ty_noun_in(english, timucu, none, unknown, timucu, regular).
 ty_noun_in(english, tin, none, unknown, tin, regular).
+ty_noun_in(english, 'tin-plating', none, unknown, 'tin-plating', regular).
 ty_noun_in(english, tinamidae, none, unknown, tinamidae, regular).
 ty_noun_in(english, tinamou, none, unknown, tinamou, regular).
 ty_noun_in(english, tinction, none, unknown, tinction, regular).
@@ -37458,6 +38937,7 @@ ty_noun_in(english, tintinnabulum, none, unknown, tintinnabulum, regular).
 ty_noun_in(english, tintometer, none, unknown, tintometer, regular).
 ty_noun_in(english, tinware, none, unknown, tinware, regular).
 ty_noun_in(english, tip, none, unknown, tip, regular).
+ty_noun_in(english, 'tip-off', none, unknown, 'tip-off', regular).
 ty_noun_in(english, tipi, none, unknown, tipi, regular).
 ty_noun_in(english, tipper, none, unknown, tipper, regular).
 ty_noun_in(english, tippet, none, unknown, tippet, regular).
@@ -37479,6 +38959,7 @@ ty_noun_in(english, tirolean, none, unknown, tirolean, regular).
 ty_noun_in(english, tisane, none, unknown, tisane, regular).
 ty_noun_in(english, tissue, none, unknown, tissue, regular).
 ty_noun_in(english, tit, none, unknown, tit, regular).
+ty_noun_in(english, 'tit-tat-toe', none, unknown, 'tit-tat-toe', regular).
 ty_noun_in(english, titan, none, unknown, titan, regular).
 ty_noun_in(english, titania, none, unknown, titania, regular).
 ty_noun_in(english, titanite, none, unknown, titanite, regular).
@@ -37497,6 +38978,7 @@ ty_noun_in(english, titin, none, unknown, titin, regular).
 ty_noun_in(english, titivation, none, unknown, titivation, regular).
 ty_noun_in(english, titlark, none, unknown, titlark, regular).
 ty_noun_in(english, title, none, unknown, title, regular).
+ty_noun_in(english, 'title-holder', none, unknown, 'title-holder', regular).
 ty_noun_in(english, titled, none, unknown, titled, regular).
 ty_noun_in(english, titmouse, none, unknown, titmouse, regular).
 ty_noun_in(english, titration, none, unknown, titration, regular).
@@ -37505,11 +38987,14 @@ ty_noun_in(english, titre, none, unknown, titre, regular).
 ty_noun_in(english, titterer, none, person, titterer, regular).
 ty_noun_in(english, tittivation, none, unknown, tittivation, regular).
 ty_noun_in(english, tittle, none, unknown, tittle, regular).
+ty_noun_in(english, 'tittle-tattle', none, unknown, 'tittle-tattle', regular).
 ty_noun_in(english, titty, none, unknown, titty, regular).
 ty_noun_in(english, titularity, none, unknown, titularity, regular).
 ty_noun_in(english, tiyin, none, unknown, tiyin, regular).
 ty_noun_in(english, tizzy, none, unknown, tizzy, regular).
+ty_noun_in(english, 'to-do', none, unknown, 'to-do', regular).
 ty_noun_in(english, toad, none, animate, toad, regular).
+ty_noun_in(english, 'toad-in-the-hole', none, unknown, 'toad-in-the-hole', regular).
 ty_noun_in(english, toadfish, none, unknown, toadfish, regular).
 ty_noun_in(english, toadflax, none, unknown, toadflax, regular).
 ty_noun_in(english, toadshade, none, unknown, toadshade, regular).
@@ -37537,6 +39022,7 @@ ty_noun_in(english, toddy, none, unknown, toddy, regular).
 ty_noun_in(english, todidae, none, unknown, todidae, regular).
 ty_noun_in(english, tody, none, unknown, tody, regular).
 ty_noun_in(english, toe, none, unknown, toe, regular).
+ty_noun_in(english, 'toe-in', none, unknown, 'toe-in', regular).
 ty_noun_in(english, toea, none, unknown, toea, regular).
 ty_noun_in(english, toecap, none, unknown, toecap, regular).
 ty_noun_in(english, toehold, none, unknown, toehold, regular).
@@ -37581,6 +39067,7 @@ ty_noun_in(english, tollon, none, unknown, tollon, regular).
 ty_noun_in(english, tolmiea, none, unknown, tolmiea, regular).
 ty_noun_in(english, tolu, none, unknown, tolu, regular).
 ty_noun_in(english, toluene, none, unknown, toluene, regular).
+ty_noun_in(english, 'tom-tom', none, unknown, 'tom-tom', regular).
 ty_noun_in(english, tomahawk, none, unknown, tomahawk, regular).
 ty_noun_in(english, tomalley, none, unknown, tomalley, regular).
 ty_noun_in(english, tomatillo, none, unknown, tomatillo, regular).
@@ -37605,9 +39092,13 @@ ty_noun_in(english, tomtit, none, unknown, tomtit, regular).
 ty_noun_in(english, ton, none, unknown, ton, regular).
 ty_noun_in(english, tonality, none, unknown, tonality, regular).
 ty_noun_in(english, tone, none, unknown, tone, regular).
+ty_noun_in(english, 'tone-beginning', none, unknown, 'tone-beginning', regular).
 ty_noun_in(english, toner, none, unknown, toner, regular).
 ty_noun_in(english, tongs, none, unknown, tongs, regular).
 ty_noun_in(english, tongue, none, unknown, tongue, regular).
+ty_noun_in(english, 'tongue-fish', none, unknown, 'tongue-fish', regular).
+ty_noun_in(english, 'tongue-flower', none, unknown, 'tongue-flower', regular).
+ty_noun_in(english, 'tongue-lashing', none, unknown, 'tongue-lashing', regular).
 ty_noun_in(english, tonguefish, none, unknown, tonguefish, regular).
 ty_noun_in(english, tongueflower, none, unknown, tongueflower, regular).
 ty_noun_in(english, tonicity, none, unknown, tonicity, regular).
@@ -37642,6 +39133,7 @@ ty_noun_in(english, toothsomeness, none, unknown, toothsomeness, regular).
 ty_noun_in(english, toothwort, none, unknown, toothwort, regular).
 ty_noun_in(english, tootle, none, unknown, tootle, regular).
 ty_noun_in(english, top, none, unknown, top, regular).
+ty_noun_in(english, 'top-up', none, unknown, 'top-up', regular).
 ty_noun_in(english, topaz, none, unknown, topaz, regular).
 ty_noun_in(english, topcoat, none, unknown, topcoat, regular).
 ty_noun_in(english, tope, none, unknown, tope, regular).
@@ -37671,6 +39163,8 @@ ty_noun_in(english, topsail, none, unknown, topsail, regular).
 ty_noun_in(english, topside, none, unknown, topside, regular).
 ty_noun_in(english, topsoil, none, unknown, topsoil, regular).
 ty_noun_in(english, topspin, none, unknown, topspin, regular).
+ty_noun_in(english, 'topsy-turvydom', none, unknown, 'topsy-turvydom', regular).
+ty_noun_in(english, 'topsy-turvyness', none, unknown, 'topsy-turvyness', regular).
 ty_noun_in(english, topv, none, unknown, topv, regular).
 ty_noun_in(english, toque, none, unknown, toque, regular).
 ty_noun_in(english, toradol, none, unknown, toradol, regular).
@@ -37698,6 +39192,7 @@ ty_noun_in(english, torridity, none, unknown, torridity, regular).
 ty_noun_in(english, torsion, none, unknown, torsion, regular).
 ty_noun_in(english, torsk, none, unknown, torsk, regular).
 ty_noun_in(english, torso, none, unknown, torso, regular).
+ty_noun_in(english, 'tort-feasor', none, unknown, 'tort-feasor', regular).
 ty_noun_in(english, torte, none, unknown, torte, regular).
 ty_noun_in(english, tortellini, none, unknown, tortellini, regular).
 ty_noun_in(english, tortfeasor, none, unknown, tortfeasor, regular).
@@ -37705,6 +39200,7 @@ ty_noun_in(english, torticollis, none, unknown, torticollis, regular).
 ty_noun_in(english, tortilla, none, unknown, tortilla, regular).
 ty_noun_in(english, tortoise, none, animate, tortoise, regular).
 ty_noun_in(english, tortoiseshell, none, unknown, tortoiseshell, regular).
+ty_noun_in(english, 'tortoiseshell-cat', none, unknown, 'tortoiseshell-cat', regular).
 ty_noun_in(english, tortricid, none, unknown, tortricid, regular).
 ty_noun_in(english, tortrix, none, unknown, tortrix, regular).
 ty_noun_in(english, tortuosity, none, unknown, tortuosity, regular).
@@ -37715,6 +39211,7 @@ ty_noun_in(english, torus, none, unknown, torus, regular).
 ty_noun_in(english, tory, none, person, tory, regular).
 ty_noun_in(english, tosh, none, unknown, tosh, regular).
 ty_noun_in(english, toss, none, unknown, toss, regular).
+ty_noun_in(english, 'toss-up', none, unknown, 'toss-up', regular).
 ty_noun_in(english, tosser, none, unknown, tosser, regular).
 ty_noun_in(english, tossup, none, unknown, tossup, regular).
 ty_noun_in(english, total, none, unknown, total, regular).
@@ -37737,6 +39234,8 @@ ty_noun_in(english, totterer, none, unknown, totterer, regular).
 ty_noun_in(english, toucan, none, unknown, toucan, regular).
 ty_noun_in(english, toucanet, none, unknown, toucanet, regular).
 ty_noun_in(english, touch, none, unknown, touch, regular).
+ty_noun_in(english, 'touch-me-not', none, unknown, 'touch-me-not', regular).
+ty_noun_in(english, 'touch-typist', none, unknown, 'touch-typist', regular).
 ty_noun_in(english, touchback, none, unknown, touchback, regular).
 ty_noun_in(english, touchdown, none, unknown, touchdown, regular).
 ty_noun_in(english, toucher, none, unknown, toucher, regular).
@@ -37802,6 +39301,8 @@ ty_noun_in(english, toxotidae, none, unknown, toxotidae, regular).
 ty_noun_in(english, toy, none, unknown, toy, regular).
 ty_noun_in(english, toyon, none, unknown, toyon, regular).
 ty_noun_in(english, toyshop, none, unknown, toyshop, regular).
+ty_noun_in(english, 'tra-la', none, unknown, 'tra-la', regular).
+ty_noun_in(english, 'tra-la-la', none, unknown, 'tra-la-la', regular).
 ty_noun_in(english, trabecula, none, unknown, trabecula, regular).
 ty_noun_in(english, trace, none, unknown, trace, regular).
 ty_noun_in(english, tracer, none, unknown, tracer, regular).
@@ -37831,6 +39332,9 @@ ty_noun_in(english, tractarian, none, person, tractarian, regular).
 ty_noun_in(english, traction, none, unknown, traction, regular).
 ty_noun_in(english, tractor, none, unknown, tractor, regular).
 ty_noun_in(english, trade, none, unknown, trade, regular).
+ty_noun_in(english, 'trade-in', none, unknown, 'trade-in', regular).
+ty_noun_in(english, 'trade-last', none, unknown, 'trade-last', regular).
+ty_noun_in(english, 'trade-off', none, unknown, 'trade-off', regular).
 ty_noun_in(english, tradecraft, none, unknown, tradecraft, regular).
 ty_noun_in(english, trademark, none, unknown, trademark, regular).
 ty_noun_in(english, tradeoff, none, unknown, tradeoff, regular).
@@ -38017,6 +39521,8 @@ ty_noun_in(english, trazodone, none, unknown, trazodone, regular).
 ty_noun_in(english, treachery, none, unknown, treachery, regular).
 ty_noun_in(english, treacle, none, unknown, treacle, regular).
 ty_noun_in(english, tread, none, unknown, tread, regular).
+ty_noun_in(english, 'tread-softly', none, unknown, 'tread-softly', regular).
+ty_noun_in(english, 'tread-wheel', none, unknown, 'tread-wheel', regular).
 ty_noun_in(english, treadle, none, unknown, treadle, regular).
 ty_noun_in(english, treadmill, none, unknown, treadmill, regular).
 ty_noun_in(english, treadwheel, none, unknown, treadwheel, regular).
@@ -38034,6 +39540,8 @@ ty_noun_in(english, treble, none, unknown, treble, regular).
 ty_noun_in(english, trebuchet, none, unknown, trebuchet, regular).
 ty_noun_in(english, trebucket, none, unknown, trebucket, regular).
 ty_noun_in(english, tree, none, unknown, tree, regular).
+ty_noun_in(english, 'tree-frog', none, unknown, 'tree-frog', regular).
+ty_noun_in(english, 'tree-worship', none, unknown, 'tree-worship', regular).
 ty_noun_in(english, treehopper, none, unknown, treehopper, regular).
 ty_noun_in(english, treelet, none, unknown, treelet, regular).
 ty_noun_in(english, treenail, none, unknown, treenail, regular).
@@ -38055,6 +39563,8 @@ ty_noun_in(english, trenchancy, none, unknown, trenchancy, regular).
 ty_noun_in(english, trencher, none, unknown, trencher, regular).
 ty_noun_in(english, trencherman, none, unknown, trencherman, regular).
 ty_noun_in(english, trend, none, unknown, trend, regular).
+ty_noun_in(english, 'trend-setter', none, unknown, 'trend-setter', regular).
+ty_noun_in(english, 'trente-et-quarante', none, unknown, 'trente-et-quarante', regular).
 ty_noun_in(english, trepan, none, unknown, trepan, regular).
 ty_noun_in(english, trepang, none, unknown, trepang, regular).
 ty_noun_in(english, trephination, none, unknown, trephination, regular).
@@ -38068,6 +39578,9 @@ ty_noun_in(english, trestle, none, unknown, trestle, regular).
 ty_noun_in(english, trestlework, none, unknown, trestlework, regular).
 ty_noun_in(english, trews, none, unknown, trews, regular).
 ty_noun_in(english, trey, none, unknown, trey, regular).
+ty_noun_in(english, 'tri-chad', none, unknown, 'tri-chad', regular).
+ty_noun_in(english, 'tri-iodomethane', none, unknown, 'tri-iodomethane', regular).
+ty_noun_in(english, 'tri-iodothyronine', none, unknown, 'tri-iodothyronine', regular).
 ty_noun_in(english, triacetate, none, unknown, triacetate, regular).
 ty_noun_in(english, triacylglyceride, none, unknown, triacylglyceride, regular).
 ty_noun_in(english, triad, none, unknown, triad, regular).
@@ -38192,11 +39705,13 @@ ty_noun_in(english, triops, none, unknown, triops, regular).
 ty_noun_in(english, triose, none, unknown, triose, regular).
 ty_noun_in(english, trioxide, none, unknown, trioxide, regular).
 ty_noun_in(english, trip, none, unknown, trip, regular).
+ty_noun_in(english, 'trip-up', none, unknown, 'trip-up', regular).
 ty_noun_in(english, tripalmitin, none, unknown, tripalmitin, regular).
 ty_noun_in(english, tripartition, none, unknown, tripartition, regular).
 ty_noun_in(english, triphammer, none, unknown, triphammer, regular).
 ty_noun_in(english, triphosphopyridine, none, unknown, triphosphopyridine, regular).
 ty_noun_in(english, triple, none, unknown, triple, regular).
+ty_noun_in(english, 'triple-decker', none, unknown, 'triple-decker', regular).
 ty_noun_in(english, triplet, none, unknown, triplet, regular).
 ty_noun_in(english, tripletail, none, unknown, tripletail, regular).
 ty_noun_in(english, triplicate, none, unknown, triplicate, regular).
@@ -38273,6 +39788,7 @@ ty_noun_in(english, trot, none, unknown, trot, regular).
 ty_noun_in(english, troth, none, unknown, troth, regular).
 ty_noun_in(english, trotline, none, unknown, trotline, regular).
 ty_noun_in(english, trotter, none, unknown, trotter, regular).
+ty_noun_in(english, 'trou-de-loup', none, unknown, 'trou-de-loup', regular).
 ty_noun_in(english, troubadour, none, person, troubadour, regular).
 ty_noun_in(english, trouble, none, unknown, trouble, regular).
 ty_noun_in(english, troublemaker, none, unknown, troublemaker, regular).
@@ -38307,6 +39823,7 @@ ty_noun_in(english, truism, none, unknown, truism, regular).
 ty_noun_in(english, trump, none, unknown, trump, regular).
 ty_noun_in(english, trumpery, none, unknown, trumpery, regular).
 ty_noun_in(english, trumpet, none, unknown, trumpet, regular).
+ty_noun_in(english, 'trumpet-wood', none, unknown, 'trumpet-wood', regular).
 ty_noun_in(english, trumpeter, none, person, trumpeter, regular).
 ty_noun_in(english, trumpetfish, none, unknown, trumpetfish, regular).
 ty_noun_in(english, trumpetwood, none, unknown, trumpetwood, regular).
@@ -38331,6 +39848,7 @@ ty_noun_in(english, trustworthiness, none, unknown, trustworthiness, regular).
 ty_noun_in(english, truth, none, unknown, truth, regular).
 ty_noun_in(english, truthfulness, none, unknown, truthfulness, regular).
 ty_noun_in(english, try, none, unknown, try, regular).
+ty_noun_in(english, 'try-on', none, unknown, 'try-on', regular).
 ty_noun_in(english, tryout, none, unknown, tryout, regular).
 ty_noun_in(english, trypetidae, none, unknown, trypetidae, regular).
 ty_noun_in(english, trypsin, none, unknown, trypsin, regular).
@@ -38352,6 +39870,8 @@ ty_noun_in(english, tsunami, none, unknown, tsunami, regular).
 ty_noun_in(english, tsuris, none, unknown, tsuris, regular).
 ty_noun_in(english, tuatara, none, unknown, tuatara, regular).
 ty_noun_in(english, tub, none, unknown, tub, regular).
+ty_noun_in(english, 'tub-cart', none, unknown, 'tub-cart', regular).
+ty_noun_in(english, 'tub-thumper', none, unknown, 'tub-thumper', regular).
 ty_noun_in(english, tuba, none, unknown, tuba, regular).
 ty_noun_in(english, tubbiness, none, unknown, tubbiness, regular).
 ty_noun_in(english, tube, none, unknown, tube, regular).
@@ -38371,6 +39891,7 @@ ty_noun_in(english, tubule, none, unknown, tubule, regular).
 ty_noun_in(english, tubulin, none, unknown, tubulin, regular).
 ty_noun_in(english, tuckahoe, none, unknown, tuckahoe, regular).
 ty_noun_in(english, tucker, none, unknown, tucker, regular).
+ty_noun_in(english, 'tucker-bag', none, unknown, 'tucker-bag', regular).
 ty_noun_in(english, tucket, none, unknown, tucket, regular).
 ty_noun_in(english, tudor, none, unknown, tudor, regular).
 ty_noun_in(english, tudung, none, unknown, tudung, regular).
@@ -38380,6 +39901,7 @@ ty_noun_in(english, tuff, none, unknown, tuff, regular).
 ty_noun_in(english, tuffet, none, unknown, tuffet, regular).
 ty_noun_in(english, tuft, none, unknown, tuft, regular).
 ty_noun_in(english, tug, none, unknown, tug, regular).
+ty_noun_in(english, 'tug-of-war', none, unknown, 'tug-of-war', regular).
 ty_noun_in(english, tugboat, none, unknown, tugboat, regular).
 ty_noun_in(english, tugger, none, unknown, tugger, regular).
 ty_noun_in(english, tughrik, none, unknown, tughrik, regular).
@@ -38394,6 +39916,7 @@ ty_noun_in(english, tulipwood, none, unknown, tulipwood, regular).
 ty_noun_in(english, tulle, none, unknown, tulle, regular).
 ty_noun_in(english, tulostoma, none, unknown, tulostoma, regular).
 ty_noun_in(english, tumble, none, unknown, tumble, regular).
+ty_noun_in(english, 'tumble-dryer', none, unknown, 'tumble-dryer', regular).
 ty_noun_in(english, tumblebug, none, unknown, tumblebug, regular).
 ty_noun_in(english, tumbler, none, person, tumbler, regular).
 ty_noun_in(english, tumbleweed, none, unknown, tumbleweed, regular).
@@ -38414,6 +39937,7 @@ ty_noun_in(english, tuna, none, animate, tuna, regular).
 ty_noun_in(english, tunaburger, none, unknown, tunaburger, regular).
 ty_noun_in(english, tundra, none, unknown, tundra, regular).
 ty_noun_in(english, tune, none, unknown, tune, regular).
+ty_noun_in(english, 'tune-up', none, unknown, 'tune-up', regular).
 ty_noun_in(english, tunefulness, none, unknown, tunefulness, regular).
 ty_noun_in(english, tuner, none, unknown, tuner, regular).
 ty_noun_in(english, tung, none, unknown, tung, regular).
@@ -38467,6 +39991,7 @@ ty_noun_in(english, turkoman, none, person, turkoman, regular).
 ty_noun_in(english, turmeric, none, unknown, turmeric, regular).
 ty_noun_in(english, turmoil, none, unknown, turmoil, regular).
 ty_noun_in(english, turn, none, unknown, turn, regular).
+ty_noun_in(english, 'turn-on', none, unknown, 'turn-on', regular).
 ty_noun_in(english, turnabout, none, unknown, turnabout, regular).
 ty_noun_in(english, turnaround, none, unknown, turnaround, regular).
 ty_noun_in(english, turnbuckle, none, unknown, turnbuckle, regular).
@@ -38518,9 +40043,11 @@ ty_noun_in(english, tutor, none, person, tutor, regular).
 ty_noun_in(english, tutorial, none, unknown, tutorial, regular).
 ty_noun_in(english, tutorship, none, unknown, tutorship, regular).
 ty_noun_in(english, tutsan, none, unknown, tutsan, regular).
+ty_noun_in(english, 'tutti-frutti', none, unknown, 'tutti-frutti', regular).
 ty_noun_in(english, tutu, none, unknown, tutu, regular).
 ty_noun_in(english, tux, none, unknown, tux, regular).
 ty_noun_in(english, tuxedo, none, unknown, tuxedo, regular).
+ty_noun_in(english, 'tv-antenna', none, unknown, 'tv-antenna', regular).
 ty_noun_in(english, twaddle, none, unknown, twaddle, regular).
 ty_noun_in(english, twaddler, none, unknown, twaddler, regular).
 ty_noun_in(english, twain, none, unknown, twain, regular).
@@ -38537,12 +40064,25 @@ ty_noun_in(english, twelvemonth, none, unknown, twelvemonth, regular).
 ty_noun_in(english, twenties, none, unknown, twenties, regular).
 ty_noun_in(english, twentieth, none, unknown, twentieth, regular).
 ty_noun_in(english, twenty, none, unknown, twenty, regular).
+ty_noun_in(english, 'twenty-eight', none, unknown, 'twenty-eight', regular).
+ty_noun_in(english, 'twenty-five', none, unknown, 'twenty-five', regular).
+ty_noun_in(english, 'twenty-four', none, unknown, 'twenty-four', regular).
+ty_noun_in(english, 'twenty-nine', none, unknown, 'twenty-nine', regular).
+ty_noun_in(english, 'twenty-one', none, unknown, 'twenty-one', regular).
+ty_noun_in(english, 'twenty-seven', none, unknown, 'twenty-seven', regular).
+ty_noun_in(english, 'twenty-six', none, unknown, 'twenty-six', regular).
+ty_noun_in(english, 'twenty-three', none, unknown, 'twenty-three', regular).
+ty_noun_in(english, 'twenty-twenty', none, unknown, 'twenty-twenty', regular).
+ty_noun_in(english, 'twenty-two', none, unknown, 'twenty-two', regular).
 ty_noun_in(english, twerp, none, unknown, twerp, regular).
+ty_noun_in(english, 'twice-pinnate', none, unknown, 'twice-pinnate', regular).
 ty_noun_in(english, twiddler, none, unknown, twiddler, regular).
 ty_noun_in(english, twig, none, unknown, twig, regular).
 ty_noun_in(english, twilight, none, unknown, twilight, regular).
 ty_noun_in(english, twill, none, unknown, twill, regular).
 ty_noun_in(english, twin, none, person, twin, regular).
+ty_noun_in(english, 'twin-prop', none, unknown, 'twin-prop', regular).
+ty_noun_in(english, 'twin-propeller-plane', none, unknown, 'twin-propeller-plane', regular).
 ty_noun_in(english, twinberry, none, unknown, twinberry, regular).
 ty_noun_in(english, twiner, none, unknown, twiner, regular).
 ty_noun_in(english, twinflower, none, unknown, twinflower, regular).
@@ -38561,6 +40101,16 @@ ty_noun_in(english, twistwood, none, unknown, twistwood, regular).
 ty_noun_in(english, twit, none, unknown, twit, regular).
 ty_noun_in(english, twitter, none, unknown, twitter, regular).
 ty_noun_in(english, twitterer, none, unknown, twitterer, regular).
+ty_noun_in(english, 'two-bagger', none, unknown, 'two-bagger', regular).
+ty_noun_in(english, 'two-baser', none, unknown, 'two-baser', regular).
+ty_noun_in(english, 'two-by-four', none, unknown, 'two-by-four', regular).
+ty_noun_in(english, 'two-dimensionality', none, unknown, 'two-dimensionality', regular).
+ty_noun_in(english, 'two-hitter', none, unknown, 'two-hitter', regular).
+ty_noun_in(english, 'two-piece', none, unknown, 'two-piece', regular).
+ty_noun_in(english, 'two-seater', none, unknown, 'two-seater', regular).
+ty_noun_in(english, 'two-step', none, unknown, 'two-step', regular).
+ty_noun_in(english, 'two-thirds', none, unknown, 'two-thirds', regular).
+ty_noun_in(english, 'two-timer', none, unknown, 'two-timer', regular).
 ty_noun_in(english, twofer, none, unknown, twofer, regular).
 ty_noun_in(english, twopence, none, unknown, twopence, regular).
 ty_noun_in(english, twosome, none, unknown, twosome, regular).
@@ -38609,6 +40159,8 @@ ty_noun_in(english, tyrothricin, none, unknown, tyrothricin, regular).
 ty_noun_in(english, tzar, none, unknown, tzar, regular).
 ty_noun_in(english, tzarina, none, person, tzarina, regular).
 ty_noun_in(english, tzetze, none, unknown, tzetze, regular).
+ty_noun_in(english, 'u-drive', none, unknown, 'u-drive', regular).
+ty_noun_in(english, 'u-turn', none, unknown, 'u-turn', regular).
 ty_noun_in(english, uakari, none, unknown, uakari, regular).
 ty_noun_in(english, ubermensch, none, person, ubermensch, regular).
 ty_noun_in(english, ubiety, none, unknown, ubiety, regular).
@@ -38976,6 +40528,9 @@ ty_noun_in(english, unwillingness, none, unknown, unwillingness, regular).
 ty_noun_in(english, unwiseness, none, unknown, unwiseness, regular).
 ty_noun_in(english, unworthiness, none, unknown, unworthiness, regular).
 ty_noun_in(english, unyieldingness, none, unknown, unyieldingness, regular).
+ty_noun_in(english, 'up-bow', none, unknown, 'up-bow', regular).
+ty_noun_in(english, 'up-tick', none, unknown, 'up-tick', regular).
+ty_noun_in(english, 'up-to-dateness', none, unknown, 'up-to-dateness', regular).
 ty_noun_in(english, upbraider, none, person, upbraider, regular).
 ty_noun_in(english, upbringing, none, unknown, upbringing, regular).
 ty_noun_in(english, upcast, none, unknown, upcast, regular).
@@ -39085,6 +40640,7 @@ ty_noun_in(english, usage, none, unknown, usage, regular).
 ty_noun_in(english, usance, none, unknown, usance, regular).
 ty_noun_in(english, use, none, unknown, use, regular).
 ty_noun_in(english, useableness, none, unknown, useableness, regular).
+ty_noun_in(english, 'used-car', none, unknown, 'used-car', regular).
 ty_noun_in(english, usefulness, none, unknown, usefulness, regular).
 ty_noun_in(english, uselessness, none, unknown, uselessness, regular).
 ty_noun_in(english, user, none, person, user, regular).
@@ -39196,6 +40752,7 @@ ty_noun_in(english, valuableness, none, unknown, valuableness, regular).
 ty_noun_in(english, valuation, none, unknown, valuation, regular).
 ty_noun_in(english, valuator, none, unknown, valuator, regular).
 ty_noun_in(english, value, none, unknown, value, regular).
+ty_noun_in(english, 'value-system', none, unknown, 'value-system', regular).
 ty_noun_in(english, valuelessness, none, unknown, valuelessness, regular).
 ty_noun_in(english, valuer, none, unknown, valuer, regular).
 ty_noun_in(english, values, none, unknown, values, regular).
@@ -39285,6 +40842,7 @@ ty_noun_in(english, vascularity, none, unknown, vascularity, regular).
 ty_noun_in(english, vascularization, none, unknown, vascularization, regular).
 ty_noun_in(english, vasculitis, none, unknown, vasculitis, regular).
 ty_noun_in(english, vase, none, unknown, vase, regular).
+ty_noun_in(english, 'vase-fine', none, unknown, 'vase-fine', regular).
 ty_noun_in(english, vasectomy, none, unknown, vasectomy, regular).
 ty_noun_in(english, vasoconstriction, none, unknown, vasoconstriction, regular).
 ty_noun_in(english, vasoconstrictive, none, unknown, vasoconstrictive, regular).
@@ -39347,6 +40905,7 @@ ty_noun_in(english, velours, none, unknown, velours, regular).
 ty_noun_in(english, veloute, none, unknown, veloute, regular).
 ty_noun_in(english, velum, none, unknown, velum, regular).
 ty_noun_in(english, velvet, none, unknown, velvet, regular).
+ty_noun_in(english, 'velvet-leaf', none, unknown, 'velvet-leaf', regular).
 ty_noun_in(english, velveteen, none, unknown, velveteen, regular).
 ty_noun_in(english, velvetleaf, none, unknown, velvetleaf, regular).
 ty_noun_in(english, velvetweed, none, unknown, velvetweed, regular).
@@ -39377,6 +40936,7 @@ ty_noun_in(english, venogram, none, unknown, venogram, regular).
 ty_noun_in(english, venography, none, unknown, venography, regular).
 ty_noun_in(english, venom, none, unknown, venom, regular).
 ty_noun_in(english, vent, none, unknown, vent, regular).
+ty_noun_in(english, 'vent-hole', none, unknown, 'vent-hole', regular).
 ty_noun_in(english, ventail, none, unknown, ventail, regular).
 ty_noun_in(english, venter, none, unknown, venter, regular).
 ty_noun_in(english, venthole, none, unknown, venthole, regular).
@@ -39512,11 +41072,14 @@ ty_noun_in(english, vibrio, none, unknown, vibrio, regular).
 ty_noun_in(english, vibrion, none, unknown, vibrion, regular).
 ty_noun_in(english, vibrissa, none, unknown, vibrissa, regular).
 ty_noun_in(english, vicar, none, person, vicar, regular).
+ty_noun_in(english, 'vicar-general', none, unknown, 'vicar-general', regular).
 ty_noun_in(english, vicarage, none, unknown, vicarage, regular).
 ty_noun_in(english, vicariate, none, unknown, vicariate, regular).
 ty_noun_in(english, vicarship, none, unknown, vicarship, regular).
 ty_noun_in(english, vice, none, unknown, vice, regular).
+ty_noun_in(english, 'vice-presidency', none, unknown, 'vice-presidency', regular).
 ty_noun_in(english, 'vice-president', none, person, 'vice-president', regular).
+ty_noun_in(english, 'vice-regent', none, unknown, 'vice-regent', regular).
 ty_noun_in(english, vicedirector, none, unknown, vicedirector, regular).
 ty_noun_in(english, vicegerent, none, unknown, vicegerent, regular).
 ty_noun_in(english, vicereine, none, unknown, vicereine, regular).
@@ -39599,6 +41162,7 @@ ty_noun_in(english, vinegarroon, none, unknown, vinegarroon, regular).
 ty_noun_in(english, vinegarweed, none, unknown, vinegarweed, regular).
 ty_noun_in(english, vinery, none, unknown, vinery, regular).
 ty_noun_in(english, vineyard, none, unknown, vineyard, regular).
+ty_noun_in(english, 'vingt-et-un', none, unknown, 'vingt-et-un', regular).
 ty_noun_in(english, viniculture, none, unknown, viniculture, regular).
 ty_noun_in(english, vinifera, none, unknown, vinifera, regular).
 ty_noun_in(english, vinification, none, unknown, vinification, regular).
@@ -39654,6 +41218,7 @@ ty_noun_in(english, virulence, none, unknown, virulence, regular).
 ty_noun_in(english, virulency, none, unknown, virulency, regular).
 ty_noun_in(english, virus, none, unknown, virus, regular).
 ty_noun_in(english, virusoid, none, unknown, virusoid, regular).
+ty_noun_in(english, 'vis-a-vis', none, unknown, 'vis-a-vis', regular).
 ty_noun_in(english, visa, none, unknown, visa, regular).
 ty_noun_in(english, visage, none, unknown, visage, regular).
 ty_noun_in(english, viscacha, none, unknown, viscacha, regular).
@@ -39747,6 +41312,7 @@ ty_noun_in(english, voicer, none, unknown, voicer, regular).
 ty_noun_in(english, voidance, none, unknown, voidance, regular).
 ty_noun_in(english, voider, none, unknown, voider, regular).
 ty_noun_in(english, voile, none, unknown, voile, regular).
+ty_noun_in(english, 'vol-au-vent', none, unknown, 'vol-au-vent', regular).
 ty_noun_in(english, volaille, none, unknown, volaille, regular).
 ty_noun_in(english, volary, none, unknown, volary, regular).
 ty_noun_in(english, volatilisation, none, unknown, volatilisation, regular).
@@ -39760,9 +41326,11 @@ ty_noun_in(english, volition, none, unknown, volition, regular).
 ty_noun_in(english, volley, none, unknown, volley, regular).
 ty_noun_in(english, volleyball, none, unknown, volleyball, regular).
 ty_noun_in(english, volt, none, unknown, volt, regular).
+ty_noun_in(english, 'volt-ampere', none, unknown, 'volt-ampere', regular).
 ty_noun_in(english, voltage, none, unknown, voltage, regular).
 ty_noun_in(english, voltaire, none, unknown, voltaire, regular).
 ty_noun_in(english, voltammetry, none, unknown, voltammetry, regular).
+ty_noun_in(english, 'volte-face', none, unknown, 'volte-face', regular).
 ty_noun_in(english, voltmeter, none, unknown, voltmeter, regular).
 ty_noun_in(english, volubility, none, unknown, volubility, regular).
 ty_noun_in(english, volume, none, unknown, volume, regular).
@@ -39853,6 +41421,7 @@ ty_noun_in(english, waggoner, none, unknown, waggoner, regular).
 ty_noun_in(english, waggonwright, none, unknown, waggonwright, regular).
 ty_noun_in(english, wagnerism, none, unknown, wagnerism, regular).
 ty_noun_in(english, wagon, none, unknown, wagon, regular).
+ty_noun_in(english, 'wagon-lit', none, unknown, 'wagon-lit', regular).
 ty_noun_in(english, wagoner, none, person, wagoner, regular).
 ty_noun_in(english, wagonwright, none, unknown, wagonwright, regular).
 ty_noun_in(english, wagtail, none, unknown, wagtail, regular).
@@ -39877,21 +41446,29 @@ ty_noun_in(english, waiting, none, unknown, waiting, regular).
 ty_noun_in(english, waitress, none, person, waitress, regular).
 ty_noun_in(english, waiver, none, unknown, waiver, regular).
 ty_noun_in(english, wake, none, unknown, wake, regular).
+ty_noun_in(english, 'wake-robin', none, unknown, 'wake-robin', regular).
 ty_noun_in(english, wakeboard, none, unknown, wakeboard, regular).
 ty_noun_in(english, wakefulness, none, unknown, wakefulness, regular).
 ty_noun_in(english, waker, none, unknown, waker, regular).
 ty_noun_in(english, walapai, none, person, walapai, regular).
 ty_noun_in(english, waldmeister, none, unknown, waldmeister, regular).
 ty_noun_in(english, walk, none, unknown, walk, regular).
+ty_noun_in(english, 'walk-in', none, unknown, 'walk-in', regular).
+ty_noun_in(english, 'walk-on', none, unknown, 'walk-on', regular).
+ty_noun_in(english, 'walk-through', none, unknown, 'walk-through', regular).
+ty_noun_in(english, 'walk-up', none, unknown, 'walk-up', regular).
 ty_noun_in(english, walkabout, none, unknown, walkabout, regular).
 ty_noun_in(english, walkaway, none, unknown, walkaway, regular).
 ty_noun_in(english, walker, none, unknown, walker, regular).
+ty_noun_in(english, 'walkie-talkie', none, unknown, 'walkie-talkie', regular).
 ty_noun_in(english, walking, none, unknown, walking, regular).
 ty_noun_in(english, walkingstick, none, unknown, walkingstick, regular).
 ty_noun_in(english, walkout, none, unknown, walkout, regular).
 ty_noun_in(english, walkover, none, unknown, walkover, regular).
 ty_noun_in(english, walkway, none, unknown, walkway, regular).
+ty_noun_in(english, 'walky-talky', none, unknown, 'walky-talky', regular).
 ty_noun_in(english, wall, none, unknown, wall, regular).
+ty_noun_in(english, 'wall-paperer', none, unknown, 'wall-paperer', regular).
 ty_noun_in(english, wallaby, none, unknown, wallaby, regular).
 ty_noun_in(english, wallah, none, unknown, wallah, regular).
 ty_noun_in(english, wallboard, none, unknown, wallboard, regular).
@@ -39931,6 +41508,7 @@ ty_noun_in(english, waratah, none, unknown, waratah, regular).
 ty_noun_in(english, warble, none, unknown, warble, regular).
 ty_noun_in(english, warbler, none, unknown, warbler, regular).
 ty_noun_in(english, ward, none, person, ward, regular).
+ty_noun_in(english, 'ward-heeler', none, unknown, 'ward-heeler', regular).
 ty_noun_in(english, warden, none, unknown, warden, regular).
 ty_noun_in(english, wardenship, none, unknown, wardenship, regular).
 ty_noun_in(english, warder, none, unknown, warder, regular).
@@ -39950,6 +41528,7 @@ ty_noun_in(english, warhorse, none, unknown, warhorse, regular).
 ty_noun_in(english, wariness, none, unknown, wariness, regular).
 ty_noun_in(english, warlock, none, unknown, warlock, regular).
 ty_noun_in(english, warlord, none, unknown, warlord, regular).
+ty_noun_in(english, 'warm-up', none, unknown, 'warm-up', regular).
 ty_noun_in(english, warmer, none, unknown, warmer, regular).
 ty_noun_in(english, warmheartedness, none, unknown, warmheartedness, regular).
 ty_noun_in(english, warming, none, unknown, warming, regular).
@@ -39981,6 +41560,7 @@ ty_noun_in(english, wartweed, none, unknown, wartweed, regular).
 ty_noun_in(english, wartwort, none, unknown, wartwort, regular).
 ty_noun_in(english, wasabi, none, unknown, wasabi, regular).
 ty_noun_in(english, wash, none, unknown, wash, regular).
+ty_noun_in(english, 'wash-and-wear', none, unknown, 'wash-and-wear', regular).
 ty_noun_in(english, washables, none, unknown, washables, regular).
 ty_noun_in(english, washbasin, none, unknown, washbasin, regular).
 ty_noun_in(english, washboard, none, unknown, washboard, regular).
@@ -39992,6 +41572,7 @@ ty_noun_in(english, washerman, none, unknown, washerman, regular).
 ty_noun_in(english, washerwoman, none, unknown, washerwoman, regular).
 ty_noun_in(english, washhouse, none, unknown, washhouse, regular).
 ty_noun_in(english, washing, none, unknown, washing, regular).
+ty_noun_in(english, 'washing-up', none, unknown, 'washing-up', regular).
 ty_noun_in(english, washington, none, unknown, washington, regular).
 ty_noun_in(english, washout, none, unknown, washout, regular).
 ty_noun_in(english, washrag, none, unknown, washrag, regular).
@@ -40005,6 +41586,7 @@ ty_noun_in(english, wassail, none, unknown, wassail, regular).
 ty_noun_in(english, wassailer, none, unknown, wassailer, regular).
 ty_noun_in(english, wastage, none, unknown, wastage, regular).
 ty_noun_in(english, waste, none, unknown, waste, regular).
+ty_noun_in(english, 'waste-yard', none, unknown, 'waste-yard', regular).
 ty_noun_in(english, wastebasket, none, unknown, wastebasket, regular).
 ty_noun_in(english, wastebin, none, unknown, wastebin, regular).
 ty_noun_in(english, wastefulness, none, unknown, wastefulness, regular).
@@ -40027,6 +41609,13 @@ ty_noun_in(english, watchstrap, none, unknown, watchstrap, regular).
 ty_noun_in(english, watchtower, none, unknown, watchtower, regular).
 ty_noun_in(english, watchword, none, unknown, watchword, regular).
 ty_noun_in(english, water, none, unknown, water, regular).
+ty_noun_in(english, 'water-color', none, unknown, 'water-color', regular).
+ty_noun_in(english, 'water-colour', none, unknown, 'water-colour', regular).
+ty_noun_in(english, 'water-mint', none, unknown, 'water-mint', regular).
+ty_noun_in(english, 'water-rate', none, unknown, 'water-rate', regular).
+ty_noun_in(english, 'water-shield', none, unknown, 'water-shield', regular).
+ty_noun_in(english, 'water-skiing', none, unknown, 'water-skiing', regular).
+ty_noun_in(english, 'water-target', none, unknown, 'water-target', regular).
 ty_noun_in(english, waterbird, none, unknown, waterbird, regular).
 ty_noun_in(english, waterbuck, none, unknown, waterbuck, regular).
 ty_noun_in(english, watercannon, none, unknown, watercannon, regular).
@@ -40037,6 +41626,7 @@ ty_noun_in(english, watercolourist, none, unknown, watercolourist, regular).
 ty_noun_in(english, watercourse, none, unknown, watercourse, regular).
 ty_noun_in(english, watercraft, none, unknown, watercraft, regular).
 ty_noun_in(english, waterdog, none, unknown, waterdog, regular).
+ty_noun_in(english, 'watered-silk', none, unknown, 'watered-silk', regular).
 ty_noun_in(english, waterer, none, unknown, waterer, regular).
 ty_noun_in(english, waterfall, none, unknown, waterfall, regular).
 ty_noun_in(english, waterfinder, none, unknown, waterfinder, regular).
@@ -40065,10 +41655,12 @@ ty_noun_in(english, waterweed, none, unknown, waterweed, regular).
 ty_noun_in(english, waterwheel, none, unknown, waterwheel, regular).
 ty_noun_in(english, waterworks, none, unknown, waterworks, regular).
 ty_noun_in(english, watt, none, unknown, watt, regular).
+ty_noun_in(english, 'watt-hour', none, unknown, 'watt-hour', regular).
 ty_noun_in(english, wattage, none, unknown, wattage, regular).
 ty_noun_in(english, wattle, none, unknown, wattle, regular).
 ty_noun_in(english, wattmeter, none, unknown, wattmeter, regular).
 ty_noun_in(english, wave, none, unknown, wave, regular).
+ty_noun_in(english, 'wave-off', none, unknown, 'wave-off', regular).
 ty_noun_in(english, waveband, none, unknown, waveband, regular).
 ty_noun_in(english, waveform, none, unknown, waveform, regular).
 ty_noun_in(english, wavefront, none, unknown, wavefront, regular).
@@ -40080,6 +41672,7 @@ ty_noun_in(english, waverer, none, unknown, waverer, regular).
 ty_noun_in(english, waviness, none, unknown, waviness, regular).
 ty_noun_in(english, waw, none, unknown, waw, regular).
 ty_noun_in(english, wax, none, unknown, wax, regular).
+ty_noun_in(english, 'wax-chandler', none, unknown, 'wax-chandler', regular).
 ty_noun_in(english, waxberry, none, unknown, waxberry, regular).
 ty_noun_in(english, waxflower, none, unknown, waxflower, regular).
 ty_noun_in(english, waxiness, none, unknown, waxiness, regular).
@@ -40136,6 +41729,7 @@ ty_noun_in(english, wedgie, none, unknown, wedgie, regular).
 ty_noun_in(english, wedlock, none, unknown, wedlock, regular).
 ty_noun_in(english, wednesday, none, unknown, wednesday, regular).
 ty_noun_in(english, weed, none, unknown, weed, regular).
+ty_noun_in(english, 'weed-whacker', none, unknown, 'weed-whacker', regular).
 ty_noun_in(english, weeder, none, unknown, weeder, regular).
 ty_noun_in(english, weedkiller, none, unknown, weedkiller, regular).
 ty_noun_in(english, weeds, none, unknown, weeds, regular).
@@ -40179,6 +41773,9 @@ ty_noun_in(english, weldment, none, unknown, weldment, regular).
 ty_noun_in(english, welfare, none, unknown, welfare, regular).
 ty_noun_in(english, welkin, none, unknown, welkin, regular).
 ty_noun_in(english, well, none, unknown, well, regular).
+ty_noun_in(english, 'well-being', none, unknown, 'well-being', regular).
+ty_noun_in(english, 'well-wisher', none, unknown, 'well-wisher', regular).
+ty_noun_in(english, 'well-wishing', none, unknown, 'well-wishing', regular).
 ty_noun_in(english, wellbeing, none, unknown, wellbeing, regular).
 ty_noun_in(english, wellerism, none, unknown, wellerism, regular).
 ty_noun_in(english, wellhead, none, unknown, wellhead, regular).
@@ -40200,6 +41797,7 @@ ty_noun_in(english, wester, none, unknown, wester, regular).
 ty_noun_in(english, western, none, unknown, western, regular).
 ty_noun_in(english, westerner, none, person, westerner, regular).
 ty_noun_in(english, wet, none, unknown, wet, regular).
+ty_noun_in(english, 'wet-nurse', none, unknown, 'wet-nurse', regular).
 ty_noun_in(english, wetback, none, unknown, wetback, regular).
 ty_noun_in(english, wether, none, unknown, wether, regular).
 ty_noun_in(english, wetland, none, unknown, wetland, regular).
@@ -40223,6 +41821,7 @@ ty_noun_in(english, whatnot, none, unknown, whatnot, regular).
 ty_noun_in(english, whatsis, none, unknown, whatsis, regular).
 ty_noun_in(english, wheal, none, unknown, wheal, regular).
 ty_noun_in(english, wheat, none, unknown, wheat, regular).
+ty_noun_in(english, 'wheat-grass', none, unknown, 'wheat-grass', regular).
 ty_noun_in(english, wheatear, none, unknown, wheatear, regular).
 ty_noun_in(english, wheatfield, none, unknown, wheatfield, regular).
 ty_noun_in(english, wheatflake, none, unknown, wheatflake, regular).
@@ -40264,9 +41863,13 @@ ty_noun_in(english, whine, none, unknown, whine, regular).
 ty_noun_in(english, whiner, none, unknown, whiner, regular).
 ty_noun_in(english, whinstone, none, unknown, whinstone, regular).
 ty_noun_in(english, whip, none, unknown, whip, regular).
+ty_noun_in(english, 'whip-round', none, unknown, 'whip-round', regular).
+ty_noun_in(english, 'whip-scorpion', none, unknown, 'whip-scorpion', regular).
+ty_noun_in(english, 'whip-snake', none, unknown, 'whip-snake', regular).
 ty_noun_in(english, whipcord, none, unknown, whipcord, regular).
 ty_noun_in(english, whiplash, none, unknown, whiplash, regular).
 ty_noun_in(english, whipper, none, unknown, whipper, regular).
+ty_noun_in(english, 'whipper-in', none, unknown, 'whipper-in', regular).
 ty_noun_in(english, whippersnapper, none, unknown, whippersnapper, regular).
 ty_noun_in(english, whippet, none, unknown, whippet, regular).
 ty_noun_in(english, whipping, none, unknown, whipping, regular).
@@ -40293,6 +41896,7 @@ ty_noun_in(english, whisper, none, unknown, whisper, regular).
 ty_noun_in(english, whisperer, none, unknown, whisperer, regular).
 ty_noun_in(english, whist, none, unknown, whist, regular).
 ty_noun_in(english, whistle, none, unknown, whistle, regular).
+ty_noun_in(english, 'whistle-blower', none, unknown, 'whistle-blower', regular).
 ty_noun_in(english, whistleblower, none, unknown, whistleblower, regular).
 ty_noun_in(english, whistler, none, unknown, whistler, regular).
 ty_noun_in(english, whistling, none, unknown, whistling, regular).
@@ -40323,7 +41927,9 @@ ty_noun_in(english, whitlowwort, none, unknown, whitlowwort, regular).
 ty_noun_in(english, whittle, none, unknown, whittle, regular).
 ty_noun_in(english, whittler, none, unknown, whittler, regular).
 ty_noun_in(english, whiz, none, person, whiz, regular).
+ty_noun_in(english, 'whiz-kid', none, unknown, 'whiz-kid', regular).
 ty_noun_in(english, whizbang, none, unknown, whizbang, regular).
+ty_noun_in(english, 'whizz-kid', none, unknown, 'whizz-kid', regular).
 ty_noun_in(english, whizzbang, none, unknown, whizzbang, regular).
 ty_noun_in(english, whodunit, none, unknown, whodunit, regular).
 ty_noun_in(english, whole, none, unknown, whole, regular).
@@ -40351,9 +41957,11 @@ ty_noun_in(english, wickedness, none, unknown, wickedness, regular).
 ty_noun_in(english, wicker, none, unknown, wicker, regular).
 ty_noun_in(english, wickerwork, none, unknown, wickerwork, regular).
 ty_noun_in(english, wicket, none, unknown, wicket, regular).
+ty_noun_in(english, 'wicket-keeper', none, unknown, 'wicket-keeper', regular).
 ty_noun_in(english, wickiup, none, unknown, wickiup, regular).
 ty_noun_in(english, wickup, none, unknown, wickup, regular).
 ty_noun_in(english, wicopy, none, unknown, wicopy, regular).
+ty_noun_in(english, 'wide-body', none, unknown, 'wide-body', regular).
 ty_noun_in(english, wideness, none, unknown, wideness, regular).
 ty_noun_in(english, widening, none, unknown, widening, regular).
 ty_noun_in(english, widgeon, none, unknown, widgeon, regular).
@@ -40394,6 +42002,7 @@ ty_noun_in(english, willies, none, unknown, willies, regular).
 ty_noun_in(english, willing, none, unknown, willing, regular).
 ty_noun_in(english, willingness, none, unknown, willingness, regular).
 ty_noun_in(english, willow, none, unknown, willow, regular).
+ty_noun_in(english, 'willow-pattern', none, unknown, 'willow-pattern', regular).
 ty_noun_in(english, willowherb, none, unknown, willowherb, regular).
 ty_noun_in(english, willowware, none, unknown, willowware, regular).
 ty_noun_in(english, willpower, none, unknown, willpower, regular).
@@ -40417,11 +42026,14 @@ ty_noun_in(english, windfall, none, unknown, windfall, regular).
 ty_noun_in(english, windflower, none, unknown, windflower, regular).
 ty_noun_in(english, windiness, none, unknown, windiness, regular).
 ty_noun_in(english, winding, none, unknown, winding, regular).
+ty_noun_in(english, 'winding-clothes', none, unknown, 'winding-clothes', regular).
+ty_noun_in(english, 'winding-sheet', none, unknown, 'winding-sheet', regular).
 ty_noun_in(english, windjammer, none, unknown, windjammer, regular).
 ty_noun_in(english, windlass, none, unknown, windlass, regular).
 ty_noun_in(english, windlessness, none, unknown, windlessness, regular).
 ty_noun_in(english, windmill, none, unknown, windmill, regular).
 ty_noun_in(english, window, none, unknown, window, regular).
+ty_noun_in(english, 'window-washing', none, unknown, 'window-washing', regular).
 ty_noun_in(english, windowpane, none, unknown, windowpane, regular).
 ty_noun_in(english, windowsill, none, unknown, windowsill, regular).
 ty_noun_in(english, windpipe, none, unknown, windpipe, regular).
@@ -40433,6 +42045,8 @@ ty_noun_in(english, windsurfing, none, unknown, windsurfing, regular).
 ty_noun_in(english, windtalker, none, person, windtalker, regular).
 ty_noun_in(english, windward, none, unknown, windward, regular).
 ty_noun_in(english, wine, none, unknown, wine, regular).
+ty_noun_in(english, 'wine-colored', none, unknown, 'wine-colored', regular).
+ty_noun_in(english, 'wine-coloured', none, unknown, 'wine-coloured', regular).
 ty_noun_in(english, wineberry, none, unknown, wineberry, regular).
 ty_noun_in(english, wineglass, none, unknown, wineglass, regular).
 ty_noun_in(english, winemaker, none, unknown, winemaker, regular).
@@ -40442,6 +42056,7 @@ ty_noun_in(english, winery, none, unknown, winery, regular).
 ty_noun_in(english, winesap, none, unknown, winesap, regular).
 ty_noun_in(english, wineskin, none, unknown, wineskin, regular).
 ty_noun_in(english, wing, none, unknown, wing, regular).
+ty_noun_in(english, 'wing-nut', none, unknown, 'wing-nut', regular).
 ty_noun_in(english, wingback, none, person, wingback, regular).
 ty_noun_in(english, winger, none, unknown, winger, regular).
 ty_noun_in(english, wingman, none, person, wingman, regular).
@@ -40466,6 +42081,7 @@ ty_noun_in(english, wintun, none, person, wintun, regular).
 ty_noun_in(english, wipeout, none, unknown, wipeout, regular).
 ty_noun_in(english, wiper, none, unknown, wiper, regular).
 ty_noun_in(english, wire, none, unknown, wire, regular).
+ty_noun_in(english, 'wire-puller', none, unknown, 'wire-puller', regular).
 ty_noun_in(english, wirehair, none, unknown, wirehair, regular).
 ty_noun_in(english, wireman, none, person, wireman, regular).
 ty_noun_in(english, wirer, none, person, wirer, regular).
@@ -40482,6 +42098,7 @@ ty_noun_in(english, wiseness, none, unknown, wiseness, regular).
 ty_noun_in(english, wisenheimer, none, person, wisenheimer, regular).
 ty_noun_in(english, wisent, none, unknown, wisent, regular).
 ty_noun_in(english, wish, none, unknown, wish, regular).
+ty_noun_in(english, 'wish-wash', none, unknown, 'wish-wash', regular).
 ty_noun_in(english, wishbone, none, unknown, wishbone, regular).
 ty_noun_in(english, wishfulness, none, unknown, wishfulness, regular).
 ty_noun_in(english, wishing, none, unknown, wishing, regular).
@@ -40491,6 +42108,8 @@ ty_noun_in(english, wisteria, none, unknown, wisteria, regular).
 ty_noun_in(english, wistfulness, none, unknown, wistfulness, regular).
 ty_noun_in(english, wit, none, unknown, wit, regular).
 ty_noun_in(english, witch, none, person, witch, regular).
+ty_noun_in(english, 'witch-hunt', none, unknown, 'witch-hunt', regular).
+ty_noun_in(english, 'witch-hunter', none, unknown, 'witch-hunter', regular).
 ty_noun_in(english, witchcraft, none, unknown, witchcraft, regular).
 ty_noun_in(english, witchery, none, unknown, witchery, regular).
 ty_noun_in(english, witchgrass, none, unknown, witchgrass, regular).
@@ -40529,6 +42148,7 @@ ty_noun_in(english, wolframite, none, unknown, wolframite, regular).
 ty_noun_in(english, wolfsbane, none, unknown, wolfsbane, regular).
 ty_noun_in(english, wollastonite, none, unknown, wollastonite, regular).
 ty_noun_in(english, wolverine, none, unknown, wolverine, regular).
+ty_noun_in(english, 'woman-worship', none, unknown, 'woman-worship', regular).
 ty_noun_in(english, womanhood, none, unknown, womanhood, regular).
 ty_noun_in(english, womaniser, none, unknown, womaniser, regular).
 ty_noun_in(english, womanishness, none, unknown, womanishness, regular).
@@ -40547,6 +42167,10 @@ ty_noun_in(english, wonk, none, unknown, wonk, regular).
 ty_noun_in(english, wont, none, unknown, wont, regular).
 ty_noun_in(english, wonton, none, unknown, wonton, regular).
 ty_noun_in(english, wood, none, unknown, wood, regular).
+ty_noun_in(english, 'wood-creeper', none, unknown, 'wood-creeper', regular).
+ty_noun_in(english, 'wood-fern', none, unknown, 'wood-fern', regular).
+ty_noun_in(english, 'wood-frog', none, unknown, 'wood-frog', regular).
+ty_noun_in(english, 'wood-rat', none, unknown, 'wood-rat', regular).
 ty_noun_in(english, woodbine, none, unknown, woodbine, regular).
 ty_noun_in(english, woodborer, none, unknown, woodborer, regular).
 ty_noun_in(english, woodcarver, none, person, woodcarver, regular).
@@ -40592,6 +42216,10 @@ ty_noun_in(english, woolgatherer, none, unknown, woolgatherer, regular).
 ty_noun_in(english, woolsorter, none, unknown, woolsorter, regular).
 ty_noun_in(english, wop, none, unknown, wop, regular).
 ty_noun_in(english, word, none, unknown, word, regular).
+ty_noun_in(english, 'word-painter', none, unknown, 'word-painter', regular).
+ty_noun_in(english, 'word-painting', none, unknown, 'word-painting', regular).
+ty_noun_in(english, 'word-splitting', none, unknown, 'word-splitting', regular).
+ty_noun_in(english, 'word-worship', none, unknown, 'word-worship', regular).
 ty_noun_in(english, wordbook, none, unknown, wordbook, regular).
 ty_noun_in(english, wordfinder, none, unknown, wordfinder, regular).
 ty_noun_in(english, wordiness, none, unknown, wordiness, regular).
@@ -40603,6 +42231,11 @@ ty_noun_in(english, words, none, unknown, words, regular).
 ty_noun_in(english, wordsmith, none, unknown, wordsmith, regular).
 ty_noun_in(english, wordsworth, none, unknown, wordsworth, regular).
 ty_noun_in(english, work, none, unknown, work, regular).
+ty_noun_in(english, 'work-board', none, unknown, 'work-board', regular).
+ty_noun_in(english, 'work-clothes', none, unknown, 'work-clothes', regular).
+ty_noun_in(english, 'work-clothing', none, unknown, 'work-clothing', regular).
+ty_noun_in(english, 'work-in', none, unknown, 'work-in', regular).
+ty_noun_in(english, 'work-shirt', none, unknown, 'work-shirt', regular).
 ty_noun_in(english, workaholic, none, person, workaholic, regular).
 ty_noun_in(english, workaholism, none, unknown, workaholism, regular).
 ty_noun_in(english, workbag, none, unknown, workbag, regular).
@@ -40637,6 +42270,8 @@ ty_noun_in(english, worktable, none, unknown, worktable, regular).
 ty_noun_in(english, workwear, none, unknown, workwear, regular).
 ty_noun_in(english, workweek, none, unknown, workweek, regular).
 ty_noun_in(english, world, none, unknown, world, regular).
+ty_noun_in(english, 'world-beater', none, unknown, 'world-beater', regular).
+ty_noun_in(english, 'world-weariness', none, unknown, 'world-weariness', regular).
 ty_noun_in(english, worldliness, none, unknown, worldliness, regular).
 ty_noun_in(english, worldling, none, unknown, worldling, regular).
 ty_noun_in(english, worm, none, animate, worm, regular).
@@ -40681,6 +42316,7 @@ ty_noun_in(english, wreckage, none, unknown, wreckage, regular).
 ty_noun_in(english, wrecker, none, unknown, wrecker, regular).
 ty_noun_in(english, wreckfish, none, unknown, wreckfish, regular).
 ty_noun_in(english, wren, none, unknown, wren, regular).
+ty_noun_in(english, 'wren-tit', none, unknown, 'wren-tit', regular).
 ty_noun_in(english, wrester, none, unknown, wrester, regular).
 ty_noun_in(english, wrestler, none, person, wrestler, regular).
 ty_noun_in(english, wrestling, none, unknown, wrestling, regular).
@@ -40696,6 +42332,9 @@ ty_noun_in(english, wristband, none, unknown, wristband, regular).
 ty_noun_in(english, wristlet, none, unknown, wristlet, regular).
 ty_noun_in(english, wristwatch, none, unknown, wristwatch, regular).
 ty_noun_in(english, writ, none, unknown, writ, regular).
+ty_noun_in(english, 'write-down', none, unknown, 'write-down', regular).
+ty_noun_in(english, 'write-in', none, unknown, 'write-in', regular).
+ty_noun_in(english, 'write-off', none, unknown, 'write-off', regular).
 ty_noun_in(english, writer, none, person, writer, regular).
 ty_noun_in(english, writing, none, unknown, writing, regular).
 ty_noun_in(english, writings, none, unknown, writings, regular).
@@ -40713,6 +42352,8 @@ ty_noun_in(english, www, none, unknown, www, regular).
 ty_noun_in(english, wyoming, none, unknown, wyoming, regular).
 ty_noun_in(english, wyrd, none, person, wyrd, regular).
 ty_noun_in(english, wyvern, none, unknown, wyvern, regular).
+ty_noun_in(english, 'x-axis', none, unknown, 'x-axis', regular).
+ty_noun_in(english, 'x-ray', none, unknown, 'x-ray', regular).
 ty_noun_in(english, xanthate, none, unknown, xanthate, regular).
 ty_noun_in(english, xanthelasma, none, unknown, xanthelasma, regular).
 ty_noun_in(english, xanthemia, none, unknown, xanthemia, regular).
@@ -40763,6 +42404,7 @@ ty_noun_in(english, xylophonist, none, person, xylophonist, regular).
 ty_noun_in(english, xylose, none, unknown, xylose, regular).
 ty_noun_in(english, xylosma, none, unknown, xylosma, regular).
 ty_noun_in(english, xyridales, none, unknown, xyridales, regular).
+ty_noun_in(english, 'y-axis', none, unknown, 'y-axis', regular).
 ty_noun_in(english, yacca, none, unknown, yacca, regular).
 ty_noun_in(english, yacht, none, unknown, yacht, regular).
 ty_noun_in(english, yachtsman, none, unknown, yachtsman, regular).
@@ -40771,6 +42413,7 @@ ty_noun_in(english, yack, none, unknown, yack, regular).
 ty_noun_in(english, yagi, none, unknown, yagi, regular).
 ty_noun_in(english, yahoo, none, unknown, yahoo, regular).
 ty_noun_in(english, yak, none, unknown, yak, regular).
+ty_noun_in(english, 'yakety-yak', none, unknown, 'yakety-yak', regular).
 ty_noun_in(english, yakuza, none, person, yakuza, regular).
 ty_noun_in(english, yale, none, unknown, yale, regular).
 ty_noun_in(english, yam, none, unknown, yam, regular).
@@ -40807,6 +42450,7 @@ ty_noun_in(english, yaws, none, unknown, yaws, regular).
 ty_noun_in(english, ybit, none, unknown, ybit, regular).
 ty_noun_in(english, yea, none, unknown, yea, regular).
 ty_noun_in(english, year, none, unknown, year, regular).
+ty_noun_in(english, 'year-end', none, unknown, 'year-end', regular).
 ty_noun_in(english, yearbook, none, unknown, yearbook, regular).
 ty_noun_in(english, yearling, none, unknown, yearling, regular).
 ty_noun_in(english, yearner, none, unknown, yearner, regular).
@@ -40817,6 +42461,7 @@ ty_noun_in(english, yell, none, unknown, yell, regular).
 ty_noun_in(english, yeller, none, unknown, yeller, regular).
 ty_noun_in(english, yelling, none, unknown, yelling, regular).
 ty_noun_in(english, yellow, none, unknown, yellow, regular).
+ty_noun_in(english, 'yellow-blindness', none, unknown, 'yellow-blindness', regular).
 ty_noun_in(english, yellowbird, none, unknown, yellowbird, regular).
 ty_noun_in(english, yellowcake, none, unknown, yellowcake, regular).
 ty_noun_in(english, yellowfin, none, unknown, yellowfin, regular).
@@ -40832,6 +42477,7 @@ ty_noun_in(english, yen, none, unknown, yen, regular).
 ty_noun_in(english, yenta, none, unknown, yenta, regular).
 ty_noun_in(english, yeoman, none, unknown, yeoman, regular).
 ty_noun_in(english, yeomanry, none, unknown, yeomanry, regular).
+ty_noun_in(english, 'yes-man', none, unknown, 'yes-man', regular).
 ty_noun_in(english, yeshiva, none, unknown, yeshiva, regular).
 ty_noun_in(english, yesterday, none, unknown, yesterday, regular).
 ty_noun_in(english, yesteryear, none, unknown, yesteryear, regular).
@@ -40841,7 +42487,9 @@ ty_noun_in(english, yid, none, unknown, yid, regular).
 ty_noun_in(english, yield, none, unknown, yield, regular).
 ty_noun_in(english, yielder, none, person, yielder, regular).
 ty_noun_in(english, yin, none, unknown, yin, regular).
+ty_noun_in(english, 'ylang-ylang', none, unknown, 'ylang-ylang', regular).
 ty_noun_in(english, ylem, none, unknown, ylem, regular).
+ty_noun_in(english, 'yo-yo', none, unknown, 'yo-yo', regular).
 ty_noun_in(english, yob, none, unknown, yob, regular).
 ty_noun_in(english, yobbo, none, unknown, yobbo, regular).
 ty_noun_in(english, yobibit, none, unknown, yobibit, regular).
@@ -40862,11 +42510,13 @@ ty_noun_in(english, yolk, none, unknown, yolk, regular).
 ty_noun_in(english, yore, none, unknown, yore, regular).
 ty_noun_in(english, yottabit, none, unknown, yottabit, regular).
 ty_noun_in(english, yottabyte, none, unknown, yottabyte, regular).
+ty_noun_in(english, 'you-drive', none, unknown, 'you-drive', regular).
 ty_noun_in(english, young, none, unknown, young, regular).
 ty_noun_in(english, youngness, none, unknown, youngness, regular).
 ty_noun_in(english, youngster, none, person, youngster, regular).
 ty_noun_in(english, younker, none, unknown, younker, regular).
 ty_noun_in(english, youth, none, person, youth, regular).
+ty_noun_in(english, 'youth-on-age', none, unknown, 'youth-on-age', regular).
 ty_noun_in(english, youthfulness, none, unknown, youthfulness, regular).
 ty_noun_in(english, yowl, none, unknown, yowl, regular).
 ty_noun_in(english, yquem, none, unknown, yquem, regular).
@@ -40881,6 +42531,7 @@ ty_noun_in(english, yugoslavia, none, unknown, yugoslavia, regular).
 ty_noun_in(english, yugoslavian, none, unknown, yugoslavian, regular).
 ty_noun_in(english, yuppie, none, unknown, yuppie, regular).
 ty_noun_in(english, yurt, none, unknown, yurt, regular).
+ty_noun_in(english, 'z-axis', none, unknown, 'z-axis', regular).
 ty_noun_in(english, zabaglione, none, unknown, zabaglione, regular).
 ty_noun_in(english, zag, none, unknown, zag, regular).
 ty_noun_in(english, zaire, none, unknown, zaire, regular).

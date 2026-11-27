@@ -1517,6 +1517,7 @@ ty_verb_in(english, abolish, abolish, regular).
 ty_verb_in(english, abominate, abominate, regular).
 ty_verb_in(english, abort, abort, regular).
 ty_verb_in(english, abound, abound, regular).
+ty_verb_in(english, 'about-face', 'about-face', regular).
 ty_verb_in(english, abrase, abrase, regular).
 ty_verb_in(english, abreact, abreact, regular).
 ty_verb_in(english, abridge, abridge, regular).
@@ -1570,6 +1571,7 @@ ty_verb_in(english, ache, ache, regular).
 ty_verb_in(english, achieve, achieve, regular).
 ty_verb_in(english, achromatise, achromatise, regular).
 ty_verb_in(english, achromatize, achromatize, regular).
+ty_verb_in(english, 'acid-wash', 'acid-wash', regular).
 ty_verb_in(english, acidify, acidify, regular).
 ty_verb_in(english, acidulate, acidulate, regular).
 ty_verb_in(english, acknowledge, acknowledge, regular).
@@ -1581,6 +1583,7 @@ ty_verb_in(english, activate, activate, regular).
 ty_verb_in(english, actualise, actualise, regular).
 ty_verb_in(english, actualize, actualize, regular).
 ty_verb_in(english, actuate, actuate, regular).
+ty_verb_in(english, 'ad-lib', 'ad-lib', regular).
 ty_verb_in(english, adapt, adapt, regular).
 ty_verb_in(english, add, add, regular).
 ty_verb_in(english, addict, addict, regular).
@@ -1655,6 +1658,12 @@ ty_verb_in(english, aid, aid, regular).
 ty_verb_in(english, ail, ail, regular).
 ty_verb_in(english, aim, aim, regular).
 ty_verb_in(english, air, air, regular).
+ty_verb_in(english, 'air-condition', 'air-condition', regular).
+ty_verb_in(english, 'air-cool', 'air-cool', regular).
+ty_verb_in(english, 'air-drop', 'air-drop', regular).
+ty_verb_in(english, 'air-freight', 'air-freight', regular).
+ty_verb_in(english, 'air-ship', 'air-ship', regular).
+ty_verb_in(english, 'air-slake', 'air-slake', regular).
 ty_verb_in(english, airbrush, airbrush, regular).
 ty_verb_in(english, airfreight, airfreight, regular).
 ty_verb_in(english, airlift, airlift, regular).
@@ -1739,6 +1748,7 @@ ty_verb_in(english, anesthetise, anesthetise, regular).
 ty_verb_in(english, anesthetize, anesthetize, regular).
 ty_verb_in(english, anger, anger, regular).
 ty_verb_in(english, angle, angle, regular).
+ty_verb_in(english, 'angle-park', 'angle-park', regular).
 ty_verb_in(english, anglicise, anglicise, regular).
 ty_verb_in(english, anglicize, anglicize, regular).
 ty_verb_in(english, animadvert, animadvert, regular).
@@ -1864,6 +1874,7 @@ ty_verb_in(english, astonish, astonish, regular).
 ty_verb_in(english, astound, astound, regular).
 ty_verb_in(english, astringe, astringe, regular).
 ty_verb_in(english, astrogate, astrogate, regular).
+ty_verb_in(english, 'atom-bomb', 'atom-bomb', regular).
 ty_verb_in(english, atomise, atomise, regular).
 ty_verb_in(english, atomize, atomize, regular).
 ty_verb_in(english, atone, atone, regular).
@@ -1920,6 +1931,7 @@ ty_verb_in(english, awe, awe, regular).
 ty_verb_in(english, baa, baa, regular).
 ty_verb_in(english, babbitt, babbitt, regular).
 ty_verb_in(english, babble, babble, regular).
+ty_verb_in(english, 'baby-sit', 'baby-sit', regular).
 ty_verb_in(english, bach, bach, regular).
 ty_verb_in(english, back, back, regular).
 ty_verb_in(english, backbite, backbite, regular).
@@ -2013,6 +2025,7 @@ ty_verb_in(english, becharm, becharm, regular).
 ty_verb_in(english, beckon, beckon, regular).
 ty_verb_in(english, becloud, becloud, regular).
 ty_verb_in(english, bed, bed, double).
+ty_verb_in(english, 'bed-hop', 'bed-hop', regular).
 ty_verb_in(english, bedamn, bedamn, regular).
 ty_verb_in(english, bedaub, bedaub, regular).
 ty_verb_in(english, bedaze, bedaze, regular).
@@ -2051,6 +2064,8 @@ ty_verb_in(english, belie, belie, regular).
 ty_verb_in(english, believe, believe, regular).
 ty_verb_in(english, belittle, belittle, regular).
 ty_verb_in(english, bellow, bellow, regular).
+ty_verb_in(english, 'belly-flop', 'belly-flop', regular).
+ty_verb_in(english, 'belly-land', 'belly-land', regular).
 ty_verb_in(english, bellyache, bellyache, regular).
 ty_verb_in(english, bellylaugh, bellylaugh, regular).
 ty_verb_in(english, belong, belong, regular).
@@ -2119,6 +2134,7 @@ ty_verb_in(english, billet, billet, regular).
 ty_verb_in(english, billow, billow, regular).
 ty_verb_in(english, binge, binge, regular).
 ty_verb_in(english, biodegrade, biodegrade, regular).
+ty_verb_in(english, 'bird-nest', 'bird-nest', regular).
 ty_verb_in(english, birdie, birdie, regular).
 ty_verb_in(english, birdlime, birdlime, regular).
 ty_verb_in(english, birdnest, birdnest, regular).
@@ -2175,8 +2191,10 @@ ty_verb_in(english, blog, blog, double).
 ty_verb_in(english, bloom, bloom, regular).
 ty_verb_in(english, blossom, blossom, regular).
 ty_verb_in(english, bloviate, bloviate, regular).
+ty_verb_in(english, 'blow-dry', 'blow-dry', regular).
 ty_verb_in(english, blub, blub, double).
 ty_verb_in(english, blubber, blubber, regular).
+ty_verb_in(english, 'blue-pencil', 'blue-pencil', regular).
 ty_verb_in(english, blueprint, blueprint, regular).
 ty_verb_in(english, blunder, blunder, regular).
 ty_verb_in(english, blunt, blunt, regular).
@@ -2186,10 +2204,12 @@ ty_verb_in(english, blush, blush, regular).
 ty_verb_in(english, bluster, bluster, regular).
 ty_verb_in(english, board, board, regular).
 ty_verb_in(english, boast, boast, regular).
+ty_verb_in(english, 'boat-race', 'boat-race', regular).
 ty_verb_in(english, bob, bob, double).
 ty_verb_in(english, bobble, bobble, regular).
 ty_verb_in(english, bode, bode, regular).
 ty_verb_in(english, bodge, bodge, regular).
+ty_verb_in(english, 'body-surf', 'body-surf', regular).
 ty_verb_in(english, bodypaint, bodypaint, regular).
 ty_verb_in(english, bog, bog, double).
 ty_verb_in(english, bogey, bogey, regular).
@@ -2261,6 +2281,7 @@ ty_verb_in(english, brawl, brawl, regular).
 ty_verb_in(english, bray, bray, regular).
 ty_verb_in(english, braze, braze, regular).
 ty_verb_in(english, breach, breach, regular).
+ty_verb_in(english, 'break-dance', 'break-dance', regular).
 ty_verb_in(english, breakfast, breakfast, regular).
 ty_verb_in(english, bream, bream, regular).
 ty_verb_in(english, breastfeed, breastfeed, regular).
@@ -2291,6 +2312,7 @@ ty_verb_in(english, brood, brood, regular).
 ty_verb_in(english, brook, brook, regular).
 ty_verb_in(english, browbeat, browbeat, regular).
 ty_verb_in(english, brown, brown, regular).
+ty_verb_in(english, 'brown-nose', 'brown-nose', regular).
 ty_verb_in(english, browse, browse, regular).
 ty_verb_in(english, bruise, bruise, regular).
 ty_verb_in(english, bruised, bruised, regular).
@@ -2351,13 +2373,16 @@ ty_verb_in(english, bustle, bustle, regular).
 ty_verb_in(english, busy, busy, regular).
 ty_verb_in(english, butcher, butcher, regular).
 ty_verb_in(english, butt, butt, regular).
+ty_verb_in(english, 'butt-weld', 'butt-weld', regular).
 ty_verb_in(english, butterfly, butterfly, regular).
 ty_verb_in(english, buttonhole, buttonhole, regular).
 ty_verb_in(english, buttress, buttress, regular).
 ty_verb_in(english, buttweld, buttweld, regular).
 ty_verb_in(english, butylate, butylate, regular).
 ty_verb_in(english, buzz, buzz, regular).
+ty_verb_in(english, 'by-bid', 'by-bid', regular).
 ty_verb_in(english, bypass, bypass, regular).
+ty_verb_in(english, 'ca-ca', 'ca-ca', regular).
 ty_verb_in(english, cabal, cabal, regular).
 ty_verb_in(english, cable, cable, regular).
 ty_verb_in(english, cachinnate, cachinnate, regular).
@@ -2506,10 +2531,12 @@ ty_verb_in(english, centrifuge, centrifuge, regular).
 ty_verb_in(english, cere, cere, regular).
 ty_verb_in(english, cerebrate, cerebrate, regular).
 ty_verb_in(english, certify, certify, regular).
+ty_verb_in(english, 'cha-cha', 'cha-cha', regular).
 ty_verb_in(english, chafe, chafe, regular).
 ty_verb_in(english, chaff, chaff, regular).
 ty_verb_in(english, chaffer, chaffer, regular).
 ty_verb_in(english, chain, chain, regular).
+ty_verb_in(english, 'chain-smoke', 'chain-smoke', regular).
 ty_verb_in(english, chair, chair, regular).
 ty_verb_in(english, chalk, chalk, regular).
 ty_verb_in(english, challenge, challenge, regular).
@@ -2520,6 +2547,7 @@ ty_verb_in(english, chance, chance, regular).
 ty_verb_in(english, chandelle, chandelle, regular).
 ty_verb_in(english, change, change, regular).
 ty_verb_in(english, channel, channel, regular).
+ty_verb_in(english, 'channel-surf', 'channel-surf', regular).
 ty_verb_in(english, channelise, channelise, regular).
 ty_verb_in(english, channelize, channelize, regular).
 ty_verb_in(english, chant, chant, regular).
@@ -2555,8 +2583,10 @@ ty_verb_in(english, chevvy, chevvy, regular).
 ty_verb_in(english, chevy, chevy, regular).
 ty_verb_in(english, chew, chew, regular).
 ty_verb_in(english, chicane, chicane, regular).
+ty_verb_in(english, 'chicken-fight', 'chicken-fight', regular).
 ty_verb_in(english, chickenfight, chickenfight, regular).
 ty_verb_in(english, chide, chide, regular).
+ty_verb_in(english, 'child-proof', 'child-proof', regular).
 ty_verb_in(english, childproof, childproof, regular).
 ty_verb_in(english, chill, chill, regular).
 ty_verb_in(english, chime, chime, regular).
@@ -2569,6 +2599,7 @@ ty_verb_in(english, chiromance, chiromance, regular).
 ty_verb_in(english, chirp, chirp, regular).
 ty_verb_in(english, chirr, chirr, regular).
 ty_verb_in(english, chirrup, chirrup, regular).
+ty_verb_in(english, 'chit-chat', 'chit-chat', regular).
 ty_verb_in(english, chitchat, chitchat, regular).
 ty_verb_in(english, chitter, chitter, regular).
 ty_verb_in(english, chivvy, chivvy, regular).
@@ -2583,6 +2614,7 @@ ty_verb_in(english, chortle, chortle, regular).
 ty_verb_in(english, chorus, chorus, regular).
 ty_verb_in(english, chouse, chouse, regular).
 ty_verb_in(english, christen, christen, regular).
+ty_verb_in(english, 'chromium-plate', 'chromium-plate', regular).
 ty_verb_in(english, chronicle, chronicle, regular).
 ty_verb_in(english, chronologise, chronologise, regular).
 ty_verb_in(english, chronologize, chronologize, regular).
@@ -2641,6 +2673,7 @@ ty_verb_in(english, claw, claw, regular).
 ty_verb_in(english, clean, clean, regular).
 ty_verb_in(english, cleanse, cleanse, regular).
 ty_verb_in(english, clear, clear, regular).
+ty_verb_in(english, 'clear-cut', 'clear-cut', regular).
 ty_verb_in(english, cleave, cleave, regular).
 ty_verb_in(english, clench, clench, regular).
 ty_verb_in(english, clew, clew, regular).
@@ -2670,7 +2703,14 @@ ty_verb_in(english, clunk, clunk, regular).
 ty_verb_in(english, cluster, cluster, regular).
 ty_verb_in(english, clutch, clutch, regular).
 ty_verb_in(english, clutter, clutter, regular).
+ty_verb_in(english, 'co-author', 'co-author', regular).
+ty_verb_in(english, 'co-educate', 'co-educate', regular).
+ty_verb_in(english, 'co-occur', 'co-occur', regular).
+ty_verb_in(english, 'co-opt', 'co-opt', regular).
 ty_verb_in(english, 'co-present', 'co-present', regular).
+ty_verb_in(english, 'co-sign', 'co-sign', regular).
+ty_verb_in(english, 'co-star', 'co-star', regular).
+ty_verb_in(english, 'co-vary', 'co-vary', regular).
 ty_verb_in(english, coach, coach, regular).
 ty_verb_in(english, coact, coact, regular).
 ty_verb_in(english, coagulate, coagulate, regular).
@@ -2709,6 +2749,8 @@ ty_verb_in(english, coin, coin, regular).
 ty_verb_in(english, coincide, coincide, regular).
 ty_verb_in(english, coinsure, coinsure, regular).
 ty_verb_in(english, coke, coke, regular).
+ty_verb_in(english, 'cold-cream', 'cold-cream', regular).
+ty_verb_in(english, 'cold-shoulder', 'cold-shoulder', regular).
 ty_verb_in(english, coldcock, coldcock, regular).
 ty_verb_in(english, coldwork, coldwork, regular).
 ty_verb_in(english, collaborate, collaborate, regular).
@@ -2766,6 +2808,7 @@ ty_verb_in(english, commutate, commutate, regular).
 ty_verb_in(english, commute, commute, regular).
 ty_verb_in(english, compact, compact, regular).
 ty_verb_in(english, compare, compare, regular).
+ty_verb_in(english, 'comparison-shop', 'comparison-shop', regular).
 ty_verb_in(english, compart, compart, regular).
 ty_verb_in(english, compartmentalise, compartmentalise, regular).
 ty_verb_in(english, compartmentalize, compartmentalize, regular).
@@ -2935,6 +2978,7 @@ ty_verb_in(english, coordinate, coordinate, regular).
 ty_verb_in(english, cope, cope, regular).
 ty_verb_in(english, copolymerise, copolymerise, regular).
 ty_verb_in(english, copolymerize, copolymerize, regular).
+ty_verb_in(english, 'copper-bottom', 'copper-bottom', regular).
 ty_verb_in(english, copulate, copulate, regular).
 ty_verb_in(english, copy, copy, regular).
 ty_verb_in(english, copyedit, copyedit, regular).
@@ -2964,6 +3008,7 @@ ty_verb_in(english, cough, cough, regular).
 ty_verb_in(english, counsel, counsel, regular).
 ty_verb_in(english, count, count, regular).
 ty_verb_in(english, counter, counter, regular).
+ty_verb_in(english, 'counter-drill', 'counter-drill', regular).
 ty_verb_in(english, counteract, counteract, regular).
 ty_verb_in(english, counterattack, counterattack, regular).
 ty_verb_in(english, counterbalance, counterbalance, regular).
@@ -2983,8 +3028,10 @@ ty_verb_in(english, countersink, countersink, regular).
 ty_verb_in(english, counterstrike, counterstrike, regular).
 ty_verb_in(english, countervail, countervail, regular).
 ty_verb_in(english, counterweight, counterweight, regular).
+ty_verb_in(english, 'country-dance', 'country-dance', regular).
 ty_verb_in(english, couple, couple, regular).
 ty_verb_in(english, court, court, regular).
+ty_verb_in(english, 'court-martial', 'court-martial', regular).
 ty_verb_in(english, covenant, covenant, regular).
 ty_verb_in(english, cover, cover, regular).
 ty_verb_in(english, covet, covet, regular).
@@ -3001,6 +3048,7 @@ ty_verb_in(english, crane, crane, regular).
 ty_verb_in(english, crap, crap, double).
 ty_verb_in(english, crape, crape, regular).
 ty_verb_in(english, crash, crash, regular).
+ty_verb_in(english, 'crash-dive', 'crash-dive', regular).
 ty_verb_in(english, craunch, craunch, regular).
 ty_verb_in(english, crave, crave, regular).
 ty_verb_in(english, crawl, crawl, regular).
@@ -3038,6 +3086,15 @@ ty_verb_in(english, croon, croon, regular).
 ty_verb_in(english, crop, crop, double).
 ty_verb_in(english, croquet, croquet, regular).
 ty_verb_in(english, cross, cross, regular).
+ty_verb_in(english, 'cross-check', 'cross-check', regular).
+ty_verb_in(english, 'cross-dress', 'cross-dress', regular).
+ty_verb_in(english, 'cross-fertilise', 'cross-fertilise', regular).
+ty_verb_in(english, 'cross-fertilize', 'cross-fertilize', regular).
+ty_verb_in(english, 'cross-file', 'cross-file', regular).
+ty_verb_in(english, 'cross-index', 'cross-index', regular).
+ty_verb_in(english, 'cross-link', 'cross-link', regular).
+ty_verb_in(english, 'cross-pollinate', 'cross-pollinate', regular).
+ty_verb_in(english, 'cross-refer', 'cross-refer', regular).
 ty_verb_in(english, crossbreed, crossbreed, regular).
 ty_verb_in(english, crosscut, crosscut, regular).
 ty_verb_in(english, crosshatch, crosshatch, regular).
@@ -3086,6 +3143,7 @@ ty_verb_in(english, curve, curve, regular).
 ty_verb_in(english, curvet, curvet, regular).
 ty_verb_in(english, cushion, cushion, regular).
 ty_verb_in(english, cuss, cuss, regular).
+ty_verb_in(english, 'custom-make', 'custom-make', regular).
 ty_verb_in(english, customise, customise, regular).
 ty_verb_in(english, customize, customize, regular).
 ty_verb_in(english, cutinize, cutinize, regular).
@@ -3095,6 +3153,7 @@ ty_verb_in(english, cyclostyle, cyclostyle, regular).
 ty_verb_in(english, cypher, cypher, double).
 ty_verb_in(english, dab, dab, double).
 ty_verb_in(english, dabble, dabble, regular).
+ty_verb_in(english, 'daisy-chain', 'daisy-chain', regular).
 ty_verb_in(english, dally, dally, regular).
 ty_verb_in(english, dam, dam, double).
 ty_verb_in(english, damage, damage, regular).
@@ -3111,6 +3170,7 @@ ty_verb_in(english, darn, darn, regular).
 ty_verb_in(english, dart, dart, regular).
 ty_verb_in(english, dash, dash, regular).
 ty_verb_in(english, date, date, regular).
+ty_verb_in(english, 'date-mark', 'date-mark', regular).
 ty_verb_in(english, dateline, dateline, regular).
 ty_verb_in(english, datemark, datemark, regular).
 ty_verb_in(english, daub, daub, regular).
@@ -3120,6 +3180,16 @@ ty_verb_in(english, dawn, dawn, regular).
 ty_verb_in(english, daydream, daydream, regular).
 ty_verb_in(english, daze, daze, regular).
 ty_verb_in(english, dazzle, dazzle, regular).
+ty_verb_in(english, 'de-access', 'de-access', regular).
+ty_verb_in(english, 'de-aerate', 'de-aerate', regular).
+ty_verb_in(english, 'de-emphasise', 'de-emphasise', regular).
+ty_verb_in(english, 'de-emphasize', 'de-emphasize', regular).
+ty_verb_in(english, 'de-energise', 'de-energise', regular).
+ty_verb_in(english, 'de-energize', 'de-energize', regular).
+ty_verb_in(english, 'de-escalate', 'de-escalate', regular).
+ty_verb_in(english, 'de-ice', 'de-ice', regular).
+ty_verb_in(english, 'de-iodinate', 'de-iodinate', regular).
+ty_verb_in(english, 'de-ionate', 'de-ionate', regular).
 ty_verb_in(english, deaccession, deaccession, regular).
 ty_verb_in(english, deactivate, deactivate, regular).
 ty_verb_in(english, deaden, deaden, regular).
@@ -3207,6 +3277,10 @@ ty_verb_in(english, dedifferentiate, dedifferentiate, regular).
 ty_verb_in(english, deduce, deduce, regular).
 ty_verb_in(english, deduct, deduct, regular).
 ty_verb_in(english, deem, deem, regular).
+ty_verb_in(english, 'deep-dye', 'deep-dye', regular).
+ty_verb_in(english, 'deep-fat-fry', 'deep-fat-fry', regular).
+ty_verb_in(english, 'deep-fry', 'deep-fry', regular).
+ty_verb_in(english, 'deep-six', 'deep-six', regular).
 ty_verb_in(english, deepen, deepen, regular).
 ty_verb_in(english, deface, deface, regular).
 ty_verb_in(english, defalcate, defalcate, regular).
@@ -3483,6 +3557,7 @@ ty_verb_in(english, dignify, dignify, regular).
 ty_verb_in(english, digress, digress, regular).
 ty_verb_in(english, dilapidate, dilapidate, regular).
 ty_verb_in(english, dilate, dilate, regular).
+ty_verb_in(english, 'dilly-dally', 'dilly-dally', regular).
 ty_verb_in(english, dillydally, dillydally, regular).
 ty_verb_in(english, dilute, dilute, regular).
 ty_verb_in(english, dim, dim, double).
@@ -3520,6 +3595,7 @@ ty_verb_in(english, disbelieve, disbelieve, regular).
 ty_verb_in(english, disbud, disbud, regular).
 ty_verb_in(english, disburden, disburden, regular).
 ty_verb_in(english, disburse, disburse, regular).
+ty_verb_in(english, 'disc-jockey', 'disc-jockey', regular).
 ty_verb_in(english, discard, discard, regular).
 ty_verb_in(english, discase, discase, regular).
 ty_verb_in(english, discern, discern, regular).
@@ -3590,6 +3666,7 @@ ty_verb_in(english, disinvest, disinvest, regular).
 ty_verb_in(english, disinvolve, disinvolve, regular).
 ty_verb_in(english, disjoin, disjoin, regular).
 ty_verb_in(english, disk, disk, regular).
+ty_verb_in(english, 'disk-jockey', 'disk-jockey', regular).
 ty_verb_in(english, dislike, dislike, regular).
 ty_verb_in(english, dislocate, dislocate, regular).
 ty_verb_in(english, dislodge, dislodge, regular).
@@ -3661,6 +3738,7 @@ ty_verb_in(english, ditto, ditto, regular).
 ty_verb_in(english, divagate, divagate, regular).
 ty_verb_in(english, divaricate, divaricate, regular).
 ty_verb_in(english, dive, dive, regular).
+ty_verb_in(english, 'dive-bomb', 'dive-bomb', regular).
 ty_verb_in(english, diverge, diverge, regular).
 ty_verb_in(english, diversify, diversify, regular).
 ty_verb_in(english, divert, divert, regular).
@@ -3695,6 +3773,12 @@ ty_verb_in(english, dope, dope, regular).
 ty_verb_in(english, dose, dose, regular).
 ty_verb_in(english, dot, dot, double).
 ty_verb_in(english, double, double, regular).
+ty_verb_in(english, 'double-check', 'double-check', regular).
+ty_verb_in(english, 'double-date', 'double-date', regular).
+ty_verb_in(english, 'double-glaze', 'double-glaze', regular).
+ty_verb_in(english, 'double-park', 'double-park', regular).
+ty_verb_in(english, 'double-space', 'double-space', regular).
+ty_verb_in(english, 'double-team', 'double-team', regular).
 ty_verb_in(english, doubt, doubt, regular).
 ty_verb_in(english, douche, douche, regular).
 ty_verb_in(english, douse, douse, regular).
@@ -3723,10 +3807,12 @@ ty_verb_in(english, dribble, dribble, regular).
 ty_verb_in(english, drift, drift, regular).
 ty_verb_in(english, drill, drill, regular).
 ty_verb_in(english, drip, drip, double).
+ty_verb_in(english, 'drip-dry', 'drip-dry', regular).
 ty_verb_in(english, drivel, drivel, regular).
 ty_verb_in(english, drool, drool, regular).
 ty_verb_in(english, droop, droop, regular).
 ty_verb_in(english, drop, drop, double).
+ty_verb_in(english, 'drop-kick', 'drop-kick', regular).
 ty_verb_in(english, dropforge, dropforge, regular).
 ty_verb_in(english, dropkick, dropkick, regular).
 ty_verb_in(english, drown, drown, regular).
@@ -3736,6 +3822,10 @@ ty_verb_in(english, drudge, drudge, regular).
 ty_verb_in(english, drug, drug, double).
 ty_verb_in(english, drum, drum, double).
 ty_verb_in(english, dry, dry, regular).
+ty_verb_in(english, 'dry-dock', 'dry-dock', regular).
+ty_verb_in(english, 'dry-nurse', 'dry-nurse', regular).
+ty_verb_in(english, 'dry-rot', 'dry-rot', regular).
+ty_verb_in(english, 'dry-wall', 'dry-wall', regular).
 ty_verb_in(english, dub, dub, double).
 ty_verb_in(english, duck, duck, regular).
 ty_verb_in(english, dulcify, dulcify, regular).
@@ -3754,6 +3844,7 @@ ty_verb_in(english, dyke, dyke, regular).
 ty_verb_in(english, dynamise, dynamise, regular).
 ty_verb_in(english, dynamite, dynamite, regular).
 ty_verb_in(english, dynamize, dynamize, regular).
+ty_verb_in(english, 'e-mail', 'e-mail', regular).
 ty_verb_in(english, earmark, earmark, regular).
 ty_verb_in(english, earn, earn, regular).
 ty_verb_in(english, ease, ease, regular).
@@ -4089,6 +4180,7 @@ ty_verb_in(english, exposit, exposit, regular).
 ty_verb_in(english, expostulate, expostulate, regular).
 ty_verb_in(english, expound, expound, regular).
 ty_verb_in(english, express, express, regular).
+ty_verb_in(english, 'express-mail', 'express-mail', regular).
 ty_verb_in(english, expropriate, expropriate, regular).
 ty_verb_in(english, expunge, expunge, regular).
 ty_verb_in(english, expurgate, expurgate, regular).
@@ -4122,6 +4214,8 @@ ty_verb_in(english, eye, eye, regular).
 ty_verb_in(english, eyewitness, eyewitness, regular).
 ty_verb_in(english, fabricate, fabricate, regular).
 ty_verb_in(english, face, face, regular).
+ty_verb_in(english, 'face-harden', 'face-harden', regular).
+ty_verb_in(english, 'face-lift', 'face-lift', regular).
 ty_verb_in(english, facilitate, facilitate, regular).
 ty_verb_in(english, factor, factor, regular).
 ty_verb_in(english, factorise, factorise, regular).
@@ -4166,6 +4260,7 @@ ty_verb_in(english, feature, feature, regular).
 ty_verb_in(english, fecundate, fecundate, regular).
 ty_verb_in(english, federalise, federalise, regular).
 ty_verb_in(english, federalize, federalize, regular).
+ty_verb_in(english, 'fee-tail', 'fee-tail', regular).
 ty_verb_in(english, feign, feign, regular).
 ty_verb_in(english, feint, feint, regular).
 ty_verb_in(english, felicitate, felicitate, regular).
@@ -4194,6 +4289,7 @@ ty_verb_in(english, fictionalise, fictionalise, regular).
 ty_verb_in(english, fictionalize, fictionalize, regular).
 ty_verb_in(english, fidget, fidget, regular).
 ty_verb_in(english, field, field, regular).
+ty_verb_in(english, 'field-test', 'field-test', regular).
 ty_verb_in(english, figure, figure, regular).
 ty_verb_in(english, filch, filch, regular).
 ty_verb_in(english, file, file, regular).
@@ -4202,6 +4298,7 @@ ty_verb_in(english, filiate, filiate, regular).
 ty_verb_in(english, filibuster, filibuster, regular).
 ty_verb_in(english, fill, fill, regular).
 ty_verb_in(english, film, film, regular).
+ty_verb_in(english, 'film-make', 'film-make', regular).
 ty_verb_in(english, filter, filter, regular).
 ty_verb_in(english, filtrate, filtrate, regular).
 ty_verb_in(english, finagle, finagle, regular).
@@ -4210,8 +4307,11 @@ ty_verb_in(english, finalize, finalize, regular).
 ty_verb_in(english, finance, finance, regular).
 ty_verb_in(english, financier, financier, regular).
 ty_verb_in(english, fine, fine, regular).
+ty_verb_in(english, 'fine-tune', 'fine-tune', regular).
 ty_verb_in(english, finedraw, finedraw, regular).
 ty_verb_in(english, finger, finger, regular).
+ty_verb_in(english, 'finger-paint', 'finger-paint', regular).
+ty_verb_in(english, 'finger-spell', 'finger-spell', regular).
 ty_verb_in(english, fingerpaint, fingerpaint, regular).
 ty_verb_in(english, fingerspell, fingerspell, regular).
 ty_verb_in(english, finish, finish, regular).
@@ -4236,6 +4336,8 @@ ty_verb_in(english, flank, flank, regular).
 ty_verb_in(english, flap, flap, double).
 ty_verb_in(english, flare, flare, regular).
 ty_verb_in(english, flash, flash, regular).
+ty_verb_in(english, 'flash-freeze', 'flash-freeze', regular).
+ty_verb_in(english, 'flat-hat', 'flat-hat', regular).
 ty_verb_in(english, flatten, flatten, regular).
 ty_verb_in(english, flatter, flatter, regular).
 ty_verb_in(english, flaunt, flaunt, regular).
@@ -4248,8 +4350,10 @@ ty_verb_in(english, flex, flex, regular).
 ty_verb_in(english, flexibilise, flexibilise, regular).
 ty_verb_in(english, flick, flick, regular).
 ty_verb_in(english, flicker, flicker, regular).
+ty_verb_in(english, 'flim-flam', 'flim-flam', regular).
 ty_verb_in(english, flinch, flinch, regular).
 ty_verb_in(english, flip, flip, double).
+ty_verb_in(english, 'flip-flop', 'flip-flop', regular).
 ty_verb_in(english, flirt, flirt, regular).
 ty_verb_in(english, flit, flit, double).
 ty_verb_in(english, flitter, flitter, regular).
@@ -4279,6 +4383,7 @@ ty_verb_in(english, flurry, flurry, regular).
 ty_verb_in(english, flush, flush, regular).
 ty_verb_in(english, fluster, fluster, regular).
 ty_verb_in(english, flutter, flutter, regular).
+ty_verb_in(english, 'fly-fish', 'fly-fish', regular).
 ty_verb_in(english, flyfish, flyfish, regular).
 ty_verb_in(english, foal, foal, regular).
 ty_verb_in(english, foam, foam, regular).
@@ -4302,6 +4407,8 @@ ty_verb_in(english, forage, forage, regular).
 ty_verb_in(english, foray, foray, regular).
 ty_verb_in(english, forbear, forbear, regular).
 ty_verb_in(english, force, force, regular).
+ty_verb_in(english, 'force-feed', 'force-feed', regular).
+ty_verb_in(english, 'force-land', 'force-land', regular).
 ty_verb_in(english, ford, ford, regular).
 ty_verb_in(english, forebear, forebear, regular).
 ty_verb_in(english, forebode, forebode, regular).
@@ -4352,9 +4459,13 @@ ty_verb_in(english, fraternize, fraternize, regular).
 ty_verb_in(english, fray, fray, regular).
 ty_verb_in(english, frazzle, frazzle, regular).
 ty_verb_in(english, free, free, regular).
+ty_verb_in(english, 'free-associate', 'free-associate', regular).
+ty_verb_in(english, 'free-base', 'free-base', regular).
 ty_verb_in(english, freeload, freeload, regular).
 ty_verb_in(english, freewheel, freewheel, regular).
 ty_verb_in(english, freez, freez, regular).
+ty_verb_in(english, 'freeze-dry', 'freeze-dry', regular).
+ty_verb_in(english, 'french-fry', 'french-fry', regular).
 ty_verb_in(english, frequent, frequent, regular).
 ty_verb_in(english, fresco, fresco, regular).
 ty_verb_in(english, freshen, freshen, regular).
@@ -4387,6 +4498,7 @@ ty_verb_in(english, fume, fume, regular).
 ty_verb_in(english, fumigate, fumigate, regular).
 ty_verb_in(english, function, function, regular).
 ty_verb_in(english, fund, fund, regular).
+ty_verb_in(english, 'fund-raise', 'fund-raise', regular).
 ty_verb_in(english, fundraise, fundraise, regular).
 ty_verb_in(english, funk, funk, regular).
 ty_verb_in(english, funnel, funnel, regular).
@@ -4416,6 +4528,7 @@ ty_verb_in(english, galvanise, galvanise, regular).
 ty_verb_in(english, galvanize, galvanize, regular).
 ty_verb_in(english, gamble, gamble, regular).
 ty_verb_in(english, gambol, gambol, regular).
+ty_verb_in(english, 'gang-rape', 'gang-rape', regular).
 ty_verb_in(english, gangrene, gangrene, regular).
 ty_verb_in(english, gaol, gaol, regular).
 ty_verb_in(english, gape, gape, regular).
@@ -4435,6 +4548,7 @@ ty_verb_in(english, gasconade, gasconade, regular).
 ty_verb_in(english, gash, gash, regular).
 ty_verb_in(english, gasify, gasify, regular).
 ty_verb_in(english, gasp, gasp, regular).
+ty_verb_in(english, 'gate-crash', 'gate-crash', regular).
 ty_verb_in(english, gather, gather, regular).
 ty_verb_in(english, gauffer, gauffer, regular).
 ty_verb_in(english, gauge, gauge, regular).
@@ -4469,6 +4583,7 @@ ty_verb_in(english, ghostwrite, ghostwrite, regular).
 ty_verb_in(english, gibber, gibber, regular).
 ty_verb_in(english, gibe, gibe, regular).
 ty_verb_in(english, gift, gift, regular).
+ty_verb_in(english, 'gift-wrap', 'gift-wrap', regular).
 ty_verb_in(english, giggle, giggle, regular).
 ty_verb_in(english, gild, gild, regular).
 ty_verb_in(english, gimp, gimp, regular).
@@ -4491,6 +4606,7 @@ ty_verb_in(english, glaze, glaze, regular).
 ty_verb_in(english, gleam, gleam, regular).
 ty_verb_in(english, glean, glean, regular).
 ty_verb_in(english, glide, glide, regular).
+ty_verb_in(english, 'glide-bomb', 'glide-bomb', regular).
 ty_verb_in(english, glimpse, glimpse, regular).
 ty_verb_in(english, glint, glint, regular).
 ty_verb_in(english, glissade, glissade, regular).
@@ -4499,6 +4615,7 @@ ty_verb_in(english, glitter, glitter, regular).
 ty_verb_in(english, gloat, gloat, regular).
 ty_verb_in(english, globalise, globalise, regular).
 ty_verb_in(english, globalize, globalize, regular).
+ty_verb_in(english, 'globe-trot', 'globe-trot', regular).
 ty_verb_in(english, glom, glom, double).
 ty_verb_in(english, glorify, glorify, regular).
 ty_verb_in(english, glory, glory, regular).
@@ -4519,9 +4636,11 @@ ty_verb_in(english, goad, goad, regular).
 ty_verb_in(english, gobble, gobble, regular).
 ty_verb_in(english, goffer, goffer, regular).
 ty_verb_in(english, goggle, goggle, regular).
+ty_verb_in(english, 'gold-plate', 'gold-plate', regular).
 ty_verb_in(english, goldbrick, goldbrick, regular).
 ty_verb_in(english, goldplate, goldplate, regular).
 ty_verb_in(english, goof, goof, regular).
+ty_verb_in(english, 'goof-proof', 'goof-proof', regular).
 ty_verb_in(english, goofproof, goofproof, regular).
 ty_verb_in(english, google, google, regular).
 ty_verb_in(english, gore, gore, regular).
@@ -4576,6 +4695,7 @@ ty_verb_in(english, growl, growl, regular).
 ty_verb_in(english, grubstake, grubstake, regular).
 ty_verb_in(english, grumble, grumble, regular).
 ty_verb_in(english, grunt, grunt, regular).
+ty_verb_in(english, 'grunt-hoot', 'grunt-hoot', regular).
 ty_verb_in(english, gruntle, gruntle, regular).
 ty_verb_in(english, guarantee, guarantee, regular).
 ty_verb_in(english, guard, guard, regular).
@@ -4612,6 +4732,10 @@ ty_verb_in(english, hammer, hammer, regular).
 ty_verb_in(english, hamper, hamper, regular).
 ty_verb_in(english, hamstring, hamstring, regular).
 ty_verb_in(english, hand, hand, regular).
+ty_verb_in(english, 'hand-build', 'hand-build', regular).
+ty_verb_in(english, 'hand-dye', 'hand-dye', regular).
+ty_verb_in(english, 'hand-pick', 'hand-pick', regular).
+ty_verb_in(english, 'hand-wash', 'hand-wash', regular).
 ty_verb_in(english, handbuild, handbuild, regular).
 ty_verb_in(english, handcolor, handcolor, regular).
 ty_verb_in(english, handcolour, handcolour, regular).
@@ -4668,6 +4792,7 @@ ty_verb_in(english, hectograph, hectograph, regular).
 ty_verb_in(english, hector, hector, regular).
 ty_verb_in(english, hedge, hedge, regular).
 ty_verb_in(english, hedgehop, hedgehop, regular).
+ty_verb_in(english, 'hee-haw', 'hee-haw', regular).
 ty_verb_in(english, heed, heed, regular).
 ty_verb_in(english, heft, heft, regular).
 ty_verb_in(english, heighten, heighten, regular).
@@ -4676,8 +4801,10 @@ ty_verb_in(english, heliograph, heliograph, regular).
 ty_verb_in(english, help, help, regular).
 ty_verb_in(english, hemagglutinate, hemagglutinate, regular).
 ty_verb_in(english, hemstitch, hemstitch, regular).
+ty_verb_in(english, 'hen-peck', 'hen-peck', regular).
 ty_verb_in(english, herald, herald, regular).
 ty_verb_in(english, herd, herd, regular).
+ty_verb_in(english, 'hero-worship', 'hero-worship', regular).
 ty_verb_in(english, hesitate, hesitate, regular).
 ty_verb_in(english, hibachi, hibachi, regular).
 ty_verb_in(english, hibernate, hibernate, regular).
@@ -4685,6 +4812,7 @@ ty_verb_in(english, hiccough, hiccough, regular).
 ty_verb_in(english, hiccup, hiccup, regular).
 ty_verb_in(english, hie, hie, regular).
 ty_verb_in(english, higgle, higgle, regular).
+ty_verb_in(english, 'high-tail', 'high-tail', regular).
 ty_verb_in(english, highjack, highjack, regular).
 ty_verb_in(english, highlight, highlight, regular).
 ty_verb_in(english, hightail, hightail, regular).
@@ -4704,9 +4832,11 @@ ty_verb_in(english, hobnail, hobnail, regular).
 ty_verb_in(english, hobnob, hobnob, regular).
 ty_verb_in(english, hock, hock, regular).
 ty_verb_in(english, hog, hog, double).
+ty_verb_in(english, 'hog-tie', 'hog-tie', regular).
 ty_verb_in(english, hoist, hoist, regular).
 ty_verb_in(english, holler, holler, regular).
 ty_verb_in(english, hollo, hollo, regular).
+ty_verb_in(english, 'home-school', 'home-school', regular).
 ty_verb_in(english, homestead, homestead, regular).
 ty_verb_in(english, homogenise, homogenise, regular).
 ty_verb_in(english, homogenize, homogenize, regular).
@@ -4723,17 +4853,24 @@ ty_verb_in(english, hook, hook, regular).
 ty_verb_in(english, hoot, hoot, regular).
 ty_verb_in(english, hoover, hoover, regular).
 ty_verb_in(english, hop, hop, double).
+ty_verb_in(english, 'hop-skip', 'hop-skip', regular).
 ty_verb_in(english, hope, hope, regular).
 ty_verb_in(english, hopple, hopple, regular).
 ty_verb_in(english, hornswoggle, hornswoggle, regular).
 ty_verb_in(english, horrify, horrify, regular).
 ty_verb_in(english, horripilate, horripilate, regular).
+ty_verb_in(english, 'horse-race', 'horse-race', regular).
+ty_verb_in(english, 'horse-trade', 'horse-trade', regular).
 ty_verb_in(english, horseshoe, horseshoe, regular).
 ty_verb_in(english, horsewhip, horsewhip, regular).
 ty_verb_in(english, hospitalise, hospitalise, regular).
 ty_verb_in(english, hospitalize, hospitalize, regular).
+ty_verb_in(english, 'hot-dog', 'hot-dog', regular).
+ty_verb_in(english, 'hot-wire', 'hot-wire', regular).
+ty_verb_in(english, 'hot-work', 'hot-work', regular).
 ty_verb_in(english, hotfoot, hotfoot, regular).
 ty_verb_in(english, house, house, regular).
+ty_verb_in(english, 'house-train', 'house-train', regular).
 ty_verb_in(english, housebreak, housebreak, regular).
 ty_verb_in(english, houseclean, houseclean, regular).
 ty_verb_in(english, housekeep, housekeep, regular).
@@ -4770,6 +4907,7 @@ ty_verb_in(english, hustle, hustle, regular).
 ty_verb_in(english, hybridise, hybridise, regular).
 ty_verb_in(english, hybridize, hybridize, regular).
 ty_verb_in(english, hydrate, hydrate, regular).
+ty_verb_in(english, 'hydrogen-bomb', 'hydrogen-bomb', regular).
 ty_verb_in(english, hydrogenate, hydrogenate, regular).
 ty_verb_in(english, hydrolise, hydrolise, regular).
 ty_verb_in(english, hydrolize, hydrolize, regular).
@@ -4802,6 +4940,8 @@ ty_verb_in(english, idolise, idolise, regular).
 ty_verb_in(english, idolize, idolize, regular).
 ty_verb_in(english, ignite, ignite, regular).
 ty_verb_in(english, ignore, ignore, regular).
+ty_verb_in(english, 'ill-treat', 'ill-treat', regular).
+ty_verb_in(english, 'ill-use', 'ill-use', regular).
 ty_verb_in(english, illegalise, illegalise, regular).
 ty_verb_in(english, illegalize, illegalize, regular).
 ty_verb_in(english, illume, illume, regular).
@@ -4861,6 +5001,7 @@ ty_verb_in(english, improve, improve, regular).
 ty_verb_in(english, improvise, improvise, regular).
 ty_verb_in(english, improvize, improvize, regular).
 ty_verb_in(english, impugn, impugn, regular).
+ty_verb_in(english, 'impulse-buy', 'impulse-buy', regular).
 ty_verb_in(english, impute, impute, regular).
 ty_verb_in(english, inactivate, inactivate, regular).
 ty_verb_in(english, inaugurate, inaugurate, regular).
@@ -5116,6 +5257,7 @@ ty_verb_in(english, jiggle, jiggle, regular).
 ty_verb_in(english, jilt, jilt, regular).
 ty_verb_in(english, jimmy, jimmy, regular).
 ty_verb_in(english, jingle, jingle, regular).
+ty_verb_in(english, 'jingle-jangle', 'jingle-jangle', regular).
 ty_verb_in(english, jinx, jinx, regular).
 ty_verb_in(english, jitterbug, jitterbug, regular).
 ty_verb_in(english, jive, jive, regular).
@@ -5138,6 +5280,7 @@ ty_verb_in(english, judge, judge, regular).
 ty_verb_in(english, juggle, juggle, regular).
 ty_verb_in(english, jumble, jumble, regular).
 ty_verb_in(english, jump, jump, regular).
+ty_verb_in(english, 'jump-start', 'jump-start', regular).
 ty_verb_in(english, jumpstart, jumpstart, regular).
 ty_verb_in(english, junk, junk, regular).
 ty_verb_in(english, junketeer, junketeer, regular).
@@ -5157,6 +5300,7 @@ ty_verb_in(english, kibbitz, kibbitz, regular).
 ty_verb_in(english, kibitz, kibitz, regular).
 ty_verb_in(english, kibosh, kibosh, regular).
 ty_verb_in(english, kick, kick, regular).
+ty_verb_in(english, 'kick-start', 'kick-start', regular).
 ty_verb_in(english, kid, kid, double).
 ty_verb_in(english, kill, kill, regular).
 ty_verb_in(english, kindle, kindle, regular).
@@ -5277,6 +5421,9 @@ ty_verb_in(english, linger, linger, regular).
 ty_verb_in(english, link, link, regular).
 ty_verb_in(english, lionise, lionise, regular).
 ty_verb_in(english, lionize, lionize, regular).
+ty_verb_in(english, 'lip-read', 'lip-read', regular).
+ty_verb_in(english, 'lip-sync', 'lip-sync', regular).
+ty_verb_in(english, 'lip-synch', 'lip-synch', regular).
 ty_verb_in(english, lipread, lipread, regular).
 ty_verb_in(english, liquefy, liquefy, regular).
 ty_verb_in(english, liquidate, liquidate, regular).
@@ -5306,6 +5453,7 @@ ty_verb_in(english, lock, lock, regular).
 ty_verb_in(english, locomote, locomote, regular).
 ty_verb_in(english, lodge, lodge, regular).
 ty_verb_in(english, log, log, double).
+ty_verb_in(english, 'log-in', 'log-in', regular).
 ty_verb_in(english, logroll, logroll, regular).
 ty_verb_in(english, loiter, loiter, regular).
 ty_verb_in(english, loll, loll, regular).
@@ -5353,6 +5501,7 @@ ty_verb_in(english, macadamize, macadamize, regular).
 ty_verb_in(english, macerate, macerate, regular).
 ty_verb_in(english, machicolate, machicolate, regular).
 ty_verb_in(english, machinate, machinate, regular).
+ty_verb_in(english, 'machine-wash', 'machine-wash', regular).
 ty_verb_in(english, macrame, macrame, regular).
 ty_verb_in(english, madden, madden, regular).
 ty_verb_in(english, madrigal, madrigal, regular).
@@ -5409,6 +5558,7 @@ ty_verb_in(english, mash, mash, regular).
 ty_verb_in(english, mask, mask, regular).
 ty_verb_in(english, masquerade, masquerade, regular).
 ty_verb_in(english, mass, mass, regular).
+ty_verb_in(english, 'mass-produce', 'mass-produce', regular).
 ty_verb_in(english, massacre, massacre, regular).
 ty_verb_in(english, massage, massage, regular).
 ty_verb_in(english, master, master, regular).
@@ -5420,6 +5570,7 @@ ty_verb_in(english, mate, mate, regular).
 ty_verb_in(english, materialise, materialise, regular).
 ty_verb_in(english, materialize, materialize, regular).
 ty_verb_in(english, matriculate, matriculate, regular).
+ty_verb_in(english, 'matt-up', 'matt-up', regular).
 ty_verb_in(english, matter, matter, regular).
 ty_verb_in(english, maturate, maturate, regular).
 ty_verb_in(english, mature, mature, regular).
@@ -5477,6 +5628,7 @@ ty_verb_in(english, mew, mew, regular).
 ty_verb_in(english, mewl, mewl, regular).
 ty_verb_in(english, miaou, miaou, regular).
 ty_verb_in(english, miaow, miaow, regular).
+ty_verb_in(english, 'micro-cook', 'micro-cook', regular).
 ty_verb_in(english, microcopy, microcopy, regular).
 ty_verb_in(english, micturate, micturate, regular).
 ty_verb_in(english, miff, miff, regular).
@@ -5635,6 +5787,7 @@ ty_verb_in(english, mouth, mouth, regular).
 ty_verb_in(english, move, move, regular).
 ty_verb_in(english, muck, muck, regular).
 ty_verb_in(english, muckrake, muckrake, regular).
+ty_verb_in(english, 'mud-wrestle', 'mud-wrestle', regular).
 ty_verb_in(english, mudwrestle, mudwrestle, regular).
 ty_verb_in(english, muffle, muffle, regular).
 ty_verb_in(english, mug, mug, double).
@@ -5702,6 +5855,7 @@ ty_verb_in(english, nettle, nettle, regular).
 ty_verb_in(english, neutralise, neutralise, regular).
 ty_verb_in(english, neutralize, neutralize, regular).
 ty_verb_in(english, nick, nick, regular).
+ty_verb_in(english, 'nickel-and-dime', 'nickel-and-dime', regular).
 ty_verb_in(english, nicker, nicker, regular).
 ty_verb_in(english, nickname, nickname, regular).
 ty_verb_in(english, nictate, nictate, regular).
@@ -5784,6 +5938,7 @@ ty_verb_in(english, offsaddle, offsaddle, regular).
 ty_verb_in(english, ogle, ogle, regular).
 ty_verb_in(english, oil, oil, regular).
 ty_verb_in(english, oink, oink, regular).
+ty_verb_in(english, 'one-step', 'one-step', regular).
 ty_verb_in(english, ooh, ooh, regular).
 ty_verb_in(english, ooz, ooz, regular).
 ty_verb_in(english, ooze, ooze, regular).
@@ -5821,6 +5976,7 @@ ty_verb_in(english, ostentate, ostentate, regular).
 ty_verb_in(english, ostracise, ostracise, regular).
 ty_verb_in(english, ostracize, ostracize, regular).
 ty_verb_in(english, oust, oust, regular).
+ty_verb_in(english, 'out-herod', 'out-herod', regular).
 ty_verb_in(english, outbalance, outbalance, regular).
 ty_verb_in(english, outbrave, outbrave, regular).
 ty_verb_in(english, outcall, outcall, regular).
@@ -5867,6 +6023,8 @@ ty_verb_in(english, outvote, outvote, regular).
 ty_verb_in(english, outwear, outwear, regular).
 ty_verb_in(english, outweigh, outweigh, regular).
 ty_verb_in(english, ovenbake, ovenbake, regular).
+ty_verb_in(english, 'over-correct', 'over-correct', regular).
+ty_verb_in(english, 'over-refine', 'over-refine', regular).
 ty_verb_in(english, overachieve, overachieve, regular).
 ty_verb_in(english, overact, overact, regular).
 ty_verb_in(english, overarch, overarch, regular).
@@ -5996,12 +6154,16 @@ ty_verb_in(english, palsy, palsy, regular).
 ty_verb_in(english, palter, palter, regular).
 ty_verb_in(english, pamper, pamper, regular).
 ty_verb_in(english, pan, pan, double).
+ty_verb_in(english, 'pan-broil', 'pan-broil', regular).
+ty_verb_in(english, 'pan-fry', 'pan-fry', regular).
 ty_verb_in(english, panel, panel, regular).
 ty_verb_in(english, panhandle, panhandle, regular).
 ty_verb_in(english, pant, pant, regular).
+ty_verb_in(english, 'pant-hoot', 'pant-hoot', regular).
 ty_verb_in(english, pantomime, pantomime, regular).
 ty_verb_in(english, parade, parade, regular).
 ty_verb_in(english, parallel, parallel, regular).
+ty_verb_in(english, 'parallel-park', 'parallel-park', regular).
 ty_verb_in(english, parallelize, parallelize, regular).
 ty_verb_in(english, paralyse, paralyse, regular).
 ty_verb_in(english, paralyze, paralyze, regular).
@@ -6021,6 +6183,7 @@ ty_verb_in(english, parrot, parrot, regular).
 ty_verb_in(english, parry, parry, regular).
 ty_verb_in(english, parse, parse, regular).
 ty_verb_in(english, part, part, regular).
+ty_verb_in(english, 'parti-color', 'parti-color', regular).
 ty_verb_in(english, participate, participate, regular).
 ty_verb_in(english, particularise, particularise, regular).
 ty_verb_in(english, particularize, particularize, regular).
@@ -6038,6 +6201,7 @@ ty_verb_in(english, patinize, patinize, regular).
 ty_verb_in(english, patronise, patronise, regular).
 ty_verb_in(english, patronize, patronize, regular).
 ty_verb_in(english, pattern, pattern, regular).
+ty_verb_in(english, 'pattern-bomb', 'pattern-bomb', regular).
 ty_verb_in(english, pauperise, pauperise, regular).
 ty_verb_in(english, pauperize, pauperize, regular).
 ty_verb_in(english, pause, pause, regular).
@@ -6050,6 +6214,7 @@ ty_verb_in(english, peculate, peculate, regular).
 ty_verb_in(english, peddle, peddle, regular).
 ty_verb_in(english, pedicure, pedicure, regular).
 ty_verb_in(english, pee, pee, regular).
+ty_verb_in(english, 'pee-pee', 'pee-pee', regular).
 ty_verb_in(english, peek, peek, regular).
 ty_verb_in(english, peel, peel, regular).
 ty_verb_in(english, peep, peep, regular).
@@ -6061,6 +6226,7 @@ ty_verb_in(english, penalise, penalise, regular).
 ty_verb_in(english, penalize, penalize, regular).
 ty_verb_in(english, pencil, pencil, regular).
 ty_verb_in(english, penetrate, penetrate, regular).
+ty_verb_in(english, 'penny-pinch', 'penny-pinch', regular).
 ty_verb_in(english, people, people, regular).
 ty_verb_in(english, pepper, pepper, regular).
 ty_verb_in(english, peptise, peptise, regular).
@@ -6127,6 +6293,7 @@ ty_verb_in(english, picket, picket, regular).
 ty_verb_in(english, picture, picture, regular).
 ty_verb_in(english, piddle, piddle, regular).
 ty_verb_in(english, piece, piece, regular).
+ty_verb_in(english, 'piece-dye', 'piece-dye', regular).
 ty_verb_in(english, pierce, pierce, regular).
 ty_verb_in(english, piffle, piffle, regular).
 ty_verb_in(english, pigeonhole, pigeonhole, regular).
@@ -6144,16 +6311,20 @@ ty_verb_in(english, pinpoint, pinpoint, regular).
 ty_verb_in(english, pioneer, pioneer, regular).
 ty_verb_in(english, pip, pip, double).
 ty_verb_in(english, pipe, pipe, regular).
+ty_verb_in(english, 'pipe-clay', 'pipe-clay', regular).
 ty_verb_in(english, pirate, pirate, regular).
 ty_verb_in(english, pirouette, pirouette, regular).
 ty_verb_in(english, piss, piss, regular).
+ty_verb_in(english, 'pistol-whip', 'pistol-whip', regular).
 ty_verb_in(english, pit, pit, double).
 ty_verb_in(english, pitch, pitch, regular).
+ty_verb_in(english, 'pitter-patter', 'pitter-patter', regular).
 ty_verb_in(english, pity, pity, regular).
 ty_verb_in(english, pivot, pivot, regular).
 ty_verb_in(english, placard, placard, regular).
 ty_verb_in(english, placate, placate, regular).
 ty_verb_in(english, place, place, regular).
+ty_verb_in(english, 'place-kick', 'place-kick', regular).
 ty_verb_in(english, plagiarise, plagiarise, regular).
 ty_verb_in(english, plagiarize, plagiarize, regular).
 ty_verb_in(english, plague, plague, regular).
@@ -6172,6 +6343,7 @@ ty_verb_in(english, platinize, platinize, regular).
 ty_verb_in(english, platitudinize, platitudinize, regular).
 ty_verb_in(english, play, play, regular).
 ty_verb_in(english, playact, playact, regular).
+ty_verb_in(english, 'plea-bargain', 'plea-bargain', regular).
 ty_verb_in(english, pleach, pleach, regular).
 ty_verb_in(english, plead, plead, regular).
 ty_verb_in(english, please, please, regular).
@@ -6233,6 +6405,7 @@ ty_verb_in(english, pompadour, pompadour, regular).
 ty_verb_in(english, ponder, ponder, regular).
 ty_verb_in(english, pontificate, pontificate, regular).
 ty_verb_in(english, pooch, pooch, regular).
+ty_verb_in(english, 'pooh-pooh', 'pooh-pooh', regular).
 ty_verb_in(english, pool, pool, regular).
 ty_verb_in(english, pop, pop, double).
 ty_verb_in(english, popularise, popularise, regular).
@@ -6263,6 +6436,7 @@ ty_verb_in(english, powder, powder, regular).
 ty_verb_in(english, powderise, powderise, regular).
 ty_verb_in(english, powderize, powderize, regular).
 ty_verb_in(english, power, power, regular).
+ty_verb_in(english, 'power-dive', 'power-dive', regular).
 ty_verb_in(english, powerwash, powerwash, regular).
 ty_verb_in(english, practice, practice, regular).
 ty_verb_in(english, practise, practise, regular).
@@ -6324,6 +6498,8 @@ ty_verb_in(english, preserve, preserve, regular).
 ty_verb_in(english, preside, preside, regular).
 ty_verb_in(english, press, press, regular).
 ty_verb_in(english, pressure, pressure, regular).
+ty_verb_in(english, 'pressure-cook', 'pressure-cook', regular).
+ty_verb_in(english, 'pressure-wash', 'pressure-wash', regular).
 ty_verb_in(english, pressurise, pressurise, regular).
 ty_verb_in(english, pressurize, pressurize, regular).
 ty_verb_in(english, presume, presume, regular).
@@ -6423,6 +6599,7 @@ ty_verb_in(english, psychoanalyse, psychoanalyse, regular).
 ty_verb_in(english, psychoanalyze, psychoanalyze, regular).
 ty_verb_in(english, ptyalise, ptyalise, regular).
 ty_verb_in(english, ptyalize, ptyalize, regular).
+ty_verb_in(english, 'pub-crawl', 'pub-crawl', regular).
 ty_verb_in(english, publicise, publicise, regular).
 ty_verb_in(english, publicize, publicize, regular).
 ty_verb_in(english, publish, publish, regular).
@@ -6487,6 +6664,7 @@ ty_verb_in(english, question, question, regular).
 ty_verb_in(english, quetch, quetch, regular).
 ty_verb_in(english, queue, queue, regular).
 ty_verb_in(english, quibble, quibble, regular).
+ty_verb_in(english, 'quick-freeze', 'quick-freeze', regular).
 ty_verb_in(english, quicken, quicken, regular).
 ty_verb_in(english, quickstep, quickstep, regular).
 ty_verb_in(english, quiesce, quiesce, regular).
@@ -6543,6 +6721,23 @@ ty_verb_in(english, raven, raven, regular).
 ty_verb_in(english, ravish, ravish, regular).
 ty_verb_in(english, raze, raze, regular).
 ty_verb_in(english, razz, razz, regular).
+ty_verb_in(english, 're-address', 're-address', regular).
+ty_verb_in(english, 're-afforest', 're-afforest', regular).
+ty_verb_in(english, 're-argue', 're-argue', regular).
+ty_verb_in(english, 're-arm', 're-arm', regular).
+ty_verb_in(english, 're-assume', 're-assume', regular).
+ty_verb_in(english, 're-create', 're-create', regular).
+ty_verb_in(english, 're-emerge', 're-emerge', regular).
+ty_verb_in(english, 're-emphasise', 're-emphasise', regular).
+ty_verb_in(english, 're-emphasize', 're-emphasize', regular).
+ty_verb_in(english, 're-enter', 're-enter', regular).
+ty_verb_in(english, 're-equip', 're-equip', regular).
+ty_verb_in(english, 're-examine', 're-examine', regular).
+ty_verb_in(english, 're-explain', 're-explain', regular).
+ty_verb_in(english, 're-explore', 're-explore', regular).
+ty_verb_in(english, 're-incorporate', 're-incorporate', regular).
+ty_verb_in(english, 're-introduce', 're-introduce', regular).
+ty_verb_in(english, 're-start', 're-start', regular).
 ty_verb_in(english, reabsorb, reabsorb, regular).
 ty_verb_in(english, reach, reach, regular).
 ty_verb_in(english, reacquaint, reacquaint, regular).
@@ -6567,6 +6762,7 @@ ty_verb_in(english, reappear, reappear, regular).
 ty_verb_in(english, reapportion, reapportion, regular).
 ty_verb_in(english, reappraise, reappraise, regular).
 ty_verb_in(english, rear, rear, regular).
+ty_verb_in(english, 'rear-end', 'rear-end', regular).
 ty_verb_in(english, rearm, rearm, regular).
 ty_verb_in(english, rearrange, rearrange, regular).
 ty_verb_in(english, reason, reason, regular).
@@ -6644,6 +6840,8 @@ ty_verb_in(english, recuperate, recuperate, regular).
 ty_verb_in(english, recurve, recurve, regular).
 ty_verb_in(english, recuse, recuse, regular).
 ty_verb_in(english, recycle, recycle, regular).
+ty_verb_in(english, 'red-eye', 'red-eye', regular).
+ty_verb_in(english, 'red-ink', 'red-ink', regular).
 ty_verb_in(english, redact, redact, regular).
 ty_verb_in(english, redden, redden, regular).
 ty_verb_in(english, rede, rede, regular).
@@ -6796,6 +6994,7 @@ ty_verb_in(english, remunerate, remunerate, regular).
 ty_verb_in(english, rename, rename, regular).
 ty_verb_in(english, rend, rend, regular).
 ty_verb_in(english, render, render, regular).
+ty_verb_in(english, 'render-set', 'render-set', regular).
 ty_verb_in(english, renege, renege, regular).
 ty_verb_in(english, renegociate, renegociate, regular).
 ty_verb_in(english, renegotiate, renegotiate, regular).
@@ -7025,6 +7224,10 @@ ty_verb_in(english, rosin, rosin, regular).
 ty_verb_in(english, rot, rot, double).
 ty_verb_in(english, rotate, rotate, regular).
 ty_verb_in(english, rough, rough, regular).
+ty_verb_in(english, 'rough-dry', 'rough-dry', regular).
+ty_verb_in(english, 'rough-hew', 'rough-hew', regular).
+ty_verb_in(english, 'rough-house', 'rough-house', regular).
+ty_verb_in(english, 'rough-sand', 'rough-sand', regular).
 ty_verb_in(english, roughcast, roughcast, regular).
 ty_verb_in(english, roughen, roughen, regular).
 ty_verb_in(english, roughhouse, roughhouse, regular).
@@ -7192,6 +7395,7 @@ ty_verb_in(english, secern, secern, regular).
 ty_verb_in(english, secernate, secernate, regular).
 ty_verb_in(english, seclude, seclude, regular).
 ty_verb_in(english, second, second, regular).
+ty_verb_in(english, 'second-guess', 'second-guess', regular).
 ty_verb_in(english, secrete, secrete, regular).
 ty_verb_in(english, sectionalise, sectionalise, regular).
 ty_verb_in(english, sectionalize, sectionalize, regular).
@@ -7210,7 +7414,11 @@ ty_verb_in(english, seine, seine, regular).
 ty_verb_in(english, seiz, seiz, regular).
 ty_verb_in(english, seize, seize, regular).
 ty_verb_in(english, select, select, regular).
+ty_verb_in(english, 'self-destroy', 'self-destroy', regular).
+ty_verb_in(english, 'self-destruct', 'self-destruct', regular).
 ty_verb_in(english, semaphore, semaphore, regular).
+ty_verb_in(english, 'semi-automatise', 'semi-automatise', regular).
+ty_verb_in(english, 'semi-automatize', 'semi-automatize', regular).
 ty_verb_in(english, senesce, senesce, regular).
 ty_verb_in(english, sense, sense, regular).
 ty_verb_in(english, sensibilise, sensibilise, regular).
@@ -7258,6 +7466,7 @@ ty_verb_in(english, sharpen, sharpen, regular).
 ty_verb_in(english, sharpshoot, sharpshoot, regular).
 ty_verb_in(english, shatter, shatter, regular).
 ty_verb_in(english, shave, shave, regular).
+ty_verb_in(english, 'she-bop', 'she-bop', regular).
 ty_verb_in(english, sheathe, sheathe, regular).
 ty_verb_in(english, sheer, sheer, regular).
 ty_verb_in(english, shell, shell, regular).
@@ -7293,6 +7502,8 @@ ty_verb_in(english, shoetree, shoetree, regular).
 ty_verb_in(english, shoo, shoo, regular).
 ty_verb_in(english, shop, shop, double).
 ty_verb_in(english, shoplift, shoplift, regular).
+ty_verb_in(english, 'short-change', 'short-change', regular).
+ty_verb_in(english, 'short-circuit', 'short-circuit', regular).
 ty_verb_in(english, shorten, shorten, regular).
 ty_verb_in(english, shortlist, shortlist, regular).
 ty_verb_in(english, shoulder, shoulder, regular).
@@ -7322,6 +7533,7 @@ ty_verb_in(english, shy, shy, regular).
 ty_verb_in(english, sibilate, sibilate, regular).
 ty_verb_in(english, sicken, sicken, regular).
 ty_verb_in(english, side, side, regular).
+ty_verb_in(english, 'side-slip', 'side-slip', regular).
 ty_verb_in(english, sideline, sideline, regular).
 ty_verb_in(english, sideswipe, sideswipe, regular).
 ty_verb_in(english, sidetrack, sidetrack, regular).
@@ -7330,6 +7542,8 @@ ty_verb_in(english, sieve, sieve, regular).
 ty_verb_in(english, sift, sift, regular).
 ty_verb_in(english, sigh, sigh, regular).
 ty_verb_in(english, sight, sight, regular).
+ty_verb_in(english, 'sight-read', 'sight-read', regular).
+ty_verb_in(english, 'sight-sing', 'sight-sing', regular).
 ty_verb_in(english, sightread, sightread, regular).
 ty_verb_in(english, sightsee, sightsee, regular).
 ty_verb_in(english, sightsing, sightsing, regular).
@@ -7342,6 +7556,7 @@ ty_verb_in(english, signpost, signpost, regular).
 ty_verb_in(english, silence, silence, regular).
 ty_verb_in(english, silhouette, silhouette, regular).
 ty_verb_in(english, silt, silt, regular).
+ty_verb_in(english, 'silver-plate', 'silver-plate', regular).
 ty_verb_in(english, silverplate, silverplate, regular).
 ty_verb_in(english, simmer, simmer, regular).
 ty_verb_in(english, simper, simper, regular).
@@ -7350,6 +7565,7 @@ ty_verb_in(english, simulate, simulate, regular).
 ty_verb_in(english, sin, sin, double).
 ty_verb_in(english, singe, singe, regular).
 ty_verb_in(english, single, single, regular).
+ty_verb_in(english, 'single-foot', 'single-foot', regular).
 ty_verb_in(english, singsong, singsong, regular).
 ty_verb_in(english, singularise, singularise, regular).
 ty_verb_in(english, singularize, singularize, regular).
@@ -7372,7 +7588,10 @@ ty_verb_in(english, skid, skid, double).
 ty_verb_in(english, skim, skim, double).
 ty_verb_in(english, skimcoat, skimcoat, regular).
 ty_verb_in(english, skimp, skimp, regular).
+ty_verb_in(english, 'skin-dive', 'skin-dive', regular).
+ty_verb_in(english, 'skinny-dip', 'skinny-dip', regular).
 ty_verb_in(english, skip, skip, double).
+ty_verb_in(english, 'skip-bomb', 'skip-bomb', regular).
 ty_verb_in(english, skipper, skipper, regular).
 ty_verb_in(english, skirl, skirl, regular).
 ty_verb_in(english, skirmish, skirmish, regular).
@@ -7391,6 +7610,7 @@ ty_verb_in(english, slacken, slacken, regular).
 ty_verb_in(english, slag, slag, double).
 ty_verb_in(english, slake, slake, regular).
 ty_verb_in(english, slam, slam, double).
+ty_verb_in(english, 'slam-dunk', 'slam-dunk', regular).
 ty_verb_in(english, slander, slander, regular).
 ty_verb_in(english, slang, slang, regular).
 ty_verb_in(english, slant, slant, regular).
@@ -7477,6 +7697,7 @@ ty_verb_in(english, snore, snore, regular).
 ty_verb_in(english, snorkel, snorkel, regular).
 ty_verb_in(english, snort, snort, regular).
 ty_verb_in(english, snow, snow, regular).
+ty_verb_in(english, 'snow-blind', 'snow-blind', regular).
 ty_verb_in(english, snowball, snowball, regular).
 ty_verb_in(english, snowboard, snowboard, regular).
 ty_verb_in(english, snowmobile, snowmobile, regular).
@@ -7491,6 +7712,9 @@ ty_verb_in(english, socialize, socialize, regular).
 ty_verb_in(english, sock, sock, regular).
 ty_verb_in(english, sodomise, sodomise, regular).
 ty_verb_in(english, sodomize, sodomize, regular).
+ty_verb_in(english, 'soft-pedal', 'soft-pedal', regular).
+ty_verb_in(english, 'soft-soap', 'soft-soap', regular).
+ty_verb_in(english, 'soft-solder', 'soft-solder', regular).
 ty_verb_in(english, soften, soften, regular).
 ty_verb_in(english, soil, soil, regular).
 ty_verb_in(english, solace, solace, regular).
@@ -7544,6 +7768,7 @@ ty_verb_in(english, specify, specify, regular).
 ty_verb_in(english, speckle, speckle, regular).
 ty_verb_in(english, spectate, spectate, regular).
 ty_verb_in(english, speculate, speculate, regular).
+ty_verb_in(english, 'speech-read', 'speech-read', regular).
 ty_verb_in(english, speechify, speechify, regular).
 ty_verb_in(english, spell, spell, regular).
 ty_verb_in(english, spellbind, spellbind, regular).
@@ -7553,6 +7778,7 @@ ty_verb_in(english, sphacelate, sphacelate, regular).
 ty_verb_in(english, spice, spice, regular).
 ty_verb_in(english, spiel, spiel, regular).
 ty_verb_in(english, spill, spill, regular).
+ty_verb_in(english, 'spin-dry', 'spin-dry', regular).
 ty_verb_in(english, spiral, spiral, regular).
 ty_verb_in(english, spiritise, spiritise, regular).
 ty_verb_in(english, spiritize, spiritize, regular).
@@ -7580,13 +7806,18 @@ ty_verb_in(english, sport, sport, regular).
 ty_verb_in(english, sportscast, sportscast, regular).
 ty_verb_in(english, sporulate, sporulate, regular).
 ty_verb_in(english, spot, spot, double).
+ty_verb_in(english, 'spot-check', 'spot-check', regular).
+ty_verb_in(english, 'spot-weld', 'spot-weld', regular).
 ty_verb_in(english, spotlight, spotlight, regular).
 ty_verb_in(english, spotweld, spotweld, regular).
 ty_verb_in(english, spout, spout, regular).
 ty_verb_in(english, sprain, sprain, regular).
 ty_verb_in(english, sprawl, sprawl, regular).
 ty_verb_in(english, spray, spray, regular).
+ty_verb_in(english, 'spray-dry', 'spray-dry', regular).
+ty_verb_in(english, 'spread-eagle', 'spread-eagle', regular).
 ty_verb_in(english, spreadeagle, spreadeagle, regular).
+ty_verb_in(english, 'spring-clean', 'spring-clean', regular).
 ty_verb_in(english, sprinkle, sprinkle, regular).
 ty_verb_in(english, sprint, sprint, regular).
 ty_verb_in(english, spritz, spritz, regular).
@@ -7652,6 +7883,7 @@ ty_verb_in(english, stave, stave, regular).
 ty_verb_in(english, stay, stay, regular).
 ty_verb_in(english, steady, steady, regular).
 ty_verb_in(english, steam, steam, regular).
+ty_verb_in(english, 'steam-heat', 'steam-heat', regular).
 ty_verb_in(english, steamer, steamer, regular).
 ty_verb_in(english, steamroll, steamroll, regular).
 ty_verb_in(english, steamroller, steamroller, regular).
@@ -7672,6 +7904,8 @@ ty_verb_in(english, stiffen, stiffen, regular).
 ty_verb_in(english, stifle, stifle, regular).
 ty_verb_in(english, stigmatise, stigmatise, regular).
 ty_verb_in(english, stigmatize, stigmatize, regular).
+ty_verb_in(english, 'still-fish', 'still-fish', regular).
+ty_verb_in(english, 'still-hunt', 'still-hunt', regular).
 ty_verb_in(english, stimulate, stimulate, regular).
 ty_verb_in(english, stint, stint, regular).
 ty_verb_in(english, stipple, stipple, regular).
@@ -7679,10 +7913,12 @@ ty_verb_in(english, stipulate, stipulate, regular).
 ty_verb_in(english, stir, stir, double).
 ty_verb_in(english, stitch, stitch, regular).
 ty_verb_in(english, stock, stock, regular).
+ty_verb_in(english, 'stock-take', 'stock-take', regular).
 ty_verb_in(english, stockpile, stockpile, regular).
 ty_verb_in(english, stoke, stoke, regular).
 ty_verb_in(english, stomp, stomp, regular).
 ty_verb_in(english, stone, stone, regular).
+ty_verb_in(english, 'stone-wash', 'stone-wash', regular).
 ty_verb_in(english, stonewall, stonewall, regular).
 ty_verb_in(english, stonewash, stonewash, regular).
 ty_verb_in(english, stooge, stooge, regular).
@@ -7708,6 +7944,7 @@ ty_verb_in(english, stray, stray, regular).
 ty_verb_in(english, streak, streak, regular).
 ty_verb_in(english, stream, stream, regular).
 ty_verb_in(english, streamline, streamline, regular).
+ty_verb_in(english, 'street-walk', 'street-walk', regular).
 ty_verb_in(english, streetwalk, streetwalk, regular).
 ty_verb_in(english, strengthen, strengthen, regular).
 ty_verb_in(english, stress, stress, regular).
@@ -7715,9 +7952,11 @@ ty_verb_in(english, stretch, stretch, regular).
 ty_verb_in(english, strickle, strickle, regular).
 ty_verb_in(english, stridulate, stridulate, regular).
 ty_verb_in(english, strip, strip, double).
+ty_verb_in(english, 'strip-search', 'strip-search', regular).
 ty_verb_in(english, stripe, stripe, regular).
 ty_verb_in(english, stroke, stroke, regular).
 ty_verb_in(english, stroll, stroll, regular).
+ty_verb_in(english, 'strong-arm', 'strong-arm', regular).
 ty_verb_in(english, strop, strop, double).
 ty_verb_in(english, structure, structure, regular).
 ty_verb_in(english, struggle, struggle, regular).
@@ -7834,6 +8073,7 @@ ty_verb_in(english, suppose, suppose, regular).
 ty_verb_in(english, suppress, suppress, regular).
 ty_verb_in(english, suppurate, suppurate, regular).
 ty_verb_in(english, surface, surface, regular).
+ty_verb_in(english, 'surface-mine', 'surface-mine', regular).
 ty_verb_in(english, surfboard, surfboard, regular).
 ty_verb_in(english, surfeit, surfeit, regular).
 ty_verb_in(english, surge, surge, regular).
@@ -7866,6 +8106,7 @@ ty_verb_in(english, swathe, swathe, regular).
 ty_verb_in(english, swatter, swatter, regular).
 ty_verb_in(english, sway, sway, regular).
 ty_verb_in(english, sweat, sweat, regular).
+ty_verb_in(english, 'sweet-talk', 'sweet-talk', regular).
 ty_verb_in(english, sweeten, sweeten, regular).
 ty_verb_in(english, swelter, swelter, regular).
 ty_verb_in(english, swerve, swerve, regular).
@@ -7876,6 +8117,7 @@ ty_verb_in(english, swipe, swipe, regular).
 ty_verb_in(english, swirl, swirl, regular).
 ty_verb_in(english, swish, swish, regular).
 ty_verb_in(english, switch, switch, regular).
+ty_verb_in(english, 'switch-hit', 'switch-hit', regular).
 ty_verb_in(english, swivel, swivel, regular).
 ty_verb_in(english, swoon, swoon, regular).
 ty_verb_in(english, swoop, swoop, regular).
@@ -7917,6 +8159,7 @@ ty_verb_in(english, tack, tack, regular).
 ty_verb_in(english, tackle, tackle, regular).
 ty_verb_in(english, tag, tag, double).
 ty_verb_in(english, tailor, tailor, regular).
+ty_verb_in(english, 'tailor-make', 'tailor-make', regular).
 ty_verb_in(english, taint, taint, regular).
 ty_verb_in(english, talc, talc, regular).
 ty_verb_in(english, talk, talk, regular).
@@ -7930,6 +8173,7 @@ ty_verb_in(english, tantalize, tantalize, regular).
 ty_verb_in(english, tap, tap, double).
 ty_verb_in(english, tapdance, tapdance, regular).
 ty_verb_in(english, taper, taper, regular).
+ty_verb_in(english, 'tar-and-feather', 'tar-and-feather', regular).
 ty_verb_in(english, target, target, regular).
 ty_verb_in(english, tarmac, tarmac, regular).
 ty_verb_in(english, tarnish, tarnish, regular).
@@ -7946,6 +8190,7 @@ ty_verb_in(english, teargas, teargas, regular).
 ty_verb_in(english, tease, tease, regular).
 ty_verb_in(english, teem, teem, regular).
 ty_verb_in(english, teeter, teeter, regular).
+ty_verb_in(english, 'teeter-totter', 'teeter-totter', regular).
 ty_verb_in(english, teetertotter, teetertotter, regular).
 ty_verb_in(english, teethe, teethe, regular).
 ty_verb_in(english, telecast, telecast, regular).
@@ -8013,6 +8258,7 @@ ty_verb_in(english, tickle, tickle, regular).
 ty_verb_in(english, ticktack, ticktack, regular).
 ty_verb_in(english, ticktock, ticktock, regular).
 ty_verb_in(english, tie, tie, regular).
+ty_verb_in(english, 'tie-dye', 'tie-dye', regular).
 ty_verb_in(english, tighten, tighten, regular).
 ty_verb_in(english, tile, tile, regular).
 ty_verb_in(english, till, till, regular).
@@ -8041,6 +8287,7 @@ ty_verb_in(english, title, title, regular).
 ty_verb_in(english, titrate, titrate, regular).
 ty_verb_in(english, titter, titter, regular).
 ty_verb_in(english, tittivate, tittivate, regular).
+ty_verb_in(english, 'tittle-tattle', 'tittle-tattle', regular).
 ty_verb_in(english, tittup, tittup, regular).
 ty_verb_in(english, toady, toady, regular).
 ty_verb_in(english, toast, toast, regular).
@@ -8049,9 +8296,11 @@ ty_verb_in(english, toenail, toenail, regular).
 ty_verb_in(english, tog, tog, double).
 ty_verb_in(english, toggle, toggle, regular).
 ty_verb_in(english, toil, toil, regular).
+ty_verb_in(english, 'toilet-train', 'toilet-train', regular).
 ty_verb_in(english, tolerate, tolerate, regular).
 ty_verb_in(english, toll, toll, regular).
 ty_verb_in(english, tomahawk, tomahawk, regular).
+ty_verb_in(english, 'tongue-tie', 'tongue-tie', regular).
 ty_verb_in(english, tonsure, tonsure, regular).
 ty_verb_in(english, tool, tool, regular).
 ty_verb_in(english, toot, toot, regular).
@@ -8070,6 +8319,7 @@ ty_verb_in(english, totalise, totalise, regular).
 ty_verb_in(english, totalize, totalize, regular).
 ty_verb_in(english, totter, totter, regular).
 ty_verb_in(english, touch, touch, regular).
+ty_verb_in(english, 'touch-type', 'touch-type', regular).
 ty_verb_in(english, toughen, toughen, regular).
 ty_verb_in(english, tour, tour, regular).
 ty_verb_in(english, tourney, tourney, regular).
@@ -8148,6 +8398,8 @@ ty_verb_in(english, trill, trill, regular).
 ty_verb_in(english, trim, trim, double).
 ty_verb_in(english, trip, trip, double).
 ty_verb_in(english, triple, triple, regular).
+ty_verb_in(english, 'triple-space', 'triple-space', regular).
+ty_verb_in(english, 'triple-tongue', 'triple-tongue', regular).
 ty_verb_in(english, trisect, trisect, regular).
 ty_verb_in(english, triumph, triumph, regular).
 ty_verb_in(english, trivialise, trivialise, regular).
@@ -8155,6 +8407,7 @@ ty_verb_in(english, trivialize, trivialize, regular).
 ty_verb_in(english, troat, troat, regular).
 ty_verb_in(english, trot, trot, double).
 ty_verb_in(english, trouble, trouble, regular).
+ty_verb_in(english, 'trouble-shoot', 'trouble-shoot', regular).
 ty_verb_in(english, troubleshoot, troubleshoot, regular).
 ty_verb_in(english, trounce, trounce, regular).
 ty_verb_in(english, trowel, trowel, regular).
@@ -8183,6 +8436,7 @@ ty_verb_in(english, turtle, turtle, regular).
 ty_verb_in(english, tusk, tusk, regular).
 ty_verb_in(english, tussle, tussle, regular).
 ty_verb_in(english, tut, tut, double).
+ty_verb_in(english, 'tut-tut', 'tut-tut', regular).
 ty_verb_in(english, tutor, tutor, regular).
 ty_verb_in(english, twaddle, twaddle, regular).
 ty_verb_in(english, twang, twang, regular).
@@ -8201,6 +8455,8 @@ ty_verb_in(english, twist, twist, regular).
 ty_verb_in(english, twit, twit, double).
 ty_verb_in(english, twitch, twitch, regular).
 ty_verb_in(english, twitter, twitter, regular).
+ty_verb_in(english, 'two-step', 'two-step', regular).
+ty_verb_in(english, 'two-time', 'two-time', regular).
 ty_verb_in(english, twotime, twotime, regular).
 ty_verb_in(english, type, type, regular).
 ty_verb_in(english, typecast, typecast, regular).
@@ -8389,6 +8645,7 @@ ty_verb_in(english, vacation, vacation, regular).
 ty_verb_in(english, vaccinate, vaccinate, regular).
 ty_verb_in(english, vacillate, vacillate, regular).
 ty_verb_in(english, vacuum, vacuum, regular).
+ty_verb_in(english, 'vacuum-clean', 'vacuum-clean', regular).
 ty_verb_in(english, validate, validate, regular).
 ty_verb_in(english, valuate, valuate, regular).
 ty_verb_in(english, value, value, regular).
@@ -8513,6 +8770,7 @@ ty_verb_in(english, wassail, wassail, regular).
 ty_verb_in(english, waste, waste, regular).
 ty_verb_in(english, watch, watch, regular).
 ty_verb_in(english, water, water, regular).
+ty_verb_in(english, 'water-wash', 'water-wash', regular).
 ty_verb_in(english, watercolour, watercolour, regular).
 ty_verb_in(english, waul, waul, regular).
 ty_verb_in(english, wave, wave, regular).
@@ -8527,8 +8785,10 @@ ty_verb_in(english, weary, weary, regular).
 ty_verb_in(english, weatherstrip, weatherstrip, regular).
 ty_verb_in(english, wedel, wedel, regular).
 ty_verb_in(english, wedge, wedge, regular).
+ty_verb_in(english, 'wee-wee', 'wee-wee', regular).
 ty_verb_in(english, weigh, weigh, regular).
 ty_verb_in(english, weight, weight, regular).
+ty_verb_in(english, 'weight-lift', 'weight-lift', regular).
 ty_verb_in(english, weightlift, weightlift, regular).
 ty_verb_in(english, welch, welch, regular).
 ty_verb_in(english, welcome, welcome, regular).
@@ -8539,6 +8799,7 @@ ty_verb_in(english, wench, wench, regular).
 ty_verb_in(english, wend, wend, regular).
 ty_verb_in(english, westernise, westernise, regular).
 ty_verb_in(english, westernize, westernize, regular).
+ty_verb_in(english, 'wet-nurse', 'wet-nurse', regular).
 ty_verb_in(english, whack, whack, regular).
 ty_verb_in(english, wham, wham, double).
 ty_verb_in(english, whang, whang, regular).
@@ -8566,6 +8827,7 @@ ty_verb_in(english, whisker, whisker, regular).
 ty_verb_in(english, whisper, whisper, regular).
 ty_verb_in(english, whistle, whistle, regular).
 ty_verb_in(english, whistlestop, whistlestop, regular).
+ty_verb_in(english, 'white-out', 'white-out', regular).
 ty_verb_in(english, whiten, whiten, regular).
 ty_verb_in(english, whiteout, whiteout, regular).
 ty_verb_in(english, whitewash, whitewash, regular).
@@ -8583,6 +8845,8 @@ ty_verb_in(english, wigwag, wigwag, regular).
 ty_verb_in(english, wilt, wilt, regular).
 ty_verb_in(english, wince, wince, regular).
 ty_verb_in(english, winch, winch, regular).
+ty_verb_in(english, 'window-dress', 'window-dress', regular).
+ty_verb_in(english, 'window-shop', 'window-shop', regular).
 ty_verb_in(english, wing, wing, regular).
 ty_verb_in(english, wink, wink, regular).
 ty_verb_in(english, winkle, winkle, regular).
@@ -8599,6 +8863,7 @@ ty_verb_in(english, wither, wither, regular).
 ty_verb_in(english, witness, witness, regular).
 ty_verb_in(english, wive, wive, regular).
 ty_verb_in(english, wobble, wobble, regular).
+ty_verb_in(english, 'wolf-whistle', 'wolf-whistle', regular).
 ty_verb_in(english, womanise, womanise, regular).
 ty_verb_in(english, womanize, womanize, regular).
 ty_verb_in(english, wonder, wonder, regular).
@@ -8627,6 +8892,7 @@ ty_verb_in(english, wriggle, wriggle, regular).
 ty_verb_in(english, wrinkle, wrinkle, regular).
 ty_verb_in(english, writhe, writhe, regular).
 ty_verb_in(english, wrong, wrong, regular).
+ty_verb_in(english, 'x-ray', 'x-ray', regular).
 ty_verb_in(english, xerox, xerox, regular).
 ty_verb_in(english, yack, yack, regular).
 ty_verb_in(english, yak, yak, regular).
@@ -8634,6 +8900,7 @@ ty_verb_in(english, yammer, yammer, regular).
 ty_verb_in(english, yank, yank, regular).
 ty_verb_in(english, yap, yap, double).
 ty_verb_in(english, yarn, yarn, regular).
+ty_verb_in(english, 'yarn-dye', 'yarn-dye', regular).
 ty_verb_in(english, yaup, yaup, regular).
 ty_verb_in(english, yaw, yaw, regular).
 ty_verb_in(english, yawn, yawn, regular).

@@ -85,6 +85,7 @@ ty_adverb(english, alee, alee).
 ty_adverb(english, alertly, alertly).
 ty_adverb(english, algebraically, algebraically).
 ty_adverb(english, alike, alike).
+ty_adverb(english, 'all-fired', 'all-fired').
 ty_adverb(english, allegedly, allegedly).
 ty_adverb(english, allegorically, allegorically).
 ty_adverb(english, alliteratively, alliteratively).
@@ -217,6 +218,8 @@ ty_adverb(english, awkwardly, awkwardly).
 ty_adverb(english, awry, awry).
 ty_adverb(english, axially, axially).
 ty_adverb(english, axiomatically, axiomatically).
+ty_adverb(english, 'baby-like', 'baby-like').
+ty_adverb(english, 'baby-wise', 'baby-wise').
 ty_adverb(english, back, back).
 ty_adverb(english, backward, backward).
 ty_adverb(english, backwards, backwards).
@@ -302,6 +305,8 @@ ty_adverb(english, bravely, bravely).
 ty_adverb(english, brazenly, brazenly).
 ty_adverb(english, breadthways, breadthways).
 ty_adverb(english, breadthwise, breadthwise).
+ty_adverb(english, 'breast-deep', 'breast-deep').
+ty_adverb(english, 'breast-high', 'breast-high').
 ty_adverb(english, breathlessly, breathlessly).
 ty_adverb(english, breezily, breezily).
 ty_adverb(english, briefly, briefly).
@@ -309,6 +314,7 @@ ty_adverb(english, bright, bright).
 ty_adverb(english, brightly, brightly).
 ty_adverb(english, brilliantly, brilliantly).
 ty_adverb(english, briskly, briskly).
+ty_adverb(english, 'broad-mindedly', 'broad-mindedly').
 ty_adverb(english, broadly, broadly).
 ty_adverb(english, broadwise, broadwise).
 ty_adverb(english, brusquely, brusquely).
@@ -329,6 +335,7 @@ ty_adverb(english, candidly, candidly).
 ty_adverb(english, cannily, cannily).
 ty_adverb(english, canonically, canonically).
 ty_adverb(english, cantankerously, cantankerously).
+ty_adverb(english, 'cap-a-pie', 'cap-a-pie').
 ty_adverb(english, capably, capably).
 ty_adverb(english, capriciously, capriciously).
 ty_adverb(english, captiously, captiously).
@@ -371,6 +378,8 @@ ty_adverb(english, childishly, childishly).
 ty_adverb(english, chintzily, chintzily).
 ty_adverb(english, chirpily, chirpily).
 ty_adverb(english, chivalrously, chivalrously).
+ty_adverb(english, 'chock-a-block', 'chock-a-block').
+ty_adverb(english, 'chop-chop', 'chop-chop').
 ty_adverb(english, chorally, chorally).
 ty_adverb(english, chromatically, chromatically).
 ty_adverb(english, chromatographically, chromatographically).
@@ -406,6 +415,7 @@ ty_adverb(english, cognitively, cognitively).
 ty_adverb(english, coherently, coherently).
 ty_adverb(english, coincidentally, coincidentally).
 ty_adverb(english, coincidently, coincidently).
+ty_adverb(english, 'cold-bloodedly', 'cold-bloodedly').
 ty_adverb(english, coldly, coldly).
 ty_adverb(english, collectedly, collectedly).
 ty_adverb(english, collectively, collectively).
@@ -536,6 +546,9 @@ ty_adverb(english, criminally, criminally).
 ty_adverb(english, crisply, crisply).
 ty_adverb(english, critically, critically).
 ty_adverb(english, crookedly, crookedly).
+ty_adverb(english, 'cross-country', 'cross-country').
+ty_adverb(english, 'cross-legged', 'cross-legged').
+ty_adverb(english, 'cross-linguistically', 'cross-linguistically').
 ty_adverb(english, crossly, crossly).
 ty_adverb(english, crucially, crucially).
 ty_adverb(english, crudely, crudely).
@@ -760,6 +773,7 @@ ty_adverb(english, drearily, drearily).
 ty_adverb(english, drily, drily).
 ty_adverb(english, drippily, drippily).
 ty_adverb(english, droopingly, droopingly).
+ty_adverb(english, 'drop-dead', 'drop-dead').
 ty_adverb(english, drowsily, drowsily).
 ty_adverb(english, drunkenly, drunkenly).
 ty_adverb(english, dryly, dryly).
@@ -814,6 +828,7 @@ ty_adverb(english, empirically, empirically).
 ty_adverb(english, emulously, emulously).
 ty_adverb(english, enchantingly, enchantingly).
 ty_adverb(english, encouragingly, encouragingly).
+ty_adverb(english, 'end-to-end', 'end-to-end').
 ty_adverb(english, endearingly, endearingly).
 ty_adverb(english, endlessly, endlessly).
 ty_adverb(english, endogenously, endogenously).
@@ -908,6 +923,7 @@ ty_adverb(english, exuberantly, exuberantly).
 ty_adverb(english, exultantly, exultantly).
 ty_adverb(english, exultingly, exultingly).
 ty_adverb(english, fabulously, fabulously).
+ty_adverb(english, 'face-to-face', 'face-to-face').
 ty_adverb(english, facetiously, facetiously).
 ty_adverb(english, facially, facially).
 ty_adverb(english, factually, factually).
@@ -971,6 +987,7 @@ ty_adverb(english, finitely, finitely).
 ty_adverb(english, firm, firm).
 ty_adverb(english, firmly, firmly).
 ty_adverb(english, first, first).
+ty_adverb(english, 'first-rate', 'first-rate').
 ty_adverb(english, firstly, firstly).
 ty_adverb(english, fiscally, fiscally).
 ty_adverb(english, fishily, fishily).
@@ -988,6 +1005,7 @@ ty_adverb(english, flawlessly, flawlessly).
 ty_adverb(english, fleetly, fleetly).
 ty_adverb(english, flexibly, flexibly).
 ty_adverb(english, flimsily, flimsily).
+ty_adverb(english, 'flip-flap', 'flip-flap').
 ty_adverb(english, flippantly, flippantly).
 ty_adverb(english, flirtatiously, flirtatiously).
 ty_adverb(english, floridly, floridly).
@@ -1054,6 +1072,7 @@ ty_adverb(english, frumpily, frumpily).
 ty_adverb(english, frumpishly, frumpishly).
 ty_adverb(english, fugally, fugally).
 ty_adverb(english, full, full).
+ty_adverb(english, 'full-time', 'full-time').
 ty_adverb(english, fully, fully).
 ty_adverb(english, fulsomely, fulsomely).
 ty_adverb(english, functionally, functionally).
@@ -1109,6 +1128,7 @@ ty_adverb(english, glowingly, glowingly).
 ty_adverb(english, glumly, glumly).
 ty_adverb(english, gluttonously, gluttonously).
 ty_adverb(english, good, good).
+ty_adverb(english, 'good-naturedly', 'good-naturedly').
 ty_adverb(english, gorgeously, gorgeously).
 ty_adverb(english, governmentally, governmentally).
 ty_adverb(english, gracefully, gracefully).
@@ -1152,6 +1172,12 @@ ty_adverb(english, gutturally, gutturally).
 ty_adverb(english, habitually, habitually).
 ty_adverb(english, haggardly, haggardly).
 ty_adverb(english, half, half).
+ty_adverb(english, 'half-and-half', 'half-and-half').
+ty_adverb(english, 'half-heartedly', 'half-heartedly').
+ty_adverb(english, 'half-hourly', 'half-hourly').
+ty_adverb(english, 'half-price', 'half-price').
+ty_adverb(english, 'half-time', 'half-time').
+ty_adverb(english, 'half-yearly', 'half-yearly').
 ty_adverb(english, halfway, halfway).
 ty_adverb(english, haltingly, haltingly).
 ty_adverb(english, handily, handily).
@@ -1167,11 +1193,14 @@ ty_adverb(english, harmlessly, harmlessly).
 ty_adverb(english, harmonically, harmonically).
 ty_adverb(english, harmoniously, harmoniously).
 ty_adverb(english, harshly, harshly).
+ty_adverb(english, 'harum-scarum', 'harum-scarum').
 ty_adverb(english, hastily, hastily).
 ty_adverb(english, hatefully, hatefully).
 ty_adverb(english, haughtily, haughtily).
 ty_adverb(english, hazardously, hazardously).
 ty_adverb(english, hazily, hazily).
+ty_adverb(english, 'head-on', 'head-on').
+ty_adverb(english, 'head-to-head', 'head-to-head').
 ty_adverb(english, headlong, headlong).
 ty_adverb(english, healthily, healthily).
 ty_adverb(english, heartily, heartily).
@@ -1185,9 +1214,11 @@ ty_adverb(english, hectically, hectically).
 ty_adverb(english, heedfully, heedfully).
 ty_adverb(english, heedlessly, heedlessly).
 ty_adverb(english, heinously, heinously).
+ty_adverb(english, 'hell-for-leather', 'hell-for-leather').
 ty_adverb(english, hellishly, hellishly).
 ty_adverb(english, helpfully, helpfully).
 ty_adverb(english, helplessly, helplessly).
+ty_adverb(english, 'helter-skelter', 'helter-skelter').
 ty_adverb(english, hence, hence).
 ty_adverb(english, henceforth, henceforth).
 ty_adverb(english, henceforward, henceforward).
@@ -1211,7 +1242,10 @@ ty_adverb(english, hesitatingly, hesitatingly).
 ty_adverb(english, hideously, hideously).
 ty_adverb(english, hierarchically, hierarchically).
 ty_adverb(english, hieroglyphically, hieroglyphically).
+ty_adverb(english, 'higgledy-piggledy', 'higgledy-piggledy').
 ty_adverb(english, high, high).
+ty_adverb(english, 'high-handedly', 'high-handedly').
+ty_adverb(english, 'high-mindedly', 'high-mindedly').
 ty_adverb(english, highly, highly).
 ty_adverb(english, hilariously, hilariously).
 ty_adverb(english, hinderingly, hinderingly).
@@ -1242,6 +1276,7 @@ ty_adverb(english, hotly, hotly).
 ty_adverb(english, however, however).
 ty_adverb(english, huffily, huffily).
 ty_adverb(english, hugely, hugely).
+ty_adverb(english, 'hugger-mugger', 'hugger-mugger').
 ty_adverb(english, humanely, humanely).
 ty_adverb(english, humanly, humanly).
 ty_adverb(english, humbly, humbly).
@@ -1570,6 +1605,8 @@ ty_adverb(english, kinda, kinda).
 ty_adverb(english, kindly, kindly).
 ty_adverb(english, kinesthetically, kinesthetically).
 ty_adverb(english, knavishly, knavishly).
+ty_adverb(english, 'knee-deep', 'knee-deep').
+ty_adverb(english, 'knee-high', 'knee-high').
 ty_adverb(english, knowingly, knowingly).
 ty_adverb(english, laboriously, laboriously).
 ty_adverb(english, lackadaisically, lackadaisically).
@@ -1620,6 +1657,9 @@ ty_adverb(english, licentiously, licentiously).
 ty_adverb(english, licitly, licitly).
 ty_adverb(english, lief, lief).
 ty_adverb(english, lifelessly, lifelessly).
+ty_adverb(english, 'light-handedly', 'light-handedly').
+ty_adverb(english, 'light-headedly', 'light-headedly').
+ty_adverb(english, 'light-heartedly', 'light-heartedly').
 ty_adverb(english, lightly, lightly).
 ty_adverb(english, lightsomely, lightsomely).
 ty_adverb(english, likely, likely).
@@ -1645,6 +1685,7 @@ ty_adverb(english, logarithmically, logarithmically).
 ty_adverb(english, logically, logically).
 ty_adverb(english, logogrammatically, logogrammatically).
 ty_adverb(english, long, long).
+ty_adverb(english, 'long-windedly', 'long-windedly').
 ty_adverb(english, longer, longer).
 ty_adverb(english, longest, longest).
 ty_adverb(english, longingly, longingly).
@@ -1688,6 +1729,7 @@ ty_adverb(english, malevolently, malevolently).
 ty_adverb(english, maliciously, maliciously).
 ty_adverb(english, malignantly, malignantly).
 ty_adverb(english, malignly, malignly).
+ty_adverb(english, 'man-to-man', 'man-to-man').
 ty_adverb(english, manageably, manageably).
 ty_adverb(english, managerially, managerially).
 ty_adverb(english, mandatorily, mandatorily).
@@ -1825,6 +1867,7 @@ ty_adverb(english, mystically, mystically).
 ty_adverb(english, naively, naively).
 ty_adverb(english, nakedly, nakedly).
 ty_adverb(english, namely, namely).
+ty_adverb(english, 'narrow-mindedly', 'narrow-mindedly').
 ty_adverb(english, narrowly, narrowly).
 ty_adverb(english, nasally, nasally).
 ty_adverb(english, nastily, nastily).
@@ -1865,6 +1908,7 @@ ty_adverb(english, nohow, nohow).
 ty_adverb(english, noiselessly, noiselessly).
 ty_adverb(english, noisily, noisily).
 ty_adverb(english, nominally, nominally).
+ty_adverb(english, 'non-verbally', 'non-verbally').
 ty_adverb(english, nonchalantly, nonchalantly).
 ty_adverb(english, noncompetitively, noncompetitively).
 ty_adverb(english, noncomprehensively, noncomprehensively).
@@ -1875,6 +1919,10 @@ ty_adverb(english, nonverbally, nonverbally).
 ty_adverb(english, nonviolently, nonviolently).
 ty_adverb(english, normally, normally).
 ty_adverb(english, north, north).
+ty_adverb(english, 'north-east', 'north-east').
+ty_adverb(english, 'north-northeast', 'north-northeast').
+ty_adverb(english, 'north-northwest', 'north-northwest').
+ty_adverb(english, 'north-west', 'north-west').
 ty_adverb(english, northeastward, northeastward).
 ty_adverb(english, northeastwardly, northeastwardly).
 ty_adverb(english, northward, northward).
@@ -1920,6 +1968,8 @@ ty_adverb(english, obviously, obviously).
 ty_adverb(english, occasionally, occasionally).
 ty_adverb(english, oddly, oddly).
 ty_adverb(english, odiously, odiously).
+ty_adverb(english, 'off-hand', 'off-hand').
+ty_adverb(english, 'off-the-clock', 'off-the-clock').
 ty_adverb(english, offensively, offensively).
 ty_adverb(english, offhandedly, offhandedly).
 ty_adverb(english, officially, officially).
@@ -1932,6 +1982,8 @@ ty_adverb(english, ofttimes, ofttimes).
 ty_adverb(english, ominously, ominously).
 ty_adverb(english, onboard, onboard).
 ty_adverb(english, once, once).
+ty_adverb(english, 'one-on-one', 'one-on-one').
+ty_adverb(english, 'one-sidedly', 'one-sidedly').
 ty_adverb(english, onerously, onerously).
 ty_adverb(english, onshore, onshore).
 ty_adverb(english, onwards, onwards).
@@ -1998,6 +2050,7 @@ ty_adverb(english, parenterally, parenterally).
 ty_adverb(english, parenthetically, parenthetically).
 ty_adverb(english, parochially, parochially).
 ty_adverb(english, part, part).
+ty_adverb(english, 'part-time', 'part-time').
 ty_adverb(english, partially, partially).
 ty_adverb(english, particularly, particularly).
 ty_adverb(english, partly, partly).
@@ -2024,6 +2077,7 @@ ty_adverb(english, pedagogically, pedagogically).
 ty_adverb(english, pedantically, pedantically).
 ty_adverb(english, peevishly, peevishly).
 ty_adverb(english, pejoratively, pejoratively).
+ty_adverb(english, 'pell-mell', 'pell-mell').
 ty_adverb(english, pellucidly, pellucidly).
 ty_adverb(english, penally, penally).
 ty_adverb(english, penetratingly, penetratingly).
@@ -2056,6 +2110,7 @@ ty_adverb(english, perpetually, perpetually).
 ty_adverb(english, perplexedly, perplexedly).
 ty_adverb(english, perseveringly, perseveringly).
 ty_adverb(english, persistently, persistently).
+ty_adverb(english, 'person-to-person', 'person-to-person').
 ty_adverb(english, personally, personally).
 ty_adverb(english, perspicuously, perspicuously).
 ty_adverb(english, persuasively, persuasively).
@@ -2085,17 +2140,23 @@ ty_adverb(english, pickaback, pickaback).
 ty_adverb(english, pictorially, pictorially).
 ty_adverb(english, picturesquely, picturesquely).
 ty_adverb(english, piercingly, piercingly).
+ty_adverb(english, 'pig-a-back', 'pig-a-back').
+ty_adverb(english, 'pig-headedly', 'pig-headedly').
 ty_adverb(english, piggishly, piggishly).
 ty_adverb(english, piggyback, piggyback).
 ty_adverb(english, pinnately, pinnately).
 ty_adverb(english, piously, piously).
 ty_adverb(english, piquantly, piquantly).
 ty_adverb(english, piratically, piratically).
+ty_adverb(english, 'pit-a-pat', 'pit-a-pat').
 ty_adverb(english, piteously, piteously).
 ty_adverb(english, pithily, pithily).
 ty_adverb(english, pitiably, pitiably).
 ty_adverb(english, pitifully, pitifully).
 ty_adverb(english, pitilessly, pitilessly).
+ty_adverb(english, 'pitter-patter', 'pitter-patter').
+ty_adverb(english, 'pitty-pat', 'pitty-pat').
+ty_adverb(english, 'pitty-patty', 'pitty-patty').
 ty_adverb(english, pityingly, pityingly).
 ty_adverb(english, placatingly, placatingly).
 ty_adverb(english, placidly, placidly).
@@ -2121,6 +2182,7 @@ ty_adverb(english, plumb, plumb).
 ty_adverb(english, pneumatically, pneumatically).
 ty_adverb(english, poetically, poetically).
 ty_adverb(english, poignantly, poignantly).
+ty_adverb(english, 'point-blank', 'point-blank').
 ty_adverb(english, pointedly, pointedly).
 ty_adverb(english, pointlessly, pointlessly).
 ty_adverb(english, poisonously, poisonously).
@@ -2140,6 +2202,9 @@ ty_adverb(english, portentously, portentously).
 ty_adverb(english, positively, positively).
 ty_adverb(english, possessively, possessively).
 ty_adverb(english, possibly, possibly).
+ty_adverb(english, 'post-free', 'post-free').
+ty_adverb(english, 'post-haste', 'post-haste').
+ty_adverb(english, 'post-paid', 'post-paid').
 ty_adverb(english, posthumously, posthumously).
 ty_adverb(english, postoperatively, postoperatively).
 ty_adverb(english, potentially, potentially).
@@ -2151,6 +2216,7 @@ ty_adverb(english, practicably, practicably).
 ty_adverb(english, practically, practically).
 ty_adverb(english, pragmatically, pragmatically).
 ty_adverb(english, praiseworthily, praiseworthily).
+ty_adverb(english, 'pre-eminently', 'pre-eminently').
 ty_adverb(english, precariously, precariously).
 ty_adverb(english, precedentedly, precedentedly).
 ty_adverb(english, preciously, preciously).
@@ -2311,6 +2377,7 @@ ty_adverb(english, reciprocally, reciprocally).
 ty_adverb(english, recklessly, recklessly).
 ty_adverb(english, recognizably, recognizably).
 ty_adverb(english, recurrently, recurrently).
+ty_adverb(english, 'red-handed', 'red-handed').
 ty_adverb(english, redly, redly).
 ty_adverb(english, reflectively, reflectively).
 ty_adverb(english, reflexly, reflexly).
@@ -2335,6 +2402,7 @@ ty_adverb(english, reminiscently, reminiscently).
 ty_adverb(english, remorsefully, remorsefully).
 ty_adverb(english, remorselessly, remorselessly).
 ty_adverb(english, remotely, remotely).
+ty_adverb(english, 'rent-free', 'rent-free').
 ty_adverb(english, repeatedly, repeatedly).
 ty_adverb(english, repellently, repellently).
 ty_adverb(english, repellingly, repellingly).
@@ -2382,6 +2450,7 @@ ty_adverb(english, rhythmically, rhythmically).
 ty_adverb(english, richly, richly).
 ty_adverb(english, ridiculously, ridiculously).
 ty_adverb(english, right, right).
+ty_adverb(english, 'right-down', 'right-down').
 ty_adverb(english, righteously, righteously).
 ty_adverb(english, rightfully, rightfully).
 ty_adverb(english, rightly, rightly).
@@ -2402,6 +2471,7 @@ ty_adverb(english, rotundly, rotundly).
 ty_adverb(english, rough, rough).
 ty_adverb(english, roughly, roughly).
 ty_adverb(english, round, round).
+ty_adverb(english, 'round-arm', 'round-arm').
 ty_adverb(english, roundly, roundly).
 ty_adverb(english, routinely, routinely).
 ty_adverb(english, rowdily, rowdily).
@@ -2456,6 +2526,7 @@ ty_adverb(english, searchingly, searchingly).
 ty_adverb(english, seasonably, seasonably).
 ty_adverb(english, seasonally, seasonally).
 ty_adverb(english, second, second).
+ty_adverb(english, 'second-best', 'second-best').
 ty_adverb(english, secondarily, secondarily).
 ty_adverb(english, secondhand, secondhand).
 ty_adverb(english, secondly, secondly).
@@ -2469,6 +2540,11 @@ ty_adverb(english, see, see).
 ty_adverb(english, seemingly, seemingly).
 ty_adverb(english, seldom, seldom).
 ty_adverb(english, selectively, selectively).
+ty_adverb(english, 'self-conceitedly', 'self-conceitedly').
+ty_adverb(english, 'self-consciously', 'self-consciously').
+ty_adverb(english, 'self-evidently', 'self-evidently').
+ty_adverb(english, 'self-indulgently', 'self-indulgently').
+ty_adverb(english, 'self-righteously', 'self-righteously').
 ty_adverb(english, selfishly, selfishly).
 ty_adverb(english, selflessly, selflessly).
 ty_adverb(english, semantically, semantically).
@@ -2510,6 +2586,7 @@ ty_adverb(english, shockingly, shockingly).
 ty_adverb(english, shoddily, shoddily).
 ty_adverb(english, short, short).
 ty_adverb(english, shortly, shortly).
+ty_adverb(english, 'shoulder-to-shoulder', 'shoulder-to-shoulder').
 ty_adverb(english, showily, showily).
 ty_adverb(english, shrewdly, shrewdly).
 ty_adverb(english, shrewishly, shrewishly).
@@ -2533,6 +2610,9 @@ ty_adverb(english, simperingly, simperingly).
 ty_adverb(english, simply, simply).
 ty_adverb(english, simultaneously, simultaneously).
 ty_adverb(english, sincerely, sincerely).
+ty_adverb(english, 'single-handed', 'single-handed').
+ty_adverb(english, 'single-handedly', 'single-handedly').
+ty_adverb(english, 'single-mindedly', 'single-mindedly').
 ty_adverb(english, singly, singly).
 ty_adverb(english, singularly, singularly).
 ty_adverb(english, sinuously, sinuously).
@@ -2540,17 +2620,21 @@ ty_adverb(english, sinusoidally, sinusoidally).
 ty_adverb(english, sixthly, sixthly).
 ty_adverb(english, skeptically, skeptically).
 ty_adverb(english, sketchily, sketchily).
+ty_adverb(english, 'skew-whiff', 'skew-whiff').
 ty_adverb(english, skilfully, skilfully).
 ty_adverb(english, skillfully, skillfully).
 ty_adverb(english, skimpily, skimpily).
 ty_adverb(english, skittishly, skittishly).
+ty_adverb(english, 'sky-high', 'sky-high').
 ty_adverb(english, skywards, skywards).
 ty_adverb(english, slackly, slackly).
+ty_adverb(english, 'slam-bang', 'slam-bang').
 ty_adverb(english, slanderously, slanderously).
 ty_adverb(english, slangily, slangily).
 ty_adverb(english, slantingly, slantingly).
 ty_adverb(english, slantways, slantways).
 ty_adverb(english, slantwise, slantwise).
+ty_adverb(english, 'slap-bang', 'slap-bang').
 ty_adverb(english, slavishly, slavishly).
 ty_adverb(english, sleekly, sleekly).
 ty_adverb(english, sleepily, sleepily).
@@ -2569,6 +2653,7 @@ ty_adverb(english, slower, slower).
 ty_adverb(english, slowest, slowest).
 ty_adverb(english, sluggishly, sluggishly).
 ty_adverb(english, slyly, slyly).
+ty_adverb(english, 'small-mindedly', 'small-mindedly').
 ty_adverb(english, smarmily, smarmily).
 ty_adverb(english, smartly, smartly).
 ty_adverb(english, smashingly, smashingly).
@@ -2586,6 +2671,7 @@ ty_adverb(english, snidely, snidely).
 ty_adverb(english, snobbishly, snobbishly).
 ty_adverb(english, snootily, snootily).
 ty_adverb(english, snugly, snugly).
+ty_adverb(english, 'so-so', 'so-so').
 ty_adverb(english, sobbingly, sobbingly).
 ty_adverb(english, soberly, soberly).
 ty_adverb(english, sociably, sociably).
@@ -2630,6 +2716,10 @@ ty_adverb(english, soundlessly, soundlessly).
 ty_adverb(english, soundly, soundly).
 ty_adverb(english, sourly, sourly).
 ty_adverb(english, south, south).
+ty_adverb(english, 'south-east', 'south-east').
+ty_adverb(english, 'south-southeast', 'south-southeast').
+ty_adverb(english, 'south-southwest', 'south-southwest').
+ty_adverb(english, 'south-west', 'south-west').
 ty_adverb(english, southeast, southeast).
 ty_adverb(english, southeastward, southeastward).
 ty_adverb(english, southeastwardly, southeastwardly).
@@ -2696,6 +2786,7 @@ ty_adverb(english, stiltedly, stiltedly).
 ty_adverb(english, stingily, stingily).
 ty_adverb(english, stirringly, stirringly).
 ty_adverb(english, stochastically, stochastically).
+ty_adverb(english, 'stock-still', 'stock-still').
 ty_adverb(english, stockily, stockily).
 ty_adverb(english, stodgily, stodgily).
 ty_adverb(english, stoically, stoically).
@@ -2705,6 +2796,7 @@ ty_adverb(english, stormily, stormily).
 ty_adverb(english, stoutly, stoutly).
 ty_adverb(english, stragglingly, stragglingly).
 ty_adverb(english, straight, straight).
+ty_adverb(english, 'straight-backed', 'straight-backed').
 ty_adverb(english, straightaway, straightaway).
 ty_adverb(english, straightforwardly, straightforwardly).
 ty_adverb(english, straightway, straightway).
@@ -2877,6 +2969,7 @@ ty_adverb(english, thither, thither).
 ty_adverb(english, thoroughly, thoroughly).
 ty_adverb(english, thoughtfully, thoughtfully).
 ty_adverb(english, thoughtlessly, thoughtlessly).
+ty_adverb(english, 'thousand-fold', 'thousand-fold').
 ty_adverb(english, threateningly, threateningly).
 ty_adverb(english, thrice, thrice).
 ty_adverb(english, thriftily, thriftily).
@@ -2889,20 +2982,25 @@ ty_adverb(english, tightly, tightly).
 ty_adverb(english, timely, timely).
 ty_adverb(english, timidly, timidly).
 ty_adverb(english, timorously, timorously).
+ty_adverb(english, 'tip-top', 'tip-top').
 ty_adverb(english, tiptoe, tiptoe).
 ty_adverb(english, tiredly, tiredly).
 ty_adverb(english, tirelessly, tirelessly).
 ty_adverb(english, tiresomely, tiresomely).
+ty_adverb(english, 'toe-to-toe', 'toe-to-toe').
 ty_adverb(english, together, together).
 ty_adverb(english, tolerably, tolerably).
 ty_adverb(english, tolerantly, tolerantly).
 ty_adverb(english, tomorrow, tomorrow).
 ty_adverb(english, tonelessly, tonelessly).
+ty_adverb(english, 'tongue-in-cheek', 'tongue-in-cheek').
 ty_adverb(english, tonight, tonight).
 ty_adverb(english, topically, topically).
 ty_adverb(english, topographically, topographically).
 ty_adverb(english, topologically, topologically).
 ty_adverb(english, toppingly, toppingly).
+ty_adverb(english, 'topsy-turvily', 'topsy-turvily').
+ty_adverb(english, 'topsy-turvy', 'topsy-turvy').
 ty_adverb(english, torpidly, torpidly).
 ty_adverb(english, tortuously, tortuously).
 ty_adverb(english, torturously, torturously).
@@ -3165,6 +3263,7 @@ ty_adverb(english, unwisely, unwisely).
 ty_adverb(english, unwittingly, unwittingly).
 ty_adverb(english, unwontedly, unwontedly).
 ty_adverb(english, unworthily, unworthily).
+ty_adverb(english, 'up-country', 'up-country').
 ty_adverb(english, uppishly, uppishly).
 ty_adverb(english, uprightly, uprightly).
 ty_adverb(english, upriver, upriver).
@@ -3218,6 +3317,7 @@ ty_adverb(english, violently, violently).
 ty_adverb(english, virtually, virtually).
 ty_adverb(english, virtuously, virtuously).
 ty_adverb(english, virulently, virulently).
+ty_adverb(english, 'vis-a-vis', 'vis-a-vis').
 ty_adverb(english, viscerally, viscerally).
 ty_adverb(english, viscidly, viscidly).
 ty_adverb(english, visibly, visibly).
@@ -3240,7 +3340,10 @@ ty_adverb(english, voyeuristically, voyeuristically).
 ty_adverb(english, vulgarly, vulgarly).
 ty_adverb(english, vulnerably, vulnerably).
 ty_adverb(english, wackily, wackily).
+ty_adverb(english, 'wafer-thin', 'wafer-thin').
 ty_adverb(english, waggishly, waggishly).
+ty_adverb(english, 'waist-deep', 'waist-deep').
+ty_adverb(english, 'waist-high', 'waist-high').
 ty_adverb(english, wanly, wanly).
 ty_adverb(english, wantonly, wantonly).
 ty_adverb(english, warily, warily).
@@ -3255,6 +3358,8 @@ ty_adverb(english, wearily, wearily).
 ty_adverb(english, weightily, weightily).
 ty_adverb(english, weirdly, weirdly).
 ty_adverb(english, well, well).
+ty_adverb(english, 'well-nigh', 'well-nigh').
+ty_adverb(english, 'well-timed', 'well-timed').
 ty_adverb(english, west, west).
 ty_adverb(english, westerly, westerly).
 ty_adverb(english, westward, westward).
@@ -3277,6 +3382,7 @@ ty_adverb(english, wildly, wildly).
 ty_adverb(english, wilfully, wilfully).
 ty_adverb(english, willfully, willfully).
 ty_adverb(english, willingly, willingly).
+ty_adverb(english, 'willy-nilly', 'willy-nilly').
 ty_adverb(english, windily, windily).
 ty_adverb(english, winsomely, winsomely).
 ty_adverb(english, wisely, wisely).
