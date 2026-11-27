@@ -96,6 +96,7 @@ main :-
     grading_words,
     unsaid_copula,
     small_words,
+    but_words,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -807,6 +808,16 @@ small_words :-
     typology_load(english),
     logic_translate(english, cocolog, 'The economic growth overjoyed the German industry.', C1),
     must('the german industry', C1, 'past(overjoy(the(economic(growth)), the(german(industry)))).\n').
+
+
+%% 67. TWO ADJECTIVES BUT JOINS (1.134.0) are each a predicate, as two
+%% `and' joins are: the `but' says a contrast, which no fact keeps.
+but_words :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'His shooting was slow but accurate.', C1),
+    must('slow but accurate', C1, 'past(slow(of(shooting, he))).\npast(accurate(of(shooting, he))).\n'),
+    logic_translate(english, cocolog, 'Don\'t overload the car.', C2),
+    must('don\'t', C2, 'is_not(imperative(overload(you, the(car)))).\n').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

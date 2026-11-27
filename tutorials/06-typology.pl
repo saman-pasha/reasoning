@@ -192,6 +192,7 @@ main :-
     grading_words,
     unsaid_copula,
     small_words,
+    but_words,
     format("~ndone~n", []).
 
 
@@ -1522,6 +1523,20 @@ small_words :-
     must('the julian calendar', IR2, phrase(np(calendar, sg, def, [julian]))),
     typology_write(english, IR1, W1),
     must('written', W1, 'A pyrrhic victory.').
+
+
+%% 103. BUT JOINS TWO ADJECTIVES OR TWO ADVERBS (1.134.0), as `and' joins
+%% them: but([A, B]) where an adjective or an adverb stands, before a noun
+%% and in a copula's predicate. `Don't' begins a command, written `Do not'.
+but_words :-
+    typology_load(english),
+    typology_read(english, 'An intelligent but argumentative child.', IR1),
+    must('intelligent but argumentative', IR1, phrase(np(child, sg, indef, [but([intelligent, argumentative])]))),
+    typology_read(english, 'His shooting was slow but accurate.', IR2),
+    must('slow but accurate', IR2, copula(past, pos, of(pron(3, sg, m), np(shooting, sg, def, [])), adj([but([slow, accurate])]))),
+    typology_read(english, 'Don\'t overload the car.', IR3),
+    typology_write(english, IR3, W3),
+    must('don\'t, written', W3, 'Do not overload the car.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

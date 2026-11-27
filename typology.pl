@@ -5613,7 +5613,8 @@ ty_adjunct_item(L, W) --> { nonvar(W), W = wh(M), ty_wh_adjunct(M) }, ty_wh_word
 ty_adjunct_item(L, adv(M)) --> [W], { ty_adverb(L, M, W), ( '$ty_padv'(W, L) -> ty_padv_adverb_ok(L, W) ; true ) }, ty_meant(L, adverb(M), [W]).
 
 %% ADVERBS JOINED (since 1.61.0): adv(and(Ms)), adv(or(Ms)) (`politically
-%% and economically'), written `A, B and C'.
+%% and economically'), written `A, B and C'; since 1.134.0 adv(but([A, B]))
+%% (`gradually but imperceptibly').
 ty_adjunct_item(L, adv(C)) -->
     ty_coord_here,
     { ty_coord_adj_slot(C, K, Ms) },
@@ -6795,6 +6796,17 @@ ty_predicate_in(L, adj(As), Rows) -->
 %% A comma before the last one's `and', after a comma, is read where
 %% ty_serial_comma/1 says (since 1.59.0: `red, blue, and yellow').
 ty_pred_adjs(L, [A|As], [R|Rs]) --> ty_adjs(L, [A], [R]), ty_pred_more(L, As, Rs, first).
+
+%% Two adjectives joined by a conjunction that is no `and' (since
+%% 1.134.0): adj([but([A, B])]), adj([or([A, B])]) (`His shooting was slow
+%% but accurate.'), each item one adjective.
+ty_pred_adjs(L, [C], Rows) -->
+    ty_coord_here,
+    { \+ nb_current('$ty_adj_items', yes), ty_coord_adj_slot(C, K, Bs), K \== and },
+    ty_coord_ahead(L, K),
+    { b_setval('$ty_adj_items', yes) },
+    ty_adj_items(L, K, Bs, Rows, plain),
+    { b_setval('$ty_adj_items', no) }.
 
 ty_pred_more(_, [], [], _) --> [].
 ty_pred_more(L, [A], [R], At) --> ty_serial_mark(L, At), ty_and_words(L), ty_adjs(L, [A], [R]).
@@ -8984,11 +8996,15 @@ ty_adjs(L, [ap(A, inf(V, O, Js))], [R]) -->
     ty_infinitive(L, V, O, Js).
 
 %% What a joined adjective's or adverb's slot may hold, reading (unbound:
-%% and, then or) or writing.
+%% and, then or, then but) or writing. BUT JOINS TWO (since 1.134.0):
+%% but([A, B]), `an intelligent but argumentative child', `slow but
+%% accurate', `gradually but imperceptibly'.
 ty_coord_adj_slot(C, K, Bs) :-
-    (   var(C) -> member(K, [and, or]), C =.. [K, Bs]
-    ;   C =.. [K, Bs], memberchk(K, [and, or]), is_list(Bs)
+    (   var(C) -> member(K, [and, or, but]), ty_coord_adj_items(K, Bs), C =.. [K, Bs]
+    ;   C =.. [K, Bs], memberchk(K, [and, or, but]), is_list(Bs), ty_coord_adj_items(K, Bs)
     ).
+
+ty_coord_adj_items(K, Bs) :- ( K == but -> Bs = [_, _] ; true ).
 
 ty_adj_items(L, K, [A|As], [R|Rs], D) -->
     ty_adjs(L, [A], [R], none, D),
@@ -9027,7 +9043,8 @@ ty_adjs(L, [A|As], [adj(G, N)|Rows], End, decl(D, GN)) -->
 %% ADJECTIVES JOINED (since 1.61.0): and(As) or or(As) as one adjective of
 %% a noun phrase (`a vicious and degrading cult', `un culto vicioso y
 %% degradante'), each in its own form, agreeing with the noun, written `A,
-%% B and C'. An item is one adjective ('$ty_adj_items' while the items are
+%% B and C'; since 1.134.0 but([A, B]), two alone (`an intelligent but
+%% argumentative child'). An item is one adjective ('$ty_adj_items' while the items are
 %% read), so no rule calls itself before a word is read.
 ty_adjs(L, [C|As], Rows, End, D) -->
     ty_coord_here,

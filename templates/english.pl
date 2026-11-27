@@ -567,6 +567,8 @@ ty_participle_like(english, past, sg).
 %% inside a command was lost (ty_person_form/5 takes a key's own rows first).
 ty_tense_form(english, imperative, pl, pos, [form(present, pl)]).
 ty_tense_form(english, imperative, pl, neg, [do, not, form(present, pl)]).
+%% `Don't' before a command (since 1.134.0), read and written `Do not'.
+ty_tense_form(english, imperative, pl, neg, ['don''t', form(present, pl)]).
 %% An infinitive (since 1.95.0) is `to' and the present's plural form, a
 %% verb's object (`He tried to catch her eye.').
 ty_tense_form(english, infinitive, any, pos, [to, form(present, pl)]).

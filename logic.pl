@@ -848,7 +848,7 @@ lg_adjunct(Inf, S, [pp(to, F)], []) :- lg_inf_parts(Inf, V2, O2, Js2), !,
 lg_adjunct(pp(P, NP), _, [pp(P, T)], Os) :- atom(P), !,
     lg_arg(adjunct, NP, T, _, Os).
 lg_adjunct(adv(M), _, [adv(M)], []) :- atom(M), !.
-lg_adjunct(adv(and(Ms)), _, Ks, []) :- is_list(Ms), forall(member(M, Ms), atom(M)), !,
+lg_adjunct(adv(C), _, Ks, []) :- nonvar(C), ( C = and(Ms) ; C = but(Ms) ), is_list(Ms), forall(member(M, Ms), atom(M)), !,
     findall(adv(M), member(M, Ms), Ks).
 lg_adjunct(J, _, _, _) :- lg_no(adjunct(J)).
 
@@ -1081,7 +1081,7 @@ lg_adjectives([A|As], Ms) :-
 
 lg_adjective(A, M) :-
     (   atom(A) -> M = A
-    ;   nonvar(A), A = and(Bs) -> member(M, Bs)
+    ;   nonvar(A), ( A = and(Bs) ; A = but(Bs) ) -> member(M, Bs)
     ;   nonvar(A), A = n(X), atom(X) -> M = A
     ;   nonvar(A), A = adv(Ad, B), atom(Ad), atom(B) -> M = A
     ;   lg_no(predicate(adj(A)))

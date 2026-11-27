@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words, but_words,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2758,6 +2758,42 @@ article_names :-
 %% adposition and as an object, its adjectives joined, an emphatic subject
 %% of a verb that asks an animate one, `of' after a verb of the
 %% of_adjunct list (with no object) or of the of_object list.
+%% 1.134.0: `but' joins two adjectives or two adverbs, as `and' joins
+%% them, and `Don't' begins a command.
+but_words :-
+    section('but joining two adjectives or adverbs, and Don\'t before a command'),
+    forall(member(T-Want, [
+               'An intelligent but argumentative child.'-phrase(np(child, sg, indef, [but([intelligent, argumentative])])),
+               'A roomy but sparsely furnished apartment.'-phrase(np(apartment, sg, indef, [but([roomy, adv(sparsely, furnished)])])),
+               'His shooting was slow but accurate.'-copula(past, pos, of(pron(3, sg, m), np(shooting, sg, def, [])), adj([but([slow, accurate])])),
+               'His shooting was slow or accurate.'-copula(past, pos, of(pron(3, sg, m), np(shooting, sg, def, [])), adj([or([slow, accurate])])),
+               'The power increased gradually but imperceptibly.'-clause(increase, past, pos, np(power, sg, def, []), none, [adv(but([gradually, imperceptibly]))]),
+               'Her feelings are dormant but easily awakened.'-copula(present, pos, of(pron(3, sg, f), np(feeling, pl, def, [])), adj([but([dormant, adv(easily, awakened)])])),
+               'Don\'t overload the car.'-clause(overload, imperative, neg, pron(2, sg, _), np(car, sg, def, [])),
+               'The dog is small and black.'-copula(present, pos, np(dog, sg, def, []), adj([small, black])) ]),
+           ( ( once(typology_read(english, T, R)) -> true ; R = none ),
+             ( R = Want -> V = yes ; V = R ),
+             atomic_list_concat(['English, the first reading: ', T], Label),
+             check(Label, V, yes) )),
+    ( once(typology_read(english, 'The dog is small, black but old.', R2)) -> true ; R2 = none ),
+    check('but joins two, no list', R2, none),
+    ( typology_write(english, clause(overload, imperative, neg, pron(2, sg, _), np(car, sg, def, [])), W) -> true ; W = none ),
+    check('Don\'t is written Do not', W, 'Do not overload the car.'),
+    forall(member(L-IR-Want3, [
+               spanish-copula(present, pos, np(dog, sg, def, []), adj([but([small, black])]))-'El perro es pequeño pero negro.',
+               italian-copula(present, pos, np(dog, sg, def, []), adj([but([small, black])]))-'Il cane è piccolo ma nero.',
+               french-clause(see, present, pos, np(boy, sg, def, []), np(dog, sg, indef, [but([small, black])]))-'Le garçon voit un chien petit mais noir.',
+               german-clause(see, present, pos, np(boy, sg, def, []), np(dog, sg, indef, [but([small, black])]))-'Der Junge sieht einen kleinen aber schwarzen Hund.',
+               persian-copula(present, pos, np(dog, sg, def, []), adj([but([small, black])]))-'سگ کوچک اما سیاه است.' ]),
+           ( typology_load(L),
+             ( typology_write(L, IR, W3) -> true ; W3 = none ),
+             atomic_list_concat([L, ', written: ', Want3], Label3),
+             check(Label3, W3, Want3),
+             ( W3 \== none, once(typology_read(L, W3, IR3)) -> true ; IR3 = none ),
+             ( IR3 =@= IR -> V3 = yes ; V3 = IR3 ),
+             atomic_list_concat([L, ', read back: ', Want3], Label4),
+             check(Label4, V3, yes) )).
+
 %% 1.133.0: a capital word inside a sentence is read in small letters
 %% where nothing else reads.
 small_words :-
@@ -3476,8 +3512,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 6237 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 6 237 sentences read at 1.133.0 within 2 000 000 inferences each are read', R1, yes),
+    ( K >= 6253 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 6 253 sentences read at 1.134.0 within 2 000 000 inferences each are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 
