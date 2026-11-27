@@ -530,6 +530,8 @@ ty_predeterminer(english, all, [all]).
 %% `such' before an indefinite noun phrase (since 1.125.0: `such a baby',
 %% `such problems'); level 2 has no form of it yet.
 ty_predeterminer(english, such, [such]).
+%% `only' before any noun phrase (since 1.131.0): `He gave only a crumb.'
+ty_predeterminer(english, only, [only]).
 %% An adjective after `the' alone (since 1.127.0), as a subject, is the
 %% people or things it describes: `The poor knew themselves.'
 ty_adjective_group(english, def).
@@ -733,6 +735,10 @@ ty_adjective_list(english, infinitive, [able, unable, glad, eager, willing, unwi
 %% phrase stands, and though they are nouns' words too (since 1.129.0: `for
 %% the poor', `The living knew themselves.').
 ty_adjective_list(english, group, [poor, rich, living, dead, young, old, new, elderly, sick, wounded, injured, blind, deaf, disabled, unemployed, homeless, hungry, weak, strong, innocent, guilty, brave, accused, deceased, needy, wealthy, meek, faithful, righteous, wicked, unborn, privileged, underprivileged, mighty, lame, halt, maimed, damned, dying, unknown, supernatural, impossible]).
+%% Adjectives' words that grade an adjective before it too, as an adverb
+%% (since 1.131.0): `The building is still unfinished.', `Her beauty is
+%% only skin-deep.'.
+ty_adjective_list(english, grading, [only, still]).
 %% The nouns an infinitive may follow, its subject the one the noun's act
 %% is of (since 1.96.0: `a bid to gain attention', `the right to vote');
 %% after them an infinitive is the noun's, never one of purpose. WordNet
@@ -828,6 +834,7 @@ ty_adverb(english, very, very).
 %% adjective's comparative is one word (ty_comparative/4: `taller',
 %% `happier', `bigger', `larger'), a few of their own (`better').
 ty_adverb(english, more, more).
+ty_adverb(english, most, most).
 %% The adverbs of grammar (since 1.107.0): words ty_closed/2 keeps from the
 %% import, read where an adverb stands, inside or before the verb's words
 %% (`They always raise the audio for commercials.'), before an adjective

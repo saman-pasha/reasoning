@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2757,6 +2757,32 @@ article_names :-
 %% adposition and as an object, its adjectives joined, an emphatic subject
 %% of a verb that asks an animate one, `of' after a verb of the
 %% of_adjunct list (with no object) or of the of_object list.
+%% 1.131.0: an adjective's word of the grading list grades an adjective
+%% (`still', `only'), `most' grades one, and `only' stands before a noun
+%% phrase.
+grading_words :-
+    section('adjectives that grade an adjective, most, only before a noun phrase'),
+    forall(member(T-Want, [
+               'The building is still unfinished.'-copula(present, pos, np(building, sg, def, []), adj([adv(still, unfinished)])),
+               'Her beauty is only skin-deep.'-copula(present, pos, of(pron(3, sg, f), np(beauty, sg, def, [])), adj([adv(only, 'skin-deep')])),
+               'A most persuasive speaker.'-phrase(np(speaker, sg, indef, [adv(most, persuasive)])),
+               'Performed the most challenging task.'-clause(perform, past, pos, pron(3, sg, zero), np(task, sg, def, [adv(most, challenging)])),
+               'He gave only a crumb.'-clause(give, past, pos, pron(3, sg, m), only(np(crumb, sg, indef, []))),
+               'He saw only his mother.'-clause(see, past, pos, pron(3, sg, m), only(of(pron(3, sg, m), np(mother, sg, def, [])))),
+               'Only the crude vital statistics.'-phrase(only(np(statistic, pl, def, [crude, vital]))),
+               'The only child slept.'-clause(sleep, past, pos, np(child, sg, def, [only]), none) ]),
+           ( ( once(typology_read(english, T, R)) -> true ; R = none ),
+             ( R = Want -> V = yes ; V = R ),
+             atomic_list_concat(['English, the first reading: ', T], Label),
+             check(Label, V, yes) )),
+    ( once(typology_read(english, 'He is pretty good.', R2)) -> true ; R2 = none ),
+    check('an adjective of no grading list grades none', R2, none),
+    forall(member(IR-Want2, [ copula(present, pos, np(building, sg, def, []), adj([adv(still, unfinished)]))-'The building is still unfinished.',
+                              clause(give, past, pos, pron(3, sg, m), only(np(crumb, sg, indef, [])))-'He gave only a crumb.',
+                              phrase(np(speaker, sg, indef, [adv(most, persuasive)]))-'A most persuasive speaker.' ]),
+           ( ( typology_write(english, IR, W) -> true ; W = none ),
+             check('written', W, Want2) )).
+
 %% 1.130.0: up, down, out and off as an adverb or an adposition where the
 %% verb has no phrasal row with them; all before a singular noun; a word
 %% that is also another noun's plural read as the plural first.
@@ -3404,8 +3430,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 6147 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 6 147 sentences read at 1.130.0 within 2 000 000 inferences each are read', R1, yes),
+    ( K >= 6171 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 6 171 sentences read at 1.131.0 within 2 000 000 inferences each are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

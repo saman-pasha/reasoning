@@ -590,3 +590,8 @@ The engine chugged down the street.	past(down(chug(the(engine)), the(street))).
 He banked the shot off the backboard.	past(off(bank(he, the(shot)), the(backboard))).
 She sprawled out luxuriously on the sofa.	past(on(luxuriously(out(sprawl(she))), the(sofa))).
 His story brought tears to her eyes.	tear(a(pl(tear))). past(to(bring(of(story, he), a(pl(tear))), of(pl(eye), she))).
+The building is still unfinished.	still(unfinished(the(building))).
+Our lawsuit is still undetermined.	still(undetermined(of(lawsuit, we))).
+The University suspended the most recalcitrant demonstrators.	past(suspend(the_university, the(pl(most(recalcitrant(demonstrator)))))).
+Performed the most challenging task without a mistake.	mistake(a(mistake)). past(without(perform(someone, the(most(challenging(task)))), a(mistake))).
+Her beauty is only skin-deep.	only('skin-deep'(of(beauty, she))).

@@ -131,7 +131,11 @@
 %%                                     the adjectives of lexicon/Base.txt,
 %%                                     or of the list Base, are of Kind
 %%                                     (since 1.96.0; infinitive: one an
-%%                                     infinitive may follow, `able to walk')
+%%                                     infinitive may follow, `able to walk';
+%%                                     since 1.131.0 grading: an
+%%                                     adjective's word that grades an
+%%                                     adjective as an adverb too, `still
+%%                                     unfinished')
 %%     ty_noun_list(L, Kind, Base)     the nouns of lexicon/Base.txt, or of
 %%                                     the list Base, are of Kind (since
 %%                                     1.96.0; infinitive: one an infinitive
@@ -518,7 +522,9 @@
 %%                                     English `all the wildlife'), or
 %%                                     before an indefinite one of Kind
 %%                                     such (since 1.125.0: `such a
-%%                                     baby', `such problems')
+%%                                     baby', `such problems'), or before
+%%                                     any of Kind only (since 1.131.0:
+%%                                     `only a crumb')
 %%     ty_adjective_group(L, Definiteness)
 %%                                     an article of Definiteness and an
 %%                                     adjective alone stand for the people
@@ -1031,7 +1037,7 @@ ty_values(quantifier, [some, every, no, any, this, that]).
 ty_values(quantifier_kind, [thing, person]).
 %% A subordinate clause's kind (since 1.65.0).
 ty_values(subordinator, [if, when, because, as]).
-ty_values(predeterminer, [all, such]).
+ty_values(predeterminer, [all, such, only]).
 ty_values(animacy, [person, animate, inanimate, unknown]).
 ty_values(place, [before, after]).
 ty_values(role, [s, o]).
@@ -3941,6 +3947,7 @@ ty_subject_number(A, N) :- nonvar(A), ty_subject_wrapped(A, N).
 %% noun phrase's number; group(A) (since 1.127.0) plural.
 ty_subject_wrapped(all(NP), N) :- nonvar(NP), ty_subject_number(NP, N).
 ty_subject_wrapped(such(NP), N) :- nonvar(NP), ty_subject_number(NP, N).
+ty_subject_wrapped(only(NP), N) :- nonvar(NP), ty_subject_number(NP, N).
 ty_subject_wrapped(emph(NP, _), N) :- nonvar(NP), ty_subject_number(NP, N).
 ty_subject_wrapped(group(_), pl).
 ty_subject_number(of(_, P), N) :- nonvar(P), P = of(_, _), ty_subject_number(P, N).
@@ -4346,6 +4353,7 @@ ty_ir_features(L, rel(NP, _), F) :- !, ty_ir_features(L, NP, F).
 ty_ir_features(L, np_pp(NP, _), F) :- !, ty_ir_features(L, NP, F).
 ty_ir_features(L, all(NP), F) :- !, ty_ir_features(L, NP, F).
 ty_ir_features(L, such(NP), F) :- !, ty_ir_features(L, NP, F).
+ty_ir_features(L, only(NP), F) :- !, ty_ir_features(L, NP, F).
 ty_ir_features(L, refl(Pr), F) :- !, ty_ir_features(L, Pr, F).
 ty_ir_features(L, emph(NP, _), F) :- !, ty_ir_features(L, NP, F).
 ty_ir_features(_, group(_), [D, pl, unknown, _]) :- !, ty_def_feature(def, D).
@@ -5818,7 +5826,7 @@ ty_np_phrase(L, C, F) -->
 ty_np_phrase(L, all(NP), F) -->
     { '$ty_predet_made'(L) },
     ty_here(S0),
-    { ty_predet_ahead(L, S0) },
+    { ty_predet_ahead(L, all, S0) },
     ty_predet_words(L, all),
     ty_np_phrase(L, NP, F),
     { ty_all_np(NP) }.
@@ -5827,10 +5835,19 @@ ty_np_phrase(L, all(NP), F) -->
 ty_np_phrase(L, such(NP), F) -->
     { '$ty_predet_made'(L) },
     ty_here(S0),
-    { ty_predet_ahead(L, S0) },
+    { ty_predet_ahead(L, such, S0) },
     ty_predet_words(L, such),
     ty_np_phrase(L, NP, F),
     { ty_such_np(NP) }.
+%% Only before a noun phrase with no marks (since 1.131.0: `Only the crude
+%% vital statistics.'), as in a role.
+ty_np_phrase(L, only(NP), F) -->
+    { '$ty_predet_made'(L) },
+    ty_here(S0),
+    { ty_predet_ahead(L, only, S0) },
+    ty_predet_words(L, only),
+    ty_np_phrase(L, NP, F),
+    { ty_only_np(NP) }.
 
 %% A NOUN PHRASE WITH AN ADPOSITION PHRASE AFTER IT (since 1.83.0):
 %% np_pp(NP, pp(Prep, X)), in a language that keeps the phrase after its
@@ -6741,7 +6758,7 @@ ty_predicate_in(L, np(M, N, D, A), []) -->
 ty_predicate_in(L, such(NP), []) -->
     { '$ty_predet_made'(L) },
     ty_here(S0),
-    { ty_predet_ahead(L, S0) },
+    { ty_predet_ahead(L, such, S0) },
     ty_predet_words(L, such),
     ty_predicate_in(L, NP, []),
     { ty_such_np(NP) }.
@@ -7219,6 +7236,7 @@ ty_verb_row(L, V, T, N, P, Words) :-
 :- dynamic('$ty_phrasal_made'/1).
 %% A language with a ty_predeterminer/3 row (since 1.118.0).
 :- dynamic('$ty_predet_made'/1).
+:- dynamic('$ty_pdw'/3).
 %% A language with a ty_pronoun(L, r, Words, Conditions) row (since 1.126.0).
 :- dynamic('$ty_refl_made'/1).
 %% Each word of a language's ty_pronoun/4 rows, and each row by its first
@@ -7325,6 +7343,7 @@ ty_vfirst_make(L) :-
     retractall('$ty_vfirst_made'(L)),
     retractall('$ty_phrasal_made'(L)),
     retractall('$ty_predet_made'(L)),
+    retractall('$ty_pdw'(_, L, _)),
     retractall('$ty_refl_made'(L)),
     retractall('$ty_pron_word'(L, _)),
     retractall('$ty_pron_rowf'(L, _, _)),
@@ -7369,6 +7388,7 @@ ty_vfirst_make(L) :-
     ( once(ty_short_form(L, _, _)) -> assertz('$ty_short_made'(L)) ; true ),
     ( ty_phrasal(L, _, _, _, _) -> assertz('$ty_phrasal_made'(L)) ; true ),
     ( ty_predeterminer(L, _, _) -> assertz('$ty_predet_made'(L)) ; true ),
+    forall(ty_predeterminer(L, PK, [PW|_]), assertz('$ty_pdw'(PW, L, PK))),
     ( ty_pronoun(L, r, _, _) -> assertz('$ty_refl_made'(L)) ; true ),
     forall(( ty_pronoun(L, _, PWs, _), member(PW, PWs), \+ '$ty_pron_word'(L, PW) ), assertz('$ty_pron_word'(L, PW))),
     forall(( ty_pronoun(L, _, [PF|PR], _), \+ '$ty_pron_rowf'(L, PF, [PF|PR]) ), assertz('$ty_pron_rowf'(L, PF, [PF|PR]))),
@@ -7679,7 +7699,7 @@ ty_role(L, Role, C, Features) -->
 ty_role(L, Role, all(NP), Features) -->
     { '$ty_predet_made'(L) },
     ty_here(S0),
-    { ty_predet_ahead(L, S0) },
+    { ty_predet_ahead(L, all, S0) },
     ty_predet_words(L, all),
     ty_role(L, Role, NP, Features),
     { ty_all_np(NP) }.
@@ -7692,19 +7712,35 @@ ty_role(L, Role, all(NP), Features) -->
 ty_role(L, Role, such(NP), Features) -->
     { '$ty_predet_made'(L) },
     ty_here(S0),
-    { ty_predet_ahead(L, S0) },
+    { ty_predet_ahead(L, such, S0) },
     ty_predet_words(L, such),
     ty_role(L, Role, NP, Features),
     { ty_such_np(NP) }.
+
+%% ONLY BEFORE A NOUN PHRASE (since 1.131.0): only(NP) where a noun phrase
+%% stands, NP any noun phrase (`He gave only a crumb of information.',
+%% `The room had only a bed and chair.'), the words of a
+%% ty_predeterminer(L, only, Words) row before it. Asked only where the
+%% next word is one.
+ty_role(L, Role, only(NP), Features) -->
+    { '$ty_predet_made'(L) },
+    ty_here(S0),
+    { ty_predet_ahead(L, only, S0) },
+    ty_predet_words(L, only),
+    ty_role(L, Role, NP, Features),
+    { ty_only_np(NP) }.
 
 %% The subject of a coordination's second clause that says none (since
 %% 1.60.0): same, with the first clause's subject's features.
 ty_role(L, s, S, F) -->
     { ty_same_subject(S1), ( var(S) -> S = same ; S == same ), ty_ir_features(L, S1, F) }.
 
-ty_predet_ahead(L, S0) :-
+%% Reading, the next word is the first of a ty_predeterminer(L, K, Words)
+%% row ('$ty_pdw'/3, made at load: a walk of the rows at each noun phrase
+%% cost the English round trips 0.1 % more inferences for a third row).
+ty_predet_ahead(L, K, S0) :-
     (   var(S0) -> true
-    ;   S0 = [W|_], atom(W), once(( ty_predeterminer(L, _, [W1|_]), W1 == W ))
+    ;   S0 = [W|_], '$ty_pdw'(W, L, K)
     ).
 
 ty_predet_words(L, K) --> { once(ty_predeterminer(L, K, Ws)) }, ty_tokens(Ws).
@@ -7718,6 +7754,22 @@ ty_all_np(NP) :-
     ;   NP = of(_, _) -> true
     ;   NP = rel(H, _) -> ty_all_np(H)
     ;   NP = np_pp(H, _) -> ty_all_np(H)
+    ).
+
+%% What only may stand before: a noun phrase, a name, a pronoun, a
+%% possessed one, a group or a coordination of them.
+ty_only_np(NP) :-
+    nonvar(NP),
+    (   NP = np(_, _, _, _) -> true
+    ;   NP = of(_, _) -> true
+    ;   NP = rel(_, _) -> true
+    ;   NP = np_pp(_, _) -> true
+    ;   NP = name(_) -> true
+    ;   NP = pron(_, _, _) -> true
+    ;   NP = group(_) -> true
+    ;   NP = and(_) -> true
+    ;   NP = or(_) -> true
+    ;   NP = all(_)
     ).
 
 %% What such may stand before: an indefinite noun phrase or a bare one,
@@ -9173,10 +9225,15 @@ ty_av_item(after, L, M, A, R, As, End, D) --> ty_av_adj(L, A, R, As, End, D), ty
 
 %% The adverb's word is no adjective's and no verb's: `pretty good' and
 %% `small red' are two adjectives (level 2's lg_grade_adverb/1 holds the
-%% same), `see red' a verb and its object (WordNet's adverb `see', vide).
+%% same), `see red' a verb and its object (WordNet's adverb `see', vide);
+%% but an adjective's word of the template's ty_adjective_list(L, grading,
+%% Base) row is an adverb's here too (since 1.131.0: `still unfinished').
 ty_av_word(L, M) --> [W], { ty_adverb(L, M, W), ty_av_word_ok(L, W) }, ty_meant(L, adverb(M), [W]).
 
-ty_av_word_ok(L, W) :- \+ ty_adjective(L, _, _, _, W), \+ ty_word_class(L, verb, W), \+ '$ty_padv'(W, L).
+ty_av_word_ok(L, W) :-
+    (   \+ ty_adjective(L, _, _, _, W) -> \+ ty_word_class(L, verb, W), \+ '$ty_padv'(W, L)
+    ;   ty_adjective_of(L, grading, W)
+    ).
 
 ty_av_adj(L, A, adj(G, N), As, End, D) -->
     [W],

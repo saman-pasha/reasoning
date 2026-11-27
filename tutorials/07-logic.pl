@@ -93,6 +93,7 @@ main :-
     hyphen_words,
     dash_words,
     particles,
+    grading_words,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -770,6 +771,20 @@ particles :-
     must('and back', E1, 'Smoke billowed up into the sky.'),
     logic_translate(english, cocolog, 'His story brought tears to her eyes.', C2),
     must('tears to her eyes', C2, 'tear(a(pl(tear))).\npast(to(bring(of(story, he), a(pl(tear))), of(pl(eye), she))).\n').
+
+
+%% 64. AN ADJECTIVE'S WORD THAT GRADES ONE (1.131.0) is round the
+%% adjective's atom, as any adverb that grades one is (`still', `most');
+%% `only' before a definite noun phrase is the constant only(T) round its
+%% term, as `all' is.
+grading_words :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'The building is still unfinished.', C1),
+    must('still unfinished', C1, 'still(unfinished(the(building))).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and back', E1, 'The building is still unfinished.'),
+    logic_translate(english, cocolog, 'He saw only his mother.', C2),
+    must('only his mother', C2, 'past(see(he, only(of(mother, he)))).\n').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

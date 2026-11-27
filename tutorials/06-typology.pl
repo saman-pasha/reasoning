@@ -189,6 +189,7 @@ main :-
     hyphen_words,
     dash_words,
     particles,
+    grading_words,
     format("~ndone~n", []).
 
 
@@ -1466,6 +1467,26 @@ particles :-
     must('all hands', IR4, phrase(np_pp(np(hand, pl, all, []), pp(on, np(deck, sg, mass, []))))),
     typology_read(english, 'The means of production.', IR5),
     must('the means', IR5, phrase(of(np(production, sg, mass, []), np(means, sg, def, [])))).
+
+
+%% 100. AN ADJECTIVE'S WORD THAT GRADES AN ADJECTIVE (1.131.0): an
+%% adverb's word that is an adjective's too grades no adjective (`pretty
+%% good' is two adjectives), but for the words of the template's
+%% ty_adjective_list(L, grading, Base) row (`still', `only'). `most' is an
+%% adverb that grades one (`a most persuasive speaker', `the most common
+%% type'). `only' stands before any noun phrase, only(NP), by a
+%% ty_predeterminer(L, only, Words) row; `the only child' stays an
+%% adjective.
+grading_words :-
+    typology_load(english),
+    typology_read(english, 'The building is still unfinished.', IR1),
+    must('still unfinished', IR1, copula(present, pos, np(building, sg, def, []), adj([adv(still, unfinished)]))),
+    typology_read(english, 'A most persuasive speaker.', IR2),
+    must('a most persuasive speaker', IR2, phrase(np(speaker, sg, indef, [adv(most, persuasive)]))),
+    typology_read(english, 'He gave only a crumb.', IR3),
+    must('only a crumb', IR3, clause(give, past, pos, pron(3, sg, m), only(np(crumb, sg, indef, [])))),
+    typology_read(english, 'The only child slept.', IR4),
+    must('the only child', IR4, clause(sleep, past, pos, np(child, sg, def, [only]), none)).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

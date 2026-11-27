@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -262,11 +262,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 561),
-    ( R >= 549 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 549 right', VR, ok),
-    ( K >= 555 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 555 kept', VK, ok).
+    check('the second measure: its sentences', N, 566),
+    ( R >= 554 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 554 right', VR, ok),
+    ( K >= 560 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 560 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -1187,6 +1187,24 @@ reflexives :-
 
 %% 1.129.0: a dash is its two sentences' items; a joined group is
 %% the(group(and(A, B))); `of' after a verb an adposition's predicate.
+%% 1.131.0: an adjective's word that grades one, most, only before a
+%% definite noun phrase.
+grading_words :-
+    section('adjectives that grade an adjective, most, only'),
+    typology_load(english),
+    forall(member(S-Want-Back, [
+               'The building is still unfinished.'-'still(unfinished(the(building))).\n'-'The building is still unfinished.',
+               'Her beauty is only skin-deep.'-'only(\'skin-deep\'(of(beauty, she))).\n'-'Her beauty is only skin-deep.',
+               'The University suspended the most recalcitrant demonstrators.'-'past(suspend(the_university, the(pl(most(recalcitrant(demonstrator)))))).\n'-'The University suspended the most recalcitrant demonstrators.',
+               'He saw only his mother.'-'past(see(he, only(of(mother, he)))).\n'-'He saw only his mother.' ]),
+           ( ( logic_translate(english, cocolog, S, C) -> true ; C = none ),
+             check(S, C, Want),
+             ( C \== none, logic_translate(cocolog, english, C, E) -> true ; E = none ),
+             atomic_list_concat(['and back: ', S], Label),
+             check(Label, E, Back) )),
+    ( logic_translate(english, cocolog, 'He gave only a crumb.', C2) -> true ; C2 = none ),
+    check('only before an indefinite noun phrase: none yet', C2, none).
+
 %% 1.130.0: a particle as an adverb or an adposition, a plural first.
 particles :-
     section('particles as adverbs and adpositions, plurals first'),

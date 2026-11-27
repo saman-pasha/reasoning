@@ -176,7 +176,9 @@ ty_capital_nouns(xx).
 %%                                     English `all the wildlife'), or
 %%                                     before an indefinite one of Kind
 %%                                     such (since 1.125.0: `such a
-%%                                     baby', `such problems')
+%%                                     baby', `such problems'), or before
+%%                                     any of Kind only (since 1.131.0:
+%%                                     `only a crumb')
 %% ty_predeterminer(xx, Kind, Words).
 %%   e.g. ty_predeterminer(english, all, [all]).
 
@@ -375,7 +377,11 @@ ty_conjunct_marks(xx).
 %%                                     the adjectives of lexicon/Base.txt,
 %%                                     or of the list Base, are of Kind
 %%                                     (since 1.96.0; infinitive: one an
-%%                                     infinitive may follow, `able to walk')
+%%                                     infinitive may follow, `able to walk';
+%%                                     since 1.131.0 grading: an
+%%                                     adjective's word that grades an
+%%                                     adjective as an adverb too, `still
+%%                                     unfinished')
 %% ty_adjective_list(xx, Kind, Base).
 %%   e.g. ty_adjective_list(english, infinitive, [able, unable, glad, eager, willing, unwilling, ready, likely, ...]).
 

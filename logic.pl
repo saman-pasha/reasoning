@@ -1150,6 +1150,12 @@ lg_group_term(and(As), T) :- is_list(As), As = [_, _|_], forall(member(A, As), a
 lg_entity(all(NP), ent(const(all(C)), [], const), Ms) :- !,
     lg_entity(NP, ent(T, Conds, Q), Ms),
     ( Q == const, T = const(C), Conds == [] -> true ; lg_no(determiner(all)) ).
+%% ONLY BEFORE A NOUN PHRASE (since 1.131.0) is the constant only(T) round
+%% its term, the noun phrase's facts its own: `He gave only a crumb.' says
+%% crumb(a(crumb)) and past(give(he, only(a(crumb)))).
+lg_entity(only(NP), ent(const(only(C)), [], const), Ms) :- !,
+    lg_entity(NP, ent(T, Conds, Q), Ms),
+    ( Q == const, T = const(C), Conds == [] -> true ; lg_no(determiner(only)) ).
 lg_entity(np_pp(H, pp(P, X)), E, Ms) :- !, lg_np_pp(H, P, X, E, Ms).
 %% A NOUN AND ITS INFINITIVE (since 1.96.0) is a term as a noun and its
 %% adposition phrase is, to(T, Atom), the atom said of someone: `A knowing
@@ -1575,6 +1581,7 @@ lg_det_term(T) :-
     ;   T = of(of(X, P0), P) -> lg_np_shape(X), atom(P0), lg_poss_term(P)
     ;   T = of(X, P) -> lg_np_shape(X), \+ lg_ap_atom(X), lg_poss_term(P)
     ;   T = all(X) -> lg_det_term(X), X \= a(_), X \= a(_, _)
+    ;   T = only(X) -> lg_det_term(X)
     ).
 
 %% An adjective's atom of a pronoun or of a name that is no noun is no
@@ -1805,6 +1812,7 @@ lg_term_facts(all(X), Fs) :- nonvar(X), !,
     (   X = the(T) -> lg_shape_facts(T, const(all(X)), Fs)
     ;   X = of(T, P) -> lg_shape_facts(of(T, P), const(all(X)), Fs)
     ).
+lg_term_facts(only(X), Fs) :- nonvar(X), !, lg_term_facts(X, Fs).
 lg_term_facts(T, Fs) :- lg_shape_facts(T, const(T), Fs).
 
 lg_shape_facts(of(T, P), K, Fs) :- !,
@@ -2397,6 +2405,7 @@ lg_const_np(L, Cs, DT, NP) :-
 lg_const_np(L, Cs, a(S), NP) :- !, memberchk(a(S), Cs), lg_indef_np(L, Cs, S, NP).
 lg_const_np(L, Cs, a(S, K), NP) :- integer(K), !, memberchk(a(S, K), Cs), lg_indef_np(L, Cs, S, NP).
 lg_const_np(L, Cs, all(T), all(NP)) :- nonvar(T), compound(T), !, lg_const_np(L, Cs, T, NP).
+lg_const_np(L, Cs, only(T), only(NP)) :- nonvar(T), !, lg_const_np(L, Cs, T, NP).
 %% A possessor someone is the person no words name (since 1.115.0):
 %% of(breath, someone) is `one's breath'.
 lg_const_np(L, Cs, of(T, P), of(PNP, of(Pr, np(N, Num, def, As)))) :-
@@ -2508,7 +2517,9 @@ lg_cmp_meaning(N, M, A) :-
 lg_grade_adverb(M) :-
     atom(M),
     catch(typology_meaning(english, adverb, M), _, fail),
-    \+ catch(typology_meaning(english, adjective, M), _, fail).
+    (   \+ catch(typology_meaning(english, adjective, M), _, fail) -> true
+    ;   catch(ty_adjective_of(english, grading, M), _, fail)
+    ).
 
 lg_np_parts(N, N, []) :- atom(N), !.
 lg_np_parts(nn(M, X), N, [n(M)|As]) :- !, atom(M), lg_np_parts(X, N, As).
