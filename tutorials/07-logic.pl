@@ -77,6 +77,7 @@ main :-
     negation,
     adjective_alone,
     operator_names,
+    ones,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -606,6 +607,15 @@ operator_names :-
     must('as/2 written is_as/2', C1, 'mouse(a(mouse)).\nis_as(meek(something), a(mouse)).\n'),
     logic_translate(cocolog, english, C1, E1),
     must('and into English', E1, 'Something is meek as a mouse.').
+
+%% 48. `ONE'S' (1.115.0) is someone's: a possessor someone is `one's' in
+%% English.
+ones :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'Catch one\'s breath.', C1),
+    must('one\'s', C1, 'imperative(catch(you, of(breath, someone))).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and into English', E1, 'Catch one\'s breath.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

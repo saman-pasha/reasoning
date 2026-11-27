@@ -2184,9 +2184,11 @@ lg_const_np(L, Cs, the(T), np_pp(np(N, Num, def, As), pp(P, XNP))) :-
 lg_const_np(L, Cs, the(T), np(N, Num, def, As)) :- !, lg_np_of_term(L, Cs, T, N, Num, As).
 lg_const_np(L, Cs, a(S), NP) :- !, memberchk(a(S), Cs), lg_indef_np(L, Cs, S, NP).
 lg_const_np(L, Cs, a(S, K), NP) :- integer(K), !, memberchk(a(S, K), Cs), lg_indef_np(L, Cs, S, NP).
+%% A possessor someone is the person no words name (since 1.115.0):
+%% of(breath, someone) is `one's breath'.
 lg_const_np(L, Cs, of(T, P), of(PNP, np(N, Num, def, As))) :- !,
     lg_np_of_term(L, T, N, Num, As),
-    lg_const_np(L, Cs, P, PNP).
+    ( P == someone -> PNP = pron(3, sg, zero) ; lg_const_np(L, Cs, P, PNP) ).
 lg_const_np(L, Cs, C, np_pp(HNP, Inf)) :-
     nonvar(C), C = to(T0, X), lg_inf_term(L, X, Inf), !,
     lg_const_np(L, Cs, T0, HNP).

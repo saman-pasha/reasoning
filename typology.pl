@@ -1995,9 +1995,11 @@ ty_tense_asked(L, V, T) :-
     ).
 
 %% A pronoun's condition: a list of its person, number and kind.
+%% zero is the kind of the person no words name (pron(3, sg, zero), since
+%% 1.86.0), whose possessive is a row since 1.115.0 (`one's').
 ty_pron_condition(C) :-
     is_list(C),
-    forall(member(X, C), memberchk(X, [1, 2, 3, polite, sg, pl, m, f, n])).
+    forall(member(X, C), memberchk(X, [1, 2, 3, polite, sg, pl, m, f, n, zero])).
 
 ty_question_rule(R) :- memberchk(R, [unchanged, front(all), front(first), invert(pronoun)]), !.
 ty_question_rule(particle(W, P)) :- ( atom(W) ; is_list(W), W \== [] ), memberchk(P, [start, end]).

@@ -24,8 +24,8 @@ red) and lesson 01 pin the shape of the answer, deliberately not the number.
 The reasoning library translates ALL 8 000 sentences of `lexicon/prose.txt`
 from English into the IR, and ALL of that IR into Cocolog. Every step
 moves one of the two counts and reports both (`tools/logic/prose.pl`;
-STATUS.md keeps them): at 1.114.0, 4 918 into the IR, 4 664 of them into
-Cocolog (1.113.0: 4 897 and 4 648; 1.112.0: 4 771 and 4 525; 1.111.0: 4 677 and 4 437; 1.110.0: 4 652 and 4 422; 1.109.0: 4 640 and 4 413; 1.108.0: 4 640 and 4 389; 1.107.0: 4 580 and 4 360; 1.105.0 and 1.106.0: 4 479 and 4 275; 1.104.0: 4 456 and 4 256; 1.103.0: 4 405 and 4 209; 1.102.0: 4 405 and 4 206; 1.100.0 and 1.101.0: 4 377 and 4 179; 1.99.0: 4 358 and 4 165; 1.98.0: 4 325 and 4 141; 1.96.0 and 1.97.0: 4 295 and 4 111; 1.95.0: 4 243 and 4 063; 1.94.0: 4 218 and 4 040; 1.93.0: 4 167 and 3 990; 1.92.0: 4 129 and 3 954; 1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
+STATUS.md keeps them): at 1.115.0, 4 932 into the IR, 4 678 of them into
+Cocolog (1.114.0: 4 918 and 4 664; 1.113.0: 4 897 and 4 648; 1.112.0: 4 771 and 4 525; 1.111.0: 4 677 and 4 437; 1.110.0: 4 652 and 4 422; 1.109.0: 4 640 and 4 413; 1.108.0: 4 640 and 4 389; 1.107.0: 4 580 and 4 360; 1.105.0 and 1.106.0: 4 479 and 4 275; 1.104.0: 4 456 and 4 256; 1.103.0: 4 405 and 4 209; 1.102.0: 4 405 and 4 206; 1.100.0 and 1.101.0: 4 377 and 4 179; 1.99.0: 4 358 and 4 165; 1.98.0: 4 325 and 4 141; 1.96.0 and 1.97.0: 4 295 and 4 111; 1.95.0: 4 243 and 4 063; 1.94.0: 4 218 and 4 040; 1.93.0: 4 167 and 3 990; 1.92.0: 4 129 and 3 954; 1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
 count says so. **Measure what blocks the rest before choosing a step**:
 at 1.80.0 the words no table has looked like the gap, and 5 115 of the
 8 000 had none -- 2 130 of them a noun phrase alone, which one rule read.
@@ -879,6 +879,11 @@ whose first word is an adposition's, an infinitive's clause (`to`) read
 its own infinitive as its adjunct for ever. Not in a command or a clause
 with no subject (`'$ty_command'` set). `'$ty_jfirst'/3` carries the
 kind, v2 or first, so no language asks a second table.
+
+**`one's` since 1.115.0** is the possessive of pron(3, sg, zero), the
+person no words name (`Catch one's breath.`); at level 2 it is someone,
+and a possessor someone comes back into English as `one's`
+(`lg_const_np/4`).
 
 **`as` since 1.114.0** is an adposition (`ty_adposition(english, as, [as])`:
 `They used umbrellas as shades.`, `Meek as a mouse.`) and a subordinator

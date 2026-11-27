@@ -509,3 +509,13 @@ Pretty girls like plain friends as foils.	girl(a(pl(pretty(girl)))). pretty(a(pl
 The application of indexes to tables of data.	application(to(of(application, a(pl(index))), a(of(pl(table), data)))). index(a(pl(index))). is_table(a(of(pl(table), data))).
 A petticoated table.	is_table(a(petticoated(table))). petticoated(a(petticoated(table))).
 A dull unoiled table.	is_table(a(dull(unoiled(table)))). dull(a(dull(unoiled(table)))). unoiled(a(dull(unoiled(table)))).
+Shift one's attention.	imperative(shift(you, of(attention, someone))).
+Muffle one's anger.	imperative(muffle(you, of(anger, someone))).
+Catch one's breath.	imperative(catch(you, of(breath, someone))).
+Beat one's breast.	imperative(beat(you, of(breast, someone))).
+Wrench one's ankle.	imperative(wrench(you, of(ankle, someone))).
+Clench one's jaw.	imperative(clench(you, of(jaw, someone))).
+One's native language.	language(of(native(language), someone)). native(of(native(language), someone)).
+Carve one's name into the bark.	imperative(into(carve(you, of(name, someone)), the(bark))).
+The necessary consequences of one's actions.	consequence(of(pl(necessary(consequence)), of(pl(action), someone))). necessary(of(pl(necessary(consequence)), of(pl(action), someone))).
+Judicious use of one's money.	use(of(judicious(use), of(money, someone))). judicious(of(judicious(use), of(money, someone))).

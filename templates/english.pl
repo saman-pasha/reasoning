@@ -869,6 +869,9 @@ ty_possessive_pronoun(english, [her], [[3, sg, f]], [[]]).
 ty_possessive_pronoun(english, [its], [[3, sg, n]], [[]]).
 ty_possessive_pronoun(english, [our], [[1, pl]], [[]]).
 ty_possessive_pronoun(english, [their], [[3, pl]], [[]]).
+%% `one's' (since 1.115.0) is the possessive of the person no words name,
+%% pron(3, sg, zero), as a clause's with no subject: `Catch one's breath.'
+ty_possessive_pronoun(english, ['one\'s'], [[3, sg, zero]], [[]]).
 
 %% Personal pronouns (`he sees her'): a subject's, and an object's, which an
 %% adposition takes too (`with him'); `I' is written with its capital. The

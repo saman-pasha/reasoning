@@ -174,6 +174,7 @@ main :-
     modified_mass,
     more_phrases,
     as_words,
+    ones,
     format("~ndone~n", []).
 
 
@@ -1284,6 +1285,13 @@ as_words :-
     typology_load(english),
     typology_read(english, 'Meek as a mouse.', IR1),
     must('as before a noun phrase', IR1, phrase(adj([ap(meek, pp(as, np(mouse, sg, indef, [])))]))).
+
+%% 83. `ONE'S' (1.115.0) is the possessive of pron(3, sg, zero), the person
+%% no words name.
+ones :-
+    typology_load(english),
+    typology_read(english, 'One\'s native language.', IR1),
+    must('one\'s', IR1, phrase(of(pron(3, sg, zero), np(language, sg, def, [native])))).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
