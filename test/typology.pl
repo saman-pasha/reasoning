@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2001,7 +2001,8 @@ commands :-
                'Look at the dog.'-[clause(look, imperative, pos, Y, np(dog, sg, def, []))],
                'Choose a goal that you see.'-[clause(choose, imperative, pos, Y, rel(np(goal, sg, indef, []), clause(see, present, pos, pron(2, sg, _), gap)))],
                'Dry sobs.'-[phrase(np(sob, pl, indef, [dry]))],
-               'Close to noon.'-[],
+               %% no command; since 1.113.0 an adjective phrase alone
+               'Close to noon.'-[phrase(adj([ap(close, pp(to, np(noon, sg, mass, [])))]))],
                'You construct a proof.'-[clause(construct, present, pos, Y, np(proof, sg, indef, []))] ]),
            ( ( typology_read(english, T, R) -> Rs = [R] ; Rs = [] ),
              atomic_list_concat(['English: ', T], Label),
@@ -2096,7 +2097,8 @@ unsaid_subjects :-
                'Ate a light supper.'-clause(eat, past, pos, Z, np(supper, sg, indef, [light])),
                'Has eaten a cake.'-clause(eat, perfect, pos, Z, np(cake, sg, indef, [])),
                'Fell into a profound sleep.'-clause(fall, past, pos, Z, none, [pp(into, np(sleep, sg, indef, [profound]))]),
-               'Interested in sports.'-none,
+               %% no clause; since 1.113.0 an adjective phrase alone
+               'Interested in sports.'-phrase(adj([ap(interested, pp(in, np(sport, pl, indef, [])))])),
                'Take the joke well.'-command ]),
            ( ( typology_read(english, T, R) -> true ; R = none ),
              ( R = clause(_, imperative, _, _, _, _) -> V = command ; V = R ),
@@ -2492,7 +2494,8 @@ passive_places :-
                'The machine needs to be serviced.'-[clause(need, present, pos, np(machine, sg, def, []), clause(service, pass(infinitive), pos, pron(3, sg, zero), none))],
                'The area is well populated.'-[clause(populate, pass(present), pos, np(area, sg, def, []), none, [adv(well)])],
                'He promptly forgot the address.'-[clause(forget, past, pos, pron(3, sg, m), np(address, sg, def, []), [adv(promptly)])],
-               'Chemically related.'-[],
+               %% read since 1.113.0, an adjective phrase alone, never a clause
+               'Chemically related.'-[phrase(adj([adv(chemically, related)]))],
                %% read since 1.112.0, `second base' a bare noun after its modifier
                'The catcher made a good throw to second base.'-[clause(make, past, pos, np(catcher, sg, def, []), np(throw, sg, indef, [good]), [pp(to, np(base, sg, mass, [second]))]),
                                                                   clause(make, past, pos, np(catcher, sg, def, []), np_pp(np(throw, sg, indef, [good]), pp(to, np(base, sg, mass, [second]))))] ]),
@@ -2726,10 +2729,30 @@ modified_mass :-
            ( findall(R, typology_read(english, T, R), Rs0), ( Rs0 = [R0|_] -> Rs = [R0] ; Rs = [] ),
              atomic_list_concat(['English, the first reading: ', T], Label),
              check(Label, Rs, Want) )),
-    findall(R2, typology_read(english, 'Light.', R2), Rs2),
+    findall(R2, typology_read(english, 'Light.', phrase(np(R2, _, _, _))), Rs2),
     check('with no modifier a bare noun is no adjective\'s word', Rs2, []),
     findall(R3, typology_read(english, 'The air is cold.', copula(_, _, _, R3)), Rs3),
     check('no such noun is a copula\'s predicate', Rs3, [adj([cold])]).
+
+%% 1.113.0: an adjective phrase alone, after every other reading; a
+%% person's or an animal's bare noun with a modifier, in a phrase alone.
+more_phrases :-
+    section('an adjective phrase alone, and a person\'s bare noun'),
+    forall(member(T-Want, [
+               'Potentially useful.'-[phrase(adj([adv(potentially, useful)]))],
+               'Short in stature.'-[phrase(adj([ap(short, pp(in, np(stature, sg, mass, [])))]))],
+               'Tragic hero.'-[phrase(np(hero, sg, mass, [tragic]))],
+               'Sacrificial lamb.'-[phrase(np(lamb, sg, mass, [sacrificial]))],
+               'Fell into a profound sleep.'-[clause(fall, past, pos, pron(3, sg, zero), none, [pp(into, np(sleep, sg, indef, [profound]))])] ]),
+           ( findall(R, typology_read(english, T, R), Rs0), ( Rs0 = [R0|_] -> Rs = [R0] ; Rs = [] ),
+             atomic_list_concat(['English, the first reading: ', T], Label),
+             check(Label, Rs, Want) )),
+    findall(R2, typology_read(english, 'Hero.', R2), Rs2),
+    check('a person\'s bare noun alone is none', Rs2, []),
+    findall(R3, typology_read(english, 'Tragic hero sees the dog.', clause(_, _, _, R3, _)), Rs3),
+    check('nor in a clause', Rs3, []),
+    ( typology_write(english, phrase(adj([adv(potentially, useful)])), W4) -> true ; W4 = none ),
+    check('an adjective phrase alone written', W4, 'Potentially useful.').
 
 %% 1.64.0: the bare singular noun. np(M, sg, mass, []): a singular noun
 %% with no article, read after the other readings, written with none;
@@ -3066,8 +3089,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 4771 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 4 771 sentences read at 1.112.0 are read', R1, yes),
+    ( K >= 4880 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 4 880 sentences read at 1.113.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

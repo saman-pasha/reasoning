@@ -475,6 +475,11 @@ lg_phrase(and(Xs), Items) :- !, lg_phrases(Xs, Items).
 %% `Something is in direct sunlight.'
 lg_phrase(pp(P, NP), Items) :- !,
     lg_statement(copula(present, pos, qp(some, thing), pp(P, NP)), Items).
+%% AN ADJECTIVE PHRASE ALONE (since 1.113.0) is said of something the same
+%% way: `Potentially useful.' is potentially(useful(something)), back into
+%% English `Something is potentially useful.'
+lg_phrase(adj(As), Items) :- !,
+    lg_statement(copula(present, pos, qp(some, thing), adj(As)), Items).
 lg_phrase(X0, Items) :-
     ( lg_phrase_noun(X0, N, As0) -> true ; functor(X0, F, _), lg_no(phrase(F)) ),
     lg_phrase_aps(X0, X, As0, As, XMs),

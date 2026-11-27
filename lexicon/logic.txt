@@ -489,3 +489,13 @@ They gave little warning of their arrival.	past(give(they, of(little(warning), o
 They performed with great polish.	past(with(perform(they), great(polish))).
 It has just enough salt.	have(it, just(enough(salt))).
 Information is updated in real time.	in(update(someone, information), real(time)).
+Potentially useful.	potentially(useful(something)).
+Atrociously expensive.	atrociously(expensive(something)).
+Unhappy over her departure.	over(unhappy(something), of(departure, she)).
+Liable to diabetes.	to(liable(something), diabetes).
+Fit for duty.	for(fit(something), duty).
+Heedful of the warnings.	of(heedful(something), the(pl(warning))).
+Receptive to the proposals.	to(receptive(something), the(pl(proposal))).
+Afraid for his life.	for(afraid(something), of(life, he)).
+Tragic hero.	hero(tragic(hero)). tragic(tragic(hero)).
+Domestic servant.	servant(domestic(servant)). domestic(domestic(servant)).

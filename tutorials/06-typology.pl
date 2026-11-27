@@ -172,6 +172,7 @@ main :-
     short_forms,
     existential,
     modified_mass,
+    more_phrases,
     format("~ndone~n", []).
 
 
@@ -1265,6 +1266,16 @@ modified_mass :-
     typology_load(english),
     typology_read(english, 'Humid air.', IR1),
     must('a bare noun after an adjective', IR1, phrase(np(air, sg, mass, [humid]))).
+
+%% 81. AN ADJECTIVE PHRASE ALONE (1.113.0) is phrase(adj(As)), read after
+%% every other reading; a person's or an animal's bare noun with a
+%% modifier is read in a phrase alone.
+more_phrases :-
+    typology_load(english),
+    typology_read(english, 'Potentially useful.', IR1),
+    must('an adjective phrase alone', IR1, phrase(adj([adv(potentially, useful)]))),
+    typology_read(english, 'Tragic hero.', IR2),
+    must('a person\'s bare noun in a phrase alone', IR2, phrase(np(hero, sg, mass, [tragic]))).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

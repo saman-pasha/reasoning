@@ -75,6 +75,7 @@ main :-
     count_words,
     modals,
     negation,
+    adjective_alone,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -586,6 +587,15 @@ negation :-
     must('a negation', C1, 'is_not(past(is_sleep(john))).\n'),
     logic_translate(cocolog, english, C1, E1),
     must('and into English', E1, 'John did not sleep.').
+
+%% 46. AN ADJECTIVE PHRASE ALONE (1.113.0) is said of something, as an
+%% adposition phrase alone is.
+adjective_alone :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'Potentially useful.', C1),
+    must('an adjective phrase alone', C1, 'potentially(useful(something)).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and into English', E1, 'Something is potentially useful.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

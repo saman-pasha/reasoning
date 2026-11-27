@@ -3875,6 +3875,24 @@ ty_sentence(L, C) -->
     ty_here(S),
     { b_setval('$ty_command', none),
       \+ ty_said_passive(Rd, L, S0, S) }.
+%% AN ADJECTIVE PHRASE ALONE (since 1.113.0): phrase(adj(As)), a sentence
+%% that says no clause and no noun (`Potentially useful.', `Short in
+%% stature.', `Unaware of the newborn hope.'), the adjectives a copula's
+%% predicate has, read after every other reading, and only where the first
+%% word is an adjective's or an adverb's: before the clause with no subject
+%% it took 11 of that clause's readings (`Fell into a profound sleep.', `fell'
+%% an adjective too).
+ty_sentence(L, phrase(adj(As))) -->
+    ty_here(S0),
+    { ty_adj_first(L, S0), b_setval('$ty_phrase', yes) },
+    ty_predicate_in(L, adj(As), _),
+    { b_setval('$ty_phrase', no) }.
+
+ty_adj_first(L, S0) :-
+    (   var(S0) -> true
+    ;   S0 = [W|_], atom(W),
+        ( ty_word_class(L, adjective, W) ; ty_word_class(L, adverb, W) ), !
+    ).
 
 ty_said_passive(read, L, S0, S) :-
     ty_passive(L, C2, S0, S),
@@ -7965,10 +7983,16 @@ ty_det_word(L, Def, GN, W) :-
 %% flag only for an IR that holds such a noun and only where no wording
 %% reads back without it, and reads its words back under the same flag
 %% (ty_write_massr/3, ty_reads_as/6).
+%% A PERSON'S OR AN ANIMAL'S (since 1.113.0) only in a phrase alone
+%% ('$ty_phrase' yes) and with a modifier before it (`Tragic hero.',
+%% `Sacrificial lamb.', `Domestic servant.'): in a clause, or alone, it is
+%% none.
 ty_mass_ok(L, M, As) :-
     nonvar(M),
     once(ty_noun(L, M, _, A, Sg, _)),
-    \+ memberchk(A, [person, animate]),
+    (   \+ memberchk(A, [person, animate]) -> true
+    ;   nb_current('$ty_phrase', yes), nonvar(As), As = [_|_]
+    ),
     (   nb_current('$ty_mass_adj', yes) -> true
     ;   nb_current('$ty_massr', on), member(X, As), \+ ( compound(X), X = ap(_, _) ) -> true
     ;   \+ ty_word_class(L, adjective, Sg)
