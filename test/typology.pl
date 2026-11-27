@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2688,6 +2688,30 @@ short_forms :-
     ( typology_write(english, copula(present, pos, pron(3, sg, m), adj([happy])), W4) -> true ; W4 = none ),
     check('written in full', W4, 'He is happy.').
 
+%% 1.111.0: a noun phrase's existence, exist(T, P, NP): the language's
+%% words of existence and the copula that agrees with the noun phrase.
+existential :-
+    section('a noun phrase\'s existence'),
+    forall(member(T-Want, [
+               'There were millions of flies.'-[exist(past, pos, of(np(fly, pl, indef, []), np(million, pl, indef, [])))],
+               'There is a narrow line between sanity and insanity.'-[exist(present, pos, np_pp(np(line, sg, indef, [narrow]), pp(between, and([np(sanity, sg, mass, []), np(insanity, sg, mass, [])]))))],
+               'There\'s a dog.'-[exist(present, pos, np(dog, sg, indef, []))],
+               'There is not a dog.'-[exist(present, neg, np(dog, sg, indef, []))],
+               'There may be a dog.'-[exist(modal(may), pos, np(dog, sg, indef, []))] ]),
+           ( findall(R, typology_read(english, T, R), Rs0), ( Rs0 = [R0|_] -> Rs = [R0] ; Rs = [] ),
+             atomic_list_concat(['English, the first reading: ', T], Label),
+             check(Label, Rs, Want) )),
+    findall(R2, typology_read(english, 'There are a dog.', R2), Rs2),
+    check('the copula agrees with the noun phrase', Rs2, []),
+    forall(member(IR3-Want3, [
+               exist(present, pos, np(dog, pl, indef, []))-'There are dogs.',
+               exist(future, pos, np(dog, sg, indef, []))-'There will be a dog.' ]),
+           ( ( typology_write(english, IR3, W3) -> true ; W3 = none ),
+             atomic_list_concat(['written: ', Want3], Label3),
+             check(Label3, W3, Want3) )),
+    ( typology_write(spanish, exist(present, pos, np(dog, sg, indef, [])), W4) -> true ; W4 = none ),
+    check('a language with no words of existence writes none', W4, none).
+
 %% 1.64.0: the bare singular noun. np(M, sg, mass, []): a singular noun
 %% with no article, read after the other readings, written with none;
 %% Persian, whose definite noun has none either, writes it as def.
@@ -3023,8 +3047,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 4652 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 4 652 sentences read at 1.110.0 are read', R1, yes),
+    ( K >= 4677 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 4 677 sentences read at 1.111.0 are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

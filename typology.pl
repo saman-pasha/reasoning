@@ -286,6 +286,13 @@
 %%                                     (adj, np, pp, or any: Spanish `es'
 %%                                     and `está'); Words [] drops it;
 %%                                     Number a person's key, as ty_verb/6's
+%%     ty_existential(L, Words)        a noun phrase's existence is Words,
+%%                                     the copula that agrees with it and
+%%                                     the noun phrase (since 1.111.0:
+%%                                     English [there]; `There were
+%%                                     millions of flies.' is exist(past,
+%%                                     pos, of(np(fly, pl, indef, []),
+%%                                     np(million, pl, indef, []))))
 %%     ty_noun_adposition(L, Place)    a noun phrase's adposition phrase
 %%                                     stands after it (Place after; since
 %%                                     1.83.0): `a dip in prices'
@@ -891,7 +898,7 @@
            ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_adjective_list/3, ty_noun_list/3, ty_purpose_mark/2, ty_purpose_bare/1, ty_adverb_inside/1, ty_infinitive_after/3, ty_phrasal/5, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_subordinate_first/1, ty_subordinate_comma/1,
            ty_answer_echo/3, ty_kind/2, ty_adjective_before/2, ty_pronoun_gender/2,
            ty_inversion/3, ty_wh_tonic/3,
-           ty_tense_form/5, ty_participle/3, ty_participle_like/3,
+           ty_tense_form/5, ty_participle/3, ty_participle_like/3, ty_existential/2,
            ty_participle_ending/5, ty_participle_agrees/2,
            ty_verb_class/3, ty_class_tense_form/6, ty_polite/3,
            ty_case/3, ty_case_after/3, ty_article_case/6, ty_noun_case/5,
@@ -1214,7 +1221,7 @@ ty_template_group('words', [ty_noun_class, ty_class_when, ty_noun_in, ty_noun, t
                             ty_conjunct_marks, ty_clause_comma, ty_comma, ty_sense, ty_closed]).
 ty_template_group('verbs and tenses', [ty_conjugation, ty_verb_in, ty_irregular_verb, ty_verb, ty_verb_list, ty_adjective_list, ty_noun_list, ty_purpose_mark, ty_purpose_bare, ty_adverb_inside, ty_infinitive_after, ty_phrasal, ty_tense_form, ty_tense_like, ty_participle,
                                        ty_participle_like, ty_participle_ending, ty_participle_agrees,
-                                       ty_verb_class, ty_class_tense_form, ty_verb_person, ty_copula,
+                                       ty_verb_class, ty_class_tense_form, ty_verb_person, ty_copula, ty_existential,
                                        ty_split_place, ty_verb_last]).
 ty_template_group('the negation', [ty_negation, ty_negation_place, ty_copula_negation,
                                    ty_negative_article, ty_negative_article_roles,
@@ -1319,6 +1326,7 @@ ty_row_shape('ty_article(L, Definiteness, Gender, Number, Word).').
 ty_row_shape('ty_mark(L, Role, Place, Word, Conditions).').
 ty_row_shape('ty_contraction(L, Words, Word).').
 ty_row_shape('ty_short_form(L, Words, Word).').
+ty_row_shape('ty_existential(L, Words).').
 ty_row_shape('ty_negation(L, Tense, Number, Words, Form).').
 ty_row_shape('ty_ending(L, Feature, From, To).').
 ty_row_shape('ty_letters(L, Class, Letters).').
@@ -3695,6 +3703,7 @@ ty_wh_features(what, [indef, sg, inanimate]).
 %% A statement has no question word.
 ty_sentence(L, IR) --> ty_clause(L, IR), { ty_wh_count(IR, yes_no) }.
 ty_sentence(L, IR) --> ty_copula_clause(L, IR), { ty_wh_count(IR, yes_no) }.
+ty_sentence(L, IR) --> ty_exist_clause(L, IR).
 ty_sentence(L, IR) --> ty_answer(L, IR).
 
 %% CLAUSES JOINED (since 1.59.0): and([C1, C2]), or([C1, C2]) and
@@ -4000,6 +4009,7 @@ ty_ir_features(_, _, [_, _, _, _]).
 
 ty_statement(L, C) --> ty_clause(L, C), { ty_wh_count(C, yes_no) }.
 ty_statement(L, C) --> ty_copula_clause(L, C), { ty_wh_count(C, yes_no) }.
+ty_statement(L, C) --> ty_exist_clause(L, C).
 ty_statement(L, C) --> ty_passive(L, C).
 ty_statement(L, C) --> ty_progressive(L, C).
 
@@ -5931,6 +5941,33 @@ ty_copula_clause(L, C) -->
       ty_predicate_ok(Pred, Rows, G, N),
       ty_kein_ok(L),
       \+ ty_passive_ap(L, Pred) }.
+
+%% THERE IS (since 1.111.0): exist(T, P, NP), the language's words of
+%% existence (ty_existential/2: English [there]), the copula that agrees
+%% with the noun phrase, and the noun phrase in the case a subject has,
+%% read as a phrase alone is (`There is a narrow line between sanity and
+%% insanity.', `There were millions of flies.', `When there is no wind,
+%% row.'). Reading, only where the words begin with the existence's.
+ty_exist_clause(L, exist(T, P, NP)) -->
+    ty_here(S0),
+    { ty_existential(L, Ws),
+      ( var(S0) -> true ; append(Ws, _, S0) ),
+      ( nonvar(NP) -> ty_exist_number(NP, N) ; true ),
+      ty_copula_polarity(L, P, CP) },
+    ty_tokens(Ws),
+    ty_copula_words(L, np, T, N, CP),
+    { ty_role_case(L, s), b_setval('$ty_phrase', yes) },
+    ty_np_phrase(L, NP, _),
+    { b_setval('$ty_phrase', no),
+      ty_exist_number(NP, N0), N0 == N, \+ ty_is_asked(NP) }.
+
+ty_exist_number(NP, _) :- var(NP), !, fail.
+ty_exist_number(np(_, N, _, _), N).
+ty_exist_number(np_pp(NP, _), N) :- ty_exist_number(NP, N).
+ty_exist_number(of(_, NP), N) :- ty_exist_number(NP, N).
+ty_exist_number(rel(NP, _), N) :- ty_exist_number(NP, N).
+ty_exist_number(and(_), pl).
+ty_exist_number(qp(_, _), sg).
 
 ty_copula_parts([], _, _, _, _) --> [].
 ty_copula_parts([P|Ps], L, C, F, R) --> ty_copula_part(P, L, C, F, R), ty_copula_parts(Ps, L, C, F, R).

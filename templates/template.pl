@@ -470,6 +470,16 @@ ty_participle_agrees(xx, clitic).
 %% ty_copula(xx, Kind, Tense, Number, Polarity, Words).
 %%   e.g. ty_copula(english, any, present, sg, pos, [is]).
 
+%%     ty_existential(L, Words)        a noun phrase's existence is Words,
+%%                                     the copula that agrees with it and
+%%                                     the noun phrase (since 1.111.0:
+%%                                     English [there]; `There were
+%%                                     millions of flies.' is exist(past,
+%%                                     pos, of(np(fly, pl, indef, []),
+%%                                     np(million, pl, indef, []))))
+%% ty_existential(xx, Words).
+%%   e.g. ty_existential(english, [there]).
+
 %%     ty_split_place(L, end)          the last part of a verb of two (an
 %%                                     auxiliary and a participle or an
 %%                                     infinitive) stands at the clause's

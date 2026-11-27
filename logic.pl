@@ -357,6 +357,13 @@ logic_why(IR0, Why) :-
 %% unsaid (since 1.99.0: `Was transferred up to headquarters.'), each of
 %% which would be someone.
 lg_active(X, X) :- var(X), !.
+%% A NOUN PHRASE'S EXISTENCE (since 1.111.0): `There is a dog in the
+%% garden.' in the present is the phrase alone, its individual's facts;
+%% in another tense or denied the clause of exist (`There was a salvo of
+%% approval.' is past(exist(a(of(salvo, approval))))).
+lg_active(exist(T, P, NP0), C) :- !,
+    lg_active(NP0, NP),
+    ( T == present, P == pos -> C = phrase(NP) ; C = clause(exist, T, P, NP, none) ).
 lg_active(clause(V, T, P, S, O), C) :- nonvar(T), T = pass(_), !,
     lg_active(clause(V, T, P, S, O, []), C).
 lg_active(clause(V, T, P, S, O), C) :- lg_pass_inf(O), !,

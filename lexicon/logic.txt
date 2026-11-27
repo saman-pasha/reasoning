@@ -469,3 +469,13 @@ She's really together.	really(together(she)).
 We're now quits.	now(quits(we)).
 He's a blasted idiot.	idiot(he). blasted(he).
 Last, I'll discuss family values.	value(a(pl(family(value)))). family(a(pl(family(value)))). future(last(discuss(i, a(pl(family(value)))))).
+There was a salvo of approval.	salvo(a(of(salvo, approval))). past(exist(a(of(salvo, approval)))).
+There were millions of flies.	million(a(of(pl(million), a(pl(fly))))). fly(a(pl(fly))). past(exist(a(of(pl(million), a(pl(fly)))))).
+There was a reshuffle of cabinet officers.	reshuffle(a(of(reshuffle, a(pl(nn(cabinet, officer)))))). officer(a(pl(nn(cabinet, officer)))). nn(cabinet, a(pl(nn(cabinet, officer)))). past(exist(a(of(reshuffle, a(pl(nn(cabinet, officer))))))).
+There was a note of uncertainty in his voice.	note(a(in(of(note, uncertainty), of(voice, he)))). past(exist(a(in(of(note, uncertainty), of(voice, he))))).
+There was a hesitation in his speech.	hesitation(a(in(hesitation, of(speech, he)))). past(exist(a(in(hesitation, of(speech, he))))).
+There was a roof on salaries.	roof(a(on(roof, a(pl(salary))))). salary(a(pl(salary))). past(exist(a(on(roof, a(pl(salary)))))).
+There are laboratories for commercial testing.	laboratory(a(for(pl(laboratory), commercial(testing)))).
+There were many demands on his time.	demand(a(on(pl(many(demand)), of(time, he)))). many(a(on(pl(many(demand)), of(time, he)))). past(exist(a(on(pl(many(demand)), of(time, he))))).
+There was a break in the action when a player was hurt.	break(a(in(break, the(action)))). player(a(player)). when(past(exist(a(in(break, the(action))))), past(hurt(someone, a(player)))).
+There were four notches in the handle of his revolver.	notch(a(in(pl(four(notch)), of(handle, of(revolver, he))))). four(a(in(pl(four(notch)), of(handle, of(revolver, he))))). past(exist(a(in(pl(four(notch)), of(handle, of(revolver, he)))))).

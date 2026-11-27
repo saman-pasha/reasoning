@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -262,11 +262,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 440),
-    ( R >= 426 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 426 right', VR, ok),
-    ( K >= 432 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 432 kept', VK, ok).
+    check('the second measure: its sentences', N, 450),
+    ( R >= 436 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 436 right', VR, ok),
+    ( K >= 442 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 442 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -1153,6 +1153,19 @@ negation :-
              check(Label2, E2, Want2) )),
     ( cocolog_read('is_not(the(war)).', U3) -> true ; U3 = none ),
     check('is_not of no compound term is a predicate', U3, utterance(assertion, [fact(pred(not, [const(the(war))]))])).
+
+%% 1.111.0: a noun phrase's existence, in the present the phrase alone, in
+%% another tense the clause of exist.
+existential :-
+    section('a noun phrase\'s existence'),
+    typology_load(english),
+    forall(member(T-Want, [
+               'There is a dog.'-'dog(a(dog)).\n',
+               'There was a salvo of approval.'-'salvo(a(of(salvo, approval))).\npast(exist(a(of(salvo, approval)))).\n',
+               'There were millions of flies.'-'million(a(of(pl(million), a(pl(fly))))).\nfly(a(pl(fly))).\npast(exist(a(of(pl(million), a(pl(fly)))))).\n' ]),
+           ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
+             one_line(['into Cocolog: ', T], Label),
+             check(Label, C, Want) )).
 
 %% Each clause of a Cocolog text asserted.
 assert_text(P) :-

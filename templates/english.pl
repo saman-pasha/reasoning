@@ -1053,6 +1053,11 @@ ty_short_form(english, [that, is], 'that''s').
 ty_short_form(english, [what, is], 'what''s').
 ty_short_form(english, [who, is], 'who''s').
 ty_short_form(english, [let, us], 'let''s').
+ty_short_form(english, [there, is], 'there''s').
+%% A NOUN PHRASE'S EXISTENCE (since 1.111.0): `there' and the copula that
+%% agrees with the noun phrase (`There is a drip through the roof.', `There
+%% were millions of flies.', `There will be signage.').
+ty_existential(english, [there]).
 ty_short_form(english, [i, am], 'i''m').
 ty_short_form(english, [i, have], 'i''ve').
 ty_short_form(english, [i, will], 'i''ll').

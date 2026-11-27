@@ -170,6 +170,7 @@ main :-
     grammar_words,
     modals,
     short_forms,
+    existential,
     format("~ndone~n", []).
 
 
@@ -1246,6 +1247,16 @@ short_forms :-
     must('a short form', IR1, copula(present, pos, pron(3, sg, m), adj([family]))),
     typology_write(english, IR1, W1),
     must('written in full', W1, 'He is family.').
+
+%% 79. A NOUN PHRASE'S EXISTENCE (1.111.0): exist(T, P, NP), the words of
+%% ty_existential/2 (English [there]) and the copula that agrees with the
+%% noun phrase.
+existential :-
+    typology_load(english),
+    typology_read(english, 'There were millions of flies.', IR1),
+    must('there is', IR1, exist(past, pos, of(np(fly, pl, indef, []), np(million, pl, indef, [])))),
+    typology_write(english, exist(future, pos, np(dog, sg, indef, [])), W2),
+    must('written in a tense', W2, 'There will be a dog.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
