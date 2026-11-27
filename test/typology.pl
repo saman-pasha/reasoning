@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words, such_words, reflexives,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2751,6 +2751,31 @@ article_names :-
     findall(R3, typology_read(english, 'The dog sleeps.', R3), Rs3),
     check('no article before a small word is a name\'s', Rs3, [clause(sleep, present, pos, np(dog, sg, def, []), none)]).
 
+%% 1.127.0: `oneself', an emphatic reflexive (emph(NP, Pronoun)), `of'
+%% before a pronoun, a number after a definite determiner, an adjective as
+%% a group (group(A)).
+numbers_and_groups :-
+    section('numbers after the article, groups, more reflexives'),
+    forall(member(T-Want, [
+               'Exert oneself.'-clause(exert, imperative, pos, pron(2, sg, _), refl(pron(3, sg, one))),
+               'The law itself was unclear.'-copula(past, pos, emph(np(law, sg, def, []), pron(3, sg, n)), adj([unclear])),
+               'She lost control of herself.'-clause(lose, past, pos, pron(3, sg, f), np_pp(np(control, sg, mass, []), pp(of, refl(pron(3, sg, f))))),
+               'She lost control of the car.'-clause(lose, past, pos, pron(3, sg, f), of(np(car, sg, def, []), np(control, sg, mass, []))),
+               'The two lovers killed themselves.'-clause(kill, past, pos, np(lover, pl, def, [two]), refl(pron(3, pl, _))),
+               'His two sons sleep.'-clause(sleep, present, pos, of(pron(3, sg, m), np(son, pl, def, [two])), none),
+               'These three books are red.'-copula(present, pos, np(book, pl, this, [three]), adj([red])),
+               'The poor knew themselves.'-clause(know, past, pos, group(poor), refl(pron(3, pl, _))),
+               'The poor man sleeps.'-clause(sleep, present, pos, np(man, sg, def, [poor]), none) ]),
+           ( ( once(typology_read(english, T, R)) -> true ; R = none ),
+             ( R = Want -> V = yes ; V = R ),
+             atomic_list_concat(['English, the first reading: ', T], Label),
+             check(Label, V, yes) )),
+    forall(member(IR-Want2, [ phrase(np(boy, pl, def, [two]))-'The two boys.',
+                              clause(know, past, pos, group(poor), refl(pron(3, pl, _)))-'The poor knew themselves.',
+                              clause(make, present, pos, emph(np(president, sg, def, []), pron(3, sg, m)), np(decision, pl, def, []))-'The president himself makes the decisions.' ]),
+           ( ( typology_write(english, IR, W) -> true ; W = none ),
+             check('written', W, Want2) )).
+
 %% 1.126.0: a reflexive pronoun, refl(Pronoun), where an object or an
 %% adposition's object stands, agreeing with its clause's subject.
 reflexives :-
@@ -3304,8 +3329,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 5835 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 5 835 sentences read at 1.126.0 within 2 000 000 inferences each are read', R1, yes),
+    ( K >= 5852 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 5 852 sentences read at 1.127.0 within 2 000 000 inferences each are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

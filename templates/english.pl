@@ -527,6 +527,9 @@ ty_predeterminer(english, all, [all]).
 %% `such' before an indefinite noun phrase (since 1.125.0: `such a baby',
 %% `such problems'); level 2 has no form of it yet.
 ty_predeterminer(english, such, [such]).
+%% An adjective after `the' alone (since 1.127.0), as a subject, is the
+%% people or things it describes: `The poor knew themselves.'
+ty_adjective_group(english, def).
 ty_subordinate_first(english).
 
 %% The negative: `does not', `do not', `did not' before the base, which is
@@ -936,6 +939,7 @@ ty_pronoun(english, r, [herself], [[3, sg, f]]).
 ty_pronoun(english, r, [itself], [[3, sg, n]]).
 ty_pronoun(english, r, [ourselves], [[1, pl]]).
 ty_pronoun(english, r, [themselves], [[3, pl]]).
+ty_pronoun(english, r, [oneself], [[3, sg, one]]).
 ty_capital(english, i, 'I').
 ty_verb_person(english, any, sg(1), pl, '', '').
 ty_verb_person(english, any, sg(2), pl, '', '').

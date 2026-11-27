@@ -89,6 +89,7 @@ main :-
     long_words,
     such_words,
     reflexives,
+    numbers_and_groups,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -718,13 +719,23 @@ such_words :-
     logic_translate(english, cocolog, 'A professional field such as law.', C1),
     must('such_as(professional(field), law)', C1, 'field(a(such_as(professional(field), law))).\nprofessional(a(such_as(professional(field), law))).\n').
 
-%% 59. A REFLEXIVE PRONOUN (1.126.0), refl(Pronoun) in the IR, has no form
-%% at level 2 yet, and logic_why/2 says so.
+%% 59. A REFLEXIVE PRONOUN (1.126.0), refl(Pronoun) in the IR, is since
+%% 1.127.0 its clause's subject where that is a constant, and back from
+%% Cocolog a reflexive again; with no subject it has no form
+%% (pronoun(reflexive)).
 reflexives :-
     typology_load(english),
-    typology_read(english, 'She expressed herself pithily.', IR1),
-    ( logic_from_ir(IR1, _) -> W1 = read ; logic_why(IR1, W1) ),
-    must('pronoun(reflexive)', W1, pronoun(reflexive)).
+    logic_translate(english, cocolog, 'She expressed herself pithily.', C1),
+    must('express(she, she)', C1, 'past(pithily(express(she, she))).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and back', E1, 'She expressed herself pithily.').
+
+%% 60. A NUMBER AFTER `THE' AND A GROUP (1.127.0): `the two lovers' is the
+%% constant the(pl(two(lover))), `the poor' the(group(poor)).
+numbers_and_groups :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'The poor knew themselves.', C1),
+    must('the(group(poor))', C1, 'past(know(the(group(poor)), the(group(poor)))).\n').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

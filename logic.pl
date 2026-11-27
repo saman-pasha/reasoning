@@ -336,11 +336,53 @@ lg_distinct([U|Us], [U|Ds]) :-
     lg_distinct(Rest, Ds).
 
 logic_from_ir(IR0, utterance(Intent, Items)) :-
-    catch(( lg_active(IR0, IR), lg_utterance(IR, Intent, Items0) ), lg_no(_), fail),
+    catch(( lg_active(IR0, IR1), lg_refl(IR1, IR), lg_utterance(IR, Intent, Items0) ), lg_no(_), fail),
     maplist(lg_number, Items0, Items).
 
 logic_why(IR0, Why) :-
-    catch(( lg_active(IR0, IR), lg_utterance(IR, _, _) -> fail ; Why = shape(IR0) ), lg_no(Why), true).
+    catch(( lg_active(IR0, IR1), lg_refl(IR1, IR), lg_utterance(IR, _, _) -> fail ; Why = shape(IR0) ), lg_no(Why), true).
+
+%% A REFLEXIVE PRONOUN (since 1.127.0) names its clause's subject: where
+%% the subject is a constant (a pronoun, a name, a definite, demonstrative
+%% or bare noun phrase), refl(_) in the clause's object and adjuncts, or in
+%% a copula's predicate, is the subject (`She expressed herself pithily.'
+%% is past(pithily(express(she, she)))), never inside a clause the IR
+%% holds (a relative clause, a subordinate clause: its own subject); else
+%% it stays, and has no form (pronoun(reflexive)). Back from Cocolog an
+%% atom of two whose arguments are one pronoun's constant says the second
+%% as a reflexive first (lg_atom_ir/4).
+lg_refl(IR0, IR) :-
+    (   nonvar(IR0), lg_refl_parts(IR0, S, Xs0, Xs, IR), lg_refl_subject(S)
+    ->  lg_refl_put(Xs0, S, Xs)
+    ;   IR = IR0
+    ).
+
+lg_refl_parts(clause(V, T, P, S, O), S, [O], [O1], clause(V, T, P, S, O1)).
+lg_refl_parts(clause(V, T, P, S, O, Js), S, [O, Js], [O1, Js1], clause(V, T, P, S, O1, Js1)).
+lg_refl_parts(copula(T, P, S, X), S, [X], [X1], copula(T, P, S, X1)).
+
+%% Back from Cocolog, the reflexive of a subject: a pronoun's own, a
+%% plural noun phrase's `themselves'.
+lg_refl_of(S, R) :- nonvar(S), ( S = pron(_, _, _) -> R = S ; ( S = np(_, pl, _, _) ; S = group(_) ) -> R = pron(3, pl, _) ).
+
+lg_refl_subject(S) :- nonvar(S), lg_refl_subject_(S), !.
+lg_refl_subject_(pron(_, _, _)).
+lg_refl_subject_(name(_)).
+lg_refl_subject_(np(_, _, D, _)) :- memberchk(D, [def, this, that, mass]).
+lg_refl_subject_(group(_)).
+
+lg_refl_put(X, _, X) :- var(X), !.
+lg_refl_put(refl(_), S, S) :- !.
+lg_refl_put(X, _, X) :- atomic(X), !.
+lg_refl_put(X, _, X) :- lg_refl_inner(X), !.
+lg_refl_put(X, S, Y) :- X =.. [F|As], maplist(lg_refl_put_(S), As, Bs), Y =.. [F|Bs].
+lg_refl_put_(S, X, Y) :- lg_refl_put(X, S, Y).
+
+lg_refl_inner(clause(_, _, _, _, _)).
+lg_refl_inner(clause(_, _, _, _, _, _)).
+lg_refl_inner(copula(_, _, _, _)).
+lg_refl_inner(rel(_, _)).
+lg_refl_inner(sub(_, _, _)).
 
 %% THE PASSIVE (since 1.98.0) is its active: clause(V, pass(T), P, S,
 %% none, Js) is clause(V, T, P, Agent, S, Js1), the agent the NP of the
@@ -1082,6 +1124,12 @@ lg_entity(of(P, NP), E, Ms) :- !, lg_possessed(P, NP, E, Ms).
 %% past(pay(he, all(of(pl(bill), he)))).
 lg_entity(such(_), _, _) :- !, lg_no(determiner(such)).
 lg_entity(refl(_), _, _) :- !, lg_no(pronoun(reflexive)).
+%% AN EMPHATIC REFLEXIVE (since 1.127.0) is its noun phrase's entity: `The
+%% law itself was unclear.' says unclear(the(law)).
+lg_entity(emph(NP, _), E, Ms) :- !, lg_entity(NP, E, Ms).
+%% AN ADJECTIVE AS A GROUP (since 1.127.0): the constant the(group(A)),
+%% the people or things A describes (`The living knew themselves.').
+lg_entity(group(A), ent(const(the(group(A))), [], const), []) :- !, atom(A).
 lg_entity(all(NP), ent(const(all(C)), [], const), Ms) :- !,
     lg_entity(NP, ent(T, Conds, Q), Ms),
     ( Q == const, T = const(C), Conds == [] -> true ; lg_no(determiner(all)) ).
@@ -2143,7 +2191,8 @@ lg_fun_first(fun(_, [Y|_]), X) :- ( nonvar(Y), Y = fun(_, _) -> lg_fun_first(Y, 
 lg_atom_ir(L, pred(P, [A, B]), How, IR) :-
     lg_binary_classes(L, P, Cs),
     lg_arg_np(L, How, A, S),
-    lg_arg_np(L, How, B, O),
+    lg_arg_np(L, How, B, O0),
+    (   A == B, lg_refl_of(S, R) -> ( O = refl(R) ; O = O0 ) ; O = O0 ),
     member(C, Cs),
     lg_binary_shape(C, P, How, S, O, IR).
 
@@ -2308,6 +2357,7 @@ lg_const_np(_, _, C, P) :- atom(C), lg_pron_np(C, P).
 lg_const_np(_, _, something, qp(some, thing)).
 lg_const_np(_, _, someone, qp(some, person)).
 lg_const_np(_, _, C, qp(some, K)) :- atom(C), lg_numbered(C, W), memberchk(W-K, [something-thing, someone-person]), !.
+lg_const_np(L, _, the(group(A)), group(A)) :- !, atom(A), typology_meaning(L, adjective, A).
 lg_const_np(L, _, the(T), np_pp(np(N, Num, def, As), Inf)) :-
     nonvar(T), T = to(T0, X), lg_inf_term(L, X, Inf), !,
     lg_np_of_term(L, T0, N, Num, As).

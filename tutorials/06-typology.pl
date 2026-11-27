@@ -185,6 +185,7 @@ main :-
     long_words,
     such_words,
     reflexives,
+    numbers_and_groups,
     format("~ndone~n", []).
 
 
@@ -1391,6 +1392,21 @@ reflexives :-
     must('herself', IR1, clause(express, past, pos, pron(3, sg, f), refl(pron(3, sg, f)), [adv(pithily)])),
     ( typology_read(english, 'He sees herself.', _) -> R2 = read ; R2 = refused ),
     must('and agreeing with its subject', R2, refused).
+
+%% 94. A NUMBER AFTER A DEFINITE DETERMINER AND AN ADJECTIVE AS A GROUP
+%% (1.127.0): `the two', `these three', `his two' put the number first in
+%% the noun phrase's list of adjectives (np(son, pl, def, [two])); an
+%% adjective alone after `the' is a group, group(A), by the template's
+%% ty_adjective_group(L, Def) row, as a subject; a reflexive right after a
+%% noun phrase is emphatic, emph(NP, Pronoun).
+numbers_and_groups :-
+    typology_load(english),
+    typology_read(english, 'His two sons sleep.', IR1),
+    must('his two sons', IR1, clause(sleep, present, pos, of(pron(3, sg, m), np(son, pl, def, [two])), none)),
+    typology_write(english, clause(know, past, pos, group(poor), refl(pron(3, pl, _))), W2),
+    must('the poor', W2, 'The poor knew themselves.'),
+    typology_read(english, 'The law itself was unclear.', IR3),
+    must('the law itself', IR3, copula(past, pos, emph(np(law, sg, def, []), pron(3, sg, n)), adj([unclear]))).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

@@ -180,6 +180,16 @@ ty_capital_nouns(xx).
 %% ty_predeterminer(xx, Kind, Words).
 %%   e.g. ty_predeterminer(english, all, [all]).
 
+%%     ty_adjective_group(L, Definiteness)
+%%                                     an article of Definiteness and an
+%%                                     adjective alone stand for the people
+%%                                     or things the adjective describes,
+%%                                     plural, as a subject (since 1.127.0:
+%%                                     English `The poor knew themselves.'),
+%%                                     group(A)
+%% ty_adjective_group(xx, Definiteness).
+%%   e.g. ty_adjective_group(english, def).
+
 %%     ty_comparative(L, Adverb, Short, Endings)
 %%                                     the adverb (ty_adverb/3's meaning)
 %%                                     that grades an adjective as its
@@ -1075,8 +1085,10 @@ ty_possessive_clitic(xx).
 %%                                     stands, refl(Pronoun)), where the
 %%                                     pronoun fits one of the Conditions,
 %%                                     each its person, number and kind
-%%                                     (`he' [[3, sg, m]]); a role with no
-%%                                     row takes o's (j) or s's rows
+%%                                     (`he' [[3, sg, m]]; the kind one, since
+%%                                     1.127.0, a reflexive of any subject:
+%%                                     `oneself' [[3, sg, one]]); a role with
+%%                                     no row takes o's (j) or s's rows
 %% ty_pronoun(xx, Role, Words, Conditions).
 %%   e.g. ty_pronoun(english, s, [i], [[1, sg]]).
 

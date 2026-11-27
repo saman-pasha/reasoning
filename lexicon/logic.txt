@@ -572,3 +572,8 @@ An inextinguishable flame.	flame(a(inextinguishable(flame))). inextinguishable(a
 A professional field such as law.	field(a(such_as(professional(field), law))). professional(a(such_as(professional(field), law))).
 Renewable energy such as solar energy is theoretically inexhaustible.	theoretically(inexhaustible(such_as(renewable(energy), solar(energy)))).
 Small aerial creatures such as butterflies.	creature(a(such_as(pl(small(aerial(creature))), a(pl(butterfly))))). small(a(such_as(pl(small(aerial(creature))), a(pl(butterfly))))). aerial(a(such_as(pl(small(aerial(creature))), a(pl(butterfly))))). butterfly(a(pl(butterfly))).
+She expressed herself pithily.	past(pithily(express(she, she))).
+Exert oneself.	imperative(exert(you, you)).
+Glue the two parts together.	imperative(together(glue(you, the(pl(two(part)))))).
+The law itself was unclear on that point.	past(on(unclear(the(law)), that(point))).
+He bundled up his few possessions.	past(bundle_up(he, of(pl(few(possession)), he))).

@@ -473,8 +473,10 @@
 %%                                     stands, refl(Pronoun)), where the
 %%                                     pronoun fits one of the Conditions,
 %%                                     each its person, number and kind
-%%                                     (`he' [[3, sg, m]]); a role with no
-%%                                     row takes o's (j) or s's rows
+%%                                     (`he' [[3, sg, m]]; the kind one, since
+%%                                     1.127.0, a reflexive of any subject:
+%%                                     `oneself' [[3, sg, one]]); a role with
+%%                                     no row takes o's (j) or s's rows
 %%     ty_polite(L, Number, Key)       the agreement key a polite `you' of
 %%                                     Number takes (Spanish sg, sg: `usted
 %%                                     ve'; French sg, pl(2): `vous voyez')
@@ -510,6 +512,13 @@
 %%                                     before an indefinite one of Kind
 %%                                     such (since 1.125.0: `such a
 %%                                     baby', `such problems')
+%%     ty_adjective_group(L, Definiteness)
+%%                                     an article of Definiteness and an
+%%                                     adjective alone stand for the people
+%%                                     or things the adjective describes,
+%%                                     plural, as a subject (since 1.127.0:
+%%                                     English `The poor knew themselves.'),
+%%                                     group(A)
 %%     ty_subordinate_first(L)         a subordinate clause may stand before
 %%                                     its main clause, a comma after it
 %%                                     (`If it sleeps, the dog is small.');
@@ -930,7 +939,7 @@
            ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
            ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
            ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-           ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_adjective_list/3, ty_noun_list/3, ty_purpose_mark/2, ty_purpose_bare/1, ty_adverb_inside/1, ty_infinitive_after/3, ty_phrasal/5, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_predeterminer/3, ty_comparative/4, ty_irregular_comparative/3, ty_subordinate_first/1, ty_subordinate_comma/1,
+           ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_adjective_list/3, ty_noun_list/3, ty_purpose_mark/2, ty_purpose_bare/1, ty_adverb_inside/1, ty_infinitive_after/3, ty_phrasal/5, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_predeterminer/3, ty_adjective_group/2, ty_comparative/4, ty_irregular_comparative/3, ty_subordinate_first/1, ty_subordinate_comma/1,
            ty_answer_echo/3, ty_kind/2, ty_adjective_before/2, ty_pronoun_gender/2,
            ty_inversion/3, ty_wh_tonic/3,
            ty_tense_form/5, ty_participle/3, ty_participle_like/3, ty_existential/2,
@@ -956,7 +965,7 @@
                  ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
                  ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
                  ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-                 ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_adjective_list/3, ty_noun_list/3, ty_purpose_mark/2, ty_purpose_bare/1, ty_adverb_inside/1, ty_infinitive_after/3, ty_phrasal/5, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_predeterminer/3, ty_comparative/4, ty_irregular_comparative/3, ty_subordinate_first/1, ty_subordinate_comma/1,
+                 ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_adjective_list/3, ty_noun_list/3, ty_purpose_mark/2, ty_purpose_bare/1, ty_adverb_inside/1, ty_infinitive_after/3, ty_phrasal/5, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_predeterminer/3, ty_adjective_group/2, ty_comparative/4, ty_irregular_comparative/3, ty_subordinate_first/1, ty_subordinate_comma/1,
                  ty_answer_echo/3, ty_adjective_before/2, ty_pronoun_gender/2,
                  ty_inversion/3, ty_wh_tonic/3,
                  ty_tense_form/5, ty_participle/3, ty_participle_like/3,
@@ -1253,7 +1262,7 @@ ty_tdoc_more(Ls, [], Ls).
 %% section blank_template holds them to the header's slots).
 ty_template_group('the orders of the levels', [ty_order]).
 ty_template_group('words', [ty_noun_class, ty_class_when, ty_noun_in, ty_noun, ty_adjective, ty_adjective_before, ty_article, ty_adposition,
-                            ty_adverb, ty_capital, ty_capital_nouns, ty_name, ty_quantifier_pronoun, ty_predeterminer, ty_comparative, ty_irregular_comparative, ty_definite_like, ty_subordinator, ty_subordinate_first, ty_subordinate_comma, ty_and, ty_conjunction, ty_serial_comma,
+                            ty_adverb, ty_capital, ty_capital_nouns, ty_name, ty_quantifier_pronoun, ty_predeterminer, ty_adjective_group, ty_comparative, ty_irregular_comparative, ty_definite_like, ty_subordinator, ty_subordinate_first, ty_subordinate_comma, ty_and, ty_conjunction, ty_serial_comma,
                             ty_conjunct_marks, ty_clause_comma, ty_comma, ty_sense, ty_closed]).
 ty_template_group('verbs and tenses', [ty_conjugation, ty_verb_in, ty_irregular_verb, ty_verb, ty_verb_list, ty_adjective_list, ty_noun_list, ty_purpose_mark, ty_purpose_bare, ty_adverb_inside, ty_infinitive_after, ty_phrasal, ty_tense_form, ty_tense_like, ty_participle,
                                        ty_participle_like, ty_participle_ending, ty_participle_agrees,
@@ -1397,6 +1406,7 @@ ty_row_shape('ty_capital(L, Word, Written).').
 ty_row_shape('ty_name(L, Meaning, Written, Gender, Animacy).').
 ty_row_shape('ty_quantifier_pronoun(L, Quantifier, Kind, Words).').
 ty_row_shape('ty_predeterminer(L, Kind, Words).').
+ty_row_shape('ty_adjective_group(L, Definiteness).').
 ty_row_shape('ty_comparative(L, Adverb, Short, Endings).').
 ty_row_shape('ty_irregular_comparative(L, Adjective, Word).').
 ty_row_shape('ty_subordinator(L, Kind, Words).').
@@ -1887,6 +1897,9 @@ ty_missing(L, bad(ty_comparative(L, M, Sh, Es))) :-
 ty_missing(L, bad(ty_irregular_comparative(L, A, W))) :-
     ty_irregular_comparative(L, A, W),
     \+ ( atom(A), atom(W) ).
+ty_missing(L, bad(ty_adjective_group(L, D))) :-
+    ty_adjective_group(L, D),
+    \+ ( ty_values(definiteness, Ds), memberchk(D, Ds) ).
 ty_missing(L, bad(ty_predeterminer(L, K, Ws))) :-
     ty_predeterminer(L, K, Ws),
     \+ ( ty_values(predeterminer, Ks), memberchk(K, Ks), is_list(Ws), Ws \== [],
@@ -2046,10 +2059,11 @@ ty_tense_asked(L, V, T) :-
 
 %% A pronoun's condition: a list of its person, number and kind.
 %% zero is the kind of the person no words name (pron(3, sg, zero), since
-%% 1.86.0), whose possessive is a row since 1.115.0 (`one's').
+%% 1.86.0), whose possessive is a row since 1.115.0 (`one's'); one (since
+%% 1.127.0) the kind of `oneself', a reflexive of any subject.
 ty_pron_condition(C) :-
     is_list(C),
-    forall(member(X, C), memberchk(X, [1, 2, 3, polite, sg, pl, m, f, n, zero])).
+    forall(member(X, C), memberchk(X, [1, 2, 3, polite, sg, pl, m, f, n, zero, one])).
 
 ty_question_rule(R) :- memberchk(R, [unchanged, front(all), front(first), invert(pronoun)]), !.
 ty_question_rule(particle(W, P)) :- ( atom(W) ; is_list(W), W \== [] ), memberchk(P, [start, end]).
@@ -3718,8 +3732,14 @@ ty_subject_number(pron(P, N0, _), N) :- ty_agreement(P, N0, N).
 %% dog sleeps').
 ty_subject_number(C, N) :- ty_coord_np(C, K, Xs), ty_coord_number(K, Xs, N).
 ty_subject_number(S, N) :- S == same, ty_same_subject(S1), ty_subject_number(S1, N).
-ty_subject_number(A, N) :- nonvar(A), A = all(NP), nonvar(NP), ty_subject_number(NP, N).
-ty_subject_number(A, N) :- nonvar(A), A = such(NP), nonvar(NP), ty_subject_number(NP, N).
+ty_subject_number(A, N) :- nonvar(A), ty_subject_wrapped(A, N).
+
+%% A noun phrase in another's: all(NP), such(NP), emph(NP, Pronoun) its
+%% noun phrase's number; group(A) (since 1.127.0) plural.
+ty_subject_wrapped(all(NP), N) :- nonvar(NP), ty_subject_number(NP, N).
+ty_subject_wrapped(such(NP), N) :- nonvar(NP), ty_subject_number(NP, N).
+ty_subject_wrapped(emph(NP, _), N) :- nonvar(NP), ty_subject_number(NP, N).
+ty_subject_wrapped(group(_), pl).
 ty_subject_number(of(_, P), N) :- nonvar(P), P = of(_, _), ty_subject_number(P, N).
 
 ty_coord_number(and, Xs, N) :-
@@ -4124,6 +4144,8 @@ ty_ir_features(L, np_pp(NP, _), F) :- !, ty_ir_features(L, NP, F).
 ty_ir_features(L, all(NP), F) :- !, ty_ir_features(L, NP, F).
 ty_ir_features(L, such(NP), F) :- !, ty_ir_features(L, NP, F).
 ty_ir_features(L, refl(Pr), F) :- !, ty_ir_features(L, Pr, F).
+ty_ir_features(L, emph(NP, _), F) :- !, ty_ir_features(L, NP, F).
+ty_ir_features(_, group(_), [D, pl, unknown, _]) :- !, ty_def_feature(def, D).
 ty_ir_features(L, C, F) :-
     ty_coord_np(C, K, Xs), !,
     findall(F1, ( member(X, Xs), ty_ir_features(L, X, F1) ), Fs),
@@ -5472,6 +5494,32 @@ ty_np_phrase(L, Pr, F) -->
     ty_words(1, 2, Ws, ty_pron_words(L, R, Pr, Ws)),
     { ty_pron_np_features(L, Pr, F) }.
 
+%% AN ADJECTIVE AS A GROUP (since 1.127.0): group(A), a subject (ty_role//4)
+%% of an article of the language's ty_adjective_group(L, Def) rows and an
+%% adjective alone, the people or the things A describes, plural and
+%% definite (`The poor knew themselves.'). Only a subject: in an object or
+%% after an adposition a word the tables know only as an adjective read as
+%% one (`in the textbook', whose noun every_noun.txt has and known_adj.txt
+%% keeps from the tables). The article's word is asked first
+%% ('$ty_group_article'/2): one call where it is none, as the clause is
+%% tried where every subject is.
+
+%% A group's adjective is no noun's word (`the textbook', `the world' are
+%% noun phrases), and the group ends its noun phrase: the word after it is
+%% no noun's and no adjective's (`the poor man'), nor a conjunction before
+%% one (`the poor and disabled': adjectives joined, not done).
+ty_group_end(L, S, S) :-
+    (   nonvar(S)
+    ->  ty_np_ends(L, S),
+        \+ ( S = [Cw, W2|_], atom(Cw), ty_and(L, AWs), memberchk(Cw, AWs), atom(W2), ty_word_class(L, adjective, W2) )
+    ;   true
+    ).
+
+ty_group_words(L, A, F) -->
+    [W], { '$ty_group_article'(L, W) }, [AW],
+    { once(ty_adjective(L, A, _, _, AW)), atom(A), \+ ty_word_class(L, noun, AW), ty_ir_features(L, group(A), F) },
+    ty_group_end(L).
+
 %% Coordinated noun phrases with no marks (since 1.59.0: `with mines and
 %% traps').
 ty_np_phrase(L, C, F) -->
@@ -5524,6 +5572,7 @@ ty_np_tail_slot(L, NP0, NP, T) :-
         )
     ;   NP0 = np(_, _, _, _) -> NP = NP0, T = none
     ;   NP0 = np_pp(NP, PP), nonvar(NP), NP = np(_, _, _, _), T = pp(PP)
+    ;   NP0 = emph(NP, Pr), nonvar(NP), NP = np(_, _, _, _), T = emph(Pr)
     ).
 
 ty_poss_tail_slot(L, P0, P, T) :-
@@ -5538,13 +5587,23 @@ ty_poss_tail_slot(L, P0, P, T) :-
     ).
 
 ty_pp_tail(_, none, _) --> [].
-ty_pp_tail(L, pp(pp(Prep, X)), _) --> { '$ty_noun_pp'(L) }, ty_pp(L, Prep, X).
+ty_pp_tail(L, pp(pp(Prep, X)), _) --> { '$ty_noun_pp'(L), ty_of_pron_set(Prep, X) }, ty_pp(L, Prep, X).
 ty_pp_tail(L, pp(inf(V, O, Js)), _) --> ty_infinitive(L, V, O, Js).
+%% AN EMPHATIC REFLEXIVE (since 1.127.0): emph(NP, Pronoun), a reflexive
+%% pronoun right after a noun phrase, of its person and number (`made by
+%% the president himself', `The law itself was unclear on that point.'),
+%% read where the text holds a reflexive's word ('$ty_prefl').
+ty_pp_tail(L, emph(Pr), _) --> ty_words(1, 2, Ws, ty_pron_words(L, r, Pr, Ws)).
 ty_pp_tail(L, open(NP0), H) -->
     (   { NP0 = H }
+    ;   { nb_current('$ty_prefl', f(yes)), nonvar(H), H = np(_, N, _, _) },
+        ty_words(1, 2, Ws, ty_pron_words(L, r, Pr, Ws)),
+        { Pr = pron(3, N, K), K \== one, NP0 = emph(H, Pr) }
     ;   ty_adp_next,
+        ty_of_pron_ahead(L),
         ty_pp(L, Prep, X),
         { \+ ( ty_to_verb_noun(L, Prep, X), ty_head_noun(H, N), ty_noun_of(L, infinitive, N) ),
+          ty_of_pron_ok(L, Prep, X),
           NP0 = np_pp(H, pp(Prep, X)) }
     ;   { '$ty_inf_made'(L) },
         ty_flag_allows('$ty_pinf'),
@@ -5565,12 +5624,52 @@ ty_pp_tail(L, open(NP0), H) -->
 ty_adp_flag(L, Words) :-
     findall(W, ( ty_adposition(L, _, [W|_]), memberchk(W, Words) ), Ws0),
     sort(Ws0, Ws1),
-    exclude(ty_of_word(L), Ws1, Ws),
+    partition(ty_of_word(L), Ws1, Ofs, Ws2),
+    (   Ofs = [_|_], member(O, Ofs), nextto(O, P, Words), '$ty_pron_word'(L, P) -> Ws3 = [O|Ws2]
+    ;   Ws3 = Ws2
+    ),
+    ( nb_current('$ty_prefl', f(yes)) -> Ws = ['$refl'|Ws3] ; Ws = Ws3 ),
     b_setval('$ty_adp', f(Ws)).
 
 %% A word whose rows are `of''s alone (English `of'; Spanish `de' is
-%% `from' too) opens no adposition phrase of a noun.
+%% `from' too) opens no adposition phrase of a noun, but (since 1.127.0)
+%% before a pronoun, and a reflexive's word in the text ('$ty_prefl') opens
+%% a noun phrase's tail as an adposition does ('$refl' among the words, no
+%% word of the text: an emphatic reflexive, emph/2). `Of' opens one only
+%% before a pronoun, which no possessor's `of' takes (`She lost control of
+%% herself.', `the size of it': np_pp(np(size, sg, def, []), pp(of,
+%% pron(3, sg, n))), ty_of_pron_ok/3).
 ty_of_word(L, W) :- ty_adposition(L, of, [W|_]), \+ ( ty_adposition(L, M, [W|_]), M \== of ).
+
+%% `of' before a pronoun may open a noun's phrase ('$ty_of_ok', ty_pp_of/1):
+%% reading, where the next two words are an `of' alone and a pronoun's;
+%% writing, where the IR's phrase is of `of' and a pronoun.
+ty_of_pron_ahead(L, S, S) :-
+    (   nonvar(S), S = [W, P|Rest], atom(W), atom(P), ty_of_word(L, W), '$ty_pron_word'(L, P),
+        ty_np_ends(L, Rest)
+    ->  b_setval('$ty_of_ok', yes)
+    ;   true
+    ).
+
+%% A word ends a noun phrase where the next is no noun's and no adjective's
+%% (`of her' before `fingers' is the possessor's `her').
+ty_np_ends(L, Rest) :-
+    (   Rest = [W|_], atom(W)
+    ->  \+ ty_word_class(L, noun, W), \+ ty_word_class(L, adjective, W)
+    ;   true
+    ).
+
+ty_of_pron_set(Prep, X) :-
+    (   Prep == of, nonvar(X), ( X = pron(_, _, _) ; X = refl(_) )
+    ->  b_setval('$ty_of_ok', yes)
+    ;   true
+    ).
+
+ty_of_pron_ok(L, Prep, X) :-
+    (   Prep == of, ty_adposition(L, of, [W|_]), ty_of_word(L, W)
+    ->  nonvar(X), ( X = pron(_, _, _) ; X = refl(_) ), !
+    ;   true
+    ).
 
 ty_adp_next(S, S) :-
     (   var(S) -> true
@@ -6064,15 +6163,17 @@ ty_poss_words_in(L, PWs, Words) :-
 %% (`$ty_pinf', asked by the infinitive after a noun, an adjective, an
 %% object and of purpose).
 ty_poss_flag(L, Words) :-
-    (   nb_current('$ty_poss_memo', memo(L0, Words0, Count, W, P, PP, PT, PI, PV)), L0 == L, Words0 == Words
+    (   nb_current('$ty_poss_memo', memo(L0, Words0, Count, W, P, PP, PT, PI, PV, PR)), L0 == L, Words0 == Words
     ->  true
     ;   ty_poss_counts(L, Words, Count, W, P),
         ( ty_ppron_in(L, Words) -> PP = yes ; PP = no ),
+        ( PP == yes, '$ty_refl_made'(L), member(X3, Words), atom(X3), ty_pronoun(L, r, [X3|_], _) -> PR = yes ; PR = no ),
         ( '$ty_phrasal_made'(L), member(X, Words), atom(X), '$ty_particle'(X, L) -> PT = yes ; PT = no ),
         ( ty_inf_in(L, Words) -> PI = yes ; PI = no ),
         ( ty_adverb_inside(L), member(X2, Words), atom(X2), ty_adverb(L, _, X2) -> PV = yes ; PV = no ),
-        nb_setval('$ty_poss_memo', memo(L, Words, Count, W, P, PP, PT, PI, PV))
+        nb_setval('$ty_poss_memo', memo(L, Words, Count, W, P, PP, PT, PI, PV, PR))
     ),
+    b_setval('$ty_prefl', f(PR)),
     b_setval('$ty_poss', f(Count)),
     b_setval('$ty_whose', f(W)),
     b_setval('$ty_pron', f(P)),
@@ -6837,6 +6938,12 @@ ty_verb_row(L, V, T, N, P, Words) :-
 %% word (since 1.126.0), so that a test of a word asks no walk of the rows.
 :- dynamic('$ty_pron_word'/2).
 :- dynamic('$ty_pron_rowf'/3).
+%% A number's article word, its number and its noun's (since 1.127.0).
+:- dynamic('$ty_count_word'/4).
+%% A language with a ty_adjective_group/2 row (since 1.127.0), and the
+%% article words of its definiteness of a plural.
+:- dynamic('$ty_group_made'/1).
+:- dynamic('$ty_group_article'/2).
 %% A language with a ty_comparative/4 row (since 1.120.0), its endings'
 %% words and its irregular comparatives' words.
 :- dynamic('$ty_cmp_made'/1).
@@ -6916,6 +7023,9 @@ ty_vfirst_make(L) :-
     retractall('$ty_refl_made'(L)),
     retractall('$ty_pron_word'(L, _)),
     retractall('$ty_pron_rowf'(L, _, _)),
+    retractall('$ty_count_word'(L, _, _, _)),
+    retractall('$ty_group_made'(L)),
+    retractall('$ty_group_article'(L, _)),
     retractall('$ty_cmp_made'(L)),
     retractall('$ty_cmp_end'(_, L)),
     retractall('$ty_cmp_irr'(_, L)),
@@ -6948,6 +7058,11 @@ ty_vfirst_make(L) :-
     ( ty_pronoun(L, r, _, _) -> assertz('$ty_refl_made'(L)) ; true ),
     forall(( ty_pronoun(L, _, PWs, _), member(PW, PWs), \+ '$ty_pron_word'(L, PW) ), assertz('$ty_pron_word'(L, PW))),
     forall(( ty_pronoun(L, _, [PF|PR], _), \+ '$ty_pron_rowf'(L, PF, [PF|PR]) ), assertz('$ty_pron_rowf'(L, PF, [PF|PR]))),
+    forall(( ty_article(L, CD, _, CN, CW), ty_count_det(CD), atom(CW), \+ sub_atom(CW, _, _, _, ' '), \+ '$ty_count_word'(L, CW, CD, CN) ),
+           assertz('$ty_count_word'(L, CW, CD, CN))),
+    ( ty_adjective_group(L, _) -> assertz('$ty_group_made'(L)) ; true ),
+    forall(( ty_adjective_group(L, GD), ty_article(L, GD, _, GN, GW), ty_fits(GN, pl), atom(GW), \+ '$ty_group_article'(L, GW) ),
+           assertz('$ty_group_article'(L, GW))),
     ( ty_comparative(L, _, _, _) -> assertz('$ty_cmp_made'(L)) ; true ),
     forall(( ty_comparative(L, _, _, CEs), member(_-CE, CEs), sub_atom(CE, _, 2, 0, CT), \+ '$ty_cmp_end'(CT, L) ), assertz('$ty_cmp_end'(CT, L))),
     forall(( ty_irregular_comparative(L, _, CW), \+ '$ty_cmp_irr'(CW, L) ), assertz('$ty_cmp_irr'(CW, L))),
@@ -7134,6 +7249,10 @@ ty_role(L, Role, Qp, Features) -->
     ty_qp_here,
     { ty_qp_slot(Qp) },
     ty_qp_role(L, Role, Qp, Features).
+%% An adjective as a group, a subject (since 1.127.0), its words alone: the
+%% row is English's, whose roles take no marks (a language whose roles do
+%% has no row yet).
+ty_role(L, s, group(A), F) --> ty_group_words(L, A, F).
 
 %% A personal pronoun in its role; an object clitic's words stood in the
 %% verb's (ty_verb_group//8), which bound it before the object's place.
@@ -7151,10 +7270,12 @@ ty_role(L, Role, refl(Pr), F) -->
 %% A reflexive object agrees with its clause's subject ('$ty_csubj', set
 %% where the verb is read) in person and number, a subject no words say
 %% with any (`Found themselves on the wrong road.' is no command of `found'
-%% to them).
+%% to them). `oneself' (gender one, since 1.127.0) agrees with any subject
+%% (`Exert oneself.').
 ty_refl_agrees(Pr) :-
     (   nb_current('$ty_csubj', S), nonvar(S) -> ty_refl_fits(S, Pr) ; true ).
 
+ty_refl_fits(_, pron(_, _, K)) :- K == one, !.
 ty_refl_fits(pron(_, _, K), _) :- K == zero, !.
 ty_refl_fits(pron(P, N, K), Pr) :- !, \+ \+ Pr = pron(P, N, K).
 ty_refl_fits(same, _) :- !.
@@ -8028,10 +8149,12 @@ ty_np(L, NP, Features) --> ty_np(L, NP, Features, none).
 %% perro', Persian `کدام سگ را'). Writing in a language with cases, the noun's
 %% gender is known before its article and adjectives are chosen.
 ty_np(L, NP0, [FDef, N, Anim, G], Next) -->
-    { NP0 = np(M, N, Def0, As),
-      (   nonvar(Def0), ty_definite_like(L, Def0, Def1) -> Def = Def1, NP = np(M, N, Def, As)
-      ;   Def = Def0, NP = NP0
+    { NP0 = np(M, N, Def0, AsK),
+      ( var(AsK) -> Kc = r(K, AsK, As) ; ty_count_split(AsK, K, As), Kc = w(K) ),
+      (   nonvar(Def0), ty_definite_like(L, Def0, Def1) -> Def = Def1
+      ;   Def = Def0
       ),
+      NP = np(M, N, Def, As),
       ty_order_at(L, np, Order0),
       ty_np_split(L, Order0, Order1, As, Bs, As2),
       (   ( var(As2) -> nb_current('$ty_apnp', on) ; ty_ends_ap(As2) ),
@@ -8045,7 +8168,7 @@ ty_np(L, NP0, [FDef, N, Anim, G], Next) -->
       ->  Noun = noun(G0, _)
       ;   true
       ) },
-    ty_np_parts(Order, L, np(M, N, Def, As3), got(Det, Noun, ARows, b(Bs, BRows), p(Ps, PRows, ApA)), Next),
+    ty_np_parts(Order, L, np(M, N, Def, As3), got(Det, Noun, ARows, b(Bs, BRows, Kc), p(Ps, PRows, ApA)), Next),
     { Noun = noun(G, _),
       (   var(PRows) -> Adjs1 = ARows
       ;   ( var(As2) -> append(As3, Ps, As2) ; true ), append(ARows, PRows, Adjs1)
@@ -8053,6 +8176,7 @@ ty_np(L, NP0, [FDef, N, Anim, G], Next) -->
       ( var(As) -> append(Bs, As2, As) ; true ),
       ( var(BRows) -> Adjs = Adjs1 ; append(BRows, Adjs1, Adjs) ),
       ty_np_ok(L, NP, Det, Noun, Adjs, Anim, Next),
+      ( K = [_] -> ty_count_def(Def) ; true ),
       ty_def_feature(Def, FDef) }.
 
 %% ty_adjective_before(L, Meaning): the adjective stands before the noun
@@ -8111,11 +8235,48 @@ ty_np_parts([P|Ps], L, NP, Got, Next) -->
 %% so, and read with the article too.
 %% A noun phrase whose Next is bare(Next1) takes no article (English
 %% `the boy's dog': the possessor stands for it).
-ty_np_part(d, _, L, np(M, N, Def, _), got(Det, Noun, _, _, _), Next) -->
+ty_np_part(d, _, L, np(M, N, Def, _), got(Det, Noun, _, b(_, _, w([])), _), Next) -->
     (   { ty_no_article(Next, L, Def) ; Def == def, nonvar(M), '$ty_bare'(L, M) }
     ->  { Det = none }
     ;   ty_det(L, Def, Noun-N, Det)
     ).
+ty_np_part(d, _, L, np(M, N, Def, _), got(Det, Noun, _, b(_, _, w([C])), _), Next) -->
+    (   { ty_no_article(Next, L, Def) ; Def == def, nonvar(M), '$ty_bare'(L, M) }
+    ->  { Det = none }
+    ;   ty_det(L, Def, Noun-N, Det)
+    ),
+    { ty_count_def(Def), once('$ty_count_word'(L, W, C, N)) }, [W].
+ty_np_part(d, _, L, np(M, N, Def, _), got(Det, Noun, _, b(_, _, r(K, AsK, As)), _), Next) -->
+    (   { ty_no_article(Next, L, Def) ; Def == def, nonvar(M), '$ty_bare'(L, M) }
+    ->  { Det = none }
+    ;   ty_det(L, Def, Noun-N, Det)
+    ),
+    (   [W], { '$ty_count_word'(L, W, C, N), ( var(Def) -> true ; ty_count_def(Def) ) },
+        { K = [C], AsK = [C|As] }
+    ;   { K = [], AsK = As }
+    ).
+
+%% A NUMBER AFTER A DEFINITE DETERMINER (since 1.127.0): `the two lovers',
+%% `these three books', `his two sons' (English's: the other five
+%% templates have no article row of a number), the number the
+%% first item of the IR's list of adjectives (np(lover, pl, def, [two])),
+%% read and written right after the article ('$ty_count_word'/4: the
+%% language's ty_article/5 rows of a number, `many' and `few'; not `one',
+%% whose words agree), its number the noun's and its determiner def, this
+%% or that (ty_count_def/1, asked once the phrase is read). ty_np//4 tells
+%% writing from reading once, and part d's three clauses are told apart by
+%% their heads: writing with no number w([]), with one w([C]), reading
+%% r(K, AsK, As), which binds the IR's list (AsK) where the number is read
+%% or not. A call more for each noun phrase costs the round trips 0.2 %.
+ty_count_def(Def) :- nonvar(Def), memberchk(Def, [def, this, that]).
+
+%% Writing, the IR's list of adjectives as its number and the rest.
+ty_count_split([], [], []).
+ty_count_split([C|As1], K, As) :- ( atom(C), ty_count_det(C) -> K = [C], As = As1 ; K = [], As = [C|As1] ).
+
+ty_count_det(C) :-
+    memberchk(C, [two, three, four, five, six, seven, eight, nine, ten, eleven, twelve,
+                  twenty, thirty, forty, fifty, hundred, thousand, many, few]).
 
 %% Indexed by Next, so a phrase with nothing after it (none) asks nothing.
 ty_no_article(bare(_), _, _).
@@ -8142,7 +8303,7 @@ ty_np_part(a, Ps, L, np(_, N, _, As), got(Det, Noun, Rows, _, p(_, _, yes)), Nex
       ;   D = plain
       ) },
     ty_np_adjs(L, As, Rows, End, D).
-ty_np_part(b, _, L, np(_, N, _, _), got(Det, Noun, _, b(Bs, Rows), _), Next) -->
+ty_np_part(b, _, L, np(_, N, _, _), got(Det, Noun, _, b(Bs, Rows, _), _), Next) -->
     {   '$ty_declines'(L)
     ->  ty_declined(L, Det, Next, D0), D = decl(D0, Noun-N)
     ;   D = plain

@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives, linking_verbs, every_words, long_words, such_words, reflexives]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -262,11 +262,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 543),
-    ( R >= 531 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 531 right', VR, ok),
-    ( K >= 537 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 537 kept', VK, ok).
+    check('the second measure: its sentences', N, 548),
+    ( R >= 536 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 536 right', VR, ok),
+    ( K >= 542 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 542 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -1172,12 +1172,32 @@ article_names :-
              check(Label2, E, T) )).
 
 %% 1.126.0: a reflexive pronoun has no form at level 2 yet.
+%% 1.127.0: a reflexive is its clause's subject where that is a constant,
+%% and back from Cocolog a reflexive again.
 reflexives :-
     section('reflexive pronouns'),
     typology_load(english),
-    once(typology_read(english, 'She expressed herself pithily.', IR)),
+    logic_translate(english, cocolog, 'She expressed herself pithily.', C1),
+    check('a reflexive is its subject', C1, 'past(pithily(express(she, she))).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    check('and back, a reflexive', E1, 'She expressed herself pithily.'),
+    once(typology_read(english, 'Perfectly poised and sure of himself.', IR)),
     ( logic_from_ir(IR, _) -> W = read ; logic_why(IR, W) ),
-    check('a reflexive pronoun has no logic form yet', W, pronoun(reflexive)).
+    check('a reflexive with no subject has no logic form', W, pronoun(reflexive)).
+
+%% 1.127.0: a number after a definite determiner, an emphatic reflexive, an
+%% adjective as a group.
+numbers_and_groups :-
+    section('numbers after the article, groups, more reflexives'),
+    typology_load(english),
+    forall(member(S-Want, [
+               'The two lovers killed themselves.'-'past(kill(the(pl(two(lover))), the(pl(two(lover))))).\n',
+               'The law itself was unclear.'-'past(unclear(the(law))).\n',
+               'The poor knew themselves.'-'past(know(the(group(poor)), the(group(poor)))).\n' ]),
+           ( ( logic_translate(english, cocolog, S, C) -> true ; C = none ),
+             check(S, C, Want) )),
+    logic_translate(cocolog, english, 'past(know(the(group(poor)), the(group(poor)))).\n', E),
+    check('a group back', E, 'The poor knew themselves.').
 
 %% 1.125.0: such_as is an adposition's predicate; such before a noun phrase
 %% has no form at level 2 yet.
