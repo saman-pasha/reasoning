@@ -81,6 +81,7 @@ main :-
     article_names,
     two_objects,
     predeterminers,
+    possessed_heads,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -648,6 +649,15 @@ predeterminers :-
     must('and into English', E1, 'All the dogs bark.'),
     logic_translate(english, cocolog, 'All dogs bark.', C2),
     must('every dog', C2, 'bark(A) :-\n    dog(A).\n').
+
+%% 52. A POSSESSED HEAD WITH ITS OWN POSSESSIVE PRONOUN (1.119.0) is the
+%% inner possessive's term inside the outer one.
+possessed_heads :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'Her acceptance of the gift encouraged him.', C1),
+    must('of(of(acceptance, she), the(gift))', C1, 'past(encourage(of(of(acceptance, she), the(gift)), he)).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and into English', E1, 'Her acceptance of the gift encouraged him.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

@@ -539,3 +539,8 @@ He believed all the Marxist dogma.	past(believe(he, all(the(marxist(dogma))))).
 He made all the obligatory apologies.	past(make(he, all(the(pl(obligatory(apology)))))).
 She took all his criticism in stride.	past(in(take(she, all(of(criticism, he))), stride)).
 All the world loves a lover.	lover(a(lover)). love(all(the(world)), a(lover)).
+His declaration of innocence.	declaration(of(of(declaration, he), innocence)).
+His plan of attack was misguided.	past(misguided(of(of(plan, he), attack))).
+Her acceptance of the gift encouraged him.	past(encourage(of(of(acceptance, she), the(gift)), he)).
+The new law might abridge our freedom of expression.	might(abridge(the(new(law)), of(of(freedom, we), expression))).
+His manipulation of his friends was scandalous.	past(scandalous(of(of(manipulation, he), of(pl(friend), he)))).

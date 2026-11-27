@@ -1141,6 +1141,15 @@ lg_wrap1(M, X, T) :- T =.. [M, X].
 %% phrase (`the status of a classic': of(status, a(classic))). The bare
 %% possessed, the indefinite possessed and the indefinite possessor since
 %% 1.77.0.
+%% A possessed with its own possessive pronoun (since 1.119.0): its term is
+%% the inner possessive's, of(evasion, he), inside the outer one:
+%% `his evasion of his creditors' of(of(evasion, he), of(pl(creditor), he)).
+lg_possessed(P, NP, E, Ms) :-
+    nonvar(NP), NP = of(Pr, NP0), nonvar(Pr), Pr = pron(_, _, _), !,
+    lg_arg(possessor, P, _, Pc, PMs),
+    lg_possessed(Pr, NP0, ent(T0, [], Q0), Ms0),
+    ( Q0 == const, T0 = const(Tin), Ms0 == [] -> true ; lg_no(shape(NP)) ),
+    E = ent(const(of(Tin, Pc)), [], const), Ms = PMs.
 lg_possessed(P, NP, E, Ms) :-
     lg_arg(possessor, P, _, Pc, PMs),
     ( nonvar(NP), NP = np(N, Num, D, As) -> true ; lg_no(shape(NP)) ),
@@ -1449,6 +1458,7 @@ lg_det_term(T) :-
     (   T = the(X) -> ( lg_np_shape(X) -> true ; lg_pp_shape(X) -> true ; lg_to_shape(X) )
     ;   T = a(X) -> ( X = of(Y, P) -> lg_np_shape(Y), lg_poss_term(P) ; lg_np_shape(X) -> true ; lg_pp_shape(X) -> true ; lg_to_shape(X) )
     ;   T = a(X, K) -> integer(K), K > 1, lg_det_term(a(X))
+    ;   T = of(of(X, P0), P) -> lg_np_shape(X), atom(P0), lg_poss_term(P)
     ;   T = of(X, P) -> lg_np_shape(X), \+ lg_ap_atom(X), lg_poss_term(P)
     ;   T = all(X) -> lg_det_term(X), X \= a(_), X \= a(_, _)
     ).
@@ -1676,7 +1686,9 @@ lg_term_facts(all(X), Fs) :- nonvar(X), !,
 lg_term_facts(T, Fs) :- lg_shape_facts(T, const(T), Fs).
 
 lg_shape_facts(of(T, P), K, Fs) :- !,
-    lg_np_facts(T, K, Fs0),
+    (   nonvar(T), T = of(T0, P0), atom(P0) -> lg_np_facts(T0, K, Fs0)
+    ;   lg_np_facts(T, K, Fs0)
+    ),
     (   nonvar(P), lg_ind_shape(P, _) -> lg_term_facts(P, Fs1) ; Fs1 = [] ),
     append(Fs0, Fs1, Fs).
 lg_shape_facts(S, K, Fs) :- lg_pp_term(S), !,
@@ -2221,6 +2233,10 @@ lg_const_np(L, Cs, a(S, K), NP) :- integer(K), !, memberchk(a(S, K), Cs), lg_ind
 lg_const_np(L, Cs, all(T), all(NP)) :- nonvar(T), compound(T), !, lg_const_np(L, Cs, T, NP).
 %% A possessor someone is the person no words name (since 1.115.0):
 %% of(breath, someone) is `one's breath'.
+lg_const_np(L, Cs, of(T, P), of(PNP, of(Pr, np(N, Num, def, As)))) :-
+    nonvar(T), T = of(T0, P0), atom(P0), lg_pron_np(P0, Pr), !,
+    lg_np_of_term(L, T0, N, Num, As),
+    ( P == someone -> PNP = pron(3, sg, zero) ; lg_const_np(L, Cs, P, PNP) ).
 lg_const_np(L, Cs, of(T, P), of(PNP, np(N, Num, def, As))) :- !,
     lg_np_of_term(L, T, N, Num, As),
     ( P == someone -> PNP = pron(3, sg, zero) ; lg_const_np(L, Cs, P, PNP) ).

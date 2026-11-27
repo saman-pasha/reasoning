@@ -3678,6 +3678,7 @@ ty_subject_number(pron(P, N0, _), N) :- ty_agreement(P, N0, N).
 ty_subject_number(C, N) :- ty_coord_np(C, K, Xs), ty_coord_number(K, Xs, N).
 ty_subject_number(S, N) :- S == same, ty_same_subject(S1), ty_subject_number(S1, N).
 ty_subject_number(A, N) :- nonvar(A), A = all(NP), nonvar(NP), ty_subject_number(NP, N).
+ty_subject_number(of(_, P), N) :- nonvar(P), P = of(_, _), ty_subject_number(P, N).
 
 ty_coord_number(and, Xs, N) :-
     findall(P, ( member(X, Xs), ( X = pron(P0, _, _), integer(P0) -> P = P0 ; P = 3 ) ), Ps),
@@ -5055,9 +5056,11 @@ ty_object(L, V, io(IO, DO), io) -->
 %% it may be: `Wished him luck.') and no `a' with a unit (`three square
 %% meals a day' is a rate, lexicon/unit.txt); the first no noun with a
 %% relative clause, which would end before the second (`The professor
-%% wrote the text that he assigned students to buy.').
+%% wrote the text that he assigned students to buy.'), nor (since 1.119.0)
+%% a bare noun alone (`She denied being an egghead.').
 ty_io_ok(IO, DO) :-
     \+ ( nonvar(IO), IO = rel(_, _) ),
+    \+ ( nonvar(IO), IO = np(_, sg, mass, As0), As0 == [] ),
     \+ ( nonvar(DO), DO = np(_, Num, D, As), As == [],
          ( D == mass ; D == indef, Num == pl ),
          \+ ( nonvar(IO), ( IO = pron(_, _, _) ; IO = name(_) ) ) ),
@@ -5712,13 +5715,36 @@ ty_poss_part(h, Ps, L, _, NP, F, _, art(Art, C0), Outer, _) -->
     { ty_poss_next(Ps, g, Outer, N0),
       ( Art == drop -> Next = bare(N0) ; Next = N0 ),
       b_setval('$ty_case', C0) },
-    ty_np(L, NP, F, Next).
+    (   { var(NP) -> true ; NP = np(_, _, _, _) }, ty_np(L, NP, F, Next)
+    ;   { Art \== drop, \+ ty_possessive_clitic(L), ty_poss_head_pron(NP, Pr, NP0) },
+        ty_here(S0),
+        { ty_poss_head_ahead(L, S0) },
+        ty_poss_pronoun(L, Pr, NP0, F, Next)
+    ).
 ty_poss_part(p, _, _, _, _, _, PWs, _, _, _) --> ty_tokens(PWs).
 ty_poss_part(g, Ps, L, G, _, _, PWs, _, Outer, Depth) -->
     { ty_poss_next(Ps, h, Outer, Next), ty_role_case(L, g),
       ( PWs \== [], nb_current('$ty_massp', on) -> b_setval('$ty_mass_adj', yes) ; true ) },
     ty_possessor(L, G, Next, Depth),
     { b_setval('$ty_mass_adj', no) }.
+
+%% A POSSESSED HEAD WITH ITS OWN POSSESSIVE PRONOUN (since 1.119.0): where
+%% the possessed keeps its article (English `of'), it may be a possessive
+%% pronoun's phrase, of(Pr, NP0): `His evasion of his creditors.' is
+%% of(of(pron(3, sg, m), np(creditor, pl, def, [])), of(pron(3, sg, m),
+%% np(evasion, sg, def, []))), the evasion his and of his creditors.
+ty_poss_head_pron(NP, Pr, NP0) :-
+    (   var(NP) -> NP = of(Pr, NP0), ty_pron_slot(Pr)
+    ;   NP = of(Pr, NP0), nonvar(Pr), Pr = pron(_, _, _)
+    ).
+
+%% Reading, only where the next word is a possessive pronoun's (a language
+%% whose possessive pronoun is a clitic, Persian, has none: asked at every
+%% possessive, the round trips cost Persian 37 % more).
+ty_poss_head_ahead(L, S0) :-
+    (   var(S0) -> true
+    ;   S0 = [W|_], atom(W), ty_word_class(L, possessive, W)
+    ).
 
 %% The class a part's last word links to: the next part's, where that part
 %% is the one named; the phrase's own Next for its last part.

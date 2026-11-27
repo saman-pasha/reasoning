@@ -178,6 +178,7 @@ main :-
     article_names,
     two_objects,
     predeterminers,
+    possessed_heads,
     format("~ndone~n", []).
 
 
@@ -1322,6 +1323,14 @@ predeterminers :-
     must('all the dogs', IR1, clause(bark, present, pos, all(np(dog, pl, def, [])), none)),
     typology_read(english, 'All dogs bark.', IR2),
     must('all dogs', IR2, clause(bark, present, pos, np(dog, pl, all, []), none)).
+
+%% 87. A POSSESSED HEAD WITH ITS OWN POSSESSIVE PRONOUN (1.119.0): where the
+%% possessed keeps its article (English `of'), it may be a possessive
+%% pronoun's phrase, of(Possessor, of(Pronoun, NP)).
+possessed_heads :-
+    typology_load(english),
+    typology_read(english, 'His love of music.', IR1),
+    must('his love of music', IR1, phrase(of(np(music, sg, mass, []), of(pron(3, sg, m), np(love, sg, def, []))))).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

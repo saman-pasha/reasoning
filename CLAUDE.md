@@ -24,8 +24,8 @@ red) and lesson 01 pin the shape of the answer, deliberately not the number.
 The reasoning library translates ALL 8 000 sentences of `lexicon/prose.txt`
 from English into the IR, and ALL of that IR into Cocolog. Every step
 moves one of the two counts and reports both (`tools/logic/prose.pl`;
-STATUS.md keeps them): at 1.118.0, 5 017 into the IR, 4 755 of them into
-Cocolog (1.117.0: 5 002 and 4 741; 1.116.0: 4 977 and 4 717; 1.115.0: 4 932 and 4 678; 1.114.0: 4 918 and 4 664; 1.113.0: 4 897 and 4 648; 1.112.0: 4 771 and 4 525; 1.111.0: 4 677 and 4 437; 1.110.0: 4 652 and 4 422; 1.109.0: 4 640 and 4 413; 1.108.0: 4 640 and 4 389; 1.107.0: 4 580 and 4 360; 1.105.0 and 1.106.0: 4 479 and 4 275; 1.104.0: 4 456 and 4 256; 1.103.0: 4 405 and 4 209; 1.102.0: 4 405 and 4 206; 1.100.0 and 1.101.0: 4 377 and 4 179; 1.99.0: 4 358 and 4 165; 1.98.0: 4 325 and 4 141; 1.96.0 and 1.97.0: 4 295 and 4 111; 1.95.0: 4 243 and 4 063; 1.94.0: 4 218 and 4 040; 1.93.0: 4 167 and 3 990; 1.92.0: 4 129 and 3 954; 1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
+STATUS.md keeps them): at 1.119.0, 5 047 into the IR, 4 783 of them into
+Cocolog (1.118.0: 5 017 and 4 755; 1.117.0: 5 002 and 4 741; 1.116.0: 4 977 and 4 717; 1.115.0: 4 932 and 4 678; 1.114.0: 4 918 and 4 664; 1.113.0: 4 897 and 4 648; 1.112.0: 4 771 and 4 525; 1.111.0: 4 677 and 4 437; 1.110.0: 4 652 and 4 422; 1.109.0: 4 640 and 4 413; 1.108.0: 4 640 and 4 389; 1.107.0: 4 580 and 4 360; 1.105.0 and 1.106.0: 4 479 and 4 275; 1.104.0: 4 456 and 4 256; 1.103.0: 4 405 and 4 209; 1.102.0: 4 405 and 4 206; 1.100.0 and 1.101.0: 4 377 and 4 179; 1.99.0: 4 358 and 4 165; 1.98.0: 4 325 and 4 141; 1.96.0 and 1.97.0: 4 295 and 4 111; 1.95.0: 4 243 and 4 063; 1.94.0: 4 218 and 4 040; 1.93.0: 4 167 and 3 990; 1.92.0: 4 129 and 3 954; 1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
 count says so. **Measure what blocks the rest before choosing a step**:
 at 1.80.0 the words no table has looked like the gap, and 5 115 of the
 8 000 had none -- 2 130 of them a noun phrase alone, which one rule read.
@@ -910,6 +910,17 @@ round the definite term (`all(the(pl(dog)))`), a term to the Cocolog
 reader (`lg_det_term/1`) and a phrase's facts (`lg_term_facts/2`). A
 second-measure line is written by hand: one copied from the dump measures
 nothing.
+
+**A possessed head with its own possessive pronoun since 1.119.0**: the
+`h` part of `ty_poss//5`, where the possessed keeps its article (English
+`of`), reads a possessive pronoun's phrase too, `of(G, of(Pr, NP))`
+(`his love of music`), asked only where the next word is a possessive
+pronoun's and never in a language of possessive clitics. **A test written
+`{ var(X) ; X = np(...) }` before a non-terminal reads it twice** on
+backtracking (the first cut cost Persian 37 % more): write it
+`{ var(X) -> true ; X = np(...) }`. At level 2 the term is
+`of(of(love, he), music)`, read back by `lg_const_np/4` and
+`lg_det_term/1`, its facts by `lg_shape_facts/3`.
 
 **`one's` since 1.115.0** is the possessive of pron(3, sg, zero), the
 person no words name (`Catch one's breath.`); at level 2 it is someone,

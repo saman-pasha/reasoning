@@ -601,7 +601,7 @@
 %% made from it, and no code, test or lesson in the tree spells the number.
 %% Bump it in the commit that changes this repository, never afterwards.
 
-reason_version(1, 118, 0).
+reason_version(1, 119, 0).
 
 reason_version(Version) :-
     reason_version(Major, Minor, Patch),
