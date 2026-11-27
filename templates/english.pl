@@ -772,11 +772,27 @@ ty_adposition(english, instead_of, [instead, of]).
 %% `of' is an adposition only in an adjective's phrase (since 1.88.0:
 %% `proud of his son'); elsewhere it is the possessor's word.
 ty_adposition(english, of, [of]).
+%% `than' is the adposition of what a comparative compares (since 1.120.0:
+%% `John is taller than Mary.' adj([ap(adv(more, tall), pp(than,
+%% name('Mary')))])).
+ty_adposition(english, than, [than]).
+%% The comparative (since 1.120.0): an adjective of one syllable, or of two
+%% that ends in y, le or ow, is one word, its last letters replaced by the
+%% first of the endings that fits (happy happier, large larger, big
+%% bigger, tall taller); any other takes `more' (`more approachable').
+ty_comparative(english, more, [1-any, 2-[y, le, ow]], [y-ier, e-er, double-er, ''-er]).
+ty_irregular_comparative(english, good, better).
+ty_irregular_comparative(english, bad, worse).
+ty_irregular_comparative(english, far, farther).
 ty_adverb(english, quickly, quickly).
 ty_adverb(english, slowly, slowly).
 ty_adverb(english, today, today).
 ty_adverb(english, here, here).
 ty_adverb(english, very, very).
+%% `more' grades an adjective as its comparative (since 1.120.0); a short
+%% adjective's comparative is one word (ty_comparative/4: `taller',
+%% `happier', `bigger', `larger'), a few of their own (`better').
+ty_adverb(english, more, more).
 %% The adverbs of grammar (since 1.107.0): words ty_closed/2 keeps from the
 %% import, read where an adverb stands, inside or before the verb's words
 %% (`They always raise the audio for commercials.'), before an adjective

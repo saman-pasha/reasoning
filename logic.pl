@@ -963,6 +963,20 @@ lg_ap_atoms([ap(A, Inf)|Xs], T, [pred(A, [T, fun(to, [F])])|As], Os) :-
     atom(A), lg_inf_parts(Inf, V2, O2, Js2), !,
     lg_inf_fun(T, V2, O2, Js2, F),
     lg_ap_atoms(Xs, T, As, Os).
+%% A COMPARATIVE WITH WHAT IT IS COMPARED WITH (since 1.120.0): a predicate
+%% of two, the comparative's, of the subject and the term `than' names:
+%% `John is taller than Mary.' taller(john, mary), `His second marriage was
+%% happier than the first.' past(happier(of(second(marriage), he),
+%% the(first))); an irregular comparative's word read as an adjective too
+%% (`better than his digestion': better(..., of(digestion, he))).
+lg_ap_atoms([ap(A0, PP)|Xs], T, [pred(N, [T, To])|As], Os) :-
+    nonvar(PP), PP = pp(than, NP),
+    (   nonvar(A0), A0 = adv(M, A) -> lg_cmp_name(M, A, N)
+    ;   atom(A0), catch(once(ty_irregular_comparative(english, _, A0)), _, fail) -> N = A0
+    ), !,
+    lg_arg(adjunct, NP, To, _, Os1),
+    lg_ap_atoms(Xs, T, As, Os2),
+    append(Os1, Os2, Os).
 lg_ap_atoms([ap(A, PP)|Xs], T, [modified(pp(P, To), At)|As], Os) :-
     ( lg_ap_adj(A, T, At), nonvar(PP), PP = pp(P, NP), atom(P) -> true ; lg_no(predicate(adj(ap(A, PP)))) ),
     lg_arg(adjunct, NP, To, _, Os1),
@@ -1104,6 +1118,10 @@ lg_pred_of(n(X), T, pred(nn, [const(X), T])) :- !.
 %% adjective's atom, as a clause's adverb is round its verb's: `She was
 %% incurably optimistic.' is past(incurably(optimistic(she))), `a perfectly
 %% natural explanation' says perfectly(natural(T)).
+%% A COMPARATIVE (since 1.120.0) is a predicate of its own, named by the
+%% English comparative's word (lg_cmp_name/3: taller, better,
+%% more_approachable): `John is taller.' taller(john).
+lg_pred_of(adv(M, A), T, pred(N, [T])) :- lg_cmp_name(M, A, N), !.
 lg_pred_of(adv(M, A), T, modified(adv(M), pred(A, [T]))) :- !.
 %% An adjective with an adposition phrase (since 1.91.0): the adjective's
 %% atom inside the phrase, `a calyx adnate to the ovary' to(adnate(T),
@@ -1951,6 +1969,17 @@ lg_atom_ir(L, modified(J, A), How, IR) :- !,
         lg_adjunct_ir(L, How, J, J1),
         lg_ir_adjunct(IR0, J1, IR)
     ).
+%% A comparative's predicate (since 1.120.0) is the copula's graded
+%% adjective, of two its phrase with `than': taller(john, mary) is
+%% copula(present, pos, name('John'), adj([ap(adv(more, tall), pp(than,
+%% name('Mary')))])).
+lg_atom_ir(L, pred(P, [A]), How, copula(present, pos, S, adj([adv(M, Adj)]))) :-
+    lg_cmp_meaning(P, M, Adj), !,
+    lg_arg_np(L, How, A, S).
+lg_atom_ir(L, pred(P, [A, B]), How, copula(present, pos, S, adj([ap(adv(M, Adj), pp(than, O))]))) :-
+    lg_cmp_meaning(P, M, Adj), !,
+    lg_arg_np(L, How, A, S),
+    lg_arg_np(L, How, B, O).
 lg_atom_ir(L, pred(P, [A]), How, IR) :-
     lg_arg_np(L, How, A, S),
     lg_unary_ir(L, P, S, IR).
@@ -2320,6 +2349,25 @@ lg_np_item_ok(_, A) :- atom(A), lg_count_det(A).
 %% An adverb that grades an adjective in a term: an adverb's word that is
 %% no adjective's (`incurably', `very'); one that is (`pretty') is the
 %% adjective level 1 reads first.
+%% A comparative's name (since 1.120.0): the English template's word of one
+%% word (taller, better), else the adverb's and the adjective's joined
+%% (more_approachable); and back.
+lg_cmp_name(M, A, N) :-
+    atom(M), atom(A),
+    catch(once(ty_comparative(english, M, _, _)), _, fail),
+    (   catch(ty_cmp_word(english, M, A, W), _, fail) -> N = W
+    ;   atomic_list_concat([M, A], '_', N)
+    ).
+
+lg_cmp_meaning(N, M, A) :-
+    atom(N),
+    catch(once(ty_comparative(english, M, _, _)), _, fail),
+    (   catch(ty_cmp_word(english, M, A, N), _, fail) -> true
+    ;   atomic_list_concat([M, A], '_', N),
+        catch(typology_meaning(english, adjective, A), _, fail),
+        \+ catch(ty_cmp_word(english, M, A, _), _, fail)
+    ).
+
 lg_grade_adverb(M) :-
     atom(M),
     catch(typology_meaning(english, adverb, M), _, fail),

@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -262,11 +262,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 515),
-    ( R >= 502 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 502 right', VR, ok),
-    ( K >= 508 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 508 kept', VK, ok).
+    check('the second measure: its sentences', N, 520),
+    ( R >= 508 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 508 right', VR, ok),
+    ( K >= 514 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 514 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -1164,6 +1164,24 @@ article_names :-
     forall(member(T-Want, [
                'The Earth is an ellipsoid.'-'ellipsoid(the_earth).\n',
                'The Missouri feeds into the Mississippi.'-'into(feed(the_missouri), the_mississippi).\n' ]),
+           ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
+             one_line(['into Cocolog: ', T], Label),
+             check(Label, C, Want),
+             ( logic_translate(cocolog, english, C, E) -> true ; E = none ),
+             one_line(['and back into English: ', T], Label2),
+             check(Label2, E, T) )).
+
+%% 1.120.0: a comparative is a predicate named by its word, of two with
+%% what `than' names.
+comparatives :-
+    section('the comparative'),
+    typology_load(english),
+    forall(member(T-Want, [
+               'John is taller than Mary.'-'taller(john, mary).\n',
+               'John is taller.'-'taller(john).\n',
+               'His second marriage was happier than the first.'-'past(happier(of(second(marriage), he), the(first))).\n',
+               'The tales are more approachable than the novels.'-'more_approachable(the(pl(tale)), the(pl(novel))).\n',
+               'John is better than Mary.'-'better(john, mary).\n' ]),
            ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
              one_line(['into Cocolog: ', T], Label),
              check(Label, C, Want),

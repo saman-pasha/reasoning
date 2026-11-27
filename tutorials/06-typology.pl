@@ -179,6 +179,7 @@ main :-
     two_objects,
     predeterminers,
     possessed_heads,
+    comparatives,
     format("~ndone~n", []).
 
 
@@ -1331,6 +1332,17 @@ possessed_heads :-
     typology_load(english),
     typology_read(english, 'His love of music.', IR1),
     must('his love of music', IR1, phrase(of(np(music, sg, mass, []), of(pron(3, sg, m), np(love, sg, def, []))))).
+
+%% 88. A COMPARATIVE (1.120.0): adv(more, A), the adverb of the template's
+%% ty_comparative/4 row grading an adjective, one word where the adjective
+%% is short (`taller', `happier', `bigger'); `than' the adposition of what
+%% it compares.
+comparatives :-
+    typology_load(english),
+    typology_read(english, 'John is taller than Mary.', IR1),
+    must('taller than Mary', IR1, copula(present, pos, name('John'), adj([ap(adv(more, tall), pp(than, name('Mary')))]))),
+    typology_write(english, copula(present, pos, name('John'), adj([adv(more, approachable)])), W2),
+    must('a long adjective', W2, 'John is more approachable.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

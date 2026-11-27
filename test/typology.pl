@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2751,6 +2751,31 @@ article_names :-
     findall(R3, typology_read(english, 'The dog sleeps.', R3), Rs3),
     check('no article before a small word is a name\'s', Rs3, [clause(sleep, present, pos, np(dog, sg, def, []), none)]).
 
+%% 1.120.0: the comparative, adv(more, A), one word where A is short, and
+%% `than' the adposition of a comparative's phrase alone.
+comparatives :-
+    section('the comparative'),
+    forall(member(A-W, [tall-taller, happy-happier, large-larger, big-bigger, good-better, gentle-gentler, hot-hotter, cool-cooler, approachable-none]),
+           ( ( ty_cmp_word(english, more, A, W1) -> true ; W1 = none ),
+             atomic_list_concat(['the comparative of ', A], Label0),
+             check(Label0, W1, W) )),
+    forall(member(T-Want, [
+               'John is taller than Mary.'-copula(present, pos, name('John'), adj([ap(adv(more, tall), pp(than, name('Mary')))])),
+               'The water is colder.'-copula(present, pos, np(water, sg, def, []), adj([adv(more, cold)])),
+               'A more clement judge reduced the sentence.'-clause(reduce, past, pos, np(judge, sg, indef, [adv(more, clement)]), np(sentence, sg, def, [])),
+               'After full moon comes the waning moon.'-none,
+               'His contention contains more than an echo of Rousseau.'-none ]),
+           ( ( typology_read(english, T, R) -> true ; R = none ),
+             atomic_list_concat(['English, the first reading: ', T], Label),
+             check(Label, R, Want) )),
+    ( typology_write(english, copula(present, pos, np(tale, pl, def, []), adj([ap(adv(more, approachable), pp(than, np(novel, pl, def, [])))])), W2) -> true ; W2 = none ),
+    check('a long adjective with more', W2, 'The tales are more approachable than the novels.'),
+    findall(R3, typology_read(english, 'Mary is more tall than John.', R3), Rs3),
+    check('no more before a short adjective', Rs3, []),
+    typology_check(english, M4),
+    findall(B4, ( member(B4, M4), B4 = bad(ty_comparative(_, _, _, _)) ), Bs4),
+    check('the English comparative row is a good one', Bs4, []).
+
 %% 1.119.0: a possessed head with its own possessive pronoun where the
 %% possessed keeps its article (`of'), of(Possessor, of(Pronoun, NP)).
 possessed_heads :-
@@ -3186,8 +3211,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 5046 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 5 046 sentences read at 1.119.0 within 2 000 000 inferences each are read', R1, yes),
+    ( K >= 5059 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 5 059 sentences read at 1.120.0 within 2 000 000 inferences each are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

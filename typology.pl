@@ -329,6 +329,24 @@
 %%                                     (since 1.90.0): before the adjective
 %%                                     (before: `perfectly natural') or
 %%                                     after it (after)
+%%     ty_comparative(L, Adverb, Short, Endings)
+%%                                     the adverb (ty_adverb/3's meaning)
+%%                                     that grades an adjective as its
+%%                                     comparative, adv(Adverb, A) (since
+%%                                     1.120.0: English more); an adjective
+%%                                     Short says (Syllables-Endings pairs,
+%%                                     any or the base's last letters:
+%%                                     English [1-any, 2-[y, le, ow]]) is
+%%                                     then one word, its base's last
+%%                                     letters replaced by the first of
+%%                                     Endings that fits (English [y-ier,
+%%                                     e-er, double-er, ''-er]; double: a
+%%                                     last consonant doubled after one
+%%                                     vowel, `bigger')
+%%     ty_irregular_comparative(L, Adjective, Word)
+%%                                     an adjective's comparative of a
+%%                                     word of its own (English good:
+%%                                     better)
 %%     ty_adjective_phrase_noun(L, Place)
 %%                                     where a noun phrase's adjective with
 %%                                     an adposition phrase stands, the last
@@ -903,7 +921,7 @@
            ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
            ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
            ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-           ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_adjective_list/3, ty_noun_list/3, ty_purpose_mark/2, ty_purpose_bare/1, ty_adverb_inside/1, ty_infinitive_after/3, ty_phrasal/5, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_predeterminer/3, ty_subordinate_first/1, ty_subordinate_comma/1,
+           ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_adjective_list/3, ty_noun_list/3, ty_purpose_mark/2, ty_purpose_bare/1, ty_adverb_inside/1, ty_infinitive_after/3, ty_phrasal/5, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_predeterminer/3, ty_comparative/4, ty_irregular_comparative/3, ty_subordinate_first/1, ty_subordinate_comma/1,
            ty_answer_echo/3, ty_kind/2, ty_adjective_before/2, ty_pronoun_gender/2,
            ty_inversion/3, ty_wh_tonic/3,
            ty_tense_form/5, ty_participle/3, ty_participle_like/3, ty_existential/2,
@@ -929,7 +947,7 @@
                  ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
                  ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
                  ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-                 ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_adjective_list/3, ty_noun_list/3, ty_purpose_mark/2, ty_purpose_bare/1, ty_adverb_inside/1, ty_infinitive_after/3, ty_phrasal/5, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_predeterminer/3, ty_subordinate_first/1, ty_subordinate_comma/1,
+                 ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_adjective_list/3, ty_noun_list/3, ty_purpose_mark/2, ty_purpose_bare/1, ty_adverb_inside/1, ty_infinitive_after/3, ty_phrasal/5, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_predeterminer/3, ty_comparative/4, ty_irregular_comparative/3, ty_subordinate_first/1, ty_subordinate_comma/1,
                  ty_answer_echo/3, ty_adjective_before/2, ty_pronoun_gender/2,
                  ty_inversion/3, ty_wh_tonic/3,
                  ty_tense_form/5, ty_participle/3, ty_participle_like/3,
@@ -1226,7 +1244,7 @@ ty_tdoc_more(Ls, [], Ls).
 %% section blank_template holds them to the header's slots).
 ty_template_group('the orders of the levels', [ty_order]).
 ty_template_group('words', [ty_noun_class, ty_class_when, ty_noun_in, ty_noun, ty_adjective, ty_adjective_before, ty_article, ty_adposition,
-                            ty_adverb, ty_capital, ty_capital_nouns, ty_name, ty_quantifier_pronoun, ty_predeterminer, ty_definite_like, ty_subordinator, ty_subordinate_first, ty_subordinate_comma, ty_and, ty_conjunction, ty_serial_comma,
+                            ty_adverb, ty_capital, ty_capital_nouns, ty_name, ty_quantifier_pronoun, ty_predeterminer, ty_comparative, ty_irregular_comparative, ty_definite_like, ty_subordinator, ty_subordinate_first, ty_subordinate_comma, ty_and, ty_conjunction, ty_serial_comma,
                             ty_conjunct_marks, ty_clause_comma, ty_comma, ty_sense, ty_closed]).
 ty_template_group('verbs and tenses', [ty_conjugation, ty_verb_in, ty_irregular_verb, ty_verb, ty_verb_list, ty_adjective_list, ty_noun_list, ty_purpose_mark, ty_purpose_bare, ty_adverb_inside, ty_infinitive_after, ty_phrasal, ty_tense_form, ty_tense_like, ty_participle,
                                        ty_participle_like, ty_participle_ending, ty_participle_agrees,
@@ -1370,6 +1388,8 @@ ty_row_shape('ty_capital(L, Word, Written).').
 ty_row_shape('ty_name(L, Meaning, Written, Gender, Animacy).').
 ty_row_shape('ty_quantifier_pronoun(L, Quantifier, Kind, Words).').
 ty_row_shape('ty_predeterminer(L, Kind, Words).').
+ty_row_shape('ty_comparative(L, Adverb, Short, Endings).').
+ty_row_shape('ty_irregular_comparative(L, Adjective, Word).').
 ty_row_shape('ty_subordinator(L, Kind, Words).').
 ty_row_shape('ty_subordinate_first(L).').
 ty_row_shape('ty_subordinate_comma(L).').
@@ -1850,6 +1870,14 @@ ty_missing(L, bad(ty_subordinator(L, K, Ws))) :-
     ty_subordinator(L, K, Ws),
     \+ ( ty_values(subordinator, Ks), memberchk(K, Ks), is_list(Ws), Ws \== [],
          forall(member(W, Ws), atom(W)) ).
+ty_missing(L, bad(ty_comparative(L, M, Sh, Es))) :-
+    ty_comparative(L, M, Sh, Es),
+    \+ ( atom(M), is_list(Sh), Sh \== [],
+         forall(member(S, Sh), ( S = N-Ls, integer(N), N > 0, ( Ls == any -> true ; is_list(Ls), forall(member(X, Ls), atom(X)) ) )),
+         is_list(Es), Es \== [], forall(member(E, Es), ( E = B-W, atom(B), atom(W) )) ).
+ty_missing(L, bad(ty_irregular_comparative(L, A, W))) :-
+    ty_irregular_comparative(L, A, W),
+    \+ ( atom(A), atom(W) ).
 ty_missing(L, bad(ty_predeterminer(L, K, Ws))) :-
     ty_predeterminer(L, K, Ws),
     \+ ( ty_values(predeterminer, Ks), memberchk(K, Ks), is_list(Ws), Ws \== [],
@@ -2096,6 +2124,7 @@ ty_read_bases(L, Surface, Topics, Mood, IR0, C) :-
     ty_qp_flag(L, Bases),
     ty_subord_flag(L, Bases),
     ty_adp_flag(L, Bases),
+    ty_cmp_flag(L, Bases),
     ty_ap_flag(L, Bases),
     ty_av_flag(L, Bases),
     ty_parse_reset(L),
@@ -2197,6 +2226,7 @@ typology_write(L, IR, Text, Topics) :-
     b_setval('$ty_apnp', off),
     b_setval('$ty_massp', on),
     b_setval('$ty_av', on),
+    b_setval('$ty_cmp', on),
     ty_parse_reset(L),
     ty_write_massr(L, IR0, Massr),
     b_setval('$ty_massr', Massr),
@@ -2283,6 +2313,7 @@ ty_reads_as(Mood, L, IR0, Tokens, Topics, Massr) :-
            b_setval('$ty_massp', on),
            b_setval('$ty_massr', Massr),
            b_setval('$ty_av', on),
+           b_setval('$ty_cmp', on),
            ty_parse_reset(L),
            b_setval('$ty_rel_open', f([])),
            ty_poss_flag(L, Tokens),
@@ -3157,6 +3188,7 @@ ty_known_base(L, B) :-
     ;   ty_possessive(L, _, Ws, _), memberchk(B, Ws)
     ;   ty_relative_possessive(L, Ws, _), memberchk(B, Ws)
     ;   ty_possessive_pronoun(L, Ws, _, _), memberchk(B, Ws)
+    ;   atom(B), '$ty_cmp_made'(L), once(ty_cmp_word(L, _, _, B))
     ;   ty_pronoun(L, _, Ws, _), memberchk(B, Ws)
     ;   ty_complement(L, _, Ws), memberchk(B, Ws)
     ;   ty_phrasal(L, _, _, B, _)
@@ -6744,6 +6776,11 @@ ty_verb_row(L, V, T, N, P, Words) :-
 :- dynamic('$ty_phrasal_made'/1).
 %% A language with a ty_predeterminer/3 row (since 1.118.0).
 :- dynamic('$ty_predet_made'/1).
+%% A language with a ty_comparative/4 row (since 1.120.0), its endings'
+%% words and its irregular comparatives' words.
+:- dynamic('$ty_cmp_made'/1).
+:- dynamic('$ty_cmp_end'/2).
+:- dynamic('$ty_cmp_irr'/2).
 %% A language with an infinitive's mark (since 1.96.0): the infinitive's
 %% readings after a noun, an adjective and an object and of purpose with no
 %% mark are asked only of it, one call where a language with none paid
@@ -6812,6 +6849,9 @@ ty_vfirst_make(L) :-
     retractall('$ty_vfirst_made'(L)),
     retractall('$ty_phrasal_made'(L)),
     retractall('$ty_predet_made'(L)),
+    retractall('$ty_cmp_made'(L)),
+    retractall('$ty_cmp_end'(_, L)),
+    retractall('$ty_cmp_irr'(_, L)),
     retractall('$ty_vg_more'(L)),
     retractall('$ty_particle'(_, L)),
     retractall('$ty_inf_made'(L)),
@@ -6837,6 +6877,9 @@ ty_vfirst_make(L) :-
     ( once(ty_short_form(L, _, _)) -> assertz('$ty_short_made'(L)) ; true ),
     ( ty_phrasal(L, _, _, _, _) -> assertz('$ty_phrasal_made'(L)) ; true ),
     ( ty_predeterminer(L, _, _) -> assertz('$ty_predet_made'(L)) ; true ),
+    ( ty_comparative(L, _, _, _) -> assertz('$ty_cmp_made'(L)) ; true ),
+    forall(( ty_comparative(L, _, _, CEs), member(_-CE, CEs), sub_atom(CE, _, 2, 0, CT), \+ '$ty_cmp_end'(CT, L) ), assertz('$ty_cmp_end'(CT, L))),
+    forall(( ty_irregular_comparative(L, _, CW), \+ '$ty_cmp_irr'(CW, L) ), assertz('$ty_cmp_irr'(CW, L))),
     forall(( ty_verb_list(L, complement, _), ty_verb(L, OcV, _, _, _, _), \+ '$ty_ocv'(OcV, L),
              ty_verb_of(L, complement, OcV) ),
            assertz('$ty_ocv'(OcV, L))),
@@ -8298,25 +8341,40 @@ ty_ap_item(L, A, P, NP, R, End, D, S0, S) :-
 
 ty_ap_parts(after, L, A, P, NP, R, C0, _, D) -->
     ty_adjs(L, [A], [R], none, D),
-    { b_setval('$ty_of_ok', yes) }, ty_pp(L, P, NP),
+    { b_setval('$ty_of_ok', yes),
+      ( ty_cmp_item(L, A) -> b_setval('$ty_than_ok', yes) ; b_setval('$ty_than_ok', no) ) },
+    ty_pp(L, P, NP),
     { ty_ap_back(C0) }.
 ty_ap_parts(before, L, A, P, NP, R, C0, End, D) -->
-    { b_setval('$ty_of_ok', yes) }, ty_pp(L, P, NP),
+    { b_setval('$ty_of_ok', yes), b_setval('$ty_than_ok', yes) }, ty_pp(L, P, NP),
     { ty_ap_back(C0) },
-    ty_adjs(L, [A], [R], End, D).
+    ty_adjs(L, [A], [R], End, D),
+    { P \== than -> true ; ty_cmp_item(L, A) }.
 
 ty_ap_back(C0) :-
-    b_setval('$ty_of_ok', no),
+    b_setval('$ty_of_ok', no), b_setval('$ty_than_ok', no),
     ( C0 == '$none' -> true ; b_setval('$ty_case', C0) ).
+
+%% A comparative adjective, of one word or of the comparative's adverb, or
+%% an irregular comparative's word (`better than his digestion').
+ty_cmp_item(L, A) :-
+    nonvar(A),
+    (   A = adv(M, _) -> once(ty_comparative(L, M, _, _))
+    ;   atom(A), once(ty_irregular_comparative(L, _, A))
+    ).
 
 %% THE ADPOSITION `of' (since 1.88.0) begins only an adjective's phrase
 %% (`proud of his son', Spanish `orgulloso de su hijo'): its rows are no
 %% phrase anywhere else, where a possessor says `of' ('$ty_of_ok', set
 %% before the phrase and taken as its words are read, so a phrase inside
-%% it is no `of' either).
+%% it is no `of' either). So `than' (since 1.120.0) begins only a
+%% comparative's phrase ('$ty_than_ok', ty_cmp_item/2: `taller than Mary';
+%% `It contains more than an echo of Rousseau.' is no adjunct of `than').
 ty_pp_of(Prep) :-
     (   Prep == of
     ->  nb_current('$ty_of_ok', yes), b_setval('$ty_of_ok', no)
+    ;   Prep == than
+    ->  nb_current('$ty_than_ok', yes), b_setval('$ty_than_ok', no), b_setval('$ty_of_ok', no)
     ;   b_setval('$ty_of_ok', no)
     ).
 
@@ -8331,7 +8389,7 @@ ty_ap_flag(L, Bases) :-
         append(Ps0, Os, Ps), Ps = [_|_],
         (   Place == after
         ->  append(_, [W, P|_], Bases), atom(W), memberchk(P, Ps),
-            once(ty_adjective(L, _, _, _, W))
+            ( once(ty_adjective(L, _, _, _, W)) -> true ; ty_cmp_text_word(L, W) )
         ;   member(W, Bases), atom(W), ty_ap_adj_word(L, W)
         )
     ->  b_setval('$ty_ap', on)
@@ -8355,11 +8413,127 @@ ty_ap_adj_word(L, W) :-
 %% Erklärung'). Read where the text has an adverb's word right before an
 %% adjective's ('$ty_av', ty_av_flag/2), written always; a plain clause,
 %% so a phrase with none asks the flag and nothing more.
+ty_adjs(L, [adv(M, A)|As], [adj(G, N)|Rows], End, D, S0, S) :-
+    nb_current('$ty_cmp', on),
+    (   var(S0)
+    ->  nonvar(M), nonvar(A), ty_cmp_word(L, M, A, W), S0 = [W|S1]
+    ;   S0 = [W|S1], atom(W), ty_cmp_word(L, M, A, W)
+    ),
+    once(ty_adjective(L, A, G, N, _)),
+    ty_adjs(L, As, Rows, End, D, S1, S).
 ty_adjs(L, [adv(M, A)|As], [R|Rows], End, D, S0, S) :-
     nb_current('$ty_av', on),
     '$ty_avp'(L, Place),
     ty_av_item(Place, L, M, A, R, As, End, D, S0, S1),
+    \+ ( '$ty_cmp_made'(L), ty_cmp_word(L, M, A, _) ),
     ty_adjs(L, As, Rows, End, D, S1, S).
+
+%% A COMPARATIVE OF ONE WORD (since 1.120.0): adv(Adverb, A), A graded by
+%% the adverb of the template's ty_comparative(L, Adverb, Short, Endings)
+%% row, is one word where A is short (`taller', `happier', `bigger',
+%% `larger'; ty_irregular_comparative/3: `better') and the adverb's word
+%% and A's elsewhere (`more approachable', ty_av_item//8, which takes no
+%% short one: `more tall' is no reading). ty_cmp_word(L, Adverb, A, Word),
+%% A's comparative of one word: from A (writing) or from the word
+%% (reading, each ending's base asked whether it is a short adjective whose
+%% comparative is the word; a word that is an adposition's or a noun's is
+%% none: `after' is not aft's).
+ty_cmp_word(L, M, A, W) :-
+    ty_comparative(L, M, Short, Endings),
+    (   nonvar(A)
+    ->  (   ty_irregular_comparative(L, A, W0) -> W = W0
+        ;   once(ty_adjective(L, A, _, _, B)), atom(B),
+            ty_cmp_short(Short, B), ty_cmp_form(Endings, B, W)
+        )
+    ;   atom(W),
+        (   ty_irregular_comparative(L, A, W)
+        ;   member(BE-WE, Endings), ty_cmp_base(BE, WE, W, B),
+            once(ty_adjective(L, A, _, _, B)),
+            ty_cmp_short(Short, B), ty_cmp_form(Endings, B, W1), W1 == W,
+            \+ ty_word_class(L, adposition, W), \+ ty_word_class(L, noun, W)
+        )
+    ).
+
+%% The first ending that fits the base: double where the base is one
+%% syllable that ends in one vowel and a consonant (not w, x or y).
+ty_cmp_form([BE-WE|_], B, W) :-
+    (   BE == double
+    ->  ty_cmp_doubles(B), sub_atom(B, _, 1, 0, C), atomic_list_concat([B, C, WE], W)
+    ;   atom_concat(Stem, BE, B), \+ ( BE == y, ty_cmp_vowel_before_y(B) )
+    ->  atom_concat(Stem, WE, W)
+    ;   fail
+    ), !.
+ty_cmp_form([_|Es], B, W) :- ty_cmp_form(Es, B, W).
+
+ty_cmp_base(double, WE, W, B) :- !,
+    atom_concat(Stem, WE, W), sub_atom(Stem, _, 2, 0, CC),
+    sub_atom(CC, 0, 1, _, C), sub_atom(CC, 1, 1, _, C),
+    sub_atom(Stem, 0, _, 1, B).
+ty_cmp_base(BE, WE, W, B) :- atom_concat(Stem, WE, W), atom_concat(Stem, BE, B).
+
+ty_cmp_vowel_before_y(B) :- sub_atom(B, _, 2, 0, VY), sub_atom(VY, 0, 1, _, V), memberchk(V, [a, e, o, u]).
+
+ty_cmp_doubles(B) :-
+    ty_cmp_syllables(B, 1),
+    atom_chars(B, Cs), append(_, [X, V, C], Cs),
+    \+ ty_cmp_vowel(X), ty_cmp_vowel(V), \+ ty_cmp_vowel(C), \+ memberchk(C, [w, x, y]).
+
+ty_cmp_vowel(C) :- memberchk(C, [a, e, i, o, u]).
+
+%% Short: the base's syllables (its groups of vowels, a last e after a
+%% consonant other than l silent) are as many as a pair says, and its last
+%% letters any or one of the pair's.
+ty_cmp_short(Short, B) :-
+    ty_cmp_syllables(B, N),
+    member(N-Ls, Short),
+    (   Ls == any -> true ; member(E, Ls), atom_concat(_, E, B) ), !.
+
+ty_cmp_syllables(B, N) :-
+    atom_chars(B, Cs),
+    ty_cmp_groups(Cs, start, 0, N0),
+    (   append(_, [X, e], Cs), \+ ty_cmp_vowel(X), X \== l, X \== y, N0 > 1 -> N is N0 - 1 ; N = N0 ).
+
+ty_cmp_groups([], _, N, N).
+ty_cmp_groups([C|Cs], Prev, N0, N) :-
+    (   ( ty_cmp_vowel(C) ; C == y, Prev \== start )
+    ->  ( Prev == vowel -> N1 = N0 ; N1 is N0 + 1 ), ty_cmp_groups(Cs, vowel, N1, N)
+    ;   ty_cmp_groups(Cs, cons, N0, N)
+    ).
+
+%% A TEXT'S COMPARATIVES OF ONE WORD: '$ty_cmp' on where the language has
+%% the row and a word of the text is one; a word with an adposition's
+%% right after it then counts as an adjective's for '$ty_ap'
+%% (ty_cmp_text_word/2: `taller than Mary').
+ty_cmp_flag(L, Bases) :-
+    (   '$ty_cmp_made'(L), ty_cmp_in_text(L, Bases),
+        member(W, Bases), atom(W), ty_cmp_maybe(L, W),
+        once(ty_cmp_word(L, _, _, W))
+    ->  b_setval('$ty_cmp', on)
+    ;   b_setval('$ty_cmp', off)
+    ).
+
+%% The words joined, one search for an ending's last letters before a space
+%% or an irregular comparative's word: a text with none walks no word.
+ty_cmp_in_text(L, Bases) :-
+    (   catch(atomic_list_concat(Bases, ' ', Tx0), _, fail)
+    ->  atomic_list_concat([' ', Tx0, ' '], Tx),
+        (   '$ty_cmp_end'(T, L), atom_concat(T, ' ', TS), sub_atom(Tx, _, _, _, TS)
+        ;   '$ty_cmp_irr'(W, L), atomic_list_concat([' ', W, ' '], WS), sub_atom(Tx, _, _, _, WS)
+        ), !
+    ;   true
+    ).
+
+%% A word that may be a comparative of one word: an irregular one's, or one
+%% whose last two letters end one of the endings' words ('$ty_cmp_end'/2,
+%% made with the tables, by those letters): asked of every word of every
+%% text, the whole reading cost the English round trips 6 % more.
+ty_cmp_maybe(L, W) :-
+    (   '$ty_cmp_irr'(W, L) -> true
+    ;   sub_atom(W, _, 2, 0, T), '$ty_cmp_end'(T, L) -> true
+    ).
+
+ty_cmp_text_word(L, W) :-
+    nb_current('$ty_cmp', on), once(ty_cmp_word(L, _, _, W)).
 
 ty_av_item(before, L, M, A, R, As, End, D) --> ty_av_word(L, M), ty_av_adj(L, A, R, As, End, D).
 ty_av_item(after, L, M, A, R, As, End, D) --> ty_av_adj(L, A, R, As, End, D), ty_av_word(L, M).

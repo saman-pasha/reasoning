@@ -82,6 +82,7 @@ main :-
     two_objects,
     predeterminers,
     possessed_heads,
+    comparatives,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -181,12 +182,12 @@ english_again :-
 %% reads to them. tools/logic/measure.pl prints the whole file's.
 measured :-
     logic_measure(english, ['Socrates is human.'-'human(socrates).',
-                            'John is taller than Mary.'-'taller(john, mary).'],
+                            'Whom does Mary love?'-'?- love(mary, X).'],
                   measure(N, Right, _, Kept, _, Misses, _)),
     must('sentences', N, 2),
     must('right', Right, 1),
     must('kept', Kept, 1),
-    must('why one is not', Misses, [miss('John is taller than Mary.', unread)]).
+    must('why one is not', Misses, [miss('Whom does Mary love?', unread)]).
 
 %% 8. A TENSE. The past, the future, the perfect and the pluperfect are said
 %% of each atom of their clause, never of a subject's noun: a man is a man
@@ -658,6 +659,17 @@ possessed_heads :-
     must('of(of(acceptance, she), the(gift))', C1, 'past(encourage(of(of(acceptance, she), the(gift)), he)).\n'),
     logic_translate(cocolog, english, C1, E1),
     must('and into English', E1, 'Her acceptance of the gift encouraged him.').
+
+%% 53. A COMPARATIVE (1.120.0) is a predicate named by its word: of two
+%% with what `than' names, of one alone.
+comparatives :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'John is taller than Mary.', C1),
+    must('taller/2', C1, 'taller(john, mary).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and into English', E1, 'John is taller than Mary.'),
+    logic_translate(english, cocolog, 'The tales are more approachable than the novels.', C2),
+    must('a long adjective', C2, 'more_approachable(the(pl(tale)), the(pl(novel))).\n').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

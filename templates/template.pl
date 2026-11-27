@@ -177,6 +177,30 @@ ty_capital_nouns(xx).
 %% ty_predeterminer(xx, Kind, Words).
 %%   e.g. ty_predeterminer(english, all, [all]).
 
+%%     ty_comparative(L, Adverb, Short, Endings)
+%%                                     the adverb (ty_adverb/3's meaning)
+%%                                     that grades an adjective as its
+%%                                     comparative, adv(Adverb, A) (since
+%%                                     1.120.0: English more); an adjective
+%%                                     Short says (Syllables-Endings pairs,
+%%                                     any or the base's last letters:
+%%                                     English [1-any, 2-[y, le, ow]]) is
+%%                                     then one word, its base's last
+%%                                     letters replaced by the first of
+%%                                     Endings that fits (English [y-ier,
+%%                                     e-er, double-er, ''-er]; double: a
+%%                                     last consonant doubled after one
+%%                                     vowel, `bigger')
+%% ty_comparative(xx, Adverb, Short, Endings).
+%%   e.g. ty_comparative(english, more, [1-any, 2-[y, le, ow]], [y-ier, e-er, double-er, ''-er]).
+
+%%     ty_irregular_comparative(L, Adjective, Word)
+%%                                     an adjective's comparative of a
+%%                                     word of its own (English good:
+%%                                     better)
+%% ty_irregular_comparative(xx, Adjective, Word).
+%%   e.g. ty_irregular_comparative(english, good, better).
+
 %%     ty_definite_like(L, Def, As)    the language writes the definiteness
 %%                                     Def as As, and never reads Def
 %%                                     (since 1.64.0: Persian writes mass
