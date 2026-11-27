@@ -181,6 +181,7 @@ main :-
     possessed_heads,
     comparatives,
     linking_verbs,
+    every_words,
     format("~ndone~n", []).
 
 
@@ -881,7 +882,7 @@ names :-
     must('Spanish marks a person''s name', W4, 'El perro ve a John Smith.'),
     typology_write(spanish, copula(present, pos, name('Mary'), adj([small])), W5),
     must('and its adjective agrees with the name''s gender', W5, 'Mary es pequeña.'),
-    ( typology_read(english, 'Shortbread is a short crumbly cookie.', _) -> R6 = read ; R6 = refused ),
+    ( typology_read(english, 'Zorblax is a short crumbly cookie.', _) -> R6 = read ; R6 = refused ),
     must('an unknown first word is no name', R6, refused).
 
 %% 49. DETERMINERS AND QUANTIFIERS (1.63.0, the translator's second step):
@@ -1354,6 +1355,14 @@ linking_verbs :-
     must('remained silent', IR1, clause(remain, past, pos, np(witness, sg, def, []), sc(adj([silent])))),
     typology_write(english, clause(seem, present, pos, np(dog, sg, def, []), sc(adj([old]))), W2),
     must('and written', W2, 'The dog seems old.').
+
+%% 90. EVERY WORD WORDNET KNOWS (1.123.0) is an English word where no other
+%% table has the word: lexicon/every_noun.txt, every_verb.txt,
+%% every_adverb.txt, and every_vi.txt for the verbs that may take no object.
+every_words :-
+    typology_load(english),
+    typology_read(english, 'The cancer had metastasized.', IR1),
+    must('metastasize, a verb SemCor never counted', IR1, clause(metastasize, pluperfect, pos, np(cancer, sg, def, []), none)).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

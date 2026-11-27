@@ -670,8 +670,9 @@ ty_adjective_adverb(english, before).
 ty_adjective_phrase_noun(english, after).
 %% A clause may say no subject (since 1.86.0): `Took the joke well.'
 ty_subject_unsaid(english, 3).
-%% The verbs that may take no object: WordNet's, lexicon/vi.txt (since 1.86.0).
-ty_verb_list(english, no_object, vi).
+%% The verbs that may take no object: WordNet's, lexicon/vi.txt (since
+%% 1.86.0), every one of them since 1.123.0 (lexicon/every_vi.txt).
+ty_verb_list(english, no_object, every_vi).
 %% The verbs whose object may be an infinitive (since 1.95.0): WordNet's,
 %% lexicon/vinf.txt, and those its frames leave out (`He had to sell his
 %% car.', `I hope to win.').

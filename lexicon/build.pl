@@ -2,6 +2,7 @@
 %%
 %%     ./cocolog -s lexicon/build.pl -- --wordnet DIR [--out DIR] [--cap CLASS=N]...
 %%     ./cocolog -s lexicon/build.pl -- --capitals --wordnet DIR [--out DIR]
+%%     ./cocolog -s lexicon/build.pl -- --every --wordnet DIR [--out DIR]
 %%     ./cocolog -s lexicon/build.pl -- --phrasal --wordnet DIR [--out DIR]
 %%     ./cocolog -s lexicon/build.pl -- --infinitive --wordnet DIR [--out DIR]
 %%     sh tools/lexicon/build.sh                         the same, from this repository's root
@@ -99,6 +100,40 @@ main :-
              lx_write(Out, Name, Vs),
              length(Vs, N), lx_take(6, Vs, First),
              format("   ~w ~w  ~w~nwrote ~w/~w.txt~n", [Name, N, First, Out, Name]) )).
+%% --every writes every_noun.txt, every_verb.txt, every_adverb.txt and
+%% every_vi.txt alone (since reasoning 1.123.0): every lemma index.noun,
+%% index.verb and index.adv name under this file's word filter, the
+%% SemCor-counted ones first (known_noun's, known_verb's and
+%% known_adverb's order) and the rest in hash order, and every verb with
+%% the frame "Something ----s" or "Somebody ----s" (1, 2), vi.txt's
+%% order uncapped. They are the typology's words, never the judge's: the
+%% known_* files stay SemCor's (lx_classes/7 says why). An uncounted lemma
+%% that is a form of another word, or that the data files write only with
+%% a capital (a name: socrates, paris), is left out (lx_every_keep/5).
+main :-
+    current_prolog_flag(argv, [_|Args0]),
+    select('--every', Args0, Args), !,
+    lx_options(Args, '/usr/share/wordnet', WN, 'lexicon', Out, [], _),
+    lx_senses(WN, Groups),
+    lx_verb_frames(WN, Frames),
+    lx_inflected(WN, Forms, All),
+    findall(W, ( member(F, ['data.adj', 'data.noun', 'data.verb', 'data.adv']),
+                 lx_data_word(WN, F, W), \+ lx_capital_form(W) ), Low0),
+    sort(Low0, Low1), findall(W-1, member(W, Low1), LowPairs), list_to_assoc(LowPairs, Low),
+    forall(member(Name-T-File-P, [every_noun-1-'index.noun'-noun, every_verb-2-'index.verb'-verb, every_adverb-4-'index.adv'-adverb]),
+           ( findall(NC-W, ( member(g(W, T, _, C), Groups), NC is -C ), K0), lx_rank_unique(K0, Counted),
+             lx_index_lemmas(WN, File, Lemmas),
+             lx_uncounted(Lemmas, Counted, Rest0),
+             include(lx_every_keep(Forms, All, Low, P), Rest0, Rest),
+             append(Counted, Rest, Words),
+             lx_every_write(Out, Name, Words) )),
+    findall(NC-W, ( member(g(W, 2, _, C), Groups), NC is -C ), Verb0),
+    lx_rank(Verb0, VCounted),
+    assoc_to_keys(Frames, AllVerbs),
+    findall(V, ( member(V, AllVerbs), \+ memberchk(V, VCounted) ), Uncounted),
+    append(VCounted, Uncounted, Verbs),
+    findall(V, ( member(V, Verbs), lx_frames(V, Frames, Fs), lx_meets(Fs, [1, 2]) ), VI),
+    lx_every_write(Out, every_vi, VI).
 main :-
     current_prolog_flag(argv, [_|Args]),
     lx_options(Args, '/usr/share/wordnet', WN, 'lexicon', Out, [], Caps),
@@ -123,6 +158,72 @@ main :-
              length(Kept, N), lx_take(6, Kept, First),
              format("   ~w ~w  ~w~n", [Class, N, First]) )),
     format("wrote ~w/{noun,class,adj,vt,vi,vpp,adverb,place,unit,language,prose,known_noun,known_verb,known_adj,known_adverb}.txt~n", [Out]).
+
+%% THE FORMS OF WORDS the reader makes itself (since reasoning 1.123.0):
+%% Forms maps a form to the lemmas it is a form of -- a noun's plural, a
+%% verb's -s, -ed and -ing, each rule made generous (an e dropped, a y made
+%% i, the last letter doubled), and every line of the four exception files
+%% (better, worse) -- and All holds every lemma of the four indexes, each
+%% of any length here (does is a form of do).
+%% Generous on purpose: a form too many leaves a rare lemma out, a form too
+%% few lets one in that reads wrong. An adjective's -er is no rule: it left
+%% out the agent nouns (spreader, of the adjective spread).
+lx_inflected(WN, Forms, All) :-
+    findall(F-B, ( member(P-File, [noun-'index.noun', verb-'index.verb']),
+                   lx_index_words(WN, File, Ls), member(B, Ls), lx_form(P, B, F), F \== B ), Regular),
+    findall(F-B, ( member(E, ['noun.exc', 'verb.exc', 'adj.exc', 'adv.exc']),
+                   lx_lines(WN, E, Lines), member(L, Lines),
+                   split_string(L, " ", " ", [FS, BS|_]), FS \== "", BS \== "",
+                   atom_string(F, FS), atom_string(B, BS), F \== B ), Irregular),
+    append(Regular, Irregular, Pairs0), msort(Pairs0, Pairs),
+    lx_group_pairs(Pairs, Grouped), list_to_assoc(Grouped, Forms),
+    findall(W-1, ( member(File2, ['index.noun', 'index.verb', 'index.adj', 'index.adv']),
+                   lx_index_words(WN, File2, Ls2), member(W, Ls2) ), Ws0),
+    sort(Ws0, Ws), list_to_assoc(Ws, All).
+
+%% every lemma of an index of letters a to z alone, whatever its length.
+lx_index_words(WN, File, Words) :-
+    lx_lines(WN, File, Lines),
+    findall(W, ( member(L, Lines), \+ sub_string(L, 0, 1, _, ' '),
+                 split_string(L, [32], [32], [LemS|_]), LemS \== "",
+                 atom_string(W, LemS), atom_codes(W, Cs),
+                 forall(member(C, Cs), ( C >= 0'a, C =< 0'z )) ), Ws),
+    sort(Ws, Words).
+
+lx_group_pairs([], []).
+lx_group_pairs([F-B|Ps], [F-[B|Bs]|Gs]) :- lx_same_form(F, Ps, Bs, Rest), lx_group_pairs(Rest, Gs).
+lx_same_form(F, [F-B|Ps], [B|Bs], Rest) :- !, lx_same_form(F, Ps, Bs, Rest).
+lx_same_form(_, Rest, [], Rest).
+
+lx_form(noun, B, F) :- lx_plural(B, F).
+lx_form(verb, B, F) :- lx_plural(B, F).
+lx_form(verb, B, F) :- member(S, [ed, ing]), lx_suffixed(B, S, F).
+
+lx_plural(B, F) :- atom_concat(B, s, F).
+lx_plural(B, F) :- atom_concat(B, es, F).
+lx_plural(B, F) :- atom_concat(B0, y, B), atom_concat(B0, ies, F).
+
+lx_suffixed(B, S, F) :- atom_concat(B, S, F).
+lx_suffixed(B, S, F) :- atom_concat(B0, e, B), atom_concat(B0, S, F).
+lx_suffixed(B, ed, F) :- atom_concat(B0, y, B), atom_concat(B0, ied, F).
+lx_suffixed(B, S, F) :- sub_atom(B, _, 1, 0, C), atomic_list_concat([B, C, S], F).
+
+%% An uncounted lemma is kept where the data files write it in small
+%% letters, and unless it is a form of another lemma (fields, teeth,
+%% twitching, drew, heaps), or, a noun, its plural is a lemma or another
+%% lemma's form (physic: physics; sens: senses).
+lx_every_keep(Forms, All, Low, P, W) :-
+    get_assoc(W, Low, _),
+    \+ lx_form_of_other(Forms, W, W),
+    \+ ( P == noun, lx_plural(W, Pl),
+         ( get_assoc(Pl, All, _) ; lx_form_of_other(Forms, Pl, W) ) ).
+
+lx_form_of_other(Forms, F, W) :- get_assoc(F, Forms, Bs), member(B, Bs), B \== W, !.
+
+lx_every_write(Out, Name, Words) :-
+    lx_write(Out, Name, Words),
+    length(Words, N), lx_take(6, Words, First),
+    format("   ~w ~w  ~w~nwrote ~w/~w.txt~n", [Name, N, First, Out, Name]).
 
 %% ---- options ----------------------------------------------------------------
 
@@ -434,6 +535,8 @@ lx_classes(Groups, Kinds, Units, Languages, Frames, AdjLemmas, Classes) :-
 %% indexes hold 50 436 nouns and 8 293 verbs past this file's word filter,
 %% against 8 915 and 3 616 counted, and widening either moves what the JUDGE
 %% refuses -- its rules are written in terms of what a word is known ONLY as.
+%% The typology takes the rest from the every_* files instead (--every,
+%% since reasoning 1.123.0), which the judge never reads.
 %% One table at a time, each measured.
 lx_rank_unique(NCWs, Words) :-
     findall(W-NC, member(NC-W, NCWs), WNCs), keysort(WNCs, ByWord),

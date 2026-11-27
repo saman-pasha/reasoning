@@ -24,8 +24,8 @@ red) and lesson 01 pin the shape of the answer, deliberately not the number.
 The reasoning library translates ALL 8 000 sentences of `lexicon/prose.txt`
 from English into the IR, and ALL of that IR into Cocolog. Every step
 moves one of the two counts and reports both (`tools/logic/prose.pl`;
-STATUS.md keeps them): at 1.122.0, 5 100 into the IR, 4 872 of them into
-Cocolog (1.121.0: 5 060 and 4 841; 1.120.0: 5 060 and 4 796; 1.119.0: 5 047 and 4 783; 1.118.0: 5 017 and 4 755; 1.117.0: 5 002 and 4 741; 1.116.0: 4 977 and 4 717; 1.115.0: 4 932 and 4 678; 1.114.0: 4 918 and 4 664; 1.113.0: 4 897 and 4 648; 1.112.0: 4 771 and 4 525; 1.111.0: 4 677 and 4 437; 1.110.0: 4 652 and 4 422; 1.109.0: 4 640 and 4 413; 1.108.0: 4 640 and 4 389; 1.107.0: 4 580 and 4 360; 1.105.0 and 1.106.0: 4 479 and 4 275; 1.104.0: 4 456 and 4 256; 1.103.0: 4 405 and 4 209; 1.102.0: 4 405 and 4 206; 1.100.0 and 1.101.0: 4 377 and 4 179; 1.99.0: 4 358 and 4 165; 1.98.0: 4 325 and 4 141; 1.96.0 and 1.97.0: 4 295 and 4 111; 1.95.0: 4 243 and 4 063; 1.94.0: 4 218 and 4 040; 1.93.0: 4 167 and 3 990; 1.92.0: 4 129 and 3 954; 1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
+STATUS.md keeps them): at 1.123.0, 5 633 into the IR, 5 371 of them into
+Cocolog (1.122.0: 5 100 and 4 872; 1.121.0: 5 060 and 4 841; 1.120.0: 5 060 and 4 796; 1.119.0: 5 047 and 4 783; 1.118.0: 5 017 and 4 755; 1.117.0: 5 002 and 4 741; 1.116.0: 4 977 and 4 717; 1.115.0: 4 932 and 4 678; 1.114.0: 4 918 and 4 664; 1.113.0: 4 897 and 4 648; 1.112.0: 4 771 and 4 525; 1.111.0: 4 677 and 4 437; 1.110.0: 4 652 and 4 422; 1.109.0: 4 640 and 4 413; 1.108.0: 4 640 and 4 389; 1.107.0: 4 580 and 4 360; 1.105.0 and 1.106.0: 4 479 and 4 275; 1.104.0: 4 456 and 4 256; 1.103.0: 4 405 and 4 209; 1.102.0: 4 405 and 4 206; 1.100.0 and 1.101.0: 4 377 and 4 179; 1.99.0: 4 358 and 4 165; 1.98.0: 4 325 and 4 141; 1.96.0 and 1.97.0: 4 295 and 4 111; 1.95.0: 4 243 and 4 063; 1.94.0: 4 218 and 4 040; 1.93.0: 4 167 and 3 990; 1.92.0: 4 129 and 3 954; 1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
 count says so. **Measure what blocks the rest before choosing a step**:
 at 1.80.0 the words no table has looked like the gap, and 5 115 of the
 8 000 had none -- 2 130 of them a noun phrase alone, which one rule read.
@@ -954,6 +954,25 @@ makes of the subject, past(remain(the(witness), silent(the(witness))));
 the Cocolog reader reads it as an atom where the verb is a linking one
 (`lg_in_atom/2`), and back it is sc(Predicate) where its innermost first
 argument is the subject (`lg_fun_first/2`).
+
+**Every word WordNet knows since 1.123.0** is an English word where no
+other table has it: `lexicon/every_noun.txt`, `every_verb.txt` and
+`every_adverb.txt`, every lemma of WordNet 3.0's index (`lexicon/build.pl
+-- --every --wordnet /usr/share/wordnet`, `apt install wordnet-base`),
+read by the English import after every other file and only for a word no
+file before them and no vocabulary has (`ty_lexicon_new/2`, `tyi_every/1`),
+and `every_vi.txt` the verbs that may take no object
+(`ty_verb_list(english, no_object, every_vi)`). **A rare sense of a known
+word is noise**: with every lemma, `see` was a noun, `small` an adverb and
+`mouse` a verb, and the English round trips cost a fifth more inferences.
+**A lemma that is another word's form reads wrong**: build.pl leaves out an
+uncounted lemma that is a plural, a verb's -s, -ed or -ing form or a line
+of the `.exc` files (`fields` read as one field, `twitching` took `His
+face is twitching.` from the progressive), and a noun whose plural is one
+(`doe`: does, which cost the round trips 2 %), the forms' bases of any
+length (`do`), and a name the data files write only with a capital
+(`socrates`: `Socrates is human.` read two ways). The `known_*` files stay SemCor's: the tagger's judge reads
+them (build.pl says why). The English load takes 0.71 s where it took 0.42.
 
 **`one's` since 1.115.0** is the possessive of pron(3, sg, zero), the
 person no words name (`Catch one's breath.`); at level 2 it is someone,

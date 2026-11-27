@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives, linking_verbs]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives, linking_verbs, every_words]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -262,11 +262,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 530),
-    ( R >= 518 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 518 right', VR, ok),
-    ( K >= 524 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 524 kept', VK, ok).
+    check('the second measure: its sentences', N, 535),
+    ( R >= 523 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 523 right', VR, ok),
+    ( K >= 529 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 529 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -1164,6 +1164,20 @@ article_names :-
     forall(member(T-Want, [
                'The Earth is an ellipsoid.'-'ellipsoid(the_earth).\n',
                'The Missouri feeds into the Mississippi.'-'into(feed(the_missouri), the_mississippi).\n' ]),
+           ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
+             one_line(['into Cocolog: ', T], Label),
+             check(Label, C, Want),
+             ( logic_translate(cocolog, english, C, E) -> true ; E = none ),
+             one_line(['and back into English: ', T], Label2),
+             check(Label2, E, T) )).
+
+%% 1.123.0: a word only WordNet's index has is a word of Cocolog as any is.
+every_words :-
+    section('every word WordNet knows'),
+    typology_load(english),
+    forall(member(T-Want, [
+               'The cancer had metastasized.'-'pluperfect(metastasize(the(cancer))).\n',
+               'She could smell the soapiness.'-'could(smell(she, the(soapiness))).\n' ]),
            ( ( logic_translate(english, cocolog, T, C) -> true ; C = none ),
              one_line(['into Cocolog: ', T], Label),
              check(Label, C, Want),

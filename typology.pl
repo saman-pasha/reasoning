@@ -8806,6 +8806,7 @@ ty_tense_fit(T0, T) :-
 %% "broadcasts"' after `copenaghen'), and the block they fall in is
 %% the verbs' one the English import asks.
 
+:- dynamic tyi_every/1.
 :- dynamic tyi_entry/4, tyi_form/4, tyi_lex/3, tyi_animate/1, tyi_gender/2, tyi_count/2,
            tyi_hand/1, tyi_class/2, tyi_name/1, tyi_class_word/4, tyi_person/1,
            tyi_sense/2, tyi_sense_word/4, tyi_vbase/2, tyi_pname/3.
@@ -8910,7 +8911,7 @@ ty_read_terms(S, Ts) :-
 
 ty_import_reset :-
     ty_import_reset_words,
-    retractall(tyi_lex(_, _, _)), retractall(tyi_pname(_, _, _)),
+    retractall(tyi_lex(_, _, _)), retractall(tyi_every(_)), retractall(tyi_pname(_, _, _)),
     retractall(tyi_class_word(_, _, _, _)),
     retractall(tyi_count(_, _)), retractall(tyi_hand(_)),
     retractall(tyi_sense(_, _)), retractall(tyi_sense_word(_, _, _, _)).
@@ -9321,7 +9322,13 @@ ty_english_row(ty_verb_in(english, B, B, C)) :-
 %% once, the first file's; a word of grammar the template names
 %% (ty_closed/2) is none. class.txt is the persons; the verbs are known_verb,
 %% vt, vi and vpp; the adjectives known_adj and adj, the adverbs
-%% known_adverb and adverb (since 1.58.0).
+%% known_adverb and adverb (since 1.58.0). Since 1.123.0, after them, every
+%% noun, verb and adverb WordNet's index names (every_noun, every_verb,
+%% every_adverb: `lexicon/build.pl -- --every'), of a word no file before
+%% them and no vocabulary has (tyi_every/1 marks the words they gave): a
+%% word with no class takes WordNet's, and a known word no rare one (`see'
+%% is no noun, `small' no adverb, `mouse' no verb: each of the three cost
+%% the round trips a fifth more inferences).
 ty_read_lexicon(L) :-
     ( tyi_hand(ty_closed(L, Closed)) -> true ; Closed = [] ),
     forall(member(Kind-Base-Anim, [noun-class-person, noun-known_noun-unknown, noun-noun-unknown,
@@ -9329,14 +9336,27 @@ ty_read_lexicon(L) :-
                                    verb-vt-unknown, verb-vi-unknown, verb-vpp-unknown,
                                    adjective-known_adj-unknown, adjective-adj-unknown,
                                    adverb-known_adverb-unknown, adverb-adverb-unknown]),
-           ( ty_lexicon_file(Base, File)
-           ->  read_file_to_codes(File, Codes), atom_codes(Text, Codes),
-               atomic_list_concat(Lines, '\n', Text),
-               forall(( member(W, Lines), W \== '', ty_az_word(W), \+ memberchk(W, Closed),
-                        \+ tyi_lex(Kind, W, _) ),
-                      assertz(tyi_lex(Kind, W, Anim)))
-           ;   true
-           )).
+           ty_read_lexicon_file(Kind, Base, Anim, Closed, plain)),
+    forall(member(Kind-Base, [noun-every_noun, verb-every_verb, adverb-every_adverb]),
+           ty_read_lexicon_file(Kind, Base, unknown, Closed, every)).
+
+ty_read_lexicon_file(Kind, Base, Anim, Closed, How) :-
+    (   ty_lexicon_file(Base, File)
+    ->  read_file_to_codes(File, Codes), atom_codes(Text, Codes),
+        atomic_list_concat(Lines, '\n', Text),
+        forall(( member(W, Lines), W \== '', ty_az_word(W), \+ memberchk(W, Closed),
+                 \+ tyi_lex(Kind, W, _), ty_lexicon_new(How, W) ),
+               ( assertz(tyi_lex(Kind, W, Anim)),
+                 ( How == every, \+ tyi_every(W) -> assertz(tyi_every(W)) ; true ) ))
+    ;   true
+    ).
+
+%% A word of an every_* file is taken only where no plain file and no
+%% vocabulary has it.
+ty_lexicon_new(plain, _).
+ty_lexicon_new(every, W) :-
+    \+ ( tyi_lex(_, W, _), \+ tyi_every(W) ),
+    \+ tyi_entry(_, _, W, _).
 
 ty_lexicon_file(Base, File) :-
     atomic_list_concat(['lexicon/', Base, '.txt'], Rel),

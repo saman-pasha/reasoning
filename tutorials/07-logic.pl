@@ -85,6 +85,7 @@ main :-
     comparatives,
     demonstratives,
     linking_verbs,
+    every_words,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -690,6 +691,15 @@ linking_verbs :-
     must('remain(W, silent(W))', C1, 'past(remain(the(witness), silent(the(witness)))).\n'),
     logic_translate(cocolog, english, C1, E1),
     must('and into English', E1, 'The witness remained silent.').
+
+%% 56. A WORD ONLY WORDNET'S INDEX HAS (1.123.0) is a word of Cocolog as any
+%% is: `scald' is no SemCor-counted verb.
+every_words :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'Scald the milk.', C1),
+    must('scald(you, the(milk))', C1, 'imperative(scald(you, the(milk))).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and into English', E1, 'Scald the milk.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

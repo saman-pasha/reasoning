@@ -347,7 +347,7 @@ ty_conjunct_marks(xx).
 %%                                     Base is a list of verbs
 %%                                     (since 1.95.0)
 %% ty_verb_list(xx, Kind, Base).
-%%   e.g. ty_verb_list(english, no_object, vi).
+%%   e.g. ty_verb_list(english, no_object, every_vi).
 
 %%     ty_adjective_list(L, Kind, Base)
 %%                                     the adjectives of lexicon/Base.txt,

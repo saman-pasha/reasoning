@@ -559,3 +559,8 @@ The situation became ugly.	past(become(the(situation), ugly(the(situation)))).
 His speech remained unimpaired.	past(remain(of(speech, he), unimpaired(of(speech, he)))).
 He remained faithful to his wife.	past(to(remain(he, faithful(he)), of(wife, he))).
 On paper the candidate seems promising.	on(seem(the(candidate), promising(the(candidate))), paper).
+Scald the milk.	imperative(scald(you, the(milk))).
+Unstring my guitar.	imperative(unstring(you, of(guitar, i))).
+They worked arduously.	past(arduously(work(they))).
+Glaciers move tardily.	tardily(move(X)) :- glacier(X).
+Music is a good relaxer.	relaxer(music). good(music).
