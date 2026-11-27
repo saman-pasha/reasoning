@@ -1081,6 +1081,7 @@ lg_entity(of(P, NP), E, Ms) :- !, lg_possessed(P, NP, E, Ms).
 %% kill all the wildlife.' says all(the(wildlife)), `He paid all his bills.'
 %% past(pay(he, all(of(pl(bill), he)))).
 lg_entity(such(_), _, _) :- !, lg_no(determiner(such)).
+lg_entity(refl(_), _, _) :- !, lg_no(pronoun(reflexive)).
 lg_entity(all(NP), ent(const(all(C)), [], const), Ms) :- !,
     lg_entity(NP, ent(T, Conds, Q), Ms),
     ( Q == const, T = const(C), Conds == [] -> true ; lg_no(determiner(all)) ).

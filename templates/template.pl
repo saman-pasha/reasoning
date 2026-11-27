@@ -1069,7 +1069,10 @@ ty_possessive_clitic(xx).
 %%     ty_pronoun(L, Role, Words, Conditions)
 %%                                     a personal pronoun's words in Role s
 %%                                     (a subject), o (an object) or j
-%%                                     (after an adposition), where the
+%%                                     (after an adposition), or r (since
+%%                                     1.126.0: a reflexive one, where an
+%%                                     object or an adposition's object
+%%                                     stands, refl(Pronoun)), where the
 %%                                     pronoun fits one of the Conditions,
 %%                                     each its person, number and kind
 %%                                     (`he' [[3, sg, m]]); a role with no

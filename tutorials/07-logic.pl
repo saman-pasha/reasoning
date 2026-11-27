@@ -88,6 +88,7 @@ main :-
     every_words,
     long_words,
     such_words,
+    reflexives,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -716,6 +717,14 @@ such_words :-
     typology_load(english),
     logic_translate(english, cocolog, 'A professional field such as law.', C1),
     must('such_as(professional(field), law)', C1, 'field(a(such_as(professional(field), law))).\nprofessional(a(such_as(professional(field), law))).\n').
+
+%% 59. A REFLEXIVE PRONOUN (1.126.0), refl(Pronoun) in the IR, has no form
+%% at level 2 yet, and logic_why/2 says so.
+reflexives :-
+    typology_load(english),
+    typology_read(english, 'She expressed herself pithily.', IR1),
+    ( logic_from_ir(IR1, _) -> W1 = read ; logic_why(IR1, W1) ),
+    must('pronoun(reflexive)', W1, pronoun(reflexive)).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

@@ -467,7 +467,10 @@
 %%     ty_pronoun(L, Role, Words, Conditions)
 %%                                     a personal pronoun's words in Role s
 %%                                     (a subject), o (an object) or j
-%%                                     (after an adposition), where the
+%%                                     (after an adposition), or r (since
+%%                                     1.126.0: a reflexive one, where an
+%%                                     object or an adposition's object
+%%                                     stands, refl(Pronoun)), where the
 %%                                     pronoun fits one of the Conditions,
 %%                                     each its person, number and kind
 %%                                     (`he' [[3, sg, m]]); a role with no
@@ -992,7 +995,7 @@ ty_values(tense, [present, past, future, perfect, imperfect, conditional, pluper
 ty_values(core_tense, [present, past]).
 ty_values(number, [sg, pl]).
 ty_values(agreement, [sg, pl, sg(1), sg(2), pl(1), pl(2)]).
-ty_values(pronoun_role, [s, o, j]).
+ty_values(pronoun_role, [s, o, j, r]).
 ty_values(person, [1, 2, 3]).
 ty_values(polarity, [pos, neg]).
 %% Since 1.107.0 a number and a quantifier of English are determiners too
@@ -2722,7 +2725,7 @@ ty_first_written(L, [FirstA|_], [First|Rest], Words) :-
 ty_table_word(L, W) :-
     once(( ty_noun(L, _, _, _, W, _) ; ty_noun(L, _, _, _, _, W)
          ; ty_noun_case(L, _, _, _, W)
-         ; ty_pronoun(L, _, Ws, _), memberchk(W, Ws) )).
+         ; '$ty_pron_word'(L, W) )).
 
 %% A word a template always writes with its capital (ty_capital/3: English
 %% `I') is its table's word, read and written.
@@ -3195,7 +3198,7 @@ ty_known_base(L, B) :-
     ;   ty_relative_possessive(L, Ws, _), memberchk(B, Ws)
     ;   ty_possessive_pronoun(L, Ws, _, _), memberchk(B, Ws)
     ;   atom(B), '$ty_cmp_made'(L), once(ty_cmp_word(L, _, _, B))
-    ;   ty_pronoun(L, _, Ws, _), memberchk(B, Ws)
+    ;   '$ty_pron_word'(L, B)
     ;   ty_complement(L, _, Ws), memberchk(B, Ws)
     ;   ty_phrasal(L, _, _, B, _)
     ;   ty_negation_place(L, Ws, _), memberchk(B, Ws)
@@ -4120,6 +4123,7 @@ ty_ir_features(L, rel(NP, _), F) :- !, ty_ir_features(L, NP, F).
 ty_ir_features(L, np_pp(NP, _), F) :- !, ty_ir_features(L, NP, F).
 ty_ir_features(L, all(NP), F) :- !, ty_ir_features(L, NP, F).
 ty_ir_features(L, such(NP), F) :- !, ty_ir_features(L, NP, F).
+ty_ir_features(L, refl(Pr), F) :- !, ty_ir_features(L, Pr, F).
 ty_ir_features(L, C, F) :-
     ty_coord_np(C, K, Xs), !,
     findall(F1, ( member(X, Xs), ty_ir_features(L, X, F1) ), Fs),
@@ -5454,6 +5458,13 @@ ty_np_phrase(L, R, F) --> { ty_rel_slot(R) }, ty_rel(L, none, R, F).
 ty_np_phrase(L, P0, F) --> { ty_poss_tail_slot(L, P0, P, T) }, ty_poss(L, P, F), ty_pp_tail(L, T, P).
 ty_np_phrase(L, Nm, F) --> ty_name_here, { ty_name_slot(Nm) }, ty_name_words(L, Nm, F).
 ty_np_phrase(L, Qp, F) --> ty_qp_here, { ty_qp_slot(Qp) }, ty_qp_words(L, Qp, F).
+%% A reflexive pronoun after an adposition (since 1.126.0: `in itself', `for
+%% ourselves'), its words the language's ty_pronoun(L, r, Words, _) rows.
+ty_np_phrase(L, refl(Pr), F) -->
+    { '$ty_refl_made'(L) },
+    ty_flag_allows('$ty_ppron'),
+    ty_words(1, 2, Ws, ty_pron_words(L, r, Pr, Ws)),
+    { ty_pron_np_features(L, Pr, F) }.
 ty_np_phrase(L, Pr, F) -->
     { ty_ppron_slot(Pr) },
     ty_flag_allows('$ty_ppron'),
@@ -6080,7 +6091,7 @@ ty_inf_in(L, Words) :-
     ).
 
 ty_ppron_in(L, Words) :-
-    once(( ty_pronoun(L, _, Ws, _), ty_all_ahead(Ws, Words) )).
+    once(( member(W, Words), '$ty_pron_rowf'(L, W, Ws), ty_all_ahead(Ws, Words) )).
 
 %% The last sentence's counts are kept (`$ty_poss_memo'): the writer reads
 %% each sentence it writes back, the same words again.
@@ -6820,6 +6831,12 @@ ty_verb_row(L, V, T, N, P, Words) :-
 :- dynamic('$ty_phrasal_made'/1).
 %% A language with a ty_predeterminer/3 row (since 1.118.0).
 :- dynamic('$ty_predet_made'/1).
+%% A language with a ty_pronoun(L, r, Words, Conditions) row (since 1.126.0).
+:- dynamic('$ty_refl_made'/1).
+%% Each word of a language's ty_pronoun/4 rows, and each row by its first
+%% word (since 1.126.0), so that a test of a word asks no walk of the rows.
+:- dynamic('$ty_pron_word'/2).
+:- dynamic('$ty_pron_rowf'/3).
 %% A language with a ty_comparative/4 row (since 1.120.0), its endings'
 %% words and its irregular comparatives' words.
 :- dynamic('$ty_cmp_made'/1).
@@ -6896,6 +6913,9 @@ ty_vfirst_make(L) :-
     retractall('$ty_vfirst_made'(L)),
     retractall('$ty_phrasal_made'(L)),
     retractall('$ty_predet_made'(L)),
+    retractall('$ty_refl_made'(L)),
+    retractall('$ty_pron_word'(L, _)),
+    retractall('$ty_pron_rowf'(L, _, _)),
     retractall('$ty_cmp_made'(L)),
     retractall('$ty_cmp_end'(_, L)),
     retractall('$ty_cmp_irr'(_, L)),
@@ -6925,6 +6945,9 @@ ty_vfirst_make(L) :-
     ( once(ty_short_form(L, _, _)) -> assertz('$ty_short_made'(L)) ; true ),
     ( ty_phrasal(L, _, _, _, _) -> assertz('$ty_phrasal_made'(L)) ; true ),
     ( ty_predeterminer(L, _, _) -> assertz('$ty_predet_made'(L)) ; true ),
+    ( ty_pronoun(L, r, _, _) -> assertz('$ty_refl_made'(L)) ; true ),
+    forall(( ty_pronoun(L, _, PWs, _), member(PW, PWs), \+ '$ty_pron_word'(L, PW) ), assertz('$ty_pron_word'(L, PW))),
+    forall(( ty_pronoun(L, _, [PF|PR], _), \+ '$ty_pron_rowf'(L, PF, [PF|PR]) ), assertz('$ty_pron_rowf'(L, PF, [PF|PR]))),
     ( ty_comparative(L, _, _, _) -> assertz('$ty_cmp_made'(L)) ; true ),
     forall(( ty_comparative(L, _, _, CEs), member(_-CE, CEs), sub_atom(CE, _, 2, 0, CT), \+ '$ty_cmp_end'(CT, L) ), assertz('$ty_cmp_end'(CT, L))),
     forall(( ty_irregular_comparative(L, _, CW), \+ '$ty_cmp_irr'(CW, L) ), assertz('$ty_cmp_irr'(CW, L))),
@@ -7117,6 +7140,27 @@ ty_role(L, Role, Qp, Features) -->
 ty_role(L, o, Pr, F) -->
     { nonvar(Pr), Pr = pron(_, _, _), ty_clitic(L, o), ty_pron_np_features(L, Pr, F) }.
 ty_role(L, Role, Pr, F) --> { ty_ppron_slot(Pr) }, ty_ppron_role(L, Role, Pr, F).
+%% A REFLEXIVE PRONOUN (since 1.126.0): refl(Pronoun) where an object stands
+%% (`The two lovers killed themselves.', `She expressed herself pithily.'),
+%% its words the language's ty_pronoun(L, r, Words, Conditions) rows.
+ty_role(L, Role, refl(Pr), F) -->
+    { Role \== s, '$ty_refl_made'(L) },
+    ty_ppron_role(L, r, Pr, F),
+    { ty_refl_agrees(Pr) }.
+
+%% A reflexive object agrees with its clause's subject ('$ty_csubj', set
+%% where the verb is read) in person and number, a subject no words say
+%% with any (`Found themselves on the wrong road.' is no command of `found'
+%% to them).
+ty_refl_agrees(Pr) :-
+    (   nb_current('$ty_csubj', S), nonvar(S) -> ty_refl_fits(S, Pr) ; true ).
+
+ty_refl_fits(pron(_, _, K), _) :- K == zero, !.
+ty_refl_fits(pron(P, N, K), Pr) :- !, \+ \+ Pr = pron(P, N, K).
+ty_refl_fits(same, _) :- !.
+ty_refl_fits(S, pron(P, N, _)) :-
+    P == 3,
+    ( ty_subject_number(S, N0) -> N0 == N ; true ).
 
 %% A relative clause's gap: its head's, with no words, or a pronoun
 %% between the role's marks (Persian `سگی که پسر آن را می‌بیند').

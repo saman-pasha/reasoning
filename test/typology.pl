@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words, such_words,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words, such_words, reflexives,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2751,6 +2751,26 @@ article_names :-
     findall(R3, typology_read(english, 'The dog sleeps.', R3), Rs3),
     check('no article before a small word is a name\'s', Rs3, [clause(sleep, present, pos, np(dog, sg, def, []), none)]).
 
+%% 1.126.0: a reflexive pronoun, refl(Pronoun), where an object or an
+%% adposition's object stands, agreeing with its clause's subject.
+reflexives :-
+    section('reflexive pronouns'),
+    forall(member(T-Want, [
+               'She expressed herself pithily.'-clause(express, past, pos, pron(3, sg, f), refl(pron(3, sg, f)), [adv(pithily)]),
+               'The boy threw himself into his work.'-clause(throw, past, pos, np(boy, sg, def, []), refl(pron(3, sg, m)), [pp(into, of(pron(3, sg, m), np(work, sg, def, [])))]),
+               'The act is good in itself.'-copula(present, pos, np(act, sg, def, []), adj([ap(good, pp(in, refl(pron(3, sg, n))))])),
+               'He sees herself.'-none,
+               'The boys threw himself into the work.'-none,
+               'Himself sees the dog.'-none ]),
+           ( ( typology_read(english, T, R) -> true ; R = none ),
+             atomic_list_concat(['English, the first reading: ', T], Label),
+             check(Label, R, Want) )),
+    ( once(typology_read(english, 'Found themselves on the wrong road.', R2)) -> true ; R2 = none ),
+    ( R2 = clause(find, past, pos, pron(3, sg, zero), refl(pron(3, pl, _)), [pp(on, np(road, sg, def, [wrong]))]) -> V2 = yes ; V2 = R2 ),
+    check('a reflexive of a subject no words say is no command', V2, yes),
+    ( typology_write(english, clause(see, present, pos, pron(1, pl, _), refl(pron(1, pl, _))), W3) -> true ; W3 = none ),
+    check('a reflexive written', W3, 'We see ourselves.').
+
 %% 1.125.0: such before an indefinite noun phrase, such(NP), and the
 %% adposition such_as.
 such_words :-
@@ -3284,8 +3304,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 5827 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 5 827 sentences read at 1.125.0 within 2 000 000 inferences each are read', R1, yes),
+    ( K >= 5835 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 5 835 sentences read at 1.126.0 within 2 000 000 inferences each are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

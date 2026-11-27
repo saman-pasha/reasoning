@@ -926,6 +926,16 @@ ty_pronoun(english, o, [her], [[3, sg, f]]).
 ty_pronoun(english, o, [it], [[3, sg, n]]).
 ty_pronoun(english, o, [us], [[1, pl]]).
 ty_pronoun(english, o, [them], [[3, pl]]).
+%% The reflexive pronouns (since 1.126.0), where an object or an
+%% adposition's object stands.
+ty_pronoun(english, r, [myself], [[1, sg]]).
+ty_pronoun(english, r, [yourself], [[2, sg]]).
+ty_pronoun(english, r, [yourselves], [[2, pl]]).
+ty_pronoun(english, r, [himself], [[3, sg, m]]).
+ty_pronoun(english, r, [herself], [[3, sg, f]]).
+ty_pronoun(english, r, [itself], [[3, sg, n]]).
+ty_pronoun(english, r, [ourselves], [[1, pl]]).
+ty_pronoun(english, r, [themselves], [[3, pl]]).
 ty_capital(english, i, 'I').
 ty_verb_person(english, any, sg(1), pl, '', '').
 ty_verb_person(english, any, sg(2), pl, '', '').

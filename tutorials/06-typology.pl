@@ -184,6 +184,7 @@ main :-
     every_words,
     long_words,
     such_words,
+    reflexives,
     format("~ndone~n", []).
 
 
@@ -1380,6 +1381,16 @@ such_words :-
     typology_load(english),
     typology_read(english, 'He is such a baby.', IR1),
     must('such a baby', IR1, copula(present, pos, pron(3, sg, m), such(np(baby, sg, indef, [])))).
+
+%% 93. A REFLEXIVE PRONOUN (1.126.0): refl(Pronoun), the template's
+%% ty_pronoun(L, r, Words, Conditions) rows, where an object or an
+%% adposition's object stands, agreeing with its clause's subject.
+reflexives :-
+    typology_load(english),
+    typology_read(english, 'She expressed herself pithily.', IR1),
+    must('herself', IR1, clause(express, past, pos, pron(3, sg, f), refl(pron(3, sg, f)), [adv(pithily)])),
+    ( typology_read(english, 'He sees herself.', _) -> R2 = read ; R2 = refused ),
+    must('and agreeing with its subject', R2, refused).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
