@@ -376,8 +376,22 @@ lg_active(clause(V, pass(T), P, S, O0, Js0), C) :- !,
     ( S == pron(3, sg, zero), A0 == pron(3, sg, zero) -> lg_no(passive(unsaid)) ; true ),
     lg_active(A0, A), maplist(lg_active, Js2, Js),
     ( Js == [] -> C = clause(V, T, P, A, O) ; C = clause(V, T, P, A, O, Js) ).
+%% A NUMBER OR A QUANTIFIER (since 1.107.0) is an indefinite noun phrase
+%% with the word its first modifier, as `several' is an adjective: `The
+%% board has seven members.' is member(a(pl(seven(member)))), ...,
+%% have(the(board), a(pl(seven(member)))); back from Cocolog the first
+%% modifier is the determiner again (lg_count_back/3).
+lg_active(np(N, Num, D, As0), np(N, Num, indef, [D|As])) :- atom(D), lg_count_det(D), !,
+    maplist(lg_active, As0, As).
 lg_active(X, Y) :- compound(X), !, X =.. [F|As], maplist(lg_active, As, Bs), Y =.. [F|Bs].
 lg_active(X, X).
+
+lg_count_det(D) :-
+    memberchk(D, [one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve,
+                  twenty, thirty, forty, fifty, hundred, thousand, many, much, few, most, both]).
+
+lg_count_back(np(N, Num, indef, [D|As]), np(N, Num, D, As)) :- atom(D), lg_count_det(D), !.
+lg_count_back(NP, NP).
 
 lg_pass_inf(O) :-
     nonvar(O), ( O = clause(_, T, _, Z, _) ; O = clause(_, T, _, Z, _, _) ),
@@ -1740,7 +1754,7 @@ lg_ind_map(L, Init, Cs) :-
            ;   A = modified(pp(_, _), pred(P, [const(C)])), memberchk(C-_, CNs)
            ->  lg_class_ok(L, P/1, adjective)
            ;   A = pred(P, [const(C)]), memberchk(C-_, CNs),
-               ( memberchk(C-P, CNs) -> true ; lg_class_ok(L, P/1, adjective) )
+               ( memberchk(C-P, CNs) -> true ; lg_count_det(P) -> true ; lg_class_ok(L, P/1, adjective) )
            )),
     findall(C, member(C-_, CNs), Cs0),
     list_to_set(Cs0, Cs).
@@ -2135,10 +2149,13 @@ lg_indef_np(L, Cs, S, np_pp(HNP, pp(P, XNP))) :-
     lg_pp_term(S), S =.. [P, T0, X], typology_meaning(L, adposition, P), !,
     lg_indef_np(L, Cs, T0, HNP),
     lg_const_np(L, Cs, X, XNP).
-lg_indef_np(L, Cs, of(T, P), of(PNP, np(N, Num, indef, As))) :- !,
+lg_indef_np(L, Cs, of(T, P), of(PNP, NP)) :- !,
     lg_np_of_term(L, T, N, Num, As),
+    lg_count_back(np(N, Num, indef, As), NP),
     lg_const_np(L, Cs, P, PNP).
-lg_indef_np(L, Cs, T, np(N, Num, indef, As)) :- lg_np_of_term(L, Cs, T, N, Num, As).
+lg_indef_np(L, Cs, T, NP) :-
+    lg_np_of_term(L, Cs, T, N, Num, As),
+    lg_count_back(np(N, Num, indef, As), NP).
 
 %% A noun's infinitive in a term (since 1.96.0): an atom of a verb said of
 %% someone, inf(Verb, Object[, Adjuncts]).
@@ -2186,6 +2203,7 @@ lg_np_item_ok(L, n(M)) :- !, typology_meaning(L, noun, M).
 lg_np_item_ok(L, ap(A, P, _, _)) :- !, typology_meaning(L, adjective, A), typology_meaning(L, adposition, P).
 lg_np_item_ok(L, adv(M, A)) :- !, typology_meaning(L, adverb, M), typology_meaning(L, adjective, A).
 lg_np_item_ok(L, A) :- typology_meaning(L, adjective, A).
+lg_np_item_ok(_, A) :- atom(A), lg_count_det(A).
 
 %% An adverb that grades an adjective in a term: an adverb's word that is
 %% no adjective's (`incurably', `very'); one that is (`pretty') is the

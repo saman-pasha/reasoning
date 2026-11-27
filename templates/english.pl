@@ -471,6 +471,33 @@ ty_article(english, this, any, sg, this).
 ty_article(english, this, any, pl, these).
 ty_article(english, that, any, sg, that).
 ty_article(english, that, any, pl, those).
+%% A number and a quantifier (since 1.107.0) are a noun phrase's
+%% determiner as `some' is: `The board has seven members.' is
+%% np(member, pl, seven, []), `Most people like eggs.' np(person, pl,
+%% most, []), `one' of a singular, `much' of a mass noun.
+ty_article(english, one, any, sg, one).
+ty_article(english, two, any, pl, two).
+ty_article(english, three, any, pl, three).
+ty_article(english, four, any, pl, four).
+ty_article(english, five, any, pl, five).
+ty_article(english, six, any, pl, six).
+ty_article(english, seven, any, pl, seven).
+ty_article(english, eight, any, pl, eight).
+ty_article(english, nine, any, pl, nine).
+ty_article(english, ten, any, pl, ten).
+ty_article(english, eleven, any, pl, eleven).
+ty_article(english, twelve, any, pl, twelve).
+ty_article(english, twenty, any, pl, twenty).
+ty_article(english, thirty, any, pl, thirty).
+ty_article(english, forty, any, pl, forty).
+ty_article(english, fifty, any, pl, fifty).
+ty_article(english, hundred, any, pl, hundred).
+ty_article(english, thousand, any, pl, thousand).
+ty_article(english, many, any, pl, many).
+ty_article(english, few, any, pl, few).
+ty_article(english, most, any, pl, most).
+ty_article(english, both, any, pl, both).
+ty_article(english, much, any, sg, much).
 ty_quantifier_pronoun(english, some, thing, [something]).
 ty_quantifier_pronoun(english, some, person, [someone]).
 ty_quantifier_pronoun(english, some, person, [somebody]).
@@ -731,6 +758,29 @@ ty_adverb(english, slowly, slowly).
 ty_adverb(english, today, today).
 ty_adverb(english, here, here).
 ty_adverb(english, very, very).
+%% The adverbs of grammar (since 1.107.0): words ty_closed/2 keeps from the
+%% import, read where an adverb stands, inside or before the verb's words
+%% (`They always raise the audio for commercials.'), before an adjective
+%% (`It was rather cold.') or first (`Then he left.').
+ty_adverb(english, never, never).
+ty_adverb(english, always, always).
+ty_adverb(english, often, often).
+ty_adverb(english, ever, ever).
+ty_adverb(english, again, again).
+ty_adverb(english, already, already).
+ty_adverb(english, almost, almost).
+ty_adverb(english, quite, quite).
+ty_adverb(english, rather, rather).
+ty_adverb(english, even, even).
+ty_adverb(english, still, still).
+ty_adverb(english, just, just).
+ty_adverb(english, also, also).
+ty_adverb(english, perhaps, perhaps).
+ty_adverb(english, too, too).
+ty_adverb(english, so, so).
+ty_adverb(english, then, then).
+ty_adverb(english, only, only).
+ty_adverb(english, yet, yet).
 
 %% Questions: the verb's first word before the subject, a positive verb in
 %% its question form (`does' before the base: `Does the boy see the dog?',

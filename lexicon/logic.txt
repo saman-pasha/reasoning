@@ -431,3 +431,13 @@ From the hill he took a seaward course.	course(a(seaward(course))). seaward(a(se
 Currently they live in Connecticut.	currently(in(live(they), connecticut)).
 Suddenly she felt a sharp pain in her side.	pain(a(sharp(pain))). sharp(a(sharp(pain))). past(suddenly(in(feel(she, a(sharp(pain))), of(side, she)))).
 After an ominous caesura the preacher continued.	caesura(a(ominous(caesura))). ominous(a(ominous(caesura))). past(after(continue(the(preacher)), a(ominous(caesura)))).
+They always raise the audio for commercials.	commercial(a(pl(commercial))). for(always(raise(they, the(audio))), a(pl(commercial))).
+It was rather cold.	past(rather(cold(it))).
+Then he left.	past(then(leave(he))).
+She never keeps her promises.	never(keep(she, of(pl(promise), she))).
+Grandparents often pamper the children.	often(pamper(X, the(pl(child)))) :- grandparent(X).
+They rehearsed the scene again.	past(again(rehearse(they, the(scene)))).
+The board has seven members.	member(a(pl(seven(member)))). seven(a(pl(seven(member)))). have(the(board), a(pl(seven(member)))).
+Three years elapsed.	year(a(pl(three(year)))). three(a(pl(three(year)))). past(elapse(a(pl(three(year))))).
+The cleat had two horns.	horn(a(pl(two(horn)))). two(a(pl(two(horn)))). past(have(the(cleat), a(pl(two(horn))))).
+They reduced the price on many items.	item(a(pl(many(item)))). many(a(pl(many(item)))). past(on(reduce(they, the(price)), a(pl(many(item))))).

@@ -72,6 +72,7 @@ main :-
     pp_phrase,
     adjunct_first,
     perfect_passive,
+    count_words,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -553,6 +554,16 @@ perfect_passive :-
     typology_load(german),
     logic_translate(german, cocolog, 'Das Mädchen ist vom Jungen gesehen worden.', C1),
     must('the active perfect', C1, 'perfect(see(the(boy), the(girl))).\n').
+
+%% 43. A NUMBER OR A QUANTIFIER (1.107.0) is an indefinite noun phrase
+%% with the word its first modifier, as an adjective is; back into
+%% English the word is the determiner again.
+count_words :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'Two dogs slept.', C1),
+    must('the group', C1, 'dog(a(pl(two(dog)))).\ntwo(a(pl(two(dog)))).\npast(is_sleep(a(pl(two(dog))))).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and into English', E1, 'Two dogs slept.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

@@ -941,7 +941,12 @@ ty_values(agreement, [sg, pl, sg(1), sg(2), pl(1), pl(2)]).
 ty_values(pronoun_role, [s, o, j]).
 ty_values(person, [1, 2, 3]).
 ty_values(polarity, [pos, neg]).
-ty_values(definiteness, [def, indef, which, every, each, all, some, no, any, this, that, mass]).
+%% Since 1.107.0 a number and a quantifier of English are determiners too
+%% (`seven members' np(member, pl, seven, []), `most people').
+ty_values(definiteness, [def, indef, which, every, each, all, some, no, any, this, that, mass,
+                         one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve,
+                         twenty, thirty, forty, fifty, hundred, thousand,
+                         many, much, few, most, both]).
 %% A quantifier pronoun's quantifier and kind (since 1.63.0).
 ty_values(quantifier, [some, every, no, any, this, that]).
 ty_values(quantifier_kind, [thing, person]).

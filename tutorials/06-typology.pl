@@ -167,6 +167,7 @@ main :-
     pp_phrase,
     adjunct_first,
     perfect_passive,
+    grammar_words,
     format("~ndone~n", []).
 
 
@@ -1211,6 +1212,16 @@ perfect_passive :-
     must('German, the two last words at the end', W2, 'Das Mädchen ist vom Jungen gesehen worden.'),
     typology_write(german, clause(see, present, pos, np(girl, sg, def, []), rel(np(dog, sg, def, []), clause(see, pass(perfect), pos, gap, none))), W3),
     must('and in a relative clause', W3, 'Das Mädchen sieht den Hund, der gesehen worden ist.').
+
+%% 76. WORDS OF GRAMMAR AS TABLE ROWS (1.107.0): adverbs the import never
+%% takes (`always', `rather') read where any adverb stands, and a number
+%% or a quantifier is a noun phrase's determiner, as `some' is.
+grammar_words :-
+    typology_load(english),
+    typology_read(english, 'The dog always sleeps.', IR1),
+    must('an adverb of grammar', IR1, clause(sleep, present, pos, np(dog, sg, def, []), none, [adv(always)])),
+    typology_read(english, 'The board has seven members.', IR2),
+    must('a number', IR2, clause(have, present, pos, np(board, sg, def, []), np(member, pl, seven, []))).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
