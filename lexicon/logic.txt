@@ -600,3 +600,8 @@ Was stupid from fatigue.	past(from(stupid(someone), fatigue)).
 The islands are of strategic importance.	of(the(pl(island)), strategic(importance)).
 The main doors were of solid glass.	past(of(the(pl(main(door))), solid(glass))).
 Was hot for her.	past(for(hot(someone), she)).
+A Pyrrhic victory.	victory(a(pyrrhic(victory))). pyrrhic(a(pyrrhic(victory))).
+The Julian calendar.	calendar(the(julian(calendar))). julian(the(julian(calendar))).
+A lapsed Catholic.	catholic(a(lapsed(catholic))). lapsed(a(lapsed(catholic))).
+The Revolutionary era.	era(the(revolutionary(era))). revolutionary(the(revolutionary(era))).
+The economic growth overjoyed the German industry.	past(overjoy(the(economic(growth)), the(german(industry)))).

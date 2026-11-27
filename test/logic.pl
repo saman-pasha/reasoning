@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -262,11 +262,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 571),
-    ( R >= 559 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 559 right', VR, ok),
-    ( K >= 565 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 565 kept', VK, ok).
+    check('the second measure: its sentences', N, 576),
+    ( R >= 564 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 564 right', VR, ok),
+    ( K >= 570 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 570 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -1187,6 +1187,19 @@ reflexives :-
 
 %% 1.129.0: a dash is its two sentences' items; a joined group is
 %% the(group(and(A, B))); `of' after a verb an adposition's predicate.
+%% 1.133.0: a capital word read in small letters is its word's predicate.
+small_words :-
+    section('a capital word in small letters'),
+    typology_load(english),
+    forall(member(S-Want-Back, [
+               'The Confederate army was a vast grey.'-'past(grey(the(confederate(army)))).\npast(vast(the(confederate(army)))).\n'-'The confederate army was a grey. The confederate army was vast.',
+               'An Englishman would interrupt a war.'-'englishman(a(englishman)).\nwar(a(war)).\nconditional(interrupt(a(englishman), a(war))).\n'-'An englishman would interrupt a war.' ]),
+           ( ( logic_translate(english, cocolog, S, C) -> true ; C = none ),
+             check(S, C, Want),
+             ( C \== none, logic_translate(cocolog, english, C, E) -> true ; E = none ),
+             atomic_list_concat(['and back: ', S], Label),
+             check(Label, E, Back) )).
+
 %% 1.132.0: a copula with no subject is said of someone; `of' first.
 unsaid_copula :-
     section('a copula with no subject, of first'),

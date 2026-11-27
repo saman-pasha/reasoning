@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2758,6 +2758,28 @@ article_names :-
 %% adposition and as an object, its adjectives joined, an emphatic subject
 %% of a verb that asks an animate one, `of' after a verb of the
 %% of_adjunct list (with no object) or of the of_object list.
+%% 1.133.0: a capital word inside a sentence is read in small letters
+%% where nothing else reads.
+small_words :-
+    section('a capital word inside a sentence in small letters, the third chance'),
+    forall(member(T-Want, [
+               'A Pyrrhic victory.'-phrase(np(victory, sg, indef, [pyrrhic])),
+               'The Fabian society.'-phrase(np(society, sg, def, [fabian])),
+               'The Julian calendar.'-phrase(np(calendar, sg, def, [julian])),
+               'A Stoic achieves happiness.'-clause(achieve, present, pos, np(stoic, sg, indef, []), np(happiness, sg, mass, [])),
+               'He met Frank.'-clause(meet, past, pos, pron(3, sg, m), name('Frank')),
+               'The Moroccan guestworker slept.'-clause(sleep, past, pos, np(guestworker, sg, def, [moroccan]), none) ]),
+           ( ( once(typology_read(english, T, R)) -> true ; R = none ),
+             ( R = Want -> V = yes ; V = R ),
+             atomic_list_concat(['English, the first reading: ', T], Label),
+             check(Label, V, yes) )),
+    ( once(typology_read(english, 'A COD parcel.', R2)) -> true ; R2 = none ),
+    check('a word of capitals alone is no small word', R2, none),
+    ( once(typology_read(english, 'The John sleeps.', R3)) -> true ; R3 = none ),
+    check('a name after an article before a verb is none', R3, none),
+    ( typology_write(english, phrase(np(victory, sg, indef, [pyrrhic])), W) -> true ; W = none ),
+    check('written in small letters', W, 'A pyrrhic victory.').
+
 %% 1.132.0: a copula with no subject, `of' first in an adposition phrase
 %% alone and in a copula's predicate, an infinitive alone.
 unsaid_copula :-
@@ -3454,8 +3476,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 6200 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 6 200 sentences read at 1.132.0 within 2 000 000 inferences each are read', R1, yes),
+    ( K >= 6237 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 6 237 sentences read at 1.133.0 within 2 000 000 inferences each are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

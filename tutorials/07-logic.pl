@@ -95,6 +95,7 @@ main :-
     particles,
     grading_words,
     unsaid_copula,
+    small_words,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -798,6 +799,14 @@ unsaid_copula :-
     must('and back', E1, 'Someone was stupid from fatigue.'),
     logic_translate(english, cocolog, 'The ceremony was of short duration.', C2),
     must('of short duration', C2, 'past(of(the(ceremony), short(duration))).\n').
+
+
+%% 66. A CAPITAL WORD READ IN SMALL LETTERS (1.133.0) is its word's
+%% predicate, as any noun's or adjective's.
+small_words :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'The economic growth overjoyed the German industry.', C1),
+    must('the german industry', C1, 'past(overjoy(the(economic(growth)), the(german(industry)))).\n').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

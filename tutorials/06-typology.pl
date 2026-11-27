@@ -191,6 +191,7 @@ main :-
     particles,
     grading_words,
     unsaid_copula,
+    small_words,
     format("~ndone~n", []).
 
 
@@ -1506,6 +1507,21 @@ unsaid_copula :-
     must('was of short duration', IR3, copula(past, pos, np(ceremony, sg, def, []), pp(of, np(duration, sg, mass, [short])))),
     typology_read(english, 'To face a problem squarely.', IR4),
     must('to face a problem', IR4, phrase(inf(face, np(problem, sg, indef, []), [adv(squarely)]))).
+
+
+%% 102. A CAPITAL WORD INSIDE A SENTENCE (1.133.0) is a noun's or an
+%% adjective's word in small letters, where the words read nothing as
+%% written: a third chance, after the capital rows kept. Not a word of
+%% capitals alone, nor a name's word but after an article. The IR has the
+%% word in small letters, so it is written back so.
+small_words :-
+    typology_load(english),
+    typology_read(english, 'A Pyrrhic victory.', IR1),
+    must('a pyrrhic victory', IR1, phrase(np(victory, sg, indef, [pyrrhic]))),
+    typology_read(english, 'The Julian calendar.', IR2),
+    must('the julian calendar', IR2, phrase(np(calendar, sg, def, [julian]))),
+    typology_write(english, IR1, W1),
+    must('written', W1, 'A pyrrhic victory.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

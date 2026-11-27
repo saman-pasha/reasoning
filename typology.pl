@@ -2248,6 +2248,9 @@ ty_read_one(L, Text, IR, Topics) :-
     *-> true
     ;   ty_surface_kept(Written, Kept), Kept \== Lowered,
         ty_read_words(L, Text, Written, Kept, Topics, Mood, IR1)
+    *-> true
+    ;   ty_surface_small(L, Lowered, Small), Small \== Lowered,
+        ty_read_words(L, Text, Written, Small, Topics, Mood, IR1)
     ),
     ty_ir_out(IR1, IR).
 
@@ -2295,6 +2298,38 @@ ty_all_sg_np(NP) :-
 ty_surface_kept([FirstA|Rest1], [First|Rest]) :-
     downcase_atom(FirstA, First),
     maplist(ty_kept_capital, Rest1, Rest).
+
+%% A CAPITAL WORD INSIDE A SENTENCE (since 1.133.0) is a noun's or an
+%% adjective's word in small letters, where the words as written read
+%% nothing and nor do they with the capital rows kept: `A Pyrrhic
+%% victory.', `A gorgeous Victorian gown.' (a word WordNet writes with a
+%% capital and in small letters too, which no capital row lowers). Not a word of capitals alone (`A COD parcel.'),
+%% nor one a name's row has, but after an article and before a noun's or
+%% an adjective's word that is no verb's, where no name stands (`The
+%% Julian calendar.'; `The John sleeps.' and `The Princess was gorgeously
+%% dressed.' stay none). A third chance, so it reads nothing that read
+%% before, and costs a text that reads nothing.
+ty_surface_small(L, [First|Rest0], [First|Rest]) :-
+    ty_small_words(Rest0, First, L, Rest).
+
+ty_small_words([], _, _, []).
+ty_small_words([W0|Ws0], Prev, L, [W|Ws]) :-
+    ty_small_word(L, Prev, W0, Ws0, W),
+    ty_small_words(Ws0, W0, L, Ws).
+
+ty_small_word(L, Prev, W0, Next, W) :-
+    (   atom(W0), sub_atom(W0, 0, 1, _, C), char_type(C, upper),
+        sub_atom(W0, 1, _, 0, T), T \== '', \+ ( sub_atom(T, _, 1, _, C2), char_type(C2, upper) ),
+        (   \+ ty_name(L, _, W0, _, _) -> true
+        ;   atom(Prev), once(ty_article(L, _, _, _, Prev)),
+            Next = [N1|_], atom(N1), \+ ty_word_class(L, verb, N1),
+            ( ty_word_class(L, noun, N1) -> true ; ty_word_class(L, adjective, N1) )
+        ),
+        downcase_atom(W0, Wl),
+        ( ty_word_class(L, noun, Wl) -> true ; ty_word_class(L, adjective, Wl) )
+    ->  W = Wl
+    ;   W = W0
+    ).
 
 ty_kept_capital(W, W0) :-
     (   atom(W), ty_capital(_, W1, W), once(ty_adjective(_, _, _, _, W1)) -> W0 = W
