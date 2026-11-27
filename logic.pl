@@ -558,6 +558,7 @@ lg_phrase_aps(np(N, Num, D, As0), np(N, Num, D, As), As0, As, Ms) :- lg_has_ap(A
 lg_phrase_aps(X, X, As, As, []).
 lg_phrase_noun(of(_, NP), N, As) :- nonvar(NP), lg_phrase_noun(NP, N, As).
 lg_phrase_noun(np_pp(H, _), N, As) :- nonvar(H), lg_phrase_noun(H, N, As).
+lg_phrase_noun(rel(NP, _), N, As) :- nonvar(NP), lg_phrase_noun(NP, N, As).
 lg_phrase_noun(all(NP), N, As) :- nonvar(NP), lg_phrase_noun(NP, N, As).
 
 %% An atom in a tense, its when clause round it or not.
@@ -630,9 +631,12 @@ lg_generic_rules(Inds, Atoms, T, Conds, Items) :-
     ( member('$ind'(_, S), Inds), lg_pp_term(S) -> lg_no(adposition(generic)) ; true ),
     lg_rules(Atoms, T, Conds, Items).
 
+%% A conclusion of no variable is a fact (since 1.136.0): a constant's
+%% relative clause is said of the constant whatever the rule's variable is
+%% (`Every boy sees the man who sleeps.' says is_sleep(the(man))).
 lg_rules(Atoms, T, Conds, Items) :-
     ( lg_has_obj(Atoms) -> lg_no(object(generic)) ; true ),
-    findall(R, ( member(A, Atoms), lg_rule(A, T, Conds, R) ), Items).
+    findall(R, ( member(A, Atoms), ( A = '$rel'(A1) -> R = fact(A1) ; ground(A) -> R = fact(A) ; lg_rule(A, T, Conds, R) ) ), Items).
 
 %% A rule whose conclusion is its only condition says nothing new; a rule
 %% with no condition is a fact of a variable (`Everything is mortal.').
@@ -796,6 +800,7 @@ lg_clause_polarity(clause(_, _, P, _, _, _), P).
 %% boy sees a dog.': each boy may see another dog).
 lg_split_objs([], [], []).
 lg_split_objs([O|As], Ps, [O|Os]) :- O = '$obj'(_, _, _, _), !, lg_split_objs(As, Ps, Os).
+lg_split_objs([O|As], Ps, [O|Os]) :- O = '$rel'(_), !, lg_split_objs(As, Ps, Os).
 lg_split_objs([A|As], [A|Ps], Os) :- lg_split_objs(As, Ps, Os).
 
 %% An object's individual is named apart from the ones its sentence named
@@ -812,12 +817,14 @@ lg_obj_facts(['$obj'(S, V, R, Cs)|As], Used, Ps, Fs) :- !,
     V = const(R),
     lg_obj_facts(As, Used1, Ps, Fs0),
     append(Cs, Fs0, Fs).
+lg_obj_facts(['$rel'(A)|As], Used, Ps, [A|Fs]) :- !, lg_obj_facts(As, Used, Ps, Fs).
 lg_obj_facts([A|As], Used, [A|Ps], Fs) :- lg_obj_facts(As, Used, Ps, Fs).
 
 lg_ind_free(S, Used, K0, K) :-
     (   member(S1-K0, Used), S1 =@= S -> K1 is K0 + 1, lg_ind_free(S, Used, K1, K) ; K = K0 ).
 
 lg_obj_conds([], [], []).
+lg_obj_conds(['$rel'(A)|As], Ps, [A|Fs]) :- !, lg_obj_conds(As, Ps, Fs).
 lg_obj_conds(['$obj'(_, V, R, Cs)|As], Ps, Fs) :- !,
     R = V,
     lg_obj_conds(As, Ps, Fs0),
@@ -1156,6 +1163,29 @@ lg_entity(all(NP), ent(const(all(C)), [], const), Ms) :- !,
 lg_entity(only(NP), ent(const(only(C)), [], const), Ms) :- !,
     lg_entity(NP, ent(T, Conds, Q), Ms),
     ( Q == const, T = const(C), Conds == [] -> true ; lg_no(determiner(only)) ).
+%% A NOUN PHRASE WITH A RELATIVE CLAUSE (since 1.136.0) is its head's
+%% entity, and the relative clause's atoms are said of the head's term,
+%% the gap that term (lg_rel_atoms/3): of a constant or an individual its
+%% facts (`The horse that won the race is a good stayer.' says
+%% past(win(the(horse), the(race))); `Parasitic vines that strangle the
+%% trees.' strangle(a(pl(parasitic(vine))), the(pl(tree)))), of a rule's
+%% variable its conditions (`Every man who is wise is happy.' happy(X) :-
+%% man(X), wise(X)), of a question's variable the question's.
+lg_entity(rel(NP, Cl), ent(T, Conds, Q), Ms) :- !,
+    lg_entity(NP, ent(T, Conds0, Q), Ms0),
+    lg_rel_atoms(Cl, T, RAs),
+    lg_split_objs(RAs, RPlain, RObjs),
+    (   Q == const
+    ->  Conds = Conds0, maplist(lg_rel_mark, RPlain, RMarks), append([Ms0, RMarks, RObjs], Ms)
+    ;   append(Conds0, RPlain, Conds), append(Ms0, RObjs, Ms)
+    ).
+
+%% A constant's relative clause's atom travels as '$rel'(Atom), beside the
+%% marks of the individuals (lg_split_objs/3), so no tense and no adjunct
+%% of the clause round it is said of it (`Our neighbor was very kind about
+%% the window our son broke.' says past(break(of(son, we), the(window))),
+%% once); a statement's fact, a question's condition.
+lg_rel_mark(A, '$rel'(A)).
 lg_entity(or(Xs), ent(const(T), [], const), Ms) :- is_list(Xs), Xs = [_, _|_], !,
     lg_or_items(Xs, Cs, Ms),
     ( Cs \== none -> T =.. [or|Cs] ; lg_no(shape(or(Xs))) ).
@@ -1196,6 +1226,14 @@ lg_entity(X, _, _) :- lg_no(shape(X)).
 %% `Vultures usually feed on carrion or roadkill.' says on(usually(feed(A)),
 %% or(carrion, roadkill)), `John or Mary sleeps.' is_sleep(or(john, mary));
 %% an indefinite item would be said to be there, which `or' never says.
+%% A relative clause's gap (since 1.136.0) is its head's term, as it is:
+%% a constant, or a variable an individual or a rule's names.
+lg_arg(K, X, T, Raw, []) :-
+    nonvar(X), X = '$gapterm'(T), !,
+    (   nonvar(T), T = const(Raw) -> true
+    ;   memberchk(K, [possessor, adposition]) -> Why =.. [relative, K], lg_no(Why)
+    ;   Raw = T
+    ).
 lg_arg(K, X, const(T), T, Ms) :-
     nonvar(X), X = and(Xs), is_list(Xs), Xs = [_, _|_], !,
     lg_args_joined(Xs, K, Raws, Ms),
@@ -1210,6 +1248,31 @@ lg_arg(K, X, V, Raw, Ms) :-
     ->  V = V0, Ms = ['$obj'(Shape, V, Raw, Conds)|Rest]
     ;   Why =.. [K, Q], lg_no(Why)
     ).
+
+%% The atoms of a relative clause, its gap the head's term T: the gap the
+%% clause's subject, or (where the subject is a constant) its object, an
+%% adjunct's or a predicate's noun phrase. A relative clause inside it
+%% keeps its own gap.
+lg_rel_atoms(Cl0, T, Atoms) :-
+    lg_rel_fill(Cl0, T, Cl, 0, N),
+    ( N >= 1 -> true ; lg_no(relative(gap)) ),
+    lg_parts(Cl, S, Pred),
+    (   nonvar(S), S = '$gapterm'(T1)
+    ->  TS = T1, SMs = []
+    ;   lg_entity(S, ent(TS, CS, QS), SMs),
+        ( QS == const, CS == [] -> true ; Why =.. [relative, QS], lg_no(Why) )
+    ),
+    lg_atoms(Cl, TS, Pred, Atoms0),
+    append(Atoms0, SMs, Atoms).
+
+lg_rel_fill(X, _, X, N, N) :- var(X), !.
+lg_rel_fill(gap, T, '$gapterm'(T), N0, N) :- !, N is N0 + 1.
+lg_rel_fill(rel(H, C), _, rel(H, C), N, N) :- !.
+lg_rel_fill(X, T, Y, N0, N) :- compound(X), !,
+    X =.. [F|As], foldl(lg_rel_fill_arg(T), As, Bs, N0, N), Y =.. [F|Bs].
+lg_rel_fill(X, _, X, N, N).
+
+lg_rel_fill_arg(T, A, B, N0, N) :- lg_rel_fill(A, T, B, N0, N).
 
 lg_or_items([], [], []).
 lg_or_items([X|Xs], Cs, Ms) :-

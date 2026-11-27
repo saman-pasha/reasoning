@@ -98,6 +98,7 @@ main :-
     small_words,
     but_words,
     joined_terms,
+    relatives,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -834,6 +835,17 @@ joined_terms :-
     must('and back', E1, 'The city pulsated with music and excitement.'),
     logic_translate(english, cocolog, 'John or Mary sleeps.', C2),
     must('john or mary', C2, 'is_sleep(or(john, mary)).\n').
+
+
+%% 69. A NOUN PHRASE WITH A RELATIVE CLAUSE (1.136.0) is its head's entity,
+%% and the relative clause's atoms are said of the head's term, the gap
+%% that term: a constant's facts, an individual's, or a rule's conditions.
+relatives :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'The horse that won the race is a good stayer.', C1),
+    must('the horse that won the race', C1, 'past(win(the(horse), the(race))).\nstayer(the(horse)).\ngood(the(horse)).\n'),
+    logic_translate(english, cocolog, 'Every man who is wise is happy.', C2),
+    must('every man who is wise', C2, 'happy(A) :-\n    man(A),\n    wise(A).\n').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

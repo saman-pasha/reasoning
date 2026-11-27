@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words, but_words, joined_terms]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words, but_words, joined_terms, relatives]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -262,11 +262,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 586),
-    ( R >= 574 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 574 right', VR, ok),
-    ( K >= 580 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 580 kept', VK, ok).
+    check('the second measure: its sentences', N, 591),
+    ( R >= 579 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 579 right', VR, ok),
+    ( K >= 585 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 585 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -661,7 +661,7 @@ phrases :-
     ( cocolog_read('quickly(run(the(dog))).', U5) -> true ; U5 = none ),
     check('... and stands on a verb\'s', U5,
           utterance(assertion, [fact(modified(adv(quickly), pred(run, [const(the(dog))])))])),
-    forall(member(T6-Want6, ['Roads that lead therefrom.'-phrase(rel), 'Him.'-phrase(pron), 'Some dogs.'-phrase(some)]),
+    forall(member(T6-Want6, ['Him.'-phrase(pron), 'Some dogs.'-phrase(some)]),
            ( once(typology_read(english, T6, IR6)),
              ( logic_from_ir(IR6, _) -> W6 = read ; logic_why(IR6, W6) ),
              atomic_list_concat(['no form yet: ', T6], L6),
@@ -1184,6 +1184,32 @@ reflexives :-
     once(typology_read(english, 'Perfectly poised and sure of himself.', IR)),
     ( logic_from_ir(IR, _) -> W = read ; logic_why(IR, W) ),
     check('a reflexive with no subject has no logic form', W, pronoun(reflexive)).
+
+%% 1.136.0: a noun phrase with a relative clause is its head's entity,
+%% the clause's atoms said of the head's term: a constant's or an
+%% individual's facts, a rule's or a question's conditions; once in its
+%% own tense; a rule's conclusion of no variable a fact.
+relatives :-
+    section('a noun phrase with a relative clause'),
+    typology_load(english),
+    forall(member(S-Want-Back, [
+               'The horse that won the race is a good stayer.'-'past(win(the(horse), the(race))).\nstayer(the(horse)).\ngood(the(horse)).\n'-'The horse won the race. The horse is a stayer. The horse is good.',
+               'Parasitic vines that strangle the trees.'-'vine(a(pl(parasitic(vine)))).\nparasitic(a(pl(parasitic(vine)))).\nstrangle(a(pl(parasitic(vine))), the(pl(tree))).\n'-'Parasitic vines strangle the trees.',
+               'Every man who is wise is happy.'-'happy(A) :-\n    man(A),\n    wise(A).\n'-'A man is happy if they are wise.',
+               'Every boy sees the man who sleeps.'-'see(A, the(man)) :-\n    boy(A).\nis_sleep(the(man)).\n'-'Every boy sees the man. The man sleeps.',
+               'Our neighbor was very kind about the window our son broke.'-'past(break(of(son, we), the(window))).\npast(about(very(kind(of(neighbor, we))), the(window))).\n'-'Our son broke the window. Our neighbor was very kind about the window.',
+               'A favor that cannot be paid back.'-'favor(a(favor)).\nis_not(can(back(pay(someone, a(favor))))).\n'-'Someone cannot pay a favor back.',
+               'This merchandise is returnable if you save the receipt.'-'returnable(this(merchandise)) :-\n    save(you, the(receipt)).\n'-'This merchandise is returnable if you save the receipt.' ]),
+           ( ( logic_translate(english, cocolog, S, C) -> true ; C = none ),
+             check(S, C, Want),
+             ( C \== none, logic_translate(cocolog, english, C, E) -> true ; E = none ),
+             atomic_list_concat(['and back: ', S], Label),
+             check(Label, E, Back) )),
+    ( logic_translate(english, cocolog, 'Is the man who sleeps happy?', Q) -> true ; Q = none ),
+    check('a question: the relative clause a condition', Q, '?- happy(the(man)), is_sleep(the(man)).\n'),
+    ( once(typology_read(english, 'A man whose name is permanently stamped on our maps.', IR)) -> true ; IR = none ),
+    ( logic_from_ir(IR, _) -> W = read ; logic_why(IR, W) ),
+    check('a gap that is a possessor has no logic form', W, relative(possessor)).
 
 %% 1.135.0: noun phrases joined where a term stands are one constant,
 %% and(T1, ..., Tn), or(T1, ..., Tn) of constants alone; a joined subject

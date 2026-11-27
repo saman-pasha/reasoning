@@ -615,3 +615,8 @@ He suffered from fatigue and emotional tension.	past(from(suffer(he), and(fatigu
 The area was poor in timber and coal.	past(in(poor(the(area)), and(timber, coal))).
 Heckle hemp or flax.	imperative(heckle(you, or(hemp, flax))).
 Water or electricity came on again after the earthquake.	past(after(again(come_on(or(water, electricity))), the(earthquake))).
+The horse that won the race is a good stayer.	past(win(the(horse), the(race))). stayer(the(horse)). good(the(horse)).
+Parasitic vines that strangle the trees.	vine(a(pl(parasitic(vine)))). parasitic(a(pl(parasitic(vine)))). strangle(a(pl(parasitic(vine))), the(pl(tree))).
+Terrorist acts that shocked the civilized world.	act(a(pl(terrorist(act)))). terrorist(a(pl(terrorist(act)))). past(shock(a(pl(terrorist(act))), the(civilized(world)))).
+A favor that cannot be paid back.	favor(a(favor)). is_not(can(back(pay(someone, a(favor))))).
+Our neighbor was very kind about the window our son broke.	past(break(of(son, we), the(window))). past(about(very(kind(of(neighbor, we))), the(window))).
