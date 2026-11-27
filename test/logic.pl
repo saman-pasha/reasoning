@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -262,11 +262,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 556),
-    ( R >= 544 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 544 right', VR, ok),
-    ( K >= 550 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 550 kept', VK, ok).
+    check('the second measure: its sentences', N, 561),
+    ( R >= 549 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 549 right', VR, ok),
+    ( K >= 555 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 555 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -1187,6 +1187,21 @@ reflexives :-
 
 %% 1.129.0: a dash is its two sentences' items; a joined group is
 %% the(group(and(A, B))); `of' after a verb an adposition's predicate.
+%% 1.130.0: a particle as an adverb or an adposition, a plural first.
+particles :-
+    section('particles as adverbs and adpositions, plurals first'),
+    typology_load(english),
+    forall(member(S-Want-Back, [
+               'The music surged up.'-'past(up(surge(the(music)))).\n'-'The music surged up.',
+               'Smoke billowed up into the sky.'-'past(into(up(billow(smoke)), the(sky))).\n'-'Smoke billowed up into the sky.',
+               'The veterans paraded down the street.'-'past(down(parade(the(pl(veteran))), the(street))).\n'-'The veterans paraded down the street.',
+               'She awoke in the arms of her cruel undoer.'-'past(in(awake(she), of(pl(arm), of(cruel(undoer), she)))).\n'-'She awoke in her cruel undoer\'s arms.' ]),
+           ( ( logic_translate(english, cocolog, S, C) -> true ; C = none ),
+             check(S, C, Want),
+             ( C \== none, logic_translate(cocolog, english, C, E) -> true ; E = none ),
+             atomic_list_concat(['and back: ', S], Label),
+             check(Label, E, Back) )).
+
 dash_words :-
     section('a dash, joined groups, of after a verb'),
     typology_load(english),

@@ -382,7 +382,14 @@ ty_conjunct_marks(xx).
 %%     ty_noun_list(L, Kind, Base)     the nouns of lexicon/Base.txt, or of
 %%                                     the list Base, are of Kind (since
 %%                                     1.96.0; infinitive: one an infinitive
-%%                                     may follow, `a bid to gain attention')
+%%                                     may follow, `a bid to gain attention';
+%%                                     since 1.130.0 singular_first: a
+%%                                     noun's own word read as itself
+%%                                     before it is read as another noun's
+%%                                     plural, `means', `stairs'; a
+%%                                     language with the row reads every
+%%                                     other such word as the plural
+%%                                     first)
 %% ty_noun_list(xx, Kind, Base).
 %%   e.g. ty_noun_list(english, infinitive, [ability, appeal, arrangement, attempt, bid, campaign, chance, compulsion, ...]).
 

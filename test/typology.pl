@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2757,6 +2757,34 @@ article_names :-
 %% adposition and as an object, its adjectives joined, an emphatic subject
 %% of a verb that asks an animate one, `of' after a verb of the
 %% of_adjunct list (with no object) or of the of_object list.
+%% 1.130.0: up, down, out and off as an adverb or an adposition where the
+%% verb has no phrasal row with them; all before a singular noun; a word
+%% that is also another noun's plural read as the plural first.
+particles :-
+    section('particles as adverbs and adpositions, all before a singular noun, plurals first'),
+    forall(member(T-Want, [
+               'The music surged up.'-clause(surge, past, pos, np(music, sg, def, []), none, [adv(up)]),
+               'The engine chugged down the street.'-clause(chug, past, pos, np(engine, sg, def, []), none, [pp(down, np(street, sg, def, []))]),
+               'He banked the shot off the backboard.'-clause(bank, past, pos, pron(3, sg, m), np(shot, sg, def, []), [pp(off, np(backboard, sg, def, []))]),
+               'He gave up.'-clause(give_up, past, pos, pron(3, sg, m), none),
+               'All due respect.'-phrase(np(respect, sg, all, [due])),
+               'All hands on deck.'-phrase(np_pp(np(hand, pl, all, []), pp(on, np(deck, sg, mass, [])))),
+               'The means of production.'-phrase(of(np(production, sg, mass, []), np(means, sg, def, []))) ]),
+           ( ( once(typology_read(english, T, R)) -> true ; R = none ),
+             ( R = Want -> V = yes ; V = R ),
+             atomic_list_concat(['English, the first reading: ', T], Label),
+             check(Label, V, yes) )),
+    forall(member(T2, [ 'The reviews were all positive.', 'He painted all day in the garden.',
+                        'The stock market is down today.', 'Found himself loaded down with responsibilities.' ]),
+           ( ( once(typology_read(english, T2, R2)) -> true ; R2 = none ),
+             atomic_list_concat(['English, no reading: ', T2], Label2),
+             check(Label2, R2, none) )),
+    forall(member(IR-Want2, [ clause(surge, past, pos, np(music, sg, def, []), none, [adv(up)])-'The music surged up.',
+                              phrase(np(respect, sg, all, [due]))-'All due respect.',
+                              phrase(np_pp(np(hand, pl, all, []), pp(on, np(deck, sg, mass, []))))-'All hands on deck.' ]),
+           ( ( typology_write(english, IR, W) -> true ; W = none ),
+             check('written', W, Want2) )).
+
 dash_words :-
     section('a dash, unknown hyphenated words, more groups, of after a verb'),
     forall(member(T-Want, [
@@ -3376,8 +3404,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 6127 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 6 127 sentences read at 1.129.0 within 2 000 000 inferences each are read', R1, yes),
+    ( K >= 6147 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 6 147 sentences read at 1.130.0 within 2 000 000 inferences each are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

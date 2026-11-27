@@ -135,7 +135,14 @@
 %%     ty_noun_list(L, Kind, Base)     the nouns of lexicon/Base.txt, or of
 %%                                     the list Base, are of Kind (since
 %%                                     1.96.0; infinitive: one an infinitive
-%%                                     may follow, `a bid to gain attention')
+%%                                     may follow, `a bid to gain attention';
+%%                                     since 1.130.0 singular_first: a
+%%                                     noun's own word read as itself
+%%                                     before it is read as another noun's
+%%                                     plural, `means', `stairs'; a
+%%                                     language with the row reads every
+%%                                     other such word as the plural
+%%                                     first)
 %%     ty_purpose_mark(L, Words)       the words that may stand before an
 %%                                     infinitive of purpose (since 1.96.0:
 %%                                     English `in order'; since 1.97.0
@@ -2242,11 +2249,37 @@ ty_read_words(L, Text, Written, Surface0, Topics, Mood, IR1) :-
     ty_first_written(L, Written, Surface0, Surface),
     ty_live_topics(L, Text, Surface),
     (   Mood == question
-    ->  findall(C-IR0, ( ty_unshort(L, Surface, Surface1), ty_read_bases(L, Surface1, Topics, Mood, IR0, C) ), All),
+    ->  findall(C-IR0, ( ty_unshort(L, Surface, Surface1), ty_read_bases(L, Surface1, Topics, Mood, IR0, C), ty_all_sg_fits(L, Surface1, IR0) ), All),
         ty_least(All, IRs),
         member(IR1, IRs)
     ;   ty_unshort(L, Surface, Surface1),
-        ty_read_bases(L, Surface1, Topics, Mood, IR1, _)
+        ty_read_bases(L, Surface1, Topics, Mood, IR1, _),
+        ty_all_sg_fits(L, Surface1, IR1)
+    ).
+
+%% `ALL' BEFORE A SINGULAR NOUN (since 1.130.0, English's ty_article(english,
+%% all, any, sg, all) row: `All due respect.', `at all cost') is no
+%% verb's object and no copula's predicate: `He painted all day.' and
+%% `The reviews were all positive.' are none; and no noun of a person or
+%% an animal (`All dog swims.'). Asked of the reading where the words hold
+%% `all'.
+ty_all_sg_fits(L, Words, IR) :-
+    (   memberchk(all, Words) -> \+ ty_all_sg_bad(L, IR) ; true ).
+
+ty_all_sg_bad(L, T) :-
+    compound(T),
+    (   ty_all_sg_at(L, T) -> true ; arg(_, T, A), ty_all_sg_bad(L, A) ).
+
+ty_all_sg_at(_, clause(_, _, _, _, O)) :- ty_all_sg_np(O).
+ty_all_sg_at(_, clause(_, _, _, _, O, _)) :- ty_all_sg_np(O).
+ty_all_sg_at(_, copula(_, _, _, P)) :- ty_all_sg_np(P).
+ty_all_sg_at(L, np(M, sg, all, _)) :-
+    atom(M), once(ty_noun(L, M, _, A, _, _)), memberchk(A, [person, animate]).
+
+ty_all_sg_np(NP) :-
+    nonvar(NP),
+    (   NP = np(_, sg, all, _) -> true
+    ;   NP = np_pp(H, _), ty_all_sg_np(H)
     ).
 
 %% A WORD A CAPITAL ROW LOWERS (since 1.92.0) that is an adjective's is
@@ -3735,7 +3768,7 @@ ty_ask_part(ow, L, clause(_, _, _, _, O, _), _, _) --> { nonvar(O), O = wh(M) },
 ty_ask_part(op, L, clause(V, _, _, _, _, _), _, comp(Ws)) -->
     { ty_complement_words(L, V, Ws) },
     ty_tokens(Ws).
-ty_ask_part(j, L, clause(_, _, _, _, _, Js), _, _) --> ty_adjuncts(L, Js).
+ty_ask_part(j, L, clause(V, _, _, _, O, Js), _, _) --> { b_setval('$ty_jv', V/O) }, ty_adjuncts(L, Js).
 ty_ask_part(p, L, copula(_, _, _, Pred), q(_, _, _, _, R), _) --> ty_predicate(L, Pred, R).
 ty_ask_part(v, L, C, Q, _) --> ty_ask_verb(L, C, Q), { Q = q(_, _, VW, _, _) }, ty_ask_inv(L, C, Q, VW).
 ty_ask_part(c, L, C, Q, _) --> ty_ask_verb(L, C, Q), { Q = q(_, _, VW, _, _) }, ty_ask_inv(L, C, Q, VW).
@@ -5148,22 +5181,23 @@ ty_clause_part(v, L, clause(V, T, P, S, O, Js), _) -->
 %% 0.14 % more inferences, the global alone 0.07 %.
 ty_clause_part(j, L, clause(V, _, _, _, O, Js), _) -->
     { nb_current('$ty_vadv', v(J0, A)), J0 == Js }, !,
-    { Js = [A|Js1], b_setval('$ty_vadv', none) },
+    { Js = [A|Js1], b_setval('$ty_vadv', none), b_setval('$ty_jv', V/O) },
     ty_verb_adjuncts(L, V, O, Js1).
-ty_clause_part(j, L, clause(V, _, _, _, O, Js), _) --> { atom(V), '$ty_ofv'(V, L, K), ty_of_fits(K, O) }, !, ty_of_adjuncts(L, Js).
-ty_clause_part(j, L, clause(_, _, _, _, _, Js), _) --> ty_adjuncts(L, Js).
+ty_clause_part(j, L, clause(V, _, _, _, O, Js), _) --> { atom(V), '$ty_ofv'(V, L, K), ty_of_fits(K, O) }, !, { b_setval('$ty_jv', V/O) }, ty_of_adjuncts(L, Js).
+ty_clause_part(j, L, clause(V, _, _, _, O, Js), _) --> { b_setval('$ty_jv', V/O) }, ty_adjuncts(L, Js).
 %% An adjunct before the subject (since 1.105.0, ty_front_order/4): jf(F)
 %% reads it and a comma after it or none, jl(F) the others, F the last.
 ty_clause_part(jf(F), L, _, _) -->
     ty_front_item(L, F),
     { ty_comma_mark(L, M) },
     ( [M] ; [] ).
-ty_clause_part(jl(F), L, clause(_, _, _, _, _, Js), _) -->
+ty_clause_part(jl(F), L, clause(V, _, _, _, O, Js), _) -->
     { nb_current('$ty_vadv', v(J0, A)), J0 == Js }, !,
-    { Js = [A|Js1], b_setval('$ty_vadv', none) },
+    { Js = [A|Js1], b_setval('$ty_vadv', none), b_setval('$ty_jv', V/O) },
     ty_adjuncts(L, R),
     { append(R, [F], Js1) }.
-ty_clause_part(jl(F), L, clause(_, _, _, _, _, Js), _) -->
+ty_clause_part(jl(F), L, clause(V, _, _, _, O, Js), _) -->
+    { b_setval('$ty_jv', V/O) },
     ty_adjuncts(L, R),
     { append(R, [F], Js) }.
 ty_clause_part(n(Ws), _, _, _) --> ty_tokens(Ws).
@@ -5512,9 +5546,10 @@ ty_adjunct_item(L, inf(V, O, Js), S0, S) :-
     S0 = [W|S2], append(Ws, S1, S2),
     ty_infinitive_ahead(L, S1, S1),
     ty_infinitive(L, V, O, Js, S1, S).
-ty_adjunct_item(L, pp(Prep, NP)) --> ty_pp(L, Prep, NP).
+ty_adjunct_item(L, pp(Prep, NP)) --> ty_pp(L, Prep, NP), { ( '$ty_padv'(Prep, L) -> ty_padv_ok(L, Prep) ; true ) }.
 ty_adjunct_item(L, W) --> { nonvar(W), W = wh(M), ty_wh_adjunct(M) }, ty_wh_words(L, M).
-ty_adjunct_item(L, adv(M)) --> [W], { ty_adverb(L, M, W) }, ty_meant(L, adverb(M), [W]).
+ty_adjunct_item(L, adv(M)) --> [W], { ty_adverb(L, M, W), ( '$ty_padv'(W, L) -> ty_padv_adverb_ok(L, W) ; true ) }, ty_meant(L, adverb(M), [W]).
+
 %% ADVERBS JOINED (since 1.61.0): adv(and(Ms)), adv(or(Ms)) (`politically
 %% and economically'), written `A, B and C'.
 ty_adjunct_item(L, adv(C)) -->
@@ -5536,6 +5571,24 @@ ty_adjunct_item(L, inf(V, O, Js)) -->
 %% adposition phrase, `to work', is the reading).
 ty_inf_not_noun(L, V, O, Js) :-
     \+ ( O == none, Js == [], once(ty_noun(L, V, _, _, _, _)) ).
+
+%% A PARTICLE AS AN ADVERB OR AN ADPOSITION (since 1.130.0): a particle's
+%% word that is a closed word of the language and has an adverb's row
+%% ('$ty_padv'/2: English `up', `down', `out', `off'; not `in', `on',
+%% which are adpositions alone) is an adjunct, an adverb or an adposition,
+%% only where the clause's verb ('$ty_jv', set where its
+%% adjuncts are read, with its object) has no phrasal verb with it: `The
+%% music surged up.', `The engine chugged down the street.', `Smoke
+%% billowed up into the sky.'; `He gave up.' is give_up, as before, and
+%% `Is wrapped up in his family.' the passive of wrap_up. As an adverb it stands only in
+%% a clause with no object (`Found himself loaded down with
+%% responsibilities.' is none), and as an adposition its noun phrase has
+%% an article (ty_pp//3: `The stock market is down today.' is none).
+ty_padv_ok(L, W) :-
+    \+ ( nb_current('$ty_jv', V/_), atom(V), ty_phrasal(L, _, V, W, _) ).
+ty_padv_adverb_ok(L, W) :-
+    ty_padv_ok(L, W),
+    \+ ( nb_current('$ty_jv', _/O), nonvar(O), O \== none ).
 
 %% A verb whose object may be an infinitive takes no infinitive of purpose
 %% with no object, and no `to' with a bare noun that is a verb too: `The
@@ -5604,7 +5657,8 @@ ty_pp(L, Prep, NP) -->
     { ty_order_at(L, pp, Order) },
     ty_pp_parts(Order, L, Prep, NP),
     { ty_pp_topic_ok(L, Prep, NP),
-      ( nb_current('$ty_nn', on) -> \+ ty_pp_infinitive(L, Prep, NP) ; true ) }.
+      ( nb_current('$ty_nn', on) -> \+ ty_pp_infinitive(L, Prep, NP) ; true ),
+      ( '$ty_padv'(Prep, L) -> \+ NP = np(_, sg, mass, _) ; true ) }.
 
 %% After the words of an infinitive (ty_infinitive_mark/2, since 1.87.0) a
 %% phrase with no article begins with no noun before a noun: `to raise
@@ -6810,7 +6864,7 @@ ty_vadv_split(L, [W1, W2, A|R], 2, M, [W1, W2|R]) :-
     atom(W1), '$ty_tfirst'(W1, L), ty_vadv_word(L, A, R, M).
 
 ty_vadv_word(L, A, R, M) :-
-    atom(A), ty_adverb(L, M, A), \+ ty_word_class(L, adposition, A),
+    atom(A), ty_adverb(L, M, A), \+ ty_word_class(L, adposition, A), \+ '$ty_padv'(A, L),
     (   '$ty_vfirst'(A, L, _)
     ->  R = [Nx|_], atom(Nx),
         ( '$ty_vfirst'(Nx, L, _) -> true ; '$ty_pword'(Nx, L) -> true ; ty_participle(L, _, Nx) -> true )
@@ -7237,6 +7291,16 @@ ty_verb_row(L, V, T, N, P, Words) :-
 :- dynamic('$ty_tnpp'/6).
 :- dynamic('$ty_pprw'/2).
 :- dynamic('$ty_particle'/2).
+%% A particle's word that is an adverb's or an adposition's of the closed
+%% words (since 1.130.0), gated by the clause's verb (ty_padv_ok/2).
+:- dynamic('$ty_padv'/2).
+%% A word that is a noun's singular and another noun's plural (since
+%% 1.130.0): `hands', `eyes', `arms'; read as the plural first, in a
+%% language whose template has a ty_noun_list(L, singular_first, Base) row
+%% (English: a noun's meaning is its word there, where in the others one
+%% meaning has several words, and the clause that cuts would hide them
+%% from the writer: Italian wrote `pericolosità' for `pericolo').
+:- dynamic('$ty_both'/2).
 
 %% Each particle of L's phrasal rows, once.
 ty_particle_of(L, Pt) :- setof(Pt0, ty_phrasal_particle(L, Pt0), Pts), member(Pt, Pts).
@@ -7276,6 +7340,11 @@ ty_vfirst_make(L) :-
     retractall('$ty_cmp_irr'(_, L)),
     retractall('$ty_vg_more'(L)),
     retractall('$ty_particle'(_, L)),
+    retractall('$ty_padv'(_, L)),
+    forall('$ty_both'(BW, L),
+           ( forall(retract(ty_noun_form(L, _, _, _, _, BW)), true),
+             forall(retract((ty_noun_form(L, _, _, _, _, BW) :- !, fail)), true) )),
+    retractall('$ty_both'(_, L)),
     retractall('$ty_inf_made'(L)),
     retractall('$ty_vinf'(_, L)),
     retractall('$ty_pass_made'(L)),
@@ -7331,6 +7400,17 @@ ty_vfirst_make(L) :-
            assertz('$ty_scv'(ScV, L))),
     ( ( ty_phrasal(L, _, _, _, _) ; ty_adverb_inside(L) ) -> assertz('$ty_vg_more'(L)) ; true ),
     forall(ty_particle_of(L, Pt), assertz('$ty_particle'(Pt, L))),
+    (   ty_closed(L, PCs)
+    ->  forall(( '$ty_particle'(PW, L), memberchk(PW, PCs), ty_adverb(L, _, PW), \+ '$ty_padv'(PW, L) ),
+               assertz('$ty_padv'(PW, L)))
+    ;   true
+    ),
+    forall(( once(ty_noun_list(L, singular_first, _)),
+             ty_noun(L, BM, _, _, _, BP), atom(BP), BP \== BM,
+             once(( ty_noun(L, BM2, _, _, BP, _), BM2 \== BM )), \+ '$ty_both'(BP, L),
+             \+ ty_noun_of(L, singular_first, BP) ),
+           assertz('$ty_both'(BP, L))),
+    forall('$ty_both'(BW, L), ty_both_forms(L, BW)),
     forall(ty_verb(L, M, T, N, P, Fs),
            (   Fs = [W|_],
                atomic_list_concat(Fs, ' ', K),
@@ -8636,6 +8716,27 @@ ty_noun_lookup(L, M, G, A, N, W) :-
         ty_fault(agreement(noun, W))
     ).
 
+%% A word that is a noun's singular and another noun's plural is read as
+%% the plural first ('$ty_both'/2, since 1.130.0): `All hands on deck.'
+%% is the hands of `hand', where no verb says the number. Its plural
+%% readings stand before these two clauses as facts (ty_vfirst_make/1),
+%% which the index finds only for such a word: a check here cost every
+%% noun's look-up two inferences, the benchmark 0.4 % (English) to 0.6 %
+%% (French) more.
+:- dynamic ty_noun_form/6.
+
+%% The clauses of such a word W, before the two below (ty_vfirst_make/1):
+%% its plural readings and its singular ones as facts, in that order, then
+%% for each meaning and number of them a clause that cuts and fails, so
+%% that the two clauses below give none of them again, written or read.
+ty_both_forms(L, W) :-
+    findall(ty_noun_form(L, M, G, A, pl, W), ty_noun(L, M, G, A, _, W), Ps),
+    findall(ty_noun_form(L, M, G, A, sg, W), ty_noun(L, M, G, A, W, _), Ss),
+    append(Ps, Ss, Fs),
+    findall(N-M, member(ty_noun_form(_, M, _, _, N, _), Fs), NMs0), sort(NMs0, NMs),
+    findall((ty_noun_form(L, M, _, _, N, W) :- !, fail), member(N-M, NMs), Zs),
+    append(Fs, Zs, Cls), reverse(Cls, RCls),
+    forall(member(C, RCls), asserta(C)).
 ty_noun_form(L, M, G, A, sg, W) :- ty_noun(L, M, G, A, W, _).
 ty_noun_form(L, M, G, A, pl, W) :- ty_noun(L, M, G, A, _, W).
 
@@ -9075,7 +9176,7 @@ ty_av_item(after, L, M, A, R, As, End, D) --> ty_av_adj(L, A, R, As, End, D), ty
 %% same), `see red' a verb and its object (WordNet's adverb `see', vide).
 ty_av_word(L, M) --> [W], { ty_adverb(L, M, W), ty_av_word_ok(L, W) }, ty_meant(L, adverb(M), [W]).
 
-ty_av_word_ok(L, W) :- \+ ty_adjective(L, _, _, _, W), \+ ty_word_class(L, verb, W).
+ty_av_word_ok(L, W) :- \+ ty_adjective(L, _, _, _, W), \+ ty_word_class(L, verb, W), \+ '$ty_padv'(W, L).
 
 ty_av_adj(L, A, adj(G, N), As, End, D) -->
     [W],

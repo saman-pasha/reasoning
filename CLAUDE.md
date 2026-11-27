@@ -24,8 +24,8 @@ red) and lesson 01 pin the shape of the answer, deliberately not the number.
 The reasoning library translates ALL 8 000 sentences of `lexicon/prose.txt`
 from English into the IR, and ALL of that IR into Cocolog. Every step
 moves one of the two counts and reports both (`tools/logic/prose.pl`;
-STATUS.md keeps them): at 1.129.0, 6 130 into the IR, 5 841 of them into
-Cocolog (1.128.0: 6 073 and 5 785; 1.127.0: 5 854 and 5 571; 1.126.0: 5 837 and 5 549; 1.125.0: 5 829 and 5 549; 1.124.0: 5 814 and 5 544; 1.123.0: 5 633 and 5 371; 1.122.0: 5 100 and 4 872; 1.121.0: 5 060 and 4 841; 1.120.0: 5 060 and 4 796; 1.119.0: 5 047 and 4 783; 1.118.0: 5 017 and 4 755; 1.117.0: 5 002 and 4 741; 1.116.0: 4 977 and 4 717; 1.115.0: 4 932 and 4 678; 1.114.0: 4 918 and 4 664; 1.113.0: 4 897 and 4 648; 1.112.0: 4 771 and 4 525; 1.111.0: 4 677 and 4 437; 1.110.0: 4 652 and 4 422; 1.109.0: 4 640 and 4 413; 1.108.0: 4 640 and 4 389; 1.107.0: 4 580 and 4 360; 1.105.0 and 1.106.0: 4 479 and 4 275; 1.104.0: 4 456 and 4 256; 1.103.0: 4 405 and 4 209; 1.102.0: 4 405 and 4 206; 1.100.0 and 1.101.0: 4 377 and 4 179; 1.99.0: 4 358 and 4 165; 1.98.0: 4 325 and 4 141; 1.96.0 and 1.97.0: 4 295 and 4 111; 1.95.0: 4 243 and 4 063; 1.94.0: 4 218 and 4 040; 1.93.0: 4 167 and 3 990; 1.92.0: 4 129 and 3 954; 1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
+STATUS.md keeps them): at 1.130.0, 6 151 into the IR, 5 856 of them into
+Cocolog (1.129.0: 6 130 and 5 841; 1.128.0: 6 073 and 5 785; 1.127.0: 5 854 and 5 571; 1.126.0: 5 837 and 5 549; 1.125.0: 5 829 and 5 549; 1.124.0: 5 814 and 5 544; 1.123.0: 5 633 and 5 371; 1.122.0: 5 100 and 4 872; 1.121.0: 5 060 and 4 841; 1.120.0: 5 060 and 4 796; 1.119.0: 5 047 and 4 783; 1.118.0: 5 017 and 4 755; 1.117.0: 5 002 and 4 741; 1.116.0: 4 977 and 4 717; 1.115.0: 4 932 and 4 678; 1.114.0: 4 918 and 4 664; 1.113.0: 4 897 and 4 648; 1.112.0: 4 771 and 4 525; 1.111.0: 4 677 and 4 437; 1.110.0: 4 652 and 4 422; 1.109.0: 4 640 and 4 413; 1.108.0: 4 640 and 4 389; 1.107.0: 4 580 and 4 360; 1.105.0 and 1.106.0: 4 479 and 4 275; 1.104.0: 4 456 and 4 256; 1.103.0: 4 405 and 4 209; 1.102.0: 4 405 and 4 206; 1.100.0 and 1.101.0: 4 377 and 4 179; 1.99.0: 4 358 and 4 165; 1.98.0: 4 325 and 4 141; 1.96.0 and 1.97.0: 4 295 and 4 111; 1.95.0: 4 243 and 4 063; 1.94.0: 4 218 and 4 040; 1.93.0: 4 167 and 3 990; 1.92.0: 4 129 and 3 954; 1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
 count says so. **Measure what blocks the rest before choosing a step**:
 at 1.80.0 the words no table has looked like the gap, and 5 115 of the
 8 000 had none -- 2 130 of them a noun phrase alone, which one rule read.
@@ -1051,6 +1051,29 @@ twig.'). **A role's animacy asks the subject's noun phrase**
 (templates/roles.pl: eat, see, sleep ask an animate one): ty_np_animacy/3
 had no clause for emph(NP, _), so `The boy himself saw the dog.' did not
 read (1.127.0 put it down to sense rows; English has none).
+**Since 1.130.0** (STATUS.md's row has the rest): `up`, `down`, `out` and
+`off` are a clause's adverb or adposition where its verb has no phrasal
+row with them (`'$ty_padv'/2`, `'$ty_jv'`, which holds the verb AND its
+object: an adverb only with no object, ty_padv_adverb_ok/2); `all` stands
+before a singular noun, but no object, copula predicate or noun of a
+person or an animal of it reads (ty_all_sg_fits/3). **A word that is a noun's singular and another
+noun's plural is read as the plural first** (`'$ty_both'/2`): its readings
+are FACTS asserted before ty_noun_form/6's two clauses (it is dynamic for
+that), the plural ones first, then for each meaning and number a clause
+that cuts and fails, so the two clauses give none of them again
+(ty_both_forms/2); the index finds them only for such a word. A check in
+the first clause cost every noun look-up two inferences, 0.4 % to 0.6 %
+of the round trips; facts with no cut gave the plural twice, and
+test/typology.pl's cases that take every reading went red. The words
+read singular first are a ty_noun_list(L, singular_first, Base) row
+made from lexicon/known_noun.txt's ranks, and only a language with that
+row (English) reads the others plural first: in the other templates a
+noun's meaning has several words, and the clause that cuts hid them from
+the writer (Italian wrote `pericolosità' for `pericolo').
+**A second-measure line can be wrong in its hand Cocolog**: four lines
+of lexicon/logic.txt said `of(operations, they)` because the reader read
+`operations` as a noun of its own; the plural first made them `later`,
+and they were written again by hand (`of(pl(operation), they)`).
 
 **`one's` since 1.115.0** is the possessive of pron(3, sg, zero), the
 person no words name (`Catch one's breath.`); at level 2 it is someone,

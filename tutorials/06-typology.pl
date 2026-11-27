@@ -188,6 +188,7 @@ main :-
     numbers_and_groups,
     hyphen_words,
     dash_words,
+    particles,
     format("~ndone~n", []).
 
 
@@ -1442,6 +1443,29 @@ dash_words :-
     must('the poor and disabled', IR3, clause(earmark, pass(present), pos, np(zakat, sg, def, []), none, [pp(for, group(and([poor, disabled])))])),
     typology_read(english, 'The letter consisted of three short lines.', IR4),
     must('consist of', IR4, clause(consist, past, pos, np(letter, sg, def, []), none, [pp(of, np(line, pl, three, [short]))])).
+
+
+%% 99. A PARTICLE AS AN ADVERB OR AN ADPOSITION (1.130.0): English `up',
+%% `down', `out' and `off' are a clause's adverb or adposition where its
+%% verb has no phrasal row with them (`He gave up.' stays give_up), an
+%% adverb only in a clause with no object, an adposition only before a
+%% phrase with an article. `All' stands before a singular noun too (`All
+%% due respect.'), but not as a verb's object or a copula's predicate. A
+%% word that is a noun and another noun's plural is read as the plural
+%% first (`hands'), but for the words of the template's
+%% ty_noun_list(L, singular_first, Base) row (`means', `stairs').
+particles :-
+    typology_load(english),
+    typology_read(english, 'The music surged up.', IR1),
+    must('surged up', IR1, clause(surge, past, pos, np(music, sg, def, []), none, [adv(up)])),
+    typology_read(english, 'The engine chugged down the street.', IR2),
+    must('down the street', IR2, clause(chug, past, pos, np(engine, sg, def, []), none, [pp(down, np(street, sg, def, []))])),
+    typology_read(english, 'All due respect.', IR3),
+    must('all due respect', IR3, phrase(np(respect, sg, all, [due]))),
+    typology_read(english, 'All hands on deck.', IR4),
+    must('all hands', IR4, phrase(np_pp(np(hand, pl, all, []), pp(on, np(deck, sg, mass, []))))),
+    typology_read(english, 'The means of production.', IR5),
+    must('the means', IR5, phrase(of(np(production, sg, mass, []), np(means, sg, def, [])))).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

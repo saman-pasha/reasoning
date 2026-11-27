@@ -464,6 +464,9 @@ ty_article(english, which, any, any, which).
 ty_article(english, every, any, sg, every).
 ty_article(english, each, any, sg, each).
 ty_article(english, all, any, pl, all).
+%% `all' before a singular noun, a mass noun's (since 1.130.0: `All work is
+%% good.', `the decline of all manhood').
+ty_article(english, all, any, sg, all).
 ty_article(english, some, any, any, some).
 ty_article(english, no, any, any, no).
 ty_article(english, any, any, any, any).
@@ -735,6 +738,11 @@ ty_adjective_list(english, group, [poor, rich, living, dead, young, old, new, el
 %% after them an infinitive is the noun's, never one of purpose. WordNet
 %% gives nouns no frames.
 ty_noun_list(english, infinitive, [ability, appeal, arrangement, attempt, bid, campaign, chance, compulsion, decision, demand, desire, determination, drive, eagerness, effort, failure, freedom, impulse, inability, incentive, intention, license, motion, need, offer, opportunity, permission, plan, plot, power, promise, proposal, readiness, refusal, reluctance, right, struggle, temptation, tendency, time, urge, way, willingness, wish]).
+%% A noun's own word that is another noun's plural is read as the plural
+%% first (`All hands on deck.'), but these are read as their own noun
+%% first: the words whose own noun lexicon/known_noun.txt (SemCor) ranks
+%% above their stem, or whose stem it does not rank (since 1.130.0).
+ty_noun_list(english, singular_first, [archives, biceps, bounds, brakes, breeches, buttocks, cosmetics, crossroads, foothills, frills, handcuffs, headwaters, knickknacks, laurels, loins, means, mechanics, mittens, moccasins, nostrils, outskirts, pajamas, parings, proceedings, reserves, stairs, takings, teens, troops, trousers, twenties, woods]).
 %% The words before an infinitive of purpose (since 1.96.0: `in order to').
 ty_purpose_mark(english, [in, order]).
 %% An infinitive of purpose may stand with no words before it (since 1.97.0).
@@ -788,6 +796,8 @@ ty_adposition(english, within, [within]).
 ty_adposition(english, as, [as]).
 ty_adposition(english, until, [until]).
 ty_adposition(english, despite, [despite]).
+ty_adposition(english, down, [down]).
+ty_adposition(english, off, [off]).
 ty_adposition(english, except, [except]).
 ty_adposition(english, out_of, [out, of]).
 ty_adposition(english, instead_of, [instead, of]).
@@ -823,6 +833,10 @@ ty_adverb(english, more, more).
 %% (`They always raise the audio for commercials.'), before an adjective
 %% (`It was rather cold.') or first (`Then he left.').
 ty_adverb(english, never, never).
+ty_adverb(english, up, up).
+ty_adverb(english, down, down).
+ty_adverb(english, out, out).
+ty_adverb(english, off, off).
 ty_adverb(english, always, always).
 ty_adverb(english, often, often).
 ty_adverb(english, ever, ever).

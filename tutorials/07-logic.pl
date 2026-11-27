@@ -92,6 +92,7 @@ main :-
     numbers_and_groups,
     hyphen_words,
     dash_words,
+    particles,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -756,6 +757,19 @@ dash_words :-
     must('and back', E1, 'That intangible thing. The soul.'),
     logic_translate(english, cocolog, 'This passage smells of plagiarism.', C2),
     must('smells of', C2, 'of(smell(this(passage)), plagiarism).\n').
+
+
+%% 63. A PARTICLE (1.130.0) as an adverb is a predicate around the verb's
+%% atom, as an adposition the adposition's; a plural is pl(...) where the
+%% word is also another noun.
+particles :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'Smoke billowed up into the sky.', C1),
+    must('billowed up into', C1, 'past(into(up(billow(smoke)), the(sky))).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and back', E1, 'Smoke billowed up into the sky.'),
+    logic_translate(english, cocolog, 'His story brought tears to her eyes.', C2),
+    must('tears to her eyes', C2, 'tear(a(pl(tear))).\npast(to(bring(of(story, he), a(pl(tear))), of(pl(eye), she))).\n').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

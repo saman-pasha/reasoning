@@ -356,7 +356,7 @@ The mining company wants to excavate the hillside.	want(the(mining(company)), to
 The company tried to project an altruistic image.	past(try(the(company), to(project(the(company), a(altruistic(image)))))).
 He tried to strangle his opponent.	past(try(he, to(strangle(he, of(opponent, he))))).
 Our plans began to take shape.	past(begin(of(pl(plan), we), to(take(of(pl(plan), we), shape)))).
-They had to consolidate their operations.	past(have(they, to(consolidate(they, of(operations, they))))).
+They had to consolidate their operations.	past(have(they, to(consolidate(they, of(pl(operation), they))))).
 He tried to find out by indirection.	past(try(he, to(by(find_out(he), indirection)))).
 She is liable to forget.	liable(she, to(forget(she))).
 You are welcome to join us.	welcome(you, to(join(you, we))).
@@ -372,7 +372,7 @@ The pass was fumbled.	past(fumble(someone, the(pass))).
 The game was interrupted by a brief shower.	shower(a(brief(shower))). brief(a(brief(shower))). past(interrupt(a(brief(shower)), the(game))).
 She was afflicted by the death of her parents.	past(afflict(of(death, of(pl(parent), she)), she)).
 He had been trained rigorously by the monks.	pluperfect(rigorously(train(the(pl(monk)), he))).
-The auditor was required to produce his working papers.	past(require(someone, to(produce(the(auditor), of(working(papers), he))))).
+The auditor was required to produce his working papers.	past(require(someone, to(produce(the(auditor), of(pl(working(paper)), he))))).
 He was licensed to carry a weapon.	past(license(someone, to(carry(he, a(weapon))))).
 The saint's bones were enshrined in the cathedral.	past(in(enshrine(someone, of(pl(bone), the(saint))), the(cathedral))).
 The thief's identification was followed quickly by his arrest.	past(quickly(follow(of(arrest, he), of(identification, the(thief))))).
@@ -483,7 +483,7 @@ Humid air.	air(humid(air)). humid(humid(air)).
 Grim rainy weather.	weather(grim(rainy(weather))). grim(grim(rainy(weather))). rainy(grim(rainy(weather))).
 Artists like north light.	like(A, north(light)) :- artist(A).
 The runner slid headlong into third base.	past(into(headlong(slide(the(runner))), third(base))).
-In hot weather they dined in their shirtsleeves.	past(in(in(dine(they), of(shirtsleeves, they)), hot(weather))).
+In hot weather they dined in their shirtsleeves.	past(in(in(dine(they), of(pl(shirtsleeve), they)), hot(weather))).
 The ship made its run in record time.	past(in(make(the(ship), of(run, it)), record(time))).
 They gave little warning of their arrival.	past(give(they, of(little(warning), of(arrival, they)))).
 They performed with great polish.	past(with(perform(they), great(polish))).
@@ -502,7 +502,7 @@ Domestic servant.	servant(domestic(servant)). domestic(domestic(servant)).
 Meek as a mouse.	mouse(a(mouse)). is_as(meek(something), a(mouse)).
 Active as a gazelle.	gazelle(a(gazelle)). is_as(active(something), a(gazelle)).
 They used umbrellas as shades.	umbrella(a(pl(umbrella))). shade(a(pl(shade))). past(is_as(use(they, a(pl(umbrella))), a(pl(shade)))).
-His concluding words came as a surprise.	surprise(a(surprise)). past(is_as(come(of(concluding(words), he)), a(surprise))).
+His concluding words came as a surprise.	surprise(a(surprise)). past(is_as(come(of(pl(concluding(word)), he)), a(surprise))).
 Constant as the northern star.	is_as(constant(something), the(northern(star))).
 Wild rice was served as an accompaniment to the main dish.	accompaniment(a(accompaniment)). past(to(is_as(serve(someone, wild(rice)), a(accompaniment)), the(main(dish)))).
 Pretty girls like plain friends as foils.	girl(a(pl(pretty(girl)))). pretty(a(pl(pretty(girl)))). friend(a(pl(plain(friend)))). plain(a(pl(plain(friend)))). foil(a(pl(foil))). is_as(like(a(pl(pretty(girl))), a(pl(plain(friend)))), a(pl(foil))).
@@ -585,3 +585,8 @@ This passage smells of plagiarism.	of(smell(this(passage)), plagiarism).
 A well-wired house.	house(a('well-wired'(house))). 'well-wired'(a('well-wired'(house))).
 The coup disposed of the dictator bloodlessly.	past(bloodlessly(of(dispose(the(coup)), the(dictator)))).
 The zakat is earmarked for the poor and disabled.	for(earmark(someone, the(zakat)), the(group(and(poor, disabled)))).
+The music surged up.	past(up(surge(the(music)))).
+The engine chugged down the street.	past(down(chug(the(engine)), the(street))).
+He banked the shot off the backboard.	past(off(bank(he, the(shot)), the(backboard))).
+She sprawled out luxuriously on the sofa.	past(on(luxuriously(out(sprawl(she))), the(sofa))).
+His story brought tears to her eyes.	tear(a(pl(tear))). past(to(bring(of(story, he), a(pl(tear))), of(pl(eye), she))).
