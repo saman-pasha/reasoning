@@ -1077,12 +1077,13 @@ ty_values(polarity, [pos, neg]).
 ty_values(definiteness, [def, indef, which, every, each, all, some, no, any, this, that, mass,
                          one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve,
                          twenty, thirty, forty, fifty, hundred, thousand,
-                         many, much, few, most, both]).
+                         many, much, few, most, both, a_few, too_many, too_much, so_many, so_much]).
 %% A quantifier pronoun's quantifier and kind (since 1.63.0).
-ty_values(quantifier, [some, every, no, any, this, that]).
+%% `those' since 1.146.0, before a relative clause alone (`those who').
+ty_values(quantifier, [some, every, no, any, this, that, those]).
 ty_values(quantifier_kind, [thing, person]).
 %% A subordinate clause's kind (since 1.65.0).
-ty_values(subordinator, [if, when, because, as, though, since, until, while, unless, before, after]).
+ty_values(subordinator, [if, when, because, as, though, since, until, while, unless, before, after, so_that, so]).
 ty_values(predeterminer, [all, such, only]).
 ty_values(animacy, [person, animate, inanimate, unknown]).
 ty_values(place, [before, after]).
@@ -3422,7 +3423,26 @@ ty_joinable0(L, C) :-
 %% ty_short_form/3, whose rows are all one language's, each read walked
 %% them, 80 inferences in German, which has none.
 ty_unshort(L, Ws, Out) :-
-    (   '$ty_short_made'(L) -> ty_unshort_(Ws, L, Out) ; Out = Ws ).
+    (   '$ty_short_made'(L) -> ty_unshort_(Ws, L, Out0) ; Out0 = Ws ),
+    (   '$ty_avj_made'(L), once(( '$ty_avj'(AW, L, _, _), memberchk(AW, Out0) ))
+    ->  ty_avjoin(Out0, L, Out)
+    ;   Out = Out0
+    ).
+
+%% AN ADVERB OF SEVERAL WORDS (since 1.146.0: English `no longer', its
+%% row's word 'no longer') is one token once the short forms are opened,
+%% its words joined where they stand together, so it reads where an adverb
+%% of one word reads (`He could no longer contain his hostility.') and is
+%% written as its row's word. The language's first words are a table made
+%% with the verb tables ('$ty_avj'/4, '$ty_avj_made'/1), and the words are
+%% walked only where one of them stands among them: walked each time, the
+%% English bench cost 0.4 % more inferences.
+ty_avjoin([], _, []).
+ty_avjoin([W|Ws], L, Out) :-
+    (   atom(W), '$ty_avj'(W, L, More, J), append(More, Rest0, Ws)
+    ->  Out = [J|Rest], ty_avjoin(Rest0, L, Rest)
+    ;   Out = [W|Rest], ty_avjoin(Ws, L, Rest)
+    ).
 
 ty_unshort_([], _, []).
 ty_unshort_([W|Ws], L, Out) :-
@@ -4300,12 +4320,12 @@ ty_ask_words(L, copula(T, P, Subj, Pred), _, Ws) :-
 %% something put them.
 ty_subject_number(np(_, N, _, _), N).
 ty_subject_number(Nm, sg) :- nonvar(Nm), Nm = name(_).
-ty_subject_number(Qp, sg) :- nonvar(Qp), Qp = qp(_, _).
+ty_subject_number(Qp, N) :- nonvar(Qp), Qp = qp(Q, _), ( Q == those -> N = pl ; N = sg ).
 ty_subject_number(W, sg) :- nonvar(W), W = wh(_).
 ty_subject_number(G, sg) :- nonvar(G), G = ger(_, _, _).
 ty_subject_number(G, N) :- nonvar(G), G = gap(H, _, _), ty_subject_number(H, N).
 ty_subject_number(rel(np(_, N, _, _), _), N).
-ty_subject_number(rel(Qp, _), sg) :- nonvar(Qp), Qp = qp(_, _).
+ty_subject_number(rel(Qp, _), N) :- nonvar(Qp), Qp = qp(Q, _), ( Q == those -> N = pl ; N = sg ).
 ty_subject_number(of(_, np(_, N, _, _)), N).
 ty_subject_number(np_pp(NP, _), N) :- nonvar(NP), ty_subject_number(NP, N).
 ty_subject_number(pron(P, N0, _), N) :- ty_agreement(P, N0, N).
@@ -4434,7 +4454,12 @@ ty_sentence(L, IR) -->
 %% ty_subordinate_comma/1 says (German); read before it too where
 %% ty_subordinate_first/1 says, a comma after it (`If it sleeps, the dog is
 %% small.'). The clause is read as a relative clause is (ty_sub//1), so
-%% German's verb stands last (`, wenn der Hund schläft').
+%% German's verb stands last (`, wenn der Hund schläft'). Since 1.146.0 the
+%% main clause may be a command (`Close the door if it rains.', `Treat the
+%% water so it can be drunk.'), tried after the statement; after the
+%% subordinate clause only past a comma (`If you are cold, turn up the
+%% heat.'), or `As he called the role he put a check mark' is a command to
+%% mark.
 ty_sentence(L, sub(K, Main, C)) -->
     ty_subord_here,
     { ty_subord_kind(K) },
@@ -4448,6 +4473,15 @@ ty_sentence(L, sub(K, Main, C)) -->
         ty_subord_statement(L, C),
         ( [','] ; [] ),
         ty_statement(L, Main)
+    ;   ty_command(L, Main),
+        ty_subord_comma_mark(L),
+        ty_subordinator_words(L, K),
+        ty_subord_statement(L, C)
+    ;   { ty_subordinate_first(L) },
+        ty_subordinator_words(L, K),
+        ty_subord_statement(L, C),
+        [','],
+        ty_command(L, Main)
     ).
 
 %% A NOUN PHRASE ALONE (since 1.81.0): phrase(NP), a sentence that says no
@@ -4661,12 +4695,38 @@ ty_phrase_command(L, NP, S0, S) :-
 
 ty_command(L, C) -->
     { '$ty_commands'(L),
-      C = clause(_, imperative, _, pron(2, _, _), _, _),
-      b_setval('$ty_command', c(C)) },
-    ty_clause(L, C),
+      C = clause(V, imperative, P, Sb, O, Js),
+      Sb = pron(2, _, _) },
+    (   { nonvar(V) }
+    ->  { b_setval('$ty_command', c(C)) },
+        ty_clause(L, C)
+    ;   ty_command_lead(L, F),
+        { C1 = clause(V, imperative, P, Sb, O, Js1), b_setval('$ty_command', c(C1)) },
+        ty_clause(L, C1),
+        ty_command_tail(L, B),
+        { append([Js1, F, B], Js) }
+    ),
     { b_setval('$ty_command', none),
       ty_command_inner_ok(C),
       \+ ty_command_adjective(L, C) }.
+
+%% AN ADVERB BEFORE A COMMAND, OR AFTER IT AND A COMMA (since 1.146.0:
+%% `Please read the passage aloud.', `Refill my glass, please.', `Then
+%% read the book.'), read as the command's last adjunct and written at its
+%% end with the others (`Read the passage aloud please.'). Before it, an
+%% adverb's word that is no verb's of the language's commands (so `Still'
+%% in `Still the waters.' is no adverb here), no adjective's and no noun's
+%% (`Good taste.' is no command `taste'), and a comma after it or none.
+ty_command_lead(L, F) -->
+    (   [W], { atom(W), ty_adverb(L, M, W), \+ '$ty_cmdv'(W, L), \+ ty_word_class(L, adjective, W), \+ ty_word_class(L, noun, W) },
+        ( [','] ; [] ), { F = [adv(M)] }
+    ;   { F = [] }
+    ).
+
+ty_command_tail(L, B) -->
+    (   [',', W], { atom(W), ty_adverb(L, M, W) }, { B = [adv(M)] }
+    ;   { B = [] }
+    ).
 
 ty_command_adjective(L, clause(V, _, _, _, O, _)) :-
     O == none,
@@ -6301,7 +6361,7 @@ ty_np_phrase(L, NP0, F) --> { ty_np_tail_slot(L, NP0, NP, T) }, ty_np(L, NP, F),
 ty_np_phrase(L, R, F) --> { ty_rel_slot(R) }, ty_rel(L, none, R, F).
 ty_np_phrase(L, P0, F) --> { ty_poss_tail_slot(L, P0, P, T) }, ty_poss(L, P, F), ty_pp_tail(L, T, P).
 ty_np_phrase(L, Nm, F) --> ty_name_here, { ty_name_slot(Nm) }, ty_name_words(L, Nm, F).
-ty_np_phrase(L, Qp, F) --> ty_qp_here, { ty_qp_slot(Qp) }, ty_qp_words(L, Qp, F).
+ty_np_phrase(L, Qp, F) --> ty_qp_here, { ty_qp_slot(Qp) }, ty_qp_words(L, Qp, F), { Qp \= qp(those, _) }.
 %% A group after an adposition (since 1.129.0: `for the poor and disabled').
 ty_np_phrase(L, group(A), F) --> { ty_group_gate(A) }, ty_group_words(L, A, F, yes).
 %% A reflexive pronoun after an adposition (since 1.126.0: `in itself', `for
@@ -6701,7 +6761,8 @@ ty_qp_words(L, qp(Q, K), F) -->
     ),
     { ty_qp_features(Q, K, F) }.
 
-ty_qp_features(Q, K, [D, sg, A, _]) :-
+ty_qp_features(Q, K, [D, N, A, _]) :-
+    ( Q == those -> N = pl ; N = sg ),
     ty_def_feature(Q, D),
     ( K == person -> A = person ; A = inanimate ).
 
@@ -6764,7 +6825,7 @@ ty_poss_parts([P|Ps], L, G, NP, F, PWs, Art, Next, Depth) -->
     ty_poss_part(P, Ps, L, G, NP, F, PWs, Art, Next, Depth),
     ty_poss_parts(Ps, L, G, NP, F, PWs, Art, Next, Depth).
 
-ty_poss_part(h, Ps, L, _, NP, F, _, art(Art, C0), Outer, _) -->
+ty_poss_part(h, Ps, L, _, NP, F, _, art(Art, C0), Outer, Depth) -->
     { ty_poss_next(Ps, g, Outer, N0),
       ( Art == drop -> Next = bare(N0) ; Next = N0 ),
       b_setval('$ty_case', C0) },
@@ -6773,13 +6834,34 @@ ty_poss_part(h, Ps, L, _, NP, F, _, art(Art, C0), Outer, _) -->
         ty_here(S0),
         { ty_poss_head_ahead(L, S0) },
         ty_poss_pronoun(L, Pr, NP0, F, Next)
+    ;   { Art \== drop, '$ty_poss_drop'(L, GOrder, GPWs), ty_poss_head_gen(NP, G2, NP2) },
+        ty_ahead(Ahead2),
+        { ty_poss_depth_ok(Ahead2, Depth),
+          ty_poss_possible(L, GPWs, Ahead2),
+          Depth1 is Depth + 1 },
+        ty_poss_parts(GOrder, L, G2, NP2, F, GPWs, art(drop, C0), Next, Depth1)
     ).
+
 ty_poss_part(p, _, _, _, _, _, PWs, _, _, _) --> ty_tokens(PWs).
 ty_poss_part(g, Ps, L, G, _, _, PWs, _, Outer, Depth) -->
     { ty_poss_next(Ps, h, Outer, Next), ty_role_case(L, g),
       ( PWs \== [], nb_current('$ty_massp', on) -> b_setval('$ty_mass_adj', yes) ; true ) },
     ty_possessor(L, G, Next, Depth),
     { b_setval('$ty_mass_adj', no) }.
+
+%% A POSSESSED HEAD WITH A POSSESSOR OF ITS OWN (since 1.146.0): where the
+%% possessed keeps its article (English `of'), it may be a possessor's
+%% phrase of the construction that drops it (English 's), a noun phrase or
+%% a name its possessor: `The world's heritage of knowledge.' is
+%% of(np(knowledge, sg, mass, []), of(np(world, sg, def, []),
+%% np(heritage, sg, def, []))), the heritage the world's and of knowledge.
+%% The language's construction that drops the article is a table made at
+%% load ('$ty_poss_drop'/3, its order less p where it has no words): asked
+%% of ty_possessive/4 at each possessed, Persian's bench cost 0.36 % more.
+ty_poss_head_gen(NP, G, NP0) :-
+    (   var(NP) -> NP = of(G, NP0)
+    ;   NP = of(G, NP0), nonvar(G), ( G = np(_, _, _, _) ; G = name(_) ), nonvar(NP0), NP0 = np(_, _, _, _)
+    ).
 
 %% A POSSESSED HEAD WITH ITS OWN POSSESSIVE PRONOUN (since 1.119.0): where
 %% the possessed keeps its article (English `of'), it may be a possessive
@@ -8004,6 +8086,7 @@ ty_particle_of(L, Pt) :- setof(Pt0, ty_phrasal_particle(L, Pt0), Pts), member(Pt
 ty_phrasal_particle(L, Pt) :- ty_phrasal(L, _, _, Pt, _).
 :- dynamic('$ty_tfirst'/2).
 :- dynamic('$ty_tpw'/8), dynamic('$ty_tpk'/2), dynamic('$ty_tpw_made'/1), dynamic('$ty_tcheck'/2), dynamic('$ty_short_made'/1), dynamic('$ty_shortw'/2).
+:- dynamic('$ty_avj'/4), dynamic('$ty_avj_made'/1).
 
 %% Whether a verb's form may begin with W (the words around a word with
 %% several meanings).
@@ -8076,6 +8159,11 @@ ty_vfirst_make(L) :-
     retractall('$ty_shortw'(_, L)),
     forall(( ty_short_form(L, _, SW), \+ '$ty_shortw'(SW, L) ), assertz('$ty_shortw'(SW, L))),
     ( once(ty_short_form(L, _, _)) -> assertz('$ty_short_made'(L)) ; true ),
+    retractall('$ty_avj'(_, L, _, _)),
+    retractall('$ty_avj_made'(L)),
+    forall(( ty_adverb(L, _, AJ), atom(AJ), atomic_list_concat([AJ1, AJ2|AJs], ' ', AJ), \+ '$ty_avj'(AJ1, L, [AJ2|AJs], AJ) ),
+           assertz('$ty_avj'(AJ1, L, [AJ2|AJs], AJ))),
+    ( '$ty_avj'(_, L, _, _) -> assertz('$ty_avj_made'(L)) ; true ),
     ( ty_phrasal(L, _, _, _, _) -> assertz('$ty_phrasal_made'(L)) ; true ),
     ( ty_floating(L, _) -> assertz('$ty_float_made'(L)) ; true ),
     ( ty_partitive(L, _, _, _) -> assertz('$ty_part_made'(L)) ; true ),
@@ -8315,7 +8403,8 @@ ty_role(L, Role, Nm, Features) -->
 ty_role(L, Role, Qp, Features) -->
     ty_qp_here,
     { ty_qp_slot(Qp) },
-    ty_qp_role(L, Role, Qp, Features).
+    ty_qp_role(L, Role, Qp, Features),
+    { Qp \= qp(those, _) }.
 %% An adjective as a group, a subject (since 1.127.0), its words alone: the
 %% row is English's, whose roles take no marks (a language whose roles do
 %% has no row yet).
@@ -8522,6 +8611,7 @@ ty_predet_words(L, K) --> { once(ty_predeterminer(L, K, Ws)) }, ty_tokens(Ws).
 ty_all_np(NP) :-
     nonvar(NP),
     (   NP = np(_, _, D, _) -> nonvar(D), memberchk(D, [def, this, that])
+    ;   NP = qp(Q, _) -> Q == those
     ;   NP = of(_, _) -> true
     ;   NP = rel(H, _) -> ty_all_np(H)
     ;   NP = np_pp(H, _) -> ty_all_np(H)
@@ -8915,14 +9005,14 @@ ty_rel_part(h, L, Role, NP, F, _, _) --> ty_marked_np(L, Role, NP, F, r).
 %% A quantifier pronoun as the head (since 1.142.0: `Everything that comes
 %% into existence', `anyone who sees the parched fields'), one of some,
 %% every, no or any: `this' and `that' alone are none (`Puzzled that she
-%% left.'). Reading, only where the text holds such a pronoun's first word
+%% left.'); since 1.146.0 `those', a head alone (`those who are ill'). Reading, only where the text holds such a pronoun's first word
 %% ('$ty_qp'), asked first: each relative clause tried on a noun phrase
 %% tries this head too, and through ty_qp_slot/1 and ty_qp_here//0 it cost
 %% the English round trips 0.75 % more inferences.
 ty_rel_part(h, L, Role, Qp, F, _, _) -->
     { var(Qp) -> nb_current('$ty_qp', f(yes)), Qp = qp(_, _) ; Qp = qp(_, _) },
     ty_qp_role(L, Role, Qp, F),
-    { Qp = qp(Q, _), memberchk(Q, [some, every, no, any]) }.
+    { Qp = qp(Q, _), memberchk(Q, [some, every, no, any, those]) }.
 ty_rel_part(m, L, _, _, _, _, m(Ws, R)) -->
     { R = r(poss(Pl, NP2, F2), Rule), Rule == moves }, !,
     ty_rel_comma(L),
@@ -9152,6 +9242,16 @@ ty_feats_make(L) :-
     retractall('$ty_art_multi'(L, _, _, _)),
     forall(( ty_article(L, _, _, _, AW), atomic_list_concat([AW1, AW2|AWs], ' ', AW) ),
            ( '$ty_art_multi'(L, AW1, AW, [AW2|AWs]) -> true ; assertz('$ty_art_multi'(L, AW1, AW, [AW2|AWs])) )),
+    retractall('$ty_poss_drop'(L, _, _)),
+    (   once(ty_possessive(L, PDO0, PDW, drop))
+    ->  ( PDW == [] -> exclude(==(p), PDO0, PDO) ; PDO = PDO0 ), assertz('$ty_poss_drop'(L, PDO, PDW))
+    ;   true
+    ),
+    retractall('$ty_artm_def'(L, _, _, _, _)),
+    retractall('$ty_artm_made'(L)),
+    forall(( ty_article(L, AD, _, _, AW), '$ty_art_multi'(L, AW1, AW, AWr), \+ '$ty_artm_def'(L, AD, AW, AW1, AWr) ),
+           assertz('$ty_artm_def'(L, AD, AW, AW1, AWr))),
+    ( '$ty_art_multi'(L, _, _, _) -> assertz('$ty_artm_made'(L)) ; true ),
     retractall('$ty_qp_first'(L, _, _, _, _)),
     forall(ty_quantifier_pronoun(L, Q, K, [QW1|QWs]), assertz('$ty_qp_first'(L, QW1, Q, K, QWs))),
     retractall('$ty_ending'(L, _, _, _, _, _)),
@@ -9228,7 +9328,7 @@ ty_feats_make(L) :-
 :- dynamic('$ty_lexw'/2).
 :- dynamic('$ty_lexw_read'/1).
 :- dynamic('$ty_art_words'/4).
-:- dynamic('$ty_art_multi'/4).
+:- dynamic('$ty_art_multi'/4), dynamic('$ty_artm_def'/5), dynamic('$ty_artm_made'/1), dynamic('$ty_poss_drop'/3).
 :- dynamic('$ty_art_defs'/3).
 :- dynamic('$ty_qp_first'/5).
 :- dynamic('$ty_ending'/6).
@@ -9585,10 +9685,19 @@ ty_det(L, Def, GN, art(W)) -->
     ;   ty_article(L, Def, _, _, W), \+ '$ty_art_multi'(L, _, W, _)
     }.
 %% An article of several words (since 1.63.0: Spanish `todos los'), its
-%% first word indexed at load ('$ty_art_multi'/4).
-ty_det(L, _, _, art(W)) -->
-    { \+ '$ty_cased'(L), '$ty_art_multi'(L, W1, W, Rest) },
-    [W1], ty_tokens(Rest).
+%% first word indexed at load ('$ty_art_multi'/4). Since 1.146.0 asked by
+%% its word once the word is taken, reading, and writing by the
+%% definiteness the IR asks: asked of every row, each phrase written with
+%% no article (`red dogs') tried English's five (`a few', `too many'),
+%% which cost its bench 2 % more inferences.
+ty_det(L, Def, _, art(W)) -->
+    { '$ty_artm_made'(L), \+ '$ty_cased'(L) },
+    [W1],
+    {   nonvar(W1) -> '$ty_art_multi'(L, W1, W, Rest)
+    ;   nonvar(Def) -> '$ty_artm_def'(L, Def, W, W1, Rest)
+    ;   '$ty_art_multi'(L, W1, W, Rest)
+    },
+    ty_tokens(Rest).
 ty_det(_, _, _, none) --> [].
 
 %% The definiteness a noun phrase's marks and checks see: a determiner of

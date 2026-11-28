@@ -107,6 +107,7 @@ main :-
     copula_tails,
     clause_objects,
     parts_and_equals,
+    adverbs_and_articles,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -988,6 +989,21 @@ parts_and_equals :-
     must('an equative', C2, 'as_tall(he, of(father, he)).\n'),
     logic_translate(english, cocolog, 'The house is big rather than small.', C3),
     must('rather than', C3, 'big(the(house)).\nis_not(small(the(house))).\n').
+
+%% 78. SO, THOSE WHO, A POSSESSOR IN A POSSESSED HEAD (1.146.0). `so'
+%% joins two clauses, so(A, B), a command among them; `those who' is
+%% everyone the relative clause says; a possessed head with a possessor of
+%% its own is the inner term inside the outer one.
+adverbs_and_articles :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'Treat the water so it can be drunk.', C1),
+    must('so after a command', C1, 'so(imperative(treat(you, the(water))), can(drunk(it))).\n'),
+    logic_translate(english, cocolog, 'He forgave those who had harmed him.', C2),
+    must('those who', C2, 'past(forgive(he, A)) :-\n    pluperfect(harm(A, he)).\n'),
+    logic_translate(english, cocolog, 'The world\'s heritage of knowledge.', C3),
+    must('a possessor in a possessed head', C3, 'heritage(of(of(heritage, the(world)), knowledge)).\n'),
+    logic_translate(cocolog, english, C3, E3),
+    must('and back', E3, 'The world\'s heritage of knowledge.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

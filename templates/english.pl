@@ -499,6 +499,16 @@ ty_article(english, hundred, any, pl, hundred).
 ty_article(english, thousand, any, pl, thousand).
 ty_article(english, many, any, pl, many).
 ty_article(english, few, any, pl, few).
+%% `a few' before a plural (since 1.146.0: `He made a few remarks.'
+%% np(remark, pl, a_few, [])), an article of two words as French's `tous
+%% les' is.
+ty_article(english, a_few, any, pl, 'a few').
+%% `too many', `too much', `so many' and `so much' (since 1.146.0: `He
+%% missed too many rehearsals.' np(rehearsal, pl, too_many, [])).
+ty_article(english, too_many, any, pl, 'too many').
+ty_article(english, too_much, any, sg, 'too much').
+ty_article(english, so_many, any, pl, 'so many').
+ty_article(english, so_much, any, sg, 'so much').
 ty_article(english, most, any, pl, most).
 ty_article(english, both, any, pl, both).
 ty_article(english, much, any, sg, much).
@@ -516,6 +526,10 @@ ty_quantifier_pronoun(english, any, person, [anyone]).
 ty_quantifier_pronoun(english, any, person, [anybody]).
 ty_quantifier_pronoun(english, this, thing, [this]).
 ty_quantifier_pronoun(english, that, thing, [that]).
+%% `those' the people a relative clause describes (since 1.146.0: `He
+%% forgave those who had harmed him.'), plural, and only as a relative
+%% clause's head.
+ty_quantifier_pronoun(english, those, person, [those]).
 %% SUBORDINATE CLAUSES (since 1.65.0): the words of each kind, and where
 %% the clause may stand.
 ty_subordinator(english, if, [if]).
@@ -537,6 +551,11 @@ ty_subordinator(english, while, [while]).
 ty_subordinator(english, unless, [unless]).
 ty_subordinator(english, before, [before]).
 ty_subordinator(english, after, [after]).
+%% `so' of a result and `so that' of a purpose (since 1.146.0): `She had a
+%% little money left over so she went to a movie.', `Inspissate the tar so
+%% that it becomes pitch.'.
+ty_subordinator(english, so_that, [so, that]).
+ty_subordinator(english, so, [so]).
 %% `all' before a definite noun phrase (since 1.118.0: `all the wildlife',
 %% `all his creditors'); before a bare noun it is the determiner (`All dogs
 %% bark.').
@@ -967,6 +986,12 @@ ty_adverb(english, perhaps, perhaps).
 ty_adverb(english, too, too).
 ty_adverb(english, so, so).
 ty_adverb(english, then, then).
+%% An adverb of two words (since 1.146.0), one token where its words stand
+%% together: `He could no longer contain his hostility.'
+ty_adverb(english, no_longer, 'no longer').
+%% `please' before a command or after it and a comma (since 1.146.0:
+%% `Refill my glass, please.').
+ty_adverb(english, please, please).
 ty_adverb(english, only, only).
 ty_adverb(english, yet, yet).
 

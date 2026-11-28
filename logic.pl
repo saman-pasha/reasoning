@@ -145,6 +145,18 @@
 %% the first and denies the second (`The house is big rather than small.'
 %% big(the(house)), is_not(small(the(house)))). All three, and back.
 %%
+%% SO (since 1.146.0) joins two clauses as `before' does, so(A, B), a
+%% command among them (`Treat the water so it can be drunk.'); `if' and
+%% `when' under a command have no form yet. `THOSE WHO' is everyone the
+%% relative clause says, a rule (`He forgave those who had harmed him.'
+%% past(forgive(he, X)) :- pluperfect(harm(X, he))). ADJECTIVES JOINED BY
+%% `OR' are one predicate named by their words and `_or_' (`His hair was
+%% red or brown.' past(red_or_brown(of(hair, he)))). A POSSESSED HEAD
+%% WITH A NOUN PHRASE OR A NAME AS ITS OWN POSSESSOR is the inner term inside
+%% the outer one (`The world's heritage of knowledge.' of(of(heritage,
+%% the(world)), knowledge)). `A FEW' and `TOO MANY' are a count's modifier
+%% as `many' is. All but `those who', and back.
+%%
 %% NO, EVERY, ANY AND SOME (since 1.139.0): `no' is `every' and the clause
 %% denied (`No dog barks.' is_not(bark(X)) :- dog(X)); `any' is `every'; a
 %% noun phrase of `every', `no' or `any' that is a constant's object, an
@@ -511,7 +523,8 @@ lg_active(X, X).
 
 lg_count_det(D) :-
     memberchk(D, [one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve,
-                  twenty, thirty, forty, fifty, hundred, thousand, many, much, few, most, both]).
+                  twenty, thirty, forty, fifty, hundred, thousand, many, much, few, most, both, a_few,
+                  too_many, too_much, so_many, so_much]).
 
 lg_count_back(np(N, Num, indef, [such|As]), such(np(N, Num, indef, As))) :- !.
 lg_count_back(np(N, Num, indef, [D|As]), np(N, Num, D, As)) :- atom(D), lg_back_det(D), !.
@@ -556,6 +569,11 @@ lg_statement(C, Items) :-
 lg_statement(C, Items) :-
     lg_joined(C, Cs), !,
     lg_statements(Cs, Items).
+%% A command's condition (since 1.146.0: `Close the door if it rains.') has
+%% no form yet: a pronoun in it would be the command's subject.
+lg_statement(sub(K, Main, _), _) :-
+    memberchk(K, [if, when]), lg_clause_tense(Main, T), T == imperative, !,
+    lg_no(subordinate(command)).
 lg_statement(sub(K, Main, Cond), Items) :- !,
     (   K == if -> lg_conditional(Main, Cond, Items)
     ;   K == when, lg_clause_tense(Main, present), lg_clause_tense(Cond, present)
@@ -810,7 +828,9 @@ lg_individual(S, _, _) :- lg_no(determiner(S)).
 %% Since 1.141.0 `as' too (`Their closeness grew as the night wore on.'
 %% as(past(grow(of(closeness, they))), past(wear_on(the(night))))), read
 %% back as a subordinator where its clause is an atom, as `before' is.
-lg_sub_kind(K) :- memberchk(K, [though, since, until, while, unless, before, after, as]).
+%% Since 1.146.0 `so' of a result and `so that' of a purpose too (`He
+%% left, so they stayed.' so(past(leave(he)), past(stay(they)))).
+lg_sub_kind(K) :- memberchk(K, [though, since, until, while, unless, before, after, as, so, so_that]).
 
 lg_when(Main, Cond, Items) :- lg_when(when, Main, Cond, Items).
 lg_when(K, Main, Cond, Items) :-
@@ -1415,6 +1435,7 @@ lg_adjective(A, M) :-
     (   atom(A) -> M = A
     ;   nonvar(A), ( A = and(Bs) ; A = but(Bs) ) -> member(M, Bs)
     ;   nonvar(A), A = rather([B1, B2]) -> ( lg_adjective(B1, M) ; lg_adjective(B2, M2), M = not(M2) )
+    ;   nonvar(A), A = or(Bs), lg_or_name(Bs, N) -> M = N
     ;   nonvar(A), A = n(X), atom(X) -> M = A
     ;   nonvar(A), A = adv(Ad, B), atom(Ad), atom(B) -> M = A
     ;   lg_no(predicate(adj(A)))
@@ -1459,6 +1480,10 @@ lg_entity(np(N, Num, some, As), ent(V, Conds, some), ['$ind'(V, T)]) :- !,
     lg_noun_conds(N, As, V, Conds),
     lg_np_term(N, Num, As, T).
 lg_entity(qp(every, _), ent(_, [], every), []) :- !.
+%% `Those' as a relative clause's head (since 1.146.0) is every one the
+%% clause describes: `He forgave those who had harmed him.' is a rule, as
+%% `everyone who' is.
+lg_entity(qp(those, _), ent(_, [], every), []) :- !.
 %% THIS AND THAT ALONE (since 1.139.0) are constants, as a noun phrase of
 %% theirs is: `That's cool.' says cool(that), `This may land you in jail.'
 %% may(in(land(this, you), jail)).
@@ -1493,6 +1518,9 @@ lg_entity(group(A), ent(const(the(group(T))), [], const), []) :- !, lg_group_ter
 %% and disabled' is the(group(and(poor, disabled))), a term of no list).
 lg_group_term(A, A) :- atom(A), !.
 lg_group_term(and(As), T) :- is_list(As), As = [_, _|_], forall(member(A, As), atom(A)), T =.. [and|As].
+%% All those who (since 1.146.0) is those who: `He forgave all those who
+%% had harmed him.'
+lg_entity(all(NP), E, Ms) :- nonvar(NP), NP = rel(H, _), nonvar(H), H = qp(those, _), !, lg_entity(NP, E, Ms).
 lg_entity(all(NP), ent(const(all(C)), [], const), Ms) :- !,
     lg_entity(NP, ent(T, Conds, Q), Ms),
     ( Q == const, T = const(C), Conds == [] -> true ; lg_no(determiner(all)) ).
@@ -1682,6 +1710,7 @@ lg_pred_of(n(X), T, pred(nn, [const(X), T])) :- !.
 %% `Totem poles are modern rather than prehistoric.' says modern(X) and
 %% is_not(prehistoric(X)) of every totem pole.
 lg_pred_of(not(A), T, not(P)) :- nonvar(A), !, lg_pred_of(A, T, P).
+lg_pred_of(or(Bs), T, pred(N, [T])) :- lg_or_name(Bs, N), !.
 lg_pred_of(adv(M, A), T, pred(N, [T])) :- lg_cmp_name(M, A, N), !.
 lg_pred_of(adv(M, A), T, modified(adv(M), pred(A, [T]))) :- !.
 %% An adjective with an adposition phrase (since 1.91.0): the adjective's
@@ -1703,6 +1732,7 @@ lg_np_term(N, Num, As, T) :-
     ( Num == pl -> T = pl(T0) ; T = T0 ).
 
 lg_wrap1(n(M), X, nn(M, X)) :- !.
+lg_wrap1(not(_), _, _) :- !, lg_no(adjective(rather)).
 lg_wrap1(ap(A, P, _, Raw), X, T) :- !, T =.. [A, X, P, Raw].
 lg_wrap1(adv(M, A), X, T) :- !,
     ( lg_grade_adverb(M) -> true ; lg_no(adjective(adv(M, A))) ),
@@ -1723,12 +1753,15 @@ lg_wrap1(M, X, T) :- T =.. [M, X].
 %% A possessed with its own possessive pronoun (since 1.119.0): its term is
 %% the inner possessive's, of(evasion, he), inside the outer one:
 %% `his evasion of his creditors' of(of(evasion, he), of(pl(creditor), he)).
+%% Since 1.146.0 its possessor may be a noun phrase or a name (`the world's
+%% heritage of knowledge' of(of(heritage, the(world)), knowledge)), an
+%% indefinite one's facts after the outer possessor's.
 lg_possessed(P, NP, E, Ms) :-
-    nonvar(NP), NP = of(Pr, NP0), nonvar(Pr), Pr = pron(_, _, _), !,
+    nonvar(NP), NP = of(Pr, NP0), nonvar(Pr), ( Pr = pron(_, _, _) ; Pr = np(_, _, _, _) ; Pr = name(_) ), !,
     lg_arg(possessor, P, _, Pc, PMs),
     lg_possessed(Pr, NP0, ent(T0, [], Q0), Ms0),
-    ( Q0 == const, T0 = const(Tin), Ms0 == [] -> true ; lg_no(shape(NP)) ),
-    E = ent(const(of(Tin, Pc)), [], const), Ms = PMs.
+    ( Q0 == const, T0 = const(Tin) -> true ; lg_no(shape(NP)) ),
+    E = ent(const(of(Tin, Pc)), [], const), append(PMs, Ms0, Ms).
 lg_possessed(P, NP, E, Ms) :-
     lg_arg(possessor, P, _, Pc, PMs),
     ( nonvar(NP), NP = np(N, Num, D, As) -> true ; lg_no(shape(NP)) ),
@@ -2071,7 +2104,7 @@ lg_det_term(T) :-
     ;   T = that(X) -> lg_dem_shape(X)
     ;   T = a(X) -> ( X = of(Y, P) -> lg_np_shape(Y), lg_poss_term(P) ; lg_np_shape(X) -> true ; lg_pp_shape(X) -> true ; lg_to_shape(X) )
     ;   T = a(X, K) -> integer(K), K > 1, lg_det_term(a(X))
-    ;   T = of(of(X, P0), P) -> lg_np_shape(X), atom(P0), lg_poss_term(P)
+    ;   T = of(of(X, P0), P) -> lg_np_shape(X), lg_poss_term(P0), lg_poss_term(P)
     ;   T = of(X, P) -> lg_np_shape(X), \+ lg_ap_atom(X), lg_poss_term(P)
     ;   T = all(X) -> ( lg_det_term(X), X \= a(_), X \= a(_, _) -> true ; atom(X), lg_np_shape(X) )
     ;   T = only(X) -> lg_det_term(X)
@@ -2324,6 +2357,10 @@ lg_term_facts(T, Fs) :- lg_shape_facts(T, const(T), Fs).
 
 lg_shape_facts(of(T, P), K, Fs) :- !,
     (   nonvar(T), T = of(T0, P0), atom(P0) -> lg_np_facts(T0, K, Fs0)
+    ;   nonvar(T), T = of(T0, P0), lg_poss_term(P0)
+    ->  lg_np_facts(T0, K, FsA),
+        ( lg_ind_shape(P0, _) -> lg_term_facts(P0, FsB) ; FsB = [] ),
+        append(FsA, FsB, Fs0)
     ;   lg_np_facts(T, K, Fs0)
     ),
     (   nonvar(P), lg_ind_shape(P, _) -> lg_term_facts(P, Fs1) ; Fs1 = [] ),
@@ -2518,6 +2555,7 @@ lg_cond_part(modified(adv(M), pred(A, [var(K0)])), K, adv(M, A)) :- K0 == K.
 %% An adjective, or a noun before the noun (n(M)).
 lg_mod_ok(L, n(M)) :- !, atom(M), lg_class_ok(L, M/1, noun).
 lg_mod_ok(L, adv(M, A)) :- !, lg_grade_adverb(M), lg_class_ok(L, A/1, adjective).
+lg_mod_ok(L, or(Bs)) :- !, is_list(Bs), forall(member(B, Bs), lg_class_ok(L, B/1, adjective)).
 lg_mod_ok(L, A) :- lg_class_ok(L, A/1, adjective).
 
 lg_body_list(and(Bs), Bs) :- !.
@@ -2894,6 +2932,7 @@ lg_add_adjunct(Js, adv(M), Js1) :-
     append(Init, [adv(and(Ms))], Js1).
 lg_add_adjunct(Js, J, Js1) :- append(Js, [J], Js1).
 
+lg_unary_ir(_, P, S, copula(present, pos, S, adj([or(Bs)]))) :- lg_or_parts(P, Bs), !.
 lg_unary_ir(L, P, S, IR) :-
     lg_unary_classes(L, P, S, Cs),
     member(C, Cs),
@@ -3038,6 +3077,12 @@ lg_const_np(L, Cs, of(T, P), of(PNP, of(Pr, np(N, Num, def, As)))) :-
     nonvar(T), T = of(T0, P0), atom(P0), lg_pron_np(P0, Pr), !,
     lg_np_of_term(L, T0, N, Num, As),
     ( P == someone -> PNP = pron(3, sg, zero) ; lg_const_np(L, Cs, P, PNP) ).
+%% A possessor a noun phrase or a name names (since 1.146.0): of(of(heritage,
+%% the(world)), knowledge) is `the world's heritage of knowledge'.
+lg_const_np(L, Cs, of(T, P), of(PNP, of(GNP, np(N, Num, def, As)))) :-
+    nonvar(T), T = of(T0, P0), lg_poss_term(P0), lg_np_of_term(L, T0, N, Num, As), !,
+    lg_const_np(L, Cs, P0, GNP),
+    ( P == someone -> PNP = pron(3, sg, zero) ; lg_const_np(L, Cs, P, PNP) ).
 lg_const_np(L, Cs, of(T, P), of(PNP, np(N, Num, def, As))) :- !,
     lg_np_of_term(L, T, N, Num, As),
     ( P == someone -> PNP = pron(3, sg, zero) ; lg_const_np(L, Cs, P, PNP) ).
@@ -3113,6 +3158,7 @@ lg_ir_aps(L, Cs, [X|Xs], [Y|Ys]) :-
     lg_ir_aps(L, Cs, Xs, Ys).
 
 lg_np_item_ok(L, n(M)) :- !, typology_meaning(L, noun, M).
+lg_np_item_ok(L, or(Bs)) :- !, is_list(Bs), forall(member(B, Bs), typology_meaning(L, adjective, B)).
 lg_np_item_ok(L, ap(A, P, _, _)) :- !, typology_meaning(L, adjective, A), typology_meaning(L, adposition, P).
 lg_np_item_ok(L, adv(M, A)) :- !, typology_meaning(L, adverb, M), typology_meaning(L, adjective, A).
 lg_np_item_ok(L, A) :- typology_meaning(L, adjective, A).
@@ -3130,6 +3176,19 @@ lg_cmp_name(M, A, N) :-
     (   catch(ty_cmp_word(english, M, A, W), _, fail) -> N = W
     ;   atomic_list_concat([M, A], '_', N)
     ).
+
+%% ADJECTIVES JOINED BY `OR' (since 1.146.0) are one predicate, named by
+%% their words joined by `_or_' (`A feudal or ritualistic society.'
+%% society(a(feudal_or_ritualistic(society))),
+%% feudal_or_ritualistic(a(feudal_or_ritualistic(society))); `The dog is
+%% big or small.' big_or_small(the(dog))); and back, where each part of the
+%% name is an adjective's.
+lg_or_name(Bs, N) :-
+    is_list(Bs), Bs = [_, _|_], forall(member(B, Bs), atom(B)), atomic_list_concat(Bs, '_or_', N).
+
+lg_or_parts(A, Bs) :-
+    atom(A), sub_atom(A, _, _, _, '_or_'), atomic_list_concat(Bs, '_or_', A), Bs = [_, _|_],
+    forall(member(B, Bs), ( B \== '', catch(typology_meaning(english, adjective, B), _, fail) )).
 
 %% A part's function (since 1.145.0): the English template's partitive
 %% Q, and `_of' (one_of, much_of); and back.
@@ -3177,6 +3236,7 @@ lg_np_parts(T, N, [adv(M, A)|As]) :-
     compound(T), T =.. [M, Y], atom(M), compound(Y), Y =.. [A, X], atom(A),
     lg_grade_adverb(M), !,
     lg_np_parts(X, N, As).
+lg_np_parts(T, N, [or(Bs)|As]) :- compound(T), T =.. [A, X], atom(A), lg_or_parts(A, Bs), !, lg_np_parts(X, N, As).
 lg_np_parts(T, N, [A|As]) :- compound(T), T =.. [A, X], atom(A), lg_np_parts(X, N, As).
 
 %% A name's constant written: each word with a capital (john_smith is
@@ -3199,7 +3259,7 @@ lg_capital(W, C) :-
 lg_class_ok(L, P/A, C) :-
     (   lg_code_class(cocolog, P/A, _)
     ->  lg_code_class(cocolog, P/A, C)
-    ;   A == 1 -> ( typology_meaning(L, C, P) -> true ; C == noun, typology_ing_noun(L, P) )
+    ;   A == 1 -> ( typology_meaning(L, C, P) -> true ; C == noun, typology_ing_noun(L, P) -> true ; C == adjective, lg_or_parts(P, _) )
     ;   memberchk(C, [verb, adposition, noun]),
         (   typology_meaning(L, C, P) -> true
         ;   C == verb, typology_command_verb(L, P)

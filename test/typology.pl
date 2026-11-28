@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words, but_words, more_grammar_words, gerund_places, commands_and_times, do_and_bare, copula_tails, clause_objects, parts_and_equals,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words, but_words, more_grammar_words, gerund_places, commands_and_times, do_and_bare, copula_tails, clause_objects, parts_and_equals, adverbs_and_articles,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -3016,6 +3016,44 @@ parts_and_equals :-
     ( once(typology_read(english, 'He painted all day.', R5)) -> true ; R5 = none ),
     check('all before a noun of time stays the time', R5, clause(paint, past, pos, pron(3, sg, m), none, [time(np(day, sg, all, []))])).
 
+%% 1.146.0: so and so that, a command with a subordinate clause, those who,
+%% adjectives joined by or, a few and too many, a possessed head with a
+%% possessor of its own, an adverb of two words, an adverb before a command
+%% or after it and a comma.
+adverbs_and_articles :-
+    section('so, a command with a subordinate clause, those who, a few, a possessor in a possessed head, no longer, please'),
+    forall(member(T-Want-Back, [
+               'Treat the water so it can be drunk.'-sub(so, clause(treat, imperative, pos, pron(2, sg, _), np(water, sg, def, [])), copula(modal(can), pos, pron(3, sg, n), adj([drunk])))-same,
+               'Close the door if it rains.'-sub(if, clause(close, imperative, pos, pron(2, sg, _), np(door, sg, def, [])), clause(rain, present, pos, pron(3, sg, n), none))-same,
+               'If you are cold, turn up the heat.'-sub(if, clause(turn_up, imperative, pos, pron(2, sg, _), np(heat, sg, def, [])), copula(present, pos, pron(2, sg, _), adj([cold])))-'Turn up the heat if you are cold.',
+               'He forgave those who had harmed him.'-clause(forgive, past, pos, pron(3, sg, m), rel(qp(those, person), clause(harm, pluperfect, pos, gap, pron(3, sg, m))))-'He forgave those that had harmed him.',
+               'His hair was red or brown.'-copula(past, pos, of(pron(3, sg, m), np(hair, sg, def, [])), adj([or([red, brown])]))-same,
+               'He made a few remarks.'-clause(make, past, pos, pron(3, sg, m), np(remark, pl, a_few, []))-same,
+               'He missed too many rehearsals.'-clause(miss, past, pos, pron(3, sg, m), np(rehearsal, pl, too_many, []))-same,
+               'Too much sun is harmful to the skin.'-copula(present, pos, np(sun, sg, too_much, []), adj([ap(harmful, pp(to, np(skin, sg, def, [])))]))-same,
+               'The world\'s heritage of knowledge.'-phrase(of(np(knowledge, sg, mass, []), of(np(world, sg, def, []), np(heritage, sg, def, []))))-same,
+               'A nation\'s balance of trade is favorable.'-copula(present, pos, of(np(trade, sg, mass, []), of(np(nation, sg, indef, []), np(balance, sg, def, []))), adj([favorable]))-same,
+               'He could no longer contain his hostility.'-clause(contain, modal(could), pos, pron(3, sg, m), of(pron(3, sg, m), np(hostility, sg, def, [])), [adv(no_longer)])-'He could contain his hostility no longer.',
+               'Refill my glass, please.'-clause(refill, imperative, pos, pron(2, sg, _), of(pron(1, sg, _), np(glass, sg, def, [])), [adv(please)])-'Refill my glass please.',
+               'Please read the passage aloud.'-clause(read, imperative, pos, pron(2, sg, _), np(passage, sg, def, []), [adv(aloud), adv(please)])-'Read the passage aloud please.' ]),
+           ( ( once(typology_read(english, T, R)) -> true ; R = none ),
+             ( R = Want -> V = yes ; V = R ),
+             atomic_list_concat(['English, the first reading: ', T], Label),
+             check(Label, V, yes),
+             ( R \== none, typology_write(english, R, W) -> true ; W = none ),
+             ( Back == same -> Back1 = T ; Back1 = Back ),
+             atomic_list_concat(['English, written: ', T], Label2),
+             check(Label2, W, Back1) )),
+    ( once(typology_read(english, 'As he called the role he put a check mark.', R2)) -> true ; R2 = none ),
+    ( R2 = sub(as, clause(put, past, _, _, _), _) -> A2 = yes ; A2 = R2 ),
+    check('a command after a subordinate clause only past a comma', A2, yes),
+    ( once(typology_read(english, 'If you are cold turn up the heat.', R3)) -> true ; R3 = none ),
+    check('no comma, no command after the subordinate clause', R3, none),
+    ( once(typology_read(english, 'He saw a few.', R4)) -> true ; R4 = none ),
+    check('a few before a noun alone', R4, none),
+    ( once(typology_read(english, 'Those sleep.', R5)) -> true ; R5 = none ),
+    check('those alone is no subject', R5, none).
+
 t_has_ger(T) :-
     compound(T),
     (   T = ger(_, _, _) -> true ; T =.. [_|As], member(A, As), t_has_ger(A) ), !.
@@ -3741,8 +3779,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 6672 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 6 672 sentences read at 1.145.0 within 2 000 000 inferences each are read', R1, yes),
+    ( K >= 6711 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 6 711 sentences read at 1.146.0 within 2 000 000 inferences each are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

@@ -717,3 +717,14 @@ Totem poles are modern rather than prehistoric.	modern(X) :- pole(X), nn(totem, 
 The guardian's duties were primarily sanctionative rather than administrative.	past(primarily(sanctionative(of(pl(duty), the(guardian))))). is_not(past(administrative(of(pl(duty), the(guardian))))).
 It suddenly spewed out a thick green concoction.	concoction(a(thick(green(concoction)))). thick(a(thick(green(concoction)))). green(a(thick(green(concoction)))). past(suddenly(spew_out(it, a(thick(green(concoction)))))).
 Suspense is the very stuff of narrative.	very_stuff(suspense, narrative).
+# so; those who; adjectives joined by or; a few and too many; a possessor in a possessed head; no longer; please (1.146.0)
+Feed the dog so it can sleep.	so(imperative(feed(you, the(dog))), can(sleep(it))).
+She saved money so she could travel.	so(past(save(she, money)), could(travel(she))).
+They thanked those who had helped them.	past(thank(they, X)) :- pluperfect(help(X, they)).
+The sky was gray or blue.	past(gray_or_blue(the(sky))).
+She wrote a few letters.	letter(a(pl(a_few(letter)))). a_few(a(pl(a_few(letter)))). past(write(she, a(pl(a_few(letter))))).
+The city's history of trade.	history(of(of(history, the(city)), trade)).
+The king's love of music is famous.	famous(of(of(love, the(king)), music)).
+She could no longer hear the music.	could(no_longer(hear(she, the(music)))).
+Close the window, please.	imperative(please(close(you, the(window)))).
+He ate too many apples.	apple(a(pl(too_many(apple)))). too_many(a(pl(too_many(apple)))). past(eat(he, a(pl(too_many(apple))))).

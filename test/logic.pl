@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words, but_words, joined_terms, relatives, more_grammar_words, gerund_places, quantified_args, copula_names, relation_names, copula_tails, clause_objects, parts_and_equals]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words, but_words, joined_terms, relatives, more_grammar_words, gerund_places, quantified_args, copula_names, relation_names, copula_tails, clause_objects, parts_and_equals, adverbs_and_articles]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -263,11 +263,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 681),
-    ( R >= 671 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 671 right', VR, ok),
-    ( K >= 673 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 673 kept', VK, ok).
+    check('the second measure: its sentences', N, 691),
+    ( R >= 681 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 681 right', VR, ok),
+    ( K >= 682 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 682 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -1272,6 +1272,29 @@ parts_and_equals :-
     ( logic_translate(english, cocolog, 'None of her sisters would betray her.', C2) -> true ; C2 = none ),
     check('a part of none has no form yet', C2, none).
 
+adverbs_and_articles :-
+    section('so, those who, adjectives joined by or, a few, a possessor in a possessed head, no longer, please'),
+    typology_load(english),
+    forall(member(S-Want-Back, [
+               'Treat the water so it can be drunk.'-'so(imperative(treat(you, the(water))), can(drunk(it))).\n'-same,
+               'He works so he can eat.'-'so(work(he), can(eat(he))).\n'-same,
+               'He forgave those who had harmed him.'-'past(forgive(he, A)) :-\n    pluperfect(harm(A, he)).\n'-'Forgive holds for he and X in the past if harm holds for X and he in the past.',
+               'His hair was red or brown.'-'past(red_or_brown(of(hair, he))).\n'-same,
+               'He made a few remarks.'-'remark(a(pl(a_few(remark)))).\na_few(a(pl(a_few(remark)))).\npast(make(he, a(pl(a_few(remark))))).\n'-same,
+               'The world\'s heritage of knowledge.'-'heritage(of(of(heritage, the(world)), knowledge)).\n'-same,
+               'A nation\'s balance of trade is favorable.'-'nation(a(nation)).\nfavorable(of(of(balance, a(nation)), trade)).\n'-same,
+               'He determined the upper bound with Descartes\' rule of signs.'-'sign(a(pl(sign))).\npast(with(determine(he, the(upper(bound))), of(of(rule, descartes), a(pl(sign))))).\n'-same,
+               'He could no longer contain his hostility.'-'could(no_longer(contain(he, of(hostility, he)))).\n'-'He could contain his hostility no longer.',
+               'Refill my glass, please.'-'imperative(please(refill(you, of(glass, i)))).\n'-'Refill my glass please.' ]),
+           ( ( logic_translate(english, cocolog, S, C) -> true ; C = none ),
+             check(S, C, Want),
+             ( C \== none, logic_translate(cocolog, english, C, E) -> true ; E = none ),
+             ( Back == same -> Back1 = S ; Back1 = Back ),
+             atomic_list_concat(['and back: ', S], Label),
+             check(Label, E, Back1) )),
+    ( logic_translate(english, cocolog, 'Close the door if it rains.', C2) -> true ; C2 = none ),
+    check('a command under if has no form yet', C2, none).
+
 copula_tails :-
     section('a copula noun phrase with an adposition phrase, a gerund noun, a particle verb passive'),
     typology_load(english),
@@ -1458,7 +1481,8 @@ but_words :-
              check(Label, E, Back) )),
     ( once(typology_read(english, 'His shooting was slow or accurate.', IR)) -> true ; IR = none ),
     ( logic_from_ir(IR, _) -> W = read ; logic_why(IR, W) ),
-    check('two adjectives or joins have no logic form', W, predicate(adj(or([slow, accurate])))).
+    %% since 1.146.0 one predicate, slow_or_accurate (adverbs_and_articles)
+    check('two adjectives or joins have a logic form', W, read).
 
 %% 1.129.0: a dash is its two sentences' items; a joined group is
 %% the(group(and(A, B))); `of' after a verb an adposition's predicate.

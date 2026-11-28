@@ -200,6 +200,7 @@ main :-
     copula_tails,
     clause_objects,
     parts_and_equals,
+    adverbs_and_articles,
     format("~ndone~n", []).
 
 
@@ -1675,6 +1676,25 @@ parts_and_equals :-
     typology_read(english, 'The reviews were all positive.', IR3),
     typology_write(english, IR3, W3),
     must('a floating all, written before the subject', W3, 'All the reviews were positive.').
+
+%% 111. AN ADVERB OF TWO WORDS, AN ARTICLE OF TWO WORDS, A COMMAND WITH A
+%% SUBORDINATE CLAUSE (1.146.0). A ty_adverb/3 row whose word has a space
+%% (`no longer') is one token where its words stand together; a
+%% ty_article/5 row of two words (`a few', `too many') is a determiner as
+%% `todos los' is; a command may be a subordinate clause's main clause,
+%% and may have an adverb before it or after it and a comma (`please').
+adverbs_and_articles :-
+    typology_load(english),
+    typology_read(english, 'He could no longer contain his hostility.', IR1),
+    must('an adverb of two words', IR1, clause(contain, modal(could), pos, pron(3, sg, m), of(pron(3, sg, m), np(hostility, sg, def, [])), [adv(no_longer)])),
+    typology_read(english, 'He made a few remarks.', IR2),
+    must('an article of two words', IR2, clause(make, past, pos, pron(3, sg, m), np(remark, pl, a_few, []))),
+    once(typology_read(english, 'Close the door if it rains.', IR3)),
+    IR3 = sub(K3, clause(V3, T3, _, _, _), _),
+    must('a command under if', K3-V3-T3, if-close-imperative),
+    once(typology_read(english, 'Refill my glass, please.', IR4)),
+    typology_write(english, IR4, W4),
+    must('please after a comma, written at the end', W4, 'Refill my glass please.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
