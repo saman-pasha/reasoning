@@ -194,6 +194,7 @@ main :-
     small_words,
     but_words,
     more_grammar_words,
+    gerund_places,
     format("~ndone~n", []).
 
 
@@ -1559,6 +1560,24 @@ more_grammar_words :-
     must('and written', W3, 'Swimming is fun.'),
     typology_read(english, 'Appalling conditions.', IR4),
     must('a noun phrase still', IR4, phrase(np(condition, pl, indef, [appalling]))).
+
+
+%% 105. THE GERUND IN MORE PLACES (1.138.0): after an adposition, where it
+%% takes its own words first (`for getting into trouble'), after `of' as a
+%% possessor, and as the object of a verb of ty_verb_list(L, gerund, Base)
+%% (`He hated painting the ceiling.'). Adpositions of several words
+%% (`because of', `according to', `in front of') and `like'; an adjective
+%% `too' grades takes an infinitive (`too old to run').
+gerund_places :-
+    typology_load(english),
+    typology_read(english, 'He had a special knack for getting into trouble.', IR1),
+    must('for getting into trouble', IR1, clause(have, past, pos, pron(3, sg, m), np(knack, sg, indef, [special]), [pp(for, ger(get, none, [pp(into, np(trouble, sg, mass, []))]))])),
+    typology_read(english, 'He hated painting the ceiling.', IR2),
+    must('a gerund object', IR2, clause(hate, past, pos, pron(3, sg, m), ger(paint, np(ceiling, sg, def, []), []))),
+    typology_read(english, 'He left because of the rain.', IR3),
+    must('because of', IR3, clause(leave, past, pos, pron(3, sg, m), none, [pp(because_of, np(rain, sg, def, []))])),
+    typology_read(english, 'The dog is too old to run.', IR4),
+    must('too old to run', IR4, copula(present, pos, np(dog, sg, def, []), adj([ap(adv(too, old), inf(run, none))]))).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

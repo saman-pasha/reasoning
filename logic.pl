@@ -1061,6 +1061,13 @@ lg_ap_atoms([ap(A, Inf)|Xs], T, [pred(A, [T, fun(to, [F])])|As], Os) :-
     atom(A), lg_inf_parts(Inf, V2, O2, Js2), !,
     lg_inf_fun(T, V2, O2, Js2, F),
     lg_ap_atoms(Xs, T, As, Os).
+%% An adjective an adverb grades with its infinitive (since 1.138.0): the
+%% adverb round the adjective's predicate of two, `Too heartsick to fight
+%% back.' too(heartsick(someone, to(back(fight(someone))))).
+lg_ap_atoms([ap(adv(M, A), Inf)|Xs], T, [modified(adv(M), pred(A, [T, fun(to, [F])]))|As], Os) :-
+    atom(M), atom(A), lg_inf_parts(Inf, V2, O2, Js2), !,
+    lg_inf_fun(T, V2, O2, Js2, F),
+    lg_ap_atoms(Xs, T, As, Os).
 %% A COMPARATIVE WITH WHAT IT IS COMPARED WITH (since 1.120.0): a predicate
 %% of two, the comparative's, of the subject and the term `than' names:
 %% `John is taller than Mary.' taller(john, mary), `His second marriage was
@@ -2436,6 +2443,10 @@ lg_ir_adjunct(clause(V, T, P, S, O), J, clause(V, T, P, S, O, [J])).
 lg_ir_adjunct(copula(T, P, S, adj([A])), pp(Pr, NP), copula(T, P, S, adj([ap(A, pp(Pr, NP))]))) :-
     ( atom(A) -> true ; A = adv(_, A1), atom(A1) ).
 lg_ir_adjunct(copula(T, P, S, adj([A])), adv(M), copula(T, P, S, adj([adv(M, A)]))) :- atom(A), lg_grade_adverb(M).
+%% Round an adjective and its infinitive (since 1.138.0): the adverb grades
+%% the adjective, `too heartsick to fight back'.
+lg_ir_adjunct(copula(T, P, S, adj([ap(A, Inf)])), adv(M), copula(T, P, S, adj([ap(adv(M, A), Inf)]))) :-
+    atom(A), lg_inf_parts(Inf, _, _, _), lg_grade_adverb(M).
 lg_ir_adjunct(clause(V, T, P, S, O, Js), J, clause(V, T, P, S, O, Js1)) :- lg_add_adjunct(Js, J, Js1).
 
 %% Two adverbs side by side are joined (`slowly and quietly').

@@ -100,6 +100,7 @@ main :-
     joined_terms,
     relatives,
     more_grammar_words,
+    gerund_places,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -866,6 +867,22 @@ more_grammar_words :-
     must('swimming', C3, 'fun(ing(swim(someone))).\n'),
     logic_translate(cocolog, english, C3, E3),
     must('and back', E3, 'Swimming is fun.').
+
+
+%% 71. THE GERUND IN MORE PLACES (1.138.0) is the constant ing(Atom) where
+%% its term stands, after an adposition, after `of' and as an object; an
+%% adposition of several words is one predicate; an adjective `too' grades
+%% with its infinitive is the adverb round the adjective's predicate.
+gerund_places :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'He hated painting the ceiling.', C1),
+    must('a gerund object', C1, 'past(hate(he, ing(paint(someone, the(ceiling))))).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and back', E1, 'He hated painting the ceiling.'),
+    logic_translate(english, cocolog, 'He left because of the rain.', C2),
+    must('because of', C2, 'past(because_of(leave(he), the(rain))).\n'),
+    logic_translate(english, cocolog, 'The dog is too old to run.', C3),
+    must('too old to run', C3, 'too(old(the(dog), to(run(the(dog))))).\n').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

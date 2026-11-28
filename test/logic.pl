@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words, but_words, joined_terms, relatives, more_grammar_words]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words, but_words, joined_terms, relatives, more_grammar_words, gerund_places]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -262,11 +262,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 601),
-    ( R >= 592 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 592 right', VR, ok),
-    ( K >= 595 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 595 kept', VK, ok).
+    check('the second measure: its sentences', N, 611),
+    ( R >= 602 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 602 right', VR, ok),
+    ( K >= 605 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 605 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -1184,6 +1184,34 @@ reflexives :-
     once(typology_read(english, 'Perfectly poised and sure of himself.', IR)),
     ( logic_from_ir(IR, _) -> W = read ; logic_why(IR, W) ),
     check('a reflexive with no subject has no logic form', W, pronoun(reflexive)).
+
+%% 1.138.0: a gerund after an adposition, after `of' and as a verb's
+%% object is the constant ing(Atom) where its term stands, its atom said of
+%% someone; an adposition of several words is one predicate
+%% (because_of/2); an adjective `too' grades with its infinitive is the
+%% adverb round the adjective's predicate of two.
+gerund_places :-
+    section('the gerund after an adposition, of and a verb; because of, like; too ADJ to INF'),
+    typology_load(english),
+    forall(member(S-Want-Back, [
+               'He was fined for littering.'-'past(for(fine(someone, he), ing(litter(someone)))).\n'-'Someone fined him for littering.',
+               'He had a special knack for getting into trouble.'-'knack(a(special(knack))).\nspecial(a(special(knack))).\npast(for(have(he, a(special(knack))), ing(into(get(someone), trouble)))).\n'-same,
+               'He hated painting the ceiling.'-'past(hate(he, ing(paint(someone, the(ceiling))))).\n'-same,
+               'He learned drawing from his father.'-'past(from(learn(he, ing(draw(someone))), of(father, he))).\n'-same,
+               'The job of repairing the engine took several hours.'-'hour(a(pl(several(hour)))).\nseveral(a(pl(several(hour)))).\npast(take(of(job, ing(repair(someone, the(engine)))), a(pl(several(hour))))).\n'-same,
+               'She could not forbear weeping.'-'is_not(could(forbear(she, ing(weep(someone))))).\n'-same,
+               'He left because of the rain.'-'past(because_of(leave(he), the(rain))).\n'-same,
+               'He sat in front of the house.'-'past(in_front_of(sit(he), the(house))).\n'-same,
+               'He worked like a demon.'-'demon(a(demon)).\npast(like(work(he), a(demon))).\n'-same,
+               'The dog is too old to run.'-'too(old(the(dog), to(run(the(dog))))).\n'-same ]),
+           ( ( logic_translate(english, cocolog, S, C) -> true ; C = none ),
+             check(S, C, Want),
+             ( C \== none, logic_translate(cocolog, english, C, E) -> true ; E = none ),
+             ( Back == same -> Back1 = S ; Back1 = Back ),
+             atomic_list_concat(['and back: ', S], Label),
+             check(Label, E, Back1) )),
+    ( logic_translate(cocolog, english, 'like(they, music).\n', E2) -> true ; E2 = none ),
+    check('like of two constants is the verb', E2, 'They like music.').
 
 %% 1.137.0: a subordinate clause of though, since, until, while, unless,
 %% before or after is its kind's atom over the main clause's and its own,

@@ -630,3 +630,13 @@ Getting that job was definitely fluky.	past(definitely(fluky(ing(get(someone, th
 Jogging works off my excess energy.	work_off(ing(jog(someone)), of(excess(energy), i)).
 The smart set goes there.	there(go(the(smart(set)))).
 They snobbishly excluded their less wealthy friends from the party.	past(from(snobbishly(exclude(they, of(pl(less(wealthy(friend))), they))), the(party))).
+He was fined for littering.	past(for(fine(someone, he), ing(litter(someone)))).
+He hated painting the ceiling.	past(hate(he, ing(paint(someone, the(ceiling))))).
+Shake well before using.	imperative(before(well(shake(you)), ing(use(someone)))).
+Too tired to eat.	too(tired(something, to(eat(something)))).
+Do not operate machinery after imbibing alcohol.	is_not(imperative(after(operate(you, machinery), ing(imbibe(someone, alcohol))))).
+He dropped the topic like a hot potato.	potato(a(hot(potato))). hot(a(hot(potato))). past(like(drop(he, the(topic)), a(hot(potato)))).
+He learned drawing from his father.	past(from(learn(he, ing(draw(someone))), of(father, he))).
+She could not forbear weeping.	is_not(could(forbear(she, ing(weep(someone))))).
+The job of repairing the engine took several hours.	hour(a(pl(several(hour)))). several(a(pl(several(hour)))). past(take(of(job, ing(repair(someone, the(engine)))), a(pl(several(hour))))).
+Suddenly the board lit up like a Christmas tree.	tree(a(nn(christmas, tree))). nn(christmas, a(nn(christmas, tree))). past(suddenly(like(light_up(the(board)), a(nn(christmas, tree))))).

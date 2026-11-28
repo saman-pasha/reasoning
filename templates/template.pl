@@ -370,7 +370,9 @@ ty_conjunct_marks(xx).
 %%                                     goes to and the thing, since
 %%                                     1.117.0; linking: one whose
 %%                                     complement is a predicate said of
-%%                                     its subject, since 1.122.0), or
+%%                                     its subject, since 1.122.0; gerund:
+%%                                     one whose object may be a gerund,
+%%                                     since 1.138.0), or
 %%                                     Base is a list of verbs
 %%                                     (since 1.95.0)
 %% ty_verb_list(xx, Kind, Base).

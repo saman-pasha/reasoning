@@ -124,7 +124,9 @@
 %%                                     goes to and the thing, since
 %%                                     1.117.0; linking: one whose
 %%                                     complement is a predicate said of
-%%                                     its subject, since 1.122.0), or
+%%                                     its subject, since 1.122.0; gerund:
+%%                                     one whose object may be a gerund,
+%%                                     since 1.138.0), or
 %%                                     Base is a list of verbs
 %%                                     (since 1.95.0)
 %%     ty_adjective_list(L, Kind, Base)
@@ -5376,6 +5378,17 @@ ty_object(L, V, inf(V2, O2, Js2), inf) -->
     { nonvar(V), ty_verb_of(L, infinitive, V) },
     ty_infinitive_words(L, V),
     ty_infinitive(L, V2, O2, Js2).
+%% A GERUND AS A VERB'S OBJECT (since 1.138.0: `He hated painting the
+%% ceiling.'), of a verb ty_verb_list(L, gerund, Base) names, in the
+%% gerund's chance alone: of any verb, `He wrote a note expressing his
+%% regret.' read two objects and `Stone containing many embedded fossils.'
+%% a command.
+ty_object(L, V, G, ger) -->
+    { '$ty_ger_made'(L), nonvar(V), ty_verb_of(L, gerund, V) },
+    ty_ger_ahead(L),
+    { var(G) -> true ; G = ger(_, _, _) },
+    { G = ger(V2, O2, Js2) },
+    ty_gerund(L, V2, O2, Js2).
 ty_object(L, V, clause(V2, infinitive, pos, NP, O2, Js2), oinf) -->
     { '$ty_inf_made'(L) },
     ty_flag_allows('$ty_pinf'),
@@ -5533,6 +5546,24 @@ ty_gerund(L, V, O, Js) -->
       b_setval('$ty_command', g(C)) },
     (   { ty_verb_last(L, rel) } -> ty_sub(ty_clause(L, C)) ; ty_clause(L, C) ),
     { b_setval('$ty_command', X0) }.
+
+%% A GERUND THAT TAKES ITS OWN WORDS FIRST (since 1.138.0), an
+%% adposition's: reading, its readings that leave the fewest words come
+%% first, so `for getting into trouble' is the gerund's adposition phrase,
+%% not the clause's (the first reading left `into trouble' to the clause).
+%% Each length is read again, so what a reading sets stays set. An object's
+%% and a possessor's gerund takes its first reading: a verb's adjuncts
+%% follow its object (`He learned drawing from his father.'), and `gave a
+%% richness of coloring to that side of the room' gives to the side.
+ty_ger_long(L, V, O, Js, S0, S) :-
+    (   var(S0)
+    ->  ty_gerund(L, V, O, Js, S0, S)
+    ;   findall(N, ( ty_gerund(L, _, _, _, S0, S1), length(S1, N) ), Ns0),
+        sort(Ns0, Ns),
+        member(N, Ns),
+        ty_gerund(L, V, O, Js, S0, S),
+        length(S, N)
+    ).
 
 ty_ger_first(S0, S0) :-
     (   var(S0) -> true ; nb_current('$ty_words', W), S0 == W ).
@@ -5976,6 +6007,17 @@ ty_np_phrase(L, only(NP), F) -->
     ty_predet_words(L, only),
     ty_np_phrase(L, NP, F),
     { ty_only_np(NP) }.
+%% A GERUND WHERE NO ROLE'S MARKS STAND (since 1.138.0), an adposition's
+%% (`Stretch the soup by adding some more cream.', `Incapable of carrying
+%% a tune.') or a copula's predicate: read in the gerund's chance alone
+%% (ty_ger_ahead//1), as a subject's is.
+ty_np_phrase(L, G, F) -->
+    { '$ty_ger_made'(L) },
+    ty_ger_ahead(L),
+    { var(G) -> true ; G = ger(_, _, _) },
+    { G = ger(V, O, Js) },
+    ty_ger_long(L, V, O, Js),
+    { ty_ir_features(L, G, F) }.
 
 %% A NOUN PHRASE WITH AN ADPOSITION PHRASE AFTER IT (since 1.83.0):
 %% np_pp(NP, pp(Prep, X)), in a language that keeps the phrase after its
@@ -6362,6 +6404,15 @@ ty_possessor(L, G, Next, Depth) -->
     ty_poss(L, G, _, Next, Depth1).
 ty_possessor(L, G, Next, _) --> { Next == none, ty_rel_slot(G) }, ty_rel(L, none, G, _).
 ty_possessor(L, G, Next, _) --> ty_name_here, { ty_name_slot(G) }, ty_name_linked(L, G, Next).
+%% A gerund as a possessor where nothing links to its last word (since
+%% 1.138.0: `The job of repairing the engine took several hours.'), in the
+%% gerund's chance alone.
+ty_possessor(L, G, Next, _) -->
+    { Next == none, '$ty_ger_made'(L) },
+    ty_ger_ahead(L),
+    { var(G) -> true ; G = ger(_, _, _) },
+    { G = ger(V, O, Js) },
+    ty_gerund(L, V, O, Js).
 
 %% A name whose last word takes the form of what follows it (Next): written,
 %% its row's words with the last one linked; read, name tokens and a last
@@ -9082,23 +9133,32 @@ ty_case_words(L, Def, C, Ws) :-
     ;   findall(W, '$ty_art_words'(L, Def, C, W), Ws)
     ).
 
+%% An adjective an infinitive may follow: one of ty_adjective_list(L,
+%% infinitive, Base), or since 1.138.0 any adjective `too' grades.
+ty_adjective_inf(L, A) :-
+    (   atom(A) -> ty_adjective_of(L, infinitive, A)
+    ;   nonvar(A), A = adv(M, A1), M == too, atom(A1)
+    ).
+
 %% A copula's predicate's adjectives (ty_adjs//3 is the predicate's alone),
 %% one of them (each item of a joined pair is read alone) with an
 %% adposition phrase since 1.88.0 (ty_ap//5).
 ty_adjs(L, As, Rows) --> ty_adjs(L, As, Rows, none, plain).
 ty_adjs(L, [ap(A, pp(P, NP))], [R]) -->
     ty_ap(L, A, P, NP, R),
-    { \+ ( ty_to_verb_noun(L, P, NP), ty_adjective_of(L, infinitive, A) ) }.
+    { \+ ( ty_to_verb_noun(L, P, NP), ty_adjective_inf(L, A) ) }.
 %% AN ADJECTIVE AND AN INFINITIVE (since 1.96.0), ap(A, inf(Verb, Object[,
 %% Adjuncts])), of an adjective ty_adjective_list(L, infinitive, Base)
 %% names: `Human beings are able to walk on two feet.', `Glad to help.';
 %% `He is sure to win.' is no adjective with `to win' an adposition
-%% phrase (ty_to_verb_noun/3).
+%% phrase (ty_to_verb_noun/3). Since 1.138.0 any adjective `too' grades,
+%% adv(too, A): `Too heartsick to fight back.', `She was too tired to be a
+%% good host.'
 ty_adjs(L, [ap(A, inf(V, O, Js))], [R]) -->
     { '$ty_inf_made'(L) },
     ty_flag_allows('$ty_pinf'),
     ty_adjs(L, [A], [R], none, plain),
-    { atom(A), ty_adjective_of(L, infinitive, A) },
+    { ty_adjective_inf(L, A) },
     ty_infinitive_ahead(L),
     ty_infinitive(L, V, O, Js).
 

@@ -737,6 +737,11 @@ ty_verb_list(english, object_purpose, [apply, can, clear, commit, condemn, conse
 %% adposition phrase, though an infinitive may be their object (since
 %% 1.96.0: `The ball came to rest.', `He got to work.').
 ty_verb_list(english, to_noun, [come, get, run]).
+%% The verbs a gerund may be the object of (since 1.138.0: `He hated
+%% painting the ceiling.', `She could not forbear weeping.'); of another
+%% verb a word in -ing after it is no gerund object (`Stone containing
+%% many embedded fossils.', `He wrote a note expressing his regret.').
+ty_verb_list(english, gerund, [admit, advise, anticipate, appreciate, avoid, ban, begin, celebrate, consider, continue, delay, deny, detest, discuss, dislike, dread, endure, enjoy, escape, fancy, fear, finish, forbear, forget, hate, imagine, involve, justify, keep, learn, like, love, mention, mind, miss, need, postpone, practice, practise, prefer, prevent, prohibit, propose, quit, recall, recommend, regret, remember, require, resent, resist, risk, start, stop, suggest, teach, tolerate, try, give_up, put_off, carry_on, keep_on]).
 %% The verbs whose object may be followed by a predicate said of it (since
 %% 1.100.0: `They considered colonialism immoral.', `They call a fender a
 %% wing.'): WordNet's `Something ----s something Adjective/Noun' less the
@@ -834,6 +839,15 @@ ty_adposition(english, off, [off]).
 ty_adposition(english, except, [except]).
 ty_adposition(english, out_of, [out, of]).
 ty_adposition(english, instead_of, [instead, of]).
+%% Adpositions of several words (since 1.138.0): `He left because of the
+%% rain.', `According to his own testimony he can't do it.', `in front of
+%% television cameras'.
+ty_adposition(english, because_of, [because, of]).
+ty_adposition(english, according_to, [according, to]).
+ty_adposition(english, in_front_of, [in, front, of]).
+%% `like' an adposition too (since 1.138.0: `He dropped the topic like a
+%% hot potato.'), after the verb `like' is tried.
+ty_adposition(english, like, [like]).
 %% `such as' (since 1.125.0): an example of a noun phrase (`Perishable
 %% foods such as butter and fruit.').
 ty_adposition(english, such_as, [such, as]).
