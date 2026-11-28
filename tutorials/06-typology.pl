@@ -195,6 +195,7 @@ main :-
     but_words,
     more_grammar_words,
     gerund_places,
+    commands_and_times,
     format("~ndone~n", []).
 
 
@@ -1578,6 +1579,26 @@ gerund_places :-
     must('because of', IR3, clause(leave, past, pos, pron(3, sg, m), none, [pp(because_of, np(rain, sg, def, []))])),
     typology_read(english, 'The dog is too old to run.', IR4),
     must('too old to run', IR4, copula(present, pos, np(dog, sg, def, []), adj([ap(adv(too, old), inf(run, none))]))).
+
+
+%% 106. A COMMAND OF A VERB NO ROW HAS, A NOUN PHRASE OF TIME (1.140.0). In
+%% a fifth chance, where nothing else reads, a command's first word may be
+%% a verb of the template's command list (ty_verb_list(L, command, Base))
+%% that no row has: English takes no rare verb sense of a known noun, so
+%% `Tar the roads.' read nothing. In a sixth, a noun phrase of a noun of
+%% ty_noun_list(L, time, Nouns) is an adjunct, time(NP): `all day', `every
+%% year', `this year'. Both are written back.
+commands_and_times :-
+    typology_load(english),
+    typology_read(english, 'Tar the roads.', IR1),
+    IR1 = clause(V1, T1, _, _, O1),
+    must('a command of tar', V1-T1-O1, tar-imperative-np(road, pl, def, [])),
+    typology_write(english, IR1, W1),
+    must('and written', W1, 'Tar the roads.'),
+    typology_read(english, 'She topped her class every year.', IR2),
+    must('every year', IR2, clause(top, past, pos, pron(3, sg, f), of(pron(3, sg, f), np(class, sg, def, [])), [time(np(year, sg, every, []))])),
+    typology_write(english, IR2, W2),
+    must('and written', W2, 'She topped her class every year.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

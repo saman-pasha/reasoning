@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words, but_words, more_grammar_words, gerund_places,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words, but_words, more_grammar_words, gerund_places, commands_and_times,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2862,6 +2862,32 @@ gerund_places :-
              atomic_list_concat(['a gerund object of a verb the list has not: ', T3], Label3),
              check(Label3, V3, no) )).
 
+%% 1.140.0: a command whose verb no row has (the template's command list,
+%% the fifth chance) and a noun phrase of time as an adjunct (the sixth),
+%% each read and written; an object of time read first as before.
+commands_and_times :-
+    section('a command of a verb no row has; a noun phrase of time as an adjunct'),
+    forall(member(T-Want, [
+               'Tar the roads.'-clause(tar, imperative, pos, pron(2, sg, _), np(road, pl, def, [])),
+               'Button the dress.'-clause(button, imperative, pos, pron(2, sg, _), np(dress, sg, def, [])),
+               'Toe a nail.'-clause(toe, imperative, pos, pron(2, sg, _), np(nail, sg, indef, [])),
+               'He painted all day in the garden.'-clause(paint, past, pos, pron(3, sg, m), none, [time(np(day, sg, all, [])), pp(in, np(garden, sg, def, []))]),
+               'She topped her class every year.'-clause(top, past, pos, pron(3, sg, f), of(pron(3, sg, f), np(class, sg, def, [])), [time(np(year, sg, every, []))]),
+               'The plant sprouted early this year.'-clause(sprout, past, pos, np(plant, sg, def, []), none, [adv(early), time(np(year, sg, this, []))]),
+               'We sat up all night.'-clause(sit_up, past, pos, pron(1, pl, _), none, [time(np(night, sg, all, []))]),
+               'He loves every day.'-clause(love, present, pos, pron(3, sg, m), np(day, sg, every, [])) ]),
+           ( ( once(typology_read(english, T, R)) -> true ; R = none ),
+             ( R = Want -> V = yes ; V = R ),
+             atomic_list_concat(['English, the first reading: ', T], Label),
+             check(Label, V, yes),
+             ( R \== none, typology_write(english, R, W) -> true ; W = none ),
+             atomic_list_concat(['English, written: ', T], Label2),
+             check(Label2, W, T) )),
+    forall(member(T3, ['Even firing at close range he missed.', 'Out to win every event.']),
+           ( ( once(typology_read(english, T3, R3)) -> true ; R3 = none ),
+             atomic_list_concat(['no command of a word with an adverb row: ', T3], Label3),
+             check(Label3, R3, none) )).
+
 t_has_ger(T) :-
     compound(T),
     (   T = ger(_, _, _) -> true ; T =.. [_|As], member(A, As), t_has_ger(A) ), !.
@@ -2954,7 +2980,9 @@ particles :-
              ( R = Want -> V = yes ; V = R ),
              atomic_list_concat(['English, the first reading: ', T], Label),
              check(Label, V, yes) )),
-    forall(member(T2, [ 'The reviews were all positive.', 'He painted all day in the garden.',
+    %% `He painted all day in the garden.' reads since 1.140.0, `all day' a
+    %% time's adjunct (commands_and_times), never the object.
+    forall(member(T2, [ 'The reviews were all positive.',
                         'The stock market is down today.', 'Found himself loaded down with responsibilities.' ]),
            ( ( once(typology_read(english, T2, R2)) -> true ; R2 = none ),
              atomic_list_concat(['English, no reading: ', T2], Label2),
@@ -3584,8 +3612,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 6382 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 6 382 sentences read at 1.138.0 within 2 000 000 inferences each are read', R1, yes),
+    ( K >= 6435 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 6 435 sentences read at 1.140.0 within 2 000 000 inferences each are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

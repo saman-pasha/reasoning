@@ -651,3 +651,14 @@ He recommended her without any reservations.	past(without(recommend(he, she), X)
 Talked to each child in turn.	past(in(to(talk(someone), X), turn)) :- child(X).
 He had made some money on the side.	money(a(some(money))). some(a(some(money))). pluperfect(on(make(he, a(some(money))), the(side))).
 He hadn't had any love in months.	month(a(pl(month))). is_not(pluperfect(in(have(he, X), a(pl(month))))) :- love(X).
+# a command of a verb no row has; a noun phrase of time; the same thing; a predicate with a relative clause (1.140.0)
+Tar the roads.	imperative(tar(you, the(pl(road)))).
+Button the dress.	imperative(button(you, the(dress))).
+Deck the halls with holly.	imperative(with(deck(you, the(pl(hall))), holly)).
+We sat up all night.	past(at_time(sit_up(we), all(night))).
+She topped her class every year.	past(at_time(top(she, of(class, she)), X)) :- year(X).
+The plant sprouted early this year.	past(at_time(early(sprout(the(plant))), this(year))).
+Leather is the latest vogue.	same(leather, the(latest(vogue))).
+That was not the case.	is_not(past(same(that, the(case)))).
+Helium gas was the thermometric fluid.	past(same(nn(helium, gas), the(thermometric(fluid)))).
+He is a man who enjoys his comfort.	enjoy(he, of(comfort, he)). man(he).

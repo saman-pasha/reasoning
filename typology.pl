@@ -126,7 +126,10 @@
 %%                                     complement is a predicate said of
 %%                                     its subject, since 1.122.0; gerund:
 %%                                     one whose object may be a gerund,
-%%                                     since 1.138.0), or
+%%                                     since 1.138.0; command: one a
+%%                                     command may begin with though no row
+%%                                     of the tables has it, read in the
+%%                                     fifth chance alone, since 1.140.0), or
 %%                                     Base is a list of verbs
 %%                                     (since 1.95.0)
 %%     ty_adjective_list(L, Kind, Base)
@@ -148,7 +151,9 @@
 %%                                     plural, `means', `stairs'; a
 %%                                     language with the row reads every
 %%                                     other such word as the plural
-%%                                     first)
+%%                                     first; since 1.140.0 time: a noun a
+%%                                     noun phrase of which is an adjunct,
+%%                                     `all day', `every year')
 %%     ty_purpose_mark(L, Words)       the words that may stand before an
 %%                                     infinitive of purpose (since 1.96.0:
 %%                                     English `in order'; since 1.97.0
@@ -947,7 +952,8 @@
                       typology_answer/4, typology_answer/5,
                       typology_import/1, typology_import/2,
                       typology_references/2, typology_reason_ir/2,
-                      typology_coverage/4, typology_meaning/3, typology_plural/3 ]).
+                      typology_coverage/4, typology_meaning/3, typology_plural/3,
+                      typology_command_verb/2 ]).
 
 :- use_module(library(reasoning/reason), [ reason_base/2 ]).
 
@@ -2264,8 +2270,67 @@ ty_read_one(L, Text, IR, Topics) :-
         b_setval('$ty_ger', on),
         ty_read_words(L, Text, Written, Lowered, Topics, Mood, IR1),
         b_setval('$ty_ger', off)
+    *-> true
+    ;   ty_cmd_chance(L, Mood, Lowered, W),
+        ty_cmd_rows(L, W, ty_read_words(L, Text, Written, Lowered, Topics, Mood, IR1))
+    *-> true
+    ;   ty_time_chance(L, Lowered),
+        b_setval('$ty_time', on),
+        ty_read_words(L, Text, Written, Lowered, Topics, Mood, IR1),
+        b_setval('$ty_time', off)
     ),
     ty_ir_out(IR1, IR).
+
+%% THE TIME'S CHANCE (since 1.140.0), the sixth: a noun phrase of time is
+%% an adjunct ('$ty_time' on, ty_adjunct_item//2) only where the words read
+%% nothing else, so `He loves every day.' keeps its object.
+ty_time_chance(L, Ws) :-
+    '$ty_time_made'(L),
+    once(( member(W, Ws), atom(W), ty_time_word(L, W) )).
+
+ty_time_word(L, W) :-
+    (   ty_noun_of(L, time, W) -> true
+    ;   once(ty_noun(L, N, _, _, _, W)), ty_noun_of(L, time, N)
+    ).
+
+%% THE COMMAND'S CHANCE (since 1.140.0), the fifth: where the words read
+%% nothing else, a statement whose first word is a verb of the template's
+%% command list (ty_verb_list(L, command, Base)) that no row of the tables
+%% has -- the English import takes no rare verb sense of a known noun
+%% (`tar', `button', `toe') -- is read with that verb's base a row of the
+%% present's plural, the imperative's form, for the read alone
+%% (ty_cmd_rows/3): `Tar the roads.' is clause(tar, imperative, pos,
+%% pron(2, _, _), np(road, pl, def, [])). The writer writes such an IR the
+%% same way (ty_write_any/5). A word with an adverb's row is none (`Even
+%% firing at close range he missed.', `Out to win every event.'), and so
+%% is a noun of a person or an animal (`Cat the sleeps.').
+ty_cmd_chance(L, statement, [W|_], W) :-
+    '$ty_cmd_made'(L), atom(W), '$ty_cmdv'(W, L), \+ '$ty_vfirst'(W, L, _).
+
+ty_cmd_rows(L, W, G) :-
+    setup_call_cleanup(ty_cmd_add(L, W), G, ty_cmd_del(L, W)).
+
+ty_cmd_add(L, W) :-
+    assertz(ty_verb(L, W, present, pl, pos, [W])),
+    assertz('$ty_vrow'(W, L, W, present, pl, pos)),
+    assertz('$ty_vfirst'(W, L, W)).
+
+ty_cmd_del(L, W) :-
+    ignore(retract(ty_verb(L, W, present, pl, pos, [W]))),
+    ignore(retract('$ty_vrow'(W, L, W, present, pl, pos))),
+    ignore(retract('$ty_vfirst'(W, L, W))).
+
+%% A verb of the command list no row has (since 1.140.0): level 2 asks it
+%% of a predicate of two or more, so `imperative(tar(you, the(pl(road))))'
+%% is a command again.
+typology_command_verb(L, V) :-
+    '$ty_cmd_made'(L), atom(V), '$ty_cmdv'(V, L), \+ '$ty_vfirst'(V, L, _).
+
+%% An IR's command of such a verb, writing.
+ty_ir_cmdv(L, IR, W) :-
+    '$ty_cmd_made'(L), nonvar(IR),
+    ( IR = clause(W, T, _, _, _) ; IR = clause(W, T, _, _, _, _) ), T == imperative,
+    atom(W), '$ty_cmdv'(W, L), \+ '$ty_vfirst'(W, L, _).
 
 %% THE GERUND'S CHANCE (since 1.137.0), the fourth: a gerund is read only
 %% where the words read nothing without one ('$ty_ger' on), so `Appalling
@@ -2484,6 +2549,8 @@ typology_write(L, IR, Text, Topics) :-
 %% hyphenated meaning no table had, again with the rows made for it.
 ty_write_any(L, IR, Topics, Mood, Tokens) :-
     (   ty_write_parts(L, IR, Topics, Mood, Tokens) -> true
+    ;   ty_ir_cmdv(L, IR, W)
+    ->  once(ty_cmd_rows(L, W, ty_write_parts(L, IR, Topics, Mood, Tokens)))
     ;   '$ty_hyph_made'(L),
         nb_setval('$ty_hyph_new', no),
         ty_hyph_ir(L, IR),
@@ -2508,6 +2575,7 @@ ty_write_parts(L, IR, Topics, Mood, Tokens) :-
     ty_parse_reset(L),
     ty_write_massr(L, IR0, Massr),
     b_setval('$ty_massr', Massr),
+    ( '$ty_time_made'(L), ty_ir_time(IR0) -> b_setval('$ty_time', on) ; b_setval('$ty_time', off) ),
     phrase(Goal, Tokens0),
     ty_reads_as(Mood, L, IR0, Tokens0, Topics, Massr), !,
     ty_write_tokens(L, Tokens0, Tokens).
@@ -2613,6 +2681,14 @@ ty_ir_ger(T) :-
     compound(T),
     (   T = ger(_, _, _) -> true
     ;   T =.. [_|As], member(A, As), ty_ir_ger(A)
+    ), !.
+
+%% An IR holds a noun phrase of time as an adjunct (since 1.140.0): its
+%% words are read back with the time's chance on, as the reader read them.
+ty_ir_time(T) :-
+    compound(T),
+    (   T = time(_) -> true
+    ;   T =.. [_|As], member(A, As), ty_ir_time(A)
     ), !.
 
 %% A statement is ty_sentence//2, at cost 0; a question ty_ask//3.
@@ -5713,6 +5789,12 @@ ty_adjunct_item(L, inf(V, O, Js), S0, S) :-
     ty_infinitive_ahead(L, S1, S1),
     ty_infinitive(L, V, O, Js, S1, S).
 ty_adjunct_item(L, pp(Prep, NP)) --> ty_pp(L, Prep, NP), { ( '$ty_padv'(Prep, L) -> ty_padv_ok(L, Prep) ; true ) }.
+%% A NOUN PHRASE OF TIME AS AN ADJUNCT (since 1.140.0), time(NP): a noun of
+%% the template's time list (ty_noun_list(L, time, Nouns)) with `all',
+%% `every', `each', `this' or `that', or with no article after `last' or
+%% `next': `He painted all day.', `She topped her class every year.', `The
+%% plant sprouted early this year.', `The Japanese were active last week.'
+ty_adjunct_item(L, time(NP)) --> { '$ty_time_made'(L), nb_current('$ty_time', on) }, ty_np_phrase(L, NP, _), { ty_time_np(L, NP) }.
 ty_adjunct_item(L, W) --> { nonvar(W), W = wh(M), ty_wh_adjunct(M) }, ty_wh_words(L, M).
 ty_adjunct_item(L, adv(M)) --> [W], { ty_adverb(L, M, W), ( '$ty_padv'(W, L) -> ty_padv_adverb_ok(L, W) ; true ) }, ty_meant(L, adverb(M), [W]).
 
@@ -5732,6 +5814,16 @@ ty_adjunct_item(L, inf(V, O, Js)) -->
     ty_infinitive_ahead(L),
     ty_infinitive(L, V, O, Js),
     { ty_inf_not_noun(L, V, O, Js) }.
+
+ty_time_np(L, NP) :-
+    nonvar(NP),
+    (   NP = all(NP1) -> nonvar(NP1), NP1 = np(N, sg, D, []), memberchk(D, [this, that])
+    ;   NP = np(N, _, D, As),
+        (   memberchk(D, [all, every, each, this, that]) -> As == []
+        ;   D == mass, As = [A], memberchk(A, [last, next])
+        )
+    ),
+    ty_noun_of(L, time, N).
 
 %% An infinitive of purpose or after a noun is more than a verb that is a
 %% noun too: `He went to work.' is no going in order to work (the
@@ -7466,6 +7558,12 @@ ty_verb_row(L, V, T, N, P, Words) :-
 :- dynamic('$ty_inf_made'/1).
 :- dynamic('$ty_inf_be'/1).
 :- dynamic('$ty_ger_made'/1).
+%% A language with a command list (since 1.140.0), and each verb of it no
+%% row has, '$ty_cmdv'(Verb, L).
+:- dynamic('$ty_cmd_made'/1).
+%% A language with a time list (since 1.140.0).
+:- dynamic('$ty_time_made'/1).
+:- dynamic('$ty_cmdv'/2).
 %% The first words of a language's infinitives (since 1.97.0): its
 %% ty_verb/6 rows of the tense infinitive, its ty_tense_form/5 row's first
 %% word (English `to', German `zu'); a text with one may hold an infinitive
@@ -7564,6 +7662,9 @@ ty_vfirst_make(L) :-
     retractall('$ty_inf_made'(L)),
     retractall('$ty_inf_be'(L)),
     retractall('$ty_ger_made'(L)),
+    retractall('$ty_cmd_made'(L)),
+    retractall('$ty_time_made'(L)),
+    forall(retract('$ty_cmdv'(_, L)), true),
     retractall('$ty_vinf'(_, L)),
     retractall('$ty_pass_made'(L)),
     retractall('$ty_prog_made'(L)),
@@ -7642,6 +7743,12 @@ ty_vfirst_make(L) :-
     ( ty_infinitive_mark(L, _) -> assertz('$ty_inf_made'(L)) ; true ),
     ( once(ty_copula(L, _, infinitive, _, _, _)) -> assertz('$ty_inf_be'(L)) ; true ),
     ( once(ty_tense_form(L, gerund, _, _, _)) -> assertz('$ty_ger_made'(L)) ; true ),
+    forall(( ty_verb_list(L, command, CB), ( is_list(CB) -> member(CV, CB) ; ty_lex_base_read(CB), '$ty_lexw'(CB, CV) ),
+             atom(CV), \+ '$ty_vfirst'(CV, L, _), \+ '$ty_cmdv'(CV, L), \+ ty_adverb(L, _, CV),
+             \+ ( ty_noun(L, CV, _, CA, _, _), memberchk(CA, [person, animate]) ) ),
+           assertz('$ty_cmdv'(CV, L))),
+    ( once('$ty_cmdv'(_, L)) -> assertz('$ty_cmd_made'(L)) ; true ),
+    ( once(ty_noun_list(L, time, _)) -> assertz('$ty_time_made'(L)) ; true ),
     findall(F, ( ty_tense_pattern(L, T, _, _, [I|_], _),
                  (   atom(I), nonvar(T), T = pass(_) -> F = pass(I)
                  ;   atom(I), nonvar(T), T = prog(_) -> F = prog(I)

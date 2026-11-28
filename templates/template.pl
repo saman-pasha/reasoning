@@ -372,7 +372,10 @@ ty_conjunct_marks(xx).
 %%                                     complement is a predicate said of
 %%                                     its subject, since 1.122.0; gerund:
 %%                                     one whose object may be a gerund,
-%%                                     since 1.138.0), or
+%%                                     since 1.138.0; command: one a
+%%                                     command may begin with though no row
+%%                                     of the tables has it, read in the
+%%                                     fifth chance alone, since 1.140.0), or
 %%                                     Base is a list of verbs
 %%                                     (since 1.95.0)
 %% ty_verb_list(xx, Kind, Base).
@@ -400,7 +403,9 @@ ty_conjunct_marks(xx).
 %%                                     plural, `means', `stairs'; a
 %%                                     language with the row reads every
 %%                                     other such word as the plural
-%%                                     first)
+%%                                     first; since 1.140.0 time: a noun a
+%%                                     noun phrase of which is an adjunct,
+%%                                     `all day', `every year')
 %% ty_noun_list(xx, Kind, Base).
 %%   e.g. ty_noun_list(english, infinitive, [ability, appeal, arrangement, attempt, bid, campaign, chance, compulsion, ...]).
 

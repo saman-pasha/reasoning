@@ -104,6 +104,14 @@
 %% its own tense (`John slept when Mary sang.': when(past(sleep(john)),
 %% past(sing(mary)))).
 %%
+%% THE SAME THING (since 1.140.0): a copula's definite noun phrase is
+%% same(Subject, Term) (`Leather is the latest vogue.' same(leather,
+%% the(latest(vogue)))); a copula's noun phrase with a relative clause is
+%% the noun phrase's atoms and the clause's, said of the subject (`He is a
+%% man who enjoys his comfort.' man(he), enjoy(he, of(comfort, he))). A
+%% NOUN PHRASE OF TIME as an adjunct is at_time(Atom, Term) (`We sat up all
+%% night.' past(at_time(sit_up(we), all(night)))), `every' a rule over it.
+%%
 %% NO, EVERY, ANY AND SOME (since 1.139.0): `no' is `every' and the clause
 %% denied (`No dog barks.' is_not(bark(X)) :- dog(X)); `any' is `every'; a
 %% noun phrase of `every', `no' or `any' that is a constant's object, an
@@ -947,9 +955,20 @@ lg_adjunct(Inf, S, [pp(to, F)], []) :- lg_inf_parts(Inf, V2, O2, Js2), !,
 lg_adjunct(pp(P, NP), _, [pp(P, T)], Os) :- atom(P), !,
     lg_arg(adjunct, NP, T, _, Os).
 lg_adjunct(adv(M), _, [adv(M)], []) :- atom(M), !.
+%% A NOUN PHRASE OF TIME AS AN ADJUNCT (since 1.140.0) is the predicate
+%% at_time(Atom, Term): `He painted all day.' past(at_time(paint(he),
+%% all(day))), `all' before a singular noun the whole of it; `every',
+%% `each' a rule over its variable (`She topped her class every year.'
+%% past(at_time(top(she, of(class, she)), A)) :- year(A)); `this', `that',
+%% `last', `next' a constant (this(year), last(week)).
+lg_adjunct(time(NP), _, [pp(at_time, T)], Os) :- !, lg_time_arg(NP, T, Os).
 lg_adjunct(adv(C), _, Ks, []) :- nonvar(C), ( C = and(Ms) ; C = but(Ms) ), is_list(Ms), forall(member(M, Ms), atom(M)), !,
     findall(adv(M), member(M, Ms), Ks).
 lg_adjunct(J, _, _, _) :- lg_no(adjunct(J)).
+
+lg_time_arg(NP, const(all(T)), []) :- nonvar(NP), NP = np(N, sg, all, As), !,
+    lg_np_term(N, sg, As, T).
+lg_time_arg(NP, T, Os) :- lg_arg(adjunct, NP, T, _, Os).
 
 %% Each atom inside its adjuncts, the first the innermost.
 lg_adjuncted([], As, As) :- !.
@@ -964,6 +983,33 @@ lg_atoms_(copula(_, _, _, _), T, adj(As), Atoms) :- !,
     lg_preds_of(Ms, T, Atoms0),
     lg_ap_atoms(Aps, T, Atoms1, Os),
     append([Atoms0, Atoms1, Os], Atoms).
+%% A COPULA'S DEFINITE NOUN PHRASE (since 1.140.0) is the same thing as the
+%% subject: same(Subject, Term), `Leather is the latest vogue.'
+%% same(leather, the(latest(vogue))), `That was not the case.'
+%% is_not(past(same(that, the(case)))).
+lg_atoms_(copula(_, _, _, _), T, NP, [pred(same, [T, C])|Ms]) :-
+    nonvar(NP), NP = np(_, Num, def, _), memberchk(Num, [sg, pl]), !,
+    lg_arg(object, NP, C, _, Ms).
+%% A COPULA'S NOUN PHRASE WITH A RELATIVE CLAUSE (since 1.140.0): the noun
+%% phrase's atoms, and the relative clause's said of the subject, its gap
+%% the subject's term, a definite one's its own (`Wheat is the stuff they
+%% use to make bread.' same(wheat, the(stuff)) and to(use(they,
+%% the(stuff)), make(they, bread))): `He is a man who enjoys his comfort.' man(he) and
+%% enjoy(he, of(comfort, he)); of a constant each in its own tense, of a
+%% rule's variable only in the present (`An integer is a number that is
+%% not a fraction.' number(X) :- integer(X), is_not(fraction(X)) :-
+%% integer(X)).
+lg_atoms_(C0, T, rel(NP, Cl), Atoms) :-
+    C0 = copula(Tn, Pol, _, _), nonvar(NP), !,
+    lg_atoms_(C0, T, NP, Atoms1),
+    ( Atoms1 = [pred(same, [_, G])|_] -> true ; G = T ),
+    lg_rel_atoms(Cl, G, RAs),
+    lg_split_objs(RAs, RPlain, RObjs),
+    (   nonvar(G), G = const(_) -> maplist(lg_rel_mark, RPlain, RMarks)
+    ;   Tn == present, Pol == pos -> RMarks = RPlain
+    ;   lg_no(predicate(relative))
+    ),
+    append([Atoms1, RMarks, RObjs], Atoms).
 lg_atoms_(copula(_, _, _, _), T, np(N, _, D, As0), Atoms) :-
     memberchk(D, [indef, mass]), !,
     lg_np_aps(As0, As, XMs),
@@ -1035,18 +1081,24 @@ lg_atoms_(_, T, verb(V, IO2), [pred(V, [T, Ti, Td])|Os]) :-
 lg_atoms_(_, T, verb(V, OC), [pred(V, [T, To, F])|Os]) :-
     nonvar(OC), OC = oc(NP, Pred), !,
     lg_arg(object, NP, To, _, Os),
-    (   catch(lg_atoms_(copula(present, pos, NP, Pred), To, Pred, [A]), lg_no(_), fail)
+    (   \+ lg_def_pred(Pred),
+        catch(lg_atoms_(copula(present, pos, NP, Pred), To, Pred, [A]), lg_no(_), fail)
     ->  lg_fun_of_atom(A, F)
     ;   lg_oc_term(Pred, F)
     ->  true
     ;   lg_no(complement(Pred))
     ).
+%% A definite noun phrase as a complement is its term, never same/2
+%% (since 1.140.0: `He found the dog the best friend.' past(find(he,
+%% the(dog), the(best(friend))))).
+lg_def_pred(P) :- nonvar(P), P = np(_, _, def, _).
 %% A LINKING VERB'S COMPLEMENT (since 1.122.0): a predicate of two, the
 %% subject and the atom a copula would make of the subject: `The situation
 %% became ugly.' is past(become(the(situation), ugly(the(situation)))).
 lg_atoms_(_, T, verb(V, SC), [pred(V, [T, F])]) :-
     nonvar(SC), SC = sc(Pred), !,
-    (   catch(lg_atoms_(copula(present, pos, none, Pred), T, Pred, [A]), lg_no(_), fail)
+    (   \+ lg_def_pred(Pred),
+        catch(lg_atoms_(copula(present, pos, none, Pred), T, Pred, [A]), lg_no(_), fail)
     ->  lg_fun_of_atom(A, F)
     ;   lg_oc_term(Pred, F)
     ->  true
@@ -1105,7 +1157,7 @@ lg_fun_of_atom(A, _) :- lg_no(infinitive(A)).
 
 lg_atom_of_fun(fun(N1, [F, T]), modified(pp(P, T), A)) :-
     nonvar(F), F = fun(_, _),
-    lg_code_meaning(N1, 2, P), typology_meaning(english, adposition, P), !,
+    lg_code_meaning(N1, 2, P), lg_adjunct_name(P), !,
     lg_atom_of_fun(F, A).
 lg_atom_of_fun(fun(N1, [F]), modified(adv(M), A)) :-
     nonvar(F), F = fun(_, _),
@@ -1734,9 +1786,13 @@ lg_in_atom(A, modified(sub(K, B), At)) :-
     lg_in_atom(Sub, B).
 lg_in_atom(A, modified(pp(P, T), At)) :-
     compound(A), A =.. [N, Inner, Arg], lg_adjunct_inner(Inner),
-    lg_code_meaning(N, 2, P), typology_meaning(english, adposition, P), !,
+    lg_code_meaning(N, 2, P), lg_adjunct_name(P), !,
     lg_in_atom(Inner, At),
     (   P == to, lg_purpose_arg(Inner, Arg) -> lg_in_atom_term(Arg, T) ; lg_in_term(Arg, T) ).
+
+%% An adjunct's predicate of two: an adposition's, or (since 1.140.0) the
+%% time's, at_time.
+lg_adjunct_name(P) :- ( P == at_time -> true ; typology_meaning(english, adposition, P) ).
 
 %% An infinitive of purpose's atom (since 1.96.0): said of the clause's own
 %% subject, so to(make(they, a(pl(arrangement))), in(meet(they), chicago))
@@ -1828,7 +1884,7 @@ lg_det_term(T) :-
     ;   T = a(X, K) -> integer(K), K > 1, lg_det_term(a(X))
     ;   T = of(of(X, P0), P) -> lg_np_shape(X), atom(P0), lg_poss_term(P)
     ;   T = of(X, P) -> lg_np_shape(X), \+ lg_ap_atom(X), lg_poss_term(P)
-    ;   T = all(X) -> lg_det_term(X), X \= a(_), X \= a(_, _)
+    ;   T = all(X) -> ( lg_det_term(X), X \= a(_), X \= a(_, _) -> true ; atom(X), lg_np_shape(X) )
     ;   T = only(X) -> lg_det_term(X)
     ;   T = ing(X) -> lg_inf_shape(X)
     ).
@@ -2514,6 +2570,11 @@ lg_atom_ir(L, pred(P, [A, F]), How, IR) :-
 %% The innermost first argument of an atom's term: unaware(someone) inside
 %% of(unaware(someone), the(scrutiny)).
 lg_fun_first(fun(_, [Y|_]), X) :- ( nonvar(Y), Y = fun(_, _) -> lg_fun_first(Y, X) ; X = Y ).
+%% The same thing (since 1.140.0): same(X, the(T)) is `X is the T.'
+lg_atom_ir(L, pred(same, [A, B]), How, copula(present, pos, S, NP)) :-
+    nonvar(B), B = const(C), nonvar(C), C = the(_), !,
+    lg_arg_np(L, How, A, S),
+    lg_arg_np(L, How, B, NP).
 lg_atom_ir(L, pred(P, [A, B]), How, IR) :-
     lg_binary_classes(L, P, Cs),
     lg_arg_np(L, How, A, S),
@@ -2565,6 +2626,7 @@ lg_adjunct_ir(L, How, pp(to, F), Inf) :-
     nonvar(F), F = fun(_, _),
     lg_inf_ir(L, How, F, V2, _, O2, Js2), !,
     ( Js2 == [] -> Inf = inf(V2, O2) ; Inf = inf(V2, O2, Js2) ).
+lg_adjunct_ir(L, How, pp(at_time, T), time(NP)) :- !, lg_arg_np(L, How, T, NP).
 lg_adjunct_ir(L, How, pp(P, T), pp(P, NP)) :- lg_arg_np(L, How, T, NP).
 lg_adjunct_ir(_, _, adv(M), adv(M)).
 
@@ -2714,6 +2776,11 @@ lg_const_np(L, Cs, DT, NP) :-
     ).
 lg_const_np(L, Cs, a(S), NP) :- !, memberchk(a(S), Cs), lg_indef_np(L, Cs, S, NP).
 lg_const_np(L, Cs, a(S, K), NP) :- integer(K), !, memberchk(a(S, K), Cs), lg_indef_np(L, Cs, S, NP).
+%% `All' before a singular noun of time (since 1.140.0): all(day) is `all
+%% day'.
+lg_const_np(L, _, all(T), np(N, sg, all, As)) :-
+    nonvar(T), \+ ( compound(T), functor(T, F, _), memberchk(F, [the, this, that, of, a]) ),
+    lg_np_of_term(L, T, N, sg, As), !.
 lg_const_np(L, Cs, all(T), all(NP)) :- nonvar(T), compound(T), !, lg_const_np(L, Cs, T, NP).
 lg_const_np(L, Cs, only(T), only(NP)) :- nonvar(T), !, lg_const_np(L, Cs, T, NP).
 lg_const_np(L, _, ing(X), ger(V, O, Js)) :- nonvar(X), lg_inf_term(L, X, Inf), !, lg_inf_parts(Inf, V, O, Js).
@@ -2867,7 +2934,10 @@ lg_class_ok(L, P/A, C) :-
     (   lg_code_class(cocolog, P/A, _)
     ->  lg_code_class(cocolog, P/A, C)
     ;   A == 1 -> typology_meaning(L, C, P)
-    ;   memberchk(C, [verb, adposition, noun]), typology_meaning(L, C, P)
+    ;   memberchk(C, [verb, adposition, noun]),
+        (   typology_meaning(L, C, P) -> true
+        ;   C == verb, typology_command_verb(L, P)
+        )
     ).
 
 %% THE GENERAL SENTENCE: `P holds for T1, T2 and T3.', a rule's conditions
@@ -2929,6 +2999,9 @@ lg_holds_tense(future, T0, T) :- !, format(atom(T), '~w in the future', [T0]).
 lg_holds_tense(conditional, T0, T) :- !, format(atom(T), 'it would be that ~w', [T0]).
 lg_holds_tense(modal(ought), T0, T) :- !, format(atom(T), 'it ought to be that ~w', [T0]).
 lg_holds_tense(modal(M), T0, T) :- !, format(atom(T), 'it ~w be that ~w', [M, T0]).
+%% A command (since 1.140.0) is asked: `It is asked that tar holds for you
+%% and the(pl(road)).', where through 1.139.0 it was `in the past'.
+lg_holds_tense(imperative, T0, T) :- !, format(atom(T), 'it is asked that ~w', [T0]).
 lg_holds_tense(_, T0, T) :- format(atom(T), '~w in the past', [T0]).
 
 lg_and([W], W) :- !.

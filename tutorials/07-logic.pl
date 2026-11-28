@@ -102,6 +102,7 @@ main :-
     more_grammar_words,
     gerund_places,
     quantified_args,
+    copula_names,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -907,6 +908,25 @@ quantified_args :-
     must('and back', E4, 'He explored every nook.'),
     logic_translate(english, cocolog, 'He had made some money on the side.', C5),
     must('some as an object', C5, 'money(a(some(money))).\nsome(a(some(money))).\npluperfect(on(make(he, a(some(money))), the(side))).\n').
+
+
+%% 73. THE SAME THING, A PREDICATE WITH A RELATIVE CLAUSE, A TIME (1.140.0).
+%% A copula's definite noun phrase is the same thing as the subject,
+%% same(Subject, Term); a copula's noun phrase with a relative clause is
+%% the noun phrase's atoms and the clause's, said of the subject; a noun
+%% phrase of time is at_time(Atom, Term).
+copula_names :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'Leather is the latest vogue.', C1),
+    must('the same thing', C1, 'same(leather, the(latest(vogue))).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and back', E1, 'Leather is the latest vogue.'),
+    logic_translate(english, cocolog, 'He is a man who enjoys his comfort.', C2),
+    must('a predicate with a relative clause', C2, 'enjoy(he, of(comfort, he)).\nman(he).\n'),
+    logic_translate(english, cocolog, 'She topped her class every year.', C3),
+    must('every year', C3, 'past(at_time(top(she, of(class, she)), A)) :-\n    year(A).\n'),
+    logic_translate(cocolog, english, C3, E3),
+    must('and back', E3, 'She topped her class every year.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

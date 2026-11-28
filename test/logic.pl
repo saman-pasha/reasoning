@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words, but_words, joined_terms, relatives, more_grammar_words, gerund_places, quantified_args]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words, but_words, joined_terms, relatives, more_grammar_words, gerund_places, quantified_args, copula_names]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -263,11 +263,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 621),
-    ( R >= 612 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 612 right', VR, ok),
-    ( K >= 615 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 615 kept', VK, ok).
+    check('the second measure: its sentences', N, 631),
+    ( R >= 622 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 622 right', VR, ok),
+    ( K >= 625 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 625 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -1200,6 +1200,33 @@ reflexives :-
 %% facts come first; `some' before a noun that is no subject is its first
 %% modifier. Back, a denied rule says its variable by `no', and a rule
 %% whose variable is no subject by `every'.
+%% 1.140.0: a copula's definite noun phrase is same(Subject, Term); a
+%% copula's noun phrase with a relative clause is the noun phrase's atoms
+%% and the clause's said of the subject (of a definite head, of the head);
+%% a command of a verb no row has is a command; a noun phrase of time is
+%% at_time(Atom, Term), `every' a rule over it; a command in a general
+%% sentence is asked.
+copula_names :-
+    section('the same thing, a predicate with a relative clause, commands and times'),
+    typology_load(english),
+    forall(member(S-Want-Back, [
+               'Leather is the latest vogue.'-'same(leather, the(latest(vogue))).\n'-same,
+               'That was not the case.'-'is_not(past(same(that, the(case)))).\n'-same,
+               'He is a man who enjoys his comfort.'-'enjoy(he, of(comfort, he)).\nman(he).\n'-'He enjoys his comfort. He is a man.',
+               'An integer is a number that is not a fraction.'-'is_number(A) :-\n    is_integer(A).\nis_not(fraction(A)) :-\n    is_integer(A).\n'-'Every integer is a number. No integer is a fraction.',
+               'Tar the roads.'-'imperative(tar(you, the(pl(road)))).\n'-same,
+               'He painted all day in the garden.'-'past(in(at_time(paint(he), all(day)), the(garden))).\n'-same,
+               'She topped her class every year.'-'past(at_time(top(she, of(class, she)), A)) :-\n    year(A).\n'-same,
+               'The plant sprouted early this year.'-'past(at_time(early(sprout(the(plant))), this(year))).\n'-same ]),
+           ( ( logic_translate(english, cocolog, S, C) -> true ; C = none ),
+             check(S, C, Want),
+             ( C \== none, logic_translate(cocolog, english, C, E) -> true ; E = none ),
+             ( Back == same -> Back1 = S ; Back1 = Back ),
+             atomic_list_concat(['and back: ', S], Label),
+             check(Label, E, Back1) )),
+    ( logic_translate(cocolog, english, 'imperative(foo(you, bar)).\n', E2) -> true ; E2 = none ),
+    check('a command in a general sentence is asked', E2, 'It is asked that foo holds for you and bar.').
+
 quantified_args :-
     section('this and that alone; no; every, any and some that are no subject'),
     typology_load(english),

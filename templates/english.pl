@@ -737,6 +737,11 @@ ty_verb_list(english, object_purpose, [apply, can, clear, commit, condemn, conse
 %% adposition phrase, though an infinitive may be their object (since
 %% 1.96.0: `The ball came to rest.', `He got to work.').
 ty_verb_list(english, to_noun, [come, get, run]).
+%% The verbs a command may begin with though no row has them (since
+%% 1.140.0): WordNet's, read in the reader's fifth chance alone, where
+%% nothing else reads (`Tar the roads.', `Button the dress.'): the import
+%% takes no rare verb sense of a known noun.
+ty_verb_list(english, command, every_verb).
 %% The verbs a gerund may be the object of (since 1.138.0: `He hated
 %% painting the ceiling.', `She could not forbear weeping.'); of another
 %% verb a word in -ing after it is no gerund object (`Stone containing
@@ -781,6 +786,9 @@ ty_noun_list(english, infinitive, [ability, appeal, arrangement, attempt, bid, c
 %% first: the words whose own noun lexicon/known_noun.txt (SemCor) ranks
 %% above their stem, or whose stem it does not rank (since 1.130.0).
 ty_noun_list(english, singular_first, [archives, biceps, bounds, brakes, breeches, buttocks, cosmetics, crossroads, foothills, frills, handcuffs, headwaters, knickknacks, laurels, loins, means, mechanics, mittens, moccasins, nostrils, outskirts, pajamas, parings, proceedings, reserves, stairs, takings, teens, troops, trousers, twenties, woods]).
+%% The nouns of time a noun phrase of which is an adjunct (since 1.140.0:
+%% `He painted all day.', `She topped her class every year.').
+ty_noun_list(english, time, [day, week, year, month, night, morning, evening, afternoon, hour, minute, weekend, summer, winter, spring, autumn, season, decade, century, time]).
 %% The words before an infinitive of purpose (since 1.96.0: `in order to').
 ty_purpose_mark(english, [in, order]).
 %% An infinitive of purpose may stand with no words before it (since 1.97.0).
