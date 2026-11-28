@@ -409,8 +409,8 @@ They were trying to find a peaceful solution.	past_progressive(try(they, to(find
 The patient is breathing irregularly.	progressive(irregularly(breathe(the(patient)))).
 They are trying to determine the cause of the crash.	progressive(try(they, to(determine(they, of(cause, the(crash)))))).
 A manned earth satellite was considered a necessary research step.	satellite(a(manned(nn(earth, satellite)))). manned(a(manned(nn(earth, satellite)))). nn(earth, a(manned(nn(earth, satellite)))). past(consider(someone, a(manned(nn(earth, satellite))), a(necessary(nn(research, step))))).
-They painted it a light shade of bluish green.	past(paint(they, it, a(of(light(shade), bluish(green))))).
-He was rightly considered the greatest singer of his time.	past(rightly(consider(someone, he, of(greatest(singer), of(time, he))))).
+They painted it a light shade of bluish green.	past(paint(they, it, light_shade(it, bluish(green)))).
+He was rightly considered the greatest singer of his time.	past(rightly(consider(someone, he, greatest_singer(he, of(time, he))))).
 In direct sunlight.	in(something, direct(sunlight)).
 Within living memory.	within(something, living(memory)).
 In the near future.	in(something, the(near(future))).
@@ -662,3 +662,14 @@ Leather is the latest vogue.	same(leather, the(latest(vogue))).
 That was not the case.	is_not(past(same(that, the(case)))).
 Helium gas was the thermometric fluid.	past(same(nn(helium, gas), the(thermometric(fluid)))).
 He is a man who enjoys his comfort.	enjoy(he, of(comfort, he)). man(he).
+# a noun of relation with adjectives; as; a complement of adjectives joined; such (1.141.0)
+She was his main squeeze.	past(main_squeeze(she, he)).
+Gossip was the main business of the evening.	past(main_business(gossip, the(evening))).
+It was the golden age of cinema.	past(golden_age(it, cinema)).
+Tourism was their economic salvation.	past(economic_salvation(tourism, they)).
+Politics is his consuming passion.	consuming_passion(politics, he).
+Blind jealousy is a frequent corollary of passionate love.	frequent_corollary(blind(jealousy), passionate(love)).
+Their closeness grew as the night wore on.	is_as(past(grow(of(closeness, they))), past(wear_on(the(night)))).
+His arguments seemed shallow and tedious.	past(seem(of(pl(argument), he), and(shallow(of(pl(argument), he)), tedious(of(pl(argument), he))))).
+The girl felt motherly and useful.	past(feel(the(girl), and(motherly(the(girl)), useful(the(girl))))).
+Must remain on your guard in such a situation.	situation(a(such(situation))). must(in(on(remain(someone), of(guard, you)), a(such(situation)))).

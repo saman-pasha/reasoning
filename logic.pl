@@ -112,6 +112,13 @@
 %% NOUN PHRASE OF TIME as an adjunct is at_time(Atom, Term) (`We sat up all
 %% night.' past(at_time(sit_up(we), all(night)))), `every' a rule over it.
 %%
+%% A NOUN OF RELATION WITH ADJECTIVES (since 1.141.0) is named by their
+%% words and its own (`Money is the main source of his frustration.'
+%% main_source(money, of(frustration, he))). `As' joins two clauses as
+%% `when' does in a tense; `such' before an indefinite noun phrase is its
+%% first modifier (a(such(situation))); a complement of adjectives joined
+%% is and(F1, ..., Fn) (`They seem happy and calm.').
+%%
 %% NO, EVERY, ANY AND SOME (since 1.139.0): `no' is `every' and the clause
 %% denied (`No dog barks.' is_not(bark(X)) :- dog(X)); `any' is `every'; a
 %% noun phrase of `every', `no' or `any' that is a constant's object, an
@@ -120,14 +127,14 @@
 %% noun is its first modifier (a(some(money))). `This' and `that' alone are
 %% constants (cool(that)).
 %%
-%% WHAT HAS NO LOGIC FORM YET: a negation of several atoms, `because' and `as', a pronoun whose gender is not known, an indefinite noun
+%% WHAT HAS NO LOGIC FORM YET: a negation of several atoms, `because', a pronoun whose gender is not known, an indefinite noun
 %% phrase in a rule's conclusion, a generic subject with a possessor in
 %% the present (`Lilies of the valley are racemose.'), a noun phrase of
 %% `every', `no' or `any' that is a possessor, inside a joined term or
-%% beside another quantified one, `not every', a noun of relation with an
-%% adjective (`the main source of'), a copula's definite noun phrase with
-%% no possessor (`Leather is the latest vogue.'), and a determiner other
-%% than the ones above. logic_why/2 names the first reason.
+%% beside another quantified one, `not every', a noun of relation with a
+%% number word (`one hell of a jumper'), `such' as a copula's noun phrase,
+%% and a determiner other than the ones above. logic_why/2 names the first
+%% reason.
 %%
 %% WHAT IS PUBLIC:
 %%
@@ -466,6 +473,13 @@ lg_active(clause(V, pass(T), P, S, O0, Js0), C) :- !,
 %% modifier is the determiner again (lg_count_back/3).
 lg_active(np(N, Num, D, As0), np(N, Num, indef, [D|As])) :- atom(D), lg_count_det(D), !,
     maplist(lg_active, As0, As).
+%% SUCH BEFORE AN INDEFINITE NOUN PHRASE (since 1.141.0) is its first
+%% modifier as a number is: `He is such a baby.' baby(he) and such(he),
+%% `He could barely exist on such a low wage.' a(such(low(wage))); back,
+%% such(NP) again (lg_count_back/2).
+lg_active(such(NP0), np(N, Num, indef, [such|As])) :-
+    nonvar(NP0), NP0 = np(N, Num, indef, As0), !,
+    maplist(lg_active, As0, As).
 lg_active(X, Y) :- compound(X), !, X =.. [F|As], maplist(lg_active, As, Bs), Y =.. [F|Bs].
 lg_active(X, X).
 
@@ -473,6 +487,7 @@ lg_count_det(D) :-
     memberchk(D, [one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve,
                   twenty, thirty, forty, fifty, hundred, thousand, many, much, few, most, both]).
 
+lg_count_back(np(N, Num, indef, [such|As]), such(np(N, Num, indef, As))) :- !.
 lg_count_back(np(N, Num, indef, [D|As]), np(N, Num, D, As)) :- atom(D), lg_back_det(D), !.
 lg_count_back(NP, NP).
 
@@ -482,6 +497,7 @@ lg_count_back(NP, NP).
 %% some(...); a subject's is no modifier (`Some dogs bark.' dog(a(pl(dog)))).
 lg_back_det(D) :- lg_count_det(D), !.
 lg_back_det(some).
+lg_back_det(such).
 
 lg_pass_inf(O) :-
     nonvar(O), ( O = clause(_, T, _, Z, _) ; O = clause(_, T, _, Z, _, _) ),
@@ -764,7 +780,10 @@ lg_individual(S, _, _) :- lg_no(determiner(S)).
 %% tense does, modified(sub(Kind, B), A), Cocolog Kind(A, B): `He remained
 %% uncorrupted though his associates were dishonest.' is
 %% though(past(uncorrupted(he)), past(dishonest(of(pl(associate), he)))).
-lg_sub_kind(K) :- memberchk(K, [though, since, until, while, unless, before, after]).
+%% Since 1.141.0 `as' too (`Their closeness grew as the night wore on.'
+%% as(past(grow(of(closeness, they))), past(wear_on(the(night))))), read
+%% back as a subordinator where its clause is an atom, as `before' is.
+lg_sub_kind(K) :- memberchk(K, [though, since, until, while, unless, before, after, as]).
 
 lg_when(Main, Cond, Items) :- lg_when(when, Main, Cond, Items).
 lg_when(K, Main, Cond, Items) :-
@@ -1010,6 +1029,7 @@ lg_atoms_(C0, T, rel(NP, Cl), Atoms) :-
     ;   lg_no(predicate(relative))
     ),
     append([Atoms1, RMarks, RObjs], Atoms).
+lg_atoms_(copula(_, _, _, _), _, np(_, _, indef, [such|_]), _) :- !, lg_no(determiner(such)).
 lg_atoms_(copula(_, _, _, _), T, np(N, _, D, As0), Atoms) :-
     memberchk(D, [indef, mass]), !,
     lg_np_aps(As0, As, XMs),
@@ -1020,13 +1040,28 @@ lg_atoms_(copula(_, _, _, _), T, np(N, _, D, As0), Atoms) :-
 %% possessor is a predicate of two, the noun's, of the subject and the
 %% possessor: `John is Mary's father.' and `John is the father of Mary.'
 %% are father(john, mary), `Sculpture is a form of art.' form(sculpture,
-%% art). One with an adjective has no form yet (relation(adjective)): `the
-%% main source of his frustration', `a mere skeleton of its former self'
-%% say the adjective of the relation, not of the subject.
+%% art). ONE WITH ADJECTIVES (since 1.141.0) says them of the
+%% relation, not of the subject, in its name, the words joined as a
+%% comparative's are (lg_relation_name/3): `Her constant complaints were
+%% the main source of his frustration.' main_source(of(pl(constant(complaint)),
+%% she), of(frustration, he)), `the most common type of glaucoma'
+%% most_common_type(X, glaucoma); back, the name taken apart.
 lg_atoms_(copula(_, _, _, _), T, of(P, NP), [pred(N, [T, Pc])|Ms]) :-
-    nonvar(NP), NP = np(N, _, D, As), memberchk(D, [def, indef, mass]), !,
-    ( As == [] -> true ; lg_no(relation(adjective)) ),
+    nonvar(NP), NP = np(N0, _, D, As), memberchk(D, [def, indef, mass]), !,
+    lg_relation_name(N0, As, N),
     lg_arg(possessor, P, Pc, _, Ms).
+
+%% A noun of relation's name: the noun, its adjectives' words before it (a
+%% graded one's adverb first), joined by `_'. A number's word and `own'
+%% are none (`He is one hell of a jumper.', `his own boss').
+lg_relation_name(N, [], N) :- !.
+lg_relation_name(N, As, Name) :-
+    maplist(lg_rel_mod_words, As, Wss), append(Wss, Ws),
+    append(Ws, [N], All), atomic_list_concat(All, '_', Name).
+
+lg_rel_mod_words(A, [A]) :- atom(A), A \== own, \+ lg_count_det(A), catch(typology_meaning(english, adjective, A), _, fail), !.
+lg_rel_mod_words(adv(M, A), [M, A]) :- atom(M), atom(A), lg_grade_adverb(M), !.
+lg_rel_mod_words(_, _) :- lg_no(relation(adjective)).
 lg_atoms_(copula(_, _, _, _), T, pp(P, NP), [pred(P, [T, To])|Os]) :- atom(P), !,
     lg_arg(object, NP, To, _, Os).
 lg_atoms_(copula(_, _, _, _), _, Pred, _) :- nonvar(Pred), Pred = such(_), !, lg_no(determiner(such)).
@@ -1088,6 +1123,15 @@ lg_atoms_(_, T, verb(V, OC), [pred(V, [T, To, F])|Os]) :-
     ->  true
     ;   lg_no(complement(Pred))
     ).
+%% A complement's term: its one atom's, or (since 1.141.0) of several
+%% adjectives' atoms and(F1, ..., Fn) (`His arguments seemed shallow and
+%% tedious.' past(seem(of(pl(argument), he), and(shallow(...),
+%% tedious(...))))).
+lg_comp_fun([A], F) :- !, lg_fun_of_atom(A, F).
+lg_comp_fun(As, fun(and, Fs)) :-
+    As = [_, _|_], forall(member(A, As), A = pred(_, [_])),
+    maplist(lg_fun_of_atom, As, Fs).
+
 %% A definite noun phrase as a complement is its term, never same/2
 %% (since 1.140.0: `He found the dog the best friend.' past(find(he,
 %% the(dog), the(best(friend))))).
@@ -1098,8 +1142,9 @@ lg_def_pred(P) :- nonvar(P), P = np(_, _, def, _).
 lg_atoms_(_, T, verb(V, SC), [pred(V, [T, F])]) :-
     nonvar(SC), SC = sc(Pred), !,
     (   \+ lg_def_pred(Pred),
-        catch(lg_atoms_(copula(present, pos, none, Pred), T, Pred, [A]), lg_no(_), fail)
-    ->  lg_fun_of_atom(A, F)
+        catch(lg_atoms_(copula(present, pos, none, Pred), T, Pred, As), lg_no(_), fail),
+        lg_comp_fun(As, F)
+    ->  true
     ;   lg_oc_term(Pred, F)
     ->  true
     ;   lg_no(complement(Pred))
@@ -1472,9 +1517,16 @@ lg_args_joined([], _, [], []).
 lg_args_joined([X|Xs], K, [R|Rs], Ms) :-
     lg_arg(K, X, _, R, Ms1), lg_args_joined(Xs, K, Rs, Ms2), append(Ms1, Ms2, Ms).
 
+%% `Such' is no atom of its noun (since 1.141.0): a(such(situation)) is a
+%% situation, and no such thing.
 lg_noun_conds(N, As, V, Cs) :-
-    lg_adjectives(As, Ms),
+    lg_adjectives(As, Ms0),
+    lg_no_such(Ms0, Ms),
     lg_preds_of([N|Ms], V, Cs).
+
+lg_no_such([], []).
+lg_no_such([M|Ms0], Ms) :- M == such, !, lg_no_such(Ms0, Ms).
+lg_no_such([M|Ms0], [M|Ms]) :- lg_no_such(Ms0, Ms).
 
 %% The atoms of meanings said of one term; never by findall/3, which would
 %% copy the term apart from the rule's other atoms.
@@ -2553,6 +2605,12 @@ lg_atom_ir(L, pred(P, [A, B, C]), How, IR) :-
 %% an atom whose first argument is the subject, is the copula's predicate
 %% it makes of the subject, sc(Predicate): become(the(situation),
 %% ugly(the(situation))) is `The situation became ugly.'.
+%% Of adjectives joined (since 1.141.0): and(F1, ..., Fn).
+lg_atom_ir(L, pred(P, [A, F]), How, clause(P, present, pos, S, sc(adj(Ads)))) :-
+    nonvar(F), F = fun(and, Fs), Fs = [_, _|_],
+    catch(ty_verb_of(L, linking, P), _, fail),
+    lg_arg_np(L, How, A, S),
+    maplist(lg_comp_adj(L, How, A), Fs, Ads), !.
 lg_atom_ir(L, pred(P, [A, F]), How, IR) :-
     nonvar(F), F = fun(_, [B2|_]),
     catch(ty_verb_of(L, linking, P), _, fail),
@@ -2567,6 +2625,11 @@ lg_atom_ir(L, pred(P, [A, F]), How, IR) :-
     ), !,
     IR = clause(P, present, pos, S, sc(Pred)).
 
+lg_comp_adj(L, How, A, F, Ad) :-
+    F = fun(_, [B|_]), B == A,
+    lg_atom_of_fun(F, A2),
+    lg_atom_ir(L, A2, How, copula(present, pos, _, adj([Ad]))).
+
 %% The innermost first argument of an atom's term: unaware(someone) inside
 %% of(unaware(someone), the(scrutiny)).
 lg_fun_first(fun(_, [Y|_]), X) :- ( nonvar(Y), Y = fun(_, _) -> lg_fun_first(Y, X) ; X = Y ).
@@ -2580,8 +2643,11 @@ lg_atom_ir(L, pred(P, [A, B]), How, IR) :-
     lg_arg_np(L, How, A, S),
     lg_arg_np(L, How, B, O0),
     (   A == B, lg_refl_of(S, R) -> ( O = refl(R) ; O = O0 ) ; O = O0 ),
-    member(C, Cs),
-    lg_binary_shape(C, P, How, S, O, IR).
+    (   member(C, Cs),
+        lg_binary_shape(C, P, How, S, O, IR)
+    ;   Cs == [],
+        lg_relation_ir(L, P, How, S, O, IR)
+    ).
 
 %% A predicate of two said as a verb (`John likes Mary.'), an adposition
 %% (`The book is on the table.') or (since 1.78.0) a noun of relation
@@ -2604,6 +2670,24 @@ lg_binary_shape(adposition, P, _, S, O, copula(present, pos, S, pp(P, O))).
 lg_binary_shape(noun, P, How, S, O, copula(present, pos, S, of(O, np(P, Num, D, [])))) :-
     lg_relation_det(How, Ds), member(D, Ds),
     ( lg_plural_np(S) -> member(Num, [pl, sg]) ; Num = sg ).
+
+%% A noun of relation whose name is its adjectives' and its noun's words
+%% joined (since 1.141.0): main_source(X, P) is `X is the main source of
+%% P'.
+lg_relation_ir(L, P, How, S, O, copula(present, pos, S, of(O, np(N, Num, D, As)))) :-
+    atom(P), atomic_list_concat(Parts, '_', P), Parts = [_, _|_],
+    append(Ws, [N], Parts), lg_class_ok(L, N/2, noun),
+    lg_rel_mods_back(L, Ws, As),
+    lg_relation_det(How, Ds), member(D, Ds),
+    ( lg_plural_np(S) -> member(Num, [pl, sg]) ; Num = sg ).
+
+lg_rel_mods_back(_, [], []).
+lg_rel_mods_back(L, [M, A|Ws], [adv(M, A)|As]) :-
+    lg_grade_adverb(M), typology_meaning(L, adjective, A), !,
+    lg_rel_mods_back(L, Ws, As).
+lg_rel_mods_back(L, [A|Ws], [A|As]) :-
+    typology_meaning(L, adjective, A),
+    lg_rel_mods_back(L, Ws, As).
 
 %% A noun of relation is definite first (`the father of'), and indefinite
 %% first said of a rule's variable (`Every set is a subset of the universal

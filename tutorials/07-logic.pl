@@ -103,6 +103,7 @@ main :-
     gerund_places,
     quantified_args,
     copula_names,
+    relation_names,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -927,6 +928,22 @@ copula_names :-
     must('every year', C3, 'past(at_time(top(she, of(class, she)), A)) :-\n    year(A).\n'),
     logic_translate(cocolog, english, C3, E3),
     must('and back', E3, 'She topped her class every year.').
+
+
+%% 74. A NOUN OF RELATION WITH ADJECTIVES, AS, A COMPLEMENT OF ADJECTIVES
+%% (1.141.0). A noun of relation's adjectives are in its name, the words
+%% joined as a comparative's are; `as' is a subordinator; a linking verb's
+%% complement of adjectives joined is and(F1, ..., Fn).
+relation_names :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'Gossip was the main business of the evening.', C1),
+    must('main business', C1, 'past(main_business(gossip, the(evening))).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and back', E1, 'Gossip was the evening\'s main business.'),
+    logic_translate(english, cocolog, 'Their closeness grew as the night wore on.', C2),
+    must('as', C2, 'is_as(past(grow(of(closeness, they))), past(wear_on(the(night)))).\n'),
+    logic_translate(english, cocolog, 'His arguments seemed shallow and tedious.', C3),
+    must('shallow and tedious', C3, 'past(seem(of(pl(argument), he), and(shallow(of(pl(argument), he)), tedious(of(pl(argument), he))))).\n').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words, but_words, joined_terms, relatives, more_grammar_words, gerund_places, quantified_args, copula_names]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words, but_words, joined_terms, relatives, more_grammar_words, gerund_places, quantified_args, copula_names, relation_names]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -263,11 +263,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 631),
-    ( R >= 622 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 622 right', VR, ok),
-    ( K >= 625 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 625 kept', VK, ok).
+    check('the second measure: its sentences', N, 641),
+    ( R >= 632 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 632 right', VR, ok),
+    ( K >= 635 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 635 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -583,9 +583,9 @@ relations :-
              check(L2, E2, Want2) )),
     ( logic_translate(cocolog, spanish, 'father(john, mary).', S3) -> true ; S3 = none ),
     check('a relation into Spanish', S3, 'John es el padre de Mary.'),
-    once(typology_read(english, 'She was his main squeeze.', IR4)),
+    once(typology_read(english, 'He is one hell of a jumper.', IR4)),
     logic_why(IR4, W4),
-    check('a relation with an adjective has no form yet', W4, relation(adjective)),
+    check('a relation with a number word has no form (one with an adjective since 1.141.0)', W4, relation(adjective)),
     forall(member(T5, ['John is Mary\'s father.', 'Bob is the father of John.']),
            ( logic_translate(english, cocolog, T5, P5), assert_text(P5) )),
     findall(X-Y, ( father(X, Z), father(Z, Y) ), XYs),
@@ -1066,7 +1066,7 @@ object_complement :-
                'past(consider(he, the(dog), small(the(dog)))).\n'-'He considered the dog small.',
                'past(leave(the(accident), she, badly(shaken(she)))).\n'-'The accident left her badly shaken.',
                'past(find(he, the(dog), a(big(hero)))).\n'-'He found the dog a big hero.',
-               'past(paint(they, it, a(of(light(shade), bluish(green))))).\n'-'They painted it a light shade of bluish green.',
+               'past(paint(they, it, light_shade(it, bluish(green)))).\n'-'They painted it the light shade of bluish green.',
                'past(see(he, the(dog), a(big(hero)))).\n'-'See holds for he, the(dog) and a(big(hero)) in the past.' ]),
            ( ( logic_translate(cocolog, english, C2, E) -> true ; E = none ),
              one_line(['back into English: ', C2], Label2),
@@ -1206,6 +1206,32 @@ reflexives :-
 %% a command of a verb no row has is a command; a noun phrase of time is
 %% at_time(Atom, Term), `every' a rule over it; a command in a general
 %% sentence is asked.
+%% 1.141.0: a noun of relation with adjectives is one name, the words
+%% joined (a number's word and `own' none); `as' is a subordinator; a
+%% complement of adjectives joined is and(F1, ..., Fn); `such' before an
+%% indefinite noun phrase is its first modifier, none in a copula's
+%% predicate.
+relation_names :-
+    section('a noun of relation with adjectives, as, a complement of adjectives, such'),
+    typology_load(english),
+    forall(member(S-Want-Back, [
+               'She was his main squeeze.'-'past(main_squeeze(she, he)).\n'-same,
+               'Gossip was the main business of the evening.'-'past(main_business(gossip, the(evening))).\n'-'Gossip was the evening\'s main business.',
+               'Open-angle glaucoma is the most common type of glaucoma.'-'most_common_type(nn(\'open-angle\', glaucoma), glaucoma).\n'-'Open-angle glaucoma is glaucoma\'s most common type.',
+               'Their closeness grew as the night wore on.'-'is_as(past(grow(of(closeness, they))), past(wear_on(the(night)))).\n'-same,
+               'His arguments seemed shallow and tedious.'-'past(seem(of(pl(argument), he), and(shallow(of(pl(argument), he)), tedious(of(pl(argument), he))))).\n'-same,
+               'He could barely exist on such a low wage.'-'wage(a(such(low(wage)))).\nlow(a(such(low(wage)))).\ncould(on(barely(exist(he)), a(such(low(wage))))).\n'-'He could exist barely on such a low wage.' ]),
+           ( ( logic_translate(english, cocolog, S, C) -> true ; C = none ),
+             check(S, C, Want),
+             ( C \== none, logic_translate(cocolog, english, C, E) -> true ; E = none ),
+             ( Back == same -> Back1 = S ; Back1 = Back ),
+             atomic_list_concat(['and back: ', S], Label),
+             check(Label, E, Back1) )),
+    forall(member(S2, ['He is one hell of a jumper.', 'He is such a baby.']),
+           ( ( logic_translate(english, cocolog, S2, C2) -> true ; C2 = none ),
+             atomic_list_concat(['no form: ', S2], L2),
+             check(L2, C2, none) )).
+
 copula_names :-
     section('the same thing, a predicate with a relative clause, commands and times'),
     typology_load(english),
