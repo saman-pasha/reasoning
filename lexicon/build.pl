@@ -100,6 +100,19 @@ main :-
              lx_write(Out, Name, Vs),
              length(Vs, N), lx_take(6, Vs, First),
              format("   ~w ~w  ~w~nwrote ~w/~w.txt~n", [Name, N, First, Out, Name]) )).
+%% --clause writes vthat.txt alone (since reasoning 1.144.0): the verbs
+%% WordNet gives the frame `Somebody ----s that CLAUSE' (26), from
+%% data.verb.
+main :-
+    current_prolog_flag(argv, [_|Args0]),
+    select('--clause', Args0, Args), !,
+    lx_options(Args, '/usr/share/wordnet', WN, 'lexicon', Out, [], _),
+    lx_verb_frames(WN, Frames),
+    assoc_to_keys(Frames, Verbs),
+    findall(V, ( member(V, Verbs), lx_frames(V, Frames, Fs), memberchk(26, Fs) ), Vs),
+    lx_write(Out, vthat, Vs),
+    length(Vs, N), lx_take(6, Vs, First),
+    format("   vthat ~w  ~w~nwrote ~w/vthat.txt~n", [N, First, Out]).
 %% --every writes every_noun.txt, every_verb.txt, every_adverb.txt and
 %% every_vi.txt alone (since reasoning 1.123.0), and every_adjective.txt
 %% (since 1.124.0): every lemma index.noun, index.verb, index.adv and

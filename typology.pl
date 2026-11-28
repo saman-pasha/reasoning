@@ -135,9 +135,15 @@
 %%                                     since 1.142.0; object_bare_known: of
 %%                                     those, one whose object is then a
 %%                                     pronoun, a name or a definite noun
-%%                                     phrase, since 1.142.0), or
-%%                                     Base is a list of verbs
+%%                                     phrase, since 1.142.0; clause: one
+%%                                     whose object may be a clause, since
+%%                                     1.144.0), or Base is a list of verbs
 %%                                     (since 1.95.0)
+%%     ty_clause_mark(L, Words)        the words before a clause that is a
+%%                                     verb's object (since 1.144.0:
+%%                                     English [that], `He claimed that the
+%%                                     evidence was a plant.'), which
+%%                                     reading may find left out
 %%     ty_adjective_list(L, Kind, Base)
 %%                                     the adjectives of lexicon/Base.txt,
 %%                                     or of the list Base, are of Kind
@@ -975,7 +981,7 @@
            ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
            ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
            ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-           ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_adjective_list/3, ty_noun_list/3, ty_purpose_mark/2, ty_purpose_bare/1, ty_adverb_inside/1, ty_infinitive_after/3, ty_phrasal/5, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_predeterminer/3, ty_adjective_group/2, ty_hyphen_word/2, ty_comparative/4, ty_irregular_comparative/3, ty_subordinate_first/1, ty_subordinate_comma/1,
+           ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_clause_mark/2, ty_adjective_list/3, ty_noun_list/3, ty_purpose_mark/2, ty_purpose_bare/1, ty_adverb_inside/1, ty_infinitive_after/3, ty_phrasal/5, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_predeterminer/3, ty_adjective_group/2, ty_hyphen_word/2, ty_comparative/4, ty_irregular_comparative/3, ty_subordinate_first/1, ty_subordinate_comma/1,
            ty_answer_echo/3, ty_kind/2, ty_adjective_before/2, ty_pronoun_gender/2,
            ty_inversion/3, ty_wh_tonic/3,
            ty_tense_form/5, ty_participle/3, ty_participle_like/3, ty_existential/2,
@@ -1001,7 +1007,7 @@
                  ty_relative_pronoun/3, ty_resumptive/3, ty_relative_after/3,
                  ty_relative_bare/2, ty_possessive/4, ty_relative_possessive/3,
                  ty_possessive_pronoun/4, ty_possessive_clitic/1, ty_pronoun/4,
-                 ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_adjective_list/3, ty_noun_list/3, ty_purpose_mark/2, ty_purpose_bare/1, ty_adverb_inside/1, ty_infinitive_after/3, ty_phrasal/5, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_predeterminer/3, ty_adjective_group/2, ty_hyphen_word/2, ty_comparative/4, ty_irregular_comparative/3, ty_subordinate_first/1, ty_subordinate_comma/1,
+                 ty_pro_drop/2, ty_subject_unsaid/2, ty_verb_list/3, ty_clause_mark/2, ty_adjective_list/3, ty_noun_list/3, ty_purpose_mark/2, ty_purpose_bare/1, ty_adverb_inside/1, ty_infinitive_after/3, ty_phrasal/5, ty_noun_modifier/2, ty_infinitive_mark/2, ty_adjective_complement/2, ty_adjective_adverb/2, ty_adjective_phrase_noun/2, ty_clitic/2, ty_verb_person/6, ty_capital/3, ty_name/5, ty_quantifier_pronoun/4, ty_subordinator/3, ty_predeterminer/3, ty_adjective_group/2, ty_hyphen_word/2, ty_comparative/4, ty_irregular_comparative/3, ty_subordinate_first/1, ty_subordinate_comma/1,
                  ty_answer_echo/3, ty_adjective_before/2, ty_pronoun_gender/2,
                  ty_inversion/3, ty_wh_tonic/3,
                  ty_tense_form/5, ty_participle/3, ty_participle_like/3,
@@ -1301,7 +1307,7 @@ ty_template_group('the orders of the levels', [ty_order]).
 ty_template_group('words', [ty_noun_class, ty_class_when, ty_noun_in, ty_noun, ty_adjective, ty_adjective_before, ty_article, ty_adposition,
                             ty_adverb, ty_capital, ty_capital_nouns, ty_name, ty_quantifier_pronoun, ty_predeterminer, ty_adjective_group, ty_hyphen_word, ty_comparative, ty_irregular_comparative, ty_definite_like, ty_subordinator, ty_subordinate_first, ty_subordinate_comma, ty_and, ty_conjunction, ty_serial_comma,
                             ty_conjunct_marks, ty_clause_comma, ty_comma, ty_sense, ty_closed]).
-ty_template_group('verbs and tenses', [ty_conjugation, ty_verb_in, ty_irregular_verb, ty_verb, ty_verb_list, ty_adjective_list, ty_noun_list, ty_purpose_mark, ty_purpose_bare, ty_adverb_inside, ty_infinitive_after, ty_phrasal, ty_tense_form, ty_tense_like, ty_participle,
+ty_template_group('verbs and tenses', [ty_conjugation, ty_verb_in, ty_irregular_verb, ty_verb, ty_verb_list, ty_clause_mark, ty_adjective_list, ty_noun_list, ty_purpose_mark, ty_purpose_bare, ty_adverb_inside, ty_infinitive_after, ty_phrasal, ty_tense_form, ty_tense_like, ty_participle,
                                        ty_participle_like, ty_participle_ending, ty_participle_agrees,
                                        ty_verb_class, ty_class_tense_form, ty_verb_person, ty_copula, ty_existential,
                                        ty_split_place, ty_verb_last]).
@@ -1456,6 +1462,7 @@ ty_row_shape('ty_pronoun_gender(L, System).').
 ty_row_shape('ty_inversion(L, Join, VowelJoin).').
 ty_row_shape('ty_wh_tonic(L, Meaning, Words).').
 ty_row_shape('ty_verb_list(L, Kind, Base).').
+ty_row_shape('ty_clause_mark(L, Words).').
 ty_row_shape('ty_adjective_list(L, Kind, Base).').
 ty_row_shape('ty_noun_list(L, Kind, Base).').
 ty_row_shape('ty_purpose_mark(L, Words).').
@@ -5730,6 +5737,26 @@ ty_object(L, V, io(IO, DO), io) -->
 ty_object(L, V, sc(Pred), sc) -->
     { nonvar(V), '$ty_scv'(V, L) },
     ty_ocomp_pred(L, none, Pred).
+%% A CLAUSE AS A VERB'S OBJECT (since 1.144.0): that(Clause), after a verb
+%% ty_verb_list(L, clause, Base) names ('$ty_thatv'/2), a statement read
+%% as a subordinate clause is, the ty_clause_mark(L, Words) row's words
+%% before it, which reading finds left out only before a subject's
+%% pronoun (`He claimed that the evidence was a plant.', `He thinks she
+%% has a soul.'; with no mark before a noun phrase, `Recall the defective
+%% auto tires.' was `recall that the auto tires'). The last reading of an
+%% object. Reading, the clause ends where its words end or a comma
+%% stands, so an adjunct after it is its own (`They claimed that they had
+%% been in contact with extraterrestrial beings.': the main clause took
+%% `with' first).
+ty_object(L, V, that(C), that) -->
+    { nonvar(V), '$ty_thatv'(V, L), once(ty_clause_mark(L, Ws)) },
+    (   ty_tokens(Ws)
+    ;   { var(C) }, ty_peek(W), { atom(W), ty_pronoun(L, s, [W], _) }
+    ),
+    { var(C) -> R = read ; R = write },
+    ty_subord_statement(L, C),
+    ty_here(S),
+    { R == write -> true ; S == [] -> true ; nonvar(S), S = [','|_] }.
 
 %% A bare infinitive's (since 1.142.0): the infinitive with its mark put
 %% before the words, and a known object.
@@ -5775,7 +5802,7 @@ ty_ocomp_pred(L, NP, Pred) -->
     ty_here(S0),
     ty_predicate(L, Pred, _),
     ty_here(S),
-    { Pred \= pp(_, _), Pred \= wh(_), Pred \= rel(_, _),
+    { Pred \= pp(_, _), Pred \= wh(_), Pred \= rel(_, _), Pred \= adv(_, _),
       (   nonvar(S0), S0 = [W|S1], S1 == S, atom(W),
           NP \== none, \+ ( nonvar(NP), NP = pron(_, _, _) ),
           ty_word_class(L, noun, W)
@@ -5943,6 +5970,8 @@ ty_object_ok(L, clause(V, _, _, _, O, Js), How) :-
              ty_js_items(Js, Items), member(pp(M, _), Items), ty_adposition(L, M, Ws) )
     ;   How = comp(Ws)
     ->  ty_complement(L, V, Ws)
+    ;   How == that
+    ->  true
     ;   ty_complement(L, V, Ws)
     ->  ty_lenient, ty_fault(complement(missing, Ws))
     ;   true
@@ -7131,6 +7160,7 @@ ty_predicate_kind(of(_, _), np).
 %% such (since 1.125.0) is a noun phrase's kind.
 ty_predicate_kind(W, np) :- nonvar(W), W = such(_).
 ty_predicate_kind(W, np) :- nonvar(W), W = np_pp(_, _).
+ty_predicate_kind(W, np) :- nonvar(W), W = adv(_, _).
 
 %% The kind a copula's words are read for: a predicate's, and reading, such
 %% last, only in a language with a ty_predeterminer(L, such, Words) row (a
@@ -7141,6 +7171,9 @@ ty_copula_kind(L, Pred, np) :- var(Pred), '$ty_predet_made'(L), ty_predeterminer
 %% A noun phrase with a tail (since 1.143.0), reading, last, only in a
 %% language with the row and a text with an adposition's word.
 ty_copula_kind(L, Pred, np) :- var(Pred), '$ty_noun_pp'(L), nb_current('$ty_adp', f([_|_])), Pred = np_pp(_, _).
+%% An adverb before a noun phrase (since 1.144.0), reading, last, only in a
+%% text with an adverb's word.
+ty_copula_kind(_, Pred, np) :- var(Pred), \+ nb_current('$ty_padv', f(no)), Pred = adv(_, _).
 ty_predicate_kind(pp(_, _), pp).
 ty_predicate_kind(W, K) :- nonvar(W), W = wh(M), ty_wh_kind(M, K).
 
@@ -7251,6 +7284,18 @@ ty_predicate_in(L, np(M, N, D, A), []) -->
 %% boring holes into the wall.'), nor a plural with no article and no
 %% adjective whose word is a participle's, which a passive reads (Italian
 %% `I ragazzi sono stati visti dalla ragazza.').
+%% AN ADVERB BEFORE A COPULA'S NOUN PHRASE (since 1.144.0): adv(Adverb,
+%% NP), NP a noun phrase, a possessed one or one with a tail (`He is still
+%% a child.', `The holding company was just a blind.', `She was clearly
+%% the gainer in that exchange.'), the adverb one word that is no
+%% adposition's nor a particle's, and the noun no noun of time (`The whole
+%% office was late the morning of the blizzard.'). A linking verb's
+%% complement has none (`He goes south every winter.').
+ty_predicate_in(L, adv(M, P), []) -->
+    { var(P) -> member(P, [np(_, _, _, _), of(_, _), np_pp(_, _)]) ; P \= adv(_, _) },
+    ty_pred_adverb(L, M),
+    ty_predicate_in(L, P, []),
+    { \+ ( ty_head_noun(P, N), atom(N), ty_noun_of(L, time, N) ) }.
 ty_predicate_in(L, NP0, []) -->
     { nonvar(NP0) -> NP0 = np_pp(np(_, _, _, _), _) ; true },
     { ty_np_tail_slot(L, NP0, NP, T), T \== none },
@@ -7275,6 +7320,13 @@ ty_predicate_in(L, R, []) --> { ty_rel_slot(R) }, ty_rel(L, none, R, _).
 ty_predicate_in(L, P, []) --> { ty_poss_slot(P) }, ty_poss(L, P, _).
 ty_predicate_in(L, pp(Prep, NP), []) --> ty_here(S0), { ty_of_first(L, Prep, S0) }, ty_pp(L, Prep, NP).
 ty_predicate_in(L, W, []) --> { nonvar(W), W = wh(M) }, ty_wh_words(L, M).
+
+ty_pred_adverb(L, M, S0, S) :-
+    (   var(M)
+    ->  nonvar(S0), S0 = [W|S], atom(W), ty_adverb(L, M, W),
+        \+ ty_word_class(L, adposition, W), \+ '$ty_padv'(W, L)
+    ;   once(ty_adverb(L, M, W)), S0 = [W|S]
+    ).
 
 ty_predicate_ok(adj(_), Rows, G, N) :- !,
     (   ty_rows_fit(Rows, G, N)
@@ -7819,6 +7871,7 @@ ty_verb_row(L, V, T, N, P, Words) :-
 %% A verb of a ty_verb_list(L, linking, Base) row (since 1.122.0), whose
 %% complement ty_object//4 may read as a predicate of its subject.
 :- dynamic('$ty_scv'/2).
+:- dynamic('$ty_thatv'/2).
 :- dynamic('$ty_vg_more'/1).
 %% The words a passive's participle follows in its patterns (English `is',
 %% `was', `be', `been'); a text with one ahead may hold a passive
@@ -7908,6 +7961,7 @@ ty_vfirst_make(L) :-
     retractall('$ty_ocpw'(_, L)),
     retractall('$ty_iov'(_, L)),
     retractall('$ty_scv'(_, L)),
+    retractall('$ty_thatv'(_, L)),
     retractall('$ty_pword'(_, L)),
     retractall('$ty_tact'(L, _, _, _, _, _)),
     retractall('$ty_pprog_made'(L)),
@@ -7956,6 +8010,9 @@ ty_vfirst_make(L) :-
     forall(( ty_verb_list(L, linking, _), ty_verb(L, ScV, _, _, _, _), \+ '$ty_scv'(ScV, L),
              ty_verb_of(L, linking, ScV) ),
            assertz('$ty_scv'(ScV, L))),
+    forall(( ty_clause_mark(L, _), ty_verb_list(L, clause, CB), ( is_list(CB) -> member(CV, CB) ; ty_lex_base_read(CB), '$ty_lexw'(CB, CV) ),
+             once(ty_verb(L, CV, _, _, _, _)), \+ '$ty_thatv'(CV, L) ),
+           assertz('$ty_thatv'(CV, L))),
     ( ( ty_phrasal(L, _, _, _, _) ; ty_adverb_inside(L) ) -> assertz('$ty_vg_more'(L)) ; true ),
     forall(ty_particle_of(L, Pt), assertz('$ty_particle'(Pt, L))),
     (   ty_closed(L, PCs)

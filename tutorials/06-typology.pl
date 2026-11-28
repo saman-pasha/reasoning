@@ -198,6 +198,7 @@ main :-
     commands_and_times,
     do_and_bare,
     copula_tails,
+    clause_objects,
     format("~ndone~n", []).
 
 
@@ -1641,6 +1642,22 @@ copula_tails :-
     must('and written', W2, 'The harvesting was complete.'),
     typology_read(english, 'The supernatant fat was skimmed off.', IR3),
     must('a particle verb in the passive', IR3, clause(skim_off, pass(past), pos, np(fat, sg, def, [supernatant]), none)).
+
+%% 109. A CLAUSE AS A VERB'S OBJECT, AN ADVERB BEFORE A COPULA'S NOUN
+%% PHRASE (1.144.0). After a verb ty_verb_list(L, clause, Base) names
+%% (English: WordNet's frame `Somebody ----s that CLAUSE'), the object may
+%% be that(Clause), the ty_clause_mark(L, Words) row's words before it,
+%% left out only before a subject's pronoun; a copula's noun phrase may
+%% have an adverb before it, adv(Adverb, NP).
+clause_objects :-
+    typology_load(english),
+    typology_read(english, 'He claimed that the evidence was a plant.', IR1),
+    must('a clause as the object', IR1, clause(claim, past, pos, pron(3, sg, m), that(copula(past, pos, np(evidence, sg, def, []), np(plant, sg, indef, []))))),
+    typology_read(english, 'He knew he was right.', IR2),
+    typology_write(english, IR2, W2),
+    must('with no that, written with it', W2, 'He knew that he was right.'),
+    typology_read(english, 'He is still a child.', IR3),
+    must('an adverb before a copula noun phrase', IR3, copula(present, pos, pron(3, sg, m), adv(still, np(child, sg, indef, [])))).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

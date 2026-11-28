@@ -381,11 +381,20 @@ ty_conjunct_marks(xx).
 %%                                     since 1.142.0; object_bare_known: of
 %%                                     those, one whose object is then a
 %%                                     pronoun, a name or a definite noun
-%%                                     phrase, since 1.142.0), or
-%%                                     Base is a list of verbs
+%%                                     phrase, since 1.142.0; clause: one
+%%                                     whose object may be a clause, since
+%%                                     1.144.0), or Base is a list of verbs
 %%                                     (since 1.95.0)
 %% ty_verb_list(xx, Kind, Base).
 %%   e.g. ty_verb_list(english, no_object, every_vi).
+
+%%     ty_clause_mark(L, Words)        the words before a clause that is a
+%%                                     verb's object (since 1.144.0:
+%%                                     English [that], `He claimed that the
+%%                                     evidence was a plant.'), which
+%%                                     reading may find left out
+%% ty_clause_mark(xx, Words).
+%%   e.g. ty_clause_mark(english, [that]).
 
 %%     ty_adjective_list(L, Kind, Base)
 %%                                     the adjectives of lexicon/Base.txt,

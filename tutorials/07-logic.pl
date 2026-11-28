@@ -105,6 +105,7 @@ main :-
     copula_names,
     relation_names,
     copula_tails,
+    clause_objects,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -959,6 +960,18 @@ copula_tails :-
     must('a gerund noun', C2, 'past(complete(the(harvesting))).\n'),
     logic_translate(cocolog, english, C2, E2),
     must('and back', E2, 'The harvesting was complete.').
+
+%% 76. A CLAUSE AS A VERB'S OBJECT, AN ADVERB BEFORE A COPULA'S NOUN PHRASE
+%% (1.144.0). The clause is a term, that(Atom), its one atom in its own
+%% tense; the adverb is round each atom the copula says of the subject.
+clause_objects :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'He claimed that the evidence was a plant.', C1),
+    must('a clause object', C1, 'past(claim(he, that(past(plant(the(evidence)))))).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and back', E1, 'He claimed that the evidence was a plant.'),
+    logic_translate(english, cocolog, 'He is still a child.', C2),
+    must('an adverb before a copula noun phrase', C2, 'still(child(he)).\n').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

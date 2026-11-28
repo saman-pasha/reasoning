@@ -695,3 +695,14 @@ The officiating was excellent.	past(excellent(the(officiating))).
 The audience could hear his prompting.	could(hear(the(audience), of(prompting, he))).
 The supernatant fat was skimmed off.	past(skim_off(someone, the(supernatant(fat)))).
 He was called on for an aliyah.	aliyah(a(aliyah)). past(for(call_on(someone, he), a(aliyah))).
+# an adverb before a copula's noun phrase; all over; a clause as a verb's object (1.144.0)
+The holding company was just a blind.	past(just(blind(the(nn(holding, company))))).
+He's usually a late riser.	usually(riser(he)). usually(late(he)).
+She's quite a girl.	quite(girl(she)).
+It was not altogether her fault.	is_not(past(altogether(fault(it, she)))).
+Spill the beans all over the table.	imperative(all_over(spill(you, the(pl(bean))), the(table))).
+He claims that the present administration is corrupt.	claim(he, that(corrupt(the(present(administration))))).
+His cheerful whistling indicated that he enjoyed his work.	past(indicate(of(cheerful(whistling), he), that(past(enjoy(he, of(work, he)))))).
+Averting her gaze meant that she was angry.	past(mean(ing(avert(someone, of(gaze, she))), that(past(angry(she))))).
+He refused to believe that the angel was a hallucination.	past(refuse(he, to(believe(he, that(past(hallucination(the(angel)))))))).
+He feels that you are in the wrong.	feel(he, that(in(you, the(wrong)))).

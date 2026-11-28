@@ -126,6 +126,16 @@
 %% has (typology_ing_noun/2), is a noun's predicate (`The harvesting was
 %% complete.' past(complete(the(harvesting)))), and back.
 %%
+%% AN ADVERB BEFORE A COPULA'S NOUN PHRASE (since 1.144.0), adv(M, NP),
+%% goes round each of the noun phrase's atoms but an adposition's
+%% (`He's usually a late riser.' usually(riser(he)), usually(late(he))).
+%% A CLAUSE AS A VERB'S OBJECT, that(C), is a term of the clause's one
+%% atom, its tense a function round it (`He claims that the present
+%% administration is corrupt.' claim(he, that(corrupt(the(present(
+%% administration)))))); the clause's subject a constant, and its atoms
+%% one with no object that is no constant. The way back reads that(X) as a
+%% clause where X is shaped as an atom (lg_that_shaped/1).
+%%
 %% NO, EVERY, ANY AND SOME (since 1.139.0): `no' is `every' and the clause
 %% denied (`No dog barks.' is_not(bark(X)) :- dog(X)); `any' is `every'; a
 %% noun phrase of `every', `no' or `any' that is a constant's object, an
@@ -1082,6 +1092,15 @@ lg_rel_mod_words(adv(M, A), [M, A]) :- atom(M), atom(A), lg_grade_adverb(M), !.
 lg_rel_mod_words(_, _) :- lg_no(relation(adjective)).
 lg_atoms_(copula(_, _, _, _), T, pp(P, NP), [pred(P, [T, To])|Os]) :- atom(P), !,
     lg_arg(object, NP, To, _, Os).
+%% AN ADVERB BEFORE A COPULA'S NOUN PHRASE (since 1.144.0) is round each
+%% atom said of the subject, as a clause's adverb is round its verb's:
+%% `He is still a child.' still(child(he)), `The holding company was just
+%% a blind.' past(just(blind(the(nn(holding, company))))).
+lg_atoms_(C0, T, adv(M, P), Atoms) :-
+    C0 = copula(_, _, _, _), atom(M), nonvar(P), !,
+    lg_atoms_(C0, T, P, Atoms0),
+    ( P = np_pp(_, pp(Pp, _)) -> true ; Pp = '$none' ),
+    maplist(lg_adv_round(M, T, Pp), Atoms0, Atoms).
 %% A COPULA'S INDEFINITE NOUN PHRASE WITH AN ADPOSITION PHRASE AFTER IT
 %% (since 1.143.0): the noun phrase's atoms and the adposition's, each said
 %% of the subject: `He is a man with a hat.' man(he), with(he, a(hat));
@@ -1097,6 +1116,7 @@ lg_atoms_(C0, T, np_pp(H, pp(P, X)), Atoms) :-
     ;   append([pred(P, [T, Xc])|Os], Atoms1, Atoms)
     ).
 lg_atoms_(copula(_, _, _, _), _, Pred, _) :- nonvar(Pred), Pred = such(_), !, lg_no(determiner(such)).
+
 lg_atoms_(copula(_, _, _, _), _, Pred, _) :- !, lg_no(predicate(Pred)).
 lg_atoms_(_, T, verb(V, none), [pred(V, [T])]) :- !.
 %% AN INFINITIVE AS A VERB'S OBJECT (since 1.95.0) is a term, to(Atom), its
@@ -1111,6 +1131,15 @@ lg_atoms_(_, T, verb(V, none), [pred(V, [T])]) :- !.
 lg_atoms_(_, T, verb(V, Inf), [pred(V, [T, fun(to, [F])])]) :-
     lg_inf_parts(Inf, V2, O2, Js2), !,
     lg_inf_fun(T, V2, O2, Js2, F).
+%% A CLAUSE AS A VERB'S OBJECT (since 1.144.0) is a term, that(Atom), the
+%% clause's one atom in its own tense, a constant its subject: `He claimed
+%% that the evidence was a plant.' past(claim(he, that(past(plant(the(evidence)))))).
+%% An indefinite noun phrase in it is the term a(Shape) and no fact, as in
+%% an infinitive (`He believes that she has a soul.' believe(he,
+%% that(have(she, a(soul))))).
+lg_atoms_(_, T, verb(V, C), [pred(V, [T, fun(that, [F])])]) :-
+    nonvar(C), C = that(C2), !,
+    lg_that_fun(C2, F).
 %% AN OBJECT AND ITS INFINITIVE (since 1.96.0): the infinitive's atom said
 %% of the object's term, `Pressure causes plantar warts to develop a
 %% painful callus.' cause(pressure, to(develop(a(pl(plantar(wart))),
@@ -1184,6 +1213,16 @@ lg_atoms_(_, T, verb(V, SC), [pred(V, [T, F])]) :-
 lg_atoms_(_, T, verb(V, O), [pred(V, [T, To])|Os]) :-
     lg_arg(object, O, To, _, Os).
 
+%% The adposition's atom of a noun phrase's tail is no atom of the noun
+%% phrase, and the adverb is not round it (`She was clearly the gainer in
+%% that exchange.' past(clearly(same(she, the(gainer)))), past(in(she,
+%% that(exchange)))).
+lg_adv_round(M, T, Pp, A0, A) :-
+    (   lg_atom_of(A0, T), \+ A0 = pred(Pp, _) -> A = modified(adv(M), A0) ; A = A0 ).
+
+lg_atom_of(pred(_, [X|_]), T) :- X == T.
+lg_atom_of(modified(_, A), T) :- lg_atom_of(A, T).
+
 lg_oc_term(Pred, F) :-
     nonvar(Pred), ( Pred = np(_, _, _, _) ; Pred = of(_, _) ; Pred = np_pp(_, _) ), !,
     catch(lg_arg(object, Pred, F, _, Ms), lg_no(_), fail),
@@ -1203,6 +1242,17 @@ lg_fun_ind(fun(_, As), I) :- member(A, As), lg_fun_ind(A, I).
 %% The copula's infinitive (since 1.137.0), inf(be, Predicate): its
 %% predicate's one atom said of S (`Migrants are likely to be poor.' says
 %% likely(a(pl(migrant)), to(poor(a(pl(migrant)))))).
+lg_that_fun(C, F) :-
+    (   catch(lg_parts(C, S, Pred), _, fail) -> true ; lg_no(clause(shape)) ),
+    lg_entity(S, ent(T, Conds, Q), SMs),
+    ( Q == const, Conds == [] -> true ; lg_no(clause(determiner)) ),
+    lg_atoms(C, T, Pred, Atoms0),
+    append(Atoms0, SMs, Atoms),
+    lg_split_objs(Atoms, Bs, Objs),
+    ( Bs = [B] -> true ; lg_no(clause(atoms)) ),
+    ( maplist(lg_inf_obj, Objs) -> true ; lg_no(clause(object)) ),
+    lg_fun_of_atom(B, F).
+
 lg_inf_fun(S, be, P, _, F) :- !,
     lg_atoms(copula(present, pos, none, P), S, P, [A2|Objs]),
     ( maplist(lg_inf_obj, Objs) -> true ; lg_no(object(infinitive)) ),
@@ -1230,7 +1280,27 @@ lg_fun_of_atom(modified(pp(P, T), A), fun(N1, [F, T])) :- !,
     lg_fun_of_atom(A, F), lg_code_pred_name(P, 2, N1).
 lg_fun_of_atom(modified(adv(M), A), fun(N1, [F])) :- !,
     lg_fun_of_atom(A, F), lg_code_pred_name(M, 1, N1).
+lg_fun_of_atom(at(T, A), fun(W, [F])) :- !,
+    lg_code_loaded(cocolog),
+    lg_fun_of_atom(A, F), lg_code_tense(cocolog, T, W).
 lg_fun_of_atom(A, _) :- lg_no(infinitive(A)).
+
+lg_that_shaped(X) :-
+    X =.. [W|As],
+    (   As = [Y], compound(Y), lg_code_loaded(cocolog), lg_code_tense(cocolog, _, W) -> true
+    ;   As = [_, _|_] -> true
+    ;   As = [A1], ( atom(A1), memberchk(A1, [i, we, you, he, she, it, they, someone, something]) -> true ; lg_det_term(A1) )
+    ), !.
+
+lg_in_that_term(X, fun(W, [F])) :-
+    X =.. [W, Y], compound(Y), lg_code_tense(cocolog, _, W), !,
+    lg_in_atom_term(Y, F).
+lg_in_that_term(X, F) :- lg_in_atom_term(X, F).
+
+lg_that_atom(fun(W, [F]), at(T, A)) :-
+    nonvar(F), F = fun(_, _), lg_code_loaded(cocolog), lg_code_tense(cocolog, T, W), !,
+    lg_that_atom(F, A).
+lg_that_atom(F, A) :- lg_atom_of_fun(F, A).
 
 lg_atom_of_fun(fun(N1, [F, T]), modified(pp(P, T), A)) :-
     nonvar(F), F = fun(_, _),
@@ -2060,6 +2130,10 @@ lg_in_term(V, V) :- var(V), !.
 lg_in_term(L, list(Ts)) :- is_list(L), !, maplist(lg_in_term, L, Ts).
 lg_in_term(A, const(A)) :- atom(A), !.
 lg_in_term(to(X), fun(to, [F])) :- compound(X), !, lg_in_atom_term(X, F).
+%% A clause's term (since 1.144.0): that(Atom), an atom in a tense or of a
+%% subject's constant, told apart from a demonstrative's term
+%% (that(exchange)).
+lg_in_term(that(X), fun(that, [F])) :- compound(X), lg_that_shaped(X), !, lg_in_that_term(X, F).
 lg_in_term(T, const(T)) :- lg_const_term(T), !.
 lg_in_term(N, num(N)) :- number(N), !.
 lg_in_term(S, str(S)) :- string(S), !.
@@ -2543,6 +2617,16 @@ lg_atom_ir(L, pred(P, [A]), How, IR) :-
 %% the clause's own subject (since 1.99.0) it is the passive infinitive
 %% (need(the(machine), to(service(someone, the(machine)))) is `The machine
 %% needs to be serviced.').
+%% A clause as a verb's object (since 1.144.0): that(Atom), the atom read
+%% back in its tense, as a clause of its own.
+lg_atom_ir(L, pred(P, [A, fun(that, [F])]), How, clause(P, present, pos, S, that(IR2))) :-
+    nonvar(F), F = fun(_, _),
+    catch(typology_meaning(L, verb, P), _, fail), !,
+    lg_arg_np(L, How, A, S),
+    lg_that_atom(F, A2),
+    lg_inf_how(How, F, How2),
+    lg_atom_ir(L, A2, How2, IR1),
+    ( IR1 = clause(V, T, Po, S1, O) -> IR2 = clause(V, T, Po, S1, O, []) ; IR2 = IR1 ).
 lg_atom_ir(L, pred(P, [A, fun(to, [F])]), How, IR) :-
     lg_arg_np(L, How, A, S),
     lg_inf_ir(L, How, F, V2, S2, O2, Js2),
@@ -2753,6 +2837,9 @@ lg_ir_adjunct(clause(V, T, P, S, O), J, clause(V, T, P, S, O, [J])).
 lg_ir_adjunct(copula(T, P, S, adj([A])), pp(Pr, NP), copula(T, P, S, adj([ap(A, pp(Pr, NP))]))) :-
     ( atom(A) -> true ; A = adv(_, A1), atom(A1) ).
 lg_ir_adjunct(copula(T, P, S, adj([A])), adv(M), copula(T, P, S, adj([adv(M, A)]))) :- atom(A), lg_grade_adverb(M).
+%% Round a copula's noun phrase (since 1.144.0): the adverb before it.
+lg_ir_adjunct(copula(T, P, S, NP), adv(M), copula(T, P, S, adv(M, NP))) :-
+    nonvar(NP), ( NP = np(_, _, _, _) ; NP = of(_, _) ; NP = np_pp(_, _) ), !.
 %% Round an adjective and its infinitive (since 1.138.0): the adverb grades
 %% the adjective, `too heartsick to fight back'.
 lg_ir_adjunct(copula(T, P, S, adj([ap(A, Inf)])), adv(M), copula(T, P, S, adj([ap(adv(M, A), Inf)]))) :-

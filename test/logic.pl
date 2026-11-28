@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words, but_words, joined_terms, relatives, more_grammar_words, gerund_places, quantified_args, copula_names, relation_names, copula_tails]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words, but_words, joined_terms, relatives, more_grammar_words, gerund_places, quantified_args, copula_names, relation_names, copula_tails, clause_objects]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -263,11 +263,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 661),
-    ( R >= 652 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 652 right', VR, ok),
-    ( K >= 654 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 654 kept', VK, ok).
+    check('the second measure: its sentences', N, 671),
+    ( R >= 662 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 662 right', VR, ok),
+    ( K >= 664 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 664 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -1231,6 +1231,24 @@ relation_names :-
            ( ( logic_translate(english, cocolog, S2, C2) -> true ; C2 = none ),
              atomic_list_concat(['no form: ', S2], L2),
              check(L2, C2, none) )).
+
+clause_objects :-
+    section('a clause as a verb object, an adverb before a copula noun phrase, all over'),
+    typology_load(english),
+    forall(member(S-Want-Back, [
+               'He claimed that the evidence was a plant.'-'past(claim(he, that(past(plant(the(evidence)))))).\n'-same,
+               'He believes that she has a soul.'-'believe(he, that(have(she, a(soul)))).\n'-same,
+               'He feels that you are in the wrong.'-'feel(he, that(in(you, the(wrong)))).\n'-same,
+               'He is still a child.'-'still(child(he)).\n'-same,
+               'The holding company was just a blind.'-'past(just(blind(the(nn(holding, company))))).\n'-same,
+               'She was clearly the gainer in that exchange.'-'past(clearly(same(she, the(gainer)))).\npast(in(she, that(exchange))).\n'-'She was clearly the gainer. She was in that exchange.',
+               'Spill the beans all over the table.'-'imperative(all_over(spill(you, the(pl(bean))), the(table))).\n'-same ]),
+           ( ( logic_translate(english, cocolog, S, C) -> true ; C = none ),
+             check(S, C, Want),
+             ( C \== none, logic_translate(cocolog, english, C, E) -> true ; E = none ),
+             ( Back == same -> Back1 = S ; Back1 = Back ),
+             atomic_list_concat(['and back: ', S], Label),
+             check(Label, E, Back1) )).
 
 copula_tails :-
     section('a copula noun phrase with an adposition phrase, a gerund noun, a particle verb passive'),

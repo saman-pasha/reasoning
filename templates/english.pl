@@ -771,6 +771,13 @@ ty_verb_list(english, ing_double, [abhor, acquit, admit, allot, begin, commit, c
 %% said of its subject (`The situation became ugly.', `He remained
 %% faithful to his wife.').
 ty_verb_list(english, linking, [appear, become, feel, get, go, grow, look, prove, remain, seem, smell, sound, stay, taste, turn]).
+%% A clause as a verb's object (since 1.144.0), `that' before it, which
+%% reading may find left out (`He claimed that the evidence was a plant.',
+%% `He thinks she has a soul.'): the verbs of lexicon/vthat.txt, WordNet's
+%% frame `Somebody ----s that CLAUSE', and two it leaves out.
+ty_verb_list(english, clause, vthat).
+ty_verb_list(english, clause, [insist, mean]).
+ty_clause_mark(english, [that]).
 ty_verb_list(english, two_objects, [allow, ask, assign, award, bring, buy, cook, cost, deny, do, earn, envy, feed, fetch, forgive, get, give, grant, guarantee, hand, issue, lend, loan, mail, offer, owe, pass, pay, pour, promise, read, refuse, sell, send, serve, show, sing, spare, teach, tell, throw, toss, wish, write]).
 ty_verb_list(english, complement, [adjudge, appoint, believe, brand, call, color, consider, crown, declare, deem, dub, dye, elect, feel, find, hold, judge, keep, label, leave, make, name, nominate, paint, proclaim, pronounce, prove, reckon, regard, render, rule, set, term, think, turn]).
 %% The adjectives an infinitive may follow, its subject the adjective's own
@@ -861,6 +868,8 @@ ty_adposition(english, instead_of, [instead, of]).
 %% television cameras'.
 ty_adposition(english, because_of, [because, of]).
 ty_adposition(english, according_to, [according, to]).
+%% `all over' (since 1.144.0): `Spill the beans all over the table.'.
+ty_adposition(english, all_over, [all, over]).
 ty_adposition(english, in_front_of, [in, front, of]).
 %% `like' an adposition too (since 1.138.0: `He dropped the topic like a
 %% hot potato.'), after the verb `like' is tried.

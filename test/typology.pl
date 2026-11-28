@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words, but_words, more_grammar_words, gerund_places, commands_and_times, do_and_bare, copula_tails,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words, but_words, more_grammar_words, gerund_places, commands_and_times, do_and_bare, copula_tails, clause_objects,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2954,6 +2954,34 @@ copula_tails :-
     ( typology_ing_noun(english, meeting) -> A5 = yes ; A5 = no ),
     check('meeting has a noun row', A5, no).
 
+%% 1.144.0: a clause as a verb's object, an adverb before a copula's noun
+%% phrase, `all over'.
+clause_objects :-
+    section('a clause as a verb object, an adverb before a copula noun phrase, all over'),
+    forall(member(T-Want, [
+               'He claimed that the evidence was a plant.'-clause(claim, past, pos, pron(3, sg, m), that(copula(past, pos, np(evidence, sg, def, []), np(plant, sg, indef, [])))),
+               'He thinks that she has a soul.'-clause(think, present, pos, pron(3, sg, m), that(clause(have, present, pos, pron(3, sg, f), np(soul, sg, indef, []), []))),
+               'He is still a child.'-copula(present, pos, pron(3, sg, m), adv(still, np(child, sg, indef, []))),
+               'The holding company was just a blind.'-copula(past, pos, np(company, sg, def, [n(holding)]), adv(just, np(blind, sg, indef, []))),
+               'Spill the beans all over the table.'-clause(spill, imperative, pos, pron(2, sg, _), np(bean, pl, def, []), [pp(all_over, np(table, sg, def, []))]) ]),
+           ( ( once(typology_read(english, T, R)) -> true ; R = none ),
+             ( R = Want -> V = yes ; V = R ),
+             atomic_list_concat(['English, the first reading: ', T], Label),
+             check(Label, V, yes),
+             ( R \== none, typology_write(english, R, W) -> true ; W = none ),
+             atomic_list_concat(['English, written: ', T], Label2),
+             check(Label2, W, T) )),
+    ( once(typology_read(english, 'He knew he was right.', R2)) -> true ; R2 = none ),
+    check('a clause with no that before a pronoun', R2, clause(know, past, pos, pron(3, sg, m), that(copula(past, pos, pron(3, sg, m), adj([right]))))),
+    ( R2 \== none, typology_write(english, R2, W2) -> true ; W2 = none ),
+    check('and written with that', W2, 'He knew that he was right.'),
+    ( once(typology_read(english, 'Recall the defective auto tires.', R3)) -> true ; R3 = none ),
+    ( R3 = clause(recall, imperative, pos, _, np(tire, pl, def, [defective, n(auto)])) -> A3 = yes ; A3 = R3 ),
+    check('no clause with no that before a noun phrase', A3, yes),
+    ( once(typology_read(english, 'He goes south every winter for the golfing.', R4)) -> true ; R4 = none ),
+    ( R4 = clause(go, present, pos, _, none, [adv(south)|_]) -> A4 = yes ; A4 = R4 ),
+    check('no adverb before a linking verb complement', A4, yes).
+
 t_has_ger(T) :-
     compound(T),
     (   T = ger(_, _, _) -> true ; T =.. [_|As], member(A, As), t_has_ger(A) ), !.
@@ -3678,8 +3706,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 6592 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 6 592 sentences read at 1.143.0 within 2 000 000 inferences each are read', R1, yes),
+    ( K >= 6632 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 6 632 sentences read at 1.144.0 within 2 000 000 inferences each are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 
