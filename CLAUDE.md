@@ -24,8 +24,8 @@ red) and lesson 01 pin the shape of the answer, deliberately not the number.
 The reasoning library translates ALL 8 000 sentences of `lexicon/prose.txt`
 from English into the IR, and ALL of that IR into Cocolog. Every step
 moves one of the two counts and reports both (`tools/logic/prose.pl`;
-STATUS.md keeps them): at 1.141.0, 6 441 into the IR, 6 316 of them into
-Cocolog (1.140.0: 6 441 and 6 287; 1.139.0: 6 388 and 6 220; 1.138.0: 6 388 and 6 162; 1.137.0: 6 323 and 6 102; 1.136.0: 6 257 and 6 046; 1.135.0: 6 257 and 5 992; 1.134.0: 6 257 and 5 944; 1.133.0: 6 241 and 5 931; 1.132.0: 6 203 and 5 894; 1.131.0: 6 174 and 5 869; 1.130.0: 6 151 and 5 856; 1.129.0: 6 130 and 5 841; 1.128.0: 6 073 and 5 785; 1.127.0: 5 854 and 5 571; 1.126.0: 5 837 and 5 549; 1.125.0: 5 829 and 5 549; 1.124.0: 5 814 and 5 544; 1.123.0: 5 633 and 5 371; 1.122.0: 5 100 and 4 872; 1.121.0: 5 060 and 4 841; 1.120.0: 5 060 and 4 796; 1.119.0: 5 047 and 4 783; 1.118.0: 5 017 and 4 755; 1.117.0: 5 002 and 4 741; 1.116.0: 4 977 and 4 717; 1.115.0: 4 932 and 4 678; 1.114.0: 4 918 and 4 664; 1.113.0: 4 897 and 4 648; 1.112.0: 4 771 and 4 525; 1.111.0: 4 677 and 4 437; 1.110.0: 4 652 and 4 422; 1.109.0: 4 640 and 4 413; 1.108.0: 4 640 and 4 389; 1.107.0: 4 580 and 4 360; 1.105.0 and 1.106.0: 4 479 and 4 275; 1.104.0: 4 456 and 4 256; 1.103.0: 4 405 and 4 209; 1.102.0: 4 405 and 4 206; 1.100.0 and 1.101.0: 4 377 and 4 179; 1.99.0: 4 358 and 4 165; 1.98.0: 4 325 and 4 141; 1.96.0 and 1.97.0: 4 295 and 4 111; 1.95.0: 4 243 and 4 063; 1.94.0: 4 218 and 4 040; 1.93.0: 4 167 and 3 990; 1.92.0: 4 129 and 3 954; 1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
+STATUS.md keeps them): at 1.142.0, 6 538 into the IR, 6 408 of them into
+Cocolog (1.141.0: 6 441 and 6 316; 1.140.0: 6 441 and 6 287; 1.139.0: 6 388 and 6 220; 1.138.0: 6 388 and 6 162; 1.137.0: 6 323 and 6 102; 1.136.0: 6 257 and 6 046; 1.135.0: 6 257 and 5 992; 1.134.0: 6 257 and 5 944; 1.133.0: 6 241 and 5 931; 1.132.0: 6 203 and 5 894; 1.131.0: 6 174 and 5 869; 1.130.0: 6 151 and 5 856; 1.129.0: 6 130 and 5 841; 1.128.0: 6 073 and 5 785; 1.127.0: 5 854 and 5 571; 1.126.0: 5 837 and 5 549; 1.125.0: 5 829 and 5 549; 1.124.0: 5 814 and 5 544; 1.123.0: 5 633 and 5 371; 1.122.0: 5 100 and 4 872; 1.121.0: 5 060 and 4 841; 1.120.0: 5 060 and 4 796; 1.119.0: 5 047 and 4 783; 1.118.0: 5 017 and 4 755; 1.117.0: 5 002 and 4 741; 1.116.0: 4 977 and 4 717; 1.115.0: 4 932 and 4 678; 1.114.0: 4 918 and 4 664; 1.113.0: 4 897 and 4 648; 1.112.0: 4 771 and 4 525; 1.111.0: 4 677 and 4 437; 1.110.0: 4 652 and 4 422; 1.109.0: 4 640 and 4 413; 1.108.0: 4 640 and 4 389; 1.107.0: 4 580 and 4 360; 1.105.0 and 1.106.0: 4 479 and 4 275; 1.104.0: 4 456 and 4 256; 1.103.0: 4 405 and 4 209; 1.102.0: 4 405 and 4 206; 1.100.0 and 1.101.0: 4 377 and 4 179; 1.99.0: 4 358 and 4 165; 1.98.0: 4 325 and 4 141; 1.96.0 and 1.97.0: 4 295 and 4 111; 1.95.0: 4 243 and 4 063; 1.94.0: 4 218 and 4 040; 1.93.0: 4 167 and 3 990; 1.92.0: 4 129 and 3 954; 1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
 count says so. **Measure what blocks the rest before choosing a step**:
 at 1.80.0 the words no table has looked like the gap, and 5 115 of the
 8 000 had none -- 2 130 of them a noun phrase alone, which one rule read.
@@ -1206,6 +1206,28 @@ jumper' has no form). `Such' is a modifier of the term and no atom of
 it (lg_no_such/2): the first cut said such(a(such(situation))). Two
 second-measure lines were written again by hand (`light_shade`,
 `greatest_singer`), their sentences now a relation's.
+**Since 1.142.0** `do` is a main verb (templates/english.pl's irregular
+row) with an object always: templates/roles.pl's ty_role_animacy(do, o,
+some), asked where the verb is read (ty_object_needed/5, which also
+refuses `does' before `not', the negation's) and of the whole clause
+(ty_roles_ok/2: none in the passive), so `Yes, he does.' stays an answer.
+Refused at the clause's end alone, it cost the English bench 8 %: every
+negative clause read `does' as the main verb first. A question of it has
+no adverb whose word begins a verb's form (`What did the boy see?', `see'
+being an adverb's row of SemCor's), asked in ty_ask_clause//3 by
+ty_verb_row/6, as a test's language made of English's rows has no
+`$ty_vfirst' table. The import now writes two phrasal rows of `do'. A
+bare infinitive (ty_verb_list(L, object_bare, Base), the table
+`$ty_barev') reads its infinitive with the mark put before the words
+(ty_bare_infinitive//4): a flag the verb's form asked cost every verb form
+a clause. A seventh chance reads a bare noun whose word is an
+adjective's too ('$ty_massa_go'); in the first chance it took `smoking'
+and `French' from the gerund's chance and the capitals'. The reader and
+the writer refuse it as a copula's noun phrase, and as a copula's subject where
+the predicate's adjective is a noun's word too (ty_massa_copula/2:
+`Red is color.' was test/explain.pl's color(red)). The ceiling of
+test/typology.pl's Spanish reading is 20 500 inferences (1.141.0 read it
+at 19 997).
 
 **`one's` since 1.115.0** is the possessive of pron(3, sg, zero), the
 person no words name (`Catch one's breath.`); at level 2 it is someone,

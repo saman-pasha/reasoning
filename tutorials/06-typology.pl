@@ -196,6 +196,7 @@ main :-
     more_grammar_words,
     gerund_places,
     commands_and_times,
+    do_and_bare,
     format("~ndone~n", []).
 
 
@@ -1599,6 +1600,28 @@ commands_and_times :-
     must('every year', IR2, clause(top, past, pos, pron(3, sg, f), of(pron(3, sg, f), np(class, sg, def, [])), [time(np(year, sg, every, []))])),
     typology_write(english, IR2, W2),
     must('and written', W2, 'She topped her class every year.').
+
+%% 107. DO AS A MAIN VERB, A BARE INFINITIVE, A QUANTIFIER PRONOUN AS A
+%% HEAD, A BARE NOUN OF AN ADJECTIVE'S WORD (1.142.0). `do' is a verb of
+%% its own with an object always (templates/roles.pl: ty_role_animacy(do,
+%% o, some)), so `Yes, he does.' stays an answer. After `let', `help' and
+%% `make' (ty_verb_list(L, object_bare, Base)) an object's infinitive has
+%% no `to'. `everything', `anyone' head a relative clause. A seventh chance
+%% reads a bare noun whose word is an adjective's too (`color', `white').
+do_and_bare :-
+    typology_load(english),
+    typology_read(english, 'He did the work.', IR1),
+    must('do as a main verb', IR1, clause(do, past, pos, pron(3, sg, m), np(work, sg, def, []))),
+    typology_read(english, 'He helped her carry the box.', IR2),
+    must('help and a bare infinitive', IR2, clause(help, past, pos, pron(3, sg, m), clause(carry, infinitive, pos, pron(3, sg, f), np(box, sg, def, [])))),
+    typology_write(english, IR2, W2),
+    must('and written with no to', W2, 'He helped her carry the box.'),
+    typology_read(english, 'He saw everything that moved.', IR3),
+    must('everything as a head', IR3, clause(see, past, pos, pron(3, sg, m), rel(qp(every, thing), clause(move, past, pos, gap, none)))),
+    typology_read(english, 'He liked color.', IR4),
+    must('a bare noun of an adjective''s word', IR4, clause(like, past, pos, pron(3, sg, m), np(color, sg, mass, []))),
+    typology_write(english, IR4, W4),
+    must('and written', W4, 'He liked color.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

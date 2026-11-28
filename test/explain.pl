@@ -113,8 +113,11 @@ arguments :-
     explain_text(english, 'digit(D) --> [D], { code_type(D, digit) }.', E3),
     check('a grammar rule\'s sentence', E3,
           'digit//1 takes one argument: D, an output; and two lists, the list before its phrase and the list after it.\n\nA phrase digit(D) is: the item D and where code_type(D, digit) holds.'),
-    explain_text(english, 'color(red).\ncolor(blue).', E4),
-    check('only terms: no sentence', E4, 'color(red) holds.\n\ncolor(blue) holds.'),
+    explain_text(english, 'zork(red).\nzork(blue).', E4),
+    check('only terms: no sentence', E4, 'zork(red) holds.\n\nzork(blue) holds.'),
+    %% A bare noun of an adjective's word is a subject since 1.142.0.
+    explain_text(english, 'color(red).\ncolor(blue).', E4b),
+    check('facts the translator says', E4b, 'Red is a color.\n\nBlue is a color.'),
     explain_text(english, 'mortal(X) :- human(X).', E5),
     check('a clause the translator says: no sentence', E5, 'Every human is mortal.'),
     explain_text(english, ':- meta_predicate twice(0).\ntwice(G) :- call(G), call(G).', E6),

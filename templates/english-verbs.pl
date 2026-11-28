@@ -369,6 +369,8 @@ ty_phrasal(english, dine_in, dine, in, none).
 ty_phrasal(english, dine_out, dine, out, none).
 ty_phrasal(english, dish_out, dish, out, object).
 ty_phrasal(english, dish_up, dish, up, object).
+ty_phrasal(english, do_in, do, in, object).
+ty_phrasal(english, do_up, do, up, object).
 ty_phrasal(english, doctor_up, doctor, up, object).
 ty_phrasal(english, dope_off, dope, off, none).
 ty_phrasal(english, dope_up, dope, up, object).

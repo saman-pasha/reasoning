@@ -673,3 +673,14 @@ Their closeness grew as the night wore on.	is_as(past(grow(of(closeness, they)))
 His arguments seemed shallow and tedious.	past(seem(of(pl(argument), he), and(shallow(of(pl(argument), he)), tedious(of(pl(argument), he))))).
 The girl felt motherly and useful.	past(feel(the(girl), and(motherly(the(girl)), useful(the(girl))))).
 Must remain on your guard in such a situation.	situation(a(such(situation))). must(in(on(remain(someone), of(guard, you)), a(such(situation)))).
+# do as a main verb; a bare infinitive; a quantifier pronoun as a head; a bare noun of an adjective's word (1.142.0)
+He did me a good turn.	turn(a(good(turn))). good(a(good(turn))). past(do(he, i, a(good(turn)))).
+He did a stretch in the federal penitentiary.	stretch(a(stretch)). past(in(do(he, a(stretch)), the(federal(penitentiary)))).
+Let's review your situation.	imperative(let(you, to(review(we, of(situation, you))))).
+An adviser helped students select their courses.	adviser(a(adviser)). student(a(pl(student))). past(help(a(adviser), to(select(a(pl(student)), of(pl(course), they))))).
+Angular momentum makes the world go round.	make(angular(momentum), to(round(go(the(world))))).
+The effects of the drought are apparent to anyone who sees the parched fields.	to(apparent(of(pl(effect), the(drought))), X) :- see(X, the(pl(parched(field)))).
+The widow wore black.	past(wear(the(widow), black)).
+Iron is absolutely necessary.	absolutely(necessary(iron)).
+Beg money and food.	imperative(beg(you, money)). imperative(beg(you, food)).
+Lead, iron, copper, tin, and zinc are base metals.	metal(lead). base(lead). metal(iron). base(iron). metal(copper). base(copper). metal(tin). base(tin). metal(zinc). base(zinc).

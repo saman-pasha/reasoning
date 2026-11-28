@@ -7,10 +7,14 @@
 %% (unknown) fits either. So `Cosa vede il ragazzo?' is what the boy
 %% sees: a thing does not see, and `what' is the object.
 %% An Animacy none: the verb takes no such role (`sleep' has no object).
+%% An Animacy some (since reasoning 1.142.0): the verb always takes the
+%% role, of any animacy (`do' as a main verb has an object, so `Yes, he
+%% does.' is an answer and `He does.' no clause).
 
 ty_role_animacy(see, s, animate).
 ty_role_animacy(sleep, s, animate).
 ty_role_animacy(sleep, o, none).
+ty_role_animacy(do, o, some).
 ty_role_animacy(eat, s, animate).
 ty_role_animacy(view, s, animate).
 ty_role_animacy(think, s, animate).

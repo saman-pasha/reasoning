@@ -129,7 +129,13 @@
 %%                                     since 1.138.0; command: one a
 %%                                     command may begin with though no row
 %%                                     of the tables has it, read in the
-%%                                     fifth chance alone, since 1.140.0), or
+%%                                     fifth chance alone, since 1.140.0;
+%%                                     object_bare: one whose object's
+%%                                     infinitive has no infinitive mark,
+%%                                     since 1.142.0; object_bare_known: of
+%%                                     those, one whose object is then a
+%%                                     pronoun, a name or a definite noun
+%%                                     phrase, since 1.142.0), or
 %%                                     Base is a list of verbs
 %%                                     (since 1.95.0)
 %%     ty_adjective_list(L, Kind, Base)
@@ -2278,6 +2284,12 @@ ty_read_one(L, Text, IR, Topics) :-
         b_setval('$ty_time', on),
         ty_read_words(L, Text, Written, Lowered, Topics, Mood, IR1),
         b_setval('$ty_time', off)
+    *-> true
+    ;   ty_massa_ahead(L, Lowered),
+        b_setval('$ty_massa_go', on),
+        ty_read_words(L, Text, Written, Lowered, Topics, Mood, IR1),
+        b_setval('$ty_massa_go', off),
+        \+ ty_massa_stray(L, IR1)
     ),
     ty_ir_out(IR1, IR).
 
@@ -2464,8 +2476,14 @@ ty_read_bases(L, Surface, Topics, Mood, IR0, C) :-
 %% plain one ('$ty_massp' on, where the text has such a word), and the
 %% later passes keep it: in the plain pass `A room of smiling faces.' was a
 %% clause, smiling a noun and faces its verb.
+ty_nn_passes(_, Bases, Goal) :-
+    nb_current('$ty_massa_go', on), !,
+    b_setval('$ty_massa', on), b_setval('$ty_massr', on), b_setval('$ty_massp', on), b_setval('$ty_nn', on),
+    b_setval('$ty_apnp', on),
+    phrase(Goal, Bases).
 ty_nn_passes(L, Bases, Goal) :-
     (   b_setval('$ty_nn', off), b_setval('$ty_apnp', off), b_setval('$ty_massp', off), b_setval('$ty_massr', off),
+        b_setval('$ty_massa', off),
         phrase(Goal, Bases)
     *-> true
     ;   ty_massp_ahead(L, Bases),
@@ -2481,6 +2499,64 @@ ty_nn_passes(L, Bases, Goal) :-
         b_setval('$ty_massr', on), b_setval('$ty_massp', on), b_setval('$ty_nn', on), b_setval('$ty_apnp', on),
         phrase(Goal, Bases)
     ).
+
+%% A BARE NOUN WHOSE WORD IS AN ADJECTIVE'S TOO WITH NO MODIFIER (since
+%% 1.142.0: `Nurses clad in white.', `He liked color.') is read in a
+%% chance of its own, the seventh and last, where the text has such a word
+%% ('$ty_massa_go', then '$ty_massa'), with every pass's flags on, and
+%% written so only where the IR holds such a noun (ty_ir_massa/2): in the
+%% first chance it took `smoking' and `French', which the gerund's chance
+%% and the capitals' read.
+ty_massa_ahead(L, Bases) :-
+    member(W, Bases), atom(W),
+    ty_word_class(L, adjective, W), once(ty_noun(L, _, _, _, W, _)), !.
+
+%% In that chance a bare noun whose word is an adverb's too stands only as
+%% an adposition's noun (`from home', `at home'), and one whose word is a
+%% subordinator's nowhere: `He fell short of our expectations.' and `for
+%% teaching while still in college' are none.
+ty_massa_stray(L, T) :- ty_massa_bad(L, T, out).
+%% Nor is it a copula's noun phrase, nor its subject where the
+%% predicate's adjective is a noun's word too (`Red is color.', which a
+%% program's color(red) was said as).
+ty_massa_stray(L, T) :- ty_massa_copula(L, T).
+
+ty_massa_copula(L, T) :-
+    compound(T),
+    (   T = copula(_, _, S, P), nonvar(P),
+        (   P = np(M, sg, mass, _), atom(M), ty_mass_relaxed(L, M)
+        ->  true
+        ;   nonvar(S), S = np(M2, sg, mass, _), atom(M2), ty_mass_relaxed(L, M2),
+            P = adj(As), is_list(As), member(A, As), atom(A),
+            once(ty_adjective(L, A, _, _, W)), once(ty_noun(L, _, _, _, W, _))
+        )
+    ->  true
+    ;   T =.. [_|Args], member(X, Args), ty_massa_copula(L, X)
+    ), !.
+
+ty_massa_bad(L, T, Where) :-
+    compound(T),
+    (   T = np(M, sg, mass, _), atom(M), once(ty_noun(L, M, _, _, W, _)),
+        ( ty_subordinator(L, _, [W|_]) -> true ; Where == out, ty_word_class(L, adverb, W) )
+    ->  true
+    ;   T = pp(_, NP), nonvar(NP)
+    ->  ty_massa_bad(L, NP, in)
+    ;   T =.. [_|Args], member(A, Args), ty_massa_bad(L, A, out)
+    ), !.
+
+%% The writer tries without it first, and with it only where the IR holds
+%% such a noun: asked of every IR written, the walk cost the English round
+%% trips 0.6 % more inferences.
+ty_write_massa(_, _, off).
+ty_write_massa(L, IR, on) :- ty_ir_massa(L, IR), \+ ty_massa_stray(L, IR).
+
+ty_ir_massa(L, T) :-
+    compound(T),
+    (   T = np(M, N, D, As), N == sg, D == mass, As == [], nonvar(M),
+        ty_mass_relaxed(L, M)
+    ->  true
+    ;   T =.. [_|Args], member(A, Args), ty_ir_massa(L, A)
+    ), !.
 
 %% A word that is a noun's and an adjective's after a word that is an
 %% adjective's or a noun's: the last pass's bare noun (ty_mass_ok/3), in a
@@ -2575,6 +2651,8 @@ ty_write_parts(L, IR, Topics, Mood, Tokens) :-
     ty_parse_reset(L),
     ty_write_massr(L, IR0, Massr),
     b_setval('$ty_massr', Massr),
+    ty_write_massa(L, IR0, Massa),
+    b_setval('$ty_massa', Massa),
     ( '$ty_time_made'(L), ty_ir_time(IR0) -> b_setval('$ty_time', on) ; b_setval('$ty_time', off) ),
     phrase(Goal, Tokens0),
     ty_reads_as(Mood, L, IR0, Tokens0, Topics, Massr), !,
@@ -3669,6 +3747,7 @@ ty_ask_clause(L, C, Cost) -->
     { ty_wh_count(C, Kind),
       ty_wh_first(C, Part),
       ty_roles_ok(L, C),
+      \+ ty_do_adverb(L, C),
       ty_object_ok(L, C, How),
       ty_comp_wh_ok(L, Order, C, How),
       ty_front_ok(C),
@@ -4076,6 +4155,7 @@ ty_subject_number(W, sg) :- nonvar(W), W = wh(_).
 ty_subject_number(G, sg) :- nonvar(G), G = ger(_, _, _).
 ty_subject_number(G, N) :- nonvar(G), G = gap(H, _, _), ty_subject_number(H, N).
 ty_subject_number(rel(np(_, N, _, _), _), N).
+ty_subject_number(rel(Qp, _), sg) :- nonvar(Qp), Qp = qp(_, _).
 ty_subject_number(of(_, np(_, N, _, _)), N).
 ty_subject_number(np_pp(NP, _), N) :- nonvar(NP), ty_subject_number(NP, N).
 ty_subject_number(pron(P, N0, _), N) :- ty_agreement(P, N0, N).
@@ -5214,11 +5294,24 @@ ty_verb_polarity(L, P, VP) :-
 
 %% The subject is what its verb takes (templates/roles.pl: the subject of
 %% `see' is animate), and a verb whose object is none takes none (`sleep':
-%% Spanish `Duerme el perro.' is no sleeping of a dog), asked of the IR
-%% once the clause is read.
-ty_roles_ok(L, clause(V, _, _, S, O, _)) :-
+%% Spanish `Duerme el perro.' is no sleeping of a dog), and one whose
+%% object is some takes one (since 1.142.0: `He does.' is no clause of
+%% `do'), and in the passive none (`The work was done ten years ago.' has
+%% no object `ten years'), asked of the IR once the clause is read.
+ty_roles_ok(L, clause(V, T, _, S, O, _)) :-
     (   ty_role_animacy(V, s, A) -> ty_np_animacy(L, S, A) ; true ),
-    (   ty_role_animacy(V, o, none) -> O == none ; true ).
+    (   ty_role_animacy(V, o, none) -> O == none ; true ),
+    (   nonvar(V), ty_role_animacy(V, o, some)
+    ->  ( nonvar(T), T = pass(_) -> O == none ; O \== none )
+    ;   true
+    ).
+
+%% A question of `do' as the main verb has no adverb whose word begins a
+%% verb's form (since 1.142.0): `What did the boy see?' is no doing with
+%% `see' an adverb's row; a statement may (`He did it well.').
+ty_do_adverb(L, clause(V, _, _, _, _, Js)) :-
+    atom(V), ty_role_animacy(V, o, some),
+    is_list(Js), member(J, Js), nonvar(J), J = adv(W), atom(W), once(ty_verb_row(L, _, _, _, _, [W])), !.
 
 ty_np_animacy(L, np(M, _, _, _), A) :-
     once(( ty_noun(L, M, _, A1, _, _), ty_animacy_fits(A, A1) )).
@@ -5226,6 +5319,7 @@ ty_np_animacy(_, wh(M), A) :-
     ty_wh_features(M, [_, _, A1]),
     ty_animacy_fits(A, A1).
 ty_np_animacy(L, rel(NP, _), A) :- NP = np(_, _, _, _), ty_np_animacy(L, NP, A).
+ty_np_animacy(L, rel(Qp, _), A) :- nonvar(Qp), Qp = qp(_, _), ty_np_animacy(L, Qp, A).
 ty_np_animacy(L, gap(NP, _, _), A) :- ty_np_animacy(L, NP, A).
 ty_np_animacy(L, of(_, NP), A) :- NP = np(_, _, _, _), ty_np_animacy(L, NP, A).
 ty_np_animacy(L, np_pp(NP, _), A) :- nonvar(NP), ty_np_animacy(L, NP, A).
@@ -5347,12 +5441,13 @@ ty_clause_parts([P|Ps], L, C, How) --> ty_clause_part(P, L, C, How), ty_clause_p
 
 ty_clause_part(s, L, clause(_, _, _, S, _, _), _) --> ty_role(L, s, S).
 ty_clause_part(o, L, clause(V, _, _, _, O, _), How) --> ty_object(L, V, O, How).
-ty_clause_part(v, L, clause(V, T, P, S, O, Js), _) -->
-    { ty_subject_number(S, N),
-      b_setval('$ty_csubj', S),
-      ty_verb_polarity(L, P, VP) },
-    ty_verb_group(L, V, T, N, VP, O, Js, Ws),
-    ty_meant(L, verb(V), Ws).
+ty_clause_part(v, L, clause(V, T, P, Sb, O, Js), _, W0, W) :-
+    ty_subject_number(Sb, N),
+    b_setval('$ty_csubj', Sb),
+    ty_verb_polarity(L, P, VP),
+    ty_verb_group(L, V, T, N, VP, O, Js, Ws, W0, W1),
+    ( atom(V), ty_role_animacy(V, o, some) -> ty_object_needed(L, T, O, Ws, W1) ; true ),
+    ty_meant(L, verb(V), Ws, W1, W).
 %% An adverb ty_vg_adverb/10 read inside the verb's words is the first of
 %% the clause's adjuncts (`$ty_vadv' holds it with the list's variable,
 %% set back as each parse starts, ty_parse_reset/1). Asked with ty_here//1
@@ -5386,6 +5481,19 @@ ty_clause_part(oh(X), L, clause(V, _, _, _, O, _), How) --> ty_object_head(L, V,
 ty_clause_part(ot(X), L, _, _) --> ty_rel_tail(L, X).
 ty_clause_part(sh(X), L, clause(_, _, _, S, _, _), _) --> ty_subject_head(L, S, X).
 ty_clause_part(st(X), L, _, _) --> ty_rel_tail(L, X).
+
+%% A verb that always takes an object (ty_role_animacy(V, o, some), since
+%% 1.142.0: `do') is refused with none as soon as it is read, not at the
+%% clause's end, and before the next word of a negation row it begins
+%% (`does not'), which makes it the negation's: read to the end, each
+%% negative clause of the bench (`The boy does not see the dog.') read
+%% `does' as the main verb first, and the English round trips cost 8 % more
+%% inferences.
+ty_object_needed(L, T, O, Ws, S) :-
+    (   nonvar(T), T = pass(_) -> true
+    ;   O \== none,
+        \+ ( Ws = [W], nonvar(S), S = [X|_], atom(X), ty_negation(L, _, _, [W, X], _) )
+    ).
 
 %% `OF' AFTER A VERB (since 1.129.0): a verb of the language's
 %% ty_verb_list(L, of_adjunct, Base) row takes an adposition phrase of
@@ -5465,6 +5573,22 @@ ty_object(L, V, G, ger) -->
     { var(G) -> true ; G = ger(_, _, _) },
     { G = ger(V2, O2, Js2) },
     ty_gerund(L, V2, O2, Js2).
+%% A BARE INFINITIVE (since 1.142.0), after a verb ty_verb_list(L,
+%% object_bare, Base) names (English `let', `help'): the object and its
+%% infinitive with no infinitive mark, the IR an object's infinitive's
+%% (`Let them match their best athletes.' is clause(let, imperative, pos,
+%% pron(2, _, _), clause(match, infinitive, pos, pron(3, pl, _), ...))).
+%% The infinitive is read with its mark put before the words, and written
+%% with the mark taken off (ty_bare_infinitive//4): a flag the verb's form
+%% asked cost every verb form read a clause, and a Spanish reading of the
+%% suite 0.4 % more inferences. After a verb
+%% ty_verb_list(L, object_bare_known, Base) names the object is a known
+%% one (ty_known_np/1).
+ty_object(L, V, clause(V2, infinitive, pos, NP, O2, Js2), bare) -->
+    { nonvar(V), '$ty_barev'(V, L) },
+    ty_role(L, o, NP),
+    { \+ ( ty_verb_of(L, object_bare_known, V), \+ ty_known_np(NP) ) },
+    ty_bare_infinitive(L, V2, O2, Js2).
 ty_object(L, V, clause(V2, infinitive, pos, NP, O2, Js2), oinf) -->
     { '$ty_inf_made'(L) },
     ty_flag_allows('$ty_pinf'),
@@ -5546,6 +5670,20 @@ ty_object(L, V, sc(Pred), sc) -->
     { nonvar(V), '$ty_scv'(V, L) },
     ty_ocomp_pred(L, none, Pred).
 
+%% A bare infinitive's (since 1.142.0): the infinitive with its mark put
+%% before the words, and a known object.
+ty_bare_infinitive(L, V, O, Js, S0, S) :-
+    once(ty_tense_form(L, infinitive, _, pos, [I|_])), atom(I),
+    ty_infinitive(L, V, O, Js, [I|S0], S).
+
+ty_known_np(NP) :-
+    nonvar(NP),
+    (   NP = pron(_, _, _) -> true
+    ;   NP = name(_) -> true
+    ;   NP = of(_, NP1) -> nonvar(NP1), NP1 = np(_, _, def, _)
+    ;   NP = np(_, _, D, _), memberchk(D, [def, this, that])
+    ).
+
 %% Two objects, the second no bare noun after a noun's (`He got an
 %% estimate from the car repair shop.' is one compound noun, `a limited
 %% edition of Bach recordings' one after `of'; after a pronoun or a name
@@ -5553,10 +5691,11 @@ ty_object(L, V, sc(Pred), sc) -->
 %% meals a day' is a rate, lexicon/unit.txt); the first no noun with a
 %% relative clause, which would end before the second (`The professor
 %% wrote the text that he assigned students to buy.'), nor (since 1.119.0)
-%% a bare noun alone (`She denied being an egghead.').
+%% a bare noun alone (`She denied being an egghead.'), nor (since 1.142.0)
+%% one with adjectives (`He did complicated pen-and-ink drawings.').
 ty_io_ok(IO, DO) :-
     \+ ( nonvar(IO), IO = rel(_, _) ),
-    \+ ( nonvar(IO), IO = np(_, sg, mass, As0), As0 == [] ),
+    \+ ( nonvar(IO), IO = np(_, sg, mass, _) ),
     \+ ( nonvar(DO), DO = np(_, Num, D, As), As == [],
          ( D == mass ; D == indef, Num == pl ),
          \+ ( nonvar(IO), ( IO = pron(_, _, _) ; IO = name(_) ) ) ),
@@ -7578,6 +7717,9 @@ ty_verb_row(L, V, T, N, P, Words) :-
 %% A verb of a ty_verb_list(L, complement, Base) row (since 1.100.0), whose
 %% object ty_object//4 may read with its complement.
 :- dynamic('$ty_ocv'/2).
+%% A verb of a ty_verb_list(L, object_bare, Base) row (since 1.142.0), whose
+%% object's infinitive ty_object//4 may read with no mark.
+:- dynamic('$ty_barev'/2).
 :- dynamic('$ty_ocpw'/2).
 %% A verb of a ty_verb_list(L, two_objects, Base) row (since 1.117.0),
 %% whose objects ty_object//4 may read as two.
@@ -7670,6 +7812,7 @@ ty_vfirst_make(L) :-
     retractall('$ty_prog_made'(L)),
     retractall('$ty_ingw'(_, L)),
     retractall('$ty_ocv'(_, L)),
+    retractall('$ty_barev'(_, L)),
     retractall('$ty_ocpw'(_, L)),
     retractall('$ty_iov'(_, L)),
     retractall('$ty_scv'(_, L)),
@@ -7707,6 +7850,9 @@ ty_vfirst_make(L) :-
     ( ty_comparative(L, _, _, _) -> assertz('$ty_cmp_made'(L)) ; true ),
     forall(( ty_comparative(L, _, _, CEs), member(_-CE, CEs), sub_atom(CE, _, 2, 0, CT), \+ '$ty_cmp_end'(CT, L) ), assertz('$ty_cmp_end'(CT, L))),
     forall(( ty_irregular_comparative(L, _, CW), \+ '$ty_cmp_irr'(CW, L) ), assertz('$ty_cmp_irr'(CW, L))),
+    forall(( ty_verb_list(L, object_bare, BB), ( is_list(BB) -> member(BV, BB) ; ty_lex_base_read(BB), '$ty_lexw'(BB, BV) ),
+             \+ '$ty_barev'(BV, L) ),
+           assertz('$ty_barev'(BV, L))),
     forall(( ty_verb_list(L, complement, _), ty_verb(L, OcV, _, _, _, _), \+ '$ty_ocv'(OcV, L),
              ty_verb_of(L, complement, OcV) ),
            assertz('$ty_ocv'(OcV, L))),
@@ -8472,6 +8618,17 @@ ty_rel_parts([P|Ps], L, Role, NP, F, C, M) -->
 %% read at all (English: no marker is no subject's). A moved adposition's
 %% marker is its words and a relative pronoun (`en la que', `in cui').
 ty_rel_part(h, L, Role, NP, F, _, _) --> ty_marked_np(L, Role, NP, F, r).
+%% A quantifier pronoun as the head (since 1.142.0: `Everything that comes
+%% into existence', `anyone who sees the parched fields'), one of some,
+%% every, no or any: `this' and `that' alone are none (`Puzzled that she
+%% left.'). Reading, only where the text holds such a pronoun's first word
+%% ('$ty_qp'), asked first: each relative clause tried on a noun phrase
+%% tries this head too, and through ty_qp_slot/1 and ty_qp_here//0 it cost
+%% the English round trips 0.75 % more inferences.
+ty_rel_part(h, L, Role, Qp, F, _, _) -->
+    { var(Qp) -> nb_current('$ty_qp', f(yes)), Qp = qp(_, _) ; Qp = qp(_, _) },
+    ty_qp_role(L, Role, Qp, F),
+    { Qp = qp(Q, _), memberchk(Q, [some, every, no, any]) }.
 ty_rel_part(m, L, _, _, _, _, m(Ws, R)) -->
     { R = r(poss(Pl, NP2, F2), Rule), Rule == moves }, !,
     ty_rel_comma(L),
@@ -9202,6 +9359,7 @@ ty_mass_ok(L, M, As) :-
     ),
     (   nb_current('$ty_mass_adj', yes) -> true
     ;   nb_current('$ty_massr', on), member(X, As), \+ ( compound(X), X = ap(_, _) ) -> true
+    ;   nb_current('$ty_massa', on) -> true
     ;   \+ ty_word_class(L, adjective, Sg)
     ),
     \+ ( ty_noun(L, M2, _, _, _, Sg), M2 \== M ).

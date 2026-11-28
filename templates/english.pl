@@ -295,6 +295,7 @@ ty_irregular_verb(english, freeze, freeze, regular, [past(sg)-froze, participle-
 ty_irregular_verb(english, get, get, regular, [past(sg)-got, participle-gotten]).
 ty_irregular_verb(english, give, give, regular, [past(sg)-gave, participle-given]).
 ty_irregular_verb(english, go, go, regular, [past(sg)-went, participle-gone]).
+ty_irregular_verb(english, do, do, regular, [past(sg)-did, participle-done]).
 ty_irregular_verb(english, grind, grind, regular, [past(sg)-ground, participle-ground]).
 ty_irregular_verb(english, grow, grow, regular, [past(sg)-grew, participle-grown]).
 ty_irregular_verb(english, hang, hang, regular, [past(sg)-hung, participle-hung]).
@@ -722,6 +723,13 @@ ty_verb_list(english, infinitive, [have, hope, need, prefer, decide, hate, remem
 %% lexicon/vtinf.txt (`Pressure causes plantar warts to develop a painful
 %% callus.').
 ty_verb_list(english, object_infinitive, vtinf).
+%% A verb whose object's infinitive has no `to' (since 1.142.0: `Let them
+%% match their best athletes.', `He helped her carry the box.'), and of
+%% those the ones whose object is then a known one, a pronoun, a name or a
+%% definite noun phrase (`Angular momentum makes the world go round.';
+%% `The goalie made a brilliant save.' is no saving).
+ty_verb_list(english, object_bare, [let, help, make]).
+ty_verb_list(english, object_bare_known, [make]).
 %% Of those, the ones whose object's infinitive is one of purpose, or the
 %% object's own, more than one whose subject the object is (since 1.96.0:
 %% `He used pressure to stop the bleeding.', `Make arrangements to
@@ -762,7 +770,7 @@ ty_verb_list(english, ing_double, [abhor, acquit, admit, allot, begin, commit, c
 %% said of its subject (`The situation became ugly.', `He remained
 %% faithful to his wife.').
 ty_verb_list(english, linking, [appear, become, feel, get, go, grow, look, prove, remain, seem, smell, sound, stay, taste, turn]).
-ty_verb_list(english, two_objects, [allow, ask, assign, award, bring, buy, cook, cost, deny, earn, envy, feed, fetch, forgive, get, give, grant, guarantee, hand, issue, lend, loan, mail, offer, owe, pass, pay, pour, promise, read, refuse, sell, send, serve, show, sing, spare, teach, tell, throw, toss, wish, write]).
+ty_verb_list(english, two_objects, [allow, ask, assign, award, bring, buy, cook, cost, deny, do, earn, envy, feed, fetch, forgive, get, give, grant, guarantee, hand, issue, lend, loan, mail, offer, owe, pass, pay, pour, promise, read, refuse, sell, send, serve, show, sing, spare, teach, tell, throw, toss, wish, write]).
 ty_verb_list(english, complement, [adjudge, appoint, believe, brand, call, color, consider, crown, declare, deem, dub, dye, elect, feel, find, hold, judge, keep, label, leave, make, name, nominate, paint, proclaim, pronounce, prove, reckon, regard, render, rule, set, term, think, turn]).
 %% The adjectives an infinitive may follow, its subject the adjective's own
 %% (since 1.96.0: `able to walk', `glad to help'); WordNet gives

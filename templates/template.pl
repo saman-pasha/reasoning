@@ -375,7 +375,13 @@ ty_conjunct_marks(xx).
 %%                                     since 1.138.0; command: one a
 %%                                     command may begin with though no row
 %%                                     of the tables has it, read in the
-%%                                     fifth chance alone, since 1.140.0), or
+%%                                     fifth chance alone, since 1.140.0;
+%%                                     object_bare: one whose object's
+%%                                     infinitive has no infinitive mark,
+%%                                     since 1.142.0; object_bare_known: of
+%%                                     those, one whose object is then a
+%%                                     pronoun, a name or a definite noun
+%%                                     phrase, since 1.142.0), or
 %%                                     Base is a list of verbs
 %%                                     (since 1.95.0)
 %% ty_verb_list(xx, Kind, Base).
