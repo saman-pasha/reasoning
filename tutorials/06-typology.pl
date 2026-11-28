@@ -197,6 +197,7 @@ main :-
     gerund_places,
     commands_and_times,
     do_and_bare,
+    copula_tails,
     format("~ndone~n", []).
 
 
@@ -1622,6 +1623,24 @@ do_and_bare :-
     must('a bare noun of an adjective''s word', IR4, clause(like, past, pos, pron(3, sg, m), np(color, sg, mass, []))),
     typology_write(english, IR4, W4),
     must('and written', W4, 'He liked color.').
+
+%% 108. A COPULA'S NOUN PHRASE WITH AN ADPOSITION PHRASE, A GERUND NOUN, A
+%% PARTICLE VERB'S PASSIVE (1.143.0). A copula's noun phrase takes a tail
+%% as a role's does, np_pp(NP, pp(Prep, X)); an eighth chance makes a
+%% verb's form in -ing after an article or a possessive a noun of its own
+%% word for one read; a phrasal row of an object has none in the passive.
+copula_tails :-
+    typology_load(english),
+    typology_read(english, 'He is a man with a hat.', IR1),
+    must('a copula noun phrase with a tail', IR1, copula(present, pos, pron(3, sg, m), np_pp(np(man, sg, indef, []), pp(with, np(hat, sg, indef, []))))),
+    typology_write(english, IR1, W1),
+    must('and written', W1, 'He is a man with a hat.'),
+    typology_read(english, 'The harvesting was complete.', IR2),
+    must('a gerund noun', IR2, copula(past, pos, np(harvesting, sg, def, []), adj([complete]))),
+    typology_write(english, IR2, W2),
+    must('and written', W2, 'The harvesting was complete.'),
+    typology_read(english, 'The supernatant fat was skimmed off.', IR3),
+    must('a particle verb in the passive', IR3, clause(skim_off, pass(past), pos, np(fat, sg, def, [supernatant]), none)).
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

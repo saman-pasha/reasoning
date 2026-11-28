@@ -684,3 +684,14 @@ The widow wore black.	past(wear(the(widow), black)).
 Iron is absolutely necessary.	absolutely(necessary(iron)).
 Beg money and food.	imperative(beg(you, money)). imperative(beg(you, food)).
 Lead, iron, copper, tin, and zinc are base metals.	metal(lead). base(lead). metal(iron). base(iron). metal(copper). base(copper). metal(tin). base(tin). metal(zinc). base(zinc).
+# a copula's noun phrase with an adposition phrase; a gerund noun; a particle verb's passive (1.143.0)
+He was a successful pianist in his day.	past(pianist(he)). past(successful(he)). past(in(he, of(day, he))).
+It was a fight to the finish.	past(fight(it)). past(to(it, the(finish))).
+Racism is a pestilence at the heart of the nation.	pestilence(racism). at(racism, of(heart, the(nation))).
+The buoys were markers for the channel.	past(marker(the(pl(buoy)))). past(for(the(pl(buoy)), the(channel))).
+The agreement was a triumph for common sense.	past(triumph(the(agreement))). past(for(the(agreement), common(sense))).
+It was the wrong moment for a joke.	joke(a(joke)). past(for(it, a(joke))). past(same(it, the(wrong(moment)))).
+The officiating was excellent.	past(excellent(the(officiating))).
+The audience could hear his prompting.	could(hear(the(audience), of(prompting, he))).
+The supernatant fat was skimmed off.	past(skim_off(someone, the(supernatant(fat)))).
+He was called on for an aliyah.	aliyah(a(aliyah)). past(for(call_on(someone, he), a(aliyah))).

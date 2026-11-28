@@ -104,6 +104,7 @@ main :-
     quantified_args,
     copula_names,
     relation_names,
+    copula_tails,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -944,6 +945,20 @@ relation_names :-
     must('as', C2, 'is_as(past(grow(of(closeness, they))), past(wear_on(the(night)))).\n'),
     logic_translate(english, cocolog, 'His arguments seemed shallow and tedious.', C3),
     must('shallow and tedious', C3, 'past(seem(of(pl(argument), he), and(shallow(of(pl(argument), he)), tedious(of(pl(argument), he))))).\n').
+
+%% 75. A COPULA'S NOUN PHRASE WITH AN ADPOSITION PHRASE, A GERUND NOUN
+%% (1.143.0). The noun phrase's atoms and the adposition's are each said of
+%% the subject; a gerund noun is a noun's predicate, and back.
+copula_tails :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'He was a hero in the war.', C1),
+    must('a hero in the war', C1, 'past(hero(he)).\npast(in(he, the(war))).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and back', E1, 'He was a hero. He was in the war.'),
+    logic_translate(english, cocolog, 'The harvesting was complete.', C2),
+    must('a gerund noun', C2, 'past(complete(the(harvesting))).\n'),
+    logic_translate(cocolog, english, C2, E2),
+    must('and back', E2, 'The harvesting was complete.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

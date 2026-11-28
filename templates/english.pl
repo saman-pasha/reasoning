@@ -659,11 +659,12 @@ ty_tense_form(english, prog(pluperfect), any, neg, [had, not, been, ing]).
 ty_adverb_inside(english).
 
 %% `a' is `an' before a vowel sound: spelled with a vowel, but not `uni',
-%% `use', `eu', `one'; and before the silent h of `hour' and `honest'.
+%% `use', `eu', `one'; and before the silent h of `hour', `honest' and
+%% (since 1.143.0) `honor' (`An honorable man.').
 ty_letters(english, vowel, [a, e, i, o, u]).
 ty_before(english, a, [[vowel]], an, space).
 ty_before(english, a, [[u, n, i], [u, s, e], [u, s, u], [e, u], [o, n, e]], a, space).
-ty_before(english, a, [[h, o, u, r], [h, o, n, e, s, t], [h, o, n, o, u, r], [h, e, i, r]], an, space).
+ty_before(english, a, [[h, o, u, r], [h, o, n, e, s, t], [h, o, n, o, u, r], [h, o, n, o, r], [h, e, i, r]], an, space).
 
 %% The copula clause: subject, copula, predicate; the copula agrees with the
 %% subject's number, for every kind of predicate.

@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words, but_words, more_grammar_words, gerund_places, commands_and_times, do_and_bare,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words, but_words, more_grammar_words, gerund_places, commands_and_times, do_and_bare, copula_tails,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2921,6 +2921,39 @@ do_and_bare :-
              atomic_list_concat(['no reading: ', T3], Label3),
              check(Label3, R3, none) )).
 
+%% 1.143.0: a copula's noun phrase with an adposition phrase after it, a
+%% verb's form in -ing as a noun (the eighth chance), the passive of a
+%% verb with a particle, `an' before `honor'.
+copula_tails :-
+    section('a copula noun phrase with a tail, a gerund noun, a particle verb passive, an honor'),
+    forall(member(T-Want, [
+               'He is a man with a hat.'-copula(present, pos, pron(3, sg, m), np_pp(np(man, sg, indef, []), pp(with, np(hat, sg, indef, [])))),
+               'He was the hero in the war.'-copula(past, pos, pron(3, sg, m), np_pp(np(hero, sg, def, []), pp(in, np(war, sg, def, [])))),
+               'It was a leviathan among redwoods.'-copula(past, pos, pron(3, sg, n), np_pp(np(leviathan, sg, indef, []), pp(among, np(redwood, pl, indef, [])))),
+               'The harvesting was complete.'-copula(past, pos, np(harvesting, sg, def, []), adj([complete])),
+               'He gave the brat a good spanking.'-clause(give, past, pos, pron(3, sg, m), io(np(brat, sg, def, []), np(spanking, sg, indef, [good]))),
+               'A balking.'-phrase(np(balking, sg, indef, [])),
+               'The supernatant fat was skimmed off.'-clause(skim_off, pass(past), pos, np(fat, sg, def, [supernatant]), none),
+               'An honorable man.'-phrase(np(man, sg, indef, [honorable])) ]),
+           ( ( once(typology_read(english, T, R)) -> true ; R = none ),
+             ( R = Want -> V = yes ; V = R ),
+             atomic_list_concat(['English, the first reading: ', T], Label),
+             check(Label, V, yes),
+             ( R \== none, typology_write(english, R, W) -> true ; W = none ),
+             atomic_list_concat(['English, written: ', T], Label2),
+             check(Label2, W, T) )),
+    ( once(typology_read(english, 'Carpenter bees are boring holes into the wall.', R2)) -> true ; R2 = none ),
+    ( R2 = clause(bore, prog(present), pos, _, _, _) -> A2 = yes ; A2 = R2 ),
+    check('a progressive stays a progressive, not a noun phrase of an -ing adjective', A2, yes),
+    forall(member(T3, ['He was bent double with pain.', 'The device is small enough to wear on your wrist.']),
+           ( ( once(typology_read(english, T3, R3)) -> true ; R3 = none ),
+             atomic_list_concat(['no reading: ', T3], Label3),
+             check(Label3, R3, none) )),
+    ( typology_ing_noun(english, harvesting) -> A4 = yes ; A4 = no ),
+    check('harvesting is a verb\'s form in -ing no noun row has', A4, yes),
+    ( typology_ing_noun(english, meeting) -> A5 = yes ; A5 = no ),
+    check('meeting has a noun row', A5, no).
+
 t_has_ger(T) :-
     compound(T),
     (   T = ger(_, _, _) -> true ; T =.. [_|As], member(A, As), t_has_ger(A) ), !.
@@ -3645,8 +3678,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 6530 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 6 530 sentences read at 1.142.0 within 2 000 000 inferences each are read', R1, yes),
+    ( K >= 6592 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 6 592 sentences read at 1.143.0 within 2 000 000 inferences each are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

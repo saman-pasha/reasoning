@@ -959,7 +959,7 @@
                       typology_import/1, typology_import/2,
                       typology_references/2, typology_reason_ir/2,
                       typology_coverage/4, typology_meaning/3, typology_plural/3,
-                      typology_command_verb/2 ]).
+                      typology_command_verb/2, typology_ing_noun/2 ]).
 
 :- use_module(library(reasoning/reason), [ reason_base/2 ]).
 
@@ -2290,8 +2290,67 @@ ty_read_one(L, Text, IR, Topics) :-
         ty_read_words(L, Text, Written, Lowered, Topics, Mood, IR1),
         b_setval('$ty_massa_go', off),
         \+ ty_massa_stray(L, IR1)
+    *-> true
+    ;   ty_ingn_chance(L, Lowered, Ns),
+        ty_ingn_rows(L, Ns, ty_read_words(L, Text, Written, Lowered, Topics, Mood, IR1)),
+        \+ ty_ingn_stray(Ns, IR1)
     ),
     ty_ir_out(IR1, IR).
+
+%% THE GERUND NOUN'S CHANCE (since 1.143.0), the eighth: where the words
+%% read nothing else, a verb's form in -ing that no noun's row has, after
+%% an article or a possessive (an adjective's word between them or not), is
+%% a noun of its own word for the read alone (ty_ingn_rows/3): `The
+%% harvesting was complete.' copula(past, pos, np(harvesting, sg, def,
+%% []), adj([complete])), `He gave the brat a good spanking.', `the
+%% quelling of the rebellion'. The writer writes such an IR the same way
+%% (ty_write_any/5), and level 2 asks typology_ing_noun/2.
+ty_ingn_chance(L, Ws, Ns) :-
+    '$ty_ger_made'(L),
+    findall(N, ty_ingn_at(L, Ws, N), Ns0), sort(Ns0, Ns), Ns \== [].
+
+ty_ingn_at(L, Ws, N) :-
+    append(_, [P, N|_], Ws), atom(N), atom_concat(_, ing, N),
+    (   ty_ingn_det(L, P) -> true
+    ;   ty_word_class(L, adjective, P), append(_, [D, P, N|_], Ws), ty_ingn_det(L, D)
+    ),
+    typology_ing_noun(L, N).
+
+%% Such a noun takes no adjective after it (`the spawning instinct in
+%% salmon', `the purchasing side of the business': the noun after it is
+%% the head).
+ty_ingn_stray(Ns, IR) :-
+    ty_ir_np(IR, np(N, _, _, As)), memberchk(N, Ns), is_list(As),
+    member(A, As), nonvar(A), A = ap(_, _), !.
+
+ty_ir_np(T, NP) :-
+    compound(T),
+    (   T = np(_, _, _, _), NP = T
+    ;   T =.. [_|As], member(A, As), ty_ir_np(A, NP)
+    ).
+
+ty_ingn_det(L, W) :- atom(W), ( ty_word_class(L, article, W) -> true ; ty_word_class(L, possessive, W) ).
+
+%% A verb's form in -ing that no noun's row has (since 1.143.0).
+typology_ing_noun(L, N) :-
+    atom(N), atom_concat(_, ing, N), \+ once(ty_noun(L, N, _, _, _, _)), once(ty_ing_word(L, _, N)).
+
+ty_ingn_rows(L, Ns, G) :-
+    setup_call_cleanup(forall(member(N, Ns), ty_ingn_add(L, N)), G, forall(member(N, Ns), ty_ingn_del(L, N))).
+
+ty_ingn_add(L, N) :- atom_concat(N, s, P), assertz(ty_noun(L, N, none, unknown, N, P)).
+ty_ingn_del(L, N) :- atom_concat(N, s, P), ignore(retract(ty_noun(L, N, none, unknown, N, P))).
+
+%% An IR's nouns of such a word, writing.
+ty_ir_ingn(L, IR, Ns) :-
+    '$ty_ger_made'(L),
+    findall(N, ( ty_ir_np_head(IR, N), typology_ing_noun(L, N) ), Ns0), sort(Ns0, Ns), Ns \== [].
+
+ty_ir_np_head(T, N) :-
+    compound(T),
+    (   T = np(N, _, _, _), atom(N)
+    ;   T =.. [_|As], member(A, As), ty_ir_np_head(A, N)
+    ).
 
 %% THE TIME'S CHANCE (since 1.140.0), the sixth: a noun phrase of time is
 %% an adjunct ('$ty_time' on, ty_adjunct_item//2) only where the words read
@@ -2627,6 +2686,8 @@ ty_write_any(L, IR, Topics, Mood, Tokens) :-
     (   ty_write_parts(L, IR, Topics, Mood, Tokens) -> true
     ;   ty_ir_cmdv(L, IR, W)
     ->  once(ty_cmd_rows(L, W, ty_write_parts(L, IR, Topics, Mood, Tokens)))
+    ;   ty_ir_ingn(L, IR, Ns)
+    ->  once(ty_ingn_rows(L, Ns, ty_write_parts(L, IR, Topics, Mood, Tokens)))
     ;   '$ty_hyph_made'(L),
         nb_setval('$ty_hyph_new', no),
         ty_hyph_ir(L, IR),
@@ -7069,6 +7130,7 @@ ty_predicate_kind(rel(_, _), np).
 ty_predicate_kind(of(_, _), np).
 %% such (since 1.125.0) is a noun phrase's kind.
 ty_predicate_kind(W, np) :- nonvar(W), W = such(_).
+ty_predicate_kind(W, np) :- nonvar(W), W = np_pp(_, _).
 
 %% The kind a copula's words are read for: a predicate's, and reading, such
 %% last, only in a language with a ty_predeterminer(L, such, Words) row (a
@@ -7076,6 +7138,9 @@ ty_predicate_kind(W, np) :- nonvar(W), W = such(_).
 %% inferences, its copula's words read once more).
 ty_copula_kind(_, Pred, K) :- ty_predicate_kind(Pred, K).
 ty_copula_kind(L, Pred, np) :- var(Pred), '$ty_predet_made'(L), ty_predeterminer(L, such, _), Pred = such(_).
+%% A noun phrase with a tail (since 1.143.0), reading, last, only in a
+%% language with the row and a text with an adposition's word.
+ty_copula_kind(L, Pred, np) :- var(Pred), '$ty_noun_pp'(L), nb_current('$ty_adp', f([_|_])), Pred = np_pp(_, _).
 ty_predicate_kind(pp(_, _), pp).
 ty_predicate_kind(W, K) :- nonvar(W), W = wh(M), ty_wh_kind(M, K).
 
@@ -7176,6 +7241,28 @@ ty_predicate_in(L, np(M, N, D, A), []) -->
     ty_np(L, np(M, N, D, A), _),
     { D == mass, A == [], nonvar(W0) -> \+ ty_word_class(L, adjective, W0) ; true },
     { \+ ( D == mass, nb_current('$ty_massr', on), ty_mass_relaxed(L, M) ) }.
+%% A COPULA'S NOUN PHRASE WITH AN ADPOSITION PHRASE AFTER IT (since
+%% 1.143.0): np_pp(NP, pp(Prep, X)) or np_pp(NP, inf(...)), the noun
+%% phrase's tail as in a role (ty_np_tail_slot/4, ty_pp_tail//3): `He was
+%% a hero in the war.', `He is a man with a hat.'. A bare noun is no
+%% such head (`elastic enough to allow', `bent double with pain', `worth
+%% good money'), nor a plural with no article whose first adjective is a
+%% verb's form in -ing, which a progressive reads (`Carpenter bees are
+%% boring holes into the wall.'), nor a plural with no article and no
+%% adjective whose word is a participle's, which a passive reads (Italian
+%% `I ragazzi sono stati visti dalla ragazza.').
+ty_predicate_in(L, NP0, []) -->
+    { nonvar(NP0) -> NP0 = np_pp(np(_, _, _, _), _) ; true },
+    { ty_np_tail_slot(L, NP0, NP, T), T \== none },
+    ty_peek(W0),
+    ty_np(L, NP, _),
+    { \+ NP = np(_, _, mass, _),
+      \+ ( NP = np(_, pl, indef, [A|_]),
+           atom(A), atom_concat(_, ing, A), once(ty_ing_word(L, _, A)) ),
+      \+ ( NP = np(_, pl, indef, []), atom(W0),
+           ( ty_participle_word(L, _, W0) -> true ; ty_part_base(L, W0, B), ty_participle_word(L, _, B) ) ) },
+    ty_pp_tail(L, T, NP),
+    { NP0 = np_pp(_, _) }.
 %% Such before a copula's noun phrase (since 1.125.0: `He is such a baby.').
 ty_predicate_in(L, such(NP), []) -->
     { '$ty_predet_made'(L) },
@@ -7224,7 +7311,10 @@ ty_verb_group(L, V, T, N, P, O, _, Ws) -->
 %% A PHRASAL VERB (since 1.94.0, ty_phrasal/5: WordNet's throw_out, set_up,
 %% come_up) is its verb's words and its particle after them: `The mayor
 %% threw out the first ball.' is clause(throw_out, past, pos, np(mayor,
-%% ...), np(ball, ...)). It is the verb group's last clause, so reading
+%% ...), np(ball, ...)); in the passive (since 1.143.0) a row of an
+%% object has none (`The supernatant fat was skimmed off.'
+%% clause(skim_off, pass(past), pos, np(fat, ...), none)). It is the verb
+%% group's last clause, so reading
 %% tries the plain verb first and the particle only where the rest is no
 %% reading with it (`Walks about in his stockinged feet.'), and only in a
 %% language with phrasal rows (`$ty_phrasal_made'/1, made with the verb
@@ -7253,7 +7343,9 @@ ty_vg_phrasal(L, V, T, N, P, O, Js, [], S0, S) :-
         ty_verb_words(L, B, T, N, P, _, S0, [Pt|S]), ty_phrasal(L, V, B, Pt, K)
     ;   ty_phrasal(L, V, B, Pt, K), ty_verb_words(L, B, T, N, P, _, S0, [Pt|S])
     ),
-    ty_phrasal_ok(K, O),
+    (   nonvar(T), T = pass(_) -> K \== none, O == none
+    ;   ty_phrasal_ok(K, O)
+    ),
     \+ ( nonvar(Js), Js = gapped(Pt, _, _, _) ).
 
 %% AN ADVERB INSIDE A VERB'S WORDS OR BEFORE THEM (since 1.99.0,

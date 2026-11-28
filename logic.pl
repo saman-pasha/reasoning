@@ -119,6 +119,13 @@
 %% first modifier (a(such(situation))); a complement of adjectives joined
 %% is and(F1, ..., Fn) (`They seem happy and calm.').
 %%
+%% A COPULA'S NOUN PHRASE WITH AN ADPOSITION PHRASE AFTER IT (since
+%% 1.143.0) is the noun phrase's atoms and the adposition's, each said of
+%% the subject (`He was a hero in the war.' past(hero(he)), past(in(he,
+%% the(war)))). A GERUND NOUN, a verb's form in -ing that no noun's row
+%% has (typology_ing_noun/2), is a noun's predicate (`The harvesting was
+%% complete.' past(complete(the(harvesting)))), and back.
+%%
 %% NO, EVERY, ANY AND SOME (since 1.139.0): `no' is `every' and the clause
 %% denied (`No dog barks.' is_not(bark(X)) :- dog(X)); `any' is `every'; a
 %% noun phrase of `every', `no' or `any' that is a constant's object, an
@@ -1009,6 +1016,17 @@ lg_atoms_(copula(_, _, _, _), T, adj(As), Atoms) :- !,
 lg_atoms_(copula(_, _, _, _), T, NP, [pred(same, [T, C])|Ms]) :-
     nonvar(NP), NP = np(_, Num, def, _), memberchk(Num, [sg, pl]), !,
     lg_arg(object, NP, C, _, Ms).
+%% One with an adposition phrase after it (since 1.143.0): the same thing,
+%% and the adposition's atom said of the subject (`He was the hero in the
+%% war.' past(same(he, the(hero))), past(in(he, the(war)))); an individual
+%% the adposition's term is, first, as for an indefinite one.
+lg_atoms_(C0, T, np_pp(H, pp(P, X)), Atoms) :-
+    C0 = copula(_, _, _, _), nonvar(H), H = np(_, Num, def, _), memberchk(Num, [sg, pl]), atom(P), !,
+    lg_arg(object, H, C, _, Ms),
+    lg_arg(object, X, Xc, _, Os),
+    (   Os == [] -> append([[pred(same, [T, C])|Ms], [pred(P, [T, Xc])]], Atoms)
+    ;   append([[pred(P, [T, Xc])|Os], [pred(same, [T, C])|Ms]], Atoms)
+    ).
 %% A COPULA'S NOUN PHRASE WITH A RELATIVE CLAUSE (since 1.140.0): the noun
 %% phrase's atoms, and the relative clause's said of the subject, its gap
 %% the subject's term, a definite one's its own (`Wheat is the stuff they
@@ -1064,6 +1082,20 @@ lg_rel_mod_words(adv(M, A), [M, A]) :- atom(M), atom(A), lg_grade_adverb(M), !.
 lg_rel_mod_words(_, _) :- lg_no(relation(adjective)).
 lg_atoms_(copula(_, _, _, _), T, pp(P, NP), [pred(P, [T, To])|Os]) :- atom(P), !,
     lg_arg(object, NP, To, _, Os).
+%% A COPULA'S INDEFINITE NOUN PHRASE WITH AN ADPOSITION PHRASE AFTER IT
+%% (since 1.143.0): the noun phrase's atoms and the adposition's, each said
+%% of the subject: `He is a man with a hat.' man(he), with(he, a(hat));
+%% `He was a hero in the war.' past(hero(he)), past(in(he, the(war))).
+%% Where the adposition's term is an individual, its atom comes first, so
+%% that the way back says the individual's facts with it (`He is with a
+%% hat. He is a man.').
+lg_atoms_(C0, T, np_pp(H, pp(P, X)), Atoms) :-
+    C0 = copula(_, _, _, _), nonvar(H), H = np(_, _, D, _), memberchk(D, [indef, mass]), atom(P), !,
+    lg_atoms_(C0, T, H, Atoms1),
+    lg_arg(object, X, Xc, _, Os),
+    (   Os == [] -> append(Atoms1, [pred(P, [T, Xc])], Atoms)
+    ;   append([pred(P, [T, Xc])|Os], Atoms1, Atoms)
+    ).
 lg_atoms_(copula(_, _, _, _), _, Pred, _) :- nonvar(Pred), Pred = such(_), !, lg_no(determiner(such)).
 lg_atoms_(copula(_, _, _, _), _, Pred, _) :- !, lg_no(predicate(Pred)).
 lg_atoms_(_, T, verb(V, none), [pred(V, [T])]) :- !.
@@ -2933,7 +2965,7 @@ lg_pron_np(they, pron(3, pl, _)).
 lg_np_of_term(L, pl(T), N, pl, As) :- !, lg_np_of_term(L, T, N, sg, As).
 lg_np_of_term(L, T, N, sg, As) :-
     lg_np_parts(T, N, As),
-    typology_meaning(L, noun, N),
+    ( typology_meaning(L, noun, N) -> true ; typology_ing_noun(L, N) ),
     forall(member(A, As), lg_np_item_ok(L, A)).
 
 %% With the individuals a group brings in (Cs), an adjective's adposition
@@ -3017,7 +3049,7 @@ lg_capital(W, C) :-
 lg_class_ok(L, P/A, C) :-
     (   lg_code_class(cocolog, P/A, _)
     ->  lg_code_class(cocolog, P/A, C)
-    ;   A == 1 -> typology_meaning(L, C, P)
+    ;   A == 1 -> ( typology_meaning(L, C, P) -> true ; C == noun, typology_ing_noun(L, P) )
     ;   memberchk(C, [verb, adposition, noun]),
         (   typology_meaning(L, C, P) -> true
         ;   C == verb, typology_command_verb(L, P)
