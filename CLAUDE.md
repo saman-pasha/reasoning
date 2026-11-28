@@ -24,8 +24,8 @@ red) and lesson 01 pin the shape of the answer, deliberately not the number.
 The reasoning library translates ALL 8 000 sentences of `lexicon/prose.txt`
 from English into the IR, and ALL of that IR into Cocolog. Every step
 moves one of the two counts and reports both (`tools/logic/prose.pl`;
-STATUS.md keeps them): at 1.144.0, 6 641 into the IR, 6 496 of them into
-Cocolog (1.143.0: 6 600 and 6 466; 1.142.0: 6 538 and 6 408; 1.141.0: 6 441 and 6 316; 1.140.0: 6 441 and 6 287; 1.139.0: 6 388 and 6 220; 1.138.0: 6 388 and 6 162; 1.137.0: 6 323 and 6 102; 1.136.0: 6 257 and 6 046; 1.135.0: 6 257 and 5 992; 1.134.0: 6 257 and 5 944; 1.133.0: 6 241 and 5 931; 1.132.0: 6 203 and 5 894; 1.131.0: 6 174 and 5 869; 1.130.0: 6 151 and 5 856; 1.129.0: 6 130 and 5 841; 1.128.0: 6 073 and 5 785; 1.127.0: 5 854 and 5 571; 1.126.0: 5 837 and 5 549; 1.125.0: 5 829 and 5 549; 1.124.0: 5 814 and 5 544; 1.123.0: 5 633 and 5 371; 1.122.0: 5 100 and 4 872; 1.121.0: 5 060 and 4 841; 1.120.0: 5 060 and 4 796; 1.119.0: 5 047 and 4 783; 1.118.0: 5 017 and 4 755; 1.117.0: 5 002 and 4 741; 1.116.0: 4 977 and 4 717; 1.115.0: 4 932 and 4 678; 1.114.0: 4 918 and 4 664; 1.113.0: 4 897 and 4 648; 1.112.0: 4 771 and 4 525; 1.111.0: 4 677 and 4 437; 1.110.0: 4 652 and 4 422; 1.109.0: 4 640 and 4 413; 1.108.0: 4 640 and 4 389; 1.107.0: 4 580 and 4 360; 1.105.0 and 1.106.0: 4 479 and 4 275; 1.104.0: 4 456 and 4 256; 1.103.0: 4 405 and 4 209; 1.102.0: 4 405 and 4 206; 1.100.0 and 1.101.0: 4 377 and 4 179; 1.99.0: 4 358 and 4 165; 1.98.0: 4 325 and 4 141; 1.96.0 and 1.97.0: 4 295 and 4 111; 1.95.0: 4 243 and 4 063; 1.94.0: 4 218 and 4 040; 1.93.0: 4 167 and 3 990; 1.92.0: 4 129 and 3 954; 1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
+STATUS.md keeps them): at 1.145.0, 6 682 into the IR, 6 533 of them into
+Cocolog (1.144.0: 6 641 and 6 496; 1.143.0: 6 600 and 6 466; 1.142.0: 6 538 and 6 408; 1.141.0: 6 441 and 6 316; 1.140.0: 6 441 and 6 287; 1.139.0: 6 388 and 6 220; 1.138.0: 6 388 and 6 162; 1.137.0: 6 323 and 6 102; 1.136.0: 6 257 and 6 046; 1.135.0: 6 257 and 5 992; 1.134.0: 6 257 and 5 944; 1.133.0: 6 241 and 5 931; 1.132.0: 6 203 and 5 894; 1.131.0: 6 174 and 5 869; 1.130.0: 6 151 and 5 856; 1.129.0: 6 130 and 5 841; 1.128.0: 6 073 and 5 785; 1.127.0: 5 854 and 5 571; 1.126.0: 5 837 and 5 549; 1.125.0: 5 829 and 5 549; 1.124.0: 5 814 and 5 544; 1.123.0: 5 633 and 5 371; 1.122.0: 5 100 and 4 872; 1.121.0: 5 060 and 4 841; 1.120.0: 5 060 and 4 796; 1.119.0: 5 047 and 4 783; 1.118.0: 5 017 and 4 755; 1.117.0: 5 002 and 4 741; 1.116.0: 4 977 and 4 717; 1.115.0: 4 932 and 4 678; 1.114.0: 4 918 and 4 664; 1.113.0: 4 897 and 4 648; 1.112.0: 4 771 and 4 525; 1.111.0: 4 677 and 4 437; 1.110.0: 4 652 and 4 422; 1.109.0: 4 640 and 4 413; 1.108.0: 4 640 and 4 389; 1.107.0: 4 580 and 4 360; 1.105.0 and 1.106.0: 4 479 and 4 275; 1.104.0: 4 456 and 4 256; 1.103.0: 4 405 and 4 209; 1.102.0: 4 405 and 4 206; 1.100.0 and 1.101.0: 4 377 and 4 179; 1.99.0: 4 358 and 4 165; 1.98.0: 4 325 and 4 141; 1.96.0 and 1.97.0: 4 295 and 4 111; 1.95.0: 4 243 and 4 063; 1.94.0: 4 218 and 4 040; 1.93.0: 4 167 and 3 990; 1.92.0: 4 129 and 3 954; 1.91.0: 4 108 and 3 933; 1.90.0: 4 055 and 3 884; 1.88.0 and 1.89.0: 3 952 and 3 789; 1.87.0: 3 849 and 3 704; 1.86.0: 3 644 and 3 508; 1.84.0 and 1.85.0: 3 550 and 3 415; 1.83.0: 3 268 and 3 155; 1.82.0: 3 118 and 3 015; 1.81.0: 2 813 and 2 723; 1.80.0: 678 and 609). A step that adds no sentence to either
 count says so. **Measure what blocks the rest before choosing a step**:
 at 1.80.0 the words no table has looked like the gap, and 5 115 of the
 8 000 had none -- 2 130 of them a noun phrase alone, which one rule read.
@@ -1258,6 +1258,22 @@ term of the clause's one atom: lg_fun_of_atom/2 of at(T, A) needs the
 Cocolog template loaded (lg_code_loaded/1), or the tense has no name,
 and cocolog_read reads that(X) as a constant unless lg_in_term/2's
 that(X) clause, which asks lg_that_shaped/1, comes first.
+**Since 1.145.0** the adverb's verb group (ty_vg_adverb/10) may be a
+phrasal verb's, as the plain one is. A ninth chance of the reader moves
+a ty_floating(L, Kind) predeterminer from after the first word to before
+the words, and keeps the reading only where the subject is all(NP) and NP
+is the words before it (ty_float_fits/5 reads them as a subject's role).
+A part, part(Q, NP), is read in a role and after an adposition where the
+next words are a ty_partitive/4 row's and `of' ('$ty_partw'/3); its
+helpers stand after the role's clauses, or ty_role/6 is not together. An
+adjective of ty_adjective_list(L, last, ...) (`very') before another is
+refused at the reading's end (ty_adj_last_fits/3), a statement's and each of a
+question's readings (a question takes them by findall/3, and the first cut
+asked the statement's alone): asked in the plain adjective's clause,
+Spanish and Italian paid 1.15 %. `rather than' is the
+kind rather, two adjectives alone, in every list of kinds of adjectives
+joined; at level 2 lg_adjective/2 gives the second as not(M), and
+lg_tensed/3 puts the tense inside a not(A).
 
 **`one's` since 1.115.0** is the possessive of pron(3, sg, zero), the
 person no words name (`Catch one's breath.`); at level 2 it is someone,

@@ -706,3 +706,14 @@ His cheerful whistling indicated that he enjoyed his work.	past(indicate(of(chee
 Averting her gaze meant that she was angry.	past(mean(ing(avert(someone, of(gaze, she))), that(past(angry(she))))).
 He refused to believe that the angel was a hallucination.	past(refuse(he, to(believe(he, that(past(hallucination(the(angel)))))))).
 He feels that you are in the wrong.	feel(he, that(in(you, the(wrong)))).
+# a part of a noun phrase; an equative; a floating all; rather than; an adverb before a phrasal verb; the very (1.145.0)
+Most of our knowledge is secondhand.	secondhand(most_of(of(knowledge, we))).
+The Crusaders overran much of the Holy Land.	past(overrun(the(pl(crusader)), much_of(the(holy(land))))).
+One of the excused jurors planned to write a book.	past(plan(one_of(the(pl(excused(juror)))), to(write(one_of(the(pl(excused(juror)))), a(book))))).
+The reviews were all positive.	past(positive(all(the(pl(review))))).
+My pencils are all pointless.	pointless(all(of(pl(pencil), i))).
+Her face was as hard as stone.	past(as_hard(of(face, she), stone)).
+Totem poles are modern rather than prehistoric.	modern(X) :- pole(X), nn(totem, X). is_not(prehistoric(X)) :- pole(X), nn(totem, X).
+The guardian's duties were primarily sanctionative rather than administrative.	past(primarily(sanctionative(of(pl(duty), the(guardian))))). is_not(past(administrative(of(pl(duty), the(guardian))))).
+It suddenly spewed out a thick green concoction.	concoction(a(thick(green(concoction)))). thick(a(thick(green(concoction)))). green(a(thick(green(concoction)))). past(suddenly(spew_out(it, a(thick(green(concoction)))))).
+Suspense is the very stuff of narrative.	very_stuff(suspense, narrative).

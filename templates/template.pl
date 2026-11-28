@@ -182,6 +182,26 @@ ty_capital_nouns(xx).
 %% ty_predeterminer(xx, Kind, Words).
 %%   e.g. ty_predeterminer(english, all, [all]).
 
+%%     ty_floating(L, Kind)            a predeterminer of Kind may stand
+%%                                     after its subject or after the
+%%                                     copula's words (since 1.145.0:
+%%                                     English `The reviews were all
+%%                                     positive.', read as `All the
+%%                                     reviews were positive.')
+%% ty_floating(xx, Kind).
+%%   e.g. ty_floating(english, all).
+
+%%     ty_partitive(L, Quantity, Words, Number)
+%%                                     the words of a part of a definite
+%%                                     noun phrase or a pronoun, before the
+%%                                     adposition of's words, part(Quantity,
+%%                                     NP) (since 1.145.0: English `one of
+%%                                     the boys', `much of the land', `each
+%%                                     of them'), of Number sg, pl or any
+%%                                     (the noun phrase's)
+%% ty_partitive(xx, Quantity, Words, Number).
+%%   e.g. ty_partitive(english, one, [one], sg).
+
 %%     ty_adjective_group(L, Definiteness)
 %%                                     an article of Definiteness and an
 %%                                     adjective alone stand for the people
@@ -225,6 +245,14 @@ ty_capital_nouns(xx).
 %% ty_irregular_comparative(xx, Adjective, Word).
 %%   e.g. ty_irregular_comparative(english, good, better).
 
+%%     ty_equative(L, Words, Prep)     the words before an adjective whose
+%%                                     adposition phrase of Prep says what
+%%                                     it is equal to, ap(adv(Prep, A),
+%%                                     pp(Prep, NP)) (since 1.145.0:
+%%                                     English `as hard as stone')
+%% ty_equative(xx, Words, Prep).
+%%   e.g. ty_equative(english, [as], as).
+
 %%     ty_definite_like(L, Def, As)    the language writes the definiteness
 %%                                     Def as As, and never reads Def
 %%                                     (since 1.64.0: Persian writes mass
@@ -265,7 +293,8 @@ ty_subordinate_comma(xx).
 
 %%     ty_conjunction(L, Kind, Words)  the words of another conjunction,
 %%                                     Kind or or but (`or', `o', `but',
-%%                                     `aber')
+%%                                     `aber'), or since 1.145.0 rather, of
+%%                                     two adjectives (`rather than')
 %% ty_conjunction(xx, Kind, Words).
 %%   e.g. ty_conjunction(english, or, [or]).
 
@@ -404,7 +433,10 @@ ty_conjunct_marks(xx).
 %%                                     since 1.131.0 grading: an
 %%                                     adjective's word that grades an
 %%                                     adjective as an adverb too, `still
-%%                                     unfinished')
+%%                                     unfinished'; since 1.145.0 last: one
+%%                                     that stands right before its noun
+%%                                     alone, after any other, `the very
+%%                                     image', a list)
 %% ty_adjective_list(xx, Kind, Base).
 %%   e.g. ty_adjective_list(english, infinitive, [able, unable, glad, eager, willing, unwilling, ready, likely, ...]).
 

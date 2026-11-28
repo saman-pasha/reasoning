@@ -199,6 +199,7 @@ main :-
     do_and_bare,
     copula_tails,
     clause_objects,
+    parts_and_equals,
     format("~ndone~n", []).
 
 
@@ -1658,6 +1659,22 @@ clause_objects :-
     must('with no that, written with it', W2, 'He knew that he was right.'),
     typology_read(english, 'He is still a child.', IR3),
     must('an adverb before a copula noun phrase', IR3, copula(present, pos, pron(3, sg, m), adv(still, np(child, sg, indef, [])))).
+
+%% 110. A PART OF A NOUN PHRASE, AN EQUATIVE, A FLOATING ALL (1.145.0). A
+%% ty_partitive(L, Quantity, Words, Number) row's words and `of' before a
+%% definite noun phrase or a pronoun are part(Quantity, NP); a
+%% ty_equative(L, Words, Prep) row's words before an adjective whose phrase
+%% is of Prep are ap(adv(Prep, A), pp(Prep, NP)); a predeterminer of a
+%% ty_floating(L, Kind) row after its subject is read as before it.
+parts_and_equals :-
+    typology_load(english),
+    typology_read(english, 'One of the boys came.', IR1),
+    must('a part of a noun phrase', IR1, clause(come, past, pos, part(one, np(boy, pl, def, [])), none)),
+    typology_read(english, 'Her face was as hard as stone.', IR2),
+    must('an equative', IR2, copula(past, pos, of(pron(3, sg, f), np(face, sg, def, [])), adj([ap(adv(as, hard), pp(as, np(stone, sg, mass, [])))]))),
+    typology_read(english, 'The reviews were all positive.', IR3),
+    typology_write(english, IR3, W3),
+    must('a floating all, written before the subject', W3, 'All the reviews were positive.').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

@@ -106,6 +106,7 @@ main :-
     relation_names,
     copula_tails,
     clause_objects,
+    parts_and_equals,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -972,6 +973,21 @@ clause_objects :-
     must('and back', E1, 'He claimed that the evidence was a plant.'),
     logic_translate(english, cocolog, 'He is still a child.', C2),
     must('an adverb before a copula noun phrase', C2, 'still(child(he)).\n').
+
+%% 77. A PART OF A NOUN PHRASE, AN EQUATIVE, RATHER THAN (1.145.0). A part
+%% is the constant Q_of(T) round its noun phrase's term; an equative a
+%% predicate of two named by its adverb and its adjective; `rather than'
+%% says its first adjective and denies its second.
+parts_and_equals :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'One of the boys came.', C1),
+    must('a part', C1, 'past(come(one_of(the(pl(boy))))).\n'),
+    logic_translate(cocolog, english, C1, E1),
+    must('and back', E1, 'One of the boys came.'),
+    logic_translate(english, cocolog, 'He is as tall as his father.', C2),
+    must('an equative', C2, 'as_tall(he, of(father, he)).\n'),
+    logic_translate(english, cocolog, 'The house is big rather than small.', C3),
+    must('rather than', C3, 'big(the(house)).\nis_not(small(the(house))).\n').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy

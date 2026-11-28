@@ -17,7 +17,7 @@ main :-
     forall(member(S, [choices, complete, written, round_trips, refused, marks, sounds,
                       copulas, adjuncts, meanings, questions, repairs, relatives, gaps, possessors, complements, negation_places,
                       question_words, answers, pronouns, echoes, french, references, live_topics,
-                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words, but_words, more_grammar_words, gerund_places, commands_and_times, do_and_bare, copula_tails, clause_objects,
+                      french_questions, tenses, polite, german, reference_sentences, copula_tenses, other_tenses, negative_article, predicate_and, months, german_possessives, german_v2, german_dessen, german_object_first, bridge, english_coverage, english_nouns, english_verbs, english_modifiers, coordination, coordination_same, coordination_inside, names, quantifiers, mass, subordinate, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, passive_languages, progressive, adjunct_first, grammar_words, modals, short_forms, existential, modified_mass, more_phrases, as_words, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words, but_words, more_grammar_words, gerund_places, commands_and_times, do_and_bare, copula_tails, clause_objects, parts_and_equals,
                       word_tables, class_topics, reproduced, free_order,
                       incomplete,
                       blank_template]),
@@ -2982,6 +2982,40 @@ clause_objects :-
     ( R4 = clause(go, present, pos, _, none, [adv(south)|_]) -> A4 = yes ; A4 = R4 ),
     check('no adverb before a linking verb complement', A4, yes).
 
+%% 1.145.0: an adverb before a phrasal verb, a floating all, as to and so as
+%% to, an equative, the very N, a part of a noun phrase, rather than.
+parts_and_equals :-
+    section('an adverb before a phrasal verb, a floating all, an equative, the very, a part, rather than'),
+    forall(member(T-Want-Back, [
+               'He suddenly gave up.'-clause(give_up, past, pos, pron(3, sg, m), none, [adv(suddenly)])-'He gave up suddenly.',
+               'He quickly threw out the ball.'-clause(throw_out, past, pos, pron(3, sg, m), np(ball, sg, def, []), [adv(quickly)])-'He threw out the ball quickly.',
+               'The reviews were all positive.'-copula(past, pos, all(np(review, pl, def, [])), adj([positive]))-'All the reviews were positive.',
+               'The various reports all agreed.'-clause(agree, past, pos, all(np(report, pl, def, [various])), none)-'All the various reports agreed.',
+               'A lay opinion as to the cause.'-phrase(np_pp(np(opinion, sg, indef, [lay]), pp(as_to, np(cause, sg, def, []))))-same,
+               'Her face was as hard as stone.'-copula(past, pos, of(pron(3, sg, f), np(face, sg, def, [])), adj([ap(adv(as, hard), pp(as, np(stone, sg, mass, [])))]))-same,
+               'Suspense is the very stuff of narrative.'-copula(present, pos, np(suspense, sg, mass, []), of(np(narrative, sg, mass, []), np(stuff, sg, def, [very])))-same,
+               'One of the boys came.'-clause(come, past, pos, part(one, np(boy, pl, def, [])), none)-same,
+               'Each of them came.'-clause(come, past, pos, part(each, pron(3, pl, _)), none)-same,
+               'Much of the land is dry.'-copula(present, pos, part(much, np(land, sg, def, [])), adj([dry]))-same,
+               'He saw one of the boys.'-clause(see, past, pos, pron(3, sg, m), part(one, np(boy, pl, def, [])))-same,
+               'Totem poles are modern rather than prehistoric.'-copula(present, pos, np(pole, pl, indef, [n(totem)]), adj([rather([modern, prehistoric])]))-same ]),
+           ( ( once(typology_read(english, T, R)) -> true ; R = none ),
+             ( R = Want -> V = yes ; V = R ),
+             atomic_list_concat(['English, the first reading: ', T], Label),
+             check(Label, V, yes),
+             ( R \== none, typology_write(english, R, W) -> true ; W = none ),
+             ( Back == same -> Back1 = T ; Back1 = Back ),
+             atomic_list_concat(['English, written: ', T], Label2),
+             check(Label2, W, Back1) )),
+    ( once(typology_read(english, 'He is a very good man.', R2)) -> true ; R2 = none ),
+    check('very before another adjective grades it', R2, copula(present, pos, pron(3, sg, m), np(man, sg, indef, [adv(very, good)]))),
+    ( once(typology_read(english, 'Each of them come.', R3)) -> true ; R3 = none ),
+    check('a part of each is singular', R3, none),
+    ( once(typology_read(english, 'One of boys came.', R4)) -> true ; R4 = none ),
+    check('no part of a bare plural', R4, none),
+    ( once(typology_read(english, 'He painted all day.', R5)) -> true ; R5 = none ),
+    check('all before a noun of time stays the time', R5, clause(paint, past, pos, pron(3, sg, m), none, [time(np(day, sg, all, []))])).
+
 t_has_ger(T) :-
     compound(T),
     (   T = ger(_, _, _) -> true ; T =.. [_|As], member(A, As), t_has_ger(A) ), !.
@@ -3075,9 +3109,10 @@ particles :-
              atomic_list_concat(['English, the first reading: ', T], Label),
              check(Label, V, yes) )),
     %% `He painted all day in the garden.' reads since 1.140.0, `all day' a
-    %% time's adjunct (commands_and_times), never the object.
-    forall(member(T2, [ 'The reviews were all positive.',
-                        'The stock market is down today.', 'Found himself loaded down with responsibilities.' ]),
+    %% time's adjunct (commands_and_times), never the object; `The reviews
+    %% were all positive.' since 1.145.0, a floating `all' read as before
+    %% its subject (parts_and_equals), never np(positive, sg, all, []).
+    forall(member(T2, [ 'The stock market is down today.', 'Found himself loaded down with responsibilities.' ]),
            ( ( once(typology_read(english, T2, R2)) -> true ; R2 = none ),
              atomic_list_concat(['English, no reading: ', T2], Label2),
              check(Label2, R2, none) )),
@@ -3706,8 +3741,8 @@ english_coverage :-
     check('the measure has its 8 000 sentences', N, 8000),
     typology_coverage(english, Lines, Read, Unknown),
     length(Read, K),
-    ( K >= 6632 -> R1 = yes ; R1 = only(K) ),
-    check('at least the 6 632 sentences read at 1.144.0 within 2 000 000 inferences each are read', R1, yes),
+    ( K >= 6672 -> R1 = yes ; R1 = only(K) ),
+    check('at least the 6 672 sentences read at 1.145.0 within 2 000 000 inferences each are read', R1, yes),
     ( Unknown = [_-C2|_], integer(C2) -> R2 = counted ; R2 = Unknown ),
     check('the words no table has, counted', R2, counted).
 

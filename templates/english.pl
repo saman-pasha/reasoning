@@ -541,6 +541,25 @@ ty_subordinator(english, after, [after]).
 %% `all his creditors'); before a bare noun it is the determiner (`All dogs
 %% bark.').
 ty_predeterminer(english, all, [all]).
+%% `all' may stand after its subject or after the copula's words (since
+%% 1.145.0: `The reviews were all positive.', `The various reports all
+%% agreed.'), read as it is before the subject.
+ty_floating(english, all).
+%% A part of a definite noun phrase or a pronoun, before `of' (since
+%% 1.145.0: `One of the excused jurors planned to write a book.', `Much of
+%% the land is dry.', `Each of them had their own anticipations.').
+ty_partitive(english, one, [one], sg).
+ty_partitive(english, each, [each], sg).
+ty_partitive(english, much, [much], sg).
+ty_partitive(english, none, [none], any).
+ty_partitive(english, some, [some], any).
+ty_partitive(english, most, [most], any).
+ty_partitive(english, all, [all], any).
+ty_partitive(english, any, [any], any).
+ty_partitive(english, many, [many], pl).
+ty_partitive(english, several, [several], pl).
+ty_partitive(english, few, [few], pl).
+ty_partitive(english, both, [both], pl).
 %% `such' before an indefinite noun phrase (since 1.125.0: `such a baby',
 %% `such problems'); level 2 has no form of it yet.
 ty_predeterminer(english, such, [such]).
@@ -791,7 +810,13 @@ ty_adjective_list(english, group, [poor, rich, living, dead, young, old, new, el
 %% Adjectives' words that grade an adjective before it too, as an adverb
 %% (since 1.131.0): `The building is still unfinished.', `Her beauty is
 %% only skin-deep.'.
-ty_adjective_list(english, grading, [only, still]).
+ty_adjective_list(english, grading, [only, still, very]).
+%% `very' an adjective too (since 1.145.0: `She's the very image of her
+%% mother.', `the very stuff of narrative'), a word of grammar the import
+%% keeps out, and one that stands right before its noun alone (`a very
+%% good man' is no man very and good).
+ty_adjective(english, very, any, any, very).
+ty_adjective_list(english, last, [very]).
 %% The nouns an infinitive may follow, its subject the one the noun's act
 %% is of (since 1.96.0: `a bid to gain attention', `the right to vote');
 %% after them an infinitive is the noun's, never one of purpose. WordNet
@@ -807,6 +832,9 @@ ty_noun_list(english, singular_first, [archives, biceps, bounds, brakes, breeche
 ty_noun_list(english, time, [day, week, year, month, night, morning, evening, afternoon, hour, minute, weekend, summer, winter, spring, autumn, season, decade, century, time]).
 %% The words before an infinitive of purpose (since 1.96.0: `in order to').
 ty_purpose_mark(english, [in, order]).
+%% and `so as to' (since 1.145.0: `Juggle an account so as to hide a
+%% deficit.').
+ty_purpose_mark(english, [so, as]).
 %% An infinitive of purpose may stand with no words before it (since 1.97.0).
 ty_purpose_bare(english).
 ty_adposition(english, in, [in]).
@@ -870,6 +898,9 @@ ty_adposition(english, because_of, [because, of]).
 ty_adposition(english, according_to, [according, to]).
 %% `all over' (since 1.144.0): `Spill the beans all over the table.'.
 ty_adposition(english, all_over, [all, over]).
+%% `as to' (since 1.145.0: `A lay opinion as to the cause of the
+%% disease.').
+ty_adposition(english, as_to, [as, to]).
 ty_adposition(english, in_front_of, [in, front, of]).
 %% `like' an adposition too (since 1.138.0: `He dropped the topic like a
 %% hot potato.'), after the verb `like' is tried.
@@ -892,6 +923,9 @@ ty_comparative(english, more, [1-any, 2-[y, le, ow]], [y-ier, e-er, double-er, '
 ty_irregular_comparative(english, good, better).
 ty_irregular_comparative(english, bad, worse).
 ty_irregular_comparative(english, far, farther).
+%% `as' before an adjective whose phrase of `as' says what it is equal to
+%% (since 1.145.0: `Her face was as hard as stone.').
+ty_equative(english, [as], as).
 ty_adverb(english, quickly, quickly).
 ty_adverb(english, slowly, slowly).
 ty_adverb(english, today, today).
@@ -1254,6 +1288,9 @@ ty_and(english, [and]).
 %% The other conjunctions (since 1.59.0): `or', `but'.
 ty_conjunction(english, or, [or]).
 ty_conjunction(english, but, [but]).
+%% `rather than' between two adjectives (since 1.145.0: `Totem poles are
+%% modern rather than prehistoric.'), the second denied.
+ty_conjunction(english, rather, [rather, than]).
 %% A comma may stand before the last item's `and' (`red, blue, and yellow'),
 %% read and not written.
 ty_serial_comma(english).

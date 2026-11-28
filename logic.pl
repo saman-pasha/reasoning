@@ -136,6 +136,15 @@
 %% one with no object that is no constant. The way back reads that(X) as a
 %% clause where X is shaped as an atom (lg_that_shaped/1).
 %%
+%% A PART OF A NOUN PHRASE (since 1.145.0), part(Q, NP), is the constant
+%% Q_of(T) round the noun phrase's term (`One of the boys came.'
+%% past(come(one_of(the(pl(boy)))))); a part of all is all(T), of `none'
+%% and `any' no form yet. AN EQUATIVE is a predicate of two named by its
+%% adverb's word and its adjective's (`He is as tall as his father.'
+%% as_tall(he, of(father, he))). `RATHER THAN' between two adjectives says
+%% the first and denies the second (`The house is big rather than small.'
+%% big(the(house)), is_not(small(the(house)))). All three, and back.
+%%
 %% NO, EVERY, ANY AND SOME (since 1.139.0): `no' is `every' and the clause
 %% denied (`No dog barks.' is_not(bark(X)) :- dog(X)); `any' is `every'; a
 %% noun phrase of `every', `no' or `any' that is a constant's object, an
@@ -625,6 +634,7 @@ lg_phrase_noun(of(_, NP), N, As) :- nonvar(NP), lg_phrase_noun(NP, N, As).
 lg_phrase_noun(np_pp(H, _), N, As) :- nonvar(H), lg_phrase_noun(H, N, As).
 lg_phrase_noun(rel(NP, _), N, As) :- nonvar(NP), lg_phrase_noun(NP, N, As).
 lg_phrase_noun(all(NP), N, As) :- nonvar(NP), lg_phrase_noun(NP, N, As).
+lg_phrase_noun(part(_, NP), N, As) :- nonvar(NP), lg_phrase_noun(NP, N, As).
 
 %% An atom in a tense, its when clause round it or not.
 lg_in_tense(at(_, _)) :- !.
@@ -895,7 +905,9 @@ lg_clause_tense(clause(_, T, _, _, _, _), T).
 
 lg_tensed(present, As, As) :- !.
 lg_tensed(_, [], []).
-lg_tensed(T, [A|As], [at(T, A)|Bs]) :- lg_tensed(T, As, Bs).
+%% An atom denied inside the clause (since 1.145.0: `rather than') takes
+%% the tense inside its negation, as a negation's clause does.
+lg_tensed(T, [A|As], [B|Bs]) :- ( nonvar(A), A = not(A1) -> B = not(at(T, A1)) ; B = at(T, A) ), lg_tensed(T, As, Bs).
 
 %% The atoms a clause says of its subject's term T, in the clause's tense;
 %% an object is a constant.
@@ -1355,6 +1367,14 @@ lg_ap_atoms([ap(A0, PP)|Xs], T, [pred(N, [T, To])|As], Os) :-
     lg_arg(adjunct, NP, To, _, Os1),
     lg_ap_atoms(Xs, T, As, Os2),
     append(Os1, Os2, Os).
+%% AN EQUATIVE (since 1.145.0, ty_equative/3) is a predicate of two of its
+%% own, named by its adverb's word and the adjective's (lg_eqv_name/3):
+%% `He is as tall as his father.' as_tall(he, of(father, he)), and back.
+lg_ap_atoms([ap(adv(M, A), PP)|Xs], T, [pred(N, [T, To])|As], Os) :-
+    nonvar(PP), PP = pp(M, NP), lg_eqv_name(M, A, N), !,
+    lg_arg(adjunct, NP, To, _, Os1),
+    lg_ap_atoms(Xs, T, As, Os2),
+    append(Os1, Os2, Os).
 lg_ap_atoms([ap(A, PP)|Xs], T, [modified(pp(P, To), At)|As], Os) :-
     ( lg_ap_adj(A, T, At), nonvar(PP), PP = pp(P, NP), atom(P) -> true ; lg_no(predicate(adj(ap(A, PP)))) ),
     lg_arg(adjunct, NP, To, _, Os1),
@@ -1394,6 +1414,7 @@ lg_adjectives([A|As], Ms) :-
 lg_adjective(A, M) :-
     (   atom(A) -> M = A
     ;   nonvar(A), ( A = and(Bs) ; A = but(Bs) ) -> member(M, Bs)
+    ;   nonvar(A), A = rather([B1, B2]) -> ( lg_adjective(B1, M) ; lg_adjective(B2, M2), M = not(M2) )
     ;   nonvar(A), A = n(X), atom(X) -> M = A
     ;   nonvar(A), A = adv(Ad, B), atom(Ad), atom(B) -> M = A
     ;   lg_no(predicate(adj(A)))
@@ -1481,6 +1502,16 @@ lg_entity(all(NP), ent(const(all(C)), [], const), Ms) :- !,
 lg_entity(only(NP), ent(const(only(C)), [], const), Ms) :- !,
     lg_entity(NP, ent(T, Conds, Q), Ms),
     ( Q == const, T = const(C), Conds == [] -> true ; lg_no(determiner(only)) ).
+%% A PART OF A NOUN PHRASE (since 1.145.0) is the constant Q_of(T) round
+%% its term (lg_part_fun/2), the noun phrase's facts its own, as only(T)
+%% is: `One of the boys came.' says past(come(one_of(the(pl(boy))))); a
+%% part of all is all(T), as `all the boys'; of `none' and `any', which
+%% deny, no form yet.
+lg_entity(part(Q, NP), ent(const(C1), [], const), Ms) :- !,
+    ( atom(Q), \+ memberchk(Q, [none, any]) -> true ; lg_no(determiner(part)) ),
+    lg_entity(NP, ent(T, Conds, K), Ms),
+    ( K == const, T = const(C), Conds == [] -> true ; lg_no(determiner(part)) ),
+    ( Q == all -> C1 = all(C) ; lg_part_fun(Q, F), C1 =.. [F, C] ).
 %% A NOUN PHRASE WITH A RELATIVE CLAUSE (since 1.136.0) is its head's
 %% entity, and the relative clause's atoms are said of the head's term,
 %% the gap that term (lg_rel_atoms/3): of a constant or an individual its
@@ -1647,6 +1678,10 @@ lg_pred_of(n(X), T, pred(nn, [const(X), T])) :- !.
 %% A COMPARATIVE (since 1.120.0) is a predicate of its own, named by the
 %% English comparative's word (lg_cmp_name/3: taller, better,
 %% more_approachable): `John is taller.' taller(john).
+%% The second adjective of `rather than' (since 1.145.0) is denied:
+%% `Totem poles are modern rather than prehistoric.' says modern(X) and
+%% is_not(prehistoric(X)) of every totem pole.
+lg_pred_of(not(A), T, not(P)) :- nonvar(A), !, lg_pred_of(A, T, P).
 lg_pred_of(adv(M, A), T, pred(N, [T])) :- lg_cmp_name(M, A, N), !.
 lg_pred_of(adv(M, A), T, modified(adv(M), pred(A, [T]))) :- !.
 %% An adjective with an adposition phrase (since 1.91.0): the adjective's
@@ -2041,6 +2076,7 @@ lg_det_term(T) :-
     ;   T = all(X) -> ( lg_det_term(X), X \= a(_), X \= a(_, _) -> true ; atom(X), lg_np_shape(X) )
     ;   T = only(X) -> lg_det_term(X)
     ;   T = ing(X) -> lg_inf_shape(X)
+    ;   T =.. [F, X], lg_part_fun(_, F) -> ( lg_det_term(X) -> true ; memberchk(X, [we, you, they]) )
     ).
 
 %% An adjective's atom of a pronoun or of a name that is no noun is no
@@ -2283,6 +2319,7 @@ lg_term_facts(all(X), Fs) :- nonvar(X), !,
     ;   X = of(T, P) -> lg_shape_facts(of(T, P), const(all(X)), Fs)
     ).
 lg_term_facts(only(X), Fs) :- nonvar(X), !, lg_term_facts(X, Fs).
+lg_term_facts(T, Fs) :- compound(T), T =.. [F, X], lg_part_fun(_, F), !, lg_term_facts(X, Fs).
 lg_term_facts(T, Fs) :- lg_shape_facts(T, const(T), Fs).
 
 lg_shape_facts(of(T, P), K, Fs) :- !,
@@ -2603,6 +2640,10 @@ lg_atom_ir(L, pred(P, [A]), How, copula(present, pos, S, adj([adv(M, Adj)]))) :-
     lg_arg_np(L, How, A, S).
 lg_atom_ir(L, pred(P, [A, B]), How, copula(present, pos, S, adj([ap(adv(M, Adj), pp(than, O))]))) :-
     lg_cmp_meaning(P, M, Adj), !,
+    lg_arg_np(L, How, A, S),
+    lg_arg_np(L, How, B, O).
+lg_atom_ir(L, pred(P, [A, B]), How, copula(present, pos, S, adj([ap(adv(M, Adj), pp(M, O))]))) :-
+    lg_eqv_meaning(P, M, Adj), !,
     lg_arg_np(L, How, A, S),
     lg_arg_np(L, How, B, O).
 lg_atom_ir(L, pred(P, [A]), How, IR) :-
@@ -2986,6 +3027,7 @@ lg_const_np(L, _, all(T), np(N, sg, all, As)) :-
     lg_np_of_term(L, T, N, sg, As), !.
 lg_const_np(L, Cs, all(T), all(NP)) :- nonvar(T), compound(T), !, lg_const_np(L, Cs, T, NP).
 lg_const_np(L, Cs, only(T), only(NP)) :- nonvar(T), !, lg_const_np(L, Cs, T, NP).
+lg_const_np(L, Cs, T, part(Q, NP)) :- compound(T), T =.. [F, X], lg_part_fun(Q, F), !, lg_const_np(L, Cs, X, NP).
 lg_const_np(L, _, ing(X), ger(V, O, Js)) :- nonvar(X), lg_inf_term(L, X, Inf), !, lg_inf_parts(Inf, V, O, Js).
 lg_const_np(L, Cs, T, NP) :-
     compound(T), T =.. [J|Ts], memberchk(J, [and, or]), Ts = [_, _|_], !,
@@ -3088,6 +3130,27 @@ lg_cmp_name(M, A, N) :-
     (   catch(ty_cmp_word(english, M, A, W), _, fail) -> N = W
     ;   atomic_list_concat([M, A], '_', N)
     ).
+
+%% A part's function (since 1.145.0): the English template's partitive
+%% Q, and `_of' (one_of, much_of); and back.
+lg_part_fun(Q, F) :-
+    (   atom(Q)
+    ->  catch(once(ty_partitive(english, Q, _, _)), _, fail), Q \== all, atom_concat(Q, '_of', F)
+    ;   atom(F), atom_concat(Q, '_of', F), Q \== '', catch(once(ty_partitive(english, Q, _, _)), _, fail), Q \== all
+    ).
+
+%% An equative's name (since 1.145.0): its adverb's word and the
+%% adjective's, joined (as_tall); and back.
+lg_eqv_name(M, A, N) :-
+    atom(M), atom(A),
+    catch(once(ty_equative(english, _, M)), _, fail),
+    atomic_list_concat([M, A], '_', N).
+
+lg_eqv_meaning(N, M, A) :-
+    atom(N),
+    catch(once(ty_equative(english, _, M)), _, fail),
+    atom_concat(M, '_', Pre), atom_concat(Pre, A, N), A \== '',
+    catch(typology_meaning(english, adjective, A), _, fail).
 
 lg_cmp_meaning(N, M, A) :-
     atom(N),
