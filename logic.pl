@@ -104,14 +104,22 @@
 %% its own tense (`John slept when Mary sang.': when(past(sleep(john)),
 %% past(sing(mary)))).
 %%
+%% NO, EVERY, ANY AND SOME (since 1.139.0): `no' is `every' and the clause
+%% denied (`No dog barks.' is_not(bark(X)) :- dog(X)); `any' is `every'; a
+%% noun phrase of `every', `no' or `any' that is a constant's object, an
+%% adposition's or an adjunct's makes a rule over its variable (`We have
+%% no bananas.' is_not(have(we, X)) :- banana(X)); `some' before such a
+%% noun is its first modifier (a(some(money))). `This' and `that' alone are
+%% constants (cool(that)).
+%%
 %% WHAT HAS NO LOGIC FORM YET: a negation of several atoms, `because' and `as', a pronoun whose gender is not known, an indefinite noun
 %% phrase in a rule's conclusion, a generic subject with a possessor in
 %% the present (`Lilies of the valley are racemose.'), a noun phrase of
-%% `every' or `some' that is no subject, a noun of relation with an
+%% `every', `no' or `any' that is a possessor, inside a joined term or
+%% beside another quantified one, `not every', a noun of relation with an
 %% adjective (`the main source of'), a copula's definite noun phrase with
-%% no possessor (`Leather is the latest vogue.'), `no' and `nothing', and
-%% a determiner other than the ones above. logic_why/2 names the first
-%% reason.
+%% no possessor (`Leather is the latest vogue.'), and a determiner other
+%% than the ones above. logic_why/2 names the first reason.
 %%
 %% WHAT IS PUBLIC:
 %%
@@ -457,8 +465,15 @@ lg_count_det(D) :-
     memberchk(D, [one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve,
                   twenty, thirty, forty, fifty, hundred, thousand, many, much, few, most, both]).
 
-lg_count_back(np(N, Num, indef, [D|As]), np(N, Num, D, As)) :- atom(D), lg_count_det(D), !.
+lg_count_back(np(N, Num, indef, [D|As]), np(N, Num, D, As)) :- atom(D), lg_back_det(D), !.
 lg_count_back(NP, NP).
+
+%% SOME BEFORE A NOUN THAT IS NO SUBJECT (since 1.139.0) is its first
+%% modifier as a number is: `He had made some money on the side.'
+%% pluperfect(on(make(he, a(some(money))), the(side))), money(...) and
+%% some(...); a subject's is no modifier (`Some dogs bark.' dog(a(pl(dog)))).
+lg_back_det(D) :- lg_count_det(D), !.
+lg_back_det(some).
 
 lg_pass_inf(O) :-
     nonvar(O), ( O = clause(_, T, _, Z, _) ; O = clause(_, T, _, Z, _, _) ),
@@ -476,9 +491,11 @@ lg_utterance(question(C), question, [query(B)]) :- !,
     append(Atoms00, SMs, Atoms0),
     lg_obj_conds(Atoms0, Atoms, OConds),
     append([Atoms, OConds, Conds], Bs),
-    lg_body(Bs, B).
+    lg_body(Bs, B),
+    ( lg_has_q(B) -> lg_no(object(quantifier)) ; true ).
 lg_utterance(IR, assertion, Items) :-
-    lg_statement(IR, Items).
+    lg_statement(IR, Items),
+    ( lg_has_q(Items) -> lg_no(object(quantifier)) ; true ).
 
 lg_statement(C, Items) :-
     nonvar(C), C =.. [K, [C1, C2]], memberchk(K, [and, but]), !,
@@ -613,7 +630,9 @@ lg_set_subject(copula(T, P, _, Pr), S, copula(T, P, S, Pr)).
 %% of a generic indefinite its rules first and one individual's facts
 %% second; of something or someone one individual's facts.
 lg_assert(const, _, [], Atoms, _, _, Items) :- !,
-    lg_facts([], Atoms, Items).
+    (   memberchk('$q'(_, _, _), Atoms) -> lg_q_rule([], Atoms, Items)
+    ;   lg_facts([], Atoms, Items)
+    ).
 lg_assert(every, T, Conds, Atoms, _, _, Items) :- !,
     lg_rules(Atoms, T, Conds, Items).
 lg_assert(generic, T, Conds, Atoms, S, Inds, Items) :- !,
@@ -628,8 +647,62 @@ lg_assert(generic, T, Conds, Atoms, S, Inds, Items) :- !,
         )
     ).
 lg_assert(some, T, Conds, Atoms, S, Inds, Items) :- !,
-    lg_individual(S, Inds, T), lg_facts(Conds, Atoms, Items).
+    lg_individual(S, Inds, T),
+    (   memberchk('$q'(_, _, _), Atoms) -> lg_q_rule(Conds, Atoms, Items)
+    ;   lg_facts(Conds, Atoms, Items)
+    ).
+lg_assert(no, T, Conds, Atoms, _, _, Items) :- !,
+    lg_denied(Atoms, Atoms1),
+    lg_rules(Atoms1, T, Conds, Items).
+lg_assert(any, T, Conds, Atoms, _, _, Items) :- !,
+    lg_rules(Atoms, T, Conds, Items).
 lg_assert(Q, _, _, _, _, _, _) :- lg_no(determiner(Q)).
+
+%% A clause's one atom denied, outside its tense and its adjuncts, as a
+%% negation is (lg_negated/3); its marks as they are. A clause denied
+%% already, or of several atoms, has none.
+lg_denied(Atoms, [not(A)|Ms]) :-
+    partition(lg_is_mark, Atoms, Ms, Plain),
+    ( Plain = [A], A \= not(_) -> true ; lg_no(negation) ).
+
+lg_is_mark('$obj'(_, _, _, _)).
+lg_is_mark('$rel'(_)).
+lg_is_mark('$q'(_, _, _)).
+
+%% A QUANTIFIED NOUN PHRASE THAT IS NO SUBJECT (since 1.139.0): where a
+%% constant's clause has a noun phrase of `every', `no' or `any' as its
+%% object, an adposition's or an adjunct's, the statement is a rule over
+%% the noun phrase's variable, its conditions the noun's, its conclusion
+%% the clause's atom: `He explored every nook.' past(explore(he, A)) :-
+%% nook(A); of `no' the atom denied, `We have no bananas.' is_not(have(we,
+%% A)) :- banana(A); of `any' the atom as it is, denied or not, `He hadn't
+%% had any love.' is_not(pluperfect(have(he, A))) :- love(A). The mark
+%% '$q'(Q, Var, Conds) travels beside the atoms; one such noun phrase. An
+%% individual beside it is a constant, its facts first, the subject's own
+%% (Conds0, `Someone felt panicked before each exam.') before them (`He hadn't had any
+%% love in months.' month(a(pl(month))) and is_not(pluperfect(in(have(he,
+%% A), a(pl(month))))) :- love(A)). `Not every' is not `every not': an
+%% atom denied already has no rule of `every' or `no'.
+lg_q_rule(Conds0, Atoms, Items) :-
+    select('$q'(Q, V, Conds), Atoms, Atoms1),
+    ( memberchk('$q'(_, _, _), Atoms1) -> lg_no(object(Q)) ; true ),
+    lg_inds_named(Conds0, [], Used),
+    lg_obj_facts(Atoms1, Used, Atoms2, OFacts0),
+    append(Conds0, OFacts0, OFacts),
+    partition(lg_is_mark, Atoms2, Ms, Plain),
+    lg_q_heads(Q, Plain, Hs),
+    append(Hs, Ms, Atoms3),
+    lg_rules(Atoms3, V, Conds, Rules),
+    findall(fact(A), member(A, OFacts), Facts),
+    append(Facts, Rules, Items).
+
+lg_q_heads(no, Plain, [not(A)]) :- !, ( Plain = [A], A \= not(_) -> true ; lg_no(negation) ).
+lg_q_heads(every, Plain, Plain) :- !, ( member(not(_), Plain) -> lg_no(negation) ; true ).
+lg_q_heads(any, Plain, Plain).
+
+%% A quantified noun phrase's mark anywhere in a term: one no statement
+%% took up.
+lg_has_q(X) :- compound(X), ( X = '$q'(_, _, _) -> true ; X =.. [_|As], member(A, As), lg_has_q(A) ), !.
 
 %% A generic subject's rules; none where its noun has a possessor
 %% (`Lilies of the valley are racemose.': the rule's variable would lose
@@ -765,7 +838,7 @@ lg_present(T, P) :-
 %% idling.' is progressive(idle(the(engine))).
 %% The conditional and the modals (since 1.108.0): `The dog would sleep.'
 %% is conditional(sleep(the(dog))), `No one can live forever.'
-%% can(forever(live(nobody))), each modal(M) its own name M.
+%% is_not(can(forever(live(A)))), each modal(M) its own name M.
 lg_tense(T) :- atom(T), memberchk(T, [present, past, future, perfect, pluperfect, imperfect, imperative, conditional]).
 lg_tense(prog(T)) :- atom(T), memberchk(T, [present, past, future, perfect, pluperfect]).
 lg_tense(modal(M)) :- atom(M), memberchk(M, [can, could, may, might, must, ought, shall, should]).
@@ -819,6 +892,7 @@ lg_clause_polarity(clause(_, _, P, _, _, _), P).
 lg_split_objs([], [], []).
 lg_split_objs([O|As], Ps, [O|Os]) :- O = '$obj'(_, _, _, _), !, lg_split_objs(As, Ps, Os).
 lg_split_objs([O|As], Ps, [O|Os]) :- O = '$rel'(_), !, lg_split_objs(As, Ps, Os).
+lg_split_objs([O|As], Ps, [O|Os]) :- O = '$q'(_, _, _), !, lg_split_objs(As, Ps, Os).
 lg_split_objs([A|As], [A|Ps], Os) :- lg_split_objs(As, Ps, Os).
 
 %% An object's individual is named apart from the ones its sentence named
@@ -1165,6 +1239,19 @@ lg_entity(np(N, Num, some, As), ent(V, Conds, some), ['$ind'(V, T)]) :- !,
     lg_noun_conds(N, As, V, Conds),
     lg_np_term(N, Num, As, T).
 lg_entity(qp(every, _), ent(_, [], every), []) :- !.
+%% THIS AND THAT ALONE (since 1.139.0) are constants, as a noun phrase of
+%% theirs is: `That's cool.' says cool(that), `This may land you in jail.'
+%% may(in(land(this, you), jail)).
+lg_entity(qp(D, thing), ent(const(D), [], const), []) :- memberchk(D, [this, that]), !.
+%% NO (since 1.139.0) is `every' and the clause denied: `No significant
+%% difference was found.' says is_not(past(found(A))) :- difference(A),
+%% significant(A), as `Every significant difference was not found.' does;
+%% `No one can live forever.' is_not(can(forever(live(A)))), a fact of a
+%% variable. ANY (since 1.139.0) is `every': `Any dog barks.' bark(A) :-
+%% dog(A).
+lg_entity(np(N, _, D, As), ent(V, Conds, D), []) :- memberchk(D, [no, any]), !,
+    lg_noun_conds(N, As, V, Conds).
+lg_entity(qp(D, _), ent(_, [], D), []) :- memberchk(D, [no, any]), !.
 lg_entity(qp(some, _), ent(_, [], some), []) :- !.
 lg_entity(wh(_), ent(_, [], wh), []) :- !.
 lg_entity('$const'(C), ent(const(C), [], const), []) :- !.
@@ -1277,6 +1364,7 @@ lg_arg(K, X, T, Raw, []) :-
 lg_arg(K, X, const(T), T, Ms) :-
     nonvar(X), X = and(Xs), is_list(Xs), Xs = [_, _|_], !,
     lg_args_joined(Xs, K, Raws, Ms),
+    ( memberchk('$q'(_, _, _), Ms) -> lg_no(joined(quantifier)) ; true ),
     T =.. [and|Raws].
 lg_arg(K, X, V, Raw, Ms) :-
     lg_entity(X, ent(T, Conds, Q), Ms0),
@@ -1286,6 +1374,10 @@ lg_arg(K, X, V, Raw, Ms) :-
     ->  V = const(Raw), Ms = Ms0
     ;   Q == generic, Ms0 = ['$ind'(V0, Shape)|Rest]
     ->  V = V0, Ms = ['$obj'(Shape, V, Raw, Conds)|Rest]
+    ;   Q == some, nonvar(X), X = np(N, Num, some, As)
+    ->  lg_arg(K, np(N, Num, indef, [some|As]), V, Raw, Ms)
+    ;   memberchk(Q, [no, every, any]), memberchk(K, [object, adposition, adjunct])
+    ->  V = T, Raw = T, Ms = ['$q'(Q, V, Conds)|Ms0]
     ;   Why =.. [K, Q], lg_no(Why)
     ).
 
@@ -2054,6 +2146,10 @@ lg_run([I|Is], Cs, [I|Run], Rest) :-
     (   A = pred(_, [_]) -> lg_run(Is, Cs, Run, Rest) ; Run = [], Rest = Is ).
 lg_run([I|Is], Cs, [I], Is) :-
     I = fact(A), member(C, Cs), lg_names_in(C, A), !.
+%% A rule whose conclusion names an individual ends its run (since
+%% 1.139.0: `He hadn't had any love in months.').
+lg_run([I|Is], Cs, [I], Is) :-
+    I = rule(H, _), member(C, Cs), lg_names_in(C, H), !.
 lg_run(Is, _, [], Is).
 
 %% A term names an individual inside it (of(pl(hand), a(surgeon)) names
@@ -2104,6 +2200,11 @@ lg_group_ir(L, Group, phrase(NP)) :-
     lg_term_individuals(C, Cs),
     lg_const_np(L, Cs, C, NP).
 lg_group_ir(L, [F|Run], IR) :-
+    Run = [_|_], append(Init, [rule(H, B)], [F|Run]), !,
+    lg_ind_map(L, Init, Map),
+    lg_body_list(B, Cs),
+    lg_rule_ir_inds(L, Map, H, Cs, IR).
+lg_group_ir(L, [F|Run], IR) :-
     Run = [_|_], !,
     append(Init, [fact(A)], [F|Run]),
     lg_ind_map(L, Init, Map),
@@ -2112,7 +2213,12 @@ lg_group_ir(L, [query(and([A|Cs]))], question(IR)) :-
     lg_core(A, pred(_, _)),
     lg_var_map(L, Cs, Map), Map \== [],
     lg_atom_ir(L, A, vmap(Map, wh), IR).
+%% A denied fact of a variable (since 1.139.0) is `nobody' or `nothing'
+%% (`No one can live forever.' is_not(can(forever(live(A))))).
+lg_group_ir(L, [fact(not(A))], IR) :- lg_has_var(A), lg_atom_ir(L, A, no, IR).
 lg_group_ir(L, [fact(A)], IR) :- lg_atom_ir(L, A, every, IR).
+
+lg_has_var(X) :- compound(X), ( X = var(_) -> true ; X =.. [_|As], member(Y, As), lg_has_var(Y) ), !.
 lg_group_ir(L, [query(A)], question(IR)) :- lg_core(A, pred(_, _)), lg_atom_ir(L, A, wh, IR).
 
 %% An atom without its tense and its adjuncts.
@@ -2136,7 +2242,7 @@ lg_ind_map(L, Init, Cs) :-
            ;   A = modified(pp(_, _), pred(P, [const(C)])), memberchk(C-_, CNs)
            ->  lg_class_ok(L, P/1, adjective)
            ;   A = pred(P, [const(C)]), memberchk(C-_, CNs),
-               ( memberchk(C-P, CNs) -> true ; lg_count_det(P) -> true ; lg_class_ok(L, P/1, adjective) )
+               ( memberchk(C-P, CNs) -> true ; lg_back_det(P) -> true ; lg_class_ok(L, P/1, adjective) )
            )),
     findall(C, member(C-_, CNs), Cs0),
     list_to_set(Cs0, Cs).
@@ -2171,6 +2277,32 @@ lg_body_list(B, [B]).
 %% subject (`A person is happy if they are healthy and safe.'), or the noun's
 %% adjectives (`Every happy dog sleeps.'); no noun `something' and an if
 %% clause (`Something sleeps if it is tired.').
+%% A denied conclusion (since 1.139.0) says var(1) by a noun phrase of
+%% `no', the clause not denied: `We have no banana.', `No dog barks.'
+lg_rule_ir(L, not(H), [pred(N, [var(1)])|Cs], IR) :-
+    lg_class_ok(L, N/1, noun),
+    lg_adjective_conds(L, Cs, As),
+    lg_atom_ir(L, H, var1(np(N, sg, no, As)), IR).
+%% A rule over var(1) whose conclusion names individuals (since 1.139.0),
+%% their facts before it: var(1) a noun phrase of `no' or `every', each
+%% individual its indefinite noun phrase.
+lg_rule_ir_inds(L, Is, not(H), [pred(N, [var(1)])|Cs], IR) :- !,
+    lg_class_ok(L, N/1, noun),
+    lg_adjective_conds(L, Cs, As),
+    lg_atom_ir(L, H, inds(Is, var1(np(N, sg, no, As))), IR).
+lg_rule_ir_inds(L, Is, H, [pred(N, [var(1)])|Cs], IR) :-
+    lg_class_ok(L, N/1, noun),
+    lg_adjective_conds(L, Cs, As),
+    lg_atom_ir(L, H, inds(Is, var1(np(N, sg, every, As))), IR).
+
+%% A conclusion whose var(1) is no subject (since 1.139.0) says it by a
+%% noun phrase of `every' and its adjectives (`He explored every hidden
+%% nook.'), no if clause.
+lg_rule_ir(L, H, [pred(N, [var(1)])|Cs], IR) :-
+    H \= not(_), Cs \== [], lg_class_ok(L, N/1, noun),
+    lg_adjective_conds(L, Cs, As),
+    lg_atom_ir(L, H, var1(np(N, sg, every, As)), IR),
+    lg_subject(IR, S), S \= np(_, _, every, _).
 lg_rule_ir(L, H, [pred(N, [var(1)])], IR) :-
     lg_class_ok(L, N/1, noun),
     lg_atom_ir(L, H, var1(np(N, sg, every, [])), IR).
@@ -2530,7 +2662,10 @@ lg_arg_np(L, How, fun(of, [T, P]), of(PNP, np(N, Num, def, As))) :- !,
     lg_np_of_term(L, S, N, Num, As),
     lg_arg_np(L, How, P, PNP).
 lg_arg_np(L, inds(Is, How), T, NP) :- !,
-    (   T = const(C), nonvar(C), memberchk(C, Is) -> lg_const_np(L, Is, C, NP) ; lg_arg_np(L, How, T, NP) ).
+    (   T = const(C), nonvar(C), ( memberchk(C, Is) -> true ; member(I, Is), lg_names_in(I, C) )
+    ->  lg_const_np(L, Is, C, NP)
+    ;   lg_arg_np(L, How, T, NP)
+    ).
 lg_arg_np(L, vmap(Map, How), T, NP) :- !,
     ( T = var(K), memberchk(K-NP0, Map) -> NP = NP0 ; lg_arg_np(L, How, T, NP) ).
 lg_arg_np(L, map(Cs), const(C), NP) :- !, lg_const_np(L, Cs, C, NP).
@@ -2539,6 +2674,7 @@ lg_arg_np(L, sub(C, NP), const(C1), NP1) :- !, lg_const_np(L, [sub(C, NP)], C1, 
 lg_arg_np(_, var1(NP), var(1), NP) :- !.
 lg_arg_np(_, wh, var(_), wh(W)) :- !, member(W, [who, what]).
 lg_arg_np(_, every, var(_), qp(every, K)) :- !, member(K, [thing, person]).
+lg_arg_np(_, no, var(_), qp(no, K)) :- !, member(K, [person, thing]).
 lg_arg_np(L, _, const(C), NP) :- lg_const_np(L, [], C, NP).
 
 %% A shape read from the compound term a variable in it makes (lg_fix/2):
@@ -2553,6 +2689,8 @@ lg_fun_shape(fun(F, As), T) :- maplist(lg_fun_shape, As, Xs), T =.. [F|Xs].
 lg_const_np(_, Cs, C, NP) :- member(sub(C1, NP0), Cs), C1 == C, !, NP = NP0.
 lg_const_np(_, _, C, P) :- atom(C), lg_pron_np(C, P).
 lg_const_np(_, _, something, qp(some, thing)).
+lg_const_np(_, _, this, qp(this, thing)).
+lg_const_np(_, _, that, qp(that, thing)).
 lg_const_np(_, _, someone, qp(some, person)).
 lg_const_np(_, _, C, qp(some, K)) :- atom(C), lg_numbered(C, W), memberchk(W-K, [something-thing, someone-person]), !.
 lg_const_np(L, _, the(group(T)), group(A)) :- !,
@@ -2666,7 +2804,7 @@ lg_np_item_ok(L, n(M)) :- !, typology_meaning(L, noun, M).
 lg_np_item_ok(L, ap(A, P, _, _)) :- !, typology_meaning(L, adjective, A), typology_meaning(L, adposition, P).
 lg_np_item_ok(L, adv(M, A)) :- !, typology_meaning(L, adverb, M), typology_meaning(L, adjective, A).
 lg_np_item_ok(L, A) :- typology_meaning(L, adjective, A).
-lg_np_item_ok(_, A) :- atom(A), lg_count_det(A).
+lg_np_item_ok(_, A) :- atom(A), lg_back_det(A).
 
 %% An adverb that grades an adjective in a term: an adverb's word that is
 %% no adjective's (`incurably', `very'); one that is (`pretty') is the

@@ -12,7 +12,7 @@ main :-
     forall(member(S, [milestone, constants, generic, joined, diagnostics, languages,
                       code_write, code_read, code_round_trip,
                       code_english, code_general, round_trips, measure, tenses,
-                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words, but_words, joined_terms, relatives, more_grammar_words, gerund_places]), once(S)),
+                      adjuncts, pronouns, possessors, objects, plurals, terms, individuals, relations, whens, phrases, commands, noun_adpositions, prepositions, unsaid_subjects, noun_modifiers, adjective_phrases, meanings_apart, graded_adjectives, adjectives_after_noun, capital_adjectives, of_bare_nouns, phrasal_verbs, infinitives, infinitive_places, infinitive_languages, passive, passive_places, object_complement, progressive, adjunct_first, passive_perfect, count_words, modals, negation, existential, adjective_alone, operator_names, ones, article_names, two_objects, predeterminers, possessed_heads, comparatives, demonstratives, linking_verbs, every_words, long_words, such_words, reflexives, numbers_and_groups, hyphen_words, dash_words, particles, grading_words, unsaid_copula, small_words, but_words, joined_terms, relatives, more_grammar_words, gerund_places, quantified_args]), once(S)),
     checks_done.
 
 %% The seven sentences of the first milestone, each its logic forms in order.
@@ -85,9 +85,10 @@ diagnostics :-
                'The dog is not big and black.'-negation,
                'Every boy sees a dog.'-object(generic),
                'The boy sleeps because the dog sleeps.'-subordinate(because),
-               'He received any letter.'-determiner(any),
-               'No dog sleeps.'-determiner(no),
-               'The boy sleeps with every dog.'-adjunct(every),
+               'He did not read every book.'-negation,
+               'Every boy sees no dog.'-object(quantifier),
+               'He feared the decline of every man.'-possessor(every),
+               'John sleeps with every dog and a cat.'-joined(quantifier),
                'Lilies of the valley are racemose.'-possessor(generic) ]),
            ( once(typology_read(english, T, IR)),
              ( logic_from_ir(IR, _) -> W = read ; logic_why(IR, W) ),
@@ -262,11 +263,11 @@ measure :-
     absolute_file_name(library(reasoning/'lexicon/logic.txt'), F, [access(read)]),
     logic_measure_cases(F, Cases),
     logic_measure(english, Cases, measure(N, R, _, K, _, _, _)),
-    check('the second measure: its sentences', N, 611),
-    ( R >= 602 -> VR = ok ; VR = R ),
-    check('the second measure: English into Cocolog, at least 602 right', VR, ok),
-    ( K >= 605 -> VK = ok ; VK = K ),
-    check('the second measure: Cocolog into English and back, at least 605 kept', VK, ok).
+    check('the second measure: its sentences', N, 621),
+    ( R >= 612 -> VR = ok ; VR = R ),
+    check('the second measure: English into Cocolog, at least 612 right', VR, ok),
+    ( K >= 615 -> VK = ok ; VK = K ),
+    check('the second measure: Cocolog into English and back, at least 615 kept', VK, ok).
 
 %% 1.70.0: A TENSE other than the present is said of each atom its clause
 %% says, at(Tense, Atom), never of a subject's noun, and Cocolog writes it
@@ -352,9 +353,11 @@ adjuncts :-
     ( cocolog_read('size([a, b], 2).', U5) -> true ; U5 = none ),
     check('a list is no adjunct\'s atom', U5,
           utterance(assertion, [fact(pred(size, [list([const(a), const(b)]), num(2)]))])),
-    once(typology_read(english, 'John sleeps with every dog.', IR6)),
-    logic_why(IR6, W6),
-    check('an adjunct\'s noun phrase of every', W6, adjunct(every)).
+    once(typology_read(english, 'John sleeps with an old dog.', IR6)),
+    ( logic_from_ir(IR6, _) -> W6 = read ; logic_why(IR6, W6) ),
+    check('an adjunct\'s indefinite noun phrase', W6, read),
+    ( logic_translate(english, cocolog, 'John sleeps with every dog.', C7) -> true ; C7 = none ),
+    check('an adjunct\'s noun phrase of every (since 1.139.0)', C7, 'with(is_sleep(john), A) :-\n    dog(A).\n').
 
 %% 1.72.0: A PRONOUN with no referent is a constant of its own, its word;
 %% in a text, the noun phrase it refers to.
@@ -661,7 +664,7 @@ phrases :-
     ( cocolog_read('quickly(run(the(dog))).', U5) -> true ; U5 = none ),
     check('... and stands on a verb\'s', U5,
           utterance(assertion, [fact(modified(adv(quickly), pred(run, [const(the(dog))])))])),
-    forall(member(T6-Want6, ['Him.'-phrase(pron), 'Some dogs.'-phrase(some)]),
+    forall(member(T6-Want6, ['Him.'-phrase(pron), 'Every dog.'-phrase(every)]),
            ( once(typology_read(english, T6, IR6)),
              ( logic_from_ir(IR6, _) -> W6 = read ; logic_why(IR6, W6) ),
              atomic_list_concat(['no form yet: ', T6], L6),
@@ -1190,6 +1193,40 @@ reflexives :-
 %% someone; an adposition of several words is one predicate
 %% (because_of/2); an adjective `too' grades with its infinitive is the
 %% adverb round the adjective's predicate of two.
+%% 1.139.0: `this' and `that' alone are constants; `no' is `every' and
+%% the clause denied; `every', `no' and `any' where a constant's clause has
+%% its object, an adposition's or an adjunct's noun phrase make a rule over
+%% that noun phrase's variable, an individual beside it a constant whose
+%% facts come first; `some' before a noun that is no subject is its first
+%% modifier. Back, a denied rule says its variable by `no', and a rule
+%% whose variable is no subject by `every'.
+quantified_args :-
+    section('this and that alone; no; every, any and some that are no subject'),
+    typology_load(english),
+    forall(member(S-Want-Back, [
+               'That is cool.'-'cool(that).\n'-same,
+               'This immediately concerns your future.'-'immediately(concern(this, of(future, you))).\n'-'This concerns your future immediately.',
+               'No dog barks.'-'is_not(bark(A)) :-\n    dog(A).\n'-same,
+               'No one heard him.'-'is_not(past(hear(_, he))).\n'-'Nobody heard him.',
+               'We have no bananas.'-'is_not(have(we, A)) :-\n    banana(A).\n'-'We have no banana.',
+               'You are in no danger.'-'is_not(in(you, A)) :-\n    danger(A).\n'-same,
+               'He reads every big book.'-'is_read(he, A) :-\n    book(A),\n    big(A).\n'-same,
+               'Any dog barks.'-'bark(A) :-\n    dog(A).\n'-'Every dog barks.',
+               'He hadn\'t had any love in months.'-'month(a(pl(month))).\nis_not(pluperfect(in(have(he, A), a(pl(month))))) :-\n    love(A).\n'-'He had had no love in months.',
+               'Felt panicked before each exam.'-'past(before(feel(someone, panicked(someone)), A)) :-\n    exam(A).\n'-'Someone felt panicked before every exam.',
+               'He explored every nook with a lamp.'-'lamp(a(lamp)).\npast(with(explore(he, A), a(lamp))) :-\n    nook(A).\n'-same,
+               'He had made some money on the side.'-'money(a(some(money))).\nsome(a(some(money))).\npluperfect(on(make(he, a(some(money))), the(side))).\n'-same ]),
+           ( ( logic_translate(english, cocolog, S, C) -> true ; C = none ),
+             check(S, C, Want),
+             ( C \== none, logic_translate(cocolog, english, C, E) -> true ; E = none ),
+             ( Back == same -> Back1 = S ; Back1 = Back ),
+             atomic_list_concat(['and back: ', S], Label),
+             check(Label, E, Back1) )),
+    ( logic_translate(english, cocolog, 'He did not read every book.', C2) -> true ; C2 = none ),
+    check('not every is no rule of every', C2, none),
+    ( catch(logic_why(clause(read, present, neg, pron(3, sg, m), np(book, sg, every, [])), W), _, W = err) -> true ; W = failed ),
+    check('not every says why', W, negation).
+
 gerund_places :-
     section('the gerund after an adposition, of and a verb; because of, like; too ADJ to INF'),
     typology_load(english),

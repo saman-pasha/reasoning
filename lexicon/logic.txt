@@ -640,3 +640,14 @@ He learned drawing from his father.	past(from(learn(he, ing(draw(someone))), of(
 She could not forbear weeping.	is_not(could(forbear(she, ing(weep(someone))))).
 The job of repairing the engine took several hours.	hour(a(pl(several(hour)))). several(a(pl(several(hour)))). past(take(of(job, ing(repair(someone, the(engine)))), a(pl(several(hour))))).
 Suddenly the board lit up like a Christmas tree.	tree(a(nn(christmas, tree))). nn(christmas, a(nn(christmas, tree))). past(suddenly(like(light_up(the(board)), a(nn(christmas, tree))))).
+# this and that alone; no; every, any and some where an object, an adposition's or an adjunct's noun phrase stands (1.139.0)
+That's cool.	cool(that).
+That's a real puzzler.	puzzler(that). real(that).
+We have no bananas.	is_not(have(we, X)) :- banana(X).
+No significant difference was found.	is_not(past(found(X))) :- difference(X), significant(X).
+He received no formal education.	is_not(past(receive(he, X))) :- education(X), formal(X).
+You are in no danger.	is_not(in(you, X)) :- danger(X).
+He recommended her without any reservations.	past(without(recommend(he, she), X)) :- reservation(X).
+Talked to each child in turn.	past(in(to(talk(someone), X), turn)) :- child(X).
+He had made some money on the side.	money(a(some(money))). some(a(some(money))). pluperfect(on(make(he, a(some(money))), the(side))).
+He hadn't had any love in months.	month(a(pl(month))). is_not(pluperfect(in(have(he, X), a(pl(month))))) :- love(X).

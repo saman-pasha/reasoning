@@ -101,6 +101,7 @@ main :-
     relatives,
     more_grammar_words,
     gerund_places,
+    quantified_args,
     format("~ndone~n", []).
 
 %% 1. A FACT. A name, a definite noun phrase and a bare noun are constants,
@@ -883,6 +884,29 @@ gerund_places :-
     must('because of', C2, 'past(because_of(leave(he), the(rain))).\n'),
     logic_translate(english, cocolog, 'The dog is too old to run.', C3),
     must('too old to run', C3, 'too(old(the(dog), to(run(the(dog))))).\n').
+
+
+%% 72. NO, EVERY, ANY AND SOME THAT ARE NO SUBJECT (1.139.0). `This' and
+%% `that' alone are constants. `No' is `every' and the clause denied. A
+%% noun phrase of `every', `no' or `any' that is a constant's object, an
+%% adposition's or an adjunct's makes a rule over its variable; `some'
+%% before such a noun is its first modifier, as a number is.
+quantified_args :-
+    typology_load(english),
+    logic_translate(english, cocolog, 'That is cool.', C1),
+    must('that alone', C1, 'cool(that).\n'),
+    logic_translate(english, cocolog, 'No dog barks.', C2),
+    must('no as a subject', C2, 'is_not(bark(A)) :-\n    dog(A).\n'),
+    logic_translate(english, cocolog, 'We have no bananas.', C3),
+    must('no as an object', C3, 'is_not(have(we, A)) :-\n    banana(A).\n'),
+    logic_translate(cocolog, english, C3, E3),
+    must('and back', E3, 'We have no banana.'),
+    logic_translate(english, cocolog, 'He explored every nook.', C4),
+    must('every as an object', C4, 'past(explore(he, A)) :-\n    nook(A).\n'),
+    logic_translate(cocolog, english, C4, E4),
+    must('and back', E4, 'He explored every nook.'),
+    logic_translate(english, cocolog, 'He had made some money on the side.', C5),
+    must('some as an object', C5, 'money(a(some(money))).\nsome(a(some(money))).\npluperfect(on(make(he, a(some(money))), the(side))).\n').
 
 
 %% Duplicated at the foot of every tutorial on purpose: one you can copy
